@@ -41,5 +41,5 @@
 /obj/effect/clockwork/servant_blocker/ex_act(severity, target)
 	return
 
-/obj/effect/clockwork/servant_blocker/safe_throw_at()
+/obj/effect/clockwork/servant_blocker/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
 	return

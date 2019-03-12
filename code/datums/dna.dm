@@ -278,7 +278,7 @@
 /datum/dna/stored/check_mutation(mutation_name)
 	return
 
-/datum/dna/stored/remove_all_mutations()
+/datum/dna/stored/remove_all_mutations(list/classes, mutadone = FALSE)
 	return
 
 /datum/dna/stored/remove_mutation_group(list/group)
