@@ -52,6 +52,11 @@
 	export_types = list(/obj/item/clothing/suit/space/syndicate)
 
 
+/datum/export/gear/asset_register
+	cost = 7500
+	unit_name = "Syndicate asset register"
+	export_types = list(/obj/item/assetregister)
+
 /datum/export/gear/radhelmet
 	cost = 50
 	unit_name = "radsuit hood"

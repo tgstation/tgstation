@@ -251,3 +251,34 @@ effective or pretty fucking useless.
 	else
 		GLOB.active_jammers -= src
 	update_icon()
+
+/obj/item/assetregister
+	name = "Syndicate asset register"
+	desc = "This book allows you to rename any golem. This register only works once per golem. Write a name in this book then hit a golem with it to change their name."
+	force = 15
+	icon = 'icons/obj/library.dmi'
+	icon_state = "register"
+
+	var/current_name = null //Null to prevent null names
+	var/list/registered_assets = list()
+
+/obj/item/assetregister/attack_self(mob/user)
+	to_chat(user,"<span class='notice'>You start writing in \the [src].</span>")
+	current_name = stripped_input(user,"What name would you like to use?","Asset Register","", MAX_NAME_LEN)
+	if(current_name)
+		to_chat(user,"<span class='notice'>You write down [current_name] in the asset register.</span>")
+
+
+/obj/item/assetregister/attack(mob/living/M, mob/living/user)
+	if(isgolem(M))
+		if(!registered_assets.Find(M))//Are they not in the list yet?
+			register_asset(M, user)
+		else
+			to_chat(user,"<span class='warning'>You have already renamed [M] before!</span>")
+	else
+		return ..()
+
+/obj/item/assetregister/proc/register_asset(mob/living/M, mob/living/user)
+	to_chat(user,"<span class='notice'>You have renamed the golem [M] to [current_name].</span>")
+	M.fully_replace_character_name(M.real_name, current_name)
+	registered_assets += M

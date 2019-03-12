@@ -127,6 +127,21 @@
 			new /obj/item/card/id/syndicate(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
 			new /obj/item/book/granter/spell/summonitem(src)
+
+		if("commander")
+			new /obj/item/storage/book/bible/syndicate(src) // 9tc
+			new /obj/item/card/id/syndicate(src) // 2tc
+			new /obj/item/card/id/syndicate(src) // 2tc
+			new /obj/item/card/id/syndicate(src) // 2tc
+			new /obj/item/codespeak_manual/unlimited(src) // 3tc
+			new /obj/item/restraints/legcuffs/bola/tactical(src) // 1tc
+			new /obj/item/restraints/legcuffs/bola/tactical(src) // 1tc
+			new /obj/item/megaphone/command(src) // 0tc
+			new /obj/item/stack/sheet/mineral/adamantine(src) // 0tc
+			new /obj/item/stack/sheet/mineral/adamantine(src) // 0tc
+			new /obj/item/stack/sheet/mineral/adamantine(src) // 0tc
+			new /obj/item/assetregister(src) // 0tc, QoL
+			new /obj/item/gun/medbeam/stimbeam(src) // 10tc
 			
 		if("white_whale_holy_grail") //Unique items that don't appear anywhere else
 			new /obj/item/pneumatic_cannon/speargun(src)

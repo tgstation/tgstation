@@ -563,7 +563,7 @@
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class ='notice'>Your hands spaz out and you drop what you were holding!</span>")
 			M.Jitter(10)
-	
+
 	M.AdjustAllImmobility(-20, FALSE)
 	M.adjustStaminaLoss(-1*REM, FALSE)
 	..()
@@ -578,7 +578,7 @@
 
 	if(prob(7))
 		to_chat(M, "<span class='notice'>[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
-	
+
 	if(prob(33))
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
@@ -590,7 +590,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(2*REM, 0)
 		M.losebreath += 2
@@ -602,7 +602,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(3*REM, 0)
 		M.losebreath += 3
@@ -614,7 +614,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(4*REM, 0)
 		M.losebreath += 4
@@ -626,7 +626,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(5*REM, 0)
 		M.losebreath += 5
@@ -907,17 +907,33 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/stimulants
-	name = "Stimulants"
-	id = "stimulants"
-	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
+/datum/reagent/medicine/fervoxazine
+	name = "Fervoxazine"
+	id = "fervoxazine"
+	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage. This reagent is even more potent with Golems"
 	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
-/datum/reagent/medicine/stimulants/on_mob_add(mob/living/L)
+/datum/reagent/medicine/fervoxazine/on_mob_add(mob/living/L)
 	..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	if(isgolem(L)) //More potent for golems
+		L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown = -2.5, blacklisted_movetypes=(FLYING|FLOATING))
+	else
+		L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown = -0.75, blacklisted_movetypes=(FLYING|FLOATING))
+
+/datum/reagent/drug/fervoxazine/on_mob_life(mob/living/carbon/M)   
+	if(prob(5))
+		var/high_message = pick("You feel heated and ready to move.", "You feel like a burning star.", "You feel like a meteor.")
+		to_chat(M, "<span class='notice'>[high_message]</span>")
+	M.adjust_bodytemperature(BODYTEMP_HEATING_MAX) //hot hot hot
+	M.adjustStaminaLoss(-2, 0) 
+	M.AdjustStun(-40, FALSE)
+	M.AdjustKnockdown(-40, FALSE)
+	M.AdjustUnconscious(-40, FALSE)
+	M.AdjustParalyzed(-40, FALSE)
+	M.AdjustImmobilized(-40, FALSE)
+	..()
 
 /datum/reagent/medicine/stimulants/on_mob_delete(mob/living/L)
 	L.remove_movespeed_modifier(id)

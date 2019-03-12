@@ -2391,6 +2391,7 @@
 #include "code\modules\projectiles\guns\misc\chem_gun.dm"
 #include "code\modules\projectiles\guns\misc\grenade_launcher.dm"
 #include "code\modules\projectiles\guns\misc\medbeam.dm"
+#include "code\modules\projectiles\guns\misc\stimbeam.dm"
 #include "code\modules\projectiles\guns\misc\syringe_gun.dm"
 #include "code\modules\projectiles\projectile\beams.dm"
 #include "code\modules\projectiles\projectile\bullets.dm"
