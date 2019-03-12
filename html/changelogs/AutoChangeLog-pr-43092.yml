@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Revolvers will no longer immediately click when trying to suicide while on an empty chamber."
