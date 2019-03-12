@@ -3,11 +3,11 @@
 	desc = "This impressive machine uses plasma based power transmission technology to supply power to alternate decks. It requires a steady power source. Click it with a multitool / ODN scanner to see stats and reacquire connections."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cablerelay-off"
+	anchored = TRUE
+	density = FALSE
 	var/obj/machinery/power/deck_relay/below
 	var/obj/machinery/power/deck_relay/above
 	var/list/relays = list() //to bridge the powernets.
-	anchored = TRUE
-	density = FALSE
 
 /obj/machinery/power/deck_relay/process()
 	refresh() //Sometimes the powernets get lost, so we need to keep checking.
@@ -15,7 +15,7 @@
 		icon_state = "cablerelay-off"
 	else
 		icon_state = "cablerelay-on"
-	if(!below || QDELETED(below) || !above || QDELETED(above))
+	if(!below || !above)
 		icon_state = "cablerelay-off"
 		find_relays()
 
@@ -52,10 +52,7 @@
 	if(!T || !istype(T))
 		return FALSE
 	below = null //in case we're re-establishing
-	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
-	if(C && C.powernet)
-		C.powernet.add_machine(src) //Nice we're in.
-		powernet = C.powernet
+	above = null
 	below = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_below(T))
 	above = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_above(T))
 	relays += below
