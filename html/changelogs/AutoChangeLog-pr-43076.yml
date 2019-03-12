@@ -1,0 +1,6 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Cow tipping now properly stuns the cow."
+  - bugfix: "Suiciding with the infernal contract now properly causes the victim to yell out."
+  - bugfix: "Accessing the notes panel within the first few seconds of connecting no longer risks broken styling."
