@@ -164,7 +164,7 @@
 	hivemembers = list()
 	calc_size()
 	for(var/power in upgrade_tiers)
-		if(upgrade_tiers[power] == 0)
+		if(!upgrade_tiers[power])
 			continue
 		owner.RemoveSpell(power)
 
