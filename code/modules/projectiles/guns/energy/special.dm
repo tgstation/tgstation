@@ -94,7 +94,7 @@
 	weapon_weight = WEAPON_LIGHT
 	obj_flags = 0
 	can_flashlight = FALSE
-	selfcharge = 1
+	selfcharge = TRUE
 
 /obj/item/gun/energy/crossbow/halloween
 	name = "candy corn crossbow"
