@@ -37,6 +37,11 @@
 
 /datum/martial_art/proc/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
 
+	var/obj/item/inactive = get_inactive_held_item()
+	if(inactive)
+		if(inactive.offhand_effect(A, D) == FALSE)
+			return 0
+
 	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
 
 	var/atk_verb = A.dna.species.attack_verb
