@@ -1,0 +1,4 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Hivemind Hosts retaining powers on death and while dead"
