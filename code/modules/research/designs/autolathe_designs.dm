@@ -133,12 +133,28 @@
 	maxstack = 30
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/toolbox
-	name = "Toolbox"
-	id = "tool_box"
+/datum/design/mechanical_toolbox
+	name = "Mechanical Toolbox"
+	id = "mechanical_tool_box"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 500)
-	build_path = /obj/item/storage/toolbox
+	build_path = /obj/item/storage/toolbox/mechanical
+	category = list("initial","Tools")
+
+/datum/design/electrical_toolbox
+	name = "Electrical ToolBox"
+	id = "electrical_tool_box"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500)
+	build_path = /obj/item/storage/toolbox/electrical
+	category = list("initial","Tools")
+
+/datum/design/emergency_toolbox
+	name = "Emergency Toolbox"
+	id = "emergency_tool_box"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500)
+	build_path = /obj/item/storage/toolbox/emergency
 	category = list("initial","Tools")
 
 /datum/design/apc_board
