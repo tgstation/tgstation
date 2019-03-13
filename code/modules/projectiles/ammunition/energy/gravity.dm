@@ -3,7 +3,6 @@
 	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "gravity"
 	delay = 50
-	harmful = FALSE
 	var/obj/item/gun/energy/gravity_gun/gun
 
 /obj/item/ammo_casing/energy/gravity/Initialize(mapload)
