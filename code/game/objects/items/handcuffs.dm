@@ -364,6 +364,32 @@
 	breakouttime = 70
 	knockdown = 20
 
+/obj/item/restraints/legcuffs/bola/nunchucks//curator traitor variant, basically the bola can also beat people up.
+	name = "nunchucks"
+	desc = "Pretty badass if you can use it right. You could probably use it to wrap around someone's legs like a bola as well, if they try running."
+	icon_state = "nunchucks"
+	item_state = "nunchucks"
+	hitsound = 'sound/effects/woodhit.ogg'
+	slot_flags = ITEM_SLOT_BELT
+	force = 25
+	throwforce = 15
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	block_chance = 50
+	max_integrity = 200
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	
+	breakouttime = 70
+	knockdown = 20
+
+/obj/item/restraints/legcuffs/bola/nunchucks/attack(mob/target, mob/living/user)
+	..()
+	if(prob(50) && target != user)
+		user.put_in_inactive_hand(src)
+
+/obj/item/restraints/legcuffs/bola/nunchucks/offhand_effect(mob/target, mob/living/user)
+	attack(user, user)
+
 /obj/item/restraints/legcuffs/bola/energy //For Security
 	name = "energy bola"
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
