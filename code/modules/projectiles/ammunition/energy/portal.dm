@@ -4,7 +4,7 @@
 	harmful = FALSE
 	fire_sound = 'sound/weapons/pulse3.ogg'
 	select_name = "blue"
-	var/obj/item/gun/energy/wormhole_projector/gun = null
+	var/obj/item/gun/energy/wormhole_projector/gun
 
 /obj/item/ammo_casing/energy/wormhole/orange
 	projectile_type = /obj/item/projectile/beam/wormhole/orange
