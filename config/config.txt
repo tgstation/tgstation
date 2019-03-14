@@ -379,6 +379,19 @@ AUTOADMIN_RANK Game Master
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
 
+
+## Uncomment to automatically deadmin players when the game starts. They will also readmin automatically upon death.
+#AUTO_DEADMIN_PLAYERS
+
+## Uncomment to automatically deadmin antagonists when they gain the role. They will also readmin automatically upon death.
+AUTO_DEADMIN_ANTAGONISTS
+
+## Uncomment to automatically deadmin specific role sets when a player joins the game. They will also readmin automatically upon death.
+AUTO_DEADMIN_HEADS
+AUTO_DEADMIN_SECURITY
+#AUTO_DEADMIN_SILICONS
+
+
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.

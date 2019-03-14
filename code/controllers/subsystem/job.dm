@@ -426,6 +426,16 @@ SUBSYSTEM_DEF(job)
 
 		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
 
+		if(M.client.holder)
+			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.toggles & DEADMIN_ALWAYS))
+				M.client.deadmin(TRUE)
+			else if((CONFIG_GET(flag/auto_deadmin_heads) || (M.client.prefs?.toggles & DEADMIN_POSITION_HEAD)) && (job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD))
+				M.client.deadmin(TRUE)
+			else if((CONFIG_GET(flag/auto_deadmin_security) || (M.client.prefs?.toggles & DEADMIN_POSITION_SECURITY)) && (job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY))
+				M.client.deadmin(TRUE)
+			else if((CONFIG_GET(flag/auto_deadmin_silicons) || (M.client.prefs?.toggles & DEADMIN_POSITION_SILICON)) && (job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON))
+				M.client.deadmin(TRUE)
+
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
 		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
