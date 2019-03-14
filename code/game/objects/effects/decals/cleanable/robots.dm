@@ -54,6 +54,22 @@
 	. = ..()
 	reagents.add_reagent("oil", 30)
 
+/obj/effect/decal/cleanable/oil/attackby(obj/item/I, mob/living/user)
+	if(I.is_hot())
+		visible_message("<span class='warning'>[user] tries to ignite [src] with [I]!</span>", "<span class='warning'>You try to ignite [src] with [I].</span>")
+		log_combat(user, src, "ignited", I)
+		fire_act(I.is_hot())
+		return
+	return ..()
+
+/obj/effect/decal/cleanable/oil/fire_act(exposed_temperature, exposed_volume)
+	if(exposed_temperature < 480)
+		return
+	visible_message("<span class='danger'>[src] catches fire!</span>")
+	var/turf/T = get_turf(src)
+	qdel(src)
+	new /obj/effect/hotspot(T)
+
 /obj/effect/decal/cleanable/oil/streak
 	icon_state = "streak1"
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
