@@ -75,7 +75,5 @@
 	icon_state = "streak1"
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
 
-/obj/effect/decal/cleanable/oil/slippery
-
 /obj/effect/decal/cleanable/oil/slippery/Initialize()
 	AddComponent(/datum/component/slippery, 80, (NO_SLIP_WHEN_WALKING | SLIDE))
