@@ -378,17 +378,13 @@
 	block_chance = 50
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	
+
 	breakouttime = 70
 	knockdown = 20
 
 /obj/item/restraints/legcuffs/bola/nunchucks/attack(mob/target, mob/living/user)
 	..()
-	if(prob(50) && target != user)
-		user.put_in_inactive_hand(src)
-
-/obj/item/restraints/legcuffs/bola/nunchucks/offhand_effect(mob/target, mob/living/user)
-	attack(user, user)
+	if(user.put_in_inactive_hand(src))
 
 /obj/item/restraints/legcuffs/bola/energy //For Security
 	name = "energy bola"
