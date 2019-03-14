@@ -3,7 +3,7 @@
 	icon_state = "energy"
 	damage = 0
 	damage_type = TOX
-	nodamage = 1
+	nodamage = TRUE
 	flag = "energy"
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
@@ -21,5 +21,5 @@
 	icon_state = "energy2"
 	damage = 0
 	damage_type = TOX
-	nodamage = 1
+	nodamage = TRUE
 	flag = "energy"
