@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Sentient firebots can now use their fire extinguishers."
-  - bugfix: "Fixed hacked firebots not resetting after being reset...."

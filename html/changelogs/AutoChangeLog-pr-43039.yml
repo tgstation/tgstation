@@ -1,4 +1,0 @@
-author: "Caiggas"
-delete-after: True
-changes: 
-  - bugfix: "Fixed jump-boots breaking after colliding with things at close range."
