@@ -15,7 +15,7 @@
 		icon_state = "cablerelay-off"
 	else
 		icon_state = "cablerelay-on"
-	if(!below || !above)
+	if(QDELETED(below) || QDELETED(above))
 		icon_state = "cablerelay-off"
 		find_relays()
 
