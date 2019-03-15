@@ -295,6 +295,18 @@ Turf and target are separate in case you want to teleport some distance from a t
 			. = pick(ais)
 	return .
 
+/proc/select_active_cored_ai(mob/user) //select from a list of active AIs that are in a core
+	var/list/ais = active_ais()
+	for(var/mob/living/silicon/ai/A in ais)
+		if(!isturf(A.loc))
+			ais -= A
+	if(ais.len)
+		if(user)
+			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in ais
+		else
+			. = pick(ais)
+	return .
+
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0)
 	var/list/mobs = sortmobs()

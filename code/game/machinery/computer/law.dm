@@ -21,6 +21,9 @@
 			to_chat(user, "<span class='caution'>Upload failed!</span> Unable to establish a connection to [current.name]. You're too far away!")
 			current = null
 			return
+		if(!isturf(current.loc))
+			to_chat(user, "<span class='caution'>Upload failed!</span> Unable to interface with [current.name] -- Core protocols are missing.")
+			return
 		M.install(current.laws, user)
 	else
 		return ..()
@@ -36,7 +39,7 @@
 	circuit = /obj/item/circuitboard/computer/aiupload
 
 /obj/machinery/computer/upload/ai/interact(mob/user)
-	src.current = select_active_ai(user)
+	src.current = select_active_cored_ai(user)
 
 	if (!src.current)
 		to_chat(user, "<span class='caution'>No active AIs detected!</span>")
@@ -45,8 +48,6 @@
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
-		return 0
-	if(A.control_disabled)
 		return 0
 	return ..()
 
