@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 		GLOB.vr_runner_players -= H
 		if(GLOB.vr_runner_active)
 			if(!GLOB.vr_runner_players.len)
-				to_chat(H, "<span class='notice'>You win! You survived for [(world.time - game_start_time) / 10] seconds.</span>")
+				to_chat(H, "<span class='notice'>You win! You survived for [(world.time - game_start_time) / 10] second\s.</span>")
 				end_game()
 			else
 				to_chat(H, "<span class='notice'>You survived for [(world.time - game_start_time) / 10] seconds. [GLOB.vr_runner_players.len] other player(s) remained.</span>")
