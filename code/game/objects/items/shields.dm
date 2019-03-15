@@ -110,6 +110,7 @@
 	block_chance = 30
 	transparent = FALSE
 	max_integrity = 65
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
