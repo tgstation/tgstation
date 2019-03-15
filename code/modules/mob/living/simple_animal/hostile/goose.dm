@@ -31,7 +31,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/toggle_ai(togglestatus)
 	. = ..()
 	if(!key)
-		if(AIStatus != AI_ON && !resting)
+		if(AIStatus != AI_ON)
 			set_resting(TRUE)
 		else
 			set_resting(FALSE)
@@ -44,7 +44,7 @@
 		wander = TRUE
 	update_icon()
 
-/mob/living/simple_animal/hostile/retaliate/goose/consider_wakeup()
+/mob/living/simple_animal/hostile/retaliate/goose/handle_automated_movement()
 	. = ..()
 	if(prob(5))
 		Retaliate()
