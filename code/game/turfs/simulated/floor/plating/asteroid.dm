@@ -1,6 +1,18 @@
 
 /**********************Asteroid**************************/
 
+//Fissure mixes per tile class
+var/list/fissure_gas_mix = list(
+	"asteroid"=list(
+		"tritium=24;co2=37;miasma=20;TEMP=420" = 1,
+		"pluox=14;bz=18;no2=8;water_vapor=300;TEMP=105.6" = 3),
+	"basalt" = list("plasma=42;miasma=32;TEMP=600" = 3,
+		"co2=20;miasma=12;bz=18;TEMP=10000" = 4),
+	"snow" = list(
+		"pluox=14;bz=18;no2=8;water_vapor=300;TEMP=105.6" = 2,
+		"co2=200;n2o=12;bz=18;TEMP=70" = 4)
+	)
+
 /turf/open/floor/plating/asteroid //floor piece
 	gender = PLURAL
 	name = "asteroid sand"
@@ -19,10 +31,6 @@
 	attachment_holes = FALSE
 	var/obj/item/stack/digResult = /obj/item/stack/ore/glass/basalt
 	var/dug
-	var/list/fissure_gas_mix = list("plasma=42;n2=32;TEMP=600" = 3,
-		"co2=20;n2o=12;bz=18;TEMP=10000" = 4,
-		"tritium=24;co2=37;TEMP=420" = 1,
-		"pluox=14;bz=18;no2=8;water_vapor=300;TEMP=105.6" = 2)
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -73,12 +81,11 @@
 				if(!can_dig(user))
 					return TRUE
 
-				if(W.tool_behaviour == TOOL_MINING && prob(2)) //I forgot about better mining tools. Brought down the probability and making the options more likely to be boring
+				if(W.tool_behaviour == TOOL_MINING && prob(100)) //I forgot about better mining tools. Brought down the probability and making the options more likely to be boring
 					to_chat(user, "<span class='warning'>You opened a fissure! A gas is escaping...</span>")
 					icon_state = "fissure"
 					icon_plating = "fissure"
-					environment_type="fissure"
-					initial_gas_mix = pickweight(fissure_gas_mix)
+					initial_gas_mix = pickweight(fissure_gas_mix[environment_type])
 				else
 					to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				getDug()
