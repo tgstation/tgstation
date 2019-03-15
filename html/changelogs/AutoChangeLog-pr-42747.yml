@@ -1,5 +1,0 @@
-author: "GranpaWalton"
-delete-after: True
-changes: 
-  - tweak: "A lavaland syndicate base portable scrubber was replaced with a portable pump"
-  - bugfix: "layer 3 injectors now properly initialize on layer 3 instead of 2"

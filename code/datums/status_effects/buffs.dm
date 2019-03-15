@@ -292,6 +292,7 @@
 			var/mob/living/carbon/C = owner
 			for(var/X in C.bodyparts)
 				var/obj/item/bodypart/BP = X
+				BP.max_damage *= 10
 				BP.brute_dam *= 10
 				BP.burn_dam *= 10
 		owner.toxloss *= 10
@@ -377,6 +378,7 @@
 			var/obj/item/bodypart/BP = X
 			BP.brute_dam *= 0.1
 			BP.burn_dam *= 0.1
+			BP.max_damage /= 10
 	owner.toxloss *= 0.1
 	owner.oxyloss *= 0.1
 	owner.cloneloss *= 0.1
@@ -571,9 +573,25 @@
 	owner.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
-	owner.remove_CC()	
+	owner.remove_CC()
 	owner.bodytemperature = BODYTEMP_NORMAL
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
 	owner.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+
+/datum/status_effect/antimagic
+	id = "antimagic"
+	duration = 10 SECONDS
+	examine_text = "<span class='notice'>They seem to be covered in a dull, grey aura.</span>"
+
+/datum/status_effect/antimagic/on_apply()
+	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
+	owner.add_trait(TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	//glowing wings overlay
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	return ..()
+
+/datum/status_effect/antimagic/on_remove()
+	owner.remove_trait(TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")

@@ -134,6 +134,9 @@ LOG_MANIFEST
 ## log mecha actions
 # LOG_MECHA
 
+## log virus and actions
+LOG_VIRUS
+
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 

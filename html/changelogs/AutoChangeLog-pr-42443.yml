@@ -1,6 +1,0 @@
-author: "PKPenguin321"
-delete-after: True
-changes: 
-  - rscadd: "Added the Antenna power to genetics. It gives you a built-in radio."
-  - rscadd: "Added the Mind Reader power to genetics. You can read the minds of people on your screen. This will reveal semi-random bit of their past conversations, their intent, and their true name. You also get the antenna sprite. Can only be unlocked by combining Paranoia and Antenna."
-  - rscadd: "Added the Paranoia disability to genetics. You scream randomly, and have a small chance to suffer from hallucinations now and then."

@@ -92,7 +92,7 @@
 			return TRUE
 	else if(istype(I, /obj/item/organ))
 		var/obj/item/organ/P = I
-		P.Insert(M, drop_if_replaced = FALSE)
+		P.Insert(M, FALSE, FALSE)
 		visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
 		return TRUE
 

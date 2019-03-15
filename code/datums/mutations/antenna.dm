@@ -30,7 +30,7 @@
 	if(linked_radio)
 		linked_radio.Destroy()
 
-/datum/mutation/human/antenna/New()
+/datum/mutation/human/antenna/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
@@ -98,7 +98,7 @@
 		else
 			to_chat(user, "<span class='boldnotice'>You can't find a mind to read inside of [M].</span>")
 
-/datum/mutation/human/mindreader/New()
+/datum/mutation/human/mindreader/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))

@@ -62,10 +62,6 @@
   mood_change = -8
   timeout = 2400
 
-/datum/mood_event/noshoes
-	description = "<span class='warning'>I am a disgrace to comedy everywhere!</span>\n"
-	mood_change = -5
-
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"
 	mood_change = -3
@@ -170,6 +166,13 @@
 	description = "<span class='warning'>I showered with my clothes on, I'm a fucking idiot.</span>\n"
 	mood_change = -3
 	timeout = 900
+
+/datum/mood_event/sapped
+	description = "<span class='boldwarning'>Some unexplainable sadness is consuming me...</span>\n"
+	mood_change = -15
+	timeout = 900
+
+/datum/mood_event/sapped
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse

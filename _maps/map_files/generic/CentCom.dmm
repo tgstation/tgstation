@@ -6506,6 +6506,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
+"oU" = (
+/obj/structure/closet/emcloset,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
 "oV" = (
 /obj/machinery/vr_sleeper{
 	dir = 4
@@ -6865,6 +6877,22 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
+"px" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -28
+	},
+/obj/structure/sign/warning/securearea{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
 "py" = (
 /obj/machinery/smartfridge,
 /turf/closed/indestructible{
@@ -6873,6 +6901,39 @@
 	smooth = 1
 	},
 /area/centcom/holding)
+"pz" = (
+/turf/open/space/basic,
+/area/centcom/ferry)
+"pA" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 2;
+	height = 13;
+	id = "ferry_away";
+	json_key = "ferry";
+	name = "CentCom Ferry Dock";
+	width = 5
+	},
+/turf/open/space,
+/area/centcom/ferry)
+"pB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/ert)
+"pC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/ert)
+"pD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/ert)
 "pE" = (
 /obj/machinery/plantgenes/seedvault,
 /obj/effect/turf_decal/tile/green{
@@ -7040,6 +7101,25 @@
 /obj/item/stack/packageWrap,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"pT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/ert)
+"pU" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/ert)
 "pV" = (
 /obj/machinery/light{
 	dir = 4
@@ -7050,6 +7130,12 @@
 /obj/effect/landmark/ai_multicam_room,
 /turf/open/ai_visible,
 /area/ai_multicam_room)
+"pX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/ert)
 "pY" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/freezer{
@@ -7148,6 +7234,22 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
+"qh" = (
+/obj/item/storage/briefcase{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/secure/briefcase,
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
@@ -7407,6 +7509,16 @@
 "qE" = (
 /turf/closed/indestructible/riveted/uranium,
 /area/wizard_station)
+"qF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/ert)
+"qG" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/ert)
 "qH" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -7548,6 +7660,25 @@
 /obj/machinery/computer/shuttle,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"rb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/ert)
+"rc" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
 "rd" = (
 /obj/structure/flora/grass/brown,
 /obj/effect/light_emitter{
@@ -8104,6 +8235,21 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"rY" = (
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/stamp/denied{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stamp,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/ferry)
+"rZ" = (
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/security_space_law,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/ferry)
 "sa" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
@@ -8114,6 +8260,23 @@
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
+"sc" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
+"sd" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Orbital Drop Pod Loading";
+	req_access_txt = "106"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
 "se" = (
 /obj/machinery/light{
 	dir = 8
@@ -8616,11 +8779,32 @@
 /area/wizard_station)
 "sY" = (
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom Supply";
+	name = "CentCom Supplypod Loading";
+	req_access_txt = "106"
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/evac)
+"sZ" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Supplypod Loading";
 	req_access_txt = "106"
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+"ta" = (
+/obj/machinery/light/floor,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"tc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"td" = (
+/obj/structure/sign/departments/drop,
+/turf/closed/indestructible/riveted,
+/area/centcom/ferry)
 "te" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/pizzaslice/mushroom,
@@ -10342,18 +10526,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
-"xb" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 2;
-	height = 13;
-	id = "ferry_away";
-	json_key = "ferry";
-	name = "CentCom Ferry Dock";
-	width = 5
-	},
-/turf/open/space,
-/area/space)
 "xc" = (
 /obj/machinery/door/airlock/external{
 	name = "Ferry Airlock"
@@ -10792,30 +10964,8 @@
 /obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
 /area/centcom/ferry)
-"yo" = (
-/obj/machinery/light,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
-/area/centcom/ferry)
 "yp" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/centcom/ferry)
-"yq" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -28
-	},
-/obj/structure/sign/warning/securearea{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "yr" = (
@@ -11481,9 +11631,7 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
 "zV" = (
-/obj/structure/closet/secure_closet/freezer/meat{
-	locked = 0
-	},
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/reagent_containers/food/snacks/carpmeat,
 /obj/item/reagent_containers/food/snacks/carpmeat,
 /obj/item/reagent_containers/food/snacks/carpmeat,
@@ -11748,24 +11896,6 @@
 "AH" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/one)
-"AJ" = (
-/obj/structure/chair/comfy/brown{
-	color = "#596479";
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/centcom/ferry)
-"AK" = (
-/obj/item/clipboard,
-/obj/item/folder/red,
-/obj/item/stamp/denied{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/stamp,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/grimy,
-/area/centcom/ferry)
 "AL" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/seclite,
@@ -11998,12 +12128,6 @@
 /obj/machinery/computer/card/centcom{
 	dir = 1
 	},
-/turf/open/floor/plasteel/grimy,
-/area/centcom/ferry)
-"Bw" = (
-/obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/taperecorder,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "Bx" = (
@@ -13287,13 +13411,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
-"DK" = (
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom Supply";
-	req_access_txt = "106"
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/evac)
 "DL" = (
 /obj/item/clothing/suit/wizrobe/black,
 /obj/item/clothing/head/wizard/black,
@@ -14445,7 +14562,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "GF" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/reagent_containers/food/snacks/meat/rawbacon,
 /obj/item/reagent_containers/food/snacks/meat/rawbacon,
 /obj/item/reagent_containers/food/snacks/meat/rawbacon,
@@ -14480,7 +14597,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
 "GG" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/whitebeet,
@@ -14548,7 +14665,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
 "GJ" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,
@@ -18331,9 +18448,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Yu" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
-	locked = 0
-	},
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Yv" = (
@@ -18344,13 +18459,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom/supplypod)
-"YA" = (
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom Supply";
-	req_access_txt = "106"
-	},
-/turf/open/floor/plasteel,
 /area/centcom/supplypod)
 "YJ" = (
 /obj/item/reagent_containers/food/condiment/enzyme,
@@ -52849,9 +52957,9 @@ to
 uj
 oe
 aa
-aa
-xb
-aa
+pz
+pA
+pz
 aa
 aa
 aa
@@ -53105,12 +53213,12 @@ sr
 tp
 uk
 mD
-aa
+pz
 oe
 xc
 oe
+pz
 aa
-mD
 aa
 aa
 aa
@@ -53623,14 +53731,14 @@ vB
 oe
 Xy
 oe
-vB
+oU
+nU
+ta
+oe
+td
+oe
+ta
 mD
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -53880,14 +53988,14 @@ vC
 wr
 xe
 wr
-yo
-nU
-aa
-aa
-aa
-aa
-aa
-aa
+wx
+mD
+pB
+pT
+pT
+pT
+qF
+oe
 aa
 aa
 aa
@@ -54138,13 +54246,13 @@ ws
 xf
 ws
 yp
+sd
+pC
+pU
+pU
+pU
+qG
 oe
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -54394,14 +54502,14 @@ vE
 wt
 xg
 wt
-yq
+px
 mD
-aa
-aa
-aa
-aa
-aa
-aa
+pD
+pX
+pX
+pX
+rb
+oe
 aa
 aa
 aa
@@ -54653,11 +54761,11 @@ xh
 wu
 mD
 mD
-oe
+tc
 oe
 nU
 oe
-oe
+tc
 mD
 mD
 aa
@@ -54911,8 +55019,8 @@ wv
 mD
 yY
 zz
-oA
-uV
+qh
+rc
 Bu
 BZ
 Cq
@@ -55426,7 +55534,7 @@ qR
 za
 pg
 Ab
-AJ
+pg
 Bv
 pg
 Cs
@@ -55683,8 +55791,8 @@ nU
 zb
 pg
 Ac
-AK
-Bw
+rY
+rZ
 pg
 Ct
 nT
@@ -55941,7 +56049,7 @@ uV
 zA
 sw
 zA
-sw
+sc
 zA
 Cu
 nU
@@ -66483,7 +66591,7 @@ Cc
 CO
 Cc
 Cc
-DK
+sY
 NO
 NO
 NO
@@ -66742,7 +66850,7 @@ qx
 Wc
 qx
 Yn
-sY
+sZ
 Yn
 Ep
 Ep
@@ -67000,7 +67108,7 @@ Cc
 Yn
 Pz
 Su
-NO
+qI
 NO
 PV
 PV
@@ -67009,7 +67117,7 @@ NO
 NO
 Uw
 NO
-NO
+ly
 WM
 Yn
 ET
@@ -67257,7 +67365,7 @@ Cc
 Yn
 Ty
 Su
-NO
+qI
 ly
 sb
 jO
@@ -67266,7 +67374,7 @@ NO
 NO
 NO
 NO
-NO
+ly
 TT
 Yn
 Yn
@@ -67514,8 +67622,8 @@ Dx
 Yn
 Yn
 Yn
-YA
-YA
+sZ
+sZ
 Yn
 Yn
 Yn
@@ -68289,10 +68397,10 @@ AH
 AH
 OP
 PK
-YA
+sZ
 UM
 UM
-YA
+sZ
 Vn
 PW
 Vn
@@ -68546,10 +68654,10 @@ OP
 OP
 OP
 PK
-YA
+sZ
 QO
 QO
-YA
+sZ
 Vn
 PW
 Vn
@@ -69318,8 +69426,8 @@ Yn
 Yn
 Yn
 Yn
-NO
-NO
+wk
+wk
 Yn
 Yn
 Yn
@@ -69575,8 +69683,8 @@ zM
 zM
 zs
 Yn
-NO
-NO
+aa
+aa
 Yn
 Pv
 Pv
@@ -69832,8 +69940,8 @@ Se
 Se
 Tc
 Yn
-Yv
-yf
+aa
+aa
 Yn
 Pm
 Pm
@@ -70081,17 +70189,17 @@ Cd
 qx
 MI
 NO
-YA
+Yn
 Se
 Si
 Se
 Si
 Se
 Tc
-YA
-UM
-UM
-YA
+Yn
+aa
+aa
+Yn
 Xh
 Xh
 Pm
@@ -70338,17 +70446,17 @@ qy
 qx
 OD
 NO
-YA
+Yn
 Se
 Si
 Se
 Si
 Se
 Tc
-YA
-QO
-QO
-YA
+Yn
+aa
+aa
+Yn
 Xh
 Xh
 Pm
@@ -70603,8 +70711,8 @@ Si
 Se
 Tc
 Yn
-Sv
-Ru
+aa
+aa
 Yn
 Pm
 Pm
@@ -70860,8 +70968,8 @@ Vk
 Vk
 Oq
 Yn
-Su
-Su
+aa
+aa
 Yn
 Co
 Co
@@ -71117,8 +71225,8 @@ Yn
 Yn
 Yn
 Yn
-wk
-wk
+aa
+aa
 Yn
 Yn
 Yn

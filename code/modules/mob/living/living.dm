@@ -83,8 +83,10 @@
 	if(now_pushing)
 		return TRUE
 
+	var/they_can_move = TRUE
 	if(isliving(M))
 		var/mob/living/L = M
+		they_can_move = L.mobility_flags & MOBILITY_MOVE
 		//Also spread diseases
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
@@ -115,14 +117,20 @@
 
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap = FALSE
-		//the puller can always swap with its victim if on grab intent
-		if(M.pulledby == src && a_intent == INTENT_GRAB)
-			mob_swap = TRUE
-		else if(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))
-			mob_swap = FALSE
-		//restrained people act if they were on 'help' intent to prevent a person being pulled from being separated from their puller
-		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
-			mob_swap = TRUE
+		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
+		if(!they_can_move) //we have to physically move them
+			if(!too_strong)
+				mob_swap = TRUE
+		else
+			//You can swap with the person you are dragging on grab intent, and restrained people in most cases 
+			if(M.pulledby == src && a_intent == INTENT_GRAB && !too_strong)
+				mob_swap = TRUE
+			else if(
+				!(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))&&\
+				((M.restrained() && !too_strong) || M.a_intent == INTENT_HELP) &&\
+				(restrained() || a_intent == INTENT_HELP) 
+			)
+				mob_swap = TRUE
 		if(mob_swap)
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
@@ -255,7 +263,7 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.dna.species.grab_sound)
-				sound_to_play = H.dna.species.grab_sound 
+				sound_to_play = H.dna.species.grab_sound
 			if(H.has_trait(TRAIT_STRONG_GRABBER))
 				sound_to_play = null
 		playsound(src.loc, sound_to_play, 50, 1, -1)
@@ -288,7 +296,7 @@
 				var/mob/living/carbon/C = L
 				if(src.has_trait(TRAIT_STRONG_GRABBER))
 					C.grippedby(src)
-					
+
 		set_pull_offsets(M, state)
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
@@ -514,7 +522,7 @@
 	SetUnconscious(0, FALSE)
 	if(should_update_mobility)
 		update_mobility()
-	
+
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
 	restore_blood()
@@ -529,6 +537,7 @@
 	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
 	set_blurriness(0)
+	set_dizziness(0)
 	set_eye_damage(0)
 	cure_nearsighted()
 	cure_blind()
@@ -542,6 +551,7 @@
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
 	update_mobility()
+	stop_sound_channel(CHANNEL_HEARTBEAT)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
@@ -745,7 +755,7 @@
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(what.has_trait(TRAIT_NODROP))
+	if(!what.canStrip(who))
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
@@ -756,10 +766,10 @@
 			if(islist(where))
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
-					if(who.dropItemToGround(what))
+					if(what.doStrip(src, who))
 						log_combat(src, who, "stripped [what] off")
 			if(what == who.get_item_by_slot(where))
-				if(who.dropItemToGround(what))
+				if(what.doStrip(src, who))
 					log_combat(src, who, "stripped [what] off")
 
 	if(Adjacent(who)) //update inventory window

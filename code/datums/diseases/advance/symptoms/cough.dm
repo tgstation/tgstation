@@ -40,7 +40,7 @@ BONUS
 		return
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
-	if(A.spread_flags &= DISEASE_SPREAD_AIRBORNE) //infect bystanders
+	if(A.spread_flags & DISEASE_SPREAD_AIRBORNE) //infect bystanders
 		infective = TRUE
 	if(A.properties["resistance"] >= 3) //strong enough to drop items
 		power = 1.5
