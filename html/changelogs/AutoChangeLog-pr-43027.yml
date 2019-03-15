@@ -1,6 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "liver purging is more consistent"
-  - bugfix: "chemical recipes are more consistent"
-  - tweak: "chemical scans only show to 2 d.p"
