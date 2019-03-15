@@ -850,7 +850,7 @@
 		if(do_after(C, 15, target = src))
 			if(can_be_firemanned(C))//Second check to make sure they're still valid to be carried
 				if(!incapacitated(FALSE, TRUE))
-					buckle_mob(C, TRUE, TRUE, TRUE)
+					buckle_mob(C, TRUE, TRUE, TRUE, 1, 0)
 					return
 		visible_message("<span class='warning'>[src] fails to fireman carry [C]!")
 	else
@@ -865,13 +865,13 @@
 				if(C.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					C.visible_message("<span class='warning'>[C] can't hang onto [src]!</span>")
 					return
-				buckle_mob(C, TRUE, TRUE, FALSE)
+				buckle_mob(C, TRUE, TRUE, FALSE, 0, 2)
 		else
 			visible_message("<span class='warning'>[C] fails to climb onto [src]!</span>")
 	else
 		to_chat(C, "<span class='warning'>You can't piggyback ride [src] right now!</span>")
 
-/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, lying_buckle = FALSE)
+/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 	if(!is_type_in_typecache(M, can_ride_typecache))
@@ -879,16 +879,28 @@
 		return
 	buckle_lying = lying_buckle
 	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
-	riding_datum.ride_check_rider_incapacitated = TRUE
 	riding_datum.ride_check_rider_restrained = TRUE
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
 		return
-	var/equipped_hands = riding_datum.equip_buckle_inhands(M, 2)
-	if(!lying_buckle && !equipped_hands)
-		M.visible_message("<span class='warning'>[M] can't get onto [src]!</span>")
-	else
-		stop_pulling()
-		. = ..(M, force, check_loc)
+	var/equipped_hands_self
+	var/equipped_hands_target
+	if(hands_needed)
+		equipped_hands_self = riding_datum.equip_buckle_inhands(src, hands_needed)
+	if(target_hands_needed)
+		equipped_hands_target = riding_datum.equip_buckle_inhands(M, target_hands_needed)
+
+	if(hands_needed || target_hands_needed)
+		if(hands_needed && !equipped_hands_self)
+			src.visible_message("<span class='warning'>[src] can't get a grip on [M] because their hands are full!</span>", 
+				"<span class='warning'>You can't get a grip on [M] because your hands are full!</span>")
+			return
+		else if(target_hands_needed && !equipped_hands_target)
+			M.visible_message("<span class='warning'>[M] can't get a grip on [src] because their hands are full!</span>",
+				"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
+			return
+	
+	stop_pulling()
+	. = ..(M, force, check_loc)
 
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
