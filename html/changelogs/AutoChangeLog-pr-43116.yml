@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - balance: "Rolling a 1 with the d20 of fate prevents you from being revived by any means."
