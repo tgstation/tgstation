@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 		var/mob/living/carbon/human/H = user
 		GLOB.vr_runner_players -= H
 		if(GLOB.vr_runner_active)
-			if(GLOB.vr_runner_players.len == 0)
+			if(!GLOB.vr_runner_players.len)
 				to_chat(H, "<span class='notice'>You win! You survived for [(world.time - game_start_time) / 10] seconds.</span>")
 				end_game()
 			else
