@@ -847,7 +847,7 @@
 	if(can_be_firemanned(C))
 		visible_message("<span class='notice'>[src] starts lifting [C] onto their back...</span>", 
 			"<span class='notice'>You start lifting [C] onto your back...</span>")
-		if(do_after(C, 15, target = src))
+		if(do_after(src, 50, C, M, TRUE))
 			if(can_be_firemanned(C))//Second check to make sure they're still valid to be carried
 				if(!incapacitated(FALSE, TRUE))
 					buckle_mob(C, TRUE, TRUE, TRUE, 1, 0)
