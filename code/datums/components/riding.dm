@@ -304,7 +304,7 @@
 		if(!riding_target_override)
 			inhand.rider = user
 		else
-			inhand.rider = riding_target
+			inhand.rider = riding_target_override
 		inhand.parent = AM
 		if(user.put_in_hands(inhand, TRUE))
 			amount_equipped++
