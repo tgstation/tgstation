@@ -110,7 +110,7 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 					findspell.Click(H)
 			else
 				qdel(A)
-		else if(color == initial(color))
+		else if(!not_reset) // make sure it's not already currently falling
 			INVOKE_ASYNC(src, .proc/turf_fall)
 
 /turf/open/indestructible/runner/proc/turf_fall()
