@@ -329,8 +329,8 @@
 	return dna
 
 
-/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
-
+/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/mutations, force_transfer_mutations)
+//Do not use force_transfer_mutations for stuff like cloners without some precautions, otherwise some conditional mutations could break (timers, drill hat etc)
 	if(newfeatures)
 		dna.features = newfeatures
 
@@ -360,6 +360,11 @@
 		update_body_parts()
 		update_mutations_overlay()
 
+	if(LAZYLEN(mutations))
+		for(var/M in mutations)
+			var/datum/mutation/human/HM = M
+			if(HM.allow_transfer || force_transfer_mutations)
+				dna.force_give(HM.class, copymut = new HM.type (HM)) //using force_give since it may include exotic mutations that otherwise wont be handled properly
 
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
