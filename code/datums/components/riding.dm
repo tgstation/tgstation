@@ -296,12 +296,15 @@
 	M.throw_at(target, 14, 5, AM)
 	M.Paralyze(60)
 
-/datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
+/datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
 	var/atom/movable/AM = parent
 	var/amount_equipped = 0
 	for(var/amount_needed = amount_required, amount_needed > 0, amount_needed--)
 		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)
-		inhand.rider = user
+		if(!riding_target_override)
+			inhand.rider = user
+		else
+			inhand.rider = riding_target
 		inhand.parent = AM
 		if(user.put_in_hands(inhand, TRUE))
 			amount_equipped++
@@ -341,7 +344,7 @@
 	. = ..()
 
 /obj/item/riding_offhand/equipped()
-	if(loc != rider)
+	if(loc != rider && loc != parent)
 		selfdeleting = TRUE
 		qdel(src)
 	. = ..()

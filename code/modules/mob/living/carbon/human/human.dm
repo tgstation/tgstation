@@ -885,7 +885,7 @@
 	var/equipped_hands_self
 	var/equipped_hands_target
 	if(hands_needed)
-		equipped_hands_self = riding_datum.equip_buckle_inhands(src, hands_needed)
+		equipped_hands_self = riding_datum.equip_buckle_inhands(src, hands_needed, M)
 	if(target_hands_needed)
 		equipped_hands_target = riding_datum.equip_buckle_inhands(M, target_hands_needed)
 
