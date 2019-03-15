@@ -23,6 +23,7 @@
 			return
 		if(!isturf(current.loc))
 			to_chat(user, "<span class='caution'>Upload failed!</span> Unable to interface with [current.name] -- Core protocols are missing.")
+			current = null
 			return
 		M.install(current.laws, user)
 	else
