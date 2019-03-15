@@ -620,15 +620,17 @@
 				if("name")
 					vv_update_display(D, "name", "[D]")
 				if("dir")
-					if(isatom(D))
-						var/dir = D.vars["dir"]
-						vv_update_display(D, "dir", dir2text(dir) || dir)
+					var/atom/A = D
+					if(istype(A))
+						vv_update_display(D, "dir", dir2text(A.dir) || A.dir)
 				if("ckey")
-					if(isliving(D))
-						vv_update_display(D, "ckey", D.vars["ckey"] || "No ckey")
+					var/mob/living/L = D
+					if(istype(L))
+						vv_update_display(D, "ckey", L.ckey || "No ckey")
 				if("real_name")
-					if(isliving(D))
-						vv_update_display(D, "real_name", D.vars["real_name"] || "No real name")
+					var/mob/living/L = D
+					if(istype(L))
+						vv_update_display(D, "real_name", L.real_name || "No real name")
 
 		else if(href_list["varnamechange"] && href_list["datumchange"])
 			if(!check_rights(NONE))

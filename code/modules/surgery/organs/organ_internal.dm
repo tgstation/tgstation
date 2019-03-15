@@ -36,7 +36,7 @@
 		A.Grant(M)
 
 //Special is for instant replacement like autosurgeons
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
 	owner = null
 	if(M)
 		M.internal_organs -= src

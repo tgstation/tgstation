@@ -83,8 +83,10 @@
 	if(now_pushing)
 		return TRUE
 
+	var/they_can_move = TRUE
 	if(isliving(M))
 		var/mob/living/L = M
+		they_can_move = L.mobility_flags & MOBILITY_MOVE
 		//Also spread diseases
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
@@ -115,14 +117,20 @@
 
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap = FALSE
-		//the puller can always swap with its victim if on grab intent
-		if(M.pulledby == src && a_intent == INTENT_GRAB)
-			mob_swap = TRUE
-		else if(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))
-			mob_swap = FALSE
-		//restrained people act if they were on 'help' intent to prevent a person being pulled from being separated from their puller
-		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
-			mob_swap = TRUE
+		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
+		if(!they_can_move) //we have to physically move them
+			if(!too_strong)
+				mob_swap = TRUE
+		else
+			//You can swap with the person you are dragging on grab intent, and restrained people in most cases 
+			if(M.pulledby == src && a_intent == INTENT_GRAB && !too_strong)
+				mob_swap = TRUE
+			else if(
+				!(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))&&\
+				((M.restrained() && !too_strong) || M.a_intent == INTENT_HELP) &&\
+				(restrained() || a_intent == INTENT_HELP) 
+			)
+				mob_swap = TRUE
 		if(mob_swap)
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
@@ -529,6 +537,7 @@
 	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
 	set_blurriness(0)
+	set_dizziness(0)
 	set_eye_damage(0)
 	cure_nearsighted()
 	cure_blind()

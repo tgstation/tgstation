@@ -3,7 +3,7 @@
 	icon_state = "ion"
 	damage = 0
 	damage_type = BURN
-	nodamage = 1
+	nodamage = TRUE
 	flag = "energy"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
 
