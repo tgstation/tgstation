@@ -498,11 +498,11 @@ Difficulty: Medium
 	return
 	
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon
-	name = "space dragon"
+	name = "ocean man"
 	maxHealth = 250
 	health = 250
 	faction = list("neutral")
-	desc = "A space carp turned dragon by vile magic.  Has the same ferocity of a space carp, but also a much more enabling body."
+	desc = "OCEAN MAN, TAKE ME BY THE HAND LEAD ME TO THE LAND, THAT YOU UNDERSTAND"
 	icon = 'icons/mob/spacedragon.dmi'
 	icon_state = "spacedragon"
 	icon_living = "spacedragon"
