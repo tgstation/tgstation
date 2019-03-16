@@ -465,10 +465,10 @@ $$
 DELIMITER ;
 
 --
--- Table structure for table `SS13_stickyban`
+-- Table structure for table `stickyban`
 --
-DROP TABLE IF EXISTS `SS13_stickyban`;
-CREATE TABLE `SS13_stickyban` (
+DROP TABLE IF EXISTS `stickyban`;
+CREATE TABLE `stickyban` (
 	`ckey` VARCHAR(32) NOT NULL,
 	`reason` VARCHAR(2048) NOT NULL,
 	`banning_admin` VARCHAR(32) NOT NULL,
@@ -477,13 +477,14 @@ CREATE TABLE `SS13_stickyban` (
 ) ENGINE=InnoDB;
 
 --
--- Table structure for table `ss13_stickyban_matched_ckey`
+-- Table structure for table `stickyban_matched_ckey`
 --
-DROP TABLE IF EXISTS `ss13_stickyban_matched_ckey`;
+DROP TABLE IF EXISTS `stickyban_matched_ckey`;
 CREATE TABLE `ss13_stickyban_matched_ckey` (
 	`stickyban` VARCHAR(32) NOT NULL,
 	`matched_ckey` VARCHAR(32) NOT NULL,
-	`first_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`exempt` TINYINT(1) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`stickyban`, `matched_ckey`)
 ) ENGINE=InnoDB;
@@ -495,18 +496,20 @@ DROP TABLE IF EXISTS `ss13_stickyban_matched_ip`;
 CREATE TABLE `ss13_stickyban_matched_ip` (
 	`stickyban` VARCHAR(32) NOT NULL,
 	`matched_ip` INT UNSIGNED NOT NULL,
-	`first_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`stickyban`, `matched_ip`)
 ) ENGINE=InnoDB;
 
 --
--- Table structure for table `ss13_stickyban_matched_cid`
+-- Table structure for table `stickyban_matched_cid`
 --
-DROP TABLE IF EXISTS `ss13_stickyban_matched_cid`;
-CREATE TABLE `ss13_stickyban_matched_cid` (
+DROP TABLE IF EXISTS `stickyban_matched_cid`;
+CREATE TABLE `stickyban_matched_cid` (
 	`stickyban` VARCHAR(32) NOT NULL,
-	`matched_cid` INT UNSIGNED NOT NULL,
-	`first_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`matched_cid` VARCHAR(32) NOT NULL,
+	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`stickyban`, `matched_cid`)
 ) ENGINE=InnoDB;
 

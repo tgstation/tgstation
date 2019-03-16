@@ -32,12 +32,19 @@
 					return
 				ban["message"] = "[reason]"
 
-			world.SetConfig("ban",ckey,list2stickyban(ban))
-			SSstickyban.cache[ckey] = ban
-
 			if(SSdbcore.Connect())
 				var/datum/DBQuery/query_create_stickyban = SSdbcore.NewQuery("INSERT INTO [format_table_name("stickyban")] (ckey, reason, banning_admin) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(ban["message"])]', '[sanitizeSQL(usr.ckey)]')")
-				query_create_stickyban.warn_execute()
+				if (query_create_stickyban.warn_execute())
+					ban["fromdb"] = TRUE
+				qdel(query_create_stickyban)
+
+			world.SetConfig("ban",ckey,list2stickyban(ban))
+			ban = stickyban2list(list2stickyban(ban))
+			ban["matches_this_round"] = list()
+			ban["existing_user_matches_this_round"] = list()
+			ban["admin_matches_this_round"] = list()
+			ban["pending_matches_this_round"] = list()
+			SSstickyban.cache[ckey] = ban
 
 			log_admin_private("[key_name(usr)] has stickybanned [ckey].\nReason: [ban["message"]]")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has stickybanned [ckey].\nReason: [ban["message"]]</span>")
@@ -60,10 +67,13 @@
 			SSstickyban.cache -= ckey
 
 			if (SSdbcore.Connect())
-				var/datum/DBQuery/query_remove_stickyban = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban")] WHERE ckey = '[sanitizeSQL(ckey)]'")
-				query_remove_stickyban.warn_execute()
-				var/datum/DBQuery/query_remove_stickyban_alts = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = '[sanitizeSQL(ckey)]'")
-				query_remove_stickyban_alts.warn_execute()
+				SSdbcore.QuerySelect(list(
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban")] WHERE ckey = '[sanitizeSQL(ckey)]'"),
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = '[sanitizeSQL(ckey)]'"),
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_cid")] WHERE stickyban = '[sanitizeSQL(ckey)]'"),
+					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ip")] WHERE stickyban = '[sanitizeSQL(ckey)]'")
+				), warn = TRUE, qdel = TRUE)
+
 
 			log_admin_private("[key_name(usr)] removed [ckey]'s stickyban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [ckey]'s stickyban</span>")
@@ -108,6 +118,7 @@
 			if (SSdbcore.Connect())
 				var/datum/DBQuery/query_remove_stickyban_alt = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
 				query_remove_stickyban_alt.warn_execute()
+				qdel(query_remove_stickyban_alt)
 
 			log_admin_private("[key_name(usr)] has disassociated [alt] from [ckey]'s sticky ban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has disassociated [alt] from [ckey]'s sticky ban</span>")
@@ -138,6 +149,7 @@
 			if (SSdbcore.Connect())
 				var/datum/DBQuery/query_edit_stickyban = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban")] SET reason = '[sanitizeSQL(reason)]' WHERE ckey = '[sanitizeSQL(ckey)]'")
 				query_edit_stickyban.warn_execute()
+				qdel(query_edit_stickyban)
 
 			log_admin_private("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]</span>")
@@ -181,9 +193,10 @@
 
 			SSstickyban.cache[ckey] = ban
 
-			if (!SSdbcore.Connect())
+			if (SSdbcore.Connect())
 				var/datum/DBQuery/query_exempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
 				query_exempt_stickyban_alt.warn_execute()
+				qdel(query_exempt_stickyban_alt)
 
 			log_admin_private("[key_name(usr)] has exempted [alt] from [ckey]'s sticky ban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has exempted [alt] from [ckey]'s sticky ban</span>")
@@ -228,9 +241,9 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-
 				var/datum/DBQuery/query_unexempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
 				query_unexempt_stickyban_alt.warn_execute()
+				qdel(query_unexempt_stickyban_alt)
 
 			log_admin_private("[key_name(usr)] has unexempted [alt] from [ckey]'s sticky ban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has unexempted [alt] from [ckey]'s sticky ban</span>")
@@ -287,8 +300,8 @@
 
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
-			log_admin_private("[key_name(usr)] has put [ckey]'s sticky ban on timeout.")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [ckey]'s sticky ban on timeout.</span>")
+			log_admin_private("[key_name(usr)] has taken [ckey]'s sticky ban off of timeout.")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has taken [ckey]'s sticky ban off of timeout.</span>")
 
 
 		if ("revert")
@@ -321,9 +334,10 @@
 	var/timeout
 	if (SSdbcore.Connect())
 		timeout = "<a href='?_src_=holder;[HrefToken()];stickyban=[(ban["timeout"] ? "untimeout" : "timeout")]&ckey=[ckey]'>\[[(ban["timeout"] ? "untimeout" : "timeout" )]\]</a>"
+	else
+		timeout = "<a href='?_src_=holder;[HrefToken()];stickyban=revert&ckey=[ckey]'>\[revert\]</a>"
 	. = list({"
 		<a href='?_src_=holder;[HrefToken()];stickyban=remove&ckey=[ckey]'>\[-\]</a>
-		<a href='?_src_=holder;[HrefToken()];stickyban=revert&ckey=[ckey]'>\[revert\]</a>
 		[timeout]
 		<b>[ckey]</b>
 		<br />"
@@ -334,16 +348,16 @@
 	else
 		. += "LEGACY<br />"
 	. += "Caught keys<br />\n<ol>"
-	var/banned_keys = list()
-	if (ban["keys"])
-		banned_keys += ban["keys"]
-	if (ban["whitelist"])
-		banned_keys += ban["whitelist"]
-	for (var/key in banned_keys)
+	for (var/key in ban["keys"])
 		if (ckey(key) == ckey)
 			continue
-		var/exempt = "<a href='?_src_=holder;[HrefToken()];stickyban=[(ban["keys"][key]["exempt"] ? "unexempt" : "exempt")]&ckey=[ckey]&alt=[ckey(key)]'>\[[(ban["keys"][key]["exempt"] ? "UE" : "E")]\]</a>"
-		. += "<li><a href='?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key][exempt]</li>"
+		. += "<li><a href='?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]<a href='?_src_=holder;[HrefToken()];stickyban=exempt&ckey=[ckey]&alt=[ckey(key)]'>\[E\]</a></li>"
+
+	for (var/key in ban["whitelist"])
+		if (ckey(key) == ckey)
+			continue
+		. += "<li><a href='?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]<a href='?_src_=holder;[HrefToken()];stickyban=unexempt&ckey=[ckey]&alt=[ckey(key)]'>\[UE\]</a></li>"
+
 	. += "</ol>\n"
 
 /datum/admins/proc/stickyban_show()

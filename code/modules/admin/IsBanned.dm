@@ -14,15 +14,10 @@
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
 
-	if (text2num(computer_id) == 2147483647) //this cid causes stickybans to go haywire
-		log_access("Failed Login (invalid cid): [key] [address]-[computer_id]")
-		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
-
-
 	var/admin = FALSE
 	var/ckey = ckey(key)
 
-	//isBanned can get re-called on a user in certain situations, this prevents that leading to repeated messages to admins.
+	//IsBanned can get re-called on a user in certain situations, this prevents that leading to repeated messages to admins.
 	var/static/list/checkedckeys = list()
 	//magic voodo to check for a key in a list while also adding that key to the list without having to do two associated lookups
 	var/message = !checkedckeys[ckey]++
@@ -90,7 +85,12 @@
 				return list("reason"="Banned","desc"="[desc]")
 
 	var/list/ban = ..()	//default pager ban stuff
+
 	if (ban)
+		if (!admin)
+			. = ban
+		if (real_bans_only)
+			return
 		var/bannedckey = "ERROR"
 		if (ban["ckey"])
 			bannedckey = ban["ckey"]
@@ -117,8 +117,6 @@
 			var/list/newmatches_connected = cachedban["existing_user_matches_this_round"]
 			var/list/newmatches_admin = cachedban["admin_matches_this_round"]
 
-
-
 			if (C)
 				newmatches_connected[ckey] = ckey
 				newmatches_connected = cachedban["existing_user_matches_this_round"]
@@ -138,7 +136,7 @@
 				newmatches.len+pendingmatches.len > STICKYBAN_MAX_MATCHES || \
 				newmatches_connected.len > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
 				newmatches_admin.len > STICKYBAN_MAX_ADMIN_MATCHES \
-				)
+			)
 
 				var/action
 				if (ban["fromdb"])
@@ -168,14 +166,14 @@
 						world.SetConfig("ban", bannedckey, list2stickyban(cachedban))
 				return null
 
-			if (ban["fromdb"])
-				if(SSdbcore.Connect())
-					var/datum/DBQuery/query_add_ckey_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_ckey")] (matched_ckey, stickyban) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(bannedckey)]')")
-					query_add_ckey_match.warn_execute()
-					var/datum/DBQuery/query_add_ip_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_ip")] (matched_ip, stickyban) VALUES ('[sanitizeSQL(address)]', '[sanitizeSQL(bannedckey)]')")
-					query_add_ip_match.warn_execute()
-					var/datum/DBQuery/query_add_cid_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_cid")] (matched_cid, stickyban) VALUES ('[sanitizeSQL(computer_id)]', '[sanitizeSQL(bannedckey)]')")
-					query_add_cid_match.warn_execute()
+		if (ban["fromdb"])
+			if(SSdbcore.Connect())
+				INVOKE_ASYNC(SSdbcore, /datum/controller/subsystem/dbcore/proc.QuerySelect, list(
+					SSdbcore.NewQuery("INSERT INTO [format_table_name("stickyban_matched_ckey")] (matched_ckey, stickyban) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(bannedckey)]') ON DUPLICATE KEY UPDATE last_matched = now()"),
+					SSdbcore.NewQuery("INSERT INTO [format_table_name("stickyban_matched_ip")] (matched_ip, stickyban) VALUES ( INET_ATON('[sanitizeSQL(address)]'), '[sanitizeSQL(bannedckey)]') ON DUPLICATE KEY UPDATE last_matched = now()"),
+					SSdbcore.NewQuery("INSERT INTO [format_table_name("stickyban_matched_cid")] (matched_cid, stickyban) VALUES ('[sanitizeSQL(computer_id)]', '[sanitizeSQL(bannedckey)]') ON DUPLICATE KEY UPDATE last_matched = now()")
+				), FALSE, TRUE)
+
 
 		//byond will not trigger isbanned() for "global" host bans,
 		//ie, ones where the "apply to this game only" checkbox is not checked (defaults to not checked)
