@@ -290,3 +290,19 @@
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
 #define GRAB_PIXEL_SHIFT_NECK 16
+
+//Flags that control what things can spawn species (whitelist)
+//Badmin magic mirror
+#define MIRROR_BADMIN (1<<0)
+//Standard magic mirror (wizard)
+#define MIRROR_MAGIC  (1<<1)
+//Pride ruin mirror
+#define MIRROR_PRIDE  (1<<2)
+//Race swap wizard event
+#define RACE_SWAP     (1<<3)
+//ERT spawn template (avoid races that don't function without correct gear)
+#define ERT_SPAWN     (1<<4)
+//xenobio black crossbreed
+#define SLIME_EXTRACT (1<<5)
+//Wabbacjack staff projectiles
+#define WABBAJACK     (1<<6)

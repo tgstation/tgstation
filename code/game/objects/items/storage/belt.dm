@@ -61,7 +61,8 @@
 		/obj/item/holosign_creator/atmos,
 		/obj/item/holosign_creator/engineering,
 		/obj/item/forcefield_projector,
-		/obj/item/assembly/signaler
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer
 		))
 	STR.can_hold = can_hold
 
@@ -518,6 +519,13 @@
 		/obj/item/melee/flyswatter,
 		/obj/item/assembly/mousetrap
 		))
+
+/obj/item/storage/belt/janitor/full/PopulateContents()
+	new /obj/item/lightreplacer(src)
+	new /obj/item/reagent_containers/spray/cleaner(src)
+	new /obj/item/soap/nanotrasen(src)
+	new /obj/item/holosign_creator/janibarrier(src)
+	new /obj/item/melee/flyswatter(src)
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"

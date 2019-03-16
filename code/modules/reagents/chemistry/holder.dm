@@ -1,3 +1,4 @@
+#define CHEMICAL_QUANTISATION_LEVEL 0.01 //stops floating point errors causing issues with checking reagent amounts
 
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -317,8 +318,10 @@
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
 							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_addiction")
+							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_overdose")
 							cached_addictions.Remove(R)
+						else
+							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_overdose")
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
@@ -656,7 +659,7 @@
 			if(!amount)
 				return R
 			else
-				if(R.volume >= amount)
+				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					return R
 				else
 					return 0
@@ -668,7 +671,7 @@
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if (R.id == reagent)
-			return R.volume
+			return round(R.volume, CHEMICAL_QUANTISATION_LEVEL)
 
 	return 0
 

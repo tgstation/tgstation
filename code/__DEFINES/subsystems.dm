@@ -49,25 +49,26 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_TITLE 21
-#define INIT_ORDER_GARBAGE			20
-#define INIT_ORDER_DBCORE			19
-#define INIT_ORDER_BLACKBOX			18
-#define INIT_ORDER_SERVER_MAINT		17
-#define INIT_ORDER_INPUT			16
-#define INIT_ORDER_VIS				15
-#define INIT_ORDER_RESEARCH			14
-#define INIT_ORDER_EVENTS			13
-#define INIT_ORDER_JOBS				12
-#define INIT_ORDER_QUIRKS			11
-#define INIT_ORDER_TICKER			10
-#define INIT_ORDER_MAPPING			9
-#define INIT_ORDER_NETWORKS			8
-#define INIT_ORDER_ECONOMY			7
-#define INIT_ORDER_ATOMS			6
-#define INIT_ORDER_LANGUAGE			5
-#define INIT_ORDER_MACHINES			4
-#define INIT_ORDER_CIRCUIT			3
+#define INIT_ORDER_TITLE			100
+#define INIT_ORDER_GARBAGE			99
+#define INIT_ORDER_DBCORE			95
+#define INIT_ORDER_BLACKBOX			94
+#define INIT_ORDER_SERVER_MAINT		93
+#define INIT_ORDER_INPUT			85
+#define INIT_ORDER_VIS				80
+#define INIT_ORDER_RESEARCH			75
+#define INIT_ORDER_EVENTS			70
+#define INIT_ORDER_JOBS				65
+#define INIT_ORDER_QUIRKS			60
+#define INIT_ORDER_TICKER			55
+#define INIT_ORDER_MAPPING			50
+#define INIT_ORDER_NETWORKS			45
+#define INIT_ORDER_ECONOMY			40
+#define INIT_ORDER_OUTPUTS			35
+#define INIT_ORDER_ATOMS			30
+#define INIT_ORDER_LANGUAGE			25
+#define INIT_ORDER_MACHINES			20
+#define INIT_ORDER_CIRCUIT			15
 #define INIT_ORDER_TIMER			1
 #define INIT_ORDER_DEFAULT			0
 #define INIT_ORDER_AIR				-1

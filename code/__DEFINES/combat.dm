@@ -12,12 +12,13 @@
 #define BRAIN		"brain"
 
 //bitflag damage defines used for suicide_act
-#define BRUTELOSS 		(1<<0)
-#define FIRELOSS 		(1<<1)
-#define TOXLOSS 		(1<<2)
-#define OXYLOSS 		(1<<3)
-#define SHAME 			(1<<4)
-#define MANUAL_SUICIDE	(1<<5)	//suicide_act will do the actual killing.
+#define BRUTELOSS 	            	(1<<0)
+#define FIRELOSS 	            	(1<<1)
+#define TOXLOSS 	            	(1<<2)
+#define OXYLOSS 	            	(1<<3)
+#define SHAME 			            (1<<4)
+#define MANUAL_SUICIDE          	(1<<5)	//suicide_act will do the actual killing.
+#define MANUAL_SUICIDE_NONLETHAL	(1<<6)  //when the suicide is conditionally lethal
 
 #define EFFECT_STUN			"stun"
 #define EFFECT_KNOCKDOWN	"knockdown"
@@ -124,6 +125,15 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//Gun bolt types
+#define BOLT_TYPE_STANDARD 1
+#define BOLT_TYPE_OPEN 2
+#define BOLT_TYPE_NO_BOLT 3
+#define BOLT_TYPE_LOCKING 4
+//Sawn off nerfs
+#define SAWN_OFF_ACC_PENALTY 25
+#define SAWN_OFF_RECOIL 1
+
 //Projectile Reflect
 #define REFLECT_NORMAL 				(1<<0)
 #define REFLECT_FAKEPROJECTILE		(1<<1)

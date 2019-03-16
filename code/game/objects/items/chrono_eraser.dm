@@ -50,7 +50,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	item_flags = DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
-	can_charge = 0
+	can_charge = FALSE
 	fire_delay = 50
 	var/obj/item/chrono_eraser/TED = null
 	var/obj/structure/chrono_field/field = null
@@ -124,7 +124,7 @@
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
-	nodamage = 1
+	nodamage = TRUE
 	var/obj/item/gun/energy/chrono_gun/gun = null
 
 /obj/item/projectile/energy/chrono_beam/Initialize()

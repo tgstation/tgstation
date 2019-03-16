@@ -1456,12 +1456,12 @@
 /area/ai_monitored/security/armory)
 "adj" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/advtaser{
+/obj/item/gun/energy/disabler{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/energy/e_gun/advtaser,
-/obj/item/gun/energy/e_gun/advtaser{
+/obj/item/gun/energy/disabler,
+/obj/item/gun/energy/disabler{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -13582,7 +13582,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/chapel/office)
+/area/maintenance/starboard/fore)
 "aFz" = (
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -15444,7 +15444,7 @@
 /area/maintenance/starboard/fore)
 "aJE" = (
 /obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/gun/ballistic/revolver/doublebarrel,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/structure/table/wood,
 /obj/item/stack/spacecash/c10,
 /obj/item/stack/spacecash/c100,

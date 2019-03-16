@@ -18,6 +18,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
 	item_state = "radio"
+	var/uses = 1
 
 /obj/item/choice_beacon/attack_self(mob/user)
 	if(canUseBeacon(user))
@@ -42,7 +43,11 @@
 		return
 
 	spawn_option(display_names[choice],M)
-	qdel(src)
+	uses--
+	if(!uses)
+		qdel(src)
+	else
+		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
 
 /obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
 	var/obj/new_item = new choice()
@@ -100,6 +105,31 @@
 	new /obj/item/claymore/weak/ceremonial(src)
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/choice_beacon/augments
+	name = "augment beacon"
+	desc = "Summons augmentations. Can be used 3 times!"
+	uses = 3
+
+/obj/item/choice_beacon/augments/generate_display_names()
+	var/static/list/augment_list
+	if(!augment_list)
+		augment_list = list()
+		var/list/templist = list(
+		/obj/item/organ/cyberimp/brain/anti_drop,
+		/obj/item/organ/cyberimp/arm/toolset,
+		/obj/item/organ/cyberimp/arm/surgery,
+		/obj/item/organ/cyberimp/chest/thrusters,
+		/obj/item/organ/lungs/cybernetic/upgraded,
+		/obj/item/organ/liver/cybernetic/upgraded) //cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
+		for(var/V in templist)
+			var/atom/A = V
+			augment_list[initial(A.name)] = A
+	return augment_list
+
+/obj/item/choice_beacon/augments/spawn_option(obj/choice,mob/living/M)
+	new choice(get_turf(M))
+	to_chat(M, "You hear something crackle from the beacon for a moment before a voice speaks.  \"Please stand by for a message from S.E.L.F. Message as follows: <span class='bold'>Item request received. Your package has been transported, use the autosurgeon supplied to apply the upgrade.</span> Message ends.\"")
 
 /obj/item/skub
 	desc = "It's skub."

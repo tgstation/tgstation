@@ -1413,8 +1413,7 @@
 	pixel_x = -4
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
@@ -1941,8 +1940,7 @@
 	req_access = null
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
@@ -2308,7 +2306,7 @@
 /area/shuttle/abandoned/bar)
 "dj" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/food/condiment/flour{
 	pixel_x = -3;
 	pixel_y = 3
@@ -2376,8 +2374,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/machinery/power/terminal{
 	dir = 1

@@ -8,7 +8,7 @@
 	limb_req = BODY_ZONE_HEAD
 	instability = 30
 
-/datum/mutation/human/telekinesis/New()
+/datum/mutation/human/telekinesis/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))

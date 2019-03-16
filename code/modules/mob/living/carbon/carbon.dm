@@ -901,7 +901,6 @@
 			if(SANITY_NEUTRAL to SANITY_GREAT)
 				. *= 0.90
 
-
 /mob/living/carbon/proc/create_internal_organs()
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X

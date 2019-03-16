@@ -33,7 +33,7 @@
 		if(C == owner)
 			continue
 		var/datum/status_effect/hive_track/mark = C.has_status_effect(STATUS_EFFECT_HIVE_TRACKER)
-		if(mark?.tracked_by == owner)
+		if(mark && mark.tracked_by == owner)
 			trackable_targets_exist = TRUE
 			var/their_loc = get_turf(C)
 			var/distance = get_dist_euclidian(my_loc, their_loc)
@@ -66,7 +66,7 @@
 	if(.)
 		tracked_by = hunter
 		if(isnum(set_duration))
-			duration = set_duration
+			duration = world.time + set_duration
 
 //Screen alert
 /obj/screen/alert/status_effect/agent_pinpointer/hivemind

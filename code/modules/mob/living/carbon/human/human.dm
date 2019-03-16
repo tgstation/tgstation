@@ -8,16 +8,13 @@
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
-	
+
 	icon_state = ""		//Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
-	
+
 	//initialize limbs first
 	create_bodyparts()
 
-	//initialize dna. for spawned humans; overwritten by other code
-	create_dna(src)
-	randomize_human(src)
-	dna.initialize_dna()
+	setup_human_dna()
 
 	if(dna.species)
 		set_species(dna.species.type)
@@ -32,6 +29,11 @@
 
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
 
+/mob/living/carbon/human/proc/setup_human_dna()
+	//initialize dna. for spawned humans; overwritten by other code
+	create_dna(src)
+	randomize_human(src)
+	dna.initialize_dna()
 
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
@@ -77,7 +79,8 @@
 				stat("Absorbed DNA", changeling.absorbedcount)
 			var/datum/antagonist/hivemind/hivemind = mind.has_antag_datum(/datum/antagonist/hivemind)
 			if(hivemind)
-				stat("Hivemind Vessels", hivemind.hive_size)
+				stat("Hivemind Vessels", "[hivemind.hive_size] (+[hivemind.size_mod])")
+				stat("Psychic Link Duration", "[(hivemind.track_bonus + TRACKER_DEFAULT_TIME)/10] seconds")
 
 	//NINJACODE
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.
@@ -988,6 +991,12 @@
 
 /mob/living/carbon/human/species/golem/clockwork/no_scrap
 	race = /datum/species/golem/clockwork/no_scrap
+
+/mob/living/carbon/human/species/golem/capitalist
+	race = /datum/species/golem/capitalist
+
+/mob/living/carbon/human/species/golem/soviet
+	race = /datum/species/golem/soviet
 
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly

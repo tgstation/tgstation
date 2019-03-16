@@ -67,7 +67,7 @@
 	if(istext(web_sound_input))
 		var/web_sound_url = ""
 		var/stop_web_sounds = FALSE
-		var/pitch
+		var/list/music_extra_data = list()
 		if(length(web_sound_input))
 
 			web_sound_input = trim(web_sound_input)
@@ -95,6 +95,8 @@
 					var/webpage_url = title
 					if (data["webpage_url"])
 						webpage_url = "<a href=\"[data["webpage_url"]]\">[title]</a>"
+					music_extra_data["start"] = data["start_time"]
+					music_extra_data["end"] = data["end_time"]
 
 					var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]",, "No", "Yes", "Cancel")
 					switch(res)
@@ -126,7 +128,7 @@
 				var/client/C = M.client
 				if((C.prefs.toggles & SOUND_MIDI) && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
 					if(!stop_web_sounds)
-						C.chatOutput.sendMusic(web_sound_url, pitch)
+						C.chatOutput.sendMusic(web_sound_url, music_extra_data)
 					else
 						C.chatOutput.stopMusic()
 

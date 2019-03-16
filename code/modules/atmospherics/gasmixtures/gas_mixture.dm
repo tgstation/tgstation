@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	ASSERT_GAS(gas_id, src)
 
 	//assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
-/datum/gas_mixture/proc/assert_gases()
+/datum/gas_mixture/proc/assert_gases(...)
 	for(var/id in args)
 		ASSERT_GAS(id, src)
 
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	ADD_GAS(gas_id, gases)
 
 	//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
-/datum/gas_mixture/proc/add_gases()
+/datum/gas_mixture/proc/add_gases(...)
 	var/cached_gases = gases
 	for(var/id in args)
 		ADD_GAS(id, cached_gases)
