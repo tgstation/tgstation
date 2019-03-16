@@ -367,15 +367,15 @@
 /obj/item/restraints/legcuffs/bola/nunchucks//curator traitor variant, basically the bola can also beat people up.
 	name = "nunchucks"
 	desc = "Pretty badass if you can use it right. You could probably use it to wrap around someone's legs like a bola as well, if they try running."
-	icon_state = "nunchucks"
-	item_state = "nunchucks"
-	hitsound = 'sound/effects/woodhit.ogg'
+	icon_state = "nunchuck"
+	item_state = "nunchuck"
+	hitsound = 'sound/weapons/nunchuck_hit.ogg'
 	slot_flags = ITEM_SLOT_BELT
-	force = 25
-	throwforce = 15
+	force = 20
+	throwforce = 20
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 50
+	attack_verb = list("attacked", "smacked", "bashed", "cracked")
+	block_chance = 10
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
@@ -383,8 +383,15 @@
 	knockdown = 20
 
 /obj/item/restraints/legcuffs/bola/nunchucks/attack(mob/target, mob/living/user)
+	if(user.has_trait(TRAIT_CLUMSY) && target != user)
+		attack(user, user)
+		return
 	..()
+	if(prob(25))
+		user.emote("flip")
+	user.changeNext_move(CLICK_CD_RANGE)
 	if(user.put_in_inactive_hand(src))
+		user.swap_hand()
 
 /obj/item/restraints/legcuffs/bola/energy //For Security
 	name = "energy bola"
