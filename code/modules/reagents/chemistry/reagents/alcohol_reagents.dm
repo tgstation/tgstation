@@ -1,6 +1,6 @@
 #define ALCOHOL_THRESHOLD_MODIFIER 0.5 //Greater numbers mean that less alcohol has greater intoxication potential
 #define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
-#define ALCOHOL_EXPONENT 1.725 //The exponent applied to boozepwr to make higher volume alcohol atleast a little bit damaging to the liver
+#define ALCOHOL_EXPONENT 1.725 //The exponent applied to boozepwr to make higher volume alcohol at least a little bit damaging to the liver
 
 ////////////// I don't know who made this header before I refactored alcohols but I'm going to fucking strangle them because it was so ugly, holy Christ
 // ALCOHOLS //
