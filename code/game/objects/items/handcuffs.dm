@@ -371,8 +371,8 @@
 	item_state = "nunchuck"
 	hitsound = 'sound/weapons/nunchuck_hit.ogg'
 	slot_flags = ITEM_SLOT_BELT
-	force = 20
-	throwforce = 20
+	force = 15
+	throwforce = 15
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "smacked", "bashed", "cracked")
 	block_chance = 10
