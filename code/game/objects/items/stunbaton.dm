@@ -58,11 +58,11 @@
 
 /obj/item/melee/baton/update_icon()
 	if(status)
-		icon_state = "[initial(name)]_active"
+		icon_state = "stunbaton_active"
 	else if(!cell)
-		icon_state = "[initial(name)]_nocell"
+		icon_state = "stunbaton_nocell"
 	else
-		icon_state = "[initial(name)]"
+		icon_state = "stunbaton"
 
 /obj/item/melee/baton/examine(mob/user)
 	..()
