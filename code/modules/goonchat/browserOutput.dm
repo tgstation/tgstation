@@ -41,17 +41,13 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 	return TRUE
 
-/datum/chatOutput/proc/load() //If you change this, be sure to change code/modules/client/darkmode.dm
+/datum/chatOutput/proc/load()
 	set waitfor = FALSE
 	if(!owner)
 		return
-	if(owner.prefs.toggles & DARKMODE) //They want dark theme, so no need to change the CSS
-		var/datum/asset/stuff = get_asset_datum(/datum/asset/group/goonchat)
-		stuff.send(owner)
-	else //They're a white theme user so change the CSS and winset them back to whitetheme.
-		var/datum/asset/stuff = get_asset_datum(/datum/asset/group/goonchat/white)
-		stuff.send(owner)
-		owner.force_white_theme() //force update their window via winset
+
+	var/datum/asset/stuff = get_asset_datum(/datum/asset/group/goonchat)
+	stuff.send(owner)
 
 	owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=browseroutput")
 
@@ -85,6 +81,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 		if("setMusicVolume")
 			data = setMusicVolume(arglist(params))
+		if("swaptodarkmode")
+			swaptodarkmode()
+		if("swaptolightmode")
+			swaptolightmode()
 
 	if(data)
 		ehjax_send(data = data)
@@ -244,3 +244,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
+
+/datum/chatOutput/proc/swaptolightmode() //Dark mode light mode stuff. Yell at KMC if this breaks! (See darkmode.dm for documentation)
+	owner.force_white_theme()
+
+/datum/chatOutput/proc/swaptodarkmode()
+	owner.force_dark_theme()
