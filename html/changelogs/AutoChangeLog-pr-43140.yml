@@ -1,0 +1,4 @@
+author: "Nervere"
+delete-after: True
+changes: 
+  - bugfix: "Fixed stunbatons being invisible."
