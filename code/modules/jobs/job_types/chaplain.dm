@@ -52,27 +52,43 @@
 	switch(lowertext(new_religion))
 		if("christianity") // DEFAULT_RELIGION
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
-		if("satanism")
-			B.name = "The Unholy Bible"
-		if("cthulhu")
-			B.name = "The Necronomicon"
-		if("islam")
-			B.name = "Quran"
-		if("scientology")
-			B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+		if("buddhism")
+			B.name = "The Sutras"
+		if("clownism","honkmother","honk","honkism")	
+			B.name = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
 		if("chaos")
 			B.name = "The Book of Lorgar"
+		if("cthulhu")
+			B.name = "The Necronomicon"
+		if("hinduism")
+			B.name = "The Vedas"
+		if("homosexuality")
+			B.name = "Guys Gone Wild"	
 		if("imperium")
 			B.name = "Uplifting Primer"
-		if("toolboxia")
-			B.name = "Toolbox Manifesto"
-		if("homosexuality")
-			B.name = "Guys Gone Wild"
+		if("islam")
+			B.name = "Quran"	
+		if("judaism")
+			B.name = "The Torah"
 		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
-			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
+			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition","F.A.T.A.L. Rulebook")
 			H.adjustBrainLoss(100) // starts off retarded as fuck
+		if("monkeyism","apism","gorillism","primatism")
+			B.name = "Going Bananas", "Bananas Out For Harambe"
+		if("mormonism")
+			B.name = "The Book of Mormon"
+		if("rastafarian","rasta")
+			B.name = "The Holy Piby"
+		if("satanism")
+			B.name = "The Unholy Bible"
 		if("science")
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+		if("scientology")
+			B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+		if("toolboxia","greytide")
+			B.name = "Toolbox Manifesto"
+		if("weeaboo","kawaii")
+			B.name = "Fanfiction Compendium","Japanese for Dummies"
 		else
 			B.name = "The Holy Book of [new_religion]"
 
