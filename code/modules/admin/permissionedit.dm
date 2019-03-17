@@ -275,6 +275,7 @@
 	deactivate()
 	message_admins("[old_owner] deadmined via auto-deadmin config.")
 	log_admin("[old_owner] deadmined via auto-deadmin config.")
+	return TRUE
 
 /datum/admins/proc/change_admin_rank(admin_ckey, admin_key, use_db, datum/admins/D, legacy_only)
 	var/datum/admin_rank/R

@@ -136,8 +136,7 @@
 	if(!client?.holder)
 		return TRUE
 	if(CONFIG_GET(flag/auto_deadmin_silicons) || (client.prefs?.toggles & DEADMIN_POSITION_SILICON))
-		client.holder.auto_deadmin()
-		return TRUE
+		return client.holder.auto_deadmin()
 	return ..()
 
 /mob/living/simple_animal/drone/death(gibbed)
