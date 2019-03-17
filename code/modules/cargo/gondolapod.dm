@@ -44,9 +44,9 @@
 /mob/living/simple_animal/pet/gondola/gondolapod/examine(mob/user)
 	..()
 	if (contents.len)
-		to_chat(user, "<span class='notice'>It looks like it hasn't made its delivery yet.</b>.<span>")
+		to_chat(user, "<span class='notice'>It looks like it hasn't made its delivery yet.</b><span>")
 	else
-		to_chat(user, "<span class='notice'>It looks like it has already made its delivery.</b>.<span>")
+		to_chat(user, "<span class='notice'>It looks like it has already made its delivery.</b><span>")
 
 /mob/living/simple_animal/pet/gondola/gondolapod/verb/check()
 	set name = "Count Contents"
