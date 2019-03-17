@@ -1,8 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "Buckle objects can now properly specify lying angle"
-  - bugfix: "Wheelchairs and other such vehicles let you use UIs even if your legs don't work"
-  - bugfix: "You can now pull objects while in a wheelchair even if your legs don't work"
-  - bugfix: "You no longer have a chance of sleeping upside down in a bed"
-  - tweak: "No longer randomises lying direction a second time on fall"
