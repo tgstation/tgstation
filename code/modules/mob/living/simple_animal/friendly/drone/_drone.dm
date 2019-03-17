@@ -132,6 +132,13 @@
 	if(!picked)
 		pickVisualAppearence()
 
+/mob/living/simple_animal/drone/auto_deadmin_on_login()
+	if(!client?.holder)
+		return TRUE
+	if(CONFIG_GET(flag/auto_deadmin_silicons) || (client.prefs?.toggles & DEADMIN_POSITION_SILICON))
+		client.holder.auto_deadmin()
+		return TRUE
+	return ..()
 
 /mob/living/simple_animal/drone/death(gibbed)
 	..(gibbed)

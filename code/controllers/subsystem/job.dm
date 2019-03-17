@@ -429,12 +429,8 @@ SUBSYSTEM_DEF(job)
 		if(M.client.holder)
 			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.toggles & DEADMIN_ALWAYS))
 				M.client.holder.auto_deadmin()
-			else if((CONFIG_GET(flag/auto_deadmin_heads) || (M.client.prefs?.toggles & DEADMIN_POSITION_HEAD)) && (job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD))
-				M.client.holder.auto_deadmin()
-			else if((CONFIG_GET(flag/auto_deadmin_security) || (M.client.prefs?.toggles & DEADMIN_POSITION_SECURITY)) && (job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY))
-				M.client.holder.auto_deadmin()
-			else if((CONFIG_GET(flag/auto_deadmin_silicons) || (M.client.prefs?.toggles & DEADMIN_POSITION_SILICON)) && (job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON))
-				M.client.holder.auto_deadmin()
+			else
+				handle_auto_deadmin_roles(M.client, rank)
 
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
@@ -453,6 +449,18 @@ SUBSYSTEM_DEF(job)
 
 	return H
 
+/datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
+	if(!C?.holder)
+		return
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return
+	if((job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD) && (CONFIG_GET(flag/auto_deadmin_heads) || (C.prefs?.toggles & DEADMIN_POSITION_HEAD)))
+		C.holder.auto_deadmin()
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY) && (CONFIG_GET(flag/auto_deadmin_security) || (C.prefs?.toggles & DEADMIN_POSITION_SECURITY)))
+		C.holder.auto_deadmin()
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && (CONFIG_GET(flag/auto_deadmin_silicons) || (client.prefs?.toggles & DEADMIN_POSITION_SILICON))) //in the event there's ever psuedo-silicon roles added, ie synths.
+		C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
 	var/datum/job/J = SSjob.GetJob("Security Officer")
