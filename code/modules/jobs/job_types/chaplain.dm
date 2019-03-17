@@ -74,7 +74,7 @@
 			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition","F.A.T.A.L. Rulebook")
 			H.adjustBrainLoss(100) // starts off retarded as fuck
 		if("monkeyism","apism","gorillism","primatism")
-			B.name = "Going Bananas", "Bananas Out For Harambe"
+			B.name = pick("Going Bananas", "Bananas Out For Harambe")
 		if("mormonism")
 			B.name = "The Book of Mormon"
 		if("rastafarian","rasta")
@@ -88,7 +88,7 @@
 		if("toolboxia","greytide")
 			B.name = "Toolbox Manifesto"
 		if("weeaboo","kawaii")
-			B.name = "Fanfiction Compendium","Japanese for Dummies"
+			B.name = pick("Fanfiction Compendium","Japanese for Dummies")
 		else
 			B.name = "The Holy Book of [new_religion]"
 
