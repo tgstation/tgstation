@@ -495,7 +495,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Income Updates:</b> <a href='?_src_=prefs;preference=income_pings'>[(chat_toggles & CHAT_BANKCARD) ? "Allowed" : "Muted"]</a><br>"
 			dat += "<br>"
-			
+
 			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
 
 			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
@@ -600,7 +600,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>ASAY Color:</b> <span style='border: 1px solid #161616; background-color: [asaycolor ? asaycolor : "#FF4500"];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=asaycolor;task=input'>Change</a><br>"
 
 				//deadmin
-				dat += "<h2>Deadmin While Playing<h2>"
+				dat += "<h2>Deadmin While Playing</h2>"
 				if(CONFIG_GET(flag/auto_deadmin_players))
 					dat += "<b>Always Deadmin:</b> FORCED</a><br>"
 				else
