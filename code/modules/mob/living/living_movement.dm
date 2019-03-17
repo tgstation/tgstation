@@ -45,9 +45,9 @@
 	if(pulling && isliving(pulling))
 		var/mob/living/L = pulling
 		if(!(L.mobility_flags & MOBILITY_STAND) && !L.buckled && grab_state < GRAB_AGGRESSIVE)
-			add_movespeed_modifier(MOVESPEED_ID_PRONE_SLOWDOWN, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
+			add_movespeed_modifier(MOVESPEED_ID_PRONE_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
 			return
-	remove_movespeed_modifier(MOVESPEED_ID_PRONE_SLOWDOWN)
+	remove_movespeed_modifier(MOVESPEED_ID_PRONE_DRAGGING)
 
 /mob/living/can_zFall(turf/T, levels)
 	return !(movement_type & FLYING)
