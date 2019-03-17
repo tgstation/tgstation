@@ -74,7 +74,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
-			owner.current.client.deadmin(TRUE)
+			owner.current.client.holder.auto_deadmin()
 
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		owner.current.ghostize(0)
 		owner.current.key = C.key
 		if(C.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || C.client.prefs?.toggles & DEADMIN_ANTAGONIST))
-			C.client.deadmin(TRUE)
+			C.client.holder.auto_deadmin()
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()

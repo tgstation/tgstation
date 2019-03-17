@@ -623,7 +623,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(holder)
 		src.holder.output_ai_laws()
 
-/client/proc/deadmin(automatic)
+/client/proc/deadmin()
 	set name = "Deadmin"
 	set category = "Admin"
 	set desc = "Shed your admin powers."
@@ -637,8 +637,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	holder.deactivate()
 
 	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
-	log_admin("[src] deadmined [automatic ? " automatically via config" : "themself"].")
-	message_admins("[src] deadmined [automatic ? " automatically via config" : "themself"].")
+	log_admin("[src] deadmined themself.")
+	message_admins("[src] deadmined themself.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Deadmin")
 
 /client/proc/readmin()

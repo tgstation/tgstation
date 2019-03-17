@@ -84,7 +84,7 @@
 		affected_mob.ghostize(0)
 		affected_mob.key = C.key
 		if(C.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || C.client.prefs?.toggles & DEADMIN_ANTAGONIST))
-			C.client.deadmin(TRUE)
+			C.client.holder.auto_deadmin()
 	else
 		to_chat(new_mob, "Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!")
 		new_mob.death()
