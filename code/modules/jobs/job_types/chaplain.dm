@@ -80,7 +80,7 @@
 		if("mormonism")
 			B.name = "The Book of Mormon"
 		if("pastafarianism")
-			B.name = "ASDF"
+			B.name = "The Gospel of the Flying Spaghetti Monster"
 		if("rastafarianism","rasta")
 			B.name = "The Holy Piby"
 		if("satanism")
