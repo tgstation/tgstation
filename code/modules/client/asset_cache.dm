@@ -562,7 +562,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"none_button.png" = 'html/none_button.png',
 	)
 
-/datum/asset/simple/pills
+/datum/asset/spritesheet/simple/pills
+	name ="pills"
 	assets = list(
 		"pill1" = 'icons/UI_Icons/Pills/pill1.png',
 		"pill2" = 'icons/UI_Icons/Pills/pill2.png',
