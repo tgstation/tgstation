@@ -204,7 +204,7 @@
 
 /datum/supply_pack/emergency/spacesuit
 	name = "Space Suit Crate"
-	desc = "Contains one aging suits from Space-Goodwill and a jetpack. Requires EVA access to open."
+	desc = "Contains one aging suit from Space-Goodwill and a jetpack. Requires EVA access to open."
 	cost = 2500
 	access = ACCESS_EVA
 	contains = list(/obj/item/clothing/suit/space,
