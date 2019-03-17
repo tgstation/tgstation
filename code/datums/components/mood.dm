@@ -204,6 +204,8 @@
 	HandleHygiene(owner)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
+	var/mob/living/owner = parent
+
 	if(amount == sanity)
 		return
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
@@ -212,7 +214,12 @@
 		amount = sanity + 0.5
 	else if(sanity > maximum && amount > sanity - 0.5)
 		amount = sanity - 0.5
-	sanity = amount
+
+	// Disturbed stops you from getting any more sane
+	if(owner.has_trait(TRAIT_UNSTABLE))
+		sanity = min(amount,sanity)
+	else
+		sanity = amount
 
 	var/mob/living/master = parent
 	switch(sanity)

@@ -41,11 +41,13 @@
 	sprite_name = "miniFE"
 	dog_fashion = null
 
-/obj/item/extinguisher/Initialize()
-	. = ..()
+/obj/item/extinguisher/proc/refill()
 	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
+/obj/item/extinguisher/Initialize()
+	. = ..()
+	refill()
 
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
@@ -232,3 +234,13 @@
 			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
+
+//firebot assembly
+/obj/item/extinguisher/attackby(obj/O, mob/user, params)
+	if(istype(O, /obj/item/bodypart/l_arm/robot) || istype(O, /obj/item/bodypart/r_arm/robot))
+		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
+		qdel(O)
+		qdel(src)
+		user.put_in_hands(new /obj/item/bot_assembly/firebot)
+	else
+		..()

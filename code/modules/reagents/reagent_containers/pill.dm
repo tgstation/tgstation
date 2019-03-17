@@ -72,9 +72,7 @@
 		to_chat(user, "<span class='warning'>[target] is full.</span>")
 		return
 
-	to_chat(user, "<span class='notice'>You dissolve [src] in [target].</span>")
-	for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
-		to_chat(O, "<span class='warning'>[user] slips something into [target]!</span>")
+	user.visible_message("<span class='warning'>[user] slips something into [target]!</span>", "<span class='notice'>You dissolve [src] in [target].</span>", null, 2)
 	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
 	qdel(src)
 

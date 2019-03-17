@@ -73,6 +73,12 @@
 	song.instrumentDir = name
 	song.instrumentExt = insTypes[name]
 
+/obj/item/instrument/piano_synth/proc/selectInstrument() // Moved here so it can be used by the action and PAI software panel without copypasta
+	var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", song.instrumentDir) as null|anything in insTypes
+	if(!insTypes[chosen])
+		return
+	return changeInstrument(chosen)
+
 /obj/item/instrument/guitar
 	name = "guitar"
 	desc = "It's made of wood and has bronze strings."

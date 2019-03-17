@@ -109,7 +109,8 @@
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
-	max_integrity = 65
+	max_integrity = 55
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
@@ -136,7 +137,7 @@
 
 /obj/item/shield/riot/flash/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
-	if (. && !embedded_flash.crit_fail)
+	if (. && !embedded_flash.burnt_out)
 		embedded_flash.activate()
 		update_icon()
 
@@ -144,13 +145,13 @@
 /obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/assembly/flash/handheld))
 		var/obj/item/assembly/flash/handheld/flash = W
-		if(flash.crit_fail)
+		if(flash.burnt_out)
 			to_chat(user, "No sense replacing it with a broken bulb.")
 			return
 		else
 			to_chat(user, "You begin to replace the bulb.")
 			if(do_after(user, 20, target = user))
-				if(flash.crit_fail || !flash || QDELETED(flash))
+				if(flash.burnt_out || !flash || QDELETED(flash))
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(embedded_flash)
@@ -166,7 +167,7 @@
 	update_icon()
 
 /obj/item/shield/riot/flash/update_icon()
-	if(!embedded_flash || embedded_flash.crit_fail)
+	if(!embedded_flash || embedded_flash.burnt_out)
 		icon_state = "riot"
 		item_state = "riot"
 	else

@@ -30,6 +30,8 @@ GLOBAL_VAR(world_mecha_log)
 GLOBAL_PROTECT(world_mecha_log)
 GLOBAL_VAR(world_virus_log)
 GLOBAL_PROTECT(world_virus_log)
+GLOBAL_VAR(world_asset_log)
+GLOBAL_PROTECT(world_asset_log)
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)
