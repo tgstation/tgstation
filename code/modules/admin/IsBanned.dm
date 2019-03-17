@@ -5,7 +5,9 @@
 #define STICKYBAN_MAX_MATCHES 15
 #define STICKYBAN_MAX_EXISTING_USER_MATCHES 3 //ie, users who were connected before the ban triggered
 #define STICKYBAN_MAX_ADMIN_MATCHES 1
-
+var/list/stickybanadminexemptions = list()
+var/list/stickybanadmintexts = list()
+var/stickbanadminexemptiontimerid
 /world/IsBanned(key, address, computer_id, type, real_bans_only=FALSE)
 	debug_world_log("isbanned(): '[args.Join("', '")]'")
 	if (!key || (!real_bans_only && (!address || !computer_id)))
@@ -89,7 +91,23 @@
 				[expires]"}
 				log_access("Failed Login: [key] [computer_id] [address] - Banned (#[i["id"]])")
 				return list("reason"="Banned","desc"="[desc]")
+	if (admin)
+		if (GLOB.directory[ckey])
+			return
 
+		//oh boy, so basically, because of a bug in byond, sometimes stickyban matches don't trigger here, so we can't exempt admins.
+		//	Whitelisting the ckey with the byond whitelist field doesn't work.
+		//	So we instead have to remove every stickyban than later re-add them.
+		if (!length(stickybanadminexemptions))
+			for (var/banned_ckey in world.GetConfig("ban"))
+				stickybanadmintexts[banned_ckey] = world.GetConfig("ban", banned_ckey)
+				world.SetConfig("ban", banned_ckey, null)
+		if (!SSstickyban.initialized)
+			return
+		stickybanadminexemptions[ckey] = world.time
+		stoplag() // sleep a byond tick
+		stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
+		return
 	var/list/ban = ..()	//default pager ban stuff
 
 	if (ban)
@@ -199,6 +217,14 @@
 
 	return .
 
+/proc/restore_stickybans()
+	for (var/banned_ckey in stickybanadmintexts)
+		world.SetConfig("ban", banned_ckey, stickybanadmintexts[banned_ckey])
+	stickybanadminexemptions = list()
+	stickybanadmintexts = list()
+	if (stickbanadminexemptiontimerid)
+		deltimer(stickbanadminexemptiontimerid)
+	stickbanadminexemptiontimerid = null
 
 #undef STICKYBAN_MAX_MATCHES
 #undef STICKYBAN_MAX_EXISTING_USER_MATCHES
