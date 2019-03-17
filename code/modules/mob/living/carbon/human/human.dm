@@ -821,16 +821,16 @@
 	.["Copy outfit"] = "?_src_=vars;[HrefToken()];copyoutfit=[REF(src)]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
-	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
-	if(user == target && can_piggyback(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
-		piggyback(target)
-		return
-	//If you dragged them to you and you're aggressively grabbing try to fireman carry them
-	else if(user != target && can_be_firemanned(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
-		fireman_carry(target)
-		return
-	else
-		return ..()
+	if(pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
+		//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
+		if(user == target && can_piggyback(target))
+			piggyback(target)
+			return
+		//If you dragged them to you and you're aggressively grabbing try to fireman carry them
+		else if(user != target && can_be_firemanned(target))
+			fireman_carry(target)
+			return
+	. = ..()
 
 //Can C try to piggyback at all.
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/C)
@@ -847,7 +847,7 @@
 	if(can_be_firemanned(C))
 		visible_message("<span class='notice'>[src] starts lifting [C] onto their back...</span>", 
 			"<span class='notice'>You start lifting [C] onto your back...</span>")
-		if(do_after(src, 50, C, M, TRUE))
+		if(do_after(src, 50, TRUE, C))
 			if(can_be_firemanned(C))//Second check to make sure they're still valid to be carried
 				if(!incapacitated(FALSE, TRUE))
 					buckle_mob(C, TRUE, TRUE, TRUE, 1, 0)
@@ -900,6 +900,7 @@
 			return
 	
 	stop_pulling()
+	riding_datum.handle_vehicle_layer()
 	. = ..(M, force, check_loc)
 
 /mob/living/carbon/human/do_after_coefficent()

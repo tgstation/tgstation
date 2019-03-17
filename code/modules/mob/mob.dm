@@ -516,7 +516,10 @@
 		return
 	if(isAI(M))
 		return
-	show_inv(usr)
+
+/mob/MouseDrop_T(atom/dropping, atom/user)
+	. = ..()
+	show_inv(user)
 
 /mob/proc/is_muzzled()
 	return 0
