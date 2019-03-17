@@ -65,10 +65,10 @@ GLOBAL_LIST_EMPTY(menulist)
 
 
 /datum/verbs/menu/Icon/Load_checked(client/C) //So we can be lazy, we invoke the "checked" menu item on menu load.
-	var/atom/verb/verbpath = Get_checked(C)
+	var/procpath/verbpath = Get_checked(C)
 	if (!verbpath || !(verbpath in typesof("[type]/verb")))
 		return
-	
+
 	if (copytext(verbpath.name,1,2) == "@")
 		winset(C, null, list2params(list("command" = copytext(verbpath.name,2))))
 	else
