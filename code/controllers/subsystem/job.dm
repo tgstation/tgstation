@@ -248,7 +248,7 @@ SUBSYSTEM_DEF(job)
 
 	JobDebug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)
-		return 0
+		return TRUE
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
