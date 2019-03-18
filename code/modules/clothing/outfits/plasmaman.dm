@@ -43,8 +43,10 @@
 /datum/outfit/plasmaman/detective
 	name = "Detective Plasmaman"
 
-	head = /obj/item/clothing/head/helmet/space/plasmaman/security
+	head = /obj/item/clothing/head/helmet/space/plasmaman/white
 	uniform = /obj/item/clothing/under/plasmaman/enviroslacks
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/laceup
 
 /datum/outfit/plasmaman/warden
 	name = "Warden Plasmaman"
