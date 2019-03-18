@@ -199,9 +199,6 @@
 /atom/movable/proc/set_glide_size(target = 8)
 	glide_size = target
 
-	for(var/atom/movable/AM in contents)
-		AM.set_glide_size(target)
-	
 	for(var/atom/movable/AM in buckled_mobs)
 		AM.set_glide_size(target)
 
