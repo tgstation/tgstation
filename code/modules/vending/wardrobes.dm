@@ -3,7 +3,7 @@
 
 /obj/machinery/vending/wardrobe
 	default_price = 50
-	extra_price = 100
+	extra_price = 75
 	payment_department = NO_FREEBIES
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
@@ -74,9 +74,11 @@
 					/obj/item/storage/backpack/satchel/eng = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/engineering = 3,
 					/obj/item/clothing/under/rank/engineer = 3,
+					/obj/item/clothing/under/rank/engineer/hazard = 3,
 					/obj/item/clothing/suit/hazardvest = 3,
 					/obj/item/clothing/shoes/workboots = 3,
-					/obj/item/clothing/head/hardhat = 3)
+					/obj/item/clothing/head/hardhat = 3,
+					/obj/item/clothing/head/hardhat/weldhat = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
 /obj/item/vending_refill/wardrobe/engi_wardrobe
@@ -168,7 +170,8 @@
 					/obj/item/clothing/suit/apron = 2,
 					/obj/item/clothing/suit/apron/overalls = 3,
 					/obj/item/clothing/under/rank/hydroponics = 3,
-					/obj/item/clothing/mask/bandana = 3)
+					/obj/item/clothing/mask/bandana = 3,
+					/obj/item/clothing/accessory/armband/hydro = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
@@ -178,13 +181,17 @@
 	name = "CuraDrobe"
 	desc = "A lowstock vendor only capable of vending clothing for curators and librarians."
 	icon_state = "curadrobe"
-	product_ads = "Our clothes are endorsed by treasure hunters everywhere!"
+	product_ads = "Glasses for your eyes and literature for your soul, Curadrobe has it all!; Impress & enthrall your library guests with Curadrobe's extended line of pens!"
 	vend_reply = "Thank you for using the CuraDrobe!"
-	products = list(/obj/item/clothing/head/fedora/curator = 1,
-					/obj/item/clothing/suit/curator = 1,
-					/obj/item/clothing/under/rank/curator/treasure_hunter = 1,
-					/obj/item/clothing/shoes/workboots/mining = 1,
+	products = list(/obj/item/pen = 4,
+					/obj/item/pen/red = 2,
+					/obj/item/pen/blue = 2,
+					/obj/item/pen/fourcolor = 1,
+					/obj/item/pen/fountain = 2,
+					/obj/item/clothing/accessory/pocketprotector = 2,
 					/obj/item/storage/backpack/satchel/explorer = 1,
+					/obj/item/clothing/glasses/regular = 2,
+					/obj/item/clothing/glasses/regular/jamjar = 1,
 					/obj/item/storage/bag/books = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 	payment_department = ACCOUNT_CIV
@@ -234,7 +241,8 @@
 					/obj/item/clothing/suit/toggle/chef = 1,
 					/obj/item/clothing/under/rank/chef = 1,
 					/obj/item/clothing/head/chefhat = 1,
-					/obj/item/reagent_containers/glass/rag = 1)
+					/obj/item/reagent_containers/glass/rag = 1,
+					/obj/item/clothing/suit/hooded/wintercoat = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -254,7 +262,7 @@
 					/obj/item/melee/flyswatter = 1,
 					/obj/item/flashlight = 1,
 					/obj/item/caution = 6,
-					/obj/item/holosign_creator = 1,
+					/obj/item/holosign_creator/janibarrier = 1,
 					/obj/item/lightreplacer = 1,
 					/obj/item/soap/nanotrasen = 1,
 					/obj/item/storage/bag/trash = 1,
@@ -294,7 +302,7 @@
 	icon_state = "chapdrobe"
 	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
 	vend_reply = "Thank you for using the ChapDrobe!"
-	products = list(/obj/item/holybeacon = 1,
+	products = list(/obj/item/choice_beacon/holy = 1,
 					/obj/item/storage/backpack/cultpack = 1,
 					/obj/item/clothing/accessory/pocketprotector/cosmetology = 1,
 					/obj/item/clothing/under/rank/chaplain = 1,
@@ -306,7 +314,7 @@
 	contraband = list(/obj/item/toy/plush/plushvar = 1,
 					/obj/item/toy/plush/narplush = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
-
+	payment_department = ACCOUNT_CIV
 /obj/item/vending_refill/wardrobe/chap_wardrobe
 	machine_name = "ChapDrobe"
 

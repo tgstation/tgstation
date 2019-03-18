@@ -15,7 +15,7 @@
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (M.a_intent == INTENT_DISARM)
-		if(!(lying))
+		if(mobility_flags & MOBILITY_STAND)
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			var/obj/item/I = get_active_held_item()
 			if(I)
@@ -178,8 +178,7 @@
 				adjustBruteLoss(30)
 
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj, def_zone)
-	..()
+	. = ..()
 	updatehealth()
 	if(prob(75) && Proj.damage > 0)
 		spark_system.start()
-	return 2

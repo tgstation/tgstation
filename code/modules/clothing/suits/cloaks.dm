@@ -8,15 +8,7 @@
 	item_state = "qmcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-
-/obj/item/clothing/head/cloakhood
-	name = "cloak hood"
-	icon = 'icons/obj/clothing/hats.dmi'
-	icon_state = "golhood"
-	desc = "A hood for a cloak."
-	body_parts_covered = HEAD
-	item_flags = NODROP
-	flags_inv = HIDEHAIR|HIDEEARS
+	flags_inv = HIDESUITSTORAGE
 
 /obj/item/clothing/neck/cloak/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -71,6 +63,7 @@
 	desc = "A protective & concealing hood."
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	transparent_protection = HIDEMASK
 
 /obj/item/clothing/suit/hooded/cloak/drake
 	name = "drake armour"
@@ -83,6 +76,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"

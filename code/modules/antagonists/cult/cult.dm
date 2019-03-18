@@ -13,7 +13,7 @@
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
 
-	
+
 /datum/antagonist/cult/get_team()
 	return cult_team
 
@@ -114,7 +114,7 @@
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
-			
+
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
@@ -131,7 +131,9 @@
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 		H.remove_trait(CULT_EYES)
+		H.remove_overlay(HALO_LAYER)
 		H.update_body()
+
 /datum/antagonist/cult/on_removal()
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
@@ -146,26 +148,33 @@
 /datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has cult'ed [new_owner.current].")
-	log_admin("[key_name(admin)] has cult'ed [new_owner.current].")
+	message_admins("[key_name_admin(admin)] has cult'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has cult'ed [key_name(new_owner)].")
 
 /datum/antagonist/cult/admin_remove(mob/user)
-	message_admins("[key_name_admin(user)] has decult'ed [owner.current].")
-	log_admin("[key_name(user)] has decult'ed [owner.current].")
+	message_admins("[key_name_admin(user)] has decult'ed [key_name_admin(owner)].")
+	log_admin("[key_name(user)] has decult'ed [key_name(owner)].")
 	SSticker.mode.remove_cultist(owner,silent=TRUE) //disgusting
 
 /datum/antagonist/cult/get_admin_commands()
 	. = ..()
 	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
 	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
+	.["Remove Dagger and Metal"] = CALLBACK(src, .proc/admin_take_all)
 
 /datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
-	if(!equip_cultist(FALSE))
+	if(!equip_cultist(metal=FALSE))
 		to_chat(admin, "<span class='danger'>Spawning dagger failed!</span>")
 
 /datum/antagonist/cult/proc/admin_give_metal(mob/admin)
-	if (!equip_cultist(TRUE))
+	if (!equip_cultist(metal=TRUE))
 		to_chat(admin, "<span class='danger'>Spawning runed metal failed!</span>")
+
+/datum/antagonist/cult/proc/admin_take_all(mob/admin)
+	var/mob/living/current = owner.current
+	for(var/o in current.GetAllContents())
+		if(istype(o, /obj/item/melee/cultblade/dagger) || istype(o, /obj/item/stack/sheet/runed_metal))
+			qdel(o)
 
 /datum/antagonist/cult/master
 	ignore_implant = TRUE
@@ -205,6 +214,7 @@
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
+
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
@@ -215,14 +225,14 @@
 	throwing.Remove(current)
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)
-	
+
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 		H.remove_trait(CULT_EYES)
-		H.cut_overlays()
-		H.regenerate_icons()
+		H.remove_overlay(HALO_LAYER)
+		H.update_body()
 
 /datum/team/cult
 	name = "Cult"
@@ -236,7 +246,7 @@
 	var/reckoning_complete = FALSE
 	var/cult_risen = FALSE
 	var/cult_ascendent = FALSE
-	
+
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return
@@ -257,7 +267,7 @@
 				to_chat(B.current, "<span class='cultlarge'>The veil weakens as your cult grows, your eyes begin to glow...")
 				addtimer(CALLBACK(src, .proc/rise, B.current), 200)
 		cult_risen = TRUE
-		
+
 	if(ratio > CULT_ASCENDENT && !cult_ascendent)
 		for(var/datum/mind/B in members)
 			if(B.current)
@@ -265,8 +275,8 @@
 				to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")
 				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
 		cult_ascendent = TRUE
-		
-		
+
+
 /datum/team/cult/proc/rise(cultist)
 	if(ishuman(cultist))
 		var/mob/living/carbon/human/H = cultist
@@ -274,13 +284,15 @@
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 		H.add_trait(CULT_EYES)
 		H.update_body()
-		
+
 /datum/team/cult/proc/ascend(cultist)
 	if(ishuman(cultist))
 		var/mob/living/carbon/human/H = cultist
 		new /obj/effect/temp_visual/cult/sparks(get_turf(H), H.dir)
 		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
-		H.add_overlay(mutable_appearance('icons/effects/32x64.dmi', istate, -BODY_FRONT_LAYER))
+		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -HALO_LAYER)
+		H.overlays_standing[HALO_LAYER] = new_halo_overlay
+		H.apply_overlay(HALO_LAYER)
 
 /datum/team/cult/proc/setup_objectives()
 	//SAC OBJECTIVE , todo: move this to objective internals
@@ -322,7 +334,7 @@
 	summon_objective.team = src
 	objectives += summon_objective
 
-	
+
 /datum/objective/sacrifice
 	var/sacced = FALSE
 	var/sac_image

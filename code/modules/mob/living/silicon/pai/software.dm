@@ -20,6 +20,7 @@
 															"universal translator" = 35,
 															//"projection array" = 15
 															"remote signaller" = 5,
+															"loudness booster" = 25
 															)
 
 /mob/living/silicon/pai/proc/paiInterface()
@@ -31,7 +32,7 @@
 	if(temp)
 		left_part = temp
 	else if(stat == DEAD)						// Show some flavor text if the pAI is dead
-		left_part = "<b><font color=red>�Rr�R �a�� ��Rr����o�</font></b>"
+		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -64,6 +65,8 @@
 				left_part = softwareCamera()
 			if("signaller")
 				left_part = softwareSignal()
+			if("loudness")
+				left_part = softwareLoudness()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -211,7 +214,7 @@
 					if(silent)
 						return alert("Communications circuits remain uninitialized.")
 
-					var/target = locate(href_list["target"])
+					var/target = locate(href_list["target"]) in GLOB.PDAs
 					pda.create_message(src, target)
 
 		// Accessing medical records
@@ -265,6 +268,12 @@
 				var/turf/T = get_turf(loc)
 				cable = new /obj/item/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+		if("loudness")
+			if(subscreen == 1) // Open Instrument
+				internal_instrument.interact(src)
+			if(subscreen == 2) // Change Instrument type
+				internal_instrument.selectInstrument()
+
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -297,6 +306,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=[s]'>Camera Jack</a> <br>"
 		if(s == "remote signaller")
 			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
+		if(s == "loudness booster")
+			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
 	dat += "<br>"
 
 	// Advanced
@@ -620,4 +631,13 @@
 	dat += "</ul>"
 	dat += "<br><br>"
 	dat += "Messages: <hr> [pda.tnote]"
+	return dat
+
+// Loudness Booster
+/mob/living/silicon/pai/proc/softwareLoudness()
+	if(!internal_instrument)
+		internal_instrument = new(src)
+	var/dat = "<h3>Sound Synthetizer</h3>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthetizer Interface</a><br>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=2'>Choose Instrument Type</a>"
 	return dat

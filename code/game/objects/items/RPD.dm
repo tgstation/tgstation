@@ -204,9 +204,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | PAINT_MODE | DESTROY_MODE | WRENCH_MODE
 
-/obj/item/pipe_dispenser/New()
+/obj/item/pipe_dispenser/Initialize()
 	. = ..()
-	spark_system = new /datum/effect_system/spark_spread
+	spark_system = new
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	if(!first_atmos)
@@ -231,6 +231,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
+
+/obj/item/pipe_dispenser/ui_base_html(html)
+	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
 /obj/item/pipe_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

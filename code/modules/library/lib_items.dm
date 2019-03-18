@@ -113,14 +113,16 @@
 				return ..()
 
 
-/obj/structure/bookcase/attack_hand(mob/user)
+/obj/structure/bookcase/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
+	if(!istype(user))
+		return
 	if(contents.len)
-		var/obj/item/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
+		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			if(!(user.mobility_flags & MOBILITY_USE) || user.stat || user.restrained() || !in_range(loc, user))
 				return
 			if(ishuman(user))
 				if(!user.get_active_held_item())
@@ -195,12 +197,9 @@
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
+
 /obj/item/book/attack_self(mob/user)
-	if(is_blind(user))
-		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid!</span>")
-		return
-	if(ismonkey(user))
-		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
+	if(!user.can_read(src))
 		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")

@@ -4301,7 +4301,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -6688,7 +6688,7 @@
 /obj/item/flashlight,
 /obj/item/flashlight,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
@@ -7366,9 +7366,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7395,7 +7393,7 @@
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
@@ -8589,7 +8587,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
@@ -8642,7 +8640,7 @@
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
@@ -13916,7 +13914,6 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zi" = (
-/obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
 /area/space/nearstation)
 "KE" = (

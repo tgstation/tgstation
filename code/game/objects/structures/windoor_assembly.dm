@@ -343,8 +343,13 @@
 	set name = "Flip Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.stat || usr.restrained())
 		return
+
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_USE))
+			return
 
 	if(facing == "l")
 		to_chat(usr, "<span class='notice'>The windoor will now slide to the right.</span>")

@@ -74,7 +74,9 @@
 	owner.add_stun_absorption("vanguard", INFINITY, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	owner.SetStun(0, FALSE)
-	owner.SetKnockdown(0)
+	owner.SetKnockdown(0, FALSE)
+	owner.SetParalyzed(0, FALSE)
+	owner.SetImmobilized(0)
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
@@ -96,7 +98,7 @@
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
 		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
-			owner.Knockdown(stuns_blocked)
+			owner.Paralyze(stuns_blocked)
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 			if(stuns_blocked >= 300)
 				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"
@@ -224,9 +226,9 @@
 	return ..()
 
 /datum/status_effect/wish_granters_gift/on_remove()
-	owner.revive(full_heal = 1, admin_revive = 1)
+	owner.revive(full_heal = TRUE, admin_revive = TRUE)
 	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
-	owner.update_canmove()
+	owner.update_mobility()
 
 /obj/screen/alert/status_effect/wish_granters_gift
 	name = "Wish Granter's Immortality"
@@ -290,6 +292,7 @@
 			var/mob/living/carbon/C = owner
 			for(var/X in C.bodyparts)
 				var/obj/item/bodypart/BP = X
+				BP.max_damage *= 10
 				BP.brute_dam *= 10
 				BP.burn_dam *= 10
 		owner.toxloss *= 10
@@ -375,6 +378,7 @@
 			var/obj/item/bodypart/BP = X
 			BP.brute_dam *= 0.1
 			BP.burn_dam *= 0.1
+			BP.max_damage /= 10
 	owner.toxloss *= 0.1
 	owner.oxyloss *= 0.1
 	owner.cloneloss *= 0.1
@@ -539,3 +543,55 @@
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SM = L
 				SM.adjustHealth(-3.5, forced = TRUE)
+
+/datum/status_effect/good_music
+	id = "Good Music"
+	alert_type = null
+	duration = 6 SECONDS
+	tick_interval = 1 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/datum/status_effect/good_music/tick()
+	owner.dizziness = max(0, owner.dizziness - 2)
+	owner.jitteriness = max(0, owner.jitteriness - 2)
+	owner.confused = max(0, owner.confused - 1)
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
+
+/obj/screen/alert/status_effect/regenerative_core
+	name = "Reinforcing Tendrils"
+	desc = "You can move faster than your broken body could normally handle!"
+	icon_state = "regenerative_core"
+	name = "Regenerative Core Tendrils"
+
+/datum/status_effect/regenerative_core
+	id = "Regenerative Core"
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /obj/screen/alert/status_effect/regenerative_core
+
+/datum/status_effect/regenerative_core/on_apply()
+	owner.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+	owner.adjustBruteLoss(-25)
+	owner.adjustFireLoss(-25)
+	owner.remove_CC()
+	owner.bodytemperature = BODYTEMP_NORMAL
+	return TRUE
+
+/datum/status_effect/regenerative_core/on_remove()
+	owner.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+
+/datum/status_effect/antimagic
+	id = "antimagic"
+	duration = 10 SECONDS
+	examine_text = "<span class='notice'>They seem to be covered in a dull, grey aura.</span>"
+
+/datum/status_effect/antimagic/on_apply()
+	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
+	owner.add_trait(TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	//glowing wings overlay
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	return ..()
+
+/datum/status_effect/antimagic/on_remove()
+	owner.remove_trait(TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")

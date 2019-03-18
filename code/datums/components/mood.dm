@@ -6,16 +6,17 @@
 	var/sanity = 100 //Current sanity
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
+	var/sanity_level = 5 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
-	var/datum/mood_event/list/mood_events = list()
+	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
-	var/holdmyinsanityeffect = 0 //before we edit our sanity lets take a look
 	var/obj/screen/mood/screen_obj
+	var/obj/screen/sanity/screen_obj_sanity
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	START_PROCESSING(SSmood, src)
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
@@ -115,40 +116,80 @@
 
 /datum/component/mood/proc/update_mood_icon()
 	var/mob/living/owner = parent
-	if(owner.client && owner.hud_used)
+	if(!(owner.client || owner.hud_used))
+		return
+	screen_obj.cut_overlays()
+	screen_obj.color = initial(screen_obj.color)
+	//lets see if we have any special icons to show instead of the normal mood levels
+	var/list/conflicting_moodies = list()
+	var/highest_absolute_mood = 0
+	for(var/i in mood_events) //adds overlays and sees which special icons need to vie for which one gets the icon_state
+		var/datum/mood_event/event = mood_events[i]
+		if(!event.special_screen_obj)
+			continue
+		if(!event.special_screen_replace)
+			screen_obj.add_overlay(event.special_screen_obj)
+		else
+			conflicting_moodies += event
+			var/absmood = abs(event.mood_change)
+			if(absmood > highest_absolute_mood)
+				highest_absolute_mood = absmood
+
+	if(!conflicting_moodies.len) //no special icons- go to the normal icon states
 		if(sanity < 25)
 			screen_obj.icon_state = "mood_insane"
 		else
 			screen_obj.icon_state = "mood[mood_level]"
+		screen_obj_sanity.icon_state = "sanity[sanity_level]"
+		return
+
+	for(var/i in conflicting_moodies)
+		var/datum/mood_event/event = i
+		if(abs(event.mood_change) == highest_absolute_mood)
+			screen_obj.icon_state = "[event.special_screen_obj]"
+			switch(mood_level)
+				if(1)
+					screen_obj.color = "#747690"
+				if(2)
+					screen_obj.color = "#f15d36"
+				if(3)
+					screen_obj.color = "#f38a43"
+				if(4)
+					screen_obj.color = "#dfa65b"
+				if(5)
+					screen_obj.color = "#4b96c4"
+				if(6)
+					screen_obj.color = "#a8d259"
+				if(7)
+					screen_obj.color = "#86d656"
+				if(8)
+					screen_obj.color = "#30dd26"
+				if(9)
+					screen_obj.color = "#2eeb9a"
+			break
 
 /datum/component/mood/process() //Called on SSmood process
 	var/mob/living/owner = parent
 
 	switch(mood_level)
 		if(1)
-			DecreaseSanity(0.2)
+			setSanity(sanity-0.2)
 		if(2)
-			DecreaseSanity(0.125, SANITY_CRAZY)
+			setSanity(sanity-0.125, minimum=SANITY_CRAZY)
 		if(3)
-			DecreaseSanity(0.075, SANITY_UNSTABLE)
+			setSanity(sanity-0.075, minimum=SANITY_UNSTABLE)
 		if(4)
-			DecreaseSanity(0.025, SANITY_DISTURBED)
+			setSanity(sanity-0.025, minimum=SANITY_DISTURBED)
 		if(5)
-			IncreaseSanity(0.1)
+			setSanity(sanity+0.1)
 		if(6)
-			IncreaseSanity(0.15)
+			setSanity(sanity+0.15)
 		if(7)
-			IncreaseSanity(0.20)
+			setSanity(sanity+0.2)
 		if(8)
-			IncreaseSanity(0.25, SANITY_GREAT)
+			setSanity(sanity+0.25, maximum=SANITY_GREAT)
 		if(9)
-			IncreaseSanity(0.4, SANITY_GREAT)
-
-	if(insanity_effect != holdmyinsanityeffect)
-		if(insanity_effect > holdmyinsanityeffect)
-			owner.crit_threshold += (insanity_effect - holdmyinsanityeffect)
-		else
-			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
+			setSanity(sanity+0.4, maximum=INFINITY)
 
 	if(owner.has_trait(TRAIT_DEPRESSION))
 		if(prob(0.05))
@@ -159,31 +200,61 @@
 			add_event(null, "jolly", /datum/mood_event/jolly)
 			clear_event(null, "depression")
 
-	holdmyinsanityeffect = insanity_effect
-	
 	HandleNutrition(owner)
+	HandleHygiene(owner)
 
-/datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
-	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
-		IncreaseSanity(0.5)
-	else
-		sanity = max(minimum, sanity - amount)
-		if(sanity < SANITY_UNSTABLE)
-			if(sanity < SANITY_CRAZY)
-				insanity_effect = (MAJOR_INSANITY_PEN)
-			else
-				insanity_effect = (MINOR_INSANITY_PEN)
+/datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
+	var/mob/living/owner = parent
 
-/datum/component/mood/proc/IncreaseSanity(amount, maximum = SANITY_NEUTRAL)
-	if(sanity > maximum)
-		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
+	if(amount == sanity)
+		return
+	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
+	// If the new amount would move towards the acceptable range faster then use it instead
+	if(sanity < minimum && amount < sanity + 0.5)
+		amount = sanity + 0.5
+	else if(sanity > maximum && amount > sanity - 0.5)
+		amount = sanity - 0.5
+
+	// Disturbed stops you from getting any more sane
+	if(owner.has_trait(TRAIT_UNSTABLE))
+		sanity = min(amount,sanity)
 	else
-		sanity = min(maximum, sanity + amount)
-		if(sanity > SANITY_CRAZY)
-			if(sanity > SANITY_UNSTABLE)
-				insanity_effect = 0
-			else
-				insanity_effect = MINOR_INSANITY_PEN
+		sanity = amount
+
+	var/mob/living/master = parent
+	switch(sanity)
+		if(SANITY_INSANE to SANITY_CRAZY)
+			setInsanityEffect(MAJOR_INSANITY_PEN)
+			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1.5, movetypes=(~FLYING))
+			sanity_level = 6
+		if(SANITY_CRAZY to SANITY_UNSTABLE)
+			setInsanityEffect(MINOR_INSANITY_PEN)
+			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1, movetypes=(~FLYING))
+			sanity_level = 5
+		if(SANITY_UNSTABLE to SANITY_DISTURBED)
+			setInsanityEffect(0)
+			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.5, movetypes=(~FLYING))
+			sanity_level = 4
+		if(SANITY_DISTURBED to SANITY_NEUTRAL)
+			setInsanityEffect(0)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			sanity_level = 3
+		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
+			setInsanityEffect(0)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			sanity_level = 2
+		if(SANITY_GREAT+1 to INFINITY)
+			setInsanityEffect(0)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			sanity_level = 1
+	update_mood_icon()
+
+/datum/component/mood/proc/setInsanityEffect(newval)
+	if(newval == insanity_effect)
+		return
+	var/mob/living/master = parent
+	master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
+	insanity_effect = newval
 
 /datum/component/mood/proc/add_event(datum/source, category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
@@ -198,6 +269,7 @@
 	the_event = new type(src, param)
 
 	mood_events[category] = the_event
+	the_event.category = category
 	update_mood()
 
 	if(the_event.timeout)
@@ -212,11 +284,23 @@
 	qdel(event)
 	update_mood()
 
+/datum/component/mood/proc/remove_temp_moods(var/admin) //Removes all temp moods
+	for(var/i in mood_events)
+		var/datum/mood_event/moodlet = mood_events[i]
+		if(!moodlet || !moodlet.timeout)
+			continue
+		mood_events -= moodlet.category
+		qdel(moodlet)
+		update_mood()
+
+
 /datum/component/mood/proc/modify_hud(datum/source)
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
+	screen_obj_sanity = new
 	hud.infodisplay += screen_obj
+	hud.infodisplay += screen_obj_sanity
 	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
@@ -227,16 +311,26 @@
 	var/datum/hud/hud = owner.hud_used
 	if(hud && hud.infodisplay)
 		hud.infodisplay -= screen_obj
+		hud.infodisplay -= screen_obj_sanity
 	QDEL_NULL(screen_obj)
+	QDEL_NULL(screen_obj_sanity)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
 	print_mood(user)
 
-
 /datum/component/mood/proc/HandleNutrition(mob/living/L)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(isethereal(H))
+			HandleCharge(H)
+		if(H.has_trait(TRAIT_NOHUNGER))
+			return FALSE //no mood events for nutrition
 	switch(L.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			add_event(null, "nutrition", /datum/mood_event/fat)
+			if (!L.has_trait(TRAIT_VORACIOUS))
+				add_event(null, "nutrition", /datum/mood_event/fat)
+			else
+				add_event(null, "nutrition", /datum/mood_event/wellfed) // round and full
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
 			add_event(null, "nutrition", /datum/mood_event/wellfed)
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
@@ -247,6 +341,50 @@
 			add_event(null, "nutrition", /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
+
+/datum/component/mood/proc/HandleCharge(mob/living/carbon/human/H)
+	var/datum/species/ethereal/E = H.dna?.species
+	switch(E.ethereal_charge)
+		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
+			add_event(null, "charge", /datum/mood_event/decharged)
+		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
+			add_event(null, "charge", /datum/mood_event/lowpower)
+		if(ETHEREAL_CHARGE_NORMAL to ETHEREAL_CHARGE_ALMOSTFULL)
+			clear_event(null, "charge")
+		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
+			add_event(null, "charge", /datum/mood_event/charged)
+
+
+/datum/component/mood/proc/HandleHygiene(mob/living/carbon/human/H)
+	switch(H.hygiene)
+		if(0 to HYGIENE_LEVEL_DIRTY)
+			if(has_trait(TRAIT_NEAT))
+				add_event(null, "neat", /datum/mood_event/dirty)
+			if(has_trait(TRAIT_NEET))
+				add_event(null, "NEET", /datum/mood_event/happy_neet)
+			HygieneMiasma(H)
+		if(HYGIENE_LEVEL_DIRTY to HYGIENE_LEVEL_NORMAL)
+			if(has_trait(TRAIT_NEAT))
+				clear_event(null, "neat")
+			if(has_trait(TRAIT_NEET))
+				clear_event(null, "NEET")
+		if(HYGIENE_LEVEL_NORMAL to HYGIENE_LEVEL_CLEAN)
+			if(has_trait(TRAIT_NEAT))
+				add_event(null, "neat", /datum/mood_event/neat)
+			if(has_trait(TRAIT_NEET))
+				clear_event(null, "NEET")
+
+/datum/component/mood/proc/HygieneMiasma(mob/living/carbon/human/H)
+	// Properly stored humans shouldn't create miasma
+	if(istype(H.loc, /obj/structure/closet/crate/coffin)|| istype(H.loc, /obj/structure/closet/body_bag) || istype(H.loc, /obj/structure/bodycontainer))
+		return
+
+	var/turf/T = get_turf(H)
+	var/datum/gas_mixture/stank = new
+	ADD_GAS(/datum/gas/miasma, stank.gases)
+	stank.gases[/datum/gas/miasma][MOLES] = MIASMA_HYGIENE_MOLES
+	T.assume_air(stank)
+	T.air_update_turf()
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

@@ -29,69 +29,62 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
-	set waitfor = 0
+	set waitfor = FALSE
 
 	if(!check_rights(R_DEBUG))
 		return
 
 	var/datum/target = null
-	var/targetselected = 0
+	var/targetselected = FALSE
 	var/returnval = null
 
-	switch(alert("Proc owned by something?",,"Yes","No"))
-		if("Yes")
-			targetselected = 1
-			var/list/value = vv_get_value(default_class = VV_ATOM_REFERENCE, classes = list(VV_ATOM_REFERENCE, VV_DATUM_REFERENCE, VV_MOB_REFERENCE, VV_CLIENT))
-			if (!value["class"] || !value["value"])
-				return
-			target = value["value"]
-		if("No")
-			target = null
-			targetselected = 0
-
-	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
-	if(!procname)
-		return
-
-	//hascall() doesn't support proc paths (eg: /proc/gib(), it only supports "gib")
-	var/testname = procname
-	if(targetselected)
-		//Find one of the 3 possible ways they could have written /proc/PROCNAME
-		if(findtext(procname, "/proc/"))
-			testname = replacetext(procname, "/proc/", "")
-		else if(findtext(procname, "/proc"))
-			testname = replacetext(procname, "/proc", "")
-		else if(findtext(procname, "proc/"))
-			testname = replacetext(procname, "proc/", "")
-		//Clear out any parenthesis if they're a dummy
-		testname = replacetext(testname, "()", "")
-
-	if(targetselected && !hascall(target,testname))
-		to_chat(usr, "<font color='red'>Error: callproc(): type [target.type] has no proc named [procname].</font>")
-		return
-	else
-		var/procpath = text2path(procname)
-		if (!procpath)
-			to_chat(usr, "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>")
+	if(alert("Proc owned by something?",,"Yes","No") == "Yes")
+		targetselected = TRUE
+		var/list/value = vv_get_value(default_class = VV_ATOM_REFERENCE, classes = list(VV_ATOM_REFERENCE, VV_DATUM_REFERENCE, VV_MOB_REFERENCE, VV_CLIENT))
+		if (!value["class"] || !value["value"])
 			return
+		target = value["value"]
+
+	var/procpath = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
+	if(!procpath)
+		return
+
+	//strip away everything but the proc name
+	var/list/proclist = splittext(procpath, "/")
+	if (!length(proclist))
+		return
+
+	var/procname = proclist[proclist.len]
+	var/proctype = ("verb" in proclist) ? "verb" :"proc"
+
+	if(targetselected)
+		if(!hascall(target, procname))
+			to_chat(usr, "<span class='warning'>Error: callproc(): type [target.type] has no [proctype] named [procpath].</span>")
+			return
+	else
+		procpath = "/[proctype]/[procname]"
+		if(!text2path(procpath))
+			to_chat(usr, "<span class='warning'>Error: callproc(): [procpath] does not exist.</span>")
+			return
+
 	var/list/lst = get_callproc_args()
 	if(!lst)
 		return
 
 	if(targetselected)
 		if(!target)
-			to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
+			to_chat(usr, "<span class='warning'>Error: callproc(): owner of proc no longer exists.</span>")
 			return
-		var/msg = "[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
+		var/msg = "[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no argument"]."
 		log_admin(msg)
 		message_admins(msg)
 		admin_ticket_log(target, msg)
-		returnval = WrapAdminProcCall(target, procname, lst) // Pass the lst as an argument list to the proc
+		returnval = WrapAdminProcCall(target, procname, lst)
 	else
-		//this currently has no hascall protection. wasn't able to get it working.
-		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		returnval = WrapAdminProcCall(GLOBAL_PROC, procname, lst) // Pass the lst as an argument list to the proc
+		var/msg = "[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no argument"]."
+		log_admin(msg)
+		message_admins(msg)
+		returnval = WrapAdminProcCall(GLOBAL_PROC, procpath, lst) //calling globals needs full qualified name (e.g /proc/foo)
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
 		to_chat(usr, .)
@@ -111,8 +104,8 @@ GLOBAL_LIST_EMPTY(AdminProcCallSpamPrevention)
 GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 /proc/WrapAdminProcCall(datum/target, procname, list/arguments)
-	if(target && procname == "Del")
-		to_chat(usr, "Calling Del() is not allowed")
+	if(target != GLOBAL_PROC && procname == "Del")
+		to_chat(usr, "<span class='warning'>Calling Del() is not allowed</span>")
 		return
 
 	if(target != GLOBAL_PROC && !target.CanProcCall(procname))
@@ -159,7 +152,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
 	set category = "Debug"
 	set name = "Atom ProcCall"
-	set waitfor = 0
+	set waitfor = FALSE
 
 	if(!check_rights(R_DEBUG))
 		return
@@ -168,7 +161,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	if(!procname)
 		return
 	if(!hascall(A,procname))
-		to_chat(usr, "<font color='red'>Error: callproc_datum(): type [A.type] has no proc named [procname].</font>")
+		to_chat(usr, "<span class='warning'>Error: callproc_datum(): type [A.type] has no proc named [procname].</span>")
 		return
 	var/list/lst = get_callproc_args()
 	if(!lst)
@@ -177,8 +170,8 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	if(!A || !IsValidSrc(A))
 		to_chat(usr, "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>")
 		return
-	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 	var/msg = "[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
+	log_admin(msg)
 	message_admins(msg)
 	admin_ticket_log(A, msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -187,8 +180,6 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	. = get_callproc_returnval(returnval,procname)
 	if(.)
 		to_chat(usr, .)
-
-
 
 /client/proc/get_callproc_args()
 	var/argnum = input("Number of arguments","Number:",0) as num|null
@@ -213,7 +204,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	. = ""
 	if(islist(returnval))
 		var/list/returnedlist = returnval
-		. = "<font color='blue'>"
+		. = "<span class='notice'>"
 		if(returnedlist.len)
 			var/assoc_check = returnedlist[1]
 			if(istext(assoc_check) && (returnedlist[assoc_check] != null))
@@ -227,10 +218,10 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 					. += "\n[elem]"
 		else
 			. = "[procname] returned an empty list"
-		. += "</font>"
+		. += "</span>"
 
 	else
-		. = "<font color='blue'>[procname] returned: [!isnull(returnval) ? returnval : "null"]</font>"
+		. = "<span class='notice'>[procname] returned: [!isnull(returnval) ? returnval : "null"]</span>"
 
 
 /client/proc/Cell()
@@ -740,8 +731,9 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		H = M.change_mob_type(/mob/living/carbon/human, null, null, TRUE)
 	else
 		H = M
-		if(alert("Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
-			delete_pocket = TRUE
+		if(H.l_store || H.r_store || H.s_store) //saves a lot of time for admins and coders alike
+			if(alert("Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
+				delete_pocket = TRUE
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in H.get_equipped_items(delete_pocket))
@@ -755,7 +747,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(H)] to [dresscode].</span>")
 
 /client/proc/robust_dress_shop()
-	var/list/outfits = list("Cancel","Naked","Custom","As Job...")
+	var/list/outfits = list("Naked","Custom","As Job...")
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
@@ -768,9 +760,6 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 	if (outfits[dresscode])
 		dresscode = outfits[dresscode]
-
-	if(dresscode == "Cancel")
-		return
 
 	if (dresscode == "As Job...")
 		var/list/job_paths = subtypesof(/datum/outfit/job)

@@ -9,7 +9,7 @@
 				/datum/surgery_step/revive,
 				/datum/surgery_step/close)
 
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 
@@ -18,7 +18,7 @@
 		return FALSE
 	if(target.stat != DEAD)
 		return FALSE
-	if(target.suiciding || target.has_trait(TRAIT_NOCLONE) || target.hellbound)
+	if(target.suiciding || target.hellbound || target.has_trait(TRAIT_HUSK))
 		return FALSE
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B)

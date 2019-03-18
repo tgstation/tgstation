@@ -13,6 +13,7 @@
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 	var/zap_cooldown = 100
@@ -35,6 +36,11 @@
 		power_multiplier += C.rating
 		zap_cooldown -= (C.rating * 20)
 	input_power_multiplier = power_multiplier
+
+/obj/machinery/power/tesla_coil/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Power generation at <b>[input_power_multiplier*100]%</b>.<br>Shock interval at <b>[zap_cooldown*0.1]</b> seconds.<span>")
 
 /obj/machinery/power/tesla_coil/on_construction()
 	if(anchored)
@@ -97,7 +103,7 @@
 	var/power = (powernet.avail/2)
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
-	tesla_zap(src, 10, power/(coeff/2))
+	tesla_zap(src, 10, power/(coeff/2), tesla_flags)
 	tesla_buckle_check(power/(coeff/2))
 
 // Tesla R&D researcher

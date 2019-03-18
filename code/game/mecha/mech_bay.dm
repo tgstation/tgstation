@@ -9,7 +9,7 @@
 
 /turf/open/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
@@ -23,7 +23,6 @@
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	var/max_charge = 50
 	var/on = FALSE
-	var/repairability = 0
 	var/turf/recharging_turf = null
 
 /obj/machinery/mech_bay_recharge_port/Initialize()
@@ -35,6 +34,11 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		MC += C.rating
 	max_charge = MC * 25
+
+/obj/machinery/mech_bay_recharge_port/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Base recharge rate at <b>[max_charge]J</b> per cycle.<span>")
 
 /obj/machinery/mech_bay_recharge_port/process()
 	if(stat & NOPOWER || !recharge_console)
@@ -99,7 +103,6 @@
 			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.obj_integrity, "maxhealth" = recharge_port.recharging_mech.max_integrity, "cell" = null)
 			if(recharge_port.recharging_mech.cell && !QDELETED(recharge_port.recharging_mech.cell))
 				data["recharge_port"]["mech"]["cell"] = list(
-				"critfail" = recharge_port.recharging_mech.cell.crit_fail,
 				"charge" = recharge_port.recharging_mech.cell.charge,
 				"maxcharge" = recharge_port.recharging_mech.cell.maxcharge
 				)

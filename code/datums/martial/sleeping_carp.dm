@@ -6,7 +6,9 @@
 
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
+	id = MARTIALART_SLEEPINGCARP
 	deflection_chance = 100
+	reroute_deflection = TRUE
 	no_guns = TRUE
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
@@ -35,7 +37,7 @@
 	return 0
 
 /datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.IsStun() && !D.IsKnockdown())
+	if(!D.stat && !D.IsStun() && !D.IsParalyzed())
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
@@ -49,19 +51,19 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(A.dir == D.dir && !D.stat && !D.IsKnockdown())
+	if(A.dir == D.dir && !D.stat && !D.IsParalyzed())
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
 		step_to(D,get_step(D,D.dir),1)
-		D.Knockdown(80)
+		D.Paralyze(80)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		return 1
 	log_combat(A, D, "back-kicked (Sleeping Carp)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.IsKnockdown())
+	if(!D.stat && !D.IsParalyzed())
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
 						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
@@ -74,11 +76,11 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.IsKnockdown())
+	if(!D.stat && !D.IsParalyzed())
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
-		D.apply_damage(20, BRUTE, BODY_ZONE_HEAD)
+		D.apply_damage(20, A.dna.species.attack_type, BODY_ZONE_HEAD)
 		D.drop_all_held_items()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		D.Stun(80)
@@ -87,13 +89,13 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(D.IsKnockdown() || D.resting || D.stat)
+	if(!(D.mobility_flags & MOBILITY_STAND))
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] elbow drops [D]!</span>", \
 						  "<span class='userdanger'>[A] piledrives you with their elbow!</span>")
 		if(D.stat)
 			D.death() //FINISH HIM!
-		D.apply_damage(50, BRUTE, BODY_ZONE_CHEST)
+		D.apply_damage(50, A.dna.species.attack_type, BODY_ZONE_CHEST)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, 1, -1)
 		return 1
 	log_combat(A, D, "elbow dropped (Sleeping Carp)")
@@ -130,9 +132,9 @@
 					  "<span class='userdanger'>[A] [atk_verb] you!</span>")
 	D.apply_damage(rand(10,15), BRUTE)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
-	if(prob(D.getBruteLoss()) && !D.lying)
+	if(prob(D.getBruteLoss()) && (D.mobility_flags & MOBILITY_STAND))
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
-		D.Knockdown(80)
+		D.Paralyze(80)
 	log_combat(A, D, "[atk_verb] (Sleeping Carp)")
 	return 1
 
@@ -181,7 +183,7 @@
 	add_fingerprint(user)
 	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
-		user.Knockdown(60)
+		user.Paralyze(60)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -215,7 +217,7 @@
 		if(prob(10))
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \
 								   "<span class='userdanger'>Your legs give out!</span>")
-			H.Knockdown(80)
+			H.Paralyze(80)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)

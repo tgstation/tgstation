@@ -111,6 +111,9 @@ The use of the : operator to override type safety checks is not allowed. You mus
 ### Type paths must begin with a /
 eg: `/datum/thing`, not `datum/thing`
 
+### Type paths must be lowercase
+eg: `/datum/thing/blue`, not `datum/thing/BLUE` or `datum/thing/Blue`
+
 ### Datum type paths must began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.
 
@@ -239,6 +242,8 @@ This prevents nesting levels from getting deeper then they need to be.
 * Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines must be incremented.
 
 * Queries must never specify the database, be it in code, or in text files in the repo.
+
+* Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
 
 ### Mapping Standards
 * TGM Format & Map Merge

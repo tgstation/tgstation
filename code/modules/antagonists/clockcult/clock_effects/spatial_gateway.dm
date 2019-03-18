@@ -133,6 +133,9 @@
 		return FALSE
 	if(!uses)
 		return FALSE
+	if(!do_teleport(A, get_turf(linked_gateway), forceMove = TRUE, channel = TELEPORT_CHANNEL_CULT))
+		visible_message("<span class='warning'>[A] bounces off [src]!</span>")
+		return FALSE
 	if(isliving(A))
 		var/mob/living/user = A
 		to_chat(user, "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>")
@@ -141,7 +144,7 @@
 	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, 1)
 	transform = matrix() * 1.5
 	linked_gateway.transform = matrix() * 1.5
-	A.forceMove(get_turf(linked_gateway))
+	
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)

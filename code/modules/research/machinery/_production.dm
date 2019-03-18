@@ -1,7 +1,6 @@
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
-	container_type = OPENCONTAINER
 	layer = BELOW_OBJ_LAYER
 	var/consoleless_interface = FALSE			//Whether it can be used without a console.
 	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
@@ -21,7 +20,7 @@
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
-	create_reagents(0)
+	create_reagents(0, OPENCONTAINER)
 	matching_designs = list()
 	cached_designs = list()
 	stored_research = new
@@ -68,11 +67,13 @@
 		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 			total_storage += M.rating * 75000
 		materials.set_local_size(total_storage)
-	var/total_rating = 0
+	var/total_rating = 1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating += M.rating
-	total_rating = max(1, total_rating)
-	efficiency_coeff = total_rating
+		total_rating = CLAMP(total_rating - (M.rating * 0.1), 0, 1)
+	if(total_rating == 0)
+		efficiency_coeff = INFINITY
+	else
+		efficiency_coeff = 1/total_rating
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()
@@ -83,7 +84,7 @@
 /obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, notify_admins)
 	if(notify_admins)
 		investigate_log("[key_name(usr)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at a [src]([type]).")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at \a [src]([type]).")
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
 		if(efficient_with(I.type))

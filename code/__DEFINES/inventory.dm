@@ -1,12 +1,12 @@
 /*ALL DEFINES RELATED TO INVENTORY OBJECTS, MANAGEMENT, ETC, GO HERE*/
 
 //ITEM INVENTORY WEIGHT, FOR w_class
-#define WEIGHT_CLASS_TINY     1 //Usually items smaller then a human hand, ex: Playing Cards, Lighter, Scalpel, Coins/Money
-#define WEIGHT_CLASS_SMALL    2 //Pockets can hold small and tiny items, ex: Flashlight, Multitool, Grenades, GPS Device
-#define WEIGHT_CLASS_NORMAL   3 //Standard backpacks can carry tiny, small & normal items, ex: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets
-#define WEIGHT_CLASS_BULKY    4 //Items that can be weilded or equipped but not stored in an inventory, ex: Defibrillator, Backpack, Space Suits
-#define WEIGHT_CLASS_HUGE     5 //Usually represents objects that require two hands to operate, ex: Shotgun, Two Handed Melee Weapons
-#define WEIGHT_CLASS_GIGANTIC 6 //Essentially means it cannot be picked up or placed in an inventory, ex: Mech Parts, Safe
+#define WEIGHT_CLASS_TINY     1 //Usually items smaller then a human hand, (e.g. playing cards, lighter, scalpel, coins/holochips)
+#define WEIGHT_CLASS_SMALL    2 //Pockets can hold small and tiny items, (e.g. flashlight, multitool, grenades, GPS device)
+#define WEIGHT_CLASS_NORMAL   3 //Standard backpacks can carry tiny, small & normal items, (e.g. fire extinguisher, stun baton, gas mask, metal sheets)
+#define WEIGHT_CLASS_BULKY    4 //Items that can be weilded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
+#define WEIGHT_CLASS_HUGE     5 //Usually represents objects that require two hands to operate, (e.g. shotgun, two-handed melee weapons)
+#define WEIGHT_CLASS_GIGANTIC 6 //Essentially means it cannot be picked up or placed in an inventory, (e.g. mech parts, safe)
 
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
@@ -87,6 +87,7 @@
 
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
+//Make sure to update check_obscured_slots() if you add more.
 #define HIDEGLOVES		(1<<0)
 #define HIDESUITSTORAGE	(1<<1)
 #define HIDEJUMPSUIT	(1<<2)	//these first four are only used in exterior suits

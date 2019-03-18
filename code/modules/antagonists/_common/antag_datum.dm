@@ -4,18 +4,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/name = "Antagonist"
 	var/roundend_category = "other antagonists"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
 	var/show_in_roundend = TRUE								//Set to false to hide the antagonists from roundend report
+	var/prevent_roundtype_conversion = TRUE		//If false, the roundtype will still convert with this antag active
 	var/datum/mind/owner						//Mind that owns this datum
 	var/silent = FALSE							//Silent will prevent the gain/lose texts to show
 	var/can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
 	var/list/typecache_datum_blacklist = list()	//List of datums this type can't coexist with
 	var/delete_on_mind_deletion = TRUE
 	var/job_rank
-	var/replace_banned = TRUE //Should replace jobbaned player with ghosts if granted.
+	var/replace_banned = TRUE //Should replace jobbanned player with ghosts if granted.
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
 	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
-	
+
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
@@ -76,7 +77,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
 		return FALSE
-	. = (jobban_isbanned(M, ROLE_SYNDICATE) || QDELETED(M) || (job_rank && (jobban_isbanned(M,job_rank) || QDELETED(M))))
+	. = (is_banned_from(M.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(M))
 
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
@@ -85,7 +86,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner)]) to replace a jobbanned player.")
 		owner.current.ghostize(0)
 		owner.current.key = C.key
 
@@ -158,16 +159,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //Called when using admin tools to give antag status
 /datum/antagonist/proc/admin_add(datum/mind/new_owner,mob/admin)
-	message_admins("[key_name_admin(admin)] made [new_owner.current] into [name].")
-	log_admin("[key_name(admin)] made [new_owner.current] into [name].")
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	new_owner.add_antag_datum(src)
 
 //Called when removing antagonist using admin tools
 /datum/antagonist/proc/admin_remove(mob/user)
 	if(!user)
 		return
-	message_admins("[key_name_admin(user)] has removed [name] antagonist status from [owner.current].")
-	log_admin("[key_name(user)] has removed [name] antagonist status from [owner.current].")
+	message_admins("[key_name_admin(user)] has removed [name] antagonist status from [key_name_admin(owner)].")
+	log_admin("[key_name(user)] has removed [name] antagonist status from [key_name(owner)].")
 	on_removal()
 
 //gamemode/proc/is_mode_antag(antagonist/A) => TRUE/FALSE

@@ -74,6 +74,8 @@
 			L.SetStun(0)
 			L.SetKnockdown(0)
 			L.SetSleeping(0)
+			L.SetImmobilized(0)
+			L.SetParalyzed(0)
 			L.SetUnconscious(0)
 			L.reagents.add_reagent("muscle_stimulant", CLAMP(5 - L.reagents.get_reagent_amount("muscle_stimulant"), 0, 5))	//If you don't have legs or get bola'd, tough luck!
 			colorize(L)
@@ -134,7 +136,7 @@
 		return
 	update_icon()
 	if(sticky)
-		item_flags |= NODROP
+		add_trait(TRAIT_NODROP, HOT_POTATO_TRAIT)
 	name = "primed [name]"
 	activation_time = timer + world.time
 	detonation_timerid = addtimer(CALLBACK(src, .proc/detonate), delay, TIMER_STOPPABLE)
@@ -148,7 +150,7 @@
 /obj/item/hot_potato/proc/deactivate()
 	update_icon()
 	name = initial(name)
-	item_flags &= ~NODROP
+	remove_trait(TRAIT_NODROP, HOT_POTATO_TRAIT)
 	deltimer(detonation_timerid)
 	STOP_PROCESSING(SSfastprocess, src)
 	detonation_timerid = null

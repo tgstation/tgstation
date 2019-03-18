@@ -198,7 +198,7 @@
 		if(H.anti_magic_check(FALSE, TRUE))
 			continue
 		H.mind.add_antag_datum(/datum/antagonist/sintouched)
-		H.Knockdown(400)
+		H.Paralyze(400)
 
 
 /obj/effect/proc_holder/spell/targeted/summon_dancefloor

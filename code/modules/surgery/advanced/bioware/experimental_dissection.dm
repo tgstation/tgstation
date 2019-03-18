@@ -1,4 +1,4 @@
-/datum/surgery/advanced/bioware/experimental_dissection
+/datum/surgery/advanced/experimental_dissection
 	name = "Experimental Dissection"
 	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
 	steps = list(/datum/surgery_step/incise,
@@ -8,10 +8,12 @@
 				/datum/surgery_step/dissection,
 				/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
-	bioware_target = BIOWARE_DISSECTION
+	target_mobtypes = list(/mob/living/carbon) //Feel free to dissect devils but they're magic.
 
-/datum/surgery/advanced/bioware/experimental_dissection/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/carbon/target)
 	. = ..()
+	if(target.has_trait(TRAIT_DISSECTED))
+		return FALSE
 	if(iscyborg(user))
 		return FALSE //robots cannot be creative
 						//(also this surgery shouldn't be consistently successful, and cyborgs have a 100% success rate on surgery)
@@ -49,7 +51,7 @@
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = check_value(target)))
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
 	target.apply_damage(80, BRUTE, L)
-	new /datum/bioware/dissected(target)
+	target.add_trait(TRAIT_DISSECTED)
 	return TRUE
 	
 /datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -57,10 +59,5 @@
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = (check_value(target) * 0.2)))
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
 	target.apply_damage(80, BRUTE, L)
-	new /datum/bioware/dissected(target)
+	target.add_trait(TRAIT_DISSECTED)
 	return TRUE
-
-/datum/bioware/dissected
-	name = "Dissected"
-	desc = "This body has been dissected and analyzed. It is no longer worth experimenting on."
-	mod_type = BIOWARE_DISSECTION

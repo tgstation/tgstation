@@ -1,5 +1,3 @@
-
-
 /atom/movable
 	var/can_buckle = 0
 	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
@@ -66,7 +64,7 @@
 	M.buckled = src
 	M.setDir(dir)
 	buckled_mobs |= M
-	M.update_canmove()
+	M.update_mobility()
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
 	post_buckle_mob(M)
 
@@ -85,7 +83,7 @@
 		. = buckled_mob
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
-		buckled_mob.update_canmove()
+		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")
 		buckled_mobs -= buckled_mob
 		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)

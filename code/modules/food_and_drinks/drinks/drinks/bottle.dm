@@ -90,13 +90,13 @@
 	armor_block = min(90,armor_block)
 	target.apply_damage(force, BRUTE, affecting, armor_block)
 
-	// You are going to knock someone out for longer if they are not wearing a helmet.
+	// You are going to knock someone down for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
 	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
-		//Knockdown the target for the duration that we calculated and divide it by 5.
+		//Knock down the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
-			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN) // Never knockdown more than a flash!
+			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN)
 
 	//Display an attack message.
 	if(target != user)
@@ -331,6 +331,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
+	custom_price = 10
 	icon_state = "orangejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -342,6 +343,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
+	custom_price = 10
 	icon_state = "cream"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -353,6 +355,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
+	custom_price = 10
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -364,6 +367,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
 	desc = "Sweet-sour goodness."
+	custom_price = 10
 	icon_state = "limejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -375,6 +379,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	custom_price = 10
 	icon_state = "mentholbox"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -385,6 +390,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/grenadine
 	name = "Jester Grenadine"
 	desc = "Contains 0% real cherries!"
+	custom_price = 10
 	icon_state = "grenadine"
 	isGlass = TRUE
 	list_reagents = list("grenadine" = 100)
@@ -412,7 +418,7 @@
 			isGlass = FALSE
 	return
 
-/obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/target,datum/thrownthing/throwdata)
+/obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/firestarter = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
 		for(var/A in accelerants)
@@ -420,8 +426,8 @@
 				firestarter = 1
 				break
 	if(firestarter && active)
-		target.fire_act()
-		new /obj/effect/hotspot(get_turf(target))
+		hit_atom.fire_act()
+		new /obj/effect/hotspot(get_turf(hit_atom))
 	..()
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)

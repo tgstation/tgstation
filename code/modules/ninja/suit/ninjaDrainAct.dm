@@ -44,8 +44,8 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			if (do_after(H,10, target = src))
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
-				cell.charge -= drain
-				S.cell.charge += drain
+				cell.use(drain)
+				S.cell.give(drain)
 				. += drain
 			else
 				break
@@ -89,7 +89,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
 				charge -= drain
-				S.cell.charge += drain
+				S.cell.give(drain)
 				. += drain
 
 			else
@@ -109,7 +109,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			if(S.cell.charge + charge > S.cell.maxcharge)
 				S.cell.charge = S.cell.maxcharge
 			else
-				S.cell.charge += charge
+				S.cell.give(charge)
 			charge = 0
 			corrupt()
 			update_icon()
@@ -181,7 +181,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		else
 			break
 
-		S.cell.charge += drained
+		S.cell.give(drain)
 		if(S.cell.charge > S.cell.maxcharge)
 			. += (drained-(S.cell.charge - S.cell.maxcharge))
 			S.cell.charge = S.cell.maxcharge
@@ -212,7 +212,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
 				cell.use(drain)
-				S.cell.charge += drain
+				S.cell.give(drain)
 				. += drain
 			else
 				break
@@ -239,8 +239,8 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			if (do_after(H,10))
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
-				cell.charge -= drain
-				S.cell.charge += drain
+				cell.use(drain)
+				S.cell.give(drain)
 				. += drain
 			else
 				break

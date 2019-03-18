@@ -20,10 +20,10 @@
 	var/material_type = /obj/item/stack/sheet/metal
 	var/material_amt = 4
 
-/obj/structure/door_assembly/New()
+/obj/structure/door_assembly/Initialize()
+	. = ..()
 	update_icon()
 	update_name()
-	..()
 
 /obj/structure/door_assembly/examine(mob/user)
 	..()
@@ -241,6 +241,7 @@
 				//door.req_access = req_access
 				door.electronics = electronics
 				door.heat_proof = heat_proof_finished
+				door.security_level = 0
 				if(electronics.one_access)
 					door.req_one_access = electronics.accesses
 				else

@@ -7,18 +7,18 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Plumbing") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	//all plumbing - yes, some things might get stated twice, doesn't matter.
-	for (var/obj/machinery/atmospherics/plumbing in GLOB.machines)
-		if (plumbing.nodealert)
-			to_chat(usr, "Unconnected [plumbing.name] located at [ADMIN_VERBOSEJMP(plumbing)]")
+	for(var/obj/machinery/atmospherics/components/pipe in GLOB.machines)
+		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
+			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]")
 
 	//Manifolds
-	for (var/obj/machinery/atmospherics/pipe/manifold/pipe in GLOB.machines)
-		if (!pipe.nodes[1] || !pipe.nodes[2] || !pipe.nodes[3])
+	for(var/obj/machinery/atmospherics/pipe/manifold/pipe in GLOB.machines)
+		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
 			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]")
 
 	//Pipes
-	for (var/obj/machinery/atmospherics/pipe/simple/pipe in GLOB.machines)
-		if (!pipe.nodes[1] || !pipe.nodes[2])
+	for(var/obj/machinery/atmospherics/pipe/simple/pipe in GLOB.machines)
+		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
 			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]")
 
 /client/proc/powerdebug()

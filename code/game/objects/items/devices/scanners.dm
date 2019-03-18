@@ -6,11 +6,14 @@ T-RAY
 HEALTH ANALYZER
 GAS ANALYZER
 SLIME SCANNER
+NANITE SCANNER
+GENE SCANNER
 
 */
 /obj/item/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
+	custom_price = 10
 	icon = 'icons/obj/device.dmi'
 	icon_state = "t-ray0"
 	var/on = FALSE
@@ -25,13 +28,21 @@ SLIME SCANNER
 	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return TOXLOSS
 
-/obj/item/t_scanner/attack_self(mob/user)
-
+/obj/item/t_scanner/proc/toggle_on()
 	on = !on
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
-
 	if(on)
 		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/t_scanner/attack_self(mob/user)
+	toggle_on()
+
+/obj/item/t_scanner/cyborg_unequip(mob/user)
+	if(!on)
+		return
+	toggle_on()
 
 /obj/item/t_scanner/process()
 	if(!on)
@@ -50,7 +61,7 @@ SLIME SCANNER
 		if(O.level != 1)
 			continue
 
-		if(O.invisibility == INVISIBILITY_MAXIMUM)
+		if(O.invisibility == INVISIBILITY_MAXIMUM || O.has_trait(TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128
@@ -181,6 +192,7 @@ SLIME SCANNER
 			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
+
 	if (M.radiation)
 		to_chat(user, "\t<span class='alert'>Subject is irradiated.</span>")
 		if(advanced)
@@ -244,6 +256,8 @@ SLIME SCANNER
 		var/ldamage = H.return_liver_damage()
 		if(ldamage > 10)
 			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "Severe" : "Minor"] liver damage detected.</span>")
+		if(advanced && H.has_dna())
+			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
 
 	// Body part damage report
 	if(iscarbon(M) && mode == 1)
@@ -336,7 +350,7 @@ SLIME SCANNER
 			if(M.reagents.reagent_list.len)
 				to_chat(user, "<span class='notice'>Subject contains the following reagents:</span>")
 				for(var/datum/reagent/R in M.reagents.reagent_list)
-					to_chat(user, "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]")
+					to_chat(user, "<span class='notice'>[round(R.volume, 0.001)] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]")
 			else
 				to_chat(user, "<span class='notice'>Subject contains no reagents.</span>")
 			if(M.reagents.addiction_list.len)
@@ -350,7 +364,7 @@ SLIME SCANNER
 	set name = "Switch Verbosity"
 	set category = "Object"
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 
 	mode = !mode
@@ -369,6 +383,7 @@ SLIME SCANNER
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "analyzer"
+	custom_price = 10
 	icon = 'icons/obj/device.dmi'
 	icon_state = "analyzer"
 	item_state = "analyzer"
@@ -552,10 +567,9 @@ SLIME SCANNER
 				to_chat(user, "<span class='notice'>[target] is empty!</span>")
 
 		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
-			var/fusion_power = round(cached_scan_results["fusion"], 0.01)
-			var/tier = fusionpower2text(fusion_power)
+			var/instability = round(cached_scan_results["fusion"], 0.01)
 			to_chat(user, "<span class='boldnotice'>Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.</span>")
-			to_chat(user, "<span class='notice'>Power of the last fusion reaction: [fusion_power]\n This power indicates it was a [tier]-tier fusion reaction.</span>")
+			to_chat(user, "<span class='notice'>Instability of the last fusion reaction: [instability].</span>")
 	return
 
 //slime scanner
@@ -642,3 +656,66 @@ SLIME SCANNER
 	var/response = SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, TRUE)
 	if(!response)
 		to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")
+
+/obj/item/sequence_scanner
+	name = "genetic sequence scanner"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gene"
+	item_state = "healthanalyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	desc = "A hand-held scanner able to swiftly scan someone for potential mutations. Hold near a DNA console to update from their database."
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 3
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	materials = list(MAT_METAL=200)
+	var/list/discovered = list() //hit a dna console to update the scanners database
+
+/obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
+	add_fingerprint(user)
+	if (!M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+		user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
+		
+		gene_scan(M, user, src)
+	else
+
+		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
+		
+
+/obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
+	. = ..()
+	if(!istype(O) || !proximity)
+		return
+
+	if(istype(O, /obj/machinery/computer/scan_consolenew))
+		var/obj/machinery/computer/scan_consolenew/C = O
+		if(C.stored_research)
+			to_chat(user, "<span class='notice'>[name] database updated.</span>")
+			discovered = C.stored_research.discovered_mutations
+		else
+			to_chat(user,"<span class='warning'>No database to update from.</span>")
+
+/proc/gene_scan(mob/living/carbon/C, mob/living/user, obj/item/sequence_scanner/G)
+	if(!iscarbon(C) || !C.has_dna())
+		return
+	to_chat(user, "<span class='notice'>[C.name]'s potential mutations.")
+	for(var/A in C.dna.mutation_index)
+		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(A)
+		var/mut_name
+		if(G && (A in G.discovered))
+			mut_name = "[HM.name] ([HM.alias])"
+		else
+			mut_name = HM.alias
+		var/temp = GET_GENE_STRING(HM.type, C.dna)
+		var/display
+		for(var/i in 0 to length(temp) / DNA_MUTATION_BLOCKS-1)
+			if(i)
+				display += "-"
+			display += copytext(temp, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+
+
+		to_chat(user, "<span class='boldnotice'>- [mut_name] > [display]</span>")

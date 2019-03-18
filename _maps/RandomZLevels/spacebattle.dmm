@@ -570,7 +570,7 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "cH" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
 	},
@@ -844,7 +844,9 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dL" = (
-/obj/mecha/working/ripley/firefighter,
+/obj/mecha/working/ripley/firefighter{
+	ruin_mecha = 1
+	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dM" = (
@@ -2470,7 +2472,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jt" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/advtaser,
+/obj/item/gun/energy/disabler,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "ju" = (
@@ -2541,7 +2543,7 @@
 "jB" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced,
-/obj/item/gun/energy/e_gun/advtaser,
+/obj/item/gun/energy/disabler,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "jC" = (
@@ -2887,10 +2889,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
-"kM" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/mineral/random,
-/area/space/nearstation)
 "vw" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate5)
@@ -3168,7 +3166,7 @@ aa
 aa
 aa
 aa
-kM
+aa
 "}
 (2,1,1) = {"
 aa

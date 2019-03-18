@@ -20,6 +20,7 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_CREATED, src)
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
@@ -33,7 +34,7 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
-	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
+	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)
@@ -103,6 +104,18 @@
 			to_chat(src, "<I>... You can almost hear something ...</I>")
 	else
 		to_chat(src, msg)
+
+/mob/proc/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+	if(!can_hear())
+		return
+	//Process sound
+	if(S)
+		SEND_SOUND(src, S)
+	//Process text
+	if(text)
+		to_chat(src, "<span class='italics'>[text]</span>")
+	//to whoever sees this: icons are handled in living.dm
+
 
 // Show a message to all player mobs who sees this atom
 // Show a message to the src mob (if the src is a mob)
@@ -184,7 +197,7 @@
 /mob/proc/restrained(ignore_grab)
 	return
 
-/mob/proc/incapacitated(ignore_restraints, ignore_grab)
+/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
@@ -461,21 +474,21 @@
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		if(href_list["item"])
-			var/slot = text2num(href_list["item"])
-			var/hand_index = text2num(href_list["hand_index"])
-			var/obj/item/what
-			if(hand_index)
-				what = get_item_for_held_index(hand_index)
-				slot = list(slot,hand_index)
-			else
-				what = get_item_by_slot(slot)
-			if(what)
-				if(!(what.item_flags & ABSTRACT))
-					usr.stripPanelUnequip(what,src,slot)
-			else
-				usr.stripPanelEquip(what,src,slot)
+
+	if(href_list["item"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		var/slot = text2num(href_list["item"])
+		var/hand_index = text2num(href_list["hand_index"])
+		var/obj/item/what
+		if(hand_index)
+			what = get_item_for_held_index(hand_index)
+			slot = list(slot,hand_index)
+		else
+			what = get_item_by_slot(slot)
+		if(what)
+			if(!(what.item_flags & ABSTRACT))
+				usr.stripPanelUnequip(what,src,slot)
+		else
+			usr.stripPanelEquip(what,src,slot)
 
 	if(usr.machine == src)
 		if(Adjacent(usr))
@@ -553,6 +566,12 @@
 			GLOB.cameranet.stat_entry()
 		if(statpanel("Tickets"))
 			GLOB.ahelp_tickets.stat_entry()
+		if(length(GLOB.sdql2_queries))
+			if(statpanel("SDQL2"))
+				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
+				for(var/i in GLOB.sdql2_queries)
+					var/datum/SDQL2_query/Q = i
+					Q.generate_stat()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -577,9 +596,6 @@
 
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			add_stings_to_statpanel(changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
@@ -593,17 +609,10 @@
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
 
-/mob/proc/add_stings_to_statpanel(list/stings)
-	for(var/obj/effect/proc_holder/changeling/S in stings)
-		if(S.chemical_cost >=0 && S.can_be_used_by(src))
-			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
-
 #define MOB_FACE_DIRECTION_DELAY 1
 
 // facing verbs
 /mob/proc/canface()
-	if(!canmove)
-		return FALSE
 	if(world.time < client.last_turn)
 		return FALSE
 	if(stat == DEAD || stat == UNCONSCIOUS)
@@ -616,8 +625,10 @@
 		return FALSE
 	return TRUE
 
-/mob/proc/fall(forced)
-	drop_all_held_items()
+/mob/living/canface()
+	if(!(mobility_flags & MOBILITY_MOVE))
+		return FALSE
+	return ..()
 
 /mob/verb/eastface()
 	set hidden = TRUE
@@ -663,9 +674,9 @@
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
 	return 0
 
-/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+/mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	if(mind)
-		return mind.get_ghost(even_if_they_cant_reenter)
+		return mind.get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 
 /mob/proc/grab_ghost(force)
 	if(mind)
@@ -690,15 +701,17 @@
 			mob_spell_list -= S
 			qdel(S)
 
-/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
+/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, major = TRUE, self = FALSE)
 	if(!magic && !holy)
 		return
 	var/list/protection_sources = list()
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, magic, holy, protection_sources) & COMPONENT_BLOCK_MAGIC)
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, major, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
 		if(protection_sources.len)
 			return pick(protection_sources)
 		else
 			return src
+	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
+		return src
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -769,6 +782,9 @@
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return
 
+/mob/proc/canUseStorage()
+	return FALSE
+
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
 		var/list/faction_src = faction.Copy()
@@ -799,10 +815,15 @@
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
 		return 0
+
+	log_played_names(ckey,newname)
+
 	real_name = newname
 	name = newname
 	if(mind)
 		mind.name = newname
+		if(mind.key)
+			log_played_names(mind.key,newname) //Just in case the mind is unsynced at the moment.
 
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
@@ -833,6 +854,8 @@
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
 				ID.update_label()
+				if(ID.registered_account?.account_holder == oldname)
+					ID.registered_account.account_holder = newname
 				if(!search_pda)
 					break
 				search_id = 0
@@ -875,17 +898,25 @@
 		if(E.mouse_pointer)
 			client.mouse_pointer_icon = E.mouse_pointer
 
-			
+
 
 /mob/proc/is_literate()
-	return 0
+	return FALSE
+
+/mob/proc/can_read(obj/O)
+	if(is_blind(src))
+		to_chat(src, "<span class='warning'>As you are trying to read [O], you suddenly feel very stupid!</span>")
+		return
+	if(!is_literate())
+		to_chat(src, "<span class='notice'>You try to read [O], but can't comprehend any of it.</span>")
+		return
+	return TRUE
 
 /mob/proc/can_hold_items()
 	return FALSE
 
 /mob/proc/get_idcard(hand_first)
 	return
-
 
 /mob/vv_get_dropdown()
 	. = ..()
@@ -914,3 +945,13 @@
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
+
+/mob/proc/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+	nutrition = max(0, nutrition + change)
+
+/mob/proc/set_nutrition(var/change) //Seriously fuck you oldcoders.
+	nutrition = max(0, change)
+
+/mob/setMovetype(newval)
+	. = ..()
+	update_movespeed(FALSE)

@@ -147,43 +147,43 @@
 /obj/structure/closet/proc/insert(atom/movable/AM)
 	if(contents.len >= storage_capacity)
 		return -1
+	if(insertion_allowed(AM))
+		AM.forceMove(src)
+		return TRUE
+	else
+		return FALSE
 
-
+/obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
-			return
+			return FALSE
 		var/mob/living/L = AM
 		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
-			return
+			return FALSE
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
-				return
+				return FALSE
 			if(L.mob_size > max_mob_size)
-				return
+				return FALSE
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
 				if(++mobs_stored >= mob_storage_capacity)
-					return
+					return FALSE
 		L.stop_pulling()
+
 	else if(istype(AM, /obj/structure/closet))
-		return
+		return FALSE
 	else if(isobj(AM))
-		if (istype(AM, /obj/item))
-			var/obj/item/I = AM
-			if (I.item_flags & NODROP)
-				return
+		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs())
+			return FALSE
+		else if(isitem(AM) && !AM.has_trait(TRAIT_NODROP))
+			return TRUE
 		else if(!allow_objects && !istype(AM, /obj/effect/dummy/chameleon))
-			return
-		if(!allow_dense && AM.density)
-			return
-		if(AM.anchored || AM.has_buckled_mobs())
-			return
+			return FALSE
 	else
-		return
+		return FALSE
 
-	AM.forceMove(src)
-
-	return 1
+	return TRUE
 
 /obj/structure/closet/proc/close(mob/living/user)
 	if(!opened || !can_close(user))
@@ -280,7 +280,7 @@
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
 		return
-	if(!istype(user) || user.incapacitated() || user.lying)
+	if(!istype(user) || user.incapacitated() || !(user.mobility_flags & MOBILITY_STAND))
 		return
 	if(!Adjacent(user) || !user.Adjacent(O))
 		return
@@ -309,7 +309,7 @@
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
-				L.Knockdown(40)
+				L.Paralyze(40)
 			O.forceMove(T)
 			close()
 	else
@@ -326,11 +326,11 @@
 		return
 	container_resist(user)
 
-/obj/structure/closet/attack_hand(mob/user)
+/obj/structure/closet/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
-	if(user.lying && get_dist(src, user) > 0)
+	if(!(user.mobility_flags & MOBILITY_STAND) && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))
@@ -352,7 +352,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(!usr.incapacitated())
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))

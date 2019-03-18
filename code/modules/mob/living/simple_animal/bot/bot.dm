@@ -58,7 +58,7 @@
 	var/mob/living/silicon/ai/calling_ai //Links a bot to the AI calling it.
 	var/obj/item/radio/Radio //The bot's radio, for speaking to people.
 	var/radio_key = null //which channels can the bot listen to
-	var/radio_channel = "Common" //The bot's default radio channel
+	var/radio_channel = RADIO_CHANNEL_COMMON //The bot's default radio channel
 	var/auto_patrol = 0// set to make bot automatically patrol
 	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
 	var/turf/summon_target	// The turf of a user summoning a bot.
@@ -110,7 +110,7 @@
 	if(stat)
 		return FALSE
 	on = TRUE
-	canmove = TRUE
+	update_mobility()
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
@@ -118,7 +118,7 @@
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
-	canmove = FALSE
+	update_mobility()
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
@@ -155,11 +155,10 @@
 		path_hud.add_to_hud(src)
 		path_hud.add_hud_to(src)
 
-/mob/living/simple_animal/bot/update_canmove()
+/mob/living/simple_animal/bot/update_mobility()
 	. = ..()
 	if(!on)
-		. = 0
-	canmove = .
+		mobility_flags = NONE
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)
@@ -847,7 +846,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return INITIALIZE_HINT_QDEL
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, !issilicon(user)))
 		return TRUE
 	// 0 for access, 1 for denied.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.

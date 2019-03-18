@@ -237,7 +237,10 @@
 	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseparable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
-	item_flags = NODROP
+
+/obj/item/clothing/suit/poncho/ponchoshame/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/suit/whitedress
 	name = "white dress"
@@ -255,7 +258,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/automatic/speargun)
+	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/pneumatic_cannon/speargun)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
 /obj/item/clothing/head/hooded/carp_hood
@@ -266,6 +269,16 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/head/hooded/carp_hood/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == SLOT_HEAD)
+		user.faction |= "carp"
+
+/obj/item/clothing/head/hooded/carp_hood/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		user.faction -= "carp"
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
@@ -364,6 +377,12 @@
 	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironically?"
 	icon_state = "vapeshirt"
 	item_state = "vapeshirt"
+
+/obj/item/clothing/suit/striped_sweater
+	name = "striped sweater"
+	desc = "Reminds you of someone, but you just can't put your finger on it..."
+	icon_state = "waldo_shirt"
+	item_state = "waldo_shirt"
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"

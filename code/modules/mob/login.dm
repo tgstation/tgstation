@@ -16,7 +16,8 @@
 	next_move = 1
 
 	..()
-
+	if (client && key != client.key)
+		key = client.key
 	reset_perspective(loc)
 
 	if(loc)
@@ -50,5 +51,6 @@
 		for(var/foo in client.player_details.post_login_callbacks)
 			var/datum/callback/CB = foo
 			CB.Invoke()
+		log_played_names(client.ckey,name,real_name)
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)

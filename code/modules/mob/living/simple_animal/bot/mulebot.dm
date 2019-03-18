@@ -23,7 +23,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/encryptionkey/headset_cargo
-	radio_channel = "Supply"
+	radio_channel = RADIO_CHANNEL_SUPPLY
 
 	bot_type = MULE_BOT
 	model = "MULE"
@@ -149,7 +149,8 @@
 	return
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/item/projectile/Proj)
-	if(..())
+	. = ..()
+	if(.)
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))
@@ -216,7 +217,7 @@
 			bot_control(action, usr) // Kill this later.
 			. = TRUE
 
-/mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, pda = 0)
+/mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, pda = FALSE)
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.
 		return
 
@@ -327,8 +328,9 @@
 // mousedrop a crate to load the bot
 // can load anything if hacked
 /mob/living/simple_animal/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
+	var/mob/living/L = user
 
-	if(user.incapacitated() || user.lying)
+	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
 		return
 
 	if(!istype(AM))
@@ -579,7 +581,7 @@
 // called when bot reaches current target
 /mob/living/simple_animal/bot/mulebot/proc/at_target()
 	if(!reached_target)
-		radio_channel = "Supply" //Supply channel
+		radio_channel = RADIO_CHANNEL_SUPPLY //Supply channel
 		audible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
 		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
 		reached_target = 1
@@ -590,7 +592,7 @@
 				to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!</span>")
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
-				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.
+				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 
 		if(load)		// if loaded, unload at target
 			if(report_delivery)
@@ -633,7 +635,7 @@
 				if(!paicard)
 					log_combat(src, L, "knocked down")
 					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-					L.Knockdown(160)
+					L.Paralyze(160)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()

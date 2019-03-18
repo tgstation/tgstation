@@ -115,12 +115,16 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
 
-/datum/chatOutput/proc/sendMusic(music, pitch)
+/datum/chatOutput/proc/sendMusic(music, list/extra_data)
 	if(!findtext(music, GLOB.is_http_protocol))
 		return
 	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
-	if(pitch)
-		music_data["musicRate"] = pitch
+
+	if(extra_data?.len)
+		music_data["musicRate"] = extra_data["pitch"]
+		music_data["musicSeek"] = extra_data["start"]
+		music_data["musicHalt"] = extra_data["end"]
+
 	ehjax_send(data = music_data)
 
 /datum/chatOutput/proc/stopMusic()
@@ -154,7 +158,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
-				if (world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only=TRUE))
+				if (world.IsBanned(row["ckey"], row["ip"], row["compid"], real_bans_only=TRUE))
 					found = row
 					break
 

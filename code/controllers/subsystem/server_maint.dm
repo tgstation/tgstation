@@ -9,6 +9,9 @@ SUBSYSTEM_DEF(server_maint)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 
+/datum/controller/subsystem/server_maint/PreInit()
+	world.hub_password = "" //quickly! before the hubbies see us.
+
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (CONFIG_GET(flag/hub))
 		world.update_hub_visibility(TRUE)
@@ -55,8 +58,8 @@ SUBSYSTEM_DEF(server_maint)
 			co.ehjax_send(data = "roundrestart")
 		if(server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[server]")
-	var/tgsversion = world.TgsVersion()
+	var/datum/tgs_version/tgsversion = world.TgsVersion()
 	if(tgsversion)
-		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion)
+		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion.raw_parameter)
 
 #undef PING_BUFFER_TIME

@@ -29,7 +29,7 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(prob(damage))
 			for(var/mob/living/N in buckled_mobs)
-				N.Knockdown(20)
+				N.Paralyze(20)
 				unbuckle_mob(N)
 				N.visible_message("<span class='boldwarning'>[N] is knocked off of [src] by [M]!</span>")
 		switch(M.melee_damage_type)
@@ -106,7 +106,7 @@
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
 			unbuckle_mob(M)
-			M.Knockdown(40)
+			M.Paralyze(40)
 			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
 	flash_act(affect_silicon = 1)
 
@@ -118,13 +118,13 @@
 			for(var/mob/living/M in buckled_mobs)
 				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
 				unbuckle_mob(M)
-				M.Knockdown(40)
-	if(Proj.stun || Proj.knockdown)
+				M.Paralyze(40)
+	if(Proj.stun || Proj.knockdown || Proj.paralyze)
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
 			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [Proj]!</span>")
 	Proj.on_hit(src)
-	return 2
+	return BULLET_ACT_HIT
 
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
 	if(affect_silicon)

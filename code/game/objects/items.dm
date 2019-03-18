@@ -48,6 +48,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	var/transparent_protection = NONE //you can see someone's mask through their transparent visor, but you can't reach it
 
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
 
@@ -173,14 +174,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	set category = "Object"
 	set src in oview(1)
 
-	if(!isturf(loc) || usr.stat || usr.restrained() || !usr.canmove)
+	if(!isturf(loc) || usr.stat || usr.restrained())
 		return
 
-	var/turf/T = src.loc
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 
-	src.loc = null
-
-	src.loc = T
+	var/turf/T = loc
+	loc = null
+	loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	..()
@@ -413,8 +417,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	set category = "Object"
 	set name = "Pick up"
 
-	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
+	if(usr.incapacitated() || !Adjacent(usr))
 		return
+
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
@@ -430,26 +439,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 
-	var/is_human_victim = 0
+	var/is_human_victim
 	var/obj/item/bodypart/affecting = M.get_bodypart(BODY_ZONE_HEAD)
 	if(ishuman(M))
 		if(!affecting) //no head!
 			return
-		is_human_victim = 1
-		var/mob/living/carbon/human/H = M
-		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || \
-			(H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
-			// you can't stab someone in the eyes wearing a mask!
-			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
-			return
+		is_human_victim = TRUE
 
-	if(ismonkey(M))
-		var/mob/living/carbon/monkey/Mo = M
-		if(Mo.wear_mask && Mo.wear_mask.flags_cover & MASKCOVERSEYES)
-			// you can't stab someone in the eyes wearing a mask!
-			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
-			return
+	if(M.is_eyes_covered())
+		// you can't stab someone in the eyes wearing a mask!
+		to_chat(user, "<span class='danger'>You're going to need to remove [M.p_their()] eye protection first!</span>")
+		return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
@@ -502,7 +502,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
-			M.Knockdown(40)
+			M.Paralyze(40)
 		if (prob(eyes.eye_damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
@@ -514,16 +514,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		return
 
-/obj/item/throw_impact(atom/A, datum/thrownthing/throwingdatum)
-	if(A && !QDELETED(A))
-		SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, A, throwingdatum)
-		if(is_hot() && isliving(A))
-			var/mob/living/L = A
+/obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(hit_atom && !QDELETED(hit_atom))
+		SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+		if(is_hot() && isliving(hit_atom))
+			var/mob/living/L = hit_atom
 			L.IgniteMob()
 		var/itempush = 1
 		if(w_class < 4)
 			itempush = 0 //too light to push anything
-		return A.hitby(src, 0, itempush)
+		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	thrownby = thrower
@@ -604,7 +604,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(success)
 			location = get_turf(M)
 	if(isturf(location))
-		location.hotspot_expose(flame_heat, 1)
+		location.hotspot_expose(flame_heat, 5)
 
 /obj/item/proc/ignition_effect(atom/A, mob/user)
 	if(is_hot())
@@ -617,7 +617,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/get_held_item_speechspans(mob/living/carbon/user)
 	return
 
-/obj/item/hitby(atom/movable/AM)
+/obj/item/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	return
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
@@ -651,7 +651,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		..()
 
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
-	if(M && M.dirty < 100)
+	if(istype(M) && M.dirty < 100)
 		M.dirty++
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
@@ -790,6 +790,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (item_flags & NODROP)
+	if(has_trait(TRAIT_NODROP))
 		return
 	return ..()
+
+/obj/item/proc/canStrip(mob/stripper, mob/owner)
+	return !has_trait(TRAIT_NODROP)
+
+/obj/item/proc/doStrip(mob/stripper, mob/owner)
+	return owner.dropItemToGround(src)
+

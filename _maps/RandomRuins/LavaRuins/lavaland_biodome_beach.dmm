@@ -165,7 +165,6 @@
 	dir = 1
 	},
 /obj/item/book/manual/wiki/barman_recipes,
-/obj/item/book/granter/action/drink_fling,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/reagent_containers/glass/rag,
 /turf/open/floor/wood,
@@ -243,7 +242,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aX" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aY" = (

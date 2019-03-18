@@ -9,49 +9,38 @@
 #define TEXT_EAST			"[EAST]"
 #define TEXT_WEST			"[WEST]"
 
-//These get to go at the top, because they're special
-//You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
-/* eg:
-/mob/living/carbon/human/death()
-	to_chat(world, THIS_PROC_TYPE_STR) //You can only output the string versions
-Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a string with () (eg: the _WITH_ARGS defines) to make it look nicer)
-*/
-#define THIS_PROC_TYPE .....
-#define THIS_PROC_TYPE_STR "[THIS_PROC_TYPE]" //Because you can only obtain a string of THIS_PROC_TYPE using "[]", and it's nice to just +/+= strings
-#define THIS_PROC_TYPE_STR_WITH_ARGS "[THIS_PROC_TYPE]([args.Join(",")])"
-#define THIS_PROC_TYPE_WEIRD ...... //This one is WEIRD, in some cases (When used in certain defines? (eg: ASSERT)) THIS_PROC_TYPE will fail to work, but THIS_PROC_TYPE_WEIRD will work instead
-//define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
-//define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
 //Human Overlays Indexes/////////
-#define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			19
-#define ID_LAYER				18
-#define HANDS_PART_LAYER		18
-#define GLOVES_LAYER			17
-#define SHOES_LAYER				16
-#define EARS_LAYER				15
-#define SUIT_LAYER				14
-#define GLASSES_LAYER			13
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		11
-#define NECK_LAYER				10
-#define BACK_LAYER				9
-#define HAIR_LAYER				8		//TODO: make part of head layer?
-#define FACEMASK_LAYER			7
-#define HEAD_LAYER				6
-#define HANDCUFF_LAYER			5
-#define LEGCUFF_LAYER			4
-#define HANDS_LAYER				3
-#define BODY_FRONT_LAYER		2
+#define MUTATIONS_LAYER			29		//mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		28		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			27		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			26		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				25		//underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	24		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			23		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			22
+#define ID_LAYER				21 //lmao at the idiot who put both ids and hands on the same layer
+#define HANDS_PART_LAYER		20
+#define GLOVES_LAYER			19
+#define SHOES_LAYER				18
+#define EARS_LAYER				17
+#define SUIT_LAYER				16
+#define GLASSES_LAYER			15
+#define BELT_LAYER				14		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		13
+#define NECK_LAYER				12
+#define BACK_LAYER				11
+#define HAIR_LAYER				10		//TODO: make part of head layer?
+#define FACEMASK_LAYER			9
+#define HEAD_LAYER				8
+#define HANDCUFF_LAYER			7
+#define LEGCUFF_LAYER			6
+#define HANDS_LAYER				5
+#define BODY_FRONT_LAYER		4
+#define SMELL_LAYER				3
+#define HALO_LAYER				2		//blood cult ascended halo, because there's currently no better solution for adding/removing
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			29		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -403,6 +392,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define BRAIN_DAMAGE_FILE "traumas.json"
 #define ION_FILE "ion_laws.json"
 #define PIRATE_NAMES_FILE "pirates.json"
+#define REDPILL_FILE "redpill.json"
 
 
 //Fullscreen overlay resolution in tiles.
@@ -411,6 +401,13 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 #define SUMMON_GUNS "guns"
 #define SUMMON_MAGIC "magic"
+
+#define TELEPORT_CHANNEL_BLUESPACE "bluespace"	//Classic bluespace teleportation, requires a sender but no receiver
+#define TELEPORT_CHANNEL_QUANTUM "quantum"		//Quantum-based teleportation, requires both sender and receiver, but is free from normal disruption
+#define TELEPORT_CHANNEL_WORMHOLE "wormhole"	//Wormhole teleportation, is not disrupted by bluespace fluctuations but tends to be very random or unsafe
+#define TELEPORT_CHANNEL_MAGIC "magic"			//Magic teleportation, does whatever it wants (unless there's antimagic)
+#define TELEPORT_CHANNEL_CULT "cult"			//Cult teleportation, does whatever it wants (unless there's holiness)
+#define TELEPORT_CHANNEL_FREE "free"			//Anything else
 
 //Run the world with this parameter to enable a single run though of the game setup and tear down process with unit tests in between
 #define TEST_RUN_PARAMETER "test-run"
@@ -428,6 +425,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //Filters
 #define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, border=4, color="#04080FAA")
+#define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)
 
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
 #define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs
@@ -445,3 +443,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define VARSET_FROM_LIST_IF(L, V, C...) if(L && L[#V] && (C)) V = L[#V]
 #define VARSET_TO_LIST(L, V) if(L) L[#V] = V
 #define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
+
+#define DICE_NOT_RIGGED 1
+#define DICE_BASICALLY_RIGGED 2
+#define DICE_TOTALLY_RIGGED 3

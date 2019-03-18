@@ -1,5 +1,5 @@
 /obj/item/melee/baton
-	name = "stunbaton"
+	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
@@ -35,7 +35,7 @@
 			cell = new preload_cell_type(src)
 	update_icon()
 
-/obj/item/melee/baton/throw_impact(atom/hit_atom)
+/obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
 	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
@@ -58,11 +58,11 @@
 
 /obj/item/melee/baton/update_icon()
 	if(status)
-		icon_state = "[initial(name)]_active"
+		icon_state = "[initial(icon_state)]_active"
 	else if(!cell)
-		icon_state = "[initial(name)]_nocell"
+		icon_state = "[initial(icon_state)]_nocell"
 	else
-		icon_state = "[initial(name)]"
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/melee/baton/examine(mob/user)
 	..()
@@ -115,7 +115,7 @@
 	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stunforce*3)
+		user.Paralyze(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -157,7 +157,7 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	L.Knockdown(stunforce)
+	L.Paralyze(stunforce)
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
@@ -185,7 +185,7 @@
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
 	desc = "An improvised stun baton."
-	icon_state = "stunprod_nocell"
+	icon_state = "stunprod"
 	item_state = "prod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'

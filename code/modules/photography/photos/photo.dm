@@ -64,7 +64,7 @@
 /obj/item/photo/examine(mob/user)
 	..()
 
-	if(in_range(src, user))
+	if(in_range(src, user) || isobserver(user))
 		show(user)
 	else
 		to_chat(user, "<span class='warning'>You need to get closer to get a good look at this photo!</span>")
@@ -88,6 +88,6 @@
 
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && usr.canmove && !usr.restrained())
+	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)

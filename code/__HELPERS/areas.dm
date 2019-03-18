@@ -1,5 +1,10 @@
 #define BP_MAX_ROOM_SIZE 300
 
+GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/engineering, \
+															    /area/engine/supermatter, \
+															    /area/engine/atmospherics_engine, \
+															    /area/ai_monitored/turret_protected/ai))
+
 // Gets an atmos isolated contained space
 // Returns an associative list of turf|dirs pairs
 // The dirs are connected turfs in the same space
@@ -85,6 +90,8 @@
 		var/area/old_area = thing.loc
 		newA.contents += thing
 		thing.change_area(old_area, newA)
+
+	newA.reg_in_areas_in_z()
 
 	var/list/firedoors = oldA.firedoors
 	for(var/door in firedoors)

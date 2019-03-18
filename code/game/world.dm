@@ -20,6 +20,8 @@ GLOBAL_VAR(restart_counter)
 
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
+	load_admins()
+
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
 	SSdbcore.CheckSchemaVersion()
@@ -28,13 +30,14 @@ GLOBAL_VAR(restart_counter)
 
 #ifndef USE_CUSTOM_ERROR_HANDLER
 	world.log = file("[GLOB.log_directory]/dd.log")
+#else
+	if (TgsAvailable())
+		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
 #endif
 
-	load_admins()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
-	LoadBans()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
@@ -98,6 +101,8 @@ GLOBAL_VAR(restart_counter)
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
+	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
+	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
@@ -193,7 +198,6 @@ GLOBAL_VAR(restart_counter)
 	qdel(src)	//shut it down
 
 /world/Reboot(reason = 0, fast_track = FALSE)
-	TgsReboot()
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
@@ -202,6 +206,8 @@ GLOBAL_VAR(restart_counter)
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+	
+	TgsReboot()
 
 	if(TEST_RUN_PARAMETER in params)
 		FinishTestRun()

@@ -38,7 +38,7 @@
 	. = ..()
 	verbs += /mob/living/proc/lay_down
 
-/mob/living/simple_animal/pet/cat/update_canmove()
+/mob/living/simple_animal/pet/cat/update_mobility()
 	..()
 	if(client && stat != DEAD)
 		if (resting)
@@ -48,7 +48,6 @@
 			icon_state = "[icon_living]"
 			collar_type = "[initial(collar_type)]"
 	regenerate_icons()
-
 
 /mob/living/simple_animal/pet/cat/space
 	name = "space cat"
@@ -172,21 +171,18 @@
 			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
 			collar_type = "[initial(collar_type)]_rest"
-			resting = 1
-			update_canmove()
+			set_resting(TRUE)
 		else if (prob(1))
 			emote("me", 1, pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
 			collar_type = "[initial(collar_type)]_sit"
-			resting = 1
-			update_canmove()
+			set_resting(TRUE)
 		else if (prob(1))
 			if (resting)
 				emote("me", 1, pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
 				collar_type = "[initial(collar_type)]"
-				resting = 0
-				update_canmove()
+				set_resting(FALSE)
 			else
 				emote("me", 1, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
@@ -242,6 +238,7 @@
 			if(M && stat != DEAD)
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "purrs!")
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		else
 			if(M && stat != DEAD)
 				emote("me", 1, "hisses!")
@@ -261,7 +258,7 @@
 	response_harm = "takes a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
-	death_sound = "bodyfall"
+	deathsound = "bodyfall"
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
 	..()

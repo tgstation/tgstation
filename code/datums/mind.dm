@@ -60,6 +60,8 @@
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 
+	var/last_death = 0
+
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 
 /datum/mind/New(var/key)
@@ -87,6 +89,7 @@
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
+		UnregisterSignal(current, COMSIG_MOB_DEATH)
 		SStgui.on_transfer(current, new_character)
 
 	if(!language_holder)
@@ -117,8 +120,12 @@
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
+	RegisterSignal(new_character, COMSIG_MOB_DEATH, .proc/set_death_time)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+
+/datum/mind/proc/set_death_time()
+	last_death = world.time
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -301,7 +308,7 @@
 			else if(uplink_loc == PDA)
 				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[U.unlock_code]\" into the ringtone select to unlock its hidden features.")
 			else if(uplink_loc == P)
-				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [U.unlock_code] from its starting position to unlock its hidden features.")
+				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [english_list(U.unlock_code)] from its starting position to unlock its hidden features.")
 
 		if(uplink_owner)
 			uplink_owner.antag_memory += U.unlock_note + "<br>"
@@ -433,7 +440,7 @@
 
 		if(!GLOB.admin_objective_list)
 			generate_admin_objective_list()
-		
+
 		if(old_objective)
 			if(old_objective.name in GLOB.admin_objective_list)
 				def_value = old_objective.name
@@ -451,7 +458,7 @@
 			target_antag.objectives += new_objective
 			message_admins("[key_name_admin(usr)] added a new objective for [current]: [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] added a new objective for [current]: [new_objective.explanation_text]")
-		else 
+		else
 			if(old_objective.type == selected_type)
 				//Edit the old
 				old_objective.admin_edit(usr)
@@ -652,8 +659,8 @@
 		S.updateButtonIcon()
 		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
-/datum/mind/proc/get_ghost(even_if_they_cant_reenter)
-	for(var/mob/dead/observer/G in GLOB.dead_mob_list)
+/datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
+	for(var/mob/dead/observer/G in (ghosts_with_clients ? GLOB.player_list : GLOB.dead_mob_list))
 		if(G.mind == src)
 			if(G.can_reenter_corpse || even_if_they_cant_reenter)
 				return G
@@ -675,6 +682,11 @@
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
+
+/datum/mind/proc/has_martialart(var/string)
+	if(martial_art && martial_art.id == string)
+		return martial_art
+	return FALSE
 
 /mob/dead/new_player/sync_mind()
 	return

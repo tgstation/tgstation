@@ -31,4 +31,5 @@
 	agent.mind.add_antag_datum(/datum/antagonist/abductor/agent, T)
 
 	spawned_mobs += list(agent, scientist)
+
 	return SUCCESSFUL_SPAWN

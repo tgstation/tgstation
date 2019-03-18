@@ -11,7 +11,7 @@
 	pass_flags = PASSMOB
 
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
-	radio_channel = "Service" //Doesn't even use the radio anyway.
+	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
@@ -120,9 +120,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 
 /mob/living/simple_animal/bot/honkbot/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
-		return
-	if(!W.tool_behaviour == TOOL_SCREWDRIVER && (W.force) && (!target) && (W.damtype != STAMINA) ) // Check for welding tool to fix #2432.
+	if(W.tool_behaviour != TOOL_SCREWDRIVER && (W.force) && (!target) && (W.damtype != STAMINA) )
 		retaliate(user)
 		addtimer(CALLBACK(src, .proc/react_buzz), 5)
 	..()
@@ -140,7 +138,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/item/projectile/Proj)
 	if((istype(Proj,/obj/item/projectile/beam)) || (istype(Proj,/obj/item/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health && ishuman(Proj.firer)))
 		retaliate(Proj.firer)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A)
 	if(!on)
@@ -150,14 +148,14 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		if (emagged <= 1)
 			honk_attack(A)
 		else
-			if(!C.IsStun() || arrest_type)
+			if(!C.IsParalyzed() || arrest_type)
 				stun_attack(A)
 		..()
 	else if (!spam_flag) //honking at the ground
 		bike_horn(A)
 
 
-/mob/living/simple_animal/bot/honkbot/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+/mob/living/simple_animal/bot/honkbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
 		playsound(src, honksound, 50, TRUE, -1)
 		var/obj/item/I = AM
@@ -197,7 +195,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			C.stuttering = 20
 			C.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
 			C.Jitter(50)
-			C.Knockdown(60)
+			C.Paralyze(60)
 			var/mob/living/carbon/human/H = C
 			if(client) //prevent spam from players..
 				spam_flag = TRUE
@@ -216,7 +214,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 					"<span class='userdanger'>[src] has honked you!</span>")
 		else
 			C.stuttering = 20
-			C.Knockdown(80)
+			C.Paralyze(80)
 			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntime)
 
 
@@ -359,7 +357,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						  	"[C] trips over [src] and falls!", \
 						  	"[C] topples over [src]!", \
 						  	"[C] leaps out of [src]'s way!")]</span>")
-			C.Knockdown(10)
+			C.Paralyze(10)
 			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1, -1)
 			if(!client)
 				speak("Honk!")

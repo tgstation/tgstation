@@ -126,7 +126,7 @@
  */
 
 /datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
-	if (!istype(T))
+	if(!istype(T))
 		return
 	var/CT = cooling_temperature
 
@@ -270,9 +270,7 @@
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustUnconscious(-20, 0)
-		M.AdjustStun(-40, 0)
-		M.AdjustKnockdown(-40, 0)
+		M.AdjustAllImmobility(-40, FALSE)
 		M.adjustStaminaLoss(-10, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
@@ -434,7 +432,7 @@
 		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Knockdown(60)
+	H.Paralyze(60)
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
 	return
 
@@ -740,7 +738,7 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/carbon/M)
-	if(M.canmove && !isspaceturf(M.loc))
+	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -758,7 +756,7 @@
 /datum/reagent/carbon
 	name = "Carbon"
 	id = "carbon"
-	description = "A crumbly black solid that, while unexciting on an physical level, forms the base of all known life. Kind of a big deal."
+	description = "A crumbly black solid that, while unexciting on a physical level, forms the base of all known life. Kind of a big deal."
 	reagent_state = SOLID
 	color = "#1C1300" // rgb: 30, 20, 0
 	taste_description = "sour chalk"
@@ -820,7 +818,7 @@
 	taste_description = "metal"
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/M)
-	if(M.canmove && !isspaceturf(M.loc))
+	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -832,26 +830,6 @@
 	description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "sweetness"
-
-/datum/reagent/radium
-	name = "Radium"
-	id = "radium"
-	description = "Radium is an alkaline earth metal. It is extremely radioactive."
-	reagent_state = SOLID
-	color = "#C7C7C7" // rgb: 199,199,199
-	taste_description = "the colour blue and regret"
-
-/datum/reagent/radium/on_mob_life(mob/living/carbon/M)
-	M.apply_effect(2*REM/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
-	..()
-
-/datum/reagent/radium/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 3)
-		if(!isspaceturf(T))
-			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
-			if(!GG)
-				GG = new/obj/effect/decal/cleanable/greenglow(T)
-			GG.reagents.add_reagent("radium", reac_volume)
 
 /datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
@@ -916,9 +894,10 @@
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
+	var/irradiation_level = 1
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/M)
-	M.apply_effect(1/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
+	M.apply_effect(irradiation_level/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
 	..()
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
@@ -927,7 +906,16 @@
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
-			GG.reagents.add_reagent("uranium", reac_volume)
+			GG.reagents.add_reagent(id, reac_volume)
+
+/datum/reagent/uranium/radium
+	name = "Radium"
+	id = "radium"
+	description = "Radium is an alkaline earth metal. It is extremely radioactive."
+	reagent_state = SOLID
+	color = "#C7C7C7" // rgb: 199,199,199
+	taste_description = "the colour blue and regret"
+	irradiation_level = 2*REM
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
@@ -939,7 +927,7 @@
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		do_teleport(M, get_turf(M), (reac_volume / 5), asoundin = 'sound/effects/phasein.ogg') //4 tiles per crystal
+		do_teleport(M, get_turf(M), (reac_volume / 5), asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //4 tiles per crystal
 	..()
 
 /datum/reagent/bluespace/on_mob_life(mob/living/carbon/M)
@@ -951,7 +939,7 @@
 	..()
 
 /mob/living/proc/bluespace_shuffle()
-	do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg')
+	do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /datum/reagent/aluminium
 	name = "Aluminium"
@@ -1135,6 +1123,18 @@
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
+/datum/reagent/snail
+	name = "Agent-S"
+	id = "snailserum"
+	description = "Virological agent that infects the subject with Gastrolosis."
+	color = "#003300" // rgb(0, 51, 0)
+	taste_description = "goo"
+	can_synth = FALSE //special orange man request
+
+/datum/reagent/snail/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+		L.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)
+
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"
@@ -1221,7 +1221,7 @@
 	M.drowsyness += 2
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.blood_volume = max(H.blood_volume - 2.5, 0)
+		H.blood_volume = max(H.blood_volume - 10, 0)
 	if(prob(20))
 		M.losebreath += 2
 		M.confused = min(M.confused + 2, 5)
@@ -1232,7 +1232,7 @@
 	id = "stimulum"
 	description = "An unstable experimental gas that greatly increases the energy of those that inhale it"
 	reagent_state = GAS
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "E1A116"
 	taste_description = "sourness"
 
@@ -1248,25 +1248,23 @@
 
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(-2*REM, 0)
-	current_cycle++
-	holder.remove_reagent(id, 0.99)		//Gives time for the next tick of life().
-	. = TRUE //Update status effects.
+	..()
 
 /datum/reagent/nitryl
 	name = "Nitryl"
 	id = "no2"
 	description = "A highly reactive gas that makes you feel faster"
 	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
 
 /datum/reagent/nitryl/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/nitryl/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -1550,7 +1548,7 @@
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.hair_style = "Very Long Hair"
-			H.facial_hair_style = "Very Long Beard"
+			H.facial_hair_style = "Beard (Very Long)"
 			H.update_hair()
 
 /datum/reagent/saltpetre
@@ -1762,7 +1760,7 @@
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
 
 /datum/reagent/pax
-	name = "pax"
+	name = "Pax"
 	id = "pax"
 	description = "A colorless liquid that suppresses violence on the subjects."
 	color = "#AAAAAA55"

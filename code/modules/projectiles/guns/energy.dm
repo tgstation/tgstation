@@ -9,7 +9,7 @@
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
-	var/can_charge = 1 //Can it be charged in a recharger?
+	var/can_charge = TRUE //Can it be charged in a recharger?
 	var/automatic_charge_overlays = TRUE	//Do we handle overlays with base update_icon()?
 	var/charge_sections = 4
 	ammo_x_offset = 2
@@ -18,7 +18,7 @@
 	var/selfcharge = 0
 	var/charge_tick = 0
 	var/charge_delay = 4
-	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
+	var/use_cyborg_cell = FALSE //whether the gun's cell drains the cyborg user's cell to recharge
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
 /obj/item/gun/energy/emp_act(severity)
@@ -165,9 +165,6 @@
 		itemState += "[ratio]"
 		item_state = itemState
 
-/obj/item/gun/energy/ui_action_click()
-	toggle_gunlight()
-
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -184,7 +181,7 @@
 			return(OXYLOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] is pretending to melt [user.p_their()] face off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(src, "gun_dry_fire", 30, 1)
+		playsound(src, dry_fire_sound, 30, TRUE)
 		return (OXYLOSS)
 
 

@@ -18,7 +18,7 @@ the new instance inside the host to be updated to the template's stats.
 	layer = BELOW_MOB_LAYER
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	sight = SEE_SELF|SEE_THRU
-	initial_language_holder = /datum/language_holder/empty
+	initial_language_holder = /datum/language_holder/universal
 
 	var/freemove = TRUE
 	var/freemove_end = 0
@@ -117,6 +117,22 @@ the new instance inside the host to be updated to the template's stats.
 		if(world.time > (last_move_tick + move_delay))
 			follow_next(Dir & NORTHWEST)
 			last_move_tick = world.time
+
+/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
+	var/atom/movable/to_follow = speaker
+	if(radio_freq)
+		var/atom/movable/virtualspeaker/V = speaker
+		to_follow = V.source
+	var/link
+	if(to_follow in hosts)
+		link = FOLLOW_LINK(src, to_follow)
+	else
+		link = ""
+	// Recompose the message, because it's scrambled by default
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+	to_chat(src, "[link] [message]")
+
 
 /mob/camera/disease/mind_initialize()
 	. = ..()
@@ -351,7 +367,7 @@ the new instance inside the host to be updated to the template's stats.
 		set_following(L)
 
 	if(href_list["buy_ability"])
-		var/datum/disease_ability/A = locate(href_list["buy_ability"])
+		var/datum/disease_ability/A = locate(href_list["buy_ability"]) in unpurchased_abilities
 		if(!istype(A))
 			return
 		if(A.CanBuy(src))
@@ -359,7 +375,7 @@ the new instance inside the host to be updated to the template's stats.
 		adaptation_menu()
 
 	if(href_list["refund_ability"])
-		var/datum/disease_ability/A = locate(href_list["refund_ability"])
+		var/datum/disease_ability/A = locate(href_list["refund_ability"]) in purchased_abilities
 		if(!istype(A))
 			return
 		if(A.CanRefund(src))
@@ -367,7 +383,7 @@ the new instance inside the host to be updated to the template's stats.
 		adaptation_menu()
 
 	if(href_list["examine_ability"])
-		var/datum/disease_ability/A = locate(href_list["examine_ability"])
+		var/datum/disease_ability/A = locate(href_list["examine_ability"]) in GLOB.disease_ability_singletons
 		if(!istype(A))
 			return
 		examining_ability = A

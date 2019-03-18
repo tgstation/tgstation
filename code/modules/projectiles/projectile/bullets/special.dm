@@ -3,8 +3,8 @@
 /obj/item/projectile/bullet/honker
 	name = "banana"
 	damage = 0
-	knockdown = 60
-	forcedodge = TRUE
+	paralyze = 60
+	movement_type = FLYING | UNSTOPPABLE
 	nodamage = TRUE
 	hitsound = 'sound/items/bikehorn.ogg'
 	icon = 'icons/obj/hydroponics/harvest.dmi'

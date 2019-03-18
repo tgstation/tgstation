@@ -68,6 +68,7 @@
 	options["The Feminist"] = "sexyclown"
 	options["The Madman"] = "joker"
 	options["The Rainbow Color"] ="rainbow"
+	options["The Jester"] ="chaos" //Nepeta33Leijon is holding me captive and forced me to help with this please send help
 
 	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
 
@@ -175,7 +176,6 @@
 
 
 /obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
-
 	var/mob/M = usr
 	var/list/options = list()
 	options["Original Tiki"] = "tiki_eyebrow"
@@ -193,3 +193,7 @@
 			A.UpdateButtonIcon()
 		to_chat(M, "The Tiki Mask has now changed into the [choice] Mask!")
 		return 1
+
+/obj/item/clothing/mask/gas/tiki_mask/yalp_elor
+	icon_state = "tiki_yalp"
+	actions_types = list()

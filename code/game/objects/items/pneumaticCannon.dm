@@ -32,6 +32,8 @@
 	var/charge_tick = 0
 	var/charge_type
 	var/selfcharge = FALSE
+	var/fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	var/spin_item = TRUE //Do the projectiles spin when launched?
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 
@@ -165,12 +167,12 @@
 				    		 "<span class='danger'>You fire \the [src]!</span>")
 	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
-	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
+	playsound(src, fire_sound, 50, 1)
 	fire_items(T, user)
 	if(pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
-		C.Knockdown(60)
+		C.Paralyze(60)
 
 /obj/item/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
 	if(fire_mode == PCANNON_FIREALL)
@@ -195,7 +197,7 @@
 	loadedItems -= I
 	loadedWeightClass -= I.w_class
 	I.forceMove(get_turf(src))
-	I.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user)
+	I.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
 	return TRUE
 
 /obj/item/pneumatic_cannon/proc/get_target(turf/target, turf/starting)
@@ -292,3 +294,44 @@
 	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream/nostun
 	maxWeightClass = 6		//2 pies
 	charge_ticks = 2		//4 second/pie
+
+/obj/item/pneumatic_cannon/speargun
+	name = "kinetic speargun"
+	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
+	icon = 'icons/obj/guns/projectile.dmi'
+	icon_state = "speargun"
+	item_state = "speargun"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	gasPerThrow = 0
+	checktank = FALSE
+	range_multiplier = 3
+	throw_amount = 1
+	maxWeightClass = 2 //a single magspear
+	spin_item = FALSE
+	var/static/list/magspear_typecache = typecacheof(/obj/item/throwing_star/magspear)
+
+/obj/item/pneumatic_cannon/speargun/Initialize()
+	. = ..()
+	allowed_typecache = magspear_typecache
+
+/obj/item/storage/backpack/magspear_quiver
+	name = "quiver"
+	desc = "A quiver for holding magspears."
+	icon_state = "quiver"
+	item_state = "quiver"
+
+/obj/item/storage/backpack/magspear_quiver/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 20
+	STR.max_combined_w_class = 40
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(
+		/obj/item/throwing_star/magspear
+		))
+
+/obj/item/storage/backpack/magspear_quiver/PopulateContents()
+	for(var/i in 1 to 20)
+		new /obj/item/throwing_star/magspear(src)

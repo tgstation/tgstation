@@ -66,6 +66,8 @@
 	H.adjustFireLoss(-15)
 	H.AdjustStun(-40)
 	H.AdjustKnockdown(-40)
+	H.AdjustImmobilized(-40)
+	H.AdjustParalyzed(-40)
 	H.AdjustUnconscious(-40)
 	playsound(H, 'sound/magic/staff_healing.ogg', 25, FALSE)
 
@@ -345,20 +347,14 @@
 	desc = "This armour is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
 
 
-/obj/item/storage/box/itemset/crusader/blue/New()
-	..()
-	contents = list()
-	sleep(1)
+/obj/item/storage/box/itemset/crusader/blue/PopulateContents()
 	new /obj/item/clothing/suit/armor/plate/crusader/blue(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
 	new /obj/item/clothing/gloves/plate/blue(src)
 	new /obj/item/clothing/shoes/plate/blue(src)
 
 
-/obj/item/storage/box/itemset/crusader/red/New()
-	..()
-	contents = list()
-	sleep(1)
+/obj/item/storage/box/itemset/crusader/red/PopulateContents()
 	new /obj/item/clothing/suit/armor/plate/crusader/red(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
 	new /obj/item/clothing/gloves/plate/red(src)
@@ -369,3 +365,9 @@
 	desc = "This one is rusted."
 	force = 30
 	armour_penetration = 15
+	
+/obj/item/claymore/weak/ceremonial
+	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
+	force = 15
+	block_chance = 30
+	armour_penetration = 5

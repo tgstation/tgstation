@@ -35,18 +35,11 @@
 		if(oxy < 0.5)
 			return 0
 
-		active_hotspot = new /obj/effect/hotspot(src)
-		active_hotspot.temperature = exposed_temperature
-		active_hotspot.volume = exposed_volume
+		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
-	else
-		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
-		heating.temperature = exposed_temperature
-		heating.react()
-		assume_air(heating)
 	return igniting
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
@@ -66,9 +59,13 @@
 	var/bypassing = FALSE
 	var/visual_update_tick = 0
 
-/obj/effect/hotspot/Initialize()
+/obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
 	. = ..()
 	SSair.hotspots += src
+	if(!isnull(starting_volume))
+		volume = starting_volume
+	if(!isnull(starting_temperature))
+		temperature = starting_temperature
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf()
@@ -80,22 +77,19 @@
 
 	location.active_hotspot = src
 
-	if(volume > CELL_VOLUME*0.95)
-		bypassing = TRUE
-	else
-		bypassing = FALSE
+	bypassing = !just_spawned && (volume > CELL_VOLUME*0.95)
 
 	if(bypassing)
-		if(!just_spawned)
-			volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
-			temperature = location.air.temperature
+		volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
+		temperature = location.air.temperature
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
-		affected.temperature = temperature
-		affected.react(src)
-		temperature = affected.temperature
-		volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
-		location.assume_air(affected)
+		if(affected) //in case volume is 0
+			affected.temperature = temperature
+			affected.react(src)
+			temperature = affected.temperature
+			volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
+			location.assume_air(affected)
 
 	for(var/A in location)
 		var/atom/AT = A
@@ -139,7 +133,7 @@
 		add_overlay(lightning_overlay)
 	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
 		var/fusion_amt = temperature < LERP(4500000,12000000,0.5) ? gauss_lerp(temperature, 4500000, 12000000) : 1
-		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/tile_effects.dmi', "chem_gas")
+		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/atmospherics.dmi', "fusion_gas")
 		fusion_overlay.blend_mode = BLEND_ADD
 		fusion_overlay.alpha = fusion_amt * 255
 		var/mutable_appearance/rainbow_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "druggy")

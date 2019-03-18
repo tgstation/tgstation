@@ -154,12 +154,12 @@
 		mmi = new (src)
 		mmi.brain = new /obj/item/organ/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
-		mmi.icon_state = "mmi_full"
-		mmi.name = "Man-Machine Interface: [real_name]"
+		mmi.name = "[initial(mmi.name)]: [real_name]"
 		mmi.brainmob = new(mmi)
 		mmi.brainmob.name = src.real_name
 		mmi.brainmob.real_name = src.real_name
 		mmi.brainmob.container = mmi
+		mmi.update_icon()
 
 	updatename()
 
@@ -501,8 +501,6 @@
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 
 	else if (istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))			// trying to unlock the interface with an ID card
-		if(emagged)//still allow them to open the cover
-			to_chat(user, "<span class='notice'>The interface seems slightly damaged.</span>")
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else
@@ -510,6 +508,8 @@
 				locked = !locked
 				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] [src]'s cover.</span>")
 				update_icons()
+				if(emagged)
+					to_chat(user, "<span class='notice'>The cover interface glitches out for a split second.</span>")
 			else
 				to_chat(user, "<span class='danger'>Access denied.</span>")
 
@@ -613,7 +613,7 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsKnockdown() || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -649,10 +649,10 @@
 	if(src.connected_ai)
 		connected_ai.connected_robots -= src
 		src.connected_ai = null
-	lawupdate = 0
-	lockcharge = 0
-	canmove = 1
-	scrambledcodes = 1
+	lawupdate = FALSE
+	lockcharge = FALSE
+	mobility_flags |= MOBILITY_FLAGS_DEFAULT
+	scrambledcodes = TRUE
 	//Disconnect it's camera so it's not so easily tracked.
 	if(!QDELETED(builtInCamera))
 		QDEL_NULL(builtInCamera)
@@ -682,7 +682,7 @@
 	else
 		clear_alert("locked")
 	lockcharge = state
-	update_canmove()
+	update_mobility()
 
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
@@ -759,7 +759,7 @@
 		robot_suit.head.flash2.burn_out()
 		robot_suit.head.flash2 = null
 		robot_suit.head = null
-		robot_suit.updateicon()
+		robot_suit.update_icon()
 	else
 		new /obj/item/robot_suit(T)
 		new /obj/item/bodypart/l_leg/robot(T)
@@ -950,17 +950,17 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(IsUnconscious() || IsStun() || IsKnockdown() || getOxyLoss() > maxHealth*0.5)
+		if(IsUnconscious() || IsStun() || IsKnockdown() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
-				update_canmove()
+				update_mobility()
 				update_headlamp()
 		else
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS
 				adjust_blindness(-1)
-				update_canmove()
+				update_mobility()
 				update_headlamp()
 	diag_hud_set_status()
 	diag_hud_set_health()

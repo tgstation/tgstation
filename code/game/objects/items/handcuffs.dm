@@ -247,6 +247,9 @@
 
 /obj/item/restraints/legcuffs/beartrap/Initialize()
 	. = ..()
+	update_icon()
+
+/obj/item/restraints/legcuffs/beartrap/update_icon()
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/user)
@@ -258,38 +261,48 @@
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
-		icon_state = "[initial(icon_state)][armed]"
+		update_icon()
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
+/obj/item/restraints/legcuffs/beartrap/proc/close_trap()
+	armed = FALSE
+	update_icon()
+	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+
 /obj/item/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
-	if(armed && isturf(src.loc))
+	if(armed && isturf(loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
-			var/snap = 0
+			var/snap = TRUE
+			if(istype(L.buckled, /obj/vehicle))
+				var/obj/vehicle/ridden_vehicle = L.buckled
+				if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
+					close_trap()
+					ridden_vehicle.visible_message("<span class='danger'>[ridden_vehicle] triggers \the [src].</span>")
+					return ..()
+
+			if(L.movement_type & (FLYING|FLOATING)) //don't close the trap if they're flying/floating over it.
+				snap = FALSE
+
 			var/def_zone = BODY_ZONE_CHEST
-			if(iscarbon(L))
+			if(snap && iscarbon(L))
 				var/mob/living/carbon/C = L
-				snap = 1
-				if(!C.lying)
+				if(C.mobility_flags & MOBILITY_STAND)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
 						forceMove(C)
 						C.update_inv_legcuffed()
 						SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-			else if(isanimal(L))
+			else if(snap && isanimal(L))
 				var/mob/living/simple_animal/SA = L
-				if(SA.mob_size > MOB_SIZE_TINY)
-					snap = 1
-			if(L.movement_type & FLYING)
-				snap = 0
+				if(SA.mob_size <= MOB_SIZE_TINY) //don't close the trap if they're as small as a mouse.
+					snap = FALSE
 			if(snap)
-				armed = 0
-				icon_state = "[initial(icon_state)][armed]"
-				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				close_trap()
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
-				L.apply_damage(trap_damage,BRUTE, def_zone)
+				L.apply_damage(trap_damage, BRUTE, def_zone)
 	..()
 
 /obj/item/restraints/legcuffs/beartrap/energy
@@ -297,11 +310,12 @@
 	armed = 1
 	icon_state = "e_snare"
 	trap_damage = 0
+	breakouttime = 30
 	item_flags = DROPDEL
 	flags_1 = NONE
 
-/obj/item/restraints/legcuffs/beartrap/energy/New()
-	..()
+/obj/item/restraints/legcuffs/beartrap/energy/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
 /obj/item/restraints/legcuffs/beartrap/energy/proc/dissipate()
@@ -311,7 +325,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk
-	. = ..()
+	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 20 // Cyborgs shouldn't have a strong restraint
@@ -329,7 +343,7 @@
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
 
-/obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
+/obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
@@ -340,7 +354,8 @@
 		C.update_inv_legcuffed()
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Knockdown(knockdown)
+		C.Paralyze(knockdown)
+		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
@@ -357,7 +372,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
 
-/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)
+/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
 		B.Crossed(hit_atom)
@@ -372,7 +387,7 @@
 	slowdown = 0
 	var/datum/status_effect/gonbolaPacify/effectReference
 
-/obj/item/restraints/legcuffs/bola/gonbola/throw_impact(atom/hit_atom)
+/obj/item/restraints/legcuffs/bola/gonbola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/C = hit_atom
