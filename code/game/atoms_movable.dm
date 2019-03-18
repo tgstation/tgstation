@@ -196,6 +196,15 @@
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)		//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
+/atom/movable/proc/set_glide_size(target = 8)
+	glide_size = target
+
+	for(var/atom/movable/AM in contents)
+		AM.set_glide_size(target)
+	
+	for(var/atom/movable/AM in buckled_mobs)
+		AM.set_glide_size(target)
+
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
