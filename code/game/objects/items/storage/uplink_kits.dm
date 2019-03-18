@@ -139,7 +139,7 @@
 			new /obj/item/book/granter/spell/summonitem(src)
 
 		if("commander")
-			new /obj/item/storage/book/bible/syndicate(src) // 9tc
+			new /obj/item/storage/book/bible/syndicate(src) // 5tc
 			new /obj/item/card/id/syndicate(src) // 2tc
 			new /obj/item/card/id/syndicate(src) // 2tc
 			new /obj/item/card/id/syndicate(src) // 2tc
