@@ -157,7 +157,6 @@
 	var/dumped = FALSE
 	var/mob/living/carbon/human/bogdanoff
 	var/obj/structure/checkoutmachine/checkout
-	var/list/acounts_to_rob
 
 /obj/item/suspiciousphone/attack_self(mob/user)
 	if(!ishuman(user))
@@ -182,30 +181,15 @@
 		dumped = TRUE	
 
 /obj/item/suspiciousphone/proc/crab17()
-	acounts_to_rob = SSeconomy.bank_accounts
-	acounts_to_rob -= bogdanoff.get_bank_account()
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(checkout).name] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
-	for(var/i in acounts_to_rob)
-		var/datum/bank_account/B = i
-		B.being_dumped = TRUE
-		dump()
-
-/obj/item/suspiciousphone/proc/dump()
-	var/percentage_lost = (rand(1, 10) / 100)
-	for(var/i in acounts_to_rob)
-		var/datum/bank_account/B = i
-		if(!B.being_dumped)
-			continue
-		var/amount = B.account_balance * percentage_lost 
-		bogdanoff.get_bank_account().transfer_money(B, amount)
-		B.bank_card_talk("You have lost [percentage_lost]% of your funds!")
-	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
+	checkout.start_dumping()
 
 /obj/structure/checkoutmachine
 	name = "credit deposit machine"
 	desc = "This is good for spacecoin because"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "console"
+	var/list/accounts_to_rob
 
 /obj/structure/checkoutmachine/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id))
@@ -213,7 +197,7 @@
 		if(!card.registered_account)
 			return
 		if(!card.registered_account.being_dumped)
-			to_chat(user, "<span class='warning'>It appears that your funds is safe from draining!</span>")
+			to_chat(user, "<span class='warning'>It appears that your funds are safe from draining!</span>")
 			return
 		if(do_after(user, 40, target = src))
 			if(!card.registered_account.being_dumped)
@@ -222,3 +206,35 @@
 			card.registered_account.being_dumped = FALSE	
 	else
 		return ..()
+
+/obj/structure/checkoutmachine/Destroy(var/force)
+	if (!force)
+		return QDEL_HINT_LETMELIVE
+	stop_dumping()
+	return ..()
+
+/obj/structure/checkoutmachine/proc/start_dumping()
+	accounts_to_rob = SSeconomy.bank_accounts
+	accounts_to_rob -= bogdanoff.get_bank_account()
+	for(var/i in accounts_to_rob)
+		var/datum/bank_account/B = i
+		B.being_dumped = TRUE
+	dump()
+
+/obj/structure/checkoutmachine/proc/dump()
+	var/percentage_lost = (rand(1, 10) / 100)
+	audible_message("<span class='danger'>[pick(list("THIS MARKET IS CRASHING WITH NO SURVIVORS!", "HODL, HODL, HODL!", "SPACEGANG SPACEGANG!")]</span>")
+	for(var/i in accounts_to_rob)
+		var/datum/bank_account/B = i
+		if(!B.being_dumped)
+			continue
+		var/amount = B.account_balance * percentage_lost 
+		bogdanoff.get_bank_account().transfer_money(B, amount)
+		B.bank_card_talk("You have lost [percentage_lost]% of your funds!")
+	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
+
+/obj/structure/checkoutmachine/proc/stop_dumping()
+	for(var/i in accounts_to_rob)
+		var/datum/bank_account/B = i
+		B.being_dumped = FALSE
+
