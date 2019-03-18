@@ -239,8 +239,8 @@
 		if(eyes)
 			eyes_overlay.icon_state = eyes.eye_icon_state
 
-		else if(eyes.eye_color)
-			eyes_overlay.color = "#" + eyes.eye_color
+			if(eyes.eye_color)
+				eyes_overlay.color = "#" + eyes.eye_color
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'
