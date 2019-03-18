@@ -103,12 +103,12 @@
 		heal_overall_damage(0, 0, abs(amount), null, updating_health)
 	return amount
 
-/mob/living/carbon/setStaminaLoss(amount, updating = TRUE, forced = FALSE)
+/mob/living/carbon/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	var/current = getStaminaLoss()
 	var/diff = amount - current
 	if(!diff)
 		return
-	adjustStaminaLoss(diff, updating, forced)
+	adjustStaminaLoss(diff, updating_health, forced)
 
 ////////////////////////////////////////////
 

@@ -171,36 +171,29 @@
 		list(
 			"key" = TOOL_WRENCH,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Internal armor is installed."
+			"desc" = "Outer plating is installed."
 		),
 
 		//17
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "Internal armor is wrenched."
+			"desc" = "Outer Plating is wrenched."
 		),
 
 		//18
 		list(
-			"key" = /obj/item/stack/sheet/plasteel,
-			"amount" = 5,
+			"key" = /obj/item/stack/rods,
+			"amount" = 10,
 			"back_key" = TOOL_WELDER,
-			"desc" = "Internal armor is welded."
+			"desc" = "Outer Plating is welded."
 		),
 
 		//19
 		list(
-			"key" = TOOL_WRENCH,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "External armor is installed."
-		),
-
-		//20
-		list(
 			"key" = TOOL_WELDER,
-			"back_key" = TOOL_WRENCH,
-			"desc" = "External armor is wrenched."
+			"back_key" = TOOL_WIRECUTTER,
+			"desc" = "Cockpit wire screen is installed."
 		),
 	)
 

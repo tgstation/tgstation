@@ -1,6 +1,8 @@
 
 //BeanieStation13 Redux
 
+//Plus a bobble hat, lets be inclusive!!
+
 /obj/item/clothing/head/beanie //Default is white, this is meant to be seen
 	name = "white beanie"
 	desc = "A stylish beanie. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their heads."
@@ -82,5 +84,10 @@
 	item_color = null
 	armor = list("melee" = 15, "bullet" = 5, "laser" = 15, "energy" = 5, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 5)
 
+/obj/item/clothing/head/beanie/waldo
+	name = "red striped bobble hat"
+	desc = "If you're going on a worldwide hike, you'll need some cold protection."
+	icon_state = "waldo_hat"
+	item_color = "waldo_hat"
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet
