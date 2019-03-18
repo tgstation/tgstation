@@ -249,7 +249,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	fps = prefs.clientfps
+	if(prefs.clientfps)
+		fps = prefs.clientfps
+	else
+		fps = world.fps * 3 // 60 fps at 20 tps (tg default)
 
 	if(fexists(roundend_report_file()))
 		verbs += /client/proc/show_previous_roundend_report
