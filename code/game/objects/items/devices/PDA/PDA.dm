@@ -423,10 +423,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if ("Authenticate")//Checks for ID
 				id_check(U)
 			if("UpdateInfo")
-				ownjob = id.assignment
-				if(istype(id, /obj/item/card/id/syndicate))
-					owner = id.registered_name
-				update_label()
+				if(id)
+					ownjob = id.assignment
+					if(istype(id, /obj/item/card/id/syndicate))
+						owner = id.registered_name
+					update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
 					U.put_in_hands(cartridge)
