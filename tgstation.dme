@@ -67,6 +67,7 @@
 #include "code\__DEFINES\mobs.dm"
 #include "code\__DEFINES\monkeys.dm"
 #include "code\__DEFINES\move_force.dm"
+#include "code\__DEFINES\movement.dm"
 #include "code\__DEFINES\movespeed_modification.dm"
 #include "code\__DEFINES\nanites.dm"
 #include "code\__DEFINES\networks.dm"
