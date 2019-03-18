@@ -84,9 +84,10 @@
 		var/result = grow_clone_from_record(pod, R)
 		if(result & CLONING_SUCCESS)
 			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+			log_cloning("Cloning of [R.fields["name"]] automatically started via autoprocess - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 		if(result & CLONING_DELETE_RECORD)
 			records -= R
-			
+
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	scanner = findscanner()
@@ -354,7 +355,7 @@
 
 		spawn(20)
 			scan_occupant(scanner.occupant)
-				
+
 			loading = FALSE
 			updateUsrDialog()
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -394,11 +395,12 @@
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 			else
 				temp = "Access Denied"
-				menu = 2 
+				menu = 2
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-				
+
 
 		else if (menu == 4)
+			log_cloning("[usr] deleted [active_record.fields["name"]]'s cloning records from [src] at [AREACOORD(src)].")
 			temp = "[active_record.fields["name"]] => Record deleted."
 			records.Remove(active_record)
 			active_record = null
@@ -408,7 +410,7 @@
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
 			if("load")
-						
+
 
 				if (!diskette || !istype(diskette.fields))
 					temp = "<font class='bad'>Load error.</font>"
@@ -430,7 +432,8 @@
 					overwrite_field_if_available(active_record, diskette, "UI")
 				if(include_se)
 					overwrite_field_if_available(active_record, diskette, "SE")
-					
+
+				log_cloning("[usr] uploaded [active_record.fields["name"]]'s cloning records to [src] at [AREACOORD(src)] via [diskette].")
 				temp = "Load successful."
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
@@ -446,6 +449,7 @@
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 
+				log_cloning("[usr] added [active_record.fields["name"]]'s cloning records to [diskette] via [src] at [AREACOORD(src)].")
 				diskette.fields = active_record.fields.Copy()
 				diskette.name = "data disk - '[diskette.fields["name"]]'"
 				temp = "Save successful."
@@ -483,6 +487,7 @@
 						active_record = null
 					menu = 1
 					success = TRUE
+					log_cloning("[usr] initiated cloning of [C.fields["name"]] - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 				if(result &	CLONING_DELETE_RECORD)
 					if(active_record == C)
 						active_record = null

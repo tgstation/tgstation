@@ -137,6 +137,9 @@ LOG_MANIFEST
 ## log virus and actions
 LOG_VIRUS
 
+## log cloning actions
+LOG_CLONING
+
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 
