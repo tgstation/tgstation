@@ -287,13 +287,14 @@
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes) //can't flash what can't see!
+		return
+
 	. = ..()
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
-		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-		if (!eyes)
-			return
 		if(visual)
 			return
 
