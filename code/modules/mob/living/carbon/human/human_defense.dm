@@ -16,10 +16,6 @@
 		organnum++
 	return (armorval/max(organnum, 1))
 
-/mob/living/carbon/human/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
-	if(NOEYES in dna.species.species_traits)
-		return
-	return ..()
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
 	if(!d_type)
