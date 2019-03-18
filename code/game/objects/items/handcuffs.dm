@@ -369,6 +369,8 @@
 	desc = "Pretty badass if you can use it right. You could probably use it to wrap around someone's legs like a bola as well, if they try running."
 	icon_state = "nunchuck"
 	item_state = "nunchuck"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	hitsound = 'sound/weapons/nunchuck_hit.ogg'
 	slot_flags = ITEM_SLOT_BELT
 	force = 15
