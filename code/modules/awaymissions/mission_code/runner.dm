@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 		if(color == COLOR_ALMOST_BLACK)
 			if(locate(A) in GLOB.vr_runner_players)
 				var/datum/thrownthing/TT = A.throwing
-				if(!TT || TT && TT.dist_travelled + 1 >= TT.maxrange)
+				if(!TT || TT?.dist_travelled + 1 >= TT.maxrange)
 					var/mob/living/carbon/human/H = A
 					var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
 					findspell.Click(H)
