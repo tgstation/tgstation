@@ -59,7 +59,7 @@
 		C.IgniteMob()
 
 /datum/species/vampire/check_weakness(obj/item/weapon, mob/living/attacker)
-	if(istype(weapon, /obj/item/melee/curator_whip))
+	if(istype(weapon, /obj/item/nullrod/whip))
 		return 1 //Vampire killer.
 	return 0
 
