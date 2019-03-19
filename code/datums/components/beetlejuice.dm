@@ -46,4 +46,4 @@
 	var/atom/movable/AM = parent
 	do_teleport(AM,get_turf(target))
 	active = FALSE
-	addtimer(VARSET_CALLBACK(src, active , TRUE), cooldown)
+	addtimer(VARSET_CALLBACK(src, active, TRUE), cooldown)
