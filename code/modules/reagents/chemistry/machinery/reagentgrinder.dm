@@ -69,7 +69,7 @@
 			var/obj/item/O = i
 			to_chat(user, "<span class='notice'>- \A [O.name].</span>")
 
-	if(!(stat & (NOPOWER|BROKEN)))
+	if(!(stat & (NOPOWER|BROKEN)) && beaker)
 		to_chat(user, "<span class='notice'>The status display reads:</span>")
 		to_chat(user, "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>")
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
