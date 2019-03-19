@@ -1,0 +1,4 @@
+author: "Vile Beggar"
+delete-after: True
+changes: 
+  - rscadd: "Mechs can now be equipped with disablers."
