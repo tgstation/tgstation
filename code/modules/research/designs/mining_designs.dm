@@ -67,7 +67,7 @@
 	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well."
 	id = "jackhammer"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 2000, MAT_SILVER = 2000, MAT_DIAMOND = 6000)
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 2000, MAT_SILVER = 2000, MAT_DIAMOND = 8000)
 	build_path = /obj/item/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
@@ -97,7 +97,7 @@
 	desc = "A device which allows kinetic accelerators to deal more damage."
 	id = "damagemod"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 3000, MAT_URANIUM = 2000)
 	build_path = /obj/item/borg/upgrade/modkit/damage
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
@@ -107,7 +107,7 @@
 	desc = "A device which decreases the cooldown of a Kinetic Accelerator."
 	id = "cooldownmod"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 3000, MAT_URANIUM = 2000)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
@@ -117,7 +117,7 @@
 	desc = "A device which allows kinetic accelerators to fire at a further range."
 	id = "rangemod"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 3000, MAT_URANIUM = 2000)
 	build_path = /obj/item/borg/upgrade/modkit/range
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
@@ -127,7 +127,7 @@
 	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts that destroy rock."
 	id = "hypermod"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 1000)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
