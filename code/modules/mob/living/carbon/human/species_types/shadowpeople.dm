@@ -59,7 +59,7 @@
 			H.visible_message("<span class='danger'>[H] dances in the shadows, evading [P]!</span>")
 			playsound(T, "bullet_miss", 75, 1)
 			return BULLET_ACT_FORCE_PIERCE
-	return BULLET_ACT_HIT
+	return ..()
 
 /datum/species/shadow/nightmare/check_roundstart_eligible()
 	return FALSE
