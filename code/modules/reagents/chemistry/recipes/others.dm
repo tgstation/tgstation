@@ -131,6 +131,12 @@
 	id = "mulligan"
 	results = list("mulligan" = 1)
 	required_reagents = list("slime_toxin" = 1, "mutagen" = 1)
+	
+/datum/chemical_reaction/felinid
+	name = "Felinid Mutation Toxin"
+	id = "felinidmutationtoxin"
+	results = list("felinidmutationtoxin" = 5)
+	required_reagents = list("lizardmutationtoxin" = 2, "mutagen" = 2, "slime_toxin" = 2, "strange_reagent" = 10)
 
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
