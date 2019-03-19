@@ -547,7 +547,6 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0
-	silent = FALSE
 	dizziness = 0
 	drowsyness = 0
 	stuttering = 0
