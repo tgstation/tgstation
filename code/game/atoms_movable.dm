@@ -140,6 +140,7 @@
 	if(AM.pulledby)
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
+	AM.set_glide_size(glide_size)
 	pulling = AM
 	AM.pulledby = src
 	grab_state = state
