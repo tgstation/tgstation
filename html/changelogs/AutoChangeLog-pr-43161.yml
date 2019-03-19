@@ -1,4 +1,0 @@
-author: "81Denton"
-delete-after: True
-changes: 
-  - bugfix: "Curators no longer lose access to the aux base and mining station EVA during skeleton shifts."

@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - code_imp: "Adds tools to make mutations transfer through cloning"

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a runtime with wabbajack / bolt of change causing the person that was hit to go invisible and be unable to do anything."

@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed carbons with no eyes having a flash overlay applied when they're flashed."
-  - bugfix: "Fixed species with no eyes getting flashed."
