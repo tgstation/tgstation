@@ -2,19 +2,24 @@
 /mob/living/simple_animal/hostile/guardian/assassin
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "slashes"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do medium damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an assassin carp! Just when you thought it was safe to go back to the water... which is unhelpful, because we're in space.</span>"
-
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
 	var/stealthcooldown = 160
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
+	var/stored_icon_state = ""
+
+/mob/living/simple_animal/hostile/guardian/protector/updatetheme(theme)//assassin holoparasites have a unique stand skin
+	..()
+	if(theme == "tech")
+		icon_living = "[namedatum.parasiteicon]_Assassin"
+		icon_state = "[namedatum.parasiteicon]_Assassin"
+		icon_dead = "[namedatum.parasiteicon]_Assassin"
 
 /mob/living/simple_animal/hostile/guardian/assassin/Initialize()
 	. = ..()
@@ -57,8 +62,10 @@
 		alpha = initial(alpha)
 		if(!forced)
 			to_chat(src, "<span class='danger'><B>You exit stealth.</span></B>")
+			set_unstealthed()
 		else
 			visible_message("<span class='danger'>\The [src] suddenly appears!</span>")
+			addtimer(CALLBACK(src, .proc/set_unstealthed), 7 SECONDS)//7 seconds of wristblades and slashing, then back to punching
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
 			cooldown = world.time + 40 //can't recall for 4 seconds
 		updatestealthalert()
@@ -74,6 +81,9 @@
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))
 		alpha = 15
+		stored_icon_state = icon_state
+		icon_state = "[icon_state]Stealth"
+		attack_sound = 'sound/weapons/bladeslice.ogg'
 		if(!forced)
 			to_chat(src, "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>")
 		updatestealthalert()
@@ -98,3 +108,8 @@
 		instealthalert = null
 		clear_alert("canstealth")
 		canstealthalert = null
+
+/mob/living/simple_animal/hostile/guardian/assassin/proc/set_unstealthed()
+	icon_state = stored_icon_state
+	attacktext = initial(attacktext)
+	attack_sound = initial(attack_sound)

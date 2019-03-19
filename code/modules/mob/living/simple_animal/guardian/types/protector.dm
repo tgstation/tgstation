@@ -13,7 +13,6 @@
 
 /mob/living/simple_animal/hostile/guardian/protector/updatetheme(theme)//protector holoparasites have a unique stand skin
 	..()
-	to_chat(world, "theme == [theme]")
 	if(theme == "tech")
 		icon_living = "[namedatum.parasiteicon]_Protector"
 		icon_state = "[namedatum.parasiteicon]_Protector"
