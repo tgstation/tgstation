@@ -1391,14 +1391,7 @@
 	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? Either way, this kit is the best way to turn a regular crewman into an ore-producing, monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade. Requires QM access to open."
 	cost = 2500
 	access = ACCESS_QM
-	contains = list(/obj/item/pickaxe/mini,
-			/obj/item/clothing/glasses/meson,
-			/obj/item/t_scanner/adv_mining_scanner/lesser,
-			/obj/item/radio/headset/headset_cargo/mining,
-			/obj/item/storage/bag/ore,
-			/obj/item/clothing/suit/hooded/explorer,
-			/obj/item/clothing/mask/gas/explorer,
-			/obj/item/card/mining_access_card)
+	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
