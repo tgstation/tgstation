@@ -289,3 +289,11 @@
 	list_reagents = list("nutriment" = 8, "liquidelectricity" = 5)
 	tastes = list("bun" = 2, "pure electricity" = 4)
 	foodtype = GRAIN | TOXIC
+
+/obj/item/reagent_containers/food/snacks/burger/crab
+	name = "crab burger"
+	desc = "A delicious patty of the crabby kind, slapped inbetween a bun."
+	icon_state = "crabburger"
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
+	tastes = list("bun" = 2, "crab meat" = 4)
+	foodtype = GRAIN | MEAT
