@@ -182,7 +182,7 @@
 	terminate_effects()
 	. = ..()
 
-/obj/item/organ/eyes/robotic/glow/Remove()
+/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
 	terminate_effects()
 	. = ..()
 
