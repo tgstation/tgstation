@@ -1,0 +1,8 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - bugfix: "Gondolapods work again"
+  - bugfix: "the see-through pod effect for centcom podlaunchers works again"
+  - bugfix: "the Stealth effect for centcom podlaunchers works again"
+  - admin: "sparks will not generate if the quietLanding effect is on, for the centcom podlauncher"
+  - admin: "makes input text clearer for the centcom podlauncher"
