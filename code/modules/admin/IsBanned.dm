@@ -48,9 +48,19 @@
 
 	//Population Cap Checking
 	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
-	if(!real_bans_only && extreme_popcap && living_player_count() >= extreme_popcap && !admin)
-		log_access("Failed Login: [key] - Population cap reached")
-		return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
+	if(!real_bans_only && extreme_popcap)
+		var/hard_popcap = CONFIG_GET(number/hard_popcap)
+
+		var/popcap_value = living_player_count()
+		if (hard_popcap)
+			popcap_value = GLOB.clients.len
+		if (!GLOB.enter_allowed || length(SSticker.queued_players) || !SSticker.HasRoundStarted())
+			hard_popcap = 0
+			popcap_value = GLOB.clients.len
+
+		if(!real_bans_only && extreme_popcap && popcap_value >= extreme_popcap && !admin && (!hard_popcap || living_player_count() >= hard_popcap))
+			log_access("Failed Login: [key] - Population cap reached")
+			return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
 
 	if(CONFIG_GET(flag/sql_enabled))
 		if(!SSdbcore.Connect())
