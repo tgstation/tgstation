@@ -110,7 +110,7 @@
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
-				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",
+				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H == user ? "your" : "[H]'s'"] [affecting.name].</span>",
 					"<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
 				if(!do_mob(user, H, 50))
 					return
