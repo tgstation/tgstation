@@ -72,7 +72,7 @@
 	desc = "The NT-75 Electromagnetic Power Inducer can wirelessly induce electric charge in an object, allowing you to recharge power cells without having to remove them."
 	id = "inducer"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_SILVER = 500)
 	build_path = /obj/item/inducer/sci
 	category = list("Power Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
