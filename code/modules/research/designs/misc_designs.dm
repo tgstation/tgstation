@@ -319,7 +319,7 @@
 	desc = "A holograpic projector used to project various warning signs."
 	id = "holosign"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000, MAT_GOLD = 500)
 	build_path = /obj/item/holosign_creator
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -408,7 +408,7 @@
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	id = "detective_scanner"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 2500, MAT_SILVER = 2000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 2000, MAT_SILVER = 2000)
 	build_path = /obj/item/detective_scanner
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
