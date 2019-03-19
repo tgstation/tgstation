@@ -2,7 +2,7 @@
 	var/keyword
 	var/list/first_heard
 	var/list/count
-	var/min_delay = 3 SECONDS //How fast they need to be said
+	var/max_delay = 3 SECONDS //How fast they need to be said
 	var/min_count = 3
 	var/cooldown = 30 SECONDS //Delay between teleports
 	var/active = TRUE
@@ -32,7 +32,7 @@
 			occurences++
 			found = findtext(message,keyword,found + length(keyword) + 1)
 
-		if(!first_heard[speaker] || (first_heard[speaker] + min_delay < world.time))
+		if(!first_heard[speaker] || (first_heard[speaker] + max_delay < world.time))
 			first_heard[speaker] = world.time
 			count[speaker] = 0
 		count[speaker] += occurences
