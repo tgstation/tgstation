@@ -211,7 +211,7 @@
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
 	id = "wormholeprojector"
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 2000, MAT_METAL = 5000, MAT_DIAMOND = 2000, MAT_BLUESPACE = 3000)
+	materials = list(MAT_SILVER = 2000, MAT_METAL = 5000, MAT_DIAMOND = 2000, MAT_BLUESPACE = 4000)
 	build_path = /obj/item/gun/energy/wormhole_projector
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
