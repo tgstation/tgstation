@@ -292,7 +292,7 @@
 
 /obj/item/reagent_containers/food/snacks/burger/crab
 	name = "crab burger"
-	desc = "A delicious patty of the crabby kind, slapped inbetween a bun."
+	desc = "A delicious patty of the crabby kind, slapped in between a bun."
 	icon_state = "crabburger"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
 	tastes = list("bun" = 2, "crab meat" = 4)
