@@ -525,24 +525,33 @@
 	..()
 
 	if(statpanel("Status"))
-		if (client)
-			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-		stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
-		var/datum/map_config/cached = SSmapping.next_map_config
-		if(cached)
-			stat(null, "Next Map: [cached.map_name]")
-		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
-		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		stat(null, "Round Time: [worldtime2text()]")
-		stat(null, "Station Time: [station_time_timestamp()]")
-		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
-		if(SSshuttle.emergency)
-			var/ETA = SSshuttle.emergency.getModeStr()
-			if(ETA)
-				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
+		stat_status()
 
 	if(client && client.holder)
-		if(statpanel("MC"))
+		stat_adminpanels()
+
+
+	if(listed_turf && client)
+		stat_turf_contents()
+
+/mob/proc/stat_status()
+	if (client)
+		stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
+	stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
+	var/datum/map_config/cached = SSmapping.next_map_config
+	if(cached)
+		stat(null, "Next Map: [cached.map_name]")
+	stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
+	stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
+	stat(null, "Round Time: [worldtime2text()]")
+	stat(null, "Station Time: [station_time_timestamp()]")
+	stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
+	if(SSshuttle.emergency)
+		var/ETA = SSshuttle.emergency.getModeStr()
+		if(ETA)
+			stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
+
+/mob/proc/stat_mc()
 			var/turf/T = get_turf(client.eye)
 			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
@@ -564,16 +573,17 @@
 				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
 			GLOB.cameranet.stat_entry()
-		if(statpanel("Tickets"))
-			GLOB.ahelp_tickets.stat_entry()
-		if(length(GLOB.sdql2_queries))
-			if(statpanel("SDQL2"))
+			
+/mob/proc/stat_tickets()
+	GLOB.ahelp_tickets.stat_entry()
+
+/mob/proc/stat_sdql2()
 				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
 				for(var/i in GLOB.sdql2_queries)
 					var/datum/SDQL2_query/Q = i
 					Q.generate_stat()
 
-	if(listed_turf && client)
+/mob/proc/stat_turf_contents()
 		if(!TurfAdjacent(listed_turf))
 			listed_turf = null
 		else
@@ -593,10 +603,19 @@
 					continue
 				statpanel(listed_turf.name, null, A)
 
-
+/mob/proc/stat_spells()
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
 	add_spells_to_statpanel(mob_spell_list)
+
+/mob/proc/stat_adminpanels()
+		if(statpanel("MC"))
+			stat_mc()
+		if(statpanel("Tickets"))
+			stat_tickets()
+		if(length(GLOB.sdql2_queries))
+			if(statpanel("SDQL2"))
+				stat_sdql2
 
 /mob/proc/add_spells_to_statpanel(list/spells)
 	for(var/obj/effect/proc_holder/spell/S in spells)
