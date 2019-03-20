@@ -1394,6 +1394,7 @@
 #include "code\modules\atmospherics\machinery\pipes\manifold.dm"
 #include "code\modules\atmospherics\machinery\pipes\manifold4w.dm"
 #include "code\modules\atmospherics\machinery\pipes\mapping.dm"
+#include "code\modules\atmospherics\machinery\pipes\multiz.dm"
 #include "code\modules\atmospherics\machinery\pipes\pipes.dm"
 #include "code\modules\atmospherics\machinery\pipes\simple.dm"
 #include "code\modules\atmospherics\machinery\pipes\heat_exchange\he_pipes.dm"
