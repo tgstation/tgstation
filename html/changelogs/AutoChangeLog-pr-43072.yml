@@ -1,0 +1,4 @@
+author: "Kmc2000"
+delete-after: True
+changes: 
+  - rscadd: "Added darkmode! You can opt-in to this by clicking the settings icon on goonchat, and looking for the toggle darkmode button."
