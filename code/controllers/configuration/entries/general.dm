@@ -42,6 +42,8 @@
 
 /datum/config_entry/flag/log_virus	// log virology data
 
+/datum/config_entry/flag/log_cloning // log cloning actions.
+
 /datum/config_entry/flag/log_vote	// log voting
 
 /datum/config_entry/flag/log_whisper	// log client whisper
@@ -290,6 +292,9 @@
 	config_entry_value = "The server is currently serving a high number of users, find alternative servers."
 
 /datum/config_entry/flag/panic_bunker	// prevents people the server hasn't seen before from connecting
+
+/datum/config_entry/string/panic_bunker_message
+	config_entry_value = "Sorry but the server is currently not accepting connections from never before seen players."
 
 /datum/config_entry/number/notify_new_player_age	// how long do we notify admins of a new player
 	min_val = -1

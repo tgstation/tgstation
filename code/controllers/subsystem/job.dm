@@ -248,7 +248,7 @@ SUBSYSTEM_DEF(job)
 
 	JobDebug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)
-		return 0
+		return TRUE
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
@@ -351,9 +351,9 @@ SUBSYSTEM_DEF(job)
 	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
-			AssignRole(player, SSjob.overflow_role) //If everything is already filled, make them an assistant
-
-	return 1
+			if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them an assistant
+				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
+	return TRUE
 
 //We couldn't find a job from prefs for this guy.
 /datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)

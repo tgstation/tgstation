@@ -480,7 +480,7 @@ CREATE TABLE `stickyban` (
 -- Table structure for table `stickyban_matched_ckey`
 --
 DROP TABLE IF EXISTS `stickyban_matched_ckey`;
-CREATE TABLE `ss13_stickyban_matched_ckey` (
+CREATE TABLE `stickyban_matched_ckey` (
 	`stickyban` VARCHAR(32) NOT NULL,
 	`matched_ckey` VARCHAR(32) NOT NULL,
 	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -490,10 +490,10 @@ CREATE TABLE `ss13_stickyban_matched_ckey` (
 ) ENGINE=InnoDB;
 
 --
--- Table structure for table `ss13_stickyban_matched_ip`
+-- Table structure for table `stickyban_matched_ip`
 --
-DROP TABLE IF EXISTS `ss13_stickyban_matched_ip`;
-CREATE TABLE `ss13_stickyban_matched_ip` (
+DROP TABLE IF EXISTS `stickyban_matched_ip`;
+CREATE TABLE `stickyban_matched_ip` (
 	`stickyban` VARCHAR(32) NOT NULL,
 	`matched_ip` INT UNSIGNED NOT NULL,
 	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

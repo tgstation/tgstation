@@ -228,7 +228,7 @@ SUBSYSTEM_DEF(ticker)
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
-	SSjob.DivideOccupations() 				//Distribute jobs
+	can_continue = can_continue && SSjob.DivideOccupations() 				//Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
@@ -407,6 +407,7 @@ SUBSYSTEM_DEF(ticker)
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
+			listclearnulls(queued_players)
 			if(living_player_count() < hpc)
 				if(next_in_line && next_in_line.client)
 					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a></span>")

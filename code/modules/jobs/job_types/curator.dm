@@ -11,13 +11,12 @@
 
 	outfit = /datum/outfit/job/curator
 
-	access = list(ACCESS_LIBRARY)
-	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION,ACCESS_MINING_STATION)
+	access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION, ACCESS_MINING_STATION)
+	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION, ACCESS_MINING_STATION)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_CIV
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
-
 
 /datum/outfit/job/curator
 	name = "Curator"
@@ -34,7 +33,6 @@
 		/obj/item/soapstone = 1,
 		/obj/item/barcodescanner = 1
 	)
-
 
 /datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
