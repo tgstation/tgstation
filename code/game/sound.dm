@@ -1,6 +1,6 @@
 /proc/playsound(atom/source, input, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
 	if(isarea(source))
-		throw EXCEPTION("playsound(): source is an area")
+		CRASH("playsound(): source is an area")
 		return
 
 	var/turf/turf_source = get_turf(source)
