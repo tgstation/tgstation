@@ -33,7 +33,7 @@ We were all new once, be patient and guide new players in the right direction.
 On most clothing items that go in the exosuit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
 Most job-related exosuit clothing can fit job-related items into it, such as the atmospheric technician's hardsuit/winter coat holding an RPD, or labcoats holding most medicine.
 If you're using hotkey mode, you can stop pulling things using H.
-The self-destruct is invincible. Go find the disk instead of trying to destroy it.
+The station's self-destruct terminal is invincible. Go find the disk instead of trying to destroy it.
 If there's something you need from another department, try asking! This game isn't singleplayer and you'd be surprised what you can get accomplished together!
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
 Ask and you shall receive.
