@@ -1,4 +1,0 @@
-author: "Basilman"
-delete-after: True
-changes: 
-  - bugfix: "Fixed certain alien organs (eyes, tongue, liver) not registering for organ bounty."
