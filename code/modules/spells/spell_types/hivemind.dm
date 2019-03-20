@@ -516,6 +516,8 @@
 		if(prob(20))
 			var/text = pick(";HELP!","I'm losing control of the situation!!","Get me outta here!")
 			target.say(text, forced = "panic")
+		if(prob(1))
+			SEND_SOUND(target, sound('sound/effects/adminhelp.ogg'))
 		var/effect = rand(1,4)
 		switch(effect)
 			if(1)
