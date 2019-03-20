@@ -1,0 +1,4 @@
+author: "Basilman"
+delete-after: True
+changes: 
+  - bugfix: "Fixed adminheal not curing various status effects"
