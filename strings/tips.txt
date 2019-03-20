@@ -27,8 +27,6 @@ A thrown glass of water can make a slippery tile, allowing you to slow down your
 When dealing with security, you can often get your sentence negated entirely through cooperation and deception.
 The P2P chat function found on tablet computers allows for a stealthy way to communicate with people.
 Experiment with different setups of the supermatter engine to maximize output, but don't risk the crew's safety to do so!
-If you don't agree with an admin's ruling, make a policy discussion on the forums. It's what they're there for!
-Demoman takes skill.
 We were all new once, be patient and guide new players in the right direction.
 On most clothing items that go in the exosuit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
 Most job-related exosuit clothing can fit job-related items into it, such as the atmospheric technician's hardsuit/winter coat holding an RPD, or labcoats holding most medicine.
@@ -42,10 +40,10 @@ Don't be afraid to ask for help, whether from your peers or from admins.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
-As the Captain, you can purchase a new emergency shuttle using a communications console. Some require cash, while others give you cash in exchange. Keep in mind that purchasing dangerous shuttles, such as Oh Hi Daniel, will make you valid.
+As the Captain, you can purchase a new emergency shuttle using a communications console. Some require cash, while others give you cash in exchange. Keep in mind that purchasing dangerous shuttles may instigate the ire of your crew.
 As the Chief Medical Officer, your hypospray is like a refillable instant injection syringe that can hold 30 units as opposed to the standard 15.
 As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and geneticists during a nuclear emergency, blob infestation, or some other crisis to keep people alive and fighting.
-As the Chief Medical Officer, your hardsuit can hold an entire medkit in it's suit storage!
+As the Chief Medical Officer, your hardsuit can hold an entire medkit in its suit storage!
 As a Medical Doctor, you can attempt to drain blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, you have confirmed the presence of changelings.
 As a Medical Doctor, while both heal toxin damage, the difference between charcoal and antitoxin is that charcoal will actively remove all other reagents from one's body, while antitoxin only removes various toxins - but can overdose.
 As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
@@ -100,7 +98,7 @@ As an Engineer, you can electrify grilles by placing wire "nodes" beneath them: 
 As an Engineer, return to Engineering once in a while to check on the engine and SMES cells. It's always a good idea to make sure containment isn't compromised.
 As an Engineer, you can temporarily power the station solely with the solar arrays. They will provide just enough electricity to power the station for a while, however their output is just slightly below what is truely needed to consistently power the station.
 As an Engineer, you can cool the supermatter crystal by spraying it with a fire extinguisher. Only for the brave!
-As an Engineer, if you become face-to-face with the threat of a blob, try setting up a PA launcher (like the kind used in singularities) in an important chokehold. The accelerated particles will severely weaken and eventually destroy that line, allowing your crewmembers to push the offensive. This tactic is ineffective against blob cores themselves, however.
+As an Engineer, the Particle Accelerator that powers singularity engines is also effective at killing blobs!
 As an Engineer, you can repair windows by using a welding tool on them while on any intent other than harm.
 As an Engineer, you can lock APCs, fire alarms, emitters and radiation collectors using your ID card to prevent others from disabling them.
 As an Engineer, you can convert tesla coils into corona analyzers by using a screwdriver on the circuit board. They will produce less power, but generate research points!
@@ -126,7 +124,7 @@ As the Warden, if a prisoner's crimes are heinous enough you can put them in per
 As the Warden, you can implant criminals you suspect might re-offend with devices that will track their location and allow you to remotely inject them with disabling chemicals. 
 As the Warden, you can use handcuffs on orange prisoner shoes to turn them into cuffed shoes, forcing prisoners to walk and potentially thwarting an escape.
 As a Security Officer, communicate and coordinate with your fellow officers using the security channel (:s) to avoid confusion.
-As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted(You can tell if they have a flashing blue outline over their job icon). Use this to your advantage in a revolution to definitively tell who is on your side!
+As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted. You can tell by the flashing blue outline around their job icon. Use this to your advantage in a revolution to definitively tell who is on your side!
 As a Security Officer, mindshield implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
 As a Security Officer, examining someone while wearing sechuds or HUDsunglasses will let you set their arrest level, which will cause Beepsky and other security bots to chase after them.
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
@@ -138,7 +136,7 @@ As the Head of Personnel, you are not higher ranking than other heads of staff, 
 As the Head of Personnel, you are just as large a target as the Captain because of the potential power your ID and computer can hand out.
 As the Mime, your invisible wall power blocks people as well as projectiles. You can use it in a pinch to delay your pursuer.
 As the Mime, you can use :r and :l to speak through your ventriloquist dummy.
-As the Mime, your oath of silence is your source of power. Breaking it robs you of your powers and of your honor, and might even make you valid, depending on the circumstance. A freshly-cloned Mime is not valid, as they lose their vow by default.
+As the Mime, your oath of silence is your source of power. Breaking it robs you of your powers and of your honor.
 As the Clown, if you lose your banana peel, you can still slip people with your PDA! Honk!
 As the Clown, eating bananas heals you slightly. Honk!
 As the Clown, your Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
@@ -153,7 +151,7 @@ As a Botanist, you can mutate the plants growing in your hydroponics trays with 
 As a Botanist, you should look into increasing the potency of your plants. This increases the size, amount of chemicals, points gained from grinding them in the biogenerator, and lets people know you are a proficient botanist.
 As a Botanist, you can combine production trait chemicals just like a Chemist. Chlorine (blumpkin) + radium and phosphorus (glowshrooms) equals unstable mutagen!
 As a Cook, you can load your food into snack vending machines.
-As a Cook, you can create a very wide variety of food with the crafting menu (that little T symbol next to your intents).
+As a Cook, you can create a very wide variety of food with the crafting menu. You can find it by looking for the hammer icon near your intents.
 As a Cook, you can rename your custom made food with a pen.
 As a Cook, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
 As a Cook, being in the kitchen will make you remember the basics of Close Quarters Cooking. It is highly effective at removing Assistants from your workplace.
@@ -217,9 +215,8 @@ As a Cultist, do not cause too much chaos before your objective is completed. If
 As a Cultist, your team starts off very weak, but if necessary can quickly convert everything they have into raw power. Make sure you have the numbers and equipment to support going loud, or the cult will fall flat on its face.
 As a Cultist, the Blood Boil rune will deal massive amounts of brute damage to non-cultists, stamina damage to Ratvarian scum, and some damage to fellow cultists of Nar'Sie nearby, but will create a fire where the rune stands on use.
 As a Cultist, you can create an army of manifested goons using a combination of the Manifest rune, which creates homunculi from ghosts, and the Blood Drain rune, which drains life from anyone standing on any blood drain rune.
-As a Cultist or Servant, check the alert in the upper-right of your screen for all the details about your cult's current status and objective.
-You can deconvert Cultists of Nar'Sie and Servants of Ratvar by feeding them large amounts of holy water. Unlike revolutionaries, implanting them with mindshield implants won't do it!
-Tiles sprayed with holy water will permanently block Servants of Ratvar from teleporting onto them.
+As a Cultist, check the alert in the upper-right of your screen for all the details about your cult's current status and objective.
+You can deconvert Cultists of Nar'Sie by feeding them large amounts of holy water. Unlike revolutionaries, implanting them with mindshield implants won't do it!
 The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.
 The Chaplain's holy weapon will kill clockwork marauders in two hits.
 As a Wizard, you can turn people to stone, then animate the resulting statue with a staff of animation to create an extremely powerful minion, for all of 5 minutes at least.
