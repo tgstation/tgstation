@@ -204,7 +204,6 @@
 	beepsky = new(where, owner)
 	beepsky.victim = owner
 
-
 /datum/brain_trauma/special/beepsky/on_lose()
 	QDEL_NULL(beepsky)
 	..()
