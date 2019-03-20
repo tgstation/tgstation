@@ -17,9 +17,13 @@
 			C.flash_act()
 
 		// Spawn some hostile syndicate critters and spread them out
-		spawn_and_random_walk(spawner_type, T, deliveryamt, walk_chance=50, admin_spawn=((flags_1 & ADMIN_SPAWNED_1) ? TRUE : FALSE))
+		var/list/spawned = spawn_and_random_walk(spawner_type, T, deliveryamt, walk_chance=50, admin_spawn=((flags_1 & ADMIN_SPAWNED_1) ? TRUE : FALSE))
+		afterspawn(spawned)
 
 	qdel(src)
+
+/obj/item/grenade/spawnergrenade/proc/afterspawn(list/mob/spawned)
+	return
 
 /obj/item/grenade/spawnergrenade/manhacks
 	name = "viscerator delivery grenade"
@@ -41,3 +45,19 @@
 	icon_state = "holy_grenade"
 	spawner_type = /mob/living/simple_animal/hostile/poison/bees/toxin
 	deliveryamt = 10
+
+/obj/item/grenade/spawnergrenade/floorgang
+	name = "Floor Gang Beacon"
+	desc = "To be used only in dire emergencies. Summons a brigade of cleanbots ready to roll."
+	spawner_type = list(/mob/living/simple_animal/bot/cleanbot, 
+						/mob/living/simple_animal/bot/firebot,
+						/mob/living/simple_animal/bot/floorbot,
+						/mob/living/simple_animal/bot/medbot)
+	deliveryamt = 20
+
+/obj/item/grenade/spawnergrenade/floorgang/afterspawn(list/mob/spawned)
+	. = ..()
+	for(var/mob/living/simple_animal/bot/B in spawned)
+		B.locked = FALSE
+		B.open = TRUE
+		B.emag_act()
