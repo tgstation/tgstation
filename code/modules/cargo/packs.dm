@@ -204,15 +204,13 @@
 
 /datum/supply_pack/emergency/spacesuit
 	name = "Space Suit Crate"
-	desc = "Contains two aging suits from Space-Goodwill. Requires EVA access to open."
-	cost = 3000
+	desc = "Contains one aging suit from Space-Goodwill and a jetpack. Requires EVA access to open."
+	cost = 2500
 	access = ACCESS_EVA
 	contains = list(/obj/item/clothing/suit/space,
-					/obj/item/clothing/suit/space,
-					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/mask/breath,
-					/obj/item/clothing/mask/breath)
+					/obj/item/tank/jetpack/carbondioxide)
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
 
@@ -1149,7 +1147,7 @@
 
 /datum/supply_pack/medical/vending
 	name = "Medical Vending Crate"
-	desc = "Contains refills for medical vending machines."
+	desc = "Contains one NanoMed Plus refill and one wall-mounted NanoMed refill."
 	cost = 2000
 	contains = list(/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/wallmed)
@@ -1399,16 +1397,10 @@
 
 /datum/supply_pack/service/minerkit
 	name = "Shaft Miner Starter Kit"
-	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? Either way, this kit is the best way to turn a regular crewman into an ore-producing, monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, cargo headset, ore bag, gasmask, and explorer suit. Requires QM access to open."
+	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? Either way, this kit is the best way to turn a regular crewman into an ore-producing, monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade. Requires QM access to open."
 	cost = 2500
 	access = ACCESS_QM
-	contains = list(/obj/item/pickaxe/mini,
-			/obj/item/clothing/glasses/meson,
-			/obj/item/t_scanner/adv_mining_scanner/lesser,
-			/obj/item/radio/headset/headset_cargo/mining,
-			/obj/item/storage/bag/ore,
-			/obj/item/clothing/suit/hooded/explorer,
-			/obj/item/clothing/mask/gas/explorer)
+	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
