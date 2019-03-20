@@ -193,7 +193,7 @@
 	scan_desc = "criminal mind"
 	gain_text = "<span class='warning'>Justice is coming for you.</span>"
 	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
-	var/obj/effect/hallucination/simple/securitron_h/beepsky
+	var/obj/effect/hallucination/simple/securitron/beepsky
 
 /datum/brain_trauma/special/beepsky/on_gain()
 	create_securitron()
@@ -230,24 +230,24 @@
 		playsound(owner, 'sound/voice/beepsky/criminal.ogg', 40)
 	..()
 
-/obj/effect/hallucination/simple/securitron_h
+/obj/effect/hallucination/simple/securitron
 	name = "Securitron"
 	desc = "The LAW is coming."
 	image_icon = 'icons/mob/aibots.dmi'
 	image_state = "secbot-c"
 	var/victim
 
-/obj/effect/hallucination/simple/securitron_h/New()
+/obj/effect/hallucination/simple/securitron/New()
 	name = pick ( "officer Beepsky", "officer Johnson", "officer Pingsky")
 	START_PROCESSING(SSfastprocess,src)
 	..()
 
-/obj/effect/hallucination/simple/securitron_h/process()
+/obj/effect/hallucination/simple/securitron/process()
 	if(prob(60))
 		forceMove(get_step_towards(src, victim))
 		if(prob(5))
 			say("Level 10 infraction alert!")
 
-/obj/effect/hallucination/simple/securitron_h/Destroy()
+/obj/effect/hallucination/simple/securitron/Destroy()
 	STOP_PROCESSING(SSfastprocess,src)
 	return ..()

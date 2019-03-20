@@ -647,8 +647,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
 	overdose_threshold = 40
 	var/datum/brain_trauma/special/beepsky/B
-	var/datum/brain_trauma/mild/phobia/security/S
-
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_add(mob/living/carbon/M)
 	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
@@ -676,7 +674,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/beepsky_smash/overdose_start(mob/living/carbon/M)
 	if(!M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.gain_trauma(S, TRAUMA_RESILIENCE_BASIC)
+		M.gain_trauma(/datum/brain_trauma/mild/phobia/security, TRAUMA_RESILIENCE_BASIC)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
