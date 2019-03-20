@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - bugfix: "Snails can't wear glasses"
+  - bugfix: "Snails don't lube the floor when buckled anymore"
