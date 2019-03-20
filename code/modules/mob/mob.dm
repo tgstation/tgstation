@@ -615,7 +615,7 @@
 			stat_tickets()
 		if(length(GLOB.sdql2_queries))
 			if(statpanel("SDQL2"))
-				stat_sdql2
+				stat_sdql2()
 
 /mob/proc/add_spells_to_statpanel(list/spells)
 	for(var/obj/effect/proc_holder/spell/S in spells)
