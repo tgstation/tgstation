@@ -122,13 +122,13 @@
 			if(!too_strong)
 				mob_swap = TRUE
 		else
-			//You can swap with the person you are dragging on grab intent, and restrained people in most cases 
+			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
 			if(M.pulledby == src && a_intent == INTENT_GRAB && !too_strong)
 				mob_swap = TRUE
 			else if(
 				!(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))&&\
 				((M.restrained() && !too_strong) || M.a_intent == INTENT_HELP) &&\
-				(restrained() || a_intent == INTENT_HELP) 
+				(restrained() || a_intent == INTENT_HELP)
 			)
 				mob_swap = TRUE
 		if(mob_swap)
@@ -547,6 +547,11 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0
+	dizziness = 0
+	drowsyness = 0
+	stuttering = 0
+	slurring = 0
+	jitteriness = 0
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
@@ -1082,7 +1087,7 @@
 	if(buckled)
 		if(buckled.buckle_lying != -1)
 			should_be_lying = buckled.buckle_lying
-	
+
 	if(should_be_lying)
 		mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL | MOBILITY_STAND)
 		if(buckled)
@@ -1097,7 +1102,7 @@
 			mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL)
 		mobility_flags |= MOBILITY_STAND
 		lying = 0
-			
+
 
 	var/canitem = !paralyzed && !stun && conscious && !chokehold && !restrained && has_arms
 	if(canitem)
