@@ -1,0 +1,8 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - rscdel: "afk kicker no longer exempts ghosts"
+  - rscadd: "afk kicker now exempts people in the lobby join queue"
+  - rscadd: "afk kicker now exempts admins"
+  - tweak: "afk kicker now includes a link you can use rejoin quickly."
+  - tweak: "(Note: these all apply to the default disabled idle time kicker, not the end of round lobby kicker)"
