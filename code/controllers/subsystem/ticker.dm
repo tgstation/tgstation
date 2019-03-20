@@ -228,7 +228,7 @@ SUBSYSTEM_DEF(ticker)
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
-	SSjob.DivideOccupations() 				//Distribute jobs
+	can_continue = can_continue && SSjob.DivideOccupations() 				//Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
