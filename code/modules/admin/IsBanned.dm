@@ -61,7 +61,7 @@
 			hard_popcap = 0
 			popcap_value = GLOB.clients.len
 
-		if(popcap_value >= extreme_popcap && (!hard_popcap || living_player_count() >= hard_popcap))
+		if(popcap_value >= extreme_popcap && (!hard_popcap || living_player_count() >= hard_popcap) && !joined_player_list.Find(ckey))
 			log_access("Failed Login: [key] - Population cap reached")
 			return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
 
