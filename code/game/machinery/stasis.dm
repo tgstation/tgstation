@@ -1,8 +1,8 @@
 /obj/machinery/stasis
 	name = "Lifeform Stasis Unit"
 	desc = "A not so comfortable looking bed with some nozzles at the top and bottom. It will keep someone in stasis."
-	icon = 'icons/obj/surgery.dmi' //PLACEHOLDER
-	icon_state = "optable" //PLACEHOLDER
+	icon = 'icons/obj/machines/stasis.dmi'
+	icon_state = "stasis"
 	density = FALSE
 	can_buckle = TRUE
 	buckle_lying = TRUE
