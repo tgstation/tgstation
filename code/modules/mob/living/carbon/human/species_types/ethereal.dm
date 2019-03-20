@@ -127,7 +127,7 @@
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 3)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 2)
-			if(H.getBruteLoss() + H.getFireLoss() + H.getOxyLoss() + H.getToxLoss() < 89.5)
+			if(H.health < 10.5)
 				apply_damage(0.5, BRUTE, null, null, H)
 			brutemod = 1.75
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
