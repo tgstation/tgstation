@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "Random docking ports (escape pod Lavaland destinations) print a more informative warning and delete themselves if Lavaland does not exist."
