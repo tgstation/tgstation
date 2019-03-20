@@ -552,56 +552,56 @@
 			stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
 /mob/proc/stat_mc()
-			var/turf/T = get_turf(client.eye)
-			stat("Location:", COORD(T))
-			stat("CPU:", "[world.cpu]")
-			stat("Instances:", "[num2text(world.contents.len, 10)]")
-			stat("World Time:", "[world.time]")
-			GLOB.stat_entry()
-			config.stat_entry()
-			stat(null)
-			if(Master)
-				Master.stat_entry()
-			else
-				stat("Master Controller:", "ERROR")
-			if(Failsafe)
-				Failsafe.stat_entry()
-			else
-				stat("Failsafe Controller:", "ERROR")
-			if(Master)
-				stat(null)
-				for(var/datum/controller/subsystem/SS in Master.subsystems)
-					SS.stat_entry()
-			GLOB.cameranet.stat_entry()
+	var/turf/T = get_turf(client.eye)
+	stat("Location:", COORD(T))
+	stat("CPU:", "[world.cpu]")
+	stat("Instances:", "[num2text(world.contents.len, 10)]")
+	stat("World Time:", "[world.time]")
+	GLOB.stat_entry()
+	config.stat_entry()
+	stat(null)
+	if(Master)
+		Master.stat_entry()
+	else
+		stat("Master Controller:", "ERROR")
+	if(Failsafe)
+		Failsafe.stat_entry()
+	else
+		stat("Failsafe Controller:", "ERROR")
+	if(Master)
+		stat(null)
+		for(var/datum/controller/subsystem/SS in Master.subsystems)
+			SS.stat_entry()
+	GLOB.cameranet.stat_entry()
 			
 /mob/proc/stat_tickets()
 	GLOB.ahelp_tickets.stat_entry()
 
 /mob/proc/stat_sdql2()
-				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
-				for(var/i in GLOB.sdql2_queries)
-					var/datum/SDQL2_query/Q = i
-					Q.generate_stat()
+	stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
+	for(var/i in GLOB.sdql2_queries)
+		var/datum/SDQL2_query/Q = i
+		Q.generate_stat()
 
 /mob/proc/stat_turf_contents()
-		if(!TurfAdjacent(listed_turf))
-			listed_turf = null
-		else
-			statpanel(listed_turf.name, null, listed_turf)
-			var/list/overrides = list()
-			for(var/image/I in client.images)
-				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides += I.loc
-			for(var/atom/A in listed_turf)
-				if(!A.mouse_opacity)
-					continue
-				if(A.invisibility > see_invisible)
-					continue
-				if(overrides.len && (A in overrides))
-					continue
-				if(A.IsObscured())
-					continue
-				statpanel(listed_turf.name, null, A)
+	if(!TurfAdjacent(listed_turf))
+		listed_turf = null
+	else
+		statpanel(listed_turf.name, null, listed_turf)
+		var/list/overrides = list()
+		for(var/image/I in client.images)
+			if(I.loc && I.loc.loc == listed_turf && I.override)
+				overrides += I.loc
+		for(var/atom/A in listed_turf)
+			if(!A.mouse_opacity)
+				continue
+			if(A.invisibility > see_invisible)
+				continue
+			if(overrides.len && (A in overrides))
+				continue
+			if(A.IsObscured())
+				continue
+			statpanel(listed_turf.name, null, A)
 
 /mob/proc/stat_spells()
 	if(mind)
@@ -609,13 +609,13 @@
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/stat_adminpanels()
-		if(statpanel("MC"))
-			stat_mc()
-		if(statpanel("Tickets"))
-			stat_tickets()
-		if(length(GLOB.sdql2_queries))
-			if(statpanel("SDQL2"))
-				stat_sdql2()
+	if(statpanel("MC"))
+		stat_mc()
+	if(statpanel("Tickets"))
+		stat_tickets()
+	if(length(GLOB.sdql2_queries))
+		if(statpanel("SDQL2"))
+			stat_sdql2()
 
 /mob/proc/add_spells_to_statpanel(list/spells)
 	for(var/obj/effect/proc_holder/spell/S in spells)
