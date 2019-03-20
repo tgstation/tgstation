@@ -17,7 +17,7 @@
 
 	mutanteyes = /obj/item/organ/eyes/snail
 	mutanttongue = /obj/item/organ/tongue/snail
-	exotic_blood = "spacelube"
+	exotic_blood = "lube"
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "sodiumchloride")
@@ -49,8 +49,8 @@
 /obj/item/storage/backpack/snail
 	name = "snail shell"
 	desc = "Worn by snails as armor and storage compartment."
-	icon_state = "snail_green"
-	item_state = "snail_green"
+	icon_state = "snailshell"
+	item_state = "snailshell"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
