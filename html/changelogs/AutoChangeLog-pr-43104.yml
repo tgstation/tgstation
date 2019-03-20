@@ -1,4 +1,0 @@
-author: "YPOQ"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug that caused limbs to take incorrect damage amounts when damage exceeded the limb's damage cap"
