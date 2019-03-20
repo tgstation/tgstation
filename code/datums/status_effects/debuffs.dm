@@ -655,7 +655,7 @@
 	if(prob(15))
 		switch(rand(1,5))
 			if(1)
-				if(owner.mobility_flags & MOBILITY_MOVE && isturf(owner.loc))
+				if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
 					to_chat(owner, "<span class='warning'>Your leg spasms!</span>")
 					step(owner, pick(GLOB.cardinals))
 			if(2)
