@@ -1,0 +1,4 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - bugfix: "Spasms should no longer cause you to step out of closed chambers, like cryo or DNA scanners."
