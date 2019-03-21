@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //Color Defines
-#define OOC_COLOR  "#002eb8"
+#define OOC_COLOR  "#386aff"
 
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //

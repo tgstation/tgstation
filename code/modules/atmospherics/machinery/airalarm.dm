@@ -735,6 +735,7 @@
 				return
 			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))// trying to unlock the interface with an ID card
 				togglelock(user)
+				return
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
 				return
