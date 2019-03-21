@@ -341,7 +341,18 @@
 /obj/item/organ/eyes/moth
 	name = "moth eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
+	icon_state = "moth_eyes"
 	flash_protect = -1
+
+/obj/item/organ/eyes/fly
+	name = "fly eyes"
+	desc = "BZZZZTTTTTT." //wip desc
+	icon_state = "fly_eyes"
+
+/obj/item/organ/eyes/abductor
+	name = "alien eyes"
+	desc = "You feel rather unsettling just looking at them... We're not alone..."
+	icon_state = "abductor_eyes"
 
 /obj/item/organ/eyes/snail
 	name = "snail eyes"
