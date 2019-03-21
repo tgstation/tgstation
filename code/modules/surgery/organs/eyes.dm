@@ -11,13 +11,15 @@
 	var/eye_damage = 0
 	var/tint = 0
 	var/eye_color = "" //set to a hex code to override a mob's eye color
+	var/eye_icon_state = "eyes"
 	var/old_eye_color = "fff"
 	var/flash_protect = 0
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
+	var/no_glasses
 
-/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
-	..()
+/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE, initialising)
+	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/HMN = owner
 		old_eye_color = HMN.eye_color
@@ -30,6 +32,8 @@
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	M.update_tint()
 	owner.update_sight()
+	if(M.has_dna())
+		M.dna.species.handle_body(M) //updates eye icon
 
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -178,7 +182,7 @@
 	terminate_effects()
 	. = ..()
 
-/obj/item/organ/eyes/robotic/glow/Remove()
+/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
 	terminate_effects()
 	. = ..()
 
@@ -244,7 +248,7 @@
 	if (!mobhook)
 		mobhook = M.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE = CALLBACK(src, .proc/update_visuals)))
 
-/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M)
+/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
 	QDEL_NULL(mobhook)
 
@@ -338,3 +342,10 @@
 	name = "moth eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	flash_protect = -1
+
+/obj/item/organ/eyes/snail
+	name = "snail eyes"
+	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."
+	eye_icon_state = "snail_eyes"
+	icon_state = "snail_eyeballs"
+	no_glasses = TRUE

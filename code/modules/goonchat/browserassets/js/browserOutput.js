@@ -35,6 +35,7 @@ var opts = {
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
 	'restarting': false, //Is the round restarting?
+	'darkmode':true, //Are we using darkmode? If not WHY ARE YOU LIVING IN 2009???
 
 	//Options menu
 	'selectedSubLoop': null, //Contains the interval loop for closing the selected sub menu
@@ -65,6 +66,8 @@ var opts = {
 	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
 	'volumeUpdating': false, //True if volume update function set to fire
 	'updatedVolume': 0, //The volume level that is sent to the server
+	'musicStartAt': 0, //The position the music starts playing
+	'musicEndAt': 0, //The position the music... stops playing... if null, doesn't apply (so the music runs through)
 	
 	'defaultMusicVolume': 25,
 
@@ -454,6 +457,19 @@ function toHex(n) {
 	return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
 }
 
+function swap() { //Swap to darkmode
+	if (opts.darkmode){
+		document.getElementById("sheetofstyles").href = "browserOutput_white.css";
+		opts.darkmode = false;
+		runByond('?_src_=chat&proc=swaptolightmode');
+	} else {
+		document.getElementById("sheetofstyles").href = "browserOutput.css";
+		opts.darkmode = true;
+		runByond('?_src_=chat&proc=swaptodarkmode');
+	}
+	setCookie('darkmode', (opts.darkmode ? 'true' : 'false'), 365);
+}
+
 function handleClientData(ckey, ip, compid) {
 	//byond sends player info to here
 	var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
@@ -531,18 +547,10 @@ function ehjaxCallback(data) {
 				handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
 			}
 			sendVolumeUpdate();
-		} else if (data.firebug) {
-			if (data.trigger) {
-				internalOutput('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>', 'internal');
-			} else {
-				internalOutput('<span class="internal boldnshit">Loading firebug console...</span>', 'internal');
-			}
-			var firebugEl = document.createElement('script');
-			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
-			document.body.appendChild(firebugEl);
 		} else if (data.adminMusic) {
 			if (typeof data.adminMusic === 'string') {
 				var adminMusic = byondDecode(data.adminMusic);
+				var bindLoadedData = false;
 				adminMusic = adminMusic.match(/https?:\/\/\S+/) || '';
 				if (data.musicRate) {
 					var newRate = Number(data.musicRate);
@@ -551,6 +559,19 @@ function ehjaxCallback(data) {
 					}
 				} else {
 					$('#adminMusic').prop('defaultPlaybackRate', 1.0);
+				}
+				if (data.musicSeek) {
+					opts.musicStartAt = Number(data.musicSeek) || 0;
+					bindLoadedData = true;
+				} else {
+					opts.musicStartAt = 0;
+				}
+				if (data.musicHalt) {
+					opts.musicEndAt = Number(data.musicHalt) || null;
+					bindLoadedData = true;
+				}
+				if (bindLoadedData) {
+					$('#adminMusic').one('loadeddata', adminMusicLoadedData);
 				}
 				$('#adminMusic').prop('src', adminMusic);
 				$('#adminMusic').trigger("play");
@@ -582,6 +603,27 @@ function sendVolumeUpdate() {
 	opts.volumeUpdating = false;
 	if(opts.updatedVolume) {
 		runByond('?_src_=chat&proc=setMusicVolume&param[volume]='+opts.updatedVolume);
+	}
+}
+
+function adminMusicEndCheck(event) {
+	if (opts.musicEndAt) {
+		if ($('#adminMusic').prop('currentTime') >= opts.musicEndAt) {
+			$('#adminMusic').off(event);
+			$('#adminMusic').trigger('pause');
+			$('#adminMusic').prop('src', '');
+		}
+	} else {
+		$('#adminMusic').off(event);
+	}
+}
+
+function adminMusicLoadedData(event) {
+	if (opts.musicStartAt && ($('#adminMusic').prop('duration') === Infinity || (opts.musicStartAt <= $('#adminMusic').prop('duration'))) ) {
+		$('#adminMusic').prop('currentTime', opts.musicStartAt);
+	}
+	if (opts.musicEndAt) {
+		$('#adminMusic').on('timeupdate', adminMusicEndCheck);
 	}
 }
 
@@ -670,6 +712,7 @@ $(function() {
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
 		'smessagecombining': getCookie('messagecombining'),
+		'sdarkmode': getCookie('darkmode'),
 	};
 
 	if (savedConfig.sfontSize) {
@@ -679,6 +722,9 @@ $(function() {
 	if (savedConfig.slineHeight) {
 		$("body").css('line-height', savedConfig.slineHeight);
 		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
+	}
+	if(savedConfig.sdarkmode == 'false'){
+		swap(); //They dont want darkmode, so switch!
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
@@ -724,8 +770,6 @@ $(function() {
 			opts.messageCombining = true;
 		}
 	}
-
-
 	(function() {
 		var dataCookie = getCookie('connData');
 		if (dataCookie) {
@@ -892,7 +936,9 @@ $(function() {
 	$('#toggleOptions').click(function(e) {
 		handleToggleClick($subOptions, $(this));
 	});
-
+	$('#darkmodetoggle').click(function(e) {
+		swap();
+	});
 	$('#toggleAudio').click(function(e) {
 		handleToggleClick($subAudio, $(this));
 	});

@@ -46,11 +46,33 @@
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 
+	create_extinguisher()
+
+/mob/living/simple_animal/bot/firebot/bot_reset()
+	create_extinguisher()
+
+/mob/living/simple_animal/bot/firebot/proc/create_extinguisher()
 	internal_ext = new /obj/item/extinguisher(src)
 	internal_ext.safety = FALSE
 	internal_ext.precision = TRUE
 	internal_ext.max_water = INFINITY
-	internal_ext.Initialize()
+	internal_ext.refill()
+
+/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A)
+	if(!on)
+		return
+	if(internal_ext)
+		internal_ext.afterattack(A, src)
+	else
+		return ..()
+
+/mob/living/simple_animal/bot/firebot/RangedAttack(atom/A)
+	if(!on)
+		return
+	if(internal_ext)
+		internal_ext.afterattack(A, src)
+	else
+		return ..()
 
 /mob/living/simple_animal/bot/firebot/turn_on()
 	. = ..()
@@ -109,10 +131,13 @@
 		extinguish_fires = FALSE
 		extinguish_people = TRUE
 
+		internal_ext = new /obj/item/extinguisher(src)
 		internal_ext.chem = "clf3" //Refill the internal extinguisher with liquid fire
 		internal_ext.power = 3
+		internal_ext.safety = FALSE
 		internal_ext.precision = FALSE
-		internal_ext.Initialize()
+		internal_ext.max_water = INFINITY
+		internal_ext.refill()
 
 /mob/living/simple_animal/bot/firebot/Topic(href, href_list)
 	if(..())

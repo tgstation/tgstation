@@ -258,12 +258,13 @@
 	uni_identity = generate_uni_identity()
 	unique_enzymes = generate_unique_enzymes()
 
-/datum/dna/proc/initialize_dna(newblood_type)
+/datum/dna/proc/initialize_dna(newblood_type, skip_index = FALSE)
 	if(newblood_type)
 		blood_type = newblood_type
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
-	generate_dna_blocks()
+	if(!skip_index) //I hate this
+		generate_dna_blocks()
 	features = random_features()
 
 
@@ -278,7 +279,7 @@
 /datum/dna/stored/check_mutation(mutation_name)
 	return
 
-/datum/dna/stored/remove_all_mutations()
+/datum/dna/stored/remove_all_mutations(list/classes, mutadone = FALSE)
 	return
 
 /datum/dna/stored/remove_mutation_group(list/group)
@@ -328,8 +329,8 @@
 	return dna
 
 
-/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
-
+/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/mutations, force_transfer_mutations)
+//Do not use force_transfer_mutations for stuff like cloners without some precautions, otherwise some conditional mutations could break (timers, drill hat etc)
 	if(newfeatures)
 		dna.features = newfeatures
 
@@ -359,6 +360,11 @@
 		update_body_parts()
 		update_mutations_overlay()
 
+	if(LAZYLEN(mutations))
+		for(var/M in mutations)
+			var/datum/mutation/human/HM = M
+			if(HM.allow_transfer || force_transfer_mutations)
+				dna.force_give(HM.class, copymut = new HM.type (HM)) //using force_give since it may include exotic mutations that otherwise wont be handled properly
 
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
@@ -566,7 +572,7 @@
 	dna.remove_all_mutations()
 	dna.stability = 100
 	if(prob(max(70-instability,0)))
-		switch(rand(0,7)) //not complete and utter death
+		switch(rand(0,10)) //not complete and utter death
 			if(0)
 				monkeyize()
 			if(1)
@@ -600,6 +606,9 @@
 					O.forceMove(drop_location())
 					if(prob(20))
 						O.animate_atom_living()
+			if(9 to 10)
+				ForceContractDisease(new/datum/disease/gastrolosis())
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
 	else
 		switch(rand(0,5))
 			if(0)
