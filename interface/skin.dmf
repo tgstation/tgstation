@@ -335,5 +335,5 @@ window "statwindow"
 		saved-params = ""
 		tab-text-color = #8ba5c4
 		tab-background-color = #202020
-		prefix-color = #ebebeb
-		suffix-color = #ebebeb
+		prefix-color = #8ba5c4
+		suffix-color = #8ba5c4
