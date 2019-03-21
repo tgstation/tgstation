@@ -39,6 +39,8 @@
 		/obj/machinery/power/emitter,
 		/obj/machinery/portable_atmospherics/pump,
 		/obj/machinery/portable_atmospherics/scrubber,
+		/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+		/obj/machinery/atmospherics/components/unary/thermomachine/heater,
 		// medbay
 		/obj/machinery/chem_heater,
 		/obj/machinery/chem_master,
@@ -69,7 +71,7 @@
 		/obj/machinery/blackbox_recorder,
 		// science
 		/obj/machinery/teleport/hub,
-		/obj/machinery/rnd/production/protolathe,
+		/obj/machinery/rnd/destructive_analyzer,
 		/obj/machinery/rnd/production/circuit_imprinter,
 		/obj/machinery/mech_bay_recharge_port,
 		/obj/machinery/mecha_part_fabricator,
