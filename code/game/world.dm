@@ -282,7 +282,7 @@ GLOBAL_VAR(restart_counter)
 	else if (n > 0)
 		features += "[players][popcap] player"
 	
-	game_state = (players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
+	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
 	
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
