@@ -21,7 +21,7 @@ You can use a machine in the vault to deposit cash or rob Cargo's department fun
 When in doubt about technicial issues, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
 Most things have special interactions with your middle mouse button, alt, shift, and control click. Experiment!
 You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to 1 second, to instant boom! Nobody ever expects this.
-If you find yourself in a fistfight with another player, always stay on the offensive. Running away won't accomplish much.
+If you find yourself in a fistfight with another player, staying on the offensive is usually the smart move. Running away often won't accomplish much.
 Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
 A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
 When dealing with security, you can often get your sentence negated entirely through cooperation and deception.
