@@ -338,7 +338,7 @@
 
 /mob/living/stop_pulling()
 	if(ismob(pulling))
-		pulling.set_glide_size(DELAY_TO_GLIDE_SIZE(pulling.total_multiplicitave_slowdown))
+		pulling.set_glide_size(DELAY_TO_GLIDE_SIZE(pulling.total_multiplicative_slowdown()))
 		reset_pull_offsets(pulling)
 	..()
 	update_pull_hud_icon()
