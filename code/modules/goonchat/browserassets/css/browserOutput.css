@@ -7,20 +7,20 @@ html, body {
 	padding: 0;
 	margin: 0;
 	height: 100%;
-	color: #99aab5;
+	color: #8ba5c4;
 }
 body {
-	background: #2c2f33;
+	background: #171717;
     font-family: Verdana, sans-serif;
     font-size: 9pt;
-	font-color: #99aab5;
+	font-color: #8ba5c4;
     line-height: 1.2;
 	overflow-x: hidden;
-	overflow-y: scroll;
+	overflow-y: ;
 	word-wrap: break-word;		
 	scrollbar-face-color:#1A1A1A;
-	scrollbar-track-color:#2c2f33;
-	scrollbar-highlight-color:#2c2f33;
+	scrollbar-track-color:#171717;
+	scrollbar-highlight-color:#171717;
 }
 
 em {
@@ -92,21 +92,21 @@ a.popt {text-decoration: none;}
 	bottom: 0;
 	right: 0;
 	padding: 8px;
-	background: #ddd;
+	background: #202020;
 	text-decoration: none;
     font-variant: small-caps;
     font-size: 1.1em;
     font-weight: bold;
-	color: #333;
+	color: #8ba5c4;
 }
-#newMessages:hover {background: #ccc;}
+#newMessages:hover {background: #171717;}
 #newMessages i {vertical-align: middle; padding-left: 3px;}
 #ping {
 	position: fixed;
 	top: 0;
 	right: 115px;
 	width: 45px;
-	background: #ddd;
+	background: #202020;
 	height: 30px;
 	padding: 8px 0 2px 0;
 }
@@ -123,19 +123,19 @@ a.popt {text-decoration: none;}
 	right: 0;
 }
 #userBar .subCell {
-	background: #ddd;
+	background: #202020;
     height: 30px;
 	padding: 5px 0;
 	display: block;
-	color: #333;
+	color: #8ba5c4;
 	text-decoration: none;
     line-height: 28px;
-    border-top: 1px solid #b4b4b4;
+    border-top: 1px solid #171717;
 }
-#userBar .subCell:hover {background: #ccc;}
+#userBar .subCell:hover {background: #202020;}
 #userBar .toggle {
 	width: 40px;
-    background: #ccc;
+    background: #202020;
     border-top: 0;
     float: right;
     text-align: center;
@@ -273,23 +273,23 @@ em						{font-style: normal;	font-weight: bold;}
 .name					{					font-weight: bold;}
 
 .say					{}
-.deadsay				{color: #7c00e6;}
+.deadsay				{color: #c685ff}
 .binarysay    			{color: #20c20e; background-color: #000000; display: block;}
 .binarysay a  			{color: #00ff00;}
 .binarysay a:active, .binarysay a:visited {color: #88ff88;}
-.radio					{color: #059223;}
-.sciradio				{color: #7c00e6;}
-.comradio				{color: #3d5bc3;}
-.secradio				{color: #a30000;}
-.medradio				{color: #397ea5;}
-.engradio				{color: #c75f35;}
-.suppradio				{color: #8b6532;}
-.servradio				{color: #577c2d;}
-.syndradio				{color: #6d3f40;}
-.centcomradio			{color: #2b677e;}
-.aiprivradio			{color: #811981;}
-.redteamradio           {color: #ff0000;}
-.blueteamradio          {color: #0000ff;}
+.radio					{color: #1ecc43;}
+.sciradio				{color: #c68cfa;}
+.comradio				{color: #5177ff;}
+.secradio				{color: #be2c2c;}
+.medradio				{color: #57b8f0;}
+.engradio				{color: #f37746;}
+.suppradio				{color: #b88646;}
+.servradio				{color: #6ca729;}
+.syndradio				{color: #7e3a3b;}
+.centcomradio			{color: #297ea0;}
+.aiprivradio			{color: #d65d95;}
+.redteamradio           {color: #ff4444;}
+.blueteamradio          {color: #3434fd;}
 
 .yell					{					font-weight: bold;}
 
@@ -397,9 +397,9 @@ h1.alert, h2.alert		{color: #99aab5;}
 .redtext				{color: #c51e1e;	font-size: 24px;}
 .clown					{color: #FF69Bf;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
-.hypnophrase			{color: #2c2f33;	font-weight: bold; animation: hypnocolor 1500ms infinite;}
+.hypnophrase			{color: #202020;	font-weight: bold; animation: hypnocolor 1500ms infinite;}
 @keyframes hypnocolor {
-	0% { color: #2c2f33; }
+	0% { color: #202020; }
 	25% { color: #410194; }
 	50% { color: #7f17d8; }
 	75% { color: #410194; }
