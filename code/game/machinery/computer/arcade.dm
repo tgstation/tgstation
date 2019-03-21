@@ -65,7 +65,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(subtypesof(/obj/item/circuitboard/computer/arcade))
+		var/list/normalgames = list()
+		var/list/raregames = list()
+		for(var/games in subtypesof(/obj/item/circuitboard/computer/arcade))
+			var/obj/item/circuitboard/computer/arcade/thegame = games//you just lost
+			if(thegame.raregame)
+				raregames |= thegame
+			else
+				normalgames |= thegame
+		var/choice
+		if(prob(1))
+			choice = pick(raregames)
+		else
+			choice = pick(normalgames)
 		var/obj/item/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		return INITIALIZE_HINT_QDEL
@@ -1112,6 +1124,34 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	explosion(loc, 2,4,8, flame_range = 16)
 	qdel(src)
 
+// ** AMPUTATION ** //
+
+/obj/machinery/computer/arcade/amputation
+	name = "Mediborg's Amputation Adventure"
+	desc = "A picture of a blood-soaked medical cyborg flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
+	icon_state = "arcade"
+	circuit = /obj/item/circuitboard/computer/arcade/amputation
+
+/obj/machinery/computer/arcade/amputation/attack_hand(mob/user)
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/c_user
+	var/obj/item/bodypart/l_arm = c_user.get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/r_arm = c_user.get_bodypart(BODY_ZONE_R_ARM)
+	to_chat(c_user, "<span class='warning'>You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it...</span>")
+	if(do_after(c_user, 50, target = src))
+		to_chat(c_user, "<span class='userdanger'>The guillotine drops on your arm, and the machine sucks it in!</span>")
+		if(l_arm)
+			l_arm.dismember()
+			qdel(l_arm)
+		else
+			r_arm.dismember()
+			qdel(r_arm)
+		var/prizenumber = rand(3,5)
+		for(var/i=1; i<=prizenumber; i++)
+			prizevend(user)
+	else
+		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
 
 #undef ORION_TRAIL_WINTURN
 #undef ORION_TRAIL_RAIDERS
