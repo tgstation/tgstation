@@ -214,8 +214,8 @@
 	if(istype(MB))
 		MB.RunOver(src)
 
+	. = ..()
 	spreadFire(AM)
-
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
