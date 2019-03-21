@@ -366,6 +366,7 @@
 #include "code\datums\components\riding.dm"
 #include "code\datums\components\rot.dm"
 #include "code\datums\components\rotation.dm"
+#include "code\datums\components\run_over_atom.dm"
 #include "code\datums\components\signal_redirect.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\snail_crawl.dm"
