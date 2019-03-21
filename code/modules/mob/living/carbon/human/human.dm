@@ -788,7 +788,7 @@
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
 	if (dna && dna.species)
-		. += dna.species.check_weakness(weapon, attacker)
+		. += dna.species.check_species_weakness(weapon, attacker)
 
 /mob/living/carbon/human/is_literate()
 	return TRUE
