@@ -18,7 +18,7 @@ Maintenance is full of equipment that is randomized every round. Look around and
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
 You can use a machine in the vault to deposit cash or rob Cargo's department funds.
-When in doubt, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
+When in doubt about technicial issues, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
 Most things have special interactions with your middle mouse button, alt, shift, and control click. Experiment!
 You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to 1 second, to instant boom! Nobody ever expects this.
 If you find yourself in a fistfight with another player, always stay on the offensive. Running away won't accomplish much.
@@ -34,8 +34,7 @@ If you're using hotkey mode, you can stop pulling things using H.
 The station's self-destruct terminal is invincible. Go find the disk instead of trying to destroy it.
 If there's something you need from another department, try asking! This game isn't singleplayer and you'd be surprised what you can get accomplished together!
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
-Ask and you shall receive.
-Catgirls get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
+Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
 Don't be afraid to ask for help, whether from your peers or from admins.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe.
