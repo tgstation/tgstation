@@ -1,0 +1,4 @@
+author: "SpironoZeppeli"
+delete-after: True
+changes: 
+  - balance: "Ethereals no longer die to their own charge levels"
