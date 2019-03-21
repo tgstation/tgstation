@@ -205,7 +205,7 @@ MIDROUND_ANTAG WIZARD
 
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
-SHUTTLE_REFUEL_DELAY 12000
+SHUTTLE_REFUEL_DELAY 8000
 
 ## Variables calculate how number of antagonists will scale to population.
 ## Used as (Antagonists = Population / Coeff)
@@ -226,7 +226,7 @@ BROTHER_OBJECTIVES_AMOUNT 2
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
-#PROTECT_ROLES_FROM_ANTAGONIST
+PROTECT_ROLES_FROM_ANTAGONIST
 
 ## Uncomment to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
@@ -291,7 +291,7 @@ ALLOW_AI_MULTICAM
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
-GATEWAY_DELAY 18000
+GATEWAY_DELAY 9000
 
 
 ## ACCESS ###
@@ -311,13 +311,13 @@ MINIMAL_ACCESS_THRESHOLD 20
 #ASSISTANTS_HAVE_MAINT_ACCESS
 
 ## Uncoment to give security maint access. Note that if you dectivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
-#SECURITY_HAS_MAINT_ACCESS
+SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
 #EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this out this to make security officers spawn in departmental security posts
-SEC_START_BRIG
+#SEC_START_BRIG
 
 
 ## GHOST INTERACTION ###
@@ -326,7 +326,7 @@ SEC_START_BRIG
 
 ## NEAR-DEATH EXPERIENCE ###
 ## Comment this out to disable mobs hearing ghosts when unconscious and very close to death
-NEAR_DEATH_EXPERIENCE
+#NEAR_DEATH_EXPERIENCE
 
 ## NON-VOCAL SILICONS ###
 ## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
@@ -346,7 +346,7 @@ NEAR_DEATH_EXPERIENCE
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
-DEFAULT_LAWS 0
+DEFAULT_LAWS 2
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -481,7 +481,7 @@ OVERFLOW_CAP -1
 #STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
-#GREY_ASSISTANTS
+GREY_ASSISTANTS
 
 ## Midround Antag (aka Mulligan antag) config options ###
 

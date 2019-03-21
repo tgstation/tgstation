@@ -14,19 +14,19 @@ $include antag_rep.txt
 # There are various options which are hard-locked for security reasons.
 
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-# SERVERNAME tgstation
+# SERVERNAME Fulpstation
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
-# SERVERSQLNAME tgstation
+# SERVERSQLNAME fulpstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
 STATIONNAME Space Station 13
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
-#HUB
+HUB
 
 ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
-LOBBY_COUNTDOWN 120
+LOBBY_COUNTDOWN 180
 
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 90
@@ -186,7 +186,7 @@ NORESPAWN
 # DONT_DEL_NEWMOB
 
 ## set a hosted by name for unix platforms
-HOSTEDBY Yournamehere
+HOSTEDBY Tomamoto
 
 ## Set to jobban "Guest-" accounts from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Set to 1 to jobban them from those positions, set to 0 to allow them.
@@ -227,16 +227,20 @@ CHECK_RANDOMIZER
 # SERVER ss13.example.com:2506
 
 ## forum address
-# FORUMURL http://tgstation13.org/phpBB/index.php
+# FORUMURL https://fulpstation.com
 
 ## Wiki address
 # WIKIURL http://www.tgstation13.org/wiki
 
 ## Rules address
 # RULESURL http://www.tgstation13.org/wiki/Rules
+RULESURL https://fulpstation.com/showthread.php?tid=342
 
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
+
+##Discord address
+DISCORDURL https://discord.gg/SVu782A
 
 ## Round specific stats address
 ## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()

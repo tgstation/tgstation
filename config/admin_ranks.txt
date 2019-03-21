@@ -49,7 +49,7 @@ Include = @
 Exclude =
 Edit =
 
-Name = Trial Admin
+Name = Admin Jr.
 Include = @ SPAWN VAREDIT BAN
 Exclude =
 Edit =
@@ -59,12 +59,12 @@ Include = @ POSSESS POLL BUILD SERVER FUN
 Exclude =
 Edit =
 
-Name = Game Admin
+Name = Admin
 Include = @ STEALTH SOUND DEBUG
 Exclude =
 Edit =
 
-Name = Game Master
+Name = Fulp Crew
 Include = EVERYTHING
 Exclude =
 Edit = EVERYTHING
