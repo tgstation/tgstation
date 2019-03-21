@@ -256,6 +256,7 @@
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
+	AM.set_glide_size(glide_size)
 	pulling = AM
 	AM.pulledby = src
 	if(!supress_message)
@@ -337,6 +338,7 @@
 
 /mob/living/stop_pulling()
 	if(ismob(pulling))
+		pulling.set_glide_size(DELAY_TO_GLIDE_SIZE(pulling.total_multiplicitave_slowdown))
 		reset_pull_offsets(pulling)
 	..()
 	update_pull_hud_icon()
