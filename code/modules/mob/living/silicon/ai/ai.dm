@@ -169,8 +169,9 @@
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
 		_key = _key[7] //strings, lists, same thing really
 	switch(_key)
-		if("`" && cam_prev)
-			eyeobj.setLoc(cam_prev)
+		if("`")
+			if(cam_prev)
+				eyeobj.setLoc(cam_prev)
 			return
 		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
 			_key = text2num(_key)
