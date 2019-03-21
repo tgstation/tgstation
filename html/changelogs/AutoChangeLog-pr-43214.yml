@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Admin modify bodyparts panel will now only show parts that are valid for modification."
