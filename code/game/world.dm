@@ -269,17 +269,16 @@ GLOBAL_VAR(restart_counter)
 	s += "</a>"
 	s += ")"
 	
-	
-	
 	var/players = GLOB.clients.len
 	
 	var/popcaptext = ""
 	var/popcap = max(CONFIG_GET(number/extreme_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/soft_popcap))
 	if (popcap)
 		popcaptext = "/[popcap]"
-	if (n > 1)
+	
+	if (players > 1)
 		features += "[players][popcap] players"
-	else if (n > 0)
+	else if (players > 0)
 		features += "[players][popcap] player"
 	
 	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
