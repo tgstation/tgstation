@@ -126,8 +126,6 @@
 	var/list/missed = find_remaining()
 	return missed.len == 0
 
-/datum/objective/sabotage/on
-
 /// Sabotage pinpointer, based heavily on IAA pinpointer code.
 /datum/status_effect/sabotage_pinpointer
 	id = "sabotage_pinpointer"
