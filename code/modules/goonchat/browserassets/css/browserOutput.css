@@ -263,7 +263,7 @@ h1.alert, h2.alert		{color: #8ba5c4;}
 
 em						{font-style: normal;	font-weight: bold;}
 
-.ooc					{					font-weight: bold;}
+.ooc					{color: #cca300;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #3d5bc3;	font-weight: bold;}
 
