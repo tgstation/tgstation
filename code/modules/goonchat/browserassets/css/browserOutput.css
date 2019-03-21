@@ -245,9 +245,9 @@ a.popt {text-decoration: none;}
 ******************************************/
 
 /* MOTD */
-.motd {color: #99aab5;	font-family: Verdana, sans-serif;}
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #99aab5;	text-decoration: underline;}
-.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #99aab5;}
+.motd {color: #8ba5c4;	font-family: Verdana, sans-serif;}
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #8ba5c4;	text-decoration: underline;}
+.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #8ba5c4;}
 
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .looc, .adminooc, .admin, .medal, .yell {font-weight: bold;}
@@ -258,8 +258,8 @@ a.popt {text-decoration: none;}
 /* OUTPUT COLORS */
 .highlight {background: yellow;}
 
-h1, h2, h3, h4, h5, h6	{color: #99aab5;font-family: Georgia, Verdana, sans-serif;}
-h1.alert, h2.alert		{color: #99aab5;}
+h1, h2, h3, h4, h5, h6	{color: #8ba5c4;font-family: Georgia, Verdana, sans-serif;}
+h1.alert, h2.alert		{color: #8ba5c4;}
 
 em						{font-style: normal;	font-weight: bold;}
 
@@ -267,41 +267,41 @@ em						{font-style: normal;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #3d5bc3;	font-weight: bold;}
 
-.adminsay   			{color: #3d5bc3;	font-weight: bold;}
-.admin					{color: #3d5bc3;	font-weight: bold;}
+.adminsay   			{color: #4a69da;	font-weight: bold;}
+.admin					{color: #5975da;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
 
 .say					{}
-.deadsay				{color: #c685ff}
+.deadsay				{color: #e2c1ff}
 .binarysay    			{color: #20c20e; background-color: #000000; display: block;}
 .binarysay a  			{color: #00ff00;}
 .binarysay a:active, .binarysay a:visited {color: #88ff88;}
 .radio					{color: #1ecc43;}
 .sciradio				{color: #c68cfa;}
 .comradio				{color: #5177ff;}
-.secradio				{color: #be2c2c;}
+.secradio				{color: #dd3535;}
 .medradio				{color: #57b8f0;}
 .engradio				{color: #f37746;}
 .suppradio				{color: #b88646;}
 .servradio				{color: #6ca729;}
-.syndradio				{color: #7e3a3b;}
-.centcomradio			{color: #297ea0;}
+.syndradio				{color: #8f4a4b;}
+.centcomradio			{color: #2681a5;}
 .aiprivradio			{color: #d65d95;}
 .redteamradio           {color: #ff4444;}
 .blueteamradio          {color: #3434fd;}
 
 .yell					{					font-weight: bold;}
 
-.alert					{color: #c51e1e;}
+.alert					{color: #d82020;}
 h1.alert, h2.alert		{color: #99aab5;}
 
 .emote					{					font-style: italic;}
 .selecteddna			{color: #ffffff; 	background-color: #001B1B}
 
-.attack					{color: #c51e1e;}
-.disarm					{color: #780202;}
-.passive				{color: #510000;}
+.attack					{color: #e01c1c;}
+.disarm					{color: #b42525;}
+.passive				{color: #a00f0f;}
 
 .userdanger				{color: #c51e1e;	font-weight: bold; font-size: 24px;}
 .danger					{color: #c51e1e;}
@@ -315,26 +315,26 @@ h1.alert, h2.alert		{color: #99aab5;}
 .notice					{color: #3d5bc3;}
 .boldnotice				{color: #3d5bc3;	font-weight: bold;}
 .adminnotice			{color: #3d5bc3;}
-.adminhelp              {color: #c51e1e;    font-weight: bold;}
-.unconscious			{color: #99aab5;	font-weight: bold;}
+.adminhelp              {color: #ff0000;    font-weight: bold;}
+.unconscious			{color: #8ba5c4;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #059223;}
-.nicegreen					{color: #059223;}
+.nicegreen				{color: #059223;}
 .shadowling				{color: #3b2769;}
-.cult					{color: #740202;}
+.cult					{color: #aa1c1c;}
 
-.cultitalic				{color: #740202;	font-style: italic;}
-.cultbold				{color: #740202; font-style: italic; font-weight: bold;}
-.cultboldtalic				{color: #740202; font-weight: bold; font-size: 24px;}
+.cultitalic				{color: #aa1c1c;	font-style: italic;}
+.cultbold				{color: #aa1c1c; font-style: italic; font-weight: bold;}
+.cultboldtalic			{color: #aa1c1c; font-weight: bold; font-size: 24px;}
 
-.cultlarge				{color: #740202; font-weight: bold; font-size: 24px;}
-.narsie					{color: #740202; font-weight: bold; font-size: 120px;}
-.narsiesmall			{color: #740202; font-weight: bold; font-size: 48px;}
+.cultlarge				{color: #aa1c1c; font-weight: bold; font-size: 24px;}
+.narsie					{color: #aa1c1c; font-weight: bold; font-size: 120px;}
+.narsiesmall			{color: #aa1c1c; font-weight: bold; font-size: 48px;}
 .colossus				{color: #7F282A; font-size: 40px;}
-.hierophant				{color: #660099; font-weight: bold; font-style: italic;}
-.hierophant_warning		{color: #660099; font-style: italic;}
+.hierophant				{color: #a22bdd; font-weight: bold; font-style: italic;}
+.hierophant_warning		{color: #c56bf1; font-style: italic;}
 .purple					{color: #7c00e6;}
-.holoparasite			{color: #35333a;}
+.holoparasite			{color: #88809c;}
 
 .revennotice			{color: #1d2953;}
 .revenboldnotice		{color: #1d2953;	font-weight: bold;}
@@ -371,18 +371,18 @@ h1.alert, h2.alert		{color: #99aab5;}
 .neovgre				{color: #6E001A; font-weight: bold; font-style: italic;}
 .neovgre_small			{color: #6E001A;}
 
-.newscaster				{color: #800000;}
-.ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}
+.newscaster				{color: #c05d5d;}
+.ghostalert				{color: #6600ff;	font-style: italic; font-weight: bold;}
 
-.alien					{color: #543354;}
+.alien					{color: #855d85;}
 .noticealien			{color: #059223;}
 .alertalien				{color: #059223;	font-weight: bold;}
 .changeling				{color: #059223;	font-style: italic;}
 .assimilator			{color: #059223;	font-size: 16px ; font-weight: bold;}
 
-.spider					{color: #7c00e6;}
+.spider					{color: #8800ff;}
 
-.interface				{color: #330033;}
+.interface				{color: #750e75;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
@@ -395,38 +395,38 @@ h1.alert, h2.alert		{color: #99aab5;}
 .extremelybig			{font-size: 40px;}
 .greentext				{color: #059223;	font-size: 24px;}
 .redtext				{color: #c51e1e;	font-size: 24px;}
-.clown					{color: #FF69Bf;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
+.clown					{color: #ff70c1;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
 .hypnophrase			{color: #202020;	font-weight: bold; animation: hypnocolor 1500ms infinite;}
 @keyframes hypnocolor {
 	0% { color: #202020; }
-	25% { color: #410194; }
-	50% { color: #7f17d8; }
-	75% { color: #410194; }
-	100% { color: #3bb5d3; }
+	25% { color: #4b02ac; }
+	50% { color: #9f41f1; }
+	75% { color: #541c9c; }
+	100% { color: #7adbf3; }
 }
 
 .phobia			{color: #dd0000;	font-weight: bold; animation: phobia 750ms infinite;}
 @keyframes phobia {
-	0% { color: #0d0d0d; }
+	0% { color: #f75a5a; }
 	50% { color: #dd0000; }
-	100% { color: #0d0d0d; }
+	100% { color: #f75a5a; }
 }
 
 .icon 					{height: 1em;	width: auto;}
 
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 16px;}
-.abductor				{color: #800080; font-style: italic;}
-.mind_control				{color: #A00D6F; font-size: 3; font-weight: bold; font-style: italic;}
+.abductor				{color: #c204c2; font-style: italic;}
+.mind_control			{color: #df3da9; font-size: 3; font-weight: bold; font-style: italic;}
 .slime					{color: #00CED1;}
 .drone					{color: #848482;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}
 
-.monkeyhive				{color: #774704;}
-.monkeylead				{color: #774704;	font-size: 2;}
+.monkeyhive				{color: #a56408;}
+.monkeylead				{color: #af6805;	font-size: 2;}
 
 .connectionClosed, .fatalError {background: red; color: white; padding: 5px;}
 .connectionClosed.restored {background: green;}

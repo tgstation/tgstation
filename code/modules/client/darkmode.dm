@@ -66,9 +66,9 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 
 /client/proc/force_dark_theme() //Inversely, if theyre using white theme and want to swap to the superior dark theme, let's get WINSET() ing
 	//Main windows
-	winset(src, "infowindow", "background-color = none;background-color = #171717")
+	winset(src, "infowindow", "background-color = none;background-color = #202020")
 	winset(src, "infowindow", "text-color = #000000;text-color = #8ba5c4")
-	winset(src, "info", "background-color = none;background-color = #171717")
+	winset(src, "info", "background-color = none;background-color = #202020")
 	winset(src, "info", "text-color = #000000;text-color = #8ba5c4")
 	winset(src, "browseroutput", "background-color = none;background-color = #202020")
 	winset(src, "browseroutput", "text-color = #000000;text-color = #8ba5c4")
