@@ -1760,7 +1760,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
-	cost = 1
+	cost = 3
 	restricted = TRUE
 
 /datum/uplink_item/badass/syndiecards
