@@ -176,7 +176,7 @@
 				if(!recipient.current_ticket)
 					new /datum/admin_help(msg, recipient, TRUE)
 
-				to_chat(recipient, "<font color='danger' size='4'><b>-- Administrator private message --</b></span>")
+				to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></span>")
 				to_chat(recipient, "<span class='danger'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='linkify'>[msg]</span></span>")
 				to_chat(recipient, "<span class='danger'><i>Click on the administrator's name to reply.</i></span>")
 				to_chat(src, "<span class='notice'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[msg]</span></span>")
