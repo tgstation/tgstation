@@ -219,7 +219,7 @@
 			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
 			var/atom/movable/thing = i
-			if(!thing.Cross(mover))
+			if(!mover.Cross(thing))
 				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
 					return FALSE
 				if(CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
