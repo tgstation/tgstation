@@ -45,19 +45,3 @@
 	icon_state = "holy_grenade"
 	spawner_type = /mob/living/simple_animal/hostile/poison/bees/toxin
 	deliveryamt = 10
-
-/obj/item/grenade/spawnergrenade/floorgang
-	name = "Floor Gang Beacon"
-	desc = "To be used only in dire emergencies."
-	spawner_type = list(/mob/living/simple_animal/bot/cleanbot, 
-						/mob/living/simple_animal/bot/firebot,
-						/mob/living/simple_animal/bot/floorbot,
-						/mob/living/simple_animal/bot/medbot)
-	deliveryamt = 10
-
-/obj/item/grenade/spawnergrenade/floorgang/afterspawn(list/mob/spawned)
-	. = ..()
-	for(var/mob/living/simple_animal/bot/B in spawned)
-		B.locked = FALSE
-		B.open = TRUE
-		B.emag_act()
