@@ -52,6 +52,8 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "stat", "tab-background-color = #272727;tab-background-color = none")
 	winset(src, "stat", "text-color = #99aab5;text-color = #000000")
 	winset(src, "stat", "tab-text-color = #99aab5;tab-text-color = #000000")
+	winset(src, "stat", "prefix-color = #8ba5c4;prefix-color = #000000")
+	winset(src, "stat", "suffix-color = #8ba5c4;suffix-color = #000000")
 	//Say, OOC, me Buttons etc.
 	winset(src, "saybutton", "background-color = #272727;background-color = none")
 	winset(src, "saybutton", "text-color = #99aab5;text-color = #000000")
@@ -101,6 +103,8 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "stat", "tab-background-color = none;tab-background-color = #202020")
 	winset(src, "stat", "text-color = #000000;text-color = #8ba5c4")
 	winset(src, "stat", "tab-text-color = #000000;tab-text-color = #8ba5c4")
+	winset(src, "stat", "prefix-color = #000000;prefix-color = #8ba5c4")
+	winset(src, "stat", "suffix-color = #000000;suffix-color = #8ba5c4")
 	//Say, OOC, me Buttons etc.
 	winset(src, "saybutton", "background-color = none;background-color = #202020")
 	winset(src, "saybutton", "text-color = #000000;text-color = #99aab5")
