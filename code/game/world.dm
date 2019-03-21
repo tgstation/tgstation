@@ -277,9 +277,9 @@ GLOBAL_VAR(restart_counter)
 		popcaptext = "/[popcap]"
 	
 	if (players > 1)
-		features += "[players][popcap] players"
+		features += "[players][popcaptext] players"
 	else if (players > 0)
-		features += "[players][popcap] player"
+		features += "[players][popcaptext] player"
 	
 	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
 	
