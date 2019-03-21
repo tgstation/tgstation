@@ -1,5 +1,17 @@
-// Traitor objective to destroy a certain kind of machine
+//! Superbox's new traitor objectives.
 
+// Put our homegrown objectives in the running.
+/datum/antagonist/traitor/forge_single_objective()
+	if (prob(30) && !(locate(/datum/objective/sabotage) in objectives))
+		var/datum/objective/sabotage/sabotage_objective = new
+		sabotage_objective.owner = owner
+		sabotage_objective.pick_target_machine()
+		add_objective(sabotage_objective)
+		return 1
+
+	return ..()
+
+/// Traitor objective to destroy all of a certain kind of machine.
 /datum/objective/sabotage
 	martyr_compatible = TRUE
 
@@ -96,13 +108,3 @@
 
 	if (!.)
 		message_admins("[key_name_admin(owner.current)] did not sabotage:\n[missed.Join("\n")]")
-
-/datum/antagonist/traitor/forge_single_objective()
-	if (prob(30) && !(locate(/datum/objective/sabotage) in objectives))
-		var/datum/objective/sabotage/sabotage_objective = new
-		sabotage_objective.owner = owner
-		sabotage_objective.pick_target_machine()
-		add_objective(sabotage_objective)
-		return 1
-
-	return ..()
