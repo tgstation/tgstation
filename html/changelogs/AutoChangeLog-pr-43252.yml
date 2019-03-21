@@ -1,0 +1,7 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - bugfix: "admin pms display in the proper colors"
+  - bugfix: "some uis are no longer unreadable."
+  - tweak: "Updated the colors of the dark mode ui."
+  - tweak: "darkmode is no longer the default"
