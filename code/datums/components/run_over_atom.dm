@@ -9,7 +9,7 @@
 
 	if(_runover_message)
 		run_over_message = _runover_message
-	RegisterSignal(parent, COMSIG_MOVABLE_CROSS, .proc/run_over)
+	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED_OVER, .proc/run_over)
 
 /datum/component/run_over_atom/proc/run_over(atom/movable/AM, atom/movable/thing_ran_over)
 	if(thing_ran_over.get_run_over(AM, damage_amount, run_over_message))
