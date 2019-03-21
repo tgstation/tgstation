@@ -13,6 +13,7 @@
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
 	var/foldedbag_path = /obj/item/bodybag
+	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = 0 // so closet code knows to put the tag overlay back
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
@@ -59,7 +60,7 @@
 		if(contents.len)
 			return 0
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = new foldedbag_path(get_turf(src))
+		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
 		qdel(src)
 
@@ -87,7 +88,7 @@
 			to_chat(usr, "<span class='warning'>You can't recursively fold bluespace body bags!</span>" )
 			return 0
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = new foldedbag_path(get_turf(src))
+		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
 		for(var/atom/movable/A in contents)
 			A.forceMove(B)
