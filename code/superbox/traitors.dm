@@ -2,15 +2,15 @@
 
 // Put our homegrown objectives in the running.
 /datum/antagonist/traitor/forge_single_objective()
-	if (prob(30) && !(locate(/datum/objective/sabotage) in objectives))
-		var/datum/objective/sabotage/sabotage_objective = new
-		sabotage_objective.owner = owner
-		sabotage_objective.pick_target_machine()
-		add_objective(sabotage_objective)
-		owner.current.apply_status_effect(/datum/status_effect/sabotage_pinpointer)
-		return 1
+	if (prob(80))
+		return ..()
 
-	return ..()
+	var/datum/objective/sabotage/sabotage_objective = new
+	sabotage_objective.owner = owner
+	sabotage_objective.pick_target_machine()
+	add_objective(sabotage_objective)
+	owner.current.apply_status_effect(/datum/status_effect/sabotage_pinpointer)
+	return 1
 
 /// Traitor objective to destroy all of a certain kind of machine.
 /datum/objective/sabotage
