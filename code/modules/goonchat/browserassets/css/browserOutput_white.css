@@ -260,7 +260,7 @@ h1.alert, h2.alert		{color: #000000;}
 
 em						{font-style: normal;	font-weight: bold;}
 
-.ooc					{					font-weight: bold;}
+.ooc					{color: #002eb8;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
 

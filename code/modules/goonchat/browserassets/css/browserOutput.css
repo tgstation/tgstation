@@ -263,7 +263,7 @@ h1.alert, h2.alert		{color: #99aab5;}
 
 em						{font-style: normal;	font-weight: bold;}
 
-.ooc					{					font-weight: bold;}
+.ooc					{color: #3366ff;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #3d5bc3;	font-weight: bold;}
 
@@ -382,7 +382,7 @@ h1.alert, h2.alert		{color: #99aab5;}
 
 .spider					{color: #7c00e6;}
 
-.interface				{color: #330033;}
+.interface				{color: #650065;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
