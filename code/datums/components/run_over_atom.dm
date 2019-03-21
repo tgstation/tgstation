@@ -25,8 +25,6 @@
 	return
 
 /mob/living/carbon/get_run_over(atom/movable/AM, _damage_amount, run_over_message)
-	if(buckled == AM)
-		return
 	visible_message("<span class='danger'>[AM] [run_over_message] [src]!</span>", \
 					"<span class='userdanger'>[AM] [run_over_message] you!</span>")
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
