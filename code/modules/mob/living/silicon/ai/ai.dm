@@ -94,6 +94,8 @@
 	var/max_multicams = 6
 	var/display_icon_override
 
+	var/list/cam_hotkeys = new/list(9)
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -162,6 +164,20 @@
 	builtInCamera = new (src)
 	builtInCamera.network = list("ss13")
 
+/mob/living/silicon/ai/key_down(_key, client/user)
+	switch(_key)
+		if("`")
+			view_core()
+			return
+		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
+			if(client.keys_held["Ctrl"]) //do we assign a new hotkey?
+				cam_hotkeys[_key] = eyeobj.loc
+				to_chat(src, "Location saved to Camera Group [_key].")
+				return
+			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
+				eyeobj.setLoc(cam_hotkeys[_key])
+				return
+	. = ..()
 
 /mob/living/silicon/ai/Destroy()
 	GLOB.ai_list -= src
