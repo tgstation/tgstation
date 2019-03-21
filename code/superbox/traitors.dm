@@ -2,15 +2,30 @@
 
 // Put our homegrown objectives in the running.
 /datum/antagonist/traitor/forge_single_objective()
-	if (prob(80))
+	if (prob(50))
 		return ..()
 
-	var/datum/objective/sabotage/sabotage_objective = new
-	sabotage_objective.owner = owner
-	sabotage_objective.pick_target_machine()
-	add_objective(sabotage_objective)
-	owner.current.apply_status_effect(/datum/status_effect/sabotage_pinpointer)
-	return 1
+	var/possible_objectives = list("sabotage", "steal power")
+
+	for (var/datum/objective/steal/S in objectives)
+		if (S.steal_target == /obj/item/stock_parts/cell/syndicate)
+			possible_objectives -= "steal power"
+			break
+
+	switch (pick(possible_objectives))
+		if ("sabotage")
+			var/datum/objective/sabotage/sabotage_objective = new
+			sabotage_objective.owner = owner
+			sabotage_objective.pick_target_machine()
+			add_objective(sabotage_objective)
+			owner.current.apply_status_effect(/datum/status_effect/sabotage_pinpointer)
+			return 1
+		if ("steal power")
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = owner
+			steal_objective.set_target(new /datum/objective_item/syndicate_powercell)
+			add_objective(steal_objective)
+			return 1
 
 /// Traitor objective to destroy all of a certain kind of machine.
 /datum/objective/sabotage
@@ -171,3 +186,69 @@
 		linked_alert.icon_state = "pinonmedium"
 	else
 		linked_alert.icon_state = "pinonfar"
+
+/// Traitor objective to steal a certain amount of energy from station systems.
+/datum/objective_item/syndicate_powercell
+	name = "energy from the station's network."
+	targetitem = /obj/item/stock_parts/cell/syndicate
+	var/charge_to_steal = 400000
+
+/datum/objective_item/syndicate_powercell/New()
+	..()
+	name = "[DisplayEnergy(charge_to_steal)] of energy from the station's network."
+	special_equipment += /obj/item/stock_parts/cell/syndicate
+
+/datum/objective_item/syndicate_powercell/check_special_completion(obj/item/stock_parts/cell/I)
+	if (istype(I))
+		return I.charge >= charge_to_steal
+
+/obj/item/stock_parts/cell/syndicate
+	name = "bluespace power cell"
+	desc = "A rechargeable transdimensional power cell."
+	icon_state = "bscell"
+	maxcharge = 400000
+	materials = null
+	chargerate = 4000
+
+/obj/item/stock_parts/cell/syndicate/Initialize(mapload, override_maxcharge)
+	. = ..()
+	charge = 0
+	update_icon()
+
+/obj/item/stock_parts/cell/syndicate/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+
+	var/obj/item/stock_parts/cell/steal_cell
+	if (istype(A, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/apc = A
+		if (apc.opened)
+			return
+		steal_cell = apc.cell
+	else if (istype(A, /obj/item/stock_parts/cell) && A != src)
+		steal_cell = A
+
+	if (!steal_cell)
+		return
+
+	addtimer(CALLBACK(src, .proc/steal_from, user, A, steal_cell))
+	return FALSE
+
+/obj/item/stock_parts/cell/syndicate/proc/steal_from(mob/living/user, obj/from, obj/item/stock_parts/cell/steal_cell)
+	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(5, 0, get_turf(src))
+
+	if (steal_cell.charge <= 0)
+		to_chat(user, "<span class='notice'>[from] is empty!</span>")
+		return
+
+	to_chat(user, "<span class='notice'>You begin stealing power from [from]...</span>")
+	while (steal_cell.charge > 0 && charge < maxcharge)
+		var/drain = min(rand(200, 4000), steal_cell.charge, maxcharge - charge)
+		if (do_after(user, 10, target = from))
+			steal_cell.use(drain)
+			give(drain)
+		else
+			break
+
+	spark_system.start()
+	playsound(src, "sparks", 50, 1)
