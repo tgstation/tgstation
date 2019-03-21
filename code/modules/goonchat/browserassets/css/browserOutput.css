@@ -311,10 +311,10 @@ h1.alert, h2.alert		{color: #99aab5;}
 .boldannounce			{color: #c51e1e;	font-weight: bold;}
 .greenannounce			{color: #059223;	font-weight: bold;}
 .rose					{color: #ff5050;}
-.info					{color: #3d5bc3;}
-.notice					{color: #3d5bc3;}
-.boldnotice				{color: #3d5bc3;	font-weight: bold;}
-.adminnotice			{color: #3d5bc3;}
+.info					{color: #5373e9;}
+.notice					{color: #5373e9;}
+.boldnotice				{color: #5373e9;	font-weight: bold;}
+.adminnotice			{color: #5373e9;}
 .adminhelp              {color: #ff0000;    font-weight: bold;}
 .unconscious			{color: #8ba5c4;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
