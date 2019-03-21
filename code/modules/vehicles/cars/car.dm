@@ -85,8 +85,7 @@
 	return FALSE
 
 /obj/vehicle/sealed/car/proc/is_car_stationary(atom/old_loc)
-	if(old_loc == loc)
-		return TRUE
+	return (old_loc == loc)
 
 /obj/vehicle/sealed/car/proc/mob_forced_enter(mob/M, silent = FALSE)
 	if(!silent)
