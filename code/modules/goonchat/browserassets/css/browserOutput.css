@@ -16,7 +16,7 @@ body {
 	font-color: #8ba5c4;
     line-height: 1.2;
 	overflow-x: hidden;
-	overflow-y: ;
+	overflow-y: scroll;
 	word-wrap: break-word;		
 	scrollbar-face-color:#1A1A1A;
 	scrollbar-track-color:#171717;
@@ -333,7 +333,7 @@ h1.alert, h2.alert		{color: #99aab5;}
 .colossus				{color: #7F282A; font-size: 40px;}
 .hierophant				{color: #a22bdd; font-weight: bold; font-style: italic;}
 .hierophant_warning		{color: #c56bf1; font-style: italic;}
-.purple					{color: #7c00e6;}
+.purple					{color: #a03ff5;}
 .holoparasite			{color: #88809c;}
 
 .revennotice			{color: #1d2953;}
