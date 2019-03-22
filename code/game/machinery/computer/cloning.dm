@@ -595,7 +595,7 @@
 		imp = new /obj/item/implant/health(mob_occupant)
 		imp.implant(mob_occupant)
 	R.fields["imp"] = "[REF(imp)]"
-	var/old_record = find_record("mind", REF(mob_occupant.mind), records)
+	var/old_record = find_record("mindref", REF(mob_occupant.mind), records)
 	if(old_record)
 		records -= old_record
 		scantemp = "Record updated."
