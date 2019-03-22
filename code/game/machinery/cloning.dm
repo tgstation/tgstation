@@ -485,7 +485,7 @@
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		go_out()
-		log_cloning("[key_name(mob_occupant)] from [src] at [AREACOORD(src)] due to deconstruction.")
+		log_cloning("[key_name(mob_occupant)] ejected from [src] at [AREACOORD(src)] due to deconstruction.")
 	..()
 
 /obj/machinery/clonepod/proc/maim_clone(mob/living/carbon/human/H)
