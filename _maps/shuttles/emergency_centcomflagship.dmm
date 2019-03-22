@@ -84,7 +84,7 @@
 /area/shuttle/escape)
 "at" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Centcomm Flagship Brig";
+	name = "Centcom Flagship Brig";
 	req_access_txt = "2";
 	req_one_access_txt = "0"
 	},
@@ -140,7 +140,7 @@
 	dir = 8;
 	icon_state = "leftsecure";
 	layer = 4.1;
-	name = "Centcomm Flagship Medbay Desk";
+	name = "Centcom Flagship Medbay Desk";
 	obj_integrity = 300;
 	pixel_x = -3;
 	req_access_txt = "5"
@@ -188,7 +188,7 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Centcomm Communication Server Room"
+	name = "Centcom Communication Server Room"
 	},
 /obj/docking_port/mobile/emergency{
 	name = "Flagship emergency"
@@ -227,7 +227,7 @@
 "aT" = (
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
-	name = "Centcomm Flagship Medbay";
+	name = "Centcom Flagship Medbay";
 	req_access_txt = "5"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -250,7 +250,7 @@
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Centcomm Flagship Engineering Room";
+	name = "Centcom Flagship Engineering Room";
 	req_one_access_txt = "32;19"
 	},
 /turf/open/floor/mineral/plastitanium,
