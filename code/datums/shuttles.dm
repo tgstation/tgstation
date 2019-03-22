@@ -359,9 +359,9 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
 	credit_cost = 15000
 
-/datum/map_template/shuttle/emergency/centcommflagship
-	suffix = "centcommflagship"
-	name = "Centcomm Flagship Shuttle"
+/datum/map_template/shuttle/emergency/centcomflagship
+	suffix = "centcomflagship"
+	name = "Centcom Flagship Shuttle"
 	description = "If you pay us a million credits we'll lend you one of our battleships to take home. We made sure to stock some vendors in there for all of your needs while heading back to Centeral Command!"
 	credit_cost = 1000000
 
