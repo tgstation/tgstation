@@ -78,7 +78,6 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "outputwindow", "text-color = #000000;text-color = #8ba5c4")
 	winset(src, "mainwindow", "background-color = none;background-color = #202020")
 	winset(src, "split", "background-color = none;background-color = #202020")
-	winset(src, "input", "background-color = none;background-color = #202020")
 	//Buttons
 	winset(src, "changelog", "background-color = none;background-color = #494949")
 	winset(src, "changelog", "text-color = #000000;text-color = #99aab5")
