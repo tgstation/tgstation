@@ -263,7 +263,8 @@ the new instance inside the host to be updated to the template's stats.
 	if(!move_listener)
 		move_listener = L.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/follow_mob)))
 	else
-		L.TakeComponent(move_listener)
+		if(L)
+			L.TakeComponent(move_listener)
 		if(QDELING(move_listener))
 			move_listener = null
 	follow_mob()
