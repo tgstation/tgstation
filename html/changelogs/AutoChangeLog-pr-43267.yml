@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - admin: "Improved some cloning logging."
-  - bugfix: "Emagging a cloning pod will now leave fingerprints."
-  - bugfix: "Ejecting someone while they're being cloned will now leave fingerprints."

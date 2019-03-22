@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "ED-209 tablecrafting recipe has been corrected to use a DRAGNet"

@@ -1,5 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - balance: "ai/borg uploads now have a gps signal when built which will be active until its monitor gets decostructed"
-  - balance: "ai/borg uploads take slighty longer to deconstruct"
