@@ -63,7 +63,7 @@
 				. = pod
 
 /proc/grow_clone_from_record(obj/machinery/clonepod/pod, datum/data/record/R)
-	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["last_death"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"])
+	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mindref"], R.fields["last_death"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"])
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
@@ -73,7 +73,7 @@
 		scan_occupant(scanner.occupant)
 
 	for(var/datum/data/record/R in records)
-		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
+		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mindref"])
 
 		if(!pod)
 			return
@@ -84,9 +84,10 @@
 		var/result = grow_clone_from_record(pod, R)
 		if(result & CLONING_SUCCESS)
 			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+			log_cloning("Cloning of [key_name(active_record.fields["mindref"])] automatically started via autoprocess - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 		if(result & CLONING_DELETE_RECORD)
 			records -= R
-			
+
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	scanner = findscanner()
@@ -353,8 +354,8 @@
 		say("Initiating scan...")
 
 		spawn(20)
-			scan_occupant(scanner.occupant)
-				
+			scan_occupant(scanner.occupant, usr)
+
 			loading = FALSE
 			updateUsrDialog()
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -394,11 +395,12 @@
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 			else
 				temp = "Access Denied"
-				menu = 2 
+				menu = 2
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-				
+
 
 		else if (menu == 4)
+			log_cloning("[key_name(usr)] deleted [key_name(active_record.fields["mindref"])]'s cloning records from [src] at [AREACOORD(src)].")
 			temp = "[active_record.fields["name"]] => Record deleted."
 			records.Remove(active_record)
 			active_record = null
@@ -408,7 +410,7 @@
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
 			if("load")
-						
+
 
 				if (!diskette || !istype(diskette.fields))
 					temp = "<font class='bad'>Load error.</font>"
@@ -430,7 +432,8 @@
 					overwrite_field_if_available(active_record, diskette, "UI")
 				if(include_se)
 					overwrite_field_if_available(active_record, diskette, "SE")
-					
+
+				log_cloning("[key_name(usr)] uploaded [key_name(active_record.fields["mindref"])]'s cloning records to [src] at [AREACOORD(src)] via [diskette].")
 				temp = "Load successful."
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
@@ -446,6 +449,7 @@
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 
+				log_cloning("[key_name(usr)] added [key_name(active_record.fields["mindref"])]'s cloning records to [diskette] via [src] at [AREACOORD(src)].")
 				diskette.fields = active_record.fields.Copy()
 				diskette.name = "data disk - '[diskette.fields["name"]]'"
 				temp = "Save successful."
@@ -483,6 +487,7 @@
 						active_record = null
 					menu = 1
 					success = TRUE
+					log_cloning("[key_name(usr)] initiated cloning of [key_name(C.fields["mindref"])] via [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 				if(result &	CLONING_DELETE_RECORD)
 					if(active_record == C)
 						active_record = null
@@ -505,7 +510,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/cloning/proc/scan_occupant(occupant)
+/obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
@@ -578,7 +583,7 @@
 		R.fields["traumas"] = B.get_traumas()
 
 	R.fields["bank_account"] = has_bank_account
-	R.fields["mind"] = "[REF(mob_occupant.mind)]"
+	R.fields["mindref"] = "[REF(mob_occupant.mind)]"
 	R.fields["last_death"] = mob_occupant.stat == DEAD ? mob_occupant.mind.last_death : -1
 
    //Add an implant if needed
@@ -597,4 +602,5 @@
 	else
 		scantemp = "Subject successfully scanned."
 	records += R
+	log_cloning("[M ? key_name(M) : "Autoprocess"] added the record of [key_name(mob_occupant)] to [src] at [AREACOORD(src)].")
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50)

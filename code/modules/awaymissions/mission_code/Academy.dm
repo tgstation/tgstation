@@ -217,6 +217,7 @@
 		if(1)
 			//Dust
 			T.visible_message("<span class='userdanger'>[user] turns to dust!</span>")
+			user.hellbound = TRUE
 			user.dust()
 		if(2)
 			//Death

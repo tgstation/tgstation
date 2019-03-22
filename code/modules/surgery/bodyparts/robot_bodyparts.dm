@@ -250,7 +250,7 @@
 		if(flash1 && flash2)
 			to_chat(user, "<span class='warning'>You have already inserted the eyes!</span>")
 			return
-		else if(F.crit_fail)
+		else if(F.burnt_out)
 			to_chat(user, "<span class='warning'>You can't use a broken flash!</span>")
 			return
 		else

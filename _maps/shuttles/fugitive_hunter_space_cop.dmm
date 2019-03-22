@@ -1,0 +1,176 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"bY" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"hB" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"hJ" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"hU" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ku" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"lp" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"qH" = (
+/obj/machinery/button/door{
+	id = "Interpolship";
+	pixel_y = 26
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"rR" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"te" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "Interpolship"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"An" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Pq" = (
+/turf/template_noop,
+/area/template_noop)
+"RA" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"RO" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"WY" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+
+(1,1,1) = {"
+Pq
+ku
+te
+te
+te
+ku
+Pq
+"}
+(2,1,1) = {"
+Pq
+ku
+qH
+RO
+RO
+ku
+Pq
+"}
+(3,1,1) = {"
+Pq
+ku
+bY
+RO
+RO
+ku
+Pq
+"}
+(4,1,1) = {"
+hB
+ku
+bY
+RO
+RO
+ku
+hB
+"}
+(5,1,1) = {"
+Pq
+hJ
+bY
+RO
+RO
+hJ
+Pq
+"}
+(6,1,1) = {"
+Pq
+ku
+RO
+RO
+RO
+ku
+Pq
+"}
+(7,1,1) = {"
+Pq
+ku
+RA
+RO
+hU
+ku
+Pq
+"}
+(8,1,1) = {"
+Pq
+ku
+lp
+RO
+hU
+ku
+Pq
+"}
+(9,1,1) = {"
+Pq
+ku
+ku
+rR
+ku
+ku
+Pq
+"}
+(10,1,1) = {"
+hB
+ku
+RO
+RO
+RO
+ku
+hB
+"}
+(11,1,1) = {"
+Pq
+An
+RA
+WY
+RO
+An
+Pq
+"}
+(12,1,1) = {"
+Pq
+ku
+An
+An
+An
+ku
+Pq
+"}

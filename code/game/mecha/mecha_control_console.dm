@@ -61,7 +61,7 @@
 	var/answer = {"<b>Name:</b> [M.name]<br>
 <b>Integrity:</b> [round((M.obj_integrity/M.max_integrity*100), 0.01)]%<br>
 <b>Cell Charge:</b> [isnull(cell_charge)?"Not Found":"[M.cell.percent()]%"]<br>
-<b>Airtank:</b> [round(M.return_pressure(), 0.01)] kPa<br>
+<b>Airtank:</b> [M.internal_tank?"[round(M.return_pressure(), 0.01)]":"Not Equipped"] kPa<br>
 <b>Pilot:</b> [M.occupant||"None"]<br>
 <b>Location:</b> [get_area_name(M, TRUE)||"Unknown"]<br>
 <b>Active Equipment:</b> [M.selected||"None"]"}

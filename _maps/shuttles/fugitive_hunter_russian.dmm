@@ -1,0 +1,505 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/closed/wall,
+/area/shuttle/hunter)
+"ab" = (
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ac" = (
+/obj/machinery/portable_atmospherics/scrubber/huge,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ad" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ae" = (
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"af" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"ag" = (
+/obj/structure/mirror{
+	pixel_y = 28
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ah" = (
+/obj/machinery/door/airlock/security/glass,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ai" = (
+/obj/structure/chair{
+	icon_state = "chair";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"aj" = (
+/obj/structure/shuttle/engine/large{
+	icon_state = "large_engine";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ak" = (
+/obj/structure/chair{
+	icon_state = "chair";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"al" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"am" = (
+/obj/machinery/door/airlock/security/glass,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"an" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ao" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ap" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool/largetank,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"aq" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"ar" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/mop,
+/obj/item/storage/bag/trash{
+	pixel_x = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"as" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"at" = (
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"au" = (
+/obj/machinery/door/airlock/security/glass,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"av" = (
+/obj/structure/table,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"aw" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/large{
+	icon_state = "crittercrate"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ax" = (
+/turf/open/space/basic,
+/area/shuttle/hunter)
+"ay" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"az" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"aA" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"aB" = (
+/obj/structure/chair{
+	icon_state = "chair";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"aC" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"aD" = (
+/obj/structure/shuttle/engine/large{
+	icon_state = "large_engine";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"aE" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"aF" = (
+/obj/machinery/computer/camera_advanced{
+	icon_state = "computer";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"aG" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"aH" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/engineering{
+	icon_state = "engi_crateopen"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"aI" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"aJ" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/coffin{
+	icon_state = "coffinopen"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"aK" = (
+/obj/effect/turf_decal/bot,
+/obj/mecha/working/ripley,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"aL" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"aM" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"aN" = (
+/obj/machinery/door/airlock/security/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"aO" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"aP" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"Pq" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+Pq
+Pq
+ae
+aj
+Pq
+Pq
+Pq
+Pq
+az
+aD
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+"}
+(2,1,1) = {"
+Pq
+aa
+ae
+ae
+aa
+Pq
+Pq
+aa
+az
+az
+aa
+Pq
+Pq
+Pq
+Pq
+Pq
+"}
+(3,1,1) = {"
+Pq
+aa
+af
+af
+aa
+Pq
+aa
+aa
+af
+af
+aa
+aa
+Pq
+Pq
+Pq
+Pq
+"}
+(4,1,1) = {"
+Pq
+aa
+ae
+ak
+aa
+aa
+as
+aw
+aA
+aE
+aE
+aH
+aa
+Pq
+Pq
+Pq
+"}
+(5,1,1) = {"
+Pq
+aa
+ag
+ak
+aa
+an
+at
+ay
+at
+at
+ay
+ay
+aJ
+aa
+Pq
+Pq
+"}
+(6,1,1) = {"
+Pq
+aa
+ae
+ak
+aa
+an
+at
+at
+at
+at
+ay
+at
+aK
+aa
+Pq
+Pq
+"}
+(7,1,1) = {"
+Pq
+aa
+ae
+ak
+aa
+ao
+at
+ay
+ay
+at
+ay
+at
+aL
+aa
+Pq
+Pq
+"}
+(8,1,1) = {"
+Pq
+aa
+ah
+aa
+aa
+aa
+am
+aa
+aa
+aa
+aa
+am
+aa
+aa
+Pq
+Pq
+"}
+(9,1,1) = {"
+Pq
+aa
+ae
+al
+aa
+ap
+aq
+aa
+ax
+ax
+aa
+aq
+at
+aa
+Pq
+Pq
+"}
+(10,1,1) = {"
+Pq
+aa
+ae
+ae
+am
+aq
+aq
+aa
+ax
+ax
+aa
+aq
+aq
+aN
+Pq
+Pq
+"}
+(11,1,1) = {"
+aa
+ab
+ae
+ae
+aa
+ar
+aq
+aa
+ax
+ax
+aa
+aq
+aM
+aa
+aO
+aO
+"}
+(12,1,1) = {"
+aa
+ab
+ai
+ai
+aa
+aa
+au
+aa
+aa
+aa
+aa
+au
+aa
+aa
+aP
+aP
+"}
+(13,1,1) = {"
+aa
+ac
+ae
+ae
+aa
+aq
+aq
+aq
+aB
+aB
+aq
+aq
+aq
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+ad
+ad
+ad
+aa
+aa
+av
+at
+aC
+aF
+aG
+aI
+aa
+aa
+aa
+Pq
+"}
+(15,1,1) = {"
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+aa
+ad
+ad
+ad
+ad
+aa
+Pq
+Pq
+Pq
+Pq
+"}
