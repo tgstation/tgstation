@@ -292,7 +292,7 @@
 
 		else if(mob_occupant && (mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
-			log_cloning("[key_name(mob_occupant)] completed cloning cycle - [src] at [AREACOORD(src)].")
+			log_cloning("[key_name(mob_occupant)] completed cloning cycle in [src] at [AREACOORD(src)].")
 			if(internal_radio)
 				SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
 

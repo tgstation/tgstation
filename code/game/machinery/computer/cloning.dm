@@ -487,7 +487,7 @@
 						active_record = null
 					menu = 1
 					success = TRUE
-					log_cloning("[key_name(usr)] initiated cloning of [key_name(C.fields["mindref"])] - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
+					log_cloning("[key_name(usr)] initiated cloning of [key_name(C.fields["mindref"])] via [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 				if(result &	CLONING_DELETE_RECORD)
 					if(active_record == C)
 						active_record = null
