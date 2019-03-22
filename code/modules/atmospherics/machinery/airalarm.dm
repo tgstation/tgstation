@@ -417,7 +417,7 @@
 		if("mode")
 			mode = text2num(params["mode"])
 			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(usr)]",INVESTIGATE_ATMOS)
-			apply_mode()
+			apply_mode(usr)
 			. = TRUE
 		if("alarm")
 			var/area/A = get_area(src)
@@ -474,7 +474,7 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
-/obj/machinery/airalarm/proc/send_signal(target, list/command, mob/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+/obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
 		return 0
 
@@ -507,7 +507,7 @@
 		if(AALARM_MODE_FLOOD)
 			return "Flood"
 
-/obj/machinery/airalarm/proc/apply_mode()
+/obj/machinery/airalarm/proc/apply_mode(atom/signal_source)
 	var/area/A = get_area(src)
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
@@ -516,14 +516,14 @@
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
-					"widenet" = 0,
-				))
+					"widenet" = 0
+				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
-				))
+				), signal_source)
 		if(AALARM_MODE_CONTAMINATED)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
@@ -543,39 +543,41 @@
 					),
 					"scrubbing" = 1,
 					"widenet" = 1,
+					"user" = signal_source
 				))
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
-				))
+				), signal_source)
 		if(AALARM_MODE_VENTING)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
-				))
+				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE*2
-				))
+				), signal_source)
 		if(AALARM_MODE_REFILL)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
-					"widenet" = 0,
-				))
+					"widenet" = 0
+				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
-					"set_external_pressure" = ONE_ATMOSPHERE * 3
+					"set_external_pressure" = ONE_ATMOSPHERE * 3,
+					"user" = signal_source
 				))
 		if(AALARM_MODE_PANIC,
 			AALARM_MODE_REPLACEMENT)
@@ -584,43 +586,43 @@
 					"power" = 1,
 					"widenet" = 1,
 					"scrubbing" = 0
-				))
+				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 0
-				))
+				), signal_source)
 		if(AALARM_MODE_SIPHON)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
-				))
+				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 0
-				))
+				), signal_source)
 
 		if(AALARM_MODE_OFF)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 0
-				))
+				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 0
-				))
+				), signal_source)
 		if(AALARM_MODE_FLOOD)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 0
-				))
+				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 2,
 					"set_internal_pressure" = 0
-				))
+				), signal_source)
 
 /obj/machinery/airalarm/update_icon()
 	if(panel_open)
@@ -683,7 +685,7 @@
 		apply_danger_level()
 	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
 		mode = AALARM_MODE_SCRUBBING
-		apply_mode()
+		apply_mode(src)
 
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
