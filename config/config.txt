@@ -137,6 +137,9 @@ LOG_MANIFEST
 ## log virus and actions
 LOG_VIRUS
 
+## log cloning actions
+LOG_CLONING
+
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 
@@ -337,6 +340,9 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
 ##	Requires database
 #PANIC_BUNKER
+
+## The message the Panic Bunker gives when someone is rejected by it
+#PANIC_BUNKER_MESSAGE Sorry, but the server is currently not accepting connections from never before seen players.
 
 ## If panic bunker is on and a player is rejected (see above), attempt to send them to this connected server (see below) instead.
 ##	You probably want this to be the same as CROSS_SERVER_ADDRESS

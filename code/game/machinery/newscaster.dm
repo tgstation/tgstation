@@ -827,7 +827,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
 	else
-		throw EXCEPTION("Invalid user for this proc")
+		CRASH("Invalid user for this proc")
 		return
 
 /obj/machinery/newscaster/proc/print_paper()

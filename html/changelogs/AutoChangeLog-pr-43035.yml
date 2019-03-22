@@ -1,5 +1,0 @@
-author: "BuffEngineering"
-delete-after: True
-changes: 
-  - bugfix: "You may no longer summon plasteel from the door dimension."
-  - tweak: "High security airlocks are now 33% more materially efficient!"

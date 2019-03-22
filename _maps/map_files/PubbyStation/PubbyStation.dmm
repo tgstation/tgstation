@@ -60587,6 +60587,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"ulV" = (
+/obj/structure/rack,
+/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/gun/energy/e_gun/dragnet,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/security/armory)
 "ulY" = (
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -85240,8 +85246,8 @@ aik
 aiM
 ajh
 ajR
+ulV
 akN
-aiM
 amj
 amX
 anH

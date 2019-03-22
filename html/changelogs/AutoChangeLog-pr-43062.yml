@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Corrected a minor issue where the regenerative core would trigger at -1 HP instead of at 0HP."

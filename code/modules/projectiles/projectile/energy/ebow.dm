@@ -3,7 +3,7 @@
 	icon_state = "cbbolt"
 	damage = 15
 	damage_type = TOX
-	nodamage = 0
+	nodamage = FALSE
 	stamina = 50
 	eyeblur = 10
 	knockdown = 10

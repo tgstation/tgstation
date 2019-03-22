@@ -483,15 +483,18 @@
 		return
 
 	var/list/turfs = get_area_turfs(target_area)
-	var/turf/T = pick(turfs)
-
+	var/original_len = turfs.len
 	while(turfs.len)
+		var/turf/T = pick(turfs)
 		if(T.x<edge_distance || T.y<edge_distance || (world.maxx+1-T.x)<edge_distance || (world.maxy+1-T.y)<edge_distance)
 			turfs -= T
-			T = pick(turfs)
 		else
 			forceMove(T)
-			break
+			return
+
+	// Fallback: couldn't find anything
+	WARNING("docking port '[id]' could not be randomly placed in [target_area]: of [original_len] turfs, none were suitable")
+	return INITIALIZE_HINT_QDEL
 
 //Pod suits/pickaxes
 
