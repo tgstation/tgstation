@@ -108,10 +108,9 @@
 				</div>
 			</body>
 			</html>"} //"
-	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
-	onclose(usr, "pai")
+	src << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	onclose(src, "pai")
 	temp = null
-	return
 
 
 

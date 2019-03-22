@@ -17,9 +17,13 @@
 			C.flash_act()
 
 		// Spawn some hostile syndicate critters and spread them out
-		spawn_and_random_walk(spawner_type, T, deliveryamt, walk_chance=50, admin_spawn=((flags_1 & ADMIN_SPAWNED_1) ? TRUE : FALSE))
+		var/list/spawned = spawn_and_random_walk(spawner_type, T, deliveryamt, walk_chance=50, admin_spawn=((flags_1 & ADMIN_SPAWNED_1) ? TRUE : FALSE))
+		afterspawn(spawned)
 
 	qdel(src)
+
+/obj/item/grenade/spawnergrenade/proc/afterspawn(list/mob/spawned)
+	return
 
 /obj/item/grenade/spawnergrenade/manhacks
 	name = "viscerator delivery grenade"
