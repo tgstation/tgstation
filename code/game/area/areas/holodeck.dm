@@ -99,6 +99,9 @@
 /area/holodeck/rec_center/winterwonderland
 	name = "Holodeck - Winter Wonderland"
 
+/area/holodeck/rec_center/photobooth
+	name = "Holodeck - Photobooth"
+
 // Bad programs
 
 /area/holodeck/rec_center/burn
