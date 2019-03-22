@@ -134,5 +134,5 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
 		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
-		"browserOutput_white.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput_white.css',
+		"browserOutput_white.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_white.css',
 	)
