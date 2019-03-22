@@ -456,19 +456,6 @@
 	else
 		return 0
 
-/obj/machinery/airalarm/proc/refresh_all()
-	var/area/A = get_area(src)
-	for(var/id_tag in A.air_vent_names)
-		var/list/I = A.air_vent_info[id_tag]
-		if(I && I["timestamp"] + AALARM_REPORT_TIMEOUT / 2 > world.time)
-			continue
-		send_signal(id_tag, list("status"))
-	for(var/id_tag in A.air_scrub_names)
-		var/list/I = A.air_scrub_info[id_tag]
-		if(I && I["timestamp"] + AALARM_REPORT_TIMEOUT / 2 > world.time)
-			continue
-		send_signal(id_tag, list("status"))
-
 /obj/machinery/airalarm/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
@@ -542,9 +529,8 @@
 						/datum/gas/pluoxium
 					),
 					"scrubbing" = 1,
-					"widenet" = 1,
-					"user" = signal_source
-				))
+					"widenet" = 1
+				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
@@ -576,9 +562,8 @@
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
-					"set_external_pressure" = ONE_ATMOSPHERE * 3,
-					"user" = signal_source
-				))
+					"set_external_pressure" = ONE_ATMOSPHERE * 3
+				), signal_source)
 		if(AALARM_MODE_PANIC,
 			AALARM_MODE_REPLACEMENT)
 			for(var/device_id in A.air_scrub_names)
