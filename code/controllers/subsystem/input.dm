@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(input)
 
 	default_macro_sets = list(
 		"default" = list(
-			"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
+			"Tab" = "\"update_input_status\"",
 			"O" = "ooc",
 			"T" = "say",
 			"M" = "me",
@@ -39,12 +39,12 @@ SUBSYSTEM_DEF(input)
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
 			),
 		"old_default" = list(
-			"Tab" = "\".winset \\\"mainwindow.macro=old_hotkeys map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
+			"Tab" = "\"update_input_status \\\"old_hotkeys\\\"\"",
 			"Ctrl+T" = "say",
 			"Ctrl+O" = "ooc",
 			),
 		"old_hotkeys" = list(
-			"Tab" = "\".winset \\\"mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
+			"Tab" = "\"update_input_status \\\"old_default\\\"\"",
 			"O" = "ooc",
 			"T" = "say",
 			"M" = "me",

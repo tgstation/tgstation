@@ -321,6 +321,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		adminGreet()
 
 	add_verbs_from_config()
+	verbs += /client/proc/update_input_status
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
@@ -697,7 +698,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
-/client/proc/update_input_color()
+/client/proc/update_input_status(swap_mode = TRUE)
+	set name = "Swap Hotkey Mode"
+	set category = "OOC"
+	if(prefs.hotkeys)
+		winset(src, "map", "focus=true")
+	else
+		winset(src, "input", "focus=true")
 	if(dark_mode)
 		if(prefs.hotkeys)
 			input_background_color = COLOR_DARKMODE_DARKBACKGROUND
@@ -713,6 +720,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			input_background_color = COLOR_INPUT_DISABLED
 	winset(src, "input", "background-color = [input_background_color]")
 	winset(src, "input", "text-color = [input_text_color]")
+	if(swap_mode)
+		var/old_mode = winget(src, "mainwindow", "macro")
+		winset(src, null, "mainwindow.macro=[macro]")
 
 /client/Click(atom/object, atom/location, control, params)
 	var/ab = FALSE
@@ -762,7 +772,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
 			return
 
-	update_input_color()
+	update_input_status()
 
 	..()
 

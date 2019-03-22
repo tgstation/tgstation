@@ -67,7 +67,7 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "tooltip", "background-color = [COLOR_DARKMODE_BACKGROUND];background-color = none")
 	winset(src, "tooltip", "text-color = [COLOR_DARKMODE_TEXT];text-color = #000000")
 
-	update_input_color()
+	update_input_status()
 
 /client/proc/force_dark_theme() //Inversely, if theyre using white theme and want to swap to the superior dark theme, let's get WINSET() ing
 	dark_mode = TRUE
@@ -120,7 +120,7 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "tooltip", "background-color = none;background-color = [COLOR_DARKMODE_BACKGROUND]")
 	winset(src, "tooltip", "text-color = #000000;text-color = [COLOR_DARKMODE_TEXT]")
 
-	update_input_color()
+	update_input_status()
 
 /datum/asset/simple/goonchat
 	verify = FALSE

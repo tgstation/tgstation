@@ -1399,12 +1399,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("hotkeys")
 					hotkeys = !hotkeys
 					var/client/C = user.client
-					if(C)
-						C.update_input_color()
 					if(hotkeys)
-						winset(user, null, "input.focus=true mainwindow.macro=default")
+						C?.update_input_status("default")
 					else
-						winset(user, null, "input.focus=true mainwindow.macro=old_default")
+						C?.update_input_status("default_old")
 				if("action_buttons")
 					buttons_locked = !buttons_locked
 				if("tgui_fancy")

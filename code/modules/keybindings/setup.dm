@@ -44,8 +44,7 @@
 			var/command = macro_set[key]
 			winset(src, "[setname]-[REF(key)]", "parent=[setname];name=[key];command=[command]")
 
-	update_input_color()
 	if(prefs.hotkeys)
-		winset(src, null, "input.focus=true mainwindow.macro=default")
+		update_input_status("default")
 	else
-		winset(src, null, "input.focus=true mainwindow.macro=old_default")
+		update_input_status("old_default")
