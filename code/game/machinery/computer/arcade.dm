@@ -65,20 +65,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/list/normalgames = list()
-		var/list/raregames = list()
-		for(var/games in subtypesof(/obj/item/circuitboard/computer/arcade))
-			var/obj/item/circuitboard/computer/arcade/thegame = games//you just lost
-			if(thegame.raregame)
-				raregames |= thegame
-			else
-				normalgames |= thegame
-		var/choice
-		if(prob(1))
-			choice = pick(raregames)
-		else
-			choice = pick(normalgames)
-		var/obj/item/circuitboard/CB = new choice()
+		var/list/gameodds = list(/obj/item/circuitboard/computer/arcade/battle = 49,
+							/obj/item/circuitboard/computer/arcade/orion_trail = 49,
+							/obj/item/circuitboard/computer/arcade/amputation = 2)
+		var/thegame = pickweight(gameodds)
+		var/obj/item/circuitboard/CB = new thegame()
 		new CB.build_path(loc, CB)
 		return INITIALIZE_HINT_QDEL
 	Reset()
@@ -1135,18 +1126,20 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/amputation/attack_hand(mob/user)
 	if(!iscarbon(user))
 		return
-	var/mob/living/carbon/c_user
+	var/mob/living/carbon/c_user = user
 	var/obj/item/bodypart/l_arm = c_user.get_bodypart(BODY_ZONE_L_ARM)
 	var/obj/item/bodypart/r_arm = c_user.get_bodypart(BODY_ZONE_R_ARM)
 	to_chat(c_user, "<span class='warning'>You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it...</span>")
 	if(do_after(c_user, 50, target = src))
 		to_chat(c_user, "<span class='userdanger'>The guillotine drops on your arm, and the machine sucks it in!</span>")
+		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 		if(l_arm)
 			l_arm.dismember()
 			qdel(l_arm)
 		else
 			r_arm.dismember()
 			qdel(r_arm)
+		playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
 		var/prizenumber = rand(3,5)
 		for(var/i=1; i<=prizenumber; i++)
 			prizevend(user)

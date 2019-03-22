@@ -147,12 +147,6 @@
 	name = "Prototype Cloning (Computer Board)"
 	build_path = /obj/machinery/computer/prototype_cloning
 
-/obj/item/circuitboard/computer/arcade
-	name = "Generic Arcade Circuit Board (BUG, examine me)"
-	desc = "This should not exist. Ahelp this and report a bug"
-	build_path = /obj/machinery/computer/arcade
-	var/raregame = FALSE
-
 /obj/item/circuitboard/computer/arcade/battle
 	name = "Arcade Battle (Computer Board)"
 	build_path = /obj/machinery/computer/arcade/battle
@@ -164,7 +158,6 @@
 /obj/item/circuitboard/computer/arcade/amputation
 	name = "Mediborg's Amputation Adventure (Computer Board)"
 	build_path = /obj/machinery/computer/arcade/amputation
-	raregame = TRUE
 
 /obj/item/circuitboard/computer/turbine_control
 	name = "Turbine control (Computer Board)"
