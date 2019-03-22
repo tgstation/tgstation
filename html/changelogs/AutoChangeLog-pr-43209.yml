@@ -1,0 +1,4 @@
+author: "Atlanta Ned"
+delete-after: True
+changes: 
+  - rscadd: "If you've got Head of Staff access, you can now message Central Command. Central Command is not responsible for any executions sustained as a result of mutinous behavior."
