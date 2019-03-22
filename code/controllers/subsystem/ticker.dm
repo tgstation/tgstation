@@ -398,10 +398,19 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
 
 /datum/controller/subsystem/ticker/proc/check_queue()
-	var/hpc = CONFIG_GET(number/hard_popcap)
-	if(!queued_players.len || !hpc)
+	if(!queued_players.len)
 		return
-
+	var/hpc = CONFIG_GET(number/hard_popcap)
+	if(!hpc)
+		listclearnulls(queued_players)
+		for (var/mob/dead/new_player/NP in queued_players)
+			to_chat(NP, "<span class='userdanger'>The alive players limit has been released!<br><a href='?src=[REF(NP)];late_join=override'>[html_encode(">>Join Game<<")]</a></span>")
+			SEND_SOUND(NP, sound('sound/misc/notice1.ogg'))
+			NP.LateChoices()
+		queued_players.len = 0
+		queue_delay = 0
+		return
+		
 	queue_delay++
 	var/mob/dead/new_player/next_in_line = queued_players[1]
 
