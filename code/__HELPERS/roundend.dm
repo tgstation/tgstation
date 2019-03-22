@@ -174,7 +174,7 @@
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)
 			C.RollCredits()
-		C.playtitlemusic(40)
+		C.playcreditsmusic(40)//playtitlemusic(40) // FULPSTATION: Play end music, NOT lobby music!
 
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
@@ -414,7 +414,7 @@
 		if(!A.members)
 			continue
 		all_teams |= A
-	
+
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue

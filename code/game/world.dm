@@ -243,8 +243,8 @@ GLOBAL_VAR(restart_counter)
 
 	var/list/features = list()
 
-	if(GLOB.master_mode)
-		features += GLOB.master_mode
+	//if(GLOB.master_mode)
+	//	features += GLOB.master_mode	// FULP REMOVE: This is done below
 
 	if (!GLOB.enter_allowed)
 		features += "closed"
@@ -264,10 +264,22 @@ GLOBAL_VAR(restart_counter)
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "<a href=\"[CONFIG_GET(string/forumurl)]\">"//Change this to wherever you want the hub to link to.
+//	s += "[game_version]"
+	s += "Forums"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "</a>"
+	s += " | "
+	s += "<a href=\"[CONFIG_GET(string/discordurl)]\">"//Change this to wherever you want the hub to link to
+	s += "Discord"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
+
+	// Fulp Description
+	if(GLOB.master_mode)
+		s += "<br>Mode: \[<b>" + (GLOB.master_mode == "secret_extended" ? "secret" : GLOB.master_mode) + "\]</b>" // FULPSTATION: What's the point in making it secret if it's going to just say the actual mode?
+
+	//s += "<br>Light RP, New Antagonists"
+	s+= "<br><b>SSETH FANS WELCOME! BEGINNER STATION: LEARN TO PLAY SS13!!</b>"
 
 	var/n = 0
 	for (var/mob/M in GLOB.player_list)
