@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "Logs for certain kinds of errors will now include better debugging information."
