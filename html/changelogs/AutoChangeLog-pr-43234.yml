@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "Exempted byond accounts already in the round from the connected players cap, allowing them to reconnect even if the server is full. This exemption applies even if you are dead or are a ghost, but does not apply if you hit \"observe\" from the lobby."
