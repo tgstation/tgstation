@@ -218,7 +218,7 @@
 	if(!is_operational() || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
-	var/mob/signal_sender = signal.data["user"]
+	var/atom/signal_sender = signal.data["user"]
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
