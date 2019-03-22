@@ -23,7 +23,7 @@
 		return
 	template = SSmapping.shelter_templates[template_id]
 	if(!template)
-		throw EXCEPTION("Shelter template ([template_id]) not found!")
+		WARNING("Shelter template ([template_id]) not found!")
 		qdel(src)
 
 /obj/item/survivalcapsule/Destroy()
