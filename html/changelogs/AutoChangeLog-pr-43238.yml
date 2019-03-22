@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Simple mobs can now only damage clown cars from the inside if they're able to smash through walls."
