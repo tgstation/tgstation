@@ -183,7 +183,7 @@
 				cam_prev = eyeobj.loc
 				eyeobj.setLoc(cam_hotkeys[_key])
 				return
-	. = ..()
+	return ..()
 
 /mob/living/silicon/ai/Destroy()
 	GLOB.ai_list -= src
