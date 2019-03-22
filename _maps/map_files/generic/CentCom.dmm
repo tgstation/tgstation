@@ -5571,7 +5571,9 @@
 "nt" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
-/obj/item/camera,
+/obj/item/camera{
+	step_y = 7
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6025,7 +6027,9 @@
 "og" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
-/obj/item/camera,
+/obj/item/camera{
+	step_y = 7
+	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 32
 	},
@@ -8854,11 +8858,13 @@
 "tj" = (
 /obj/structure/falsewall/wood,
 /obj/structure/mirror,
+/obj/item/paint/anycolor{
+	step_x = 31
+	},
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
 "tk" = (
 /obj/structure/table/wood,
-/obj/item/camera,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
 "tl" = (
@@ -17301,6 +17307,13 @@
 /obj/machinery/processor,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"Nb" = (
+/obj/item/paint/anycolor{
+	step_x = 4;
+	step_y = 31
+	},
+/turf/open/floor/white,
+/area/holodeck/rec_center/photobooth)
 "Nd" = (
 /turf/closed/indestructible{
 	icon = 'icons/turf/walls/wood_wall.dmi';
@@ -18013,7 +18026,9 @@
 /area/centcom/holding)
 "Ty" = (
 /obj/structure/table/reinforced,
-/obj/item/camera,
+/obj/item/camera{
+	step_y = 7
+	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
 "Tz" = (
@@ -18248,6 +18263,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"Wg" = (
+/obj/structure/table/wood,
+/obj/item/toy/crayon/spraycan{
+	step_x = 5;
+	step_y = 14
+	},
+/obj/item/toy/crayon/spraycan{
+	step_x = 0;
+	step_y = 6
+	},
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/photobooth)
 "Wj" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -18539,6 +18566,20 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
+"Zk" = (
+/obj/structure/table/wood,
+/obj/item/camera{
+	step_y = 7
+	},
+/obj/item/toy/crayon/spraycan{
+	step_x = 27;
+	step_y = 14
+	},
+/obj/item/camera{
+	step_y = 0
+	},
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/photobooth)
 "Zl" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -72082,7 +72123,7 @@ aa
 (209,1,1) = {"
 ac
 tk
-tb
+Nb
 tb
 tb
 tb
@@ -72338,7 +72379,7 @@ aa
 "}
 (210,1,1) = {"
 ac
-tk
+Zk
 tb
 tb
 tb
@@ -72595,7 +72636,7 @@ aa
 "}
 (211,1,1) = {"
 ac
-tk
+Wg
 tb
 tb
 tb
