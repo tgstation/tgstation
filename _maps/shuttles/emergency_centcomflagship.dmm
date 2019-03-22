@@ -188,7 +188,7 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Centcom Communication Server Room"
+	name = "Centcom Flagship Communication Server Room"
 	},
 /obj/docking_port/mobile/emergency{
 	name = "Flagship emergency"
@@ -340,7 +340,7 @@
 "bs" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/hatch{
-	name = "Centcomm Communication Server Room"
+	name = "Centcom Communication Server Room"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -822,7 +822,7 @@
 /area/shuttle/escape)
 "da" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Centcomm Flagship Bridge";
+	name = "Centcom Flagship Bridge";
 	req_access = list(16)
 	},
 /turf/open/floor/mineral/plastitanium,
