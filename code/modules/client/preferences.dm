@@ -1398,7 +1398,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("hotkeys")
 					hotkeys = !hotkeys
-					user.update_input_color()
+					var/client/C = user.client
+					if(C)
+						C.update_input_color()
 					if(hotkeys)
 						winset(user, null, "input.focus=true mainwindow.macro=default")
 					else
