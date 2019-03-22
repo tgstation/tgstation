@@ -252,7 +252,7 @@
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return
-	if(!is_type_in_list(src, allowed_toolbox))
+	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
 		return
 	if(contents.len >= 1)
 		to_chat(user, "<span class='warning'>They won't fit in, as there is already stuff inside!</span>")
@@ -261,6 +261,8 @@
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
 		switch(B.toolbox)
+			if(/obj/item/storage/toolbox)
+				B.toolbox_color = "r"
 			if(/obj/item/storage/toolbox/emergency)
 				B.toolbox_color = "r"
 			if(/obj/item/storage/toolbox/electrical)
@@ -271,7 +273,7 @@
 				B.toolbox_color = "s"
 		user.put_in_hands(B)
 		B.update_icon()
-		to_chat(user, "<span class='notice'>You add the tiles into the empty [src.name]. They protrude from the top.</span>")
+		to_chat(user, "<span class='notice'>You add the tiles into the empty [name]. They protrude from the top.</span>")
 		qdel(src)
 	else
 		to_chat(user, "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>")

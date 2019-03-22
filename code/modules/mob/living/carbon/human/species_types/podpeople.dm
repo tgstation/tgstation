@@ -60,6 +60,7 @@
 					H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 				else
 					H.easy_randmut(POSITIVE)
+				H.randmuti()
 				H.domutcheck()
 			else
 				H.adjustFireLoss(rand(5,15))

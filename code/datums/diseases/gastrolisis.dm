@@ -8,7 +8,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	stage_prob = 1
 	disease_flags = CURABLE
-	cures = list("sodiumchloride")
+	cures = list("sodiumchloride",  "mutadone")
 
 /datum/disease/gastrolosis/stage_act()
 	..()

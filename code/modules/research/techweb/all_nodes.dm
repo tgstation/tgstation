@@ -789,6 +789,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/mech_disabler
+	id = "mech_disabler"
+	display_name =  "Exosuit Weapon (CH-DS \"Peacemaker\" Mounted Disabler)"
+	description = "A basic piece of mech weaponry"
+	prereq_ids = list("beam_weapons")
+	design_ids = list("mech_disabler")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
 /datum/techweb_node/mech_grenade_launcher
 	id = "mech_grenade_launcher"
 	display_name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
@@ -831,15 +840,6 @@
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("bluespace_travel")
 	design_ids = list("mech_wormhole_gen")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 5000
-
-/datum/techweb_node/mech_taser
-	id = "mech_taser"
-	display_name =  "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
-	description = "A basic piece of mech weaponry"
-	prereq_ids = list("electronic_weapons")
-	design_ids = list("mech_taser")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
