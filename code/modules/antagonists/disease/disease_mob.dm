@@ -265,8 +265,10 @@ the new instance inside the host to be updated to the template's stats.
 	else
 		if(L)
 			L.TakeComponent(move_listener)
-		if(QDELING(move_listener))
-			move_listener = null
+			if(QDELING(move_listener))
+				move_listener = null
+		else
+			QDEL_NULL(move_listener)
 	follow_mob()
 
 /mob/camera/disease/proc/follow_next(reverse = FALSE)
