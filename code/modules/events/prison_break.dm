@@ -44,10 +44,7 @@
 /datum/round_event/grey_tide/end()
 	for(var/area/A in areasToOpen)
 		for(var/obj/O in A)
-			if(istype(O, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/temp = O
-				temp.overload_lighting()
-			else if(istype(O, /obj/structure/closet/secure_closet))
+			if(istype(O, /obj/structure/closet/secure_closet))
 				var/obj/structure/closet/secure_closet/temp = O
 				temp.locked = FALSE
 				temp.update_icon()
@@ -59,3 +56,4 @@
 			else if(istype(O, /obj/machinery/door_timer))
 				var/obj/machinery/door_timer/temp = O
 				temp.timer_end(forced = TRUE)
+
