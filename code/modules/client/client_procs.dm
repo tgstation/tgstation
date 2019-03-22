@@ -711,8 +711,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			input_background_color = COLOR_INPUT_DISABLED
 		else
 			input_background_color = COLOR_INPUT_DISABLED
-	winset(src, "client", "background-color = [input_background_color]")
-	winset(src, "client", "text-color = [input_text_color]")
+	winset(src, "input", "background-color = [input_background_color]")
+	winset(src, "input", "text-color = [input_text_color]")
 
 /client/Click(atom/object, atom/location, control, params)
 	var/ab = FALSE
