@@ -26,7 +26,7 @@
 	var/b1
 	var/static/r2 = 237
 	var/static/g2 = 164
-	var/static/b2 = 149	
+	var/static/b2 = 149
 	//this is shit but how do i fix it? no clue.
 
 
@@ -128,7 +128,7 @@
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 2)
 			if(H.health > 10.5)
-				apply_damage(0.5, BRUTE, null, null, H)
+				apply_damage(0.5, BURN, null, null, H)
 			brutemod = 1.75
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 1)
