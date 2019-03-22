@@ -602,5 +602,5 @@
 	else
 		scantemp = "Subject successfully scanned."
 	records += R
-	log_cloning("[usr ? key_name(usr) : "Autoprocess"] added the record of [key_name(mob_occupant)] to [src] at [AREACOORD(src)].")
+	log_cloning("[M ? key_name(M) : "Autoprocess"] added the record of [key_name(mob_occupant)] to [src] at [AREACOORD(src)].")
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50)
