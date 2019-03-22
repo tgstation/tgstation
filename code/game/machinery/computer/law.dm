@@ -3,22 +3,22 @@
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
-	var/obj/item/gps/internal_gps
-	var/internal_gps_type = /obj/item/gps/internal_gps/internal_gps
+	var/obj/item/gps/internal/ai_upload/imbedded_gps
+	var/obj/item/gps/internal/ai_upload/imbedded_gps_type = /obj/item/gps/internal/ai_upload
 	time_to_scewdrive = 60
 
-/obj/item/gps/internal_gps/internal_gps
+/obj/item/gps/internal/ai_upload
 	icon_state = null
 	gpstag = "Encrypted Upload Signal"
 	desc = "Signal used to connect remotely with silicons."
 	invisibility = 100
 
 /obj/machinery/computer/upload/Initialize()
-	internal_gps = new internal_gps_type(src)
+	imbedded_gps = new imbedded_gps_type(src)
 	return ..()
 
 /obj/machinery/computer/upload/Destroy()
-	QDEL_NULL(internal_gps)
+	QDEL_NULL(imbedded_gps)
 	return ..()
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
