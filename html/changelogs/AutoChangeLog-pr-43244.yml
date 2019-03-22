@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - imageadd: "Mech disablers are no longer invisible."
