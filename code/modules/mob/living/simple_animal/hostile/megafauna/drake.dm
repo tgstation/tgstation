@@ -132,7 +132,7 @@ Difficulty: Medium
 		return
 	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
 	while(amount > 0)
-		if(!target)
+		if(QDELETED(target))
 			break
 		var/turf/T = pick(RANGE_TURFS(1, target))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
@@ -496,7 +496,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
-	
+
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon
 	name = "space dragon"
 	maxHealth = 250
@@ -522,8 +522,8 @@ Difficulty: Medium
 	var/datum/action/small_sprite/carpsprite = new/datum/action/small_sprite/spacedragon()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/grant_achievement(medaltype,scoretype)
-	return	
-	
+	return
+
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/Initialize()
 	carpsprite.Grant(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon(src)
@@ -538,7 +538,7 @@ Difficulty: Medium
 	var/list/turfs = list()
 	turfs = line_target(0, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
-	
+
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/OpenFire()
 	if(swooping)
 		return

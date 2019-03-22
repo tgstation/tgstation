@@ -165,9 +165,9 @@
 				<font color="[patient.getOxyLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Respiratory Damage:</b> [patient.getOxyLoss()]%</font><br />
 				<font color="[patient.getToxLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Toxin Content:</b> [patient.getToxLoss()]%</font><br />
 				<font color="[patient.getFireLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Burn Severity:</b> [patient.getFireLoss()]%</font><br />
-				<span_class='danger'>[patient.getCloneLoss() ? "Subject appears to have cellular damage." : ""]</span><br />
-				<span_class='danger'>[patient.getBrainLoss() ? "Significant brain damage detected." : ""]</span><br />
-				<span_class='danger'>[length(patient.get_traumas()) ? "Brain Traumas detected." : ""]</span><br />
+				<span class='danger'>[patient.getCloneLoss() ? "Subject appears to have cellular damage." : ""]</span><br />
+				<span class='danger'>[patient.getBrainLoss() ? "Significant brain damage detected." : ""]</span><br />
+				<span class='danger'>[length(patient.get_traumas()) ? "Brain Traumas detected." : ""]</span><br />
 				"}
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_reagents()
