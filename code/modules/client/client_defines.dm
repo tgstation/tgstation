@@ -16,6 +16,11 @@
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 	var/ircreplyamount = 0
 
+	var/dark_mode = FALSE //mmm grayons
+
+	var/input_background_color = COLOR_INPUT_DISABLED
+	var/input_text_color = "#000000"
+
 		/////////
 		//OTHER//
 		/////////

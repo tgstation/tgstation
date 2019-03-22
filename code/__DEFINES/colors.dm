@@ -3,6 +3,10 @@
 #define COLOR_INPUT_DISABLED "#F0F0F0"
 #define COLOR_INPUT_ENABLED "#D3B5B5"
 
+#define COLOR_DARKMODE_BACKGROUND "#202020"
+#define COLOR_DARKMODE_DARKBACKGROUND "#171717"
+#define COLOR_DARKMODE_TEXT "#8ba5c4"
+
 //#define COLOR_WHITE            "#EEEEEE"
 //#define COLOR_SILVER           "#C0C0C0"
 //#define COLOR_GRAY             "#808080"

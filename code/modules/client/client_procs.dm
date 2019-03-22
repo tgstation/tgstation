@@ -697,6 +697,23 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
+/client/proc/update_input_color()
+	if(dark_mode)
+		if(prefs.hotkeys)
+			input_background_color = COLOR_DARKMODE_DARKBACKGROUND
+			input_text_color = COLOR_DARKMODE_TEXT
+		else
+			input_background_color = COLOR_DARKMODE_DARKBACKGROUND
+			input_text_color = COLOR_DARKMODE_TEXT
+	else
+		input_text_color = "#000000"
+		if(prefs.hotkeys)
+			input_background_color = COLOR_INPUT_DISABLED
+		else
+			input_background_color = COLOR_INPUT_DISABLED
+	winset(src, "client", "background-color = [input_background_color]")
+	winset(src, "client", "text-color = [input_text_color]")
+
 /client/Click(atom/object, atom/location, control, params)
 	var/ab = FALSE
 	var/list/L = params2list(params)
@@ -745,11 +762,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
 			return
 
-	if (prefs.hotkeys)
-		// If hotkey mode is enabled, then clicking the map will automatically
-		// unfocus the text bar. This removes the red color from the text bar
-		// so that the visual focus indicator matches reality.
-		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+	update_input_color()
 
 	..()
 
