@@ -473,6 +473,7 @@
 		/obj/item/rsf,
 		/obj/item/instrument/violin,
 		/obj/item/instrument/guitar,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
