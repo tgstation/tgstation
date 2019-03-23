@@ -278,9 +278,6 @@ GLOBAL_VAR(restart_counter)
 	if(GLOB.master_mode)
 		s += "<br>Mode: \[<b>" + (GLOB.master_mode == "secret_extended" ? "secret" : GLOB.master_mode) + "\]</b>" // FULPSTATION: What's the point in making it secret if it's going to just say the actual mode?
 
-	//s += "<br>Light RP, New Antagonists"
-	s+= "<br><b>SSETH FANS WELCOME! BEGINNER STATION: LEARN TO PLAY SS13!!</b>"
-
 	var/players = GLOB.clients.len
 
 	var/popcaptext = ""
@@ -295,11 +292,14 @@ GLOBAL_VAR(restart_counter)
 
 	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
 
-	if (!host && hostedby)
-		features += "hosted by <b>[hostedby]</b>"
+	//if (!host && hostedby)
+	features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
 		s += ": [jointext(features, ", ")]"
+
+	//s += "<br>Light RP, New Antagonists"
+	s+= "<br><b>SSETH FANS WELCOME! COME LEARN TO PLAY SS13!</b>"
 
 	status = s
 
