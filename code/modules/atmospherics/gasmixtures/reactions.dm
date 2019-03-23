@@ -488,7 +488,6 @@
 	var/pluox_used = min(STIM_BALL_GAS_AMOUNT/cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/pluoxium][MOLES])
 	var/energy_released = stim_used*STIMULUM_HEAT_SCALE//Stimulum has a lot of stored energy, and breaking it up releases some of it
 	location.fire_nuclear_particle(ball_shot_angle)
-	to_chat(world,"Fired ball at [ball_shot_angle]")
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] += 4*pluox_used
 	cached_gases[/datum/gas/nitrogen][MOLES] += 8*stim_used
 	cached_gases[/datum/gas/pluoxium][MOLES] -= pluox_used
