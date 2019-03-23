@@ -1176,6 +1176,23 @@
 /obj/machinery/door/airlock/proc/prison_open()
 	if(obj_flags & EMAGGED)
 		return
+	var/turf/srcturf = get_turf(src)
+	if(!istype(srcturf))
+		return
+	var/shouldntopen = 0
+	for(var/turf/T in orange(1,src))
+		if(T.x != srcturf.x && T.y != srcturf.y)
+			continue
+		if(istype(T,/turf/open/space))
+			shouldntopen = 1
+			break
+		if(istype(T,/turf/open/floor))
+			var/turf/open/floor/F = T
+			if(F.air && F.air.gases["o2"] && F.air.gases["o2"][MOLES] && F.air.gases["o2"][MOLES] < 16)
+				shouldntopen = 1
+				break
+	if(shouldntopen)
+		return
 	locked = FALSE
 	src.open()
 	locked = TRUE

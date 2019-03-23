@@ -1,9 +1,10 @@
 //This proc allows download of past server logs saved within the data/logs/ folder.
 //It works similarly to show-server-log.
 /client/proc/getserverlog()
-	set name = ".getserverlog"
+	//set name = ".getserverlog"
+	set name = "Fetch Old Server Logs"
 	set desc = "Fetch logfiles from data/logs"
-	set category = null
+	set category = "Admin"
 
 	var/path = browse_files("data/logs/")
 	if(!path)

@@ -1045,9 +1045,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("hair_style")
 					var/new_hair_style
 					if(gender == MALE)
-						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in sortNames(GLOB.hair_styles_male_list)
+						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_male_list
 					else
-						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in sortNames(GLOB.hair_styles_female_list)
+						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_female_list
 					if(new_hair_style)
 						hair_style = new_hair_style
 

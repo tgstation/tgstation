@@ -14,6 +14,8 @@
 									/area/security,
 									/area/quartermaster,
 									/area/science)
+	var/restricted_areas = list(/area/engine/supermatter)
+	var/list
 	var/severity = 1
 
 
@@ -24,6 +26,13 @@
 	for(var/i in 1 to severity)
 		var/picked_area = pick_n_take(potential_areas)
 		for(var/area/A in world)
+			var/skip = 0
+			for(var/restricted in restricted_areas)
+				if(istype(A, restricted))
+					skip = 1
+					break
+			if(skip)
+				continue
 			if(istype(A, picked_area))
 				areasToOpen += A
 

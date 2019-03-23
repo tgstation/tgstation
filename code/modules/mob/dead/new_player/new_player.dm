@@ -304,7 +304,7 @@
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
-	if(!job.is_whitelisted(client))
+	if(!job && job.is_whitelisted(client))
 		message_admins("An illegal attempt to access job \"[rank]\" has been made by [key].")
 		log_game("An illegal attempt to access job \"[rank]\" has been made by [key].")
 		return FALSE

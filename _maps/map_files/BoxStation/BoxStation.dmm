@@ -4759,7 +4759,7 @@
 "bNA" = (/obj/structure/cable{icon_state = "0-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/closed/wall/r_wall,/area/maintenance/aft)
 "bNB" = (/obj/structure/filingcabinet,/turf/open/floor/carpet,/area/medical/psychiatry)
 "bNC" = (/obj/structure/table,/obj/item/device/taperecorder,/obj/structure/cable{icon_state = "1-2"},/turf/open/floor/carpet,/area/medical/psychiatry)
-"bND" = (/obj/structure/table,/obj/item/paper_bin,/obj/item/folder/white,/obj/item/phone,/obj/item/gun/energy/meteorgun/pen,/turf/open/floor/carpet,/area/medical/psychiatry)
+"bND" = (/obj/structure/table,/obj/item/paper_bin,/obj/item/folder/white,/obj/item/phone,/obj/item/pen{desc = "It fires meteors, yesterday."; name = "meteor pen"},/turf/open/floor/carpet,/area/medical/psychiatry)
 "bNE" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable{icon_state = "1-2"},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
 "bNF" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
 "bNG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/closed/wall,/area/medical/medbay/central)

@@ -117,7 +117,7 @@
 "cm" = (/obj/machinery/telecomms/allinone{intercept = 1},/turf/open/floor/circuit/red,/area/shuttle/syndicate/hallway)
 "cn" = (/obj/machinery/light{dir = 8},/turf/open/floor/engine,/area/shuttle/syndicate/armory)
 "co" = (/turf/open/floor/engine,/area/shuttle/syndicate/armory)
-"cp" = (/obj/machinery/door/poddoor{id = "syndieshoppoddoor"; name = "outer blast door"},/obj/machinery/button/door{id = "syndieshoppoddoor"; name = "external door control"; pixel_x = 0; pixel_y = -26; req_access_txt = "150"},/turf/open/floor/engine,/area/shuttle/syndicate/armory)
+"cp" = (/obj/machinery/door/poddoor{id = "syndieshoppoddoor"; name = "outer blast door"},/obj/machinery/button/door{id = "syndieshoppoddoor"; name = "external door control"; pixel_y = 26; req_access_txt = "150"},/turf/open/floor/engine,/area/shuttle/syndicate/armory)
 "cq" = (/obj/item/cautery,/obj/item/scalpel,/obj/structure/table/reinforced,/turf/open/floor/plasteel/vault{dir = 5},/area/shuttle/syndicate/medical)
 "cr" = (/obj/structure/table/optable,/obj/item/surgical_drapes,/obj/effect/turf_decal/bot_white,/turf/open/floor/plasteel/dark,/area/shuttle/syndicate/medical)
 "cs" = (/obj/item/retractor,/obj/item/hemostat,/obj/structure/table/reinforced,/turf/open/floor/plasteel/vault{dir = 5},/area/shuttle/syndicate/medical)
@@ -157,9 +157,9 @@ bjbpbqbrbsbtbuayaCaybvbwbxbybzbAbn
 bjbBbCbCbCbCbubDaCbEbvbFbFbFbFbFbn
 bjbpbGbHbIbIbJbKbKbKbLbMbMbNbObPbn
 bjbQbGbRbSbSbubTbUbTbvbVbVbWbObXbn
-bjbYbZcacbccbjcdcecdbncfcgchcichcj
-bjckbGclblbjbjcdcmcdbnbnbmcncococp
-bjcqcrcsbjaaawctctctawaabncucococv
+bjbYbZcacbccbjcdcecdbncfcgchcichcp
+bjckbGclblbjbjcdcmcdbnbnbmcncococj
+bjcqcrcsbjaaawctctctawaabncocucocv
 bjcwcwcwbjaaawcxcyczawaabncAcAcAcv
 bjcBcCcDcEaaaaaaaaaaaaaacFcGcHcIbn
 "}

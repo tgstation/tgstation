@@ -345,12 +345,14 @@
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
+	var/list/new_players_list = list()
 	var/list/candidates = list()
 	var/list/drafted = list()
 	var/datum/mind/applicant = null
 
 	// Ultimate randomizing code right here
 	for(var/mob/dead/new_player/player in GLOB.player_list)
+		new_players_list += player
 		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			players += player
 
@@ -359,7 +361,10 @@
 	players = shuffle(players)
 
 	if(precentage_for_antagonists > 0)
-		var/new_recommended_enemies = round(players.len*precentage_for_antagonists,1)
+		var/number_of_players = new_players_list.len
+		if(GLOB.override_lobby_player_count > 0)
+			number_of_players = GLOB.override_lobby_player_count
+		var/new_recommended_enemies = round(number_of_players*precentage_for_antagonists,1)
 		if(minimum_enemies)
 			new_recommended_enemies = max(new_recommended_enemies,minimum_enemies)
 		if(new_recommended_enemies < recommended_enemies)
@@ -517,11 +522,13 @@
 		return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
 
-
+/datum/config_entry/flag/use_age_restriction_for_antags
 /datum/game_mode/proc/get_remaining_days(client/C)
 	if(!C)
 		return 0
-	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
+	/*if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
+		return 0*/
+	if(!CONFIG_GET(flag/use_age_restriction_for_antags))
 		return 0
 	if(!isnum(C.player_age))
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced

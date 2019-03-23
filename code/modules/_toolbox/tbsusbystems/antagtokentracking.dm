@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(memorized_restricted_jobs)
+
 //******************************************************************
 //This subsystem rewards players with antag tokens for hours played.
 //******************************************************************
@@ -14,6 +16,12 @@ SUBSYSTEM_DEF(antagtokens)
 		/obj/structure/closet,
 		/obj/machinery/disposal)
 	var/list/minutes_tracked
+
+/datum/controller/subsystem/Initialize(start_timeofday)
+	var/datum/game_mode/traitor/T = new()
+	GLOB.memorized_restricted_jobs = T.protected_jobs
+	qdel(T)
+	. = ..()
 
 /datum/controller/subsystem/antagtokens/fire(resumed)
 	if(!last_check)
