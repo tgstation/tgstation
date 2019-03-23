@@ -53,7 +53,12 @@
 		else
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 
-	if(!damage)
+	var/miss_chance
+	if(A.dna.species.punchdamagelow != 0) //dont divide by 0
+		miss_chance = min((A.dna.species.punchdamagehigh/A.dna.species.punchdamagelow) + A.getStaminaLoss() + (A.getBruteLoss()/2), 100) //old base chance for a miss + various damage
+	else
+		miss_chance = 100 //0 dmg punches = always miss
+	if(prob(miss_chance) && atk_verb != "kick") //kicks never miss though
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
 			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -67,14 +72,20 @@
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 
-	D.apply_damage(damage, A.dna.species.attack_type, affecting, armor_block)
+	if(atk_verb == "kick")
+		D.apply_damage(damage*1.5, A.dna.species.attack_type, affecting, armor_block) //kicks deal all damage in brute/burn/etc, no stamina
+	else
+		D.apply_damage(damage/2, A.dna.species.attack_type, affecting, armor_block) //deal half damage in brute/burn/etc
+		D.apply_damage(damage, STAMINA, affecting, armor_block) //deal full damage in stamina
+
 
 	log_combat(A, D, "punched")
 
 	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
 		D.visible_message("<span class='danger'>[A] has knocked [D] down!!</span>", \
 								"<span class='userdanger'>[A] has knocked [D] down!</span>")
-		D.apply_effect(40, EFFECT_KNOCKDOWN, armor_block)
+		var/knockdown_duration = 20 + (A.getStaminaLoss() + (A.getBruteLoss()/2))/2.5 //50 total damage = 20 + 20 = 40 duration, which is the old base duration
+		D.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
 		D.forcesay(GLOB.hit_appends)
 	else if(!(D.mobility_flags & MOBILITY_STAND))
 		D.forcesay(GLOB.hit_appends)
