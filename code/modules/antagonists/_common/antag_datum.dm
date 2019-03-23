@@ -73,6 +73,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 		give_antag_moodies()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
+		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
+			owner.current.client.holder.auto_deadmin()
 
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
