@@ -187,13 +187,11 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "aL" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Centcomm Communication Server Room"
-	},
 /obj/docking_port/mobile/emergency{
 	name = "Flagship emergency"
 	},
 /obj/structure/fans/tiny,
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aM" = (
@@ -804,46 +802,67 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"gH" = (
+"eZ" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"ge" = (
+/turf/open/floor/mech_bay_recharge_floor,
+/area/shuttle/escape)
+"ii" = (
+/obj/machinery/porta_turret/centcom_shuttle,
+/turf/closed/wall/mineral/plastitanium/overspace,
+/area/shuttle/escape)
+"ik" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/recharge_station,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"iq" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
+"is" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"sg" = (
+/obj/structure/chair/stool,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"sV" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"yU" = (
-/turf/closed/wall/mineral/plastitanium/overspace,
-/area/shuttle/escape)
-"Cd" = (
-/obj/structure/window/reinforced/spawner,
+"Dj" = (
 /obj/machinery/recharge_station,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"DN" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"Fv" = (
-/turf/open/floor/mech_bay_recharge_floor,
-/area/shuttle/escape)
-"GM" = (
-/obj/machinery/porta_turret/centcom_shuttle,
+"DM" = (
 /turf/closed/wall/mineral/plastitanium/overspace,
 /area/shuttle/escape)
-"LX" = (
+"Jc" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"Ms" = (
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 1
+"KM" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
 	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"LD" = (
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"Ng" = (
+"NW" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
@@ -852,33 +871,12 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"NM" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/escape)
-"Oa" = (
-/obj/structure/chair/stool,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"Ob" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer{
+"Ys" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"OC" = (
-/obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"QP" = (
-/obj/machinery/suit_storage_unit/engine,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"XT" = (
-/obj/machinery/recharge_station,
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -900,7 +898,7 @@ aa
 aa
 aa
 aa
-GM
+ii
 aL
 ab
 ab
@@ -909,7 +907,7 @@ ab
 ab
 aU
 ab
-GM
+ii
 aa
 aa
 aa
@@ -950,11 +948,11 @@ aa
 aa
 ab
 aM
-DN
+Ys
 aO
 aO
 aO
-DN
+Ys
 aM
 aW
 ab
@@ -1010,7 +1008,7 @@ aa
 aa
 aa
 aa
-GM
+ii
 ab
 ab
 ab
@@ -1019,7 +1017,7 @@ ab
 ab
 ab
 ad
-yU
+DM
 aa
 aa
 aa
@@ -1057,7 +1055,7 @@ ab
 aa
 aa
 aa
-GM
+ii
 ab
 cG
 cH
@@ -1076,11 +1074,11 @@ aa
 (5,1,1) = {"
 aa
 aa
-GM
+ii
 ab
 ab
 ab
-GM
+ii
 aa
 aa
 aa
@@ -1090,14 +1088,14 @@ aa
 aa
 aa
 aa
-GM
+ii
 ab
 ab
 aN
 ab
 ab
 ab
-NM
+iq
 ab
 aN
 ab
@@ -1123,13 +1121,13 @@ aa
 "}
 (6,1,1) = {"
 aa
-GM
+ii
 ay
 cA
 cV
 cD
 ay
-GM
+ii
 aa
 aa
 aa
@@ -1137,7 +1135,7 @@ aa
 aa
 aa
 aa
-GM
+ii
 ay
 bY
 bY
@@ -1146,7 +1144,7 @@ cP
 cQ
 cS
 aq
-Ng
+NW
 aq
 aq
 aq
@@ -1157,8 +1155,8 @@ ab
 cd
 aZ
 aZ
-Cd
-XT
+ik
+Dj
 aZ
 aZ
 cZ
@@ -1170,7 +1168,7 @@ aa
 aa
 "}
 (7,1,1) = {"
-yU
+DM
 ay
 bP
 an
@@ -1197,7 +1195,7 @@ aq
 aq
 aq
 aq
-Oa
+sg
 aV
 aX
 aX
@@ -1205,8 +1203,8 @@ am
 cw
 aZ
 aZ
-Cd
-XT
+ik
+Dj
 aZ
 aZ
 aZ
@@ -1245,7 +1243,7 @@ aq
 aq
 aq
 aq
-Oa
+sg
 aV
 aX
 aX
@@ -1253,8 +1251,8 @@ ab
 cx
 aZ
 aZ
-LX
-LX
+Jc
+Jc
 aZ
 aZ
 aZ
@@ -1293,7 +1291,7 @@ aq
 aq
 aq
 aq
-Oa
+sg
 aV
 bT
 cg
@@ -1301,8 +1299,8 @@ ab
 db
 aZ
 aZ
-Fv
-Fv
+ge
+ge
 aZ
 aZ
 bx
@@ -1322,13 +1320,13 @@ aK
 cY
 an
 an
-NM
+iq
 ac
-NM
+iq
 at
 ab
 ac
-NM
+iq
 az
 ce
 aq
@@ -1345,12 +1343,12 @@ aq
 aq
 aq
 bR
-NM
+iq
 cy
 aZ
 aZ
-Ms
-OC
+eZ
+is
 aZ
 aZ
 by
@@ -1404,7 +1402,7 @@ bv
 bz
 aZ
 aZ
-QP
+LD
 ay
 bK
 bM
@@ -1452,7 +1450,7 @@ aZ
 bA
 aZ
 aZ
-QP
+LD
 ay
 bK
 bM
@@ -1527,7 +1525,7 @@ aG
 aF
 aF
 cb
-NM
+iq
 cr
 aq
 cT
@@ -1602,7 +1600,7 @@ bM
 aa
 "}
 (16,1,1) = {"
-yU
+DM
 az
 an
 cK
@@ -1651,13 +1649,13 @@ aa
 "}
 (17,1,1) = {"
 aa
-GM
+ii
 ay
 cs
 ct
 cu
 ay
-GM
+ii
 aa
 aa
 aa
@@ -1665,7 +1663,7 @@ aa
 aa
 aa
 aa
-GM
+ii
 ay
 ao
 aJ
@@ -1678,8 +1676,8 @@ cO
 br
 aX
 cI
-gH
-Ob
+sV
+KM
 bV
 ab
 bd
@@ -1700,11 +1698,11 @@ aa
 (18,1,1) = {"
 aa
 aa
-GM
+ii
 ab
 ab
 ab
-GM
+ii
 aa
 aa
 aa
@@ -1714,7 +1712,7 @@ aa
 aa
 aa
 aa
-GM
+ii
 ab
 ab
 bZ
@@ -1777,7 +1775,7 @@ aa
 aa
 aa
 aa
-GM
+ii
 ab
 bh
 bm
@@ -1826,7 +1824,7 @@ aa
 aa
 aa
 aa
-GM
+ii
 ab
 ab
 ab
@@ -1835,7 +1833,7 @@ ab
 ab
 ab
 ad
-yU
+DM
 aa
 aa
 aa
