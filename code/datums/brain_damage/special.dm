@@ -216,7 +216,7 @@
 		if(prob(20))
 			playsound(owner, 'sound/voice/beepsky/iamthelaw.ogg', 50)
 		return
-	if(!beepsky || !beepsky.loc || beepsky.z != owner.z)
+	if(QDELETED(beepsky) || !beepsky.loc || beepsky.z != owner.z)
 		QDEL_NULL(beepsky)
 		create_securitron()
 	if(get_dist(owner, beepsky) <= 1)
