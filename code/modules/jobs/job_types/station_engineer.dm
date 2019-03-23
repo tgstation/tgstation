@@ -4,7 +4,7 @@
 	department_head = list("Chief Engineer")
 	department_flag = ENGSEC
 	faction = "Station"
-	total_positions = 5
+	total_positions = 9
 	spawn_positions = 5
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
