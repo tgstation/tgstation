@@ -317,6 +317,10 @@
 	var/list/cant_craft = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
+
+		if(!R.always_availible && user.known_recipes(R)) //User doesn't actually know how to make this.
+			continue
+
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
 		if(check_contents(R, surroundings))
@@ -431,3 +435,19 @@
 	data["tool_text"] = tool_text
 
 	return data
+
+//Mob helpers
+
+/mob/proc/known_recipes(datum/crafting_recipe/R)
+	if(!mind)
+		return FALSE
+	if(!mind.learned_recipes)
+		return FALSE
+	return R.type in mind.learned_recipes
+
+/mob/proc/teach_crafting_recipe(R)
+	if(!mind)
+		return FALSE
+	if(!mind.learned_recipes)
+		mind.learned_recipes = list()
+	mind.learned_recipes |= R
