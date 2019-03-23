@@ -5571,9 +5571,7 @@
 "nt" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
-/obj/item/camera{
-	step_y = 7
-	},
+/obj/item/camera,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6027,9 +6025,7 @@
 "og" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
-/obj/item/camera{
-	step_y = 7
-	},
+/obj/item/camera,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 32
 	},
@@ -8858,9 +8854,7 @@
 "tj" = (
 /obj/structure/falsewall/wood,
 /obj/structure/mirror,
-/obj/item/paint/anycolor{
-	step_x = 31
-	},
+/obj/item/paint/anycolor,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
 "tk" = (
@@ -17308,10 +17302,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Nb" = (
-/obj/item/paint/anycolor{
-	step_x = 4;
-	step_y = 31
-	},
+/obj/item/paint/anycolor,
 /turf/open/floor/white,
 /area/holodeck/rec_center/photobooth)
 "Nd" = (
@@ -18026,9 +18017,7 @@
 /area/centcom/holding)
 "Ty" = (
 /obj/structure/table/reinforced,
-/obj/item/camera{
-	step_y = 7
-	},
+/obj/item/camera,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
 "Tz" = (
@@ -18265,14 +18254,8 @@
 /area/centcom/evac)
 "Wg" = (
 /obj/structure/table/wood,
-/obj/item/toy/crayon/spraycan{
-	step_x = 5;
-	step_y = 14
-	},
-/obj/item/toy/crayon/spraycan{
-	step_x = 0;
-	step_y = 6
-	},
+/obj/item/toy/crayon/spraycan,
+/obj/item/toy/crayon/spraycan,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
 "Wj" = (
@@ -18568,16 +18551,9 @@
 /area/holodeck/rec_center/firingrange)
 "Zk" = (
 /obj/structure/table/wood,
-/obj/item/camera{
-	step_y = 7
-	},
-/obj/item/toy/crayon/spraycan{
-	step_x = 27;
-	step_y = 14
-	},
-/obj/item/camera{
-	step_y = 0
-	},
+/obj/item/camera,
+/obj/item/toy/crayon/spraycan,
+/obj/item/camera,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
 "Zl" = (
