@@ -59,7 +59,7 @@
 	new /obj/item/clothing/under/rank/chief_medical_officer(src)
 	new /obj/item/clothing/shoes/sneakers/brown	(src)
 	new /obj/item/cartridge/cmo(src)
-	new /obj/item/radio/headset/heads/cmo(src)
+	new /obj/item/radio/headset/cmo(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/defibrillator/compact/loaded(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
