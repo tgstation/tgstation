@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Heirloom bodybags no longer lose their heirloom status when deployed."
