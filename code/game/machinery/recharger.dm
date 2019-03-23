@@ -25,6 +25,10 @@
 	..()
 	if(in_range(user, src) || isobserver(user))
 		to_chat(user, "<span class='notice'>The status display reads: Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.<span>")
+	if(charging)
+		var/obj/item/stock_parts/cell/C = charging.get_cell()
+		to_chat(user, "<span class='notice'>The status display reads: [capitalize(charging.name)]'s cell is at <b>[C.percent()]%</b>.<span>")
+
 
 /obj/machinery/recharger/proc/setCharging(new_charging)
 	charging = new_charging
