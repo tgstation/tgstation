@@ -1,0 +1,4 @@
+author: "Borisvanmemes"
+delete-after: True
+changes: 
+  - bugfix: "ED 209s now drop DRAGNets and not tasers"
