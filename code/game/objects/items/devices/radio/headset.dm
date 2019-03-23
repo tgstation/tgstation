@@ -153,16 +153,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "com_headset"
 	keyslot = new /obj/item/encryptionkey/headset_com
 
-/obj/item/radio/headset/heads
-	command = TRUE
-
-/obj/item/radio/headset/heads/captain
+/obj/item/radio/headset/captain
 	name = "\proper the captain's headset"
 	desc = "The headset of the king."
 	icon_state = "com_headset"
 	keyslot = new /obj/item/encryptionkey/heads/captain
+	command = TRUE
 
-/obj/item/radio/headset/heads/captain/alt
+/obj/item/radio/headset/captain/alt
 	name = "\proper the captain's bowman headset"
 	desc = "The headset of the boss. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
@@ -172,41 +170,41 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
-/obj/item/radio/headset/heads/rd
+/obj/item/radio/headset/rd
 	name = "\proper the research director's headset"
 	desc = "Headset of the fellow who keeps society marching towards technological singularity."
 	icon_state = "com_headset"
 	keyslot = new /obj/item/encryptionkey/heads/rd
 
-/obj/item/radio/headset/heads/hos
+/obj/item/radio/headset/hos
 	name = "\proper the head of security's headset"
 	desc = "The headset of the man in charge of keeping order and protecting the station."
 	icon_state = "com_headset"
 	keyslot = new /obj/item/encryptionkey/heads/hos
 
-/obj/item/radio/headset/heads/hos/alt
+/obj/item/radio/headset/hos/alt
 	name = "\proper the head of security's bowman headset"
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
 
-/obj/item/radio/headset/heads/hos/ComponentInitialize()
+/obj/item/radio/headset/hos/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
-/obj/item/radio/headset/heads/ce
+/obj/item/radio/headset/ce
 	name = "\proper the chief engineer's headset"
 	desc = "The headset of the guy in charge of keeping the station powered and undamaged."
 	icon_state = "com_headset"
 	keyslot = new /obj/item/encryptionkey/heads/ce
 
-/obj/item/radio/headset/heads/cmo
+/obj/item/radio/headset/cmo
 	name = "\proper the chief medical officer's headset"
 	desc = "The headset of the highly trained medical chief."
 	icon_state = "com_headset"
 	keyslot = new /obj/item/encryptionkey/heads/cmo
 
-/obj/item/radio/headset/heads/hop
+/obj/item/radio/headset/hop
 	name = "\proper the head of personnel's headset"
 	desc = "The headset of the guy who will one day be captain."
 	icon_state = "com_headset"
@@ -243,6 +241,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/encryptionkey/heads/captain
+	command = TRUE
 
 /obj/item/radio/headset/headset_cent/alt
 	name = "\improper CentCom bowman headset"
@@ -258,7 +257,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai
-	command = TRUE
 
 /obj/item/radio/headset/ai/can_receive(freq, level)
 	return ..(freq, level, TRUE)
