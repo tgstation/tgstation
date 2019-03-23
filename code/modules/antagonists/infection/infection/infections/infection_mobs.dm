@@ -47,7 +47,7 @@
 		adjustFireLoss(5)
 
 /mob/living/simple_animal/hostile/infection/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /obj/structure/infection))
+	if(istype(mover, /obj/structure/infection) || istype(mover, /obj/item/projectile/bullet/infection))
 		return 1
 	return ..()
 
@@ -96,12 +96,17 @@
 	var/is_zombie = 0
 	var/upgrade_points = 0
 
-/mob/living/simple_animal/hostile/infection/infectionspore/Initialize(mapload, var/obj/structure/infection/factory/linked_node)
+/mob/living/simple_animal/hostile/infection/infectionspore/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
+	if(commander)
+		overmind = commander
 	. = ..()
-	upgrade_points = overmind.all_upgrade_points
+	if(overmind)
+		upgrade_points = overmind.all_upgrade_points
+	else
+		upgrade_points = 5
 
 /mob/living/simple_animal/hostile/infection/infectionspore/proc/evolve_menu()
 	if(upgrade_points > 0)
@@ -123,7 +128,7 @@
 	return
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Life()
-	if(!is_zombie && isturf(src.loc))
+	if(!is_zombie && isturf(src.loc) && factory)
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
 				Zombify(H)

@@ -2,9 +2,9 @@
 	name = "infection"
 	icon = 'icons/mob/blob.dmi'
 	light_color = LIGHT_COLOR_FIRE
-	light_range = 2
+	light_range = 4
 	desc = "A thick wall of writhing tendrils."
-	density = TRUE
+	density = FALSE
 	opacity = 0
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
@@ -320,8 +320,8 @@
 /obj/structure/infection/normal
 	name = "normal infection"
 	icon_state = "blob"
-	layer = TURF_LAYER
-	light_range = 1
+	//layer = TURF_LAYER
+	light_range = 2
 	obj_integrity = 25
 	max_integrity = 25
 	health_regen = 1
@@ -331,7 +331,22 @@
 	return
 
 /obj/structure/infection/normal/CanPass(atom/movable/mover, turf/target)
-	return 1
+	. = ..()
+	if(. || !istype(mover, /obj/item/projectile))
+		return TRUE
+	return FALSE
+
+/obj/structure/infection/normal/Crossed(atom/movable/mover)
+	if(istype(mover) && (mover.pass_flags & PASSBLOB))
+		return TRUE
+	if(ismob(mover))
+		var/mob/M = mover
+		M.add_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update=TRUE, priority=100, multiplicative_slowdown=3)
+
+/obj/structure/infection/normal/Uncrossed(atom/movable/mover)
+	if(ismob(mover))
+		var/mob/M = mover
+		M.remove_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update = TRUE)
 
 /obj/structure/infection/normal/scannerreport()
 	return "N/A"

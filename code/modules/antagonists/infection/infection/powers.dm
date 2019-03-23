@@ -155,6 +155,12 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
 	createSpecial(60, /obj/structure/infection/factory, 7, 1)
 
+/mob/camera/commander/verb/create_turret()
+	set category = "Infection"
+	set name = "Create Turret Infection (70)"
+	set desc = "Create a turret that will fire at enemies."
+	createSpecial(70, /obj/structure/infection/turret, 8, 1)
+
 /mob/camera/commander/proc/create_spore()
 	upgrade_points--
 	to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
@@ -186,8 +192,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 			"Sentient Spore" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
 			"Show Infection Resource Upgrades" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
 			"Show Infection Node Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_node_overlay"),
-			"Show Infection Factory Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
-			"Show Infection Shield Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_shield_radial")
+			"Show Infection Factory Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
+			"Show Infection Shield Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_shield_radial"),
+			"Show Infection Turret Upgrades" = image(icon = 'icons/mob/infection.dmi', icon_state = "infection_turret")
 		)
 		var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
 		if(choice == "Sentient Spore")
@@ -200,6 +207,8 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 			upgrade_factory_menu()
 		if(choice == "Show Infection Shield Upgrades")
 			upgrade_shield_menu()
+		if(choice == "Show Infection Turret Upgrades")
+			upgrade_turret_menu()
 	else
 		to_chat(src, "We lack the necessary resources to upgrade ourself. Absorb the beacons to gain their power.")
 
@@ -243,6 +252,14 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
 	if(choice == "Increase Shield Max Level")
 		upgrade("Shield")
+
+/mob/camera/commander/proc/upgrade_turret_menu()
+	var/list/choices = list(
+		"Increase Turret Max Level" = image(icon= 'icons/mob/infection.dmi', icon_state = "infection_turret")
+	)
+	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+	if(choice == "Increase Turret Max Level")
+		upgrade("Turret")
 
 /mob/camera/commander/verb/revert()
 	set category = "Infection"

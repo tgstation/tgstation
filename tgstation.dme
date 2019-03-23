@@ -1314,6 +1314,7 @@
 #include "code\modules\antagonists\infection\infection\infections\node.dm"
 #include "code\modules\antagonists\infection\infection\infections\resource.dm"
 #include "code\modules\antagonists\infection\infection\infections\shield.dm"
+#include "code\modules\antagonists\infection\infection\infections\turret.dm"
 #include "code\modules\antagonists\magic_servant\servant.dm"
 #include "code\modules\antagonists\monkey\monkey.dm"
 #include "code\modules\antagonists\morph\morph.dm"

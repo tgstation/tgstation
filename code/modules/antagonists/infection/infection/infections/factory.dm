@@ -37,8 +37,7 @@
 		return
 	flick("blob_factory_glow", src)
 	spore_delay = world.time + spore_cooldown
-	var/mob/living/simple_animal/hostile/infection/infectionspore/IS = new/mob/living/simple_animal/hostile/infection/infectionspore(src.loc, src)
+	var/mob/living/simple_animal/hostile/infection/infectionspore/IS = new/mob/living/simple_animal/hostile/infection/infectionspore(src.loc, src, overmind)
 	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
-		IS.overmind = overmind
 		IS.update_icons()
 		overmind.infection_mobs.Add(IS)

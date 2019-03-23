@@ -107,12 +107,26 @@
 	obj_integrity = min(max_integrity, obj_integrity+core_regen)
 	if(overmind)
 		overmind.update_health_hud()
-		Pulse_Area(overmind, 20, 20)
-	for(var/obj/structure/infection/normal/I in range(2, src))
+		Pulse_Area(overmind, 20, 40)
+	for(var/obj/structure/infection/normal/I in range(2, src) + (range(5,src) - range(4, src)))
 		var/turf/T = get_turf(I)
 		I.change_to(/obj/structure/infection/shield/reflective/strong, overmind)
 		var/obj/structure/infection/shield/reflective/strong/S = locate(/obj/structure/infection/shield/reflective/strong) in T.contents
 		S.point_return = 0
+	var/list/turrets = list()
+	turrets += locate(x-4,y+4,z)
+	turrets += locate(x+4,y+4,z)
+	turrets += locate(x-4,y-4,z)
+	turrets += locate(x+4,y-4,z)
+	for(var/turf/T in turrets)
+		var/obj/structure/infection/normal/I = locate(/obj/structure/infection/normal) in T.contents
+		if(I && prob(15))
+			I.change_to(/obj/structure/infection/turret, overmind)
+			var/obj/structure/infection/turret/S = locate(/obj/structure/infection/turret) in T.contents
+			S.infection_level = 3
+			S.do_upgrade()
+			S.do_upgrade()
+			S.point_return = 0
 	INVOKE_ASYNC(src, .proc/pulseNodes)
 	..()
 

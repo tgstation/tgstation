@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	var/list/resource_infection = list()
 	var/nodes_required = 1 //if the infection needs nodes to place resource and factory blobs
 	var/placed = 0
-	var/base_point_rate = 2 //for core placement
+	var/base_point_rate = 10 //for core placement
 	var/autoplace_time = 100 // a few seconds, just so it isnt sudden at game start
 	var/place_beacons_delay = 50
 	var/victory_in_progress = FALSE
@@ -42,12 +42,14 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 								   "Resource" = 1,
 								   "Node" = 1,
 								   "Factory" = 1,
-								   "Shield" = 1)
+								   "Shield" = 1,
+								   "Turret" = 1)
 	var/list/max_upgrade_levels = list("Base" = 1,
 									   "Resource" = 3,
 								  	   "Node" = 3,
 								  	   "Factory" = 3,
-								       "Shield" = 3)
+								       "Shield" = 3,
+								       "Turret" = 3)
 
 /mob/camera/commander/Initialize(mapload, starting_points = max_infection_points)
 	GLOB.infection_commanders += src
