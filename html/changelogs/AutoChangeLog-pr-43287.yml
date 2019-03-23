@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the connection cap being silly about what connections it counted towards the limit."
