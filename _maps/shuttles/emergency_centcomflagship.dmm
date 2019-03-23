@@ -84,7 +84,7 @@
 /area/shuttle/escape)
 "at" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Centcomm Flagship Brig";
+	name = "Centcom Flagship Brig";
 	req_access_txt = "2";
 	req_one_access_txt = "0"
 	},
@@ -140,7 +140,7 @@
 	dir = 8;
 	icon_state = "leftsecure";
 	layer = 4.1;
-	name = "Centcomm Flagship Medbay Desk";
+	name = "Centcom Flagship Medbay Desk";
 	obj_integrity = 300;
 	pixel_x = -3;
 	req_access_txt = "5"
@@ -227,7 +227,7 @@
 "aT" = (
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
-	name = "Centcomm Flagship Medbay";
+	name = "Centcom Flagship Medbay";
 	req_access_txt = "5"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -250,7 +250,7 @@
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Centcomm Flagship Engineering Room";
+	name = "Centcom Flagship Engineering Room";
 	req_one_access_txt = "32;19"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -331,7 +331,7 @@
 "bs" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/hatch{
-	name = "Centcomm Communication Server Room"
+	name = "Centcom Communication Server Room"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -462,6 +462,12 @@
 "bR" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bS" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "bT" = (
 /obj/structure/table/reinforced,
@@ -774,7 +780,7 @@
 /area/shuttle/escape)
 "da" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Centcomm Flagship Bridge";
+	name = "Centcom Flagship Bridge";
 	req_access = list(16)
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -798,16 +804,46 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"eu" = (
+"gH" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"yU" = (
+/turf/closed/wall/mineral/plastitanium/overspace,
+/area/shuttle/escape)
+"Cd" = (
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/recharge_station,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"jo" = (
-/obj/structure/chair/stool,
-/turf/open/floor/mineral/titanium/white,
+"DN" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
-"la" = (
+"Fv" = (
+/turf/open/floor/mech_bay_recharge_floor,
+/area/shuttle/escape)
+"GM" = (
+/obj/machinery/porta_turret/centcom_shuttle,
+/turf/closed/wall/mineral/plastitanium/overspace,
+/area/shuttle/escape)
+"LX" = (
+/obj/machinery/mech_bay_recharge_port,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Ms" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Ng" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
@@ -816,63 +852,33 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"mj" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"tl" = (
+"NM" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
-"Ak" = (
-/turf/closed/wall/mineral/plastitanium/overspace,
+"Oa" = (
+/obj/structure/chair/stool,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"Dx" = (
+"Ob" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"Gn" = (
-/obj/machinery/recharge_station,
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"Mp" = (
-/obj/machinery/suit_storage_unit/engine,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"QR" = (
-/turf/open/floor/mech_bay_recharge_floor,
-/area/shuttle/escape)
-"Se" = (
-/obj/machinery/mech_bay_recharge_port,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"Tb" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"Ui" = (
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"Uy" = (
+"OC" = (
 /obj/machinery/computer/mech_bay_power_console,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"Ve" = (
-/obj/machinery/porta_turret/centcom_shuttle,
-/turf/closed/wall/mineral/plastitanium/overspace,
+"QP" = (
+/obj/machinery/suit_storage_unit/engine,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"XT" = (
+/obj/machinery/recharge_station,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -894,7 +900,7 @@ aa
 aa
 aa
 aa
-Ve
+GM
 aL
 ab
 ab
@@ -903,7 +909,7 @@ ab
 ab
 aU
 ab
-Ve
+GM
 aa
 aa
 aa
@@ -944,11 +950,11 @@ aa
 aa
 ab
 aM
-mj
+DN
 aO
 aO
 aO
-mj
+DN
 aM
 aW
 ab
@@ -1004,7 +1010,7 @@ aa
 aa
 aa
 aa
-Ve
+GM
 ab
 ab
 ab
@@ -1013,7 +1019,7 @@ ab
 ab
 ab
 ad
-Ak
+yU
 aa
 aa
 aa
@@ -1051,7 +1057,7 @@ ab
 aa
 aa
 aa
-Ve
+GM
 ab
 cG
 cH
@@ -1070,11 +1076,11 @@ aa
 (5,1,1) = {"
 aa
 aa
-Ve
+GM
 ab
 ab
 ab
-Ve
+GM
 aa
 aa
 aa
@@ -1084,14 +1090,14 @@ aa
 aa
 aa
 aa
-Ve
+GM
 ab
 ab
 aN
 ab
 ab
 ab
-tl
+NM
 ab
 aN
 ab
@@ -1117,13 +1123,13 @@ aa
 "}
 (6,1,1) = {"
 aa
-Ve
+GM
 ay
 cA
 cV
 cD
 ay
-Ve
+GM
 aa
 aa
 aa
@@ -1131,7 +1137,7 @@ aa
 aa
 aa
 aa
-Ve
+GM
 ay
 bY
 bY
@@ -1140,19 +1146,19 @@ cP
 cQ
 cS
 aq
-la
+Ng
 aq
 aq
 aq
 bN
-aX
+bS
 ca
 ab
 cd
 aZ
 aZ
-eu
-Gn
+Cd
+XT
 aZ
 aZ
 cZ
@@ -1164,7 +1170,7 @@ aa
 aa
 "}
 (7,1,1) = {"
-Ak
+yU
 ay
 bP
 an
@@ -1191,7 +1197,7 @@ aq
 aq
 aq
 aq
-jo
+Oa
 aV
 aX
 aX
@@ -1199,8 +1205,8 @@ am
 cw
 aZ
 aZ
-eu
-Gn
+Cd
+XT
 aZ
 aZ
 aZ
@@ -1239,7 +1245,7 @@ aq
 aq
 aq
 aq
-jo
+Oa
 aV
 aX
 aX
@@ -1247,8 +1253,8 @@ ab
 cx
 aZ
 aZ
-Se
-Se
+LX
+LX
 aZ
 aZ
 aZ
@@ -1287,7 +1293,7 @@ aq
 aq
 aq
 aq
-jo
+Oa
 aV
 bT
 cg
@@ -1295,8 +1301,8 @@ ab
 db
 aZ
 aZ
-QR
-QR
+Fv
+Fv
 aZ
 aZ
 bx
@@ -1316,13 +1322,13 @@ aK
 cY
 an
 an
-tl
+NM
 ac
-tl
+NM
 at
 ab
 ac
-tl
+NM
 az
 ce
 aq
@@ -1339,12 +1345,12 @@ aq
 aq
 aq
 bR
-tl
+NM
 cy
 aZ
 aZ
-Ui
-Uy
+Ms
+OC
 aZ
 aZ
 by
@@ -1398,7 +1404,7 @@ bv
 bz
 aZ
 aZ
-Mp
+QP
 ay
 bK
 bM
@@ -1446,7 +1452,7 @@ aZ
 bA
 aZ
 aZ
-Mp
+QP
 ay
 bK
 bM
@@ -1521,7 +1527,7 @@ aG
 aF
 aF
 cb
-tl
+NM
 cr
 aq
 cT
@@ -1596,7 +1602,7 @@ bM
 aa
 "}
 (16,1,1) = {"
-Ak
+yU
 az
 an
 cK
@@ -1645,13 +1651,13 @@ aa
 "}
 (17,1,1) = {"
 aa
-Ve
+GM
 ay
 cs
 ct
 cu
 ay
-Ve
+GM
 aa
 aa
 aa
@@ -1659,7 +1665,7 @@ aa
 aa
 aa
 aa
-Ve
+GM
 ay
 ao
 aJ
@@ -1672,8 +1678,8 @@ cO
 br
 aX
 cI
-Tb
-Dx
+gH
+Ob
 bV
 ab
 bd
@@ -1694,11 +1700,11 @@ aa
 (18,1,1) = {"
 aa
 aa
-Ve
+GM
 ab
 ab
 ab
-Ve
+GM
 aa
 aa
 aa
@@ -1708,7 +1714,7 @@ aa
 aa
 aa
 aa
-Ve
+GM
 ab
 ab
 bZ
@@ -1771,7 +1777,7 @@ aa
 aa
 aa
 aa
-Ve
+GM
 ab
 bh
 bm
@@ -1820,7 +1826,7 @@ aa
 aa
 aa
 aa
-Ve
+GM
 ab
 ab
 ab
@@ -1829,7 +1835,7 @@ ab
 ab
 ab
 ad
-Ak
+yU
 aa
 aa
 aa
