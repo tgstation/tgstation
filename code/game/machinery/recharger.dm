@@ -23,7 +23,15 @@
 
 /obj/machinery/recharger/examine(mob/user)
 	..()
-	if(in_range(user, src) || isobserver(user))
+	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+		to_chat(user, "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
+		return
+
+	if(charging)
+		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
+		to_chat(user, "<span class='notice'>- \A [charging].</span>")
+
+	if(!(stat & (NOPOWER|BROKEN)))
 		to_chat(user, "<span class='notice'>The status display reads:<span>")
 		to_chat(user, "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.<span>")
 		if(charging)
