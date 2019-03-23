@@ -471,7 +471,6 @@
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
 		/obj/item/rsf,
-		/obj/item/instrument/violin,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
