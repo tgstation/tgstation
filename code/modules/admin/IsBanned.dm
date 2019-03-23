@@ -51,7 +51,7 @@
 
 	//Population Cap Checking
 	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
-	if(!real_bans_only && !C && extreme_popcap && !admin)
+	if(!real_bans_only && !C && extreme_popcap && !admin && !world.IsSubscribed(ckey, "BYOND"))
 		var/hard_popcap = CONFIG_GET(number/hard_popcap)
 
 		var/popcap_value = living_player_count()
