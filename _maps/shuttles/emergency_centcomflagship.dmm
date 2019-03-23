@@ -84,7 +84,7 @@
 /area/shuttle/escape)
 "at" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Centcom Flagship Brig";
+	name = "Centcomm Flagship Brig";
 	req_access_txt = "2";
 	req_one_access_txt = "0"
 	},
@@ -140,7 +140,7 @@
 	dir = 8;
 	icon_state = "leftsecure";
 	layer = 4.1;
-	name = "Centcom Flagship Medbay Desk";
+	name = "Centcomm Flagship Medbay Desk";
 	obj_integrity = 300;
 	pixel_x = -3;
 	req_access_txt = "5"
@@ -188,7 +188,7 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Centcom Flagship Communication Server Room"
+	name = "Centcomm Communication Server Room"
 	},
 /obj/docking_port/mobile/emergency{
 	name = "Flagship emergency"
@@ -227,7 +227,7 @@
 "aT" = (
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
-	name = "Centcom Flagship Medbay";
+	name = "Centcomm Flagship Medbay";
 	req_access_txt = "5"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -250,7 +250,7 @@
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Centcom Flagship Engineering Room";
+	name = "Centcomm Flagship Engineering Room";
 	req_one_access_txt = "32;19"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -309,14 +309,6 @@
 /obj/machinery/telecomms/server/presets/common,
 /turf/open/floor/circuit/green/telecomms,
 /area/shuttle/escape)
-"bn" = (
-/obj/structure/table/reinforced,
-/obj/machinery/microwave,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "bo" = (
 /obj/machinery/telecomms/bus/preset_two,
 /turf/open/floor/circuit/green/telecomms,
@@ -331,7 +323,6 @@
 /area/shuttle/escape)
 "br" = (
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/beer,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -340,7 +331,7 @@
 "bs" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/hatch{
-	name = "Centcom Communication Server Room"
+	name = "Centcomm Communication Server Room"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -379,9 +370,6 @@
 /area/shuttle/escape)
 "bz" = (
 /obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
@@ -392,9 +380,6 @@
 "bA" = (
 /obj/structure/cable{
 	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -435,12 +420,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"bI" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
 "bJ" = (
 /obj/machinery/telecomms/message_server,
 /turf/open/floor/plasteel/dark/telecomms,
@@ -472,6 +451,7 @@
 "bP" = (
 /obj/machinery/turretid{
 	control_area = /area/shuttle/escape;
+	icon_state = "control_kill";
 	pixel_y = 28
 	},
 /obj/item/radio/intercom{
@@ -479,26 +459,13 @@
 	},
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
-"bQ" = (
-/obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "bR" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"bS" = (
-/obj/machinery/deepfryer,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "bT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/dish_drive,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"bU" = (
-/obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "bV" = (
@@ -543,21 +510,19 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"cf" = (
-/obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "cg" = (
 /obj/machinery/door/window/eastleft{
 	dir = 4;
-	name = "Kitchen Window";
+	name = "Kitchen Door";
 	req_access_txt = "28"
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ch" = (
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/westright{
+	name = "Bar Door";
+	req_access = 25
+	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ci" = (
@@ -636,9 +601,7 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "ct" = (
-/obj/machinery/modular_computer/console/preset/engineering{
-	dir = 8
-	},
+/obj/structure/AIcore/deactivated,
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "cu" = (
@@ -672,17 +635,13 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "cz" = (
-/obj/machinery/recharge_station,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "cA" = (
 /obj/machinery/recharger,
 /obj/structure/table/reinforced,
 /turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"cB" = (
-/obj/machinery/processor,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "cC" = (
 /obj/machinery/power/terminal,
@@ -735,13 +694,6 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "cM" = (
-/obj/structure/chair/comfy{
-	dir = 1
-	},
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"cN" = (
-/obj/machinery/light,
 /obj/structure/chair/comfy{
 	dir = 1
 	},
@@ -822,7 +774,7 @@
 /area/shuttle/escape)
 "da" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Centcom Flagship Bridge";
+	name = "Centcomm Flagship Bridge";
 	req_access = list(16)
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -846,6 +798,82 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"eu" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/recharge_station,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"jo" = (
+/obj/structure/chair/stool,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"la" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"mj" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"tl" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
+"Ak" = (
+/turf/closed/wall/mineral/plastitanium/overspace,
+/area/shuttle/escape)
+"Dx" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Gn" = (
+/obj/machinery/recharge_station,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Mp" = (
+/obj/machinery/suit_storage_unit/engine,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"QR" = (
+/turf/open/floor/mech_bay_recharge_floor,
+/area/shuttle/escape)
+"Se" = (
+/obj/machinery/mech_bay_recharge_port,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Tb" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Ui" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Uy" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Ve" = (
+/obj/machinery/porta_turret/centcom_shuttle,
+/turf/closed/wall/mineral/plastitanium/overspace,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -866,7 +894,7 @@ aa
 aa
 aa
 aa
-ad
+Ve
 aL
 ab
 ab
@@ -875,7 +903,7 @@ ab
 ab
 aU
 ab
-ad
+Ve
 aa
 aa
 aa
@@ -916,11 +944,11 @@ aa
 aa
 ab
 aM
+mj
 aO
 aO
 aO
-aO
-aO
+mj
 aM
 aW
 ab
@@ -976,7 +1004,7 @@ aa
 aa
 aa
 aa
-ad
+Ve
 ab
 ab
 ab
@@ -985,7 +1013,7 @@ ab
 ab
 ab
 ad
-ab
+Ak
 aa
 aa
 aa
@@ -1012,18 +1040,18 @@ aa
 aa
 ab
 aM
-aO
 cm
 aO
+aO
+aO
+cm
 aM
-aO
-cm
 aW
 ab
 aa
 aa
 aa
-ad
+Ve
 ab
 cG
 cH
@@ -1042,11 +1070,11 @@ aa
 (5,1,1) = {"
 aa
 aa
-ad
+Ve
 ab
 ab
 ab
-ad
+Ve
 aa
 aa
 aa
@@ -1056,16 +1084,16 @@ aa
 aa
 aa
 aa
-ad
+Ve
 ab
 ab
 aN
 ab
 ab
 ab
+tl
+ab
 aN
-ab
-ab
 ab
 ab
 ab
@@ -1089,13 +1117,13 @@ aa
 "}
 (6,1,1) = {"
 aa
-ad
+Ve
 ay
 cA
 cV
 cD
 ay
-ad
+Ve
 aa
 aa
 aa
@@ -1103,7 +1131,7 @@ aa
 aa
 aa
 aa
-ad
+Ve
 ay
 bY
 bY
@@ -1112,19 +1140,19 @@ cP
 cQ
 cS
 aq
-cq
-bn
+la
+aq
+aq
+aq
+bN
 aX
-cB
 ca
-bS
-bU
 ab
 cd
 aZ
 aZ
-aZ
-aZ
+eu
+Gn
 aZ
 aZ
 cZ
@@ -1136,7 +1164,7 @@ aa
 aa
 "}
 (7,1,1) = {"
-ab
+Ak
 ay
 bP
 an
@@ -1161,18 +1189,18 @@ cU
 cU
 aq
 aq
+aq
+aq
+jo
 aV
-aX
-aX
-aX
 aX
 aX
 am
 cw
 aZ
 aZ
-aZ
-aZ
+eu
+Gn
 aZ
 aZ
 aZ
@@ -1209,18 +1237,18 @@ cO
 cO
 aq
 aq
+aq
+aq
+jo
 aV
-aX
-aX
-aX
 aX
 aX
 ab
 cx
 aZ
 aZ
-aZ
-aZ
+Se
+Se
 aZ
 aZ
 aZ
@@ -1257,18 +1285,18 @@ aq
 aq
 aq
 aq
+aq
+aq
+jo
 aV
-bN
-aV
-cf
 bT
 cg
 ab
 db
 aZ
 aZ
-aZ
-aZ
+QR
+QR
 aZ
 aZ
 bx
@@ -1288,13 +1316,13 @@ aK
 cY
 an
 an
-ab
+tl
 ac
-ab
+tl
 at
 ab
 ac
-ab
+tl
 az
 ce
 aq
@@ -1311,12 +1339,12 @@ aq
 aq
 aq
 bR
-ab
+tl
 cy
 aZ
 aZ
-aZ
-aZ
+Ui
+Uy
 aZ
 aZ
 by
@@ -1368,9 +1396,9 @@ aZ
 aZ
 bv
 bz
-bI
-bH
-bL
+aZ
+aZ
+Mp
 ay
 bK
 bM
@@ -1416,9 +1444,9 @@ aZ
 aZ
 aZ
 bA
-bI
-bH
-bL
+aZ
+aZ
+Mp
 ay
 bK
 bM
@@ -1431,7 +1459,7 @@ an
 cX
 cY
 an
-cN
+aw
 ab
 cn
 as
@@ -1493,7 +1521,7 @@ aG
 aF
 aF
 cb
-ab
+tl
 cr
 aq
 cT
@@ -1568,7 +1596,7 @@ bM
 aa
 "}
 (16,1,1) = {"
-ab
+Ak
 az
 an
 cK
@@ -1593,7 +1621,7 @@ ac
 aq
 aq
 aq
-bQ
+aV
 aX
 aX
 aX
@@ -1617,13 +1645,13 @@ aa
 "}
 (17,1,1) = {"
 aa
-ad
+Ve
 ay
 cs
 ct
 cu
 ay
-ad
+Ve
 aa
 aa
 aa
@@ -1631,7 +1659,7 @@ aa
 aa
 aa
 aa
-ad
+Ve
 ay
 ao
 aJ
@@ -1644,8 +1672,8 @@ cO
 br
 aX
 cI
-cI
-cI
+Tb
+Dx
 bV
 ab
 bd
@@ -1666,11 +1694,11 @@ aa
 (18,1,1) = {"
 aa
 aa
-ad
+Ve
 ab
 ab
 ab
-ad
+Ve
 aa
 aa
 aa
@@ -1680,7 +1708,7 @@ aa
 aa
 aa
 aa
-ad
+Ve
 ab
 ab
 bZ
@@ -1743,7 +1771,7 @@ aa
 aa
 aa
 aa
-ad
+Ve
 ab
 bh
 bm
@@ -1792,7 +1820,7 @@ aa
 aa
 aa
 aa
-ad
+Ve
 ab
 ab
 ab
@@ -1801,7 +1829,7 @@ ab
 ab
 ab
 ad
-ab
+Ak
 aa
 aa
 aa
