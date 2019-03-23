@@ -706,7 +706,7 @@
 		var/resist_chance = 30
 		if(isliving(src))
 			var/mob/living/L = src
-			resist_chance = min(resist_chance/pulledby.grab_state-sqrt((L.getStaminaLoss()+L.getBruteLoss()/2)*(3-pulledby.grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
+			resist_chance = max(resist_chance/pulledby.grab_state-sqrt((L.getStaminaLoss()+L.getBruteLoss()/2)*(3-pulledby.grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
 		if(prob(resist_chance))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			log_combat(pulledby, src, "broke grab")
