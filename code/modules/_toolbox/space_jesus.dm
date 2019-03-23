@@ -4,6 +4,7 @@
 	anchored = 1
 	incorporeal_move = 1
 	omnipotent_access = 1
+	var/datum/mind/saved_mind
 
 /mob/living/carbon/human/jesus/update_canmove()
 	..()
@@ -17,6 +18,19 @@
 	new /obj/effect/particle_effect/smoke(get_turf(src))
 	playsound(get_turf(src), 'sound/effects/smoke.ogg', 50, 0, 0, 0, 0)
 	visible_message("<font size=3 color=red><b>Space Jesus has returned to heaven!</b></font>")
+	if(saved_mind)
+		stop_sound_channel(CHANNEL_HEARTBEAT)
+		var/mob/dead/observer/ghost
+		if(istype(saved_mind.current,/mob/living) && saved_mind.current != src)
+			ghost = new(saved_mind.current)
+			SStgui.on_transfer(src, ghost)
+			ghost.key = key
+			ghost.loc = loc
+		else
+			ghost = ghostize(0)
+			ghost.mind = saved_mind
+		ghost.can_reenter_corpse = TRUE
+		saved_mind = null
 	qdel(src)
 
 /mob/living/carbon/human/jesus/verb/hallelujah()
@@ -77,6 +91,7 @@
 	gender = MALE
 	if (istype(D))
 		D.update_dna_identity()
+	sync_mind()
 	updateappearance()
 
 /mob/living/carbon/human/jesus/get_spans()
@@ -139,7 +154,8 @@
 			if (!istype(M))
 				to_chat(usr, "Oops! There was a problem. Contact a developer.")
 				return
-
+			if(mind)
+				M.saved_mind = mind
 			M.key = savedkey
 			if(M.mind)
 				M.mind.assigned_role = "Space Jesus"

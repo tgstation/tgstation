@@ -35,6 +35,8 @@ SUBSYSTEM_DEF(antagtokens)
 	if(istype(minutes_tracked,/list) && last_check+(tick_delay*10) <= world.time)
 		last_check = world.time
 		for(var/client/C in GLOB.clients)
+			if(is_special_character(C.mob)) //antags dont get counted
+				continue
 			if(IsGuestKey(C.key)) //guests dont get counted.
 				continue
 			if(C.is_afk(300))
@@ -60,6 +62,9 @@ SUBSYSTEM_DEF(antagtokens)
 			if(minutes_tracked[C.ckey] && isnum(minutes_tracked[C.ckey]))
 				currentminutes = minutes_tracked[C.ckey]
 			currentminutes++
+			//security gets double fucking tokens
+			if((C.mob.mind && C.mob.mind.assigned_role && C.mob.mind.assigned_role in GLOB.memorized_restricted_jobs)||(check_perseus(C.mob)))
+				currentminutes++
 			if(currentminutes >= MINUTESFORANTAGTOKEN)
 				var/tokens = 0
 				var/savefile/S = new /savefile(GLOB.antagtokenpath)
