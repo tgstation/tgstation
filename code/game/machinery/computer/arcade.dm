@@ -1129,6 +1129,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/mob/living/carbon/c_user = user
 	var/obj/item/bodypart/l_arm = c_user.get_bodypart(BODY_ZONE_L_ARM)
 	var/obj/item/bodypart/r_arm = c_user.get_bodypart(BODY_ZONE_R_ARM)
+	if(!l_arm && !r_arm)
+		return
 	to_chat(c_user, "<span class='warning'>You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it...</span>")
 	if(do_after(c_user, 50, target = src))
 		to_chat(c_user, "<span class='userdanger'>The guillotine drops on your arm, and the machine sucks it in!</span>")
@@ -1136,7 +1138,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(l_arm)
 			l_arm.dismember()
 			qdel(l_arm)
-		else
+		else if(r_arm)
 			r_arm.dismember()
 			qdel(r_arm)
 		playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
