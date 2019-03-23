@@ -74,13 +74,17 @@ Slimecrossing Weapons
 	item_state = "bloodgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	item_flags = ABSTRACT | NODROP | DROPDEL
+	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 5
 	max_charges = 1 //Recharging costs blood.
 	recharge_rate = 1
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
+
+/obj/item/gun/magic/bloodchill/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/gun/magic/bloodchill/process()
 	charge_tick++
@@ -103,7 +107,7 @@ Slimecrossing Weapons
 	icon_state = "pulse0_bl"
 	damage = 0
 	damage_type = OXY
-	nodamage = 1
+	nodamage = TRUE
 	hitsound = 'sound/effects/splat.ogg'
 
 /obj/item/projectile/magic/bloodchill/on_hit(mob/living/target)

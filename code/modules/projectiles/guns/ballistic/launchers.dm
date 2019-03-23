@@ -4,12 +4,13 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher//this is only used for underbarrel grenade launchers at the moment, but admins can still spawn it if they feel like being assholes
 	desc = "A break-operated grenade launcher."
 	name = "grenade launcher"
-	icon_state = "dshotgun-sawn"
+	icon_state = "dshotgun_sawn"
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
+	bolt_type = BOLT_TYPE_NO_BOLT
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin
@@ -41,16 +42,12 @@
 	actions_types = list()
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/gyropistol/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
-
 /obj/item/gun/ballistic/rocketlauncher
-	name = "rocket propelled grenade launcher"
-	desc = "A reusable rocket propelled grenade launcher."
+	name = "\improper PML-9"
+	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" and an arrow have been written near the barrel."
 	icon_state = "rocketlauncher"
 	item_state = "rocketlauncher"
-	mag_type = /obj/item/ammo_box/magazine/rocket
+	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
 	fire_sound = 'sound/weapons/rocketlaunch.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE
@@ -59,56 +56,20 @@
 	fire_delay = 0
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
-	magazine_wording = "rocket"
-
-/obj/item/gun/ballistic/rocketlauncher/handle_atom_del(atom/A)
-	if(A == chambered)
-		chambered = null
-		if(!QDELETED(magazine))
-			QDEL_NULL(magazine)
-	if(A == magazine)
-		magazine = null
-		if(!QDELETED(chambered))
-			QDEL_NULL(chambered)
-	update_icon()
-	return ..()
-
-/obj/item/gun/ballistic/rocketlauncher/can_shoot()
-	return chambered?.BB
+	bolt_type = BOLT_TYPE_NO_BOLT
+	internal_magazine = TRUE
+	cartridge_wording = "rocket"
+	empty_indicator = TRUE
 
 /obj/item/gun/ballistic/rocketlauncher/unrestricted
 	pin = /obj/item/firing_pin
 
-/obj/item/gun/ballistic/rocketlauncher/process_chamber()
-	if(chambered)
-		chambered = null
-	if(magazine)
-		QDEL_NULL(magazine)
-	update_icon()
+/obj/item/gun/ballistic/rocketlauncher/afterattack()
+	. = ..()
+	magazine.get_round(FALSE) //Hack to clear the mag after it's fired
 
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
 	return //too difficult to remove the rocket with TK
-
-/obj/item/gun/ballistic/rocketlauncher/attack_self(mob/living/user)
-	if(magazine)
-		if(chambered)
-			chambered.forceMove(magazine)
-			magazine.stored_ammo.Insert(1, chambered)
-			chambered = null
-		else
-			stack_trace("Removed [magazine] from [src] without a chambered round")
-		magazine.forceMove(drop_location())
-		if(user.is_holding(src))
-			user.put_in_hands(magazine)
-		playsound(src, 'sound/weapons/gun_magazine_remove_full.ogg', 70, TRUE)
-		to_chat(user, "<span class='notice'>You work the [magazine] out from [src].</span>")
-		magazine = null
-	else
-		to_chat(user, "<span class='notice'>There's no rocket in [src].</span>")
-	update_icon()
-
-/obj/item/gun/ballistic/rocketlauncher/update_icon()
-	icon_state = "[initial(icon_state)]-[chambered ? "1" : "0"]"
 
 /obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)
 	user.visible_message("<span class='warning'>[user] aims [src] at the ground! It looks like [user.p_theyre()] performing a sick rocket jump!<span>", \

@@ -620,15 +620,17 @@
 				if("name")
 					vv_update_display(D, "name", "[D]")
 				if("dir")
-					if(isatom(D))
-						var/dir = D.vars["dir"]
-						vv_update_display(D, "dir", dir2text(dir) || dir)
+					var/atom/A = D
+					if(istype(A))
+						vv_update_display(D, "dir", dir2text(A.dir) || A.dir)
 				if("ckey")
-					if(isliving(D))
-						vv_update_display(D, "ckey", D.vars["ckey"] || "No ckey")
+					var/mob/living/L = D
+					if(istype(L))
+						vv_update_display(D, "ckey", L.ckey || "No ckey")
 				if("real_name")
-					if(isliving(D))
-						vv_update_display(D, "real_name", D.vars["real_name"] || "No real name")
+					var/mob/living/L = D
+					if(istype(L))
+						vv_update_display(D, "real_name", L.real_name || "No real name")
 
 		else if(href_list["varnamechange"] && href_list["datumchange"])
 			if(!check_rights(NONE))
@@ -1246,9 +1248,17 @@
 			var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
 			if(!edit_action)
 				return
-			var/list/limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-			if(edit_action == "augment")
-				limb_list += BODY_ZONE_CHEST
+			var/list/limb_list = list()
+			if(edit_action == "remove" || edit_action == "augment")
+				for(var/obj/item/bodypart/B in C.bodyparts)
+					limb_list += B.body_zone
+				if(edit_action == "remove")
+					limb_list -= BODY_ZONE_CHEST
+			else
+				limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+				for(var/obj/item/bodypart/B in C.bodyparts)
+					limb_list -= B.body_zone
+
 			var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in limb_list
 
 			if(!C)

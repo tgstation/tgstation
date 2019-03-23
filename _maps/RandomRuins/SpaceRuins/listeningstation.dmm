@@ -877,14 +877,12 @@
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'DANGER: SELF DESTRUCT DEVICE'.";
-	name = "DANGER: SELF DESTRUCT DEVICE";
-	pixel_x = 32
-	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
 	req_access_txt = "150"
+	},
+/obj/structure/sign/warning/explosives/alt{
+	pixel_x = 32
 	},
 /turf/open/floor/circuit/red,
 /area/ruin/space/has_grav/listeningstation)
@@ -1035,8 +1033,7 @@
 "bx" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/space{
 	assignedrole = "Space Syndicate";
-	dir = 8;
-	flavour_text = "<span class='big bold'>You are a syndicate agent,</span><b> assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6>DON'T</font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8;
@@ -1051,8 +1048,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/clothing/head/welding,

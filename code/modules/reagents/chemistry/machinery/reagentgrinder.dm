@@ -72,8 +72,9 @@
 	if(!(stat & (NOPOWER|BROKEN)))
 		to_chat(user, "<span class='notice'>The status display reads:</span>")
 		to_chat(user, "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>")
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
+		if(beaker)
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -128,7 +129,6 @@
 			return
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
-		updateUsrDialog()
 		update_icon()
 		return TRUE //no afterattack
 

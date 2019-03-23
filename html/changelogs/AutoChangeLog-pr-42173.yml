@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Applying an item fortification scroll to a non-enchanted item no longer has a chance of immediately deleting that item."
-  - tweak: "Also, item fortification scrolls have more colourful messages."

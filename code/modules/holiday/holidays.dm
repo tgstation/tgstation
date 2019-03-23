@@ -482,6 +482,14 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 		return TRUE
 	return FALSE
 
+/datum/holiday/lifeday
+	name = "Life Day"
+	begin_day = 17
+	begin_month = NOVEMBER
+
+/datum/holiday/lifeday/getStationPrefix()
+	return pick("Itchy", "Lumpy", "Malla", "Kazook") //he really pronounced it "Kazook", I wish I was making shit up
+
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21

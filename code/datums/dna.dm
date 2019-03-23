@@ -60,26 +60,30 @@
 	new_dna.mutations = mutations.Copy()
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
-/datum/dna/proc/add_mutation(mutation_type, class = MUT_OTHER, time)
+/datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
+	var/mutation_type = mutation
+	if(istype(mutation, /datum/mutation/human))
+		var/datum/mutation/human/HM = mutation
+		mutation_type = HM.type
 	if(get_mutation(mutation_type))
 		return
-	force_give(new mutation_type (class, time))
+	return force_give(new mutation_type (class, time, copymut = mutation))
 
 /datum/dna/proc/remove_mutation(mutation_type)
-	force_lose(get_mutation(mutation_type))
+	return force_lose(get_mutation(mutation_type))
 
 /datum/dna/proc/check_mutation(mutation_type)
 	return get_mutation(mutation_type)
 
-/datum/dna/proc/remove_all_mutations(list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER))
-	remove_mutation_group(mutations, classes)
+/datum/dna/proc/remove_all_mutations(list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER), mutadone = FALSE)
+	remove_mutation_group(mutations, classes, mutadone)
 	scrambled = FALSE
 
-/datum/dna/proc/remove_mutation_group(list/group, list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER))
+/datum/dna/proc/remove_mutation_group(list/group, list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER), mutadone = FALSE)
 	if(!group)
 		return
 	for(var/datum/mutation/human/HM in group)
-		if(HM.class in classes)
+		if((HM.class in classes) && !(HM.mutadone_proof && mutadone))
 			force_lose(HM)
 
 /datum/dna/proc/generate_uni_identity()
@@ -110,7 +114,7 @@
 /datum/dna/proc/generate_dna_blocks()
 	var/bonus
 	if(species && species.inert_mutation)
-		bonus = get_initialized_mutation(species.inert_mutation)
+		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
 	if(!LAZYLEN(mutations_temp))
 		return
@@ -118,7 +122,7 @@
 	shuffle_inplace(mutations_temp)
 	if(ismonkey(holder))
 		mutations |= new RACEMUT(MUT_NORMAL)
-		mutation_index[RACEMUT] = get_sequence(RACEMUT)
+		mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
 	else
 		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
 	for(var/i in 2 to DNA_MUTATION_BLOCKS)
@@ -137,12 +141,12 @@
 //Used to create a chipped gene sequence
 /proc/create_sequence(mutation, active, difficulty)
 	if(!difficulty)
-		var/datum/mutation/human/A = get_initialized_mutation(mutation) //leaves the possibility to change difficulty mid-round
+		var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(mutation) //leaves the possibility to change difficulty mid-round
 		if(!A)
 			return
 		difficulty = A.difficulty
 	difficulty += rand(-2,4)
-	var/sequence = get_sequence(mutation)
+	var/sequence = GET_SEQUENCE(mutation)
 	if(active)
 		return sequence
 	while(difficulty)
@@ -188,12 +192,15 @@
 		. = HM.on_acquiring(holder)
 		if(.)
 			qdel(HM)
+		update_instability()
 
 //Use remove_mutation instead
 /datum/dna/proc/force_lose(datum/mutation/human/HM)
 	if(holder && (HM in mutations))
 		set_se(0, HM)
-		return HM.on_losing(holder)
+		. = HM.on_losing(holder)
+		update_instability(FALSE)
+		return
 
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
@@ -224,7 +231,7 @@
 	stability = 100
 	for(var/datum/mutation/human/M in mutations)
 		if(M.class == MUT_EXTRA)
-			stability -= M.instability
+			stability -= M.instability * GET_MUTATION_STABILIZER(M)
 	if(holder)
 		var/message
 		if(alert)
@@ -242,61 +249,22 @@
 				if(-INFINITY to 0)
 					message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
 		if(stability <= 0)
-			addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 60 seconds to get your shit togheter
+			holder.apply_status_effect(STATUS_EFFECT_DNA_MELT)
 		if(message)
 			to_chat(holder, message)
-
-/datum/dna/proc/something_horrible()
-	if(!holder || (stability > 0))
-		return
-	var/instability = -stability
-	remove_all_mutations()
-	stability = 100
-	if(!ishuman(holder))
-		holder.gib()
-		return
-	var/mob/living/carbon/human/H = holder
-	if(prob(max(70-instability,0)))
-		switch(rand(0,3)) //not complete and utter death
-			if(0)
-				H.monkeyize()
-			if(1)
-				H.gain_trauma(/datum/brain_trauma/severe/paralysis)
-			if(2)
-				H.corgize()
-			if(3)
-				to_chat(H, "<span class='notice'>Oh, we actually feel quite alright!</span>")
-	else
-		switch(rand(0,3))
-			if(0)
-				H.gib()
-			if(1)
-				H.dust()
-
-			if(2)
-				H.death()
-				H.petrify(INFINITY)
-			if(3)
-				if(prob(90))
-					var/obj/item/bodypart/BP = H.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
-					if(BP)
-						BP.dismember()
-					else
-						H.gib()
-				else
-					H.set_species(/datum/species/dullahan)
 
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()
 	uni_identity = generate_uni_identity()
 	unique_enzymes = generate_unique_enzymes()
 
-/datum/dna/proc/initialize_dna(newblood_type)
+/datum/dna/proc/initialize_dna(newblood_type, skip_index = FALSE)
 	if(newblood_type)
 		blood_type = newblood_type
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
-	generate_dna_blocks()
+	if(!skip_index) //I hate this
+		generate_dna_blocks()
 	features = random_features()
 
 
@@ -311,7 +279,7 @@
 /datum/dna/stored/check_mutation(mutation_name)
 	return
 
-/datum/dna/stored/remove_all_mutations()
+/datum/dna/stored/remove_all_mutations(list/classes, mutadone = FALSE)
 	return
 
 /datum/dna/stored/remove_mutation_group(list/group)
@@ -361,8 +329,8 @@
 	return dna
 
 
-/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
-
+/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/mutations, force_transfer_mutations)
+//Do not use force_transfer_mutations for stuff like cloners without some precautions, otherwise some conditional mutations could break (timers, drill hat etc)
 	if(newfeatures)
 		dna.features = newfeatures
 
@@ -392,6 +360,11 @@
 		update_body_parts()
 		update_mutations_overlay()
 
+	if(LAZYLEN(mutations))
+		for(var/M in mutations)
+			var/datum/mutation/human/HM = M
+			if(HM.allow_transfer || force_transfer_mutations)
+				dna.force_give(HM.class, copymut = new HM.type (HM)) //using force_give since it may include exotic mutations that otherwise wont be handled properly
 
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
@@ -456,23 +429,28 @@
 	return is_gene_active(mutation)
 
 /datum/dna/proc/is_gene_active(mutation)
-	return (mutation_index[mutation] == get_sequence(mutation))
+	return (mutation_index[mutation] == GET_SEQUENCE(mutation))
 
 /datum/dna/proc/set_se(on=TRUE, datum/mutation/human/HM)
 	if(!HM || !(HM.type in mutation_index) || (LAZYLEN(mutation_index) < DNA_MUTATION_BLOCKS))
 		return
 	. = TRUE
 	if(on)
-		mutation_index[HM.type] = get_sequence(HM.type)
-	else if(get_sequence(HM.type) == mutation_index[HM.type])
+		mutation_index[HM.type] = GET_SEQUENCE(HM.type)
+	else if(GET_SEQUENCE(HM.type) == mutation_index[HM.type])
 		mutation_index[HM.type] = create_sequence(HM.type, FALSE, HM.difficulty)
 
-/datum/dna/proc/activate_mutation(mutation)
+/datum/dna/proc/activate_mutation(mutation) //note that this returns a boolean and not a new mob
 	if(!mutation)
-		return
-	if(!mutation_in_sequence(mutation, src)) //cant activate what we dont have, use add_mutation
 		return FALSE
-	return add_mutation(mutation, MUT_NORMAL)
+	var/mutation_type = mutation
+	if(istype(mutation, /datum/mutation/human))
+		var/datum/mutation/human/M = mutation
+		mutation_type = M.type
+	if(!mutation_in_sequence(mutation_type)) //cant activate what we dont have, use add_mutation
+		return FALSE
+	add_mutation(mutation, MUT_NORMAL)
+	return TRUE
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
 
@@ -492,6 +470,17 @@
 		return 0
 	return getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 
+/datum/dna/proc/mutation_in_sequence(mutation)
+	if(!mutation)
+		return
+	if(istype(mutation, /datum/mutation/human))
+		var/datum/mutation/human/HM = mutation
+		if(HM.type in mutation_index)
+			return TRUE
+	else if(mutation in mutation_index)
+		return TRUE
+
+
 /mob/living/carbon/proc/randmut(list/candidates, difficulty = 2)
 	if(!has_dna())
 		return
@@ -510,7 +499,7 @@
 		mutations += GLOB.not_good_mutations
 	var/list/possible = list()
 	for(var/datum/mutation/human/A in mutations)
-		if((!sequence || mutation_in_sequence(A.type, dna)) && !dna.get_mutation(A.type))
+		if((!sequence || dna.mutation_in_sequence(A.type)) && !dna.get_mutation(A.type))
 			possible += A.type
 	if(exclude_monkey)
 		possible.Remove(RACEMUT)
@@ -573,3 +562,91 @@
 	return value
 
 /////////////////////////// DNA HELPER-PROCS
+
+/mob/living/carbon/human/proc/something_horrible(ignore_stability)
+	if(!has_dna()) //shouldn't ever happen anyway so it's just in really weird cases
+		return
+	if(!ignore_stability && (dna.stability > 0))
+		return
+	var/instability = -dna.stability
+	dna.remove_all_mutations()
+	dna.stability = 100
+	if(prob(max(70-instability,0)))
+		switch(rand(0,10)) //not complete and utter death
+			if(0)
+				monkeyize()
+			if(1)
+				gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
+				new/obj/vehicle/ridden/wheelchair(get_turf(src)) //don't buckle, because I can't imagine to plethora of things to go through that could otherwise break
+				to_chat(src, "<span class='warning'>My flesh turned into a wheelchair and I can't feel my legs.</span>")
+			if(2)
+				corgize()
+			if(3)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+			if(4)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>") //you thought
+				physiology.damage_resistance = -20000
+			if(5)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+				reagents.add_reagent("mutationtoxin2", 10)
+			if(6)
+				apply_status_effect(STATUS_EFFECT_GO_AWAY)
+			if(7)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+				ForceContractDisease(new/datum/disease/decloning()) //slow acting, non-viral clone damage based GBS
+			if(8)
+				var/list/elligible_organs = list()
+				for(var/obj/item/organ/O in internal_organs) //make sure we dont get an implant or cavity item
+					elligible_organs += O
+				vomit(20, TRUE)
+				if(elligible_organs.len)
+					var/obj/item/organ/O = pick(elligible_organs)
+					O.Remove(src)
+					visible_message("<span class='danger'>[src] vomits up their [O.name]!</span>", "<span class='danger'>You vomit up your [O.name]") //no "vomit up your the heart"
+					O.forceMove(drop_location())
+					if(prob(20))
+						O.animate_atom_living()
+			if(9 to 10)
+				ForceContractDisease(new/datum/disease/gastrolosis())
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+	else
+		switch(rand(0,5))
+			if(0)
+				gib()
+			if(1)
+				dust()
+
+			if(2)
+				death()
+				petrify(INFINITY)
+			if(3)
+				if(prob(95))
+					var/obj/item/bodypart/BP = get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
+					if(BP)
+						BP.dismember()
+					else
+						gib()
+				else
+					set_species(/datum/species/dullahan)
+			if(4)
+				visible_message("<span class='warning'>[src]'s skin melts off!</span>", "<span class='boldwarning'>Your skin melts off!</span>")
+				spawn_gibs()
+				set_species(/datum/species/skeleton)
+				if(prob(90))
+					addtimer(CALLBACK(src, .proc/death), 30)
+					if(mind)
+						mind.hasSoul = FALSE
+			if(5)
+				to_chat(src, "<span class='phobia'>LOOK UP!</span>")
+				addtimer(CALLBACK(src, .proc/something_horrible_mindmelt), 30)
+
+
+/mob/living/carbon/human/proc/something_horrible_mindmelt()
+	if(!has_trait(TRAIT_BLIND))
+		var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in internal_organs
+		if(!eyes)
+			return
+		eyes.Remove(src)
+		qdel(eyes)
+		visible_message("<span class='notice'>[src] looks up and their eyes melt away!</span>", "<span class>='userdanger'>I understand now.</span>")
+		addtimer(CALLBACK(src, .proc/adjustBrainLoss, 200), 20)
