@@ -126,20 +126,6 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aE" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window{
-	base_state = "leftsecure";
-	dir = 8;
-	icon_state = "leftsecure";
-	layer = 4.1;
-	name = "Centcom Flagship Medbay Desk";
-	obj_integrity = 300;
-	pixel_x = -3;
-	req_access_txt = "5"
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
 "aF" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -363,30 +349,9 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"bA" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bB" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"bC" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -443,6 +408,7 @@
 /obj/machinery/turretid{
 	control_area = /area/shuttle/escape;
 	icon_state = "control_kill";
+	lethal = 1;
 	pixel_y = 28
 	},
 /obj/item/radio/intercom{
@@ -503,9 +469,12 @@
 /obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"ce" = (
-/obj/machinery/vending/cigarette,
-/turf/open/floor/mineral/titanium/white,
+"cf" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "cg" = (
 /obj/machinery/door/window/eastleft{
@@ -566,6 +535,16 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"cp" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
 "cq" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -619,7 +598,12 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "cz" = (
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/table,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner,
+/obj/item/storage/box/smart_metal_foam,
+/obj/item/storage/box/smart_metal_foam,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "cA" = (
@@ -627,24 +611,12 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
-"cC" = (
-/obj/machinery/power/terminal,
-/obj/structure/cable,
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
 "cD" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "cE" = (
 /obj/structure/table/optable,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"cF" = (
-/obj/machinery/computer/operating{
-	dir = 4
-	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cG" = (
@@ -677,8 +649,9 @@
 	},
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
-"cM" = (
-/obj/structure/chair/comfy{
+"cN" = (
+/obj/machinery/light,
+/obj/structure/chair/comfy/beige{
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
@@ -690,8 +663,9 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "cP" = (
-/obj/structure/chair/sofa/left{
-	dir = 4
+/obj/structure/window/reinforced/spawner,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -699,23 +673,13 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/chair/sofa{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"cR" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "cS" = (
-/obj/structure/chair/sofa/right{
-	dir = 4
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -724,7 +688,8 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "cU" = (
-/obj/structure/table/wood/fancy,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "cV" = (
@@ -747,14 +712,6 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/spawner/north,
 /turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"cZ" = (
-/obj/structure/table,
-/obj/item/storage/box/smart_metal_foam,
-/obj/structure/window/spawner/east,
-/obj/structure/window/spawner/west,
-/obj/structure/window/spawner,
-/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "da" = (
 /obj/machinery/door/airlock/command/glass{
@@ -782,115 +739,169 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"ea" = (
-/obj/structure/window/reinforced/spawner,
-/obj/machinery/recharge_station,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"fL" = (
-/obj/machinery/recharge_station,
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"gj" = (
-/obj/item/bedsheet,
-/obj/structure/bed,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"gY" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"ju" = (
-/turf/open/floor/mech_bay_recharge_floor,
-/area/shuttle/escape)
-"jH" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/escape)
-"jR" = (
-/obj/machinery/mech_bay_recharge_port,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"ke" = (
+"eb" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
-"si" = (
-/obj/machinery/porta_turret/centcom_shuttle,
-/turf/closed/wall/mineral/plastitanium/overspace,
-/area/shuttle/escape)
-"sA" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"Bl" = (
-/obj/structure/table,
-/obj/item/restraints/handcuffs,
-/obj/item/restraints/handcuffs,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"Dz" = (
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 1
-	},
+"en" = (
+/obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"GD" = (
-/obj/machinery/door/window/brigdoor/security/cell/westright{
-	name = "Shuttle Cell Door";
-	req_access_txt = "63"
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"ID" = (
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"Jm" = (
+"gg" = (
 /obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"KO" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"Mj" = (
+"gn" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"Rp" = (
+"km" = (
 /obj/structure/chair/stool,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"Xg" = (
+"kK" = (
 /turf/closed/wall/mineral/plastitanium/overspace,
 /area/shuttle/escape)
-"Yr" = (
+"mi" = (
+/obj/structure/window/reinforced/spawner/east,
 /obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"ne" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/recharge_station,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"sy" = (
+/obj/structure/chair/comfy/beige{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/shuttle/escape)
+"tA" = (
+/obj/machinery/porta_turret/centcom_shuttle,
+/turf/closed/wall/mineral/plastitanium/overspace,
+/area/shuttle/escape)
+"tC" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ui" = (
+/obj/structure/table,
+/obj/item/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"xT" = (
+/obj/machinery/computer/operating{
+	dir = 2
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Ag" = (
+/turf/open/floor/mech_bay_recharge_floor,
+/area/shuttle/escape)
+"CI" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"Ga" = (
+/obj/item/bedsheet,
+/obj/structure/bed,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"Gh" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Jv" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Kh" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"NC" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Po" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window{
+	base_state = "leftsecure";
+	dir = 8;
+	icon_state = "leftsecure";
+	layer = 4.1;
+	name = "Centcom Flagship Medbay Desk";
+	obj_integrity = 300;
+	pixel_x = -3;
+	req_access_txt = "5"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"PC" = (
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"PF" = (
+/obj/machinery/door/window/brigdoor/security/cell/westright{
+	name = "Shuttle Cell Door";
+	req_access_txt = "63"
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"RC" = (
+/obj/machinery/light{
 	dir = 4
 	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Tc" = (
+/obj/machinery/recharge_station,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Wp" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"YU" = (
-/obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/mineral/titanium/yellow,
+"Xa" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Zk" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
+"ZU" = (
+/obj/structure/table/reinforced,
+/obj/machinery/microwave,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -912,7 +923,7 @@ aa
 aa
 aa
 aa
-si
+tA
 aL
 ab
 ab
@@ -921,7 +932,7 @@ ab
 ab
 aU
 ab
-si
+tA
 aa
 aa
 aa
@@ -962,11 +973,11 @@ aa
 aa
 ab
 aM
-KO
+tC
 aO
 aO
 aO
-KO
+tC
 aM
 aW
 ab
@@ -1022,7 +1033,7 @@ aa
 aa
 aa
 aa
-si
+tA
 ab
 ab
 ab
@@ -1031,7 +1042,7 @@ ab
 ab
 ab
 ad
-Xg
+kK
 aa
 aa
 aa
@@ -1069,15 +1080,15 @@ ab
 aa
 aa
 aa
-si
+tA
 ab
 cG
 cH
 ci
 bf
-bf
-bf
-bf
+aZ
+Kh
+aZ
 ay
 bK
 bM
@@ -1088,11 +1099,11 @@ aa
 (5,1,1) = {"
 aa
 aa
-si
+tA
 ab
 ab
 ab
-si
+tA
 aa
 aa
 aa
@@ -1102,14 +1113,14 @@ aa
 aa
 aa
 aa
-si
+tA
 ab
 ab
 aN
 ab
 ab
 ab
-jH
+Zk
 ab
 aN
 ab
@@ -1135,13 +1146,13 @@ aa
 "}
 (6,1,1) = {"
 aa
-si
+tA
 ay
 cA
 cV
 cD
 ay
-si
+tA
 aa
 aa
 aa
@@ -1149,7 +1160,7 @@ aa
 aa
 aa
 aa
-si
+tA
 ay
 bY
 bY
@@ -1157,8 +1168,8 @@ aq
 cP
 cQ
 cS
-aq
-Yr
+cU
+Wp
 aq
 aq
 aq
@@ -1169,11 +1180,11 @@ ab
 cd
 aZ
 aZ
-ea
-fL
+ne
+Tc
 aZ
 aZ
-cZ
+aZ
 ay
 ay
 bK
@@ -1182,7 +1193,7 @@ aa
 aa
 "}
 (7,1,1) = {"
-Xg
+kK
 ay
 bP
 an
@@ -1202,23 +1213,23 @@ bY
 aq
 aq
 aq
+cP
 cU
+cS
 cU
-cU
 aq
 aq
 aq
-aq
-Rp
-aV
+km
+ZU
 aX
 aX
 am
 cw
 aZ
 aZ
-ea
-fL
+ne
+Tc
 aZ
 aZ
 aZ
@@ -1250,14 +1261,14 @@ aq
 aq
 aq
 aq
-cO
-cO
-cO
 aq
 aq
 aq
 aq
-Rp
+aq
+aq
+aq
+km
 aV
 aX
 aX
@@ -1265,8 +1276,8 @@ ab
 cx
 aZ
 aZ
-jR
-jR
+en
+en
 aZ
 aZ
 aZ
@@ -1305,16 +1316,16 @@ aq
 aq
 aq
 aq
-Rp
-aV
+km
+cf
 bT
 cg
 ab
 db
 aZ
 aZ
-ju
-ju
+Ag
+Ag
 aZ
 aZ
 bx
@@ -1333,36 +1344,36 @@ an
 aK
 cY
 an
-an
-jH
+sy
+Zk
 ac
-jH
+Zk
 at
 ab
 ac
-jH
+Zk
 az
-ce
+ac
+Po
+ac
+ab
+aP
+ay
 aq
-aq
-cO
-aq
-cR
-aq
-aq
-aq
-aq
+mi
+mi
+mi
 aq
 aq
 aq
 aq
 bR
-jH
+Zk
 cy
 aZ
 aZ
-Dz
-YU
+Jv
+NC
 aZ
 aZ
 by
@@ -1381,7 +1392,7 @@ an
 cW
 cY
 an
-cM
+sy
 ac
 ar
 as
@@ -1390,16 +1401,16 @@ cv
 av
 av
 ab
-ac
-aE
-ac
+aF
+aF
+cE
+xT
+aF
 ab
-aP
-ay
 dd
-aq
-aq
-aq
+Xa
+Xa
+Xa
 aq
 aq
 aq
@@ -1416,7 +1427,7 @@ bv
 bz
 aZ
 aZ
-Jm
+gg
 ay
 bK
 bM
@@ -1429,7 +1440,7 @@ an
 cX
 cY
 an
-cM
+sy
 ac
 as
 as
@@ -1440,8 +1451,8 @@ as
 ac
 aA
 aF
-cE
-cF
+aF
+aF
 aF
 am
 aq
@@ -1461,10 +1472,10 @@ aZ
 aZ
 aZ
 aZ
-bA
 aZ
 aZ
-Jm
+aZ
+gg
 ay
 bK
 bM
@@ -1477,14 +1488,14 @@ an
 cX
 cY
 an
-aw
+cN
 ab
 cn
 as
 as
 as
 as
-Bl
+ui
 ac
 aA
 aF
@@ -1510,8 +1521,8 @@ bs
 ay
 bW
 bB
-bH
-bL
+bB
+bB
 ay
 ay
 bK
@@ -1525,21 +1536,21 @@ an
 an
 an
 an
-cM
+sy
 ab
-GD
-sA
-GD
-sA
-GD
-ID
+PF
+CI
+PF
+CI
+PF
+PC
 ab
 aB
 aG
 aF
 aF
 cb
-jH
+Zk
 cr
 aq
 cT
@@ -1557,9 +1568,9 @@ cj
 bg
 ab
 cz
-bC
-cC
-bL
+bB
+bB
+bB
 ay
 bK
 bM
@@ -1573,13 +1584,13 @@ an
 an
 an
 an
-cM
+sy
 ab
-gj
-ke
-gj
-ke
-gj
+Ga
+eb
+Ga
+cp
+Ga
 ax
 ab
 aC
@@ -1614,7 +1625,7 @@ bM
 aa
 "}
 (16,1,1) = {"
-Xg
+kK
 az
 an
 cK
@@ -1663,13 +1674,13 @@ aa
 "}
 (17,1,1) = {"
 aa
-si
+tA
 ay
 cs
 ct
 cu
 ay
-si
+tA
 aa
 aa
 aa
@@ -1677,11 +1688,11 @@ aa
 aa
 aa
 aa
-si
+tA
 ay
 ao
 aJ
-aF
+RC
 aS
 ab
 bY
@@ -1690,8 +1701,8 @@ cO
 br
 aX
 cI
-Mj
-gY
+gn
+Gh
 bV
 ab
 bd
@@ -1712,11 +1723,11 @@ aa
 (18,1,1) = {"
 aa
 aa
-si
+tA
 ab
 ab
 ab
-si
+tA
 aa
 aa
 aa
@@ -1726,7 +1737,7 @@ aa
 aa
 aa
 aa
-si
+tA
 ab
 ab
 bZ
@@ -1789,7 +1800,7 @@ aa
 aa
 aa
 aa
-si
+tA
 ab
 bh
 bm
@@ -1838,7 +1849,7 @@ aa
 aa
 aa
 aa
-si
+tA
 ab
 ab
 ab
@@ -1847,7 +1858,7 @@ ab
 ab
 ab
 ad
-Xg
+kK
 aa
 aa
 aa
