@@ -318,7 +318,7 @@
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
 
-		if(!R.always_availible && user.known_recipes(R)) //User doesn't actually know how to make this.
+		if(!R.always_availible && !user.known_recipes(R)) //User doesn't actually know how to make this.
 			continue
 
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
