@@ -477,7 +477,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
 					A.convert_to_archdevil()
 	else
-		throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
+		CRASH("Unable to find a blobstart landmark for hellish resurrection")
 
 
 /datum/antagonist/devil/proc/update_hud()

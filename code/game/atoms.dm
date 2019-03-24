@@ -265,7 +265,7 @@
 	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	to_chat(user, get_examine_string(user, TRUE))
+	to_chat(user, "[get_examine_string(user, TRUE)].")
 
 	if(desc)
 		to_chat(user, desc)

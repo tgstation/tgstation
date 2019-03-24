@@ -214,8 +214,8 @@
 	if(istype(MB))
 		MB.RunOver(src)
 
+	. = ..()
 	spreadFire(AM)
-
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
@@ -788,7 +788,7 @@
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
 	if (dna && dna.species)
-		. += dna.species.check_weakness(weapon, attacker)
+		. += dna.species.check_species_weakness(weapon, attacker)
 
 /mob/living/carbon/human/is_literate()
 	return TRUE

@@ -13,6 +13,7 @@
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
+	var/time_to_scewdrive = 20
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -77,7 +78,7 @@
 		return TRUE
 	if(circuit && !(flags_1&NODECONSTRUCT_1))
 		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
-		if(I.use_tool(src, user, 20, volume=50))
+		if(I.use_tool(src, user, time_to_scewdrive, volume=50))
 			deconstruct(TRUE, user)
 	return TRUE
 

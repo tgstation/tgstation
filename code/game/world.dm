@@ -268,17 +268,21 @@ GLOBAL_VAR(restart_counter)
 	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
-
-	var/n = 0
-	for (var/mob/M in GLOB.player_list)
-		if (M.client)
-			n++
-
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
-		features += "~[n] player"
-
+	
+	var/players = GLOB.clients.len
+	
+	var/popcaptext = ""
+	var/popcap = max(CONFIG_GET(number/extreme_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/soft_popcap))
+	if (popcap)
+		popcaptext = "/[popcap]"
+	
+	if (players > 1)
+		features += "[players][popcaptext] players"
+	else if (players > 0)
+		features += "[players][popcaptext] player"
+	
+	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
+	
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
 

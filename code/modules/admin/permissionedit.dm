@@ -269,6 +269,14 @@
 	log_admin("[key_name(usr)] forcefully deadmined [admin_key]")
 	D.deactivate() //after logs so the deadmined admin can see the message.
 
+/datum/admins/proc/auto_deadmin()
+	to_chat(owner, "<span class='interface'>You are now a normal player.</span>")
+	var/old_owner = owner
+	deactivate()
+	message_admins("[old_owner] deadmined via auto-deadmin config.")
+	log_admin("[old_owner] deadmined via auto-deadmin config.")
+	return TRUE
+
 /datum/admins/proc/change_admin_rank(admin_ckey, admin_key, use_db, datum/admins/D, legacy_only)
 	var/datum/admin_rank/R
 	var/list/rank_names = list()
