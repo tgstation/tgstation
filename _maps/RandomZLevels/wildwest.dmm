@@ -1674,13 +1674,13 @@
 	},
 /area/awaymission/wildwest/mines)
 "fE" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fF" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/wood,
