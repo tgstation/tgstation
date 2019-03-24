@@ -45,6 +45,18 @@
 	spawn_text = "climbs out of"
 	faction = list("skeleton")
 
+/obj/structure/spawner/clown
+	name = "Laughing Larry"
+	desc = "A laughing, jovial figure. Something seems stuck in his throat."
+	icon_state = "clownbeacon"
+	icon = 'icons/obj/device.dmi'
+	max_integrity = 200
+	max_mobs = 15
+	spawn_time = 150
+	mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/ClownHulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/Chlown, /mob/living/simple_animal/hostile/retaliate/clown/honcmunculus)
+	spawn_text = "climbs out of"
+	faction = list("clown")
+
 /obj/structure/spawner/mining
 	name = "monster den"
 	desc = "A hole dug into the ground, harboring all kinds of monsters found within most caves or mining asteroids."
