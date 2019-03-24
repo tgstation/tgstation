@@ -60005,15 +60005,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"sXb" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/chair/office/dark{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/genetics)
 "sXi" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -86599,7 +86590,7 @@ bmi
 bjN
 bow
 bpz
-sXb
+bpz
 bss
 btV
 bou

@@ -49,7 +49,7 @@
 /area/reebe/city_of_cogs)
 "am" = (
 /obj/structure/table/reinforced/brass,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid,
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "an" = (

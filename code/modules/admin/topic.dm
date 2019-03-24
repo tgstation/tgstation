@@ -930,12 +930,8 @@
 		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
 
 		var/client/C = usr.client
-		var/can_ghost = TRUE
 		if(!isobserver(usr))
-			can_ghost = C.admin_ghost()
-
-		if(!can_ghost)
-			return
+			C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(AM)
 

@@ -1,7 +1,6 @@
 /datum/job/hos
 	title = "Head of Security"
 	flag = HOS
-	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Captain")
 	department_flag = ENGSEC
 	head_announce = list(RADIO_CHANNEL_SECURITY)

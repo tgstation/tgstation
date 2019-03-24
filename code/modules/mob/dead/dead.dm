@@ -121,9 +121,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if (isturf(T))
 		update_z(T.z)
 
-/mob/dead/auto_deadmin_on_login()
-	return
-
 /mob/dead/Logout()
 	update_z(null)
 	return ..()

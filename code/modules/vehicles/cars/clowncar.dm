@@ -42,10 +42,6 @@
 			var/mob/voreman = i
 			SSmedals.UnlockMedal(MEDAL_CLOWNCARKING,voreman.client)
 
-/obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/M)
-	if((M.loc != src) || M.environment_smash & (ENVIRONMENT_SMASH_WALLS|ENVIRONMENT_SMASH_RWALLS))
-		return ..()
-
 /obj/vehicle/sealed/car/clowncar/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)

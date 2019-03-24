@@ -379,14 +379,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/spawned_mobs = new(amount)
 
 	for(var/j in 1 to amount)
-		var/atom/movable/X 
-
-		if (istype(spawn_type, /list))
-			var/mob_type = pick(spawn_type)
-			X = new mob_type(T)
-		else
-			X = new spawn_type(T)
-
+		var/atom/movable/X = new spawn_type(T)
 		if (admin_spawn)
 			X.flags_1 |= ADMIN_SPAWNED_1
 

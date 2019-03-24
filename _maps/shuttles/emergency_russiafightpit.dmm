@@ -503,7 +503,7 @@
 "bF" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/firstaid{
 	pixel_x = 2;
 	pixel_y = 3
 	},

@@ -3,23 +3,6 @@
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
-	var/obj/item/gps/internal
-	var/internal_type = /obj/item/gps/internal/internal_gps
-	time_to_scewdrive = 60
-
-/obj/item/gps/internal/internal_gps
-	icon_state = null
-	gpstag = "Encrypted Upload Signal"
-	desc = "Signal used to connect remotely with silicons."
-	invisibility = 100
-
-/obj/machinery/computer/upload/Initialize()
-	internal = new internal_type(src)
-	. = ..()
-
-/obj/machinery/computer/upload/Destroy()
-	QDEL_NULL(internal)
-	. = ..()
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/aiModule))
@@ -44,8 +27,8 @@
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
 	if(S.stat == DEAD)
-		return FALSE
-	return TRUE
+		return 0
+	return 1
 
 /obj/machinery/computer/upload/ai
 	name = "\improper AI upload console"
@@ -62,9 +45,9 @@
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
-		return FALSE
+		return 0
 	if(A.control_disabled)
-		return FALSE
+		return 0
 	return ..()
 
 
@@ -83,7 +66,7 @@
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !iscyborg(B))
-		return FALSE
+		return 0
 	if(B.scrambledcodes || B.emagged)
-		return FALSE
+		return 0
 	return ..()

@@ -56,7 +56,8 @@
 
 /obj/mecha/combat/marauder/seraph/Initialize()
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
+	var/obj/item/mecha_parts/mecha_equipment/ME
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)
 	ME.attach(src)

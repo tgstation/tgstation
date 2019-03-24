@@ -35,7 +35,7 @@ var opts = {
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
 	'restarting': false, //Is the round restarting?
-	'darkmode':false, //Are we using darkmode? If not WHY ARE YOU LIVING IN 2009???
+	'darkmode':true, //Are we using darkmode? If not WHY ARE YOU LIVING IN 2009???
 
 	//Options menu
 	'selectedSubLoop': null, //Contains the interval loop for closing the selected sub menu
@@ -1010,7 +1010,7 @@ $(function() {
 
 		$.ajax({
 			type: 'GET',
-			url: 'browserOutput_white.css',
+			url: 'browserOutput.css',
 			success: function(styleData) {
 				var blob = new Blob(['<head><title>Chat Log</title><style>', styleData, '</style></head><body>', $messages.html(), '</body>']);
 
