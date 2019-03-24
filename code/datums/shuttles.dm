@@ -362,8 +362,8 @@
 /datum/map_template/shuttle/emergency/centcomflagship
 	suffix = "centcomflagship"
 	name = "Centcom Flagship Shuttle"
-	description = "If you pay us a million credits we'll lend you one of our battleships to take home. We made sure to stock some vendors in there for all of your needs while heading back to Centeral Command!"
-	credit_cost = 150000
+	description = "If you pay us a 75 thousand credits we'll lend you one of our battleships to take home. We made sure to stock some vendors in there for all of your needs while heading back to Centeral Command! Oh and we also added 4 drones."
+	credit_cost = 75000
 
 /datum/map_template/shuttle/emergency/omega
 	suffix = "omega"
