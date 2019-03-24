@@ -2,14 +2,6 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
-"aac" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
-"aad" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "aaf" = (
 /obj/structure/grille,
 /obj/structure/lattice,
@@ -52821,8 +52813,8 @@ ayP
 axI
 adP
 adP
-aac
-aac
+aZc
+aZc
 aaa
 aaa
 aaa
@@ -53849,8 +53841,8 @@ ayR
 axJ
 adP
 adP
-aac
-aac
+aZc
+aZc
 aaa
 aaa
 aaa
@@ -64163,7 +64155,7 @@ bcB
 bcP
 bcl
 bdj
-adO
+aaa
 baP
 bat
 aaa
@@ -64420,7 +64412,7 @@ bcC
 bcC
 bcZ
 bdk
-adO
+aaa
 baP
 bat
 aaa
@@ -64677,7 +64669,7 @@ bcD
 bcQ
 bcQ
 aUh
-adO
+aaa
 baP
 baP
 aaa
@@ -64934,7 +64926,7 @@ bcl
 bcl
 bcn
 aUh
-adO
+aaa
 baP
 aaa
 aaa
@@ -65191,7 +65183,7 @@ bcl
 bcl
 bcn
 aUh
-adO
+aaa
 bat
 aaa
 aaa
@@ -66219,7 +66211,7 @@ bcl
 bcl
 bcn
 aUh
-adO
+aaa
 bat
 aaa
 aaa
@@ -66476,7 +66468,7 @@ bcl
 bcl
 bcn
 aUh
-adO
+aaa
 baP
 aaa
 aaa
@@ -66733,7 +66725,7 @@ bcE
 bcR
 bcE
 aUh
-adO
+aaa
 baP
 baP
 aaa
@@ -66990,7 +66982,7 @@ bcF
 bcF
 bdc
 aUh
-adO
+aaa
 baP
 bat
 aaa
@@ -67247,7 +67239,7 @@ bcG
 bcS
 bcl
 aUh
-adO
+aaa
 baP
 bat
 aaa
@@ -70575,7 +70567,7 @@ aTb
 aTH
 aYA
 aZb
-adO
+aaa
 aZc
 adP
 aaa
@@ -70831,8 +70823,8 @@ adP
 aTc
 aTI
 adP
-adO
-adO
+aaa
+aaa
 aZc
 adP
 aaa
@@ -73644,7 +73636,7 @@ aNx
 aMF
 aMM
 aaa
-aad
+adP
 aaa
 tfC
 tfC
@@ -74928,9 +74920,9 @@ aNx
 aNx
 aMI
 aMM
-aac
-aac
-aac
+aZc
+aZc
+aZc
 adP
 uhe
 pMC
@@ -75186,8 +75178,8 @@ vjK
 vjK
 vjK
 oNK
-aac
-aac
+aZc
+aZc
 uhe
 aaa
 pMC
