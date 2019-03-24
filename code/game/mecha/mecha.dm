@@ -411,6 +411,10 @@
 		var/lights_energy_drain = 2
 		use_power(lights_energy_drain)
 
+	if(!enclosed && occupant && occupant.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
+		visible_message("<span class='warning'>[occupant] tumbles out of the cockpit!</span>")
+		go_out() //Maybe we should install seat belts?
+
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
