@@ -118,6 +118,7 @@
 	default_price = 50
 	extra_price = 75
 	payment_department = NO_FREEBIES
+
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
