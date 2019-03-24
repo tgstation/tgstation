@@ -116,6 +116,7 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "tooltip", "background-color = none;background-color = [COLOR_DARKMODE_BACKGROUND]")
 	winset(src, "tooltip", "text-color = #000000;text-color = [COLOR_DARKMODE_TEXT]")
 
+
 /datum/asset/simple/goonchat
 	verify = FALSE
 	assets = list(
