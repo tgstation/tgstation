@@ -727,7 +727,7 @@
 	for(var/mob/living/carbon/C in targets)
 		if(!is_hivehost(C))
 			continue
-		if(C.InCritical() || (C.stat == DEAD && C?.last_mind.last_death + 150 <= world.time) )
+		if(C.InCritical() || (C.stat == DEAD && C?.last_mind.last_death + 150 >= world.time) )
 			C.gib()
 			hive.track_bonus += TRACKER_BONUS_LARGE
 			hive.size_mod += 5
