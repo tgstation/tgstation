@@ -16,6 +16,12 @@
 	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = 0 // so closet code knows to put the tag overlay back
 
+/obj/structure/closet/body_bag/Destroy()
+	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
+	if (foldedbag_instance && !foldedbag_instance.loc)
+		QDEL_NULL(foldedbag_instance)
+	return ..()
+
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
 		if(!user.is_literate())

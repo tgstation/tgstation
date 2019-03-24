@@ -5,6 +5,22 @@
 	config_entry_value = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/auto_deadmin_players
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_antagonists
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_heads
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_silicons
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_security
+	protection = CONFIG_ENTRY_LOCKED
+
+
 /datum/config_entry/string/servername	// server name (the name of the game window)
 
 /datum/config_entry/string/serversqlname	// short form server name used for the DB
