@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a minor runtime caused by admins clicking a follow link while in the lobby."
