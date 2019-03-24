@@ -205,7 +205,8 @@
 		/obj/item/reagent_containers/glass/bottle/potion/flight=1,
 		/obj/item/organ/heart/cursed/wizard=1,
 		/obj/item/immortality_talisman=1,
-		/obj/item/book/granter/spell/summonitem=1)
+		/obj/item/book/granter/spell/summonitem=1,
+		/obj/item/extinguisher=1)
 
 /datum/component/spawner/megafauna
 	var/spawn_wait_time = 150 // time to next spawn when the megafauna dies, 15 seconds
