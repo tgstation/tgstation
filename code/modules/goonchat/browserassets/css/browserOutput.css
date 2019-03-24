@@ -7,13 +7,13 @@ html, body {
 	padding: 0;
 	margin: 0;
 	height: 100%;
-	color: #8ba5c4;
+	color: #a4bad6;
 }
 body {
 	background: #171717;
     font-family: Verdana, sans-serif;
     font-size: 9pt;
-	font-color: #8ba5c4;
+	font-color: #a4bad6;
     line-height: 1.2;
 	overflow-x: hidden;
 	overflow-y: scroll;
@@ -97,7 +97,7 @@ a.popt {text-decoration: none;}
     font-variant: small-caps;
     font-size: 1.1em;
     font-weight: bold;
-	color: #8ba5c4;
+	color: #a4bad6;
 }
 #newMessages:hover {background: #171717;}
 #newMessages i {vertical-align: middle; padding-left: 3px;}
@@ -127,7 +127,7 @@ a.popt {text-decoration: none;}
     height: 30px;
 	padding: 5px 0;
 	display: block;
-	color: #8ba5c4;
+	color: #a4bad6;
 	text-decoration: none;
     line-height: 28px;
     border-top: 1px solid #171717;
@@ -245,9 +245,9 @@ a.popt {text-decoration: none;}
 ******************************************/
 
 /* MOTD */
-.motd {color: #8ba5c4;	font-family: Verdana, sans-serif;}
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #8ba5c4;	text-decoration: underline;}
-.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #8ba5c4;}
+.motd {color: #a4bad6;	font-family: Verdana, sans-serif;}
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #a4bad6;	text-decoration: underline;}
+.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #a4bad6;}
 
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .looc, .adminooc, .admin, .medal, .yell {font-weight: bold;}
@@ -258,8 +258,8 @@ a.popt {text-decoration: none;}
 /* OUTPUT COLORS */
 .highlight {background: yellow;}
 
-h1, h2, h3, h4, h5, h6	{color: #8ba5c4;font-family: Georgia, Verdana, sans-serif;}
-h1.alert, h2.alert		{color: #8ba5c4;}
+h1, h2, h3, h4, h5, h6	{color: #a4bad6;font-family: Georgia, Verdana, sans-serif;}
+h1.alert, h2.alert		{color: #a4bad6;}
 
 em						{font-style: normal;	font-weight: bold;}
 
@@ -294,7 +294,6 @@ em						{font-style: normal;	font-weight: bold;}
 .yell					{					font-weight: bold;}
 
 .alert					{color: #d82020;}
-h1.alert, h2.alert		{color: #99aab5;}
 
 .emote					{					font-style: italic;}
 .selecteddna			{color: #ffffff; 	background-color: #001B1B}
@@ -316,7 +315,7 @@ h1.alert, h2.alert		{color: #99aab5;}
 .boldnotice				{color: #6685f5;	font-weight: bold;}
 .adminnotice			{color: #6685f5;}
 .adminhelp              {color: #ff0000;    font-weight: bold;}
-.unconscious			{color: #8ba5c4;	font-weight: bold;}
+.unconscious			{color: #a4bad6;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #059223;}
 .nicegreen				{color: #059223;}

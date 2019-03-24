@@ -5,7 +5,7 @@
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
-#define COLOR_DARKMODE_TEXT "#8ba5c4"
+#define COLOR_DARKMODE_TEXT "#a4bad6"
 
 #define COLOR_WHITE            "#EEEEEE"
 #define COLOR_SILVER           "#C0C0C0"
