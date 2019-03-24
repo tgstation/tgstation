@@ -43,6 +43,7 @@
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 	time_coeff = 2
 	instability = 25
+	locked = TRUE
 
 /datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
