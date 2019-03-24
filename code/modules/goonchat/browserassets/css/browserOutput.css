@@ -311,16 +311,16 @@ h1.alert, h2.alert		{color: #99aab5;}
 .boldannounce			{color: #c51e1e;	font-weight: bold;}
 .greenannounce			{color: #059223;	font-weight: bold;}
 .rose					{color: #ff5050;}
-.info					{color: #5373e9;}
-.notice					{color: #5373e9;}
-.boldnotice				{color: #5373e9;	font-weight: bold;}
-.adminnotice			{color: #5373e9;}
+.info					{color: #6685f5;}
+.notice					{color: #6685f5;}
+.boldnotice				{color: #6685f5;	font-weight: bold;}
+.adminnotice			{color: #6685f5;}
 .adminhelp              {color: #ff0000;    font-weight: bold;}
 .unconscious			{color: #8ba5c4;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #059223;}
 .nicegreen				{color: #059223;}
-.shadowling				{color: #3b2769;}
+.shadowling				{color: #8e8a99;}
 .cult					{color: #aa1c1c;}
 
 .cultitalic				{color: #aa1c1c;	font-style: italic;}
@@ -331,9 +331,9 @@ h1.alert, h2.alert		{color: #99aab5;}
 .narsie					{color: #aa1c1c; font-weight: bold; font-size: 120px;}
 .narsiesmall			{color: #aa1c1c; font-weight: bold; font-size: 48px;}
 .colossus				{color: #7F282A; font-size: 40px;}
-.hierophant				{color: #a22bdd; font-weight: bold; font-style: italic;}
+.hierophant				{color: #b441ee; font-weight: bold; font-style: italic;}
 .hierophant_warning		{color: #c56bf1; font-style: italic;}
-.purple					{color: #a03ff5;}
+.purple					{color: #b362fa;}
 .holoparasite			{color: #88809c;}
 
 .revennotice			{color: #1d2953;}
@@ -346,7 +346,7 @@ h1.alert, h2.alert		{color: #99aab5;}
 .umbra_emphasis			{color: #7c00e6;	font-weight: bold;	font-style: italic;}
 .umbra_large			{color: #7c00e6; font-size: 24px; font-weight: bold; font-style: italic;}
 
-.deconversion_message	{color: #7c00e6; font-size: 24px; font-style: italic;}
+.deconversion_message	{color: #a947ff; font-size: 24px; font-style: italic;}
 
 .brass					{color: #BE8700;}
 .heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
