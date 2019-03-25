@@ -9,6 +9,8 @@
 	circuit = /obj/item/circuitboard/machine/stasis
 	idle_power_usage = 40
 	active_power_usage = 340
+	fair_market_price = 10
+	payment_department = ACCOUNT_MED
 
 /obj/machinery/stasis/Exited(atom/movable/AM, atom/newloc)
 	if(AM == occupant)
@@ -35,16 +37,16 @@
 	if(!can_be_occupant(L))
 		return
 	occupant = L
-	if(is_operational())
+	if(is_operational() && check_nap_violations())
 		chill_out(L)
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
+	thaw_them(L)
 	if(L == occupant)
 		occupant = null
-	thaw_them(L)
 
 /obj/machinery/stasis/process()
-	if( !( occupant && isliving(occupant) ) )
+	if( !( occupant && isliving(occupant) && check_nap_violations() ) )
 		return
 	var/mob/living/L_occupant = occupant
 	if(is_operational())
@@ -52,3 +54,6 @@
 			chill_out(L_occupant)
 	else if(L_occupant.IsInStasis())
 		thaw_them(L_occupant)
+
+/obj/machinery/stasis/nap_violation(mob/violator)
+	unbuckle_mob(violator, TRUE)
