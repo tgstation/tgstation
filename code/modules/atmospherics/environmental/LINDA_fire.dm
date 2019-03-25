@@ -10,7 +10,7 @@
 
 
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
-	var/datum/gas_mixture/air_gases = air?.gases
+	var/list/air_gases = air?.gases
 	if(!air_gases)
 		return 0
 
