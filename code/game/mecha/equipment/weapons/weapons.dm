@@ -351,7 +351,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/fire
 	name = "\improper INC-1 fire launcher"
-	desc = "A weapon for combat exosuits. Launches ClF3 grenades."
+	desc = "A weapon for combat exosuits. Launches CLF3 grenades."
 	projectile = /obj/item/grenade/chem_grenade/fire
 	
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proj_init(var/obj/item/grenade/flashbang/F)
