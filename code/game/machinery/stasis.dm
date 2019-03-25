@@ -19,6 +19,16 @@
 			thaw_them(L)
 	. = ..()
 
+/obj/machinery/stasis/update_icon()
+	..()
+	if(stat & BROKEN)
+		icon_state = "stasis_broken"
+		return
+	if(panel_open || stat & MAINT)
+		icon_state = "stasis_maintenance"
+		return
+	icon_state = "stasis"
+
 /obj/machinery/stasis/proc/chill_out(mob/living/target)
 	if(target != occupant)
 		return
@@ -54,6 +64,12 @@
 			chill_out(L_occupant)
 	else if(L_occupant.IsInStasis())
 		thaw_them(L_occupant)
+
+/obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)
+	return default_deconstruction_screwdriver(user, "stasis_maintenance", "stasis", I)
+
+/obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/I)
+	return default_deconstruction_crowbar(I)
 
 /obj/machinery/stasis/nap_violation(mob/violator)
 	unbuckle_mob(violator, TRUE)
