@@ -1,0 +1,6 @@
+author: "py01"
+delete-after: True
+changes: 
+  - balance: "-Mechs no longer explode on death
+-Mechs and syndicate combat mechs sleep the pilot for 2s when destroyed, other combat mechs for 4s.
+-Mechs now have exit times. 1s for basic ripley, 2s for other mechs, 4s for all combat mechs. You cannot punch or use equipment when exiting, and moving cancels."
