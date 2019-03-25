@@ -84,9 +84,12 @@
 	var/silicon_pilot = FALSE //set to true if an AI or MMI is piloting.
 
 	var/enter_delay = 40 //Time taken to enter the mech
+	var/exit_delay = 20 //Time to exit mech
+	var/destruction_sleep_duration = 20 //Time that mech pilot is put to sleep for if mech is destroyed
 	var/enclosed = TRUE //Set to false for open-cockpit mechs
 	var/silicon_icon_state = null //if the mech has a different icon when piloted by an AI or MMI
-
+	var/is_currently_ejecting = FALSE //Mech cannot use equiptment when true, set to true if pilot is trying to exit mech
+	
 	//Action datums
 	var/datum/action/innate/mecha/mech_eject/eject_action = new
 	var/datum/action/innate/mecha/mech_toggle_internals/internals_action = new
@@ -162,6 +165,8 @@
 	return cell
 
 /obj/mecha/Destroy()
+	if(occupant)
+		occupant.SetSleeping(destruction_sleep_duration)
 	go_out()
 	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
@@ -171,8 +176,6 @@
 		else
 			M.forceMove(loc)
 	if(wreckage)
-		if(prob(30))
-			explosion(get_turf(src), 0, 0, 1, 3)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
@@ -450,6 +453,8 @@
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
 		return
 	if(completely_disabled)
+		return
+	if(is_currently_ejecting)
 		return
 	if(phasing)
 		occupant_message("Unable to interact with objects while phasing")
