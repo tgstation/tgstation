@@ -379,7 +379,7 @@
 	beakers += B2
 
 /obj/item/grenade/chem_grenade/fire/
-	name = "fire"
+	name = "fire grenade"
 	desc = "Makes a short-lived ball of fire."
 	stage = READY
 

@@ -320,7 +320,8 @@
 	var/missile_speed = 2
 	var/missile_range = 30
 	var/diags_first = FALSE
-
+	var/det_time = 20
+	
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/action(target)
 	if(!action_checks(target))
 		return
@@ -347,9 +348,13 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 800
 	equip_cooldown = 60
-	var/det_time = 20
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/grenade/flashbang/F)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/fire
+	name = "\improper INC-1 fire launcher"
+	desc = "A weapon for combat exosuits. Launches ClF3 grenades."
+	projectile = /obj/item/grenade/chem_grenade/fire
+	
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proj_init(var/obj/item/grenade/flashbang/F)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")

@@ -227,6 +227,16 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
+/datum/design/mech_fire_launcher
+	name = "Exosuit Weapon (INC-1 Fire Launcher)"
+	desc = "Allows for the construction of an INC-1 fire launcher."
+	id = "mech_fire_launcher"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/fire
+	materials = list(MAT_METAL=22000,MAT_GOLD=6000,MAT_SILVER=8000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+	
 /datum/design/clusterbang_launcher
 	name = "Exosuit Module (SOB-3 Clusterbang Launcher)"
 	desc = "A weapon that violates the Geneva Convention at 3 rounds per minute"
