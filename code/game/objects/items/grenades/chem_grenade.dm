@@ -378,6 +378,16 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/grenade/chem_grenade/fire/
+	name = "fire"
+	desc = "Makes a short-lived ball of fire."
+	stage = READY
+
+/obj/item/grenade/chem_grenade/fire/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
+	B1.reagents.add_reagent("clf3", 1)
+	beakers += B1
 
 /obj/item/grenade/chem_grenade/antiweed
 	name = "weedkiller grenade"
