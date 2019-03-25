@@ -87,8 +87,8 @@
 	allowed = GLOB.detective_vest_allowed
 
 /obj/item/clothing/suit/det_suit/grey
-	name = "noir trenchcoat"
-	desc = "A hard-boiled private investigator's grey trenchcoat."
+	name = "noir suit coat"
+	desc = "A hard-boiled private investigator's grey suit coat."
 	icon_state = "greydet"
 	item_state = "greydet"
 
