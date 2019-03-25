@@ -76,6 +76,7 @@
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
 	max_equip = 5
+	destruction_sleep_duration = 20
 
 /obj/mecha/combat/marauder/mauler/loaded/Initialize()
 	. = ..()

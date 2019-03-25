@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a runtime that resulted in the character preview messing up if you were set to a non-human species while having a command level position set to high when enforce human authority is enabled."
