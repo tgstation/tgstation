@@ -326,9 +326,10 @@
 	else
 		health = 0
 		icon_state = icon_dead
+		if(flip_on_death)
+			transform = transform.Turn(180)
 		density = FALSE
 		..()
-	update_transform()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -442,10 +443,6 @@
 		changed = TRUE
 		ntransform.Scale(resize)
 		resize = RESIZE_DEFAULT_SIZE
-
-	if(flip_on_death && stat == DEAD)
-		changed = TRUE
-		ntransform.Turn(180)
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
