@@ -10,16 +10,18 @@
 
 
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
-	var/datum/gas_mixture/air_contents = return_air()
+	var/datum/gas_mixture/air_contents = air
 	if(!air_contents)
 		return 0
 
 	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
+	if (oxy < 0.5)
+		return soh
 	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
 	var/trit = air_contents.gases[/datum/gas/tritium] ? air_contents.gases[/datum/gas/tritium][MOLES] : 0
 	if(active_hotspot)
 		if(soh)
-			if((tox > 0.5 || trit > 0.5) && oxy > 0.5)
+			if(tox > 0.5 || trit > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
@@ -32,8 +34,6 @@
 		igniting = 1
 
 	if(igniting)
-		if(oxy < 0.5)
-			return 0
 
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
