@@ -1127,23 +1127,20 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/c_user = user
-	var/obj/item/bodypart/l_arm = c_user.get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/r_arm = c_user.get_bodypart(BODY_ZONE_R_ARM)
-	if(!l_arm && !r_arm)
+	if(!c_user.get_bodypart(BODY_ZONE_L_ARM) && !c_user.get_bodypart(BODY_ZONE_R_ARM))
 		return
 	to_chat(c_user, "<span class='warning'>You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it...</span>")
 	if(do_after(c_user, 50, target = src))
 		to_chat(c_user, "<span class='userdanger'>The guillotine drops on your arm, and the machine sucks it in!</span>")
 		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-		if(l_arm)
-			l_arm.dismember()
-			qdel(l_arm)
-		else if(r_arm)
-			r_arm.dismember()
-			qdel(r_arm)
+		var/which_hand = BODY_ZONE_L_ARM
+		if(!(c_user.active_hand_index % 2))
+			which_hand = BODY_ZONE_R_ARM
+		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
+		chopchop.dismember()
+		qdel(chopchop)
 		playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
-		var/prizenumber = rand(3,5)
-		for(var/i=1; i<=prizenumber; i++)
+		for(var/i=1; i<=rand(3,5); i++)
 			prizevend(user)
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
