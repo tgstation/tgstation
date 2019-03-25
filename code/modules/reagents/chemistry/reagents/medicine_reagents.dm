@@ -933,7 +933,7 @@
 	if(prob(5))
 		var/high_message = pick("You feel heated and ready to move.", "You feel like a burning star.", "You feel like a meteor.")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.adjust_bodytemperature(BODYTEMP_HEATING_MAX) //hot hot hot
+	M.adjust_bodytemperature(BODYTEMP_HEATING_MAX + 100) //hot hot hot
 	M.adjustStaminaLoss(-30, 0) 
 	M.AdjustStun(-40, FALSE)
 	M.AdjustKnockdown(-40, FALSE)
