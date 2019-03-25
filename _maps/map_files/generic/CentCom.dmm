@@ -8854,19 +8854,21 @@
 "tj" = (
 /obj/structure/falsewall/wood,
 /obj/structure/mirror,
-/obj/item/paint/anycolor,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
 "tk" = (
 /obj/structure/table/wood,
+/obj/item/paint/anycolor{
+	pixel_x = 7
+	},
+/obj/item/paint/anycolor{
+	pixel_x = -5
+	},
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
 "tl" = (
 /obj/structure/dresser,
 /turf/open/floor/holofloor/carpet,
-/area/holodeck/rec_center/photobooth)
-"tm" = (
-/turf/open/floor/black,
 /area/holodeck/rec_center/photobooth)
 "tn" = (
 /obj/effect/turf_decal/stripes/line{
@@ -17301,10 +17303,6 @@
 /obj/machinery/processor,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
-"Nb" = (
-/obj/item/paint/anycolor,
-/turf/open/floor/white,
-/area/holodeck/rec_center/photobooth)
 "Nd" = (
 /turf/closed/indestructible{
 	icon = 'icons/turf/walls/wood_wall.dmi';
@@ -17850,6 +17848,12 @@
 "Si" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/two)
+"Sq" = (
+/obj/structure/table/wood,
+/obj/item/camera,
+/obj/item/camera,
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/photobooth)
 "Su" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
@@ -18252,12 +18256,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
-"Wg" = (
-/obj/structure/table/wood,
-/obj/item/toy/crayon/spraycan,
-/obj/item/toy/crayon/spraycan,
-/turf/open/floor/holofloor/carpet,
-/area/holodeck/rec_center/photobooth)
 "Wj" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -18549,13 +18547,6 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
-"Zk" = (
-/obj/structure/table/wood,
-/obj/item/camera,
-/obj/item/toy/crayon/spraycan,
-/obj/item/camera,
-/turf/open/floor/holofloor/carpet,
-/area/holodeck/rec_center/photobooth)
 "Zl" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -18601,6 +18592,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"ZN" = (
+/obj/structure/table/wood,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/photobooth)
 "ZQ" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -71846,11 +71849,11 @@ tb
 tb
 tb
 tb
-tm
-tm
-tm
-tm
-tm
+tb
+tb
+tb
+tb
+tb
 fx
 aa
 aa
@@ -72099,15 +72102,15 @@ aa
 (209,1,1) = {"
 ac
 tk
-Nb
 tb
 tb
 tb
-tm
-tm
-tm
-tm
-tm
+tb
+tb
+tb
+tb
+tb
+tb
 fx
 aa
 aa
@@ -72355,16 +72358,16 @@ aa
 "}
 (210,1,1) = {"
 ac
-Zk
+Sq
 tb
 tb
 tb
 tb
-tm
-tm
-tm
-tm
-tm
+tb
+tb
+tb
+tb
+tb
 fx
 aa
 aa
@@ -72612,16 +72615,16 @@ aa
 "}
 (211,1,1) = {"
 ac
-Wg
+ZN
 tb
 tb
 tb
 tb
-tm
-tm
-tm
-tm
-tm
+tb
+tb
+tb
+tb
+tb
 fx
 aa
 aa
@@ -72874,11 +72877,11 @@ tb
 tb
 tb
 tb
-tm
-tm
-tm
-tm
-tm
+tb
+tb
+tb
+tb
+tb
 fx
 aa
 aa
