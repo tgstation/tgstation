@@ -10,15 +10,15 @@
 
 
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
-	var/datum/gas_mixture/air_contents = air
-	if(!air_contents)
+	var/datum/gas_mixture/air_gases = air?.gases
+	if(!air_gases)
 		return 0
 
-	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
+	var/oxy = air_gases[/datum/gas/oxygen] ? air_gases[/datum/gas/oxygen][MOLES] : 0
 	if (oxy < 0.5)
 		return (active_hotspot ? soh : 0)
-	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
-	var/trit = air_contents.gases[/datum/gas/tritium] ? air_contents.gases[/datum/gas/tritium][MOLES] : 0
+	var/tox = air_gases[/datum/gas/plasma] ? air_gases[/datum/gas/plasma][MOLES] : 0
+	var/trit = air_gases[/datum/gas/tritium] ? air_gases[/datum/gas/tritium][MOLES] : 0
 	if(active_hotspot)
 		if(soh)
 			if(tox > 0.5 || trit > 0.5)
@@ -28,19 +28,15 @@
 					active_hotspot.volume = exposed_volume
 		return 1
 
-	var/igniting = 0
-
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5))
-		igniting = 1
-
-	if(igniting)
+	if(exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5)
 
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
-	return igniting
+		return 1
+	return 0
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
