@@ -595,6 +595,9 @@
 		if(!isnull(G.lighting_alpha))
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
+	if(has_trait(TRAIT_THERMAL_VISION))
+		sight |= (SEE_MOBS)
+
 	if(has_trait(TRAIT_XRAY_VISION))
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = max(see_in_dark, 8)
