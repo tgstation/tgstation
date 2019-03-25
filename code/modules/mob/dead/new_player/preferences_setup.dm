@@ -25,12 +25,14 @@
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI_JF)
-				preview_icon = icon('icons/mob/ai.dmi', "AI", SOUTH)
-				preview_icon.Scale(64, 64)
+				/*preview_icon = icon('icons/mob/ai.dmi', "AI", SOUTH)
+				preview_icon.Scale(64, 64)*/
+				parent.show_character_previews(image(icon = 'icons/mob/ai.dmi', icon_state = "ai", dir = SOUTH))
 				return
 			if(CYBORG)
-				preview_icon = icon('icons/mob/robots.dmi', "robot", SOUTH)
-				preview_icon.Scale(64, 64)
+				/*preview_icon = icon('icons/mob/robots.dmi', "robot", SOUTH)
+				preview_icon.Scale(64, 64)*/
+				parent.show_character_previews(image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH))
 				return
 
 	// Set up the dummy for its photoshoot
@@ -61,7 +63,7 @@
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
 	COMPILE_OVERLAYS(mannequin)
-	CHECK_TICK
+	/*CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
 	CHECK_TICK
@@ -82,5 +84,6 @@
 	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
 	CHECK_TICK
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
-	CHECK_TICK
+	CHECK_TICK*/
+	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)

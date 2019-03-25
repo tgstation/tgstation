@@ -131,6 +131,8 @@
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
 	if(!isnum(minimal_player_age))
 		return 0
+	if(C.prefs && title in C.prefs.overridden_unavailable_jobs)
+		return 0
 
 	return max(0, minimal_player_age - C.player_age)
 

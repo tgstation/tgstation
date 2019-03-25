@@ -487,3 +487,95 @@ var/global/list/backup_admin_verbs = list(
 	if(confirm != "Confirm")
 		return
 	world.Reboot()
+
+/datum/admins/proc/override_unavailable_job()
+	set name = "Override Unavailable Job"
+	set category = "Special Verbs"
+	var/selection1 = alert(usr,"Is the player online or offline?","Override Unavailable Job","Online","Offline","Cancel")
+	if(!selection1 || selection1 == "Cancel")
+		return
+	var/selectedckey
+	switch(selection1)
+		if("Online")
+			selectedckey = input(usr,"Choose a player.","Override Unavailable Job",null) as null|anything in GLOB.clients
+			if(!istype(selectedckey,/client))
+				return
+			var/client/C = selectedckey
+			selectedckey = C.ckey
+		if("Offline")
+			selectedckey = input(usr,"Enter a player's ckey","Override Unavailable Job",null) as text
+			selectedckey = key_to_ckey(selectedckey)
+	if(!selectedckey)
+		return
+	var/list/selection2 = list("Enable a job","Disable a job","Clear all overridden jobs for this player")
+	var/option = input(usr,"Choose an option.","Override Unavailable Job",null) as null|anything in selection2
+	if(!(option in selection2)||!SSjob||!SSjob.occupations)
+		return
+	switch(option)
+		if("Enable a job")
+			var/pickedjob = input(usr,"Choose a job to over played time for [selectedckey].","Override Unavailable Job",null) as null|anything in SSjob.name_occupations
+			if(!SSjob.name_occupations[pickedjob])
+				return
+			var/datum/preferences/P
+			for(var/client/C in GLOB.clients)
+				if(C.ckey == selectedckey)
+					if(C.prefs)
+						P = C.prefs
+					break
+			if(!P)
+				P = new()
+				P.load_path(selectedckey)
+			if(!P)
+				return
+			P.load_preferences()
+			if(!istype(P.overridden_unavailable_jobs,/list))
+				P.overridden_unavailable_jobs = list()
+			if(pickedjob in P.overridden_unavailable_jobs)
+				to_chat(usr,"This job is already overridden for [selectedckey].")
+				return
+			P.overridden_unavailable_jobs += pickedjob
+			P.save_preferences()
+			message_admins("[usr.key] has overridden [selectedckey]'s played time and enabled '[pickedjob]'. for them.")
+			log_game("[usr.key] has overridden [selectedckey]'s played time and enabled '[pickedjob]'. for them.")
+		if("Disable a job")
+			var/datum/preferences/P
+			for(var/client/C in GLOB.clients)
+				if(C.ckey == selectedckey)
+					if(C.prefs)
+						P = C.prefs
+					break
+			if(!P)
+				P = new()
+				P.load_path(selectedckey)
+			if(!P)
+				return
+			P.load_preferences()
+			var/pickedjob = input(usr,"Choose a job to cease being overridden for [selectedckey].","Override Unavailable Job",null) as null|anything in P.overridden_unavailable_jobs
+			if(!SSjob.name_occupations[pickedjob] || !istype(P.overridden_unavailable_jobs,/list))
+				return
+			P.overridden_unavailable_jobs -= pickedjob
+			P.save_preferences()
+			message_admins("[usr.key] has removed '[pickedjob]' from overridden jobs for [selectedckey]'s based on played time.")
+			log_game("[usr.key] has removed '[pickedjob]' from overridden jobs for [selectedckey]'s based on played time.")
+		if("Clear all overridden jobs for this player")
+			var/confirm = alert(usr,"Are you sure you want to reset the overridden jobs based on played time for [selectedckey]","Override Unavailable Job","Yes","Cancel")
+			if(confirm != "Yes")
+				return
+			var/datum/preferences/P
+			for(var/client/C in GLOB.clients)
+				if(C.ckey == selectedckey)
+					if(C.prefs)
+						P = C.prefs
+					break
+			if(!P)
+				P = new()
+				P.load_path(selectedckey)
+			if(!P)
+				return
+			P.load_preferences()
+			if(!istype(P.overridden_unavailable_jobs,/list))
+				return
+			P.overridden_unavailable_jobs.Cut()
+			P.save_preferences()
+			message_admins("[usr.key] has reset all overridden jobs based on played time for [selectedckey].")
+			log_game("[usr.key] has reset all overridden jobs based on played time for [selectedckey].")

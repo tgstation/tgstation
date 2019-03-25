@@ -35,12 +35,12 @@
 /mob/living/carbon/human/GetVoice()
 	if(istype(wear_mask, /obj/item/clothing/mask))
 		var/obj/item/clothing/mask/V = wear_mask
-		if(V.disguise_voice() && wear_id)
-			var/obj/item/card/id/idcard = wear_id.GetID()
-			if(istype(idcard))
+		if(V.disguise_voice())
+			if(wear_id)
+				var/obj/item/card/id/idcard = wear_id.GetID()
 				return idcard.registered_name
 			else
-				return real_name
+				return name
 		else
 			return real_name
 	if(mind)

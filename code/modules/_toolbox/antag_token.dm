@@ -1,9 +1,15 @@
 GLOBAL_VAR_INIT(antagtokenpath,"data/other_saves/antagtokens.sav")
 
+/datum/game_mode
+	var/list/available_antag_tokens = list("traitor","changeling")
+
 client/verb/check_antag_token()
 	set name = "Antagonist Tokens"
 	set category = "OOC"
 	var/tokens = get_antag_token_count()
+	if(!SSticker || !SSticker.mode || !SSticker.mode.available_antag_tokens || !SSticker.mode.available_antag_tokens.len)
+		return
+	var/list/choices = SSticker.mode.available_antag_tokens
 	if(!istype(mob,/mob/living/carbon/human) || !mob.mind)
 		if(!tokens)
 			alert(src,"You have [tokens] antagonist tokens","Antagonist Tokens","Ok")
@@ -19,15 +25,13 @@ client/verb/check_antag_token()
 		var/antagchoice = alert(src,"You have [tokens] antagonist tokens. Do you wish to use one now?","Antagonist Tokens","Yes","No")
 		if(antagchoice != "Yes")
 			return
-		antagchoice = alert(src,"What antagonist from this list do you wish to be?","Antagonist Tokens","Traitor","Changeling")
-		if(!(antagchoice in list("Traitor","Changeling")))
+		if(choices.len > 1)
+			antagchoice = input(src,"What antagonist from this list do you wish to be?","Antagonist Tokens",null) as null|anything in choices
+		else
+			antagchoice = choices[1]
+		if(!(antagchoice in SSticker.mode.available_antag_tokens))
 			return
-		var/success
-		switch(antagchoice)
-			if("Traitor")
-				success = use_antag_token("traitor")
-			if("Changeling")
-				success = use_antag_token("changeling")
+		var/success = use_antag_token(antagchoice)
 		if(success)
 			to_chat(src, "<B>You have used an antagonist token.</B>")
 			message_admins("[ckey] has used an antag token to be come a [antagchoice].")
@@ -83,15 +87,36 @@ client/verb/check_antag_token()
 		switch(antagtype)
 			if("traitor")
 				if(istype(mob,/mob/living/carbon/human))
-					tokens--
 					mob.mind.add_antag_datum(/datum/antagonist/traitor)
 					success = 1
 			if("changeling")
 				if(istype(mob,/mob/living/carbon/human))
-					tokens--
 					mob.mind.make_Changling()
 					success = 1
+			if("cult")
+				if(istype(mob,/mob/living/carbon/human))
+					if(istype(SSticker.mode,/datum/game_mode/cult))
+						var/datum/game_mode/cult/cultmode = SSticker.mode
+						cultmode.add_cultist(mob.mind, 0, equip=TRUE)
+						success = 1
+						if(cultmode.main_cult)
+							var/datum/antagonist/cult/C = mob.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+							if(C && C.cult_team)
+								cultmode.main_cult = C.cult_team
+			if("revs")
+				if(istype(SSticker.mode,/datum/game_mode/revolution))
+					var/datum/game_mode/revolution/revmode = SSticker.mode
+					if(revmode.revolution)
+						var/datum/antagonist/rev/head/new_head = new()
+						new_head.give_flash = TRUE
+						new_head.give_hud = TRUE
+						new_head.remove_clumsy = TRUE
+						mob.mind.add_antag_datum(new_head,revmode.revolution)
+						success = 1
+						revmode.revolution.update_objectives()
+						revmode.revolution.update_heads()
 		if(success)
+			tokens--
 			tokens = max(tokens,0)
 			S["[ckey]"] << tokens
 			return 1
@@ -151,3 +176,9 @@ client/verb/check_antag_token()
 			S["[chosenckey]"] << tokens
 			message_admins("[usr.ckey] has set [chosenckey]'s antag tokens to [newtokencount]")
 			log_admin("[usr.ckey] removes one antag token from [chosenckey].")
+
+/datum/game_mode/revolution
+	available_antag_tokens = list("revs")
+
+/datum/game_mode/cult
+	available_antag_tokens = list("cult")

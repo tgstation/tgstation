@@ -18,14 +18,15 @@
 	var/new_form = /mob/living/carbon/human
 
 /datum/disease/transformation/Copy()
-	var/datum/disease/transformation/D = ..()
-	D.stage1 = stage1.Copy()
-	D.stage2 = stage2.Copy()
-	D.stage3 = stage3.Copy()
-	D.stage4 = stage4.Copy()
-	D.stage5 = stage5.Copy()
-	D.new_form = D.new_form
-	return D
+	. = ..()
+	var/datum/disease/transformation/D = .
+	if(istype(D))
+		D.stage1 = stage1
+		D.stage2 = stage2
+		D.stage3 = stage3
+		D.stage4 = stage4
+		D.stage5 = stage5
+		D.new_form = new_form
 
 /datum/disease/transformation/stage_act()
 	..()
