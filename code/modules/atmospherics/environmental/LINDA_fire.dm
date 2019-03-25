@@ -12,11 +12,11 @@
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	var/list/air_gases = air?.gases
 	if(!air_gases)
-		return 0
+		return
 
 	var/oxy = air_gases[/datum/gas/oxygen] ? air_gases[/datum/gas/oxygen][MOLES] : 0
 	if (oxy < 0.5)
-		return (active_hotspot ? soh : 0)
+		return
 	var/tox = air_gases[/datum/gas/plasma] ? air_gases[/datum/gas/plasma][MOLES] : 0
 	var/trit = air_gases[/datum/gas/tritium] ? air_gases[/datum/gas/tritium][MOLES] : 0
 	if(active_hotspot)
@@ -26,7 +26,7 @@
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
-		return 1
+		return
 
 	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5))
 
@@ -35,8 +35,6 @@
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
-		return 1
-	return 0
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
