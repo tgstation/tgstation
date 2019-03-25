@@ -1,0 +1,7 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "pAIs are no longer immune to stamina damage."
+  - bugfix: "Fixed a runtime when an AI core witnesses someone exit a cardboard box."
+  - bugfix: "Fixed a runtime when attempting to blind a True Devil with a flashlight."
+  - bugfix: "The implant chair no longer runtimes when implanting non-implant organs."

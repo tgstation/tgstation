@@ -37,16 +37,14 @@
 /datum/spawners_menu/ui_act(action, params)
 	if(..())
 		return
-
-	var/group_name = params["name"]
-	if(!group_name || !(group_name in GLOB.mob_spawners))
-		return
-	var/list/spawnerlist = GLOB.mob_spawners[group_name]
+	var/list/spawnerlist = list(GLOB.mob_spawners[params["name"]])
 	if(!spawnerlist.len)
 		return
-	var/obj/effect/mob_spawn/MS = pick(spawnerlist)
-	if(!istype(MS) || !(MS in GLOB.poi_list))
+	var/spawner_ref = pick(spawnerlist)
+	var/obj/effect/mob_spawn/MS = locate(spawner_ref) in GLOB.poi_list
+	if(!MS)
 		return
+
 	switch(action)
 		if("jump")
 			if(MS)

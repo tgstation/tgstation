@@ -490,8 +490,6 @@
 	return ..()
 
 /obj/machinery/nuclearbomb/beer/actually_explode()
-	//Unblock roundend, we're not actually exploding.
-	SSticker.roundend_check_paused = FALSE
 	var/turf/bomb_location = get_turf(src)
 	if(!bomb_location)
 		disarm()

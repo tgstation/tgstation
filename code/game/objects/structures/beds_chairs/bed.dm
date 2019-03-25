@@ -14,7 +14,7 @@
 	icon = 'icons/obj/objects.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
-	buckle_lying = 90
+	buckle_lying = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 30

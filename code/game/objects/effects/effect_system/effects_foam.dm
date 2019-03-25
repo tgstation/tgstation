@@ -22,14 +22,15 @@
 	/turf/open/space/transit,
 	/turf/open/chasm,
 	/turf/open/lava))
-	var/slippery_foam = TRUE
 
 /obj/effect/particle_effect/foam/firefighting
 	name = "firefighting foam"
 	lifetime = 20 //doesn't last as long as normal foam
 	amount = 0 //no spread
-	slippery_foam = FALSE
 	var/absorbed_plasma = 0
+
+/obj/effect/particle_effect/foam/firefighting/MakeSlippery()
+	return
 
 /obj/effect/particle_effect/foam/firefighting/process()
 	..()
@@ -72,7 +73,9 @@
 	name = "aluminium foam"
 	metal = ALUMINUM_FOAM
 	icon_state = "mfoam"
-	slippery_foam = FALSE
+
+/obj/effect/particle_effect/foam/metal/MakeSlippery()
+	return
 
 /obj/effect/particle_effect/foam/metal/smart
 	name = "smart foam"
@@ -90,14 +93,13 @@
 
 /obj/effect/particle_effect/foam/Initialize()
 	. = ..()
+	MakeSlippery()
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
-/obj/effect/particle_effect/foam/ComponentInitialize()
-	. = ..()
-	if(slippery_foam)
-		AddComponent(/datum/component/slippery, 100)
+/obj/effect/particle_effect/foam/proc/MakeSlippery()
+	AddComponent(/datum/component/slippery, 100)
 
 /obj/effect/particle_effect/foam/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)

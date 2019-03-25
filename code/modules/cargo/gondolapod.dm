@@ -39,14 +39,7 @@
 	set name = "Release Contents"
 	set category = "Gondola"
 	set desc = "Release any contents stored within your vast belly."
-	linked_pod.open(src, forced = TRUE)
-
-/mob/living/simple_animal/pet/gondola/gondolapod/examine(mob/user)
-	..()
-	if (contents.len)
-		to_chat(user, "<span class='notice'>It looks like it hasn't made its delivery yet.</b><span>")
-	else
-		to_chat(user, "<span class='notice'>It looks like it has already made its delivery.</b><span>")
+	linked_pod.open(src, manual = TRUE)
 
 /mob/living/simple_animal/pet/gondola/gondolapod/verb/check()
 	set name = "Count Contents"
@@ -54,7 +47,7 @@
 	set desc = "Take a deep look inside youself, and count up what's inside"
 	var/total = contents.len
 	if (total)	
-		to_chat(src, "<span class='notice'>You detect [total] object\s within your incredibly vast belly.</span>")
+		to_chat(src, "<span class='notice'>You detect [total] object[total > 1 ? "s" : ""] within your incredibly vast belly.</span>")
 	else
 		to_chat(src, "<span class='notice'>A closer look inside yourself reveals... nothing.</span>")
 

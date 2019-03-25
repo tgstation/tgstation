@@ -109,8 +109,7 @@
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
-	max_integrity = 55
-	w_class = WEIGHT_CLASS_NORMAL
+	max_integrity = 65
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)

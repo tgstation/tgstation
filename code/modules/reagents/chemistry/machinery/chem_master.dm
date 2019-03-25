@@ -20,20 +20,9 @@
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
-	var/list/pillStyles = null
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
-
-	//Calculate the span tags and ids fo all the available pill icons
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	pillStyles = list()
-	for (var/x in 1 to PILL_STYLE_COUNT)
-		var/list/SL = list()
-		SL["id"] = x
-		SL["htmltag"] = assets.icon_tag("pill[x]")
-		pillStyles += list(SL)
-
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -143,17 +132,13 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pills)
 		assets.send(user)
 
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
 		ui.open()
 
-//Insert our custom spritesheet css link into the html
-/obj/machinery/chem_master/ui_base_html(html)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
-	
+
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
 	data["isBeakerLoaded"] = beaker ? 1 : 0
@@ -181,8 +166,11 @@
 		for(var/datum/reagent/N in reagents.reagent_list)
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
-
-	//Calculated at init time as it never changes
+	var/list/pillStyles = list()
+	for (var/x in 1 to PILL_STYLE_COUNT)
+		var/list/SL = list()
+		SL["id"] = x
+		pillStyles += list(SL)
 	data["pillStyles"] = pillStyles
 	return data
 

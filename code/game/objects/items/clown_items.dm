@@ -28,7 +28,7 @@
 	force_string = "robust... against germs"
 	var/uses = 100
 
-/obj/item/soap/ComponentInitialize()
+/obj/item/soap/Initialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
 

@@ -1,5 +1,5 @@
 /obj/item/melee/baton
-	name = "stun baton"
+	name = "stunbaton"
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
@@ -58,11 +58,11 @@
 
 /obj/item/melee/baton/update_icon()
 	if(status)
-		icon_state = "[initial(icon_state)]_active"
+		icon_state = "[initial(name)]_active"
 	else if(!cell)
-		icon_state = "[initial(icon_state)]_nocell"
+		icon_state = "[initial(name)]_nocell"
 	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[initial(name)]"
 
 /obj/item/melee/baton/examine(mob/user)
 	..()
@@ -185,7 +185,7 @@
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
 	desc = "An improvised stun baton."
-	icon_state = "stunprod"
+	icon_state = "stunprod_nocell"
 	item_state = "prod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'

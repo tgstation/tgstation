@@ -558,7 +558,6 @@
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
-		/obj/item/gun/energy/e_gun/mini
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
