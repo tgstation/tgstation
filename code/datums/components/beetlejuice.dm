@@ -6,6 +6,7 @@
 	var/min_count = 3
 	var/cooldown = 30 SECONDS //Delay between teleports
 	var/active = TRUE
+	var/regex/R
 
 /datum/component/beetlejuice/Initialize()
 	if(!ismovableatom(parent))
@@ -19,18 +20,27 @@
 	if(ismob(O))
 		var/mob/M = parent
 		keyword = M.real_name
+	update_regex()
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_LIVING_SAY_SPECIAL, .proc/say_react)
+
+/datum/component/beetlejuice/proc/update_regex()
+	R = regex("[REGEX_QUOTE(keyword)]","g")
+
+/datum/component/beetlejuice/vv_edit_var(var_name, var_value)
+	. = ..()
+	if (var_name == NAMEOF(src, keyword))
+		update_regex()
 
 /datum/component/beetlejuice/proc/say_react(datum/source, mob/speaker,message)
 	if(!speaker || !message || !active)
 		return
-	var/found = findtext(message,keyword)
+	var/found = R.Find(message)
 	if(found)
-		var/occurences = 0
-		while(found > 0)
+		var/occurences = 1
+		while(R.Find(message))
 			occurences++
-			found = findtext(message,keyword,found + length(keyword) + 1)
+		R.next = 1
 
 		if(!first_heard[speaker] || (first_heard[speaker] + max_delay < world.time))
 			first_heard[speaker] = world.time
