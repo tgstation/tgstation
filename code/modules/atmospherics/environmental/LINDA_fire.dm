@@ -16,7 +16,7 @@
 
 	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
 	if (oxy < 0.5)
-		return soh
+		return (active_hotspot ? soh : 0)
 	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
 	var/trit = air_contents.gases[/datum/gas/tritium] ? air_contents.gases[/datum/gas/tritium][MOLES] : 0
 	if(active_hotspot)
