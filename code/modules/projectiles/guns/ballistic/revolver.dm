@@ -81,10 +81,12 @@
 	unique_reskin = list("Default" = "detective",
 						"Fitz Special" = "detective_fitz",
 						"Police Positive Special" = "detective_police",
+						"Blued Steel" = "detective_blued",
+						"Stainless Steel" = "detective_stainless",
 						"Gold Trim" = "detective_gold",
 						"Leopard Spots" = "detective_leopard",
 						"The Peacemaker" = "detective_peacemaker",
-						"Black Panther" = "detective_panther",
+						"Black Panther" = "detective_panther"
 						)
 
 /obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
