@@ -25,7 +25,7 @@
 	var/max_time = 40
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		max_time -= L.rating
-	interval = max(max_time,1)
+	interval = max(max_time,1)sd
 
 /obj/machinery/harvester/update_icon(warming_up)
 	if(warming_up)
