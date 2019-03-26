@@ -4,7 +4,7 @@
 	icon_state = "propulsion";
 	dir = 8
 	},
-/turf/open/space/basic,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "b" = (
 /turf/closed/wall/mineral/titanium,
