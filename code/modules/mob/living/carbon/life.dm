@@ -535,9 +535,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				adjustFireLoss(-0.15, FALSE)
 
 		if(drunkenness >= 51)
-			if(prob(5))
-				confused += 10
-				vomit()
+			if(prob(3))
+				confused += 15
+				vomit() // vomiting clears toxloss, consider this a blessing
 			Dizzy(25)
 
 		if(drunkenness >= 61)
@@ -551,11 +551,12 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			blur_eyes(5)
 
 		if(drunkenness >= 81)
-			adjustToxLoss(0.2)
+			adjustToxLoss(1)
 			if(prob(5) && !stat)
 				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
+			adjustToxLoss(1)
 			adjustBrainLoss(0.4, 60)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
@@ -565,7 +566,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					Sleeping(900)
 
 		if(drunkenness >= 101)
-			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
+			adjustToxLoss(2) //Let's be honest you shouldn't be alive by now
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()

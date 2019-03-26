@@ -334,6 +334,7 @@
 #include "code\datums\components\_component.dm"
 #include "code\datums\components\anti_magic.dm"
 #include "code\datums\components\armor_plate.dm"
+#include "code\datums\components\beetlejuice.dm"
 #include "code\datums\components\butchering.dm"
 #include "code\datums\components\caltrop.dm"
 #include "code\datums\components\chasm.dm"

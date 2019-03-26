@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Pulling someone while they're buckled to a chair will no longer offset them and make them face you."
+  - bugfix: "Buckling someone in while they're being pulled will now properly reset their offsets."
+  - bugfix: "Pulling offsets will now update properly while dragging someone who's laying down."

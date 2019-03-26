@@ -1,0 +1,4 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "Humans can no longer use UIs while incapacitated"
