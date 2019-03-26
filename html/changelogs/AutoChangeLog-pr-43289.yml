@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "Examining a recharger will now tell you the amount of charge the inserted device has."
