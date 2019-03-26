@@ -14,11 +14,14 @@
 	if(!air_gases)
 		return
 
-	var/oxy = air_gases[/datum/gas/oxygen] ? air_gases[/datum/gas/oxygen][MOLES] : 0
+	. = air_gases[/datum/gas/oxygen]
+	var/oxy = . ? .[MOLES] : 0
 	if (oxy < 0.5)
 		return
-	var/tox = air_gases[/datum/gas/plasma] ? air_gases[/datum/gas/plasma][MOLES] : 0
-	var/trit = air_gases[/datum/gas/tritium] ? air_gases[/datum/gas/tritium][MOLES] : 0
+	. = air_gases[/datum/gas/plasma]
+	var/tox = . ? .[MOLES] : 0
+	. = air_gases[/datum/gas/plasma]
+	var/trit = . ? .[MOLES] : 0
 	if(active_hotspot)
 		if(soh)
 			if(tox > 0.5 || trit > 0.5)
