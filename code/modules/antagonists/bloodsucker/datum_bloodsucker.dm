@@ -238,13 +238,45 @@
 
 
 
+
+
 // 			Dev Notes
 //
 // HEALING: Maybe Vamps metabolize specially? Like, they slowly drip their own blood into their system?
 //			- Give Vamps their own metabolization proc, perhaps?
+//			**
 //
 // KILLING: It's almost impossible to track who someone has directly killed. But an Admin could be given
 //			an easy way to whip a Bloodsucker for cruel behavior, as a RP mechanic but not a punishment.
+//			**
+//
+// HUNGER:  Just keep adjusting mob's nutrition to Blood Hunger level. No need to cancel nutrition from eating.
+//			** mob.dm /set_nutrition()
+//			** snacks.dm / attack()  <-- Stop food from doing anything?
+
+// ORGANS:  Liver
+//			** life.dm /handle_liver()
+//
+// CORPSE:	Most of these effects likely go away when using "Masquerade" to appear alive.
+//			** status_procs.dm /adjust_bodytemperature()
+//			** traits.dm /TRAIT_NOBREATH /TRAIT_SLEEPIMMUNE /TRAIT_RESISTCOLD /TRAIT_RADIMMUNE  /TRAIT_VIRUSIMMUNE
+//			*  MASQUERADE ON/OFF: /TRAIT_FAKEDEATH (M)
+//			* /TRAIT_NIGHT_VISION
+//			* /TRAIT_DEATHCOMA <-- This basically makes you immobile. When using status_procs /fakedeath(), make sure to remove Coma unless we're in Torpor!
+//			* /TRAIT_NODEATH <--- ???
+//			** species  /NOZOMBIE
+//			* ADD: TRAIT_COLDBLOODED <-- add to carbon/life.dm /natural_bodytemperature_stabilization()
+//
+// MASQUERADE	Appear as human!
+//				** examine.dm /examine() <-- Change "blood_volume < BLOOD_VOLUME_SAFE" to a new examine
+//
+// NOSFERATU ** human.add_trait(TRAIT_DISFIGURED, "insert_vamp_datum_here") <-- Makes you UNKNOWN unless your ID says otherwise.
+// STEALTH   ** human_helpers.dm /get_visible_name()
+//
+// FRENZY	** living.dm /update_mobility() (USED TO be update_canmove)
+//
+// PREDATOR See other Vamps!
+//		    * examine.dm /examine()
 
 
 
