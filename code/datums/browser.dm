@@ -461,4 +461,4 @@
 	// so just reset the user mob's machine var
 	if(src && src.mob)
 		src.mob.unset_machine()
-	//return
+	return

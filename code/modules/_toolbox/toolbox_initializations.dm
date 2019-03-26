@@ -197,3 +197,11 @@ GLOBAL_LIST_EMPTY(hub_features)
 		allowed_department_flags = ALL
 		department_tag = "Unidentified"
 	return ..()
+
+//To ask the player to adminhelp if they are griefed
+/client/proc/inform_to_adminhelp_death()
+	spawn(30)
+		var/informed = alert(src,"If you feel this death was illegitimate. Please adminhelp and an admin will investigate this death for you.","You Have Died","No thanks","Admin PM now")
+		if(informed != "Admin PM now")
+			return
+		adminhelp()

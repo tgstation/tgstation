@@ -126,6 +126,35 @@
 	belt = /obj/item/storage/belt/utility/full
 
 //00000050600012d5ab193
+/*/mob/proc/jesusify()
+	if(isnewplayer(src))
+		to_chat(usr, "<span class='danger'>Cannot convert players who have not entered yet.</span>")
+		return
+
+	spawn(0)
+		var/mob/living/carbon/human/jesus/M
+		var/location = src.loc
+		var/delay = 50
+		spawn(0)
+			for(var/i=0,i<=20,i++)
+				if(i != 0)
+					delay = max(delay-5,1)
+				var/obj/effect/E = new(loc)
+				E.pixel_x = rand(-24,24)
+				E.pixel_y = rand(-24,24)
+				E.anchored = 1
+				E.density = 0
+				E.icon = 'icons/effects/beam/dmi'
+				E.icon_state = "lightning[rand(1,12)]"
+				spawn(8)
+					qdel(E)
+				sleep(delay)
+			*/
+
+
+
+
+
 /mob/proc/jesusify()
 	if(isnewplayer(src))
 		to_chat(usr, "<span class='danger'>Cannot convert players who have not entered yet.</span>")

@@ -48,7 +48,7 @@
 
 	var/gamemode_ready = FALSE //Is the gamemode all set up and ready to start checking for ending conditions.
 
-	var/precentage_for_antagonists = -1
+	var/divider_for_antagonists = -1
 
 	var/minimum_enemies = 0
 
@@ -360,11 +360,11 @@
 	// Goodbye antag dante
 	players = shuffle(players)
 
-	if(precentage_for_antagonists > 0)
+	if(divider_for_antagonists > 0)
 		var/number_of_players = new_players_list.len
 		if(GLOB.override_lobby_player_count > 0)
 			number_of_players = GLOB.override_lobby_player_count
-		var/new_recommended_enemies = round(number_of_players*precentage_for_antagonists,1)
+		var/new_recommended_enemies = round(number_of_players/divider_for_antagonists,1)
 		if(minimum_enemies)
 			new_recommended_enemies = max(new_recommended_enemies,minimum_enemies)
 		if(new_recommended_enemies < recommended_enemies)

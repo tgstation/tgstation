@@ -45,7 +45,13 @@
 
 /mob/living/death(gibbed)
 	if(client)
-		to_chat(src,"<font color='red' size='3'><B>You have died.</B></font><BR><font color='blue'><B>If you feel this death was illegitimate. Please adminhelp and an admin will investigate this death for you.<B></font>")
+		to_chat(src,"<font color='red' size='3'><B>You have died.</B></font>")
+		if(GLOB && istype(GLOB.Player_Client_Cache,/list))
+			var/datum/client_cache/cache = GLOB.Player_Client_Cache[client.ckey]
+			var/cacheentry = "Informed_To_Adminhelp_Grief"
+			if(istype(cache) && istype(cache.warnings_experienced,/list) && !(cacheentry in cache.warnings_experienced))
+				cache.warnings_experienced += cacheentry
+				client.inform_to_adminhelp_death()
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time

@@ -427,6 +427,7 @@ GLOBAL_LIST_EMPTY(Player_Client_Cache)
 	var/holderrank
 	var/related_accounts_cid
 	var/related_accounts_ip
+	var/list/warnings_experienced = list()
 
 /datum/client_cache/proc/generate(client/C)
 	if(istype(C,/mob))

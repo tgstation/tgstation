@@ -16,7 +16,8 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
-	precentage_for_antagonists = 0.15
+	divider_for_antagonists = 3.76
+	minimum_enemies = 1
 
 	announce_span = "green"
 	announce_text = "Alien changelings have infiltrated the crew!\n\
@@ -25,8 +26,6 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 
 	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 	var/list/changelings = list()
-
-	precentage_for_antagonists = 0.15
 
 /datum/game_mode/changeling/pre_setup()
 

@@ -7,7 +7,7 @@
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
-	precentage_for_antagonists = 0.2
+	divider_for_antagonists = 6
 	minimum_enemies = 2
 
 	announce_span = "danger"
