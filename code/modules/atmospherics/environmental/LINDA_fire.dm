@@ -20,7 +20,7 @@
 		return
 	. = air_gases[/datum/gas/plasma]
 	var/tox = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/plasma]
+	. = air_gases[/datum/gas/tritium]
 	var/trit = . ? .[MOLES] : 0
 	if(active_hotspot)
 		if(soh)
