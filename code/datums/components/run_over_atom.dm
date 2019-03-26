@@ -1,25 +1,30 @@
 /datum/component/run_over_atom
 	var/run_over_message = "drives over"
 	var/damage_amount
+	var/datum/callback/before_callback
+	var/datum/callback/after_callback
 
-/datum/component/run_over_atom/Initialize(_damage, _runover_message)
+/datum/component/run_over_atom/Initialize(_damage, _runover_message, datum/callback/before_running_over, datum/callback/after_running_over)
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	damage_amount = _damage ? _damage : rand(5, 15) //see multipliers below.
 
 	if(_runover_message)
 		run_over_message = _runover_message
+
+	if(before_running_over)
+		before_callback = before_running_over
+	if(after_running_over)
+		after_callback = after_running_over
+
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED_OVER, .proc/run_over)
 
 /datum/component/run_over_atom/proc/run_over(atom/movable/AM, atom/movable/thing_ran_over)
-	if(thing_ran_over.get_run_over(AM, damage_amount, run_over_message))
-		AM.after_running_over(thing_ran_over)
-
-/atom/movable/proc/after_running_over(atom/movable/AM)
-	return
-
-/mob/living/simple_animal/bot/mulebot/after_running_over(atom/movable/AM)
-	bloodiness += 4
+	if(before_callback)
+		before_callback.Invoke(thing_ran_over)
+	thing_ran_over.get_run_over(AM, damage_amount, run_over_message)
+	if(after_callback)
+		after_callback.Invoke(thing_ran_over)
 
 /atom/movable/proc/get_run_over(atom/movable/AM, _damage_amount, run_over_message)
 	return
@@ -41,5 +46,3 @@
 
 	add_splatter_floor()
 	AM.add_blood_DNA(get_blood_dna_list())
-	return TRUE
-

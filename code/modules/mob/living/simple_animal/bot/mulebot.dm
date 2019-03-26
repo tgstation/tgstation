@@ -64,13 +64,20 @@
 /mob/living/simple_animal/bot/mulebot/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/ntnet_interface)
-	AddComponent(/datum/component/run_over_atom)
+	AddComponent(/datum/component/run_over_atom, null, null, CALLBACK(src, .proc/add_victim_bloodiness))
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
 	unload(0)
 	qdel(wires)
 	wires = null
 	return ..()
+
+/mob/living/simple_animal/bot/mulebot/proc/add_victim_bloodiness(atom/movable/AM)
+	if(!ismob(AM))
+		return
+	var/mob/M = AM
+	if(M.get_blood_id())
+		bloodiness += 4
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
