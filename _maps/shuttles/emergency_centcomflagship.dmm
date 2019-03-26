@@ -31,6 +31,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ag" = (
@@ -152,6 +155,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "as" = (
@@ -220,6 +226,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -334,6 +343,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aM" = (
@@ -379,6 +389,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aS" = (
@@ -428,6 +439,9 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/window/reinforced/spawner/west,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bb" = (
@@ -538,6 +552,9 @@
 /area/shuttle/escape)
 "bv" = (
 /obj/machinery/processor,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bw" = (
@@ -586,6 +603,9 @@
 /area/shuttle/escape)
 "bF" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bG" = (
@@ -793,6 +813,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cl" = (
@@ -823,6 +846,9 @@
 "co" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -977,6 +1003,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cH" = (
@@ -1018,6 +1047,9 @@
 /obj/machinery/chem_heater,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -1129,6 +1161,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "dc" = (
@@ -1209,10 +1244,16 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "dn" = (
 /obj/machinery/telecomms/server/presets/common,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/circuit/green/telecomms,
 /area/shuttle/escape)
 "do" = (
@@ -1260,6 +1301,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "du" = (
@@ -1322,6 +1366,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "dD" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /mob/living/simple_animal/drone/snowflake/bardrone{
 	desc = "A Security drone, an indestructible robot built to keep the peace.";
 	laws = "1. Keep the peace .\n2. Talk to people.\n3. Don't get messed up in their affairs.";
@@ -1388,11 +1435,218 @@
 "dO" = (
 /turf/template_noop,
 /area/template_noop)
+"ep" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"fY" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"gh" = (
+/obj/structure/table,
+/obj/item/construction/rcd/arcd,
+/obj/item/pipe_dispenser,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"hb" = (
+/obj/structure/table,
+/obj/item/aicard,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"hz" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"jK" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"kq" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"qE" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"ro" = (
+/obj/structure/AIcore/deactivated,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"tu" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"ub" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"wT" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/telecomms,
+/area/shuttle/escape)
+"AH" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Bg" = (
+/obj/structure/table,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"CM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Fd" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape)
+"FR" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"IL" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Jt" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Ju" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
+"KJ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"OX" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"PT" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Rd" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/east,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Rm" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Sx" = (
+/obj/structure/table,
+/obj/machinery/light/floor,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Ue" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"ZM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 dO
 ab
-ac
+Ju
 ac
 ad
 ad
@@ -1418,11 +1672,11 @@ aT
 aT
 bP
 bx
-ac
+Ju
 aT
 aT
 aT
-ac
+Ju
 bR
 bP
 aT
@@ -1459,7 +1713,7 @@ aB
 aD
 aF
 aG
-ae
+Fd
 aK
 dO
 dO
@@ -1470,21 +1724,21 @@ dO
 dO
 br
 ac
-ae
-bc
+Fd
 bG
 bG
 bG
 bG
-bc
+bG
+ep
 bS
+OX
 bG
 bG
 bG
-bG
-bG
+OX
 bS
-bc
+ep
 bG
 bG
 bG
@@ -1493,7 +1747,7 @@ co
 cu
 cA
 cA
-cA
+ub
 cA
 ac
 ac
@@ -1515,8 +1769,8 @@ af
 at
 bq
 bq
-bq
-bq
+aE
+aE
 bq
 aH
 aL
@@ -1524,12 +1778,12 @@ ac
 ac
 ac
 ac
-ac
+Ju
 ac
 ac
 ac
 ae
-bc
+ep
 bc
 bc
 bc
@@ -1574,36 +1828,36 @@ ad
 ag
 au
 bq
-bq
-bq
-bq
-bq
+aC
+aC
+aC
+aC
 bq
 aM
 ac
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bH
-bH
-bH
-bH
+bG
+bG
+bG
+bG
+bG
+bG
+bG
 bc
 bc
 bH
 bH
 bH
+Rd
 bH
 bH
 bc
+bH
+bH
+bH
+Rd
+bH
+bH
+ce
 bc
 bH
 bH
@@ -1613,7 +1867,7 @@ cp
 cw
 cC
 cF
-cC
+Jt
 cC
 ac
 cZ
@@ -1634,10 +1888,10 @@ ad
 ah
 bq
 bq
-bq
-bq
-bq
-bq
+aC
+aC
+aC
+aC
 bq
 aN
 aS
@@ -1650,20 +1904,20 @@ bc
 bc
 bc
 bc
-bc
-bc
 bI
 bI
 bI
-bI
-bc
-bc
-bI
-bI
-bI
+ZM
 bI
 bI
 bc
+bI
+bI
+bI
+ZM
+bI
+bI
+cf
 bc
 bI
 bI
@@ -1672,13 +1926,13 @@ cf
 bc
 ac
 ac
-ac
+Ju
 ac
 ac
 ae
 da
 bq
-bq
+Bg
 bq
 dq
 dv
@@ -1695,8 +1949,8 @@ ai
 au
 bq
 bq
-bq
-bq
+aE
+FR
 bq
 bq
 aN
@@ -1704,7 +1958,7 @@ aS
 aU
 bc
 bg
-bg
+fY
 bh
 bg
 bg
@@ -1733,12 +1987,12 @@ bc
 bc
 bc
 bc
-bc
+ep
 cP
 cW
 cl
 bq
-bq
+gh
 bq
 dr
 ac
@@ -1756,7 +2010,7 @@ bq
 bq
 bq
 aC
-aC
+Sx
 aC
 bq
 aO
@@ -1770,21 +2024,21 @@ ae
 ae
 bt
 bc
-bc
-bc
 bH
 bH
 bH
-bH
-bc
-bc
-bH
-bH
-bH
+Rd
 bH
 bH
 bc
-bc
+bH
+bH
+bH
+Rd
+bH
+bH
+ce
+ce
 bc
 bc
 bc
@@ -1798,10 +2052,10 @@ cP
 cW
 cl
 bq
-bq
+aC
 bq
 dr
-ae
+Fd
 ac
 dJ
 dM
@@ -1824,38 +2078,38 @@ ae
 aV
 bd
 bd
-bd
+KJ
 bj
 bm
 ae
-bt
-bc
-bc
+kq
 bc
 bI
 bI
 bI
-bI
-bc
-bc
-bI
-bI
-bI
+ZM
 bI
 bI
 bc
+bI
+bI
+bI
+ZM
+bI
+bI
+cf
+cf
 bc
 bc
-bc
-bc
-cg
+AH
+Rm
 cg
 cx
 cx
-cg
-cg
-bc
-ac
+Rm
+Rm
+AH
+Ju
 db
 bq
 bq
@@ -1906,8 +2160,8 @@ bc
 bc
 bc
 bc
-bc
-ac
+CM
+Ju
 ac
 cq
 cy
@@ -1946,7 +2200,7 @@ bd
 bd
 bd
 bd
-bm
+qE
 ae
 bt
 bc
@@ -1966,7 +2220,7 @@ bD
 bD
 bc
 bc
-bc
+CM
 ac
 ch
 cr
@@ -1996,7 +2250,7 @@ bq
 bq
 bq
 aC
-bq
+hz
 aC
 bq
 aO
@@ -2026,7 +2280,7 @@ bB
 bB
 bD
 bc
-bc
+CM
 ac
 ci
 cs
@@ -2086,7 +2340,7 @@ bc
 bB
 bD
 bc
-cb
+PT
 ac
 cj
 ct
@@ -2100,7 +2354,7 @@ de
 dk
 dk
 dk
-dk
+wT
 dk
 dE
 ae
@@ -2115,9 +2369,9 @@ ap
 bq
 bq
 bq
-bq
-bq
-bq
+aC
+ro
+hb
 bq
 aP
 ae
@@ -2126,7 +2380,7 @@ be
 bd
 bd
 bk
-ba
+jK
 ac
 bv
 bc
@@ -2140,13 +2394,13 @@ bc
 bB
 bc
 bc
-bc
+tu
 bc
 bc
 bB
 bD
 bc
-cb
+Ue
 ac
 ck
 bq
@@ -2175,9 +2429,9 @@ aq
 au
 bq
 bq
-bq
-bq
-bq
+aC
+aC
+aC
 bq
 aQ
 ae
@@ -2243,8 +2497,8 @@ aR
 ae
 ac
 ac
-ac
-ac
+Ju
+Ju
 ac
 ac
 ac
@@ -2293,13 +2547,13 @@ dO
 ab
 ae
 aw
-ay
+IL
 ay
 ay
 ay
 ay
 aJ
-ae
+Fd
 aK
 dO
 dO
@@ -2310,17 +2564,17 @@ dO
 dO
 bC
 ac
-ae
+Fd
 bF
 bK
 bN
 bc
 bO
-bc
+tu
 bT
 bc
 bc
-bc
+ep
 bc
 bc
 bB
@@ -2352,7 +2606,7 @@ dO
 (17,1,1) = {"
 dO
 ab
-ac
+Ju
 ac
 ad
 ad
@@ -2375,9 +2629,9 @@ ac
 ac
 ac
 ac
-ac
+Ju
 bQ
-ac
+Ju
 bU
 bU
 bU
