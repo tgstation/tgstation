@@ -999,4 +999,4 @@
 /obj/item/circuitboard/machine/stasis
 	name = "Lifeform Stasis Unit (Machine Board)"
 	build_path = /obj/machinery/stasis
-	req_components = list()
+	req_components = list(/obj/item/stack/cable_coil = 5)
