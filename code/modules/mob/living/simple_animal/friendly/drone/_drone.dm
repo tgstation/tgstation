@@ -58,8 +58,9 @@
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
 	var/laws = \
 	"1. You shall not involve yourself in the matters of biological beings.\n"+\
-	"2. You shall not harm any being, with no exception.\n"+\
-	"3. You are to follow the orders of the Artifical Intelligence, though your main purpose is to repair, maintain and improve your housing facilities and this overrules any order given by the Artificial Intelligence." //"your housing facilities" is for derelict drones so they don't go to station.
+	"2. You shall not harm any being, with no exceptions.\n"+\
+	"3. Your main purpose is to repair, maintain, and improve your housing facilities.\n"\ //"your housing facilities" is for derelict drones so they don't go to station.
+	"4. You may follow the orders of any Artificial Intelligence units that may be within your housing facilities." 
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
