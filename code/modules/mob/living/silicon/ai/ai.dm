@@ -169,7 +169,7 @@
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
 		_key = _key[7] //strings, lists, same thing really
 	switch(_key)
-		if("`")
+		if("`", "0")
 			if(cam_prev)
 				eyeobj.setLoc(cam_prev)
 			return
