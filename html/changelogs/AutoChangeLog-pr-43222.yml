@@ -1,5 +1,0 @@
-author: "Basilman"
-delete-after: True
-changes: 
-  - bugfix: "fixed runtime from selectin missing bodypart due to ran_zone"
-  - code_imp: "changed how ran_zone selects a zone from a switch to pickweight"
