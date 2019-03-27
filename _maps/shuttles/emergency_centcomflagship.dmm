@@ -620,12 +620,6 @@
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"bI" = (
-/obj/effect/spawner/structure/window/plastitanium,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/leafybush,
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "bJ" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -750,16 +744,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "ce" = (
-/obj/effect/spawner/structure/window/plastitanium,
 /obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/open/floor/grass,
-/area/shuttle/escape)
-"cf" = (
+/obj/structure/flora/ausbushes/sunnybush,
 /obj/effect/spawner/structure/window/plastitanium,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "cg" = (
@@ -1421,17 +1408,30 @@
 /obj/structure/chair/office/dark,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
-"dT" = (
+"dQ" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/leafybush,
 /obj/effect/spawner/structure/window/plastitanium,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"dR" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/effect/spawner/structure/window/plastitanium,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"dS" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/effect/spawner/structure/window/plastitanium,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"dT" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/sunnybush,
 /obj/structure/flora/ausbushes/ywflowers,
-/turf/open/floor/grass,
-/area/shuttle/escape)
-"dU" = (
 /obj/effect/spawner/structure/window/plastitanium,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "dV" = (
@@ -1850,23 +1850,23 @@ bc
 bc
 bc
 ac
-bI
-ce
-bI
-cf
+dQ
+dR
+dQ
+dS
 dT
 ac
+dR
 ce
-dU
-bI
-dU
-bI
+dQ
+ce
+dQ
 ac
-bI
-dU
-bI
-cf
-cf
+dQ
+ce
+dQ
+dS
+dS
 ac
 bc
 ac
