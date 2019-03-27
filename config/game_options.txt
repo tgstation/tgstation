@@ -291,7 +291,7 @@ ALLOW_AI_MULTICAM
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
-GATEWAY_DELAY 9000
+GATEWAY_DELAY 7500
 
 
 ## ACCESS ###
