@@ -1092,7 +1092,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cf" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1126,7 +1126,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ch" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1168,7 +1168,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cl" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

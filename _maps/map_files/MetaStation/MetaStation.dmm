@@ -1579,7 +1579,7 @@
 /area/security/execution/education)
 "adn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -9367,7 +9367,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "arg" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/landmark/start/warden,
@@ -9987,7 +9987,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aso" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -10006,7 +10006,7 @@
 /area/security/warden)
 "asq" = (
 /obj/effect/landmark/start/warden,
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
@@ -14529,7 +14529,7 @@
 /area/security/detectives_office)
 "aBo" = (
 /obj/effect/landmark/start/detective,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -16118,7 +16118,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "aEw" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/start/shaft_miner,
@@ -16385,7 +16385,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aEW" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -17730,7 +17730,7 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/fore)
 "aHv" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/fore)
 "aHw" = (
@@ -18988,7 +18988,7 @@
 /area/security/courtroom)
 "aKf" = (
 /obj/effect/landmark/start/lawyer,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/item/radio/intercom{
@@ -21362,7 +21362,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -22573,7 +22573,7 @@
 /area/quartermaster/storage)
 "aRI" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -22610,7 +22610,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aRL" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -24699,7 +24699,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "aVP" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/plasteel,
@@ -27993,7 +27993,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bbC" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/landmark/start/depsec/engineering,
@@ -28192,7 +28192,7 @@
 /area/quartermaster/office)
 "bbU" = (
 /obj/effect/landmark/start/cargo_technician,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown,
@@ -29659,7 +29659,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "beO" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -31536,7 +31536,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "bin" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/machinery/status_display/ai{
@@ -31570,7 +31570,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "bir" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/machinery/status_display/evac{
@@ -31697,7 +31697,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "biI" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/structure/cable/yellow{
@@ -31735,7 +31735,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "biL" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -31900,13 +31900,13 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bja" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bjb" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -31915,7 +31915,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bjd" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -31924,7 +31924,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bje" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -32478,7 +32478,7 @@
 /area/quartermaster/sorting)
 "bki" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/start/cargo_technician,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -33878,7 +33878,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet{
@@ -34719,7 +34719,7 @@
 /area/crew_quarters/heads/hop)
 "bon" = (
 /obj/effect/landmark/start/head_of_personnel,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -37492,7 +37492,7 @@
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -38761,7 +38761,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bwo" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/start/head_of_personnel,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -39310,7 +39310,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
@@ -39335,7 +39335,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bxr" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
@@ -39678,7 +39678,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bxV" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/landmark/start/librarian,
@@ -40393,7 +40393,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bzo" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -40434,7 +40434,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bzt" = (
@@ -40983,7 +40983,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bAE" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/landmark/start/atmospheric_technician,
@@ -41303,7 +41303,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bBs" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -41973,7 +41973,7 @@
 /turf/open/floor/wood,
 /area/vacant_room/office)
 "bCN" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -45274,7 +45274,7 @@
 /turf/open/floor/carpet,
 /area/vacant_room/office)
 "bJw" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -45315,7 +45315,7 @@
 /area/library)
 "bJB" = (
 /obj/effect/landmark/start/librarian,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -46839,7 +46839,7 @@
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "bMC" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/wood,
 /area/vacant_room/office)
 "bMD" = (
@@ -48965,7 +48965,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bRi" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/wood,
 /area/library)
 "bRj" = (
@@ -49707,7 +49707,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bSy" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -50116,7 +50116,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bTx" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/machinery/airalarm{
@@ -51833,7 +51833,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/start/botanist,
@@ -54540,7 +54540,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "cbR" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/machinery/button/door{
 	desc = "A remote control switch for the medbay foyer.";
 	id = "MedbayFoyer";
@@ -54704,7 +54704,7 @@
 /area/security/checkpoint/science/research)
 "ccm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/landmark/start/depsec/science,
@@ -74227,7 +74227,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cNa" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -74661,7 +74661,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cNR" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel,

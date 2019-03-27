@@ -130,7 +130,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
 "aF" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -141,13 +141,13 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
 "aH" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
 "aI" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -6645,7 +6645,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/secpost)
 "oh" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/item/shard,
@@ -11509,7 +11509,7 @@
 	},
 /area/awaymission/snowdin/post/minipost)
 "Ax" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plating,
