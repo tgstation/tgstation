@@ -312,14 +312,13 @@
 	data["display_craftable_only"] = display_craftable_only
 	data["display_compact"] = display_compact
 
-	var/datum/mind/user_mind = user.mind
 	var/list/surroundings = get_surroundings(user)
 	var/list/can_craft = list()
 	var/list/cant_craft = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
-
-		if(!R.always_availible && (!user_mind || !user_mind.known_recipes(R.type))) //User doesn't actually know how to make this.
+		
+		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
@@ -438,9 +437,6 @@
 	return data
 
 //Mind helpers
-
-/datum/mind/proc/known_recipes(R)
-	return R in learned_recipes
 
 /datum/mind/proc/teach_crafting_recipe(R)
 	if(!learned_recipes)
