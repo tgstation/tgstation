@@ -109,15 +109,14 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aq" = (
-/obj/structure/chair/office/dark{
-	dir = 1
+/obj/structure/chair/wood/normal{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ar" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/chair/office/dark{
-	dir = 1
+/obj/structure/chair/wood/normal{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
@@ -227,7 +226,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aB" = (
-/obj/structure/chair/office/light,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aC" = (
@@ -619,6 +620,10 @@
 	},
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bI" = (
+/obj/structure/chair/wood/normal,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bJ" = (
 /obj/structure/table,
@@ -1892,7 +1897,7 @@ dN
 ad
 ag
 bq
-cK
+aq
 bq
 bq
 bq
@@ -1949,7 +1954,7 @@ dO
 (7,1,1) = {"
 ad
 ag
-ar
+ai
 aj
 aj
 bq
@@ -2007,7 +2012,7 @@ dO
 (8,1,1) = {"
 ad
 ag
-ar
+ai
 ak
 af
 bq
@@ -2067,9 +2072,9 @@ ad
 ag
 ai
 al
-aq
-bq
 aB
+bq
+bI
 az
 dV
 aO
@@ -2123,7 +2128,7 @@ dO
 (10,1,1) = {"
 ad
 ag
-ar
+ai
 am
 dW
 bq
@@ -2181,7 +2186,7 @@ dO
 (11,1,1) = {"
 ad
 ag
-ar
+ai
 an
 an
 bq
@@ -2240,7 +2245,7 @@ dO
 ad
 ag
 bq
-cL
+ar
 bq
 bq
 bq
