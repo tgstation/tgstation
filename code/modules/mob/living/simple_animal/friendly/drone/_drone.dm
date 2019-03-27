@@ -59,7 +59,7 @@
 	var/laws = \
 	"1. You shall not involve yourself in the matters of biological beings.\n"+\
 	"2. You shall not harm any being, with no exceptions.\n"+\
-	"3. Your main purpose is to repair, maintain, and improve your housing facilities.\n"\ //"your housing facilities" is for derelict drones so they don't go to station.
+	"3. Your main purpose is to repair, maintain, and improve your housing facilities.\n"+\ //"your housing facilities" is for derelict drones so they don't go to station.
 	"4. You may follow the orders of any Artificial Intelligence units that may be within your housing facilities." 
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
