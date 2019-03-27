@@ -754,6 +754,12 @@
 /obj/effect/spawner/structure/window/plastitanium,
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"cf" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
 "cg" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -1010,13 +1016,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cK" = (
-/obj/structure/chair/office/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"cL" = (
-/obj/structure/chair/office/light{
+/obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -2225,7 +2225,7 @@ cs
 bq
 bq
 bq
-cK
+cf
 bq
 ac
 ac
@@ -2283,7 +2283,7 @@ ct
 bq
 bq
 bq
-cL
+cK
 bq
 ac
 de
