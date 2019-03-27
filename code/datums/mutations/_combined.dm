@@ -19,7 +19,7 @@
 
 /datum/generecipe/x_ray
 	required = "/datum/mutation/human/thermal; /datum/mutation/human/radioactive"
-	result = /datum/mutation/human/x_ray
+	result = /datum/mutation/human/thermal/x_ray
 
 /datum/generecipe/mindread
 	required = "/datum/mutation/human/antenna; /datum/mutation/human/paranoia"
