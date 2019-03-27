@@ -1021,6 +1021,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
+"cL" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
 "cM" = (
 /obj/machinery/chem_heater,
 /obj/effect/turf_decal/tile/yellow,
@@ -1409,10 +1413,6 @@
 "dO" = (
 /turf/template_noop,
 /area/template_noop)
-"dP" = (
-/obj/structure/chair/office/dark,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
 "dQ" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/leafybush,
@@ -2139,7 +2139,7 @@ aQ
 bp
 bd
 bd
-dP
+cL
 aW
 ae
 bt
@@ -2197,7 +2197,7 @@ aO
 aR
 bd
 bd
-dP
+cL
 aX
 aT
 bu
