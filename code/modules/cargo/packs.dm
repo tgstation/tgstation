@@ -1459,7 +1459,7 @@
 
 /datum/supply_pack/service/vending/dinnerware
 	name = "Dinnerware Supply Crate"
-	desc = "More knifes for the chef."
+	desc = "More knives for the chef."
 	cost = 1000
 	contains = list(/obj/item/vending_refill/dinnerware)
 	crate_name = "dinnerware supply crate"
@@ -1479,7 +1479,7 @@
 					/obj/item/vending_refill/robotics,
 					/obj/item/vending_refill/sovietsoda,
 					/obj/item/vending_refill/engineering)
-	crate_name = "unlabelled supply crate"
+	crate_name = "unlabeled supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
