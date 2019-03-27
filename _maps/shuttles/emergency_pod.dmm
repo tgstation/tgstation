@@ -31,21 +31,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "h" = (
-/obj/machinery/computer/emergency_shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "i" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	dir = 8;
-	dwidth = 8;
-	height = 9;
-	name = "Emergency Pod";
-	width = 21
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -55,15 +46,51 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"k" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"l" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/space)
+"m" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"n" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"o" = (
+/turf/closed/wall/mineral/titanium,
+/area/space)
+"p" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/space)
 
 (1,1,1) = {"
 a
 e
 b
-i
-a
-d
-d
+m
+p
 d
 d
 d
@@ -76,17 +103,15 @@ a
 (2,1,1) = {"
 b
 f
-g
-j
-b
-d
-d
+i
+n
+o
 d
 d
 d
 b
 f
-g
+i
 j
 b
 "}
@@ -94,10 +119,8 @@ b
 c
 f
 g
-j
-c
-d
-d
+n
+l
 d
 d
 d
@@ -111,10 +134,8 @@ c
 b
 f
 g
-j
-b
-d
-d
+n
+o
 d
 d
 d
@@ -127,27 +148,23 @@ b
 (5,1,1) = {"
 b
 b
-h
+k
+o
+o
+d
+d
+d
 b
 b
-d
-d
-d
-d
-d
-b
-b
-h
+k
 b
 b
 "}
 (6,1,1) = {"
-d
+h
 b
-c
-b
-d
-d
+l
+o
 d
 d
 d
