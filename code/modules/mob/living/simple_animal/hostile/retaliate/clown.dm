@@ -48,7 +48,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/fleshclown
 	name = "Fleshclown"
 	desc = "A being forged out of the pure essence of pranking, cursed into existence by a cruel maker."
-	icon = 'icons/mob/Clown_mobs.dmi'
+	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "no no no no no no no no no no no no no"
 	icon_living = "no no no no no no no no no no no no no"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
@@ -60,9 +60,10 @@
 	emote_see = list("honks", "sweats", "jiggles", "contemplates its existence")
 	speak_chance = 5
 	a_intent = INTENT_HARM
-	maxHealth = 200
-	health = 200
-	speed = 1
+	ventcrawler = VENTCRAWLER_ALWAYS
+	maxHealth = 140
+	health = 140
+	speed = 5
 	harm_intent_damage = 8
 	melee_damage_lower = 10
 	melee_damage_upper = 15
@@ -73,12 +74,12 @@
 	del_on_death = 1
 	loot = list(/obj/item/clothing/suit/hooded/bloated_human, /obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
 
-/mob/living/simple_animal/hostile/retaliate/clown/ClownHulk
+/mob/living/simple_animal/hostile/retaliate/clown/clownhulk
 	name = "Honk Hulk"
 	desc = "A cruel and fearsome clown. Don't make him angry."
-	icon = 'icons/mob/Clown_mobs.dmi'
-	icon_state = "Honkhulk"
-	icon_living = "Honkhulk"
+	icon = 'icons/mob/clown_mobs.dmi'
+	icon_state = "honkhulk"
+	icon_living = "honkhulk"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	turns_per_move = 5
 	response_help = "tries desperately to appease"
@@ -89,7 +90,7 @@
 	speak_chance = 5
 	a_intent = INTENT_HARM
 	maxHealth = 500
-	health = 500
+	health = 300
 	pixel_x = -16
 	speed = 2
 	harm_intent_damage = 20
@@ -105,33 +106,33 @@
 /mob/living/simple_animal/hostile/retaliate/clown/longface
 	name = "Longface"
 	desc = "Often found walking into the bar."
-	icon = 'icons/mob/Clown_mobs.dmi'
-	icon_state = "Long Face"
-	icon_living = "Long Face"
+	icon = 'icons/mob/clown_mobs.dmi'
+	icon_state = "long face"
+	icon_living = "long face"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
-	turns_per_move = 5
+	turns_per_move = 10
 	response_help = "tries awkwardly to hug"
-	response_disarm = "pushes the unweildy frame of"
+	response_disarm = "pushes the unwieldy frame of"
 	response_harm = "tries to shut up"
 	speak = list("YA-HONK!!!")
 	emote_see = list("honks", "squeaks")
-	speak_chance = 30
+	speak_chance = 60
 	a_intent = INTENT_HARM
 	maxHealth = 150
 	health = 150
 	pixel_x = -16
-	speed = 5
-	harm_intent_damage = 8
-	melee_damage_lower = 10
+	speed = 10
+	harm_intent_damage = 5
+	melee_damage_lower = 5
 	melee_damage_upper = 10
 	attacktext = "YA-HONKs"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
 
-/mob/living/simple_animal/hostile/retaliate/clown/Chlown
+/mob/living/simple_animal/hostile/retaliate/clown/chlown
 	name = "Chlown"
 	desc = "A real lunkhead who somehow gets all the girls"
-	icon = 'icons/mob/Clown_mobs.dmi'
+	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "chlown"
 	icon_living = "chlown"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
@@ -144,49 +145,59 @@
 	speak_chance = 5
 	a_intent = INTENT_HARM
 	maxHealth = 500
-	health = 500
+	health = 300
 	pixel_x = -16
 	speed = 5
 	harm_intent_damage = 14
 	melee_damage_lower = 10
 	melee_damage_upper = 20
-	attacktext = "steals your girlfriend"
-	attack_sound = 'sound/items/bikehorn.ogg'
+	armour_penetration = 35
+	attacktext = "steals the girlfriend of"
+	attack_sound = 'sound/items/airhorn2.ogg'
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	del_on_death = 5
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
 
 /mob/living/simple_animal/hostile/retaliate/clown/honcmunculus
+	var/datum/reagent/funjuice = "methamphetamine"
 	name = "Honkmunculus"
 	desc = "A slender wiry figure of alchemical origin."
-	icon = 'icons/mob/Clown_mobs.dmi'
+	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "honkmunculus"
 	icon_living = "honkmunculus"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	turns_per_move = 5
 	response_help = "skeptically pokes"
-	response_disarm = "pushes the unweildy frame of"
-	response_harm = "Robusts"
+	response_disarm = "pushes the unwieldy frame of"
+	response_harm = "robusts"
 	speak = list("honk")
 	emote_see = list("squirms", "writhes")
 	speak_chance = 1
 	a_intent = INTENT_HARM
 	maxHealth = 200
-	health = 200
+	health = 100
 	pixel_x = -16
-	speed = 10
-	harm_intent_damage = 8
+	speed = 20
+	harm_intent_damage = 5
 	melee_damage_lower = 5
-	melee_damage_upper = 15
+	melee_damage_upper = 10
 	attacktext = "ferociously mauls"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap)
 
+/mob/living/simple_animal/hostile/retaliate/clown/honcmunculus/AttackingTarget()
+	. = ..()
+	if(. && isliving(target))
+		var/mob/living/L = target
+		if(L.reagents)
+			L.reagents.add_reagent(funjuice, rand(1,5))
+
+
 /mob/living/simple_animal/hostile/retaliate/clown/destroyer
 	name = "The Destroyer"
 	desc = "An ancient being born of arcane honking."
-	icon = 'icons/mob/Clown_mobs.dmi'
+	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "destroyer"
 	icon_living = "destroyer"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
@@ -215,7 +226,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/mutant
 	name = "Unknown"
 	desc = "Kill it for its own sake."
-	icon = 'icons/mob/Clown_mobs.dmi'
+	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "mutant"
 	icon_living = "mutant"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
@@ -228,7 +239,7 @@
 	speak_chance = 5
 	a_intent = INTENT_HARM
 	maxHealth = 130
-	health = 75
+	health = 35
 	pixel_x = -16
 	speed = 2
 	harm_intent_damage = 10
@@ -241,9 +252,9 @@
 /mob/living/simple_animal/hostile/retaliate/clown/blob
 	name = "Something that was once a clown"
 	desc = "A grotesque bulging figure far mutated from it's original state."
-	icon = 'icons/mob/Clown_mobs.dmi'
-	icon_state = "Blob"
-	icon_living = "Blob"
+	icon = 'icons/mob/clown_mobs.dmi'
+	icon_state = "blob"
+	icon_living = "blob"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	turns_per_move = 10
 	response_help = "reluctantly sinks a finger into"
@@ -253,13 +264,14 @@
 	emote_see = list("jiggles", "wobbles")
 	speak_chance = 20
 	a_intent = INTENT_HARM
-	maxHealth = 130
-	health = 200
+	maxHealth = 400
+	health = 300
 	pixel_x = -16
-	speed = 5
+	speed = 20
 	harm_intent_damage = 10
 	melee_damage_lower = 10
-	melee_damage_upper = 30
+	melee_damage_upper = 15
 	attacktext = "bounces off of"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
+

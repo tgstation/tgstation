@@ -47,16 +47,16 @@
 	deliveryamt = 10
 
 /obj/item/grenade/spawnergrenade/clown
-	name = "C.L.U.W.N.E"
+	name = "C.L.U.W.N.E."
 	desc = "A sleek device often given to clowns on their 10th birthdays for protection. You can hear faint scratching coming from within."
 	icon_state = "clown_ball"
 	item_state = "clown_ball"
-	spawner_type = list(/mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/ClownHulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/Chlown, /mob/living/simple_animal/hostile/retaliate/clown/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/blob)
+	spawner_type = list(/mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/chlown, /mob/living/simple_animal/hostile/retaliate/clown/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/blob)
 	deliveryamt = 1
 
 /obj/item/grenade/spawnergrenade/clown_broken
-	name = "stuffed C.L.U.W.N.E"
-	desc = "A sleek device often given to clowns on their 10th birthdays for protection.While a typical C.L.U.W.N.E only holds one creature, sometimes foolish young clowns try to cram more in, ofte to disasterous effect."
+	name = "stuffed C.L.U.W.N.E."
+	desc = "A sleek device often given to clowns on their 10th birthdays for protection. While a typical C.L.U.W.N.E only holds one creature, sometimes foolish young clowns try to cram more in, often to disasterous effect."
 	icon_state = "clown_broken"
 	item_state = "clown_broken"
 	spawner_type = /mob/living/simple_animal/hostile/retaliate/clown/mutant
