@@ -404,7 +404,9 @@
 
 /obj/item/book/granter/crafting_recipe/on_reading_finished(mob/user)
 	. = ..()
+	if(!user.mind)
+		return
 	for(var/crafting_recipe_type in crafting_recipe_types)
 		var/datum/crafting_recipe/R = crafting_recipe_type
-		user.teach_crafting_recipe(crafting_recipe_type)
+		user.mind.teach_crafting_recipe(crafting_recipe_type)
 		to_chat(user,"<span class='notice'>You learned how to make [initial(R.name)].</span>")
