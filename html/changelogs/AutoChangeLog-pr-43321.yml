@@ -1,0 +1,4 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - bugfix: "Added a 15 second grace period after death to prevent people from avoiding a hivemind host's Reclaim by succumbing."
