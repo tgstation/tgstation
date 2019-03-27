@@ -1,9 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/machinery/light/floor,
+/obj/machinery/vending/snack/random,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ab" = (
@@ -22,10 +19,9 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "ad" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/plastitanium,
 /obj/machinery/door/poddoor/preopen{
-	id = "escape_cockpit_blast";
+	id = "escape_cockpit_windows";
 	name = "Cockpit Blast Door"
 	},
 /turf/open/floor/plating,
@@ -34,13 +30,13 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
 "af" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "escape_cockpit_blast";
-	name = "Cockpit Blast Door"
+/obj/machinery/button/door{
+	id = "escape_cockpit_windows";
+	name = "Cockpit Window Blast Doors";
+	pixel_x = -35;
+	req_access_txt = "19"
 	},
-/obj/effect/spawner/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ag" = (
 /obj/effect/turf_decal/tile/blue{
@@ -88,16 +84,29 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ao" = (
-/obj/machinery/light/floor,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced/spawner/west,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/wrench,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ap" = (
-/obj/machinery/light/floor,
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced/spawner/east,
-/turf/open/floor/plasteel,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/vending/snack/random,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aq" = (
 /obj/structure/chair/office/dark{
@@ -154,22 +163,17 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aw" = (
-/obj/machinery/button/door{
-	id = "escape_cockpit_windows";
-	name = "Cockpit Window Blast Doors";
-	pixel_x = -7;
-	pixel_y = 26;
-	req_access_txt = "19"
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/obj/machinery/turretid{
-	control_area = "/area/shuttle/escape";
-	desc = "Used toadjust the ships automated defenses.";
-	icon_state = "control_kill";
-	lethal = 1;
-	pixel_x = 5;
-	pixel_y = 32;
-	req_access = null;
-	req_access_txt = "19"
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
@@ -243,7 +247,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/closet,
+/obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plasteel,
@@ -268,6 +272,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aH" = (
@@ -288,6 +295,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aJ" = (
@@ -318,19 +328,18 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aM" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/machinery/vending/cigarette,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aN" = (
 /obj/effect/fun_balloon/sentience/emergency_shuttle{
@@ -494,7 +503,12 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bo" = (
-/obj/machinery/light/floor,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bp" = (
@@ -607,11 +621,10 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bI" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/mineral/titanium/white,
+/obj/effect/spawner/structure/window/plastitanium,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/leafybush,
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "bJ" = (
 /obj/structure/table,
@@ -710,15 +723,16 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "ca" = (
-/obj/machinery/door/airlock/hatch,
-/turf/open/floor/mineral/plastitanium,
+/obj/structure/closet/secure_closet/engineering_electrical{
+	anchored = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cb" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/structure/closet/secure_closet/engineering_welding{
+	anchored = 1
 	},
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cc" = (
 /obj/effect/turf_decal/caution/stand_clear/red{
@@ -736,18 +750,17 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "ce" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/white,
+/obj/effect/spawner/structure/window/plastitanium,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "cf" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/white,
+/obj/effect/spawner/structure/window/plastitanium,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "cg" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -788,20 +801,10 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ck" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/structure/closet/secure_closet/engineering_electrical{
+	anchored = 1
 	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark/telecomms,
 /area/shuttle/escape)
 "cl" = (
 /obj/effect/turf_decal/stripes/line{
@@ -838,9 +841,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "cp" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "cq" = (
@@ -1420,6 +1421,45 @@
 /obj/structure/chair/office/dark,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
+"dT" = (
+/obj/effect/spawner/structure/window/plastitanium,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"dU" = (
+/obj/effect/spawner/structure/window/plastitanium,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"dV" = (
+/obj/effect/spawner/structure/window/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dW" = (
+/obj/machinery/turretid{
+	control_area = "/area/shuttle/escape";
+	desc = "Used to adjust the ships automated defenses.";
+	icon_state = "control_kill";
+	lethal = 1;
+	pixel_x = 33;
+	pixel_y = 0;
+	req_access = null;
+	req_access_txt = "19"
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"ea" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "ep" = (
 /obj/machinery/light{
 	dir = 8
@@ -1529,15 +1569,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
-"OX" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
 "PT" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -1588,23 +1619,23 @@ dO
 dO
 br
 ac
-aT
-aT
-aT
-aT
+dV
+dV
+dV
+dV
 bP
 bx
 Ju
-aT
-aT
-aT
+dV
+dV
+dV
 Ju
 bR
 bP
-aT
-aT
-aT
-aT
+dV
+dV
+dV
+dV
 ac
 ac
 ac
@@ -1645,24 +1676,24 @@ dO
 br
 ac
 Fd
-bG
-bG
-bG
-bG
-bG
-ep
-bS
-OX
-bG
-bG
-bG
-OX
+bc
+bc
+bc
+bc
+bc
+bc
 bS
 ep
-bG
-bG
-bG
-bG
+bc
+bc
+bc
+bc
+bS
+ep
+bc
+bc
+bc
+bc
 co
 cu
 cA
@@ -1704,18 +1735,18 @@ ae
 ep
 bc
 bc
-bo
 bc
 bc
-bo
-bc
-bo
 bc
 bc
-bo
 bc
 bc
-bo
+bc
+bc
+bc
+bc
+bc
+bc
 bc
 bc
 bc
@@ -1744,41 +1775,41 @@ dO
 (4,1,1) = {"
 br
 ac
-af
-af
-af
-af
-af
+ad
+ad
+ad
+ad
+ad
 ac
 ac
-bG
+aa
 aa
 bG
 bG
 bG
 bG
-aa
+bG
 bc
 bc
-bH
-bH
-bH
-bH
-bH
-bH
-bc
-bH
-bH
-bH
-bH
-bH
-bH
-ce
-bc
-bH
-bH
-bH
-ce
+bo
+AH
+AH
+AH
+AH
+AH
+bo
+AH
+AH
+AH
+AH
+AH
+bo
+AH
+AH
+AH
+AH
+AH
+bo
 cp
 cw
 cC
@@ -1801,7 +1832,7 @@ dN
 "}
 (5,1,1) = {"
 ac
-aM
+aw
 ab
 as
 au
@@ -1818,25 +1849,25 @@ bc
 bc
 bc
 bc
+ac
 bI
-bI
-bI
-bI
-bI
-bI
-bc
-bI
-bI
-bI
-bI
-bI
+ce
 bI
 cf
-bc
+dT
+ac
+ce
+dU
 bI
+dU
 bI
+ac
+bI
+dU
 bI
 cf
+cf
+ac
 bc
 ac
 ac
@@ -1876,25 +1907,25 @@ bg
 bg
 bs
 bc
-bc
-bc
-bo
-bc
-bc
-bo
-bc
-bo
-bc
-bc
-bo
-bc
-bc
-bo
-bc
-bc
-bc
-bc
-bc
+ea
+bG
+bG
+bG
+bG
+bG
+ea
+bG
+bG
+bG
+bG
+bG
+ea
+bG
+bG
+bG
+bG
+bG
+ea
 bc
 bc
 bc
@@ -1920,8 +1951,8 @@ ad
 ag
 ar
 aj
-ao
-aw
+aj
+bq
 bq
 aD
 ae
@@ -1934,21 +1965,21 @@ ae
 ae
 bt
 bc
-bH
-bH
-bH
-bH
-bH
-bH
 bc
-bH
-bH
-bH
-bH
-bH
-bH
-ce
-ce
+bc
+bc
+bc
+bc
+bc
+bc
+bc
+bc
+bc
+bc
+bc
+bc
+bc
+bc
 bc
 bc
 bc
@@ -1978,7 +2009,7 @@ ad
 ag
 ar
 ak
-bq
+af
 bq
 bq
 aD
@@ -1992,21 +2023,21 @@ bm
 ae
 kq
 bc
-bI
-bI
-bI
-bI
-bI
-bI
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bc
-bI
-bI
-bI
-bI
-bI
-bI
-cf
-cf
 bc
 bc
 AH
@@ -2020,11 +2051,11 @@ AH
 Ju
 db
 bq
-bq
+ca
 bq
 ds
 dw
-aT
+dV
 dO
 dO
 dO
@@ -2040,7 +2071,7 @@ aq
 bq
 aB
 az
-aT
+dV
 aO
 aR
 bd
@@ -2052,18 +2083,18 @@ aU
 bc
 bc
 bc
-bo
 bc
 bc
-bo
-bc
-bo
 bc
 bc
-bo
 bc
 bc
-bo
+bc
+bc
+bc
+bc
+bc
+bc
 bc
 bc
 CM
@@ -2078,11 +2109,11 @@ ac
 ac
 dc
 bq
-bq
+cb
 bq
 bq
 dx
-aT
+dV
 dO
 dO
 dO
@@ -2094,11 +2125,11 @@ ad
 ag
 ar
 am
-bq
+dW
 bq
 bq
 aA
-aT
+dV
 aQ
 bp
 bd
@@ -2140,7 +2171,7 @@ dj
 dj
 dt
 dy
-aT
+dV
 dO
 dO
 dO
@@ -2152,11 +2183,11 @@ ad
 ag
 ar
 an
-ap
+an
 bq
 bq
 aE
-aT
+dV
 aO
 aR
 bd
@@ -2193,9 +2224,9 @@ cK
 bq
 ac
 ac
-aT
-aT
-aT
+dV
+dV
+dV
 ac
 dz
 ae
@@ -2214,7 +2245,7 @@ bq
 bq
 bq
 aP
-aT
+dV
 aQ
 dI
 bd
@@ -2300,7 +2331,7 @@ bD
 bc
 Ue
 ac
-ck
+ao
 bq
 bq
 bq
@@ -2324,11 +2355,11 @@ dN
 (14,1,1) = {"
 bC
 ac
-af
-af
-af
-af
-af
+ad
+ad
+ad
+ad
+ad
 ac
 ae
 bb
@@ -2414,7 +2445,7 @@ bc
 bB
 bD
 bc
-cb
+ap
 ac
 cm
 bq
@@ -2426,7 +2457,7 @@ cT
 ac
 dh
 dk
-dk
+ck
 dn
 du
 dA
@@ -2472,7 +2503,7 @@ bc
 bB
 bD
 bh
-cb
+aM
 ac
 cn
 bq
@@ -2522,23 +2553,23 @@ ac
 Ju
 bQ
 Ju
-bU
-bU
-bU
-bU
-bU
+dV
+dV
+dV
+dV
+dV
 ac
 bZ
-ca
+bR
 ac
 ac
-aT
-aT
-aT
-aT
-aT
-aT
-aT
+dV
+dV
+dV
+dV
+dV
+dV
+dV
 cX
 dO
 dO
