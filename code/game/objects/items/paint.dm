@@ -51,12 +51,12 @@
 
 
 /obj/item/paint/anycolor
-	gender= PLURAL
-	name = "any color"
+	gender = PLURAL
+	name = "adaptive paint"
 	icon_state = "paint_neutral"
 
 /obj/item/paint/anycolor/attack_self(mob/user)
-	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
+	var/t1 = input(user, "Please select a color:", "[src]", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
 	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
 		return
 	switch(t1)

@@ -29,27 +29,10 @@
 
 
 /proc/ran_zone(zone, probability = 80)
-
-	zone = check_zone(zone)
-
 	if(prob(probability))
-		return zone
-
-	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
-	switch(t)
-		if(1)
-			return BODY_ZONE_HEAD
-		if(2)
-			return BODY_ZONE_CHEST
-		if(3 to 6)
-			return BODY_ZONE_L_ARM
-		if(7 to 10)
-			return BODY_ZONE_R_ARM
-		if(11 to 14)
-			return BODY_ZONE_L_LEG
-		if(15 to 18)
-			return BODY_ZONE_R_LEG
-
+		zone = check_zone(zone)
+	else
+		zone = pickweight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
 	return zone
 
 /proc/above_neck(zone)
@@ -413,7 +396,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
-			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
+			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 			return 1 //successful heal
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")

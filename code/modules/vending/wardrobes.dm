@@ -77,7 +77,8 @@
 					/obj/item/clothing/under/rank/engineer/hazard = 3,
 					/obj/item/clothing/suit/hazardvest = 3,
 					/obj/item/clothing/shoes/workboots = 3,
-					/obj/item/clothing/head/hardhat = 3)
+					/obj/item/clothing/head/hardhat = 3,
+					/obj/item/clothing/head/hardhat/weldhat = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
 /obj/item/vending_refill/wardrobe/engi_wardrobe
@@ -261,7 +262,7 @@
 					/obj/item/melee/flyswatter = 1,
 					/obj/item/flashlight = 1,
 					/obj/item/caution = 6,
-					/obj/item/holosign_creator = 1,
+					/obj/item/holosign_creator/janibarrier = 1,
 					/obj/item/lightreplacer = 1,
 					/obj/item/soap/nanotrasen = 1,
 					/obj/item/storage/bag/trash = 1,

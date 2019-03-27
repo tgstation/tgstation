@@ -162,6 +162,12 @@
 	strip_delay = 80
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/police
+	name = "police officer's hat"
+	desc = "A police officer's Hat. This hat emphasizes that you are THE LAW."
+	icon_state = "policehelm"
+	dynamic_hair_suffix = ""
+
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."

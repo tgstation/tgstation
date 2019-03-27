@@ -44,6 +44,7 @@
 				factions = B.data["quirks"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+				log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
 			else
 				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
 
@@ -117,6 +118,7 @@
 			new V(podman)
 		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
+		log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

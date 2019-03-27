@@ -420,11 +420,13 @@
 	if(!has_trait(TRAIT_HUSK))
 		remove_trait(TRAIT_DISFIGURED, "husk")
 		update_body()
+		return TRUE
 
 /mob/living/proc/become_husk(source)
 	if(!has_trait(TRAIT_HUSK))
 		add_trait(TRAIT_DISFIGURED, "husk")
 		update_body()
+		. = TRUE
 	add_trait(TRAIT_HUSK, source)
 
 /mob/living/proc/cure_fakedeath(list/sources)

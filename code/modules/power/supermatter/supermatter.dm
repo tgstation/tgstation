@@ -489,7 +489,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			has_been_powered = TRUE
 	else if(takes_damage)
 		damage += Proj.damage * config_bullet_energy
-	return FALSE
+	return BULLET_ACT_HIT
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100
@@ -559,7 +559,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(nom.incorporeal_move || nom.status_flags & GODMODE)
 		return
 	if(!vis_msg)
-		vis_msg = "<span class='danger'>[nom] reaches out and touches [src], inducing a resonance... [nom.p_their()] body starts to glow and bursts into flames before flashing into ash"
+		vis_msg = "<span class='danger'>[nom] reaches out and touches [src], inducing a resonance... [nom.p_their()] body starts to glow and burst into flames before flashing into dust!</span>"
 	if(!mob_msg)
 		mob_msg = "<span class='userdanger'>You reach out and touch [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>"
 	if(!cause)
@@ -604,7 +604,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/Bumped(atom/movable/AM)
 	if(isliving(AM))
-		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... [AM.p_their()] body starts to glow and catch flame before flashing into ash.</span>",\
+		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... [AM.p_their()] body starts to glow and burst into flames before flashing into dust!</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 	else if(isobj(AM) && !iseffect(AM))

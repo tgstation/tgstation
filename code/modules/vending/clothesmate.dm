@@ -4,7 +4,7 @@
 	desc = "A vending machine for clothing."
 	icon_state = "clothes"
 	icon_deny = "clothes-deny"
-	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
+	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/beanie = 3,
 		            /obj/item/clothing/head/beanie/black = 3,
@@ -56,6 +56,7 @@
 		            /obj/item/clothing/under/pants/tan = 2,
 		            /obj/item/clothing/under/pants/track = 2,
 		            /obj/item/clothing/shoes/sneakers/black = 4,
+		            /obj/item/clothing/head/wig/natural  = 4,
 		            /obj/item/clothing/under/plaid_skirt = 2,
 		            /obj/item/clothing/under/plaid_skirt/blue = 2,
 		            /obj/item/clothing/under/plaid_skirt/purple = 2,

@@ -8,6 +8,7 @@
 	name = "The Sleeping Carp"
 	id = MARTIALART_SLEEPINGCARP
 	deflection_chance = 100
+	reroute_deflection = TRUE
 	no_guns = TRUE
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help

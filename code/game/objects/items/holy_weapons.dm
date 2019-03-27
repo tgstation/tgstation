@@ -181,7 +181,7 @@
 
 /obj/item/nullrod/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, null, FALSE)
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
@@ -221,8 +221,8 @@
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
 	item_flags = ABSTRACT | DROPDEL

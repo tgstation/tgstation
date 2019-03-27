@@ -105,6 +105,18 @@
 	else
 		to_chat(src, msg)
 
+/mob/proc/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+	if(!can_hear())
+		return
+	//Process sound
+	if(S)
+		SEND_SOUND(src, S)
+	//Process text
+	if(text)
+		to_chat(src, "<span class='italics'>[text]</span>")
+	//to whoever sees this: icons are handled in living.dm
+
+
 // Show a message to all player mobs who sees this atom
 // Show a message to the src mob (if the src is a mob)
 // Use for atoms performing visible actions

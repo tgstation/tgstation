@@ -61,7 +61,8 @@
 		/obj/item/holosign_creator/atmos,
 		/obj/item/holosign_creator/engineering,
 		/obj/item/forcefield_projector,
-		/obj/item/assembly/signaler
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer
 		))
 	STR.can_hold = can_hold
 
@@ -519,6 +520,13 @@
 		/obj/item/assembly/mousetrap
 		))
 
+/obj/item/storage/belt/janitor/full/PopulateContents()
+	new /obj/item/lightreplacer(src)
+	new /obj/item/reagent_containers/spray/cleaner(src)
+	new /obj/item/soap/nanotrasen(src)
+	new /obj/item/holosign_creator/janibarrier(src)
+	new /obj/item/melee/flyswatter(src)
+
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
 	desc = "A bandolier for holding shotgun ammunition."
@@ -550,6 +558,7 @@
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
+		/obj/item/gun/energy/e_gun/mini
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()

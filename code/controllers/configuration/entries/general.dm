@@ -5,6 +5,22 @@
 	config_entry_value = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/auto_deadmin_players
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_antagonists
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_heads
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_silicons
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_security
+	protection = CONFIG_ENTRY_LOCKED
+
+
 /datum/config_entry/string/servername	// server name (the name of the game window)
 
 /datum/config_entry/string/serversqlname	// short form server name used for the DB
@@ -39,6 +55,10 @@
 /datum/config_entry/flag/log_game	// log game events
 
 /datum/config_entry/flag/log_mecha	// log mech data
+
+/datum/config_entry/flag/log_virus	// log virology data
+
+/datum/config_entry/flag/log_cloning // log cloning actions.
 
 /datum/config_entry/flag/log_vote	// log voting
 
@@ -289,6 +309,9 @@
 
 /datum/config_entry/flag/panic_bunker	// prevents people the server hasn't seen before from connecting
 
+/datum/config_entry/string/panic_bunker_message
+	config_entry_value = "Sorry but the server is currently not accepting connections from never before seen players."
+
 /datum/config_entry/number/notify_new_player_age	// how long do we notify admins of a new player
 	min_val = -1
 
@@ -353,6 +376,10 @@
 
 /datum/config_entry/string/client_error_message
 	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+
+/datum/config_entry/number/client_error_build
+	config_entry_value = null
+	min_val = 0
 
 /datum/config_entry/number/minute_topic_limit
 	config_entry_value = null

@@ -644,7 +644,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/lighter/greyscale
 	name = "cheap lighter"
-	desc = "A cheap-as-free lighter."
+	desc = "A cheap lighter."
 	icon_state = "lighter"
 	fancy = FALSE
 	overlay_list = list(

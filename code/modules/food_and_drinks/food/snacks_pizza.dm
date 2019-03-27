@@ -198,7 +198,7 @@
 	desc = "I come over, maybe I give you a pizza, maybe I break off your arm."
 	icon_state = "arnoldpizzaslice"
 	filling_color = "#A52A2A"
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
 	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/arnold/attack(mob/living/M, mob/living/user)

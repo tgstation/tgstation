@@ -228,7 +228,7 @@
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
-		force = 10 //stunbaton damage
+		force = 10 //stun baton damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
 		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
@@ -310,7 +310,8 @@
 /obj/item/melee/supermatter_sword/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[P] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
-	consume_everything()
+	consume_everything(P)
+	return BULLET_ACT_HIT
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")

@@ -244,12 +244,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/twohanded/required/gibtonite/bullet_act(obj/item/projectile/P)
 	GibtoniteReaction(P.firer)
-	..()
+	. = ..()
 
 /obj/item/twohanded/required/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
-
-
 
 /obj/item/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
@@ -325,7 +323,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.visible_message("<span class='suicide'>[user] couldn't flip \the [src]!</span>")
 		return SHAME
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
-	return MANUAL_SUICIDE
+	return MANUAL_SUICIDE_NONLETHAL
 
 /obj/item/coin/proc/manual_suicide(mob/living/user)
 	var/index = sideslist.Find(coinflip)
@@ -333,6 +331,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
 		user.adjustOxyLoss(200)
 		user.death(0)
+		user.set_suicide(TRUE)
+		user.suicide_log()
 	else
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
 

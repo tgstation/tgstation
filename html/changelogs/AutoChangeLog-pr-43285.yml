@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Corrected cloning logs not showing the clone's key if they ghosted during processing."

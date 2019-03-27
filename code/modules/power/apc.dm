@@ -569,7 +569,7 @@
 	else if (istype(W, /obj/item/stack/cable_coil) && opened)
 		var/turf/host_turf = get_turf(src)
 		if(!host_turf)
-			throw EXCEPTION("attackby on APC when it's not on a turf")
+			CRASH("attackby on APC when it's not on a turf")
 			return
 		if (host_turf.intact)
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first!</span>")

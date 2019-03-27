@@ -131,7 +131,7 @@ Slimecrossing Armor
 	desc = "A full suit of adamantine plate armor. Impressively resistant to damage, but weighs about as much as you do."
 	icon_state = "adamsuit"
 	item_state = "adamsuit"
-	flags_inv = list()
+	flags_inv = NONE
 	obj_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 40

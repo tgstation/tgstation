@@ -265,8 +265,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/suppressor
-	name = "Universal Suppressor"
-	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
+	name = "Suppressor"
+	desc = "A reverse-engineered suppressor that fits on most small arms with threaded barrels."
 	id = "suppressor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)

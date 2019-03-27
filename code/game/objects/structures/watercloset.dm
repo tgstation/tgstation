@@ -266,7 +266,7 @@
 	else
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		if(ishuman(user))
-			var/mob/living/carbon/human/dirtyboy
+			var/mob/living/carbon/human/dirtyboy = user
 			dirtyboy.adjust_hygiene(10)
 
 /obj/structure/sink/attackby(obj/item/O, mob/living/user, params)

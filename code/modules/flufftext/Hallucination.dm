@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("gun")
 			var/hits = 0
 			for(var/i in 1 to rand(3, 6))
-				target.playsound_local(source, get_sfx("gunshot"), 25)
+				target.playsound_local(source, "sound/weapons/gunshot.ogg", 25, TRUE)
 				if(prob(60))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, 'sound/weapons/pierce.ogg', 25, 1), rand(5,10))
 					hits++
@@ -679,8 +679,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!",\
 		"AI [pick("rogue", "is dead")]!!")
 
-	var/list/mob/living/carbon/people = list()
-	var/list/mob/living/carbon/person = null
+	var/mob/living/carbon/person = null
 	var/datum/language/understood_language = target.get_random_understood_language()
 	for(var/mob/living/carbon/H in view(target))
 		if(H == target)
@@ -690,7 +689,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		else
 			if(get_dist(target,H)<get_dist(target,person))
 				person = H
-		people += H
 	if(person && !force_radio) //Basic talk
 		var/chosen = specific_message
 		if(!chosen)

@@ -146,7 +146,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
-	..()
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)

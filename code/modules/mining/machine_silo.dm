@@ -171,7 +171,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return
 	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats)
 
-	var/list/logs = GLOB.silo_access_logs[REF(src)]
+	var/list/datum/ore_silo_log/logs = GLOB.silo_access_logs[REF(src)]
 	if(!LAZYLEN(logs))
 		GLOB.silo_access_logs[REF(src)] = logs = list(entry)
 	else if(!logs[1].merge(entry))

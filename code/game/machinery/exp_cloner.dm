@@ -42,11 +42,11 @@
 	icon_state = "pod_1"
 	//Get the clone body ready
 	maim_clone(H)
-	H.add_trait(TRAIT_STABLEHEART, "cloning")
-	H.add_trait(TRAIT_EMOTEMUTE, "cloning")
-	H.add_trait(TRAIT_MUTE, "cloning")
-	H.add_trait(TRAIT_NOBREATH, "cloning")
-	H.add_trait(TRAIT_NOCRITDAMAGE, "cloning")
+	H.add_trait(TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_MUTE, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_NOBREATH, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	H.Unconscious(80)
 
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone?", null, null, null, 100, H)

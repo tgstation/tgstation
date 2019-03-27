@@ -40,7 +40,7 @@
 	return FALSE
 
 /mob/living/proc/on_hit(obj/item/projectile/P)
-	return
+	return BULLET_ACT_HIT
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
@@ -48,7 +48,7 @@
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-	return P.on_hit(src, armor)
+	return P.on_hit(src, armor)? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0

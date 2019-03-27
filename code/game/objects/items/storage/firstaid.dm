@@ -174,6 +174,32 @@
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
+//medibot assembly
+/obj/item/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
+	if((!istype(S, /obj/item/bodypart/l_arm/robot)) && (!istype(S, /obj/item/bodypart/r_arm/robot)))
+		return ..()
+
+	//Making a medibot!
+	if(contents.len >= 1)
+		to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
+		return
+
+	var/obj/item/bot_assembly/medbot/A = new
+	if(istype(src, /obj/item/storage/firstaid/fire))
+		A.skin = "ointment"
+	else if(istype(src, /obj/item/storage/firstaid/toxin))
+		A.skin = "tox"
+	else if(istype(src, /obj/item/storage/firstaid/o2))
+		A.skin = "o2"
+	else if(istype(src, /obj/item/storage/firstaid/brute))
+		A.skin = "brute"
+	user.put_in_hands(A)
+	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
+	A.robot_arm = S.type
+	A.firstaid = type
+	qdel(S)
+	qdel(src)
+
 /*
  * Pill Bottles
  */

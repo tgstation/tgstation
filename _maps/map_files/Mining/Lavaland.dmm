@@ -774,7 +774,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cc" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/structure/cable{
 	icon_state = "1-4"
 	},

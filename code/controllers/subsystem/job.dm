@@ -248,7 +248,7 @@ SUBSYSTEM_DEF(job)
 
 	JobDebug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)
-		return 0
+		return TRUE
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
@@ -351,9 +351,9 @@ SUBSYSTEM_DEF(job)
 	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
-			AssignRole(player, SSjob.overflow_role) //If everything is already filled, make them an assistant
-
-	return 1
+			if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them an assistant
+				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
+	return TRUE
 
 //We couldn't find a job from prefs for this guy.
 /datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)
@@ -426,6 +426,12 @@ SUBSYSTEM_DEF(job)
 
 		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
 
+		if(M.client.holder)
+			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.toggles & DEADMIN_ALWAYS))
+				M.client.holder.auto_deadmin()
+			else
+				handle_auto_deadmin_roles(M.client, rank)
+
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
 		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
@@ -433,7 +439,7 @@ SUBSYSTEM_DEF(job)
 		if(job.req_admin_notify)
 			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
+			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
 	if(ishuman(H))
 		var/mob/living/carbon/human/wageslave = H
 		to_chat(M, "<b>Your account ID is [wageslave.account_id].</b>")
@@ -443,11 +449,23 @@ SUBSYSTEM_DEF(job)
 
 	return H
 
+/datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
+	if(!C?.holder)
+		return TRUE
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return
+	if((job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD) && (CONFIG_GET(flag/auto_deadmin_heads) || (C.prefs?.toggles & DEADMIN_POSITION_HEAD)))
+		return C.holder.auto_deadmin()
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY) && (CONFIG_GET(flag/auto_deadmin_security) || (C.prefs?.toggles & DEADMIN_POSITION_SECURITY)))
+		return C.holder.auto_deadmin()
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && (CONFIG_GET(flag/auto_deadmin_silicons) || (C.prefs?.toggles & DEADMIN_POSITION_SILICON))) //in the event there's ever psuedo-silicon roles added, ie synths.
+		return C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
 	var/datum/job/J = SSjob.GetJob("Security Officer")
 	if(!J)
-		throw EXCEPTION("setup_officer_positions(): Security officer job is missing")
+		CRASH("setup_officer_positions(): Security officer job is missing")
 
 	var/ssc = CONFIG_GET(number/security_scaling_coeff)
 	if(ssc > 0)

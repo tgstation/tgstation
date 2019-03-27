@@ -77,11 +77,11 @@
 					/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas)
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
@@ -204,15 +204,13 @@
 
 /datum/supply_pack/emergency/spacesuit
 	name = "Space Suit Crate"
-	desc = "Contains two aging suits from Space-Goodwill. Requires EVA access to open."
-	cost = 3000
+	desc = "Contains one aging suit from Space-Goodwill and a jetpack. Requires EVA access to open."
+	cost = 2500
 	access = ACCESS_EVA
 	contains = list(/obj/item/clothing/suit/space,
-					/obj/item/clothing/suit/space,
-					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/mask/breath,
-					/obj/item/clothing/mask/breath)
+					/obj/item/tank/jetpack/carbondioxide)
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
 
@@ -363,15 +361,6 @@
 					/obj/item/melee/baton/loaded)
 	crate_name = "stun baton crate"
 
-/datum/supply_pack/security/taser
-	name = "Taser Crate"
-	desc = "From the depths of stunbased combat, this order rises above, supreme. Contains three hybrid tasers, capable of firing both electrodes and disabling shots. Requires Security access to open."
-	cost = 3000
-	contains = list(/obj/item/gun/energy/e_gun/advtaser,
-					/obj/item/gun/energy/e_gun/advtaser,
-					/obj/item/gun/energy/e_gun/advtaser)
-	crate_name = "taser crate"
-
 /datum/supply_pack/security/wall_flash
 	name = "Wall-Mounted Flash Crate"
 	desc = "Contains four wall-mounted flashes. Requires Security access to open."
@@ -408,6 +397,15 @@
 					/obj/item/kitchen/knife/combat,
 					/obj/item/kitchen/knife/combat)
 	crate_name = "combat knife crate"
+
+/datum/supply_pack/security/armory/dragnet
+	name = "DRAGnet Crate"
+	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, a recent breakthrough in law enforcement prisoner management technology. Requires armory access to open."
+	cost = 1500
+	contains = list(/obj/item/gun/energy/e_gun/dragnet,
+					/obj/item/gun/energy/e_gun/dragnet,
+					/obj/item/gun/energy/e_gun/dragnet)
+	crate_name = "\improper DRAGnet crate"
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
@@ -1149,7 +1147,7 @@
 
 /datum/supply_pack/medical/vending
 	name = "Medical Vending Crate"
-	desc = "Contains refills for medical vending machines."
+	desc = "Contains one NanoMed Plus refill and one wall-mounted NanoMed refill."
 	cost = 2000
 	contains = list(/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/wallmed)
@@ -1230,16 +1228,23 @@
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
-	desc = "The tools you need to replace those finicky humans with a loyal robot army! Contains three proximity sensors, two high-powered cells, six flashes, and an electrical toolbox. Requires Robotics access to open."
-	cost = 1000
+	desc = "The tools you need to replace those finicky humans with a loyal robot army! Contains four proximity sensors, two empty first aid kits, two health analyzers, two red hardhats, two mechanical toolboxes, and two cleanbot assemblies! Requires Robotics access to open."
+	cost = 1500
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
-					/obj/item/storage/toolbox/electrical,
-					/obj/item/storage/box/flashes,
-					/obj/item/stock_parts/cell/high,
-					/obj/item/stock_parts/cell/high)
+					/obj/item/assembly/prox_sensor,
+					/obj/item/storage/firstaid,
+					/obj/item/storage/firstaid,
+					/obj/item/healthanalyzer,
+					/obj/item/healthanalyzer,
+					/obj/item/clothing/head/hardhat/red,
+					/obj/item/clothing/head/hardhat/red,
+					/obj/item/storage/toolbox/mechanical,
+					/obj/item/storage/toolbox/mechanical,
+					/obj/item/bot_assembly/cleanbot,
+					/obj/item/bot_assembly/cleanbot)
 	crate_name = "robotics assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
@@ -1392,16 +1397,10 @@
 
 /datum/supply_pack/service/minerkit
 	name = "Shaft Miner Starter Kit"
-	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? Either way, this kit is the best way to turn a regular crewman into an ore-producing, monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, cargo headset, ore bag, gasmask, and explorer suit. Requires QM access to open."
+	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? Either way, this kit is the best way to turn a regular crewman into an ore-producing, monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade. Requires QM access to open."
 	cost = 2500
 	access = ACCESS_QM
-	contains = list(/obj/item/pickaxe/mini,
-			/obj/item/clothing/glasses/meson,
-			/obj/item/t_scanner/adv_mining_scanner/lesser,
-			/obj/item/radio/headset/headset_cargo/mining,
-			/obj/item/storage/bag/ore,
-			/obj/item/clothing/suit/hooded/explorer,
-			/obj/item/clothing/mask/gas/explorer)
+	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
@@ -1942,7 +1941,6 @@
 					/obj/item/clothing/shoes/sneakers/black,
 					/obj/item/clothing/gloves/color/white,
 					/obj/item/clothing/mask/gas/mime,
-					/obj/item/clothing/head/beret,
 					/obj/item/clothing/head/frenchberet,
 					/obj/item/clothing/suit/suspenders,
 					/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,

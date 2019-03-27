@@ -314,7 +314,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bd" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "be" = (
@@ -673,7 +673,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ct" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cu" = (
@@ -747,7 +747,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cG" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cH" = (

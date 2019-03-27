@@ -55,7 +55,11 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
+		cut_overlays()
+		if(panel_open)
+			add_overlay("[initial(icon_state)]-panel")
+		updateUsrDialog()
 		return
 
 	if(default_pry_open(O))

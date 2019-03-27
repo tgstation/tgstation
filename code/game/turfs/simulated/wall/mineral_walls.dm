@@ -115,13 +115,12 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
-/turf/closed/wall/mineral/plasma/bullet_act(var/obj/item/projectile/Proj)
+/turf/closed/wall/mineral/plasma/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj, /obj/item/projectile/beam))
 		PlasmaBurn(2500)
 	else if(istype(Proj, /obj/item/projectile/ion))
 		PlasmaBurn(500)
-	..()
-
+	. = ..()
 
 /turf/closed/wall/mineral/wood
 	name = "wooden wall"

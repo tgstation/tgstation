@@ -844,7 +844,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/awaymission/BMPship/Aft)
 "cR" = (
-/obj/structure/closet/secure_closet/freezer/meat{
+/obj/structure/closet/secure_closet/freezer/meat/open{
 	opened = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -1345,7 +1345,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
 "ef" = (
-/obj/structure/chair/office{
+/obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/carpet,

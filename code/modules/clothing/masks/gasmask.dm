@@ -176,7 +176,6 @@
 
 
 /obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
-
 	var/mob/M = usr
 	var/list/options = list()
 	options["Original Tiki"] = "tiki_eyebrow"
@@ -194,3 +193,7 @@
 			A.UpdateButtonIcon()
 		to_chat(M, "The Tiki Mask has now changed into the [choice] Mask!")
 		return 1
+
+/obj/item/clothing/mask/gas/tiki_mask/yalp_elor
+	icon_state = "tiki_yalp"
+	actions_types = list()

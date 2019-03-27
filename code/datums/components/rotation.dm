@@ -44,15 +44,17 @@
 	if(src.rotation_flags & ROTATION_CLOCKWISE)
 		default_rotation_direction = ROTATION_CLOCKWISE
 
-	if(src.rotation_flags & ROTATION_ALTCLICK)
+/datum/component/simple_rotation/proc/add_signals()
+	if(rotation_flags & ROTATION_ALTCLICK)
 		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
-	if(src.rotation_flags & ROTATION_WRENCH)
+	if(rotation_flags & ROTATION_WRENCH)
 		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
 
-	if(src.rotation_flags & ROTATION_VERBS)
+/datum/component/simple_rotation/proc/add_verbs()
+	if(rotation_flags & ROTATION_VERBS)
 		var/atom/movable/AM = parent
-		if(src.rotation_flags & ROTATION_FLIP)
+		if(rotation_flags & ROTATION_FLIP)
 			AM.verbs += /atom/movable/proc/simple_rotate_flip
 		if(src.rotation_flags & ROTATION_CLOCKWISE)
 			AM.verbs += /atom/movable/proc/simple_rotate_clockwise
@@ -66,11 +68,30 @@
 		AM.verbs -= /atom/movable/proc/simple_rotate_clockwise
 		AM.verbs -= /atom/movable/proc/simple_rotate_counterclockwise
 
-/datum/component/simple_rotation/Destroy()
+/datum/component/simple_rotation/proc/remove_signals()
+		UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY))
+
+/datum/component/simple_rotation/RegisterWithParent()
+	add_verbs()
+	add_signals()
+	. = ..()
+
+/datum/component/simple_rotation/PostTransfer()
+	//Because of the callbacks which we don't track cleanly we can't transfer this
+	//item cleanly, better to let the new of the new item create a new rotation datum
+	//instead (there's no real state worth transferring)
+	return COMPONENT_NOTRANSFER
+
+/datum/component/simple_rotation/UnregisterFromParent()
 	remove_verbs()
+	remove_signals()
+	. = ..()
+
+/datum/component/simple_rotation/Destroy()
 	QDEL_NULL(can_user_rotate)
 	QDEL_NULL(can_be_rotated)
 	QDEL_NULL(after_rotation)
+	//Signals + verbs removed via UnRegister
 	. = ..()
 
 /datum/component/simple_rotation/RemoveComponent()

@@ -108,10 +108,9 @@
 				</div>
 			</body>
 			</html>"} //"
-	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
-	onclose(usr, "pai")
+	src << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	onclose(src, "pai")
 	temp = null
-	return
 
 
 
@@ -269,7 +268,10 @@
 				cable = new /obj/item/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 		if("loudness")
-			internal_instrument.interact(src)
+			if(subscreen == 1) // Open Instrument
+				internal_instrument.interact(src)
+			if(subscreen == 2) // Change Instrument type
+				internal_instrument.selectInstrument()
 
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
@@ -634,4 +636,7 @@
 /mob/living/silicon/pai/proc/softwareLoudness()
 	if(!internal_instrument)
 		internal_instrument = new(src)
-	return "<h3>Sound Synthetizer</h3>"
+	var/dat = "<h3>Sound Synthetizer</h3>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthetizer Interface</a><br>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=2'>Choose Instrument Type</a>"
+	return dat

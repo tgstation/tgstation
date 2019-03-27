@@ -52,12 +52,11 @@
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
-	M.AdjustStun(-20, FALSE)
-	M.AdjustKnockdown(-20, FALSE)
-	M.AdjustUnconscious(-20, FALSE)
-	M.AdjustParalyzed(-20, FALSE)
-	M.AdjustImmobilized(-20, FALSE)
-	M.adjustStaminaLoss(-0.5*REM, 0)
+	M.AdjustStun(-5, FALSE)
+	M.AdjustKnockdown(-5, FALSE)
+	M.AdjustUnconscious(-5, FALSE)
+	M.AdjustParalyzed(-5, FALSE)
+	M.AdjustImmobilized(-5, FALSE)
 	..()
 	. = 1
 

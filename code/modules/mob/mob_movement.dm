@@ -1,18 +1,6 @@
 /mob/CanPass(atom/movable/mover, turf/target)
 	return TRUE				//There's almost no cases where non /living mobs should be used in game as actual mobs, other than ghosts.
 
-/mob/living/CanPass(atom/movable/mover, turf/target)
-	if((mover.pass_flags & PASSMOB))
-		return TRUE
-	if(istype(mover, /obj/item/projectile) || mover.throwing)
-		return (!density || !(mobility_flags & MOBILITY_STAND))
-	if(buckled == mover)
-		return TRUE
-	if(ismob(mover))
-		if (mover in buckled_mobs)
-			return TRUE
-	return (!mover.density || !density || !(mobility_flags & MOBILITY_STAND))
-
 //DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
 //See mob_movespeed.dm
 /mob/proc/movement_delay()	//update /living/movement_delay() if you change this

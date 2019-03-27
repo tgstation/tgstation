@@ -3060,7 +3060,7 @@
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "hs" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "ht" = (

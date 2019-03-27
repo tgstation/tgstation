@@ -793,3 +793,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(has_trait(TRAIT_NODROP))
 		return
 	return ..()
+
+/obj/item/proc/canStrip(mob/stripper, mob/owner)
+	return !has_trait(TRAIT_NODROP)
+
+/obj/item/proc/doStrip(mob/stripper, mob/owner)
+	return owner.dropItemToGround(src)
+

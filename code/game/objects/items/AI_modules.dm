@@ -238,7 +238,7 @@ AI MODULES
 			return
 		newpos = 15
 	lawpos = min(newpos, 50)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
 	laws[1] = targName
@@ -365,7 +365,7 @@ AI MODULES
 	var/subject = "human being"
 
 /obj/item/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
-	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject)
+	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject, MAX_NAME_LEN)
 	if(!targName)
 		return
 	subject = targName
@@ -447,7 +447,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/core/freeformcore/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
 	laws[1] = targName
@@ -499,7 +499,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/syndicate/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
 	laws[1] = targName

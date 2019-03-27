@@ -15,6 +15,7 @@
 	disliked_food = FRUIT | GROSS
 	toxic_food = MEAT | RAW
 	mutanteyes = /obj/item/organ/eyes/moth
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
 	. = ..()
@@ -48,7 +49,7 @@
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
-/datum/species/moth/check_weakness(obj/item/weapon, mob/living/attacker)
+/datum/species/moth/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 9 //flyswatters deal 10x damage to moths
 	return 0

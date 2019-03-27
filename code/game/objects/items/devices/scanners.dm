@@ -7,6 +7,7 @@ HEALTH ANALYZER
 GAS ANALYZER
 SLIME SCANNER
 NANITE SCANNER
+GENE SCANNER
 
 */
 /obj/item/t_scanner
@@ -191,6 +192,7 @@ NANITE SCANNER
 			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
+
 	if (M.radiation)
 		to_chat(user, "\t<span class='alert'>Subject is irradiated.</span>")
 		if(advanced)
@@ -254,6 +256,8 @@ NANITE SCANNER
 		var/ldamage = H.return_liver_damage()
 		if(ldamage > 10)
 			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "Severe" : "Minor"] liver damage detected.</span>")
+		if(advanced && H.has_dna())
+			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
 
 	// Body part damage report
 	if(iscarbon(M) && mode == 1)
@@ -346,7 +350,7 @@ NANITE SCANNER
 			if(M.reagents.reagent_list.len)
 				to_chat(user, "<span class='notice'>Subject contains the following reagents:</span>")
 				for(var/datum/reagent/R in M.reagents.reagent_list)
-					to_chat(user, "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]")
+					to_chat(user, "<span class='notice'>[round(R.volume, 0.001)] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]")
 			else
 				to_chat(user, "<span class='notice'>Subject contains no reagents.</span>")
 			if(M.reagents.addiction_list.len)
@@ -530,7 +534,7 @@ NANITE SCANNER
 
 /proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src)
 	var/icon = target
-	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
@@ -563,10 +567,9 @@ NANITE SCANNER
 				to_chat(user, "<span class='notice'>[target] is empty!</span>")
 
 		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
-			var/fusion_power = round(cached_scan_results["fusion"], 0.01)
-			var/tier = fusionpower2text(fusion_power)
+			var/instability = round(cached_scan_results["fusion"], 0.01)
 			to_chat(user, "<span class='boldnotice'>Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.</span>")
-			to_chat(user, "<span class='notice'>Power of the last fusion reaction: [fusion_power]\n This power indicates it was a [tier]-tier fusion reaction.</span>")
+			to_chat(user, "<span class='notice'>Instability of the last fusion reaction: [instability].</span>")
 	return
 
 //slime scanner
@@ -624,7 +627,7 @@ NANITE SCANNER
 	to_chat(user, "Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]")
 	if(T.effectmod)
 		to_chat(user, "<span class='notice'>Core mutation in progress: [T.effectmod]</span>")
-		to_chat(user, "<span_class = 'notice'>Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]</span>")
+		to_chat(user, "<span class = 'notice'>Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]</span>")
 	to_chat(user, "========================")
 
 
@@ -673,11 +676,15 @@ NANITE SCANNER
 	var/list/discovered = list() //hit a dna console to update the scanners database
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
-
 	add_fingerprint(user)
+	if (!M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+		user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
 
-	gene_scan(M, user, src)
+		gene_scan(M, user, src)
+	else
+
+		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
+
 
 /obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
 	. = ..()
@@ -697,13 +704,13 @@ NANITE SCANNER
 		return
 	to_chat(user, "<span class='notice'>[C.name]'s potential mutations.")
 	for(var/A in C.dna.mutation_index)
-		var/datum/mutation/human/HM = get_initialized_mutation(A)
+		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(A)
 		var/mut_name
 		if(G && (A in G.discovered))
 			mut_name = "[HM.name] ([HM.alias])"
 		else
 			mut_name = HM.alias
-		var/temp = get_gene_string(HM.type, C.dna)
+		var/temp = GET_GENE_STRING(HM.type, C.dna)
 		var/display
 		for(var/i in 0 to length(temp) / DNA_MUTATION_BLOCKS-1)
 			if(i)

@@ -62,6 +62,17 @@
 	if (CONFIG_GET(flag/log_mecha))
 		WRITE_LOG(GLOB.world_mecha_log, "MECHA: [text]")
 
+/proc/log_virus(text)
+	if (CONFIG_GET(flag/log_virus))
+		WRITE_LOG(GLOB.world_virus_log, "VIRUS: [text]")
+
+/proc/log_cloning(text, mob/initiator)
+	if(CONFIG_GET(flag/log_cloning))
+		WRITE_LOG(GLOB.world_cloning_log, "CLONING: [text]")
+
+/proc/log_asset(text)
+	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
+
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")

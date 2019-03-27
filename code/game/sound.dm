@@ -1,18 +1,17 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
+/proc/playsound(atom/source, input, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
 	if(isarea(source))
-		throw EXCEPTION("playsound(): source is an area")
+		CRASH("playsound(): source is an area")
 		return
 
 	var/turf/turf_source = get_turf(source)
 
 	if (!turf_source)
 		return
-		
+
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || open_sound_channel()
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
-	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = (world.view + extrarange)
 	var/z = turf_source.z
 	var/list/listeners = SSmobs.clients_by_zlevel[z]
@@ -21,12 +20,21 @@
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
+			sound_or_datum(M, turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
 	for(var/P in SSmobs.dead_players_by_zlevel[z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
+			sound_or_datum(M, turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
 
+/proc/sound_or_datum(mob/receiver, turf/turf_source, input, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+	if(istype(input, /datum/outputs))
+		var/datum/outputs/O = input
+		O.send_info(receiver, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	else
+		var/sound/S = sound(get_sfx(input))
+		receiver.playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
+
+//kept for legacy support and uploaded admin sounds
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
 	if(!client || !can_hear())
 		return
@@ -136,8 +144,6 @@
 				soundin = pick('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
 			if ("pageturn")
 				soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
-			if ("gunshot")
-				soundin = pick('sound/weapons/gunshot.ogg', 'sound/weapons/gunshot2.ogg','sound/weapons/gunshot3.ogg','sound/weapons/gunshot4.ogg')
 			if ("ricochet")
 				soundin = pick(	'sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
 			if ("terminal_type")
@@ -166,4 +172,6 @@
 				soundin = pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
 			if("honkbot_e")
 				soundin = pick('sound/items/bikehorn.ogg', 'sound/items/AirHorn2.ogg', 'sound/misc/sadtrombone.ogg', 'sound/items/AirHorn.ogg', 'sound/effects/reee.ogg',  'sound/items/WEEOO1.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/creep.ogg','sound/magic/Fireball.ogg' ,'sound/effects/pray.ogg', 'sound/voice/hiss1.ogg','sound/machines/buzz-sigh.ogg', 'sound/machines/ping.ogg', 'sound/weapons/flashbang.ogg', 'sound/weapons/bladeslice.ogg')
+			if("goose")
+				soundin = pick('sound/creatures/goose1.ogg', 'sound/creatures/goose2.ogg', 'sound/creatures/goose3.ogg', 'sound/creatures/goose4.ogg')
 	return soundin

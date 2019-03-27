@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(traumas)
 					   "security"  = typecacheof(list(/obj/item/clothing/under/rank/security, /obj/item/clothing/under/rank/warden,
 											 	 /obj/item/clothing/under/rank/head_of_security, /obj/item/clothing/under/rank/det,
 												 /obj/item/melee/baton, /obj/item/gun/energy/taser, /obj/item/restraints/handcuffs,
-												 /obj/machinery/door/airlock/security)),
+												 /obj/machinery/door/airlock/security, /obj/effect/hallucination/simple/securitron)),
 
 					  "clowns"    = typecacheof(list(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes,
 												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/instrument/bikehorn,

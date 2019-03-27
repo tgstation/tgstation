@@ -861,7 +861,7 @@
 
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!</span>")
 		log_admin("[key_name(usr)] AIized [key_name(H)].")
-		H.AIize(H.client)
+		H.AIize(TRUE, H.client)
 
 	else if(href_list["makealien"])
 		if(!check_rights(R_SPAWN))
@@ -930,8 +930,12 @@
 		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
 
 		var/client/C = usr.client
+		var/can_ghost = TRUE
 		if(!isobserver(usr))
-			C.admin_ghost()
+			can_ghost = C.admin_ghost()
+
+		if(!can_ghost)
+			return
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(AM)
 

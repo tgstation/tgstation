@@ -185,15 +185,14 @@
 		if(!can_trigger_gun(L))
 			return
 
-	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
-		shoot_with_empty_chamber(user)
-		return
-
 	if(flag)
 		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 			handle_suicide(user, target, params)
 			return
 
+	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
+		shoot_with_empty_chamber(user)
+		return
 
 	//Exclude lasertag guns from the TRAIT_CLUMSY check.
 	if(clumsy_check)
@@ -206,7 +205,7 @@
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		to_chat(user, "<span class='userdanger'>You need both hands free to fire [src]!</span>")
+		to_chat(user, "<span class='userdanger'>You need both hands free to fire \the [src]!</span>")
 		return
 
 	//DUAL (or more!) WIELDING
