@@ -411,7 +411,7 @@
 		var/lights_energy_drain = 2
 		use_power(lights_energy_drain)
 
-	if(!enclosed && occupant && occupant.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
+	if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 		visible_message("<span class='warning'>[occupant] tumbles out of the cockpit!</span>", "<span class='danger'>You tumble out of the cockpit!</span>")
 		go_out() //Maybe we should install seat belts?
 
