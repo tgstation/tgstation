@@ -300,6 +300,8 @@
 		set_pull_offsets(M, state)
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
+	if(M.buckled)
+		return //don't make them change direction or offset them if they're buckled into something.
 	var/offset = 0
 	switch(grab_state)
 		if(GRAB_PASSIVE)
@@ -317,11 +319,21 @@
 		if(SOUTH)
 			animate(M, pixel_x = 0, pixel_y = -offset, 3)
 		if(EAST)
+			if(M.lying == 270) //update the dragged dude's direction if we've turned
+				M.lying = 90
+				M.update_transform() //force a transformation update, otherwise it'll take a few ticks for update_mobility() to do so
+				M.lying_prev = M.lying
 			animate(M, pixel_x = offset, pixel_y = 0, 3)
 		if(WEST)
+			if(M.lying == 90)
+				M.lying = 270
+				M.update_transform()
+				M.lying_prev = M.lying
 			animate(M, pixel_x = -offset, pixel_y = 0, 3)
 
-/mob/living/proc/reset_pull_offsets(mob/living/M)
+/mob/living/proc/reset_pull_offsets(mob/living/M, override)
+	if(!override && M.buckled)
+		return
 	animate(M, pixel_x = 0, pixel_y = 0, 1)
 
 //mob verbs are a lot faster than object verbs
@@ -1089,19 +1101,21 @@
 			should_be_lying = buckled.buckle_lying
 
 	if(should_be_lying)
-		mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL | MOBILITY_STAND)
+		mobility_flags &= ~MOBILITY_STAND
 		if(buckled)
 			if(buckled.buckle_lying != -1)
 				lying = buckled.buckle_lying
 		if(!lying) //force them on the ground
 			lying = pick(90, 270)
 	else
-		if(!restrained)
-			mobility_flags |= (MOBILITY_UI | MOBILITY_PULL)
-		else
-			mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL)
 		mobility_flags |= MOBILITY_STAND
 		lying = 0
+	
+	if(should_be_lying || restrained || incapacitated())
+		mobility_flags &= ~(MOBILITY_UI|MOBILITY_PULL)
+	else
+		mobility_flags |= MOBILITY_UI|MOBILITY_PULL
+		
 
 
 	var/canitem = !paralyzed && !stun && conscious && !chokehold && !restrained && has_arms

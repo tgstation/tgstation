@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/ooccolor = null
+	var/ooccolor = "#c43b23"
 	var/asaycolor = null
 	var/enable_tips = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
@@ -75,7 +75,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/negative_quirks = list()
 	var/list/neutral_quirks = list()
 	var/list/all_quirks = list()
-	var/list/character_quirks = list()
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0

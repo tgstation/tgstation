@@ -1756,13 +1756,13 @@
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "eJ" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "eK" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
@@ -5178,7 +5178,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "mH" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -5193,7 +5193,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "mI" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -5509,7 +5509,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "nn" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -5800,7 +5800,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "nN" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "nO" = (
@@ -6656,7 +6656,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "pj" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -6668,7 +6668,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "pk" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -8388,7 +8388,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "sr" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green{
@@ -8409,7 +8409,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "st" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
@@ -8469,7 +8469,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "sz" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8503,7 +8503,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "sB" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
@@ -8796,6 +8796,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/ferry)
+"tb" = (
+/turf/open/floor/white,
+/area/holodeck/rec_center/photobooth)
 "tc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/light/floor,
@@ -8848,6 +8851,25 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
+"tj" = (
+/obj/structure/falsewall/wood,
+/obj/structure/mirror,
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/photobooth)
+"tk" = (
+/obj/structure/table/wood,
+/obj/item/paint/anycolor{
+	pixel_x = 7
+	},
+/obj/item/paint/anycolor{
+	pixel_x = -5
+	},
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/photobooth)
+"tl" = (
+/obj/structure/dresser,
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/photobooth)
 "tn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -8874,7 +8896,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tq" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
@@ -8928,7 +8950,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "tz" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/structure/cable/white{
@@ -9386,7 +9408,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "uw" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -10845,13 +10867,13 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "xV" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/centcom/control)
 "xW" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -11465,12 +11487,12 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zB" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/ert_spawn,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zC" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/ert_spawn,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11735,7 +11757,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Ah" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/ert_spawn,
@@ -11936,7 +11958,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "AP" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/ert_spawn,
@@ -12447,14 +12469,14 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Ca" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/landmark/ert_spawn,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cb" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/landmark/ert_spawn,
@@ -13360,7 +13382,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "DG" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
@@ -13400,7 +13422,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "DJ" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -17826,6 +17848,12 @@
 "Si" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/two)
+"Sq" = (
+/obj/structure/table/wood,
+/obj/item/camera,
+/obj/item/camera,
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/photobooth)
 "Su" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
@@ -18564,6 +18592,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"ZN" = (
+/obj/structure/table/wood,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/photobooth)
 "ZQ" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -71546,18 +71586,18 @@ aa
 aa
 "}
 (207,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ab
 aa
 aa
 aa
@@ -71803,18 +71843,18 @@ aa
 aa
 "}
 (208,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ac
+tj
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+fx
 aa
 aa
 aa
@@ -72060,18 +72100,18 @@ aa
 aa
 "}
 (209,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ac
+tk
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+fx
 aa
 aa
 aa
@@ -72317,18 +72357,18 @@ aa
 aa
 "}
 (210,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ac
+Sq
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+fx
 aa
 aa
 aa
@@ -72574,18 +72614,18 @@ aa
 aa
 "}
 (211,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ac
+ZN
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+fx
 aa
 aa
 aa
@@ -72831,18 +72871,18 @@ aa
 aa
 "}
 (212,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ac
+tl
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+fx
 aa
 aa
 aa
@@ -73089,16 +73129,16 @@ aa
 "}
 (213,1,1) = {"
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 ab
 ae
 ae

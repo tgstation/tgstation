@@ -27,6 +27,7 @@
 #define COMSIG_GLOB_VAR_EDIT "!var_edit"						//called after a successful var edit somewhere in the world: (list/args)
 #define COMSIG_GLOB_MOB_CREATED "!mob_created"					//mob was created somewhere : (mob)
 #define COMSIG_GLOB_MOB_DEATH "!mob_death"						//mob died somewhere : (mob , gibbed)
+#define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"			//global living say plug - use sparingly: (mob/speaker , message)
 
 //////////////////////////////////////////////////////////////////
 
