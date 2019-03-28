@@ -14520,7 +14520,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/sorting/mail{
 	name = "sorting disposal pipe (Research)";
-	sortType = 0;
 	sortTypes = list(12,24,25)
 	},
 /obj/structure/cable/yellow{
@@ -21460,7 +21459,6 @@
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
 	name = "sorting disposal pipe (Security)";
-	sortType = 0;
 	sortTypes = list(7,8)
 	},
 /obj/structure/cable/yellow{
@@ -52447,7 +52445,6 @@
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
 	name = "sorting disposal pipe (Engineering)";
-	sortType = 0;
 	sortTypes = list(4,5)
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
