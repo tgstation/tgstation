@@ -4726,7 +4726,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Engine_Shutter"
+	id = "engsm"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -4862,7 +4862,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Engine_Shutter"
+	id = "engsm"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -52676,7 +52676,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Engine_Shutter"
+	id = "engsm"
 	},
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -53630,6 +53630,7 @@
 	dir = 10
 	},
 /obj/structure/chair/stool,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
 "iGD" = (
@@ -53906,11 +53907,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/airalarm/engine{
-	pixel_y = 25
+/obj/machinery/button/door{
+	id = "engsm";
+	name = "Radiation Shutters Control";
+	pixel_y = 24;
+	req_access_txt = "10"
 	},
 /turf/open/floor/plasteel,
-/area/engine/supermatter)
+/area/engine/engine_room)
 "kAG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -54901,6 +54905,19 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"qxz" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/button/door{
+	dir = 2;
+	id = "supermatter_external";
+	name = "Supermatter External Lockdown";
+	pixel_x = 5;
+	pixel_y = -24;
+	req_access_txt = "24"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engine_room)
 "qxF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -55135,7 +55152,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Engine_Shutter"
+	id = "engsm"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -55238,7 +55255,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Engine_Shutter"
+	id = "engsm"
 	},
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -55904,7 +55921,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Engine_Shutter"
+	id = "engsm"
 	},
 /obj/item/tank/internals/plasma,
 /turf/open/floor/plating,
@@ -56049,14 +56066,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/button/door{
-	id = "engsm";
-	name = "Radiation Shutters Control";
-	pixel_y = 24;
-	req_access_txt = "10"
+/obj/machinery/airalarm/engine{
+	pixel_y = 25
 	},
 /turf/open/floor/plasteel,
-/area/engine/engine_room)
+/area/engine/supermatter)
 "wIl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -91897,7 +91911,7 @@ mFQ
 miv
 dZa
 mFO
-oij
+qxz
 uwV
 enD
 psF
