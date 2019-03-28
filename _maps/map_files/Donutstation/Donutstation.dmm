@@ -52881,12 +52881,6 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/engine/engine_room/external";
-	dir = 8;
-	name = "Supermatter External Access";
-	pixel_x = -25
-	},
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
