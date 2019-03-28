@@ -30,9 +30,6 @@
 "g" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"h" = (
-/turf/open/space/basic,
-/area/shuttle/escape)
 "i" = (
 /obj/machinery/light{
 	icon_state = "tube";
@@ -56,41 +53,20 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"l" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/space)
 "m" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency,
 /turf/open/floor/mineral/titanium/blue,
-/area/space)
-"n" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/space)
-"o" = (
-/turf/closed/wall/mineral/titanium,
-/area/space)
-"p" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium,
-/area/space)
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
 e
 b
 m
-p
+a
 d
 d
 d
@@ -104,8 +80,8 @@ a
 b
 f
 i
-n
-o
+j
+b
 d
 d
 d
@@ -119,8 +95,8 @@ b
 c
 f
 g
-n
-l
+j
+c
 d
 d
 d
@@ -134,8 +110,8 @@ c
 b
 f
 g
-n
-o
+j
+b
 d
 d
 d
@@ -149,8 +125,8 @@ b
 b
 b
 k
-o
-o
+b
+b
 d
 d
 d
@@ -161,10 +137,10 @@ b
 b
 "}
 (6,1,1) = {"
-h
+d
 b
-l
-o
+c
+b
 d
 d
 d
