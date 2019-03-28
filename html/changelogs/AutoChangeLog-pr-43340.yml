@@ -1,0 +1,7 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - balance: "X-Ray vision can no longer be obtained via a random gene sequence at roundstart."
+  - balance: "X-Ray now has 35 instability, up from 25."
+  - rscadd: "A new gene, thermal vision, has been added to genetics."
+  - rscadd: "You can create X-Ray vision by mixing Thermal Vision and Radioactive together."
