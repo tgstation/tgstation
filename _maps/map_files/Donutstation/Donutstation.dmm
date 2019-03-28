@@ -136,7 +136,6 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "pipe11-3";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/corner,
@@ -181,7 +180,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
-	icon_state = "manifold-3";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -695,7 +693,6 @@
 /area/quartermaster/miningdock)
 "abJ" = (
 /obj/machinery/computer/med_data{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -1206,8 +1203,7 @@
 /area/science/storage)
 "adj" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4;
-	icon_state = "manifoldlayer"
+	dir = 4
 	},
 /turf/closed/wall/r_wall,
 /area/science/storage)
@@ -1595,7 +1591,6 @@
 /area/chapel/office)
 "aec" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	icon_state = "filter_off";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -2182,7 +2177,6 @@
 "afz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -2493,7 +2487,6 @@
 /area/medical/medbay/central)
 "agj" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -2628,7 +2621,6 @@
 "agx" = (
 /obj/machinery/mass_driver{
 	name = "Holy Driver";
-	icon_state = "mass_driver";
 	dir = 1;
 	id = "chapelgun"
 	},
@@ -3009,7 +3001,6 @@
 /area/chapel/office)
 "ahr" = (
 /obj/machinery/computer/robotics{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -3189,7 +3180,6 @@
 /area/crew_quarters/heads/hor)
 "ahL" = (
 /obj/machinery/computer/mecha{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -3373,7 +3363,6 @@
 /area/science/mixing)
 "aig" = (
 /obj/machinery/computer/rdservercontrol{
-	icon_state = "computer";
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -3729,7 +3718,6 @@
 /area/science/research)
 "ajd" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	icon_state = "freezer_1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -4055,7 +4043,6 @@
 /area/bridge)
 "ajL" = (
 /obj/machinery/computer/monitor{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -4469,7 +4456,6 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	icon_state = "pipe-j1s";
 	name = "sorting disposal pipe (Bar)";
 	sortType = 19
 	},
@@ -4651,7 +4637,6 @@
 /area/hydroponics)
 "akV" = (
 /obj/machinery/computer/rdconsole/core{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4669,7 +4654,6 @@
 /area/crew_quarters/bar)
 "akX" = (
 /obj/machinery/computer/prisoner{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -4947,7 +4931,6 @@
 "alN" = (
 /obj/structure/lattice,
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 1
 	},
 /turf/open/space/basic,
@@ -5001,7 +4984,6 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	icon_state = "pipe-j1s";
 	name = "sorting disposal pipe (Kitchen)";
 	sortType = 20
 	},
@@ -6644,7 +6626,6 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	icon_state = "pipe-j1s";
 	name = "sorting disposal pipe (Theatre)";
 	sortType = 18
 	},
@@ -6739,7 +6720,6 @@
 	dir = 1
 	},
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -7513,7 +7493,6 @@
 /area/medical/virology)
 "arW" = (
 /obj/machinery/computer/rdconsole/production{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -8610,7 +8589,6 @@
 /area/crew_quarters/dorms)
 "aun" = (
 /obj/machinery/computer/holodeck{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -9680,7 +9658,6 @@
 	},
 /obj/structure/sign/directions/command{
 	dir = 4;
-	icon_state = "direction_bridge";
 	pixel_x = 30;
 	pixel_y = 24
 	},
@@ -9690,7 +9667,6 @@
 	},
 /obj/structure/sign/directions/security{
 	dir = 4;
-	icon_state = "direction_sec";
 	pixel_x = 30;
 	pixel_y = 32
 	},
@@ -10646,8 +10622,7 @@
 /area/engine/atmos)
 "ayL" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4;
-	icon_state = "manifoldlayer"
+	dir = 4
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -10919,8 +10894,7 @@
 /area/teleporter)
 "azq" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4;
-	icon_state = "manifoldlayer"
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -11428,7 +11402,6 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/junction/flip{
-	icon_state = "pipe-j2";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -11438,7 +11411,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	icon_state = "pipe-j1s";
 	name = "sorting disposal pipe (Head of Personnel)";
 	sortType = 15
 	},
@@ -11496,7 +11468,6 @@
 /area/crew_quarters/heads/hop)
 "aAE" = (
 /obj/machinery/modular_computer/console/preset/command{
-	icon_state = "console";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green,
@@ -11677,7 +11648,6 @@
 	dir = 4
 	},
 /obj/machinery/computer/med_data{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -13054,7 +13024,6 @@
 /area/security/processing)
 "aEc" = (
 /obj/machinery/computer/security/labor{
-	icon_state = "computer";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -13245,7 +13214,6 @@
 /area/security/brig)
 "aEs" = (
 /obj/machinery/computer/gulag_teleporter_computer{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/machinery/gulag_item_reclaimer{
@@ -14154,7 +14122,6 @@
 /area/security/prison)
 "aGd" = (
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -14880,7 +14847,6 @@
 "aHD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1{
-	icon_state = "pipe11-1";
 	dir = 10
 	},
 /obj/machinery/atmospherics/components/binary/pump{
@@ -15679,7 +15645,6 @@
 	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -15737,7 +15702,6 @@
 	dir = 8
 	},
 /obj/machinery/computer/card/minor/cmo{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -16292,7 +16256,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
-	icon_state = "manifold-3";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -16669,7 +16632,6 @@
 /area/library)
 "aLT" = (
 /obj/machinery/computer/aifixer{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -18052,7 +18014,6 @@
 /area/security/courtroom)
 "aOZ" = (
 /obj/machinery/computer/card/minor/hos{
-	icon_state = "computer";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -18232,8 +18193,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4;
-	icon_state = "manifoldlayer"
+	dir = 4
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
@@ -18927,7 +18887,6 @@
 /area/space/nearstation)
 "aQR" = (
 /obj/machinery/computer/station_alert{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -19200,11 +19159,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
-	icon_state = "manifold-3";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1{
-	icon_state = "pipe11-1";
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -19286,7 +19243,6 @@
 /area/maintenance/port/fore)
 "aRI" = (
 /obj/machinery/computer/atmos_alert{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -20548,7 +20504,6 @@
 	dir = 5
 	},
 /obj/structure/disposalpipe/junction/yjunction{
-	icon_state = "pipe-y";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
@@ -20815,7 +20770,6 @@
 /area/engine/engineering)
 "aUV" = (
 /obj/machinery/computer/card/minor/ce{
-	icon_state = "computer";
 	dir = 1
 	},
 /obj/machinery/requests_console{
@@ -21348,7 +21302,6 @@
 	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -21506,7 +21459,6 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	icon_state = "pipe-j1s";
 	name = "sorting disposal pipe (Security)";
 	sortType = 0;
 	sortTypes = list(7,8)
@@ -23247,7 +23199,6 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
@@ -25819,7 +25770,6 @@
 	req_access_txt = "5; 68"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -27041,7 +26991,6 @@
 /area/medical/virology)
 "bgR" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -27354,7 +27303,6 @@
 /area/security/main)
 "bhw" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
-	icon_state = "freezer_1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
@@ -27764,7 +27712,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "pipe11-3";
 	dir = 1
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
@@ -28639,7 +28586,6 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	icon_state = "pipe-j1s";
 	name = "sorting disposal pipe (Recycling)";
 	sortType = 1
 	},
@@ -30658,7 +30604,6 @@
 /area/hallway/primary/central)
 "bnr" = (
 /obj/machinery/computer/rdconsole/robotics{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/machinery/light{
@@ -30736,7 +30681,6 @@
 /area/science/lab)
 "bnz" = (
 /obj/machinery/computer/security/hos{
-	icon_state = "computer";
 	dir = 1
 	},
 /obj/machinery/light,
@@ -30766,7 +30710,6 @@
 /area/engine/atmos)
 "bnC" = (
 /obj/machinery/computer/mech_bay_power_console{
-	icon_state = "computer";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -31018,7 +30961,6 @@
 /area/science/explab)
 "bnZ" = (
 /obj/machinery/computer/apc_control{
-	icon_state = "computer";
 	dir = 1
 	},
 /obj/machinery/computer/security/telescreen/ce{
@@ -31046,7 +30988,6 @@
 /area/crew_quarters/bar)
 "bob" = (
 /obj/machinery/computer/station_alert{
-	icon_state = "computer";
 	dir = 1
 	},
 /obj/machinery/newscaster{
@@ -31906,7 +31847,6 @@
 	dir = 1
 	},
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -33109,7 +33049,6 @@
 /area/engine/atmos)
 "brV" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -36416,13 +36355,11 @@
 	},
 /obj/structure/sign/directions/medical{
 	dir = 8;
-	icon_state = "direction_med";
 	pixel_x = -30;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/science{
 	dir = 8;
-	icon_state = "direction_sci";
 	pixel_x = -30;
 	pixel_y = 24
 	},
@@ -37694,7 +37631,6 @@
 	pixel_y = -26
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -37896,7 +37832,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
 	dir = 1
 	},
 /obj/machinery/navbeacon{
@@ -38431,7 +38366,6 @@
 "bBS" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -39519,7 +39453,6 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	icon_state = "pipe-j1s";
 	name = "sorting disposal pipe (Custodial)";
 	sortType = 22
 	},
@@ -40249,7 +40182,6 @@
 /area/quartermaster/office)
 "bFe" = (
 /obj/machinery/computer/cargo{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -40412,7 +40344,6 @@
 /area/crew_quarters/heads/cmo)
 "bFp" = (
 /obj/machinery/computer/cargo/request{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -40465,7 +40396,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/junction/flip{
-	icon_state = "pipe-j2";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -40571,7 +40501,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/junction/flip{
-	icon_state = "pipe-j2";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -41490,7 +41419,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/junction/flip{
-	icon_state = "pipe-j2";
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
@@ -41636,7 +41564,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
-	icon_state = "pipe-j2s";
 	name = "sorting disposal pipe (Hydroponics)";
 	sortType = 21
 	},
@@ -42207,7 +42134,6 @@
 /area/tcommsat/computer)
 "bID" = (
 /obj/structure/transit_tube/station/reverse{
-	icon_state = "closed_terminus0";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -42450,7 +42376,6 @@
 /area/tcommsat/server)
 "bJi" = (
 /obj/machinery/computer/telecomms/server{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -42475,7 +42400,6 @@
 /area/bridge)
 "bJm" = (
 /obj/machinery/computer/shuttle/labor{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -42506,7 +42430,6 @@
 /area/tcommsat/computer)
 "bJp" = (
 /obj/machinery/computer/message_monitor{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/machinery/light{
@@ -42917,7 +42840,6 @@
 /area/ai_monitored/security/armory)
 "bKj" = (
 /obj/machinery/computer/shuttle/labor{
-	icon_state = "computer";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -43014,7 +42936,6 @@
 /area/maintenance/aft)
 "bKu" = (
 /obj/structure/disposalpipe/junction/flip{
-	icon_state = "pipe-j2";
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -43357,7 +43278,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat/foyer";
 	enabled = 1;
-	icon_state = "control_standby";
 	name = "AI Chamber Foyer Control";
 	pixel_y = -24;
 	req_access = null;
@@ -43448,7 +43368,6 @@
 	pixel_x = -24
 	},
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
 	dir = 1
 	},
 /obj/machinery/camera{
@@ -43700,7 +43619,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/ai";
 	enabled = 1;
-	icon_state = "control_standby";
 	name = "AI Chamber Turret Control";
 	pixel_x = 32;
 	pixel_y = -24;
@@ -43842,7 +43760,6 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/junction/yjunction{
-	icon_state = "pipe-y";
 	dir = 1
 	},
 /obj/effect/landmark/event_spawn,
@@ -45856,7 +45773,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	icon_state = "pipe-j1s";
 	name = "sorting disposal pipe (Detective)";
 	sortType = 30
 	},
@@ -45889,7 +45805,6 @@
 	},
 /obj/structure/sign/directions/evac{
 	dir = 8;
-	icon_state = "direction_evac";
 	pixel_y = 42
 	},
 /turf/open/floor/plasteel,
@@ -46100,7 +46015,6 @@
 /area/maintenance/fore)
 "bQn" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/structure/window/reinforced/tinted,
@@ -49372,7 +49286,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	icon_state = "freezer_1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -50733,7 +50646,6 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
 	dir = 4
 	},
 /obj/machinery/navbeacon{
@@ -50824,7 +50736,6 @@
 /area/gateway)
 "caX" = (
 /obj/machinery/computer/telecomms/monitor{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -50991,7 +50902,6 @@
 /area/maintenance/fore)
 "cbz" = (
 /obj/machinery/computer/camera_advanced/xenobio{
-	icon_state = "computer";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -51210,7 +51120,6 @@
 /obj/machinery/disposal/deliveryChute{
 	desc = "A chute for big and small corpses alike!";
 	dir = 1;
-	icon_state = "intake";
 	name = "corpse chute"
 	},
 /obj/machinery/door/window/northleft{
@@ -51336,7 +51245,6 @@
 	},
 /obj/machinery/computer/security/telescreen{
 	name = "Test Chamber Monitor";
-	icon_state = "telescreen";
 	dir = 4;
 	pixel_y = 2;
 	network = list("xeno")
@@ -51450,7 +51358,6 @@
 /area/construction)
 "ccw" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -51491,7 +51398,6 @@
 	dir = 4
 	},
 /obj/structure/transit_tube/station/reverse{
-	icon_state = "closed_terminus0";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -51670,7 +51576,6 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -51711,7 +51616,6 @@
 	dir = 8
 	},
 /obj/structure/transit_tube/curved{
-	icon_state = "curved0";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -51801,7 +51705,6 @@
 "cdh" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/curved{
-	icon_state = "curved0";
 	dir = 8
 	},
 /turf/open/space/basic,
@@ -51927,14 +51830,12 @@
 "cdv" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/transit_tube/curved{
-	icon_state = "curved0";
 	dir = 1
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
 "cdw" = (
 /obj/structure/transit_tube/station/reverse{
-	icon_state = "closed_terminus0";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -51956,7 +51857,6 @@
 	name = "AI privacy shutters"
 	},
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -51974,7 +51874,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat/foyer";
 	enabled = 1;
-	icon_state = "control_standby";
 	name = "AI Chamber Foyer Control";
 	pixel_y = -24;
 	req_access = null;
@@ -52012,7 +51911,6 @@
 "cdE" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/curved{
-	icon_state = "curved0";
 	dir = 1
 	},
 /turf/open/space/basic,
@@ -52039,7 +51937,6 @@
 "cdI" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 8
 	},
 /turf/open/space/basic,
@@ -52511,7 +52408,6 @@
 	},
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
-	icon_state = "pipe-j2s";
 	name = "sorting disposal pipe (Law Office)";
 	sortType = 29
 	},
@@ -52550,7 +52446,6 @@
 "ceI" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
-	icon_state = "pipe-j2s";
 	name = "sorting disposal pipe (Engineering)";
 	sortType = 0;
 	sortTypes = list(4,5)
@@ -52695,7 +52590,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -52815,7 +52709,6 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -52829,7 +52722,6 @@
 /area/engine/engine_room)
 "dfK" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer";
 	dir = 4
 	},
 /obj/machinery/light{
@@ -52842,7 +52734,6 @@
 /area/engine/engine_room)
 "dfN" = (
 /obj/structure/reflector/single/anchored{
-	icon_state = "reflector_map";
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
@@ -52893,14 +52784,12 @@
 /area/engine/engine_room/external)
 "dpT" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	icon_state = "pipe11-2";
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engine_room)
 "dtX" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	icon_state = "pipe11-2";
 	dir = 4
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
@@ -52993,7 +52882,6 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 4
 	},
 /obj/machinery/power/apc{
@@ -53068,7 +52956,6 @@
 	pixel_y = -26
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -53096,7 +52983,6 @@
 /area/crew_quarters/fitness/locker_room)
 "eCr" = (
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
@@ -53137,7 +53023,6 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 8
 	},
 /obj/structure/sign/poster/official/random{
@@ -53447,7 +53332,6 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 9
 	},
 /turf/open/floor/plasteel,
@@ -53596,7 +53480,6 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	icon_state = "pipe-j1s";
 	name = "sorting disposal pipe (Atmospherics)";
 	sortType = 6
 	},
@@ -53636,7 +53519,6 @@
 /area/crew_quarters/heads/chief)
 "hTm" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer";
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -53687,7 +53569,6 @@
 /area/hallway/primary/central)
 "hZC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "pipe11-3";
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
@@ -53943,7 +53824,6 @@
 	},
 /obj/structure/sign/directions/supply{
 	dir = 1;
-	icon_state = "direction_supply";
 	pixel_y = 42
 	},
 /turf/open/floor/plasteel,
@@ -54024,7 +53904,6 @@
 "kuZ" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -54093,7 +53972,6 @@
 "lhs" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -54104,7 +53982,6 @@
 	dir = 6
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 8
 	},
 /obj/machinery/power/apc/highcap/ten_k{
@@ -54718,7 +54595,6 @@
 	dir = 10
 	},
 /obj/machinery/camera/autoname{
-	icon_state = "camera";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -55050,7 +54926,6 @@
 "qyl" = (
 /obj/machinery/atmospherics/pipe/manifold4w/dark/visible,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "pipe11-3";
 	dir = 6
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
@@ -55101,11 +54976,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
-	icon_state = "manifold-3";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1{
-	icon_state = "pipe11-1";
 	dir = 10
 	},
 /obj/machinery/holopad,
@@ -55185,7 +55058,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
-	icon_state = "manifold-3";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -55427,8 +55299,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4;
-	icon_state = "manifoldlayer"
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -55582,7 +55453,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1{
-	icon_state = "pipe11-1";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
@@ -55938,7 +55808,6 @@
 /area/hallway/primary/central)
 "vpa" = (
 /obj/machinery/atmospherics/pipe/manifold/orange/visible{
-	icon_state = "manifold-2";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -56016,7 +55885,6 @@
 /area/engine/engineering)
 "vAo" = (
 /obj/machinery/power/emitter{
-	icon_state = "emitter";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -56215,7 +56083,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/modular_computer/console/preset/engineering{
-	icon_state = "console";
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -56286,7 +56153,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "pipe11-3";
 	dir = 9
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
@@ -56415,7 +56281,6 @@
 /area/space)
 "yhe" = (
 /obj/structure/reflector/single/anchored{
-	icon_state = "reflector_map";
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,

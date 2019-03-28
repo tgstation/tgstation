@@ -78,7 +78,6 @@
 /area/lavaland/surface/outdoors)
 "ao" = (
 /obj/machinery/computer/shuttle/labor/one_way{
-	icon_state = "computer";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -285,7 +284,6 @@
 	dir = 4
 	},
 /obj/machinery/computer/mech_bay_power_console{
-	icon_state = "computer";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -366,7 +364,6 @@
 /area/mine/eva)
 "bh" = (
 /obj/machinery/computer/secure_data{
-	icon_state = "computer";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -494,7 +491,6 @@
 /area/mine/eva)
 "bw" = (
 /obj/machinery/computer/security/labor{
-	icon_state = "computer";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -832,7 +828,6 @@
 /area/mine/laborcamp)
 "ci" = (
 /obj/machinery/computer/prisoner{
-	icon_state = "computer";
 	dir = 1
 	},
 /turf/open/floor/plasteel,

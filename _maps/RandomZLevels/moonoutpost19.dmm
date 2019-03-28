@@ -6197,7 +6197,6 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mn" = (
 /obj/structure/closet/secure_closet{
-	icon_state = "freezer";
 	locked = 0;
 	name = "meat fridge";
 	req_access_txt = "201"
@@ -6213,7 +6212,6 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mo" = (
 /obj/structure/closet/secure_closet{
-	icon_state = "freezer";
 	locked = 0;
 	name = "refrigerator";
 	req_access_txt = "201"
