@@ -1345,7 +1345,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
 "ef" = (
-/obj/structure/chair/office{
+/obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/carpet,

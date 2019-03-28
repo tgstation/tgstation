@@ -5654,7 +5654,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "anl" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/start/head_of_personnel,
@@ -7803,7 +7803,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness)
 "asf" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -8541,7 +8541,7 @@
 /turf/open/floor/plating,
 /area/storage/tech)
 "atI" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/start/lawyer,
@@ -16860,7 +16860,7 @@
 /turf/open/floor/engine/cult,
 /area/library)
 "aLM" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/start/librarian,
@@ -34698,7 +34698,7 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "btP" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/start/lawyer,
@@ -37885,7 +37885,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/cmo)
 "bzV" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
@@ -37968,7 +37968,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "bAf" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/start/quartermaster,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -40679,7 +40679,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bFd" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/start/cargo_technician,
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -42740,7 +42740,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bIN" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -42854,7 +42854,7 @@
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "bJd" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
@@ -42964,7 +42964,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bJr" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,

@@ -1165,13 +1165,13 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "gO" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "gP" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/indestructible,
@@ -1203,7 +1203,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "gZ" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "hb" = (
@@ -2100,7 +2100,7 @@
 /turf/closed/indestructible/riveted,
 /area/awaymission/centcomAway/cafe)
 "mg" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/indestructible,

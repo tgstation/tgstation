@@ -1,4 +1,0 @@
-author: "81Denton"
-delete-after: True
-changes: 
-  - bugfix: "Rolling a 17 on the d20 of fate no longer gives you an empty box."
