@@ -95,7 +95,7 @@
 	var/display_icon_override
 
 	var/list/cam_hotkeys = new/list(9)
-	var/cam_prev = null
+	var/cam_prev
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
