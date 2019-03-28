@@ -1,0 +1,5 @@
+author: "AnturK"
+delete-after: True
+changes: 
+  - bugfix: "Spraypainting blast doors no longer makes them see-through."
+  - balance: "Paint remover now works on blast doors and the like."
