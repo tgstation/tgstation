@@ -53980,7 +53980,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/engine/engineering";
+	areastring = "/area/engine/engine_room";
 	dir = 8;
 	name = "Engine Room APC";
 	pixel_y = -26
@@ -54213,6 +54213,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
 "mpC" = (
