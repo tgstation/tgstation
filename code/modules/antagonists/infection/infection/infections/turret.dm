@@ -39,6 +39,8 @@
 	add_overlay(mutable_appearance('icons/mob/infection.dmi', "infection_turret"))
 
 /obj/structure/infection/turret/Life()
+	if(!overmind)
+		return
 	var/list/targets = list()
 	for(var/mob/A in view(scan_range, src))
 		if(A.invisibility > SEE_INVISIBLE_LIVING)

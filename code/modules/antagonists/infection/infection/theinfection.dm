@@ -8,7 +8,7 @@
 	opacity = 0
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
-	CanAtmosPass = ATMOS_PASS_NO
+	CanAtmosPass = ATMOS_PASS_PROC
 	var/point_return = 0 //How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
@@ -17,7 +17,7 @@
 	var/pulse_cooldown = 20
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
-	var/atmosblock = TRUE //if the infection blocks atmos and heat spread
+	var/atmosblock = FALSE //if the infection blocks atmos and heat spread
 	var/mob/camera/commander/overmind
 	var/list/angles = list() // possible angles for the node to expand on
 	var/timecreated
@@ -126,7 +126,14 @@
 	return 0
 
 /obj/structure/infection/CanAtmosPass(turf/T)
-	return !atmosblock
+	// override for shield blobs etc
+	if(atmosblock)
+		return FALSE
+	// atmos can pass if there's an infection structure the other turf as well (atmos can only pass between other infections like a cell wall)
+	var/obj/structure/infection/INF = locate(/obj/structure/infection) in T
+	if(INF && !isspaceturf(T))
+		return TRUE
+	return FALSE
 
 /obj/structure/infection/CanAStarPass(ID, dir, caller)
 	. = 0
