@@ -19,8 +19,7 @@
 //
 //	from_item			:	'world' | expression
 //
-//	call_function		:	<function name> '(' [arguments] ')'
-//	arguments			:	expression [',' arguments]
+//	call_function		:	<function name> '(' [expression_list] ')'
 //
 //	object_type			:	<type path>
 //
@@ -30,12 +29,17 @@
 //
 //	bool_expression		:	expression comparitor expression  [bool_operator bool_expression]
 //	expression			:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
+//	expression_list		:	expression [',' expression_list]
 //	unary_expression	:	unary_operator ( unary_expression | value | '(' expression ')' )
+//
 //	comparitor			:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
-//	value				:	variable | string | number | 'null' | object_type
+//	value				:	variable | string | number | 'null' | object_type | array | selectors_array
 //	unary_operator		:	'!' | '-' | '~'
 //	binary_operator		:	comparitor | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
 //	bool_operator		:	'AND' | '&&' | 'OR' | '||'
+//
+//	array				:	'[' expression_list ']'
+//	selectors_array		:	'@[' object_selectors ']'
 //
 //	string				:	''' <some text> ''' | '"' <some text > '"'
 //	number				:	<some digits>
@@ -424,7 +428,7 @@
 
 	return i + 1
 
-//array:	'[' expression, expression, ... ']'
+//array:	'[' expression_list ']'
 /datum/SDQL_parser/proc/array(var/i, var/list/node)
 	// Arrays get turned into this: list("[", list(exp_1a = exp_1b, ...), ...), "[" is to mark the next node as an array.
 	if(copytext(token(i), 1, 2) != "\[")
@@ -624,7 +628,7 @@
 	return i + 1
 
 
-//value:	variable | string | number | 'null' | object_type
+//value:	variable | string | number | 'null' | object_type | array | selectors_array
 /datum/SDQL_parser/proc/value(i, list/node)
 	if(token(i) == "null")
 		node += "null"
