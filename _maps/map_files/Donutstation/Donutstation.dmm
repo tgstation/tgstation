@@ -53052,8 +53052,6 @@
 /area/space)
 "euN" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/radiation,
-/obj/item/clothing/head/radiation,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible/layer3{
@@ -53062,6 +53060,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/item/clothing/glasses/meson,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
 "eyM" = (
@@ -54607,15 +54606,13 @@
 /area/engine/supermatter)
 "nPz" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/radiation,
-/obj/item/clothing/head/radiation,
-/obj/item/clothing/glasses/meson,
-/obj/item/geiger_counter,
-/obj/item/geiger_counter,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible/layer3,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/analyzer,
+/obj/item/analyzer,
+/obj/item/analyzer,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
 "nUo" = (
@@ -55384,12 +55381,11 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "smc" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 8;
-	filter_type = "n2"
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
