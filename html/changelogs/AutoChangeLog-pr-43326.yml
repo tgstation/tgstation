@@ -1,0 +1,4 @@
+author: "Fox McCloud"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a very longstanding LINDA bug where turfs adjacent to a hotspot would be less prone to igniting"
