@@ -53969,9 +53969,9 @@
 	},
 /obj/machinery/power/apc/highcap/ten_k{
 	areastring = "/area/engine/engine_room";
-	dir = 1;
+	dir = 2;
 	name = "Engine Room APC";
-	pixel_y = -26
+	pixel_y = -24
 	},
 /obj/structure/cable/yellow,
 /turf/open/floor/plasteel,
