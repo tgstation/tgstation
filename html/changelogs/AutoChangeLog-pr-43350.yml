@@ -1,4 +1,0 @@
-author: "Vile Beggar"
-delete-after: True
-changes: 
-  - bugfix: "Wearing the CE jumpsuit along with the advanced hardsuit will now fully protect you from radiation, as intended."
