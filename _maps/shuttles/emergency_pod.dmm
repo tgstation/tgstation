@@ -57,7 +57,10 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
-/obj/docking_port/mobile/emergency,
+/obj/docking_port/mobile/emergency{
+	port_direction = 2;
+	preferred_direction = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 
