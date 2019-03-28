@@ -216,7 +216,7 @@
 	harm_intent_damage = 50
 	melee_damage_lower = 40
 	melee_damage_upper = 60
-	attacktext = "Acts out divine vengeance on"
+	attacktext = "acts out divine vengeance on"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
@@ -250,6 +250,7 @@
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/retaliate/clown/blob
+	var/datum/reagent/funjuice = "skewium"
 	name = "Something that was once a clown"
 	desc = "A grotesque bulging figure far mutated from it's original state."
 	icon = 'icons/mob/clown_mobs.dmi'
@@ -267,6 +268,7 @@
 	maxHealth = 400
 	health = 300
 	pixel_x = -16
+	mob_size = MOB_SIZE_LARGE
 	speed = 20
 	harm_intent_damage = 10
 	melee_damage_lower = 10
@@ -275,3 +277,9 @@
 	attack_sound = 'sound/items/bikehorn.ogg'
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 
+/mob/living/simple_animal/hostile/retaliate/clown/blob/AttackingTarget()
+	. = ..()
+	if(. && isliving(target))
+		var/mob/living/L = target
+		if(L.reagents)
+			L.reagents.add_reagent(funjuice, rand(1,5))
