@@ -6593,7 +6593,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
@@ -52837,7 +52837,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -53004,7 +53004,7 @@
 	name = "Supermatter External Access";
 	pixel_x = -25
 	},
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -53143,7 +53143,7 @@
 	icon_state = "camera";
 	dir = 8
 	},
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
@@ -53835,7 +53835,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -54307,7 +54307,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -54829,7 +54829,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
@@ -55560,7 +55560,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
@@ -55576,7 +55576,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -56230,7 +56230,7 @@
 /area/engine/engineering)
 "wQC" = (
 /obj/machinery/portable_atmospherics/pump,
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
