@@ -20823,7 +20823,6 @@
 	department = "Chief Engineer's Desk";
 	departmentType = 3;
 	name = "Chief Engineer RC";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
@@ -21015,7 +21014,6 @@
 	areastring = "/area/engine/engineering";
 	dir = 1;
 	name = "Engineering APC";
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /obj/structure/cable/yellow{
@@ -53859,7 +53857,6 @@
 	areastring = "/area/crew_quarters/heads/chief";
 	dir = 2;
 	name = "CE Office APC";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/structure/cable/yellow,
@@ -54114,7 +54111,6 @@
 	areastring = "/area/engine/engineering";
 	dir = 8;
 	name = "Engine Room APC";
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /obj/structure/cable/yellow,
