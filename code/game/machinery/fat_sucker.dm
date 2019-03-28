@@ -80,7 +80,10 @@
 /obj/machinery/fat_sucker/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	if(!allowed(user))
+	if(user == occupant)
+		to_chat(user, "<span class='warning'>You can't reach the controls from inside!</span>")
+		return
+	if(!(obj_flags & EMAGGED) && !allowed(user))
 		to_chat(user, "<span class='warning'>You lack the required access.</span>")
 		return
 	free_exit = !free_exit
@@ -168,3 +171,11 @@
 /obj/machinery/fat_sucker/crowbar_act(mob/living/user, obj/item/I)
 	if(default_deconstruction_crowbar(I))
 		return TRUE
+
+/obj/machinery/fat_sucker/emag_act(mob/living/user)
+	if(obj_flags & EMAGGED)
+		return
+	start_at = 100
+	stop_at = 0
+	to_chat(user, "<span class='notice'>You remove the acces restrictions and lower the automatic ejection threshold!</span>")
+	obj_flags |= EMAGGED
