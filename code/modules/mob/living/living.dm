@@ -83,8 +83,10 @@
 	if(now_pushing)
 		return TRUE
 
+	var/they_can_move = TRUE
 	if(isliving(M))
 		var/mob/living/L = M
+		they_can_move = L.mobility_flags & MOBILITY_MOVE
 		//Also spread diseases
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
@@ -115,14 +117,20 @@
 
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap = FALSE
-		//the puller can always swap with its victim if on grab intent
-		if(M.pulledby == src && a_intent == INTENT_GRAB)
-			mob_swap = TRUE
-		else if(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))
-			mob_swap = FALSE
-		//restrained people act if they were on 'help' intent to prevent a person being pulled from being separated from their puller
-		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
-			mob_swap = TRUE
+		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
+		if(!they_can_move) //we have to physically move them
+			if(!too_strong)
+				mob_swap = TRUE
+		else
+			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
+			if(M.pulledby == src && a_intent == INTENT_GRAB && !too_strong)
+				mob_swap = TRUE
+			else if(
+				!(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))&&\
+				((M.restrained() && !too_strong) || M.a_intent == INTENT_HELP) &&\
+				(restrained() || a_intent == INTENT_HELP)
+			)
+				mob_swap = TRUE
 		if(mob_swap)
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
@@ -292,6 +300,8 @@
 		set_pull_offsets(M, state)
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
+	if(M.buckled)
+		return //don't make them change direction or offset them if they're buckled into something.
 	var/offset = 0
 	switch(grab_state)
 		if(GRAB_PASSIVE)
@@ -309,11 +319,21 @@
 		if(SOUTH)
 			animate(M, pixel_x = 0, pixel_y = -offset, 3)
 		if(EAST)
+			if(M.lying == 270) //update the dragged dude's direction if we've turned
+				M.lying = 90
+				M.update_transform() //force a transformation update, otherwise it'll take a few ticks for update_mobility() to do so
+				M.lying_prev = M.lying
 			animate(M, pixel_x = offset, pixel_y = 0, 3)
 		if(WEST)
+			if(M.lying == 90)
+				M.lying = 270
+				M.update_transform()
+				M.lying_prev = M.lying
 			animate(M, pixel_x = -offset, pixel_y = 0, 3)
 
-/mob/living/proc/reset_pull_offsets(mob/living/M)
+/mob/living/proc/reset_pull_offsets(mob/living/M, override)
+	if(!override && M.buckled)
+		return
 	animate(M, pixel_x = 0, pixel_y = 0, 1)
 
 //mob verbs are a lot faster than object verbs
@@ -529,6 +549,7 @@
 	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
 	set_blurriness(0)
+	set_dizziness(0)
 	set_eye_damage(0)
 	cure_nearsighted()
 	cure_blind()
@@ -538,6 +559,11 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0
+	dizziness = 0
+	drowsyness = 0
+	stuttering = 0
+	slurring = 0
+	jitteriness = 0
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
@@ -916,7 +942,7 @@
 /mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(mind && mind.has_antag_datum(/datum/antagonist/devil))
 		return check_devil_bane_multiplier(weapon, attacker)
-	return 1
+	return 1 //This is not a boolean, it's the multiplier for the damage the weapon does.
 
 /mob/living/proc/check_acedia()
 	if(mind && mind.has_objective(/datum/objective/sintouched/acedia))
@@ -1069,26 +1095,28 @@
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyzed && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying)
 	var/canstand = canstand_involuntary && !resting
 
-	if(canstand)
+	var/should_be_lying = !canstand
+	if(buckled)
+		if(buckled.buckle_lying != -1)
+			should_be_lying = buckled.buckle_lying
+
+	if(should_be_lying)
+		mobility_flags &= ~MOBILITY_STAND
+		if(buckled)
+			if(buckled.buckle_lying != -1)
+				lying = buckled.buckle_lying
+		if(!lying) //force them on the ground
+			lying = pick(90, 270)
+	else
 		mobility_flags |= MOBILITY_STAND
 		lying = 0
-		if(!restrained)
-			mobility_flags |= (MOBILITY_UI | MOBILITY_PULL)
-		else
-			mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL)
+	
+	if(should_be_lying || restrained || incapacitated())
+		mobility_flags &= ~(MOBILITY_UI|MOBILITY_PULL)
 	else
-		mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL)
+		mobility_flags |= MOBILITY_UI|MOBILITY_PULL
+		
 
-		var/should_be_lying = (buckled && (buckled.buckle_lying != -1)) ? buckled.buckle_lying : TRUE //make lying match buckle_lying if it's not -1, else lay down
-
-		if(should_be_lying)
-			mobility_flags &= ~MOBILITY_STAND
-			if(!lying) //force them on the ground
-				lying = pick(90, 270)
-		else
-			mobility_flags |= MOBILITY_STAND //important to add this back, otherwise projectiles will pass through the mob while they're upright.
-			if(lying) //stand them back up
-				lying = 0
 
 	var/canitem = !paralyzed && !stun && conscious && !chokehold && !restrained && has_arms
 	if(canitem)

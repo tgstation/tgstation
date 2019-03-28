@@ -81,6 +81,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 		if("setMusicVolume")
 			data = setMusicVolume(arglist(params))
+		if("swaptodarkmode")
+			swaptodarkmode()
+		if("swaptolightmode")
+			swaptolightmode()
 
 	if(data)
 		ehjax_send(data = data)
@@ -158,7 +162,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
-				if (world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only=TRUE))
+				if (world.IsBanned(row["ckey"], row["ip"], row["compid"], real_bans_only=TRUE))
 					found = row
 					break
 
@@ -244,3 +248,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
+
+/datum/chatOutput/proc/swaptolightmode() //Dark mode light mode stuff. Yell at KMC if this breaks! (See darkmode.dm for documentation)
+	owner.force_white_theme()
+
+/datum/chatOutput/proc/swaptodarkmode()
+	owner.force_dark_theme()

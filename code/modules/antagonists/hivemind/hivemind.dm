@@ -163,6 +163,10 @@
 /datum/antagonist/hivemind/proc/destroy_hive()
 	hivemembers = list()
 	calc_size()
+	for(var/power in upgrade_tiers)
+		if(!upgrade_tiers[power])
+			continue
+		owner.RemoveSpell(power)
 
 /datum/antagonist/hivemind/antag_panel_data()
 	return "Vessels Assimilated: [hive_size] (+[size_mod])"

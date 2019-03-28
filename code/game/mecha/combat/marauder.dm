@@ -56,8 +56,7 @@
 
 /obj/mecha/combat/marauder/seraph/Initialize()
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)
 	ME.attach(src)
@@ -76,6 +75,7 @@
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
 	max_equip = 5
+	destruction_sleep_duration = 20
 
 /obj/mecha/combat/marauder/mauler/loaded/Initialize()
 	. = ..()

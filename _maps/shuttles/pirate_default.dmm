@@ -91,6 +91,40 @@
 "aj" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
+"ak" = (
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/freezer{
+	locked = 0;
+	name = "fridge"
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/fancy/donut_box,
+/obj/item/reagent_containers/food/snacks/cookie,
+/obj/item/reagent_containers/food/snacks/cookie{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/turf/open/floor/plasteel,
+/area/shuttle/pirate)
 "al" = (
 /obj/machinery/loot_locator,
 /obj/effect/decal/cleanable/dirt,
@@ -620,38 +654,6 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/shuttle/pirate)
-"bw" = (
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = -24
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet/freezer{
-	locked = 0;
-	name = "fridge"
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/storage/box/donkpockets,
-/obj/item/storage/fancy/donut_box,
-/obj/item/reagent_containers/food/snacks/cookie,
-/obj/item/reagent_containers/food/snacks/cookie{
-	pixel_x = -6;
-	pixel_y = -6
-	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bx" = (
@@ -1210,7 +1212,7 @@ eA
 aa
 ap
 aw
-bw
+ak
 bF
 aj
 aj

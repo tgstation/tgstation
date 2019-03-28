@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "If an admin sends a ghost back to the lobby, they can now choose a different set of quirks."

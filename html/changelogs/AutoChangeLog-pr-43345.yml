@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "The code to handle buckling latejoin players to chairs has been made more flexible."

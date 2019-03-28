@@ -61,13 +61,9 @@
 
 /obj/structure/closet/supplypod/update_icon()
 	cut_overlays()
-	if (style == STYLE_SEETHROUGH && !opened)
-		pixel_x = 0
-		pixel_y = 0
-		for (var/atom/movable/O in contents)
-			var/icon/I = getFlatIcon(O) //im so sorry
-			add_overlay(I)
-	else if (style != STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
+	if (style == STYLE_SEETHROUGH || style == STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
+		return
+	else 
 		if (opened)
 			add_overlay("[icon_state]_open")
 		else
@@ -148,13 +144,15 @@
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
 		moveToNullspace()
 		addtimer(CALLBACK(src, .proc/open, benis), openingDelay) //After the openingDelay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
+	else if (style == STYLE_SEETHROUGH)
+		open(src)
 	else
-		addtimer(CALLBACK(src, .proc/open, src), (style == STYLE_SEETHROUGH ? 0 : openingDelay)) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
+		addtimer(CALLBACK(src, .proc/open, src), openingDelay) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
 /obj/structure/closet/supplypod/open(atom/movable/holder, var/broken = FALSE, var/forced = FALSE) //The holder var represents an atom whose contents we will be working with
-	opened = TRUE //This is to ensure we don't open something that has already been opened
-	if (style == STYLE_SEETHROUGH)
-		update_icon()
+	if (opened) //This is to ensure we don't open something that has already been opened
+		return
+	opened = TRUE 
 	var/turf/T = get_turf(holder) //Get the turf of whoever's contents we're talking about
 	var/mob/M
 	if (istype(holder, /mob)) //Allows mobs to assume the role of the holder, meaning we look at the mob's contents rather than the supplypod's contents. Typically by this point the supplypod's contents have already been moved over to the mob's contents
@@ -164,13 +162,18 @@
 	if (openingSound)
 		playsound(get_turf(holder), openingSound, soundVolume, 0, 0) //Special admin sound to play
 	INVOKE_ASYNC(holder, .proc/setOpened) //Use the INVOKE_ASYNC proc to call setOpened() on whatever the holder may be, without giving the atom/movable base class a setOpened() proc definition
+	if (style == STYLE_SEETHROUGH)
+		update_icon()
 	for (var/atom/movable/O in holder.contents) //Go through the contents of the holder
 		O.forceMove(T) //move everything from the contents of the holder to the turf of the holder
 	if (!effectQuiet && !openingSound && style != STYLE_SEETHROUGH) //If we aren't being quiet, play the default pod open sound
 		playsound(get_turf(holder), open_sound, 15, 1, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return
-	addtimer(CALLBACK(src, .proc/depart, holder), departureDelay) //Finish up the pod's duties after a certain amount of time
+	if (style == STYLE_SEETHROUGH)
+		depart(src)
+	else
+		addtimer(CALLBACK(src, .proc/depart, holder), departureDelay) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/proc/depart(atom/movable/holder)
 	if (leavingSound)
@@ -178,7 +181,7 @@
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists)
-		if (style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
+		if (!effectQuiet && style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
 		qdel(src) //Delete ourselves and the holder
 		if (holder != src)
@@ -207,8 +210,7 @@
 	update_icon()
 
 /obj/structure/closet/supplypod/Destroy()
-	if (!opened) //If we havent opened yet, we're opening because we've been destroyed. Lets dump our contents by opening up
-		open(src, broken = TRUE)
+	open(src, broken = TRUE) //Lets dump our contents by opening up
 	. = ..()
 
 //------------------------------------FALLING SUPPLY POD-------------------------------------//
@@ -224,7 +226,7 @@
 
 /obj/effect/DPfall/Initialize(dropLocation, obj/structure/closet/supplypod/pod)
 	if (pod.style == STYLE_SEETHROUGH)
-		pixel_x = 0
+		pixel_x = -16
 		pixel_y = 0
 		for (var/atom/movable/O in pod.contents)
 			var/icon/I = getFlatIcon(O) //im so sorry
@@ -266,7 +268,7 @@
 		for (var/mob/living/M in get_turf(src))
 			M.Stun(pod.landingDelay+10, ignore_canstun = TRUE)//you aint goin nowhere, kid.
 	if (pod.effectStealth) //If effectStealth is true we want to be invisible
-		alpha = 255
+		icon_state = ""
 	if (pod.fallDuration == initial(pod.fallDuration) && pod.landingDelay + pod.fallDuration < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
 		pod.fallingSound =  'sound/weapons/mortar_whistle.ogg'

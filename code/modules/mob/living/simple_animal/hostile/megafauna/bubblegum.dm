@@ -439,7 +439,7 @@ Difficulty: Hard
 	..()
 	toggle_ai(AI_OFF)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/charge()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/charge(var/atom/chargeat = target, var/delay = 3, var/chargepast = 2)
 	..()
 	qdel(src)
 

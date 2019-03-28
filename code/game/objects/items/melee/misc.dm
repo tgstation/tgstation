@@ -228,7 +228,7 @@
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
-		force = 10 //stunbaton damage
+		force = 10 //stun baton damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
 		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")

@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - admin: "Play Internet Sound now respects start (like &t=xxx or &start=xxx) and end times (like &end=xxx). This allows admins to choose a snippet of media to play, like for example pick a song out of an hour long album compilation."

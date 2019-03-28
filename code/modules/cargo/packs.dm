@@ -204,15 +204,13 @@
 
 /datum/supply_pack/emergency/spacesuit
 	name = "Space Suit Crate"
-	desc = "Contains two aging suits from Space-Goodwill. Requires EVA access to open."
-	cost = 3000
+	desc = "Contains one aging suit from Space-Goodwill and a jetpack. Requires EVA access to open."
+	cost = 2500
 	access = ACCESS_EVA
 	contains = list(/obj/item/clothing/suit/space,
-					/obj/item/clothing/suit/space,
-					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/mask/breath,
-					/obj/item/clothing/mask/breath)
+					/obj/item/tank/jetpack/carbondioxide)
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
 
@@ -399,6 +397,15 @@
 					/obj/item/kitchen/knife/combat,
 					/obj/item/kitchen/knife/combat)
 	crate_name = "combat knife crate"
+
+/datum/supply_pack/security/armory/dragnet
+	name = "DRAGnet Crate"
+	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, a recent breakthrough in law enforcement prisoner management technology. Requires armory access to open."
+	cost = 1500
+	contains = list(/obj/item/gun/energy/e_gun/dragnet,
+					/obj/item/gun/energy/e_gun/dragnet,
+					/obj/item/gun/energy/e_gun/dragnet)
+	crate_name = "\improper DRAGnet crate"
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
@@ -648,6 +655,13 @@
 					/obj/item/storage/toolbox/mechanical)
 	cost = 1000
 	crate_name = "toolbox crate"
+
+/datum/supply_pack/service/vending/engivend
+	name = "EngiVend Supply Crate"
+	desc = "The engineers are out of metal foam grenades? This should help."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/engivend)
+	crate_name = "engineering supply crate"
 
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"
@@ -1140,7 +1154,7 @@
 
 /datum/supply_pack/medical/vending
 	name = "Medical Vending Crate"
-	desc = "Contains refills for medical vending machines."
+	desc = "Contains one NanoMed Plus refill and one wall-mounted NanoMed refill."
 	cost = 2000
 	contains = list(/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/wallmed)
@@ -1390,16 +1404,10 @@
 
 /datum/supply_pack/service/minerkit
 	name = "Shaft Miner Starter Kit"
-	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? Either way, this kit is the best way to turn a regular crewman into an ore-producing, monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, cargo headset, ore bag, gasmask, and explorer suit. Requires QM access to open."
+	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? Either way, this kit is the best way to turn a regular crewman into an ore-producing, monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade. Requires QM access to open."
 	cost = 2500
 	access = ACCESS_QM
-	contains = list(/obj/item/pickaxe/mini,
-			/obj/item/clothing/glasses/meson,
-			/obj/item/t_scanner/adv_mining_scanner/lesser,
-			/obj/item/radio/headset/headset_cargo/mining,
-			/obj/item/storage/bag/ore,
-			/obj/item/clothing/suit/hooded/explorer,
-			/obj/item/clothing/mask/gas/explorer)
+	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
@@ -1440,6 +1448,37 @@
 	cost = 1500
 	contains = list(/obj/item/vending_refill/cola)
 	crate_name = "soft drinks supply crate"
+
+/datum/supply_pack/service/vending/vendomat
+	name = "Vendomat Supply Crate"
+	desc = "More tools for your IED testing facility."
+	cost = 1000
+	contains = list(/obj/item/vending_refill/assist)
+	crate_name = "vendomat supply crate"
+
+/datum/supply_pack/service/vending/dinnerware
+	name = "Dinnerware Supply Crate"
+	desc = "More knives for the chef."
+	cost = 1000
+	contains = list(/obj/item/vending_refill/dinnerware)
+	crate_name = "dinnerware supply crate"
+
+/datum/supply_pack/service/vending/ptech
+	name = "PTech Supply Crate"
+	desc = "Not enough cartridges after half the crew lost their PDA to explosions? This may fix it."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/cart)
+	crate_name = "ptech supply crate"
+
+/datum/supply_pack/service/vending/imported
+	name = "Imported Vending Machines"
+	desc = "Vending machines famous in other parts of the galaxy."
+	cost = 4000
+	contains = list(/obj/item/vending_refill/sustenance,
+					/obj/item/vending_refill/robotics,
+					/obj/item/vending_refill/sovietsoda,
+					/obj/item/vending_refill/engineering)
+	crate_name = "unlabeled supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
@@ -1617,6 +1656,13 @@
 	crate_name = "exotic seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/datum/supply_pack/organic/vending/hydro_refills
+	name = "Hydroponics Vending Machines Refills"
+	desc = "When the clown takes all the banana seeds. Contains a NutriMax refill and an MegaSeed Servitor refill."
+	cost = 2000
+	contains = list(/obj/item/vending_refill/hydroseeds,
+					/obj/item/vending_refill/hydronutrients)
+	crate_name = "hydroponics supply crate"
 //////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// Livestock /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

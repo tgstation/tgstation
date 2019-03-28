@@ -3851,7 +3851,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ahR" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/start/warden,
 /obj/machinery/button/door{
 	id = "Prison Gate";
@@ -6011,7 +6011,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "amn" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -8165,7 +8165,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "asn" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/start/lawyer,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -14925,7 +14925,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aIs" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/machinery/camera{
 	c_tag = "Library North";
 	dir = 2
@@ -14954,7 +14954,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aIw" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -15551,13 +15551,13 @@
 /turf/open/floor/wood,
 /area/library)
 "aJQ" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/library)
 "aJR" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -16655,7 +16655,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aMH" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -16666,7 +16666,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aMJ" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
@@ -19507,7 +19507,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aUl" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -19642,7 +19642,7 @@
 /area/library)
 "aUF" = (
 /obj/effect/landmark/start/librarian,
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/wood,
 /area/library)
 "aUG" = (
@@ -19696,7 +19696,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aUN" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -21175,7 +21175,7 @@
 /turf/open/floor/wood,
 /area/vacant_room/office)
 "aXY" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -21225,7 +21225,7 @@
 /turf/closed/wall,
 /area/quartermaster/warehouse)
 "aYd" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
@@ -25376,7 +25376,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bix" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/start/depsec/medical,
@@ -27554,7 +27554,7 @@
 /area/quartermaster/office)
 "bnz" = (
 /obj/effect/landmark/start/cargo_technician,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -28260,7 +28260,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bpc" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -29767,7 +29767,7 @@
 	},
 /area/science/research)
 "bsY" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/landmark/start/head_of_personnel,
@@ -31616,7 +31616,7 @@
 /turf/closed/wall,
 /area/quartermaster/qm)
 "bxv" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/landmark/start/depsec/science,
@@ -31712,7 +31712,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bxM" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/red,
@@ -32159,7 +32159,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "byL" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/landmark/start/depsec/supply,
@@ -32689,7 +32689,7 @@
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzT" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/start/quartermaster,
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -32737,7 +32737,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "bAb" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/start/shaft_miner,
@@ -33950,7 +33950,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCI" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
@@ -37246,7 +37246,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/landmark/start/cargo_technician,
@@ -38788,7 +38788,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOD" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -39906,7 +39906,7 @@
 /turf/open/floor/plasteel/dark/corner,
 /area/engine/atmos)
 "bRv" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/landmark/start/atmospheric_technician,
@@ -40083,7 +40083,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bRS" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/landmark/start/depsec/engineering,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
@@ -41805,7 +41805,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWt" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -46912,7 +46912,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/landmark/start/station_engineer,
@@ -49175,7 +49175,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -50449,7 +50449,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctG" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/structure/cable{
@@ -51692,7 +51692,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cwp" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
@@ -51902,7 +51902,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "cxl" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/start/lawyer,
@@ -56611,7 +56611,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "mSf" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
@@ -56914,7 +56914,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "pvj" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
