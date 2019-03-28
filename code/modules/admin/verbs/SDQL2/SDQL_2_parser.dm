@@ -490,6 +490,23 @@
 
 	return i + 1
 
+//selectors_array:	'@[' object_selectors ']'
+/datum/SDQL_parser/proc/selectors_array(var/i, var/list/node)
+	if(token(i) == "@\[")
+		node += token(i++)
+		if(token(i) != "]")
+			var/list/select = list()
+			i = object_selectors(i, select)
+			node[++node.len] = select
+			if(token(i) != "]")
+				parse_error("Expected ']' to close selector array, but found '[token(i)]'")
+		else
+			parse_error("Selector array expected a selector, but found nothing")
+	else
+		parse_error("Expected '@\[' but found '[token(i)]'")
+
+	return i + 1
+
 //call_function:	<function name> ['(' [arguments] ')']
 /datum/SDQL_parser/proc/call_function(i, list/node, list/arguments)
 	if(length(tokenl(i)))
@@ -626,8 +643,13 @@
 
 	else if(copytext(token(i), 1, 2) == "\[") // Start a list.
 		i = array(i, node)
+
+	else if(copytext(token(i), 1, 3) == "@\[")
+		i = selectors_array(i, node)
+
 	else if(copytext(token(i), 1, 2) == "/")
 		i = object_type(i, node)
+
 	else
 		i = variable(i, node)
 

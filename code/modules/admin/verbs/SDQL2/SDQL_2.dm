@@ -879,6 +879,16 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				dummy[result] = assoc
 				result = dummy
 			val += result
+
+	else if(expression[i] == "@\[")
+		var/list/search_tree = expression[++i]
+
+		state = SDQL2_STATE_SEARCHING
+		val = Search(search_tree)
+		SDQL2_STAGE_SWITCH_CHECK
+
+		state = SDQL2_STATE_EXECUTING
+
 	else
 		val = world.SDQL_var(object, expression, i, object, superuser, src)
 		i = expression.len
@@ -1060,7 +1070,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 					"=" = list("", "="),
 					"<" = list("", "=", ">"),
 					">" = list("", "="),
-					"!" = list("", "="))
+					"!" = list("", "="),
+					"@" = list("\["))
 
 	var/word = ""
 	var/list/query_list = list()
