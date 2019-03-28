@@ -45,6 +45,32 @@
 	..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 
+/mob/living/simple_animal/hostile/retaliate/clown/banana
+	name = "Clownana"
+	desc = "A fusion of clown and banana DNA birthed from a botany experiment gone wrong."
+	icon = 'icons/mob/clown_mobs.dmi'
+	icon_state = "banana tree"
+	icon_living = "banana tree"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	turns_per_move = 5
+	response_help = "pokes"
+	response_disarm = "peels"
+	response_harm = "peels"
+	speak = list("HONK", "Honk!", "YA-HONK!!!")
+	emote_see = list("honks", "bites into the banana", "plucks a banana off its head", "photosynthesizes")
+	speak_chance = 5
+	maxHealth = 120
+	health = 100
+	speed = 10
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
+	var/banana_time = 20
+
+/mob/living/simple_animal/hostile/retaliate/clown/banana/Life()
+	. = ..()
+	if(banana_time < world.time)
+		new /obj/item/grown/bananapeel(loc)
+		banana_time = world.time + rand(20,60)
+
 /mob/living/simple_animal/hostile/retaliate/clown/fleshclown
 	name = "Fleshclown"
 	desc = "A being forged out of the pure essence of pranking, cursed into existence by a cruel maker."
@@ -62,7 +88,7 @@
 	a_intent = INTENT_HARM
 	ventcrawler = VENTCRAWLER_ALWAYS
 	maxHealth = 140
-	health = 140
+	health = 100
 	speed = 5
 	harm_intent_damage = 8
 	melee_damage_lower = 10
@@ -89,19 +115,19 @@
 	emote_see = list("honks", "sweats", "grunts")
 	speak_chance = 5
 	a_intent = INTENT_HARM
-	maxHealth = 500
-	health = 300
+	maxHealth = 400
+	health = 200
 	pixel_x = -16
 	speed = 2
-	harm_intent_damage = 20
-	melee_damage_lower = 10
-	melee_damage_upper = 30
+	harm_intent_damage = 15
+	melee_damage_lower = 15
+	melee_damage_upper = 20
 	attacktext = "pummels"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	del_on_death = 5
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
 
 /mob/living/simple_animal/hostile/retaliate/clown/longface
 	name = "Longface"
@@ -127,7 +153,7 @@
 	melee_damage_upper = 10
 	attacktext = "YA-HONKs"
 	attack_sound = 'sound/items/bikehorn.ogg'
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
 
 /mob/living/simple_animal/hostile/retaliate/clown/chlown
 	name = "Chlown"
@@ -151,7 +177,7 @@
 	harm_intent_damage = 14
 	melee_damage_lower = 10
 	melee_damage_upper = 20
-	armour_penetration = 35
+	armour_penetration = 20
 	attacktext = "steals the girlfriend of"
 	attack_sound = 'sound/items/airhorn2.ogg'
 	obj_damage = 30
@@ -209,13 +235,14 @@
 	emote_see = list("honks", "sweats", "grunts")
 	speak_chance = 10
 	a_intent = INTENT_HARM
-	maxHealth = 800
-	health = 800
+	maxHealth = 400
+	health = 400
 	pixel_x = -16
-	speed = 6
-	harm_intent_damage = 50
-	melee_damage_lower = 40
-	melee_damage_upper = 60
+	speed = 5
+	harm_intent_damage = 30
+	melee_damage_lower = 20
+	melee_damage_upper = 40
+	armour_penetration = 30
 	attacktext = "acts out divine vengeance on"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	obj_damage = 50
@@ -241,13 +268,13 @@
 	maxHealth = 130
 	health = 35
 	pixel_x = -16
-	speed = 2
+	speed = 10
 	harm_intent_damage = 10
 	melee_damage_lower = 10
-	melee_damage_upper = 30
+	melee_damage_upper = 20
 	attacktext = "awkwardly flails at"
 	attack_sound = 'sound/items/bikehorn.ogg'
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/retaliate/clown/blob
 	var/datum/reagent/funjuice = "skewium"
@@ -265,8 +292,8 @@
 	emote_see = list("jiggles", "wobbles")
 	speak_chance = 20
 	a_intent = INTENT_HARM
-	maxHealth = 400
-	health = 300
+	maxHealth = 300
+	health = 200
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 	speed = 20
