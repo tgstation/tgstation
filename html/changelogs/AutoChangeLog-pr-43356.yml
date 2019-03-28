@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "The death icon for the \"banned\" AI core choice will now show properly."
