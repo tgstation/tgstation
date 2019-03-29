@@ -15,6 +15,7 @@
 	var/special_enabled = FALSE
 	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE
+	var/small_item = FALSE //Small items can be grouped into a single crate.
 
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
@@ -391,6 +392,13 @@
 					/obj/item/clothing/suit/armor/bulletproof)
 	crate_name = "bulletproof armor crate"
 
+/datum/supply_pack/security/armory/combatknives_single
+	name = "Combat Knife Single-Pack"
+	desc = "Contains one sharpened combat knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
+	cost = 1200
+	small_item = TRUE
+	contains = list(/obj/item/kitchen/knife/combat)
+
 /datum/supply_pack/security/armory/combatknives
 	name = "Combat Knives Crate"
 	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
@@ -399,6 +407,14 @@
 					/obj/item/kitchen/knife/combat,
 					/obj/item/kitchen/knife/combat)
 	crate_name = "combat knife crate"
+
+/datum/supply_pack/security/armory/ballistic_single
+	name = "Combat Shotgun Single-Pack"
+	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier. Requires Armory access to open."
+	cost = 3200
+	small_item = TRUE
+	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat,
+					/obj/item/storage/belt/bandolier)
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
@@ -411,6 +427,13 @@
 					/obj/item/storage/belt/bandolier,
 					/obj/item/storage/belt/bandolier)
 	crate_name = "combat shotguns crate"
+
+/datum/supply_pack/security/armory/energy_single
+	name = "Energy Guns Single-Pack"
+	desc = "Contains one Energy Gun, capable of firing both nonlethal and lethal blasts of light. Requires Armory access to open."
+	cost = 1500
+	small_item = TRUE
+	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
@@ -517,6 +540,12 @@
 					/obj/item/clothing/gloves/combat)
 	crate_name = "swat crate"
 
+/datum/supply_pack/security/armory/wt550_single
+	name = "WT-550 Auto Rifle Single-Pack"
+	desc = "Contains one high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
+	cost = 2000
+	contains = list(/obj/item/gun/ballistic/automatic/wt550)
+	small_item = TRUE
 
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Auto Rifle Crate"
@@ -525,6 +554,13 @@
 	contains = list(/obj/item/gun/ballistic/automatic/wt550,
 					/obj/item/gun/ballistic/automatic/wt550)
 	crate_name = "auto rifle crate"
+
+/datum/supply_pack/security/armory/wt550ammo_single
+	name = "WT-550 Auto Rifle Ammo Single-Pack"
+	desc = "Contains a 20-round magazine for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
+	cost = 750 //one of the few single-pack items that who's price per unit is the exact same as the bulk
+	contains = list(/obj/item/ammo_box/magazine/wt550m9)
+	small_item = TRUE
 
 /datum/supply_pack/security/armory/wt550ammo
 	name = "WT-550 Auto Rifle Ammo Crate"
@@ -535,7 +571,6 @@
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
-
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
@@ -552,6 +587,20 @@
 	contains = list(/obj/machinery/shieldgen,
 					/obj/machinery/shieldgen)
 	crate_name = "anti-breach shield projector crate"
+
+/datum/supply_pack/engineering/ripley
+	name = "APLU MK-I Crate"
+	desc = "A do-it-yourself kit for building an ALPU MK-I \"Ripley\", designed for lifting and carrying heavy equipment, and other station tasks. Batteries not included."
+	cost = 2000
+	contains = list(/obj/item/mecha_parts/chassis/ripley,
+					/obj/item/mecha_parts/part/ripley_torso,
+					/obj/item/mecha_parts/part/ripley_right_arm,
+					/obj/item/mecha_parts/part/ripley_left_arm,
+					/obj/item/mecha_parts/part/ripley_right_leg,
+					/obj/item/mecha_parts/part/ripley_left_leg,
+					/obj/item/stock_parts/capacitor,
+					/obj/item/stock_parts/scanning_module)
+	crate_name= "APLU MK-I kit"
 
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
@@ -586,6 +635,13 @@
 					/obj/item/clothing/glasses/meson/engine,
 					/obj/item/clothing/glasses/meson/engine)
 	crate_name = "engineering gear crate"
+
+/datum/supply_pack/engineering/sologamermitts
+	name = "Insulated Gloves Single-Pack"
+	desc = "The backbone of modern society. Barely ever ordered for actual engineering. Single Order."
+	cost = 800
+	small_item = TRUE
+	contains = list(/obj/item/clothing/gloves/color/yellow)
 
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
