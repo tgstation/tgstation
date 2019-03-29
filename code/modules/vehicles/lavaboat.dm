@@ -9,6 +9,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
 	legs_required = 0
+	arms_required = 0
 
 /obj/vehicle/ridden/lavaboat/Initialize()
 	. = ..()
