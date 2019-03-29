@@ -85,6 +85,7 @@
 	connected_port = null
 	pixel_x = 0
 	pixel_y = 0
+	update_icon()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/portableConnectorReturnAir()
