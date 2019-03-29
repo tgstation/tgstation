@@ -4,9 +4,7 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 
 /area/awaymission/vr/runner
 	name = "VrRunner"
-	icon_state = "awaycontent4"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	icon_state = "awaycontent5"
 
 /datum/outfit/vr/runner
 	name = "Runner Equipment"
@@ -98,13 +96,12 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 	. = ..()
 	GLOB.vr_runner_tiles += src
 
-/turf/open/indestructible/runner/Entered(atom/movable/A)
+/turf/open/indestructible/runner/Crossed(atom/movable/A)
 	. = ..()
 	if(isliving(A) && GLOB.vr_runner_active)
 		if(color == COLOR_ALMOST_BLACK)
 			if(locate(A) in GLOB.vr_runner_players)
-				var/datum/thrownthing/TT = A.throwing
-				if(!TT || TT?.dist_travelled + 1 >= TT.maxrange)
+				if(!A.throwing)
 					var/mob/living/carbon/human/H = A
 					var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
 					findspell.Click(H)
@@ -121,12 +118,10 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 		return
 	not_reset = FALSE
 	color = COLOR_ALMOST_BLACK
-	for(var/mob/living/carbon/human/H in GLOB.vr_runner_players)
-		var/turf/open/indestructible/runner/R = get_turf(H)
-		if(src == R)
-			var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
+	for(var/mob/living/carbon/human/H in src.contents)
+		var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
+		if(H)
 			findspell.Click(H)
-	return
 
 /turf/open/indestructible/runner/proc/reset_fall()
 	not_reset = FALSE

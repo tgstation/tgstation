@@ -7,6 +7,11 @@
 	. = ..()
 	quit_action = new()
 	quit_action.Grant(src)
+	check_area()
+
+/mob/living/carbon/human/virtual_reality/Moved()
+	. = ..()
+	check_area()
 
 /mob/living/carbon/human/virtual_reality/death()
 	revert_to_reality()
@@ -32,6 +37,23 @@
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 	revert_to_reality(FALSE)
+
+/mob/living/carbon/human/virtual_reality/proc/check_area()
+	var/area/check = get_area(src)
+	if(!check || !istype(check, /area/awaymission/vr))
+		return
+	var/area/awaymission/vr/A = check
+	if(A.death)
+		to_chat(src, "<span class='userdanger'>It is unwise to attempt to break Virtual Reality.</span>")
+		playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
+		src.dust()
+		return
+	if(A.pacifist && !src.has_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT))
+		src.add_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT)
+		to_chat(src, "<span class='notice'>You feel like your ability to fight other living beings is being suppressed.</span>")
+	else if(!A.pacifist && src.has_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT))
+		src.remove_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT)
+		to_chat(src, "<span class='notice'>You feel that your ability to fight is no longer being suppressed.</span>")
 
 /mob/living/carbon/human/virtual_reality/proc/revert_to_reality(deathchecks = TRUE)
 	if(real_mind && mind)

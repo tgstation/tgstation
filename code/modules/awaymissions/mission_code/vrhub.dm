@@ -1,13 +1,21 @@
 /area/awaymission/vr/general
-	name = "VrGeneral"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	name = "Virtual Reality Forbidden Zone"
+	death = TRUE
 
 /area/awaymission/vr/hub
-	name = "VrHub"
+	name = "Virtual Reality Hub Area"
 	icon_state = "awaycontent2"
-	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/awaymission/vr/hub/boxing
+	name = "Virtual Reality Boxing Ring"
+	icon_state = "awaycontent9"
+	pacifist = FALSE
+
+/area/awaymission/vr/syndicate
+	name = "Virtual Reality Syndicate Trainer"
+	icon_state = "awaycontent6"
+	pacifist = FALSE
 
 /obj/effect/portal/permanent/one_way/recall
 	name = "recall portal"
@@ -80,18 +88,12 @@
 	death = FALSE
 	uses = -1 // infinite
 	random = TRUE
-	mob_species = /datum/species/human
+	mob_type = /mob/living/carbon/human/virtual_reality
 	outfit = /datum/outfit/vr
 	flavour_text = "<span class='big bold'>You have connected to another stations virtual reality system</span>\n\
 	<b>You have been assigned a mission by nanotrasen to increase productivity in a station that lacks any and all teamwork.\n\
 	Your objective is to help other people by completing tasks, whether social or combatative, together, while also improving your own skills.</b>"
 	assignedrole = "Vr"
-	var/pacifist = TRUE // if the virtual human upon spawning is a pacifist
-
-/obj/effect/mob_spawn/human/virtual_reality/equip(mob/living/carbon/human/H)
-	. = ..()
-	if(pacifist)
-		H.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
 
 /obj/effect/portal/permanent/one_way/recall/murderdome
 	name = "Murderdome Portal"
@@ -102,17 +104,6 @@
 	light_color = LIGHT_COLOR_FIRE
 	light_power = 1
 	light_range = 3
-
-/obj/effect/portal/permanent/one_way/recall/murderdome/teleport(atom/movable/M, force = FALSE)
-	. = ..()
-	if(. && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
-
-/obj/effect/portal/permanent/one_way/recall/murderdome/recall_effect(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
 
 /obj/effect/portal/permanent/one_way/destroy/murderdome
 	name = "Murderdome Exit Portal"
@@ -128,17 +119,6 @@
 	light_power = 1
 	light_range = 3
 
-/obj/effect/portal/permanent/one_way/recall/syndicate/teleport(atom/movable/M, force = FALSE)
-	. = ..()
-	if(. && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
-
-/obj/effect/portal/permanent/one_way/recall/syndicate/recall_effect(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
-
 /obj/effect/portal/permanent/one_way/destroy/syndicate
 	name = "Syndicate Exit Portal"
 	id = "vr syndicate"
@@ -153,17 +133,18 @@
 	light_power = 1
 	light_range = 3
 
-/obj/effect/portal/permanent/one_way/recall/snowdin/teleport(atom/movable/M, force = FALSE)
-	. = ..()
-	if(. && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
-
-/obj/effect/portal/permanent/one_way/recall/snowdin/recall_effect(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
-
 /obj/effect/portal/permanent/one_way/destroy/snowdin
 	name = "Snowdin Exit Portal"
 	id = "vr snowdin"
+
+/obj/effect/light_emitter/vr_hub
+	set_luminosity = 9
+	set_cap = 2.5
+	light_color = LIGHT_COLOR_WHITE
+
+/turf/closed/indestructible/iron
+	name = "rough metal wall"
+	desc = "A wall with rough metal plating."
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = "iron"
+	canSmoothWith = list(/turf/closed/indestructible/iron)

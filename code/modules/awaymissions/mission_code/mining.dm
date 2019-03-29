@@ -1,8 +1,11 @@
 /area/awaymission/vr/megafauna_arena
-	name = "VrMegafauna"
+	name = "Virtual Reality Megafauna Trainer Safe Area"
 	icon_state = "awaycontent3"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/area/awaymission/vr/megafauna_arena/arena
+	name = "Virtual Reality Megafauna Trainer Fighting Area"
+	icon_state = "awaycontent4"
+	pacifist = FALSE
 
 /datum/outfit/job/miner/equipped/vr
 	name = "Virtual Reality Miner"
@@ -23,17 +26,6 @@
 	light_color = LIGHT_COLOR_FIRE
 	light_power = 1
 	light_range = 10
-
-/obj/effect/portal/permanent/one_way/recall/megafauna_arena/teleport(atom/movable/M, force = FALSE)
-	. = ..()
-	if(. && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
-
-/obj/effect/portal/permanent/one_way/recall/megafauna_arena/recall_effect(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
 
 /obj/effect/portal/permanent/one_way/destroy/megafauna_arena
 	name = "Megafauna Arena Exit Portal"
