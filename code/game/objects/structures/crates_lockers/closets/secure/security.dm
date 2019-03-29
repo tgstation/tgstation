@@ -183,6 +183,7 @@
 	new /obj/item/clothing/under/rank/det/grey(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/det_suit/grey(src)
+	new /obj/item/clothing/suit/det_suit/noir(src)
 	new /obj/item/clothing/head/fedora(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/storage/box/evidence(src)
