@@ -7,7 +7,6 @@
 	load_sound = 'sound/weapons/revolverload.ogg'
 	eject_sound = 'sound/weapons/revolverempty.ogg'
 	vary_fire_sound = FALSE
-	fire_sound_volume = 90
 	dry_fire_sound = 'sound/weapons/revolverdry.ogg'
 	casing_ejector = FALSE
 	internal_magazine = TRUE
@@ -44,7 +43,7 @@
 	recent_spin = world.time + spin_delay
 
 	if(do_spin())
-		playsound(usr, "revolver_spin", 30, FALSE)
+		playsound(usr, "revolver_spin", 100, FALSE)
 		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
@@ -142,7 +141,7 @@
 	name = "\improper Golden revolver"
 	desc = "This ain't no game, ain't never been no show, And I'll gladly gun down the oldest lady you know. Uses .357 ammo."
 	icon_state = "goldrevolver"
-	fire_sound = 'sound/weapons/resonator_blast.ogg'
+	fire_sound = 'sound/weapons/revolver357shot.ogg'
 	recoil = 8
 	pin = /obj/item/firing_pin
 
@@ -161,6 +160,7 @@
 /obj/item/gun/ballistic/revolver/russian
 	name = "\improper Russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
+	icon_state = "nagant"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 
