@@ -239,6 +239,8 @@
 					/obj/item/grenade/chem_grenade/antiweed)
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
+//иии
+/datum/supply_pack/emergency/bio
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
@@ -371,6 +373,8 @@
 					/obj/item/storage/box/wall_flash)
 	crate_name = "wall-mounted flash crate"
 
+//иии
+/datum/supply_pack/security/m1991
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Armory //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -542,8 +546,10 @@
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
-
-
+//иии
+/datum/supply_pack/security/armory/shotguns
+/datum/supply_pack/security/armory/ammo
+/datum/supply_pack/security/armory/rusky
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1191,11 +1197,13 @@
 /datum/supply_pack/science
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
+/datum/supply_pack/science/science/parts
+//иии
 
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
 	desc = "Ever wanted to build your own giant medical robot? Well, now you can! Contains the Odysseus main control board and Odysseus peripherals board. Requires Robotics access to open."
-	cost = 2500
+	cost = 1500
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/circuitboard/mecha/odysseus/peripherals,
 					/obj/item/circuitboard/mecha/odysseus/main)
@@ -1205,7 +1213,7 @@
 /datum/supply_pack/science/robotics/mecha_ripley
 	name = "Circuit Crate (Ripley APLU)"
 	desc = "Rip apart rocks and xenomorphs alike with the Ripley APLU. Contains the Main Ripley control board, as well as the Ripley Peripherals board. Requires Robotics access to open."
-	cost = 3000
+	cost = 1200
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/book/manual/ripley_build_and_repair,
 					/obj/item/circuitboard/mecha/ripley/main,
@@ -1270,7 +1278,7 @@
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
 	desc = "What's a computer? Contains five cargo tablets."
-	cost = 5000
+	cost = 1500
 	contains = list(/obj/item/modular_computer/tablet/preset/cargo,
 					/obj/item/modular_computer/tablet/preset/cargo,
 					/obj/item/modular_computer/tablet/preset/cargo,
@@ -1411,6 +1419,8 @@
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/service/barman
+//ииии
 /datum/supply_pack/service/vending/bartending
 	name = "Booze-o-mat and Coffee Supply Crate"
 	desc = "Bring on the booze and coffee vending machine refills."
@@ -1720,6 +1730,18 @@
 	for(var/i in 1 to 49)
 		new /mob/living/simple_animal/crab(.)
 
+/datum/supply_pack/critter/parrot
+	name = "parrot crate"
+	desc = "parrots
+	cost = 4000
+	contains = list(/mob/living/simple_animal/crab)
+	crate_name = "look sir free crabs"
+//ййй
+/datum/supply_pack/critter/crab/generate()
+	. = ..()
+	for(var/i in 1 to 5)
+		new /mob/living/simple_animal/parrot(.)
+
 /datum/supply_pack/critter/corgi
 	name = "Corgi Crate"
 	desc = "Considered the optimal dog breed by thousands of research scientists, this Corgi is but one dog from the millions of Ian's noble bloodline. Comes with a cute collar!"
@@ -1910,6 +1932,9 @@
 					/obj/item/lipstick/random)
 	crate_name = "formalwear crate"
 	crate_type = /obj/structure/closet/crate/wooden
+//иии
+/datum/supply_pack/costumes_toys/medieval
+/datum/supply_pack/costumes_toys/pirates
 
 /datum/supply_pack/costumes_toys/clownpin
 	name = "Hilarious Firing Pin Crate"
