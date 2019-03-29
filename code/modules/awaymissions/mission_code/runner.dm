@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 	. = ..()
 	GLOB.vr_runner_tiles += src
 
-/turf/open/indestructible/runner/Crossed(atom/movable/A)
+/turf/open/indestructible/runner/Entered(atom/movable/A)
 	. = ..()
 	if(isliving(A) && GLOB.vr_runner_active)
 		if(color == COLOR_ALMOST_BLACK)

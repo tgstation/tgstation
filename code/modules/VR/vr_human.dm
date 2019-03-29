@@ -15,7 +15,7 @@
 
 /mob/living/carbon/human/virtual_reality/death()
 	revert_to_reality()
-	..()
+	. = ..()
 
 /mob/living/carbon/human/virtual_reality/Destroy()
 	revert_to_reality()
@@ -30,6 +30,8 @@
 		revert_to_reality(FALSE)
 
 /mob/living/carbon/human/virtual_reality/ghostize()
+	if(!real_mind && !vr_sleeper)
+		return ..()
 	stack_trace("Ghostize was called on a virtual reality mob")
 
 /mob/living/carbon/human/virtual_reality/ghost()
