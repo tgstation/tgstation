@@ -539,7 +539,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 					objs[j] = SDQL_expression(x, expression)
 					SDQL2_TICK_CHECK
 					SDQL2_HALT_CHECK
-				if(objs.len == 1 && islist(objs[1]))
+				if(length(objs) == 1 && islist(objs[1]))
 					objs = objs[1]
 
 			if ("where")
