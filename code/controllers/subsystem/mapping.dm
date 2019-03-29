@@ -259,11 +259,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for(var/area/A in world)
 		if (is_type_in_typecache(A, station_areas_blacklist))
 			continue
-		if (!A.contents.len)
+		if (!A.contents.len || !A.unique)
 			continue
 		var/turf/picked = A.contents[1]
 		if (is_station_level(picked.z))
-			GLOB.the_station_areas |= A.type
+			GLOB.the_station_areas += A.type
 
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
