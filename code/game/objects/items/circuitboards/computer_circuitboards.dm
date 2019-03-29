@@ -155,6 +155,10 @@
 	name = "Orion Trail (Computer Board)"
 	build_path = /obj/machinery/computer/arcade/orion_trail
 
+/obj/item/circuitboard/computer/arcade/amputation
+	name = "Mediborg's Amputation Adventure (Computer Board)"
+	build_path = /obj/machinery/computer/arcade/amputation
+
 /obj/item/circuitboard/computer/turbine_control
 	name = "Turbine control (Computer Board)"
 	build_path = /obj/machinery/computer/turbine_computer

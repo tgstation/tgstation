@@ -78,14 +78,14 @@
 	add_fingerprint(user)
 
 
-/obj/item/paint/afterattack(turf/target, mob/user, proximity)
+/obj/item/paint/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 		return
-	if(!istype(target) || isspaceturf(target))
+	if(!isturf(target) || isspaceturf(target))
 		return
 	var/newcolor = "#" + item_color
 	target.add_atom_colour(newcolor, WASHABLE_COLOUR_PRIORITY)
@@ -93,12 +93,14 @@
 /obj/item/paint/paint_remover
 	gender =  PLURAL
 	name = "paint remover"
-	desc = "Used to remove color from floors and walls."
+	desc = "Used to remove color from anything."
 	icon_state = "paint_neutral"
 
-/obj/item/paint/paint_remover/afterattack(turf/target, mob/user, proximity)
+/obj/item/paint/paint_remover/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(target) && target.color != initial(target.color))
+	if(!isturf(target) || !isobj(target))
+		return
+	if(target.color != initial(target.color))
 		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

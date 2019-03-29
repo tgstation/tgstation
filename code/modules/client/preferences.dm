@@ -75,7 +75,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/negative_quirks = list()
 	var/list/neutral_quirks = list()
 	var/list/all_quirks = list()
-	var/list/character_quirks = list()
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
