@@ -1113,7 +1113,6 @@
 	},
 /obj/item/reagent_containers/dropper,
 /obj/item/radio/intercom{
-	pixel_x = 0;
 	pixel_y = 29
 	},
 /turf/open/floor/plasteel/white,
@@ -5845,7 +5844,6 @@
 	areastring = "/area/engine/supermatter";
 	dir = 1;
 	name = "Supermatter APC";
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /obj/structure/cable/yellow{
@@ -13073,9 +13071,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/item/radio/intercom{
-	pixel_x = 0
-	},
+/obj/item/radio/intercom,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "aDv" = (
@@ -14279,8 +14275,7 @@
 	department = "Genetics";
 	departmentType = 0;
 	name = "Genetics Requests Console";
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -15025,7 +15020,6 @@
 	pixel_y = 1
 	},
 /obj/item/radio/intercom{
-	pixel_x = 0;
 	pixel_y = 29
 	},
 /turf/open/floor/plasteel,
@@ -17015,7 +17009,6 @@
 	network = list("ss13","Research")
 	},
 /obj/item/radio/intercom{
-	pixel_x = 0;
 	pixel_y = 29
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -21328,7 +21321,6 @@
 	department = "Chief Engineer's Desk";
 	departmentType = 3;
 	name = "Chief Engineer RC";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
@@ -21520,7 +21512,6 @@
 	areastring = "/area/engine/engineering";
 	dir = 1;
 	name = "Engineering APC";
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /obj/structure/cable/yellow{
@@ -21579,8 +21570,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom{
-	pixel_x = 29;
-	pixel_y = 0
+	pixel_x = 29
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
@@ -21683,7 +21673,6 @@
 	areastring = "/area/crew_quarters/heads/chief";
 	dir = 2;
 	name = "CE Office APC";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/structure/cable/yellow,
@@ -29967,7 +29956,6 @@
 	},
 /obj/structure/closet/athletic_mixed,
 /obj/item/radio/intercom{
-	pixel_x = 0;
 	pixel_y = 29
 	},
 /turf/open/floor/plasteel,
@@ -41493,8 +41481,7 @@
 /obj/machinery/requests_console{
 	department = "Security";
 	departmentType = 5;
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -48802,7 +48789,6 @@
 	dir = 9
 	},
 /obj/item/radio/intercom{
-	pixel_x = 0;
 	pixel_y = 29
 	},
 /turf/open/floor/plasteel/white,
@@ -53640,7 +53626,6 @@
 /area/crew_quarters/fitness/locker_room)
 "drR" = (
 /obj/item/radio/intercom{
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/white/side{
@@ -54876,7 +54861,6 @@
 	areastring = "/area/maintenance/aft";
 	dir = 1;
 	name = "Aft Maintenance APC";
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/plating,
@@ -55198,8 +55182,7 @@
 /area/space/nearstation)
 "pID" = (
 /obj/item/radio/intercom{
-	pixel_x = 29;
-	pixel_y = 0
+	pixel_x = 29
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
