@@ -46,7 +46,7 @@
 		return FALSE
 	if(already_known(user))
 		return FALSE
-	if(used == TRUE && oneuse == TRUE)
+	if(used && oneuse)
 		recoil(user)
 	else
 		on_reading_start(user)
