@@ -1,5 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - rscadd: "AIs can now use CTRL and a number key (1 - 9) to assign a location to the number key, and then press the key later to jump their camera to that location. The numpad keys will work as aliases for their respective numbers."
-  - rscadd: "The Tilde key, or zero (or numpad zero), will return you to the last point you jumped from."
