@@ -6,6 +6,7 @@
 	fire_sound = 'sound/weapons/revolver357shot.ogg'
 	load_sound = 'sound/weapons/revolverload.ogg'
 	eject_sound = 'sound/weapons/revolverempty.ogg'
+	fire_sound_volume = 100
 	vary_fire_sound = FALSE
 	dry_fire_sound = 'sound/weapons/revolverdry.ogg'
 	casing_ejector = FALSE
