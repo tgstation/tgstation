@@ -148,8 +148,13 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/sepia
 	colour = "sepia"
 
+/proc/sepia_heal(mob/living/target)
+	if(target.stat == DEAD)
+		return
+	target.revive(full_heal = 1)
+	
 /obj/item/slimecross/regenerative/sepia/core_effect(mob/living/target, mob/user)
-	new /obj/effect/timestop(get_turf(target), 2, 50, list(user,target))
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/sepia_heal, target), 50)
 
 /obj/item/slimecross/regenerative/cerulean
 	colour = "cerulean"
