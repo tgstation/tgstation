@@ -1,0 +1,4 @@
+author: "Spyro Zeppeli"
+delete-after: True
+changes: 
+  - balance: "Changes ethereal low charge damage from brute to burn"
