@@ -3,10 +3,13 @@
 	name = "all-terrain vehicle"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "atv"
+	max_integrity = 200
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 20, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	key_type = /obj/item/key
 	var/static/mutable_appearance/atvcover
 
 /obj/vehicle/ridden/atv/Initialize()
+	START_PROCESSING(SSobj,src)
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.vehicle_move_delay = 1.5
@@ -60,3 +63,26 @@
 				turret.pixel_x = 12
 				turret.pixel_y = 4
 				turret.layer = OBJ_LAYER
+
+/obj/vehicle/ridden/atv/attackby(obj/item/W as obj, mob/user as mob, params)
+	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
+		if(obj_integrity < max_integrity)
+			if(W.use_tool(src, user, 0, volume=50, amount=1))
+				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to [src].</span>")
+				obj_integrity += min(10, max_integrity-obj_integrity)
+				if(obj_integrity == max_integrity)
+					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
+		return TRUE
+	else
+		return ..()
+
+/obj/vehicle/ridden/atv/process()
+	if(obj_integrity < 100 && prob(20))
+		var/datum/effect_system/smoke_spread/smoke = new
+		smoke.set_up(0, src)
+		smoke.start()
+
+/obj/vehicle/ridden/atv/Destroy()
+	STOP_PROCESSING(SSobj,src)
+	explosion(src, -1, 0, 2, 4, flame_range = 3)
+	return ..()
