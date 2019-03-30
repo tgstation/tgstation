@@ -709,6 +709,6 @@
 	name = "Bug Spray"
 	id = "bug_spray"
 	results = list("bug_spray" = 5)
-	required_reagents = list("triple_sec" = 2, "limejuice" = 1, "lemonjuice" = 1, "rum" = 2, "vodka" = 1)
+	required_reagents = list("triple_sec" = 2, "lemon_lime" = 1, "rum" = 2, "vodka" = 1)
 	mix_message = "The faint aroma of summer camping trips wafts through the air; but what's that buzzing noise?"
 	mix_sound = 'sound/creatures/bee.ogg'

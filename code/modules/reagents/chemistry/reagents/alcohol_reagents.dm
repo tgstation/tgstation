@@ -2008,8 +2008,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/champagne //How the hell did we not have champagne already!?
-	name = "Wizz Fizz"
-	id = "wizz_fizz"
+	name = "Champagne"
+	id = "champagne"
 	description = "A sparkling wine known for its ability to strike fast and hard."
 	color = "#ffffc1"
 	boozepwr = 50
@@ -2035,20 +2035,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/M)
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(M.mind)
-			var/datum/antagonist/wizard/wizard = M.mind.has_antag_datum(/datum/antagonist/wizard)
-		M.heal_bodypart_damage(1,1,1)
-		M.adjustBruteLoss(-2,0)
-		M.adjustOxyLoss(-2,0)
-		M.adjustFireLoss(-2,0)
-		M.adjustToxLoss(-2,0)
-		. = 1
+		var/datum/antagonist/wizard/wizard = M.mind.has_antag_datum(/datum/antagonist/wizard)
+		if(wizard)
+			M.heal_bodypart_damage(1,1,1)
+			M.adjustBruteLoss(-2,0)
+			M.adjustOxyLoss(-2,0)
+			M.adjustFireLoss(-2,0)
+			M.adjustToxLoss(-2,0)
+			. = 1
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
 	name = "Bug Spray"
 	id = "bug_spray"
 	description = "A harsh, acrid, bitter drink, for those who need something to brace themselves."
-	color = "#4235d0"
+	color = "#45123d"
 	boozepwr = 50
 	quality = DRINK_GOOD
 	taste_description = "the pain of ten thousand slain mosquitos."
@@ -2057,10 +2058,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Your eyes begin to water as the sting of alcohol reaches them."
 
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/M)
-	//Bugs should not drink Bug spray.
+//Bugs should not drink Bug spray.
 	if(M.has_trait(MOB_BUG))
-	M.adjustBruteLoss(1,0)
-	M.adjustOxyLoss(1,0)
-	M.adjustToxLoss(4,0)
+
+		M.adjustBruteLoss(1,0)
+		M.adjustOxyLoss(1,0)
+		M.adjustToxLoss(4,0)
 		. = 1
 	return ..()
