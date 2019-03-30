@@ -15,6 +15,7 @@
 /obj/item/projectile/bullet/c38
 	name = ".38 bullet"
 	damage = 25
+	stamina = 20
 
 /obj/item/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"
