@@ -164,6 +164,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 					miscboxes["Cargo"].name = "small items crate"
 				for (var/item in SO.pack.contains)
 					new item(miscboxes["Cargo"])
+				if(SO.pack.access)
+					miscboxes["Cargo"].req_access += SO.pack.access
 				misc_order_num["Cargo"] = "[misc_order_num["Cargo"]]#[SO.id]  "
 		else
 			SO.generate(pick_n_take(empty_turfs))
