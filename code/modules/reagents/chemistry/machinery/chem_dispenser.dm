@@ -513,7 +513,8 @@
 		"creme_de_cacao",
 		"triple_sec",
 		"sake",
-		"champagne"
+		"champagne",
+		"applejack"
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(

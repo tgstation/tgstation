@@ -2027,7 +2027,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#4235d0" //Just pretend that the triple-sec was blue curacao.
 	boozepwr = 50
 	quality = DRINK_GOOD
-	taste_description = "friendship! It is magic, after all."
+	taste_description = "friendship! It is magic, after all"
 	glass_icon_state = "wizz_fizz"
 	glass_name = "Wizz Fizz"
 	glass_desc = "The glass bubbles and froths with an almost magical intensity."
@@ -2049,10 +2049,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Bug Spray"
 	id = "bug_spray"
 	description = "A harsh, acrid, bitter drink, for those who need something to brace themselves."
-	color = "#45123d"
+	color = "#33ff33"
 	boozepwr = 50
 	quality = DRINK_GOOD
-	taste_description = "the pain of ten thousand slain mosquitos."
+	taste_description = "the pain of ten thousand slain mosquitos"
 	glass_icon_state = "bug_spray"
 	glass_name = "Bug Spray"
 	glass_desc = "Your eyes begin to water as the sting of alcohol reaches them."
@@ -2066,3 +2066,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.emote("scream")
 		. = 1
 	return ..()
+
+/datum/reagent/consumable/ethanol/applejack
+	name = "Applejack"
+	id = "applejack"
+	description = "The perfect beverage for when you feel the need to horse around."
+	color = "#ff6633"
+	boozepwr = 20
+	quality = DRINK_NICE
+	taste_description = "an honest day's work at the orchard"
+	glass_icon_state = "applejack"
+	glass_name = "Applejack"
+	glass_desc = "You feel like you could drink this all neight."
