@@ -39,13 +39,13 @@
 	if(uses != max_uses)
 		var/percentage_left = uses / max_uses
 		switch(percentage_left)
-			if(0 to 0.14)
+			if(0 to 0.15)
 				msg = "There's just a tiny bit left of what it used to be, you're not sure it'll last much longer."
-			if(0.15 to 0.29)
+			if(0.15 to 0.30)
 				msg = "It's dissolved quite a bit, but there's still some life to it."
-			if(0.30 to 0.49)
+			if(0.30 to 0.50)
 				msg = "It's past its prime, but it's definitely still good."
-			if(0.50 to 0.74)
+			if(0.50 to 0.75)
 				msg = "It's started to get a little smaller than it used to be, but it'll definitely still last for a while."
 			else
 				msg = "It's seen some light use, but it's still pretty fresh."
