@@ -19,7 +19,7 @@
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	var/feast_sound = 'sound/magic/demon_consume.ogg'
-	death_sound = 'sound/magic/demon_dies.ogg'
+	deathsound = 'sound/magic/demon_dies.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -34,7 +34,6 @@
 	melee_damage_upper = 30
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	var/playstyle_string = "<span class='big bold'>You are a slaughter demon,</span><B> a terrible creature from another realm. You have a single desire: To kill.  \
 							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and disappearing from the station at will. \
@@ -51,27 +50,21 @@
 	..()
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
-	if(istype(loc, /obj/effect/dummy/slaughter))
-		bloodspell.phased = 1
-
-/mob/living/simple_animal/slaughter/Life()
-	..()
-	if(boost<world.time)
-		speed = 1
-	else
-		speed = 0
+	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
+		bloodspell.phased = TRUE
 
 /obj/effect/decal/cleanable/blood/innards
-	icon = 'icons/obj/surgery.dmi'
 	name = "pile of viscera"
 	desc = "A repulsive pile of guts and gore."
 	gender = NEUTER
-	random_icon_states = list("innards")
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "innards"
+	random_icon_states = null
 
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()
-	speed = 0
-	boost = world.time + 60
+	add_movespeed_modifier(MOVESPEED_ID_SLAUGHTER, update=TRUE, priority=100, multiplicative_slowdown=-1)
+	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, MOVESPEED_ID_SLAUGHTER, TRUE), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
@@ -87,7 +80,7 @@
 /obj/item/organ/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
-	user.visible_message("<span class='warning'>[user] raises [src] to their mouth and tears into it with their teeth!</span>", \
+	user.visible_message("<span class='warning'>[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!</span>", \
 						 "<span class='danger'>An unnatural hunger consumes you. You raise [src] your mouth and devour it!</span>")
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
@@ -126,7 +119,7 @@
 
 	attack_sound = 'sound/items/bikehorn.ogg'
 	feast_sound = 'sound/spookoween/scary_horn2.ogg'
-	death_sound = 'sound/misc/sadtrombone.ogg'
+	deathsound = 'sound/misc/sadtrombone.ogg'
 
 	icon_state = "bowmon"
 	icon_living = "bowmon"

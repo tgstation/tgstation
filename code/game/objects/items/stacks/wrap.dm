@@ -9,7 +9,7 @@
 	desc = "Wrap packages with this festive paper to make gifts."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wrap_paper"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
@@ -31,13 +31,13 @@
 	desc = "You can use this to wrap items in."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "deliveryPaper"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 
 /obj/item/stack/packageWrap/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins wrapping themselves in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(use(3))
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(user.loc))
 		P.icon_state = "deliverypackage5"
@@ -61,6 +61,7 @@
 	return 0
 
 /obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!istype(target))
@@ -111,7 +112,7 @@
 		return
 
 	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
-	user.log_message("<font color='blue'>Has used [name] on [target]</font>", INDIVIDUAL_ATTACK_LOG)
+	user.log_message("has used [name] on [key_name(target)]", LOG_ATTACK, color="blue")
 
 /obj/item/stack/packageWrap/use(used, transfer = FALSE)
 	var/turf/T = get_turf(src)

@@ -18,18 +18,18 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_BLUE]" = "blueteamradio"
 	))
 
-/atom/movable/proc/say(message, datum/language/language = null)
+/atom/movable/proc/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!can_speak())
 		return
 	if(message == "" || !message)
 		return
-	var/list/spans = get_spans()
+	spans |= get_spans()
 	if(!language)
 		language = get_default_language()
 	send_speech(message, 7, src, , spans, message_language=language)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
 /atom/movable/proc/can_speak()
 	return 1

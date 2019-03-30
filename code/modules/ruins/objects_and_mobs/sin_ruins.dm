@@ -98,6 +98,13 @@
 	desc = "Pride cometh before the..."
 	icon_state = "magic_mirror"
 
+/obj/structure/mirror/magic/pride/New()
+	for(var/speciestype in subtypesof(/datum/species))
+		var/datum/species/S = speciestype
+		if(initial(S.changesource_flags) & MIRROR_PRIDE)
+			choosable_races += initial(S.id)
+	..()
+
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
@@ -129,7 +136,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
-	..()
+	. = ..()
 	if(!proximity)
 		return
 	if(!istype(user))
@@ -142,4 +149,4 @@
 			user.updateappearance(mutcolor_update=1)
 			user.domutcheck()
 			user.visible_message("<span class='warning'>[user]'s appearance shifts into [H]'s!</span>", \
-			"<span class='boldannounce'>They think they're <i>sooo</i> much better than you. Not anymore, they won't.</span>")
+			"<span class='boldannounce'>[H.p_they(TRUE)] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't.</span>")

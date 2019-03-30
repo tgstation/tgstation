@@ -11,8 +11,9 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
-	slot_flags = SLOT_BELT
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
 	var/range = 8
@@ -58,6 +59,7 @@
 	scanning = 0
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
+	. = ..()
 	scan(A, user)
 	return FALSE
 
@@ -189,6 +191,11 @@
 		return
 	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
 	log = list()
+
+/obj/item/detective_scanner/examine(mob/user)
+	..()
+	if(LAZYLEN(log) && !scanning)
+		to_chat(user, "<span class='notice'>Alt-click to clear scanner logs.</span>")
 
 /obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks

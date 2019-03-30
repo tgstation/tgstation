@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
 	desc = "The overmind. It controls the blob."
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = 1
@@ -21,6 +21,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	faction = list(ROLE_BLOB)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	call_life = TRUE
+	hud_type = /datum/hud/blob_overmind
 	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
@@ -29,6 +30,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/list/blob_mobs = list()
 	var/list/resource_blobs = list()
 	var/free_chem_rerolls = 1 //one free chemical reroll
+	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
 	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
 	var/base_point_rate = 2 //for blob core placement
@@ -93,6 +95,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
+	else if(!free_chem_rerolls && (last_reroll_time + BLOB_REROLL_TIME<world.time))
+		to_chat(src, "<b><span class='big'><font color=\"#EE4000\">You have gained another free chemical re-roll.</font></span></b>")
+		free_chem_rerolls = 1
 
 	if(!victory_in_progress && max_count < blobs_legit.len)
 		max_count = blobs_legit.len
@@ -123,8 +128,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			L.fully_heal()
 
-		for(var/V in GLOB.sortedAreas)
-			var/area/A = V
+		for(var/area/A in GLOB.sortedAreas)
+			if(!(A.type in GLOB.the_station_areas))
+				continue
 			if(!A.blob_allowed)
 				continue
 			A.color = blob_reagent_datum.color
@@ -183,7 +189,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	blob_points = CLAMP(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_points)]</font></div>"
 
-/mob/camera/blob/say(message)
+/mob/camera/blob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if (!message)
 		return
 
@@ -206,7 +212,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if (!message)
 		return
 
-	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
+	src.log_talk(message, LOG_SAY)
 
 	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"

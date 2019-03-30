@@ -77,7 +77,8 @@
 
 //Lower right, persistent menu
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
-#define ui_pull_resist "EAST-2:26,SOUTH+1:7"
+#define ui_above_movement "EAST-2:26,SOUTH+1:7"
+#define ui_above_intent "EAST-3:24, SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"
 #define ui_acti "EAST-3:24,SOUTH:5"
 #define ui_zonesel "EAST-1:28,SOUTH:5"
@@ -134,6 +135,8 @@
 #define ui_ai_take_picture "SOUTH:6,WEST+12"
 #define ui_ai_view_images "SOUTH:6,WEST+13"
 #define ui_ai_sensor "SOUTH:6,WEST+14"
+#define ui_ai_multicam "SOUTH+1:6,WEST+13"
+#define ui_ai_add_multicam "SOUTH+1:6,WEST+14"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"

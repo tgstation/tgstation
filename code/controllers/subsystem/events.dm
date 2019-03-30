@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(events)
 	var/frequency_upper = 6000	//10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
 
 	var/list/holidays			//List of all holidays occuring today or null if no holidays
-	var/wizardmode = 0
+	var/wizardmode = FALSE
 
 /datum/controller/subsystem/events/Initialize(time, zlevel)
 	for(var/type in typesof(/datum/round_event_control))
@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(events)
 		control += E				//add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
-	..()
+	return ..()
 
 
 /datum/controller/subsystem/events/fire(resumed = 0)
@@ -91,26 +91,8 @@ SUBSYSTEM_DEF(events)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
 	else if(. == EVENT_READY)
-		E.runEvent(TRUE)
-
-/datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
-	var/list/safe_areas = list(
-	/area/ai_monitored/turret_protected/ai,
-	/area/ai_monitored/turret_protected/ai_upload,
-	/area/engine,
-	/area/solar,
-	/area/holodeck,
-	/area/shuttle
-	)
-
-	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
-	var/list/danger_areas = list(
-	/area/engine/break_room,
-	/area/crew_quarters/heads/chief)
-
-	//Need to locate() as it's just a list of paths.
-	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas)) in GLOB.sortedAreas
-
+		E.random = TRUE
+		E.runEvent()
 
 //allows a client to trigger an event
 //aka Badmin Central

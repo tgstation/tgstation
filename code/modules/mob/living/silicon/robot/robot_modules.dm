@@ -1,7 +1,7 @@
 /obj/item/robot_module
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "std_module"
+	icon_state = "std_mod"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -32,6 +32,7 @@
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
+	var/canDispose = FALSE // Whether the borg can stuff itself into disposal
 
 /obj/item/robot_module/Initialize()
 	. = ..()
@@ -58,6 +59,9 @@
 	return ..()
 
 /obj/item/robot_module/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
 	for(var/obj/O in modules)
 		O.emp_act(severity)
 	..()
@@ -116,7 +120,7 @@
 	if(I.loc != src)
 		I.forceMove(src)
 	modules += I
-	I.flags_1 |= NODROP_1
+	I.add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += I
@@ -142,7 +146,7 @@
 		if(istype(I, /obj/item/assembly/flash))
 			var/obj/item/assembly/flash/F = I
 			F.times_used = 0
-			F.crit_fail = 0
+			F.burnt_out = FALSE
 			F.update_icon()
 		else if(istype(I, /obj/item/melee/baton))
 			var/obj/item/melee/baton/B = I
@@ -389,7 +393,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/mop/cyborg,
 		/obj/item/lightreplacer/cyborg,
-		/obj/item/holosign_creator,
+		/obj/item/holosign_creator/janibarrier,
 		/obj/item/reagent_containers/spray/cyborg_drying)
 	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
 	ratvar_modules = list(
@@ -466,9 +470,9 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
-		/obj/item/instrument/violin,
+		/obj/item/rsf,
 		/obj/item/instrument/guitar,
-		/obj/item/rsf/cyborg,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
@@ -521,7 +525,6 @@
 		/obj/item/weldingtool/mini,
 		/obj/item/extinguisher/mini,
 		/obj/item/storage/bag/sheetsnatcher/borg,
-		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
@@ -533,6 +536,16 @@
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	hat_offset = 0
+	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes.
+
+/obj/item/robot_module/miner/rebuild_modules()
+	. = ..()
+	if(!mining_scanner)
+		mining_scanner = new(src)
+
+/obj/item/robot_module/miner/Destroy()
+	QDEL_NULL(mining_scanner)
+	return ..()
 
 /obj/item/robot_module/syndicate
 	name = "Syndicate Assault"
@@ -592,6 +605,40 @@
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
 	hat_offset = 3
+
+/obj/item/robot_module/saboteur
+	name = "Syndicate Saboteur"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/borg/sight/thermal,
+		/obj/item/construction/rcd/borg/syndicate,
+		/obj/item/pipe_dispenser,
+		/obj/item/extinguisher,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/screwdriver/nuke,
+		/obj/item/wrench/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/multitool/cyborg,
+		/obj/item/stack/sheet/metal/cyborg,
+		/obj/item/stack/sheet/glass/cyborg,
+		/obj/item/stack/sheet/rglass/cyborg,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/destTagger/borg,
+		/obj/item/stack/cable_coil/cyborg,
+		/obj/item/pinpointer/syndicate_cyborg,
+		/obj/item/borg_chameleon,
+		)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg/engineer,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	cyborg_base_icon = "synd_engi"
+	moduleselect_icon = "malf"
+	can_be_pushed = FALSE
+	magpulsing = TRUE
+	hat_offset = -4
+	canDispose = TRUE
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"

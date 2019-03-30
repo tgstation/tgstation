@@ -4,7 +4,6 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 500
@@ -22,14 +21,22 @@
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
-	var/gib_time = 40
+	gibtime = 40
+	meat_produced = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gib_time -= 5 * M.rating
-		gibtime = gib_time
+		gibtime -= 5 * M.rating
 		if(M.rating >= 2)
 			ignore_clothing = TRUE
+
+/obj/machinery/gibber/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.<span>")
+		for(var/obj/item/stock_parts/manipulator/M in component_parts)
+			if(M.rating >= 2)
+				to_chat(user, "<span class='notice'>Gibber has been upgraded to process inorganic materials.<span>")
 
 /obj/machinery/gibber/update_icon()
 	cut_overlays()
@@ -79,7 +86,7 @@
 
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
-				if(!(I.flags_1 & NODROP_1))
+				if(!I.has_trait(TRAIT_NODROP))
 					to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 					return
 
@@ -98,9 +105,6 @@
 
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
-		return
-
-	else if(exchange_parts(user, P))
 		return
 
 	else if(default_pry_open(P))
@@ -174,13 +178,17 @@
 			typeofskin = /obj/item/stack/sheet/animalhide/monkey
 		else if(isalien(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
-
+	var/occupant_volume
+	if(occupant?.reagents)
+		occupant_volume = occupant.reagents.total_volume
 	for (var/i=1 to meat_produced)
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+			if(occupant_volume)
+				occupant.reagents.trans_to(newmeat, occupant_volume / meat_produced, remove_blacklisted = TRUE)
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
 		allmeat[i] = newmeat
@@ -188,7 +196,7 @@
 	if(typeofskin)
 		skin = new typeofskin
 
-	add_logs(user, occupant, "gibbed")
+	log_combat(user, occupant, "gibbed")
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
 	qdel(src.occupant)
@@ -219,7 +227,7 @@
 /obj/machinery/gibber/autogibber
 	var/input_dir = NORTH
 
-/obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
+/obj/machinery/gibber/autogibber/Bumped(atom/movable/AM)
 	var/atom/input = get_step(src, input_dir)
 	if(ismob(AM))
 		var/mob/M = AM

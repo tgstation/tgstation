@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = HEAR_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0
@@ -95,6 +95,7 @@
 
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+	. = ..()
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
@@ -120,9 +121,7 @@
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording started."
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
-		for(used, used < max)
-			if(recording == 0)
-				break
+		while(recording && used < max)
 			mytape.used_capacity++
 			used++
 			sleep(10)
@@ -239,6 +238,7 @@
 	name = "tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content."
 	icon_state = "tape_white"
+	icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -276,7 +276,7 @@
 
 
 /obj/item/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined && istype(I, /obj/item/screwdriver) || istype(I, /obj/item/pen))
+	if(ruined && I.tool_behaviour == TOOL_SCREWDRIVER || istype(I, /obj/item/pen))
 		to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
 		if(I.use_tool(src, user, 120))
 			to_chat(user, "<span class='notice'>You wound the tape back in.</span>")
@@ -286,6 +286,6 @@
 /obj/item/tape/random
 	icon_state = "random_tape"
 
-/obj/item/tape/random/New()
+/obj/item/tape/random/Initialize()
+	. = ..()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
-	..()

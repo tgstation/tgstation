@@ -24,6 +24,8 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	alpha = 50
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
 	..()
 	if(target && ranged_cooldown > world.time && iscarbon(target))
@@ -48,7 +50,7 @@
 
 /obj/item/projectile/mega_arachnid
 	name = "flesh snare"
-	nodamage = 1
+	nodamage = TRUE
 	damage = 0
 	icon_state = "tentacle_end"
 
@@ -61,6 +63,7 @@
 /obj/item/restraints/legcuffs/beartrap/mega_arachnid
 	name = "fleshy restraints"
 	desc = "Used by mega arachnids to immobilize their prey."
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
+	flags_1 = NONE
 	icon_state = "tentacle_end"
 	icon = 'icons/obj/projectiles.dmi'

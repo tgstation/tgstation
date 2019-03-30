@@ -10,6 +10,7 @@
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
+	report_type = "revolution"
 	antag_flag = ROLE_REV
 	false_report_weight = 10
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
@@ -58,6 +59,7 @@
 		lenin.restricted_roles = restricted_jobs
 
 	if(headrev_candidates.len < required_enemies)
+		setup_error = "Not enough headrev candidates"
 		return FALSE
 
 	return TRUE
@@ -96,7 +98,7 @@
 	revolution = new()
 
 	for(var/datum/mind/rev_mind in headrev_candidates)
-		log_game("[rev_mind.key] (ckey) has been selected as a head rev")
+		log_game("[key_name(rev_mind)] has been selected as a head rev")
 		var/datum/antagonist/rev/head/new_head = new()
 		new_head.give_flash = TRUE
 		new_head.give_hud = TRUE
@@ -132,7 +134,7 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
-	if(CONFIG_GET(keyed_flag_list/continuous)["revolution"])
+	if(CONFIG_GET(keyed_list/continuous)["revolution"])
 		if(finished)
 			SSshuttle.clearHostileEnvironment(src)
 		return ..()
@@ -166,7 +168,7 @@
 	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
 		var/turf/T = get_turf(rev_mind.current)
 		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(T.z))
-			if(ishuman(rev_mind.current))
+			if(ishuman(rev_mind.current) || ismonkey(rev_mind.current))
 				return FALSE
 	return TRUE
 

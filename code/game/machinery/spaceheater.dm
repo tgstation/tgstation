@@ -52,6 +52,8 @@
 		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 	else
 		to_chat(user, "There is no power cell installed.")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Temperature range at <b>[settableTemperatureRange]°C</b>.<br>Heating power at <b>[heatingPower*0.001]kJ</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.<span>") //100%, 75%, 50%, 25%
 
 /obj/machinery/space_heater/update_icon()
 	if(on)
@@ -65,7 +67,9 @@
 
 /obj/machinery/space_heater/process()
 	if(!on || !is_operational())
-		return
+		if (on) // If it's broken, turn it off too
+			on = FALSE
+		return PROCESS_KILL
 
 	if(cell && cell.charge > 0)
 		var/turf/L = loc
@@ -107,6 +111,7 @@
 	else
 		on = FALSE
 		update_icon()
+		return PROCESS_KILL
 
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 0
@@ -126,12 +131,11 @@
 		settableTemperatureMedian + settableTemperatureRange)
 
 /obj/machinery/space_heater/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
 		return
 	if(cell)
 		cell.emp_act(severity)
-	..(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -150,13 +154,13 @@
 		else
 			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return
-	else if(istype(I, /obj/item/screwdriver))
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
 		if(panel_open)
 			interact(user)
-	else if(exchange_parts(user, I) || default_deconstruction_crowbar(I))
+	else if(default_deconstruction_crowbar(I))
 		return
 	else
 		return ..()
@@ -202,6 +206,8 @@
 			mode = HEATER_MODE_STANDBY
 			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 			update_icon()
+			if (on)
+				START_PROCESSING(SSmachines, src)
 			. = TRUE
 		if("mode")
 			setMode = params["mode"]

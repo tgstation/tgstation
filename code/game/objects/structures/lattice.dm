@@ -8,6 +8,7 @@
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
+	plane = FLOOR_PLANE
 	var/number_of_rods = 1
 	canSmoothWith = list(/obj/structure/lattice,
 	/turf/open/floor,
@@ -38,7 +39,7 @@
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
-	if(istype(C, /obj/item/wirecutters))
+	if(C.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "<span class='notice'>Slicing [name] joints ...</span>")
 		deconstruct()
 	else
@@ -49,6 +50,20 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/rods(get_turf(src), number_of_rods)
 	qdel(src)
+
+/obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_FLOORWALL)
+		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)
+
+/obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	if(passed_mode == RCD_FLOORWALL)
+		to_chat(user, "<span class='notice'>You build a floor.</span>")
+		var/turf/T = src.loc
+		if(isspaceturf(T))
+			T.PlaceOnTop(/turf/open/floor/plating)
+			qdel(src)
+			return TRUE
+	return FALSE
 
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)

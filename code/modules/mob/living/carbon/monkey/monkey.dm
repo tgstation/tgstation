@@ -3,7 +3,7 @@
 	verb_say = "chimpers"
 	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
-	icon_state = ""
+	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
@@ -14,8 +14,7 @@
 	unique_name = TRUE
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
-
-
+	hud_type = /datum/hud/monkey
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	verbs += /mob/living/proc/mob_sleep
@@ -27,15 +26,15 @@
 
 	//initialize limbs
 	create_bodyparts()
-
 	create_internal_organs()
 
 	. = ..()
 
 	if (cubespawned)
-		if (LAZYLEN(SSmobs.cubemonkeys) > SSmobs.cubemonkeycap)
+		var/cap = CONFIG_GET(number/monkeycap)
+		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
 			if (spawner)
-				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [SSmobs.cubemonkeycap] monkeys on the station at one time!</span>")
+				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!</span>")
 			return INITIALIZE_HINT_QDEL
 		SSmobs.cubemonkeys += src
 
@@ -58,26 +57,32 @@
 	internal_organs += new /obj/item/organ/stomach
 	..()
 
-/mob/living/carbon/monkey/movement_delay()
-	if(reagents)
-		if(reagents.has_reagent("morphine"))
-			return -1
-
-		if(reagents.has_reagent("nuka_cola"))
-			return -1
-
+/mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
-	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45)
-		. += (health_deficiency / 25)
+	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)
+	var/amount
+	if(reagents.has_reagent("morphine"))
+		amount = -1
+	if(reagents.has_reagent("nuka_cola"))
+		amount = -1
+	if(amount)
+		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
 
+/mob/living/carbon/monkey/updatehealth()
+	. = ..()
+	var/slow = 0
+	if(!has_trait(TRAIT_IGNOREDAMAGESLOWDOWN))
+		var/health_deficiency = (maxHealth - health)
+		if(health_deficiency >= 45)
+			slow += (health_deficiency / 25)
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
+
+/mob/living/carbon/monkey/adjust_bodytemperature(amount)
+	. = ..()
+	var/slow = 0
 	if (bodytemperature < 283.222)
-		. += (283.222 - bodytemperature) / 10 * 1.75
-
-	var/static/config_monkey_delay
-	if(isnull(config_monkey_delay))
-		config_monkey_delay = CONFIG_GET(number/monkey_delay)
-	. += config_monkey_delay
+		slow += ((283.222 - bodytemperature) / 10) * 1.75
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -134,12 +139,14 @@
 
 	//Check for weapons
 	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck )
-		for(var/obj/item/I in held_items)
+		for(var/obj/item/I in held_items) //if they're holding a gun
 			if(weaponcheck.Invoke(I))
 				threatcount += 4
+		if(weaponcheck.Invoke(back)) //if a weapon is present in the back slot
+			threatcount += 4 //trigger look_for_perp() since they're nonhuman and very likely hostile
 
 	//mindshield implants imply trustworthyness
-	if(isloyal())
+	if(has_trait(TRAIT_MINDSHIELD))
 		threatcount -= 1
 
 	return threatcount
@@ -168,5 +175,5 @@
 	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
-		equip_to_slot_or_del(helmet,slot_head)
+		equip_to_slot_or_del(helmet,SLOT_HEAD)
 		helmet.attack_self(src) // todo encapsulate toggle

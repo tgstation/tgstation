@@ -4,7 +4,7 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
 	range = 1
@@ -19,13 +19,15 @@ Urist: I don't feel like figuring out how you store object spells so I'm leaving
 Make sure spells that are removed from spell_list are actually removed and deleted when mind transferring.
 Also, you never added distance checking after target is selected. I've went ahead and did that.
 */
-/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/living/user = usr, distanceoverride)
+/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/living/user = usr, distanceoverride, silent = FALSE)
 	if(!targets.len)
-		to_chat(user, "<span class='warning'>No mind found!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>No mind found!</span>")
 		return
 
 	if(targets.len > 1)
-		to_chat(user, "<span class='warning'>Too many minds! You're not a hive damnit!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>Too many minds! You're not a hive damnit!</span>")
 		return
 
 	var/mob/living/target = targets[1]
@@ -34,28 +36,34 @@ Also, you never added distance checking after target is selected. I've went ahea
 	var/t_is = target.p_are()
 
 	if(!(target in oview(range)) && !distanceoverride)//If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
-		to_chat(user, "<span class='warning'>[t_He] [t_is] too far away!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[t_He] [t_is] too far away!</span>")
 		return
 
 	if(ismegafauna(target))
-		to_chat(user, "<span class='warning'>This creature is too powerful to control!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>This creature is too powerful to control!</span>")
 		return
 
 	if(target.stat == DEAD)
-		to_chat(user, "<span class='warning'>You don't particularly want to be dead!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>You don't particularly want to be dead!</span>")
 		return
 
 	if(!target.key || !target.mind)
-		to_chat(user, "<span class='warning'>[t_He] appear[target.p_s()] to be catatonic! Not even magic can affect [target.p_their()] vacant mind.</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[t_He] appear[target.p_s()] to be catatonic! Not even magic can affect [target.p_their()] vacant mind.</span>")
 		return
 
 	if(user.suiciding)
-		to_chat(user, "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>")
 		return
 
 	var/datum/mind/TM = target.mind
 	if((target.anti_magic_check() || TM.has_antag_datum(/datum/antagonist/wizard) || TM.has_antag_datum(/datum/antagonist/cult) || TM.has_antag_datum(/datum/antagonist/clockcult) || TM.has_antag_datum(/datum/antagonist/changeling) || TM.has_antag_datum(/datum/antagonist/rev)) || cmptext(copytext(target.key,1,2),"@"))
-		to_chat(user, "<span class='warning'>[target.p_their(TRUE)] mind is resisting your spell!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[target.p_their(TRUE)] mind is resisting your spell!</span>")
 		return
 
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.
@@ -77,3 +85,4 @@ Also, you never added distance checking after target is selected. I've went ahea
 	victim.Unconscious(unconscious_amount_victim)
 	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
 	SEND_SOUND(victim, sound('sound/magic/mandswap.ogg'))// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened
+	return TRUE

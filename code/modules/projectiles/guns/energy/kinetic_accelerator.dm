@@ -8,9 +8,10 @@
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
-	can_flashlight = 1
+	can_flashlight = TRUE
 	flight_x_offset = 15
 	flight_y_offset = 9
+	automatic_charge_overlays = FALSE
 	var/overheat_time = 16
 	var/holds_charge = FALSE
 	var/unique_frequency = FALSE // modified by KA modkits
@@ -22,7 +23,6 @@
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
 
-	var/empty_state = "kineticgun_empty"
 	var/recharge_timerid
 
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
@@ -121,8 +121,8 @@
 	var/carried = 0
 	if(!unique_frequency)
 		for(var/obj/item/gun/energy/kinetic_accelerator/K in loc.GetAllContents())
-
-			carried++
+			if(!K.unique_frequency)
+				carried++
 
 		carried = max(carried, 1)
 	else
@@ -145,9 +145,10 @@
 
 /obj/item/gun/energy/kinetic_accelerator/update_icon()
 	..()
-
-	if(empty_state && !can_shoot())
-		add_overlay(empty_state)
+	if(!can_shoot())
+		add_overlay("[icon_state]_empty")
+	else
+		cut_overlays()
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic
@@ -326,7 +327,7 @@
 /obj/item/borg/upgrade/modkit/cooldown
 	name = "cooldown decrease"
 	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
-	modifier = 2.5
+	modifier = 3.2
 	minebot_upgrade = FALSE
 
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)

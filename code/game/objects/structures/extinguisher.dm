@@ -8,22 +8,22 @@
 	max_integrity = 200
 	integrity_failure = 50
 	var/obj/item/extinguisher/stored_extinguisher
-	var/opened = 0
+	var/opened = FALSE
 
-/obj/structure/extinguisher_cabinet/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>")
-
-/obj/structure/extinguisher_cabinet/New(loc, ndir, building)
-	..()
+/obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
+	. = ..()
 	if(building)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
 		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
-		opened = 1
+		opened = TRUE
 		icon_state = "extinguisher_empty"
 	else
 		stored_extinguisher = new /obj/item/extinguisher(src)
+
+/obj/structure/extinguisher_cabinet/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>")
 
 /obj/structure/extinguisher_cabinet/Destroy()
 	if(stored_extinguisher)
@@ -41,7 +41,7 @@
 		update_icon()
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench) && !stored_extinguisher)
+	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 60))
@@ -59,6 +59,7 @@
 			stored_extinguisher = I
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
+			return TRUE
 		else
 			toggle_cabinet(user)
 	else if(user.a_intent != INTENT_HARM)

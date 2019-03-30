@@ -3,7 +3,6 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
-	anchored = TRUE
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
@@ -46,8 +45,12 @@
 		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5 // Up to 30
-	waterlevel = maxwater
-	nutrilevel = 3
+
+/obj/machinery/hydroponics/constructable/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.<span>")
+
 
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
@@ -56,25 +59,19 @@
 	return ..()
 
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
-		return
-
-	if(exchange_parts(user, I))
-		return
-
-	if(default_pry_open(I))
-		return
-
-	if(default_unfasten_wrench(user, I))
-		return
-
-	if(istype(I, /obj/item/crowbar))
-		if(using_irrigation)
-			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
-		else if(default_deconstruction_crowbar(I, 1))
+	if (user.a_intent != INTENT_HARM)
+		// handle opening the panel
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 			return
-	else
-		return ..()
+
+		// handle deconstructing the machine, if permissible
+		if(I.tool_behaviour == TOOL_CROWBAR && using_irrigation)
+			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
+			return
+		else if(default_deconstruction_crowbar(I))
+			return
+
+	return ..()
 
 /obj/machinery/hydroponics/proc/FindConnected()
 	var/list/connected = list()
@@ -653,7 +650,7 @@
 		adjustPests(rand(2,4))
 
 	// FEED ME SEYMOUR
-	if(S.has_reagent("strangereagent", 1))
+	if(S.has_reagent("strange_reagent", 1))
 		spawnplant()
 
 	// The best stuff there is. For testing/debugging.
@@ -732,7 +729,7 @@
 			var/datum/reagents/S = new /datum/reagents() //This is a strange way, but I don't know of a better one so I can't fix it at the moment...
 			S.my_atom = H
 
-			reagent_source.reagents.trans_to(S,split)
+			reagent_source.reagents.trans_to(S,split, transfered_by = user)
 			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 
@@ -748,7 +745,7 @@
 	else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
 		if(!myseed)
 			if(istype(O, /obj/item/seeds/kudzu))
-				investigate_log("had Kudzu planted in it by [user.ckey]([user]) at ([x],[y],[z])","kudzu")
+				investigate_log("had Kudzu planted in it by [key_name(user)] at [AREACOORD(src)]","kudzu")
 			if(!user.transferItemToLoc(O, src))
 				return
 			to_chat(user, "<span class='notice'>You plant [O].</span>")
@@ -788,33 +785,15 @@
 	else if(istype(O, /obj/item/storage/bag/plants))
 		attack_hand(user)
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
-			O.SendSignal(COMSIG_TRY_STORAGE_INSERT, G, user, TRUE)
+			SEND_SIGNAL(O, COMSIG_TRY_STORAGE_INSERT, G, user, TRUE)
 
-	else if(istype(O, /obj/item/wrench) && unwrenchable)
-		if(using_irrigation)
-			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
+	else if(default_unfasten_wrench(user, O))
+		return
+
+	else if((O.tool_behaviour == TOOL_WIRECUTTER) && unwrenchable)
+		if (!anchored)
+			to_chat(user, "<span class='warning'>Anchor the tray first!</span>")
 			return
-
-		if(!anchored && !isinspace())
-			user.visible_message("[user] begins to wrench [src] into place.", \
-								"<span class='notice'>You begin to wrench [src] in place...</span>")
-			if (O.use_tool(src, user, 20, volume=50))
-				if(anchored)
-					return
-				anchored = TRUE
-				user.visible_message("[user] wrenches [src] into place.", \
-									"<span class='notice'>You wrench [src] in place.</span>")
-		else if(anchored)
-			user.visible_message("[user] begins to unwrench [src].", \
-								"<span class='notice'>You begin to unwrench [src]...</span>")
-			if (O.use_tool(src, user, 20, volume=50))
-				if(!anchored)
-					return
-				anchored = FALSE
-				user.visible_message("[user] unwrenches [src].", \
-									"<span class='notice'>You unwrench [src].</span>")
-
-	else if(istype(O, /obj/item/wirecutters) && unwrenchable)
 		using_irrigation = !using_irrigation
 		O.play_tool_sound(src)
 		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
@@ -842,6 +821,17 @@
 
 	else
 		return ..()
+
+/obj/machinery/hydroponics/can_be_unfasten_wrench(mob/user, silent)
+	if (!unwrenchable)  // case also covered by NODECONSTRUCT checks in default_unfasten_wrench
+		return CANT_UNFASTEN
+
+	if (using_irrigation)
+		if (!silent)
+			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
+		return FAILED_UNFASTEN
+
+	return ..()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
 	. = ..()
@@ -930,7 +920,7 @@
 	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/shovel) && !istype(O, /obj/item/shovel/spade)) //Doesn't include spades because of uprooting plants
+	if(O.tool_behaviour == TOOL_SHOVEL && !istype(O, /obj/item/shovel/spade)) //Doesn't include spades because of uprooting plants
 		to_chat(user, "<span class='notice'>You clear up [src]!</span>")
 		qdel(src)
 	else

@@ -17,14 +17,8 @@
 	var/energy = 0
 	var/creation_type = /obj/singularity
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/the_singularitygen/attack_hand(mob/user)
-	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
-		return
-	. = ..()
-
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, W, 0)
 	else
 		return ..()

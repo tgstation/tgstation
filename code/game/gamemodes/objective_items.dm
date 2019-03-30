@@ -41,7 +41,7 @@
 	name = "a hand teleporter."
 	targetitem = /obj/item/hand_tele
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Captain", "Research Director")
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack."
@@ -148,12 +148,12 @@
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
 	if(istype(I, /obj/item/areaeditor/blueprints))
-		return 1
+		return TRUE
 	if(istype(I, /obj/item/photo))
 		var/obj/item/photo/P = I
-		if(P.blueprints)	//if the blueprints are in frame
-			return 1
-	return 0
+		if(P.picture.has_blueprints)	//if the blueprints are in frame
+			return TRUE
+	return FALSE
 
 /datum/objective_item/steal/slime
 	name = "an unused sample of slime extract."

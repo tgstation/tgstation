@@ -1,4 +1,4 @@
-/mob/living/brain/say(message, language)
+/mob/living/brain/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!(container && istype(container, /obj/item/mmi)))
 		return //No MMI, can't speak, bucko./N
 	else

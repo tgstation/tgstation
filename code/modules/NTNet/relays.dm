@@ -7,7 +7,6 @@
 	idle_power_usage = 100
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
-	anchored = TRUE
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ntnet_relay
 	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.

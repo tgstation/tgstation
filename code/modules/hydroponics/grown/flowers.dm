@@ -22,10 +22,11 @@
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
 	icon_state = "poppy"
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#FF6347"
 	bitesize_mod = 3
 	foodtype = VEGETABLES | GROSS
+	distill_reagent = "vermouth"
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -61,7 +62,6 @@
 	icon_state = "geranium"
 	filling_color = "#008B8B"
 
-
 // Harebell
 /obj/item/seeds/harebell
 	name = "pack of harebell seeds"
@@ -86,10 +86,10 @@
 	name = "harebell"
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 3
-
+	distill_reagent = "vermouth"
 
 // Sunflower
 /obj/item/seeds/sunflower
@@ -118,7 +118,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = "fire"
 	force = 0
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
@@ -149,9 +149,10 @@
 	name = "moonflower"
 	desc = "Store in a location at least 50 yards away from werewolves."
 	icon_state = "moonflower"
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 2
+	distill_reagent = "absinthe" //It's made from flowers.
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower
@@ -176,7 +177,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = "fire"
 	force = 0
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
@@ -195,10 +196,11 @@
 		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
 		M.adjust_fire_stacks(seed.potency / 20)
 		if(M.IgniteMob())
-			message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
-			log_game("[key_name(user)] set [key_name(M)] on fire")
+			message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(M)] on fire with [src] at [AREACOORD(user)]")
+			log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 
 /obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(force > 0)

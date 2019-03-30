@@ -22,7 +22,7 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
-	else if(istype(I, /obj/item/weldingtool))
+	else if(I.tool_behaviour == TOOL_WELDER)
 		if(!I.tool_start_check(user, amount=0))
 			return
 		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
@@ -132,7 +132,7 @@
 	src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
-	M.AdjustKnockdown(20)
+	M.AdjustParalyzed(20)
 
 /obj/structure/kitchenspike/Destroy()
 	if(has_buckled_mobs())

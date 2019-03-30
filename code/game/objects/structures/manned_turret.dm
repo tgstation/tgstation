@@ -6,6 +6,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "machinegun"
 	can_buckle = TRUE
+	anchored = FALSE
 	density = TRUE
 	max_integrity = 100
 	buckle_lying = FALSE
@@ -179,12 +180,13 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1 | NODROP_1 | NOBLUDGEON_1 | DROPDEL_1
+	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 
 /obj/item/gun_control/Initialize()
 	. = ..()
+	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	turret = loc
 	if(!istype(turret))
 		return INITIALIZE_HINT_QDEL
@@ -207,7 +209,7 @@
 	add_fingerprint(user)
 
 /obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
-	..()
+	. = ..()
 	var/obj/machinery/manned_turret/E = user.buckled
 	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, params)
 	E.direction_track(user, targeted_atom)

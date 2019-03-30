@@ -7,7 +7,6 @@
 	dat +={"
 			<B>General Secrets</B><BR>
 			<BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=show_admins'>Show Admin List</A><BR>
 			<BR>
@@ -62,9 +61,11 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=ancap'>Anarcho-Capitalist Station Mode</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=customportal'>Spawn a custom portal storm</A><BR>
 			<BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=flipmovement'>Flip client movement directions</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=randommovement'>Randomize client movement directions</A><BR>
@@ -107,17 +108,6 @@
 				dat += "No-one has done anything this round!"
 			usr << browse(dat, "window=admin_log")
 
-		if("list_job_debug")
-			var/dat = "<B>Job Debug info.</B><HR>"
-			for(var/line in SSjob.job_debug)
-				dat += "[line]<BR>"
-			dat+= "*******<BR><BR>"
-			for(var/datum/job/job in SSjob.occupations)
-				if(!job)
-					continue
-				dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-			usr << browse(dat, "window=jobdebug;size=600x500")
-
 		if("show_admins")
 			var/dat = "<B>Current admins:</B><HR>"
 			if(GLOB.admin_datums)
@@ -136,15 +126,15 @@
 			log_admin("[key_name(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>")
 
-			var/area/thunderdome = locate(/area/tdome/arena)
+			var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena]
 			if(delete_mobs == "Yes")
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj, /obj/machinery/camera))
+				if(!istype(obj, /obj/machinery/camera) && !istype(obj, /obj/effect/abstract/proximity_checker))
 					qdel(obj) //Clear objects
 
-			var/area/template = locate(/area/tdome/arena_source)
+			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
 			template.copy_contents_to(thunderdome)
 
 		if("clear_virus")
@@ -362,7 +352,7 @@
 					continue
 				if(is_special_character(H))
 					continue
-				var/datum/antagonist/traitor/human/T = new()
+				var/datum/antagonist/traitor/T = new()
 				T.give_objectives = FALSE
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
@@ -425,10 +415,10 @@
 						var/obj/item/clothing/under/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, slot_w_uniform)
+						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.flags_1 |= NODROP_1
+							I.add_trait(TRAIT_NODROP, ADMIN_TRAIT)
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 
@@ -476,6 +466,20 @@
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
+
+		if("ancap")
+			if(!check_rights(R_FUN))
+				return
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anarcho-capitalist Station"))
+			SSeconomy.full_ancap = !SSeconomy.full_ancap
+			message_admins("[key_name_admin(usr)] toggled Anarcho-capitalist mode")
+			if(SSeconomy.full_ancap)
+				priority_announce("The NAP is now in full effect.", null, 'sound/ai/commandreport.ogg')
+			else
+				priority_announce("The NAP has been revoked.", null, 'sound/ai/commandreport.ogg')
+
+
+
 
 		if("guns")
 			if(!check_rights(R_FUN))
@@ -644,6 +648,77 @@
 			message_admins("[key_name_admin(usr)] has reset all movement keys.")
 			log_admin("[key_name(usr)] has reset all movement keys.")
 
+		if("customportal")
+			if(!check_rights(R_FUN))
+				return
+
+			var/list/settings = list(
+				"mainsettings" = list(
+					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/poison/bees),
+					"humanoutfit" = list("desc" = "Outfit if human", "type" = "datum", "path" = "/datum/outfit", "subtypesonly" = TRUE, "value" = /datum/outfit),
+					"amount" = list("desc" = "Number per portal", "type" = "number", "value" = 1),
+					"portalnum" = list("desc" = "Number of total portals", "type" = "number", "value" = 10),
+					"offerghosts" = list("desc" = "Get ghosts to play mobs", "type" = "boolean", "value" = "No"),
+					"minplayers" = list("desc" = "Minimum number of ghosts", "type" = "number", "value" = 1),
+					"playersonly" = list("desc" = "Only spawn ghost-controlled mobs", "type" = "boolean", "value" = "No"),
+					"ghostpoll" = list("desc" = "Ghost poll question", "type" = "string", "value" = "Do you want to play as %TYPE% portal invader?"),
+					"delay" = list("desc" = "Time between portals, in deciseconds", "type" = "number", "value" = 50),
+					"color" = list("desc" = "Portal color", "type" = "color", "value" = "#00FF00"),
+					"playlightning" = list("desc" = "Play lightning sounds on announcement", "type" = "boolean", "value" = "Yes"),
+					"announce_players" = list("desc" = "Make an announcement", "type" = "boolean", "value" = "Yes"),
+					"announcement" = list("desc" = "Announcement", "type" = "string", "value" = "Massive bluespace anomaly detected en route to %STATION%. Brace for impact."),
+				)
+			)
+
+			message_admins("[key_name(usr)] is creating a custom portal storm...")
+			var/list/prefreturn = presentpreflikepicker(usr,"Customize Portal Storm", "Customize Portal Storm", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
+
+			if (prefreturn["button"] == 1)
+				var/list/prefs = settings["mainsettings"]
+
+				if (prefs["amount"]["value"] < 1 || prefs["portalnum"]["value"] < 1)
+					to_chat(usr, "Number of portals and mobs to spawn must be at least 1")
+					return
+
+				var/mob/pathToSpawn = prefs["typepath"]["value"]
+				if (!ispath(pathToSpawn))
+					pathToSpawn = text2path(pathToSpawn)
+
+				if (!ispath(pathToSpawn))
+					to_chat(usr, "Invalid path [pathToSpawn]")
+					return
+
+				var/list/candidates = list()
+
+				if (prefs["offerghosts"]["value"] == "Yes")
+					candidates = pollGhostCandidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), ROLE_TRAITOR)
+
+				if (prefs["playersonly"]["value"] == "Yes" && length(candidates) < prefs["minplayers"]["value"])
+					message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")
+					return
+
+				if (prefs["announce_players"]["value"] == "Yes")
+					portalAnnounce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
+
+				var/mutable_appearance/storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+				storm.color = prefs["color"]["value"]
+
+				message_admins("[key_name_admin(usr)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
+				log_admin("[key_name(usr)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
+
+				var/outfit = prefs["humanoutfit"]["value"]
+				if (!ispath(outfit))
+					outfit = text2path(outfit)
+
+				for (var/i in 1 to prefs["portalnum"]["value"])
+					if (length(candidates)) // if we're spawning players, gotta be a little tricky and also not spawn players on top of NPCs
+						var/ghostcandidates = list()
+						for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
+							ghostcandidates += pick_n_take(candidates)
+							addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm, ghostcandidates, outfit), i*prefs["delay"]["value"])
+					else if (prefs["playersonly"]["value"] != "Yes")
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, prefs["amount"]["value"], storm, null, outfit), i*prefs["delay"]["value"])
+
 	if(E)
 		E.processing = FALSE
 		if(E.announceWhen>0)
@@ -654,3 +729,29 @@
 		log_admin("[key_name(usr)] used secret [item]")
 		if (ok)
 			to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key))
+
+/proc/portalAnnounce(announcement, playlightning)
+	set waitfor = 0
+	if (playlightning)
+		sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
+		sleep(80)
+	priority_announce(replacetext(announcement, "%STATION%", station_name()))
+	if (playlightning)
+		sleep(20)
+		sound_to_playing_players('sound/magic/lightningbolt.ogg')
+
+/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, portal_appearance, players, humanoutfit)
+	for (var/i in 1 to numtospawn)
+		var/mob/spawnedMob = new mobtype(loc)
+		if (length(players))
+			var/mob/chosen = players[1]
+			if (chosen.client)
+				chosen.client.prefs.copy_to(spawnedMob)
+				spawnedMob.key = chosen.key
+			players -= chosen
+		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
+			var/mob/living/carbon/human/H = spawnedMob
+			H.equipOutfit(humanoutfit)
+	var/turf/T = get_step(loc, SOUTHWEST)
+	flick_overlay_static(portal_appearance, T, 15)
+	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), 1)

@@ -6,6 +6,9 @@
 	var/amt_unconscious = 0
 	var/amt_stun = 0
 
+	var/inflict_status
+	var/list/status_params = list()
+
 	//set to negatives for healing
 	var/amt_dam_fire = 0
 	var/amt_dam_brute = 0
@@ -41,7 +44,7 @@
 		target.adjustToxLoss(amt_dam_tox)
 		target.adjustOxyLoss(amt_dam_oxy)
 		//disabling
-		target.Knockdown(amt_knockdown)
+		target.Paralyze(amt_knockdown)
 		target.Unconscious(amt_unconscious)
 		target.Stun(amt_stun)
 
@@ -50,3 +53,8 @@
 		//summoning
 		if(summon_type)
 			new summon_type(target.loc, target)
+
+		if(inflict_status)
+			var/list/stat_args = status_params.Copy()
+			stat_args.Insert(1,inflict_status)
+			target.apply_status_effect(arglist(stat_args))

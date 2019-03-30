@@ -94,6 +94,10 @@
 			Stun(effect * hit_percent)
 		if(EFFECT_KNOCKDOWN)
 			Knockdown(effect * hit_percent)
+		if(EFFECT_PARALYZE)
+			Paralyze(effect * hit_percent)
+		if(EFFECT_IMMOBILIZE)
+			Immobilize(effect * hit_percent)
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
 		if(EFFECT_IRRADIATE)
@@ -110,18 +114,26 @@
 		if(EFFECT_JITTER)
 			if((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE))
 				jitteriness = max(jitteriness,(effect * hit_percent))
+		if(EFFECT_PARALYZE)
+			Paralyze(effect * hit_percent)
+		if(EFFECT_IMMOBILIZE)
+			Immobilize(effect * hit_percent)
 	return 1
 
 
-/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0, paralyze = 0, immobilize = 0)
 	if(blocked >= 100)
-		return 0
+		return BULLET_ACT_BLOCK
 	if(stun)
 		apply_effect(stun, EFFECT_STUN, blocked)
 	if(knockdown)
 		apply_effect(knockdown, EFFECT_KNOCKDOWN, blocked)
 	if(unconscious)
 		apply_effect(unconscious, EFFECT_UNCONSCIOUS, blocked)
+	if(paralyze)
+		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
+	if(immobilize)
+		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
 	if(irradiate)
 		apply_effect(irradiate, EFFECT_IRRADIATE, blocked)
 	if(slur)
@@ -136,13 +148,13 @@
 		apply_damage(stamina, STAMINA, null, blocked)
 	if(jitter)
 		apply_effect(jitter, EFFECT_JITTER, blocked)
-	return 1
+	return BULLET_ACT_HIT
 
 
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -230,14 +242,14 @@
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
+/mob/living/proc/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	return
 
-/mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
+/mob/living/proc/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	return
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
 	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(-burn, FALSE)
 	adjustStaminaLoss(-stamina, FALSE)
@@ -246,7 +258,7 @@
 		update_stamina()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, check_armor = FALSE)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)
@@ -255,7 +267,7 @@
 		update_stamina()
 
 // heal MANY bodyparts, in random order
-/mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
+/mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE)
 	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(-burn, FALSE)
 	adjustStaminaLoss(-stamina, FALSE)
@@ -264,7 +276,7 @@
 		update_stamina()
 
 // damage MANY bodyparts, in random order
-/mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+/mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)

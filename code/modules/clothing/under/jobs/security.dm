@@ -28,6 +28,15 @@
 	item_state = "gy_suit"
 	item_color = "security"
 
+/obj/item/clothing/under/rank/security/skirt
+	name = "security jumpskirt"
+	desc = "A \"tactical\" security jumpsuit with the legs replaced by a skirt."
+	icon_state = "secskirt"
+	item_state = "r_suit"
+	item_color = "secskirt"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE //you know now that i think of it if you adjust the skirt and the sprite disappears isn't that just like flashing everyone
+
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
@@ -133,8 +142,21 @@
  */
 
 /obj/item/clothing/under/rank/security/blueshirt
+	name = "blue shirt and tie"
 	desc = "I'm a little busy right now, Calhoun."
 	icon_state = "blueshift"
 	item_state = "blueshift"
 	item_color = "blueshift"
+	can_adjust = FALSE
+
+/*
+ *Spacepol
+ */
+
+/obj/item/clothing/under/rank/security/spacepol
+	name = "police uniform"
+	desc = "Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol."
+	icon_state = "spacepol"
+	item_state = "spacepol"
+	item_color = "spacepol"
 	can_adjust = FALSE

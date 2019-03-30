@@ -36,6 +36,10 @@
 	QDEL_NULL(cpu)
 	return ..()
 
+/obj/machinery/modular_computer/examine(mob/user)
+	..()
+	get_modular_computer_parts_examine(user)
+
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()
 	if(.)
@@ -144,6 +148,9 @@
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
 /obj/machinery/modular_computer/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
 	if(cpu)
 		cpu.emp_act(severity)
 

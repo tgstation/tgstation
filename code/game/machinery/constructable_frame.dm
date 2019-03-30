@@ -4,7 +4,7 @@
 	icon_state = "box_0"
 	density = TRUE
 	max_integrity = 250
-	var/obj/item/circuitboard/circuit = null
+	var/obj/item/circuitboard/machine/circuit = null
 	var/state = 1
 
 /obj/structure/frame/examine(user)
@@ -91,7 +91,7 @@
 					icon_state = "box_1"
 
 				return
-			if(istype(P, /obj/item/screwdriver) && !anchored)
+			if(P.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
 				if(P.use_tool(src, user, 40, volume=50))
@@ -101,20 +101,20 @@
 						M.add_fingerprint(user)
 						qdel(src)
 				return
-			if(istype(P, /obj/item/wrench))
+			if(P.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				if(P.use_tool(src, user, 40, volume=75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
-						anchored = !anchored
+						setAnchored(!anchored)
 				return
 
 		if(2)
-			if(istype(P, /obj/item/wrench))
+			if(P.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				if(P.use_tool(src, user, 40, volume=75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
-					anchored = !anchored
+					setAnchored(!anchored)
 				return
 
 			if(istype(P, /obj/item/circuitboard/machine))
@@ -138,7 +138,7 @@
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
 
-			if(istype(P, /obj/item/wirecutters))
+			if(P.tool_behaviour == TOOL_WIRECUTTER)
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -147,7 +147,7 @@
 				return
 
 		if(3)
-			if(istype(P, /obj/item/crowbar))
+			if(P.tool_behaviour == TOOL_CROWBAR)
 				P.play_tool_sound(src)
 				state = 2
 				circuit.forceMove(drop_location())
@@ -165,7 +165,14 @@
 				icon_state = "box_1"
 				return
 
-			if(istype(P, /obj/item/screwdriver))
+			if(P.tool_behaviour == TOOL_WRENCH && !circuit.needs_anchored)
+				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
+				if(P.use_tool(src, user, 40, volume=75))
+					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
+					setAnchored(!anchored)
+				return
+
+			if(P.tool_behaviour == TOOL_SCREWDRIVER)
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)
@@ -173,8 +180,8 @@
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
-					new_machine.anchored = anchored
+					var/obj/machinery/new_machine = new circuit.build_path(loc)
+					new_machine.setAnchored(anchored)
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
@@ -182,6 +189,9 @@
 					for(var/obj/O in src)
 						O.moveToNullspace()
 						new_machine.component_parts += O
+					if(new_machine.circuit)
+						QDEL_NULL(new_machine.circuit)
+					new_machine.circuit = circuit
 					circuit.moveToNullspace()
 					new_machine.RefreshParts()
 					qdel(src)
@@ -212,7 +222,7 @@
 							req_components[path] -= used_amt
 						else
 							added_components[part] = path
-							if(replacer.SendSignal(COMSIG_TRY_STORAGE_TAKE, part, src))
+							if(SEND_SIGNAL(replacer, COMSIG_TRY_STORAGE_TAKE, part, src))
 								req_components[path]--
 
 				for(var/obj/item/part in added_components)
@@ -265,5 +275,4 @@
 		for(var/X in components)
 			var/obj/item/I = X
 			I.forceMove(loc)
-
 	..()

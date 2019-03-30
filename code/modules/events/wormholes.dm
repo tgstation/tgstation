@@ -50,7 +50,7 @@
 	mech_sized = TRUE
 
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
-	if(istype(M, /obj/effect))	//sparks don't teleport
+	if(iseffect(M))	//sparks don't teleport
 		return
 	if(M.anchored)
 		if(!(ismecha(M) && mech_sized))
@@ -63,4 +63,4 @@
 				hard_target = P.loc
 		if(!hard_target)
 			return
-		do_teleport(M, hard_target, 1, 1, 0, 0) ///You will appear adjacent to the beacon
+		do_teleport(M, hard_target, 1, 1, 0, 0, channel = TELEPORT_CHANNEL_WORMHOLE) ///You will appear adjacent to the beacon

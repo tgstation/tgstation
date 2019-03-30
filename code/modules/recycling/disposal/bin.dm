@@ -4,13 +4,13 @@
 
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
-	anchored = TRUE
 	density = TRUE
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT | USES_TGUI
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
 	var/pressure_charging = TRUE
@@ -42,10 +42,6 @@
 	update_icon()
 
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
-
-/obj/machinery/disposal/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/machinery/disposal/proc/trunk_check()
 	trunk = locate() in loc
@@ -81,12 +77,12 @@
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
-		if(istype(I, /obj/item/screwdriver))
+		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			panel_open = !panel_open
 			I.play_tool_sound(src)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
-		else if(istype(I, /obj/item/weldingtool) && panel_open)
+		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
@@ -97,7 +93,7 @@
 			return
 
 	if(user.a_intent != INTENT_HARM)
-		if((I.flags_1 & ABSTRACT_1) || !user.temporarilyRemoveItemFromInventory(I))
+		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
 			return
 		place_item_in_disposal(I, user)
 		update_icon()
@@ -116,7 +112,12 @@
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
-		return
+		if (iscyborg(user))
+			var/mob/living/silicon/robot/borg = user
+			if (!borg.module || !borg.module.canDispose)
+				return
+		else
+			return
 	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return
 	if(target.buckled || target.has_buckled_mobs())
@@ -137,7 +138,7 @@
 			user.visible_message("[user] climbs into [src].", "<span class='notice'>You climb into [src].</span>")
 		else
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>")
-			add_logs(user, target, "stuffed", addition="into [src]")
+			log_combat(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()
 
@@ -333,7 +334,7 @@
 			. = TRUE
 
 
-/obj/machinery/disposal/bin/hitby(atom/movable/AM)
+/obj/machinery/disposal/bin/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && AM.CanEnterDisposals())
 		if(prob(75))
 			AM.forceMove(src)
@@ -454,8 +455,8 @@
 		..()
 		flush()
 
-/obj/machinery/disposal/deliveryChute/CollidedWith(atom/movable/AM) //Go straight into the chute
-	if(!AM.CanEnterDisposals())
+/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
+	if(QDELETED(AM) || !AM.CanEnterDisposals())
 		return
 	switch(dir)
 		if(NORTH)
@@ -493,6 +494,9 @@
 
 /obj/mecha/CanEnterDisposals()
 	return
+
+/obj/machinery/disposal/bin/newHolderDestination(obj/structure/disposalholder/H)
+	H.destinationTag = 1
 
 /obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1

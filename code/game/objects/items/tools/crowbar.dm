@@ -7,7 +7,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/crowbar.ogg'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
@@ -53,7 +53,7 @@
 	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"
 	item_state = "crowbar"
-	toolspeed = 0.5
+	toolspeed = 0.7
 
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
@@ -73,7 +73,7 @@
 
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
-	toolspeed = 0.25
+	toolspeed = 0.7
 
 /obj/item/crowbar/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -82,7 +82,7 @@
 
 /obj/item/crowbar/power/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
-	var/obj/item/wirecutters/power/cutjaws = new /obj/item/wirecutters/power
+	var/obj/item/wirecutters/power/cutjaws = new /obj/item/wirecutters/power(drop_location())
 	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(cutjaws)

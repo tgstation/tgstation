@@ -6,51 +6,22 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien20"
-	},
+/turf/closed/wall/mineral/abductor,
 /area/lavaland/surface/outdoors)
 "d" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien21"
-	},
-/area/ruin/unpowered)
-"e" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien22"
-	},
-/area/ruin/unpowered)
-"f" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien23"
-	},
-/area/ruin/unpowered)
-"g" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien24"
-	},
-/area/lavaland/surface/outdoors)
-"h" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien16"
-	},
-/area/lavaland/surface/outdoors)
-"i" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien17"
-	},
+/turf/closed/wall/mineral/abductor,
 /area/ruin/unpowered)
 "j" = (
 /obj/machinery/abductor/experiment{
 	team_number = 100
 	},
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "k" = (
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "l" = (
@@ -58,84 +29,59 @@
 	team_number = 100
 	},
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"m" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien18"
-	},
-/area/ruin/unpowered)
-"n" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien19"
-	},
-/area/lavaland/surface/outdoors)
 "o" = (
 /obj/item/hemostat/alien,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "p" = (
 /obj/effect/mob_spawn/human/abductor,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "q" = (
 /obj/structure/closet/abductor,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
-	},
-/area/ruin/unpowered)
-"r" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien14"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "s" = (
 /obj/structure/table/optable/abductor,
 /obj/item/cautery/alien,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "t" = (
 /obj/structure/table/abductor,
 /obj/item/storage/box/alienhandcuffs,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
-	},
-/area/ruin/unpowered)
-"u" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien12"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "v" = (
 /obj/item/scalpel/alien,
 /obj/item/surgical_drapes,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "w" = (
 /obj/item/retractor/alien,
 /obj/item/paper/guides/antag/abductor,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
-	},
-/area/ruin/unpowered)
-"x" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien10"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "y" = (
 /obj/machinery/abductor/gland_dispenser,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "z" = (
@@ -143,45 +89,15 @@
 /obj/item/surgicaldrill/alien,
 /obj/item/circular_saw/alien,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "A" = (
 /obj/structure/bed/abductor,
 /turf/open/floor/plating/abductor{
-	initial_gas_mix = "o2=16;n2=23;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"B" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien8"
-	},
-/area/ruin/unpowered)
-"C" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien9"
-	},
-/area/lavaland/surface/outdoors)
-"D" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien2"
-	},
-/area/ruin/unpowered)
-"E" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien3"
-	},
-/area/ruin/unpowered)
-"F" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien4"
-	},
-/area/ruin/unpowered)
-"G" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien5"
-	},
-/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -211,7 +127,7 @@ a
 a
 a
 a
-h
+c
 a
 a
 a
@@ -223,7 +139,7 @@ a
 a
 a
 c
-i
+d
 a
 a
 a
@@ -240,54 +156,54 @@ k
 k
 a
 y
-D
+d
 a
 "}
 (6,1,1) = {"
 a
 a
-e
+d
 k
 o
 s
 v
 z
-E
+d
 a
 "}
 (7,1,1) = {"
 a
 a
-f
+d
 l
 p
 k
 w
 A
-F
+d
 a
 "}
 (8,1,1) = {"
 a
 a
-g
-m
+c
+d
 q
 t
 q
-B
-G
+d
+c
 a
 "}
 (9,1,1) = {"
 a
 a
 b
-n
-r
-u
-x
-C
+c
+d
+d
+d
+c
 b
 a
 "}

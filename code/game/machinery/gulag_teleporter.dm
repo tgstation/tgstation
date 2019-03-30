@@ -13,7 +13,6 @@ The console is located at computer/gulag_teleporter.dm
 	icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
@@ -137,16 +136,17 @@ The console is located at computer/gulag_teleporter.dm
 		linked_reclaimer.stored_items[occupant] = list()
 	var/mob/living/mob_occupant = occupant
 	for(var/obj/item/W in mob_occupant)
-		if(!is_type_in_typecache(W, telegulag_required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
-			if(istype(W, /obj/item/restraints/handcuffs))
-				W.forceMove(get_turf(src))
-				continue
-			if(linked_reclaimer)
-				linked_reclaimer.stored_items[mob_occupant] += W
-				linked_reclaimer.contents += W
-				W.forceMove(linked_reclaimer)
-			else
-				W.forceMove(src)
+		if(!is_type_in_typecache(W, telegulag_required_items))
+			if(mob_occupant.temporarilyRemoveItemFromInventory(W))
+				if(istype(W, /obj/item/restraints/handcuffs))
+					W.forceMove(get_turf(src))
+					continue
+				if(linked_reclaimer)
+					linked_reclaimer.stored_items[mob_occupant] += W
+					linked_reclaimer.contents += W
+					W.forceMove(linked_reclaimer)
+				else
+					W.forceMove(src)
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
 	if(!ishuman(occupant))
@@ -174,7 +174,7 @@ The console is located at computer/gulag_teleporter.dm
 /*  beacon that receives the teleported prisoner */
 /obj/structure/gulag_beacon
 	name = "labor camp bluespace beacon"
-	desc = "A recieving beacon for bluespace teleportations."
+	desc = "A receiving beacon for bluespace teleportations."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "light_on-w"
 	resistance_flags = INDESTRUCTIBLE

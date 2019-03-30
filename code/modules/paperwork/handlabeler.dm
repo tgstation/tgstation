@@ -36,6 +36,7 @@
 	return OXYLOSS
 
 /obj/item/hand_labeler/afterattack(atom/A, mob/user,proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!mode)	//if it's off, give up.
@@ -89,7 +90,7 @@
 	name = "cyborg-hand labeler"
 
 /obj/item/hand_labeler/borg/afterattack(atom/A, mob/user, proximity)
-	..(A, user, proximity)
+	. = ..(A, user, proximity)
 	if(!iscyborg(user))
 		return
 

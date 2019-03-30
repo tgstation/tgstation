@@ -3,6 +3,11 @@
 
 //#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
 
+// Comment this out if you are debugging problems that might be obscured by custom error handling in world/Error
+#ifdef DEBUG
+#define USE_CUSTOM_ERROR_HANDLER
+#endif
+
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 
@@ -30,7 +35,7 @@
 #define MIN_COMPILER_VERSION 512
 #if DM_VERSION < MIN_COMPILER_VERSION
 //Don't forget to update this part
-#error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
+#error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
 #error You need version 512 or higher
 #endif
 

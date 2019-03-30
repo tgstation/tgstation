@@ -7,13 +7,12 @@
 	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
-	
+
 	var/operating = FALSE
 	var/list/L = list()
 	var/list/LL = list()
@@ -32,6 +31,8 @@
 	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
+	var/base_price = 25
+	var/hacked_price = 50
 
 	var/list/categories = list(
 							"Tools",
@@ -47,7 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), 0, FALSE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -91,9 +92,6 @@
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
 		updateUsrDialog()
-		return TRUE
-
-	if(exchange_parts(user, O))
 		return TRUE
 
 	if(default_deconstruction_crowbar(O))
@@ -158,6 +156,7 @@
 
 			var/multiplier = text2num(href_list["multiplier"])
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
+			multiplier = CLAMP(multiplier,1,50)
 
 			/////////////////
 
@@ -179,7 +178,7 @@
 			matching_designs.Cut()
 
 			for(var/v in stored_research.researched_designs)
-				var/datum/design/D = stored_research.researched_designs[v]
+				var/datum/design/D = SSresearch.techweb_design_by_id(v)
 				if(findtext(D.name,href_list["to_search"]))
 					matching_designs.Add(D)
 			updateUsrDialog()
@@ -204,6 +203,7 @@
 	else
 		for(var/i=1, i<=multiplier, i++)
 			var/obj/item/new_item = new being_built.build_path(A)
+			new_item.materials = new_item.materials.Copy()
 			for(var/mat in materials_used)
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autolathe_crafted(src)
@@ -221,6 +221,12 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
+
+/obj/machinery/autolathe/examine(mob/user)
+	..()
+	GET_COMPONENT(materials, /datum/component/material_container)
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[prod_coeff*100]%</b>.<span>")
 
 /obj/machinery/autolathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
@@ -254,7 +260,7 @@
 	dat += materials_printout()
 
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category))
 			continue
 
@@ -368,7 +374,7 @@
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
 	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/D = SSresearch.techweb_designs[id]
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 			if(hacked)
 				stored_research.add_design(D)

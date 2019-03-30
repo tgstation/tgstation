@@ -6,7 +6,7 @@
 	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
 	var/shuttlePortId = ""
-	var/shuttlePortName = ""
+	var/shuttlePortName = "custom location"
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
@@ -22,6 +22,12 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
 	. = ..()
 	GLOB.navigation_computers += src
+	for(var/V in SSshuttle.stationary)
+		if(!V)
+			continue
+		var/obj/docking_port/stationary/S = V
+		if(jumpto_ports[S.id])
+			z_lock |= S.z
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()
@@ -30,6 +36,9 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
 	if(jammed)
 		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")
+		return
+	if(!shuttle_port && !SSshuttle.getShuttle(shuttleId))
+		to_chat(user,"<span class='warning'>Warning: Shuttle connection severed!</span>")
 		return
 	return ..()
 
@@ -54,10 +63,9 @@
 		shuttle_port = null
 		return
 
-	eyeobj = new /mob/camera/aiEye/remote/shuttle_docker()
+	eyeobj = new /mob/camera/aiEye/remote/shuttle_docker(null, src)
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
-	the_eye.origin = src
-	the_eye.dir = shuttle_port.dir
+	the_eye.setDir(shuttle_port.dir)
 	var/turf/origin = locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z)
 	for(var/V in shuttle_port.shuttle_areas)
 		var/area/A = V
@@ -70,7 +78,7 @@
 			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 			I.layer = ABOVE_NORMAL_TURF_LAYER
 			I.plane = 0
-			I.mouse_opacity = 0
+			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			the_eye.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
@@ -134,7 +142,7 @@
 		my_port.dheight = shuttle_port.dheight
 		my_port.dwidth = shuttle_port.dwidth
 		my_port.hidden = shuttle_port.hidden
-	my_port.dir = the_eye.dir
+	my_port.setDir(the_eye.dir)
 	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images
@@ -163,7 +171,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot()
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	var/list/image_cache = the_eye.placement_images
-	the_eye.dir = turn(the_eye.dir, -90)
+	the_eye.setDir(turn(the_eye.dir, -90))
 	for(var/i in 1 to image_cache.len)
 		var/image/pic = image_cache[i]
 		var/list/coords = image_cache[pic]
@@ -244,11 +252,22 @@
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	if(port && (shuttleId == initial(shuttleId) || override))
+		shuttleId = port.id
+		shuttlePortId = "[port.id]_custom"
+	if(dock)
+		jumpto_ports[dock.id] = TRUE
+
 /mob/camera/aiEye/remote/shuttle_docker
 	visible_icon = FALSE
-	use_static = FALSE
+	use_static = USE_STATIC_NONE
 	var/list/placement_images = list()
 	var/list/placed_images = list()
+
+/mob/camera/aiEye/remote/shuttle_docker/Initialize(mapload, obj/machinery/computer/camera_advanced/origin)
+	src.origin = origin
+	return ..()
 
 /mob/camera/aiEye/remote/shuttle_docker/setLoc(T)
 	..()

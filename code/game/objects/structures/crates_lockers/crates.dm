@@ -15,8 +15,8 @@
 	delivery_icon = "deliverycrate"
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
-/obj/structure/closet/crate/New()
-	..()
+/obj/structure/closet/crate/Initialize()
+	. = ..()
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
 	update_icon()
@@ -64,6 +64,15 @@
 	manifest = null
 	update_icon()
 
+/obj/structure/closet/crate/coffin
+	name = "coffin"
+	desc = "It's a burial receptacle for the dearly departed."
+	icon_state = "coffin"
+	resistance_flags = FLAMMABLE
+	max_integrity = 70
+	material_drop = /obj/item/stack/sheet/mineral/wood
+	material_drop_amount = 5
+
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
 	name = "internals crate"
@@ -98,6 +107,7 @@
 	new /obj/item/reagent_containers/blood/OMinus(src)
 	new /obj/item/reagent_containers/blood/OPlus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/ethereal(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 
@@ -148,3 +158,32 @@
 	name = "science crate"
 	desc = "A science crate."
 	icon_state = "scicrate"
+
+/obj/structure/closet/crate/solarpanel_small
+	name = "budget solar panel crate"
+	icon_state = "engi_e_crate"
+
+/obj/structure/closet/crate/solarpanel_small/PopulateContents()
+	..()
+	for(var/i in 1 to 13)
+		new /obj/item/solar_assembly(src)
+	new /obj/item/circuitboard/computer/solar_control(src)
+	new /obj/item/paper/guides/jobs/engi/solars(src)
+	new /obj/item/electronics/tracker(src)
+
+/obj/structure/closet/crate/goldcrate
+	name = "gold crate"
+
+/obj/structure/closet/crate/goldcrate/PopulateContents()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
+	new /obj/item/storage/belt/champion(src)
+
+/obj/structure/closet/crate/silvercrate
+	name = "silver crate"
+
+/obj/structure/closet/crate/silvercrate/PopulateContents()
+	..()
+	for(var/i in 1 to 5)
+		new /obj/item/coin/silver(src)

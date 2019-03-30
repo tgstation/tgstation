@@ -28,24 +28,18 @@
 		else
 			to_chat(usr, "<span class='danger'>The grenade launcher cannot hold more grenades.</span>")
 
-/obj/item/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
-	if(target == user)
-		return
+/obj/item/gun/grenadelauncher/can_shoot()
+	return grenades.len
 
-	if(grenades.len)
-		fire_grenade(target,user)
-	else
-		to_chat(user, "<span class='danger'>The grenade launcher is empty.</span>")
-
-/obj/item/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
+/obj/item/gun/grenadelauncher/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	user.visible_message("<span class='danger'>[user] fired a grenade!</span>", \
 						"<span class='danger'>You fire the grenade launcher!</span>")
 	var/obj/item/grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
 	F.forceMove(user.loc)
 	F.throw_at(target, 30, 2, user)
-	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")
-	log_game("[key_name(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")
+	message_admins("[ADMIN_LOOKUPFLW(user)] fired a grenade ([F.name]) from a grenade launcher ([src]) from [AREACOORD(user)] at [target] [AREACOORD(target)].")
+	log_game("[key_name(user)] fired a grenade ([F.name]) with a grenade launcher ([src]) from [AREACOORD(user)] at [target] [AREACOORD(target)].")
 	F.active = 1
 	F.icon_state = initial(F.icon_state) + "_active"
 	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)

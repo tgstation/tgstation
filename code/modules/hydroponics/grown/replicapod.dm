@@ -7,7 +7,6 @@
 	species = "replicapod"
 	plantname = "Replica Pod"
 	product = /mob/living/carbon/human //verrry special -- Urist
-	container_type = INJECTABLE|DRAWABLE
 	lifespan = 50
 	endurance = 8
 	maturation = 10
@@ -22,13 +21,13 @@
 	var/blood_type = null
 	var/list/features = null
 	var/factions = null
-	var/list/traits = null
+	var/list/quirks = null
 	var/contains_sample = 0
 
 /obj/item/seeds/replicapod/Initialize()
 	. = ..()
 
-	create_reagents(volume)
+	create_reagents(volume, INJECTABLE|DRAWABLE)
 
 /obj/item/seeds/replicapod/on_reagent_change(changetype)
 	if(changetype == ADD_REAGENT)
@@ -42,9 +41,10 @@
 				blood_type = B.data["blood_type"]
 				features = B.data["features"]
 				factions = B.data["factions"]
-				factions = B.data["traits"]
+				factions = B.data["quirks"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+				log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
 			else
 				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
 
@@ -114,10 +114,11 @@
 		podman.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
-		for(var/V in traits)
+		for(var/V in quirks)
 			new V(podman)
 		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
+		log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

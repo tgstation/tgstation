@@ -64,7 +64,7 @@
 
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			if(istype(W, /obj/item/wrench) && !isinspace())
+			if(W.tool_behaviour == TOOL_WRENCH && !isinspace())
 				W.play_tool_sound(src, 75)
 				anchored = TRUE
 				user.visible_message("[user.name] secures the [name] to the floor.", \
@@ -72,7 +72,7 @@
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
-			if(istype(W, /obj/item/wrench))
+			if(W.tool_behaviour == TOOL_WRENCH)
 				W.play_tool_sound(src, 75)
 				anchored = FALSE
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
@@ -87,18 +87,18 @@
 					construction_state = PA_CONSTRUCTION_PANEL_OPEN
 					did_something = TRUE
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			if(istype(W, /obj/item/wirecutters))//TODO:Shock user if its on?
+			if(W.tool_behaviour == TOOL_WIRECUTTER)//TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [name].", \
 					"You remove some wires.")
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
-			else if(istype(W, /obj/item/screwdriver))
+			else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("[user.name] closes the [name]'s access panel.", \
 					"You close the access panel.")
 				construction_state = PA_CONSTRUCTION_COMPLETE
 				did_something = TRUE
 		if(PA_CONSTRUCTION_COMPLETE)
-			if(istype(W, /obj/item/screwdriver))
+			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("[user.name] opens the [name]'s access panel.", \
 					"You open the access panel.")
 				construction_state = PA_CONSTRUCTION_PANEL_OPEN

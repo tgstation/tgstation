@@ -18,6 +18,7 @@ effective or pretty fucking useless.
 /obj/item/batterer
 	name = "mind batterer"
 	desc = "A strange device with twin antennas."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "batterer"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -38,12 +39,12 @@ effective or pretty fucking useless.
 		to_chat(user, "<span class='danger'>The mind batterer has been burnt out!</span>")
 		return
 
-	add_logs(user, null, "knocked down people in the area", src)
+	log_combat(user, null, "knocked down people in the area", src)
 
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
 		if(prob(50))
 
-			M.Knockdown(rand(200,400))
+			M.Paralyze(rand(200,400))
 			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
 
 		else
@@ -81,7 +82,7 @@ effective or pretty fucking useless.
 	if(!irradiate)
 		return
 	if(!used)
-		add_logs(user, M, "irradiated", src)
+		log_combat(user, M, "irradiated", src)
 		var/cooldown = GetCooldown()
 		used = 1
 		icon_state = "health1"
@@ -176,7 +177,7 @@ effective or pretty fucking useless.
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
 	var/mob/living/carbon/human/user = null
@@ -187,7 +188,7 @@ effective or pretty fucking useless.
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/shadowcloak/ui_action_click(mob/user)
-	if(user.get_item_by_slot(slot_belt) == src)
+	if(user.get_item_by_slot(SLOT_BELT) == src)
 		if(!on)
 			Activate(usr)
 		else
@@ -195,7 +196,7 @@ effective or pretty fucking useless.
 	return
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
-	if(slot == slot_belt)
+	if(slot == SLOT_BELT)
 		return 1
 
 /obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
@@ -217,11 +218,11 @@ effective or pretty fucking useless.
 
 /obj/item/shadowcloak/dropped(mob/user)
 	..()
-	if(user && user.get_item_by_slot(slot_belt) != src)
+	if(user && user.get_item_by_slot(SLOT_BELT) != src)
 		Deactivate()
 
 /obj/item/shadowcloak/process()
-	if(user.get_item_by_slot(slot_belt) != src)
+	if(user.get_item_by_slot(SLOT_BELT) != src)
 		Deactivate()
 		return
 	var/turf/T = get_turf(src)

@@ -1,10 +1,10 @@
 
-/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
+/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal, atmos_link_override)
 	if(!istype(source) || !istype(destination))
 		return
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
-	var/obj/effect/portal/P1 = new newtype(source, _creator, _lifespan, null, FALSE)
-	var/obj/effect/portal/P2 = new newtype(actual_destination, _creator, _lifespan, P1, TRUE)
+	var/obj/effect/portal/P1 = new newtype(source, _creator, _lifespan, null, FALSE, null, atmos_link_override)
+	var/obj/effect/portal/P2 = new newtype(actual_destination, _creator, _lifespan, P1, TRUE, null, atmos_link_override)
 	if(!istype(P1)||!istype(P2))
 		return
 	P1.link_portal(P2)
@@ -20,6 +20,7 @@
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
 	var/creator
 	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
 	var/atmos_link = FALSE			//Link source/destination atmos.
@@ -27,12 +28,15 @@
 	var/turf/open/atmos_destination	//Atmos link destination
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
+	var/last_effect = 0
 
 /obj/effect/portal/anom
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
+	layer = RIPPLE_LAYER
 	mech_sized = TRUE
+	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
@@ -45,7 +49,9 @@
 		user.forceMove(get_turf(src))
 		return TRUE
 
-/obj/effect/portal/Crossed(atom/movable/AM, oldloc)
+/obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
+	if(force_stop)
+		return ..()
 	if(isobserver(AM))
 		return ..()
 	if(linked && (get_turf(oldloc) == get_turf(linked)))
@@ -145,7 +151,7 @@
 		return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M, force = FALSE)
-	if(!force && (!istype(M) || istype(M, /obj/effect) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
+	if(!force && (!istype(M) || iseffect(M) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
@@ -153,8 +159,13 @@
 	if(!force && (!ismecha(M) && !istype(M, /obj/item/projectile) && M.anchored && !allow_anchored))
 		return
 	if(ismegafauna(M))
-		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")
-	if(do_teleport(M, real_target, innate_accuracy_penalty))
+		message_admins("[M] has used a portal at [ADMIN_VERBOSEJMP(src)] made by [usr].")
+	var/no_effect = FALSE
+	if(last_effect == world.time)
+		no_effect = TRUE
+	else
+		last_effect = world.time
+	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel))
 		if(istype(M, /obj/item/projectile))
 			var/obj/item/projectile/P = M
 			P.ignore_source_check = TRUE
@@ -176,3 +187,53 @@
 		real_target = get_turf(linked)
 	return real_target
 
+/obj/effect/portal/permanent
+	name = "permanent portal"
+	desc = "An unwavering portal that will never fade."
+	var/id // var edit or set id in map editor
+	hardlinked = FALSE // dont qdel my portal nerd
+
+/obj/effect/portal/permanent/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+	. = ..()
+	set_linked()
+
+/obj/effect/portal/permanent/proc/get_linked()
+	if(!id)
+		return
+	for(var/obj/effect/portal/permanent/P in GLOB.portals - src)
+		if(P.id && P.id == id) // gets portals with the same id, there should only be two permanent portals with the same id
+			return P
+
+/obj/effect/portal/permanent/proc/set_linked()
+	var/obj/effect/portal/permanent/other = get_linked()
+	if(!other)
+		return
+	other.linked = src
+	linked = other
+
+/obj/effect/portal/permanent/teleport(atom/movable/M, force = FALSE)
+	if(!linked) // try to search for a new one if something was var edited etc
+		set_linked()
+	. = ..()
+
+/obj/effect/portal/permanent/one_way // doesn't have a return portal
+	name = "one-way portal"
+	desc = "You get the feeling that this might not be the safest thing you've ever done."
+	var/keep // if this is a portal that should be kept
+
+/obj/effect/portal/permanent/one_way/set_linked()
+	var/obj/effect/portal/permanent/one_way/other = get_linked()
+	if(!other)
+		return
+	hard_target = get_turf(other)
+	other.hard_target = get_turf(src)
+	if(!other.keep)
+		qdel(other)
+	if(!keep)
+		qdel(src)
+
+/obj/effect/portal/permanent/one_way/keep // because its nice to be able to tell which is which on the map
+	keep = TRUE
+
+/obj/effect/portal/permanent/one_way/destroy
+	keep = FALSE

@@ -149,6 +149,7 @@
 	if(istype(R))
 		beegent = R
 		name = "[initial(name)] ([R.name])"
+		poison_type = null
 		generate_bee_visuals()
 
 
@@ -209,14 +210,14 @@
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[initial(R.id)])
 
- /mob/living/simple_animal/hostile/poison/bees/queen
- 	name = "queen bee"
- 	desc = "She's the queen of bees, BZZ BZZ!"
- 	icon_base = "queen"
- 	isqueen = TRUE
+/mob/living/simple_animal/hostile/poison/bees/queen
+	name = "queen bee"
+	desc = "She's the queen of bees, BZZ BZZ!"
+	icon_base = "queen"
+	isqueen = TRUE
 
 
- //the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
+//the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
 /mob/living/simple_animal/hostile/poison/bees/queen/Found(atom/A)
 	return FALSE
 
@@ -271,7 +272,7 @@
 			if(R && S.reagents.has_reagent(R.id, 5))
 				S.reagents.remove_reagent(R.id,5)
 				queen.assign_reagent(R)
-				user.visible_message("<span class='warning'>[user] injects [src]'s genome with [R.name], mutating it's DNA!</span>","<span class='warning'>You inject [src]'s genome with [R.name], mutating it's DNA!</span>")
+				user.visible_message("<span class='warning'>[user] injects [src]'s genome with [R.name], mutating its DNA!</span>","<span class='warning'>You inject [src]'s genome with [R.name], mutating its DNA!</span>")
 				name = queen.name
 			else
 				to_chat(user, "<span class='warning'>You don't have enough units of that chemical to modify the bee's DNA!</span>")
@@ -295,3 +296,10 @@
 			forceMove(beehome.drop_location())
 	else
 		..()
+		
+/mob/living/simple_animal/hostile/poison/bees/short
+	desc = "These bees seem unstable and won't survive for long."
+
+/mob/living/simple_animal/hostile/poison/bees/short/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/death), 50 SECONDS)

@@ -35,18 +35,18 @@
 								"<span class='userdanger'>[M] has knocked [src] down!</span>")
 					var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 					apply_damage(damage, BRUTE, affecting)
-					add_logs(M, src, "attacked")
+					log_combat(M, src, "attacked")
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 					visible_message("<span class='userdanger'>[M] has attempted to punch [src]!</span>", \
 						"<span class='userdanger'>[M] has attempted to punch [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 			if ("disarm")
-				if (!lying)
+				if (!(mobility_flags & MOBILITY_STAND))
 					if (prob(5))
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						add_logs(M, src, "pushed")
+						log_combat(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else

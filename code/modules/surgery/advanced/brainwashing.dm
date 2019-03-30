@@ -4,7 +4,8 @@
 	surgeries = list(/datum/surgery/advanced/brainwashing)
 
 /datum/surgery/advanced/brainwashing
-	name = "brainwashing"
+	name = "Brainwashing"
+	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	steps = list(
 	/datum/surgery_step/incise,
 	/datum/surgery_step/retract_skin,
@@ -13,7 +14,7 @@
 	/datum/surgery_step/brainwash,
 	/datum/surgery_step/close)
 
-	species = list(/mob/living/carbon/human)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
 
 /datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
@@ -40,13 +41,13 @@
 	if(!target.mind)
 		user.visible_message("[target] doesn't respond to the brainwashing, as if [target.p_they()] lacked a mind...")
 		return FALSE
-	if(target.isloyal())
+	if(target.has_trait(TRAIT_MINDSHIELD))
 		user.visible_message("You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased.")
 		return FALSE
 	user.visible_message("[user] successfully brainwashes [target]!", "<span class='notice'>You succeed in brainwashing [target].</span>")
 	to_chat(target, "<span class='userdanger'>A new compulsion fills your mind... you feel forced to obey it!</span>")
 	brainwash(target, objective)
-	message_admins("[key_name_admin(user)] surgically brainwashed [key_name_admin(target)] with the objective '[objective]'.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")
 	log_game("[key_name(user)] surgically brainwashed [key_name(target)] with the objective '[objective]'.")
 	return TRUE
 

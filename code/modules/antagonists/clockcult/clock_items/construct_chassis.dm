@@ -15,7 +15,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A && construct_type)
-		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', notify_volume = 75, source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_CONSTRUCT)
 	GLOB.poi_list += src
 	LAZYADD(GLOB.mob_spawners[name], src)
 
@@ -115,4 +115,4 @@
 			S.no_cost = TRUE
 		if(seasonal_hat && seasonal_hat != "none")
 			var/obj/item/hat = new seasonal_hat(construct)
-			construct.equip_to_slot_or_del(hat, slot_head)
+			construct.equip_to_slot_or_del(hat, SLOT_HEAD)

@@ -11,7 +11,7 @@
 
 	var/motd = global.config.motd
 	if(motd)
-		to_chat(src, "<div class=\"motd\">[motd]</div>")
+		to_chat(src, "<div class=\"motd\">[motd]</div>", handle_whitespace=FALSE)
 
 	if(GLOB.admin_notice)
 		to_chat(src, "<span class='notice'><b>Admin Notice:</b>\n \t [GLOB.admin_notice]</span>")

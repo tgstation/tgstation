@@ -14,13 +14,24 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag, params)
+/obj/item/storage/part_replacer/pre_attack(obj/machinery/T, mob/living/user, params)
 	if(!istype(T) || !T.component_parts)
 		return ..()
-	if(works_from_distance || user.Adjacent(T))
+	if(user.Adjacent(T)) // no TK upgrading.
+		if(works_from_distance)
+			user.Beam(T, icon_state = "rped_upgrade", time = 5)
 		T.exchange_parts(user, src)
+		return FALSE
+	return ..()
+
+/obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/user, adjacent, params)
+	if(adjacent || !istype(T) || !T.component_parts)
+		return ..()
 	if(works_from_distance)
 		user.Beam(T, icon_state = "rped_upgrade", time = 5)
+		T.exchange_parts(user, src)
+		return
+	return ..()
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
@@ -39,6 +50,46 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	alt_sound = 'sound/items/pshoom_2.ogg'
 	component_type = /datum/component/storage/concrete/bluespace/rped
 
+/obj/item/storage/part_replacer/bluespace/tier1
+
+/obj/item/storage/part_replacer/bluespace/tier1/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/stock_parts/capacitor(src)
+		new /obj/item/stock_parts/scanning_module(src)
+		new /obj/item/stock_parts/manipulator(src)
+		new /obj/item/stock_parts/micro_laser(src)
+		new /obj/item/stock_parts/matter_bin(src)
+
+/obj/item/storage/part_replacer/bluespace/tier2
+
+/obj/item/storage/part_replacer/bluespace/tier2/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/stock_parts/capacitor/adv(src)
+		new /obj/item/stock_parts/scanning_module/adv(src)
+		new /obj/item/stock_parts/manipulator/nano(src)
+		new /obj/item/stock_parts/micro_laser/high(src)
+		new /obj/item/stock_parts/matter_bin/adv(src)
+
+/obj/item/storage/part_replacer/bluespace/tier3
+
+/obj/item/storage/part_replacer/bluespace/tier3/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/stock_parts/capacitor/super(src)
+		new /obj/item/stock_parts/scanning_module/phasic(src)
+		new /obj/item/stock_parts/manipulator/pico(src)
+		new /obj/item/stock_parts/micro_laser/ultra(src)
+		new /obj/item/stock_parts/matter_bin/super(src)
+
+/obj/item/storage/part_replacer/bluespace/tier4
+
+/obj/item/storage/part_replacer/bluespace/tier4/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/stock_parts/capacitor/quadratic(src)
+		new /obj/item/stock_parts/scanning_module/triphasic(src)
+		new /obj/item/stock_parts/manipulator/femto(src)
+		new /obj/item/stock_parts/micro_laser/quadultra(src)
+		new /obj/item/stock_parts/matter_bin/bluespace(src)
+
 /obj/item/storage/part_replacer/cyborg
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
@@ -47,10 +98,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
-//Sorts stock parts inside an RPED by their rating.
-//Only use /obj/item/stock_parts/ with this sort proc!
-/proc/cmp_rped_sort(obj/item/stock_parts/A, obj/item/stock_parts/B)
-	return B.rating - A.rating
+/proc/cmp_rped_sort(obj/item/A, obj/item/B)
+	return B.get_part_rating() - A.get_part_rating()
 
 /obj/item/stock_parts
 	name = "stock part"

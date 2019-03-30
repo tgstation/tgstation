@@ -27,12 +27,14 @@
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	vision_range = 1 // Only attack when target is close
-	wander = 0
+	wander = FALSE
 	attacktext = "glomps"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 
 	var/morphed = FALSE
+	var/melee_damage_disguised = 0
+	var/eat_while_disguised = FALSE
 	var/atom/movable/form = null
 	var/morph_time = 0
 	var/static/list/blacklist_typecache = typecacheof(list(
@@ -45,7 +47,7 @@
 							You may take the form of anything nearby by shift-clicking it. This process will alert any nearby \
 							observers, and can only be performed once every five seconds. While morphed, you move faster, but do \
 							less damage. In addition, anyone within three tiles will note an uncanny wrongness if examining you. \
-							You can attack any item or dead creature to consume it - creatures will fully restore your health. \
+							You can attack any item or dead creature to consume it - creatures will restore your health. \
 							Finally, you can restore yourself to your original form while morphed by shift-clicking yourself.</b>"
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
@@ -75,11 +77,14 @@
 	return !is_type_in_typecache(A, blacklist_typecache) && (isobj(A) || ismob(A))
 
 /mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
+	if(morphed && !eat_while_disguised)
+		to_chat(src, "<span class='warning'>You can not eat anything while you are disguised!</span>")
+		return FALSE
 	if(A && A.loc != src)
 		visible_message("<span class='warning'>[src] swallows [A] whole!</span>")
 		A.forceMove(src)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)
 	if(morph_time <= world.time && !stat)
@@ -109,8 +114,8 @@
 	pixel_x = initial(pixel_x)
 
 	//Morphed is weaker
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage_lower = melee_damage_disguised
+	melee_damage_upper = melee_damage_disguised
 	speed = 0
 
 	morph_time = world.time + MORPH_COOLDOWN
@@ -126,6 +131,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
+	animate_movement = initial(animate_movement)
 	maptext = null
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
@@ -181,10 +187,13 @@
 
 /mob/living/simple_animal/hostile/morph/can_track(mob/living/user)
 	if(morphed)
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/hostile/morph/AttackingTarget()
+	if(morphed && !melee_damage_disguised)
+		to_chat(src, "<span class='warning'>You can not attack while disguised!</span>")
+		return
 	if(isliving(target)) //Eat Corpses to regen health
 		var/mob/living/L = target
 		if(L.stat == DEAD)
@@ -230,7 +239,7 @@
 	player_mind.add_antag_datum(/datum/antagonist/morph)
 	to_chat(S, S.playstyle_string)
 	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
-	message_admins("[key_name_admin(S)] has been made into a morph by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a morph by an event.")
 	log_game("[key_name(S)] was spawned as a morph by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

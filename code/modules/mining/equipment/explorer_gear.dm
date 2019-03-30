@@ -25,11 +25,19 @@
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/hooded/explorer/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
+/obj/item/clothing/head/hooded/explorer/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
 /obj/item/clothing/mask/gas/explorer
 	name = "explorer gas mask"
 	desc = "A military-grade gas mask that can be connected to an air supply."
 	icon_state = "gas_mining"
-	visor_flags = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)
@@ -52,8 +60,8 @@
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	item_state = "hostile_env"
-	flags_1 = THICKMATERIAL_1 //not spaceproof
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL //not spaceproof
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	slowdown = 0
 	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
@@ -83,8 +91,8 @@
 	icon_state = "hostile_env"
 	item_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	flags_1 = THICKMATERIAL_1 // no space protection
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL // no space protection
 	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
@@ -106,4 +114,3 @@
 		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', "hostile_env_glass")
 		M.appearance_flags = RESET_COLOR
 		. += M
-

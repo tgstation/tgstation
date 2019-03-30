@@ -13,7 +13,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 	// No running around with open laptops in hands.
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = SLOWS_WHILE_IN_HAND
 
 	screen_on = 0 		// Starts closed
 	var/start_open = TRUE	// unless this var is set to 1

@@ -38,6 +38,7 @@
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
 	clockwork = TRUE //it'd look weird
+	pass_flags = PASSTABLE
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/card/id))
@@ -150,7 +151,7 @@
 									background = "'background-color:#990000;'"
 								if("Incarcerated")
 									background = "'background-color:#CD6500;'"
-								if("Parolled")
+								if("Paroled")
 									background = "'background-color:#CD6500;'"
 								if("Discharged")
 									background = "'background-color:#006699;'"
@@ -182,10 +183,10 @@
 					if(istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1))
 						if(istype(active1.fields["photo_front"], /obj/item/photo))
 							var/obj/item/photo/P1 = active1.fields["photo_front"]
-							user << browse_rsc(P1.img, "photo_front")
+							user << browse_rsc(P1.picture.picture_image, "photo_front")
 						if(istype(active1.fields["photo_side"], /obj/item/photo))
 							var/obj/item/photo/P2 = active1.fields["photo_side"]
-							user << browse_rsc(P2.img, "photo_side")
+							user << browse_rsc(P2.picture.picture_image, "photo_side")
 						dat += {"<table><tr><td><table>
 						<tr><td>Name:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=name'>&nbsp;[active1.fields["name"]]&nbsp;</A></td></tr>
 						<tr><td>ID:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
@@ -345,16 +346,14 @@ What a mess.*/
 				active2 = null
 
 			if("Browse Record")
-				var/datum/data/record/R = locate(href_list["d_rec"])
-				var/S = locate(href_list["d_rec"])
-				if(!( GLOB.data_core.general.Find(R) ))
+				var/datum/data/record/R = locate(href_list["d_rec"]) in GLOB.data_core.general
+				if(!R)
 					temp = "Record Not Found!"
 				else
+					active1 = active2 = R
 					for(var/datum/data/record/E in GLOB.data_core.security)
 						if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-							S = E
-					active1 = R
-					active2 = S
+							active2 = E
 					screen = 3
 
 
@@ -446,7 +445,7 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
-								new /obj/item/poster/wanted(src.loc, photo.img, wanted_name, info)
+								new /obj/item/poster/wanted(loc, photo.picture.picture_image, wanted_name, info)
 							printing = 0
 
 //RECORD DELETE
@@ -457,7 +456,7 @@ What a mess.*/
 				temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
 
 			if("Purge All Records")
-				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", INVESTIGATE_RECORDS)
+				investigate_log("[key_name(usr)] has purged all the security records.", INVESTIGATE_RECORDS)
 				for(var/datum/data/record/R in GLOB.data_core.security)
 					qdel(R)
 				GLOB.data_core.security.Cut()
@@ -611,7 +610,7 @@ What a mess.*/
 						if(photo)
 							qdel(active1.fields["photo_front"])
 							//Lets center it to a 32x32.
-							var/icon/I = photo.img
+							var/icon/I = photo.picture.picture_image
 							var/w = I.Width()
 							var/h = I.Height()
 							var/dw = w - 32
@@ -622,7 +621,7 @@ What a mess.*/
 						if(active1.fields["photo_front"])
 							if(istype(active1.fields["photo_front"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_front"]
-								print_photo(P.img, active1.fields["name"])
+								print_photo(P.picture.picture_image, active1.fields["name"])
 					if("show_photo_side")
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
@@ -633,7 +632,7 @@ What a mess.*/
 						if(photo)
 							qdel(active1.fields["photo_side"])
 							//Lets center it to a 32x32.
-							var/icon/I = photo.img
+							var/icon/I = photo.picture.picture_image
 							var/w = I.Width()
 							var/h = I.Height()
 							var/dw = w - 32
@@ -644,7 +643,7 @@ What a mess.*/
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_side"]
-								print_photo(P.img, active1.fields["name"])
+								print_photo(P.picture.picture_image, active1.fields["name"])
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
@@ -653,6 +652,7 @@ What a mess.*/
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
+							investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("mi_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
@@ -667,6 +667,7 @@ What a mess.*/
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
+							investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("ma_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
@@ -686,7 +687,7 @@ What a mess.*/
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=none'>None</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=arrest'>*Arrest*</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=incarcerated'>Incarcerated</a></li>"
-							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=parolled'>Parolled</a></li>"
+							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=paroled'>Paroled</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>"
 							temp += "</ul>"
 					if("rank")
@@ -720,22 +721,22 @@ What a mess.*/
 									active2.fields["criminal"] = "*Arrest*"
 								if("incarcerated")
 									active2.fields["criminal"] = "Incarcerated"
-								if("parolled")
-									active2.fields["criminal"] = "Parolled"
+								if("paroled")
+									active2.fields["criminal"] = "Paroled"
 								if("released")
 									active2.fields["criminal"] = "Discharged"
-							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
+							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [key_name(usr)].", INVESTIGATE_RECORDS)
 							for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 								H.sec_hud_set_security_status()
 					if("Delete Record (Security) Execute")
-						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
+						investigate_log("[key_name(usr)] has deleted the security records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 						if(active2)
 							qdel(active2)
 							active2 = null
 
 					if("Delete Record (ALL) Execute")
 						if(active1)
-							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
+							investigate_log("[key_name(usr)] has deleted all records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 							for(var/datum/data/record/R in GLOB.data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 									qdel(R)
@@ -757,10 +758,9 @@ What a mess.*/
 	var/obj/item/photo/P = null
 	if(issilicon(user))
 		var/mob/living/silicon/tempAI = user
-		var/datum/picture/selection = tempAI.GetPhoto()
+		var/datum/picture/selection = tempAI.GetPhoto(user)
 		if(selection)
-			P = new()
-			P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+			P = new(null, selection)
 	else if(istype(user.get_active_held_item(), /obj/item/photo))
 		P = user.get_active_held_item()
 	return P
@@ -776,15 +776,16 @@ What a mess.*/
 	small_img.Scale(8, 8)
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	P.icon = ic
-	P.img = temp
+	P.picture.picture_image = temp
 	P.desc = "The photo on file for [name]."
 	P.pixel_x = rand(-10, 10)
 	P.pixel_y = rand(-10, 10)
 	printing = FALSE
 
 /obj/machinery/computer/secure_data/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+
+	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
 		return
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
@@ -800,7 +801,7 @@ What a mess.*/
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
-					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged")
+					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Paroled", "Discharged")
 				if(5)
 					R.fields["p_stat"] = pick("*Unconscious*", "Active", "Physically Unfit")
 				if(6)
@@ -817,8 +818,6 @@ What a mess.*/
 			qdel(R)
 			continue
 
-	..(severity)
-
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)
 		if(authenticated)
@@ -831,18 +830,21 @@ What a mess.*/
 	return 0
 
 /obj/machinery/computer/secure_data/AltClick(mob/user)
-	if(user.canUseTopic(src) && scan)
+	if(user.canUseTopic(src))
 		eject_id(user)
 
 /obj/machinery/computer/secure_data/proc/eject_id(mob/user)
 	if(scan)
-		user.put_in_hands(scan)
+		scan.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(scan)
 		scan = null
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else //switching the ID with the one you're holding
-		var/obj/item/I = user.is_holding_item_of_type(/obj/item/card/id)
-		if(I)
-			if(!user.transferItemToLoc(I, src))
-				return
-			scan = I
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+		if(issilicon(user) || !Adjacent(user))
+			return
+		var/obj/item/card/id/held_id = user.is_holding_item_of_type(/obj/item/card/id)
+		if(QDELETED(held_id) || !user.transferItemToLoc(held_id, src))
+			return
+		scan = held_id
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)

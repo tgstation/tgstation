@@ -5,7 +5,7 @@
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
 	icon = 'icons/obj/singularity.dmi'
-	icon_state = "beacon"
+	icon_state = "beacon0"
 
 	anchored = FALSE
 	density = TRUE
@@ -56,13 +56,13 @@
 		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
 
 /obj/machinery/power/singularity_beacon/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(active)
 			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return
 
 		if(anchored)
-			anchored = FALSE
+			setAnchored(FALSE)
 			to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
 			disconnect_from_network()
 			return
@@ -70,7 +70,7 @@
 			if(!connect_to_network())
 				to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
 				return
-			anchored = TRUE
+			setAnchored(TRUE)
 			to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
 			return
 	else
@@ -86,7 +86,7 @@
 	if(!active)
 		return
 
-	if(surplus() > 1500)
+	if(surplus() >= 1500)
 		add_load(1500)
 		if(cooldown <= world.time)
 			cooldown = world.time + 80

@@ -32,13 +32,22 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	icon_state = "sheet-corgi"
 	item_state = "sheet-corgi"
 
+
+GLOBAL_LIST_INIT(gondola_recipes, list ( \
+	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1), \
+	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/gondola, 2), \
+	))
+
 /obj/item/stack/sheet/animalhide/gondola
 	name = "gondola hide"
-	desc = "The extremely valuable by-product of gondola hunting."
+	desc = "The extremely valuable product of gondola hunting."
 	singular_name = "gondola hide piece"
 	icon_state = "sheet-gondola"
 	item_state = "sheet-gondola"
 
+/obj/item/stack/sheet/animalhide/gondola/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.gondola_recipes
+	return ..()
 
 GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3), \
@@ -149,6 +158,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("leather satchel", /obj/item/storage/backpack/satchel/leather, 5), \
 	new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5), \
 	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7), \
+	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2), \
 	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 10), \
 ))
 
@@ -187,7 +197,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "hide plate"
 	max_amount = 6
 	novariants = FALSE
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
@@ -200,7 +210,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "drake plate"
 	max_amount = 10
 	novariants = FALSE
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
@@ -211,10 +221,9 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	if(W.is_sharp())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
-		if(do_after(user,50, target = src))
+		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You cut the hair from this [src.singular_name].</span>")
-			var/obj/item/stack/sheet/hairlesshide/HS = new(user.loc)
-			HS.amount = 1
+			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), 1)
 			use(1)
 	else
 		return ..()
@@ -228,21 +237,11 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	if(exposed_temperature >= drying_threshold_temperature)
 		wetness--
 		if(wetness == 0)
-			//Try locating an exisitng stack on the tile and add to there if possible
-			for(var/obj/item/stack/sheet/leather/HS in src.loc)
-				if(HS.amount < 50)
-					HS.amount++
-					src.use(1)
-					wetness = initial(wetness)
-					break
-			//If it gets to here it means it did not find a suitable stack on the tile.
-			var/obj/item/stack/sheet/leather/HS = new(src.loc)
-			HS.amount = 1
+			new /obj/item/stack/sheet/leather(drop_location(), 1)
 			wetness = initial(wetness)
-			src.use(1)
+			use(1)
 
 /obj/item/stack/sheet/wetleather/microwave_act(obj/machinery/microwave/MW)
 	..()
-	var/obj/item/stack/sheet/leather/L = new(loc)
-	L.amount = amount
+	new /obj/item/stack/sheet/leather(drop_location(), amount)
 	qdel(src)

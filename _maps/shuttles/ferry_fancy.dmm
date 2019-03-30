@@ -27,7 +27,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "g" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "h" = (
@@ -87,7 +87,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "p" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,

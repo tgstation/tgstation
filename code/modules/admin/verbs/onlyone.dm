@@ -8,7 +8,9 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
 
 	for(var/obj/item/disk/nuclear/N in GLOB.poi_list)
-		N.relocate() //Gets it out of bags and such
+		var/datum/component/stationloving/component = N.GetComponent(/datum/component/stationloving)
+		if (component)
+			component.relocate() //Gets it out of bags and such
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat == DEAD || !(H.client))

@@ -32,8 +32,8 @@ Possible to do for anyone motivated enough:
 	desc = "It's a floor-mounted device for projecting holographic images."
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
+	plane = FLOOR_PLANE
 	flags_1 = HEAR_1
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -66,7 +66,7 @@ Possible to do for anyone motivated enough:
 	flags_1 = NODECONSTRUCT_1
 	on_network = FALSE
 	var/proximity_range = 1
-	
+
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
 	if(proximity_range)
@@ -86,7 +86,7 @@ Possible to do for anyone motivated enough:
 		replay_stop()
 	else if(disk && disk.record)
 		replay_start()
-	
+
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
 	if (!isliving(AM))
 		return
@@ -142,11 +142,13 @@ Possible to do for anyone motivated enough:
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
 
+/obj/machinery/holopad/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Current projection range: <b>[holo_range]</b> units.<span>")
+
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
-		return
-
-	if(exchange_parts(user, P))
 		return
 
 	if(default_pry_open(P))
@@ -279,13 +281,13 @@ Possible to do for anyone motivated enough:
 				new /datum/holocall(usr, src, callnames[result])
 
 	else if(href_list["connectcall"])
-		var/datum/holocall/call_to_connect = locate(href_list["connectcall"])
+		var/datum/holocall/call_to_connect = locate(href_list["connectcall"]) in holo_calls
 		if(!QDELETED(call_to_connect))
 			call_to_connect.Answer(src)
 		temp = ""
 
 	else if(href_list["disconnectcall"])
-		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"])
+		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"]) in holo_calls
 		if(!QDELETED(call_to_disconnect))
 			call_to_disconnect.Disconnect(src)
 		temp = ""
@@ -396,7 +398,7 @@ Possible to do for anyone motivated enough:
 		Hologram.copy_known_languages_from(user,replace = TRUE)
 		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-		Hologram.anchored = TRUE//So space wind cannot drag it.
+		Hologram.setAnchored(TRUE)//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		Hologram.set_light(2)	//hologram lighting
 		move_hologram()
@@ -411,6 +413,7 @@ Possible to do for anyone motivated enough:
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	if(speaker && LAZYLEN(masters) && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
@@ -482,6 +485,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			continue
 		if(another.validate_location(T))
 			unset_holo(holo_owner)
+			if(another.masters && another.masters[holo_owner])
+				another.clear_holo(holo_owner)
 			another.set_holo(holo_owner, h)
 			return TRUE
 	return FALSE
@@ -490,7 +495,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(QDELETED(user) || user.incapacitated() || !user.client)
 		return FALSE
 	return TRUE
-		
+
 //Can we display holos there
 //Area check instead of line of sight check because this is a called a lot if AI wants to move around.
 /obj/machinery/holopad/proc/validate_location(turf/T,check_los = FALSE)
@@ -552,7 +557,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	holder.selected_default_language = record.language
 	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	Hologram.anchored = TRUE//So space wind cannot drag it.
+	Hologram.setAnchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2)	//hologram lighting
 	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")
@@ -669,7 +674,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/effect/overlay/holo_pad_hologram/Destroy()
 	Impersonation = null
-	if(HC)
+	if(!QDELETED(HC))
 		HC.Disconnect(HC.calling_holopad)
 	return ..()
 

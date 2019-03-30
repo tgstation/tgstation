@@ -60,13 +60,16 @@ Meitnerium
 Mendelevium
 Mercury
 Molybdenum
+Moscovium
 Neodymium
 Neon
 Neptunium
 Nickel
+Nihonium
 Niobium
 Nitrogen
 Nobelium
+Oganesson
 Osmium
 Oxygen
 Palladium
@@ -98,6 +101,7 @@ Sulfur
 Tantalum
 Technetium
 Tellurium
+Tennessine
 Terbium
 Thallium
 Thorium
@@ -105,10 +109,6 @@ Thulium
 Tin
 Titanium
 Tungsten
-Ununoctium
-Ununpentium
-Ununseptium
-Ununtrium
 Uranium
 Vanadium
 Xenon

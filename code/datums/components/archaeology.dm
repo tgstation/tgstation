@@ -15,9 +15,9 @@
 			archdrops[i][ARCH_PROB] = 100
 			stack_trace("ARCHAEOLOGY WARNING: [parent] contained a null probability value in [i].")
 	callback = _callback
-	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
-	RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)
-	RegisterSignal(COMSIG_ATOM_SING_PULL, .proc/SingDig)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/Dig)
+	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/BombDig)
+	RegisterSignal(parent, COMSIG_ATOM_SING_PULL, .proc/SingDig)
 
 /datum/component/archaeology/InheritComponent(datum/component/archaeology/A, i_am_original)
 	var/list/other_archdrops = A.archdrops
@@ -25,7 +25,7 @@
 	for(var/I in other_archdrops)
 		_archdrops[I] += other_archdrops[I]
 
-/datum/component/archaeology/proc/Dig(obj/item/I, mob/living/user)
+/datum/component/archaeology/proc/Dig(datum/source, obj/item/I, mob/living/user)
 	if(dug)
 		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
 		return
@@ -72,7 +72,7 @@
 	if(callback)
 		callback.Invoke()
 
-/datum/component/archaeology/proc/SingDig(S, current_size)
+/datum/component/archaeology/proc/SingDig(datum/source, S, current_size)
 	switch(current_size)
 		if(STAGE_THREE)
 			if(prob(30))
@@ -84,7 +84,7 @@
 			if(current_size >= STAGE_FIVE && prob(70))
 				gets_dug()
 
-/datum/component/archaeology/proc/BombDig(severity, target)
+/datum/component/archaeology/proc/BombDig(datum/source, severity, target)
 	switch(severity)
 		if(3)
 			return

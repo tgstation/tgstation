@@ -2,9 +2,7 @@
 	if(stat == DEAD)
 		return
 	stat = DEAD
-	canmove = 0
-	card.removePersonality()
-	card.forceMove(loc)
+	mobility_flags = NONE
 	update_sight()
 	clear_fullscreens()
 

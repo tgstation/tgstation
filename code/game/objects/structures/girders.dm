@@ -9,10 +9,8 @@
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	max_integrity = 200
-
-/obj/structure/girder/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
@@ -210,6 +208,9 @@
 
 // Screwdriver behavior for girders
 /obj/structure/girder/screwdriver_act(mob/user, obj/item/tool)
+	if(..())
+		return TRUE
+
 	. = FALSE
 	if(state == GIRDER_DISPLACED)
 		user.visible_message("<span class='warning'>[user] disassembles the girder.</span>",
@@ -343,7 +344,7 @@
 		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 		qdel(src)
 
-	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+	else if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -418,7 +419,7 @@
 
 /obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount = 0))
 			return
 		to_chat(user, "<span class='notice'>You start slicing apart [src]...</span>")
@@ -440,7 +441,7 @@
 		if(B.get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two bronze sheets to build a bronze wall!</span>")
 			return 0
-		user.visible_message("<span class='notice'>[user] begins plating [src] with brozne...</span>", "<span class='notice'>You begin constructing a bronze wall...</span>")
+		user.visible_message("<span class='notice'>[user] begins plating [src] with bronze...</span>", "<span class='notice'>You begin constructing a bronze wall...</span>")
 		if(do_after(user, 50, target = src))
 			if(B.get_amount() < 2)
 				return

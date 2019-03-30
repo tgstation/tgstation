@@ -214,13 +214,16 @@
 		if(!C)
 			C = H.client
 		var/image = get_id_photo(H, C, show_directions)
-		var/obj/item/photo/photo_front = new()
-		var/obj/item/photo/photo_side = new()
-		for(var/D in show_directions) 
-			if(D == SOUTH)
-				photo_front.photocreate(null, icon(image, dir = D))
-			if(D == WEST || D == EAST)
-				photo_side.photocreate(null, icon(image, dir = D))
+		var/datum/picture/pf = new
+		var/datum/picture/ps = new
+		pf.picture_name = "[H]"
+		ps.picture_name = "[H]"
+		pf.picture_desc = "This is [H]."
+		ps.picture_desc = "This is [H]."
+		pf.picture_image = icon(image, dir = SOUTH)
+		ps.picture_image = icon(image, dir = WEST)
+		var/obj/item/photo/photo_front = new(null, pf)
+		var/obj/item/photo/photo_side = new(null, ps)
 
 		//These records should ~really~ be merged or something
 		//General Record
@@ -274,7 +277,6 @@
 		L.fields["sex"]			= H.gender
 		L.fields["blood_type"]	= H.dna.blood_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes
-		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity
 		L.fields["species"]		= H.dna.species.type
 		L.fields["features"]	= H.dna.features

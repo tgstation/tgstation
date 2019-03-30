@@ -2,8 +2,9 @@
 	name = "chameleon-projector"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
-	slot_flags = SLOT_BELT
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
@@ -15,8 +16,8 @@
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_appearance = null
 
-/obj/item/chameleon/New()
-	..()
+/obj/item/chameleon/Initialize()
+	. = ..()
 	var/obj/item/cigbutt/butt = /obj/item/cigbutt
 	saved_appearance = initial(butt.appearance)
 
@@ -35,19 +36,29 @@
 		to_chat(user, "<span class='warning'>You can't use [src] while inside something!</span>")
 
 /obj/item/chameleon/afterattack(atom/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!check_sprite(target))
 		return
-	if(!active_dummy)
-		if(!(isturf(target) || istype(target, /obj/structure/falsewall) || ismob(target))) //NOT any of these
-			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
-			to_chat(user, "<span class='notice'>Scanned [target].</span>")
-			var/obj/temp = new/obj()
-			temp.appearance = target.appearance
-			temp.layer = initial(target.layer) // scanning things in your inventory
-			temp.plane = initial(target.plane)
-			saved_appearance = temp.appearance
+	if(active_dummy)//I now present you the blackli(f)st
+		return
+	if(isturf(target))
+		return
+	if(ismob(target))
+		return
+	if(istype(target, /obj/structure/falsewall))
+		return
+	if(iseffect(target))
+		if(!(istype(target, /obj/effect/decal))) //be a footprint
+			return
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
+	to_chat(user, "<span class='notice'>Scanned [target].</span>")
+	var/obj/temp = new/obj()
+	temp.appearance = target.appearance
+	temp.layer = initial(target.layer) // scanning things in your inventory
+	temp.plane = initial(target.plane)
+	saved_appearance = temp.appearance
 
 /obj/item/chameleon/proc/check_sprite(atom/target)
 	if(target.icon_state in icon_states(target.icon))
@@ -66,7 +77,7 @@
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
-		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(get_turf(user))
+		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(user.drop_location())
 		C.activate(user, saved_appearance, src)
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
@@ -135,7 +146,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
-	..()
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)

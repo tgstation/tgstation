@@ -4,7 +4,7 @@
 	desc = "Everything you need for do-it-yourself station repair."
 	icon_state = "engi"
 	icon_deny = "engi-deny"
-	req_access_txt = "11"
+	req_access = list(ACCESS_ENGINE_EQUIP)
 	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,
 		            /obj/item/clothing/under/rank/engineer = 4,
 		            /obj/item/clothing/shoes/sneakers/orange = 4,
@@ -27,5 +27,11 @@
 					/obj/item/stock_parts/micro_laser = 5,
 					/obj/item/stock_parts/matter_bin = 5,
 					/obj/item/stock_parts/manipulator = 5)
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
-	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/vending_refill/engineering
+	default_price = 50
+	extra_price = 60
+	payment_department = ACCOUNT_ENG
+
+/obj/item/vending_refill/engineering
+	machine_name = "Robco Tool Maker"
+	icon_state = "refill_engi"

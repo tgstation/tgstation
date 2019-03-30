@@ -6,7 +6,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
 	density = TRUE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
 	var/efficiency = 10
 	var/on = FALSE
@@ -83,10 +82,9 @@
 	add_fingerprint(user)
 	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
-		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
-			add_logs(usr, src, "has added [english_list(RC.reagents.reagent_list)] to [src]")
 			return
 	if(default_unfasten_wrench(user, I, 40))
 		on = FALSE
@@ -143,9 +141,9 @@
 			on = !on
 			update_icon()
 			if(on)
-				message_admins("[key_name_admin(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(src)].")
-				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
-				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)].")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
+				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
+				log_combat(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE

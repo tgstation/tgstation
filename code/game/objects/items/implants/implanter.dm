@@ -63,11 +63,3 @@
 	if(imp_type)
 		imp = new imp_type(src)
 	update_icon()
-
-/obj/item/implanter/adrenalin
-	name = "implanter (adrenalin)"
-	imp_type = /obj/item/implant/adrenalin
-
-/obj/item/implanter/emp
-	name = "implanter (EMP)"
-	imp_type = /obj/item/implant/emp

@@ -5,7 +5,8 @@
 /mob/living/silicon/robot/get_active_held_item()
 	return module_active
 
-
+/obj/item/proc/cyborg_unequip(mob/user)
+	return
 
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
@@ -16,16 +17,10 @@
 		sight_mode &= ~S.sight_mode
 		update_sight()
 	else if(istype(O, /obj/item/storage/bag/tray/))
-		O.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY)
+		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
-	O.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
-
-	if(O.flags_1 & DROPDEL_1)
-		O.flags_1 &= ~DROPDEL_1 //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
-
-	O.dropped(src)
 
 	if(module_active == O)
 		module_active = null
@@ -38,6 +33,13 @@
 	else if(held_items[3] == O)
 		inv3.icon_state = "inv3"
 		held_items[3] = null
+
+	if(O.item_flags & DROPDEL)
+		O.item_flags &= ~DROPDEL //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
+
+	O.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
+	O.cyborg_unequip(src)
+
 	hud_used.update_robot_modules_display()
 	return 1
 
@@ -63,7 +65,7 @@
 	else
 		to_chat(src, "<span class='warning'>You need to disable a module first!</span>")
 	if(.)
-		O.equipped(src, slot_hands)
+		O.equipped(src, SLOT_HANDS)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE

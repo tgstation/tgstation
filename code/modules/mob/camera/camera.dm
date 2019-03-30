@@ -3,7 +3,8 @@
 /mob/camera
 	name = "camera mob"
 	density = FALSE
-	anchored = TRUE
+	move_force = INFINITY
+	move_resist = INFINITY
 	status_flags = GODMODE  // You can't damage it.
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	see_in_dark = 7
@@ -26,7 +27,12 @@
 	return
 
 /mob/camera/forceMove(atom/destination)
+	var/oldloc = loc
 	loc = destination
+	Moved(oldloc, NONE, TRUE)
 
-/mob/camera/emote(act, m_type=1, message = null)
+/mob/camera/canUseStorage()
+	return FALSE
+
+/mob/camera/emote(act, m_type=1, message = null, intentional = FALSE)
 	return

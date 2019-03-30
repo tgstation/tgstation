@@ -6,16 +6,26 @@ SUBSYSTEM_DEF(icon_smooth)
 	flags = SS_TICKER
 
 	var/list/smooth_queue = list()
+	var/list/deferred = list()
 
 /datum/controller/subsystem/icon_smooth/fire()
-	while(smooth_queue.len)
-		var/atom/A = smooth_queue[smooth_queue.len]
-		smooth_queue.len--
-		smooth_icon(A)
+	var/list/cached = smooth_queue
+	while(cached.len)
+		var/atom/A = cached[cached.len]
+		cached.len--
+		if (A.flags_1 & INITIALIZED_1)
+			smooth_icon(A)
+		else
+			deferred += A
 		if (MC_TICK_CHECK)
 			return
-	if (!smooth_queue.len)
-		can_fire = 0
+
+	if (!cached.len)
+		if (deferred.len)
+			smooth_queue = deferred
+			deferred = cached
+		else
+			can_fire = 0
 
 /datum/controller/subsystem/icon_smooth/Initialize()
 	smooth_zlevel(1,TRUE)
@@ -29,4 +39,4 @@ SUBSYSTEM_DEF(icon_smooth)
 		smooth_icon(A)
 		CHECK_TICK
 
-	..()
+	return ..()

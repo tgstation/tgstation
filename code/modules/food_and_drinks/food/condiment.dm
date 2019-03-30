@@ -10,7 +10,7 @@
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
@@ -41,7 +41,7 @@
 		return 0
 
 	if(M == user)
-		to_chat(M, "<span class='notice'>You swallow some of contents of \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] swallows some of contents of \the [src].</span>", "<span class='notice'>You swallow some of contents of \the [src].</span>")
 	else
 		user.visible_message("<span class='warning'>[user] attempts to feed [M] from [src].</span>")
 		if(!do_mob(user, M))
@@ -49,15 +49,16 @@
 		if(!reagents || !reagents.total_volume)
 			return // The condiment might be empty after the delay.
 		user.visible_message("<span class='warning'>[user] feeds [M] from [src].</span>")
-		add_logs(user, M, "fed", reagents.log_list())
+		log_combat(user, M, "fed", reagents.log_list())
 
 	var/fraction = min(10/reagents.total_volume, 1)
 	reagents.reaction(M, INGEST, fraction)
-	reagents.trans_to(M, 10)
+	reagents.trans_to(M, 10, transfered_by = user)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
 /obj/item/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
@@ -70,7 +71,7 @@
 			to_chat(user, "<span class='warning'>[src] is full!</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
@@ -81,7 +82,7 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>you can't add anymore to [target]!</span>")
 			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/reagent_containers/food/condiment/on_reagent_change(changetype)
@@ -146,6 +147,7 @@
 	return (TOXLOSS)
 
 /obj/item/reagent_containers/food/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(isturf(target))
@@ -154,9 +156,8 @@
 			return
 		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
 		reagents.remove_reagent("sodiumchloride", 2)
-		new/obj/effect/decal/cleanable/salt(target)
+		new/obj/effect/decal/cleanable/food/salt(target)
 		return
-	..()
 
 /obj/item/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -241,6 +242,7 @@
 	return
 
 /obj/item/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
 
@@ -256,7 +258,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>")
-			src.reagents.trans_to(target, amount_per_transfer_from_this)
+			src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 			qdel(src)
 
 /obj/item/reagent_containers/food/condiment/pack/on_reagent_change(changetype)

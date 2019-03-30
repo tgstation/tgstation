@@ -45,7 +45,7 @@
 /datum/objective/abductee/calling/New()
 	var/mob/dead/D = pick(GLOB.dead_mob_list)
 	if(D)
-		explanation_text = "You know that [D] has perished. Hold a seance to call them from the spirit realm."
+		explanation_text = "You know that [D] has perished. Hold a seance to call [D.p_them()] from the spirit realm."
 
 /datum/objective/abductee/forbiddennumber
 

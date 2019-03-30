@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 6
 	throw_speed = 3
 	throw_range = 7
@@ -53,6 +53,11 @@
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)
 		return
+	else if(istype(C) && C.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
+		to_chat(C, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+		if(do_after(user, 15, null, C))
+			to_chat(C, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			C.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 	else
 		..()
 
@@ -91,7 +96,7 @@
 
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
 	usesound = 'sound/items/jaws_cut.ogg'
-	toolspeed = 0.25
+	toolspeed = 0.7
 	random_color = FALSE
 
 /obj/item/wirecutters/power/suicide_act(mob/user)
@@ -107,7 +112,7 @@
 
 /obj/item/wirecutters/power/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
-	var/obj/item/crowbar/power/pryjaws = new /obj/item/crowbar/power
+	var/obj/item/crowbar/power/pryjaws = new /obj/item/crowbar/power(drop_location())
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(pryjaws)

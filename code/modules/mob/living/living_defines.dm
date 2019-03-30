@@ -2,7 +2,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 2
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	pressure_resistance = 10
 
 	var/resize = 1 //Badminnery resize
@@ -20,9 +20,17 @@
 	var/fireloss = 0	//Burn damage caused by being way too hot, too cold or burnt.
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
+	var/crit_threshold = HEALTH_THRESHOLD_CRIT // when the mob goes from "normal" to crit
 
+	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
+
+	var/resting = FALSE
+
+	var/lying = 0			//number of degrees. DO NOT USE THIS IN CHECKS. CHECK FOR MOBILITY FLAGS INSTEAD!!
+	var/lying_prev = 0		//last value of lying on update_mobility
+
+	var/audiolocation = FALSE
 	var/confused = 0	//Makes the mob move in random directions.
-
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
@@ -32,13 +40,11 @@
 	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
 								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
 
-	var/list/status_traits = list()
-
-	var/list/roundstart_traits = list()
+	var/list/roundstart_quirks = list()
 
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
-	var/now_pushing = null //used by living/Collide() and living/PushAM() to prevent potential infinite loop.
+	var/now_pushing = null //used by living/Bump() and living/PushAM() to prevent potential infinite loop.
 
 	var/cameraFollow = null
 
@@ -55,7 +61,6 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	var/list/mob_biotypes = list(MOB_ORGANIC)
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
-	var/list/image/staticOverlays = list()
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 
 	var/list/pipes_shown = list()
@@ -102,7 +107,6 @@
 
 	var/list/obj/effect/proc_holder/abilities = list()
 
-	var/registered_z
 	var/can_be_held = FALSE	//whether this can be picked up and held.
 
 	var/radiation = 0 //If the mob is irradiated.

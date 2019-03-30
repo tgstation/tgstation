@@ -46,13 +46,13 @@
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/sound_emitter/attack_ghost(mob/user)
-	if(!check_rights_for(user.client, R_SOUNDS))
+	if(!check_rights_for(user.client, R_SOUND))
 		examine(user)
 		return
 	edit_emitter(user)
 
 /obj/effect/sound_emitter/AltClick(mob/user)
-	if(check_rights_for(user.client, R_SOUNDS))
+	if(check_rights_for(user.client, R_SOUND))
 		activate(user)
 		to_chat(user, "<span class='notice'>Sound emitter activated.</span>")
 
@@ -74,7 +74,7 @@
 
 /obj/effect/sound_emitter/Topic(href, href_list)
 	..()
-	if(!ismob(usr) || !usr.client || !check_rights_for(usr.client, R_SOUNDS))
+	if(!ismob(usr) || !usr.client || !check_rights_for(usr.client, R_SOUND))
 		return
 	var/mob/user = usr
 	if(href_list["edit_label"])
@@ -143,7 +143,7 @@
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M.playsound_local(M, sound_file, sound_volume, FALSE, channel = CHANNEL_ADMIN, pressure_affected = FALSE)
 	if(user)
-		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [COORD(src)]")
+		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [AREACOORD(src)]")
 	flick("shield1", src)
 
 #undef SOUND_EMITTER_LOCAL

@@ -9,7 +9,7 @@
 	<span class='brass'>Siphons <b>5 W</b> of power per second while in an APC.</span>"
 	icon_state = "wall_gear"
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/obj/machinery/power/apc/apc
 
 /obj/item/clockwork/integration_cog/Initialize()

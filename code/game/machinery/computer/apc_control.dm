@@ -28,6 +28,7 @@
 				playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
+			active_apc.remote_control = null
 			active_apc = null
 
 /obj/machinery/computer/apc_control/attack_ai(mob/user)
@@ -92,9 +93,7 @@
 	if(!usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
-		var/obj/item/card/id/ID = usr.get_active_held_item()
-		if(!istype(ID))
-			ID = usr.get_idcard()
+		var/obj/item/card/id/ID = usr.get_idcard(TRUE)
 		if(ID && istype(ID))
 			if(check_access(ID))
 				authenticated = TRUE
@@ -121,13 +120,15 @@
 			playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
+			active_apc.remote_control = null
 			active_apc = null
-		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Connected to APC in [APC.area]. Interface request sent.</span>")
-		log_activity("remotely accessed APC in [APC.area]")
-		APC.ui_interact(usr, state = GLOB.not_incapacitated_state)
+		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Connected to APC in [get_area_name(APC.area, TRUE)]. Interface request sent.</span>")
+		log_activity("remotely accessed APC in [get_area_name(APC.area, TRUE)]")
+		APC.remote_control = src
+		APC.ui_interact(usr)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-		message_admins("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
-		log_game("[key_name(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
+		log_game("[key_name(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
 		if(APC.locked)
 			APC.say("Remote access detected. Interface unlocked.")
 			playsound(APC, 'sound/machines/boltsup.ogg', 25, 0)
@@ -137,7 +138,7 @@
 		active_apc = APC
 	if(href_list["name_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
-		var/new_filter = stripped_input(usr, "What name are you looking for?", name) as null|text
+		var/new_filter = stripped_input(usr, "What name are you looking for?", name)
 		if(!src || !usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 			return
 		log_activity("changed name filter to \"[new_filter]\"")
@@ -188,7 +189,7 @@
 		log_activity("logged in")
 	else if(!(obj_flags & EMAGGED))
 		user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
-		log_game("[key_name(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
+		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], disabling operator tracking.")
 		obj_flags |= EMAGGED
 	playsound(src, "sparks", 50, 1)
 

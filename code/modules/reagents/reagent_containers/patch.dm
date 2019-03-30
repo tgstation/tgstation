@@ -9,9 +9,7 @@
 	apply_type = PATCH
 	apply_method = "apply"
 	self_delay = 30		// three seconds
-
-/obj/item/reagent_containers/pill/patch/afterattack(obj/target, mob/user , proximity)
-	return // thanks inheritance again
+	dissolvable = FALSE
 
 /obj/item/reagent_containers/pill/patch/attack(mob/living/L, mob/user)
 	if(ishuman(L))
@@ -40,3 +38,9 @@
 	desc = "Helps with burn injuries."
 	list_reagents = list("silver_sulfadiazine" = 20)
 	icon_state = "bandaid_burn"
+
+/obj/item/reagent_containers/pill/patch/synthflesh
+	name = "synthflesh patch"
+	desc = "Helps with brute and burn injuries."
+	list_reagents = list("synthflesh" = 20)
+	icon_state = "bandaid_both"

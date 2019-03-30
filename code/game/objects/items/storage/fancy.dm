@@ -109,7 +109,7 @@
 	icon_type = "candle"
 	item_state = "candlebox5"
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
 	fancy_open = TRUE
 
@@ -132,7 +132,7 @@
 	item_state = "cigpacket"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 
@@ -151,10 +151,10 @@
 		return
 	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(W && contents.len > 0)
-		SendSignal(COMSIG_TRY_STORAGE_TAKE, W, user)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
 		contents -= W
-		to_chat(user, "<span class='notice'>You take a [icon_type] out of the pack.</span>")
+		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
@@ -166,18 +166,20 @@
 		else
 			icon_state = initial(icon_state)
 			add_overlay("[icon_state]_open")
-			var/i = contents.len
+			var/cig_position = 1
 			for(var/C in contents)
 				var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
-				inserted_overlay.pixel_x = 1 * (i - 1)
+
 				if(istype(C, /obj/item/lighter/greyscale))
 					inserted_overlay.icon_state = "lighter_in"
 				else if(istype(C, /obj/item/lighter))
 					inserted_overlay.icon_state = "zippo_in"
 				else
 					inserted_overlay.icon_state = "cigarette"
+
+				inserted_overlay.icon_state = "[inserted_overlay.icon_state]_[cig_position]"
 				add_overlay(inserted_overlay)
-				i--
+				cig_position++
 	else
 		cut_overlays()
 
@@ -188,10 +190,10 @@
 	if(cig)
 		if(M == user && contents.len > 0 && !user.wear_mask)
 			var/obj/item/clothing/mask/cigarette/W = cig
-			SendSignal(COMSIG_TRY_STORAGE_TAKE, W, M)
-			M.equip_to_slot_if_possible(W, slot_wear_mask)
+			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, M)
+			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
 			contents -= W
-			to_chat(user, "<span class='notice'>You take a [icon_type] out of the pack.</span>")
+			to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 		else
 			..()
 	else
@@ -237,7 +239,7 @@
 	name = "\improper Midori Tabako packet"
 	desc = "You can't understand the runes, but the packet smells funny."
 	icon_state = "midori"
-	spawn_type = /obj/item/clothing/mask/cigarette/rollie
+	spawn_type = /obj/item/clothing/mask/cigarette/rollie/nicotine
 
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims
 	name = "\improper Shady Jim's Super Slims packet"
@@ -250,6 +252,18 @@
 	desc = "Loaded with 100% pure slime. And also nicotine."
 	icon_state = "slime"
 	spawn_type = /obj/item/clothing/mask/cigarette/xeno
+
+/obj/item/storage/fancy/cigarettes/cigpack_cannabis
+	name = "\improper Freak Brothers' Special packet"
+	desc = "A label on the packaging reads, \"Endorsed by Phineas, Freddy and Franklin.\""
+	icon_state = "midori"
+	spawn_type = /obj/item/clothing/mask/cigarette/rollie/cannabis
+
+/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker
+	name = "\improper Leary's Delight packet"
+	desc = "Banned in over 36 galaxies."
+	icon_state = "shadyjim"
+	spawn_type = /obj/item/clothing/mask/cigarette/rollie/mindbreaker
 
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
@@ -293,22 +307,27 @@
 /obj/item/storage/fancy/cigarettes/cigars/update_icon()
 	cut_overlays()
 	if(fancy_open)
-		add_overlay("[icon_state]_open")
-		var/mutable_appearance/cigar_overlay = mutable_appearance(icon, icon_type)
-		for(var/c = contents.len, c >= 1, c--)
-			cigar_overlay.pixel_x = 4 * (c - 1)
+		icon_state = "[initial(icon_state)]_open"
+
+		var/cigar_position = 1 //generate sprites for cigars in the box
+		for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
+			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]_[cigar_position]")
 			add_overlay(cigar_overlay)
+			cigar_position++
+
 	else
-		icon_state = "cigarcase"
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba
-	name = "\improper cohiba robusto cigar case"
+	name = "\improper Cohiba Robusto cigar case"
 	desc = "A case of imported Cohiba cigars, renowned for their strong flavor."
+	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
-	name = "\improper premium havanian cigar case"
+	name = "\improper premium Havanian cigar case"
 	desc = "A case of classy Havanian cigars."
+	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
 
 /*

@@ -7,7 +7,7 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
-/obj/item/pda/clown/Initialize()
+/obj/item/pda/clown/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip))
 
@@ -19,7 +19,7 @@
 
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/pda/ai
-	icon_state = "NONE"
+	icon = null
 	ttone = "data"
 	fon = FALSE
 	detonatable = FALSE

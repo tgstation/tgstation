@@ -70,7 +70,10 @@ Consuming extracts:
 			fed = TRUE
 			M.visible_message("<span class='danger'>[user] forces [M] to eat [src]!</span>", "<span class='warning'>[user] forces you to eat [src].</span>")
 	if(fed)
-		to_chat(M, "Tastes like [taste].")
+		var/mob/living/carbon/human/H = M
+
+		if(!istype(H) || !H.has_trait(TRAIT_AGEUSIA))
+			to_chat(M, "Tastes like [taste].")
 		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, 1)
 		if(nutrition)
 			M.reagents.add_reagent("nutriment",nutrition)
@@ -232,7 +235,7 @@ Consuming extracts:
 			L.Cut(I,I+1)
 
 	if(target)
-		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg')
+		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		new /obj/effect/particle_effect/sparks(get_turf(M))
 		playsound(get_turf(M), "sparks", 50, 1)
 
@@ -278,7 +281,7 @@ Consuming extracts:
 	var/colour = "#FFFFFF"
 
 /obj/item/slime_cookie/pyrite/Initialize()
-	..()
+	. = ..()
 	var/tastemessage = "paint remover"
 	switch(rand(1,7))
 		if(1)

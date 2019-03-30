@@ -8,8 +8,8 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/timeleft = 300 //Set to 0 for permanent forcefields (ugh)
 
-/obj/effect/forcefield/New()
-	..()
+/obj/effect/forcefield/Initialize()
+	. = ..()
 	if(timeleft)
 		QDEL_IN(src, timeleft)
 
@@ -27,11 +27,11 @@
 ///////////Mimewalls///////////
 
 /obj/effect/forcefield/mime
-	icon_state = "empty"
+	icon_state = "nothing"
 	name = "invisible wall"
 	desc = "You have a bad feeling about this."
 
 /obj/effect/forcefield/mime/advanced
 	name = "invisible blockade"
-	desc = "You're goona be here a while."
+	desc = "You're gonna be here awhile."
 	timeleft = 600

@@ -52,6 +52,8 @@
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
 	. = ..()
 	lay_web = new
@@ -80,7 +82,7 @@
 	humanize_spider(user)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
-	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
+	if(key || !playable_spider || stat)//Someone is in it, it's dead, or the fun police are shutting it down
 		return 0
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || QDELETED(src))
@@ -208,7 +210,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	poison_type = "frost_oil"
+	poison_type = "frostoil"
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
 
@@ -217,7 +219,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	poison_type = "frost_oil"
+	poison_type = "frostoil"
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
 
@@ -226,7 +228,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	poison_type = "frost_oil"
+	poison_type = "frostoil"
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
 
@@ -346,9 +348,9 @@
 	button_icon_state = "lay_web"
 
 /datum/action/innate/spider/lay_web/Activate()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return
-	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
+	var/mob/living/simple_animal/hostile/poison/giant_spider/S = owner
 
 	if(!isturf(S.loc))
 		return
@@ -520,7 +522,7 @@
 	for(var/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
 		to_chat(M, "[link] [my_message]")
-	log_talk(user, "SPIDERCOMMAND: [key_name(user)] : [message]",LOGSAY)
+	usr.log_talk(message, LOG_SAY, tag="spider command")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)

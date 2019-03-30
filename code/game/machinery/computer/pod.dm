@@ -52,7 +52,7 @@
 			d2 = "<A href='?src=[REF(src)];time=0'>Stop Time Launch</A>"
 		else
 			d2 = "<A href='?src=[REF(src)];time=1'>Initiate Time Launch</A>"
-		dat += "<HR>\nTimer System: [d2]\nTime Left: [DisplayTimeText(time)] <A href='?src=[REF(src)];tp=-30'>-</A> <A href='?src=[REF(src)];tp=-1'>-</A> <A href='?src=[REF(src)];tp=1'>+</A> <A href='?src=[REF(src)];tp=30'>+</A>"
+		dat += "<HR>\nTimer System: [d2]\nTime Left: [DisplayTimeText((time SECONDS))] <A href='?src=[REF(src)];tp=-30'>-</A> <A href='?src=[REF(src)];tp=-1'>-</A> <A href='?src=[REF(src)];tp=1'>+</A> <A href='?src=[REF(src)];tp=30'>+</A>"
 		var/temp = ""
 		var/list/L = list( 0.25, 0.5, 1, 2, 4, 8, 16 )
 		for(var/t in L)
@@ -130,4 +130,4 @@
 
 /obj/machinery/computer/pod/old/swf
 	name = "\improper Magix System IV"
-	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition."
+	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorcerer's Edition."

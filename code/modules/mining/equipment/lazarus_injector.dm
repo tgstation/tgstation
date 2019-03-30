@@ -16,6 +16,7 @@
 	var/revive_type = SENTIENCE_ORGANIC //So you can't revive boss monsters or robots with it
 
 /obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(!loaded)
 		return
 	if(isliving(target) && proximity_flag)
@@ -34,7 +35,7 @@
 						H.robust_searching = 1
 						H.friends += user
 						H.attack_same = 1
-						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")
+						log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
 					else
 						H.attack_same = 0
 				loaded = 0
@@ -51,6 +52,9 @@
 			return
 
 /obj/item/lazarus_injector/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(!malfunctioning)
 		malfunctioning = 1
 

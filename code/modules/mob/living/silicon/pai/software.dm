@@ -20,6 +20,7 @@
 															"universal translator" = 35,
 															//"projection array" = 15
 															"remote signaller" = 5,
+															"loudness booster" = 25
 															)
 
 /mob/living/silicon/pai/proc/paiInterface()
@@ -31,7 +32,7 @@
 	if(temp)
 		left_part = temp
 	else if(stat == DEAD)						// Show some flavor text if the pAI is dead
-		left_part = "<b><font color=red>�Rr�R �a�� ��Rr����o�</font></b>"
+		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -64,6 +65,8 @@
 				left_part = softwareCamera()
 			if("signaller")
 				left_part = softwareSignal()
+			if("loudness")
+				left_part = softwareLoudness()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -105,10 +108,9 @@
 				</div>
 			</body>
 			</html>"} //"
-	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
-	onclose(usr, "pai")
+	src << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	onclose(src, "pai")
 	temp = null
-	return
 
 
 
@@ -170,7 +172,8 @@
 
 			if(href_list["send"])
 				signaler.send_activation()
-				audible_message("[icon2html(src, world)] *beep* *beep*")
+				audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+				playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 
 			if(href_list["freq"])
 				var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
@@ -208,9 +211,9 @@
 					pda.silent = !pda.silent
 				else if(href_list["target"])
 					if(silent)
-						return alert("Communications circuits remain unitialized.")
+						return alert("Communications circuits remain uninitialized.")
 
-					var/target = locate(href_list["target"])
+					var/target = locate(href_list["target"]) in GLOB.PDAs
 					pda.create_message(src, target)
 
 		// Accessing medical records
@@ -251,8 +254,7 @@
 					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
-				if(!(flags_2 & OMNITONGUE_2))
-					grant_all_languages(TRUE)
+				grant_all_languages(TRUE)
 					// this is PERMAMENT.
 		if("doorjack")
 			if(href_list["jack"])
@@ -265,6 +267,12 @@
 				var/turf/T = get_turf(loc)
 				cable = new /obj/item/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+		if("loudness")
+			if(subscreen == 1) // Open Instrument
+				internal_instrument.interact(src)
+			if(subscreen == 2) // Change Instrument type
+				internal_instrument.selectInstrument()
+
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -297,6 +305,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=[s]'>Camera Jack</a> <br>"
 		if(s == "remote signaller")
 			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
+		if(s == "loudness booster")
+			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
 	dat += "<br>"
 
 	// Advanced
@@ -311,8 +321,8 @@
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=[REF(src)];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
-			var/translator_on = (flags_2 & OMNITONGUE_2)
-			dat += "<a href='byond://?src=[REF(src)];software=translator;sub=0'>Universal Translator</a>[translator_on ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			var/datum/language_holder/H = get_language_holder()
+			dat += "<a href='byond://?src=[REF(src)];software=translator;sub=0'>Universal Translator</a>[H.omnitongue ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=[REF(src)];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
@@ -383,7 +393,7 @@
 		else
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, "[M] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly.")
+		to_chat(P, "[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.")
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -463,10 +473,10 @@
 
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
-	var/translator_on = (flags_2 & OMNITONGUE_2)
+	var/datum/language_holder/H = get_language_holder()
 	. = {"<h3>Universal Translator</h3><br>
 				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
-				The device is currently [translator_on ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[translator_on ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
+				The device is currently [H.omnitongue ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[H.omnitongue ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
 	return .
 
 // Security HUD
@@ -620,4 +630,13 @@
 	dat += "</ul>"
 	dat += "<br><br>"
 	dat += "Messages: <hr> [pda.tnote]"
+	return dat
+
+// Loudness Booster
+/mob/living/silicon/pai/proc/softwareLoudness()
+	if(!internal_instrument)
+		internal_instrument = new(src)
+	var/dat = "<h3>Sound Synthetizer</h3>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthetizer Interface</a><br>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=2'>Choose Instrument Type</a>"
 	return dat

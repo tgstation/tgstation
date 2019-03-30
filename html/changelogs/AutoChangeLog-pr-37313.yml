@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - balance: "Experimentor now only outputs one clone."
-  - bugfix: "Above change also fixes **an exploit** with loaded items getting cloned after changing the loaded item and ejecting."

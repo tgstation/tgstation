@@ -74,6 +74,7 @@
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	opacity = TRUE
+	anchored = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()
 	return 0
@@ -176,8 +177,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			message_admins("Legion took damage while the necropolis gate was closed, and has released itself!")
 			log_game("Legion took damage while the necropolis gate was closed and released itself.")
 		else
-			message_admins("[user ? key_name_admin(user):"Unknown"] has released Legion!")
-			log_game("[user ? key_name(user):"Unknown"] released Legion.")
+			message_admins("[user ? ADMIN_LOOKUPFLW(user):"Unknown"] has released Legion!")
+			log_game("[user ? key_name(user) : "Unknown"] released Legion.")
 
 		var/sound/legion_sound = sound('sound/creatures/legion_spawn.ogg')
 		for(var/mob/M in GLOB.player_list)

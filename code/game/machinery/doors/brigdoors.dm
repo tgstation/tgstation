@@ -24,7 +24,6 @@
 	icon_state = "frame"
 	desc = "A remote control for a door."
 	req_access = list(ACCESS_SECURITY)
-	anchored = TRUE
 	density = FALSE
 	var/id = null // id of linked machinery/lockers
 

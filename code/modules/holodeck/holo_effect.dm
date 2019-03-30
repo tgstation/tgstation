@@ -100,6 +100,11 @@
 
 /obj/effect/holodeck_effect/mobspawner/penguin
 	mobtype = /mob/living/simple_animal/pet/penguin/emperor
+	
+/obj/effect/holodeck_effect/mobspawner/penguin/Initialize()
+	if(prob(1))
+		mobtype = /mob/living/simple_animal/pet/penguin/emperor/shamebrero
+	return ..()
 
 /obj/effect/holodeck_effect/mobspawner/penguin_baby
 	mobtype = /mob/living/simple_animal/pet/penguin/baby

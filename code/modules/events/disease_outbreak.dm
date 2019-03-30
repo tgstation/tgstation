@@ -57,11 +57,11 @@
 				var/datum/disease/dnaspread/DS = D
 				DS.strain_data["name"] = H.real_name
 				DS.strain_data["UI"] = H.dna.uni_identity
-				DS.strain_data["SE"] = H.dna.struc_enzymes
+				DS.strain_data["SE"] = H.dna.mutation_index
 			else
 				D = new virus_type()
 		else
-			D = make_virus(max_severity, max_severity)
+			D = new /datum/disease/advance/random(max_severity, max_severity)
 		D.carrier = TRUE
 		H.ForceContractDisease(D, FALSE, TRUE)
 
@@ -70,26 +70,6 @@
 			var/list/name_symptoms = list() //for feedback
 			for(var/datum/symptom/S in A.symptoms)
 				name_symptoms += S.name
-			message_admins("An event has triggered a random advanced virus outbreak on [key_name_admin(H)]! It has these symptoms: [english_list(name_symptoms)]")
+			message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(H)]! It has these symptoms: [english_list(name_symptoms)]")
 			log_game("An event has triggered a random advanced virus outbreak on [key_name(H)]! It has these symptoms: [english_list(name_symptoms)]")
 		break
-
-/datum/round_event/disease_outbreak/proc/make_virus(max_symptoms, max_level)
-	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
-		max_symptoms = VIRUS_SYMPTOM_LIMIT
-	var/datum/disease/advance/A = new /datum/disease/advance()
-	var/list/datum/symptom/possible_symptoms = list()
-	for(var/symptom in subtypesof(/datum/symptom))
-		var/datum/symptom/S = symptom
-		if(initial(S.level) > max_level)
-			continue
-		if(initial(S.level) <= 0) //unobtainable symptoms
-			continue
-		possible_symptoms += S
-	for(var/i in 1 to max_symptoms)
-		var/datum/symptom/chosen_symptom = pick_n_take(possible_symptoms)
-		if(chosen_symptom)
-			var/datum/symptom/S = new chosen_symptom
-			A.symptoms += S
-	A.Refresh() //just in case someone already made and named the same disease
-	return A

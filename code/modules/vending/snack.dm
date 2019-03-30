@@ -4,21 +4,23 @@
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
-	products = list(/obj/item/reagent_containers/food/snacks/candy = 6,
-		            /obj/item/reagent_containers/food/drinks/dry_ramen = 6,
+	products = list(/obj/item/reagent_containers/food/snacks/spacetwinkie = 6,
+					/obj/item/reagent_containers/food/snacks/cheesiehonkers = 6,
+					/obj/item/reagent_containers/food/snacks/candy = 6,
 		            /obj/item/reagent_containers/food/snacks/chips = 6,
 		            /obj/item/reagent_containers/food/snacks/sosjerky = 6,
-		            /obj/item/reagent_containers/food/snacks/no_raisin = 6,
-		            /obj/item/reagent_containers/food/snacks/spacetwinkie = 6,
-					/obj/item/reagent_containers/food/snacks/cheesiehonkers = 6)
+					/obj/item/reagent_containers/food/snacks/no_raisin = 6,
+					/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
+					/obj/item/reagent_containers/food/snacks/energybar = 6)
 	contraband = list(/obj/item/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/vending_refill/snack
-	var/chef_compartment_access = "28"
+	var/chef_compartment_access = "28" //ACCESS_KITCHEN
+	default_price = 20
+	extra_price = 30
+	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
-	charges = list(12, 2, 0)//of 36 standard, 6 contraband
-	init_charges = list(12, 2, 0)
 
 /obj/machinery/vending/snack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/reagent_containers/food/snacks))
@@ -44,7 +46,7 @@
 			if(iscompartmentfull(user))
 				break
 			if(!S.junkiness)
-				T.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, src, TRUE)
+				SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src, TRUE)
 				food_load(S)
 				loaded++
 			else

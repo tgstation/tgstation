@@ -71,19 +71,24 @@
 /obj/mecha/proc/get_stats_part()
 	var/integrity = obj_integrity/max_integrity*100
 	var/cell_charge = get_charge()
-	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
-	var/tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
-	var/cabin_pressure = round(return_pressure(),0.01)
+	var/datum/gas_mixture/int_tank_air = 0
+	var/tank_pressure = 0
+	var/tank_temperature = 0
+	var/cabin_pressure = 0
+	if (internal_tank)
+		int_tank_air = internal_tank.return_air()
+		tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
+		tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
+		cabin_pressure = round(return_pressure(),0.01)
 	. = {"[report_internal_damage()]
 						[integrity<30?"<span class='userdanger'>DAMAGE LEVEL CRITICAL</span><br>":null]
 						<b>Integrity: </b> [integrity]%<br>
 						<b>Powercell charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
-						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
-						<b>Airtank pressure: </b>[tank_pressure]kPa<br>
-						<b>Airtank temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
-						<b>Cabin pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<span class='danger'>[cabin_pressure]</span>": cabin_pressure]kPa<br>
-						<b>Cabin temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
+						<b>Air source: </b>[internal_tank?"[use_internal_tank?"Internal Airtank":"Environment"]":"Environment"]<br>
+						<b>Airtank pressure: </b>[internal_tank?"[tank_pressure]kPa":"N/A"]<br>
+						<b>Airtank temperature: </b>[internal_tank?"[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C":"N/A"]<br>
+						<b>Cabin pressure: </b>[internal_tank?"[cabin_pressure>WARNING_HIGH_PRESSURE ? "<span class='danger'>[cabin_pressure]</span>": cabin_pressure]kPa":"N/A"]<br>
+						<b>Cabin temperature: </b> [internal_tank?"[return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C":"N/A"]<br>
 						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=[REF(src)];reset_dna=1'>Reset</a>\]<br>":""]<br>
 						[thrusters_action.owner ? "<b>Thrusters: </b> [thrusters_active ? "Enabled" : "Disabled"]<br>" : ""]
 						[defense_action.owner ? "<b>Defence Mode: </b> [defence_mode ? "Enabled" : "Disabled"]<br>" : ""]
@@ -100,14 +105,14 @@
 						<div class='header'>Electronics</div>
 						<div class='links'>
 						<b>Radio settings:</b><br>
-						Microphone: <a href='?src=[REF(src)];rmictoggle=1'><span id="rmicstate">[radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
-						Speaker: <a href='?src=[REF(src)];rspktoggle=1'><span id="rspkstate">[radio.listening?"Engaged":"Disengaged"]</span></a><br>
+						Microphone: [radio? "<a href='?src=[REF(src)];rmictoggle=1'><span id=\"rmicstate\">[radio.broadcasting?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
+						Speaker: [radio? "<a href='?src=[REF(src)];rspktoggle=1'><span id=\"rspkstate\">[radio.listening?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
 						Frequency:
-						<a href='?src=[REF(src)];rfreq=-10'>-</a>
-						<a href='?src=[REF(src)];rfreq=-2'>-</a>
-						<span id="rfreq">[format_frequency(radio.frequency)]</span>
-						<a href='?src=[REF(src)];rfreq=2'>+</a>
-						<a href='?src=[REF(src)];rfreq=10'>+</a><br>
+						[radio? "<a href='?src=[REF(src)];rfreq=-10'>-</a>":"-"]
+						[radio? "<a href='?src=[REF(src)];rfreq=-2'>-</a>":"-"]
+						<span id="rfreq">[radio?"[format_frequency(radio.frequency)]":"Error"]</span>
+						[radio? "<a href='?src=[REF(src)];rfreq=2'>+</a>":"+"]
+						[radio? "<a href='?src=[REF(src)];rfreq=10'>+</a><br>":"+"]
 						</div>
 						</div>
 						<div class='wr'>
@@ -115,9 +120,8 @@
 						<div class='links'>
 						<a href='?src=[REF(src)];toggle_id_upload=1'><span id='t_id_upload'>[add_req_access?"L":"Unl"]ock ID upload panel</span></a><br>
 						<a href='?src=[REF(src)];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
-						<a href='?src=[REF(src)];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>
+						[internal_tank?"<a href='?src=[REF(src)];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>":""]
 						<a href='?src=[REF(src)];dna_lock=1'>DNA-lock</a><br>
-						<a href='?src=[REF(src)];view_log=1'>View internal log</a><br>
 						<a href='?src=[REF(src)];change_name=1'>Change exosuit name</a><br>
 						</div>
 						</div>
@@ -146,15 +150,6 @@
 		. += "<div id='[REF(MT)]'>[MT.get_equip_info()]</div>"
 	. += "</div>"
 
-
-
-/obj/mecha/proc/get_log_html()
-	. = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
-	for(var/list/entry in log)
-		. += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
-						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
-						"}
-	. += "</body></html>"
 
 
 
@@ -199,7 +194,7 @@
 						</head>
 						<body>
 						[add_req_access?"<a href='?src=[REF(src)];req_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Edit operation keycodes</a>":null]
-						[maint_access?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Initiate maintenance protocol</a>":null]
+						[maint_access?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>[(state>0) ? "Terminate" : "Initiate"] maintenance protocol</a>":null]
 						[(state>0) ?"<a href='?src=[REF(src)];set_internal_tank_valve=1;user=[REF(user)]'>Set Cabin Air Pressure</a>":null]
 						</body>
 						</html>"}
@@ -289,16 +284,11 @@
 		radio.set_frequency(new_frequency)
 		send_byjax(src.occupant,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
 
-	if (href_list["view_log"])
-		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
-		onclose(occupant, "exosuit_log")
-
 	if (href_list["change_name"])
-		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
-		if(newname && trim(newname))
-			name = newname
-		else
-			alert(occupant, "nope.avi")
+		var/userinput = input(occupant, "Choose new exosuit name", "Rename exosuit", "") as null|text
+		if(!isnull(userinput))
+			var/newname = copytext(sanitize(userinput),1,MAX_NAME_LEN)
+			name = newname ? newname : initial(name)
 
 	if (href_list["toggle_id_upload"])
 		add_req_access = !add_req_access
@@ -315,7 +305,7 @@
 		if(internal_tank.connected_port)
 			if(internal_tank.disconnect())
 				occupant_message("Disconnected from the air system port.")
-				log_message("Disconnected from gas port.")
+				log_message("Disconnected from gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to disconnect from the air system port!</span>")
 				return
@@ -323,7 +313,7 @@
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
 			if(internal_tank.connect(possible_port))
 				occupant_message("Connected to the air system port.")
-				log_message("Connected to gas port.")
+				log_message("Connected to gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to connect with air system port!</span>")
 				return
@@ -341,14 +331,13 @@
 
 	if(href_list["repair_int_control_lost"])
 		occupant_message("Recalibrating coordination system...")
-		log_message("Recalibration of coordination system started.")
+		log_message("Recalibration of coordination system started.", LOG_MECHA)
 		var/T = loc
 		spawn(100)
 			if(T == loc)
 				clearInternalDamage(MECHA_INT_CONTROL_LOST)
 				occupant_message("<span class='notice'>Recalibration successful.</span>")
-				log_message("Recalibration of coordination system finished with 0 errors.")
+				log_message("Recalibration of coordination system finished with 0 errors.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Recalibration failed!</span>")
-				log_message("Recalibration of coordination system failed with 1 error.",1)
-
+				log_message("Recalibration of coordination system failed with 1 error.", LOG_MECHA, color="red")

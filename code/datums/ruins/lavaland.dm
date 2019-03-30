@@ -115,6 +115,14 @@
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
 
+/datum/map_template/ruin/lavaland/ratvar
+	name = "Dead God"
+	id = "ratvar"
+	description = "Ratvars final resting place."
+	suffix = "lavaland_surface_dead_ratvar.dmm"
+	cost = 0
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"
@@ -206,4 +214,11 @@
 	description = "A heavily-damaged mining ripley, property of a very unfortunate miner. You might have to do a bit of work to fix this thing up."
 	suffix = "lavaland_surface_random_ripley.dmm"
 	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/puzzle
+	name = "Ancient Puzzle"
+	id = "puzzle"
+	description = "Mystery to be solved."
+	suffix = "lavaland_surface_puzzle.dmm"
 	cost = 5

@@ -17,8 +17,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	delete_equipment()
 	cut_overlays(TRUE)
 
+/mob/living/carbon/human/dummy/setup_human_dna()
+	create_dna(src)
+	randomize_human(src)
+	dna.initialize_dna(skip_index = TRUE) //Skip stuff that requires full round init.
+
 //Inefficient pooling/caching way.
 GLOBAL_LIST_EMPTY(human_dummy_list)
+GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 /proc/generate_or_wait_for_human_dummy(slotkey)
 	if(!slotkey)
@@ -26,11 +32,10 @@ GLOBAL_LIST_EMPTY(human_dummy_list)
 	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
 	if(istype(D))
 		UNTIL(!D.in_use)
-	else
-		pass()
 	if(QDELETED(D))
 		D = new
 		GLOB.human_dummy_list[slotkey] = D
+		GLOB.dummy_mob_list += D
 	D.in_use = TRUE
 	return D
 

@@ -5,11 +5,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
 	var/gpstag = "COM0"
 	var/emped = FALSE
-	var/turf/locked_location
 	var/tracking = TRUE
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
@@ -29,10 +28,13 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	return ..()
 
 /obj/item/gps/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	emped = TRUE
 	cut_overlay("working")
 	add_overlay("emp")
-	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
+	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_UNIQUE|TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
 	SStgui.close_uis(src) //Close the UI control if it is open.
 
 /obj/item/gps/proc/reboot()
@@ -154,11 +156,14 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon_state = "gps-b"
 	gpstag = "BORG0"
 	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
-	flags_1 = NODROP_1
+
+/obj/item/gps/cyborg/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/gps/internal
 	icon_state = null
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM

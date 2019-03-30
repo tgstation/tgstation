@@ -1,5 +1,6 @@
 /datum/martial_art/krav_maga
 	name = "Krav Maga"
+	id = MARTIALART_KRAVMAGA
 	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
 	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
 	var/datum/action/lung_punch/lungpunch = new/datum/action/lung_punch()
@@ -86,14 +87,14 @@
 	return 0
 
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(D.stat || D.IsKnockdown())
+	if(D.stat || D.IsParalyzed())
 		return 0
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
-	D.Knockdown(40)
-	add_logs(A, D, "leg sweeped")
+	D.Paralyze(40)
+	log_combat(A, D, "leg sweeped")
 	return 1
 
 /datum/martial_art/krav_maga/proc/quick_choke(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)//is actually lung punch
@@ -103,35 +104,35 @@
 	if(D.losebreath <= 10)
 		D.losebreath = CLAMP(D.losebreath + 5, 0, 10)
 	D.adjustOxyLoss(10)
-	add_logs(A, D, "quickchoked")
+	log_combat(A, D, "quickchoked")
 	return 1
 
 /datum/martial_art/krav_maga/proc/neck_chop(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
 				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.apply_damage(5, BRUTE)
+	D.apply_damage(5, A.dna.species.attack_type)
 	if(D.silent <= 10)
 		D.silent = CLAMP(D.silent + 10, 0, 10)
-	add_logs(A, D, "neck chopped")
+	log_combat(A, D, "neck chopped")
 	return 1
 
 /datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	add_logs(A, D, "grabbed with krav maga")
+	log_combat(A, D, "grabbed (Krav Maga)")
 	..()
 
 /datum/martial_art/krav_maga/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	add_logs(A, D, "punched")
+	log_combat(A, D, "punched")
 	var/picked_hit_type = pick("punches", "kicks")
 	var/bonus_damage = 10
-	if(D.IsKnockdown() || D.resting || D.lying)
+	if(!(D.mobility_flags & MOBILITY_STAND))
 		bonus_damage += 5
 		picked_hit_type = "stomps on"
-	D.apply_damage(bonus_damage, BRUTE)
+	D.apply_damage(bonus_damage, A.dna.species.attack_type)
 	if(picked_hit_type == "kicks" || picked_hit_type == "stomps on")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, 1, -1)
@@ -140,7 +141,7 @@
 		playsound(get_turf(D), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
 					  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
-	add_logs(A, D, "[picked_hit_type] with [name]")
+	log_combat(A, D, "[picked_hit_type] with [name]")
 	return 1
 
 /datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -159,7 +160,7 @@
 		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-	add_logs(A, D, "disarmed with krav maga", "[I ? " removing \the [I]" : ""]")
+	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
 	return 1
 
 //Krav Maga Gloves
@@ -170,7 +171,7 @@
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
-	if(slot == slot_gloves)
+	if(slot == SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 
@@ -178,7 +179,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(slot_gloves) == src)
+	if(H.get_item_by_slot(SLOT_GLOVES) == src)
 		style.remove(H)
 
 /obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
@@ -191,3 +192,18 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+
+/obj/item/clothing/gloves/krav_maga/combatglovesplus
+	name = "combat gloves plus"
+	desc = "These tactical gloves are fireproof and shock resistant, and using nanochip technology it teaches you the powers of krav maga."
+	icon_state = "black"
+	item_state = "blackglovesplus"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	strip_delay = 80
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)

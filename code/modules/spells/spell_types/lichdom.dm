@@ -8,14 +8,14 @@
 	becoming a lich destroys all internal organs except the brain."
 	school = "necromancy"
 	charge_max = 10
-	clothes_req = 0
-	centcom_cancast = 0
+	clothes_req = FALSE
+	centcom_cancast = FALSE
 	invocation = "NECREM IMORTIUM!"
 	invocation_type = "shout"
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 10
-	include_user = 1
+	include_user = TRUE
 
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "skeleton"
@@ -28,13 +28,16 @@
 		if(!hand_items.len)
 			to_chat(M, "<span class='caution'>You must hold an item you wish to make your phylactery...</span>")
 			return
+		if(!M.mind.hasSoul)
+			to_chat(user, "<span class='caution'>You do not possess a soul.</span>")
+			return
 
 		var/obj/item/marked_item
 
-		for(var/obj/item in hand_items)
+		for(var/obj/item/item in hand_items)
 			// I ensouled the nuke disk once. But it's probably a really
 			// mean tactic, so probably should discourage it.
-			if((item.flags_1 & ABSTRACT_1) || (item.flags_1 & NODROP_1) || (item.flags_2 & STATIONLOVING_2))
+			if((item.item_flags & ABSTRACT) || item.has_trait(TRAIT_NODROP) || SEND_SIGNAL(item, COMSIG_ITEM_IMBUE_SOUL, user))
 				continue
 			marked_item = item
 			to_chat(M, "<span class='warning'>You begin to focus your very being into [item]...</span>")
@@ -57,15 +60,16 @@
 		new /obj/item/phylactery(marked_item, M.mind)
 
 		to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
+		M.mind.hasSoul = FALSE
 		M.set_species(/datum/species/skeleton)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.dropItemToGround(H.w_uniform)
 			H.dropItemToGround(H.wear_suit)
 			H.dropItemToGround(H.head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), slot_wear_suit)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), slot_head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), SLOT_WEAR_SUIT)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), SLOT_HEAD)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), SLOT_W_UNIFORM)
 
 		// you only get one phylactery.
 		M.mind.RemoveSpell(src)
@@ -124,10 +128,10 @@
 	var/mob/old_body = mind.current
 	var/mob/living/carbon/human/lich = new(item_turf)
 
-	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), slot_shoes)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), slot_w_uniform)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), slot_wear_suit)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), slot_head)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), SLOT_SHOES)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), SLOT_W_UNIFORM)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), SLOT_WEAR_SUIT)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), SLOT_HEAD)
 
 	lich.real_name = mind.name
 	mind.transfer_to(lich)
@@ -135,7 +139,7 @@
 	lich.hardset_dna(null,null,lich.real_name,null, new /datum/species/skeleton)
 	to_chat(lich, "<span class='warning'>Your bones clatter and shudder as you are pulled back into this world!</span>")
 	var/turf/body_turf = get_turf(old_body)
-	lich.Knockdown(200 + 200*resurrections)
+	lich.Paralyze(200 + 200*resurrections)
 	resurrections++
 	if(old_body && old_body.loc)
 		if(iscarbon(old_body))

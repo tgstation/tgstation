@@ -29,21 +29,21 @@ STI KALY - blind
 	switch(stage)
 		if(2)
 			if(prob(1)&&prob(50))
-				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"))
+				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"), forced = "wizarditis")
 			if(prob(1)&&prob(50))
 				to_chat(affected_mob, "<span class='danger'>You feel [pick("that you don't have enough mana", "that the winds of magic are gone", "an urge to summon familiar")].</span>")
 
 
 		if(3)
 			if(prob(1)&&prob(50))
-				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"))
+				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"), forced = "wizarditis")
 			if(prob(1)&&prob(50))
 				to_chat(affected_mob, "<span class='danger'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar")].</span>")
 
 		if(4)
 
 			if(prob(1))
-				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"))
+				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"), forced = "wizarditis")
 				return
 			if(prob(1)&&prob(50))
 				to_chat(affected_mob, "<span class='danger'>You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")].</span>")
@@ -61,19 +61,19 @@ STI KALY - blind
 			if(!istype(H.head, /obj/item/clothing/head/wizard))
 				if(!H.dropItemToGround(H.head))
 					qdel(H.head)
-				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(H), slot_head)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(H), SLOT_HEAD)
 			return
 		if(prob(chance))
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
 				if(!H.dropItemToGround(H.wear_suit))
 					qdel(H.wear_suit)
-				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), SLOT_WEAR_SUIT)
 			return
 		if(prob(chance))
 			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal/magic))
 				if(!H.dropItemToGround(H.shoes))
 					qdel(H.shoes)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(H), slot_shoes)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(H), SLOT_SHOES)
 			return
 	else
 		var/mob/living/carbon/H = affected_mob
@@ -111,7 +111,7 @@ STI KALY - blind
 	if(!L)
 		return
 
-	affected_mob.say("SCYAR NILA [uppertext(thearea.name)]!")
+	affected_mob.say("SCYAR NILA [uppertext(thearea.name)]!", forced = "wizarditis teleport")
 	affected_mob.forceMove(pick(L))
 
 	return

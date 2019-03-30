@@ -5,7 +5,7 @@
 
 /obj/structure/mecha_wreckage
 	name = "exosuit wreckage"
-	desc = "Remains of some unfortunate mecha. Completely unrepairable, but perhaps something can be salvaged."
+	desc = "Remains of some unfortunate mecha. Completely irreparable, but perhaps something can be salvaged."
 	icon = 'icons/mecha/mecha.dmi'
 	density = TRUE
 	anchored = FALSE
@@ -35,7 +35,7 @@
 		to_chat(user, "<span class='notice'>The AI recovery beacon is active.</span>")
 
 /obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool))
+	if(I.tool_behaviour == TOOL_WELDER)
 		if(salvage_num <= 0 || !length(welder_salvage))
 			to_chat(user, "<span class='warning'>You don't see anything that can be cut with [I]!</span>")
 			return
@@ -54,7 +54,7 @@
 			to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
 		return
 
-	else if(istype(I, /obj/item/wirecutters))
+	else if(I.tool_behaviour == TOOL_WIRECUTTER)
 		if(salvage_num <= 0)
 			to_chat(user, "<span class='warning'>You don't see anything that can be cut with [I]!</span>")
 			return
@@ -67,7 +67,7 @@
 			else
 				to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
 
-	else if(istype(I, /obj/item/crowbar))
+	else if(I.tool_behaviour == TOOL_CROWBAR)
 		if(crowbar_salvage && crowbar_salvage.len)
 			var/obj/S = pick(crowbar_salvage)
 			if(S)
@@ -149,6 +149,23 @@
 	icon_state = "ripley-broken"
 
 /obj/structure/mecha_wreckage/ripley/Initialize()
+	. = ..()
+	var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
+								/obj/item/mecha_parts/part/ripley_left_arm,
+								/obj/item/mecha_parts/part/ripley_right_arm,
+								/obj/item/mecha_parts/part/ripley_left_leg,
+								/obj/item/mecha_parts/part/ripley_right_leg)
+	for(var/i = 0; i < 2; i++)
+		if(parts.len && prob(40))
+			var/part = pick(parts)
+			welder_salvage += part
+			parts -= part
+
+/obj/structure/mecha_wreckage/ripley/mkii
+	name = "\improper Ripley MK-II wreckage"
+	icon_state = "ripleymkii-broken"
+
+/obj/structure/mecha_wreckage/ripley/mkii/Initialize()
 	. = ..()
 	var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
 								/obj/item/mecha_parts/part/ripley_left_arm,

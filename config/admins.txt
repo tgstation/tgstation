@@ -1,15 +1,11 @@
-###############################################################################################
-# Basically, ckey goes first. Rank goes after the "="                                         #
-# Case is not important for ckey.                                                             #
-# Case IS important for the rank.                                                             #
-# All punctuation (spaces etc) EXCEPT '-', '_' and '@' will be stripped from rank names.      #
-# Ranks can be anything defined in admin_ranks.txt                                            #
-# NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
-# NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
-# If SQL-based admin loading is enabled, admins listed here will always be loaded first		  #
-# and will override any duplicate entries in the database.									  #
-###############################################################################################
+#List users here to be made admins with the format: ckey = rank name.
+#Ckey will be converted to ckey format, lowercase with no punctuation except '@'.
+#Rank name will match anything after ' = ' and has not format requirements.
+#Ranks will match to those with the same name in admin_ranks.txt, if a match isn't found the user won't be adminned.
+#If SQL-based admin loading is enabled, admins listed here will always be loaded first and will override any duplicate entries in the database.
+
 Optimumtact = Host
+CitrusGender = Game Master
 NewSta = Game Master
 Expletives = Game Master
 kingofkosmos = Game Master
@@ -133,3 +129,9 @@ Plizzard = Game Master
 octareenroon91 = Game Master
 Serpentarium = Game Master
 Averagejoe82 = Game Master
+The Dreamweaver = Game Master
+Denton-30 = Game Master
+Naksuasdf = Game Master
+MrDoomBringer = Game Master
+shizcalev = Game Master
+NicBR = Game Master

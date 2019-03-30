@@ -3,40 +3,60 @@ sudo: false
 branches:
   except:
   - ___TGS3TempBranch
-env:
-    global:
-    - BYOND_MAJOR="512"
-    - BYOND_MINOR="1418"
-    - NODE_VERSION="4"
-    - RUST_G_VERSION="0.2.0"
-    - BUILD_TOOLS=false
-    - BUILD_TESTING=false
-    - DM_MAPFILE="loadallmaps"
-    matrix:
-    - BUILD_TOOLS=true
-    - BUILD_TESTING=true
-    - BUILD_TESTING=false
-
-cache:
-  directories:
-    - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-    - tgui/node_modules
-    - $HOME/.rustup
-    - $HOME/.cargo
-
-
-addons:
-  apt:
-    packages:
-      - libc6-i386
-      - libgcc1:i386
-      - libstdc++6:i386
-      - gcc-multilib
-      - python3
-      - python3-pip
+  - ___TGSTempBranch
+matrix:
+  include:
+    - env:
+      - BUILD_TOOLS=true
+      name: "Build Tools"
+      addons:
+        apt:
+          packages:
+            - python3
+            - python3-pip
+      cache:
+        directories:
+          - tgui/node_modules
+    - env:
+      - BUILD_TESTING=true
+      - BUILD_TOOLS=false
+      name: "Build All Maps"
+      addons:
+        apt:
+          packages:
+            - libstdc++6:i386
+      cache:
+        directories:
+          - $HOME/BYOND
+    - env:
+      - BUILD_TESTING=false
+      - BUILD_TOOLS=false
+      name: "Build and Run Unit Tests"
+      addons:
+        mariadb: '10.2'
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - libstdc++6:i386
+            - libssl-dev:i386
+            - gcc-multilib
+            - g++-7
+            - g++-7-multilib
+            - libmariadbclient-dev:i386
+      cache:
+        directories:
+          - $HOME/.cargo
+          - $HOME/BYOND
+          - $HOME/MariaDB
+          - $HOME/.rustup
 
 install:
   - tools/travis/install_build_tools.sh
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis;'; fi
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis < SQL/tgstation_schema.sql; fi
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'; fi
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql; fi
 
 before_script:
   - tools/travis/before_build_tools.sh
@@ -44,7 +64,7 @@ before_script:
 
 script:
   - tools/travis/check_filedirs.sh tgstation.dme
-  - tools/travis/build_tools.sh
-  - tools/travis/build_dependencies.sh
+  - tools/travis/build_tools.sh || travis_terminate 1
+  - tools/travis/build_dependencies.sh || travis_terminate 1
   - tools/travis/build_byond.sh
 

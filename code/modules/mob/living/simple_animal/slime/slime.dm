@@ -2,7 +2,7 @@
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSGRILLE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	var/is_adult = 0
@@ -62,6 +62,8 @@
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
+	do_footstep = TRUE
+
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
 
@@ -97,7 +99,7 @@
 	create_reagents(100)
 	set_colour(new_colour)
 	. = ..()
-	nutrition = 700
+	set_nutrition(700)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -134,35 +136,39 @@
 		icon_state = icon_dead
 	..()
 
-/mob/living/simple_animal/slime/movement_delay()
-	if(bodytemperature >= 330.23) // 135 F or 57.08 C
-		return -1	// slimes become supercharged at high temperatures
-
+/mob/living/simple_animal/slime/on_reagent_change()
 	. = ..()
+	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
+	var/amount = 0
+	if(reagents.has_reagent("morphine")) // morphine slows slimes down
+		amount = 2
+	if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
+		amount = 5
+	if(amount)
+		add_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
 
-	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45)
-		. += (health_deficiency / 25)
+/mob/living/simple_animal/slime/updatehealth()
+	. = ..()
+	var/mod = 0
+	if(!has_trait(TRAIT_IGNOREDAMAGESLOWDOWN))
+		var/health_deficiency = (maxHealth - health)
+		if(health_deficiency >= 45)
+			mod += (health_deficiency / 25)
+		if(health <= 0)
+			mod += 2
+	add_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, TRUE, 100, multiplicative_slowdown = mod, override = TRUE)
 
-	if(bodytemperature < 183.222)
-		. += (283.222 - bodytemperature) / 10 * 1.75
+/mob/living/simple_animal/slime/adjust_bodytemperature()
+	. = ..()
+	var/mod = 0
+	if(bodytemperature >= 330.23) // 135 F or 57.08 C
+		mod = -1	// slimes become supercharged at high temperatures
+	else if(bodytemperature < 283.222)
+		mod = ((283.222 - bodytemperature) / 10) * 1.75
+	if(mod)
+		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
 
-	if(reagents)
-		if(reagents.has_reagent("morphine")) // morphine slows slimes down
-			. *= 2
-
-		if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
-			. *= 5
-
-	if(health <= 0) // if damaged, the slime moves twice as slow
-		. *= 2
-
-	var/static/config_slime_delay
-	if(isnull(config_slime_delay))
-		config_slime_delay = CONFIG_GET(number/slime_delay)
-	. += config_slime_delay
-
-/mob/living/simple_animal/slime/ObjCollide(obj/O)
+/mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)
@@ -213,19 +219,19 @@
 	return ..() //Heals them
 
 /mob/living/simple_animal/slime/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
 	attacked += 10
 	if((Proj.damage_type == BURN))
 		adjustBruteLoss(-abs(Proj.damage)) //fire projectiles heals slimes.
 		Proj.on_hit(src)
 	else
-		..(Proj)
-	return 0
+		. = ..(Proj)
+	. = . || BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/slime/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	powerlevel = 0 // oh no, the power!
-	..()
 
 /mob/living/simple_animal/slime/MouseDrop(atom/movable/A as mob|obj)
 	if(isliving(A) && A != src && usr == src)
@@ -237,7 +243,7 @@
 /mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
 
-/mob/living/simple_animal/slime/start_pulling(atom/movable/AM)
+/mob/living/simple_animal/slime/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return
 
 /mob/living/simple_animal/slime/attack_ui(slot)
@@ -253,7 +259,7 @@
 			return
 		attacked += 5
 		if(nutrition >= 100) //steal some nutrition. negval handled in life()
-			nutrition -= (50 + (40 * M.is_adult))
+			adjust_nutrition(-(50 + (40 * M.is_adult)))
 			M.add_nutrition(50 + (40 * M.is_adult))
 		if(health > 0)
 			M.adjustBruteLoss(-10 + (-10 * M.is_adult))
@@ -304,9 +310,9 @@
 				discipline_slime(M)
 	else
 		if(stat == DEAD && surgeries.len)
-			if(M.a_intent == INTENT_HELP)
+			if(M.a_intent == INTENT_HELP || M.a_intent == INTENT_DISARM)
 				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(M))
+					if(S.next_step(M,M.a_intent))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
@@ -319,9 +325,9 @@
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
-		if(user.a_intent == INTENT_HELP)
+		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user))
+				if(S.next_step(user,user.a_intent))
 					return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
@@ -356,7 +362,7 @@
 		var/hasFound = FALSE //Have we found an extract to be added?
 		for(var/obj/item/slime_extract/S in P.contents)
 			if(S.effectmod == effectmod)
-				P.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, get_turf(src), TRUE)
+				SEND_SIGNAL(P, COMSIG_TRY_STORAGE_TAKE, S, get_turf(src), TRUE)
 				qdel(S)
 				applied++
 				hasFound = TRUE
@@ -450,13 +456,13 @@
 
 	SStun = world.time + rand(20,60)
 	spawn(0)
-		canmove = 0
+		mobility_flags &= ~MOBILITY_MOVE
 		if(user)
 			step_away(src,user,15)
 		sleep(3)
 		if(user)
 			step_away(src,user,15)
-		update_canmove()
+		update_mobility()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

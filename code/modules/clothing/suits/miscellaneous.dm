@@ -31,6 +31,21 @@
 /*
  * Costume
  */
+/obj/item/clothing/suit/hooded/flashsuit
+	name = "flashy costume"
+	desc = "What did you expect?"
+	icon_state = "flashsuit"
+	item_state = "armor"
+	body_parts_covered = CHEST|GROIN
+	hoodtype = /obj/item/clothing/head/hooded/flashsuit
+
+/obj/item/clothing/head/hooded/flashsuit
+	name = "flash button"
+	desc = "You will learn to fear the flash."
+	icon_state = "flashsuit"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
+
 /obj/item/clothing/suit/pirate
 	name = "pirate coat"
 	desc = "Yarr."
@@ -173,7 +188,7 @@
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(slot == slot_wear_suit)
+	if(slot == SLOT_WEAR_SUIT)
 		disguise(user)
 
 /obj/item/clothing/suit/cardborg/dropped(mob/living/user)
@@ -222,7 +237,10 @@
 	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseparable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
-	flags_1 = NODROP_1
+
+/obj/item/clothing/suit/poncho/ponchoshame/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/suit/whitedress
 	name = "white dress"
@@ -240,7 +258,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/automatic/speargun)
+	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/pneumatic_cannon/speargun)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
 /obj/item/clothing/head/hooded/carp_hood
@@ -251,6 +269,16 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/head/hooded/carp_hood/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == SLOT_HEAD)
+		user.faction |= "carp"
+
+/obj/item/clothing/head/hooded/carp_hood/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		user.faction -= "carp"
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
@@ -279,7 +307,7 @@
 	icon_state = "bee"
 	item_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	flags_1 = THICKMATERIAL_1
+	clothing_flags = THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/bee_hood
 
 /obj/item/clothing/head/hooded/bee_hood
@@ -287,7 +315,7 @@
 	desc = "A hood attached to a bee costume."
 	icon_state = "bee"
 	body_parts_covered = HEAD
-	flags_1 = THICKMATERIAL_1
+	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS
 	dynamic_hair_suffix = ""
 
@@ -311,7 +339,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/security/officer/russian
-	name = "russian officer's jacket"
+	name = "\improper Russian officer's jacket"
 	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
 	icon_state = "officertanjacket"
 	item_state = "officertanjacket"
@@ -349,6 +377,12 @@
 	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironically?"
 	icon_state = "vapeshirt"
 	item_state = "vapeshirt"
+
+/obj/item/clothing/suit/striped_sweater
+	name = "striped sweater"
+	desc = "Reminds you of someone, but you just can't put your finger on it..."
+	icon_state = "waldo_shirt"
+	item_state = "waldo_shirt"
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
@@ -397,7 +431,7 @@
 	desc = "A canvas jacket styled after classical American military garb. Feels sturdy, yet comfortable."
 	icon_state = "militaryjacket"
 	item_state = "militaryjacket"
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/gun/ballistic/revolver/detective, /obj/item/radio)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
 
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
@@ -513,7 +547,7 @@
 	name = "medical winter coat"
 	icon_state = "coatmedical"
 	item_state = "coatmedical"
-	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	allowed = list(/obj/item/analyzer, /obj/item/sensor_device, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 0, "acid" = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical
 
@@ -594,3 +628,15 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass_old"
 	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
+
+/obj/item/clothing/suit/ghost_sheet
+	name = "ghost sheet"
+	desc = "The hands float by themselves, so it's extra spooky."
+	icon_state = "ghost_sheet"
+	item_state = "ghost_sheet"
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 2
+	w_class = WEIGHT_CLASS_TINY
+	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	alternate_worn_layer = UNDER_HEAD_LAYER

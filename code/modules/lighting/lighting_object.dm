@@ -11,8 +11,6 @@
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 
-	blend_mode       = BLEND_ADD
-
 	var/needs_update = FALSE
 	var/turf/myturf
 
@@ -102,7 +100,7 @@
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
 	#else
-	// Because of floating points�?, it won't even be a flat 0.
+	// Because of floating points™?, it won't even be a flat 0.
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
 	#endif

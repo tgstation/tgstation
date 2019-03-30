@@ -18,19 +18,34 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 30)
-	var/charges = list(0, 0, 0)	//how many restocking "charges" the refill has for standard/contraband/coin products
-	var/init_charges = list(0, 0, 0)
 
+	// Built automatically from the corresponding vending machine.
+	// If null, considered to be full. Otherwise, is list(/typepath = amount).
+	var/list/products
+	var/list/contraband
+	var/list/premium
 
-/obj/item/vending_refill/New(amt = -1)
-	..()
+/obj/item/vending_refill/Initialize(mapload)
+	. = ..()
 	name = "\improper [machine_name] restocking unit"
-	if(isnum(amt) && amt > -1)
-		charges[1] = amt
 
 /obj/item/vending_refill/examine(mob/user)
 	..()
-	if(charges[1] > 0)
-		to_chat(user, "It can restock [charges[1]+charges[2]+charges[3]] item(s).")
-	else
+	var/num = get_part_rating()
+	if (num == INFINITY)
+		to_chat(user, "It's sealed tight, completely full of supplies.")
+	else if (num == 0)
 		to_chat(user, "It's empty!")
+	else
+		to_chat(user, "It can restock [num] item\s.")
+
+/obj/item/vending_refill/get_part_rating()
+	if (!products || !contraband || !premium)
+		return INFINITY
+	. = 0
+	for(var/key in products)
+		. += products[key]
+	for(var/key in contraband)
+		. += contraband[key]
+	for(var/key in premium)
+		. += premium[key]

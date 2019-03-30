@@ -10,7 +10,6 @@
 	icon_state = "control_boxp1"
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	density = TRUE
-	anchored = TRUE
 
 /obj/machinery/artillerycontrol/process()
 	if(reload < reload_cooldown)
@@ -47,7 +46,7 @@
 		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
 		priority_announce("Bluespace artillery fire detected. Brace for impact.")
-		message_admins("[key_name_admin(usr)] has launched an artillery strike.")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has launched an artillery strike.")
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
 			L+=T

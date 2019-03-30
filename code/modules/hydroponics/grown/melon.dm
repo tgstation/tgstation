@@ -34,6 +34,7 @@
 	bitesize_mod = 3
 	foodtype = FRUIT
 	juice_results = list("watermelonjuice" = 0)
+	wine_power = 40
 
 // Holymelon
 /obj/item/seeds/watermelon/holy
@@ -54,7 +55,21 @@
 	icon_state = "holymelon"
 	filling_color = "#FFD700"
 	dried_type = null
+	wine_power = 70 //Water to wine, baby.
+	wine_flavor = "divinity"
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE) //deliver us from evil o melon god
+	var/uses = 1
+	if(seed)
+		uses = round(seed.potency / 20)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
+
+/obj/item/reagent_containers/food/snacks/grown/holymelon/proc/block_magic(mob/user, major)
+	if(major)
+		to_chat(user, "<span class='warning'>[src] hums slightly, and seems to decay a bit.</span>")
+
+/obj/item/reagent_containers/food/snacks/grown/holymelon/proc/expire(mob/user)
+	to_chat(user, "<span class='warning'>[src] rapidly turns into ash!</span>")
+	qdel(src)
+	new /obj/effect/decal/cleanable/ash(drop_location())

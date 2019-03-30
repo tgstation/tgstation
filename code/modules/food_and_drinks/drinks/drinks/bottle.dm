@@ -21,7 +21,7 @@
 	if(bartender_check(target) && ranged)
 		return
 	var/obj/item/broken_bottle/B = new (loc)
-	if(!ranged)
+	if(!ranged && thrower)
 		thrower.put_in_hands(B)
 	B.icon_state = icon_state
 
@@ -32,7 +32,8 @@
 
 	if(isGlass)
 		if(prob(33))
-			new/obj/item/shard(drop_location())
+			var/obj/item/shard/S = new(drop_location())
+			target.Bumped(S)
 		playsound(src, "shatter", 70, 1)
 	else
 		B.force = 0
@@ -42,6 +43,7 @@
 	transfer_fingerprints_to(B)
 
 	qdel(src)
+	target.Bumped(B)
 
 /obj/item/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
 
@@ -51,6 +53,9 @@
 	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
 
+	if(user.has_trait(TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
+		return
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
@@ -85,13 +90,13 @@
 	armor_block = min(90,armor_block)
 	target.apply_damage(force, BRUTE, affecting, armor_block)
 
-	// You are going to knock someone out for longer if they are not wearing a helmet.
+	// You are going to knock someone down for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
 	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
-		//Knockdown the target for the duration that we calculated and divide it by 5.
+		//Knock down the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
-			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN) // Never knockdown more than a flash!
+			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN)
 
 	//Display an attack message.
 	if(target != user)
@@ -102,7 +107,7 @@
 				"<span class='userdanger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
-	add_logs(user, target, "attacked", src)
+	log_combat(user, target, "attacked", src)
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	SplashReagents(target)
@@ -298,11 +303,35 @@
 	icon_state = "grappabottle"
 	list_reagents = list("grappa" = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/sake
+	name = "Ryo's traditional sake"
+	desc = "Sweet as can be, and burns like fire going down."
+	icon_state = "sakebottle"
+	list_reagents = list("sake" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/sake/Initialize()
+	. = ..()
+	if(prob(10))
+		name = "Fluffy Tail Sake"
+		desc += " On the bottle is a picture of a kitsune with nine touchable tails."
+		icon_state = "sakebottle_k"
+	else if(prob(10))
+		name = "Inubashiri's Home Brew"
+		desc += " Awoo."
+		icon_state = "sakebottle_i"
+
+/obj/item/reagent_containers/food/drinks/bottle/fernet
+	name = "Fernet Bronca"
+	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
+	icon_state = "fernetbottle"
+	list_reagents = list("fernet" = 100)
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
+	custom_price = 10
 	icon_state = "orangejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -314,6 +343,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
+	custom_price = 10
 	icon_state = "cream"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -325,6 +355,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
+	custom_price = 10
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -336,12 +367,33 @@
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
 	desc = "Sweet-sour goodness."
+	custom_price = 10
 	icon_state = "limejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list("limejuice" = 100)
+	foodtype = FRUIT
+
+/obj/item/reagent_containers/food/drinks/bottle/menthol
+	name = "menthol"
+	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	custom_price = 10
+	icon_state = "mentholbox"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	isGlass = FALSE
+	list_reagents = list("menthol" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/grenadine
+	name = "Jester Grenadine"
+	desc = "Contains 0% real cherries!"
+	custom_price = 10
+	icon_state = "grenadine"
+	isGlass = TRUE
+	list_reagents = list("grenadine" = 100)
 	foodtype = FRUIT
 
 
@@ -366,7 +418,7 @@
 			isGlass = FALSE
 	return
 
-/obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/target,datum/thrownthing/throwdata)
+/obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/firestarter = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
 		for(var/A in accelerants)
@@ -374,19 +426,14 @@
 				firestarter = 1
 				break
 	if(firestarter && active)
-		target.fire_act()
-		new /obj/effect/hotspot(get_turf(target))
+		hit_atom.fire_act()
+		new /obj/effect/hotspot(get_turf(hit_atom))
 	..()
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
 	if(I.is_hot() && !active)
-		active = 1
-		var/turf/bombturf = get_turf(src)
-		var/area/bombarea = get_area(bombturf)
-		var/message = "[ADMIN_LOOKUP(user)] has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]."
-		GLOB.bombers += message
-		message_admins(message)
-		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] [COORD(bombturf)].")
+		active = TRUE
+		log_bomber(user, "has primed a", src, "for detonation")
 
 		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
 		add_overlay(GLOB.fire_overlay)

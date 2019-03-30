@@ -6,7 +6,7 @@
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(hud_type && slot == slot_glasses)
+	if(hud_type && slot == SLOT_GLASSES)
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
 
@@ -17,7 +17,8 @@
 		H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
-	if(obj_flags & EMAGGED)
+	. = ..()
+	if(obj_flags & EMAGGED || . & EMP_PROTECT_SELF)
 		return
 	obj_flags |= EMAGGED
 	desc = "[desc] The display is flickering slightly."
@@ -70,6 +71,14 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	name = "diagnostic sunglasses"
+	desc = "Sunglasses with a diagnostic HUD."
+	icon_state = "sunhuddiag"
+	item_state = "glasses"
+	flash_protect = 1
+	tint = 1
+
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
@@ -86,8 +95,8 @@
 	// have multiple inheritance, okay?
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/hud/security/chameleon/New()
-	..()
+/obj/item/clothing/glasses/hud/security/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
@@ -96,6 +105,8 @@
 
 /obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
 	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 
@@ -192,5 +203,7 @@
 	user.update_inv_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	thermal_overload()
-	..()

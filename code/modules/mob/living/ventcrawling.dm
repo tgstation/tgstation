@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(stat)
 		to_chat(src, "You must be conscious to do this!")
 		return
-	if(lying)
+	if(IsStun() || IsParalyzed())
 		to_chat(src, "You can't vent crawl while you're stunned!")
 		return
 	if(restrained())
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 
 			if(iscarbon(src) && ventcrawler < 2)//It must have atleast been 1 to get this far
 				var/failed = 0
-				var/list/items_list = get_equipped_items()
+				var/list/items_list = get_equipped_items(include_pockets = TRUE)
 				if(items_list.len)
 					failed = 1
 				for(var/obj/item/I in held_items)
@@ -91,14 +91,16 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(!totalMembers.len)
 		return
 
-	for(var/X in totalMembers)
-		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
-		if(!A.pipe_vision_img)
-			A.pipe_vision_img = image(A, A.loc, layer = ABOVE_HUD_LAYER, dir = A.dir)
-			A.pipe_vision_img.plane = ABOVE_HUD_PLANE
-		pipes_shown += A.pipe_vision_img
-		if(client)
-			client.images += A.pipe_vision_img
+	if(client)
+		for(var/X in totalMembers)
+			var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
+			if(in_view_range(client.mob, A))
+				if(!A.pipe_vision_img)
+					A.pipe_vision_img = image(A, A.loc, layer = ABOVE_HUD_LAYER, dir = A.dir)
+					A.pipe_vision_img.plane = ABOVE_HUD_PLANE
+				client.images += A.pipe_vision_img
+				pipes_shown += A.pipe_vision_img
+	setMovetype(movement_type | VENTCRAWLING)
 
 
 /mob/living/proc/remove_ventcrawl()
@@ -106,6 +108,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
 	pipes_shown.len = 0
+	setMovetype(movement_type & ~VENTCRAWLING)
 
 
 

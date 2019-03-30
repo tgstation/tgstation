@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(vote)
 				client_popup = new(C, "vote", "Voting Panel")
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
-				client_popup.open(0)
+				client_popup.open(FALSE)
 
 
 /datum/controller/subsystem/vote/proc/reset()
@@ -302,7 +302,7 @@ SUBSYSTEM_DEF(vote)
 	var/datum/browser/popup = new(src, "vote", "Voting Panel")
 	popup.set_window_options("can_close=0")
 	popup.set_content(SSvote.interface(client))
-	popup.open(0)
+	popup.open(FALSE)
 
 /datum/action/vote
 	name = "Vote!"
@@ -318,6 +318,8 @@ SUBSYSTEM_DEF(vote)
 	return 1
 
 /datum/action/vote/proc/remove_from_client()
+	if(!owner)
+		return
 	if(owner.client)
 		owner.client.player_details.player_actions -= src
 	else if(owner.ckey)

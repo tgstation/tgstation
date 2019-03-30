@@ -106,10 +106,14 @@
 	/obj/item/stack/sheet/plasteel,
 	/obj/item/stack/sheet/mineral/titanium,
 	/obj/item/stack/sheet/mineral/plastitanium,
-	/obj/item/stack/rods
+	/obj/item/stack/rods,
+	/obj/item/stack/sheet/bluespace_crystal,
+	/obj/item/stack/sheet/mineral/abductor,
+	/obj/item/stack/sheet/plastic,
+	/obj/item/stack/sheet/mineral/wood
 	)
 
 	for(var/i = 0, i<2, i++)
 		for(var/res in resources)
-			var/obj/item/stack/R = new res(src)
-			R.amount = R.max_amount
+			var/obj/item/stack/R = res
+			new res(src, initial(R.max_amount))

@@ -3,12 +3,13 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
 	item_state = "flight"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/paint_color = "grey"
 
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 
 /obj/item/pipe_painter/afterattack(atom/A, mob/user, proximity_flag)
+	. = ..()
 	//Make sure we only paint adjacent items
 	if(!proximity_flag)
 		return

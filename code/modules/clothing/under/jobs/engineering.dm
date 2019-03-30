@@ -25,6 +25,14 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 60, "acid" = 20)
 	resistance_flags = NONE
 
+/obj/item/clothing/under/rank/engineer/hazard
+	name = "engineer's hazard jumpsuit"
+	desc = "A high visibility jumpsuit made from heat and radiation resistant materials."
+	icon_state = "hazard"
+	item_state = "suit-orange"
+	item_color = "hazard"
+	alt_covers_chest = TRUE
+
 /obj/item/clothing/under/rank/roboticist
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
 	name = "roboticist's jumpsuit"

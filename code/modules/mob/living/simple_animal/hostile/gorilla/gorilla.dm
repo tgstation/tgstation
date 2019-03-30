@@ -13,7 +13,7 @@
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
-	loot = list(/obj/effect/gibspawner/generic)
+	loot = list(/obj/effect/gibspawner/generic/animal)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/gorilla = 4)
 	response_help  = "prods"
 	response_disarm = "challenges"
@@ -27,6 +27,7 @@
 	attacktext = "pummels"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
+	held_items = list(null, null)
 	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
 	faction = list("jungle")
 	robust_searching = TRUE
@@ -36,6 +37,8 @@
 	unique_name = TRUE
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
+
+	do_footstep = TRUE
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
@@ -68,7 +71,7 @@
 			var/atom/throw_target = get_edge_target_turf(L, dir)
 			L.throw_at(throw_target, rand(1,2), 7, src)
 		else
-			L.Knockdown(20)
+			L.Paralyze(20)
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
 
 /mob/living/simple_animal/hostile/gorilla/CanAttack(atom/the_target)
@@ -91,7 +94,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/handle_automated_speech(override)
 	if(speak_chance && (override || prob(speak_chance)))
-		playsound(src, "sound/creatures/gorilla.ogg", 200)
+		playsound(src, 'sound/creatures/gorilla.ogg', 50)
 	..()
 
 /mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
@@ -102,6 +105,6 @@
 /mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
 	oogas++
 	if(oogas >= rand(2,6))
-		playsound(src, "sound/creatures/gorilla.ogg", 200)
+		playsound(src, 'sound/creatures/gorilla.ogg', 50)
 		oogas = 0
 

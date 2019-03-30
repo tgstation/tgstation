@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
 			Must be used within five minutes, or your benefactors will lose interest."
 	var/declaring_war = FALSE
-	var/uplink_type = /obj/item/radio/uplink/nuclear
+	var/uplink_type = /obj/item/uplink/nuclear
 
 /obj/item/nuclear_challenge/attack_self(mob/living/user)
 	if(!check_allowed(user))
@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		to_chat(user, "On second thought, the element of surprise isn't so bad after all.")
 		return
 
-	var/war_declaration = "[user.real_name] has declared his intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."
+	var/war_declaration = "[user.real_name] has declared [user.p_their()] intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop [user.p_them()]."
 
 	declaring_war = TRUE
 	var/custom_threat = alert(user, "Do you want to customize your declaration?", "Customize?", "Yes", "No")
@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	return TRUE
 
 /obj/item/nuclear_challenge/clownops
-	uplink_type = /obj/item/radio/uplink/clownop
+	uplink_type = /obj/item/uplink/clownop
 
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT

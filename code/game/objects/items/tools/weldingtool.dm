@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
@@ -87,7 +87,7 @@
 
 
 /obj/item/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
@@ -111,7 +111,7 @@
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
 				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",
-					"<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
+					"<span class='notice'>You start fixing some of the dents on [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 				if(!do_mob(user, H, 50))
 					return
 			item_heal_robotic(H, user, 15, 0)
@@ -120,10 +120,11 @@
 
 
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!status && O.is_refillable())
-		reagents.trans_to(O, reagents.total_volume)
+		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()
 	if(isOn())
@@ -136,13 +137,13 @@
 		if(isliving(O))
 			var/mob/living/L = O
 			if(L.IgniteMob())
-				message_admins("[key_name_admin(user)] set [key_name_admin(L)] on fire")
-				log_game("[key_name(user)] set [key_name(L)] on fire")
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
+				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent("plasma"))
-		message_admins("[key_name_admin(user)] activated a rigged welder.")
+		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		explode()
 	switched_on(user)
 	if(welding)
@@ -265,10 +266,10 @@
 	status = !status
 	if(status)
 		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
-		container_type = NONE
+		DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 	else
 		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
-		container_type = OPENCONTAINER
+		ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
@@ -302,6 +303,11 @@
 	name = "integrated welding tool"
 	desc = "An advanced welder designed to be used in robotic systems."
 	toolspeed = 0.5
+
+/obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
+	if(!isOn())
+		return
+	switched_on(user)
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return

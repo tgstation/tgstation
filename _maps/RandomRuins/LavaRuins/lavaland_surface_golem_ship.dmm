@@ -118,7 +118,7 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/obj/item/book/manual/research_and_development{
+/obj/item/book/manual/wiki/research_and_development{
 	name = "Sacred Text of the Liberator";
 	pixel_x = -4;
 	pixel_y = 3

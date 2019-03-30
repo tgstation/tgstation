@@ -54,7 +54,7 @@
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
-	else if(istype(P, /obj/item/wrench))
+	else if(P.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
@@ -97,11 +97,13 @@
 	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
 
 /obj/structure/filingcabinet/Topic(href, href_list)
+	if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
+		return
 	if(href_list["retrieve"])
 		usr << browse("", "window=filingcabinet") // Close the menu
 
-		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
-		if(istype(P) && P.loc == src && in_range(src, usr))
+		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
+		if(istype(P) && in_range(src, usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
 			icon_state = "[initial(icon_state)]-open"

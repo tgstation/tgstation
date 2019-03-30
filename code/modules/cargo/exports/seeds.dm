@@ -1,5 +1,5 @@
 /datum/export/seed
-	cost = 100 // Gets multiplied by potency
+	cost = 50 // Gets multiplied by potency
 	k_elasticity = 1	//price inelastic/quantity elastic, only need to export a few samples
 	unit_name = "new plant species sample"
 	export_types = list(/obj/item/seeds)
@@ -15,9 +15,10 @@
 	return ..() * S.rarity // That's right, no bonus for potency. Send a crappy sample first to "show improvement" later.
 
 /datum/export/seed/sell_object(obj/O)
-	..()
-	var/obj/item/seeds/S = O
-	discoveredPlants[S.type] = S.potency
+	. = ..()
+	if(.)
+		var/obj/item/seeds/S = O
+		discoveredPlants[S.type] = S.potency
 
 
 /datum/export/seed/potency

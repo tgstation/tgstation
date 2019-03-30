@@ -1,7 +1,7 @@
 //A slow but strong beast that tries to stun using its tentacles
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
-	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
+	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath"
 	icon_living = "Goliath"
@@ -9,7 +9,7 @@
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_opacity = MOUSE_OPACITY_ICON
 	move_to_delay = 40
 	ranged = 1
 	ranged_cooldown_time = 120
@@ -28,10 +28,14 @@
 	throw_message = "does nothing to the rocky hide of the"
 	vision_range = 5
 	aggro_vision_range = 9
-	anchored = TRUE //Stays anchored until death as to be unpullable
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
+
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	. = ..()
@@ -50,7 +54,9 @@
 		. = 1
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	anchored = FALSE
+	move_force = MOVE_FORCE_DEFAULT
+	move_resist = MOVE_RESIST_DEFAULT
+	pull_force = PULL_FORCE_DEFAULT
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()

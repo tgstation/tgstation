@@ -1,5 +1,5 @@
 
-/mob/living/silicon/grippedby(mob/living/user)
+/mob/living/silicon/grippedby(mob/living/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
 
 /mob/living/silicon/get_ear_protection()//no ears
@@ -9,13 +9,13 @@
 	if(..()) //if harm or disarm intent
 		var/damage = 20
 		if (prob(90))
-			add_logs(M, src, "attacked")
+			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 							"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			if(prob(8))
 				flash_act(affect_silicon = 1)
-			add_logs(M, src, "attacked")
+			log_combat(M, src, "attacked")
 			adjustBruteLoss(damage)
 			updatehealth()
 		else
@@ -29,7 +29,7 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(prob(damage))
 			for(var/mob/living/N in buckled_mobs)
-				N.Knockdown(20)
+				N.Paralyze(20)
 				unbuckle_mob(N)
 				N.visible_message("<span class='boldwarning'>[N] is knocked off of [src] by [M]!</span>")
 		switch(M.melee_damage_type)
@@ -65,6 +65,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
+	. = FALSE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M) & COMPONENT_NO_ATTACK_HAND)
+		. = TRUE
 	switch(M.a_intent)
 		if ("help")
 			M.visible_message("[M] pets [src].", \
@@ -76,7 +79,6 @@
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
 				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM)
@@ -91,35 +93,38 @@
 	return 0 //So borgs they don't die trying to fix wiring
 
 /mob/living/silicon/emp_act(severity)
+	. = ..()
+	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			src.take_bodypart_damage(20)
 		if(2)
 			src.take_bodypart_damage(10)
 	to_chat(src, "<span class='userdanger'>*BZZZT*</span>")
-	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
 			unbuckle_mob(M)
-			M.Knockdown(40)
+			M.Paralyze(40)
 			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
 	flash_act(affect_silicon = 1)
-	..()
 
-/mob/living/silicon/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/bullet_act(obj/item/projectile/Proj, def_zone)
+	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, Proj, def_zone)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		adjustBruteLoss(Proj.damage)
 		if(prob(Proj.damage*1.5))
 			for(var/mob/living/M in buckled_mobs)
 				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
 				unbuckle_mob(M)
-				M.Knockdown(40)
-	if(Proj.stun || Proj.knockdown)
+				M.Paralyze(40)
+	if(Proj.stun || Proj.knockdown || Proj.paralyze)
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
 			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [Proj]!</span>")
 	Proj.on_hit(src)
-	return 2
+	return BULLET_ACT_HIT
 
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
 	if(affect_silicon)

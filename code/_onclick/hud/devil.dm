@@ -2,7 +2,7 @@
 //Soul counter is stored with the humans, it does weird when you place it here apparently...
 
 
-/datum/hud/devil/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/devil/New(mob/owner)
 	..()
 	var/obj/screen/using
 
@@ -17,7 +17,7 @@
 	pull_icon.screen_loc = ui_drone_pull
 	static_inventory += pull_icon
 
-	build_hand_slots(ui_style)
+	build_hand_slots()
 
 	using = new /obj/screen/inventory()
 	using.name = "hand"
@@ -59,7 +59,3 @@
 		for(var/obj/item/I in D.held_items)
 			I.screen_loc = null
 			D.client.screen -= I
-
-/mob/living/carbon/true_devil/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/devil(src, ui_style2icon(client.prefs.UI_style))

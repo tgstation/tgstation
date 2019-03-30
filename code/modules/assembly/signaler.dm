@@ -7,35 +7,37 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
-	attachable = 1
+	attachable = TRUE
 
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 	var/suicider = null
+	var/hearing_range = 1
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
-	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.transferItemToLoc(src, user, TRUE)
 	suicider = user
-	return MANUAL_SUICIDE
+	return MANUAL_SUICIDE_NONLETHAL
 
 /obj/item/assembly/signaler/proc/manual_suicide(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user]'s \the [src] recieves a signal, killing them instantly!</span>")
+	user.visible_message("<span class='suicide'>[user]'s \the [src] receives a signal, killing [user.p_them()] instantly!</span>")
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
+	user.set_suicide(TRUE)
+	user.suicide_log()
 
-/obj/item/assembly/signaler/New()
-	..()
-	spawn(40)
-		set_frequency(frequency)
+/obj/item/assembly/signaler/Initialize()
+	. = ..()
+	set_frequency(frequency)
 
 
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
-	return ..()
+	. = ..()
 
 /obj/item/assembly/signaler/activate()
 	if(!..())//cooldown processing
@@ -80,7 +82,7 @@ Code:
 /obj/item/assembly/signaler/Topic(href, href_list)
 	..()
 
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!usr.canUseTopic(src, BE_CLOSE))
 		usr << browse(null, "window=radio")
 		onclose(usr, "radio")
 		return
@@ -111,7 +113,7 @@ Code:
 		var/obj/item/assembly/signaler/signaler2 = W
 		if(secured && signaler2.secured)
 			code = signaler2.code
-			frequency = signaler2.frequency
+			set_frequency(signaler2.frequency)
 			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
 	..()
 
@@ -131,17 +133,22 @@ Code:
 	return
 
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
+	. = FALSE
 	if(!signal)
-		return 0
+		return
 	if(signal.data["code"] != code)
-		return 0
+		return
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
-		return 0
+		return
 	if(suicider)
 		manual_suicide(suicider)
-	pulse(1)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
-	return
+	pulse(TRUE)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	for(var/CHM in get_hearers_in_view(hearing_range, src))
+		if(ismob(CHM))
+			var/mob/LM = CHM
+			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	return TRUE
 
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)
@@ -153,20 +160,21 @@ Code:
 // Embedded signaller used in grenade construction.
 // It's necessary because the signaler doens't have an off state.
 // Generated during grenade construction.  -Sayu
-/obj/item/assembly/signaler/reciever
+/obj/item/assembly/signaler/receiver
 	var/on = FALSE
 
-/obj/item/assembly/signaler/reciever/proc/toggle_safety()
+/obj/item/assembly/signaler/receiver/proc/toggle_safety()
 	on = !on
 
-/obj/item/assembly/signaler/reciever/activate()
+/obj/item/assembly/signaler/receiver/activate()
 	toggle_safety()
-	return 1
+	return TRUE
 
-/obj/item/assembly/signaler/reciever/describe()
-	return "The radio receiver is [on?"on":"off"]."
+/obj/item/assembly/signaler/receiver/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The radio receiver is [on?"on":"off"].</span>")
 
-/obj/item/assembly/signaler/reciever/receive_signal(datum/signal/signal)
+/obj/item/assembly/signaler/receiver/receive_signal(datum/signal/signal)
 	if(!on)
 		return
 	return ..(signal)
@@ -180,14 +188,17 @@ Code:
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	resistance_flags = FIRE_PROOF
+	var/anomaly_type = /obj/effect/anomaly
 
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
-		return 0
+		return FALSE
 	if(signal.data["code"] != code)
-		return 0
+		return FALSE
 	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()
+	return TRUE
 
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return
@@ -195,4 +206,6 @@ Code:
 /obj/item/assembly/signaler/cyborg
 
 /obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
+	return
+/obj/item/assembly/signaler/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return

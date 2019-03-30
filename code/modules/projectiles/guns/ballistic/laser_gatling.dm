@@ -9,7 +9,7 @@
 	item_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	var/obj/item/gun/ballistic/minigun/gun
 	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
@@ -33,14 +33,13 @@
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
-			if(user.get_item_by_slot(slot_back) == src)
+			if(user.get_item_by_slot(SLOT_BACK) == src)
 				armed = 1
 				if(!user.put_in_hands(gun))
 					armed = 0
 					to_chat(user, "<span class='warning'>You need a free hand to hold the gun!</span>")
 					return
 				update_icon()
-				gun.forceMove(user)
 				user.update_inv_back()
 		else
 			to_chat(user, "<span class='warning'>You are already holding the gun!</span>")
@@ -111,7 +110,7 @@
 	fire_sound = 'sound/weapons/laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
 	casing_ejector = FALSE
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	var/obj/item/minigunpack/ammo_pack
 
 /obj/item/gun/ballistic/minigun/Initialize()
@@ -142,9 +141,7 @@
 /obj/item/gun/ballistic/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
 		to_chat(user, "You need the backpack power source to fire the gun!")
-	..()
+	. = ..()
 
 /obj/item/gun/ballistic/minigun/dropped(mob/living/user)
 	ammo_pack.attach_gun(user)
-
-

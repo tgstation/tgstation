@@ -4,7 +4,6 @@
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "scanner"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -27,6 +26,11 @@
 		precision_coeff = P.rating
 	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
+
+/obj/machinery/dna_scannernew/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Radiation pulse accuracy increased by factor <b>[precision_coeff**2]</b>.<br>Radiation pulse damage decreased by factor <b>[damage_coeff**2]</b>.<span>")
 
 /obj/machinery/dna_scannernew/update_icon()
 
@@ -96,15 +100,8 @@
 
 	..(user)
 
-	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
-	if(istype(mob_occupant))
-		if(locate_computer(/obj/machinery/computer/cloning))
-			if(!mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
-				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
-
 	// DNA manipulators cannot operate on severed heads or brains
-	if(isliving(occupant))
+	if(iscarbon(occupant))
 		var/obj/machinery/computer/scan_consolenew/console = locate_computer(/obj/machinery/computer/scan_consolenew)
 		if(console)
 			console.on_scanner_close()
@@ -133,9 +130,6 @@
 		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_pry_open(I))
 		return
 
@@ -148,6 +142,7 @@
 	toggle_open(user)
 
 /obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	var/mob/living/L = user
+	if(user.stat || (isliving(user) && (!(L.mobility_flags & MOBILITY_STAND) || !(L.mobility_flags & MOBILITY_UI))) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)

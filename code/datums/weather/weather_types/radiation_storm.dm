@@ -38,9 +38,9 @@
 					H.randmuti()
 					if(prob(50))
 						if(prob(90))
-							H.randmutb()
+							H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 						else
-							H.randmutg()
+							H.easy_randmut(POSITIVE)
 						H.domutcheck()
 		L.rad_act(20)
 

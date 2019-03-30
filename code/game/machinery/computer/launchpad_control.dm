@@ -18,7 +18,9 @@
 	return
 
 /obj/machinery/computer/launchpad/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, W))
+			return
 		var/obj/item/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/launchpad))
 			if(LAZYLEN(launchpads) < maximum_pads)
@@ -128,7 +130,7 @@
 		pad.x_offset = 0
 
 	if(href_list["change_name"])
-		var/new_name = stripped_input(usr, "What do you wish to name the launchpad?", "Launchpad", pad.display_name, 15) as text|null
+		var/new_name = stripped_input(usr, "What do you wish to name the launchpad?", "Launchpad", pad.display_name, 15)
 		if(!new_name)
 			return
 		pad.display_name = new_name

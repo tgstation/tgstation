@@ -1,4 +1,5 @@
 /datum/component/mirage_border
+	can_transfer = TRUE
 	var/obj/effect/abstract/mirage_holder/holder
 
 /datum/component/mirage_border/Initialize(turf/target, direction, range=world.view)
@@ -7,7 +8,7 @@
 	if(!target || !istype(target) || !direction)
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("[type] improperly instanced with the following args: target=\[[target]\], direction=\[[direction]\], range=\[[range]\]")
-	
+
 	holder = new(parent)
 
 	var/x = target.x
@@ -27,11 +28,15 @@
 	QDEL_NULL(holder)
 	return ..()
 
-/datum/component/mirage_border/OnTransfer(atom/thing)
-	if(!isturf(thing))
+/datum/component/mirage_border/PreTransfer()
+	holder.moveToNullspace()
+
+/datum/component/mirage_border/PostTransfer()
+	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
-	holder.forceMove(thing)
+	holder.forceMove(parent)
 
 /obj/effect/abstract/mirage_holder
 	name = "Mirage holder"
+	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

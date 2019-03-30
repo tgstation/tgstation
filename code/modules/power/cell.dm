@@ -20,7 +20,6 @@
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
-	container_type = INJECTABLE|DRAINABLE
 
 /obj/item/stock_parts/cell/get_cell()
 	return src
@@ -28,7 +27,7 @@
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	create_reagents(5)
+	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
 	charge = maxcharge
@@ -131,10 +130,12 @@
 		rigged = TRUE //broken batterys are dangerous
 
 /obj/item/stock_parts/cell/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	charge -= 1000 / severity
 	if (charge < 0)
 		charge = 0
-	..()
 
 /obj/item/stock_parts/cell/ex_act(severity, target)
 	..()
@@ -153,7 +154,7 @@
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
-		return CLAMP(round(charge/10000), 10, 90) + rand(-5,5)
+		return CLAMP(20 + round(charge/25000), 20, 195) + rand(-5,5)
 	else
 		return 0
 
@@ -320,8 +321,9 @@
 	charge = 0
 	update_icon()
 
-/obj/item/stock_parts/cell/emproof/emp_act(severity)
-	return
+/obj/item/stock_parts/cell/emproof/empty/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/emproof/corrupt()
 	return
@@ -336,6 +338,9 @@
 	return
 
 /obj/item/stock_parts/cell/beam_rifle/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	charge = CLAMP((charge-(10000/severity)),0,maxcharge)
 
 /obj/item/stock_parts/cell/emergency_light

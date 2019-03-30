@@ -12,7 +12,7 @@
 		return
 	if(!is_servant_of_ratvar(user))
 		return
-	if(!isprocessing)
+	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprocessing, src)
 		to_chat(user, "<span class='notice'>You activate [src].</span>")
 		icon_state = "[icon_state]_on"

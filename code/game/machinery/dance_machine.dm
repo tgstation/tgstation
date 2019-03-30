@@ -3,7 +3,6 @@
 	desc = "A classic music player."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "jukebox"
-	anchored = TRUE
 	verb_say = "states"
 	density = TRUE
 	req_access = list(ACCESS_BAR)
@@ -64,13 +63,13 @@
 
 /obj/machinery/jukebox/attackby(obj/item/O, mob/user, params)
 	if(!active && !(flags_1 & NODECONSTRUCT_1))
-		if(istype(O, /obj/item/wrench))
+		if(O.tool_behaviour == TOOL_WRENCH)
 			if(!anchored && !isinspace())
 				to_chat(user,"<span class='notice'>You secure [src] to the floor.</span>")
-				anchored = TRUE
+				setAnchored(TRUE)
 			else if(anchored)
 				to_chat(user,"<span class='notice'>You unsecure and disconnect [src].</span>")
-				anchored = FALSE
+				setAnchored(FALSE)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return
 	return ..()
@@ -230,11 +229,11 @@
 		sparkles += S
 		switch(i)
 			if(1 to 8)
-				S.orbit(src, 30, TRUE, 60, 36, TRUE, FALSE)
+				S.orbit(src, 30, TRUE, 60, 36, TRUE)
 			if(9 to 16)
-				S.orbit(src, 62, TRUE, 60, 36, TRUE, FALSE)
+				S.orbit(src, 62, TRUE, 60, 36, TRUE)
 			if(17 to 24)
-				S.orbit(src, 95, TRUE, 60, 36, TRUE, FALSE)
+				S.orbit(src, 95, TRUE, 60, 36, TRUE)
 			if(25)
 				S.pixel_y = 7
 				S.forceMove(get_turf(src))
@@ -377,7 +376,7 @@
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
 			for(var/mob/living/carbon/NS in rangers)
-				NS.lay_down(TRUE)		//specifically excludes silicons to prevent pAI chat spam
+				NS.set_resting(!NS.resting, TRUE)
 		 time--
 
 /obj/machinery/jukebox/disco/proc/dance5(var/mob/living/M)
@@ -460,5 +459,9 @@
 	. = ..()
 	if(active)
 		for(var/mob/M in rangers)
-			if(prob(5+(allowed(M)*4)) && M.canmove)
+			if(prob(5+(allowed(M)*4)))
+				if(isliving(M))
+					var/mob/living/L = M
+					if(!(L.mobility_flags & MOBILITY_MOVE))
+						continue
 				dance(M)

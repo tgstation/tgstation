@@ -10,12 +10,10 @@
 	var/datum/objective/O = new /datum/objective/disease_infect()
 	O.owner = owner
 	objectives += O
-	owner.objectives += O
 
 	O = new /datum/objective/disease_infect_centcom()
 	O.owner = owner
 	objectives += O
-	owner.objectives += O
 
 	. = ..()
 

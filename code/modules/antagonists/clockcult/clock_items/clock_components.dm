@@ -5,7 +5,7 @@
 	clockwork_desc = null
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/component_id //What the component is identified as
-	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
+	var/cultist_message = "You are not worthy of this meme." //Showed to Nar'Sian cultists if they pick up the component in addition to chaplains
 	var/list/servant_of_ratvar_messages = list("ayy" = FALSE, "lmao" = TRUE) //Fluff, shown to servants of Ratvar on a low chance, if associated value is TRUE, will automatically apply ratvarian
 	var/message_span = "heavy_brass"
 
@@ -16,7 +16,7 @@
 
 /obj/item/clockwork/component/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user))
-		user.visible_message("<span class='notice'>[user] crushes [src] in their hand!</span>", \
+		user.visible_message("<span class='notice'>[user] crushes [src] in [user.p_their()] hand!</span>", \
 		"<span class='alloy'>You crush [src], capturing its escaping energy for use as power.</span>")
 		playsound(user, 'sound/effects/pop_expl.ogg', 50, TRUE)
 		adjust_clockwork_power(POWER_WALL_TOTAL)

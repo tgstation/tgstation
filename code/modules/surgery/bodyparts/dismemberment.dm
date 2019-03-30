@@ -1,7 +1,7 @@
 
 /obj/item/bodypart/proc/can_dismember(obj/item/I)
 	if(dismemberable)
-		. = (get_damage() >= (max_damage - I.armour_penetration/2))
+		return TRUE
 
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
@@ -16,10 +16,10 @@
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-	affecting.receive_damage(CLAMP(brute_dam/2, 15, 50), CLAMP(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(CLAMP(brute_dam/2 * affecting.body_damage_coeff, 15, 50), CLAMP(burn_dam/2 * affecting.body_damage_coeff, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
-	C.SendSignal(COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
+	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
 
 	if(dam_type == BURN)
@@ -51,7 +51,7 @@
 		return FALSE
 	if(C.has_trait(TRAIT_NODISMEMBER))
 		return FALSE
-
+	. = list()
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
 	C.add_splatter_floor(T)
@@ -64,14 +64,15 @@
 		O.Remove(C)
 		O.forceMove(T)
 		organ_spilled = 1
+		. += X
 	if(cavity_item)
 		cavity_item.forceMove(T)
+		. += cavity_item
 		cavity_item = null
 		organ_spilled = 1
 
 	if(organ_spilled)
 		C.visible_message("<span class='danger'><B>[C]'s internal organs spill out onto the floor!</B></span>")
-	return 1
 
 
 
@@ -102,14 +103,14 @@
 		I.forceMove(src)
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
-		C.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
+		SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 	if(!special)
 		if(C.dna)
 			for(var/X in C.dna.mutations) //some mutations require having specific limbs to be kept.
 				var/datum/mutation/human/MT = X
 				if(MT.limb_req && MT.limb_req == body_zone)
-					MT.force_lose(C)
+					C.dna.force_lose(MT)
 
 		for(var/X in C.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/obj/item/organ/O = X
@@ -122,7 +123,7 @@
 	C.update_health_hud() //update the healthdoll
 	C.update_body()
 	C.update_hair()
-	C.update_canmove()
+	C.update_mobility()
 
 	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
@@ -150,15 +151,23 @@
 		LB.brainmob = brainmob
 		brainmob = null
 		LB.brainmob.forceMove(LB)
-		LB.brainmob.container = LB
 		LB.brainmob.stat = DEAD
 
 /obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
 	LB.eyes = src
 	..()
 
+/obj/item/organ/ears/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
+	LB.ears = src
+	..()
+
+/obj/item/organ/tongue/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
+	LB.tongue = src
+	..()
+
 /obj/item/bodypart/chest/drop_limb(special)
-	return
+	if(special)
+		..()
 
 /obj/item/bodypart/r_arm/drop_limb(special)
 	var/mob/living/carbon/C = owner
@@ -199,7 +208,7 @@
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.forceMove(drop_location())
+			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
@@ -210,7 +219,7 @@
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.forceMove(drop_location())
+			owner.legcuffed.forceMove(owner.drop_location())
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
@@ -242,16 +251,11 @@
 	name = "[owner.real_name]'s head"
 	..()
 
-
-
-
-
-
 //Attach a limb to a human and drop any existing limb of that type.
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/C, special)
 	if(!istype(C))
 		return
-	var/obj/item/bodypart/O = locate(src.type) in C.bodyparts
+	var/obj/item/bodypart/O = C.get_bodypart(body_zone)
 	if(O)
 		O.drop_limb(1)
 	attach_limb(C, special)
@@ -259,7 +263,7 @@
 /obj/item/bodypart/head/replace_limb(mob/living/carbon/C, special)
 	if(!istype(C))
 		return
-	var/obj/item/bodypart/head/O = locate(src.type) in C.bodyparts
+	var/obj/item/bodypart/head/O = C.get_bodypart(body_zone)
 	if(O)
 		if(!special)
 			return
@@ -301,7 +305,7 @@
 	C.update_body()
 	C.update_hair()
 	C.update_damage_overlays()
-	C.update_canmove()
+	C.update_mobility()
 
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
@@ -314,6 +318,13 @@
 			brainmob = null //Set head brainmob var to null
 		brain.Insert(C) //Now insert the brain proper
 		brain = null //No more brain in the head
+
+	if(tongue)
+		tongue = null
+	if(ears)
+		ears = null
+	if(eyes)
+		eyes = null
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C

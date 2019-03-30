@@ -97,23 +97,15 @@
 			card_slot = computer.all_components[MC_CARD]
 			D = card_slot.GetID()
 		var/mob/living/carbon/human/h = user
-		var/obj/item/card/id/I = h.get_idcard()
-		var/obj/item/card/id/C = h.get_active_held_item()
-		if(C)
-			C = C.GetID()
-		if(!(C && istype(C)))
-			C = null
+		var/obj/item/card/id/I = h.get_idcard(TRUE)
 
-		if(!I && !C && !D)
+		if(!I && !D)
 			if(loud)
 				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
 			return 0
 
 		if(I)
 			if(access_to_check in I.GetAccess())
-				return 1
-		else if(C)
-			if(access_to_check in C.GetAccess())
 				return 1
 		else if(D)
 			if(access_to_check in D.GetAccess())
@@ -129,7 +121,7 @@
 		return computer.get_header_data()
 	return list()
 
-// This is performed on program startup. May be overriden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
+// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))

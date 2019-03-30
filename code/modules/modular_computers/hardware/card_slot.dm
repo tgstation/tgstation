@@ -9,6 +9,13 @@
 	var/obj/item/card/id/stored_card = null
 	var/obj/item/card/id/stored_card2 = null
 
+/obj/item/computer_hardware/card_slot/handle_atom_del(atom/A)
+	if(A == stored_card)
+		try_eject(1, null, TRUE)
+	if(A == stored_card2)
+		try_eject(2, null, TRUE)
+	. = ..()
+
 /obj/item/computer_hardware/card_slot/Destroy()
 	try_eject()
 	return ..()
@@ -57,6 +64,9 @@
 		stored_card2 = I
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.sec_hud_set_ID()
 
 	return TRUE
 
@@ -71,7 +81,7 @@
 		if(user)
 			user.put_in_hands(stored_card)
 		else
-			stored_card.forceMove(get_turf(src))
+			stored_card.forceMove(drop_location())
 		stored_card = null
 		ejected++
 
@@ -79,7 +89,7 @@
 		if(user)
 			user.put_in_hands(stored_card2)
 		else
-			stored_card2.forceMove(get_turf(src))
+			stored_card2.forceMove(drop_location())
 		stored_card2 = null
 		ejected++
 
@@ -91,7 +101,9 @@
 			for(var/I in holder.idle_threads)
 				var/datum/computer_file/program/P = I
 				P.event_idremoved(1, slot)
-
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.sec_hud_set_ID()
 		to_chat(user, "<span class='notice'>You remove the card[ejected>1 ? "s" : ""] from \the [src].</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		return TRUE
@@ -100,7 +112,7 @@
 /obj/item/computer_hardware/card_slot/attackby(obj/item/I, mob/living/user)
 	if(..())
 		return
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
 		try_eject(0,user)
 		return

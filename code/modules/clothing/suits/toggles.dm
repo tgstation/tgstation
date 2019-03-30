@@ -5,9 +5,9 @@
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 
-/obj/item/clothing/suit/hooded/New()
+/obj/item/clothing/suit/hooded/Initialize()
+	. = ..()
 	MakeHood()
-	..()
 
 /obj/item/clothing/suit/hooded/Destroy()
 	. = ..()
@@ -24,11 +24,11 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
-	if(slot == slot_wear_suit)
+	if(slot == SLOT_WEAR_SUIT)
 		return 1
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
-	if(slot != slot_wear_suit)
+	if(slot != SLOT_WEAR_SUIT)
 		RemoveHood()
 	..()
 
@@ -59,7 +59,7 @@
 			if(H.head)
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else if(H.equip_to_slot_if_possible(hood,slot_head,0,0,1))
+			else if(H.equip_to_slot_if_possible(hood,SLOT_HEAD,0,0,1))
 				suittoggled = TRUE
 				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
@@ -83,7 +83,7 @@
 
 /obj/item/clothing/head/hooded/equipped(mob/user, slot)
 	..()
-	if(slot != slot_head)
+	if(slot != SLOT_HEAD)
 		if(suit)
 			suit.RemoveHood()
 		else
@@ -155,7 +155,7 @@
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	if(!helmettype)
 		return
-	if(slot != slot_wear_suit)
+	if(slot != SLOT_WEAR_SUIT)
 		RemoveHelmet()
 	..()
 
@@ -192,7 +192,7 @@
 			if(H.head)
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else if(H.equip_to_slot_if_possible(helmet,slot_head,0,0,1))
+			else if(H.equip_to_slot_if_possible(helmet,SLOT_HEAD,0,0,1))
 				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE
 				H.update_inv_wear_suit()

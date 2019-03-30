@@ -6,7 +6,6 @@
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	var/busy = FALSE
 	var/hacked = FALSE
@@ -43,10 +42,11 @@
 		if(linked_console)
 			disconnect_console()
 		return
-	if(exchange_parts(user, O))
-		return
 	if(default_deconstruction_crowbar(O))
 		return
+	if(panel_open && is_wire_tool(O))
+		wires.interact(user)
+		return TRUE
 	if(is_refillable() && O.is_drainable())
 		return FALSE //inserting reagents into the machine
 	if(Insert_Item(O, user))
@@ -68,6 +68,7 @@
 		to_chat(user, "<span class='warning'>You can't load [src] while it's opened!</span>")
 		return FALSE
 	if(disabled)
+		to_chat(user, "<span class='warning'>The insertion belts of [src] won't engage!</span>")
 		return FALSE
 	if(requires_console && !linked_console)
 		to_chat(user, "<span class='warning'>[src] must be linked to an R&D console first!</span>")

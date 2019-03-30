@@ -20,12 +20,12 @@
 	var/override = 0
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A, proximity)
+		override += HM.on_attack_hand(A, proximity)
 
 	if(override)
 		return
 
-	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
 	A.attack_hand(src)
 
 //Return TRUE to cancel other attack hand effects that respect it.
@@ -33,7 +33,7 @@
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
-	if(SendSignal(COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
 		. = TRUE
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
@@ -55,6 +55,11 @@
 	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED) && user.incapacitated((interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED), !(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB)))
 		return FALSE
 	return TRUE
+
+/atom/ui_status(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		. = min(., UI_UPDATE)
 
 /atom/movable/can_interact(mob/user)
 	. = ..()
@@ -81,16 +86,18 @@
 	return 0
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
+	. = ..()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
 			return
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_ranged_attack(src, A, mouseparams)
+		HM.on_ranged_attack(A, mouseparams)
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
+		return
 
 /*
 	Animals & All Unspecified
@@ -111,7 +118,7 @@
 	A.attack_paw(src)
 
 /atom/proc/attack_paw(mob/user)
-	if(SendSignal(COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_NO_ATTACK_HAND)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_NO_ATTACK_HAND)
 		return TRUE
 	return FALSE
 
