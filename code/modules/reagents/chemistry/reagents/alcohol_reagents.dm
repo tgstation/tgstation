@@ -2012,8 +2012,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "champagne"
 	description = "A sparkling wine known for its ability to strike fast and hard."
 	color = "#ffffc1"
-	boozepwr = 50
-	quality = DRINK_NICE
+	boozepwr = 40
 	taste_description = "auspicious occasions and bad decisions"
 	glass_icon_state = "champagne_glass"
 	glass_name = "Champagne"
@@ -2073,7 +2072,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "The perfect beverage for when you feel the need to horse around."
 	color = "#ff6633"
 	boozepwr = 20
-	quality = DRINK_NICE
 	taste_description = "an honest day's work at the orchard"
 	glass_icon_state = "applejack_glass"
 	glass_name = "Applejack"
