@@ -2015,7 +2015,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 50
 	quality = DRINK_NICE
 	taste_description = "auspicious occasions and bad decisions"
-	glass_icon_state = "champagne"
+	glass_icon_state = "champagne_glass"
 	glass_name = "Champagne"
 	glass_desc = "The flute clearly displays the slowly rising bubbles."
 
@@ -2075,6 +2075,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 20
 	quality = DRINK_NICE
 	taste_description = "an honest day's work at the orchard"
-	glass_icon_state = "applejack"
+	glass_icon_state = "applejack_glass"
 	glass_name = "Applejack"
 	glass_desc = "You feel like you could drink this all neight."
