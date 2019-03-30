@@ -2005,3 +2005,62 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = flavor
 	if(holder.my_atom)
 		holder.my_atom.on_reagent_change()
+
+
+/datum/reagent/consumable/ethanol/champagne //How the hell did we not have champagne already!?
+	name = "Wizz Fizz"
+	id = "wizz_fizz"
+	description = "A sparkling wine known for its ability to strike fast and hard."
+	color = "#ffffc1"
+	boozepwr = 50
+	quality = DRINK_NICE
+	taste_description = "auspicious occasions and bad decisions"
+	glass_icon_state = "champagne"
+	glass_name = "Champagne"
+	glass_desc = "The flute clearly displays the slowly rising bubbles."
+
+
+/datum/reagent/consumable/ethanol/wizz_fizz
+	name = "Wizz Fizz"
+	id = "wizz_fizz"
+	description = "A magical potion, fizzy and wild! However the taste, you will find, is quite mild."
+	color = "#4235d0" //Just pretend that the triple-sec was blue curacao.
+	boozepwr = 50
+	quality = DRINK_GOOD
+	taste_description = "friendship! It is magic, after all."
+	glass_icon_state = "wizz_fizz"
+	glass_name = "Wizz Fizz"
+	glass_desc = "The glass bubbles and froths with an almost magical intensity."
+
+/datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/M)
+	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
+	if(M.mind)
+			var/datum/antagonist/wizard/wizard = M.mind.has_antag_datum(/datum/antagonist/wizard)
+		M.heal_bodypart_damage(1,1,1)
+		M.adjustBruteLoss(-2,0)
+		M.adjustOxyLoss(-2,0)
+		M.adjustFireLoss(-2,0)
+		M.adjustToxLoss(-2,0)
+		. = 1
+	return ..()
+
+/datum/reagent/consumable/ethanol/bug_spray
+	name = "Bug Spray"
+	id = "bug_spray"
+	description = "A harsh, acrid, bitter drink, for those who need something to brace themselves."
+	color = "#4235d0"
+	boozepwr = 50
+	quality = DRINK_GOOD
+	taste_description = "the pain of ten thousand slain mosquitos."
+	glass_icon_state = "bug_spray"
+	glass_name = "Bug Spray"
+	glass_desc = "Your eyes begin to water as the sting of alcohol reaches them."
+
+/datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/M)
+	//Bugs should not drink Bug spray.
+	if(M.has_trait(MOB_BUG))
+	M.adjustBruteLoss(1,0)
+	M.adjustOxyLoss(1,0)
+	M.adjustToxLoss(4,0)
+		. = 1
+	return ..()
