@@ -197,7 +197,7 @@
 	prefix = "Plasteel"
 	special_names = null
 
-/datum/species/golem/plasteel/mob_negates_gravity()
+/datum/species/golem/plasteel/negates_gravity(mob/living/carbon/human/H)
 	return TRUE
 
 /datum/species/golem/plasteel/on_species_gain(mob/living/carbon/C, datum/species/old_species)
