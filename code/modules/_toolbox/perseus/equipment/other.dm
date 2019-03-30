@@ -200,7 +200,7 @@ removed sections which read.
 			..()
 			reagents.add_reagent("synaptizine", 5)
 			reagents.add_reagent("omnizine", 5)
-			reagents.add_reagent("stimulants", 5)
+			reagents.add_reagent("ephedrine", 5)
 
 /*
 * Stimpack Tank

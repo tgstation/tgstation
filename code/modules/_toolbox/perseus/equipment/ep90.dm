@@ -1,8 +1,8 @@
 var/const/EP_STUNTIME_SINGLE = 1 * 20
-var/const/EP_STUNTIME_AOE = 1 * 20
+var/const/EP_STUNTIME_AOE = 2 * 20
 
 var/const/IS_EP_SINGLE_STACKING = 1 * 20
-var/const/IS_EP_AOE_STACKING = 1 * 20
+var/const/IS_EP_AOE_STACKING = 2 * 20
 
 var/const/EP_MAX_SINGLE_STACK = 7 * 20
 var/const/EP_MAX_AOE_STACK = 7 * 20
@@ -182,7 +182,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	name = "energy"
 	icon_state = "ep90shot"
 	icon = 'icons/oldschool/perseus.dmi'
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/effects/sparks1.ogg'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	stun = EP_STUNTIME_SINGLE
 	knockdown = EP_STUNTIME_SINGLE
@@ -234,7 +234,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	name = "energy"
 	icon_state = "ep90shot"
 	icon = 'icons/oldschool/perseus.dmi'
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/effects/sparks1.ogg'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 	stun = EP_STUNTIME_AOE
@@ -286,7 +286,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 /obj/item/ammo_casing/energy/ep90_single
 	select_name = "semi-automatic fire"
 	projectile_type = /obj/item/projectile/energy/ep90_single
-	e_cost = 20
+	e_cost = 40
 	fire_sound = 'sound/toolbox/ep90.ogg'
 
 /obj/item/ammo_casing/energy/ep90_single/newshot(var/emagged = 0)
@@ -297,7 +297,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 /obj/item/ammo_casing/energy/ep90_aoe
 	select_name = "area-of-effect fire"
 	projectile_type = /obj/item/projectile/energy/ep90_aoe
-	e_cost = 100
+	e_cost = 500
 	fire_sound = 'sound/toolbox/ep90.ogg'
 
 /obj/item/ammo_casing/energy/ep90_aoe/newshot(var/emagged = 0)
@@ -309,7 +309,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 /obj/item/ammo_casing/energy/ep90_burst_3
 	select_name = "3-round-burst"
 	projectile_type = /obj/item/projectile/energy/ep90_single
-	e_cost = 20
+	e_cost = 40
 	fire_sound = 'sound/toolbox/ep90.ogg'
 	burst = 3
 	burst_delay = 1.6
@@ -323,7 +323,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 /obj/item/ammo_casing/energy/ep90_burst_5
 	select_name = "5-round-burst"
 	projectile_type = /obj/item/projectile/energy/ep90_single
-	e_cost = 20
+	e_cost = 40
 	fire_sound = 'sound/toolbox/ep90.ogg'
 	burst = 5
 	burst_delay = 2.7
