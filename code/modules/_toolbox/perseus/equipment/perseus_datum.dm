@@ -77,7 +77,7 @@
 	var/perc_identifier = "ERROR"
 	var/datum/mind/owner_mind = null
 	var/mob/living/last_mob = null
-	var/list/action_datums = list(/datum/action/padrenal = 10,/datum/action/pdoors = 0) //must be /datum/action. Added number is how many players are required to be playing for this to work. -falaskian
+	var/list/action_datums = list(/datum/action/pdoors = 0) //must be /datum/action. Added number is how many players are required to be playing for this to work. -falaskian
 	var/list/active_actions = list()
 	var/iscommander = 0
 	var/list/handled_client_images = list()
@@ -283,6 +283,7 @@
 		return 0
 
 	to_chat(H, "<span class='notice'>You feel a sudden surge of energy! Return to the Mycenae to recharge your [name].</span>")
+
 	H.SetStun(0)
 	H.SetKnockdown(0)
 	H.SetUnconscious(0)
@@ -292,7 +293,8 @@
 
 	H.reagents.add_reagent("synaptizine", 10)
 	H.reagents.add_reagent("omnizine", 10)
-	H.reagents.add_reagent("stimulants", 10)
+	H.reagents.add_reagent("ephedrine", 10)
+
 	cooldown = 1
 	UpdateButtonIcon()
 

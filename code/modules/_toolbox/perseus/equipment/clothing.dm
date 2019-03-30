@@ -13,7 +13,7 @@
 	icon = 'icons/oldschool/perseus.dmi'
 	alternate_worn_icon = 'icons/oldschool/perseus_worn.dmi'
 	flags_1 = NOSLIP_1
-	armor = list("melee" = 80, "bullet" = 60, "laser" = 50, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0)
+	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0)
 	var/obj/item/stun_knife/knife
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -95,7 +95,7 @@
 	item_state = "persarmour"
 	icon = 'icons/oldschool/perseus.dmi'
 	alternate_worn_icon = 'icons/oldschool/perseus_worn.dmi'
-	armor = list("melee" = 50, "bullet" = 15, "laser" = 50, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0)
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -214,7 +214,7 @@
 	flags_inv = HIDEFACE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = 0
-	armor = list("melee" = 70, "bullet" = 55, "laser" = 45, "energy" = 10, "bomb" = 25, "bio" = 10, "rad" = 0)
+	armor = list("melee" = 35, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0)
 /*
 * Perseus Helmet
 */
@@ -228,7 +228,8 @@
 	flags_1 = THICKMATERIAL_1 | STOPSPRESSUREDMAGE_1
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEFACE | HIDEHAIR
-	armor = list("melee" = 70, "bullet" = 55, "laser" = 45, "energy" = 10, "bomb" = 25, "bio" = 10, "rad" = 0)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	armor = list("melee" = 35, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0)
 
 /*
 * Perseus Winter Coat
@@ -307,6 +308,10 @@
 	var/authorized_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	//origin_tech = "magnets=3"
 	//invis_view = SEE_INVISIBLE_MINIMUM
+
+/obj/item/clothing/glasses/perseus/emp_act(severity)
+	thermal_overload()
+	..()
 
 /obj/item/clothing/glasses/perseus/New()
 	SSobj.processing += src

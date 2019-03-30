@@ -8,8 +8,7 @@
 */
 
 /obj/item/projectile/bullet/fiveseven
-	damage = 49
-	knockdown = 120
+	damage = 24
 
 /obj/item/ammo_casing/fiveseven
 	desc = "A 5.7x28mm casing"
