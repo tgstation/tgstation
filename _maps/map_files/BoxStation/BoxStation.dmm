@@ -35913,6 +35913,7 @@
 	},
 /obj/machinery/computer/security/telescreen/toxins{
 	dir = 8;
+	network = list("toxins");
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel,
