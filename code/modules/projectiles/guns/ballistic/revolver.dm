@@ -44,7 +44,7 @@
 	recent_spin = world.time + spin_delay
 
 	if(do_spin())
-		playsound(usr, "revolver_spin", 100, FALSE)
+		playsound(src, "revolver_spin", 100)
 		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
