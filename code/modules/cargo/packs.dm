@@ -543,6 +543,26 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
+/datum/supply_pack/security/armory/deltaelite
+	name = "Delta Elite Crate"
+	desc = "Contains two 10mm 1911-style handguns and two accompanying magazines. Requires Armory access to open."
+	cost = 5000
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/deltaelite,
+					/obj/item/gun/ballistic/automatic/pistol/deltaelite,
+					/obj/item/ammo_box/magazine/de10mm,
+					/obj/item/ammo_box/magazine/de10mm)
+	crate_name = "delta elite crate"
+
+/datum/supply_pack/security/armory/deltaeliteammo
+	name = "Delta Elite Magazine Crate"
+	desc = "Contains four 10mm magazines, designed to fit into the Colt Delta Elite. Requires Armory access to open."
+	cost = 3000
+	contains = list(/obj/item/ammo_box/magazine/de10mm,
+					/obj/item/ammo_box/magazine/de10mm,
+					/obj/item/ammo_box/magazine/de10mm,
+					/obj/item/ammo_box/magazine/de10mm)
+	crate_name = "delta elite magazine crate"
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////

@@ -34,7 +34,25 @@
 
 /obj/item/ammo_box/magazine/m45/update_icon()
 	..()
-	icon_state = "45-[ammo_count() ? "8" : "0"]"
+	if (ammo_count() >= 8)
+		icon_state = "45-8"
+	else
+		icon_state = "45-[ammo_count()]"
+
+/obj/item/ammo_box/magazine/de10mm
+	name = "Colt Delta Elite magazine (10mm)"
+	desc = "A single-stack m1911 magazine, modified to fit 10mm auto."
+	icon_state = "45-8"
+	ammo_type = /obj/item/ammo_casing/c10mm
+	caliber = "10mm"
+	max_ammo = 8
+
+/obj/item/ammo_box/magazine/de10mm/update_icon()
+	..()
+	if (ammo_count() >= 8)
+		icon_state = "45-8"
+	else
+		icon_state = "45-[ammo_count()]"
 
 /obj/item/ammo_box/magazine/pistolm9mm
 	name = "pistol magazine (9mm)"

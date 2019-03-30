@@ -35,6 +35,17 @@
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE
 
+/obj/item/gun/ballistic/automatic/pistol/deltaelite
+	name = "\improper Colt Delta Elite"
+	desc = "A modification on the classic 1911 handgun, this gun is chambered in 10mm. Like it's predecessor, it suffers from low capacity."
+	icon_state = "deltaelite"
+	w_class = WEIGHT_CLASS_NORMAL
+	mag_type = /obj/item/ammo_box/magazine/de10mm
+	can_suppress = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/deltaelite/no_mag
+	spawnwithmagazine = FALSE
+
 /obj/item/gun/ballistic/automatic/pistol/deagle
 	name = "\improper Desert Eagle"
 	desc = "A robust .50 AE handgun."
