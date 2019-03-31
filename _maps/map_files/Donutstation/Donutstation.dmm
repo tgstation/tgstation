@@ -52914,9 +52914,6 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible/layer3{
-	dir = 5
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -54044,19 +54041,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"lGc" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/hatch{
-	name = "Supermatter External Chamber";
-	req_access_txt = "10"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1,
-/turf/open/floor/plasteel/dark,
-/area/engine/engine_room/external)
 "lKe" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -54182,8 +54166,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -54470,7 +54452,6 @@
 /area/engine/supermatter)
 "nPz" = (
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible/layer3,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -55463,16 +55444,14 @@
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
 "tpd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "tqi" = (
@@ -92176,7 +92155,7 @@ hfx
 feu
 etL
 hLL
-lGc
+dlq
 oCw
 kMb
 yeA
