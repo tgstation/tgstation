@@ -39,7 +39,17 @@
 	pixel_z = -8
 	layer = LARGE_MOB_LAYER
 
+/obj/structure/checkoutmachine/proc/check_if_finished()
+	for(var/i in accounts_to_rob)
+		var/datum/bank_account/B = i
+		if (B.being_dumped)
+			return FALSE
+	return TRUE
+
 /obj/structure/checkoutmachine/attackby(obj/item/W, mob/user, params)
+	if(check_if_finished())
+		qdel(src)
+		return
 	if(istype(W, /obj/item/card/id))
 		var/obj/item/card/id/card = W
 		if(!card.registered_account)
@@ -54,6 +64,9 @@
 			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>")
 			card.registered_account.being_dumped = FALSE	
 			card.registered_account.canWithdraw = 0
+			if(check_if_finished())
+				qdel(src)
+				return
 	else
 		return ..()
 
@@ -115,6 +128,8 @@
 		return QDEL_HINT_LETMELIVE
 	stop_dumping()
 	STOP_PROCESSING(SSfastprocess, src)
+	priority_announce("The credit deposit machine at [get_area(src).name] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
+	explosion(src, 0,1,2)
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
