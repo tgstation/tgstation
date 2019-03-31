@@ -70,6 +70,7 @@
 	anchored = TRUE //Prevent movement
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
+	update_icon()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/Move()
