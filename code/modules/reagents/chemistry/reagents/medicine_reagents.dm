@@ -929,7 +929,7 @@
 	else
 		L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown = -0.75, blacklisted_movetypes=(FLYING|FLOATING))
 
-/datum/reagent/drug/fervoxazine/on_mob_life(mob/living/carbon/M)   
+/datum/reagent/medicine/fervoxazine/on_mob_life(mob/living/carbon/M)   
 	if(prob(5))
 		var/high_message = pick("You feel heated and ready to move.", "You feel like a burning star.", "You feel like a meteor.")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
@@ -941,6 +941,7 @@
 	M.AdjustParalyzed(-40, FALSE)
 	M.AdjustImmobilized(-40, FALSE)
 	..()
+	. = 1
 
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"
