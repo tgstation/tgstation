@@ -84,6 +84,10 @@
 		return
 	var/mob/living/carbon/C = occupant
 	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
+	if(operation_order.len >= 2 && istype(operation_order[operation_order.len - 1], /obj/item/bodypart/head)) // Swap head and torso, so the head is processed last
+		var/obj/item/bodypart/temp = operation_order[operation_order.len - 1]
+		operation_order[operation_order.len - 1] = operation_order[operation_order.len]
+		operation_order[operation_order.len] = temp
 	harvesting = TRUE
 	visible_message("<span class='notice'>The [name] begins warming up!</span>")
 	say("Initializing harvest protocol.")
@@ -162,6 +166,7 @@
 		return
 	obj_flags |= EMAGGED
 	allow_living = TRUE
+	allow_clothing = TRUE
 	to_chat(user, "<span class='warning'>You overload [src]'s lifesign scanners.</span>")
 
 /obj/machinery/harvester/container_resist(mob/living/user)
