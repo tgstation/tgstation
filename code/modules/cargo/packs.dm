@@ -239,8 +239,32 @@
 					/obj/item/grenade/chem_grenade/antiweed)
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
-//иии
+
 /datum/supply_pack/emergency/bio
+	name = "Biological Emergency Crate"
+	desc = "This crate holds 2 full bio suits which will protect you from viruses."
+	cost = 2000
+	contains = list(/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/storage/bag/bio,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/clothing/gloves/color/latex/nitrile,
+					/obj/item/clothing/gloves/color/latex/nitrile)
+	crate_name = "bio suit crate"
+
+/datum/supply_pack/emergency/bomb
+	name = "Explosive Emergency Crate"
+	desc = "There is a bomb beeping in the courtroom? Don't panic and quickly buy this crate, it has all you need to disarm the bomb (time not included).
+	cost = 1500
+	contains = list(/obj/item/clothing/head/bomb_hood,
+					/obj/item/clothing/mask/gas,
+					/obj/item/screwdriver,
+					/obj/item/wirecutters,
+					/obj/item/multitool)
+	crate_name = "bomb suit crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
@@ -373,8 +397,6 @@
 					/obj/item/storage/box/wall_flash)
 	crate_name = "wall-mounted flash crate"
 
-//иии
-/datum/supply_pack/security/m1991
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Armory //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -546,10 +568,48 @@
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
-//иии
-/datum/supply_pack/security/armory/shotguns
+
 /datum/supply_pack/security/armory/ammo
-/datum/supply_pack/security/armory/rusky
+	name = "Ammo Crate"
+	desc = "Contains two 20-round magazines for the WT-550 Auto Rifle, three boxes of buckshot ammo, three boxes of rubber ammo, two .38 speedloarders. Requires Armory access to open."
+	cost = 2500
+	contains = list(/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/storage/box/lethalshot
+					/obj/item/storage/box/lethalshot
+					/obj/item/storage/box/lethalshot
+					/obj/item/storage/box/rubbershot
+					/obj/item/storage/box/rubbershot
+					/obj/item/storage/box/rubbershot
+					/obj/item/ammo_box/c38
+					/obj/item/ammo_box/c38)
+	crate_name = "ammo crate"
+
+/datum/supply_pack/security/armory/randomised/russian
+	name = "Russian Surplus Crate"
+	desc = "Contains various military surplus bought on amazon. Requires Armory access to open."
+	cost = 5000
+	var/num_contained = 10
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/rationpack,
+					/obj/item/ammo_box/a762,
+					/obj/item/ammo_box/a762,
+					/obj/item/clothing/under/russian_soldier,
+					/obj/item/clothing/suit/armor/russian,
+					/obj/item/clothing/head/helmet/russian,
+					/obj/item/clothing/shoes/russian,
+					/obj/item/clothing/under/soviet,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/gun/ballistic/rifle/boltaction,
+					/obj/item/gun/ballistic/rifle/boltaction)
+	crate_name = "surplus military crate"
+
+/datum/supply_pack/armory/randomised/russian/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1420,7 +1480,15 @@
 	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/service/barman
-//ииии
+	name = "Mini Bar Kit"
+	desc = "The barman wont serve you drinks? Then make your own bar with this crate. Contains one booze dispenser, one soda dispenser, a shaker, one box of glasses."
+	cost = 2000
+	contains = list(/obj/machinery/chem_dispenser/drinks/beer/unwrenched,
+					/obj/machinery/chem_dispenser/drinks/unwrenched,
+					/obj/item/storage/box/drinkingglasses,
+					/obj/item/reagent_containers/food/drinks/shaker)
+	crate_name = "bar kit"
+
 /datum/supply_pack/service/vending/bartending
 	name = "Booze-o-mat and Coffee Supply Crate"
 	desc = "Bring on the booze and coffee vending machine refills."
@@ -1542,6 +1610,29 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana,
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
+
+/datum/supply_pack/organic/meat
+	name = "Excellent Meat Crate"
+	desc = "The best cuts in the whole galaxy."
+	cost = 3000
+	var/num_contained = 10
+	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
+					/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+					/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+					/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+					/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+					/obj/item/reagent_containers/food/snacks/meat/rawbacon,
+					/obj/item/reagent_containers/food/snacks/meat/slab/penguin,
+					/obj/item/reagent_containers/food/snacks/spiderleg,
+					/obj/item/reagent_containers/food/snacks/carpmeat,
+					/obj/item/reagent_containers/food/snacks/meat/slab/human)
+	crate_name = "food crate"
+
+/datum/supply_pack/organic/meat/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
 
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
