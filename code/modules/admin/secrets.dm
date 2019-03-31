@@ -197,7 +197,12 @@
 			for(var/sig in GLOB.lastsignalers)
 				dat += "[sig]<BR>"
 			usr << browse(dat, "window=lastsignalers;size=800x500")
-
+		
+		if("check_antagonist")
+			if(!check_rights(R_ADMIN))
+				return
+			usr.client.check_antagonists()
+		
 		if("list_lawchanges")
 			if(!check_rights(R_ADMIN))
 				return
