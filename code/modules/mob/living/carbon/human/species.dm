@@ -1287,7 +1287,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				"<span class='danger'>[user.name] kicks you onto your side!</span>", null, COMBAT_MESSAGE_RANGE)
 			log_combat(user, target, "kicks", "onto their side (paralyzing)")
 
-		if(shove_blocked && !target.is_shove_knockdown_blocked())
+		if(shove_blocked && !target.is_shove_knockdown_blocked() && !target.buckled)
 			var/directional_blocked = FALSE
 			if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
 				var/target_turf = get_turf(target)
