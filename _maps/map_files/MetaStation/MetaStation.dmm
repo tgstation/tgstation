@@ -34274,7 +34274,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	enabled = 1;
-	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
 	pixel_x = 30;
 	req_access_txt = "65"
@@ -49905,7 +49904,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/dark/visible{
-	icon_state = "manifold-2";
 	dir = 8
 	},
 /turf/open/floor/plasteel/kitchen_coldroom,
@@ -67364,7 +67362,6 @@
 /area/science/nanite)
 "cAr" = (
 /obj/machinery/computer/nanite_chamber_control{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
