@@ -7,6 +7,7 @@
 	var/account_id
 	var/welfare = TRUE
 	var/being_dumped = FALSE //pink levels are rising
+	var/canWithdraw = 0
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -19,6 +20,10 @@
 	if(add_to_accounts)
 		SSeconomy.bank_accounts -= src
 	return ..()
+
+/datum/bank_account/proc/dumpeet()
+	being_dumped = TRUE
+	canWithdraw = world.time + 600
 
 /datum/bank_account/proc/_adjust_money(amt)
 	account_balance += amt
