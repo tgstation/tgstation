@@ -477,7 +477,7 @@ GLOBAL_LIST_EMPTY(perseus_supplypacks)
 	var/cost = null
 	var/containertype = /obj/structure/closet/crate/secure/perc
 	var/containername = null
-	var/access = PERSEUS_ENFORCER
+	var/access = ACCESS_PERSEUS_ENFORCER
 	var/amount = 0
 
 /datum/perseus_supply_packs/New()

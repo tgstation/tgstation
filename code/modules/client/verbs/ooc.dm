@@ -29,7 +29,14 @@
 		if(jobban_isbanned(src.mob, "OOC"))
 			to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 			return
-
+		if(!istype(mob,/mob/dead/new_player) && GLOB && istype(GLOB.Player_Client_Cache,/list))
+			var/datum/client_cache/cache = GLOB.Player_Client_Cache[ckey]
+			var/cacheentry = "Informed_Not_To_Ic_In_OOC"
+			if(istype(cache) && istype(cache.warnings_experienced,/list) && !(cacheentry in cache.warnings_experienced))
+				cache.warnings_experienced += cacheentry
+				var/icinooc = alert(usr,"OOC is ment for only non round related conversation only. This means anything that can be interpreted as round related in any way is forbidden in OOC.","OOC","Ok","Cancel")
+				if(icinooc != "Ok")
+					return
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
 
