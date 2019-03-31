@@ -10,7 +10,6 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 	upgrade_type = "Shield"
 	cost_per_level = 15
-	extra_description = "Turns into a reflective shield with less brute resistance but more overall health."
 	var/damaged_icon = "blob_shield_damaged"
 	var/damaged_desc = "A wall of twitching tendrils."
 	var/damaged_name = "weakened strong infection"
@@ -22,6 +21,10 @@
 
 /obj/structure/infection/shield/do_upgrade()
 	change_to(/obj/structure/infection/shield/reflective, overmind)
+
+/obj/structure/infection/shield/extra_description()
+	. = "Current Max Integrity is [max_integrity]. Incoming Brute Damage is currently multiplied by [brute_resist]\nUpgrade: "
+	. += "Turns into a reflective shield with 200 Max Integrity and half as much Brute Resistance."
 
 /obj/structure/infection/shield/update_icon()
 	..()
@@ -50,10 +53,13 @@
 	brute_resist = 0.5
 	explosion_block = 2
 	infection_level = 2
-	extra_description = "Upgrades the brute resistance to be the same as a normal shield."
 
 /obj/structure/infection/shield/reflective/do_upgrade()
 	change_to(/obj/structure/infection/shield/reflective/strong, overmind)
+
+/obj/structure/infection/shield/reflective/extra_description()
+	. = "Current Max Integrity is [max_integrity]. Incoming Brute Damage is currently multiplied by [brute_resist]\nUpgrade: "
+	. += "Doubles current Brute Resistance."
 
 /obj/structure/infection/shield/reflective/handle_ricochet(obj/item/projectile/P)
 	var/turf/p_turf = get_turf(P)
@@ -75,5 +81,7 @@
 	damaged_name = "weakened strong reflective infection"
 	icon_state = "blob_idle_glow"
 	infection_level = 3
-	extra_description = null
 	brute_resist = 0.25
+
+/obj/structure/infection/shield/reflective/strong/extra_description()
+	. = "Current Max Integrity is [max_integrity]. Incoming Brute Damage is currently multiplied by [brute_resist]\n"

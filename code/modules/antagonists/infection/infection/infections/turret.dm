@@ -8,7 +8,6 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 	upgrade_type = "Turret"
 	cost_per_level = 70
-	extra_description = "Fires faster and further, and irradiates the target."
 	var/damaged_icon = "infection_turret_damaged"
 	var/damaged_desc = "A weakened wall with leaking radiating material."
 	var/damaged_name = "weakened strong infection"
@@ -26,8 +25,13 @@
 /obj/structure/infection/turret/do_upgrade()
 	frequency++
 	scan_range++
+
+/obj/structure/infection/turret/extra_description()
+	. = "Currently firing [frequency] times a second. Maximum Range is [scan_range].\nUpgrade: "
+	if(infection_level == 1)
+		. += "Fires faster and further, and irradiates the target."
 	if(infection_level == 2)
-		extra_description = "Fires faster and further, and disorients the target."
+		. += "Fires faster and further, and disorients the target."
 
 /obj/structure/infection/turret/update_icon()
 	cut_overlays()

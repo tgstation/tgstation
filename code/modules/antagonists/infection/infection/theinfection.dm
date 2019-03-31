@@ -24,7 +24,6 @@
 	var/infection_level = 1 // upgrade level of infection
 	var/cost_per_level = 0 // multiplied by current level
 	var/upgrade_type = "Base" // stat type of structure upgraded by overmind
-	var/extra_description // extra description about what the upgrade does
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -45,20 +44,23 @@
 	if(C != overmind)
 		return FALSE
 	var/list/choices = list(
-		"Upgrade [upgrade_type] Infection" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
-		"Description of Upgrade" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help")
+		"Upgrade [upgrade_type] Infection" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
+		"Display Information" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help")
 	)
 	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
 	if(choice == "Upgrade [upgrade_type] Infection")
 		upgrade_self()
-	if(choice == "Description of Upgrade")
+	if(choice == "Display Information")
 		show_description()
 	return TRUE
 
 /obj/structure/infection/proc/show_description()
-	to_chat(overmind, "\n[src] is currently level [infection_level].\nIt will cost [cost_to_upgrade()] points to upgrade.\nYou may upgrade this infection to level [current_max_upgrade()].")
-	if(extra_description)
-		to_chat(overmind, extra_description)
+	to_chat(overmind, "\nCurrent level is [infection_level].\n[cost_to_upgrade()] points to upgrade.\nMax level of this type is [current_max_upgrade()].")
+	if(extra_description())
+		to_chat(overmind, extra_description())
+
+/obj/structure/infection/proc/extra_description()
+	return
 
 /obj/structure/infection/proc/upgrade_self()
 	if(!can_upgrade())
@@ -161,7 +163,7 @@
 		pulsing_overmind = overmind
 	Be_Pulsed()
 	ConsumeTile()
-	next_pulse = world.time + pulse_cooldown * CLAMP((world.time - timecreated) / 300, 1, 8) // increases cooldown based on greater time alive
+	next_pulse = world.time + pulse_cooldown // increases cooldown based on greater time alive
 	for(var/i = 1 to count)
 		if(!angles.len)
 			reset_angles()
@@ -232,7 +234,7 @@
 	return
 
 /obj/structure/infection/ex_act(severity)
-	take_damage(rand(5, 10), BRUTE, "bomb", 0)
+	take_damage(rand(30/severity, 60/severity), BRUTE, "bomb", 0)
 
 /obj/structure/infection/tesla_act(power)
 	..()

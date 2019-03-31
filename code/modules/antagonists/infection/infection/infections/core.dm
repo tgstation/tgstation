@@ -93,6 +93,10 @@
 			overmind.update_health_hud()
 
 /obj/structure/infection/core/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	for(var/mob/M in range(10,src))
+		if(M.client)
+			flash_color(M.client, "#FB6B00", 1)
+			shake_camera(M, 4, 3)
 	playsound(src.loc, pick('sound/effects/curseattack.ogg', 'sound/effects/curse1.ogg', 'sound/effects/curse2.ogg', 'sound/effects/curse3.ogg', 'sound/effects/curse4.ogg',), 300, 1, pressure_affected = FALSE)
 
 /obj/structure/infection/core/Life()

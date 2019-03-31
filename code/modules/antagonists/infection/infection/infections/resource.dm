@@ -7,12 +7,19 @@
 	point_return = 15
 	upgrade_type = "Resource"
 	cost_per_level = 20
-	extra_description = "Increases the resource added per tick by 2."
 	var/resource_delay = 0
+	var/produced = 1 // points produced
 
 /obj/structure/infection/resource/Initialize()
 	START_PROCESSING(SSobj, src)
 	. = ..()
+
+/obj/structure/infection/resource/do_upgrade()
+	produced += 2
+
+/obj/structure/infection/resource/extra_description()
+	. = "Currently producing [produced] points every 2 seconds.\nUpgrade: "
+	. += "Increases points produced to [produced + 2]."
 
 /obj/structure/infection/resource/scannerreport()
 	return "Gradually supplies the infection with resources, increasing the rate of expansion."
@@ -33,5 +40,5 @@
 		return
 	flick("blob_resource_glow", src)
 	if(overmind)
-		overmind.add_points(infection_level * 2 - 1)
-	resource_delay = world.time + 40
+		overmind.add_points(produced)
+	resource_delay = world.time + 20

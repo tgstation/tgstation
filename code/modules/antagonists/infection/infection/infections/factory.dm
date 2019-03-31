@@ -8,7 +8,6 @@
 	point_return = 25
 	upgrade_type = "Factory"
 	cost_per_level = 30
-	extra_description = "Increases maximum spores by 2."
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
@@ -17,6 +16,13 @@
 /obj/structure/infection/factory/Initialize()
 	START_PROCESSING(SSobj, src)
 	. = ..()
+
+/obj/structure/infection/factory/do_upgrade()
+	max_spores += 2
+
+/obj/structure/infection/factory/extra_description()
+	. = "Currently producing a maximum of [max_spores] spores.\nUpgrade: "
+	. += "Increases maximum spores to [max_spores + 2]."
 
 /obj/structure/infection/factory/scannerreport()
 	return "Will produce an infection spore every few seconds."
@@ -31,7 +37,7 @@
 
 /obj/structure/infection/factory/Life()
 	. = ..()
-	if(spores.len >= (max_spores + 2 * (infection_level - 1)))
+	if(spores.len >= max_spores)
 		return
 	if(spore_delay > world.time)
 		return

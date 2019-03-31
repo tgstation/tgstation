@@ -26,8 +26,8 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	var/obj/effect/meteor/infection/meteor = null // The infection's incoming meteor
 	var/infection_points = 0
 	var/max_infection_points = 1000
-	var/upgrade_points = 3 // obtained by destroying beacons
-	var/all_upgrade_points = 3 // all upgrade points earned so far
+	var/upgrade_points = 6 // obtained by destroying beacons
+	var/all_upgrade_points = 6 // all upgrade points earned so far
 	var/last_attack = 0
 	var/list/infection_mobs = list()
 	var/list/resource_infection = list()

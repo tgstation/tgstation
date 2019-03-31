@@ -189,26 +189,39 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set desc = "Improve yourself and your army to be unstoppable."
 	if(upgrade_points > 0)
 		var/list/choices = list(
-			"Sentient Spore" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
-			"Show Infection Resource Upgrades" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
-			"Show Infection Node Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_node_overlay"),
-			"Show Infection Factory Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
-			"Show Infection Shield Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_shield_radial"),
-			"Show Infection Turret Upgrades" = image(icon = 'icons/mob/infection.dmi', icon_state = "infection_turret")
+			"Summon Sentient Spore" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
+			"Structure Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
+			"Effect Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
 		)
 		var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-		if(choice == "Sentient Spore")
+		if(choice == "Summon Sentient Spore")
 			create_spore()
-		if(choice == "Show Infection Resource Upgrades")
-			upgrade_resource_menu()
-		if(choice == "Show Infection Node Upgrades")
-			upgrade_node_menu()
-		if(choice == "Show Infection Factory Upgrades")
-			upgrade_factory_menu()
-		if(choice == "Show Infection Shield Upgrades")
-			upgrade_shield_menu()
-		if(choice == "Show Infection Turret Upgrades")
-			upgrade_turret_menu()
+		else if(choice == "Structure Upgrades")
+			choices = list(
+				"Upgrade Infection Resource" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
+				"Upgrade Infection Node" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_node_overlay"),
+				"Upgrade Infection Factory" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
+				"Upgrade Infection Shield" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_shield_radial"),
+				"Upgrade Infection Turret" = image(icon = 'icons/mob/infection.dmi', icon_state = "infection_turret")
+			)
+			choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+			if(choice == "Upgrade Infection Resource")
+				upgrade("Resource")
+			else if(choice == "Upgrade Infection Node")
+				upgrade("Node")
+			else if(choice == "Upgrade Infection Factory")
+				upgrade("Factory")
+			else if(choice == "Upgrade Infection Shield")
+				upgrade("Shield")
+			else if(choice == "Upgrade Infection Turret")
+				upgrade("Turret")
+		else if(choice == "Effect Unlocks")
+			// add stuff like
+			// stronger natural core defenses
+			// extra point for spore evolution?
+			// natural resistance to fire based attacks
+			// other stuff idk
+			return
 	else
 		to_chat(src, "We lack the necessary resources to upgrade ourself. Absorb the beacons to gain their power.")
 
@@ -220,46 +233,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	upgrade_points--
 	to_chat(src, "You may now upgrade [stat] infections to level [upgrade_levels[stat]].")
 	return TRUE
-
-/mob/camera/commander/proc/upgrade_resource_menu()
-	var/list/choices = list(
-		"Increase Resource Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial")
-	)
-	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-	if(choice == "Increase Resource Max Level")
-		upgrade("Resource")
-
-/mob/camera/commander/proc/upgrade_node_menu()
-	var/list/choices = list(
-		"Increase Node Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_node_overlay")
-	)
-	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-	if(choice == "Increase Node Max Level")
-		upgrade("Node")
-
-/mob/camera/commander/proc/upgrade_factory_menu()
-	var/list/choices = list(
-		"Increase Factory Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial")
-	)
-	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-	if(choice == "Increase Factory Max Level")
-		upgrade("Factory")
-
-/mob/camera/commander/proc/upgrade_shield_menu()
-	var/list/choices = list(
-		"Increase Shield Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_shield_radial")
-	)
-	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-	if(choice == "Increase Shield Max Level")
-		upgrade("Shield")
-
-/mob/camera/commander/proc/upgrade_turret_menu()
-	var/list/choices = list(
-		"Increase Turret Max Level" = image(icon= 'icons/mob/infection.dmi', icon_state = "infection_turret")
-	)
-	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-	if(choice == "Increase Turret Max Level")
-		upgrade("Turret")
 
 /mob/camera/commander/verb/revert()
 	set category = "Infection"
