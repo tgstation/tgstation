@@ -159,7 +159,7 @@
 			processing = TRUE
 			soundloop.start()
 			update_icon()
-			set_light(2, 1 "#ff0000")
+			set_light(2, 1, "#ff0000")
 		else
 			say("Subject not fat enough.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
