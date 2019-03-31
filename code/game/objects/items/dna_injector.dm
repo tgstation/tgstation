@@ -415,6 +415,14 @@
 	name = "\improper DNA injector (Anti-Cryokinesis)"
 	remove_mutations = list(CRYOKINESIS)
 
+/obj/item/dnainjector/thermal
+	name = "\improper DNA injector (Thermal Vision)"
+	add_mutations = list(THERMAL)
+
+/obj/item/dnainjector/antithermal
+	name = "\improper DNA injector (Anti-Thermal Vision)"
+	remove_mutations = list(THERMAL)
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 

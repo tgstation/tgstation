@@ -1,0 +1,4 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Firefighter construction text is no longer off by a step."

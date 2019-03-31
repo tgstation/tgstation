@@ -59,9 +59,7 @@
 		return
 	var/area/AS = get_area(src)
 	if(istype(AS, /area/holodeck))
-		log_world("### MAPPING ERROR")
-		log_world("Holodeck computer cannot be in a holodeck.")
-		log_world("This would cause circular power dependency.")
+		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
 	else

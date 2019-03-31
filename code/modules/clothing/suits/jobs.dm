@@ -92,6 +92,12 @@
 	icon_state = "greydet"
 	item_state = "greydet"
 
+/obj/item/clothing/suit/det_suit/noir
+	name = "noir suit coat"
+	desc = "A dapper private investigator's grey suit coat."
+	icon_state = "detsuit"
+	item_state = "detsuit"
+
 //Engineering
 /obj/item/clothing/suit/hazardvest
 	name = "hazard vest"
