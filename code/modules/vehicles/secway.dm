@@ -39,7 +39,7 @@
 
 
 /obj/vehicle/ridden/secway/bullet_act(obj/item/projectile/P)
-	if(prob(70))
+	if(prob(60))
 		for(var/mob/M in buckled_mobs)
 			M.bullet_act(P)
 		return TRUE
