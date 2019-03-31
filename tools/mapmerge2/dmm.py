@@ -43,6 +43,20 @@ class DMM:
             f.flush()
             return bio.getvalue()
 
+    def get_or_generate_key(self, tile):
+        try:
+            return self.dictionary.inv[tile]
+        except KeyError:
+            key = self.generate_new_key()
+            self.dictionary[key] = tile
+            return key
+
+    def get_tile(self, coord):
+        return self.dictionary[self.grid[coord]]
+
+    def set_tile(self, coord, tile):
+        self.grid[coord] = self.get_or_generate_key(tile)
+
     def generate_new_key(self):
         free_keys = self._ensure_free_keys(1)
         # choose one of the free keys at random
