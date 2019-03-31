@@ -43,7 +43,7 @@
 /atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
 	return FALSE
 
-/turf/proc/CalculateAdjacentTurfs()
+/turf/proc/ImmediateCalculateAdjacentTurfs()
 	var/canpass = CANATMOSPASS(src, src) 
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
@@ -51,26 +51,6 @@
 		if(!isopenturf(T))
 			continue
 		if(!(blocks_air || T.blocks_air) && ((direction & (UP|DOWN))? (canvpass && CANVERTICALATMOSPASS(T, src)) : (canpass && CANATMOSPASS(T, src))) )
-			LAZYINITLIST(atmos_adjacent_turfs)
-			LAZYINITLIST(T.atmos_adjacent_turfs)
-			atmos_adjacent_turfs[T] = TRUE
-			T.atmos_adjacent_turfs[src] = TRUE
-		else
-			if (atmos_adjacent_turfs)
-				atmos_adjacent_turfs -= T
-			if (T.atmos_adjacent_turfs)
-				T.atmos_adjacent_turfs -= src
-			UNSETEMPTY(T.atmos_adjacent_turfs)
-	UNSETEMPTY(atmos_adjacent_turfs)
-	src.atmos_adjacent_turfs = atmos_adjacent_turfs
-
-/turf/proc/ImmediateCalculateAdjacentTurfs()
-	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
-	for(var/direction in GLOB.cardinals)
-		var/turf/T = get_step(src, direction)
-		if(!T)
-			continue
-		if( !(blocks_air || T.blocks_air) && CANATMOSPASS(T, src) )
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[T] = TRUE
