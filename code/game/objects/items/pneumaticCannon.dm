@@ -250,7 +250,6 @@
 	if(!tank)
 		return
 	add_overlay(tank.icon_state)
-	update_icon()
 
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj) && !ispath(type, /mob))
