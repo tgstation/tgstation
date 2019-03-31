@@ -18,7 +18,7 @@
 		if(dumped) //Prevents fuckers from cheesing alert
 			return FALSE
 		var/turf/targetturf = get_random_station_turf()
-		new var/obj/effect/dumpeetTarget(targetturf, user)
+		new /obj/effect/dumpeetTarget(targetturf, user)
 		dumped = TRUE
 
 /obj/structure/checkoutmachine
