@@ -2,12 +2,12 @@
 	name = "lipid extractor"
 	desc = "Safely and efficiently extracts excess fat from a subject."
 	icon = 'icons/obj/machines/fat_sucker.dmi'
-	icon_state = "sucker"
+	icon_state = "fat"
 
 	state_open = FALSE
 	density = TRUE
 	req_access = list(ACCESS_KITCHEN)
-	var/processing
+	var/processing = FALSE
 	var/start_at = NUTRITION_LEVEL_WELL_FED
 	var/stop_at = NUTRITION_LEVEL_STARVING
 	var/free_exit = TRUE //set to false to prevent people from exiting before being completely stripped of fat
@@ -15,6 +15,7 @@
 	var/nutrients //amount of nutrients we got build up
 	var/nutrient_to_meat = 90 //one slab of meat gives about 52 nutrition
 	var/datum/looping_sound/microwave/soundloop //100% stolen from microwaves
+	var/breakout_time = 600
 
 	var/next_fact = 10 //in ticks, so about 20 seconds
 	var/static/list/fat_facts = list(\
@@ -29,6 +30,7 @@
 /obj/machinery/fat_sucker/Initialize()
 	. = ..()
 	soundloop = new(list(src),  FALSE)
+	update_icon()
 
 /obj/machinery/fat_sucker/RefreshParts()
 	..()
@@ -49,23 +51,38 @@
 		to_chat(user, "<span class='warning'>You need to close the maintenance hatch first!</span>")
 		return
 	..()
+	playsound(src, 'sound/machines/click.ogg', 50)
 	if(occupant)
 		if(!iscarbon(occupant))
 			occupant.forceMove(drop_location())
 			occupant = null
 			return
 		to_chat(occupant, "<span class='notice'>You enter [src]</span>")
-		addtimer(CALLBACK(src, .proc/start_extracting), 20)
+		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
+		update_icon()
 
 /obj/machinery/fat_sucker/open_machine(mob/user)
 	make_meat()
+	playsound(src, 'sound/machines/click.ogg', 50)
 	if(processing)
 		stop()
 	..()
 
 /obj/machinery/fat_sucker/container_resist(mob/living/user)
 	if(!free_exit || state_open)
-		to_chat(user, "<span class='notice'>The emergency release is not responding!</span>")
+		to_chat(user, "<span class='notice'>The emergency release is not responding! You start pushing against the hull!</span>")
+		user.changeNext_move(CLICK_CD_BREAKOUT)
+		user.last_special = world.time + CLICK_CD_BREAKOUT
+		user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
+			"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+			"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		if(do_after(user, breakout_time, target = src))
+			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+				return
+			free_exit = TRUE
+			user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+				"<span class='notice'>You successfully break out of [src]!</span>")
+			open_machine()
 		return
 	open_machine()
 
@@ -91,12 +108,24 @@
 
 /obj/machinery/fat_sucker/update_icon()
 	overlays.Cut()
-	if(state_open)
-		icon_state = initial(icon_state) + "_open"
-	else if(processing)
-		icon_state  = initial(icon_state) + "_on"
-	else
-		icon_state = initial(icon_state)
+	if(!state_open)
+		if(processing)
+			overlays += "[icon_state]_door_on"
+			overlays += "[icon_state]_stack"
+			overlays += "[icon_state]_smoke"
+			overlays += "[icon_state]_green"
+		else
+			overlays += "[icon_state]_door_off"
+			if(occupant)
+				if(powered(EQUIP))
+					overlays += "[icon_state]_stack"
+					overlays += "[icon_state]_yellow"
+			else
+				overlays += "[icon_state]_red"
+	else if(powered(EQUIP))
+		overlays += "[icon_state]_red"
+	if(panel_open)
+		overlays += "[icon_state]_panel"
 
 /obj/machinery/fat_sucker/process()
 	if(!processing)
@@ -134,6 +163,7 @@
 		else
 			say("Subject not fat enough.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+			overlays += "[icon_state]_red" //throw a red light icon over it, to show that it wont work
 
 /obj/machinery/fat_sucker/proc/stop()
 	processing = FALSE
@@ -164,7 +194,8 @@
 	if(state_open)
 		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
 		return
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]_panel", initial(icon_state), I))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		update_icon()
 		return
 	return FALSE
 
