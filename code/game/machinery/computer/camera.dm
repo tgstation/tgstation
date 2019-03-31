@@ -272,7 +272,7 @@
 /obj/machinery/computer/security/telescreen/toxins
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("toxin")
+	network = list("toxins")
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"
