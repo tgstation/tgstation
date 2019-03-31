@@ -23,7 +23,7 @@
 
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
-	canWithdraw = world.time + 600
+	canWithdraw = world.time + 3000
 
 /datum/bank_account/proc/_adjust_money(amt)
 	account_balance += amt
