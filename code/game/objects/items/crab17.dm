@@ -64,8 +64,7 @@
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
 	START_PROCESSING(SSfastprocess, src)
-	deadchat_broadcast("<span class='deadsay'>Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!</span>", turf_target = get_turf(src))
-
+	
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
 	start_dumping() //The machine doesnt move during this time, giving people close by a small window to grab their funds before it starts running around
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src).name] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
@@ -173,7 +172,8 @@
 
 /obj/effect/dumpeetTarget/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/startLaunch), 20)
+	addtimer(CALLBACK(src, .proc/startLaunch), 100)
+	deadchat_broadcast("<span class='deadsay'>Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!</span>", turf_target = get_turf(src))
 
 /obj/effect/dumpeetTarget/proc/startLaunch()
 	DF = new /obj/effect/dumpeetFall(drop_location())
