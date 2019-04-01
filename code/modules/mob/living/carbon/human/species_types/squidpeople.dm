@@ -19,7 +19,7 @@
 
 /datum/species/squid/random_name(gender,unique,lastname)
 	if(unique)
-		return random_unique_squid_name()
+		return random_unique_squid_name(genderToFind = gender)
 
 	var/randname = squid_name(gender)
 
@@ -28,9 +28,9 @@
 
 	return randname
 
-/proc/random_unique_squid_name(attempts_to_find_unique_name=10)
+/proc/random_unique_squid_name(attempts_to_find_unique_name=10, genderToFind)
     for(var/i in 1 to attempts_to_find_unique_name)
-        . = capitalize(squid_name())
+        . = capitalize(squid_name(genderToFind))
         if(!findname(.))
             break
 
