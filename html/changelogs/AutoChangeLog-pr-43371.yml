@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Revamped Donutstation's engineering and supermatter rooms to fix a number of issues that prevented proper functionality, and resolved numerous aesthetic complaints."
-  - bugfix: "Fixed Jones actions on a couple away mission fridges."

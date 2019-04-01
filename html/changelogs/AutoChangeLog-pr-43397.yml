@@ -1,4 +1,0 @@
-author: "AutomaticFrenzy"
-delete-after: True
-changes: 
-  - bugfix: "soap now displays the correct message when examined"
