@@ -193,7 +193,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown
 	name = "Chlown"
-	desc = "A real lunkhead who somehow gets all the girls"
+	desc = "A real lunkhead who somehow gets all the girls."
 	icon_state = "chlown"
 	icon_living = "chlown"
 	response_help = "submits to"
