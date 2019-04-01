@@ -168,7 +168,6 @@
 /area/shuttle/hunter)
 "aF" = (
 /obj/machinery/computer/camera_advanced{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,

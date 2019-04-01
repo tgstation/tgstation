@@ -111,6 +111,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
+	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
 	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
 	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
@@ -294,10 +295,9 @@ GLOBAL_VAR(restart_counter)
 	else if (players > 0)
 		features += "[players][popcaptext] player"
 
-
 	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
 
-	if (!host && hostedby)	// FULP REMOVE: No need for Host!
+	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
 
 	// FUPLP REMOVE: We don't list features!

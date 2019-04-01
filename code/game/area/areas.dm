@@ -75,7 +75,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			continue
 		if(GLOB.teleportlocs[AR.name])
 			continue
-		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (!AR.contents.len)
+			continue
+		var/turf/picked = AR.contents[1]
 		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
