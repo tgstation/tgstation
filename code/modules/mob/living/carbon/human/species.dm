@@ -1285,6 +1285,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.Paralyze(SHOVE_CHAIN_PARALYZE)
 			target.visible_message("<span class='danger'>[user.name] kicks [target.name] onto their side!</span>",
 				"<span class='danger'>[user.name] kicks you onto your side!</span>", null, COMBAT_MESSAGE_RANGE)
+			addtimer(CALLBACK(target, /mob/living/proc/SetKnockdown, 0), SHOVE_CHAIN_PARALYZE)
 			log_combat(user, target, "kicks", "onto their side (paralyzing)")
 
 		if(shove_blocked && !target.is_shove_knockdown_blocked() && !target.buckled)
