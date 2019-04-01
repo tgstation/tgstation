@@ -69,7 +69,7 @@
 		if(defib)
 			to_chat(user, "<span class='warning'>There's already a defibrillator in [src]!</span>")
 			return
-		if(I.item_flags & NODROP || !user.transferItemToLoc(I, src))
+		if(I.has_trait(TRAIT_NODROP) || !user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \
@@ -78,7 +78,7 @@
 		defib = I
 		update_icon()
 		return
-	else if(I == defib.paddles)
+	else if(defib && I == defib.paddles)
 		defib.paddles.snap_back()
 		return
 	var/obj/item/card/id = I.GetID()

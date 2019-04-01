@@ -201,7 +201,7 @@
 			if(P)
 				P.duration = world.time + amount
 			else
-				P = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount, updating)
+				P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount, updating)
 		return P
 
 /mob/living/proc/AdjustParalyzed(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
@@ -420,11 +420,13 @@
 	if(!has_trait(TRAIT_HUSK))
 		remove_trait(TRAIT_DISFIGURED, "husk")
 		update_body()
+		return TRUE
 
 /mob/living/proc/become_husk(source)
 	if(!has_trait(TRAIT_HUSK))
 		add_trait(TRAIT_DISFIGURED, "husk")
 		update_body()
+		. = TRUE
 	add_trait(TRAIT_HUSK, source)
 
 /mob/living/proc/cure_fakedeath(list/sources)

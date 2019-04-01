@@ -346,16 +346,14 @@ What a mess.*/
 				active2 = null
 
 			if("Browse Record")
-				var/datum/data/record/R = locate(href_list["d_rec"])
-				var/S = locate(href_list["d_rec"])
-				if(!( GLOB.data_core.general.Find(R) ))
+				var/datum/data/record/R = locate(href_list["d_rec"]) in GLOB.data_core.general
+				if(!R)
 					temp = "Record Not Found!"
 				else
+					active1 = active2 = R
 					for(var/datum/data/record/E in GLOB.data_core.security)
 						if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-							S = E
-					active1 = R
-					active2 = S
+							active2 = E
 					screen = 3
 
 

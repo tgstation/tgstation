@@ -40,3 +40,10 @@
 	id = "aranesp"
 	results = list("aranesp" = 3)
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
+
+/datum/chemical_reaction/happiness
+	name = "Happiness"
+	id = "happiness"
+	results = list("happiness" = 4)
+	required_reagents = list("nitrous_oxide" = 2, "epinephrine" = 1, "ethanol" = 1)
+	required_catalysts = list("plasma" = 5)

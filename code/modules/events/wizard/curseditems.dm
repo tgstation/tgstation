@@ -50,7 +50,8 @@
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
 				H.dropItemToGround(H.get_item_by_slot(i), TRUE)
 				H.equip_to_slot_or_del(I, i)
-				I.item_flags |= NODROP | DROPDEL
+				I.add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
+				I.item_flags |= DROPDEL
 				I.name = "cursed " + I.name
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)

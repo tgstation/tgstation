@@ -48,4 +48,5 @@ Bonus
 				M.emote("sniff")
 		else
 			M.emote("sneeze")
-			A.spread(4 + power)
+			if(M.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
+				A.spread(4 + power)

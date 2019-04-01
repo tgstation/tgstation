@@ -620,15 +620,17 @@
 				if("name")
 					vv_update_display(D, "name", "[D]")
 				if("dir")
-					if(isatom(D))
-						var/dir = D.vars["dir"]
-						vv_update_display(D, "dir", dir2text(dir) || dir)
+					var/atom/A = D
+					if(istype(A))
+						vv_update_display(D, "dir", dir2text(A.dir) || A.dir)
 				if("ckey")
-					if(isliving(D))
-						vv_update_display(D, "ckey", D.vars["ckey"] || "No ckey")
+					var/mob/living/L = D
+					if(istype(L))
+						vv_update_display(D, "ckey", L.ckey || "No ckey")
 				if("real_name")
-					if(isliving(D))
-						vv_update_display(D, "real_name", D.vars["real_name"] || "No real name")
+					var/mob/living/L = D
+					if(istype(L))
+						vv_update_display(D, "real_name", L.real_name || "No real name")
 
 		else if(href_list["varnamechange"] && href_list["datumchange"])
 			if(!check_rights(NONE))
@@ -795,7 +797,7 @@
 			src.cmd_admin_gib(M)
 
 		else if(href_list["build_mode"])
-			if(!check_rights(R_BUILDMODE))
+			if(!check_rights(R_BUILD))
 				return
 
 			var/mob/M = locate(href_list["build_mode"]) in GLOB.mob_list
@@ -1057,6 +1059,8 @@
 				var/chosenart = artnames[result]
 				var/datum/martial_art/MA = new chosenart
 				MA.teach(C)
+				log_admin("[key_name(usr)] has taught [MA] to [key_name(C)].")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has taught [MA] to [key_name_admin(C)].</span>")
 
 		else if(href_list["givetrauma"])
 			if(!check_rights(NONE))
@@ -1075,8 +1079,13 @@
 				to_chat(usr, "Mob doesn't exist anymore")
 				return
 
-			if(result)
-				C.gain_trauma(result)
+			if(!result)
+				return
+
+			var/datum/brain_trauma/BT = C.gain_trauma(result)
+			if(BT)
+				log_admin("[key_name(usr)] has traumatized [key_name(C)] with [BT.name]")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has traumatized [key_name_admin(C)] with [BT.name].</span>")
 
 		else if(href_list["curetraumas"])
 			if(!check_rights(NONE))
@@ -1088,6 +1097,8 @@
 				return
 
 			C.cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
+			log_admin("[key_name(usr)] has cured all traumas from [key_name(C)].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] has cured all traumas from [key_name_admin(C)].</span>")
 
 		else if(href_list["hallucinate"])
 			if(!check_rights(NONE))
@@ -1237,9 +1248,17 @@
 			var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
 			if(!edit_action)
 				return
-			var/list/limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-			if(edit_action == "augment")
-				limb_list += BODY_ZONE_CHEST
+			var/list/limb_list = list()
+			if(edit_action == "remove" || edit_action == "augment")
+				for(var/obj/item/bodypart/B in C.bodyparts)
+					limb_list += B.body_zone
+				if(edit_action == "remove")
+					limb_list -= BODY_ZONE_CHEST
+			else
+				limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+				for(var/obj/item/bodypart/B in C.bodyparts)
+					limb_list -= B.body_zone
+
 			var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in limb_list
 
 			if(!C)
@@ -1346,10 +1365,10 @@
 					return
 
 			if(amount != 0)
-				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-				var/msg = "<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>"
-				message_admins(msg)
-				admin_ticket_log(L, msg)
+				var/log_msg = "[key_name(usr)] dealt [amount] amount of [Text] damage to [key_name(L)]"
+				message_admins("[key_name(usr)] dealt [amount] amount of [Text] damage to [ADMIN_LOOKUPFLW(L)]")
+				log_admin(log_msg)
+				admin_ticket_log(L, "<font color='blue'>[log_msg]</font>")
 				vv_update_display(L, Text, "[newamt]")
 		else if(href_list["copyoutfit"])
 			if(!check_rights(R_SPAWN))

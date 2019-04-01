@@ -20,6 +20,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		var/value = attributes[attribute]
 		if(islist(value))
 			value = deepCopyList(value)
+		#ifdef TESTING
+		if(what.vars[attribute] == value)
+			var/message = "<font color=green>[what.type]</font> at [AREACOORD(what)] - <b>VAR:</b> <font color=red>[attribute] = [isnull(value) ? "null" : (isnum(value) ? value : "\"[value]\"")]</font>"
+			log_mapping("DIRTY VAR: [message]")
+			GLOB.dirty_vars += message
+		#endif
 		what.vars[attribute] = value
 
 /area/template_noop
