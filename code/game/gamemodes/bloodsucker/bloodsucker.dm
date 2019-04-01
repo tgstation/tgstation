@@ -8,7 +8,7 @@
 	name = "bloodsucker"
 	config_tag = "bloodsucker"
 	report_type = "traitor"
-	traitor_name = "Nanotrasen Internal Affairs Agent"
+	traitor_name = "Bloodsucker"//Nanotrasen Internal Affairs Agent"
 	antag_flag = ROLE_BLOODSUCKER
 	false_report_weight = 1
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances

@@ -262,7 +262,8 @@ GLOBAL_VAR(restart_counter)
 			features += "AI allowed"
 		hostedby = CONFIG_GET(string/hostedby)
 
-	s+= "<b>SSETH FANS WELCOME!</b>" // "<b>The Problems of the Future, <i>Today!</i></b>"  // "<b>[station_name()]</b>";	// FULPSTATION: We don't display the name of the Station anymore
+	var/server_caption = CONFIG_GET(string/servercaption)
+	s+= "<b>[server_caption]</b>" // SSETH FANS WELCOME! // "<b>The Problems of the Future, <i>Today!</i></b>"  // "<b>[station_name()]</b>";	// FULPSTATION: We don't display the name of the Station anymore
 	s += " ("
 	//s += "<a href=\"[CONFIG_GET(string/forumurl)]\">"//Change this to wherever you want the hub to link to.
 //	s += "[game_version]"

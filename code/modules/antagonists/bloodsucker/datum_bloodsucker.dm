@@ -1,4 +1,5 @@
 
+
 /datum/team/vampireclan
 	name = "Clan" // Teravanni,
 
@@ -16,14 +17,30 @@
 	// CLAN
 	var/datum/team/vampireclan/clan
 
+	// POWERS
+	var/list/obj/effect/proc_holder/spell/powers = list()// Purchased powers
+	var/poweron_feed = FALSE			// Am I feeding?
+	var/poweron_masquerade = FALSE
+	// STATS
+	var/regenRate = 0.3					// How many points of Brute do I heal per tick? Note: Fire never changes its rate (0.1)
+	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
+	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding. // BLOOD_VOLUME_NORMAL  550 // BLOOD_VOLUME_SAFE 475 //BLOOD_VOLUME_OKAY 336 //BLOOD_VOLUME_BAD 224 // BLOOD_VOLUME_SURVIVE 122
 
 
 
 /datum/antagonist/bloodsucker/on_gain()
+
+	// Give Powers & Stats
+	AssignStarterPowersAndStats()
+
 	. = ..()
 
 
 /datum/antagonist/bloodsucker/on_removal()
+
+	// Clear Powers & Stats
+	ClearAllPowersAndStats()
+
 	. = ..()
 
 
@@ -84,7 +101,7 @@
 	if (!am_fledgling)
 		vampreputation = pick("Butcher","Blood Fiend","Crimson","Red","Black","Terror","Nightman","Feared","Ravenous","Fiend","Malevolent","Wicked","Ancient","Plaguebringer","Sinister","Forgotten","Wretched","Baleful", \
 							"Inqisitor","Harvester","Reviled","Robust","Betrayer","Destructor","Damned","Accursed","Terrible","Vicious","Profane","Vile","Depraved","Foul","Slayer","Manslayer","Sovereign","Slaughterer", \
-							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder","Horrible","Immortal","Undying")
+							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder","Horrible","Immortal","Undying","Overlord","Corrupt")
 		if (gender == MALE)
 			if (prob(10)) // Gender override
 				vampreputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
@@ -114,6 +131,24 @@
 	return fullname
 
 
+
+/datum/antagonist/bloodsucker/proc/BuyPower(datum/action/bloodsucker/power)//(obj/effect/proc_holder/spell/power)
+	powers += power
+	power.Grant(owner.current)// owner.AddSpell(power)
+
+/datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
+
+	// Powers
+	BuyPower(new /datum/action/bloodsucker/feed)
+
+/datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
+
+	// Powers
+	while(powers.len)
+		var/datum/action/bloodsucker/power = pick(powers)
+		powers -= power
+		power.Remove(owner.current)
+		// owner.RemoveSpell(power)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,7 +217,7 @@
 //		- Brute damage heals rather rapidly. Burn damage heals slowly.
 //		- Healing is reduced when hungry or starved.
 //		- Burn does not heal when starved. A starved vampire remains "dead" until burns can heal.
-//		- Bodyparts and organs regrow in Torpor (except for the Heart and
+//		- Bodyparts and organs regrow in Torpor (except for the Heart and Brain).
 //
 //	* Bloodsuckers are IMMORTAL
 //		- Brute damage cannot destroy them (and it caps very low, so they don't stack too much)
@@ -205,25 +240,55 @@
 //
 // 	* Bloodsuckers enter Torpor when DEAD or RESTING in coffin
 //		- Torpid vampires regenerate their health. Coffins negate cost and speed up the process.
-//		** To rest in a coffin, either SLEEP or CLOSE THE LID while you're in it. You will automatically sleep until healed.
+//		** To rest in a coffin, either SLEEP or CLOSE THE LID while you're in it. You will be given a prompt to sleep until healed. Healing in a coffin costs NO blood!
 //
 
 //					P O W E R S
 //	* HASTE
-//		SPRINT:	Hastily speed in a direction faster than the eye can see.
+//		SPRINT:	A) Hastily speed in a direction faster than the eye can see. B) Spin and dizzy people you pass. C) Chance to knock down people you pass.
 //		LUNGE:	Leap toward a location and put your target into an agressive hold.
 //
 //	* STEALTH
-//		CLOAK:  	Vanish into the shadows, eventually even moving while hidden.
-//		DISGUISE:	Bear the name, and eventually the features, of another.
+//		CLOAK:  	A) Vanish into the shadows when stationary. B) Moving does not break your current level of invisibility (but stops you from hiding further).
+//		DISGUISE:	A) Bear the face and voice of a new person. B) Bear the random outfit of another.
 //
-
+//	* FEED
+//		A) Mute victim while Feeding (and slowly deal Stamina damage) B) Paralyze victim while feeding C) Sleep victim while Feeding
+//
+//	* MEZMERIZE
+//		LOVE:		Target falls in love with you. Being harmed directly causes them harm if they see it?
+//		STAY:		Target will do everything they can to stand in the same place.
+//		FOLLOW:		Target follows you, spouting random phrases from their history (or maybe Poly's or NPC's vocab?)
+//		ATTACK:		Target finds a nearby non-Bloodsucker victim to attack.
+//
+//	* EXPEL
+//		TAINT:		Mark areas with your corrupting blood. Your coffin must remain in an area so marked to gain any benefit. Spiders and rats will infest the area, cobwebs grow rapidly, and trespassers are overcome with fear.
+//		SERVITUDE:	Your blood binds a mortal to your will. Vassals feel your pain and can locate you anywhere. Your death causes them agony.
+//		HEIR:		Raise a moral corpse into a Bloodsucker. The change will take a while, and the body must be brought to a tainted coffin to rise.
+//
+//	* NIGHTMARE
+//		BOGEYMAN:	Terrify those who view you in your death-form, causing them to shake, pale, and drop possessions.
+//
+//
 
 //					F L A W S
 //
 //	Bestial: Your eyes glow red when hungry
 //	Craven:
 //
+
+// 					O B J E C T I V E S
+//
+//
+//
+//
+//	1) GROOM AN HEIR:	Find a person with appropriate traits (hair, blood type, gender) to be turned as a Vampire. Before they rise, they must be properly trained. Raise them to great power after their change.
+//
+//	2) BIBLIOPHILE:		Research objects of interest, study items looking for clues of ancient secrets, and hunt down the clues to a Vampiric artifact of horrible power.
+//
+//	3) CRYPT LORD:		Build a terrifying sepulcher to your evil, with servants to lavish upon you in undeath. The trappings of a true crypt lord come at grave cost.
+//
+//	4) GOURMOND:		Oh, to taste all the delicacies the station has to offer!
 
 
 //			Vassals
@@ -244,7 +309,7 @@
 //
 // HEALING: Maybe Vamps metabolize specially? Like, they slowly drip their own blood into their system?
 //			- Give Vamps their own metabolization proc, perhaps?
-//			**
+//			** shadowpeople.dm has rules for healing.
 //
 // KILLING: It's almost impossible to track who someone has directly killed. But an Admin could be given
 //			an easy way to whip a Bloodsucker for cruel behavior, as a RP mechanic but not a punishment.
@@ -271,14 +336,35 @@
 //				** examine.dm /examine() <-- Change "blood_volume < BLOOD_VOLUME_SAFE" to a new examine
 //
 // NOSFERATU ** human.add_trait(TRAIT_DISFIGURED, "insert_vamp_datum_here") <-- Makes you UNKNOWN unless your ID says otherwise.
-// STEALTH   ** human_helpers.dm /get_visible_name()
+// STEALTH   ** human_helpers.dm /get_visible_name()     ** shadowpeople.dm has rules for Light.
 //
 // FRENZY	** living.dm /update_mobility() (USED TO be update_canmove)
 //
 // PREDATOR See other Vamps!
 //		    * examine.dm /examine()
+//
+// WEAKNESSES:	-Poor mood in Chapel or near Chaplain.  -Stamina damage from Bible
 
 
+
+
+
+// TODO:
+//
+// Death (fire, heart, brain, head)
+// Disable Life: BLOOD
+// Body Temp
+// Spend blood over time (more if imitating life) (none if sleeping in coffin)
+// Auto-Heal (brute to 0, fire to 99) (toxin/o2 always 0)
+//
+// Hud Icons
+// UI Blood Counter
+// Examine Name (+Masquerade, only "Dead and lifeless" if not standing?)
+//
+//
+// Turn vamps
+// Create vassals
+//
 
 
 /////////////////////////////////////

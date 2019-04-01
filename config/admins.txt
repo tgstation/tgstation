@@ -18,6 +18,7 @@ FaKanza	 = Admin
 Trickytyfly = Admin
 
 #ADMINS
+Ss4gogeta0 = Fulp Crew
 saladata = Admin
 RootVeggie = Admin
 Hugh Mann = Admin
@@ -29,7 +30,6 @@ ChocolateJ = Admin
 Axolotl123 = Admin
 Qustinnus = Admin
 Idontcareacount = Admin
-Ss4gogeta0 = Admin
 Windarkata = Admin
 Bricksqwad = Admin
 Ishiro = Admin

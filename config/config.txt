@@ -16,6 +16,9 @@ $include antag_rep.txt
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
 SERVERNAME Fulpstation
 
+## Server Caption: Shows next to the server name in the BYOND hub.
+SERVERCAPTION The Problems of the Future, Today!
+
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 SERVERSQLNAME fulpstation
 
