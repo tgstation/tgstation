@@ -1,0 +1,4 @@
+author: "Vile Beggar"
+delete-after: True
+changes: 
+  - bugfix: "Polymorphed drones no longer have normal drone flavortext."
