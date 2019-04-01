@@ -1,12 +1,12 @@
 /obj/item/melee/baton
 	name = "stun baton"
-	desc = "A stun baton for incapacitating people with."
+	desc = "A stun baton for incapacitating people with. Etched into the side, someone wrote some gibberish about boomerangs and throwing. "
 	icon_state = "stunbaton"
 	item_state = "baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	force = 10
+	force = 1
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("beaten")
@@ -16,7 +16,7 @@
 	var/status = 0
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
-	var/throw_hit_chance = 35
+	var/throw_hit_chance = 100
 	var/preload_cell_type //if not empty the baton starts with this type of cell
 
 /obj/item/melee/baton/get_cell()
