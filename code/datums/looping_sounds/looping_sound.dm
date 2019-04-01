@@ -27,6 +27,7 @@
 	var/muted = TRUE
 	var/max_loops
 	var/direct
+	var/heard_by_ghosts = 1 //that shit is annoying when you are a ghost. -falaskian
 
 /datum/looping_sound/New(list/_output_atoms=list(), start_immediately=FALSE, _direct=FALSE)
 	if(!mid_sounds)
@@ -75,6 +76,8 @@
 		S.volume = volume
 	for(var/i in 1 to atoms_cache.len)
 		var/atom/thing = atoms_cache[i]
+		if(!heard_by_ghosts && istype(thing,/mob/dead/observer))  //ghost check -falaskian
+			continue
 		if(direct)
 			SEND_SOUND(thing, S)
 		else

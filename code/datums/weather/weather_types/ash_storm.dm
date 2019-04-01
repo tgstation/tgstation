@@ -30,6 +30,14 @@
 	var/datum/looping_sound/weak_outside_ashstorm/sound_wo = new(list(), FALSE, TRUE)
 	var/datum/looping_sound/weak_inside_ashstorm/sound_wi = new(list(), FALSE, TRUE)
 
+//ash storms cannot be heard by ghosts -falaskian
+/datum/weather/ash_storm/New()
+	. = ..()
+	sound_ao.heard_by_ghosts = 0
+	sound_ai.heard_by_ghosts = 0
+	sound_wo.heard_by_ghosts = 0
+	sound_wi.heard_by_ghosts = 0
+
 /datum/weather/ash_storm/telegraph()
 	. = ..()
 	var/list/inside_areas = list()
