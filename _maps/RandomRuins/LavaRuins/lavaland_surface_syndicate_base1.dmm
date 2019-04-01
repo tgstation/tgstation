@@ -85,12 +85,6 @@
 /obj/machinery/vending/boozeomat/syndicate_access,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/bar)
-"al" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/medical/syndicate_access,
-/turf/open/floor/plasteel/white,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
 "ap" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -4434,33 +4428,8 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lm" = (
-/obj/structure/closet/secure_closet/medical1{
-	req_access = null;
-	req_access_txt = "150"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 9
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"ln" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 1
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"lo" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 5
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
+/turf/open/space/basic,
+/area/space)
 "lp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -4607,37 +4576,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
-"lG" = (
-/obj/structure/table,
-/obj/item/storage/box/syringes,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/gun/syringe/syndicate,
-/turf/open/floor/plasteel/white/side{
-	dir = 9
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"lH" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"lI" = (
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"lJ" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"lK" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
 "lL" = (
 /obj/machinery/airalarm/syndicate{
 	dir = 4;
@@ -4848,30 +4786,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
-"md" = (
-/obj/machinery/sleeper/syndie{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"me" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"mf" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 11
-	},
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
 "mg" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -5023,56 +4937,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
-"mA" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/OMinus,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 8
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"mB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"mC" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"mD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"mE" = (
-/obj/structure/table/reinforced,
-/obj/item/scalpel,
-/obj/item/circular_saw{
-	pixel_y = 9
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
 "mF" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27;
@@ -5209,27 +5073,6 @@
 	dir = 4
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"mZ" = (
-/obj/machinery/sleeper/syndie{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"na" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"nb" = (
-/obj/structure/table/optable,
-/obj/item/surgical_drapes,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
 "nc" = (
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
@@ -5547,54 +5390,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
-"ny" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/white/side{
-	dir = 8
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"nz" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 9
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"nA" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"nB" = (
-/obj/structure/table/reinforced,
-/obj/item/surgicaldrill,
-/obj/item/cautery,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"nC" = (
-/obj/structure/table/reinforced,
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 6
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
 "nD" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -5900,31 +5695,6 @@
 	dir = 4
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"oa" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 10
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"ob" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"oc" = (
-/obj/machinery/light/small,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -29
-	},
-/obj/structure/cable/yellow,
-/obj/machinery/power/apc/syndicate{
-	dir = 4;
-	name = "Medbay APC";
-	pixel_x = 24
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 6
-	},
-/area/ruin/unpowered/syndicate_lava_base/medbay)
 "od" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -6089,17 +5859,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"or" = (
-/obj/structure/rack{
-	dir = 8
-	},
-/obj/item/storage/belt/medical,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/crowbar,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/neck/stethoscope,
-/turf/open/floor/plasteel/white,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
 "ot" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -7810,13 +7569,13 @@ kg
 kt
 kQ
 kQ
-lG
-md
-mA
-mZ
-ny
-oa
-or
+lm
+lm
+lm
+lm
+lm
+lm
+lm
 kQ
 ab
 ab
@@ -7860,13 +7619,13 @@ kh
 ha
 kQ
 lm
-lH
-me
-mB
-na
-nz
-ob
-al
+lm
+lm
+lm
+lm
+lm
+lm
+lm
 kQ
 ab
 ab
@@ -7909,13 +7668,13 @@ jR
 iQ
 ku
 kR
-ln
-lI
-lI
-mC
-lI
-nA
-oc
+lm
+lm
+lm
+lm
+lm
+lm
+lm
 kQ
 kQ
 ac
@@ -7959,12 +7718,12 @@ jS
 ki
 kv
 kS
-ln
-lJ
-mf
-mD
-lI
-nB
+lm
+lm
+lm
+lm
+lm
+lm
 kQ
 kQ
 ac
@@ -8009,12 +7768,12 @@ if
 kj
 kw
 kT
-lo
-lK
-kQ
-mE
-nb
-nC
+lm
+lm
+lm
+lm
+lm
+lm
 kQ
 ac
 ab

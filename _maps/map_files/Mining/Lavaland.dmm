@@ -84,24 +84,8 @@
 /turf/closed/wall,
 /area/mine/laborcamp)
 "ar" = (
-/obj/structure/table,
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"as" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"at" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
-/obj/machinery/camera{
-	c_tag = "Labor Camp Medical";
-	dir = 8;
-	network = list("labor")
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/space)
 "au" = (
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
@@ -123,15 +107,6 @@
 "aw" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
-"ax" = (
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"ay" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
 "az" = (
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -10035,8 +10010,8 @@ an
 an
 an
 aq
-as
-ax
+ar
+ar
 aB
 az
 az
@@ -10292,8 +10267,8 @@ an
 an
 an
 aq
-at
-ay
+ar
+ar
 aq
 aE
 az
