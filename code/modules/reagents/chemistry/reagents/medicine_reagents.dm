@@ -1345,3 +1345,8 @@
 	M.adjustToxLoss(1, 0)
 	..()
 	. = 1
+
+
+/obj/item/clothing/shoes/sneakers/white/damndaniel/pointed_at(var/mob/user)
+	spawn(10)
+		user.say("DAMN DANIEL!")

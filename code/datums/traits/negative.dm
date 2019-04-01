@@ -99,8 +99,6 @@
 				heirloom_type = /obj/item/bikehorn/golden
 			if("Mime")
 				heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
-			if("Janitor")
-				heirloom_type = pick(/obj/item/mop, /obj/item/caution, /obj/item/reagent_containers/glass/bucket)
 			if("Cook")
 				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
 			if("Botanist")

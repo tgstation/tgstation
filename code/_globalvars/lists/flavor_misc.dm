@@ -143,7 +143,6 @@ GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons
 19 Bar
 20 Kitchen
 21 Hydroponics
-22 Janitor
 23 Genetics
 24 Testing Range
 25 Toxins
