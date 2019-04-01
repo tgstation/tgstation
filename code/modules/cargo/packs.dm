@@ -257,9 +257,10 @@
 
 /datum/supply_pack/emergency/bomb
 	name = "Explosive Emergency Crate"
-	desc = "There is a bomb beeping in the courtroom? Don't panic and quickly buy this crate, it has all you need to disarm the bomb (time not included).
+	desc = "There is a bomb beeping in the courtroom? Don't panic and quickly buy this crate, it has all you need to disarm the bomb (time not included)."
 	cost = 1500
 	contains = list(/obj/item/clothing/head/bomb_hood,
+					/obj/item/clothing/suit/bomb_suit,
 					/obj/item/clothing/mask/gas,
 					/obj/item/screwdriver,
 					/obj/item/wirecutters,
@@ -298,11 +299,11 @@
 	desc = "Stay hot on the criminal's heels with Nanotrasen's Detective Essentials(tm). Contains a forensics scanner, six evidence bags, camera, tape recorder, white crayon, and of course, a fedora. Requires Security access to open."
 	cost = 2000
 	contains = list(/obj/item/detective_scanner,
-	                /obj/item/storage/box/evidence,
-	                /obj/item/camera,
-	                /obj/item/taperecorder,
-	                /obj/item/toy/crayon/white,
-	                /obj/item/clothing/head/fedora/det_hat)
+					/obj/item/storage/box/evidence,
+					/obj/item/camera,
+					/obj/item/taperecorder,
+					/obj/item/toy/crayon/white,
+					/obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
 
 /datum/supply_pack/security/helmets
@@ -396,6 +397,13 @@
 					/obj/item/storage/box/wall_flash,
 					/obj/item/storage/box/wall_flash)
 	crate_name = "wall-mounted flash crate"
+
+/datum/supply_pack/security/vending/security
+	name = "SecTech Supply Crate"
+	desc = "Officer Paul bought all the donuts? Then refill the security vendor with ths crate."
+	cost = 1500
+	contains = list(/obj/machinery/vending/security)
+	crate_name = "SecTech supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Armory //////////////////////////////////////////
@@ -550,7 +558,6 @@
 					/obj/item/clothing/gloves/combat)
 	crate_name = "swat crate"
 
-
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Auto Rifle Crate"
 	desc = "Contains two high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
@@ -572,39 +579,41 @@
 /datum/supply_pack/security/armory/ammo
 	name = "Ammo Crate"
 	desc = "Contains two 20-round magazines for the WT-550 Auto Rifle, three boxes of buckshot ammo, three boxes of rubber ammo, two .38 speedloarders. Requires Armory access to open."
-	cost = 2500
+	cost = 3000
 	contains = list(/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/storage/box/lethalshot
-					/obj/item/storage/box/lethalshot
-					/obj/item/storage/box/lethalshot
-					/obj/item/storage/box/rubbershot
-					/obj/item/storage/box/rubbershot
-					/obj/item/storage/box/rubbershot
-					/obj/item/ammo_box/c38
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/ammo_box/c38,
 					/obj/item/ammo_box/c38)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/security/armory/randomised/russian
 	name = "Russian Surplus Crate"
-	desc = "Contains various military surplus bought on amazon. Requires Armory access to open."
+	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
 	cost = 5000
 	var/num_contained = 10
-	contains = list(
-					/obj/item/reagent_containers/food/snacks/rationpack,
+	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
 					/obj/item/ammo_box/a762,
 					/obj/item/ammo_box/a762,
-					/obj/item/clothing/under/russian_soldier,
-					/obj/item/clothing/suit/armor/russian,
-					/obj/item/clothing/head/helmet/russian,
+					/obj/item/clothing/suit/armor/vest/russian,
+					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,
-					/obj/item/clothing/under/soviet,
 					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/under/syndicate/rus_army,
+					/obj/item/clothing/under/soviet,
+					/obj/item/clothing/mask/russian_balaclava,
+					/obj/item/clothing/head/helmet/rus_ushanka,
+					/obj/item/clothing/suit/armor/vest/russian_coat,
 					/obj/item/gun/ballistic/rifle/boltaction,
 					/obj/item/gun/ballistic/rifle/boltaction)
 	crate_name = "surplus military crate"
 
-/datum/supply_pack/armory/randomised/russian/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/security/armory/randomised/russian/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)
 		var/item = pick_n_take(L)
@@ -1257,8 +1266,13 @@
 /datum/supply_pack/science
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
-/datum/supply_pack/science/science/parts
-//èèè
+
+/datum/supply_pack/science/rped
+	name = "RPED crate"
+	desc = "Need to rebuild the ORM but science got annihialted after a bomb test? Buy this for the most advanced parts NT can give you."
+	cost = 1500
+	contains = list(/obj/item/storage/part_replacer/cargo)
+	crate_name = "\improper RPED crate"
 
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
@@ -1479,16 +1493,6 @@
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/service/barman
-	name = "Mini Bar Kit"
-	desc = "The barman wont serve you drinks? Then make your own bar with this crate. Contains one booze dispenser, one soda dispenser, a shaker, one box of glasses."
-	cost = 2000
-	contains = list(/obj/machinery/chem_dispenser/drinks/beer/unwrenched,
-					/obj/machinery/chem_dispenser/drinks/unwrenched,
-					/obj/item/storage/box/drinkingglasses,
-					/obj/item/reagent_containers/food/drinks/shaker)
-	crate_name = "bar kit"
-
 /datum/supply_pack/service/vending/bartending
 	name = "Booze-o-mat and Coffee Supply Crate"
 	desc = "Bring on the booze and coffee vending machine refills."
@@ -1614,7 +1618,7 @@
 /datum/supply_pack/organic/meat
 	name = "Excellent Meat Crate"
 	desc = "The best cuts in the whole galaxy."
-	cost = 3000
+	cost = 2000
 	var/num_contained = 10
 	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
 					/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
@@ -1791,7 +1795,7 @@
 	cost = 5000 //Cats are worth as much as corgis.
 	contains = list(/mob/living/simple_animal/pet/cat,
 					/obj/item/clothing/neck/petcollar,
-                    /obj/item/toy/cattoy)
+					/obj/item/toy/cattoy)
 	crate_name = "cat crate"
 
 /datum/supply_pack/critter/cat/generate()
@@ -1822,15 +1826,15 @@
 		new /mob/living/simple_animal/crab(.)
 
 /datum/supply_pack/critter/parrot
-	name = "parrot crate"
-	desc = "parrots
+	name = "Bird Crate"
+	desc = "Contains four expert telecommunication birds."
 	cost = 4000
-	contains = list(/mob/living/simple_animal/crab)
-	crate_name = "look sir free crabs"
-//ééé
+	contains = list(/mob/living/simple_animal/parrot)
+	crate_name = "parrot crate"
+
 /datum/supply_pack/critter/crab/generate()
 	. = ..()
-	for(var/i in 1 to 5)
+	for(var/i in 1 to 4)
 		new /mob/living/simple_animal/parrot(.)
 
 /datum/supply_pack/critter/corgi
@@ -2023,9 +2027,6 @@
 					/obj/item/lipstick/random)
 	crate_name = "formalwear crate"
 	crate_type = /obj/structure/closet/crate/wooden
-//èèè
-/datum/supply_pack/costumes_toys/medieval
-/datum/supply_pack/costumes_toys/pirates
 
 /datum/supply_pack/costumes_toys/clownpin
 	name = "Hilarious Firing Pin Crate"
@@ -2318,8 +2319,7 @@
 	cost = 600
 	contains = list(/obj/item/clothing/under/burial,
 					/obj/item/reagent_containers/food/snacks/grown/harebell,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium
-					)
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium)
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
 
@@ -2332,8 +2332,7 @@
 					/obj/item/storage/book/bible/booze,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie
-					)
+					/obj/item/clothing/suit/hooded/chaplain_hoodie)
 	crate_name = "religious supplies crate"
 
 /datum/supply_pack/misc/toner
