@@ -77,7 +77,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 			verbs -= /mob/dead/proc/server_hop
 			to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
 		if(1)
-			pick = csa[0]
+			pick = csa[1]
 		else
 			pick = input(src, "Pick a server to jump to", "Server Hop") as null|anything in csa
 
