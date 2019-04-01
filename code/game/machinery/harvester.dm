@@ -45,16 +45,33 @@
 	harvesting = FALSE
 
 /obj/machinery/harvester/attack_hand(mob/user)
-	if(state_open)
-		close_machine()
-	else if(!harvesting)
-		open_machine()
-
-/obj/machinery/harvester/AltClick(mob/user)
 	if(harvesting || !user || !isliving(user) || state_open)
 		return
-	if(can_harvest())
+	else if(can_harvest())
 		start_harvest()
+
+/obj/machinery/harvester/MouseDrop_T(mob/target, mob/user)
+	if (!istype(target) || target.anchored || target.buckled || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE) || !state_open)
+		return
+	add_fingerprint(user)
+	if (user == target)
+		user.visible_message("[user] starts climbing into [src].", "<span class='notice'>You start climbing into [src]...</span>")
+	else
+		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", "<span class='userdanger'>[user] starts putting you into [src]!</span>")
+	if (do_mob(user, target, 30))
+		if (!loc)
+			return
+		close_machine(target)
+		if (user == target)
+			user.visible_message("[user] climbs into [src].", "<span class='notice'>You climb into [src].</span>")
+		else
+			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>")
+			log_combat(user, target, "forced", addition="into [src]")
+
+/obj/machinery/harvester/AltClick(mob/user)
+	if (!state_open && user != occupant)
+		open_machine()
+	. = ..()
 
 /obj/machinery/harvester/proc/can_harvest()
 	if(!powered(EQUIP) || state_open || !occupant || !iscarbon(occupant))
