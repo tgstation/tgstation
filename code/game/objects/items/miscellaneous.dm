@@ -131,17 +131,3 @@
 	new choice(get_turf(M))
 	to_chat(M, "You hear something crackle from the beacon for a moment before a voice speaks.  \"Please stand by for a message from S.E.L.F. Message as follows: <span class='bold'>Item request received. Your package has been transported, use the autosurgeon supplied to apply the upgrade.</span> Message ends.\"")
 
-/obj/item/skub
-	desc = "It's skub."
-	name = "skub"
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "skub"
-	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("skubbed")
-
-/obj/item/skub/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")
-
-	user.gib()
-	playsound(src, 'sound/items/eatfood.ogg', 50, 1, -1)
-	return MANUAL_SUICIDE
