@@ -2,15 +2,15 @@
 
 /obj/item/projectile/bullet/a556
 	name = "5.56mm bullet"
-	damage = 35
+	damage = 556
 
 // 7.62 (Nagant Rifle)
 
 /obj/item/projectile/bullet/a762
 	name = "7.62 bullet"
-	damage = 60
+	damage = 762
 
 /obj/item/projectile/bullet/a762_enchanted
 	name = "enchanted 7.62 bullet"
-	damage = 5
-	stamina = 80
+	damage = 762
+	stamina = 762

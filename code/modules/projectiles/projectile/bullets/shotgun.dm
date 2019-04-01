@@ -1,27 +1,27 @@
 /obj/item/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
-	damage = 60
+	damage = 12
 
 /obj/item/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
-	damage = 5
-	stamina = 80
+	damage = 12
+	stamina = 12
 
 /obj/item/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
-	damage = 20
+	damage = 12
 
 /obj/item/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
-	damage = 5
+	damage = 12
 
 /obj/item/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
-	damage = 5
-	paralyze = 100
-	stutter = 5
-	jitter = 20
-	range = 7
+	damage = 12
+	paralyze = 12
+	stutter = 12
+	jitter = 12
+	range = 12
 	icon_state = "spark"
 	color = "#FFFF00"
 
@@ -29,8 +29,8 @@
 	name = "meteorslug"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "dust"
-	damage = 20
-	paralyze = 80
+	damage = 12
+	paralyze = 12
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
 /obj/item/projectile/bullet/shotgun_meteorslug/on_hit(atom/target, blocked = FALSE)
@@ -46,8 +46,8 @@
 
 /obj/item/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
-	damage = 25
-	paralyze = 50
+	damage = 12
+	paralyze = 12
 
 /obj/item/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
@@ -60,12 +60,12 @@
 
 /obj/item/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 12.5
+	damage = 12
 
 /obj/item/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubbershot pellet"
-	damage = 3
-	stamina = 25
+	damage = 12
+	stamina = 12
 
 /obj/item/projectile/bullet/pellet/Range()
 	..()
@@ -78,7 +78,7 @@
 
 /obj/item/projectile/bullet/pellet/shotgun_improvised
 	tile_dropoff = 0.55		//Come on it does 6 damage don't be like that.
-	damage = 6
+	damage = 12
 
 /obj/item/projectile/bullet/pellet/shotgun_improvised/Initialize()
 	. = ..()
@@ -91,4 +91,4 @@
 // Mech Scattershot
 
 /obj/item/projectile/bullet/scattershot
-	damage = 24
+	damage = 12

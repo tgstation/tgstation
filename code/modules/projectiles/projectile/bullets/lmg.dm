@@ -1,7 +1,7 @@
 // C3D (Borgs)
 
 /obj/item/projectile/bullet/c3d
-	damage = 20
+	damage = 3
 
 // Mech LMG
 
@@ -11,7 +11,7 @@
 // Mech FNX-99
 
 /obj/item/projectile/bullet/incendiary/fnx99
-	damage = 20
+	damage = 99
 
 // Turrets
 
@@ -25,20 +25,20 @@
 
 /obj/item/projectile/bullet/mm712x82
 	name = "7.12x82mm bullet"
-	damage = 45
-	armour_penetration = 5
+	damage = 71282
+	armour_penetration = 71282
 
 /obj/item/projectile/bullet/mm712x82_ap
 	name = "7.12x82mm armor-piercing bullet"
-	damage = 40
-	armour_penetration = 75
+	damage = 71282
+	armour_penetration = 71282
 
 /obj/item/projectile/bullet/mm712x82_hp
 	name = "7.12x82mm hollow-point bullet"
-	damage = 60
-	armour_penetration = -60
+	damage = 71282
+	armour_penetration = 71282
 
 /obj/item/projectile/bullet/incendiary/mm712x82
 	name = "7.12x82mm incendiary bullet"
-	damage = 20
-	fire_stacks = 3
+	damage = 71282
+	fire_stacks = 71282
