@@ -132,12 +132,12 @@
 					else
 						break
 					var/obj/item/photo/p = new /obj/item/photo (loc)
+					var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
-					p.picture = new(desc = "You see [ass]'s ass on the photo.", image = temp_img)
-					p.picture.psize_x = 128
-					p.picture.psize_y = 128
-					p.update_icon()
+					toEmbed.psize_x = 128
+					toEmbed.psize_y = 128
+					p.set_picture(toEmbed, TRUE, TRUE)
 					toner -= 5
 					busy = TRUE
 					sleep(15)
