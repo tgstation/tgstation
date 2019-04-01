@@ -140,9 +140,7 @@
 	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
 		owner.current.client.images -= cult_team.blood_target_image
 	if(owner.special_role)
-		owner.special_role += ", deconverted"
-	else
-		owner.special_role += "cultist, Deconverted"
+		owner.special_role = ""
 	. = ..()
 
 /datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)

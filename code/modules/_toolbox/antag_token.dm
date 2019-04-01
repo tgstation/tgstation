@@ -8,6 +8,10 @@ client/verb/check_antag_token()
 	set category = "OOC"
 	var/tokens = get_antag_token_count()
 	if(!SSticker || !SSticker.mode || !SSticker.mode.available_antag_tokens || !SSticker.mode.available_antag_tokens.len)
+		to_chat(src, "<B>Antagonist tokens are disabled right now.</B>")
+		return
+	if(SSticker.current_state < GAME_STATE_PLAYING)
+		alert(src,"You have [tokens] antagonist tokens. You must wait untill the game starts to use one.","Antagonist Tokens","Ok")
 		return
 	var/list/choices = SSticker.mode.available_antag_tokens
 	if(!istype(mob,/mob/living/carbon/human) || !mob.mind)
@@ -54,6 +58,9 @@ client/verb/check_antag_token()
 		return 0
 
 /client/proc/use_antag_token(var/antagtype = null)
+	if(SSticker && SSticker.current_state < GAME_STATE_PLAYING)
+		to_chat(src, "<B>Wait untill the game starts to use an antagonist token.</B>")
+		return 0
 	if(!ckey || !antagtype || !istext(antagtype)||!mob.mind)
 		to_chat(src, "<B>You can't use an antagonist token right now.</B>")
 		return 0
@@ -74,6 +81,7 @@ client/verb/check_antag_token()
 	var/tokens = 0
 	S["[ckey]"] >> tokens
 	if(isnum(tokens) && tokens >= 1)
+		var/success = 0
 		if(mob.mind)
 			if(mob.mind.special_role)
 				to_chat(src, "<B>You are already an antagonist.</B>")
@@ -83,38 +91,37 @@ client/verb/check_antag_token()
 				if((CONFIG_GET(flag/protect_roles_from_antagonist) && (mob.mind.assigned_role in GLOB.memorized_restricted_jobs))||(J && J.antagonist_immune))
 					to_chat(src, "<B>A [mob.mind.assigned_role] cannot be an antagonist.</B>")
 					return 0
-		var/success = 0
-		switch(antagtype)
-			if("traitor")
-				if(istype(mob,/mob/living/carbon/human))
-					mob.mind.add_antag_datum(/datum/antagonist/traitor)
-					success = 1
-			if("changeling")
-				if(istype(mob,/mob/living/carbon/human))
-					mob.mind.make_Changling()
-					success = 1
-			if("cult")
-				if(istype(mob,/mob/living/carbon/human))
-					if(istype(SSticker.mode,/datum/game_mode/cult))
-						var/datum/game_mode/cult/cultmode = SSticker.mode
-						cultmode.add_cultist(mob.mind, 0, equip=TRUE)
+			switch(antagtype)
+				if("traitor")
+					if(istype(mob,/mob/living/carbon/human))
+						mob.mind.add_antag_datum(/datum/antagonist/traitor)
 						success = 1
-						if(cultmode.main_cult)
-							var/datum/antagonist/cult/C = mob.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-							if(C && C.cult_team)
-								cultmode.main_cult = C.cult_team
-			if("revs")
-				if(istype(SSticker.mode,/datum/game_mode/revolution))
-					var/datum/game_mode/revolution/revmode = SSticker.mode
-					if(revmode.revolution)
-						var/datum/antagonist/rev/head/new_head = new()
-						new_head.give_flash = TRUE
-						new_head.give_hud = TRUE
-						new_head.remove_clumsy = TRUE
-						mob.mind.add_antag_datum(new_head,revmode.revolution)
+				if("changeling")
+					if(istype(mob,/mob/living/carbon/human))
+						mob.mind.make_Changling()
 						success = 1
-						revmode.revolution.update_objectives()
-						revmode.revolution.update_heads()
+				if("cult")
+					if(istype(mob,/mob/living/carbon/human) && !(mob.mind.assigned_role in SSticker.mode.restricted_jobs))
+						if(istype(SSticker.mode,/datum/game_mode/cult))
+							var/datum/game_mode/cult/cultmode = SSticker.mode
+							cultmode.add_cultist(mob.mind, 0, equip=TRUE)
+							success = 1
+							if(cultmode.main_cult)
+								var/datum/antagonist/cult/C = mob.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+								if(C && C.cult_team)
+									cultmode.main_cult = C.cult_team
+				if("revs")
+					if(istype(SSticker.mode,/datum/game_mode/revolution) && !(mob.mind.assigned_role in SSticker.mode.restricted_jobs))
+						var/datum/game_mode/revolution/revmode = SSticker.mode
+						if(revmode.revolution)
+							var/datum/antagonist/rev/head/new_head = new()
+							new_head.give_flash = TRUE
+							new_head.give_hud = TRUE
+							new_head.remove_clumsy = TRUE
+							mob.mind.add_antag_datum(new_head,revmode.revolution)
+							success = 1
+							revmode.revolution.update_objectives()
+							revmode.revolution.update_heads()
 		if(success)
 			tokens--
 			tokens = max(tokens,0)

@@ -204,4 +204,6 @@ GLOBAL_LIST_EMPTY(hub_features)
 		var/informed = alert(src,"If you feel this death was illegitimate. Please adminhelp and an admin will investigate this death for you.","You Have Died","No thanks","Admin PM now")
 		if(informed != "Admin PM now")
 			return
-		adminhelp()
+		var/adminhelptext = input(src,"Enter admin help message.","Admin Help","I have died, is this death legit?") as text
+		if(adminhelptext)
+			adminhelp(adminhelptext)

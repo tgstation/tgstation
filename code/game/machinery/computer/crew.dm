@@ -122,7 +122,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 		// Check if their z-level is correct and if they are wearing a uniform.
 		// Accept H.z==0 as well in case the mob is inside an object.
-		if ((H.z == 0 || H.z == z) && istype(H.w_uniform, /obj/item/clothing/under))
+		if ((H.z == 0 || H.z == z || H.z == SSmapping.levels_by_trait(ZTRAIT_STATION)[1]) && istype(H.w_uniform, /obj/item/clothing/under))
 			U = H.w_uniform
 
 			// Are the suit sensors on?

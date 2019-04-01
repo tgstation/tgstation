@@ -8,7 +8,7 @@
 */
 
 /obj/item/projectile/bullet/fiveseven
-	damage = 24
+	damage = 40
 
 /obj/item/ammo_casing/fiveseven
 	desc = "A 5.7x28mm casing"
@@ -172,6 +172,11 @@
 					do_stun = 0
 					to_chat(user,"<div class='warning'>The [src] is out of charge!</div>")
 				if(do_stun)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
+							playsound(H, 'sound/weapons/genhit.ogg', 50, 1)
+							return
 					do_stun(M,user)
 			else
 				. = 1
