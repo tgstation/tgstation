@@ -615,9 +615,8 @@
 	crate_name = "surplus military crate"
 
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)
-		var/item = pick(L)
+		var/item = pick(contains)
 		new item(C)
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1655,9 +1654,8 @@
 	crate_name = "food crate"
 
 /datum/supply_pack/organic/randomized/chef/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)
-		var/item = pick(L)
+		var/item = pick(contains)
 		new item(C)
 
 /datum/supply_pack/organic/randomized/chef/fruits
@@ -1878,7 +1876,7 @@
 
 /datum/supply_pack/critter/parrot
 	name = "Bird Crate"
-	desc = "Contains four expert telecommunication birds."
+	desc = "Contains five expert telecommunication birds."
 	cost = 4000
 	contains = list(/mob/living/simple_animal/parrot)
 	crate_name = "parrot crate"
@@ -1887,6 +1885,8 @@
 	. = ..()
 	for(var/i in 1 to 4)
 		new /mob/living/simple_animal/parrot(.)
+	if(prob(1))
+		new /mob/living/simple_animal/parrot/clock_hawk(.)
 
 /datum/supply_pack/critter/corgi
 	name = "Corgi Crate"

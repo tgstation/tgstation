@@ -304,11 +304,10 @@
 	icon_state = "rus_ushanka"
 	item_state = "rus_ushanka"
 	clothing_flags = THICKMATERIAL
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	armor = list("melee" = 20, "bullet" = 20, "laser" = 40,"energy" = 20, "bomb" = 20, "bio" = 80, "rad" = 80, "fire" = 20, "acid" = 90)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 40,"energy" = 20, "bomb" = 20, "bio" = 80, "rad" = 70, "fire" = 20, "acid" = 80)
 
 //LightToggle
 
