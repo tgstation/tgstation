@@ -9,6 +9,7 @@
 	fire_delay = 0
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
+	tac_reloads = TRUE
 	fire_sound = "sound/weapons/gunshot.ogg"
 	vary_fire_sound = FALSE
 	fire_sound_volume = 80
