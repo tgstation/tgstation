@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - bugfix: "Corrected an error that stopped photos of crew members being printed at the security records consoles."
