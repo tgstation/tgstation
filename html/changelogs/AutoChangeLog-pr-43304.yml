@@ -1,0 +1,6 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - balance: "Deflecting shots while inside a MK-I Ripley (or inside anything else, for that matter) will cause the shots to deflect back into the container."
+  - balance: "Firing at a MK-I Ripley while aiming for the head or chest will still hit the pilot, but aiming for the arms or legs will now intentionally hit the mech."
+  - tweak: "Being incapacitated in an open-canopy mech will now lead to you falling out."
