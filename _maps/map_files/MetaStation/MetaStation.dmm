@@ -60141,7 +60141,7 @@
 /obj/machinery/door/airlock/wood{
 	doorClose = 'sound/effects/doorcreaky.ogg';
 	doorOpen = 'sound/effects/doorcreaky.ogg';
-	name = "The Gobletting Barmaid"
+	name = "The Gobetting Barmaid"
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
@@ -83564,6 +83564,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"mrv" = (
+/obj/machinery/door/airlock/wood{
+	doorClose = 'sound/effects/doorcreaky.ogg';
+	doorOpen = 'sound/effects/doorcreaky.ogg';
+	name = "The Gobetting Barmaid"
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/maintenance/port/aft)
 "msD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -101999,7 +102009,7 @@ cjv
 diG
 dux
 cnl
-cox
+mrv
 dux
 diI
 diK
