@@ -60139,6 +60139,8 @@
 /area/maintenance/port/aft)
 "cnl" = (
 /obj/machinery/door/airlock/wood{
+	doorClose = 'sound/effects/doorcreaky.ogg';
+	doorOpen = 'sound/effects/doorcreaky.ogg';
 	name = "The Gobletting Barmaid"
 	},
 /turf/open/floor/wood,
@@ -60878,6 +60880,8 @@
 /area/hallway/secondary/service)
 "cox" = (
 /obj/machinery/door/airlock/wood{
+	doorClose = 'sound/effects/doorcreaky.ogg';
+	doorOpen = 'sound/effects/doorcreaky.ogg';
 	name = "The Gobletting Barmaid"
 	},
 /turf/open/floor/wood{
@@ -100723,7 +100727,7 @@ aaa
 aaf
 aaa
 aaa
-cBR
+cox
 cBR
 cBR
 cBR
