@@ -15,8 +15,6 @@
 
 /obj/vehicle/ridden/secway/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
 	. = ..()
-	if(obj_integrity <= 0)
-		explosion(src, -1, 0, 2, 4, flame_range = 3)
 	if(. && (obj_integrity > 0) && obj_integrity < (max_integrity * 0.5))
 		START_PROCESSING(SSobj, src)
 
@@ -41,6 +39,8 @@
 	..()
 
 /obj/vehicle/ridden/secway/Destroy()
+	if(obj_integrity <= 0)
+		explosion(src, -1, 0, 2, 4, flame_range = 3)
 	STOP_PROCESSING(SSobj,src)
 	return ..()
 
