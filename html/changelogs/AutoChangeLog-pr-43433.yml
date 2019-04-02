@@ -1,4 +1,0 @@
-author: "pireamaineach"
-delete-after: True
-changes: 
-  - bugfix: "Makes the .45 magazine actually update per round rather than just showing full or empty."
