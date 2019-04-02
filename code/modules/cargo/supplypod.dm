@@ -150,6 +150,8 @@
 		addtimer(CALLBACK(src, .proc/open, src), openingDelay) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
 /obj/structure/closet/supplypod/open(atom/movable/holder, var/broken = FALSE, var/forced = FALSE) //The holder var represents an atom whose contents we will be working with
+	if (!holder)
+		return
 	if (opened) //This is to ensure we don't open something that has already been opened
 		return
 	opened = TRUE 
