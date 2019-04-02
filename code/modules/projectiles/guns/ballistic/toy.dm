@@ -12,6 +12,7 @@
 	clumsy_check = 0
 	item_flags = NONE
 	casing_ejector = FALSE
+	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/toy/update_icon()
 	. = ..()
@@ -31,6 +32,7 @@
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
+	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/toy/pistol/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol/riot
