@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	if(getDockedId() == "supply_away") // Sell when we get home
 		sell()
 
-/obj/docking_port/mobile/supply/proc/generateManifest(obj/structure/closet/crate/C, var/id, var/ordernum) //generates the manifests for miscboxes. Normal manifests are made in the /modules/cargo/order.dm file.
+/obj/docking_port/mobile/supply/proc/generateManifest(obj/structure/closet/crate/C, var/id, var/ordernum, var/packname) //generates-the-manifests.
 	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(C, id, 0)
 
 	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
@@ -85,11 +85,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	P.name = "shipping manifest - (Grouped Item Crate)"
 	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
 	P.info += "<hr/>"
-	if(!(id == "Cargo"))
+	if(id && !(id == "Cargo"))
 		P.info += "Direct purchase from [id]<br/>"
 		P.name += " - Purchased by [id]"
-	P.info += "Orders: [ordernum]<br/>"
+	P.info += "Order[packname?"":"s"]: [ordernum]<br/>"
 	P.info += "Destination: [station_name]<br/>"
+	if(packname)
+		P.info += "Item: [packname]<br/>"
 	P.info += "Contents: <br/>"
 	P.info += "<ul>"
 	for(var/atom/movable/AM in C.contents - P)
@@ -101,6 +103,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		P.info += "<li>[AM.name]</li>"
 	P.info += "</ul>"
 	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
+
+	if(P.errors & MANIFEST_ERROR_ITEM)
+		if(istype(C, /obj/structure/closet/crate/secure) || istype(C, /obj/structure/closet/crate/large))
+			P.errors &= ~MANIFEST_ERROR_ITEM
+		else
+			var/lost = max(round(C.contents.len / 10), 1)
+			while(--lost >= 0)
+				qdel(pick(C.contents))
 
 	P.update_icon()
 	P.forceMove(C)
@@ -162,13 +172,15 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				if(!miscboxes.len || !miscboxes["Cargo"])
 					miscboxes["Cargo"] = new /obj/structure/closet/crate/secure(pick_n_take(empty_turfs))
 					miscboxes["Cargo"].name = "small items crate"
+					miscboxes["Cargo"].req_access = list()
 				for (var/item in SO.pack.contains)
 					new item(miscboxes["Cargo"])
 				if(SO.pack.access)
 					miscboxes["Cargo"].req_access += SO.pack.access
 				misc_order_num["Cargo"] = "[misc_order_num["Cargo"]]#[SO.id]  "
 		else
-			SO.generate(pick_n_take(empty_turfs))
+			var/obj/structure/closet/crate/crate = SO.generate(pick_n_take(empty_turfs))
+			generateManifest(crate, "", "#[SO.id]", SO.pack.name)
 
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)

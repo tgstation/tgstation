@@ -92,7 +92,7 @@
 
 /datum/supply_order/proc/generate(atom/A)
 	var/obj/structure/closet/crate/C = pack.generate(A, paying_account)
-	var/obj/item/paper/fluff/jobs/cargo/manifest/M = generateManifest(C)
+/*	var/obj/item/paper/fluff/jobs/cargo/manifest/M = generateManifest(C) //to be removed before merging --Zxaber
 
 	if(M.errors & MANIFEST_ERROR_ITEM)
 		if(istype(C, /obj/structure/closet/crate/secure) || istype(C, /obj/structure/closet/crate/large))
@@ -100,5 +100,5 @@
 		else
 			var/lost = max(round(C.contents.len / 10), 1)
 			while(--lost >= 0)
-				qdel(pick(C.contents))
+				qdel(pick(C.contents))*/
 	return C
