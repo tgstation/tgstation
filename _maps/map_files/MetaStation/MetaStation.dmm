@@ -60878,16 +60878,6 @@
 /obj/machinery/rnd/production/techfab/department/service,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
-"cox" = (
-/obj/machinery/door/airlock/wood{
-	doorClose = 'sound/effects/doorcreaky.ogg';
-	doorOpen = 'sound/effects/doorcreaky.ogg';
-	name = "The Gobletting Barmaid"
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
-	},
-/area/maintenance/port/aft)
 "coy" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/latex,
@@ -100490,7 +100480,7 @@ aaa
 aaf
 aaa
 aaa
-aaa
+cBR
 aaf
 aaa
 aaa
@@ -100737,7 +100727,7 @@ aaa
 aaf
 aaa
 aaa
-cox
+cBR
 cBR
 cBR
 cBR
