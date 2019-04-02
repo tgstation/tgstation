@@ -230,10 +230,16 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			Knockdown(30)
-			log_combat(M, src, "tackled")
-			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
-				"<span class='userdanger'>[M] has tackled down [src]!</span>")
+			if (src.IsKnockdown() && !src.IsParalyzed()) 
+				Paralyze(40)
+				log_combat(M, src, "pinned")
+				visible_message("<span class='danger'>[M] has pinned down [src]!</span>", \
+					"<span class='userdanger'>[M] has pinned down [src]!</span>")
+			else
+				Knockdown(30)
+				log_combat(M, src, "tackled")
+				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
+					"<span class='userdanger'>[M] has tackled down [src]!</span>")
 
 	if(M.limb_destroyer)
 		dismembering_strike(M, affecting.body_zone)
