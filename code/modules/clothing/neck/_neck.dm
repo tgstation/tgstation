@@ -73,11 +73,15 @@
 			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
 			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 
+			if (!do_mob(user,M,60))	// FULPSTATION: Stethoscope should take a moment to listen
+				return // FAIL
+
 			if(!(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH))))
 				if(heart && istype(heart))
-					heart_strength = "<span class='danger'>an unstable</span>"
-					if(heart.beating)
-						heart_strength = "a healthy"
+					heart.HeartStrengthMessage()// FULPCHANGE: Display Heart Message
+					//heart_strength = "<span class='danger'>an unstable</span>"
+					//if(heart.beating)
+					//	heart_strength = "a healthy"
 				if(lungs && istype(lungs))
 					lung_strength = "<span class='danger'>strained</span>"
 					if(!(M.failed_last_breath || M.losebreath))

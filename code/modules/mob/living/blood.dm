@@ -19,7 +19,7 @@
 	if(bodytemperature >= TCRYO && !(has_trait(TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
-			blood_volume += 0.1 // regenerate blood VERY slowly
+			blood_volume +=  0.2 // 0.1 // regenerate blood VERY slowly  // FULPSTATION: Let's double it, why not?
 			if(blood_volume < BLOOD_VOLUME_OKAY)
 				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
 
@@ -28,6 +28,9 @@
 
 	if(NOBLOOD in dna.species.species_traits)
 		bleed_rate = 0
+		return
+
+	if (AmBloodsucker()) // FULPSTATION: Bloodsuckers don't need to be here.
 		return
 
 	if(bodytemperature >= TCRYO && !(has_trait(TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.

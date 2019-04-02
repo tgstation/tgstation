@@ -168,6 +168,8 @@
 
 	// DONE!
 	DeactivatePower(user,target)
+	user.visible_message("<span class='warning'>[user] unclenches their teeth from [target]'s neck.</span>", \
+						 "<span class='warning'>You retract your fangs and release [target] from your bite.</span>")
 
 
 /datum/action/bloodsucker/feed/ContinueActive(mob/living/user)
@@ -181,7 +183,7 @@
 	//target.Knockdown(50 * powerLevel,1)  <--- Too weak! They can still crawl away.
 	// NOTE: THis is based on level of power!
 
-/datum/action/bloodsucker/feed/DeactivatePower(mob/living/user, mob/living/target)
+/datum/action/bloodsucker/feed/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	if (bloodsuckerdatum)

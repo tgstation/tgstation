@@ -42,7 +42,7 @@
 
 	// Active? DEACTIVATE AND END!
 	if (active && CheckCanDeactivate(TRUE))
-		DeactivatePower()
+		DeactivatePower(owner)
 		return
 
 	if(!owner || !owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/bloodsucker))
@@ -57,8 +57,6 @@
 		active = !active
 
 	ActivatePower()
-
-	to_chat(owner, "You use [name]!")
 
 
 /datum/action/bloodsucker/proc/CheckCanUse(display_error)
@@ -93,5 +91,5 @@
 	active = FALSE
 
 
-/datum/action/bloodsucker/feed/proc/ContinueActive(mob/living/user) // Used by loops to make sure this power can stay active.
+/datum/action/bloodsucker/proc/ContinueActive(mob/living/user) // Used by loops to make sure this power can stay active.
 	return active && user.mind && user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)

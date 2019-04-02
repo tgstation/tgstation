@@ -14,6 +14,7 @@
 	var/vampname						// My Dracula name
 	var/vamptitle						// My Dracula title
 	var/vampreputation					// My "Surname" or description of my deeds
+
 	// CLAN
 	var/datum/team/vampireclan/clan
 
@@ -21,10 +22,20 @@
 	var/list/obj/effect/proc_holder/spell/powers = list()// Purchased powers
 	var/poweron_feed = FALSE			// Am I feeding?
 	var/poweron_masquerade = FALSE
+
 	// STATS
 	var/regenRate = 0.3					// How many points of Brute do I heal per tick? Note: Fire never changes its rate (0.1)
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding. // BLOOD_VOLUME_NORMAL  550 // BLOOD_VOLUME_SAFE 475 //BLOOD_VOLUME_OKAY 336 //BLOOD_VOLUME_BAD 224 // BLOOD_VOLUME_SURVIVE 122
+
+	// TRACKING
+	var/foodInGut = 0					// How much food to throw up later. You shouldn't have eaten that.
+
+
+	// LISTS
+	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, TRAIT_NODEATH, TRAIT_COLDBLOODED)
+	//var/static/list/defaultOrgans = list (/obj/item/organ/heart/vampheart,/obj/item/organ/heart/vampeyes)
+
 
 
 
@@ -32,6 +43,11 @@
 
 	// Give Powers & Stats
 	AssignStarterPowersAndStats()
+
+
+
+	// Run Life Function
+	LifeTick()
 
 	. = ..()
 
@@ -140,6 +156,30 @@
 
 	// Powers
 	BuyPower(new /datum/action/bloodsucker/feed)
+	BuyPower(new /datum/action/bloodsucker/masquerade)
+
+	// Traits
+	for (var/T in defaultTraits)
+		owner.current.add_trait(T, "bloodsucker")
+
+	// Stats
+	if (ishuman(owner.current))
+		var/mob/living/carbon/human/H = owner.current
+		var/datum/species/S = H.dna.species
+		// Make Changes
+		S.brutemod *= 0.5
+		S.burnmod += 0.2 // 0.5
+		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
+		S.coldmod = 0
+		S.stunmod *= 0.8 // 0.5
+		S.punchdamagelow += 1       //lowest possible punch damage   0
+		S.punchdamagehigh += 1      //highest possible punch damage	 9
+		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
+		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
+
+	// Physiology
+	CheckVampOrgans() // Heart, Eyes
+
 
 /datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
@@ -150,6 +190,17 @@
 		power.Remove(owner.current)
 		// owner.RemoveSpell(power)
 
+	// Traits
+	for (var/T in defaultTraits)
+		owner.current.remove_trait(T, "bloodsucker")
+
+	// Stats
+	if (ishuman(owner.current))
+		var/mob/living/carbon/human/H = owner.current
+		H.set_species(H.dna.species.type)
+
+	// Physiology
+	owner.current.regenerate_organs()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -248,9 +299,12 @@
 //		SPRINT:	A) Hastily speed in a direction faster than the eye can see. B) Spin and dizzy people you pass. C) Chance to knock down people you pass.
 //		LUNGE:	Leap toward a location and put your target into an agressive hold.
 //
+//	* AGILITY
+//		CELERITY:	Dodge projectiles and even bullets. Perhaps avoid explosions!
+//
 //	* STEALTH
 //		CLOAK:  	A) Vanish into the shadows when stationary. B) Moving does not break your current level of invisibility (but stops you from hiding further).
-//		DISGUISE:	A) Bear the face and voice of a new person. B) Bear the random outfit of another.
+//		DISGUISE:	A) Bear the face and voice of a new person. B) Bear a random outfit of an unknown profession.
 //
 //	* FEED
 //		A) Mute victim while Feeding (and slowly deal Stamina damage) B) Paralyze victim while feeding C) Sleep victim while Feeding
@@ -364,6 +418,10 @@
 //
 // Turn vamps
 // Create vassals
+//
+
+
+// FIX LIST
 //
 
 

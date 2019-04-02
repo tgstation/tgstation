@@ -1,20 +1,56 @@
 
 
+// 		TO PLUG INTO LIFE:
 
-/mob/living/proc/AmBloodsucker(falseIfMortalDisguise=FALSE)
-	// No Datum
-	if (!mind || !mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		return FALSE
+// Cancel BLOOD life
+// Cancel METABOLISM life   (or find a way to control what gets digested)
+// Create COLDBLOODED trait (thermal homeostasis)
+
+// 		EXAMINE
+//
+// Show as dead when...
+
+
+
 
 
 
 
 /datum/antagonist/bloodsucker/proc/LifeTick() // Should probably run from life.dm, same as handle_changeling
 
+	// Disable Heart (if not Masquerade)
+	while (owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
+
+		// Heal
+		HandleHealing()
+
+		// Deduct Blood
+		AddBloodVolume(-0.15)
+
+		// Apply Low Blood Effects
+		HandleStarving()
+
+		// Death
+		HandleDeath()
+
+		// Standard Update
+		//update_hud()
+
+	// Free my Vassals! (if I haven't yet)
+	//FreeAllVassals()
 
 
 
-/datum/antagonist/bloodsucker/proc/SetBloodVolume(value)
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//			BLOOD
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/datum/antagonist/bloodsucker/proc/AddBloodVolume(value)
 	owner.current.blood_volume = CLAMP(owner.current.blood_volume + value, 0, maxBloodVolume)
 	//update_hud()
 
@@ -32,6 +68,12 @@
 			target.blood_volume = 0
 			target.death(0)
 
+	///////////
+	// Shift Body Temp (toward Target's temp, by volume taken)
+	owner.current.bodytemperature = ((owner.current.blood_volume * owner.current.bodytemperature) + (blood_taken * target.bodytemperature)) / (owner.current.blood_volume + blood_taken)
+	// our volume * temp, + their volume * temp, / total volume
+	///////////
+
 	// Reduce Value Quantity
 	if (target.stat == DEAD)	// Penalty for Dead Blood			<------ **** ALSO make drunk????!
 		blood_taken /= 3
@@ -41,7 +83,7 @@
 
 
 	// Apply to Volume
-	SetBloodVolume(blood_taken)
+	AddBloodVolume(blood_taken)
 
 	// Reagents (NOT Blood!)
 	if(target.reagents && target.reagents.total_volume)
@@ -52,7 +94,152 @@
 	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//			HEALING
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//
 /datum/antagonist/bloodsucker/proc/HandleHealing()
+	// No Bleeding
+	if (ishuman(owner.current))
+		var/mob/living/carbon/human/H = owner.current
+		H.bleed_rate = 0 // NOTE: This is done HERE, not in hande_healing_natural, because
+
+
+
+
+// I am hungry!
+/datum/antagonist/bloodsucker/proc/HandleStarving()
+
+	// High: 	Faster Healing
+	// Med: 	Pale
+	// Low: 	Twitch
+	// V.Low:   Blur Vision
+	// EMPTY:	Frenzy!
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//			DEATH
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/mob/proc/HandleDeath()
+	// CHECK
+	// Fire Damage? (above double health)
+	// Missing Brain or Heart?
+	// Staked while unconscious?
+
+/datum/antagonist/bloodsucker/proc/AmFinalDeath()
+ 	return owner && owner.AmFinalDeath()
+
+/datum/mind/proc/AmFinalDeath()
+ 	return !current || !isliving(current) || isbrain(current) || !get_turf(current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
+
+/datum/antagonist/bloodsucker/proc/FinalDeath()
+
+	playsound(get_turf(owner.current), 'sound/effects/tendril_destroyed.ogg', 60, 1)
+	owner.current.drop_all_held_items()
+	owner.current.unequip_everything()
+	var/mob/living/carbon/C = owner.current
+	C.remove_all_embedded_objects()
+
+	// Free my Vassals!
+	FreeAllVassals()
+
+	// Elders get Dusted
+	if (vamptitle)
+		owner.current.visible_message("<span class='warning'>[owner.current]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains.</span>", \
+			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
+			 "<span class='italics'>You hear a dry, crackling sound.</span>")
+		owner.current.dust()
+	// Fledglings get Gibbed
+	else
+		owner.current.visible_message("<span class='warning'>[owner.current]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat.</span>", \
+			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
+			 "<span class='italics'>You hear a wet, bursting sound.</span>")
+		owner.current.gib()
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//			HUMAN FOOD
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/mob/proc/CheckBloodsuckerEatFood(var/food_nutrition)
+	if (!isliving(src))
+		return
+	var/mob/living/L = src
+	if (!L.AmBloodsucker())
+		return
+	// We're a vamp? Try to eat food...
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	bloodsuckerdatum.handle_eat_human_food(food_nutrition)
+
+
+/datum/antagonist/bloodsucker/proc/handle_eat_human_food(var/food_nutrition) // Called from snacks.dm and drinks.dm
+	if (!owner.current || !iscarbon(owner.current))
+		return
+	var/mob/living/carbon/C = owner.current
+
+	// Remove Nutrition, Give Bad Food
+	C.nutrition -= food_nutrition
+	foodInGut += food_nutrition
+
+	// Already ate some bad clams? Then we can back out, because we're already sick from it.
+	if (foodInGut != food_nutrition)
+		return
+	// Haven't eaten, but I'm in a Human Disguise.
+	else if (poweron_masquerade)
+		to_chat(C, "<span class='notice'>Your stomach turns, but your Human Disguise keeps the food down...for now.</span>")
+
+	// First Food
+
+	// Keep looping until we purge. If we have activated our Human Disguise, we ignore the food. But it'll come up eventually...
+	var/sickphase = 0
+	while (foodInGut)
+
+		// Wait an interval...
+		sleep(100 + 50 * sickphase) // At intervals of 100, 150, and 200. (10 seconds, 15 seconds, and 20 seconds)
+
+		// Died? Cancel
+		if (C.stat == DEAD)
+			return
+		// Put up disguise? Then hold off the vomit.
+		if (poweron_masquerade)
+			if (sickphase > 0)
+				to_chat(C, "<span class='notice'>Your stomach settles temporarily. You regain your composure...for now.</span>")
+			sickphase = 0
+			continue
+
+		switch(sickphase)
+			if (1)
+				to_chat(C, "<span class='warning'>You feel unwell. You can taste ash on your tongue.</span>")
+			if (2)
+				to_chat(C, "<span class='warning'>Your stomach turns. Whatever you ate tastes of grave dirt and brimstone.</span>")
+				C.Dizzy(15)
+			if (3)
+				to_chat(C, "<span class='warning'>You purge the food of the living from your viscera! You've never felt worse.</span>")
+				C.vomit(foodInGut * 4, foodInGut * 2, 0)  // (var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+				C.blood_volume = max(0, C.blood_volume - foodInGut * 2)
+				C.Stun(rand(20,30))
+				C.Dizzy(50)
+				badfood = 0
+
+		sickphase ++
+
+
+
+
+
+
+
 
 
 
