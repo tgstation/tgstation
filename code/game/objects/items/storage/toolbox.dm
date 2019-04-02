@@ -243,7 +243,7 @@
 
 /obj/item/storage/toolbox/ammo
 	name = "ammo box"
-	desc = "contain a few clips."
+	desc = "It contains a few clips."
 	icon_state = "ammobox"
 	item_state = "ammobox"
 
