@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#c43b23"
-	var/asaycolor = null
+	var/asaycolor = "#ff4500"			//This won't change the color for current admins, only incoming ones.
 	var/enable_tips = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
 
