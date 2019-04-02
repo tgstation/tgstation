@@ -1260,6 +1260,27 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
 
+/datum/supply_pack/medical/chemical
+	name = "Chemical Starter Kit Crate"
+	desc = "Contains twelve different chemicals, for all the fun experiments you can make."
+	cost = 1700
+	contains = list(/obj/item/reagent_containers/glass/bottle/hydrogen,
+					/obj/item/reagent_containers/glass/bottle/carbon,
+					/obj/item/reagent_containers/glass/bottle/nitrogen,
+					/obj/item/reagent_containers/glass/bottle/oxygen,
+					/obj/item/reagent_containers/glass/bottle/fluorine,
+					/obj/item/reagent_containers/glass/bottle/phosphorus,
+					/obj/item/reagent_containers/glass/bottle/silicon,
+					/obj/item/reagent_containers/glass/bottle/chlorine,
+					/obj/item/reagent_containers/glass/bottle/radium,
+					/obj/item/reagent_containers/glass/bottle/sacid,
+					/obj/item/reagent_containers/glass/bottle/ethanol,
+					/obj/item/reagent_containers/glass/bottle/potassium,
+					/obj/item/clothing/glasses/science,
+					/obj/item/reagent_containers/dropper,
+					/obj/item/storage/box/beakers)
+	crate_name = "chemical crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1639,6 +1660,47 @@
 		var/item = pick_n_take(L)
 		new item(C)
 
+/datum/supply_pack/organic/fruit
+	name = "Fruit Crate"
+	desc = "Rich of vitamins, may contain oranges."
+	cost = 1500
+	var/num_contained = 15
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+					/obj/item/reagent_containers/food/snacks/grown/watermelon,
+					/obj/item/reagent_containers/food/snacks/grown/apple,
+					/obj/item/reagent_containers/food/snacks/grown/berries,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon)
+	crate_name = "food crate"
+
+/datum/supply_pack/organic/fruit/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
+/datum/supply_pack/organic/vegetables
+	name = "Vegetables Crate"
+	desc = "Grown in vats."
+	cost = 1300
+	var/num_contained = 15
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/chili,
+					/obj/item/reagent_containers/food/snacks/grown/corn,
+					/obj/item/reagent_containers/food/snacks/grown/tomato,
+					/obj/item/reagent_containers/food/snacks/grown/potato,
+					/obj/item/reagent_containers/food/snacks/grown/carrot,
+					/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+					/obj/item/reagent_containers/food/snacks/grown/onion,
+					/obj/item/reagent_containers/food/snacks/grown/pumpkin)
+	crate_name = "food crate"
+
+/datum/supply_pack/organic/vegetables/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
+
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	desc = "Designed by Aussec's Advanced Warfare Research Division, these high-yield, Clown-grade cream pies are powered by a synergy of performance and efficiency. Guaranteed to provide maximum results."
@@ -1661,7 +1723,8 @@
 					/obj/item/cultivator,
 					/obj/item/plant_analyzer,
 					/obj/item/clothing/gloves/botanic_leather,
-					/obj/item/clothing/suit/apron)
+					/obj/item/clothing/suit/apron,
+					/obj/item/storage/box/disks_plantgene)
 	crate_name = "hydroponics crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -1833,7 +1896,7 @@
 	contains = list(/mob/living/simple_animal/parrot)
 	crate_name = "parrot crate"
 
-/datum/supply_pack/critter/crab/generate()
+/datum/supply_pack/critter/parrot/generate()
 	. = ..()
 	for(var/i in 1 to 4)
 		new /mob/living/simple_animal/parrot(.)
