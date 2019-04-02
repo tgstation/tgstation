@@ -9,18 +9,27 @@
 
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
-	START_PROCESSING(SSobj,src)
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.vehicle_move_delay = 1.5
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 
-/obj/vehicle/ridden/secway/process()
-	if(obj_integrity < 50 && prob(20))
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(0, src)
-		smoke.start()
+/obj/vehicle/ridden/secway/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
+	. = ..()
+	if(obj_integrity <= 0)
+		explosion(src, -1, 0, 2, 4, flame_range = 3)
+	if(. && (obj_integrity > 0) && obj_integrity < (max_integrity * 0.5))
+		START_PROCESSING(SSobj, src)
 
-/obj/vehicle/ridden/secway/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/vehicle/ridden/secway/process()
+	if(obj_integrity >= (max_integrity * 0.5) || obj_integrity <= 0)
+		return PROCESS_KILL
+	if(!prob(80))
+		return
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(0, src)
+	smoke.start()
+
+/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(obj_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume=50, amount=1))
@@ -29,14 +38,11 @@
 				if(obj_integrity == max_integrity)
 					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 		return TRUE
-	else
-		return ..()
+	..()
 
 /obj/vehicle/ridden/secway/Destroy()
 	STOP_PROCESSING(SSobj,src)
-	explosion(src, -1, 0, 2, 4, flame_range = 3)
 	return ..()
-
 
 /obj/vehicle/ridden/secway/bullet_act(obj/item/projectile/P)
 	if(prob(60))

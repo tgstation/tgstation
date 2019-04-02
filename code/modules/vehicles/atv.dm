@@ -9,7 +9,6 @@
 	var/static/mutable_appearance/atvcover
 
 /obj/vehicle/ridden/atv/Initialize()
-	START_PROCESSING(SSobj,src)
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.vehicle_move_delay = 1.5
@@ -73,23 +72,31 @@
 				if(obj_integrity == max_integrity)
 					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 		return TRUE
-	else
-		return ..()
+	..()
+
+/obj/vehicle/ridden/atv/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
+	. = ..()
+	if(obj_integrity <= 0)
+		explosion(src, -1, 0, 2, 4, flame_range = 3)
+	if(. && (obj_integrity > 0) && obj_integrity < (max_integrity * 0.5))
+		START_PROCESSING(SSobj, src)
 
 /obj/vehicle/ridden/atv/process()
-	if(obj_integrity < 100 && prob(20))
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(0, src)
-		smoke.start()
+	if(obj_integrity >= (max_integrity * 0.5) || obj_integrity <= 0)
+		return PROCESS_KILL
+	if(!prob(80))
+		return
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(0, src)
+	smoke.start()
 
 /obj/vehicle/ridden/atv/bullet_act(obj/item/projectile/P)
 	if(prob(50))
 		for(var/mob/M in buckled_mobs)
 			M.bullet_act(P)
 		return TRUE
-	. = ..()
+	return ..()
 
 /obj/vehicle/ridden/atv/Destroy()
 	STOP_PROCESSING(SSobj,src)
-	explosion(src, -1, 0, 2, 4, flame_range = 3)
 	return ..()
