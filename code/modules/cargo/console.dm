@@ -84,7 +84,7 @@
 		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly)
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
-			"name" = P.name,
+			"name" = "[P.small_item?"\[\]   ":""][P.name]", //places a "[]" before the name, to mark small-item orders
 			"cost" = P.cost,
 			"id" = pack,
 			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
