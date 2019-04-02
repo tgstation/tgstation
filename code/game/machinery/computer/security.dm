@@ -765,19 +765,14 @@ What a mess.*/
 		P = user.get_active_held_item()
 	return P
 
-/obj/machinery/computer/secure_data/proc/print_photo(icon/temp, name)
+/obj/machinery/computer/secure_data/proc/print_photo(icon/temp, person_name)
 	if (printing)
 		return
 	printing = TRUE
 	sleep(20)
 	var/obj/item/photo/P = new/obj/item/photo(drop_location())
-	var/icon/small_img = icon(temp)
-	var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
-	small_img.Scale(8, 8)
-	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
-	P.icon = ic
-	P.picture.picture_image = temp
-	P.desc = "The photo on file for [name]."
+	var/datum/picture/toEmbed = new(name = person_name, desc = "The photo on file for [person_name].", image = temp)
+	P.set_picture(toEmbed, TRUE, TRUE)
 	P.pixel_x = rand(-10, 10)
 	P.pixel_y = rand(-10, 10)
 	printing = FALSE
