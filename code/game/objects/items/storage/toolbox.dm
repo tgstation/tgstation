@@ -244,7 +244,7 @@
 /obj/item/storage/toolbox/ammo
 	name = "ammo box"
 	desc = "contain a few clips."
-	icon_state = null
+	icon_state = "ammobox"
 	item_state = "ammobox"
 
 /obj/item/storage/toolbox/ammo/PopulateContents()

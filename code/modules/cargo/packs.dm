@@ -617,7 +617,7 @@
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
+		var/item = pick(L)
 		new item(C)
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1637,7 +1637,7 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
 
-/datum/supply_pack/organic/meat
+/datum/supply_pack/organic/randomized/chef
 	name = "Excellent Meat Crate"
 	desc = "The best cuts in the whole galaxy."
 	cost = 2000
@@ -1654,17 +1654,17 @@
 					/obj/item/reagent_containers/food/snacks/meat/slab/human)
 	crate_name = "food crate"
 
-/datum/supply_pack/organic/meat/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/organic/randomized/chef/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
+		var/item = pick(L)
 		new item(C)
 
-/datum/supply_pack/organic/fruit
+/datum/supply_pack/organic/randomized/chef/fruits
 	name = "Fruit Crate"
 	desc = "Rich of vitamins, may contain oranges."
 	cost = 1500
-	var/num_contained = 15
+	num_contained = 15
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
 					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
 					/obj/item/reagent_containers/food/snacks/grown/watermelon,
@@ -1673,17 +1673,11 @@
 					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon)
 	crate_name = "food crate"
 
-/datum/supply_pack/organic/fruit/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
-	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
-		new item(C)
-
-/datum/supply_pack/organic/vegetables
+/datum/supply_pack/organic/randomized/chef/vegetables
 	name = "Vegetables Crate"
 	desc = "Grown in vats."
 	cost = 1300
-	var/num_contained = 15
+	num_contained = 15
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/chili,
 					/obj/item/reagent_containers/food/snacks/grown/corn,
 					/obj/item/reagent_containers/food/snacks/grown/tomato,
@@ -1693,13 +1687,6 @@
 					/obj/item/reagent_containers/food/snacks/grown/onion,
 					/obj/item/reagent_containers/food/snacks/grown/pumpkin)
 	crate_name = "food crate"
-
-/datum/supply_pack/organic/vegetables/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
-	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
-		new item(C)
-
 
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
