@@ -13,6 +13,7 @@
     vary_fire_sound = FALSE
     rack_sound = "sound/weapons/mosinboltout.ogg"
     bolt_drop_sound = "sound/weapons/mosinboltin.ogg"
+	tac_reloads = FALSE
 
 obj/item/gun/ballistic/rifle/update_icon()
     ..()

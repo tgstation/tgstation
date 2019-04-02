@@ -19,7 +19,6 @@
 	pin = null
 	bolt_type = BOLT_TYPE_LOCKING
 	mag_display = TRUE
-	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/proto/unrestricted
 	pin = /obj/item/firing_pin
@@ -70,7 +69,6 @@
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
-	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/firing_pin
@@ -95,7 +93,6 @@
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
-	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
@@ -106,7 +103,6 @@
 	bolt_type = BOLT_TYPE_OPEN
 	mag_display = TRUE
 	rack_sound = "sound/weapons/pistollock.ogg"
-	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
@@ -122,7 +118,6 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
-	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/m90/Initialize()
 	. = ..()
@@ -195,7 +190,6 @@
 	burst_size = 4
 	fire_delay = 1
 	bolt_type = BOLT_TYPE_OPEN
-	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
@@ -208,7 +202,6 @@
 	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
-	tac_reloads = TRUE
 
 
 // L6 SAW //
@@ -231,6 +224,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	mag_display = TRUE
 	mag_display_ammo = TRUE
+	tac_reloads = FALSE
 	fire_sound = 'sound/weapons/rifleshot.ogg'
 	rack_sound = 'sound/weapons/chunkyrack.ogg'
 
