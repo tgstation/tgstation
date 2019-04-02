@@ -1,0 +1,4 @@
+author: "Barhandar"
+delete-after: True
+changes: 
+  - rscadd: "Plasteel golems have been buffed and will now stay on the ground instead of floating without gravity (like magboots). They're also cannot be swapped positions with even on help intent."
