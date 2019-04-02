@@ -1,0 +1,5 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the assimilation radar bug for real this time."
+  - bugfix: "Possibly fixed mindshield implants sometimes not working against vessels."
