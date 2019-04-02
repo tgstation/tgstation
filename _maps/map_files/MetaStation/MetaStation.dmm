@@ -60138,8 +60138,8 @@
 	},
 /area/maintenance/port/aft)
 "cnl" = (
-/obj/structure/mineral_door/wood{
-	name = "The Gobbetting Barmaid"
+/obj/machinery/door/airlock/wood{
+	name = "The Gobletting Barmaid"
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
@@ -60877,8 +60877,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "cox" = (
-/obj/structure/mineral_door/wood{
-	name = "The Gobbetting Barmaid"
+/obj/machinery/door/airlock/wood{
+	name = "The Gobletting Barmaid"
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
