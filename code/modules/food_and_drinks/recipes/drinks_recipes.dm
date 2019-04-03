@@ -712,3 +712,10 @@
 	required_reagents = list("triple_sec" = 2, "lemon_lime" = 1, "rum" = 2, "vodka" = 1)
 	mix_message = "The faint aroma of summer camping trips wafts through the air; but what's that buzzing noise?"
 	mix_sound = 'sound/creatures/bee.ogg'
+
+/datum/chemical_reaction/jack_rose
+	name = "Jack Rose"
+	id = "jack_rose"
+	results = list("jack_rose" = 4)
+	required_reagents = list("grenadine" = 1, "applejack" = 2, "limejuice" = 1)
+	mix_message = "As the grenadine incorporates, the beverage takes on a mellow, red-orange glow."

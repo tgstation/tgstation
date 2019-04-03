@@ -2037,11 +2037,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/datum/antagonist/wizard/wizard = M.mind.has_antag_datum(/datum/antagonist/wizard)
 		if(wizard)
 			M.heal_bodypart_damage(1,1,1)
-			M.adjustBruteLoss(-2,0)
-			M.adjustOxyLoss(-2,0)
-			M.adjustFireLoss(-2,0)
-			M.adjustToxLoss(-2,0)
-			. = 1
+			M.adjustBruteLoss(-1,0)
+			M.adjustOxyLoss(-1,0)
+			M.adjustFireLoss(-1,0)
+			M.adjustToxLoss(-1,0)
+		. = 1
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
@@ -2059,8 +2059,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/M)
 //Bugs should not drink Bug spray.
 	if(ismoth(M) || isflyperson(M))
-		M.adjustOxyLoss(1,0)
-		M.adjustToxLoss(2,0)
+		M.adjustOxyLoss(0.5,0)
+		M.adjustToxLoss(1,0)
 		M.emote("scream")
 		. = 1
 	return ..()
@@ -2075,3 +2075,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "applejack_glass"
 	glass_name = "Applejack"
 	glass_desc = "You feel like you could drink this all neight."
+
+/datum/reagent/consumable/ethanol/jack_rose
+	name = "Jack Rose"
+	id = "jack_rose"
+	description = "A light cocktail perfect for sipping with a slice of pie."
+	color = "#ff6633"
+	boozepwr = 15
+	quality = DRINK_NICE
+	taste_description = "a sweet and sour slice of apple"
+	glass_icon_state = "jack_rose"
+	glass_name = "Jack Rose"
+	glass_desc = "Enough of these, and you realy will start to suppose your toeses are roses."
