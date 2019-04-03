@@ -240,6 +240,33 @@
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
 
+/datum/supply_pack/emergency/bio
+	name = "Biological Emergency Crate"
+	desc = "This crate holds 2 full bio suits which will protect you from viruses."
+	cost = 2000
+	contains = list(/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/storage/bag/bio,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/clothing/gloves/color/latex/nitrile,
+					/obj/item/clothing/gloves/color/latex/nitrile)
+	crate_name = "bio suit crate"
+
+/datum/supply_pack/emergency/bomb
+	name = "Explosive Emergency Crate"
+	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (time not included)"
+	cost = 1500
+	contains = list(/obj/item/clothing/head/bomb_hood,
+					/obj/item/clothing/suit/bomb_suit,
+					/obj/item/clothing/mask/gas,
+					/obj/item/screwdriver,
+					/obj/item/wirecutters,
+					/obj/item/multitool)
+	crate_name = "bomb suit crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -272,11 +299,11 @@
 	desc = "Stay hot on the criminal's heels with Nanotrasen's Detective Essentials(tm). Contains a forensics scanner, six evidence bags, camera, tape recorder, white crayon, and of course, a fedora. Requires Security access to open."
 	cost = 2000
 	contains = list(/obj/item/detective_scanner,
-	                /obj/item/storage/box/evidence,
-	                /obj/item/camera,
-	                /obj/item/taperecorder,
-	                /obj/item/toy/crayon/white,
-	                /obj/item/clothing/head/fedora/det_hat)
+					/obj/item/storage/box/evidence,
+					/obj/item/camera,
+					/obj/item/taperecorder,
+					/obj/item/toy/crayon/white,
+					/obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
 
 /datum/supply_pack/security/helmets
@@ -371,6 +398,30 @@
 					/obj/item/storage/box/wall_flash)
 	crate_name = "wall-mounted flash crate"
 
+/datum/supply_pack/security/ammo
+	name = "Ammo Crate"
+	desc = "Contains two 20-round magazines for the WT-550 Auto Rifle, three boxes of buckshot ammo, three boxes of rubber ammo and special .38 speedloarders. Requires Security access to open."
+	cost = 2500
+	contains = list(/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/ammo_box/c38/trac,
+					/obj/item/ammo_box/c38/hotshot,
+					/obj/item/ammo_box/c38/iceblox)
+	crate_name = "ammo crate"
+
+/datum/supply_pack/security/vending/security
+	name = "SecTech Supply Crate"
+	desc = "Officer Paul bought all the donuts? Then refill the security vendor with ths crate."
+	cost = 1500
+	contains = list(/obj/machinery/vending/security)
+	crate_name = "SecTech supply crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Armory //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -451,9 +502,12 @@
 
 /datum/supply_pack/security/armory/trackingimp
 	name = "Tracking Implants Crate"
-	desc = "Contains four tracking implants. Requires Armory access to open."
+	desc = "Contains four tracking implants and three tracking speedloaders of tracing .38 ammo. Requires Armory access to open."
 	cost = 2000
-	contains = list(/obj/item/storage/box/trackimp)
+	contains = list(/obj/item/storage/box/trackimp,
+					/obj/item/ammo_box/c38/trac,
+					/obj/item/ammo_box/c38/trac,
+					/obj/item/ammo_box/c38/trac)
 	crate_name = "tracking implant crate"
 
 /datum/supply_pack/security/armory/fire
@@ -524,7 +578,6 @@
 					/obj/item/clothing/gloves/combat)
 	crate_name = "swat crate"
 
-
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Auto Rifle Crate"
 	desc = "Contains two high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
@@ -543,6 +596,31 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
+/datum/supply_pack/security/armory/russian
+	name = "Russian Surplus Crate"
+	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
+	cost = 5000
+	contraband = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
+					/obj/item/ammo_box/a762,
+					/obj/item/storage/toolbox/ammo,
+					/obj/item/clothing/suit/armor/vest/russian,
+					/obj/item/clothing/head/helmet/rus_helmet,
+					/obj/item/clothing/shoes/russian,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/under/syndicate/rus_army,
+					/obj/item/clothing/under/soviet,
+					/obj/item/clothing/mask/russian_balaclava,
+					/obj/item/clothing/head/helmet/rus_ushanka,
+					/obj/item/clothing/suit/armor/vest/russian_coat,
+					/obj/item/gun/ballistic/rifle/boltaction,
+					/obj/item/gun/ballistic/rifle/boltaction)
+	crate_name = "surplus military crate"
+
+/datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 10)
+		var/item = pick(contains)
+		new item(C)
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
@@ -1184,6 +1262,27 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
 
+/datum/supply_pack/medical/chemical
+	name = "Chemical Starter Kit Crate"
+	desc = "Contains twelve different chemicals, for all the fun experiments you can make."
+	cost = 1700
+	contains = list(/obj/item/reagent_containers/glass/bottle/hydrogen,
+					/obj/item/reagent_containers/glass/bottle/carbon,
+					/obj/item/reagent_containers/glass/bottle/nitrogen,
+					/obj/item/reagent_containers/glass/bottle/oxygen,
+					/obj/item/reagent_containers/glass/bottle/fluorine,
+					/obj/item/reagent_containers/glass/bottle/phosphorus,
+					/obj/item/reagent_containers/glass/bottle/silicon,
+					/obj/item/reagent_containers/glass/bottle/chlorine,
+					/obj/item/reagent_containers/glass/bottle/radium,
+					/obj/item/reagent_containers/glass/bottle/sacid,
+					/obj/item/reagent_containers/glass/bottle/ethanol,
+					/obj/item/reagent_containers/glass/bottle/potassium,
+					/obj/item/clothing/glasses/science,
+					/obj/item/reagent_containers/dropper,
+					/obj/item/storage/box/beakers)
+	crate_name = "chemical crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1192,10 +1291,17 @@
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
 
+/datum/supply_pack/science/rped
+	name = "RPED crate"
+	desc = "Need to rebuild the ORM but science got annihialted after a bomb test? Buy this for the most advanced parts NT can give you."
+	cost = 1500
+	contains = list(/obj/item/storage/part_replacer/cargo)
+	crate_name = "\improper RPED crate"
+
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
 	desc = "Ever wanted to build your own giant medical robot? Well, now you can! Contains the Odysseus main control board and Odysseus peripherals board. Requires Robotics access to open."
-	cost = 2500
+	cost = 1500
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/circuitboard/mecha/odysseus/peripherals,
 					/obj/item/circuitboard/mecha/odysseus/main)
@@ -1205,7 +1311,7 @@
 /datum/supply_pack/science/robotics/mecha_ripley
 	name = "Circuit Crate (Ripley APLU)"
 	desc = "Rip apart rocks and xenomorphs alike with the Ripley APLU. Contains the Main Ripley control board, as well as the Ripley Peripherals board. Requires Robotics access to open."
-	cost = 3000
+	cost = 1200
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/book/manual/ripley_build_and_repair,
 					/obj/item/circuitboard/mecha/ripley/main,
@@ -1270,7 +1376,7 @@
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
 	desc = "What's a computer? Contains five cargo tablets."
-	cost = 5000
+	cost = 1500
 	contains = list(/obj/item/modular_computer/tablet/preset/cargo,
 					/obj/item/modular_computer/tablet/preset/cargo,
 					/obj/item/modular_computer/tablet/preset/cargo,
@@ -1533,6 +1639,53 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
 
+/datum/supply_pack/organic/randomized/chef
+	name = "Excellent Meat Crate"
+	desc = "The best cuts in the whole galaxy."
+	cost = 2000
+	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
+					/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+					/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+					/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+					/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+					/obj/item/reagent_containers/food/snacks/meat/rawbacon,
+					/obj/item/reagent_containers/food/snacks/meat/slab/penguin,
+					/obj/item/reagent_containers/food/snacks/spiderleg,
+					/obj/item/reagent_containers/food/snacks/carpmeat,
+					/obj/item/reagent_containers/food/snacks/meat/slab/human)
+	crate_name = "food crate"
+
+/datum/supply_pack/organic/randomized/chef/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 15)
+		var/item = pick(contains)
+		new item(C)
+
+/datum/supply_pack/organic/randomized/chef/fruits
+	name = "Fruit Crate"
+	desc = "Rich of vitamins, may contain oranges."
+	cost = 1500
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+					/obj/item/reagent_containers/food/snacks/grown/watermelon,
+					/obj/item/reagent_containers/food/snacks/grown/apple,
+					/obj/item/reagent_containers/food/snacks/grown/berries,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon)
+	crate_name = "food crate"
+
+/datum/supply_pack/organic/randomized/chef/vegetables
+	name = "Vegetables Crate"
+	desc = "Grown in vats."
+	cost = 1300
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/chili,
+					/obj/item/reagent_containers/food/snacks/grown/corn,
+					/obj/item/reagent_containers/food/snacks/grown/tomato,
+					/obj/item/reagent_containers/food/snacks/grown/potato,
+					/obj/item/reagent_containers/food/snacks/grown/carrot,
+					/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+					/obj/item/reagent_containers/food/snacks/grown/onion,
+					/obj/item/reagent_containers/food/snacks/grown/pumpkin)
+	crate_name = "food crate"
+
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	desc = "Designed by Aussec's Advanced Warfare Research Division, these high-yield, Clown-grade cream pies are powered by a synergy of performance and efficiency. Guaranteed to provide maximum results."
@@ -1555,7 +1708,8 @@
 					/obj/item/cultivator,
 					/obj/item/plant_analyzer,
 					/obj/item/clothing/gloves/botanic_leather,
-					/obj/item/clothing/suit/apron)
+					/obj/item/clothing/suit/apron,
+					/obj/item/storage/box/disks_plantgene)
 	crate_name = "hydroponics crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -1690,7 +1844,7 @@
 	cost = 5000 //Cats are worth as much as corgis.
 	contains = list(/mob/living/simple_animal/pet/cat,
 					/obj/item/clothing/neck/petcollar,
-                    /obj/item/toy/cattoy)
+					/obj/item/toy/cattoy)
 	crate_name = "cat crate"
 
 /datum/supply_pack/critter/cat/generate()
@@ -1719,6 +1873,20 @@
 	. = ..()
 	for(var/i in 1 to 49)
 		new /mob/living/simple_animal/crab(.)
+
+/datum/supply_pack/critter/parrot
+	name = "Bird Crate"
+	desc = "Contains five expert telecommunication birds."
+	cost = 4000
+	contains = list(/mob/living/simple_animal/parrot)
+	crate_name = "parrot crate"
+
+/datum/supply_pack/critter/parrot/generate()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /mob/living/simple_animal/parrot(.)
+	if(prob(1))
+		new /mob/living/simple_animal/parrot/clock_hawk(.)
 
 /datum/supply_pack/critter/corgi
 	name = "Corgi Crate"
@@ -2202,8 +2370,7 @@
 	cost = 600
 	contains = list(/obj/item/clothing/under/burial,
 					/obj/item/reagent_containers/food/snacks/grown/harebell,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium
-					)
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium)
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
 
@@ -2216,8 +2383,7 @@
 					/obj/item/storage/book/bible/booze,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie
-					)
+					/obj/item/clothing/suit/hooded/chaplain_hoodie)
 	crate_name = "religious supplies crate"
 
 /datum/supply_pack/misc/toner
