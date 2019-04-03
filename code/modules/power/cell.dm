@@ -111,7 +111,7 @@
 	var/turf/T = get_turf(src.loc)
 	if (charge==0)
 		return
-	var/devastation_range = -1 //round(charge/11000)
+	var/devastation_range = CLAMP(round(sqrt(charge)/120),0,2)
 	var/heavy_impact_range = round(sqrt(charge)/60)
 	var/light_impact_range = round(sqrt(charge)/30)
 	var/flash_range = light_impact_range
