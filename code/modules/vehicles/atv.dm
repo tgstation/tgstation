@@ -6,6 +6,7 @@
 	max_integrity = 150
 	armor = list("melee" = 50, "bullet" = 25, "laser" = 20, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	key_type = /obj/item/key
+	integrity_failure = 70
 	var/static/mutable_appearance/atvcover
 
 /obj/vehicle/ridden/atv/Initialize()
@@ -72,15 +73,15 @@
 				if(obj_integrity == max_integrity)
 					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 		return TRUE
-	..()
+	return ..()
 
 /obj/vehicle/ridden/atv/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
 	. = ..()
-	if(. && (obj_integrity > 0) && obj_integrity < (max_integrity * 0.5))
+	if(. && (obj_integrity > 0) && obj_integrity < integrity_failure)
 		START_PROCESSING(SSobj, src)
 
 /obj/vehicle/ridden/atv/process()
-	if(obj_integrity >= (max_integrity * 0.5) || obj_integrity <= 0)
+	if(obj_integrity >= integrity_failure || obj_integrity <= 0)
 		return PROCESS_KILL
 	if(!prob(80))
 		return
@@ -89,14 +90,16 @@
 	smoke.start()
 
 /obj/vehicle/ridden/atv/bullet_act(obj/item/projectile/P)
-	if(prob(50))
+	if(prob(50) && buckled_mobs)
 		for(var/mob/M in buckled_mobs)
 			M.bullet_act(P)
 		return TRUE
 	return ..()
 
+/obj/vehicle/ridden/atv/obj_destruction()
+	explosion(src, -1, 0, 2, 4, flame_range = 3)
+	return ..()
+
 /obj/vehicle/ridden/atv/Destroy()
-	if(obj_integrity <= 0)
-		explosion(src, -1, 0, 2, 4, flame_range = 3)
 	STOP_PROCESSING(SSobj,src)
 	return ..()

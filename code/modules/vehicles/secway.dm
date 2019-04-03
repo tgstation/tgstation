@@ -6,6 +6,7 @@
 	max_integrity = 100
 	armor = list("melee" = 20, "bullet" = 15, "laser" = 10, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	key_type = /obj/item/key/security
+	integrity_failure = 50
 
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
@@ -15,11 +16,11 @@
 
 /obj/vehicle/ridden/secway/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
 	. = ..()
-	if(. && (obj_integrity > 0) && obj_integrity < (max_integrity * 0.5))
+	if(. && (obj_integrity > 0) && obj_integrity < integrity_failure)
 		START_PROCESSING(SSobj, src)
 
 /obj/vehicle/ridden/secway/process()
-	if(obj_integrity >= (max_integrity * 0.5) || obj_integrity <= 0)
+	if(obj_integrity >= integrity_failure || obj_integrity <= 0)
 		return PROCESS_KILL
 	if(!prob(80))
 		return
@@ -30,23 +31,25 @@
 /obj/vehicle/ridden/secway/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(obj_integrity < max_integrity)
-			if(W.use_tool(src, user, 0, volume=50, amount=1))
+			if(W.use_tool(src, user, 0, volume = 50, amount = 1))
 				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to [src].</span>")
 				obj_integrity += min(10, max_integrity-obj_integrity)
 				if(obj_integrity == max_integrity)
 					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 		return TRUE
-	..()
+	return ..()
+
+/obj/vehicle/ridden/secway/obj_destruction()
+	explosion(src, -1, 0, 2, 4, flame_range = 3)
+	return ..()
 
 /obj/vehicle/ridden/secway/Destroy()
-	if(obj_integrity <= 0)
-		explosion(src, -1, 0, 2, 4, flame_range = 3)
 	STOP_PROCESSING(SSobj,src)
 	return ..()
 
 /obj/vehicle/ridden/secway/bullet_act(obj/item/projectile/P)
-	if(prob(60))
+	if(prob(60) && buckled_mobs)
 		for(var/mob/M in buckled_mobs)
 			M.bullet_act(P)
 		return TRUE
-	. = ..()
+	return ..()
