@@ -30114,10 +30114,6 @@
 	dir = 8
 	},
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "station intercom";
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel/dark,
@@ -54088,8 +54084,7 @@
 /area/crew_quarters/fitness/locker_room)
 "jtr" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+	dir = 1
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
