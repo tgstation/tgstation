@@ -18,7 +18,6 @@
 			<BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=clear_virus'>Cure all diseases currently in existence</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=list_bombers'>Bombing List</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=check_antagonist'>Show a list of current antagonists</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=list_signalers'>Show last [length(GLOB.lastsignalers)] signalers</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=list_lawchanges'>Show last [length(GLOB.lawchanges)] law changes</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=showailaws'>Show AI Laws</A><BR>
@@ -197,12 +196,7 @@
 			for(var/sig in GLOB.lastsignalers)
 				dat += "[sig]<BR>"
 			usr << browse(dat, "window=lastsignalers;size=800x500")
-		
-		if("check_antagonist")
-			if(!check_rights(R_ADMIN))
-				return
-			usr.client.check_antagonists()
-		
+
 		if("list_lawchanges")
 			if(!check_rights(R_ADMIN))
 				return
