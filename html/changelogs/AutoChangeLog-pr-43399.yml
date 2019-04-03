@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Paraplegics/mobs missing legs can no longer operate vehicles which require legs to operate (ie bicycles, skateboards, ATVs, ect) if they lost the limbs while still buckled in."
+  - tweak: "Mobs with no arms will now fall off bikes & scooters when trying to move."
+  - tweak: "Badmins can now edit limb requirements of vehicles."
