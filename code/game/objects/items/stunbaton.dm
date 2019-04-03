@@ -205,3 +205,58 @@
 /obj/item/melee/baton/cattleprod/baton_stun()
 	if(sparkler.activate())
 		..()
+
+//Security Critical Aeromation Matrices (SCAMs, or Stun-gun Boomerangs). Heavily borrowed from the Bananium Shield Code.
+
+/obj/item/melee/baton/scam
+	name = "SCAM Boomerang"
+	desc = "A device invented in 2486 for the great Space Emu War by the future confederacy of Neo-Australia, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when you thow!"
+	throw_speed = 1
+	icon_state = "boomerang"
+	item_state = "boomerang"
+	force = 5
+	throwforce = 5
+	throw_range = 5
+	stunforce = 100
+	hitcost = 2000
+	throw_hit_chance = 99  //Have you prayed today?
+
+/obj/item/melee/baton/scam/Initialize()
+	. = ..()
+
+/obj/item/melee/baton/scam/attack_self(mob/living/carbon/human/user)
+	..()
+
+/obj/item/melee/baton/scam/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+	if(status==1)
+		if(iscarbon(thrower))
+			var/mob/living/carbon/C = thrower
+			C.throw_mode_off() //so they can catch it on the return.
+	return ..()
+
+/obj/item/melee/baton/scam/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(status==1)
+		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
+		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
+			if(status==1 && prob(throw_hit_chance) && iscarbon(hit_atom))
+				baton_stun(hit_atom)
+		if(thrownby && !caught)
+			sleep(1)
+			throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+	else
+		return ..()
+
+/obj/item/melee/baton/scam/Initialize()
+	. = ..()
+
+/obj/item/melee/baton/scam/loaded //this one starts with a cell pre-installed.
+	preload_cell_type = /obj/item/stock_parts/cell/upgraded
+
+
+/obj/item/melee/baton/scam/update_icon()
+	if(status)
+		icon_state = "[initial(icon_state)]_active"
+	else if(!cell)
+		icon_state = "[initial(icon_state)]"
+	else
+		icon_state = "[initial(icon_state)]"
