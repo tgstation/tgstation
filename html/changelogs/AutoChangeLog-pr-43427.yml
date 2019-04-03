@@ -1,0 +1,5 @@
+author: "Nervere"
+delete-after: True
+changes: 
+  - admin: "removed a duplicate/broken secrets panel button"
+  - admin: "you can now click the text that says \"Antagonist\" on an antagonist's entry in the global player panel to check all antags, as intended"
