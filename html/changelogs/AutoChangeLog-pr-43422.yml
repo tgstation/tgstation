@@ -1,7 +1,0 @@
-author: "Nervere"
-delete-after: True
-changes: 
-  - bugfix: "Default color for when custom asay colors is not enabled is now orange, not red."
-  - bugfix: "Asay is now properly bolded in lightmode."
-  - bugfix: "Asay is now properly bolded in darkmode."
-  - tweak: "Default color for when custom asay colors is enabled is now orange, not black."

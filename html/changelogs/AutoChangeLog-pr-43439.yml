@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Locker bolts will no longer move mobs that aren't valid for lockering."

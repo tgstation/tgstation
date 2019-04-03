@@ -1,4 +1,0 @@
-author: "bobbahbrown"
-delete-after: True
-changes: 
-  - bugfix: "Wands, staves, and other magic guns no longer allow bypassing den and anti-magic checks when being fired offhand."

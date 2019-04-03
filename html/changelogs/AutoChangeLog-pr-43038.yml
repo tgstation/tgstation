@@ -1,4 +1,0 @@
-author: "Basilman"
-delete-after: True
-changes: 
-  - bugfix: "Added a cooldown for datum outputs"
