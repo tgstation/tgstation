@@ -150,10 +150,11 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
+	var/component = /datum/component/squeak/bikehorn
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, /datum/outputs/bikehorn, 50)
+	AddComponent(component, 50)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
@@ -169,10 +170,7 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-
-/obj/item/bikehorn/airhorn/Initialize()
-	. = ..()
-	AddComponent(/datum/component/squeak, /datum/outputs/airhorn, 50)
+	component = /datum/component/squeak/airhorn
 
 //golden bikehorn
 /obj/item/bikehorn/golden
