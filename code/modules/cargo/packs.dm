@@ -601,7 +601,6 @@
 	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
 	cost = 5000
 	contraband = TRUE
-	var/num_contained = 10
 	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
 					/obj/item/ammo_box/a762,
 					/obj/item/storage/toolbox/ammo,
@@ -619,7 +618,7 @@
 	crate_name = "surplus military crate"
 
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to num_contained)
+	for(var/i in 1 to 10)
 		var/item = pick(contains)
 		new item(C)
 
@@ -1644,7 +1643,6 @@
 	name = "Excellent Meat Crate"
 	desc = "The best cuts in the whole galaxy."
 	cost = 2000
-	var/num_contained = 10
 	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
 					/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
 					/obj/item/reagent_containers/food/snacks/meat/slab/bear,
@@ -1658,7 +1656,7 @@
 	crate_name = "food crate"
 
 /datum/supply_pack/organic/randomized/chef/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to num_contained)
+	for(var/i in 1 to 15)
 		var/item = pick(contains)
 		new item(C)
 
@@ -1666,7 +1664,6 @@
 	name = "Fruit Crate"
 	desc = "Rich of vitamins, may contain oranges."
 	cost = 1500
-	num_contained = 15
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
 					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
 					/obj/item/reagent_containers/food/snacks/grown/watermelon,
@@ -1679,7 +1676,6 @@
 	name = "Vegetables Crate"
 	desc = "Grown in vats."
 	cost = 1300
-	num_contained = 15
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/chili,
 					/obj/item/reagent_containers/food/snacks/grown/corn,
 					/obj/item/reagent_containers/food/snacks/grown/tomato,
