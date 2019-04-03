@@ -1,0 +1,6 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - rscadd: "russian surplus crate, sec ammo crate, meat/veggie/fruit crate, rped crate,  bomb suit crate, bio suit crate, parrot crate, chem crate"
+  - tweak: "lowered price of some crates which are overpriced for no reason aka the ipod crate and the mech circuits crate, track implant crate has also track .38 ammo"
+  - bugfix: "sectech vendor has the refill pack"
