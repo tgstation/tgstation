@@ -251,7 +251,7 @@
 
 /obj/item/clothing/suit/armor/vest/russian
 	name = "russian vest"
-	desc = "A bulletproof vest with forest camo, good thing you are in one right?"
+	desc = "A bulletproof vest with forest camo. Good thing there's plenty of forests to hide in around here, right?"
 	icon_state = "rus_armor"
 	item_state = "rus_armor"
 	armor = list("melee" = 30, "bullet" = 60, "laser" = 20, "energy" = 15, "bomb" = 50, "bio" = 20, "rad" = 30, "fire" = 20, "acid" = 50)
