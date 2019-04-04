@@ -305,6 +305,15 @@ GENE SCANNER
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
 			to_chat(user, "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>")
+		var/obj/item/organ/brain/brain = M.getorganslot(ORGAN_SLOT_BRAIN)
+		if(brain)
+			switch(world.time - brain.maggots_timer)
+				if(MAGGOTS_INFESTATION_LEVEL_1 to MAGGOTS_INFESTATION_LEVEL_2)
+					to_chat(user, "<span class='danger'>Maggots have begun to infest the subject's brain.</span>")
+				if(MAGGOTS_INFESTATION_LEVEL_2 to MAGGOTS_INFESTATION_LEVEL_3)
+					to_chat(user, "<span class='danger'>Maggots have eaten most of the subject's brain.</span>")
+				if(MAGGOTS_INFESTATION_LEVEL_3 to INFINITY)
+					to_chat(user, "<span class='danger'>Maggots have rendered subject's brain unclonable.</span>")
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing

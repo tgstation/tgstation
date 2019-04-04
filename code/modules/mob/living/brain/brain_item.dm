@@ -14,6 +14,7 @@
 	var/brain_death = FALSE //if the brainmob was intentionally killed by attacking the brain after removal, or by severe braindamage
 	var/damaged_brain = FALSE //if the brain was injured after removal. Can be healed with mannitol.
 	var/decoy_override = FALSE	//if it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
+	var/maggots_timer = 0
 
 	var/list/datum/brain_trauma/traumas = list()
 

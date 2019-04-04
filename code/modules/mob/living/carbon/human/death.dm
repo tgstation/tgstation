@@ -24,6 +24,10 @@
 	if(H)
 		H.beat = BEAT_NONE
 
+	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.maggots_timer = world.time
+
 	. = ..()
 
 	dizziness = 0

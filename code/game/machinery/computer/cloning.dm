@@ -535,6 +535,11 @@
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
+	var/obj/item/organ/brain/brain = M.getorganslot(ORGAN_SLOT_BRAIN)
+	if(istype(brain) && (world.time - brain.maggots_timer) >= MAGGOTS_INFESTATION_LEVEL_3)
+		scantemp = "<font class='bad'>Subject's brain is too deteriorated.</font>"
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+		return
 	if((mob_occupant.has_trait(TRAIT_HUSK)) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject's body is too damaged to scan properly.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
@@ -562,6 +567,10 @@
 	else
 		var/datum/species/rando_race = pick(GLOB.roundstart_races)
 		R.fields["mrace"] = rando_race.type
+
+	if(istype(brain) && (world.time - brain.maggots_timer) >= MAGGOTS_INFESTATION_LEVEL_2)
+		if(prob(LERP(MAGGOTS_FLY_MINIMUM_CHANCE, MAGGOTS_FLY_MAXIMUM_CHANCE, (world.time - brain.maggots_timer - MAGGOTS_INFESTATION_LEVEL_2) / MAGGOTS_INFESTATION_LEVEL_3)))
+			R.fields["mrace"] = new /datum/species/fly
 
 	R.fields["name"] = mob_occupant.real_name
 	R.fields["id"] = copytext(md5(mob_occupant.real_name), 2, 6)
