@@ -221,12 +221,6 @@
 	hitcost = 2000
 	throw_hit_chance = 99  //Have you prayed today?
 
-/obj/item/melee/baton/scam/Initialize()
-	. = ..()
-
-/obj/item/melee/baton/scam/attack_self(mob/living/carbon/human/user)
-	..()
-
 /obj/item/melee/baton/scam/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	if(status==1)
 		if(iscarbon(thrower))
@@ -246,13 +240,6 @@
 	else
 		return ..()
 
-/obj/item/melee/baton/scam/Initialize()
-	. = ..()
-
-/obj/item/melee/baton/scam/loaded //this one starts with a cell pre-installed.
-	preload_cell_type = /obj/item/stock_parts/cell/upgraded
-
-
 /obj/item/melee/baton/scam/update_icon()
 	if(status)
 		icon_state = "[initial(icon_state)]_active"
@@ -260,3 +247,6 @@
 		icon_state = "[initial(icon_state)]"
 	else
 		icon_state = "[initial(icon_state)]"
+
+/obj/item/melee/baton/scam/loaded //this one starts with a cell pre-installed.
+	preload_cell_type = /obj/item/stock_parts/cell/upgraded
