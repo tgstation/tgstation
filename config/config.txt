@@ -325,6 +325,9 @@ HARD_POPCAP_MESSAGE The server is currently serving a high number of users, You 
 ## Message for extreme cap
 EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, find alternative servers.
 
+## Uncomment to allow BYOND subscribers to bypassing server connection population cap. (Living player population cap still applies.)
+BYOND_MEMBER_BYPASS_POPCAP
+
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
 ##	Requres database
 NOTIFY_NEW_PLAYER_AGE 0
