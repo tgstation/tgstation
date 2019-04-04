@@ -5,7 +5,8 @@
 	buckle_lying = FALSE
 	default_driver_move = FALSE
 	var/legs_required = 2
-	var/arms_requires = 0	//why not?
+	var/arms_required = 1	//why not?
+	var/fall_off_if_missing_arms = FALSE //heh...
 
 /obj/vehicle/ridden/Initialize()
 	. = ..()
@@ -60,6 +61,25 @@
 	if(key_type && !is_key(inserted_key))
 		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 		return FALSE
+	if(legs_required)
+		var/how_many_legs = user.get_num_legs()
+		if(how_many_legs < legs_required)
+			to_chat(user, "<span class='warning'>You can't seem to manage that with[how_many_legs ? " your leg[how_many_legs > 1 ? "s" : null]" : "out legs"]...</span>")
+			return FALSE
+	if(arms_required)
+		var/how_many_arms = user.get_num_arms()
+		if(how_many_arms < arms_required)
+			if(fall_off_if_missing_arms)
+				unbuckle_mob(user, TRUE)
+				user.visible_message("<span class='danger'>[user] falls off of \the [src].",\
+				"<span class='danger'>You fall of \the [src] while trying to operate it without [arms_required ? "both arms":"an arm"]!</span>")
+				if(isliving(user))
+					var/mob/living/L = user
+					L.Stun(30)
+				return FALSE
+
+			to_chat(user, "<span class='warning'>You can't seem to manage that with[how_many_arms ? " your arm[how_many_arms > 1 ? "s" : null]" : "out arms"]...</span>")
+			return FALSE
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
 	return ..()
