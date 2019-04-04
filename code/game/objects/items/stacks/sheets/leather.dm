@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	name = "sinew"
 	icon = 'icons/obj/mining.dmi'
 	desc = "Long stringy filaments."
-	singular_name = "watcher sinew"
+	singular_name = "sinew"
 	icon_state = "sinew"
 	novariants = TRUE
 

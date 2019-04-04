@@ -10,6 +10,7 @@
 
 	var/revive_time = 600
 	var/mob/living/carbon/human/gem
+	var/hitcooldown = 0
 
 /obj/item/gem/attack_animal(mob/living/simple_animal/user)
 	..()
@@ -32,6 +33,7 @@
 		gem = H
 		name = H.name
 		icon_state = H.dna.species.id
+		baseicon = H.dna.species.id
 		to_chat(gem, "<span class='notice'>You start focusing, preparing to reform...</span>")
 		addtimer(CALLBACK(src, .proc/revive), revive_time)
 	else
@@ -73,7 +75,11 @@
 		addtimer(CALLBACK(src, .proc/revive), 100)
 
 /obj/item/gem/attackby(obj/item/P, mob/living/carbon/human/user, params)
-	if(istype(P, /obj/item/pickaxe))
+	if(bubbled == TRUE)
+		visible_message("<span class='danger'>[usr.name] pops the bubble containing [name]!</span>")
+		icon_state = baseicon
+		bubbled = FALSE
+	else if(istype(P, /obj/item/pickaxe) && hitcooldown < world.time)
 		var/obj/item/pickaxe/pickaxe = P
 		gemhealth = gemhealth-pickaxe.force
 		pickaxe.play_tool_sound(src, volume=50)
@@ -81,14 +87,11 @@
 			visible_message("<span class='danger'>[usr.name] strikes [name]'s Gemstone using [P.name]!</span>")
 			log_combat("[key_name(user)] attacks [name]'s gemstone")
 			log_admin("[key_name(user)] attacks [name]'s gemstone.")
+			hitcooldown = world.time+5
 		else
 			visible_message("<span class='danger'>[usr.name] shatters [name] using [P.name]!</span>")
 			log_combat("[key_name(user)] shattered [name]")
 			log_admin("[key_name(user)] shattered [name]")
 			src.Destroy()
-	else if(bubbled == TRUE)
-		visible_message("<span class='danger'>[usr.name] pops the bubble containing [name]!</span>")
-		icon_state = baseicon
-		bubbled = FALSE
 	else
 		. = ..()

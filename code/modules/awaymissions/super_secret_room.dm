@@ -1,22 +1,15 @@
 /obj/structure/speaking_tile
-	name = "strange tile"
-	desc = "A weird tile that beckons you towards it. Maybe it can help you get out of this mess..."
-	verb_say = "intones"
+	name = "Ludicrous Turtle"
+	desc = "A weird talking turtle."
+	verb_say = "says"
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "speaking_tile"
+	icon_state = "absurdlyludicrous"
 	layer = 5
 	resistance_flags = INDESTRUCTIBLE
+	density = TRUE
 	var/speaking = FALSE
 	var/times_spoken_to = 0
-	var/list/shenanigans = list()
-
-/obj/structure/speaking_tile/Initialize()
-	. = ..()
-	var/json_file = file("data/npc_saves/Poly.json")
-	if(!fexists(json_file))
-		return
-	var/list/json = json_decode(file2text(json_file))
-	shenanigans = json["phrases"]
+	var/list/shenanigans = list("Hey.","Memes are great.","I had to do a lot of editing.","Yeehaw","I wonder how Hikari's Haven is doing.","I'm going to hell for all the jokes i made about a sick eevee.","Hello","Bonjour. learned that from Futurama.", "Aloha.","hmmm...")
 
 /obj/structure/speaking_tile/interact(mob/user)
 	if(!isliving(user) || speaking)
@@ -25,7 +18,7 @@
 
 	switch(times_spoken_to)
 		if(0)
-			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
+			SpeakPeace(list("Welcome to the error handling castle.","Yeah, we must have fucked up the coding really badly.","You should probably tell the diamond authority on discord what you were doing, or make a bug report on the github."))
 			for(var/obj/structure/signpost/salvation/S in orange(7))
 				S.invisibility = 0
 				var/datum/effect_system/smoke_spread/smoke = new
@@ -33,33 +26,33 @@
 				smoke.start()
 				break
 		if(1)
-			SpeakPeace(list("Take that ladder up.","It'll send you back to the station.","Hopefully you'll never need to see this place again."))
+			SpeakPeace(list("Take that ladder up.","It'll send you back to earth.","Hopefully you'll never need to see this place again."))
 		if(2)
-			SpeakPeace(list("Curious about what happened?","Somehow your corporeal form was sent to nullspace with you still in it.","Lucky for you this room exists to save you from that horrible fate."))
+			SpeakPeace(list("Curious about what happened?","Somehow your corporeal form was sent to nullspace with you still in it.","Lucky for you this castle exists in nullspace."))
 		if(3)
-			SpeakPeace(list("So yeah, you're welcome.","Anyway don't you have things to do?","There's no real point to sticking around here forever."))
+			SpeakPeace(list("So yeah, might as well grab some goodies while you're here.","Anyway don't you have things to do?","There's no real point to sticking around here forever."))
 		if(4)
-			SpeakPeace(list("I'm flattered you care this much about this room.","However it's not proper to just stand in here all shift and see what I'll say.","I'm going to work hard to be more boring so you'll leave."))
+			SpeakPeace(list("I'm flattered you care this much about this room.","Y'know sticking around here's not good for you right?","I'm going to work hard to be more boring so you'll leave."))
 		if(5 to 8)
 			SpeakPeace(list("..."))
 		if(9)
-			SpeakPeace(list("Alright maybe that's <b>too</b> boring.", "I can't keep manually typing these lines out though.", "It's hard to explain but the code structure I'm using is kind of terrible."))
+			SpeakPeace(list("Alright maybe that's <b>too</b> boring.", "I can't keep manually typing these lines out though.", "My name's Absurdly Ludicrous, by the way. I'm just someone's pokemon avatar and i'm not really here."))
+			name = "Absurdly Ludicrous"
+			desc = "A talking mememon."
 		if(10)
-			SpeakPeace(list("Oh I have an idea!", "Lets outsource this endless banter to Poly!", "Then you'll be able to keep listening to this without getting bored!"))
-			if(isnull(shenanigans) || !shenanigans.len)
-				shenanigans = list("Except the poly file is missing...")
-		if(11 to 14, 16 to 50, 52 to 99, 103 to 107, 109 to 203, 205 to 249, 252 to 665, 667 to 999, 1001 to 5642)
-			SpeakPeace(list(pick(shenanigans),pick(shenanigans),pick(shenanigans)))
+			SpeakPeace(list("Oh I have an idea!", "Lets outsource this endless banter to Poly!", "Except Poly doesn't really exist in this codebase unless some Xenobiology shenanigans happen."))
+		if(11 to 14, 16 to 50, 52 to 99, 103 to 107, 109 to 203, 205 to 249, 252 to 419, 421 to 665, 667 to 998)
+			SpeakPeace(pick(shenanigans))
 			if(times_spoken_to % 10 == 0)
 				SpeakPeace(list("That's [times_spoken_to] times you've spoken to me by the way."))
 		if(15)
-			SpeakPeace(list("See? Isn't this fun?","Now you can mash this for hours without getting bored.","Anyway I'll leave you it."))
+			SpeakPeace(list("I'm not gonna outsource it cause there's no point.","Oh well.","Anyway I'll leave you it."))
 		if(51)
-			SpeakPeace(list("The fun never ends around here.", "The Poly text files stores up to 500 statements.", "But you've probably heard a few repeats by now."))
+			SpeakPeace(list("The fun never ends around here.", "The Poly text files stores up to 500 statements.", "but there's no poly so what's the point?"))
 		if(100)
 			SpeakPeace(list("And that's a solid hundred.", "Good hustle I guess.", "You've probably heard a lot of repeats by now."))
 		if(101)
-			SpeakPeace(list("I hope you're getting the reference this room is presenting.", "As well as the more obscure meta reference this conversation is presenting.", "This stuff has layers."))
+			SpeakPeace(list("I hope you're enjoying the rewrite of this room.", "As well as the codebase we helped make.", "So... yeah."))
 		if(102)
 			SpeakPeace(list("I am very tempted to just stretch this out forever.","It's technically easier than doing this.","Just an option."))
 		if(108)
@@ -69,21 +62,40 @@
 		if(250)
 			SpeakPeace(list("Congratulations.", "By my very loose calculations you've now wasted a decent chunk of the round doing this.", "But you've seen this meme to its conclusion, and that's an experience in itself, right?"))
 		if(251)
-			SpeakPeace(list("Anyway, here.", "I can't give you anything that would impact the progression of the round.","But you've earned this at least."))
-			var/obj/item/reagent_containers/food/drinks/trophy/silver_cup/the_ride = new(get_turf(user))
-			the_ride.name = "Overextending The Joke: Second Place"
-			the_ride.desc = "There's a point where this needed to stop, and we've clearly passed it."
+			SpeakPeace(list("Anyway, here.", "Have fun with this infinite cup.","well, not actually infinite but close enough. What would you do with 1,000,000 units anyways?"))
+			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/the_ride = new(get_turf(user))
+			the_ride.name = "The Infinity Cup"
+			the_ride.desc = "AW YEAH, TIME TO GET CRUNK ON ERRORS!"
+			the_ride.volume = 1000000
 		if(252)
 			SpeakPeace(list("You know what this means right?", "Of course it's not over!", "The question becomes now is it more impressive to solider on to an unknown finish, or to have to common sense to stop here?"))
+		if(420)
+			SpeakPeace(list("Heeeey the meme number!", "Here, have some SCP-420-J", "The world's strongest blunt."))
+			var/obj/item/clothing/mask/cigarette/rollie/omega/scpj = new(get_turf(user))
+			scpj.name = "SCP-420-J"
+			scpj.desc = "A rollie this majestic can't be smoked just anywhere."
 		if(666)
 			SpeakPeace(list("The darkness in your heart won't be filled by simple platitudes.","You won't stop now, you're in this to the end.", "Will you reach the finish line before the round ends?"))
+		if(999)
+			SpeakPeace(list("Seriously, this is what you do for fun?", "Please, do NOT click another time!", "Just leave."))
 		if(1000)
-			SpeakPeace(list("The ends exists somewhere beyond meaningful milestones.", "There will be no more messages until then.", "You disgust me."))
-		if(5643)
+			for(var/obj/structure/signpost/salvation/S in orange(7))
+				var/datum/effect_system/smoke_spread/smoke = new
+				smoke.set_up(1, S.loc)
+				smoke.start()
+				qdel(S)
+				break
+			SpeakPeace(list("AH FUCK IT OVERFLOWED!", "Welp, you're here forever now thanks to my shitty code.", "I'll unlock the other rooms so you at least won't die here right away. I'm going home."))
 			SSmedals.UnlockMedal(MEDAL_TIMEWASTE, user.client)
-			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/never_ends = new(get_turf(user))
-			never_ends.name = "Overextending The Joke: First Place"
-			never_ends.desc = "And so we are left alone with our regrets."
+
+			for(var/turf/closed/indestructible/fakedoor/glitch/G in world)
+				new /obj/structure/mineral_door/paperframe/glitch(locate(G.x,G.y,G.z))
+				new /turf/open/indestructible/hoteltile(locate(G.x,G.y,G.z))
+			new /obj/item/clothing/head/sombrero/ludicrous(get_turf(src))
+			var/datum/effect_system/smoke_spread/smoke = new
+			smoke.set_up(1, src.loc)
+			smoke.start()
+			qdel(src)
 		else
 			y += 2
 	speaking = FALSE

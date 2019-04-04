@@ -87,7 +87,7 @@
 	harvest_message_med = "You pick a few onions."
 
 /obj/structure/flora/ash/earth/soybeans
-	icon_state = "soybeans"
+	icon_state = "soybean"
 	name = "wild soybeans"
 	desc = "It's pretty bland, but oh the possibilities..."
 	harvest = /obj/item/reagent_containers/food/snacks/grown/soybeans
@@ -283,9 +283,9 @@
 	harvest_message_med = "You pick a few oranges."
 
 /obj/structure/flora/ash/earth/cherries
-	icon_state = "cherries"
+	icon_state = "cherry"
 	name = "wild cherries"
-	desc = "It's a tangy fruit."
+	desc = "Great for toppings!"
 	harvest = /obj/item/reagent_containers/food/snacks/grown/cherries
 	harvest_message_low = "You pick a cherry."
 	harvest_message_med = "You pick a few cherries."

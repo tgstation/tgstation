@@ -390,9 +390,11 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
+	chameleonwhitelist = FALSE
 
 /obj/item/clothing/under/kilt/highlander/Initialize()
 	. = ..()
@@ -455,6 +457,7 @@
 	item_state = "r_suit"
 	item_color = "hos_parade_male"
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/hosparadefem
 	name = "head of security's parade uniform"
@@ -464,6 +467,7 @@
 	item_color = "hos_parade_fem"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/assistantformal
 	name = "assistant's formal uniform"
@@ -472,6 +476,7 @@
 	item_state = "gy_suit"
 	item_color = "assistant_formal"
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
@@ -481,6 +486,7 @@
 	item_color = "black_tango"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/stripeddress
 	name = "striped dress"
@@ -491,6 +497,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_FULL
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/sailordress
 	name = "sailor dress"
@@ -501,6 +508,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/redeveninggown
 	name = "red evening gown"
@@ -510,6 +518,7 @@
 	item_color = "red_evening_gown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/maid
 	name = "maid costume"
@@ -520,6 +529,7 @@
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/maid/Initialize()
 	. = ..()
@@ -535,6 +545,7 @@
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/plaid_skirt
 	name = "red plaid skirt"
@@ -546,6 +557,7 @@
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	custom_price = 25
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/plaid_skirt/blue
 	name = "blue plaid skirt"
@@ -577,6 +589,7 @@
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/singerb
 	name = "blue performer's outfit"
@@ -588,6 +601,7 @@
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/plaid_skirt/green
 	name = "green plaid skirt"
@@ -616,6 +630,7 @@
 	item_color = "geisha"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/villain
 	name = "villain suit"
@@ -631,6 +646,7 @@
 	item_state = "b_suit"
 	item_color = "sailor"
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
@@ -725,6 +741,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/drfreeze
 	name = "doctor freeze's jumpsuit"
@@ -750,6 +767,7 @@
 	item_state = "lb_suit"
 	item_color = "leather"
 	can_adjust = FALSE
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/gondola
 	name = "gondola hide suit"

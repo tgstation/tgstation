@@ -545,6 +545,9 @@
 /obj/item/card/id/away/quantumanomaly/cargo
 	assignment = "Cargo Technician"
 
+/obj/item/card/id/away/quantumanomaly/clown
+	assignment = "Clown"
+
 /obj/item/card/id/away/quantumanomaly/cook
 	assignment = "Cook"
 
@@ -588,7 +591,7 @@
 
 /obj/effect/mob_spawn/human/quantumanomaly/Initialize(mapload)
 	. = ..()
-	var/arrpee = rand(1,4)
+	var/arrpee = rand(1,5)
 	var/job = "assistant"
 	switch(arrpee)
 		if(1)
@@ -621,6 +624,17 @@
 			suit_store = /obj/item/plant_analyzer
 			back = /obj/item/storage/backpack/botany
 			id = /obj/item/card/id/away/quantumanomaly/botanist
+		if(5)
+			job = "clown" //honk
+			assignedrole = "Clown"
+			ears = /obj/item/radio/headset
+			uniform = /obj/item/clothing/under/rank/clown
+			back = /obj/item/storage/backpack/clown
+			id = /obj/item/card/id/away/quantumanomaly/clown
+			belt = /obj/item/pda/clown
+			shoes = /obj/item/clothing/shoes/clown_shoes
+			mask = /obj/item/clothing/mask/gas/clown_hat
+			l_pocket = /obj/item/bikehorn
 	flavour_text = "<span class='big bold'>You are a [job] working for Nanotrasen,</span><b> stationed onboard [pick("a state of the art research station","the place Nanotrasen puts their mistakes","Space Station 13","an idiot's wonderland")]. You vaguely recall being dragged into a \
 	sleeper pod due to getting critted by [pick("incompetent Security Officers","the Mime","the Chaplain for being a heretic","the Bomb Obsessed Scientist","an Idiot who tried being edgy","the Traitor")]. The last thing you remember is the whole ship being squashed and stretched and a tremendous ammount of pain, before passing out. As you open \
 	your eyes, everything seems fine at first, a dark feeling swells in your gut as you climb out of the sleeper. Everyone but you is dead. \

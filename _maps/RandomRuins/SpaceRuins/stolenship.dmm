@@ -48,6 +48,7 @@
 "V" = (/obj/machinery/light{dir = 8},/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/mythril/thirty,/obj/item/stack/sheet/mineral/abductor/thirty,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
 "W" = (/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/diamond/thirty,/obj/item/stack/sheet/mineral/gold/thirty,/obj/item/stack/sheet/mineral/plasma/thirty,/obj/item/stack/sheet/mineral/silver/thirty,/obj/item/stack/sheet/mineral/titanium/thirty,/obj/item/stack/sheet/mineral/uranium/thirty,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
 "X" = (/obj/machinery/light{dir = 8},/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/bananium/thirty,/obj/item/gemwarpwhistle,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"Y" = (/obj/structure/wailingstone/anchored,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
 
 (1,1,1) = {"
 bcTcdcbaaaaaaaaaaaaaaaaaaaa
@@ -58,7 +59,7 @@ cccccccqercsrqtrqscucaaaaaa
 ghcvwxcyzrccfffffccpccfffcb
 ghcezecreqckezeeeAcecVBCeuc
 ccceeemelemeeDEDeefemeeeeef
-ccTFWlTeteTeGHIHJefuTeKUBCf
+ccTFWlTeteTeGHIHJefuTYKUBCf
 ccczeemelemeeLMLeefemeeeeef
 ghcNNNcreqcOeeeezOcecXBCeuc
 ghcNNNcPerccfffffccpccfffcb

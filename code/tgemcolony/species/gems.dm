@@ -18,12 +18,20 @@
 	var/datum/action/ability1 = null
 	var/datum/action/ability2 = null
 	var/datum/quirk/quirk = null
+	var/mob/corrupted = /mob/living/simple_animal/hostile/netherworld
 
 /datum/species/gem/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
 		return
+	H.setToxLoss(0) //gems can't be poisoned.
+	H.setBrainLoss(0) //nor given brain damage in the normal way.
 	if(H.health <= 0)
 		H.setCloneLoss(9001) //POOF THEM WHEN CRITTED!
+
+/datum/species/gem/proc/corrupt(mob/living/carbon/human/H)
+	H.visible_message("<span class='danger'>[H] was just corrupted!</span>")
+	new corrupted(H.loc)
+	qdel(H)
 
 /datum/species/gem/peridot
 	name = "Peridot"
@@ -97,6 +105,15 @@
 	fixed_mut_color = "6C6"
 	hair_color = "CFC"
 	hairstyle = "Sapphire Hair"
+
+//datum/species/gem/pinkzircon
+//	name = "Zircon"
+//	id = "pinkzircon"
+//	height = "normal"
+//	fixed_mut_color = "FC9"
+//	hair_color = "F9C"
+//	hairstyle = "Spiky 3"
+//	weapon = new/datum/action/innate/gem/weapon/zircon
 
 /datum/species/gem/rosequartz
 	name = "Rose Quartz"

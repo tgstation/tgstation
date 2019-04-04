@@ -174,6 +174,14 @@
 	tastes = list("beef" = 2)
 	foodtype = RAW | MEAT | GROSS
 
+/obj/item/reagent_containers/food/snacks/meat/slab/chicken
+	name = "chicken"
+	desc = "Tastes like chicken! because it is."
+	icon_state = "bearmeat"
+	filling_color = "#FFB6C1"
+	tastes = list("chicken" = 2)
+	foodtype = RAW | MEAT | GROSS
+
 /obj/item/reagent_containers/food/snacks/meat/slab/veal
 	name = "veal"
 	desc = "the flesh of a baby cow."

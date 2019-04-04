@@ -35,6 +35,14 @@
 	cost = 10
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/earth/massiveisland
+	name = "Massive Island"
+	id = "massiveisland"
+	description = "The perfect location to build a settlement. Just bring a pickaxe, or an injector."
+	suffix = "massiveisland.dmm"
+	cost = 10
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/earth/goatisland
 	name = "Goat Island"
 	id = "goatisland"

@@ -33,6 +33,10 @@
 	var/scanspeed = 600
 	var/foundturfSCAN = FALSE
 	var/foundturfINJECT = FALSE
+	var/premade = FALSE
+
+/obj/machinery/geminjector/premade
+	premade = TRUE
 
 /obj/machinery/geminjector/proc/cooldownfinish()
 	src.visible_message("<span class='notice'>[src] lets out a burst of steam as it finishes.</span>")
@@ -47,9 +51,12 @@
 	anchored = FALSE
 	RefreshParts()
 	spawn(5) //let the parts initialize
-	src.visible_message("<span class='notice'>[src] clanks and clicks as it prepares it's software as well as hardware.</span>")
-	spawn(cooldown)
-	cooldownfinish()
+	if(!premade)
+		src.visible_message("<span class='notice'>[src] clanks and clicks as it prepares it's software as well as hardware.</span>")
+		spawn(cooldown)
+		cooldownfinish()
+	else
+		cooldownfinish()
 
 /obj/machinery/geminjector/RefreshParts()
 	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
@@ -97,15 +104,16 @@ obj/machinery/geminjector/proc/inject()
 	for(var/turf/A in range(1,src))
 		if(istype(A, /turf/closed/mineral) && foundturfINJECT == FALSE)
 			var/turf/closed/mineral/M = A
-			new/turf/open/floor/plating/kindergarden(locate(M.x,M.y,M.z))
-			new/obj/kindergartengem(locate(M.x,M.y,M.z))
-			foundturfINJECT = TRUE
-			src.visible_message("<span class='userdanger'>[src] injects a seed into the ground and begins cooling down!</span>")
-			src.visible_message("<span class='notice'>[src] pings, ''Operation Successful.''</span>")
-			anchored = FALSE
-			icon_state = "injector"
-			spawn(cooldown)
-			cooldownfinish()
+			if(checknearby(M))
+				new/turf/open/floor/plating/kindergarden(locate(M.x,M.y,M.z))
+				new/obj/kindergartengem(locate(M.x,M.y,M.z))
+				foundturfINJECT = TRUE
+				src.visible_message("<span class='userdanger'>[src] injects a seed into the ground and begins cooling down!</span>")
+				src.visible_message("<span class='notice'>[src] pings, ''Operation Successful.''</span>")
+				anchored = FALSE
+				icon_state = "injector"
+				spawn(cooldown)
+				cooldownfinish()
 	if(foundturfINJECT == FALSE)
 		src.visible_message("<span class='notice'>[src] pings, ''Injection interrupted.''</span>")
 		cooling = FALSE
@@ -113,3 +121,18 @@ obj/machinery/geminjector/proc/inject()
 		foundturfSCAN = FALSE
 		foundturfINJECT = FALSE
 		return
+
+obj/machinery/geminjector/proc/checknearby(var/turf/closed/mineral/M)
+	var/west = locate(M.x-1,M.y,M.z)
+	if(istype(west,/turf/open))
+		return 1
+	var/north = locate(M.x,M.y+1,M.z)
+	if(istype(north,/turf/open))
+		return 1
+	var/east = locate(M.x+1,M.y,M.z)
+	if(istype(east,/turf/open))
+		return 1
+	var/south = locate(M.x,M.y-1,M.z)
+	if(istype(south,/turf/open))
+		return 1
+	return 0

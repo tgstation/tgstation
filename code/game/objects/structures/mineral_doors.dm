@@ -303,6 +303,11 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
 
+/obj/structure/mineral_door/paperframe/glitch
+	name = "data frame door"
+	desc = "LOCKED = FALSE"
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/mineral_door/paperframe/Initialize()
 	. = ..()
 	queue_smooth_neighbors(src)

@@ -16,6 +16,7 @@
 	item_color = "hosred"
 	item_flags = DROPDEL
 	clothing_flags = NOSLIP
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/chameleon/gem/Initialize()
 	. = ..()
@@ -34,6 +35,7 @@
 	icon_state = "homeworld_pink"
 	item_color = "homeworld_pink"
 	item_state = "p_suit"
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/under/chameleon/gem/yellow
 	name = "Homeworld Uniform"

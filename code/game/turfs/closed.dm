@@ -105,12 +105,24 @@
 	name = "water"
 	desc = "Deep water."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "oceanwater_motion"
+	icon_state = "chasmwater_motion"
+
+/turf/closed/indestructible/ocean/glitch
+	name = "water...?"
+	desc = "It seems to rapidly switch between deep and shallow."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "glitchwater"
 
 /turf/closed/indestructible/fakedoor
 	name = "CentCom Access"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	icon_state = "fake_door"
+
+/turf/closed/indestructible/fakedoor/glitch
+	name = "data frame door"
+	icon_state = "paperframe"
+	icon = 'icons/obj/doors/mineral_doors.dmi'
+	desc = "LOCKED = TRUE"
 
 /turf/closed/indestructible/rock
 	name = "dense rock"
@@ -137,6 +149,10 @@
 	desc = "A wall layered with impenetrable sheets of paper."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "paperwall"
+
+/turf/closed/indestructible/paper/glitch
+	name = "thick data wall"
+	desc = "A wall layered with impenetrable sheets of dm files that need some serious cleaning."
 
 /turf/closed/indestructible/necropolis
 	name = "necropolis wall"

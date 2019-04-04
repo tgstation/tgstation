@@ -7,9 +7,9 @@
 
 	if(H.isfusion == FALSE)
 		new /obj/effect/temp_visual/gem_poof(get_turf(H))
+		H.unequip_everything()
 		if(H.suiciding)
 			H.visible_message("<span class='danger'>[H] shattered themself!</span>")
-			H.unequip_everything()
 			for(var/atom/movable/A in H.stored_items)
 				H.stored_items.Remove(A)
 				A.forceMove(H.drop_location())
@@ -20,7 +20,6 @@
 			shard.desc = "It appears to be the remains of [H.name]"
 			QDEL_NULL(H)
 		else
-
 			H.visible_message("<span class='danger'>[H] was poofed!</span>")
 			new /obj/item/gem(get_turf(H), H)
 	else
@@ -37,5 +36,5 @@
 		domfuse.key = H.key
 		H.unequip_everything()
 		spawn(5)
-		del(H)
+		qdel(H)
 	..()

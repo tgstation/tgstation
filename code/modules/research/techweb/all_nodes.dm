@@ -85,16 +85,6 @@
 	"portadrive_basic", "portadrive_advanced", "portadrive_super", "cardslot", "aislot", "miniprinter", "APClink", "bat_control", "bat_normal", "bat_advanced",
 	"bat_super", "bat_micro", "bat_nano", "cpu_normal", "pcpu_normal", "cpu_small", "pcpu_small")
 
-/datum/techweb_node/telecomms
-	id = "telecomms"
-	display_name = "Telecommunications Technology"
-	description = "Subspace transmission technology for near-instant communications devices."
-	prereq_ids = list("comptech", "bluespace_basic")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 5000
-	design_ids = list("s-receiver", "s-bus", "s-broadcaster", "s-processor", "s-hub", "s-server", "s-relay", "comm_monitor", "comm_server",
-	"s-ansible", "s-filter", "s-amplifier", "ntnet_relay", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter")
-
 /////////////////////////engineering tech/////////////////////////
 /datum/techweb_node/engineering
 	id = "engineering"
@@ -221,6 +211,20 @@
 	design_ids = list("voidcore")
 	export_price = 4000
 
+////////////////////////Alternate Universe technology////////////////////////
+/datum/techweb_node/telecomms
+	id = "telecomms"
+	display_name = "Telecommunications Technology"
+	description = "Subspace transmission technology for near-instant communications devices."
+	prereq_ids = list("comptech", "bluespace_basic")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+	design_ids = list("s-receiver", "s-bus", "s-broadcaster", "s-processor", "s-hub", "s-server", "s-relay", "comm_monitor", "comm_server",
+	"s-ansible", "s-filter", "s-amplifier", "ntnet_relay", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter","bounced_radio","radio_headset","intercom_frame")
+	hidden = TRUE
+	boost_item_paths = list(/obj/item/radio, /obj/item/radio/off, /obj/item/wallframe/intercom, /obj/item/radio/headset)
+
+////////////////////////Future Technology////////////////////////
 /datum/techweb_node/gem_eratwo
 	id = "gem_eratwo"
 	display_name = "Era 2 Gem Tech"

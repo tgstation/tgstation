@@ -3,7 +3,7 @@
 "ac" = (/turf/closed/mineral/random/airless,/area/template_noop)
 "ad" = (/turf/closed/wall/r_wall/rust,/area/science/xenobiology)
 "ae" = (/obj/structure/frame/computer{dir = 4},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
-"af" = (/obj/item/shard/gem/random,/obj/machinery/airalarm/directional/north,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"af" = (/obj/structure/table_frame,/obj/machinery/reagentgrinder,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
 "ag" = (/obj/machinery/smartfridge/extract/preloaded,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
 "ah" = (/obj/structure/lattice,/turf/template_noop,/area/science/xenobiology)
 "ai" = (/obj/structure/frame/machine,/obj/machinery/light/broken{dir = 8},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
@@ -139,6 +139,9 @@
 "cI" = (/mob/living/simple_animal/slime{health = -150},/turf/open/floor/plasteel/airless{icon_state = "damaged2"},/area/science/xenobiology)
 "cJ" = (/obj/machinery/camera{c_tag = "Xenobiology Cage 1"; dir = 4; network = list("ss13","rd")},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
 "cK" = (/obj/machinery/camera{c_tag = "Xenobiology Cage 3"; dir = 8; network = list("ss13","rd")},/turf/open/floor/plasteel/airless{icon_state = "damaged2"},/area/science/xenobiology)
+"cL" = (/obj/machinery/airalarm/directional/north,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"cM" = (/obj/structure/wailingstone/anchored,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"cN" = (/obj/item/shard/gem/random,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -148,9 +151,9 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacac
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacacaaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacacaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacacaaaaacacacacacacacacacacacacacacacacacaaaaaaaa
 aaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaaaaaaaa
-aaaaaaaaaaaaaaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaaaaaaaa
-aaaaaaaaaaaaacacacacacacacacacacacacacabacabacadadadadadacacacacacacacacacacacacacacacacacacaaaaaaaa
-aaaaaaaaaaaaacacacacacacacacacacacacacababababadaeafagadacacacacacacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaaaacacacacacacacacacacacacacacacacadadadadadacacacacacacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaacacacacacacacacacacacacacabacabacadafcLcMadacacacacacacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaacacacacacacacacacacacacacababababadaecNagadacacacacacacacacacacacacacacacacacacaaaaaaaa
 aaaaaaaaaaaaacacacacacacacacacacacacadadahahadadaiajakadadadadadadacacacacacacacacacacacacaaaaaaaaaa
 aaaaaaaaaaaaacacacacacacacacacacacacadalamanaoapaqaqarasatasaucEadacacacacacacacacacacacacaaaaaaaaaa
 aaaaaaaaaaaaaaacacacacacacacacacacacadavawaxayazaraAaBaCaCarascFadabacacacacacacacacacacaaaaaaaaaaaa

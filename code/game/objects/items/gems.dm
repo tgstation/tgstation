@@ -20,6 +20,9 @@
 /obj/item/gemid/peridot
 	icon_state = "peridot"
 
+/obj/item/gemid/pinkzircon
+	icon_state = "pinkzircon"
+
 /obj/item/gemid/amethyst
 	icon_state = "amethyst"
 

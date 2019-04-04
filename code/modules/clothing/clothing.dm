@@ -21,6 +21,7 @@
 	var/toggle_cooldown = null
 	var/cooldown = 0
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+	var/chameleonwhitelist = FALSE
 
 	var/clothing_flags = NONE
 
@@ -36,7 +37,7 @@
 	// THESE OVERRIDE THE HIDEHAIR FLAGS
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
-	
+
 
 /obj/item/clothing/Initialize()
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))

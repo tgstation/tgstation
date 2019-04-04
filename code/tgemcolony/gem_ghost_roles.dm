@@ -108,6 +108,10 @@
 	<br>Carry their stuff, play music, whatever the Agate asks of you.\
 	<br>You can summon a Spear to fight, but you should avoid doing so.</b>"
 
+/obj/effect/mob_spawn/human/gem/pearl/homeworld/rebel
+	name = "Rebel Pearl"
+	status = "Rebel"
+
 /obj/effect/mob_spawn/human/gem/agate
 	name = "Agate Deposit"
 	mob_name = "Agate"
@@ -234,6 +238,7 @@
 				if(rebelflavor == "rosequartz")
 					var/datum/action/recruit = new/datum/action/innate/gem/recruitcrystalgem
 					recruit.Grant(H)
+					new_spawn.mind.add_antag_datum(/datum/antagonist/crystalgem)
 					to_chat(new_spawn, "<span class='notice'>You emerge from the ground, seeing the Life that's already here... You must protect it.</span>")
 					new_spawn.mind.assigned_role = "Crystal Gem"
 					log_game("[key_name(new_spawn)] as [mob_name] is a Crystal Gem (Antag Role).")
@@ -320,3 +325,11 @@
 	mob_species = /datum/species/gem/amethyst
 	flavour_text = "<span class='big bold'>You are an Amethyst,</span><b><br>You are a Quartz Soldier,\
 	<br>You disarm your opponents with your whip and are tough to poof.</b>"
+
+//obj/effect/mob_spawn/human/gem/zircon
+//	name = "Zircon Deposit"
+//	mob_name = "Zircon"
+//	id = /obj/item/gemid/pinkzircon
+//	mob_species = /datum/species/gem/pinkzircon
+//	flavour_text = "<span class='big bold'>You are a Zircon,</span><b><br>You are a Walking Library,\
+//	<br>Print and Upload books so Gems can learn.</b>"

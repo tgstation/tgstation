@@ -137,7 +137,8 @@
 
 /datum/action/item_action/chameleon/change
 	name = "Chameleon Change"
-	var/list/chameleon_blacklist = list() //This is a typecache
+	//var/list/chameleon_blacklist = list() //This is a typecache
+	var/list/chameleon_whitelist = list() //This is a typecache
 	var/list/chameleon_list = list()
 	var/chameleon_type = null
 	var/chameleon_name = "Item"
@@ -166,11 +167,11 @@
 	if(button)
 		button.name = "Change [chameleon_name] Appearance"
 
-	chameleon_blacklist |= typecacheof(target.type)
+	chameleon_whitelist |= typecacheof(target.type)
 	for(var/V in typesof(chameleon_type))
 		if(ispath(V) && ispath(V, /obj/item))
 			var/obj/item/I = V
-			if(chameleon_blacklist[V] || (initial(I.item_flags) & ABSTRACT) || !initial(I.icon_state))
+			if(!chameleon_whitelist[V] || (initial(I.item_flags) & ABSTRACT) || !initial(I.icon_state))
 				continue
 			var/chameleon_item_name = "[initial(I.name)] ([initial(I.icon_state)])"
 			chameleon_list[chameleon_item_name] = I
@@ -274,7 +275,9 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/under
 	chameleon_action.chameleon_name = "Jumpsuit"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/under, /obj/item/clothing/under/color, /obj/item/clothing/under/rank, /obj/item/clothing/under/changeling), only_root_path = TRUE)
+	chameleon_action.chameleon_whitelist = typecacheof(list(\
+	/obj/item/clothing/under/gem,/obj/item/clothing/under/gem/yellow,/obj/item/clothing/under/gem/blue,\
+	/obj/item/clothing/under/gem/white), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
@@ -303,7 +306,8 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/suit
 	chameleon_action.chameleon_name = "Suit"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/suit/armor/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE)
+	chameleon_action.chameleon_whitelist = typecacheof(list(\
+	/obj/item/clothing/suit/armor/vest,/obj/item/clothing/suit/armor/vest/alt), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/suit/chameleon/emp_act(severity)
@@ -331,7 +335,10 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
+	chameleon_action.chameleon_whitelist = typecacheof(list(\
+	/obj/item/clothing/glasses/regular,/obj/item/clothing/glasses/regular/hipster,/obj/item/clothing/glasses/regular/jamjar,\
+	/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/glasses/sunglasses/big,/obj/item/clothing/glasses/sunglasses/garb,\
+	/obj/item/clothing/glasses/sunglasses/garb/supergarb), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity)
@@ -360,7 +367,9 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/gloves
 	chameleon_action.chameleon_name = "Gloves"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/gloves, /obj/item/clothing/gloves/color, /obj/item/clothing/gloves/changeling), only_root_path = TRUE)
+	chameleon_action.chameleon_whitelist = typecacheof(list(\
+	/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/bracer,/obj/item/clothing/gloves/combat,\
+	/obj/item/clothing/gloves/fingerless), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/gloves/chameleon/emp_act(severity)
@@ -389,7 +398,8 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/head
 	chameleon_action.chameleon_name = "Hat"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/head/changeling, only_root_path = TRUE)
+	chameleon_action.chameleon_whitelist = typecacheof(list(\
+	/obj/item/clothing/head/bandana,/obj/item/clothing/head/crown,/obj/item/clothing/head/crown/fancy), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/head/chameleon/emp_act(severity)
@@ -439,7 +449,8 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/mask
 	chameleon_action.chameleon_name = "Mask"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE)
+	chameleon_action.chameleon_whitelist = typecacheof(list(\
+	/obj/item/clothing/mask/breath,/obj/item/clothing/mask/gas), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/mask/chameleon/emp_act(severity)
@@ -492,7 +503,8 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/shoes
 	chameleon_action.chameleon_name = "Shoes"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/shoes/changeling, only_root_path = TRUE)
+	chameleon_action.chameleon_whitelist = typecacheof(list(\
+	/obj/item/clothing/shoes/chameleon/gem,/obj/item/clothing/shoes/sandal), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/shoes/chameleon/emp_act(severity)
@@ -592,7 +604,8 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/pda
 	chameleon_action.chameleon_name = "PDA"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/pda/heads, /obj/item/pda/ai, /obj/item/pda/ai/pai), only_root_path = TRUE)
+	chameleon_action.chameleon_whitelist = typecacheof(list(\
+	/obj/item/pda,/obj/item/pda/curator), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/pda/chameleon/emp_act(severity)

@@ -23,6 +23,7 @@
 	item_state = "armoralt"
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
+	chameleonwhitelist = TRUE
 
 /obj/item/clothing/suit/armor/vest/roman
 	desc = "An iron vest that provides decent protection against most types of damage."

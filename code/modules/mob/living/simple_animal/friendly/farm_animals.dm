@@ -12,7 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4, , /obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/animalhide/generic = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3, /obj/item/stack/sheet/bone = 1, /obj/item/stack/sheet/animalhide/generic = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -160,7 +160,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/beef = 6, /obj/item/stack/sheet/bone = 2, /obj/item/stack/sheet/animalhide/generic = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/beef = 4, /obj/item/stack/sheet/bone = 2, /obj/item/stack/sheet/animalhide/generic = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -248,7 +248,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1, /obj/item/stack/sheet/bone = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 1, /obj/item/stack/sheet/bone = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -297,7 +297,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/stack/sheet/bone = 1, /obj/item/stack/sheet/sinew = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 2, /obj/item/stack/sheet/bone = 1, /obj/item/stack/sheet/sinew = 1)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
 	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
 	response_help  = "pets"

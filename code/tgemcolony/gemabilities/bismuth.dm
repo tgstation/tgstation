@@ -2,7 +2,7 @@
 	name = "Smelt Ores"
 	desc = "Ore redemption? You mean the Clod machine. Smelt ores in your active hand better than that old thing can ever do."
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-	button_icon_state = "healingtears"
+	button_icon_state = "smelt"
 	background_icon_state = "bg_spell"
 
 /datum/action/innate/gem/smelt/Activate()

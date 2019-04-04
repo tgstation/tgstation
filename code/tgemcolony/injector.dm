@@ -38,11 +38,10 @@
 		to_chat(user, "<span class='notice'>You start picking...</span>")
 
 		if(I.use_tool(src, user, 120, volume=50))
-			if(ismineralturf(src))
-				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
-				playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
-				ScrapeAway(null, CHANGETURF_DEFER_CHANGE)
-				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+			to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
+			playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
+			ScrapeAway(null, CHANGETURF_DEFER_CHANGE)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 	else
 		if(istype(I,/obj/item/handheldinjector))
 			to_chat(user, "<span class='notice'>You can't inject in this lifeless soil.</span>")

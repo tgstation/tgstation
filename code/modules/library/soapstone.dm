@@ -99,6 +99,9 @@
 /obj/item/soapstone/empty
 	remaining_uses = 0
 
+/obj/item/soapstone/justone
+	remaining_uses = 1
+
 /proc/good_chisel_message_location(turf/T)
 	if(!T)
 		. = FALSE

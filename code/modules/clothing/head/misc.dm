@@ -225,6 +225,14 @@
 
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
+/obj/item/clothing/head/sombrero/ludicrous
+	name = "ludicrous sombrero"
+	icon_state = "ludicroushat"
+	item_state = "ludicroushat"
+	desc = "You can practically feel like a master."
+	flags_inv = HIDEHAIR
+	dog_fashion = null
+
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
 	icon_state = "greensombrero"

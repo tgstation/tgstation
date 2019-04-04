@@ -241,6 +241,13 @@
 	reqs = list(/obj/item/stack/sheet/bone = 2, /obj/item/stack/sheet/mineral/wood = 2)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/bonepick
+	name = "Bone Pickaxe"
+	result = /obj/item/pickaxe/bone
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/mineral/wood = 2, /obj/item/stack/sheet/sinew = 1)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/bonetalisman
 	name = "Bone Talisman"
 	result = /obj/item/clothing/accessory/talisman
@@ -261,7 +268,8 @@
 	result = /obj/item/twohanded/bonespear
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 2,
-				 /obj/item/stack/sheet/mineral/wood = 2)
+				 /obj/item/stack/sheet/mineral/wood = 3,
+				 /obj/item/stack/sheet/sinew = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/bonfire

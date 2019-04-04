@@ -345,6 +345,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/rollie/cannabis
 	list_reagents = list("space_drugs" = 15, "lipolicide" = 35)
 
+/obj/item/clothing/mask/cigarette/rollie/omega
+	list_reagents = list("space_drugs" = 3,
+						"mindbreaker" = 3,
+						"mercury" = 15,
+						"lithium" = 15,
+						"atropine" = 15,
+						"haloperidol" = 15,
+						"methamphetamine" = 15,
+						"capsaicin" = 15,
+						"barbers_aid" = 15,
+						"bath_salts" = 15,
+						"itching_powder" = 15,
+						"crank" = 15,
+						"krokodil" = 15,
+						"histamine" = 15,
+						"lipolicide" = 15)
+
 /obj/item/clothing/mask/cigarette/rollie/mindbreaker
 	list_reagents = list("mindbreaker" = 35, "lipolicide" = 15)
 

@@ -165,7 +165,7 @@
 		/turf/closed/mineral/uranium = 2, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 4,
 		/turf/closed/mineral/titanium = 4, /turf/closed/mineral/silver = 6, /turf/closed/mineral/coal = 10,
 		/turf/closed/mineral/iron = 20, /turf/closed/mineral/gibtonite = 2, /turf/closed/mineral/bscrystal = 1,
-		/turf/closed/mineral/copper = 20, /turf/closed/mineral/tin = 20, /turf/closed/mineral/magnesium = 20)
+		/turf/closed/mineral/copper = 10, /turf/closed/mineral/tin = 10, /turf/closed/mineral/magnesium = 10)
 		//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
 	var/display_icon_state = "rock"
@@ -173,6 +173,10 @@
 /turf/closed/mineral/random/airless
 	baseturfs = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS
+	mineralSpawnChanceList = list(
+		/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10, /turf/closed/mineral/titanium = 11,
+		/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40,
+		/turf/closed/mineral/gibtonite = 4, /turf/closed/mineral/bscrystal = 1)
 
 /turf/closed/mineral/random/Initialize()
 
@@ -202,7 +206,7 @@
 		/turf/closed/mineral/uranium = 4, /turf/closed/mineral/diamond = 2, /turf/closed/mineral/gold = 8,
 		/turf/closed/mineral/titanium = 8, /turf/closed/mineral/silver = 12, /turf/closed/mineral/coal = 20,
 		/turf/closed/mineral/iron = 40, /turf/closed/mineral/gibtonite = 4, /turf/closed/mineral/bscrystal = 2,
-		/turf/closed/mineral/copper = 40, /turf/closed/mineral/tin = 40, /turf/closed/mineral/magnesium = 40)
+		/turf/closed/mineral/copper = 20, /turf/closed/mineral/tin = 20, /turf/closed/mineral/magnesium = 20)
 
 /turf/closed/mineral/random/high_chance/airless
 	baseturfs = /turf/open/floor/plating/asteroid/airless

@@ -2,7 +2,7 @@
 	name = "Scan Ores"
 	desc = "Vital for Kindergartening, you can find what ores are in the soil."
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-	button_icon_state = "healingtears"
+	button_icon_state = "scanores"
 	background_icon_state = "bg_spell"
 	var/cooldown = 35
 	var/current_cooldown = 0

@@ -2,7 +2,7 @@
 	name = "Bubble Gem"
 	desc = "Prevent a gem from reforming by trapping them in a bubble"
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-	button_icon_state = "healingtears"
+	button_icon_state = "bubblegem"
 	background_icon_state = "bg_spell"
 
 /datum/action/innate/gem/bubble/Activate()

@@ -16,7 +16,7 @@ var/list/allgems = list()
 	for(var/obj/effect/mob_spawn/human/gem/A in world)
 		if(A.status != "Rebel")
 			gems = gems+1
-	for(var/var/mob/living/carbon/human/A in world)
+	for(var/mob/living/carbon/human/A in world)
 		if(A.key != null && isgem(A)) //don't count ghosted gems
 			if(SSmapping.level_trait(A.z,ZTRAIT_STATION) && A.health > 0) //gotta be on the planet.
 				if(A.mind.assigned_role == "Crystal Gem")
