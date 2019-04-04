@@ -19,7 +19,6 @@
 
 /obj/machinery/stasis/Initialize(mapload)
 	mattress_on = SSvis_overlays.add_vis_overlay(src, icon, "stasis_on", layer, plane, dir, alpha = 0, unique = TRUE)
-	add_overlay(mutable_appearance('icons/obj/machines/stasis.dmi', "tubes", layer + 0.1))
 	return ..()
 
 /obj/machinery/stasis/examine(mob/user)
@@ -63,6 +62,11 @@
 		var/easing_direction = _running ? EASE_OUT : EASE_IN
 		animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
 
+	if(occupant)
+		add_overlay(mutable_appearance('icons/obj/machines/stasis.dmi', "tubes", LYING_MOB_LAYER + 0.1))
+	else
+		cut_overlay(mutable_appearance('icons/obj/machines/stasis.dmi', "tubes", LYING_MOB_LAYER + 0.1))
+
 	if(stat & BROKEN)
 		icon_state = "stasis_broken"
 		return
@@ -101,11 +105,13 @@
 	occupant = L
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
+	update_icon()
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
 	if(L == occupant)
 		occupant = null
+	update_icon()
 
 /obj/machinery/stasis/process()
 	if( !( occupant && isliving(occupant) && check_nap_violations() ) )
