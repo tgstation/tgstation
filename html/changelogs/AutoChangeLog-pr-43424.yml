@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - rscadd: "Monkeys now apply knockdown when tackling instead of stunning, and can stun you by tackling you whilst you are knocked down."
