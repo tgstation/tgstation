@@ -1,6 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - rscadd: "Disarm has been reworked, instead of an rng based system instead it pushes people away from you. If their movement is blocked it knocks them over. Shoving someone twice quickly will knock ranged weapons out of their hands."
-  - rscdel: "Moving into humans while in a hostile intent no longer pushes them."
-  - tweak: "Passive grabs need to be resisted out of while on the ground, and can't be directly crawled out of"
