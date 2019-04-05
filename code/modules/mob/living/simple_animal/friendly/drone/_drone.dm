@@ -9,9 +9,11 @@
 #define MAINTDRONE	"drone_maint"
 #define REPAIRDRONE	"drone_repair"
 #define SCOUTDRONE	"drone_scout"
+#define MOMMI	"drone_mommi"
 #define CLOCKDRONE	"drone_clock"
 
 #define MAINTDRONE_HACKED "drone_maint_red"
+#define MOMMI_HACKED	"drone_mommi_hacked"
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
 #define SCOUTDRONE_HACKED "drone_scout_hacked"
 
