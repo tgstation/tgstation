@@ -4780,10 +4780,6 @@
 	pixel_x = -4
 	},
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "station intercom";
 	pixel_x = -30
 	},
 /turf/open/floor/wood,
@@ -13822,10 +13818,6 @@
 "aFt" = (
 /obj/structure/closet/secure_closet/freezer/cream_pie,
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "station intercom";
 	pixel_x = -30
 	},
 /turf/open/floor/wood,
@@ -20613,10 +20605,6 @@
 	dir = 8
 	},
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "station intercom";
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel/white,
@@ -34376,10 +34364,6 @@
 	},
 /obj/item/pen,
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "station intercom";
 	pixel_x = -30
 	},
 /turf/open/floor/wood,
@@ -53722,10 +53706,6 @@
 "hou" = (
 /obj/machinery/recharge_station,
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "station intercom";
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel,
@@ -54176,10 +54156,6 @@
 "jRN" = (
 /obj/structure/table/wood,
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "station intercom";
 	pixel_x = -30
 	},
 /turf/open/floor/carpet,
@@ -55137,10 +55113,6 @@
 /area/quartermaster/storage)
 "opq" = (
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "station intercom";
 	pixel_x = -30
 	},
 /turf/open/floor/wood,
