@@ -15,10 +15,12 @@
 	var/stasis_enabled = TRUE
 	var/last_stasis_sound = FALSE
 	var/stasis_can_toggle = 0
+	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
 
 /obj/machinery/stasis/Initialize(mapload)
-	mattress_on = SSvis_overlays.add_vis_overlay(src, icon, "stasis_on", layer, plane, dir, alpha = 0, unique = TRUE)
+	if(mattress_state)
+		mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, layer, plane, dir, alpha = 0, unique = TRUE)
 	return ..()
 
 /obj/machinery/stasis/examine(mob/user)
