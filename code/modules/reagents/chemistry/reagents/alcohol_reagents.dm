@@ -2033,15 +2033,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/M)
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
-	if(M.mind)
-		var/datum/antagonist/wizard/wizard = M.mind.has_antag_datum(/datum/antagonist/wizard)
-		if(wizard)
-			M.heal_bodypart_damage(1,1,1)
-			M.adjustBruteLoss(-1,0)
-			M.adjustOxyLoss(-1,0)
-			M.adjustFireLoss(-1,0)
-			M.adjustToxLoss(-1,0)
-		. = 1
+	if(M?.mind?.has_antag_datum(/datum/antagonist/wizard))
+		M.heal_bodypart_damage(1,1,1)
+		M.adjustBruteLoss(-1,0)
+		M.adjustOxyLoss(-1,0)
+		M.adjustFireLoss(-1,0)
+		M.adjustToxLoss(-1,0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
@@ -2062,7 +2059,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjustOxyLoss(0.5,0)
 		M.adjustToxLoss(1,0)
 		M.emote("scream")
-		. = 1
 	return ..()
 
 /datum/reagent/consumable/ethanol/applejack
@@ -2086,4 +2082,4 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "a sweet and sour slice of apple"
 	glass_icon_state = "jack_rose"
 	glass_name = "Jack Rose"
-	glass_desc = "Enough of these, and you realy will start to suppose your toeses are roses."
+	glass_desc = "Enough of these, and you really will start to suppose your toeses are roses."
