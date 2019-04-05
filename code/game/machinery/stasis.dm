@@ -31,10 +31,11 @@
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
 	if(last_stasis_sound != _running)
+		var/sound_freq = rand(5120, 8800)
 		if(_running)
-			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = 7056)
+			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
 		else
-			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = 7056)
+			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/AltClick(mob/user)
@@ -64,10 +65,9 @@
 		var/easing_direction = _running ? EASE_OUT : EASE_IN
 		animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
 
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays - mattress_on)
 	if(occupant)
-		add_overlay(mutable_appearance('icons/obj/machines/stasis.dmi', "tubes", LYING_MOB_LAYER + 0.1))
-	else
-		cut_overlay(mutable_appearance('icons/obj/machines/stasis.dmi', "tubes", LYING_MOB_LAYER + 0.1))
+		SSvis_overlays.add_vis_overlay(src, 'icons/obj/machines/stasis.dmi', "tubes", LYING_MOB_LAYER + 0.1, plane, dir) //using vis_overlays instead of normal overlays for mouse_opacity here
 
 	if(stat & BROKEN)
 		icon_state = "stasis_broken"
