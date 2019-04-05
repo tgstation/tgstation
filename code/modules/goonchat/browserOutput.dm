@@ -197,8 +197,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 			CRASH("Invalid message! [message]")
 		return
 
-	if(target == world)
-		target = GLOB.clients
+
 
 	var/original_message = message
 	//Some macros remain in the string even after parsing and fuck up the eventual output
@@ -207,28 +206,55 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
-
-	if(islist(target))
-		// Do the double-encoding outside the loop to save nanoseconds
-		var/twiceEncoded = url_encode(url_encode(message))
-		for(var/I in target)
-			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
+	
+	
+	var/twiceEncoded = url_encode(url_encode(message))
+	if(target == world)
+		var/list/simple_clients = list()
+		var/list/targets = GLOB.clients.Copy()
+		for(var/I in 1 to length(targets))
+			var/client/C = targets[I]
+			if (!I)
+				continue
+			var/client/C = I
+			if(!C.chatOutput || C.chatOutput.broken)
+				targets[I] = null
+				continue
+			if(!C.chatOutput.loaded)
+				C.chatOutput.messageQueue += message
+				targets[I] = null
+				continue
+		
+		SEND_TEXT(world, original_message)
+		targets << output(twiceEncoded, "browseroutput:output")
+		
+	else if(islist(target))
+		var/list/targets = target
+		targets = targets.Copy()
+		for(var/I in 1 to length(targets))
+			var/client/C = CLIENT_FROM_VAR(target[I]) //Grab us a client if possible
 
 			if (!C)
+				targets[I] = null
 				continue
-
-			//Send it to the old style output window.
-			SEND_TEXT(C, original_message)
-
+			
+		
 			if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+				targets[I] = null
 				continue
 
 			if(!C.chatOutput.loaded)
 				//Client still loading, put their messages in a queue
+				targets[I] = null
 				C.chatOutput.messageQueue += message
 				continue
+			
+			target[I] = C
 
-			C << output(twiceEncoded, "browseroutput:output")
+		//Send it to the old style output window. (using the original targets and original message)
+		SEND_TEXT(target, original_message)
+		targets << output(twiceEncoded, "browseroutput:output")
+
 	else
 		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
 
@@ -245,9 +271,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 			//Client still loading, put their messages in a queue
 			C.chatOutput.messageQueue += message
 			return
-
-		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
-		C << output(url_encode(url_encode(message)), "browseroutput:output")
+			
+		C << output(twiceEncoded), "browseroutput:output")
 
 /datum/chatOutput/proc/swaptolightmode() //Dark mode light mode stuff. Yell at KMC if this breaks! (See darkmode.dm for documentation)
 	owner.force_white_theme()
