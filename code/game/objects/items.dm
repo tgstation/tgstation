@@ -34,6 +34,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/throwhitsound = null
 	var/pickupsound = null
 	var/dropsound = null
+	var/equipsound = null
 
 	var/w_class = WEIGHT_CLASS_NORMAL
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
