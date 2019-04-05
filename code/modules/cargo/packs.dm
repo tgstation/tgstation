@@ -419,7 +419,7 @@
 	name = "SecTech Supply Crate"
 	desc = "Officer Paul bought all the donuts? Then refill the security vendor with ths crate."
 	cost = 1500
-	contains = list(/obj/machinery/vending/security)
+	contains = list(/obj/item/vending_refill/security)
 	crate_name = "SecTech supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
