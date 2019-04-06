@@ -30,6 +30,9 @@
 	usesound = 'sound/weapons/empty.ogg'
 	var/mode = 0
 
+	pickupsound = "sound/items/handle/multitool_pickup.ogg"
+	dropsound = "sound/items/handle/multitool_drop.ogg"
+
 /obj/item/multitool/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Its buffer [buffer ? "contains [buffer]." : "is empty."]</span>")
