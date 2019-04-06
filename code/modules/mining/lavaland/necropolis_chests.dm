@@ -520,7 +520,7 @@
 		. = ..()
 
 /obj/effect/immortality_talisman/void
-	vanish_description = "dragged into the void"
+	vanish_description = "is dragged into the void"
 
 //Shared Bag
 
