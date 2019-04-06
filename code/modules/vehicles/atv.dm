@@ -75,10 +75,9 @@
 		return TRUE
 	return ..()
 
-/obj/vehicle/ridden/atv/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
-	. = ..()
-	if(. && (obj_integrity > 0) && obj_integrity < integrity_failure)
-		START_PROCESSING(SSobj, src)
+/obj/vehicle/ridden/secway/obj_break()
+	START_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/vehicle/ridden/atv/process()
 	if(obj_integrity >= integrity_failure || obj_integrity <= 0)

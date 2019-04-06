@@ -14,10 +14,9 @@
 	D.vehicle_move_delay = 1.5
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 
-/obj/vehicle/ridden/secway/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
-	. = ..()
-	if(. && (obj_integrity > 0) && obj_integrity < integrity_failure)
-		START_PROCESSING(SSobj, src)
+/obj/vehicle/ridden/secway/obj_break()
+	START_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/vehicle/ridden/secway/process()
 	if(obj_integrity >= integrity_failure || obj_integrity <= 0)
