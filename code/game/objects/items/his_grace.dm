@@ -24,6 +24,9 @@
 	var/victims_needed = 25
 	var/ascend_bonus = 15
 
+	pickupsound = "sound/items/handle/toolbox_pickup.ogg"
+	dropsound = "sound/items/handle/toolbox_drop.ogg"
+
 /obj/item/his_grace/Initialize()
 	. = ..()
 	START_PROCESSING(SSprocessing, src)

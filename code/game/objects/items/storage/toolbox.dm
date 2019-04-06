@@ -17,6 +17,9 @@
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 
+	pickupsound = "sound/items/handle/toolbox_pickup.ogg"
+	dropsound = "sound/items/handle/toolbox_drop.ogg"
+
 /obj/item/storage/toolbox/Initialize()
 	. = ..()
 	if(has_latches)
