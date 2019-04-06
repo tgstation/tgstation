@@ -34,6 +34,9 @@
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 1
 
+	pickupsound = "sound/items/handle/weldingtool_pickup.ogg"
+	dropsound = "sound/items/handle/weldingtool_drop.ogg"
+
 /obj/item/weldingtool/Initialize()
 	. = ..()
 	create_reagents(max_fuel)
