@@ -18,6 +18,8 @@
 	var/freshly_laundered = FALSE
 	var/dodgy_colours = FALSE
 
+	equipsound = "sound/items/equip/jumpsuit_equip.ogg"
+
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)

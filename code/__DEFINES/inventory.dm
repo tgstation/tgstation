@@ -147,6 +147,11 @@
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
 
+#define INTERACTION_SOUND_RANGE_MODIFIER -3  //How much the sound range for item interaction sounds such as pickup and putdown and the like's range is reduced.
+#define PICKUP_SOUND_VOLUME 20
+#define DROP_SOUND_VOLUME 20
+#define EQUIP_SOUND_VOLUME 30
+
 //Allowed equipment lists for security vests and hardsuits.
 
 GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(

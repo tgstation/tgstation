@@ -34,7 +34,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/throwhitsound = null
 	var/pickupsound = null
 	var/dropsound = null
-	var/equipsound = null
 
 	var/w_class = WEIGHT_CLASS_NORMAL
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -378,14 +377,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	if(dropsound)
-		playsound(src, dropsound, 15, TRUE)
+		playsound(src, dropsound, DROP_SOUND_VOLUME, TRUE, INTERACTION_SOUND_RANGE_MODIFIER)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
 	if(pickupsound)
-		playsound(src, pickupsound, 30, TRUE)
+		playsound(src, pickupsound, PICKUP_SOUND_VOLUME, TRUE, INTERACTION_SOUND_RANGE_MODIFIER)
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
@@ -403,8 +402,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
-	if(equipsound)
-		playsound(src, equipsound, 30, TRUE)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
@@ -773,7 +770,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(islist(usesound))
 			played_sound = pick(usesound)
 
-		playsound(target, played_sound, volume, 1)
+		playsound(target, played_sound, volume, TRUE)
 
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
