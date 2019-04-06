@@ -41,7 +41,6 @@
 
 	pickupsound = "sound/items/handle/cloth_pickup.ogg"
 	dropsound = "sound/items/handle/cloth_drop.ogg"
-	equipsound = "sound/items/handle/jumpsuit_equip.ogg"
 
 /obj/item/clothing/Initialize()
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
