@@ -715,22 +715,20 @@
 	return 1 //returning 0 means we successfully broke free
 
 /mob/living/resist_grab(moving_resist)
-	. = 1
+	. = TRUE
 	if(pulledby.grab_state || resting)
 		var/altered_grab_state = pulledby.grab_state
 		if(resting && pulledby.grab_state < 3) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = 30
-		if(isliving(src))
-			var/mob/living/L = src
-			resist_chance = max(resist_chance/altered_grab_state-sqrt((L.getStaminaLoss()+L.getBruteLoss()/2)*(3-altered_grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
+		resist_chance = max(resist_chance/altered_grab_state-sqrt((getStaminaLoss()+getBruteLoss()/2)*(3-altered_grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
 		if(prob(resist_chance))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
 			return FALSE
 		else
-			src.adjustStaminaLoss(rand(5,10))
+			adjustStaminaLoss(rand(8,15))//8 is from 7.5 rounded up
 			visible_message("<span class='danger'>[src] struggles as they fail to break free of [pulledby]'s grip!</span>")
 		if(moving_resist && client) //we resisted by trying to move
 			client.move_delay = world.time + 20
