@@ -31,6 +31,8 @@
 		"yellow" = "#d58c18"
 	)
 
+	pickupsound = "sound/items/handle/wirecutter_pickup.ogg"
+	dropsound = "sound/items/handle/wirecutter_drop.ogg"
 
 /obj/item/wirecutters/Initialize()
 	. = ..()
