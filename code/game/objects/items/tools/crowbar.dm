@@ -18,6 +18,9 @@
 	toolspeed = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 
+	pickupsound = "sound/items/handle/crowbar_pickup.ogg"
+	dropsound = "sound/items/handle/crowbar_drop.ogg"
+
 /obj/item/crowbar/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
