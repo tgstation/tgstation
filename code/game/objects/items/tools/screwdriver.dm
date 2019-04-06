@@ -30,6 +30,8 @@
 		"cyan" = rgb(24, 162, 213),
 		"yellow" = rgb(255, 165, 0)
 	)
+	pickupsound = "sound/items/handle/screwdriver_pickup.ogg"
+	dropsound = "sound/items/handle/screwdriver_drop.ogg"
 
 /obj/item/screwdriver/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
