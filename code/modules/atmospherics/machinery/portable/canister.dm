@@ -379,9 +379,7 @@
 		pump.airs[1] = null
 		pump.airs[2] = null
 
-	if(connected_port || valve_open)
-		update_icon()
-
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
