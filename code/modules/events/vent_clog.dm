@@ -71,7 +71,7 @@
 	earliest_start = 45 MINUTES
 
 /datum/round_event/vent_clog/catastrophic
-	randomProbability = 30
+	randomProbability = 100
 	reagentsAmount = 250
 
 /datum/round_event_control/vent_clog/beer
