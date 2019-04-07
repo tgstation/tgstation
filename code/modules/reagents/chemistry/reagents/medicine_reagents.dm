@@ -1110,7 +1110,6 @@
 	..()
 	. = 1
 
-
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
 	id = "earthsblood"
