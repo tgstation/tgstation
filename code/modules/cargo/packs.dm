@@ -1151,7 +1151,7 @@
 
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
-	desc = "Contains twelve different chemicals, for all the fun experiments you can make."
+	desc = "Contains thirteen different chemicals, for all the fun experiments you can make."
 	cost = 1700
 	contains = list(/obj/item/reagent_containers/glass/bottle/hydrogen,
 					/obj/item/reagent_containers/glass/bottle/carbon,
@@ -1165,6 +1165,7 @@
 					/obj/item/reagent_containers/glass/bottle/sacid,
 					/obj/item/reagent_containers/glass/bottle/ethanol,
 					/obj/item/reagent_containers/glass/bottle/potassium,
+					/obj/item/reagent_containers/glass/bottle/sugar,
 					/obj/item/clothing/glasses/science,
 					/obj/item/reagent_containers/dropper,
 					/obj/item/storage/box/beakers)
