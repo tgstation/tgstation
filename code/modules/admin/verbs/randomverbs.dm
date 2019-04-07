@@ -1103,11 +1103,10 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!weather_type)
 		return
 
-	var/z_level = input("Z-Level to target? Leave blank to target current Z-Level.", "Z-Level")  as num|null
+	var/turf/T = get_turf(mob)
+	var/z_level = input("Z-Level to target?", "Z-Level", T?.z) as num|null
 	if(!isnum(z_level))
-		if(!src.mob)
-			return
-		z_level = src.mob.z
+		return
 
 	SSweather.run_weather(weather_type, z_level)
 
