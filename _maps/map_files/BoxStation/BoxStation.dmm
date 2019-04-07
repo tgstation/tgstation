@@ -4972,7 +4972,6 @@
 	dir = 8
 	},
 /obj/machinery/computer/monitor{
-	icon_state = "computer";
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -4994,7 +4993,6 @@
 /area/maintenance/solars/port/fore)
 "ajX" = (
 /obj/machinery/computer/teleporter{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -50626,7 +50624,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	enabled = 1;
-	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
 	pixel_y = -24;
 	req_access = null;
@@ -50869,7 +50866,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat/atmos";
 	enabled = 1;
-	icon_state = "control_standby";
 	name = "Atmospherics Turret Control";
 	pixel_x = -27;
 	req_access = null;
@@ -50896,7 +50892,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat/service";
 	enabled = 1;
-	icon_state = "control_standby";
 	name = "Service Bay Turret Control";
 	pixel_x = 27;
 	req_access = null;
@@ -51198,7 +51193,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat/hallway";
 	enabled = 1;
-	icon_state = "control_standby";
 	name = "Chamber Hallway Turret Control";
 	pixel_x = 32;
 	pixel_y = -24;

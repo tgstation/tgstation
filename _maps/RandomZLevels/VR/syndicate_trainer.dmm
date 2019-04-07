@@ -468,7 +468,6 @@
 /area/awaymission/centcomAway/hangar)
 "cO" = (
 /obj/machinery/sleep_console{
-	icon_state = "console";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -746,7 +745,6 @@
 /area/awaymission/centcomAway/general)
 "eI" = (
 /obj/machinery/sleep_console{
-	icon_state = "console";
 	dir = 8
 	},
 /turf/open/indestructible,
