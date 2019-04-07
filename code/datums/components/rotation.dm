@@ -69,7 +69,7 @@
 		AM.verbs -= /atom/movable/proc/simple_rotate_counterclockwise
 
 /datum/component/simple_rotation/proc/remove_signals()
-		UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY))
 
 /datum/component/simple_rotation/RegisterWithParent()
 	add_verbs()
