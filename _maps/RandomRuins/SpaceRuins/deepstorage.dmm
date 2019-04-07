@@ -144,7 +144,7 @@
 /obj/machinery/power/apc/away{
 	dir = 2;
 	name = "Recycling APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
@@ -694,7 +694,7 @@
 /obj/machinery/power/apc/away{
 	dir = 2;
 	name = "Kitchen APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
@@ -1762,7 +1762,7 @@
 /obj/machinery/power/apc/away{
 	dir = 2;
 	name = "Main Area APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
@@ -2172,7 +2172,7 @@
 /obj/machinery/power/apc/away{
 	dir = 1;
 	name = "Airlock Control APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,

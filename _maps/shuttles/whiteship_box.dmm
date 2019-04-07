@@ -383,7 +383,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Crew Quarters APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -1047,7 +1047,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Medbay APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/plasteel/white,
@@ -2135,7 +2135,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Bridge APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/blue{
