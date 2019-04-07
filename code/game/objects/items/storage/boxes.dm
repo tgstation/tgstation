@@ -609,6 +609,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 
+	pickupsound = "sound/items/handle/matchbox_pickup.ogg"
+	dropsound = "sound/items/handle/matchbox_drop.ogg"
+
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
