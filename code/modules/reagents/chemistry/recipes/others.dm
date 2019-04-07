@@ -516,6 +516,15 @@
 /datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
 	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life") // Lol.
 
+/datum/chemical_reaction/life_friendly
+	name = "Life (Friendly)"
+	id = "life_friendly"
+	required_reagents = list("strange_reagent" = 1, "synthflesh" = 1, "blood" = 1, "pax" = 1)
+	required_temp = 374
+
+/datum/chemical_reaction/life_friendly/on_reaction(datum/reagents/holder, created_volume)
+	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life (Friendly)", FRIENDLY_SPAWN)
+
 /datum/chemical_reaction/corgium
 	name = "corgium"
 	id = "corgium"
