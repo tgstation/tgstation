@@ -4,6 +4,8 @@ buttoncolor(selector, color)
   &.{selector}
     transition: background-color 0.5s
     background-color: color
+    &:not(.active)
+      background-color: desaturate(color, button-desaturate-inactive) unless selector is 'disabled'
   &.{selector}.active:hover,
   &.{selector}.active:focus
     transition: background-color 0.25s
