@@ -514,7 +514,7 @@
 	required_temp = 374
 
 /datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
-	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life") // Lol.
+	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life (hostile)") //defaults to HOSTILE_SPAWN
 
 /datum/chemical_reaction/life_friendly
 	name = "Life (Friendly)"
@@ -523,7 +523,7 @@
 	required_temp = 374
 
 /datum/chemical_reaction/life_friendly/on_reaction(datum/reagents/holder, created_volume)
-	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life (Friendly)", FRIENDLY_SPAWN)
+	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life (friendly)", FRIENDLY_SPAWN)
 
 /datum/chemical_reaction/corgium
 	name = "corgium"
