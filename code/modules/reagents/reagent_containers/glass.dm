@@ -7,6 +7,8 @@
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
+	pickupsound = "sound/items/handle/drinkglass_pickup.ogg"
+	dropsound = "sound/items/handle/drinkglass_drop.ogg"
 
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
