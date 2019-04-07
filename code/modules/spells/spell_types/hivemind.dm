@@ -785,6 +785,10 @@
 		return
 
 	var/objective = stripped_input(user, "What objective do you want to give to your vessels?", "Objective")
+	
+	if(!objective)
+		revert_cast()
+		return
 
 	for(var/i = 0, i < 4, i++)
 		var/mob/living/carbon/C = pick_n_take(valid_targets)
