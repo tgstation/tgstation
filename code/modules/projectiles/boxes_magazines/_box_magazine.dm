@@ -23,6 +23,9 @@
 	var/list/bullet_cost
 	var/list/base_cost// override this one as well if you override bullet_cost
 
+	pickupsound = "sound/items/handle/ammobox_pickup.ogg"
+	dropsound = "sound/items/handle/ammobox_drop.ogg"
+
 /obj/item/ammo_box/Initialize()
 	. = ..()
 	if (!bullet_cost)
