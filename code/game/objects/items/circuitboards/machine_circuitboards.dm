@@ -986,7 +986,7 @@
 	req_components = list()
 
 /obj/item/circuitboard/machine/fat_sucker
-	name = "Fat Sucker (Machine Board)"
+	name = "Lipid Extractor (Machine Board)"
 	build_path = /obj/machinery/fat_sucker
 	req_components = list(/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/kitchen/fork = 1)
