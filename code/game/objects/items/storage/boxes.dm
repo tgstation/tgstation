@@ -32,6 +32,9 @@
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
 
+	pickupsound = "sound/items/handle/cardboardbox_pickup.ogg"
+	dropsound = "sound/items/handle/cardboardbox_drop.ogg"
+
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
 	update_icon()
