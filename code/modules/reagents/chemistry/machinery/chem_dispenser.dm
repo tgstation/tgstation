@@ -394,10 +394,9 @@
 	return final_list
 
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	replace_beaker(user)
-	return
+	..()
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		replace_beaker(user)
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()
