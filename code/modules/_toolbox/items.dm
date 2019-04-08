@@ -77,3 +77,39 @@
 	desc = "Dried cannabis leaf rolled up in a thin piece of paper."
 	smoketime = 120
 	list_reagents = list("space_drugs" = 30, "lipolicide" = 5, "omnizine" = 2)
+
+// N-word pass
+
+/obj/item/nwordpass
+	name = "N-word pass"
+	desc = "Official pass to say the N-word."
+	icon = 'icons/obj/card.dmi'
+	icon_state = "gold"
+	item_state = "gold_id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+
+/obj/item/nwordpass/attack_self(mob/user)
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		if(H.dna)
+			var/success = 0
+			if(istype(H.dna.species, /datum/species/human))
+				var/list/skin_tones_b = list("african1","african2")
+				if(!(H.skin_tone in skin_tones_b))
+					H.skin_tone = pick(skin_tones_b)
+					success = 1
+				else
+					to_chat(H, "<span class='warning'>You can already say the N-word legally.</span>")
+			else if(istype(H.dna.species, /datum/species/lizard))
+				var/datum/dna/L = H.dna
+				if(L.features["mcolor"] != "804200")
+					L.features["mcolor"] = "804200"
+					success = 1
+				else
+					to_chat(H, "<span class='warning'>You can already say the N-word legally.</span>")
+			else
+				to_chat(H, "<span class='warning'>That would be cultural appropriation.</span>")
+			if(success)
+				to_chat(H, "<span class='notice'>Now you can legally say the N-word. Congratulations!</span>")
+				H.regenerate_icons()
