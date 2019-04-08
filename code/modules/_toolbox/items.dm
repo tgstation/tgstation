@@ -70,3 +70,10 @@
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]0"
+
+// Rollie Cannabis
+
+/obj/item/clothing/mask/cigarette/rollie/cannabis
+	desc = "Dried cannabis leaf rolled up in a thin piece of paper."
+	smoketime = 120
+	list_reagents = list("space_drugs" = 30, "lipolicide" = 5, "omnizine" = 2)
