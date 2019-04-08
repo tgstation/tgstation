@@ -188,7 +188,7 @@ SUBSYSTEM_DEF(ticker)
 					fire()
 
 		if(GAME_STATE_SETTING_UP)
-			if(!setup())
+			if(!setup(1))
 				//setup failed
 				current_state = GAME_STATE_STARTUP
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
@@ -212,8 +212,9 @@ SUBSYSTEM_DEF(ticker)
 		world.update_status()
 		last_hub_update = world.time+600
 
-/datum/controller/subsystem/ticker/proc/setup()
-	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
+/datum/controller/subsystem/ticker/proc/setup(startinggame = 0)
+	if(startinggame)
+		to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 	var/init_start = world.timeofday
 		//Create and announce mode
 	var/list/datum/game_mode/runnable_modes
@@ -255,11 +256,23 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
-		if(!can_continue)
+		if(!can_continue || !src.mode.Post_DivideOccupations())
+			log_game("Round start up attempt failed. Round type was [mode.name].")
 			qdel(mode)
 			mode = null
-			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
+			var/i=1
+			while(i<=5)
+				CHECK_TICK
+				var/new_attempt = setup()
+				if(new_attempt)
+					message_admins("Round start up attempts failed [i] times but was successful.")
+					log_game("Round start up attempts failed [i] but was successful.")
+					return new_attempt
+				i++
+			message_admins("Round start up attempts failed [i] times. Reverting to pre-game lobby.")
+			log_game("Round start up attempts failed [i] times. Reverting to pre-game lobby.")
+			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			return 0
 	else
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")

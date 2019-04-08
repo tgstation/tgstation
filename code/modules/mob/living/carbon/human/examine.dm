@@ -116,10 +116,8 @@
 				var/foundghost = 0
 				if(mind)
 					for(var/mob/dead/observer/G in GLOB.player_list)
-						if(G.mind == mind)
+						if(G.mind == mind && G.can_reenter_corpse)
 							foundghost = 1
-							if (G.can_reenter_corpse == 0)
-								foundghost = 0
 							break
 				if(!foundghost)
 					msg += " and [t_his] soul has departed"
@@ -257,14 +255,27 @@
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"
 		if(getorgan(/obj/item/organ/brain))
+			var/keyandorghost = 0
 			if(!key)
+				if(mind)
+					for(var/mob/dead/observer/O in GLOB.player_list)
+						if(O.mind == mind && O.can_reenter_corpse && O.key)
+							keyandorghost = 1
+							break
+			else
+				keyandorghost = 1
+			if(!keyandorghost)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
 				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
-
+	if(!obscured.len)
+		if(dna && dna.species)
+			msg += "You can tell this person is of the [dna.species.name] race.\n"
+	else
+		msg += "Their clothing is obscuring what race they are.\n"
 	var/traitstring = get_trait_string()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

@@ -100,6 +100,8 @@
 	gamemode_ready = TRUE
 	return 1
 
+/datum/game_mode/proc/Post_DivideOccupations()
+	return TRUE
 
 ///Handles late-join antag assignments
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)

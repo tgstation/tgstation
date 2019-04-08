@@ -33,12 +33,17 @@
 	id = "Messaging Server"
 	network = "tcommsat"
 	autolinkers = list("common")
+	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
 	var/wastoggled = 0
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/decryptkey
+
+/obj/item/circuitboard/machine/telecomms/message_server
+	name = "Messaging Server (Machine Board)"
+	build_path = /obj/machinery/telecomms/message_server
 
 /obj/machinery/telecomms/message_server/Initialize()
 	. = ..()

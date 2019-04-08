@@ -25,7 +25,8 @@
 	var/leader_antag_datum_type = /datum/antagonist/nukeop/leader
 
 /datum/game_mode/nuclear/pre_setup()
-	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
+	//var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
+	var/n_agents = min(round(num_players() / divider_for_antagonists), antag_candidates.len, agents_possible)
 	if(n_agents >= required_enemies)
 		for(var/i = 0, i < n_agents, ++i)
 			var/datum/mind/new_op = pick_n_take(antag_candidates)

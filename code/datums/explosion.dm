@@ -87,7 +87,8 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/area/epi_area = get_area(epicenter)
 	if(adminlog)
 		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [epi_area] [ADMIN_COORDJMP(epicenter)]")
-		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
+	//always log explosions.
+	log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
 
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y

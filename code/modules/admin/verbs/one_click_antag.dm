@@ -29,6 +29,8 @@
 	popup.open()
 
 /datum/admins/proc/isReadytoRumble(mob/living/carbon/human/applicant, targetrole, onstation = TRUE, conscious = TRUE)
+	if(!(applicant.mind in GLOB.Original_Minds))
+		return FALSE
 	if(applicant.mind.special_role)
 		return FALSE
 	if(!(targetrole in applicant.client.prefs.be_special))

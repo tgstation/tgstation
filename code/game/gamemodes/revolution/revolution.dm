@@ -35,6 +35,8 @@
 
 	var/list/defeated_head_players = list()
 
+	var/target_is_security = 0
+
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
@@ -70,12 +72,13 @@
 		return 0
 
 /datum/game_mode/revolution/pre_setup()
-
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
+
+	max_headrevs = recommended_enemies
 
 	for (var/i=1 to max_headrevs)
 		if (antag_candidates.len==0)
@@ -91,6 +94,7 @@
 	return TRUE
 
 /datum/game_mode/revolution/post_setup()
+
 	var/list/heads = SSjob.get_living_heads()
 	var/list/sec = SSjob.get_living_sec()
 	var/weighted_score = min(max(round(heads.len - ((8 - sec.len) / 3)),1),max_headrevs)
@@ -137,6 +141,17 @@
 	SSshuttle.registerHostileEnvironment(src)
 	..()
 
+/datum/game_mode/revolution/Post_DivideOccupations()
+	var/list/targets = list()
+	if(SSjob)
+		targets += SSjob.get_all_heads()
+		if(!targets.len)
+			targets += SSjob.get_all_sec()
+			target_is_security = 1
+	if(!targets.len)
+		message_admins("Failed to start revs due to no heads of staff. Skipping.")
+		return FALSE
+	return TRUE
 
 /datum/game_mode/revolution/process()
 	check_counter++
@@ -190,33 +205,8 @@
 	for(var/datum/objective/mutiny/objective in revolution.objectives)
 		if(!objective.target)
 			continue
-		var/turf/T = get_turf(objective.target.current)
-		var/away = 0
-		if(istype(objective.target.current,/mob/living))
-			var/client/C
-			if(objective.target.current && objective.target.current.client)
-				C = objective.target.current.client
-			if(!C)
-				for(var/mob/dead/observer/O in GLOB.player_list)
-					if(O.can_reenter_corpse && O.mind == objective.target && O.client)
-						C = O.client
-						break
-			if(C && C.is_afk())
-				away = 1
-			else if(!C)
-				away = 1
-		var/inactivetoolong = 0
-		if(away)
-			if(!(objective.target in defeated_head_players))
-				defeated_head_players[objective.target] = world.time
-			if(objective.target in defeated_head_players && defeated_head_players[objective.target]+600 <= world.time)
-				inactivetoolong = 1
-		else
-			if(objective.target in defeated_head_players)
-				defeated_head_players.Remove(objective.target)
-		if(!inactivetoolong && considered_alive(objective.target) && is_station_level(T.z))
-			if(ishuman(objective.target.current))
-				return FALSE
+		if(is_player_alive_and_well(objective.target))
+			return FALSE
 	return TRUE
 
 /////////////////////////////
@@ -224,15 +214,25 @@
 /////////////////////////////
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
-		var/turf/T = get_turf(rev_mind.current)
+		if(is_player_alive_and_well(rev_mind))
+			return FALSE
+	return TRUE
+
+/datum/game_mode/revolution/proc/is_player_alive_and_well(datum/mind/M)
+	if(istype(M,/mob))
+		var/mob/mob = M
+		if(mob.mind)
+			M = mob.mind
+	if(istype(M) && M.current)
+		var/turf/T = get_turf(M.current)
 		var/away = 0
-		if(istype(rev_mind.current,/mob/living))
+		if(istype(M.current,/mob/living))
 			var/client/C
-			if(rev_mind.current && rev_mind.current.client)
-				C = rev_mind.current.client
+			if(M.current && M.current.client)
+				C = M.current.client
 			if(!C)
 				for(var/mob/dead/observer/O in GLOB.player_list)
-					if(O.can_reenter_corpse && O.mind == rev_mind && O.client)
+					if(O.can_reenter_corpse && O.mind == M && O.client)
 						C = O.client
 						break
 			if(C && C.is_afk())
@@ -241,18 +241,17 @@
 				away = 1
 		var/inactivetoolong = 0
 		if(away)
-			if(!(rev_mind in defeated_head_players))
-				defeated_head_players[rev_mind] = world.time
-			if(rev_mind in defeated_head_players && defeated_head_players[rev_mind]+600 <= world.time)
+			if(!(M in defeated_head_players))
+				defeated_head_players[M] = world.time
+			if(M in defeated_head_players && defeated_head_players[M]+600 <= world.time)
 				inactivetoolong = 1
 		else
-			if(rev_mind in defeated_head_players)
-				defeated_head_players.Remove(rev_mind)
-		if(!inactivetoolong && considered_alive(rev_mind) && is_station_level(T.z))
-			if(ishuman(rev_mind.current))
-				return FALSE
-	return TRUE
-
+			if(M in defeated_head_players)
+				defeated_head_players.Remove(M)
+		if(!inactivetoolong && considered_alive(M) && is_station_level(T.z))
+			if(istype(M.current,/mob/living/carbon))
+				return TRUE
+	return FALSE
 
 /datum/game_mode/revolution/set_round_result()
 	..()

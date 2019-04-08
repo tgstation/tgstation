@@ -93,7 +93,16 @@
 	..()
 
 	if(brainmob)
-		if(brainmob.client)
+		var/hasclient = 0
+		if(!brainmob.client)
+			if(brainmob.mind)
+				for(var/mob/dead/observer/O in GLOB.player_list)
+					if(O.mind == brainmob.mind && O.can_reenter_corpse)
+						hasclient = 1
+						break
+		else
+			hasclient = 1
+		if(hasclient)
 			if(brainmob.health <= HEALTH_THRESHOLD_DEAD)
 				to_chat(user, "It's lifeless and severely damaged.")
 			else

@@ -255,6 +255,10 @@
 
 /datum/team/revolution/proc/update_objectives(initial = FALSE)
 	var/untracked_heads = SSjob.get_all_heads()
+	if(SSticker && istype(SSticker.mode,/datum/game_mode/revolution))
+		var/datum/game_mode/revolution/revmode = SSticker.mode
+		if(revmode.target_is_security)
+			untracked_heads = SSjob.get_all_heads() + SSjob.get_all_sec()
 	for(var/datum/objective/mutiny/O in objectives)
 		untracked_heads -= O.target
 	for(var/datum/mind/M in untracked_heads)

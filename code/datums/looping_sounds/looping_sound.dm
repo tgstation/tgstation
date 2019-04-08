@@ -76,12 +76,24 @@
 		S.volume = volume
 	for(var/i in 1 to atoms_cache.len)
 		var/atom/thing = atoms_cache[i]
-		if(!heard_by_ghosts && istype(thing,/mob/dead/observer))  //ghost check -falaskian
-			continue
-		if(direct)
-			SEND_SOUND(thing, S)
+		if(!heard_by_ghosts)
+			if(istype(thing,/area))
+				for(var/mob/M in GLOB.player_list)
+					if(istype(thing,/mob/dead/observer))
+						continue
+					var/area/A = get_area(M)
+					if(istype(A,thing.type))
+						if(direct)
+							SEND_SOUND(thing, S)
+						else
+							playsound(thing, S, volume)
+			else if(istype(thing,/mob/dead/observer))
+				continue
 		else
-			playsound(thing, S, volume)
+			if(direct)
+				SEND_SOUND(thing, S)
+			else
+				playsound(thing, S, volume)
 
 /datum/looping_sound/proc/get_sound(looped, _mid_sounds)
 	if(!_mid_sounds)

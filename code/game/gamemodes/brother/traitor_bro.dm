@@ -49,8 +49,9 @@
 			bro.restricted_roles = restricted_jobs
 			log_game("[bro.key] (ckey) has been selected as a Brother")
 		pre_brother_teams += team
-	if(num_players < 10)
+	if(num_players <= 10)
 		minimum_traitors = 0
+		traitors_possible = 0
 	return ..()
 
 /datum/game_mode/traitor/bros/post_setup()

@@ -1,4 +1,5 @@
 GLOBAL_VAR_INIT(antagtokenpath,"data/other_saves/antagtokens.sav")
+GLOBAL_LIST_EMPTY(used_antag_tokens)
 
 /datum/game_mode
 	var/list/available_antag_tokens = list("traitor","changeling")
@@ -122,11 +123,12 @@ client/verb/check_antag_token()
 							success = 1
 							revmode.revolution.update_objectives()
 							revmode.revolution.update_heads()
-		if(success)
-			tokens--
-			tokens = max(tokens,0)
-			S["[ckey]"] << tokens
-			return 1
+			if(success)
+				tokens--
+				tokens = max(tokens,0)
+				S["[ckey]"] << tokens
+				GLOB.used_antag_tokens[mob.mind] = "[antagtype]"
+				return 1
 	to_chat(src, "<B>You can't use an antagonist token right now.</B>")
 	return 0
 
