@@ -4,7 +4,7 @@
 	max_occurrences = 1
 	weight = 8
 	earliest_start = 70 MINUTES
-	min_players = 20
+	min_players = 40
 
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1
