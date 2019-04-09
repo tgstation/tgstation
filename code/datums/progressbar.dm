@@ -64,12 +64,13 @@
 		LAZYREMOVE(user.progressbars, bar.loc)
 
 	animate(bar, alpha = 0, time = 5)
-	addtimer(CALLBACK(src, /datum/progressbar/proc/remove_from_client), 5)
+	addtimer(CALLBACK(src, /datum/progressbar/proc/remove_from_client), 5, TIMER_CLIENT_TIME)
 	QDEL_IN(bar, 5)
 	. = ..()
 
 /datum/progressbar/proc/remove_from_client()
 	if(client)
 		client.images -= bar
+		client = null
 
 #undef PROGRESSBAR_HEIGHT
