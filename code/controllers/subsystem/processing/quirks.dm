@@ -35,4 +35,4 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if(Q)
 			user.add_quirk(Q, spawn_effects)
 		else
-			stack_trace("Invalid quirk in client preferences")
+			stack_trace("Invalid quirk \"[V]\" in client [cli.ckey] preferences")
