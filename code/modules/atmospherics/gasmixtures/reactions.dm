@@ -99,7 +99,7 @@
 	var/temperature = air.temperature
 	var/burned_fuel = 0
 
-	var/temp_divider = max(1, (8000 - ((temperature/100)-14)**2)/10) // Quadratic formula that determines the reaction speed as a function of temperature
+	var/temp_divider = max(3, (10000 - ((temperature/50)-28)**2)/50) // Formula that determines the reaction speed as a function of temperature
 
 	burned_fuel = cached_gases[/datum/gas/nitrous_oxide][MOLES] / temp_divider
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= burned_fuel
