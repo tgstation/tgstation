@@ -177,6 +177,27 @@ SUBSYSTEM_DEF(dbcore)
 		return FALSE
 	return new /datum/DBQuery(sql_query, connection)
 
+/datum/controller/subsystem/dbcore/proc/QuerySelect(list/querys, warn = FALSE, qdel = FALSE)
+	if (!islist(querys))
+		if (!istype(querys, /datum/DBQuery))
+			CRASH("Invalid query passed to QuerySelect: [querys]")
+		querys = list(querys)
+
+	for (var/thing in querys)
+		var/datum/DBQuery/query = thing
+		if (warn)
+			INVOKE_ASYNC(query, /datum/DBQuery.proc/warn_execute)
+		else
+			INVOKE_ASYNC(query, /datum/DBQuery.proc/Execute)
+
+	for (var/thing in querys)
+		var/datum/DBQuery/query = thing
+		UNTIL(!query.in_progress)
+		if (qdel)
+			qdel(query)
+
+
+
 /*
 Takes a list of rows (each row being an associated list of column => value) and inserts them via a single mass query.
 Rows missing columns present in other rows will resolve to SQL NULL

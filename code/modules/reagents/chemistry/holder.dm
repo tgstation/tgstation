@@ -1,4 +1,4 @@
-#define CHEMICAL_QUANTISATION_LEVEL 0.01 //stops floating point errors causing issues with checking reagent amounts
+#define CHEMICAL_QUANTISATION_LEVEL 0.0001 //stops floating point errors causing issues with checking reagent amounts
 
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id

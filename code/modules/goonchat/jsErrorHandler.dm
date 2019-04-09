@@ -25,7 +25,7 @@
 		return 0
 
 	if (!(fileName in src.validFiles))
-		throw EXCEPTION("Debug log file '[fileName].[src.ext]' is not a valid path.")
+		CRASH("Debug log file '[fileName].[src.ext]' is not a valid path.")
 
 	var/logFile = file("[src.directory]/[fileName].[src.ext]")
 	var/fileSize = length(logFile)
@@ -41,10 +41,10 @@
 		return 0
 
 	if (!fexists("[src.directory]/[fileName].[src.ext]"))
-		throw EXCEPTION("Debug log file '[fileName].[src.ext]' does not exist.")
+		CRASH("Debug log file '[fileName].[src.ext]' does not exist.")
 
 	if (!(fileName in src.validFiles))
-		throw EXCEPTION("Debug log file '[fileName].[src.ext]' is not a valid path.")
+		CRASH("Debug log file '[fileName].[src.ext]' is not a valid path.")
 
 	fdel("[src.directory]/[fileName].[src.ext]")
 	return 1
