@@ -32,6 +32,9 @@
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
 
+	pickupsound = "sound/items/handle/paper_pickup.ogg"
+	dropsound = "sound/items/handle/paper_drop.ogg"
+
 
 /obj/item/paper/pickup(user)
 	if(contact_poison && ishuman(user))
