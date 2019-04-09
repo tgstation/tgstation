@@ -110,6 +110,7 @@
 
 /datum/sprite_accessory/hair/bedheadlong
 	name = "Long Bedhead"
+	icon_state = "hair_long_bedhead"
 
 /datum/sprite_accessory/hair/bedheadfloorlength
 	name = "Floorlength Bedhead"
