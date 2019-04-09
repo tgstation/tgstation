@@ -114,8 +114,6 @@
 				if(variable in user.vars)
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
-		if(equipsound)
-			playsound(src, equipsound, EQUIP_SOUND_VOLUME, TRUE)
 
 /obj/item/clothing/examine(mob/user)
 	..()
