@@ -13,6 +13,7 @@
 	minimal_player_age = 14
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_COMMAND
 
 	outfit = /datum/outfit/job/captain
 
