@@ -159,7 +159,7 @@
 		[reeltext]
 		<BR>"}
 		if(balance > 0)
-			dat+={"<font size='1'><A href='?src=[REF(src)];refund=1'>Refund balance</A><BR>"}
+			dat+="<font size='1'><A href='?src=[REF(src)];refund=1'>Refund balance</A><BR>"
 
 	var/datum/browser/popup = new(user, "slotmachine", "Slot Machine")
 	popup.set_content(dat)
