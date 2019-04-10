@@ -23,8 +23,8 @@
 	change_to(/obj/structure/infection/shield/reflective, overmind)
 
 /obj/structure/infection/shield/extra_description()
-	. = "Current Max Integrity is [max_integrity]. Incoming Brute Damage is currently multiplied by [brute_resist]\nUpgrade: "
-	. += "Turns into a reflective shield with 200 Max Integrity and half as much Brute Resistance."
+	. = "Current Max Integrity is [max_integrity]. Incoming Brute Damage is currently multiplied by [brute_resist]"
+	. += "\nUpgrade: Turns into a reflective shield with 200 Max Integrity and half as much Brute Resistance."
 
 /obj/structure/infection/shield/update_icon()
 	..()
@@ -58,8 +58,8 @@
 	change_to(/obj/structure/infection/shield/reflective/strong, overmind)
 
 /obj/structure/infection/shield/reflective/extra_description()
-	. = "Current Max Integrity is [max_integrity]. Incoming Brute Damage is currently multiplied by [brute_resist]\nUpgrade: "
-	. += "Doubles current Brute Resistance."
+	. = "Current Max Integrity is [max_integrity]. Incoming Brute Damage is currently multiplied by [brute_resist]"
+	. += "\nUgprade: Doubles current Brute Resistance."
 
 /obj/structure/infection/shield/reflective/handle_ricochet(obj/item/projectile/P)
 	var/turf/p_turf = get_turf(P)
@@ -84,4 +84,4 @@
 	brute_resist = 0.25
 
 /obj/structure/infection/shield/reflective/strong/extra_description()
-	. = "Current Max Integrity is [max_integrity]. Incoming Brute Damage is currently multiplied by [brute_resist]\n"
+	. = "Current Max Integrity is [max_integrity]. Incoming Brute Damage is currently multiplied by [brute_resist]"

@@ -28,8 +28,8 @@
 	expansion_amount += 2
 
 /obj/structure/infection/node/extra_description()
-	. = "Rate of expansion decreases with age.\nExpanding every [max(pulse_cooldown/10, 1)] seconds(s). Maximum Range is [expansion_range]. Amount Created is [expansion_amount]\nUpgrade: "
-	. += "Increases rate of expansion to [max(pulse_cooldown/10, 1)]. Maximum Range Increased to [expansion_range + 2]. Amount Created Increased to [expansion_amount + 2]."
+	. = "Rate of expansion decreases with age.\nExpanding every [max(pulse_cooldown/10, 1)] seconds(s). Maximum Range is [expansion_range]. Amount Created is [expansion_amount]."
+	. += "\nUpgrade: Increases rate of expansion to [max(pulse_cooldown/10, 1)]. Maximum Range Increased to [expansion_range + 2]. Amount Created Increased to [expansion_amount + 2]."
 
 /obj/structure/infection/node/Pulse_Area(mob/camera/commander/pulsing_overmind)
 	..(claim_range = expansion_range, count = expansion_amount)

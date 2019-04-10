@@ -18,8 +18,8 @@
 	produced += 2
 
 /obj/structure/infection/resource/extra_description()
-	. = "Currently producing [produced] points every 2 seconds.\nUpgrade: "
-	. += "Increases points produced to [produced + 2]."
+	. = "Currently producing [produced] points every 2 seconds."
+	. += "\nUpgrade: Increases points produced to [produced + 2]."
 
 /obj/structure/infection/resource/scannerreport()
 	return "Gradually supplies the infection with resources, increasing the rate of expansion."
@@ -41,4 +41,4 @@
 	flick("blob_resource_glow", src)
 	if(overmind)
 		overmind.add_points(produced)
-	resource_delay = world.time + 20
+	resource_delay = world.time + 40

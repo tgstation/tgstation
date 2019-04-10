@@ -27,11 +27,11 @@
 	scan_range++
 
 /obj/structure/infection/turret/extra_description()
-	. = "Currently firing [frequency] times a second. Maximum Range is [scan_range].\nUpgrade: "
+	. = "Currently firing [frequency] times a second. Maximum Range is [scan_range]."
 	if(infection_level == 1)
-		. += "Fires faster and further, and irradiates the target."
+		. += "\nUpgrade: Fires faster and further, and irradiates the target."
 	if(infection_level == 2)
-		. += "Fires faster and further, and disorients the target."
+		. += "\nUpgrade: Fires faster and further, and disorients the target."
 
 /obj/structure/infection/turret/update_icon()
 	cut_overlays()

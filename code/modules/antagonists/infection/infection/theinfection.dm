@@ -211,6 +211,10 @@
 	return O //just in case you want to do something to the animation.
 
 /obj/structure/infection/proc/expand(turf/T = null, controller = null)
+	var/area/turfArea = T.loc
+	// do not expand to areas that were space at roundstart
+	if(istype(turfArea, /area/space))
+		return null
 	infection_attack_animation(T)
 	if(locate(/obj/structure/beacon_wall) in T.contents || locate(/obj/structure/infection) in T.contents)
 		return
@@ -221,6 +225,9 @@
 		I.forceMove(T)
 		I.update_icon()
 		I.ConsumeTile()
+		if(T.dynamic_lighting == 0)
+			T.dynamic_lighting == 1
+			T.lighting_build_overlay()
 		return I
 	else
 		T.blob_act(src)

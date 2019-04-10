@@ -21,8 +21,8 @@
 	max_spores += 2
 
 /obj/structure/infection/factory/extra_description()
-	. = "Currently producing a maximum of [max_spores] spores.\nUpgrade: "
-	. += "Increases maximum spores to [max_spores + 2]."
+	. = "Currently producing a maximum of [max_spores] spores."
+	. += "\nUpgrade: Increases maximum spores to [max_spores + 2]."
 
 /obj/structure/infection/factory/scannerreport()
 	return "Will produce an infection spore every few seconds."
