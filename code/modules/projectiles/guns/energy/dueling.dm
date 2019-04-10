@@ -131,14 +131,31 @@
 /obj/item/gun/energy/dueling
 	name = "dueling pistol"
 	desc = "High-tech dueling pistol. Launches chaff and projectile according to preset settings."
-	icon_state = "mini"
+	icon_state = "dueling_pistol"
 	item_state = "gun"
 	ammo_x_offset = 2
 	w_class = WEIGHT_CLASS_SMALL
 	ammo_type = list(/obj/item/ammo_casing/energy/duel)
+	automatic_charge_overlays = FALSE
 	var/unlocked = FALSE
 	var/setting = DUEL_SETTING_A
 	var/datum/duel/duel
+	var/mutable_appearance/setting_overlay
+
+/obj/item/gun/energy/dueling/Initialize()
+	. = ..()
+	setting_overlay = mutable_appearance(icon,setting_iconstate())
+	add_overlay(setting_overlay)
+
+/obj/item/gun/energy/dueling/proc/setting_iconstate()
+	switch(setting)
+		if(DUEL_SETTING_A)
+			return "duel_red"
+		if(DUEL_SETTING_B)
+			return "duel_green"
+		if(DUEL_SETTING_C)
+			return "duel_blue"
+	return "duel_red"
 
 /obj/item/gun/energy/dueling/attack_self(mob/living/user)
 	. = ..()
@@ -156,6 +173,14 @@
 		if(DUEL_SETTING_C)
 			setting = DUEL_SETTING_A
 	to_chat(user,"<span class='notice'>You switch [src] setting to [setting] mode.")
+	update_icon()
+
+/obj/item/gun/energy/dueling/update_icon(force_update)
+	. = ..()
+	if(setting_overlay)
+		cut_overlay(setting_overlay)
+		setting_overlay.icon_state = setting_iconstate()
+		add_overlay(setting_overlay)
 
 /obj/item/gun/energy/dueling/Destroy()
 	. = ..()
