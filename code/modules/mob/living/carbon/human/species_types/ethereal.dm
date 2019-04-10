@@ -94,7 +94,7 @@
 	.=..()
 	set_charge(ETHEREAL_CHARGE_FULL)
 
-/datum/species/ethereal/spec_electrocute_act(mob/living/carbon/human/H, shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/datum/species/ethereal/spec_electrocute_act(mob/living/carbon/human/H, shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
 	.=..()
 	adjust_charge(shock_damage * siemens_coeff * 2)
 	to_chat(H, "<span class='notice'>You absorb some of the shock into your body!</span>")

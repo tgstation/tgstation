@@ -42,7 +42,7 @@
 /datum/nanite_program/triggered/shocking/trigger()
 	if(!..())
 		return
-	host_mob.electrocute_act(rand(5,10), "shock nanites", TRUE, TRUE)
+	host_mob.electrocute_act(rand(5, 10), "shock nanites", TRUE, TRUE)
 
 /datum/nanite_program/triggered/stun
 	name = "Neural Shock"

@@ -209,12 +209,12 @@
 	if(!L.on) //wait, wait, don't shock me
 		return
 	flick("[L.base_state]2", L)
-	for(var/mob/living/carbon/human/M in view(shock_range, L))
+	for(var/mob/living/M in view(shock_range, L))
 		if(M == user)
 			continue
-		L.Beam(M,icon_state="purple_lightning",time=5)
+		L.Beam(M, icon_state = "purple_lightning", time = 5)
 		if(!M.anti_magic_check(FALSE, TRUE))
-			M.electrocute_act(shock_damage, L, safety=TRUE)
+			M.electrocute_act(shock_damage, L, safety = TRUE)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 

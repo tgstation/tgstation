@@ -283,7 +283,7 @@
 		var/atom/movable/AM = am
 		if(AM == user || AM.anchored)
 			continue
-		
+
 		if(ismob(AM))
 			var/mob/M = AM
 			if(M.anti_magic_check(anti_magic_check, FALSE))
@@ -376,7 +376,7 @@
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
 			if(!M.anti_magic_check())
-				M.electrocute_act(80, src, illusion = 1)
+				M.electrocute_act(80, src, illusion = TRUE)
 		qdel(src)
 
 /obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY)

@@ -150,7 +150,7 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.dna.species.grab_sound)
-				sound_to_play = H.dna.species.grab_sound 	
+				sound_to_play = H.dna.species.grab_sound
 		playsound(src.loc, sound_to_play, 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous
@@ -310,7 +310,7 @@
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage)
 	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE

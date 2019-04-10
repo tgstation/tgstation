@@ -90,11 +90,7 @@ Burning extracts:
 	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, 1)
 	for(var/mob/living/M in range(4,get_turf(user)))
 		if(M != user)
-			var/mob/living/carbon/C = M
-			if(istype(C))
-				C.electrocute_act(25,src)
-			else
-				M.adjustFireLoss(25)
+			M.electrocute_act(25 ,src)
 			to_chat(M, "<span class='danger'>You feel a sharp electrical pulse!</span>")
 	..()
 
