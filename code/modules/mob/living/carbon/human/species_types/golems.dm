@@ -516,7 +516,7 @@
 	attack_verb = "honk"
 	attack_sound = 'sound/items/airhorn2.ogg'
 	prefix = "Bananium"
-	special_names = ("Peel","Cream Pie","Split","Honk")
+	special_names = list("Peel","Cream Pie","Split","Honk")
 
 	var/last_honk = 0
 	var/honkooldown = 0
