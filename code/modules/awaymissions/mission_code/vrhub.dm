@@ -72,10 +72,11 @@
 			H.delete_equipment()
 			H.equipOutfit(last_portal.recall_equipment)
 		last_portal.recall_effect(user)
-		do_teleport(user, recall_turf, 0, no_effects = FALSE, channel = TELEPORT_CHANNEL_BLUESPACE)
-		recall_portals -= last_portal
-		if(!recall_portals.len)
-			user.mind.RemoveSpell(src) // remove spell if no portals left
+		if(user)
+			do_teleport(user, recall_turf, 0, no_effects = FALSE, channel = TELEPORT_CHANNEL_BLUESPACE)
+			recall_portals -= last_portal
+			if(!recall_portals.len)
+				user.mind.RemoveSpell(src) // remove spell if no portals left
 
 /obj/effect/mob_spawn/human/virtual_reality
 	name = "Network Relay"
@@ -109,7 +110,7 @@
 	name = "Murderdome Exit Portal"
 	id = "vr murderdome"
 
-/obj/effect/portal/permanent/one_way/syndicate
+/obj/effect/portal/permanent/one_way/recall/syndicate
 	name = "Syndicate Portal"
 	desc = "Active, but only occasionally. Leads to a syndicate training program."
 	equipment = /datum/outfit/vr/syndicate
@@ -118,6 +119,11 @@
 	light_color = LIGHT_COLOR_FIRE
 	light_power = 1
 	light_range = 3
+
+/obj/effect/portal/permanent/one_way/recall/syndicate/recall_effect(mob/user)
+	// fuck this im not dealing with you fucks smuggling equipment out of the syndicate uplink
+	user.dust()
+	return
 
 /obj/effect/portal/permanent/one_way/destroy/syndicate
 	name = "Syndicate Exit Portal"
