@@ -34274,7 +34274,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	enabled = 1;
-	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
 	pixel_x = 30;
 	req_access_txt = "65"
@@ -49905,7 +49904,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/dark/visible{
-	icon_state = "manifold-2";
 	dir = 8
 	},
 /turf/open/floor/plasteel/kitchen_coldroom,
@@ -60116,8 +60114,10 @@
 	},
 /area/maintenance/port/aft)
 "cnl" = (
-/obj/structure/mineral_door/wood{
-	name = "The Gobbetting Barmaid"
+/obj/machinery/door/airlock/wood{
+	doorClose = 'sound/effects/doorcreaky.ogg';
+	doorOpen = 'sound/effects/doorcreaky.ogg';
+	name = "The Gobetting Barmaid"
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
@@ -60854,14 +60854,6 @@
 /obj/machinery/rnd/production/techfab/department/service,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
-"cox" = (
-/obj/structure/mineral_door/wood{
-	name = "The Gobbetting Barmaid"
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
-	},
-/area/maintenance/port/aft)
 "coy" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/latex,
@@ -67364,7 +67356,6 @@
 /area/science/nanite)
 "cAr" = (
 /obj/machinery/computer/nanite_chamber_control{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -83541,6 +83532,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"mrv" = (
+/obj/machinery/door/airlock/wood{
+	doorClose = 'sound/effects/doorcreaky.ogg';
+	doorOpen = 'sound/effects/doorcreaky.ogg';
+	name = "The Gobetting Barmaid"
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/maintenance/port/aft)
 "msD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -101982,7 +101983,7 @@ cjv
 diG
 dux
 cnl
-cox
+mrv
 dux
 diI
 diK

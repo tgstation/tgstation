@@ -44,7 +44,7 @@
 		var/datum/antagonist/hivevessel/woke = target.is_wokevessel()
 		if(is_hivemember(target))
 			for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
-				if(hive.hivemembers.Find(target))
+				if(hive.hivemembers.Find(target.mind))
 					var/mob/living/carbon/C = hive.owner.current.get_real_hivehost()
 					if(C)
 						C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, target, woke?TRACKER_AWAKENED_TIME:TRACKER_MINDSHIELD_TIME)
@@ -57,7 +57,7 @@
 			remove_hivemember(target)
 
 		if(woke)
-			woke.one_mind.remove_member(target.mind)
+			woke.one_mind?.remove_member(target.mind)
 			target.mind.remove_antag_datum(/datum/antagonist/hivevessel)
 
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)

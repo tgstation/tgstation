@@ -19,6 +19,7 @@
 	casing_ejector = FALSE
 	bolt_wording = "pump"
 	cartridge_wording = "shell"
+	tac_reloads = FALSE
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0

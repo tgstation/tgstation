@@ -70,6 +70,9 @@
 	if(CONFIG_GET(flag/log_cloning))
 		WRITE_LOG(GLOB.world_cloning_log, "CLONING: [text]")
 
+/proc/log_paper(text)
+	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
+
 /proc/log_asset(text)
 	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
 
@@ -181,6 +184,8 @@
 	WRITE_LOG(GLOB.config_error_log, text)
 	SEND_TEXT(world.log, text)
 
+/proc/log_mapping(text)
+	WRITE_LOG(GLOB.world_map_error_log, text)
 
 /* For logging round startup. */
 /proc/start_log(log)

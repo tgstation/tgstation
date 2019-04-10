@@ -1,47 +1,48 @@
 /obj/item/gun/ballistic/rifle
-    name = "Bolt Rifle"
-    desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
-    icon_state = "moistnugget"
-    icon_state = "moistnugget"
-    mag_type = /obj/item/ammo_box/magazine/internal/boltaction
-    bolt_wording = "bolt"
-    bolt_type = BOLT_TYPE_STANDARD
-    semi_auto = FALSE
-    internal_magazine = TRUE
-    fire_sound = "sound/weapons/rifleshot.ogg"
-    fire_sound_volume = 80
-    vary_fire_sound = FALSE
-    rack_sound = "sound/weapons/mosinboltout.ogg"
-    bolt_drop_sound = "sound/weapons/mosinboltin.ogg"
+	name = "Bolt Rifle"
+	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
+	icon_state = "moistnugget"
+	icon_state = "moistnugget"
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	bolt_wording = "bolt"
+	bolt_type = BOLT_TYPE_STANDARD
+	semi_auto = FALSE
+	internal_magazine = TRUE
+	fire_sound = "sound/weapons/rifleshot.ogg"
+	fire_sound_volume = 80
+	vary_fire_sound = FALSE
+	rack_sound = "sound/weapons/mosinboltout.ogg"
+	bolt_drop_sound = "sound/weapons/mosinboltin.ogg"
+	tac_reloads = FALSE
 
 obj/item/gun/ballistic/rifle/update_icon()
-    ..()
-    add_overlay("[icon_state]_bolt[bolt_locked ? "_locked" : ""]")
+	..()
+	add_overlay("[icon_state]_bolt[bolt_locked ? "_locked" : ""]")
 
 obj/item/gun/ballistic/rifle/rack(mob/user = null)
-    if (bolt_locked == FALSE)
-        to_chat(user, "<span class='notice'>You open the bolt of \the [src]</span>")
-        playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
-        process_chamber(FALSE, FALSE, FALSE)
-        bolt_locked = TRUE
-        update_icon()
-        return
-    drop_bolt(user)
+	if (bolt_locked == FALSE)
+		to_chat(user, "<span class='notice'>You open the bolt of \the [src]</span>")
+		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+		process_chamber(FALSE, FALSE, FALSE)
+		bolt_locked = TRUE
+		update_icon()
+		return
+	drop_bolt(user)
 
 obj/item/gun/ballistic/rifle/can_shoot()
-    if (bolt_locked)
-        return FALSE
-    . = ..()
+	if (bolt_locked)
+		return FALSE
+	return ..()
 
 obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
-    if (!bolt_locked)
-        to_chat(user, "<span class='notice'>The bolt is closed!</span>")
-        return
-    . = ..()
+	if (!bolt_locked)
+		to_chat(user, "<span class='notice'>The bolt is closed!</span>")
+		return
+	return ..()
 
 /obj/item/gun/ballistic/rifle/examine(mob/user)
-    ..()
-    to_chat(user, "The bolt is [bolt_locked ? "open" : "closed"].")
+	..()
+	to_chat(user, "The bolt is [bolt_locked ? "open" : "closed"].")
 
 ///////////////////////
 // BOLT ACTION RIFLE //
@@ -78,7 +79,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/dropped()
-	..()
+	. = ..()
 	guns_left = 0
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/proc/discard_gun(mob/user)
