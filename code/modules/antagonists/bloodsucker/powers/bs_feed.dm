@@ -12,7 +12,7 @@
 
 /datum/action/bloodsucker/feed
 	name = "Feed"//"Cellular Emporium"
-	desc = "Draw the heartsblood of the living."
+	desc = "Draw the heartsblood of the living.<br>"
 	icon_icon = 'icons/obj/drinks.dmi'
 	button_icon_state = "changelingsting"
 	background_icon_state = "bg_changeling"
@@ -53,43 +53,63 @@
 		to_chat(owner, "<span class='warning'>You cannot feed with your mouth covered! Remove your mask.</span>")
 		return FALSE
 	// Not in correct state
-	if (owner.grab_state < GRAB_AGGRESSIVE)//GRAB_PASSIVE)
-		to_chat(owner, "<span class='warning'>You don't have a tight enough grip on your victim!</span>")
+	if (owner.grab_state < GRAB_PASSIVE)//GRAB_AGGRESSIVEs)
+		to_chat(owner, "<span class='warning'>You aren't grabbing anyone!</span>") // You don't have a tight enough grip on your victim!
 		return FALSE
+	// Subtle targets MUST be carbon!
+	if (owner.grab_state < GRAB_AGGRESSIVE && !iscarbon(owner.pulling))//GRAB_AGGRESSIVEs)
+		to_chat(owner, "<span class='warning'>Lesser beings require a tighter grip!</span>") // You don't have a tight enough grip on your victim!
+		return FALSE
+
 	// DONE!
 	return TRUE
 
 
 
+//	NOTE: QUIET VS LOUD FEEDING!!!
 /datum/action/bloodsucker/feed/ActivatePower()
 
 	var/mob/living/target = owner.pulling
 	var/mob/living/user = owner
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 
+	// Am I SECRET or LOUD? It stays this way the whole time! I must END IT to try it the other way.
+	var/amSilent = owner.grab_state == GRAB_PASSIVE
 
 	// Initial Wait
-	to_chat(user, "<span class='warning'>You pull [target] close to you and draw out your fangs...</span>")
-	do_mob(user, target, 30)//sleep(10)
+	if (amSilent)
+		to_chat(user, "<span class='notice'>You lean quietly toward [target] and secretly draw out your fangs...</span>")
+		if (!do_mob(user, target, 60))//sleep(10)
+			return
+	else
+		to_chat(user, "<span class='warning'>You pull [target] close to you and draw out your fangs...</span>")
+		if (!do_mob(user, target, 30))//sleep(10)
+			return
 	if (!user.pulling || !target) // Cancel. They're gone.
 		return
-
 
 	// Put target to Sleep (Bloodsuckers are immune to their own bite's sleep effect)
-	if((!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) && target.stat <= UNCONSCIOUS)
-		ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
-	// Pull Target Close
-	if (!target.density) // Pull target to you if they don't take up space.
-		target.Move(user.loc)
-
-	// Wait, then Cancel if Invalid
-	sleep(5)
-	if (!user.pulling || !target) // Cancel. They're gone.
-		return
+	if (!amSilent)
+		if((!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) && target.stat <= UNCONSCIOUS)
+			ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
+		// Pull Target Close
+		if (!target.density) // Pull target to you if they don't take up space.
+			target.Move(user.loc)
+		// Wait, then Cancel if Invalid
+		sleep(5)
+		if (!user.pulling || !target) // Cancel. They're gone.
+			return
 
 	// Broadcast Message
-	user.visible_message("<span class='warning'>[user] closes their mouth around [target]'s neck!</span>", \
+	if (amSilent)
+		var/deadmessage = target.stat == DEAD ? "" : "[target.p_they(TRUE)] looks dazed, and will not remember this."
+		user.visible_message("<span class='notice'>[user] puts [target]'s wrist up to [user.p_their()] mouth.</span>", \
+						 	 "<span class='notice'>You slip your fangs into [target]'s wrist. [deadmessage]</span>", \
+						 	 vision_distance = 5, ignored_mob=target) // Only people who AREN'T the target will notice this action.
+	else				// /atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+		user.visible_message("<span class='warning'>[user] closes [user.p_their()] mouth around [target]'s neck!</span>", \
 						 "<span class='warning'>You sink your fangs into [target]'s neck.</span>")
+
 	// Begin Feed Loop
 	var/warning_target_inhuman = FALSE
 	var/warning_target_dead = FALSE
@@ -104,38 +124,40 @@
 	while (bloodsuckerdatum && target && active)
 		user.mobility_flags &= ~MOBILITY_MOVE // user.canmove = 0 // Prevents spilling blood accidentally.
 
-
 		if (!do_mob(user, target, 20, 0, 0, extra_checks=CALLBACK(src, .proc/ContinueActive, user)))
-
 			// May have disabled Feed during do_mob
 			if (!active || !ContinueActive(user))
 				break
 
-			to_chat(user, "<span class='warning'>Your feeding has been interrupted!</span>")
-			user.visible_message("<span class='danger'>[user] is ripped from [target]'s throat. Blood sprays everywhere!</span>", \
-					 			 "<span class='userdanger'>Your teeth are ripped from [target]'s throat, creating a bloody mess!</span>")
+			if (amSilent)
+				to_chat(user, "<span class='warning'>Your feeding has been interrupted...but [target.p_they()] didn't seem to notice you.<span>")
+			else
+				to_chat(user, "<span class='warning'>Your feeding has been interrupted!</span>")
+				user.visible_message("<span class='danger'>[user] is ripped from [target]'s throat. [target.p_their(TRUE)] blood sprays everywhere!</span>", \
+						 			 "<span class='userdanger'>Your teeth are ripped from [target]'s throat. [target.p_their(TRUE)] blood sprays everywhere!</span>")
 
-			// Deal Damage to Target (should have been more careful!)
-			if (iscarbon(target))
-				var/mob/living/carbon/C = target
-				C.bleed(30)
-			playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
-			if (ishuman(target))
-				var/mob/living/carbon/human/H = target
-				H.bleed_rate += 20
-			target.add_splatter_floor(get_turf(target))
-			user.add_mob_blood(target)
-			target.add_mob_blood(target)
-			target.take_overall_damage(10,0)
-			target.emote("scream")
+				// Deal Damage to Target (should have been more careful!)
+				if (iscarbon(target))
+					var/mob/living/carbon/C = target
+					C.bleed(30)
+				playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
+				if (ishuman(target))
+					var/mob/living/carbon/human/H = target
+					H.bleed_rate += 20
+				target.add_splatter_floor(get_turf(target))
+				user.add_mob_blood(target)
+				target.add_mob_blood(target)
+				target.take_overall_damage(10,0)
+				target.emote("scream")
 
 			DeactivatePower(user,target)
 			return
 
 		///////////////////////////////////////////////////////////
 		// 		Handle Feeding! User & Victim Effects (per tick)
-		bloodsuckerdatum.HandleFeeding(target)
-		ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
+		bloodsuckerdatum.HandleFeeding(target, amSilent ? 0.2 : 1)
+		if (!amSilent)
+			ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
 		///////////////////////////////////////////////////////////
 		// Done?
 		if (target.blood_volume <= 0)
@@ -147,7 +169,7 @@
 			warning_target_inhuman = TRUE
 		// Dead Blood?
 		if (!warning_target_dead && target.stat == DEAD)
-			to_chat(user, "<span class='notice'>Your victim is dead. Its blood barely nourishes you.</span>")
+			to_chat(user, "<span class='notice'>Your victim is dead. [target.p_their()] blood barely nourishes you.</span>")
 			warning_target_dead = TRUE
 		// Full?
 		if (!warning_full && user.blood_volume >= bloodsuckerdatum.maxBloodVolume)
@@ -168,13 +190,16 @@
 
 	// DONE!
 	DeactivatePower(user,target)
-	user.visible_message("<span class='warning'>[user] unclenches their teeth from [target]'s neck.</span>", \
-						 "<span class='warning'>You retract your fangs and release [target] from your bite.</span>")
+	if (amSilent)
+		to_chat(user, "<span class='notice'>You slowly release [target]'s wrist. [target.p_their(TRUE)] face lacks expression, like you've already been forgotten.</span>")
+	else
+		user.visible_message("<span class='warning'>[user] unclenches their teeth from [target]'s neck.</span>", \
+							 "<span class='warning'>You retract your fangs and release [target] from your bite.</span>")
 
 
 /datum/action/bloodsucker/feed/ContinueActive(mob/living/user)
 	return ..() // Active, and still Antag
-
+	// NOTE: We don't check for user.pulling etc. because do_mob does this.
 
 /datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target, powerLevel=1)
 	//target.Sleeping(100,0) 	  // SetSleeping() only changes sleep if the input is higher than the current value. AdjustSleeping() adds or subtracts //

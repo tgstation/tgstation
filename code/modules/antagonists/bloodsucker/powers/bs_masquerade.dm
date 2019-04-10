@@ -27,7 +27,7 @@
 	button_icon_state = "changelingsting"
 	background_icon_state = "bg_changeling"
 
-	bloodcost = 0
+	bloodcost = 10
 	cooldown = 30
 	amToggle = TRUE
 
@@ -39,8 +39,8 @@
 /datum/action/bloodsucker/masquerade/CheckCanUse(display_error)
 	if(!..(display_error))// DEFAULT CHECKS
 		return FALSE
-	// Must be ALIVE. Must be AWAKE.
-	// Cannot have other powers on!
+	// DONE!
+	return TRUE
 
 
 
@@ -52,25 +52,30 @@
 	to_chat(user, "<span class='notice'>Your heart beats falsely within your lifeless chest. You may yet pass for a mortal.</span>")
 	to_chat(user, "<span class='warning'>Your vampiric healing is halted while imitating life.</span>")
 
-	bloodsuckerdatum.poweron_masquerade = TRUE
 
-
+	// Remove ColdBlooded & Hard/SoftCrit
+	user.remove_trait(TRAIT_COLDBLOODED, "bloodsucker")
+	user.remove_trait(TRAIT_NOHARDCRIT, "bloodsucker")
+	user.remove_trait(TRAIT_NOSOFTCRIT, "bloodsucker")
+	var/obj/item/organ/heart/vampheart/H = user.getorganslot(ORGAN_SLOT_HEART)
 
 	// WE ARE ALIVE! //
+	bloodsuckerdatum.poweron_masquerade = TRUE
 	while(ContinueActive(user))
 
-		// 		ACTIONS:
-		// start heart (if it's not aleady)
-		//
+		// HEART
+		if (istype(H))
+			H.FakeStart()
+
 		// 		PASSIVE (done from LIFE)
-		// Raise Temperature
 		// Don't Show Pale/Dead on low blood
 		// Don't vomit food
+		// Don't Heal
 
+		// Pay Blood Toll
+		bloodsuckerdatum.AddBloodVolume(-0.2)
 
 		sleep(20) // Check every few ticks that we haven't disabled this power
-
-
 
 	DeactivatePower()
 
@@ -79,6 +84,9 @@
 
 
 /datum/action/bloodsucker/masquerade/ContinueActive(mob/living/user)
+	// Disable if unable to use power anymore.
+	if (user.stat == DEAD || user.blood_volume <= 0) // not conscious or soft critor uncon, just dead
+		return FALSE
 	return ..() // Active, and still Antag
 
 
@@ -88,8 +96,13 @@
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	bloodsuckerdatum.poweron_masquerade = FALSE
 
-	// 		ACTIONS:
-	// -stop heart
+	user.add_trait(TRAIT_COLDBLOODED, "bloodsucker")
+	user.add_trait(TRAIT_NOHARDCRIT, "bloodsucker")
+	user.add_trait(TRAIT_NOSOFTCRIT, "bloodsucker")
 
-	to_chat(user, "<span class='notice'>Your heart beats one final time, while your skin dries and your icy pallor returns.</span>")
+	// HEART
+	var/obj/item/organ/heart/H = user.getorganslot(ORGAN_SLOT_HEART)
+	H.Stop()
+
+	to_chat(user, "<span class='notice'>Your heart beats one final time, while your skin dries out and your icy pallor returns.</span>")
 

@@ -1,6 +1,7 @@
 
 
 /datum/antagonist/bloodsucker/proc/CheckVampOrgans()
+	// Do I have any parts that need replacing?
 
 	// Heart
 	var/obj/item/organ/O
@@ -8,6 +9,9 @@
 	if (!istype(O, /obj/item/organ/heart/vampheart))
 		var/obj/item/organ/heart/vampheart/H = new()
 		H.Insert(owner.current)
+		H.Stop() // Now...stop beating!
+
+
 	// Eyes
 	O = owner.current.getorganslot(ORGAN_SLOT_EYES)
 	if (!istype(O, /obj/item/organ/eyes/vampeyes))
@@ -38,21 +42,28 @@
 
 /obj/item/organ/heart/vampheart
 	beating = 0
+	var/fakingit = 0
 
 /obj/item/organ/heart/vampheart/prepare_eat()
 	..()
 	// Do cool stuff for eating vamp heart?
 
 /obj/item/organ/heart/vampheart/Restart()
+	beating = 0	// DONT run ..(). We don't want to start beating again.
 	return 0
 
+/obj/item/organ/heart/vampheart/Stop()
+	fakingit = 0
+	return ..()
+
 /obj/item/organ/heart/vampheart/proc/FakeStart()
-	// We're pretending to beat, to fool people.
+	fakingit = 1 // We're pretending to beat, to fool people.
 
 /obj/item/organ/heart/vampheart/HeartStrengthMessage()
-	if (beating)
+	if (fakingit)
 		return "a healthy"
 	return "<span class='danger'>no</span>"	// Bloodsuckers don't have a heartbeat at all when stopped (default is "an unstable")
+
 
 
 

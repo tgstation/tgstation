@@ -33,7 +33,9 @@
 
 
 	// LISTS
-	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, TRAIT_NODEATH, TRAIT_COLDBLOODED)
+	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_COLDBLOODED)
+	// REMOVED: TRAIT_NODEATH
+	// TO ADD:
 	//var/static/list/defaultOrgans = list (/obj/item/organ/heart/vampheart,/obj/item/organ/heart/vampeyes)
 
 
@@ -43,7 +45,6 @@
 
 	// Give Powers & Stats
 	AssignStarterPowersAndStats()
-
 
 
 	// Run Life Function
@@ -168,7 +169,7 @@
 		var/datum/species/S = H.dna.species
 		// Make Changes
 		S.brutemod *= 0.5
-		S.burnmod += 0.2 // 0.5
+		S.burnmod += 0.2 // 0.5													//  <--------------------  Start small, but burn mod increases based on blood pool!
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		S.coldmod = 0
 		S.stunmod *= 0.8 // 0.5
@@ -201,6 +202,12 @@
 
 	// Physiology
 	owner.current.regenerate_organs()
+
+
+//datum/antagonist/bloodsucker/proc/LevelUp()
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -251,7 +258,7 @@
 //
 //	However, only elder Bloodsuckers are the powerful creatures of legend. Ranking up as a Bloodsucker
 //  should impart slight strength and health benefits, as well as powers that can grow over time. But
-//  their weaknesses should grow as well, and not just to fire. Flaws should
+//  their weaknesses should grow as well, and not just to fire.
 
 
 //					A B I L I T I E S
@@ -301,6 +308,7 @@
 //
 //	* AGILITY
 //		CELERITY:	Dodge projectiles and even bullets. Perhaps avoid explosions!
+//		REFLEXES	TRAIT_NOSLIPWATER, TRAIT_NOSLIPALL
 //
 //	* STEALTH
 //		CLOAK:  	A) Vanish into the shadows when stationary. B) Moving does not break your current level of invisibility (but stops you from hiding further).
@@ -316,13 +324,13 @@
 //		ATTACK:		Target finds a nearby non-Bloodsucker victim to attack.
 //
 //	* EXPEL
-//		TAINT:		Mark areas with your corrupting blood. Your coffin must remain in an area so marked to gain any benefit. Spiders and rats will infest the area, cobwebs grow rapidly, and trespassers are overcome with fear.
+//		TAINT:		Mark areas with your corrupting blood. Your coffin must remain in an area so marked to gain any benefit. Spiders, roaches, and rats will infest the area, cobwebs grow rapidly, and trespassers are overcome with fear.
 //		SERVITUDE:	Your blood binds a mortal to your will. Vassals feel your pain and can locate you anywhere. Your death causes them agony.
 //		HEIR:		Raise a moral corpse into a Bloodsucker. The change will take a while, and the body must be brought to a tainted coffin to rise.
 //
 //	* NIGHTMARE
 //		BOGEYMAN:	Terrify those who view you in your death-form, causing them to shake, pale, and drop possessions.
-//
+//		HORROR:		Horrified characters cannot speak, shake, and slowly push away from the source.
 //
 
 //					F L A W S
@@ -342,7 +350,7 @@
 //
 //	3) CRYPT LORD:		Build a terrifying sepulcher to your evil, with servants to lavish upon you in undeath. The trappings of a true crypt lord come at grave cost.
 //
-//	4) GOURMOND:		Oh, to taste all the delicacies the station has to offer!
+//	4) GOURMOND:		Oh, to taste all the delicacies the station has to offer! DRINK ## BLOOD FROM VICTIMS WHO LIVE, EAT ## ORGANS FROM VICTIMS WHO LIVE
 
 
 //			Vassals
