@@ -88,7 +88,7 @@
 
 /datum/gas_reaction/nitrous_decomp/init_reqs()
 	min_requirements = list(
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*3,
+		"TEMP" = N2O_DECOMPOSITION_MIN_ENERGY,
 		/datum/gas/nitrous_oxide = MINIMUM_MOLE_COUNT
 	)
 
@@ -99,9 +99,8 @@
 	var/temperature = air.temperature
 	var/burned_fuel = 0
 
-	var/temp_divider = max(3, (10000 - ((temperature/50)-28)**2)/50) // Formula that determines the reaction speed as a function of temperature
 
-	burned_fuel = cached_gases[/datum/gas/nitrous_oxide][MOLES] / temp_divider
+	burned_fuel = max(0,0.00002*(temperature-(0.00001*(temperature**2))))*cached_gases[/datum/gas/nitrous_oxide][MOLES]
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= burned_fuel
 
 	if(burned_fuel)
@@ -112,12 +111,11 @@
 		ASSERT_GAS(/datum/gas/nitrogen, air)
 		cached_gases[/datum/gas/nitrogen][MOLES] += burned_fuel
 
-	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
-
-	return burned_fuel>0 ? REACTING : NO_REACTION
+		return REACTING
+	return NO_REACTION
 
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/tritfire
