@@ -154,11 +154,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	rarity = 250
 
-/datum/gas/coolant
-	id = "coolant"
-	specific_heat = 100
-	name = "Coolant"
-
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
