@@ -109,7 +109,7 @@
 	name = "Murderdome Exit Portal"
 	id = "vr murderdome"
 
-/obj/effect/portal/permanent/one_way/recall/syndicate
+/obj/effect/portal/permanent/one_way/syndicate
 	name = "Syndicate Portal"
 	desc = "Active, but only occasionally. Leads to a syndicate training program."
 	equipment = /datum/outfit/vr/syndicate

@@ -68,6 +68,8 @@
 	if(deathchecks && vr_sleeper)
 		vr_sleeper.vr_human = null
 		vr_sleeper = null
+	if(!real_mind && !vr_sleeper)
+		src.ghostize()
 	real_mind = null
 
 /datum/action/quit_vr
