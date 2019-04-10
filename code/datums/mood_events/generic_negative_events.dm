@@ -172,7 +172,9 @@
 	mood_change = -15
 	timeout = 900
 
-/datum/mood_event/sapped
+/datum/mood_event/back_pain
+	description = "<span class='boldwarning'>Bags never sit right on my back, this hurts like hell!</span>\n"
+	mood_change = -15
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse

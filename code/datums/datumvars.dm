@@ -1248,9 +1248,17 @@
 			var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
 			if(!edit_action)
 				return
-			var/list/limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-			if(edit_action == "augment")
-				limb_list += BODY_ZONE_CHEST
+			var/list/limb_list = list()
+			if(edit_action == "remove" || edit_action == "augment")
+				for(var/obj/item/bodypart/B in C.bodyparts)
+					limb_list += B.body_zone
+				if(edit_action == "remove")
+					limb_list -= BODY_ZONE_CHEST
+			else
+				limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+				for(var/obj/item/bodypart/B in C.bodyparts)
+					limb_list -= B.body_zone
+
 			var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in limb_list
 
 			if(!C)
@@ -1360,7 +1368,7 @@
 				var/log_msg = "[key_name(usr)] dealt [amount] amount of [Text] damage to [key_name(L)]"
 				message_admins("[key_name(usr)] dealt [amount] amount of [Text] damage to [ADMIN_LOOKUPFLW(L)]")
 				log_admin(log_msg)
-				admin_ticket_log(L, "<span class='notice'>[log_msg]</span>")
+				admin_ticket_log(L, "<font color='blue'>[log_msg]</font>")
 				vv_update_display(L, Text, "[newamt]")
 		else if(href_list["copyoutfit"])
 			if(!check_rights(R_SPAWN))
@@ -1368,3 +1376,30 @@
 			var/mob/living/carbon/human/H = locate(href_list["copyoutfit"]) in GLOB.carbon_list
 			if(istype(H))
 				H.copy_outfit()
+		else if(href_list["modquirks"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["modquirks"]) in GLOB.mob_list
+			if(!istype(H))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+				return
+
+			var/list/options = list("Clear"="Clear")
+			for(var/x in subtypesof(/datum/quirk))
+				var/datum/quirk/T = x
+				var/qname = initial(T.name)
+				options[H.has_quirk(T) ? "[qname] (Remove)" : "[qname] (Add)"] = T
+
+			var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in options
+			if(result)
+				if(result == "Clear")
+					for(var/datum/quirk/q in H.roundstart_quirks)
+						H.remove_quirk(q.type)
+				else
+					var/T = options[result]
+					if(H.has_quirk(T))
+						H.remove_quirk(T)
+					else
+						H.add_quirk(T,TRUE)
+

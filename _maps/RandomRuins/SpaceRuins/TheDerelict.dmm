@@ -2558,7 +2558,6 @@
 "iK" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	icon_state = "mass_driver";
 	id = "derelict_gun"
 	},
 /obj/machinery/door/window{

@@ -5,10 +5,10 @@
 	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
 	icon_state = "seeds"
 	products = list(/obj/item/seeds/ambrosia = 3,
-		            /obj/item/seeds/apple = 3,
-		            /obj/item/seeds/cotton = 3,
-		            /obj/item/seeds/banana = 3,
-		            /obj/item/seeds/berry = 3,
+					/obj/item/seeds/apple = 3,
+					/obj/item/seeds/cotton = 3,
+					/obj/item/seeds/banana = 3,
+					/obj/item/seeds/berry = 3,
 					/obj/item/seeds/cabbage = 3,
 					/obj/item/seeds/carrot = 3,
 					/obj/item/seeds/cherry = 3,
@@ -40,17 +40,20 @@
 					/obj/item/seeds/wheat = 3,
 					/obj/item/seeds/whitebeet = 3)
 	contraband = list(/obj/item/seeds/amanita = 2,
-		              /obj/item/seeds/glowshroom = 2,
-		              /obj/item/seeds/liberty = 2,
-		              /obj/item/seeds/nettle = 2,
+					  /obj/item/seeds/glowshroom = 2,
+					  /obj/item/seeds/liberty = 2,
+					  /obj/item/seeds/nettle = 2,
 					  /obj/item/seeds/plump = 2,
 					  /obj/item/seeds/reishi = 2,
 					  /obj/item/seeds/cannabis = 3,
 					  /obj/item/seeds/starthistle = 2,
 					  /obj/item/seeds/random = 2)
 	premium = list(/obj/item/reagent_containers/spray/waterflower = 1)
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
-	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/vending_refill/hydroseeds
 	default_price = 10
 	extra_price = 50
 	payment_department = ACCOUNT_SRV
+
+/obj/item/vending_refill/hydroseeds
+	machine_name = "MegaSeed Servitor"
+	icon_state = "refill_plant"

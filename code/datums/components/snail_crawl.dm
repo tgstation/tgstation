@@ -6,7 +6,7 @@
 	snail = parent
 
 /datum/component/snailcrawl/proc/lubricate()
-	if(snail.resting) //s l i d e
+	if(snail.resting && !snail.buckled) //s l i d e
 		var/turf/open/OT = get_turf(snail)
 		if(isopenturf(OT))
 			OT.MakeSlippery(TURF_WET_LUBE, 20)

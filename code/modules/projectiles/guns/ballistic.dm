@@ -53,7 +53,7 @@
 	var/cartridge_wording = "bullet"
 	var/rack_delay = 5
 	var/recent_rack = 0
-	var/tac_reloads = FALSE //Snowflake mechanic no more.
+	var/tac_reloads = TRUE //Snowflake mechanic no more.
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -117,7 +117,7 @@
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
-	if (chamber_next_round && (magazine.max_ammo > 1))
+	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
 /obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE)

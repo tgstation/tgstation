@@ -54,12 +54,12 @@
 	if(stat)
 		return
 	if (!network)
-		throw EXCEPTION("No camera network")
 		user.unset_machine()
+		CRASH("No camera network")
 		return
 	if (!(islist(network)))
-		throw EXCEPTION("Camera network is not a list")
 		user.unset_machine()
+		CRASH("Camera network is not a list")
 		return
 	if(..())
 		user.unset_machine()
@@ -272,7 +272,7 @@
 /obj/machinery/computer/security/telescreen/toxins
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("toxin")
+	network = list("toxins")
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"
