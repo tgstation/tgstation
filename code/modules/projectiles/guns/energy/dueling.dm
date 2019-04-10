@@ -305,7 +305,7 @@
 //Storage case.
 /obj/item/storage/lockbox/dueling
 	name = "dueling pistol case"
-	desc = "Let's solve this like gentlemen."
+	desc = "Let's solve this like gentlespacemen."
 	icon_state = "medalbox+l"
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
