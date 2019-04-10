@@ -1,23 +1,16 @@
 <script>
-  import { UI_INTERACTIVE, UI_UPDATE } from 'util/constants'
+  import { UI_INTERACTIVE } from 'util/constants'
   import { act } from 'util/byond'
 
   component.exports = {
     computed: {
       clickable () {
-        if (this.get('active') && (!this.get('state') || this.get('state') == "toggle")) {
+        if (this.get('enabled') && (!this.get('state') || this.get('state') == "toggle")) {
           return true
         }
         return false
       },
       enabled () {
-        switch (this.get('config.status')) {
-          case UI_INTERACTIVE: return true
-          case UI_UPDATE: return true
-          default: return false
-        }
-      },
-      active () {
         if (this.get('config.status') === UI_INTERACTIVE) {
           return true
         }
@@ -31,17 +24,13 @@
           extra = ` tooltip-${this.get('tooltip-side')}`
         if (this.get('grid'))
           extra += ' gridable'
-        if (this.get('enabled')) {
-          const state = this.get('state')
-          const style = this.get('style')
-          const active_class = this.get('active') ? 'active' : 'inactive'
-          if (!state) {
-            return `${active_class} normal ${style} ${extra}`
-          } else {
-            return `${active_class} ${state} ${extra}`
-          }
+        const state = this.get('state')
+        const style = this.get('style')
+        const active_class = this.get('enabled') ? 'active' : 'inactive'
+        if (!state) {
+          return `${active_class} normal ${style} ${extra}`
         } else {
-          return `inactive disabled ${extra}`
+          return `${active_class} ${state} ${extra}`
         }
       }
 		},
