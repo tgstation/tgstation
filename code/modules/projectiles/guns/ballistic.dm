@@ -53,7 +53,7 @@
 	var/cartridge_wording = "bullet"
 	var/rack_delay = 5
 	var/recent_rack = 0
-	var/tac_reloads = FALSE //Snowflake mechanic no more.
+	var/tac_reloads = TRUE //Snowflake mechanic no more.
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()

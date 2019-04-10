@@ -171,10 +171,12 @@
 	desc = "Bon appetit!"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
+	item_state = "baguette"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
 
