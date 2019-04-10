@@ -70,6 +70,9 @@
 	if(CONFIG_GET(flag/log_cloning))
 		WRITE_LOG(GLOB.world_cloning_log, "CLONING: [text]")
 
+/proc/log_paper(text)
+	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
+
 /proc/log_asset(text)
 	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
 
