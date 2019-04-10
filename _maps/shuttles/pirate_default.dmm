@@ -11,7 +11,6 @@
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
