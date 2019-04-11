@@ -53935,6 +53935,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engine_room/external)
+"kXC" = (
+/obj/machinery/vending/modularpc,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "leR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -86217,7 +86221,7 @@ acf
 acf
 acf
 acf
-axw
+kXC
 axE
 axG
 bso

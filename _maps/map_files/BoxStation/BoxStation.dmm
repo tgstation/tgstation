@@ -56807,6 +56807,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"oLX" = (
+/obj/machinery/vending/modularpc,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "oMN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -77153,7 +77157,7 @@ ayy
 ayy
 aAO
 aBN
-aDe
+oLX
 aDe
 aFT
 aDe
