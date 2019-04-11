@@ -43,7 +43,7 @@
 		data += "Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"
 		if(calibrating)
 			data += "Calibration: <font color='yellow'>In Progress</font>"
-		else if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
+		else if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
 			data += "Calibration: <font color='green'>Optimal</font>"
 		else
 			data += "Calibration: <font color='red'>Sub-Optimal</font>"
@@ -83,13 +83,13 @@
 		if(!target)
 			say("Error: No target set to calibrate to.")
 			return
-		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
+		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
 			say("Hub is already calibrated!")
 			return
 		say("Processing hub calibration to target...")
 
 		calibrating = 1
-		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
+		spawn(50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
@@ -120,19 +120,22 @@
 	if(regime_set == "Teleporter")
 		for(var/obj/item/beacon/R in GLOB.teleportbeacons)
 			if(is_eligible(R))
-				var/area/A = get_area(R)
-				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
+				if(R.renamed)
+					L[avoid_assoc_duplicate_keys("[R.name] ([get_area(R)])", areaindex)] = R
+				else
+					var/area/A = get_area(R)
+					L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
-			if(!I.imp_in || !isliving(I.loc))
+			if(!I.imp_in || !isliving(I.loc) || !I.allow_teleport)
 				continue
 			else
 				var/mob/living/M = I.loc
 				if(M.stat == DEAD)
-					if(M.timeofdeath + 6000 < world.time)
+					if(M.timeofdeath + I.lifespan_postmortem < world.time)
 						continue
 				if(is_eligible(I))
-					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
+					L[avoid_assoc_duplicate_keys("[M.real_name] ([get_area(M)])", areaindex)] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]

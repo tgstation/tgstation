@@ -113,6 +113,7 @@ Class Procs:
 	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+	var/damage_deflection = 0
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 	var/fair_market_price = 69
@@ -171,9 +172,11 @@ Class Procs:
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/proc/dropContents()
+/obj/machinery/proc/dropContents(list/subset = null)
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/A in contents)
+		if(subset && !(A in subset))
+			continue
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A
@@ -367,6 +370,11 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+
+/obj/machinery/run_obj_armor(damage_amount, damage_type, damage_flag = NONE, attack_dir)
+	if(damage_flag == "melee" && damage_amount < damage_deflection)
+		return 0
+	return ..()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)

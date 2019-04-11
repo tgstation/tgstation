@@ -281,3 +281,11 @@
 	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)
 	tastes = list("bun" = 4, "bacon" = 2)
 	foodtype = GRAIN | MEAT
+
+/obj/item/reagent_containers/food/snacks/burger/empoweredburger
+	name = "empowered burger"
+	desc = "It's shockingly good, if you live off of electricity that is."
+	icon_state = "empoweredburger"
+	list_reagents = list("nutriment" = 8, "liquidelectricity" = 5)
+	tastes = list("bun" = 2, "pure electricity" = 4)
+	foodtype = GRAIN | TOXIC

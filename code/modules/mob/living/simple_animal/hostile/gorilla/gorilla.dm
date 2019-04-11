@@ -13,7 +13,7 @@
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
-	loot = list(/obj/effect/gibspawner/generic)
+	loot = list(/obj/effect/gibspawner/generic/animal)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/gorilla = 4)
 	response_help  = "prods"
 	response_disarm = "challenges"
@@ -94,7 +94,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/handle_automated_speech(override)
 	if(speak_chance && (override || prob(speak_chance)))
-		playsound(src, 'sound/creatures/gorilla.ogg', 200)
+		playsound(src, 'sound/creatures/gorilla.ogg', 50)
 	..()
 
 /mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
@@ -105,6 +105,6 @@
 /mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
 	oogas++
 	if(oogas >= rand(2,6))
-		playsound(src, 'sound/creatures/gorilla.ogg', 200)
+		playsound(src, 'sound/creatures/gorilla.ogg', 50)
 		oogas = 0
 

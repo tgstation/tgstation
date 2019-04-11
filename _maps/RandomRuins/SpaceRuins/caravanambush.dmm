@@ -621,7 +621,7 @@
 /area/shuttle/caravan/freighter3)
 "hw" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
@@ -637,7 +637,7 @@
 /area/shuttle/caravan/freighter3)
 "hy" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 4
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/stormtrooper,
 /turf/open/floor/plasteel/airless/dark,
@@ -756,7 +756,7 @@
 /area/shuttle/caravan/freighter3)
 "ib" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/closet/crate/secure/plasma,
 /obj/item/tank/internals/plasma/full,
@@ -962,7 +962,7 @@
 /area/shuttle/caravan/freighter2)
 "iV" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 4
+	dir = 1
 	},
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/gun/ballistic/shotgun/sc_pump,
@@ -970,7 +970,7 @@
 /area/shuttle/caravan/freighter2)
 "iX" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark,
@@ -1049,7 +1049,7 @@
 /area/shuttle/caravan/freighter2)
 "jr" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/weapon,

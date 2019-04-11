@@ -53,6 +53,11 @@
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)
 		return
+	else if(istype(C) && C.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
+		to_chat(C, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+		if(do_after(user, 15, null, C))
+			to_chat(C, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			C.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 	else
 		..()
 
@@ -91,7 +96,7 @@
 
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
 	usesound = 'sound/items/jaws_cut.ogg'
-	toolspeed = 0.25
+	toolspeed = 0.7
 	random_color = FALSE
 
 /obj/item/wirecutters/power/suicide_act(mob/user)

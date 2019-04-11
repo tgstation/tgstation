@@ -77,10 +77,7 @@
 					A.aiControlDisabled = -1
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
-				A.set_electrified(30)
-				if(usr)
-					LAZYADD(A.shockedby, text("\[[time_stamp()]\] [key_name(usr)]"))
-					log_combat(usr, A, "electrified")
+				A.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, usr)
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
 			if(!A.density)
@@ -129,13 +126,10 @@
 		if(WIRE_SHOCK) // Cut to shock the door, mend to unshock.
 			if(mend)
 				if(A.secondsElectrified)
-					A.set_electrified(0)
+					A.set_electrified(MACHINE_NOT_ELECTRIFIED, usr)
 			else
-				if(A.secondsElectrified != -1)
-					A.set_electrified(-1)
-					if(usr)
-						LAZYADD(A.shockedby, text("\[[time_stamp()]\] [key_name(usr)]"))
-						log_combat(usr, A, "electrified")
+				if(A.secondsElectrified != MACHINE_ELECTRIFIED_PERMANENT)
+					A.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.

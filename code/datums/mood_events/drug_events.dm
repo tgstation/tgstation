@@ -7,6 +7,11 @@
 	mood_change = 2
 	timeout = 3600
 
+/datum/mood_event/wrong_brand
+	description = "<span class='warning'>I hate that brand of cigarettes.</span>\n"
+	mood_change = -2
+	timeout = 3600
+
 /datum/mood_event/overdose
 	mood_change = -8
 	timeout = 3000
@@ -37,3 +42,19 @@
 
 /datum/mood_event/withdrawal_critical/add_effects(drug_name)
 	description = "<span class='boldwarning'>[drug_name]! [drug_name]! [drug_name]!</span>\n"
+
+/datum/mood_event/happiness_drug
+	description = "<span class='nicegreen'>I can't feel anything and I never want this to end.</span>\n"
+	mood_change = 50
+
+/datum/mood_event/happiness_drug_good_od
+	description = "<span class='nicegreen'>YES! YES!! YES!!!</span>\n"
+	mood_change = 100
+	timeout = 300
+	special_screen_obj = "mood_happiness_good"
+
+/datum/mood_event/happiness_drug_bad_od
+	description = "<span class='boldwarning'>NO! NO!! NO!!!</span>\n"
+	mood_change = -100
+	timeout = 300
+	special_screen_obj = "mood_happiness_bad"

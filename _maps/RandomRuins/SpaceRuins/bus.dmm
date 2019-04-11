@@ -49,7 +49,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "al" = (
-/obj/effect/decal/cleanable/salt,
+/obj/effect/decal/cleanable/food/salt,
 /obj/item/reagent_containers/food/condiment/saltshaker,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)

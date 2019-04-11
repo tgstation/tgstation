@@ -60,18 +60,68 @@
 
 /datum/brain_trauma/severe/paralysis
 	name = "Paralysis"
-	desc = "Patient's brain can no longer control its motor functions."
+	desc = "Patient's brain can no longer control part of its motor functions."
 	scan_desc = "cerebral paralysis"
-	gain_text = "<span class='warning'>You can't feel your body anymore!</span>"
-	lose_text = "<span class='notice'>You can feel your limbs again!</span>"
+	gain_text = ""
+	lose_text = ""
+	var/paralysis_type
+	var/list/paralysis_traits = list()
+	 //for descriptions
 
-/datum/brain_trauma/severe/paralysis/on_life()
-	owner.Paralyze(200, ignore_canknockdown = TRUE)
+/datum/brain_trauma/severe/paralysis/New(specific_type)
+	if(specific_type)
+		paralysis_type = specific_type
+	if(!paralysis_type)
+		paralysis_type = pick("full","left","right","arms","legs","r_arm","l_arm","r_leg","l_leg")
+	var/subject
+	switch(paralysis_type)
+		if("full")
+			subject = "your body"
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG)
+		if("left")
+			subject = "the left side of your body"
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_L_LEG)
+		if("right")
+			subject = "the right side of your body"
+			paralysis_traits = list(TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_R_LEG)
+		if("arms")
+			subject = "your arms"
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM)
+		if("legs")
+			subject = "your legs"
+			paralysis_traits = list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG)
+		if("r_arm")
+			subject = "your right arm"
+			paralysis_traits = list(TRAIT_PARALYSIS_R_ARM)
+		if("l_arm")
+			subject = "your left arm"
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM)
+		if("r_leg")
+			subject = "your right leg"
+			paralysis_traits = list(TRAIT_PARALYSIS_R_LEG)
+		if("l_leg")
+			subject = "your left leg"
+			paralysis_traits = list(TRAIT_PARALYSIS_L_LEG)
+
+	gain_text = "<span class='warning'>You can't feel [subject] anymore!</span>"
+	lose_text = "<span class='notice'>You can feel [subject] again!</span>"
+
+/datum/brain_trauma/severe/paralysis/on_gain()
 	..()
+	for(var/X in paralysis_traits)
+		owner.add_trait(X, "trauma_paralysis")
+	owner.update_disabled_bodyparts()
 
 /datum/brain_trauma/severe/paralysis/on_lose()
-	owner.SetParalyzed(0)
 	..()
+	for(var/X in paralysis_traits)
+		owner.remove_trait(X, "trauma_paralysis")
+	owner.update_disabled_bodyparts()
+
+/datum/brain_trauma/severe/paralysis/paraplegic
+	random_gain = FALSE
+	paralysis_type = "legs"
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
@@ -99,7 +149,7 @@
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
-	scan_desc = "severe monophobia"
+	scan_desc = "monophobia"
 	gain_text = ""
 	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
 	var/stress = 0
@@ -118,7 +168,7 @@
 		if(stress > 10 && (prob(5)))
 			stress_reaction()
 	else
-		stress -= 4
+		stress = max(stress - 4, 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
 	if(owner.has_trait(TRAIT_BLIND))

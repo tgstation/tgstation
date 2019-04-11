@@ -73,4 +73,4 @@
 	if(pinned_target)
 		pinned_target.bullet_act(P)
 	else
-		..()
+		. = ..()

@@ -65,7 +65,7 @@
 			if(!isitem(A))
 				continue
 			var/obj/item/I = A
-			if(!(I.item_flags & NODROP))
+			if(!(I.has_trait(TRAIT_NODROP)))
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 				return
@@ -127,7 +127,7 @@
 /obj/machinery/harvester/proc/end_harvesting()
 	harvesting = FALSE
 	open_machine()
-	say("Subject has been succesfuly harvested.")
+	say("Subject has been successfully harvested.")
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, 0)
 
 /obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/I)
@@ -138,7 +138,7 @@
 		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
 	if(state_open)
-		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] it's maintenance hatch!</span>")
+		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
 		return
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		return
@@ -188,3 +188,5 @@
 		to_chat(user, "<span class='notice'>[src] must be closed before harvesting.</span>")
 	else if(!harvesting)
 		to_chat(user, "<span class='notice'>Alt-click [src] to start harvesting.</span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Harvest speed at <b>[interval*0.1]</b> seconds per organ.<span>")

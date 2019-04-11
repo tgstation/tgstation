@@ -8,7 +8,7 @@ Contains:
  - NASA Voidsuit
  - Father Christmas' magical clothes
  - Pirate's spacesuit
- - ERT hardsuit: command, sec, engi, med
+ - ERT hardsuit: command, sec, engi, med, janitor
  - EVA spacesuit
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
@@ -158,21 +158,24 @@ Contains:
 
 	//Emergency Response Team suits
 /obj/item/clothing/head/helmet/space/hardsuit/ert
-	name = "emergency response unit helmet"
-	desc = "Standard issue command helmet for the ERT."
+	name = "emergency response team commander helmet"
+	desc = "The integrated helmet of an ERT hardsuit, this one has blue highlights."
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
 	item_color = "ert_commander"
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
-	item_flags = NODROP
 	brightness_on = 7
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
+/obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+
 /obj/item/clothing/suit/space/hardsuit/ert
-	name = "emergency response team suit"
-	desc = "Standard issue command suit for the ERT."
+	name = "emergency response team commander hardsuit"
+	desc = "The standard issue hardsuit of the ERT, this one has blue highlights. Offers superb protection against environmental hazards."
 	icon_state = "ert_command"
 	item_state = "ert_command"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
@@ -185,43 +188,65 @@ Contains:
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
-	desc = "Standard issue security helmet for the ERT."
+	name = "emergency response team security helmet"
+	desc = "The integrated helmet of an ERT hardsuit, this one has red highlights."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
 	item_color = "ert_security"
 
 /obj/item/clothing/suit/space/hardsuit/ert/sec
-	desc = "Standard issue security suit for the ERT."
+	name = "emergency response team security hardsuit"
+	desc = "The standard issue hardsuit of the ERT, this one has red highlights. Offers superb protection against environmental hazards."
 	icon_state = "ert_security"
 	item_state = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 
 	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
-	desc = "Standard issue engineer helmet for the ERT."
+	name = "emergency response team engineering helmet"
+	desc = "The integrated helmet of an ERT hardsuit, this one has orange highlights."
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
 	item_color = "ert_engineer"
 
 /obj/item/clothing/suit/space/hardsuit/ert/engi
-	desc = "Standard issue engineer suit for the ERT."
+	name = "emergency response team engineering hardsuit"
+	desc = "The standard issue hardsuit of the ERT, this one has orange highlights. Offers superb protection against environmental hazards."
 	icon_state = "ert_engineer"
 	item_state = "ert_engineer"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
 
 	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
-	desc = "Standard issue medical helmet for the ERT."
+	name = "emergency response team medical helmet"
+	desc = "The integrated helmet of an ERT hardsuit, this one has white highlights."
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
 	item_color = "ert_medical"
 
 /obj/item/clothing/suit/space/hardsuit/ert/med
-	desc = "Standard issue medical suit for the ERT."
+	name = "emergency response team medical hardsuit"
+	desc = "The standard issue hardsuit of the ERT, this one has white highlights. Offers superb protection against environmental hazards."
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	species_exception = list(/datum/species/angel)
+
+	//ERT Janitor
+/obj/item/clothing/head/helmet/space/hardsuit/ert/jani
+	name = "emergency response team janitorial helmet"
+	desc = "The integrated helmet of an ERT hardsuit, this one has purple highlights."
+	icon_state = "hardsuit0-ert_janitor"
+	item_state = "hardsuit0-ert_janitor"
+	item_color = "ert_janitor"
+
+/obj/item/clothing/suit/space/hardsuit/ert/jani
+	name = "emergency response team janitorial hardsuit"
+	desc = "The standard issue hardsuit of the ERT, this one has purple highlights. Offers superb protection against environmental hazards. This one has extra clips for holding various janitorial tools."
+	icon_state = "ert_janitor"
+	item_state = "ert_janitor"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/jani
+	allowed = list(/obj/item/storage/bag/trash, /obj/item/melee/flyswatter, /obj/item/mop, /obj/item/holosign_creator/janibarrier, /obj/item/reagent_containers/glass/bucket, /obj/item/reagent_containers/spray/chemsprayer/janitor)
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
@@ -269,8 +294,10 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
-	item_flags = NODROP
 
+/obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/carp
 	name = "carp space suit"
@@ -279,12 +306,21 @@ Contains:
 	item_state = "space_suit_syndicate"
 	slowdown = 0	//Space carp magic, never stop believing
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75) //As whimpy whimpy whoo
-	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/automatic/speargun)	//I'm giving you a hint here
+	allowed = list(/obj/item/tank/internals, /obj/item/pneumatic_cannon/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
 
+/obj/item/clothing/head/helmet/space/hardsuit/carp/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == SLOT_HEAD)
+		user.faction |= "carp"
+
+/obj/item/clothing/head/helmet/space/hardsuit/carp/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		user.faction -= "carp"
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
-	name = "paranormal response unit helmet"
+	name = "paranormal response team helmet"
 	desc = "A helmet worn by those who deal with paranormal threats for a living."
 	icon_state = "hardsuit0-prt"
 	item_state = "hardsuit0-prt"
@@ -294,7 +330,7 @@ Contains:
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
-	name = "paranormal response team suit"
+	name = "paranormal response team hardsuit"
 	desc = "Powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats."
 	icon_state = "knight_grey"
 	item_state = "knight_grey"

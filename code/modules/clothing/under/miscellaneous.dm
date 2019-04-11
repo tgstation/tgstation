@@ -202,7 +202,7 @@
 	desc = "A formal black suit and red tie, intended for the station's finest."
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
-	item_color = "black_suit"
+	item_color = "really_black_suit"
 
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
@@ -294,6 +294,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 25
 
 /obj/item/clothing/under/skirt/red
 	name = "red skirt"
@@ -304,6 +305,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 25
 
 /obj/item/clothing/under/skirt/purple
 	name = "purple skirt"
@@ -314,6 +316,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 25
 
 
 /obj/item/clothing/under/schoolgirl
@@ -351,6 +354,7 @@
 	item_state = "lb_suit"
 	item_color = "overalls"
 	can_adjust = FALSE
+	custom_price = 20
 
 /obj/item/clothing/under/pirate
 	name = "pirate outfit"
@@ -388,7 +392,10 @@
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
-	item_flags = NODROP
+
+/obj/item/clothing/under/kilt/highlander/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, HIGHLANDER)
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -530,6 +537,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	custom_price = 25
 
 /obj/item/clothing/under/plaid_skirt/blue
 	name = "blue plaid skirt"
@@ -745,3 +753,12 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
+
+/obj/item/clothing/under/durathread
+	name = "durathread jumpsuit"
+	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
+	icon_state = "durathread"
+	item_state = "durathread"
+	item_color = "durathread"
+	can_adjust = FALSE
+	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)

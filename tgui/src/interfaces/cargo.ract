@@ -47,6 +47,9 @@
         <div class='content'>
           <ui-button icon='minus' action='remove' params='{"id": "{{id}}"}'/>
         </div>
+        {{#if paid}}
+    			<div class='content'><b>(Paid privately)</b></div>
+    		{{/if}}
       </ui-section>
     {{else}}
       <span>Nothing in Cart</span>
@@ -82,7 +85,8 @@
     <tab name='{{name}}'>
       {{#each packs}}
         <ui-section label='{{name}}' candystripe right>
-          <ui-button tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}"}'>{{cost}} Credits</ui-button>
+          <ui-button tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}","self_paid": "0"}'>{{cost}} Credits</ui-button>
+				<ui-button tooltip='Pay with your bank account instead of the cargo budget. Costs 10% extra for handling fees.' tooltip-side='left' action='add' params='{"id": "{{id}}","self_paid": "1"}'>Buy Directly</ui-button>
         </ui-section>
       {{/each}}
     </tab>

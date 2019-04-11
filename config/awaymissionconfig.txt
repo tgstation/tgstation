@@ -21,6 +21,7 @@
 #_maps/RandomZLevels/research.dmm
 #_maps/RandomZLevels/Cabin.dmm
 #_maps/RandomZLevels/beach2.dmm
+_maps/RandomZLevels/VR/mining_VR.dmm
 _maps/RandomZLevels/VR/murderdome.dmm
 _maps/RandomZLevels/VR/snowdin_VR.dmm
 _maps/RandomZLevels/VR/syndicate_trainer.dmm

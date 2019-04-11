@@ -173,10 +173,11 @@
 /obj/item/grenade/clusterbuster/random
 	icon_state = "random_clusterbang"
 
-/obj/item/grenade/clusterbuster/random/New()
+/obj/item/grenade/clusterbuster/random/Initialize()
+	..()
 	var/real_type = pick(subtypesof(/obj/item/grenade/clusterbuster))
 	new real_type(loc)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 //rainbow slime effect
 /obj/item/grenade/clusterbuster/slime
