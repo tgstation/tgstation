@@ -526,10 +526,13 @@
 /turf/closed/wall,
 /area/security/main)
 "abq" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hos)
 "abr" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "abs" = (
@@ -861,6 +864,9 @@
 /area/crew_quarters/heads/hos)
 "abV" = (
 /obj/machinery/computer/security/hos,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "abW" = (
@@ -1282,6 +1288,9 @@
 "acS" = (
 /obj/item/book/manual/wiki/security_space_law,
 /obj/structure/table/wood,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "acT" = (
@@ -1500,10 +1509,16 @@
 /area/crew_quarters/heads/hos)
 "ado" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "adp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "adq" = (
@@ -1731,6 +1746,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "adO" = (
@@ -1744,6 +1762,9 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "adQ" = (
@@ -55954,6 +55975,16 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"hIT" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/heads/hos)
 "hYR" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plating,
@@ -56396,6 +56427,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
+"ldC" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/heads/hos)
 "lhu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -56519,6 +56563,12 @@
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"mkv" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hos)
 "mBm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -57064,6 +57114,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"rWA" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/heads/hos)
 "rYJ" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot{
@@ -57588,6 +57645,13 @@
 	},
 /turf/open/floor/grass,
 /area/hydroponics/garden)
+"vKV" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/heads/hos)
 "vPE" = (
 /obj/item/assembly/signaler{
 	pixel_y = 8
@@ -88489,7 +88553,7 @@ aaa
 aaf
 aaf
 aaa
-abp
+adR
 abP
 aco
 acO
@@ -89003,7 +89067,7 @@ aaa
 aaa
 aaf
 aaa
-abp
+adR
 abO
 acq
 acq
@@ -89517,7 +89581,7 @@ aaa
 aaa
 aaa
 aaf
-abp
+adR
 abR
 abP
 abP
@@ -89777,8 +89841,8 @@ aaf
 abq
 abq
 abq
-abr
-abr
+rWA
+hIT
 abq
 abq
 aff
@@ -90545,9 +90609,9 @@ aaa
 aaa
 aaa
 aaf
-abr
+ldC
 abV
-acu
+mkv
 acS
 adp
 adP
@@ -90802,7 +90866,7 @@ aaf
 aaf
 aaf
 aaf
-abr
+vKV
 abU
 act
 acu
