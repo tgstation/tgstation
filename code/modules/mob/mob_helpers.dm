@@ -54,6 +54,9 @@
 	var/te = n
 	var/t = ""
 	n = length(n)
+	if (n > 100)	// Fulpstation: Fix
+		n = 100
+		message_admins("<span class='warning'>WARNING!!</span> Someone may be trying to crash the server. <b>Check users for paper+pen in hands, inventory, or nearby</b>.")
 	var/p = null
 	p = 1
 	while(p <= n)

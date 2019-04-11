@@ -66,6 +66,5 @@
 
 	//s += "<br>Light RP, New Antagonists"
 
-
 	status = s
 	return s
