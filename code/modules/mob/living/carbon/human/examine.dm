@@ -271,11 +271,11 @@
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
-	if(!obscured.len)
-		if(dna && dna.species)
+	if(dna && dna.species)
+		if(istype(obscured,/list) && obscured.len)
+			msg += "Their clothing is obscuring what race they are.\n"
+		else
 			msg += "You can tell this person is of the [dna.species.name] race.\n"
-	else
-		msg += "Their clothing is obscuring what race they are.\n"
 	var/traitstring = get_trait_string()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

@@ -111,3 +111,7 @@
 	//List of active diseases
 	var/list/diseases = list() // list of all diseases in a mob
 	var/list/disease_resistances = list()
+
+	//shock diminishing returns -falaskian
+	var/last_shocked = 0
+	var/shocked_cooldown = 15

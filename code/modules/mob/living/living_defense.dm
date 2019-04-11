@@ -305,6 +305,9 @@
 		return FALSE
 	if(has_trait(TRAIT_SHOCKIMMUNE))
 		return FALSE
+	if(last_shocked && last_shocked+shocked_cooldown > world.time)
+		return 0
+	last_shocked = world.time
 	if(shock_damage > 0)
 		if(!illusion)
 			adjustFireLoss(shock_damage)
