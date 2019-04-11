@@ -458,6 +458,21 @@
 	contains = list(/obj/item/storage/box/exileimp)
 	crate_name = "exile implant crate"
 
+/datum/supply_pack/security/armory/m1911
+	name = "M1911 Sidearm Crate"
+	desc = "For officers prefering a more classic taste in sidearms. Includes one M1911, and one magazine. Requires Armory access to open."
+	cost = 2000
+	small_item = TRUE
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag,
+					/obj/item/ammo_box/magazine/m45)
+
+/datum/supply_pack/security/armory/m1911ammo_single
+	name = "M1911 Spare Magazine"
+	desc = "Contains an 8-round magazine for the M1911. Requires Armory access to open."
+	cost = 750
+	contains = list(/obj/item/ammo_box/magazine/m45)
+	small_item = TRUE
+
 /datum/supply_pack/security/armory/mindshield
 	name = "Mindshield Implants Crate"
 	desc = "Prevent against radical thoughts with three Mindshield implants. Requires Armory access to open."
@@ -1078,6 +1093,13 @@
 	group = "Medical"
 	crate_type = /obj/structure/closet/crate/medical
 
+/datum/supply_pack/medical/firstaidbruises_single
+	name = "Bruise Treatment Kit Crate Single-Pack"
+	desc = "Contains one first aid kit focused on healing bruises and broken bones."
+	cost = 350
+	small_item = TRUE
+	contains = list(/obj/item/storage/firstaid/brute)
+
 /datum/supply_pack/medical/firstaidbruises
 	name = "Bruise Treatment Kit Crate"
 	desc = "Contains three first aid kits focused on healing bruises and broken bones."
@@ -1086,6 +1108,13 @@
 					/obj/item/storage/firstaid/brute,
 					/obj/item/storage/firstaid/brute)
 	crate_name = "brute treatment kit crate"
+
+/datum/supply_pack/medical/firstaidburns_single
+	name = "Burn Treatment Kit Crate Single-Pack"
+	desc = "Contains one first aid kit focused on healing severe burns."
+	cost = 350
+	small_item = TRUE
+	contains = list(/obj/item/storage/firstaid/fire)
 
 /datum/supply_pack/medical/firstaidburns
 	name = "Burn Treatment Kit Crate"
@@ -1096,6 +1125,13 @@
 					/obj/item/storage/firstaid/fire)
 	crate_name = "burn treatment kit crate"
 
+/datum/supply_pack/medical/firstaid_single
+	name = "First Aid Kit Crate Single-Pack"
+	desc = "Contains one first aid kit for healing most types of wounds."
+	cost = 300
+	small_item = TRUE
+	contains = list(/obj/item/storage/firstaid/regular)
+
 /datum/supply_pack/medical/firstaid
 	name = "First Aid Kit Crate"
 	desc = "Contains four first aid kits for healing most types of wounds."
@@ -1105,6 +1141,13 @@
 					/obj/item/storage/firstaid/regular,
 					/obj/item/storage/firstaid/regular)
 	crate_name = "first aid kit crate"
+
+/datum/supply_pack/medical/firstaidoxygen_single
+	name = "Oxygen Deprivation Kit Crate Single-Pack"
+	desc = "Contains three first aid kits focused on helping oxygen deprivation victims."
+	cost = 400
+	small_item = TRUE
+	contains = list(/obj/item/storage/firstaid/o2)
 
 /datum/supply_pack/medical/firstaidoxygen
 	name = "Oxygen Deprivation Kit Crate"
@@ -1123,6 +1166,13 @@
 					/obj/item/reagent_containers/medspray/sterilizine,
 					/obj/item/roller)
 	crate_name = "surgical supplies crate"
+
+/datum/supply_pack/medical/firstaidtoxins_single
+	name = "Toxin Treatment Kit Crate Single-Pack"
+	desc = "Contains one first aid kit focused on healing damage dealt by heavy toxins."
+	cost = 350
+	small_item = TRUE
+	contains = list(/obj/item/storage/firstaid/toxin)
 
 /datum/supply_pack/medical/firstaidtoxins
 	name = "Toxin Treatment Kit Crate"
@@ -1233,27 +1283,6 @@
 /datum/supply_pack/science
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
-
-/datum/supply_pack/science/robotics/mecha_odysseus
-	name = "Circuit Crate (Odysseus)"
-	desc = "Ever wanted to build your own giant medical robot? Well, now you can! Contains the Odysseus main control board and Odysseus peripherals board. Requires Robotics access to open."
-	cost = 2500
-	access = ACCESS_ROBOTICS
-	contains = list(/obj/item/circuitboard/mecha/odysseus/peripherals,
-					/obj/item/circuitboard/mecha/odysseus/main)
-	crate_name = "\improper Odysseus circuit crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-
-/datum/supply_pack/science/robotics/mecha_ripley
-	name = "Circuit Crate (Ripley APLU)"
-	desc = "Rip apart rocks and xenomorphs alike with the Ripley APLU. Contains the Main Ripley control board, as well as the Ripley Peripherals board. Requires Robotics access to open."
-	cost = 3000
-	access = ACCESS_ROBOTICS
-	contains = list(/obj/item/book/manual/ripley_build_and_repair,
-					/obj/item/circuitboard/mecha/ripley/main,
-					/obj/item/circuitboard/mecha/ripley/peripherals)
-	crate_name = "\improper APLU Ripley circuit crate"
-	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
@@ -2155,7 +2184,7 @@
 
 /datum/supply_pack/misc/book_crate
 	name = "Book Crate"
-	desc = "Surplus from the Nanotrasen Archives, these five books are sure to be good reads."
+	desc = "Surplus from the Nanotrasen Archives, These five books are sure to be good reads."
 	cost = 1500
 	contains = list(/obj/item/book/codex_gigas,
 					/obj/item/book/manual/random/,
