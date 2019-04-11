@@ -321,8 +321,8 @@
 			else
 				return
 		else if(user.hallucinating() && prob(1) && !operating)
-			user.electrocute_act(50, src, 1, illusion = TRUE) // We'll just go with a flat 50 damage, instead of doing powernet checks
-			return
+			if(user.electrocute_act(50, src, 1, illusion = TRUE)) // We'll just go with a flat 50 damage, instead of doing powernet checks
+				return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
 			if(cyclelinkedairlock.operating)
