@@ -2,6 +2,7 @@
 
 /datum/progressbar
 	var/goal = 1
+	var/last_progress = 0
 	var/image/bar
 	var/shown = 0
 	var/mob/user
@@ -32,7 +33,7 @@
 
 /datum/progressbar/proc/update(progress)
 	if (!user || !user.client)
-		shown = 0
+		shown = FALSE
 		return
 	if (user.client != client)
 		if (client)
@@ -41,10 +42,11 @@
 			user.client.images += bar
 
 	progress = CLAMP(progress, 0, goal)
+	last_progress = progress
 	bar.icon_state = "prog_bar_[round(((progress / goal) * 100), 5)]"
 	if (!shown)
 		user.client.images += bar
-		shown = 1
+		shown = TRUE
 
 /datum/progressbar/proc/shiftDown()
 	--listindex
@@ -53,8 +55,8 @@
 	animate(bar, pixel_y = dist_to_travel, time = 5, easing = SINE_EASING)
 
 /datum/progressbar/Destroy()
-	if(progress != goal)
-		bar.icon_state = "[icon_state]_fail"
+	if(last_progress != goal)
+		bar.icon_state = "[bar.icon_state]_fail"
 	for(var/I in user.progressbars[bar.loc])
 		var/datum/progressbar/P = I
 		if(P != src && P.listindex > listindex)
