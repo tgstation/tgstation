@@ -44,7 +44,14 @@
 		return
 	if(!chassis || chassis.occupant != owner)
 		return
-	chassis.go_out()
+	chassis.is_currently_ejecting = TRUE
+	to_chat(owner, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.<span>")
+	if(do_after(chassis.occupant,chassis.exit_delay, target = chassis))
+		to_chat(owner, "<span class='notice'>You exit the mech.<span>")
+		chassis.go_out()
+	else
+		to_chat(owner, "<span class='notice'>You stop exiting the mech. Weapons are enabled again.<span>")
+	chassis.is_currently_ejecting = FALSE
 
 
 /datum/action/innate/mecha/mech_toggle_internals

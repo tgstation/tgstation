@@ -49,7 +49,7 @@
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
-/datum/species/moth/check_weakness(obj/item/weapon, mob/living/attacker)
+/datum/species/moth/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 9 //flyswatters deal 10x damage to moths
 	return 0

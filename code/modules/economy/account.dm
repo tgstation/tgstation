@@ -5,7 +5,7 @@
 	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
 	var/account_id
-	var/welfare = TRUE
+	var/welfare = FALSE
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -41,12 +41,15 @@
 	return FALSE
 
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
+	var/money_to_transfer = account_job.paycheck * amt_of_paychecks
+	if(welfare)
+		money_to_transfer += PAYCHECK_WELFARE
 	if(free)
-		adjust_money(account_job.paycheck * amt_of_paychecks)
+		adjust_money(money_to_transfer)
 	else
 		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
 		if(D)
-			if(!transfer_money(D, account_job.paycheck * amt_of_paychecks))
+			if(!transfer_money(D, money_to_transfer))
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
@@ -54,10 +57,6 @@
 				return TRUE
 	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
-
-
-/datum/bank_account/proc/add_neetbux()
-	account_job.paycheck += PAYCHECK_WELFARE
 
 /datum/bank_account/proc/bank_card_talk(message, force)
 	if(!message || !bank_cards.len)

@@ -198,27 +198,7 @@
 /obj/docking_port/mobile/pirate
 	name = "pirate shuttle"
 	id = "pirateship"
-	var/engines_cooling = FALSE
-	var/engine_cooldown = 3 MINUTES
-
-/obj/docking_port/mobile/pirate/getStatusText()
-	. = ..()
-	if(engines_cooling)
-		return "[.] - Engines cooling."
-
-/obj/docking_port/mobile/pirate/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
-	. = ..()
-	if(. == DOCKING_SUCCESS && !is_reserved_level(new_dock.z))
-		engines_cooling = TRUE
-		addtimer(CALLBACK(src,.proc/reset_cooldown),engine_cooldown,TIMER_UNIQUE)
-
-/obj/docking_port/mobile/pirate/proc/reset_cooldown()
-	engines_cooling = FALSE
-
-/obj/docking_port/mobile/pirate/canMove()
-	if(engines_cooling)
-		return FALSE
-	return ..()
+	rechargeTime = 3 MINUTES
 
 /obj/machinery/suit_storage_unit/pirate
 	suit_type = /obj/item/clothing/suit/space

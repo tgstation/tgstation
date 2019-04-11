@@ -112,7 +112,7 @@
 		return
 	CB = CALLBACK(src, .proc/on_signal)
 
-/obj/item/organ/cyberimp/brain/anti_stun/Remove()
+/obj/item/organ/cyberimp/brain/anti_stun/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
 	QDEL_NULL(listener)
 

@@ -430,7 +430,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "R" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
