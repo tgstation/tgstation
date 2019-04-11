@@ -70,7 +70,7 @@
 
 	animate(bar, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
 	addtimer(CALLBACK(src, .proc/remove_from_client), PROGRESSBAR_ANIMATION_TIME, TIMER_CLIENT_TIME)
-	QDEL_IN(bar, PROGRESSBAR_ANIMATION_TIME) //for garbage collection safety
+	QDEL_IN(bar, PROGRESSBAR_ANIMATION_TIME + 1) //for garbage collection safety
 	. = ..()
 
 /datum/progressbar/proc/remove_from_client()
