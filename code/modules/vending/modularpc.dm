@@ -25,5 +25,5 @@
 	payment_department = ACCOUNT_SCI
 
 /obj/item/vending_refill/modularpc
-	machine_name = "Robotech Deluxe"
+	machine_name = "Deluxe Silicon Selections"
 	icon_state = "refill_engi"
