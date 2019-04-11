@@ -206,8 +206,6 @@
 	if(sparkler.activate())
 		..()
 
-//Security Critical Aeromation Matrices (SCAMs, or Stun-gun Boomerangs). Heavily borrowed from the Bananium Shield Code.
-
 /obj/item/melee/baton/scam
 	name = "SCAM Boomerang"
 	desc = "A device invented in 2486 for the great Space Emu War by the future confederacy of Neo-Australia, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when you thow!"
@@ -239,6 +237,7 @@
 			throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
 	else
 		return ..()
+
 
 /obj/item/melee/baton/scam/update_icon()
 	if(status)
