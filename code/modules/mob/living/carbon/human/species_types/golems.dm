@@ -516,7 +516,7 @@
 	attack_verb = "honk"
 	attack_sound = 'sound/items/airhorn2.ogg'
 	prefix = "Bananium"
-	special_names = list("Peel","Cream Pie","Split","Honk")
+	special_names = null
 
 	var/last_honk = 0
 	var/honkooldown = 0
@@ -805,7 +805,7 @@
 	name = "Plastic Golem"
 	id = "plastic golem"
 	prefix = "Plastic"
-	special_names = list("Sheet", "Bag")
+	special_names = list("Sheet", "Bag", "Bottle")
 	fixed_mut_color = "fff"
 	info_text = "As a <span class='danger'>Plastic Golem</span>, you are capable of ventcrawling and passing through plastic flaps as long as you are naked."
 
