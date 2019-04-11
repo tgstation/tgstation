@@ -53,6 +53,8 @@
 	animate(bar, pixel_y = dist_to_travel, time = 5, easing = SINE_EASING)
 
 /datum/progressbar/Destroy()
+	if(progress != goal)
+		bar.icon_state = "[icon_state]_fail"
 	for(var/I in user.progressbars[bar.loc])
 		var/datum/progressbar/P = I
 		if(P != src && P.listindex > listindex)
@@ -64,7 +66,7 @@
 		LAZYREMOVE(user.progressbars, bar.loc)
 
 	animate(bar, alpha = 0, time = 5)
-	addtimer(CALLBACK(src, /datum/progressbar/proc/remove_from_client), 5, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(src, .proc/remove_from_client), 5, TIMER_CLIENT_TIME)
 	QDEL_IN(bar, 5)
 	. = ..()
 
