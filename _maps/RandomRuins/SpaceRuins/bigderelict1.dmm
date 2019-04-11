@@ -814,7 +814,7 @@
 	start_charge = 0;
 	dir = 4;
 	name = "Power Storage APC";
-	pixel_x = 23;
+	pixel_x = 24;
 	pixel_y = 2
 	},
 /obj/structure/cable{
@@ -925,7 +925,7 @@
 	start_charge = 0;
 	dir = 2;
 	name = "Tradepost APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
