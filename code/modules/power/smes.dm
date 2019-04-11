@@ -132,16 +132,16 @@
 			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 				do_sparks(5, TRUE, src)
 				return
+			if(!terminal)
+				C.use(10)
+				user.visible_message(\
+					"[user.name] has built a power terminal.",\
+					"<span class='notice'>You build the power terminal.</span>")
 
-			C.use(10)
-			user.visible_message(\
-				"[user.name] has built a power terminal.",\
-				"<span class='notice'>You build the power terminal.</span>")
-
-			//build the terminal and link it to the network
-			make_terminal(T)
-			terminal.connect_to_network()
-			connect_to_network()
+				//build the terminal and link it to the network
+				make_terminal(T)
+				terminal.connect_to_network()
+				connect_to_network()
 		return
 
 	//crowbarring it !
