@@ -1,4 +1,5 @@
 #define PROGRESSBAR_HEIGHT 6
+#define PROGRESSBAR_ANIMATION_TIME 5
 
 /datum/progressbar
 	var/goal = 1
@@ -29,7 +30,7 @@
 	listindex = bars.len
 	bar.pixel_y = 0
 	bar.alpha = 0
-	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = 5, easing = SINE_EASING)
+	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 /datum/progressbar/proc/update(progress)
 	if (!user || !user.client)
@@ -52,7 +53,7 @@
 	--listindex
 	bar.pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1))
 	var/dist_to_travel = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)) - PROGRESSBAR_HEIGHT
-	animate(bar, pixel_y = dist_to_travel, time = 5, easing = SINE_EASING)
+	animate(bar, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 /datum/progressbar/Destroy()
 	if(last_progress != goal)
@@ -67,9 +68,9 @@
 	if(!bars.len)
 		LAZYREMOVE(user.progressbars, bar.loc)
 
-	animate(bar, alpha = 0, time = 5)
-	addtimer(CALLBACK(src, .proc/remove_from_client), 5, TIMER_CLIENT_TIME)
-	QDEL_IN(bar, 5)
+	animate(bar, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
+	addtimer(CALLBACK(src, .proc/remove_from_client), PROGRESSBAR_ANIMATION_TIME, TIMER_CLIENT_TIME)
+	QDEL_IN(bar, PROGRESSBAR_ANIMATION_TIME) //for garbage collection safety
 	. = ..()
 
 /datum/progressbar/proc/remove_from_client()
@@ -77,4 +78,5 @@
 		client.images -= bar
 		client = null
 
+#undef PROGRESSBAR_ANIMATION_TIME
 #undef PROGRESSBAR_HEIGHT
