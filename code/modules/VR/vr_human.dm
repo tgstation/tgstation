@@ -48,13 +48,13 @@
 	if(A.death)
 		to_chat(src, "<span class='userdanger'>It is unwise to attempt to break Virtual Reality.</span>")
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
-		src.dust()
+		dust()
 		return
-	if(A.pacifist && !src.has_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT))
-		src.add_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT)
+	if(A.pacifist && !has_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT))
+		add_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT)
 		to_chat(src, "<span class='notice'>You feel like your ability to fight other living beings is being suppressed.</span>")
-	else if(!A.pacifist && src.has_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT))
-		src.remove_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT)
+	else if(!A.pacifist && has_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT))
+		remove_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT)
 		to_chat(src, "<span class='notice'>You feel that your ability to fight is no longer being suppressed.</span>")
 
 /mob/living/carbon/human/virtual_reality/proc/revert_to_reality(deathchecks = TRUE)
@@ -69,7 +69,7 @@
 		vr_sleeper.vr_human = null
 		vr_sleeper = null
 	if(!real_mind && !vr_sleeper)
-		src.ghostize()
+		ghostize()
 	real_mind = null
 
 /datum/action/quit_vr
