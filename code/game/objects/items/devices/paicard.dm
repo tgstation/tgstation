@@ -149,7 +149,7 @@
 				src.add_overlay("pai-null")
 
 /obj/item/paicard/proc/alertUpdate()
-	audible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
+	audible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] bleeps electronically.</span>")
 
 /obj/item/paicard/emp_act(severity)
 	. = ..()
