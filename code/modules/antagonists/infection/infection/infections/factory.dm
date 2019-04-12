@@ -15,9 +15,6 @@
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/infection/factory/show_description()
-	return
-
 /obj/structure/infection/factory/scannerreport()
 	return "Will produce an infection spore every few seconds."
 

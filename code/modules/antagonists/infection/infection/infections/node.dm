@@ -17,9 +17,6 @@
 	. = ..()
 	base_pulse_cd = pulse_cooldown
 
-/obj/structure/infection/node/show_description()
-	return
-
 /obj/structure/infection/node/scannerreport()
 	return "Gradually expands and sustains nearby infectious structures."
 

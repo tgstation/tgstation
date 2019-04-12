@@ -19,9 +19,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/structure/infection/turret/show_description()
-	return
-
 /obj/structure/infection/turret/update_icon()
 	cut_overlays()
 	color = null
@@ -104,7 +101,7 @@
 		return
 
 	update_icon()
-	var/obj/item/projectile/A = new projectile_type(T)
+	var/obj/item/projectile/bullet/infection/A = new projectile_type(T)
 	A = alter_projectile(A, target)
 	playsound(loc, 'sound/weapons/gunshot_smg.ogg', 75, 1)
 
@@ -115,7 +112,17 @@
 	return A
 
 /obj/structure/infection/turret/proc/alter_projectile(obj/item/projectile/A, atom/movable/target)
+	for(var/datum/infection/upgrade/turret/U in upgrade_list)
+		if(!U.bought)
+			continue
+		A = U.alter_projectile(A, target)
 	return A
+
+/*
+//
+// Projectiles
+//
+*/
 
 /obj/item/projectile/bullet/infection
 	name = "bulky spore"
@@ -130,6 +137,14 @@
 	flag = "bullet"
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
+
+/obj/item/projectile/bullet/infection/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	var/obj/structure/infection/T = firer
+	for(var/datum/infection/upgrade/turret/U in T.upgrade_list)
+		if(!U.bought)
+			continue
+		U.projectile_hit(target)
 
 /obj/item/projectile/bullet/infection/infernal
 	name = "burning spore"
@@ -146,30 +161,41 @@
 	range = 150
 	homing_turn_speed = 15
 
+/obj/item/projectile/bullet/infection/flak
+	name = "flak spore"
+	icon = 'icons/mob/blob.dmi'
+	icon_state = "flak_bullet"
+	damage = 8
+	range = 2
+	speed = 2
+
+/*
+//
+// Turrets
+//
+*/
+
 /obj/structure/infection/turret/resistant
 	name = "resistant turret"
 	desc = "A very bulky turret fit for a war of attrition."
 	max_integrity = 450
-
-/obj/structure/infection/turret/resistant/alter_projectile(obj/item/projectile/A, atom/movable/target)
-	return A
+	upgrade_types = list(/datum/infection/upgrade/turret/turn_speed, /datum/infection/upgrade/turret/flak_homing, /datum/infection/upgrade/turret/stamina_damage)
 
 /obj/structure/infection/turret/infernal
 	name = "infernal turret"
 	desc = "A fiery turret intent on disintegrating its enemies."
 	projectile_type = /obj/item/projectile/bullet/infection/infernal // the bullet fired for this turret
-
-/obj/structure/infection/turret/infernal/alter_projectile(obj/item/projectile/A, atom/movable/target)
-	return A
+	upgrade_types = list(/datum/infection/upgrade/turret/turn_speed, /datum/infection/upgrade/turret/flak_homing, /datum/infection/upgrade/turret/stamina_damage)
 
 /obj/structure/infection/turret/homing
 	name = "homing turret"
 	desc = "A frail looking turret that seems to track your every movement."
 	max_integrity = 75
 	projectile_type = /obj/item/projectile/bullet/infection/homing // the bullet fired for this turret
-	upgrade_types = list(/datum/infection/upgrade/homing/turn_speed, /datum/infection/upgrade/homing/flak_homing, /datum/infection/upgrade/homing/stamina_damage)
+	upgrade_types = list(/datum/infection/upgrade/turret/turn_speed, /datum/infection/upgrade/turret/flak_homing, /datum/infection/upgrade/turret/stamina_damage)
 
 /obj/structure/infection/turret/homing/alter_projectile(obj/item/projectile/A, atom/movable/target)
+	A = ..()
 	A.set_homing_target(target)
 	return A
 

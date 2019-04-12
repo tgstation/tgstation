@@ -21,7 +21,7 @@
 	var/mob/camera/commander/overmind
 	var/list/angles = list() // possible angles for the node to expand on
 	var/timecreated
-	var/list/upgrades_list = list() // unlockable upgrades
+	var/list/upgrade_list = list() // unlockable upgrades
 	var/list/upgrade_types = list() // the types of upgrades
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
@@ -37,7 +37,7 @@
 	timecreated = world.time
 	if(upgrade_types.len > 0)
 		for(var/upgrade_type in upgrade_types)
-			upgrades_list += new upgrade_type()
+			upgrade_list += new upgrade_type()
 
 /obj/structure/infection/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -59,7 +59,7 @@
 /obj/structure/infection/proc/upgrade_menu(var/mob/camera/commander/C)
 	var/list/choices = list()
 	var/list/upgrades_temp = list()
-	for(var/datum/infection/upgrade/U in upgrades_list)
+	for(var/datum/infection/upgrade/U in upgrade_list)
 		if(U.times == 0)
 			continue
 		var/upgrade_index = "[U.name] ([U.cost])"
