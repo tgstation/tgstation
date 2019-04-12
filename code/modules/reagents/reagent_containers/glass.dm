@@ -339,6 +339,7 @@
 
 /obj/item/reagent_containers/glass/mortar
 	name = "mortar"
+	desc = "Use this with a pestle to extract chemicals out of items."
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 100
@@ -352,35 +353,35 @@
 	if(grinded)
 		grinded.forceMove(drop_location())
 		grinded = null
-		to_chat(user, "<span class='danger'>you eject the item inside </span>")
+		to_chat(user, "You eject the item inside.")
 
 /obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
 	if(istype(I,/obj/item/pestle))
 		if(grinded)
-			to_chat(user, "<span class='danger'>you start grinding...</span>")
-			if(do_after(user, 20, target = src))
+			to_chat(user, "You start grinding...")
+			if(do_after(user, 25, target = src))
 				user.adjustStaminaLoss(40)
 				if(grinded.juice_results) //prioritize juicing
 					grinded.on_juice()
 					reagents.add_reagent_list(grinded.juice_results)
-					to_chat(user, "<span class='danger'>you juice [grinded] in fine liquid </span>")
+					to_chat(user, "You juice [grinded] into a fine liquid.")
 					qdel(grinded)
 					grinded = null
 					return
 				reagents.add_reagent_list(grinded.grind_results)
-				to_chat(user, "<span class='danger'>you broke [grinded] in fine powder </span>")
+				to_chat(user, "You break [grinded] into powder.")
 				qdel(grinded)
 				grinded = null
 				return
 			return
 		else
-			to_chat(user, "<span class='danger'> there is nothign to grind </span>")
+			to_chat(user, "<span class='danger'> There is nothing to grind! </span>")
 			return
 	if(grinded)
-		to_chat(user, "<span class='danger'>there is something inside already</span>")
+		to_chat(user, "<span class='danger'> There is something inside already! </span>")
 		return
 	if(I.juice_results || I.grind_results)
 		I.forceMove(src)
 		grinded = I
 		return
-	to_chat(user, "<span class='danger'>you cant grind this </span>")
+	to_chat(user, "<span class='danger'> You can't grind this! </span>")
