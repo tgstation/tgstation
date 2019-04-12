@@ -89,7 +89,7 @@
 	var/enclosed = TRUE //Set to false for open-cockpit mechs
 	var/silicon_icon_state = null //if the mech has a different icon when piloted by an AI or MMI
 	var/is_currently_ejecting = FALSE //Mech cannot use equiptment when true, set to true if pilot is trying to exit mech
-	
+
 	//Action datums
 	var/datum/action/innate/mecha/mech_eject/eject_action = new
 	var/datum/action/innate/mecha/mech_toggle_internals/internals_action = new
@@ -301,6 +301,12 @@
 			to_chat(user, "[src] appears to be piloting itself...")
 		else if(occupant && occupant != user) //!silicon_pilot implied
 			to_chat(user, "You can see [occupant] inside.")
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				for(var/O in H.held_items)
+					if(istype(O, /obj/item/gun))
+						to_chat(user, "<span class='warning'>It looks like you can hit the pilot directly if you target the center or above.</span>")
+						break //in case user is holding two guns
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -414,6 +420,10 @@
 	if(lights)
 		var/lights_energy_drain = 2
 		use_power(lights_energy_drain)
+
+	if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
+		visible_message("<span class='warning'>[occupant] tumbles out of the cockpit!</span>")
+		go_out() //Maybe we should install seat belts?
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()
@@ -843,7 +853,7 @@
 
 
 /obj/mecha/MouseDrop_T(mob/M, mob/user)
-	if (!user.canUseTopic(src) || (user != M))
+	if((user != M) || user.incapacitated() || !Adjacent(user))
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.
 		return

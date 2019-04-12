@@ -41,6 +41,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	payment_department = ACCOUNT_SRV
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
+	var/purchase_message_cooldown
+	var/last_shopper
 
 	// To be filled out at compile time
 	var/list/products	= list()	//For each, use the following pattern:
@@ -481,7 +483,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 			if(D)
 				D.adjust_money(price_to_use)
-		say("Thank you for shopping with [src]!")
+		if(last_shopper != usr || purchase_message_cooldown < world.time)
+			say("Thank you for shopping with [src]!")
+			purchase_message_cooldown = world.time + 5 SECONDS
+			last_shopper = usr
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)

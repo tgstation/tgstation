@@ -375,23 +375,28 @@
 		return TRUE
 
 /////////////////////////////////// DISABILITIES ////////////////////////////////////
-/mob/living/proc/add_quirk(quirk, spawn_effects) //separate proc due to the way these ones are handled
-	if(has_trait(quirk))
+/mob/living/proc/add_quirk(quirktype, spawn_effects) //separate proc due to the way these ones are handled
+	if(has_trait(quirktype))
 		return
-	if(!SSquirks || !SSquirks.quirks[quirk])
+	var/datum/quirk/T = quirktype
+	var/qname = initial(T.name)
+	if(!SSquirks || !SSquirks.quirks[qname])
 		return
-	var/datum/quirk/T = SSquirks.quirks[quirk]
-	new T (src, spawn_effects)
+	new quirktype (src, spawn_effects)
 	return TRUE
 
-/mob/living/proc/remove_quirk(quirk)
-	var/datum/quirk/T = roundstart_quirks[quirk]
-	if(T)
-		qdel(T)
-		return TRUE
+/mob/living/proc/remove_quirk(quirktype)
+	for(var/datum/quirk/Q in roundstart_quirks)
+		if(Q.type == quirktype)
+			qdel(Q)
+			return TRUE
+	return FALSE
 
-/mob/living/proc/has_quirk(quirk)
-	return roundstart_quirks[quirk]
+/mob/living/proc/has_quirk(quirktype)
+	for(var/datum/quirk/Q in roundstart_quirks)
+		if(Q.type == quirktype)
+			return TRUE
+	return FALSE
 
 /////////////////////////////////// TRAIT PROCS ////////////////////////////////////
 

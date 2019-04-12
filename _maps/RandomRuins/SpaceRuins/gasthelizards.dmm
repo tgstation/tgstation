@@ -175,7 +175,7 @@
 	dir = 1;
 	name = "Worn-out APC";
 	pixel_x = 1;
-	pixel_y = 26
+	pixel_y = 23
 	},
 /obj/machinery/light{
 	dir = 1

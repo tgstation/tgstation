@@ -1410,7 +1410,7 @@
 	dir = 2;
 	locked = 1;
 	name = "Worn-out APC";
-	pixel_y = -25;
+	pixel_y = -23;
 	req_access = null;
 	req_access_txt = "150";
 	start_charge = 0
@@ -3413,7 +3413,7 @@
 	dir = 4;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = 25;
+	pixel_x = 24;
 	req_access = null;
 	start_charge = 100
 	},
@@ -4980,7 +4980,7 @@
 	dir = 1;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_y = 25;
+	pixel_y = 23;
 	req_access = null;
 	start_charge = 100
 	},

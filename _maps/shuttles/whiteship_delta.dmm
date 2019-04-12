@@ -183,7 +183,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Bar APC";
-	pixel_x = -24;
+	pixel_x = -25;
 	req_access = null
 	},
 /obj/structure/spider/stickyweb,
@@ -478,7 +478,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Frigate Crew Quarters APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1229,7 +1229,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Bridge APC";
-	pixel_x = -24;
+	pixel_x = -25;
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -2271,7 +2271,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Cargo APC";
-	pixel_x = -24;
+	pixel_x = -25;
 	req_access = null
 	},
 /turf/open/floor/plasteel,
