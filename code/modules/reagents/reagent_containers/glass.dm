@@ -330,3 +330,52 @@
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
+
+/obj/item/mortar
+	name = "mortar"
+	desc = "i exist"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "largebottle"
+
+/obj/item/reagent_containers/glass/grinder
+	name = "grinder"
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
+	volume = 100
+	reagent_flags = OPENCONTAINER
+	spillable = TRUE
+	resistance_flags = ACID_PROOF
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "smallbottle"
+	var/obj/item/grinded
+
+/obj/item/reagent_containers/glass/grinder/AltClick(mob/user)
+	if(grinded)
+		grinded.forceMove(drop_location())
+		grinded = null
+		to_chat(user, "<span class='danger'>you eject the item inside </span>")
+
+/obj/item/reagent_containers/glass/grinder/attackby(obj/item/I, mob/user)
+	if(istype(I,/obj/item/mortar))
+		if(grinded)
+			to_chat(user, "<span class='danger'>you start grinding...</span>")
+		//	if(do_after(user, 20, target = src))
+			if(grinded.juice_results) //prioritize juicing
+				grinded.on_juice()
+				reagents.add_reagent_list(grinded.juice_results)
+				qdel(grinded)
+				return
+			grinded.on_grind()// test if needed
+			reagents.add_reagent_list(grinded.grind_results)
+			to_chat(user, "<span class='danger'>you broke [grinded] in fine powder </span>")
+			qdel(grinded)
+			grinded = null
+			return
+		else
+			to_chat(user, "<span class='danger'> there is nothign to grind </span>")
+			return
+	if(I.juice_results || I.grind_results)
+		I.forceMove(src)
+		grinded = I
+		return
+	to_chat(user, "<span class='danger'>you cant grind this </span>")
