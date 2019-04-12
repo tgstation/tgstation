@@ -344,7 +344,6 @@
 	volume = 100
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
-	resistance_flags = ACID_PROOF
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	var/obj/item/grinded
@@ -355,21 +354,27 @@
 		grinded = null
 		to_chat(user, "<span class='danger'>you eject the item inside </span>")
 
-/obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/user)
+/obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
+	if(grinded)
+		to_chat(user, "<span class='danger'>there is something inside already</span>")
+		return
 	if(istype(I,/obj/item/pestle))
 		if(grinded)
 			to_chat(user, "<span class='danger'>you start grinding...</span>")
-		//	if(do_after(user, 20, target = src))
-			if(grinded.juice_results) //prioritize juicing
-				grinded.on_juice()
-				reagents.add_reagent_list(grinded.juice_results)
+			if(do_after(user, 20, target = src))
+				user.adjustStaminaLoss(40)
+				if(grinded.juice_results) //prioritize juicing
+					grinded.on_juice()
+					reagents.add_reagent_list(grinded.juice_results)
+					to_chat(user, "<span class='danger'>you juice [grinded] in fine liquid </span>")
+					qdel(grinded)
+					grinded = null
+					return
+				reagents.add_reagent_list(grinded.grind_results)
+				to_chat(user, "<span class='danger'>you broke [grinded] in fine powder </span>")
 				qdel(grinded)
+				grinded = null
 				return
-			grinded.on_grind()// test if needed
-			reagents.add_reagent_list(grinded.grind_results)
-			to_chat(user, "<span class='danger'>you broke [grinded] in fine powder </span>")
-			qdel(grinded)
-			grinded = null
 			return
 		else
 			to_chat(user, "<span class='danger'> there is nothign to grind </span>")
