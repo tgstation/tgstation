@@ -147,6 +147,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "medsci_headset"
 	keyslot = new /obj/item/encryptionkey/headset_medsci
 
+/obj/item/radio/headset/headset_srvsec
+	name = "law and order headset"
+	desc = "In the criminal justice headset, the encryption keys are represented by two separate but equally important groups. Sec, who investigates crime, and Service, who provide services. These are their comms."
+	icon_state = "srvsec_headset"
+	keyslot = new /obj/item/encryptionkey/headset_srvsec
+
 /obj/item/radio/headset/headset_com
 	name = "command radio headset"
 	desc = "A headset with a commanding channel."
