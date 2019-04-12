@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_srvsec
 	name = "law and order headset"
-	desc = "In the criminal justice headset, the encryption keys are represented by two separate but equally important groups. Sec, who investigates crime, and Service, who provide services. These are their comms."
+	desc = "In the criminal justice headset, the encryption keys are represented by two separate but equally important groups. Sec, who investigate crime, and Service, who provide services. These are their comms."
 	icon_state = "srvsec_headset"
 	keyslot = new /obj/item/encryptionkey/headset_srvsec
 
