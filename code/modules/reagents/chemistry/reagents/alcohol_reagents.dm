@@ -2035,9 +2035,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(M?.mind?.has_antag_datum(/datum/antagonist/wizard))
 		M.heal_bodypart_damage(1,1,1)
-		M.adjustBruteLoss(-1,0)
 		M.adjustOxyLoss(-1,0)
-		M.adjustFireLoss(-1,0)
 		M.adjustToxLoss(-1,0)
 	return ..()
 
@@ -2056,10 +2054,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/M)
 //Bugs should not drink Bug spray.
 	if(ismoth(M) || isflyperson(M))
-		M.adjustOxyLoss(0.5,0)
 		M.adjustToxLoss(1,0)
+	return ..()
+/datum/reagent/consumable/ethanol/bug_spray/on_mob_add(mob/living/carbon/M)
+
+	if(ismoth(M) || isflyperson(M))
 		M.emote("scream")
 	return ..()
+
 
 /datum/reagent/consumable/ethanol/applejack
 	name = "Applejack"
