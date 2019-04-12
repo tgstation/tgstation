@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 		return
 	not_reset = FALSE
 	color = COLOR_ALMOST_BLACK
-	for(var/mob/living/carbon/human/H in src.contents)
+	for(var/mob/living/carbon/human/H in contents)
 		var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
 		if(H)
 			findspell.Click(H)
