@@ -355,9 +355,6 @@
 		to_chat(user, "<span class='danger'>you eject the item inside </span>")
 
 /obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
-	if(grinded)
-		to_chat(user, "<span class='danger'>there is something inside already</span>")
-		return
 	if(istype(I,/obj/item/pestle))
 		if(grinded)
 			to_chat(user, "<span class='danger'>you start grinding...</span>")
@@ -379,6 +376,9 @@
 		else
 			to_chat(user, "<span class='danger'> there is nothign to grind </span>")
 			return
+	if(grinded)
+		to_chat(user, "<span class='danger'>there is something inside already</span>")
+		return
 	if(I.juice_results || I.grind_results)
 		I.forceMove(src)
 		grinded = I
