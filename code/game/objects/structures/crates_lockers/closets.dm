@@ -190,6 +190,8 @@
 	if(!opened || !can_close(user))
 		return 0
 	take_contents()
+	for(var/atom/movable/AM in src)
+		AM.add_hiddenprint(user)
 	playsound(loc, close_sound, 15, 1, -3)
 	climb_time = initial(climb_time)
 	opened = FALSE

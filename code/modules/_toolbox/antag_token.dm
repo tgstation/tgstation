@@ -127,6 +127,7 @@ client/verb/check_antag_token()
 				tokens--
 				tokens = max(tokens,0)
 				S["[ckey]"] << tokens
+				SSantagtokens.cache_a_token(ckey)
 				GLOB.used_antag_tokens[mob.mind] = "[antagtype]"
 				return 1
 	to_chat(src, "<B>You can't use an antagonist token right now.</B>")

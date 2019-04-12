@@ -21,7 +21,41 @@ SUBSYSTEM_DEF(antagtokens)
 	var/datum/game_mode/traitor/T = new()
 	GLOB.memorized_restricted_jobs = T.protected_jobs
 	qdel(T)
+	//seeing who used an antag token when the server crashed, if it crashed.
+	var/savefile/S = new /savefile(ANTAGTOKENMINUTESPATH)
+	if(S)
+		var/list/uncanceled_antag_tokens
+		S["activated_tokens"] >> uncanceled_antag_tokens
+		if(istype(uncanceled_antag_tokens) && uncanceled_antag_tokens.len)
+			var/savefile/TS = new /savefile(GLOB.antagtokenpath)
+			if(TS)
+				for(var/t in uncanceled_antag_tokens)
+					if(istext(t))
+						var/tokens
+						TS["[t]"] >> tokens
+						if(!isnum(tokens))
+							tokens = 0
+						tokens++
+						TS["[t]"] << tokens
+	wipe_cached_tokens(S)
 	. = ..()
+
+/datum/controller/subsystem/proc/wipe_cached_tokens(savefile/S)
+	if(!S)
+		S = new /savefile(ANTAGTOKENMINUTESPATH)
+	if(S)
+		S["activated_tokens"] << list()
+
+/datum/controller/subsystem/proc/cache_a_token(ckey)
+	if(!ckey || !istext(ckey))
+		return
+	var/savefile/S = new /savefile(ANTAGTOKENMINUTESPATH)
+	if(S)
+		var/list/uncanceled_antag_tokens
+		S["activated_tokens"] >> uncanceled_antag_tokens
+		if(istype(uncanceled_antag_tokens) && !(ckey in uncanceled_antag_tokens))
+			uncanceled_antag_tokens += ckey
+			S["activated_tokens"] << uncanceled_antag_tokens
 
 /datum/controller/subsystem/antagtokens/fire(resumed)
 	if(!last_check)

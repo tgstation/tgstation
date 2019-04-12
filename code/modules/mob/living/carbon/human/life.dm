@@ -331,7 +331,7 @@
 		return
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!istype(heart))
-		adjustOxyLoss(8)
+		adjustBruteLoss(8)
 		return
 
 	if(!can_heartattack(heart))

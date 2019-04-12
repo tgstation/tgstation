@@ -202,6 +202,9 @@ SUBSYSTEM_DEF(ticker)
 			scripture_states = scripture_unlock_alert(scripture_states)
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
+				log_game("The round has ended")
+				log_attack("The round has ended")
+				SSantagtokens.wipe_cached_tokens()
 				current_state = GAME_STATE_FINISHED
 				world.update_status()
 				toggle_ooc(TRUE) // Turn it on

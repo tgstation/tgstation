@@ -53,6 +53,19 @@
 				cache.warnings_experienced += cacheentry
 				client.inform_to_adminhelp_death()
 	stat = DEAD
+	var/alert_ssd = null
+	if(!client)
+		if(ckey)
+			alert_ssd = ckey
+		else if(mind)
+			for(var/mob/dead/observer/O in GLOB.player_list)
+				if(O.mind == mind && O.ckey)
+					alert_ssd = O.ckey
+					break
+		if(alert_ssd)
+			message_admins("An SSD player has died. [real_name]([alert_ssd])")
+			log_game("An SSD player has died. [real_name]([alert_ssd])")
+			log_attack("An SSD player has died. [real_name]([alert_ssd])")
 	unset_machine()
 	timeofdeath = world.time
 	tod = station_time_timestamp()

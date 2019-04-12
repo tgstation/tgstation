@@ -163,8 +163,14 @@
 
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
-
-	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
+	var/themaxhealth = mob_occupant.getMaxHealth()
+	if(istype(mob_occupant, /mob/living/carbon))
+		var/mob/living/carbon/C = mob_occupant
+		var/list/obj/item/bodypart/parts = C.get_damageable_bodyparts()
+		for(var/obj/item/bodypart/B in parts)
+			if(B.status == BODYPART_ROBOTIC && B.get_damage())
+				themaxhealth -= B.get_damage()
+	if(mob_occupant.health >= themaxhealth) // Don't bother with fully healed people.
 		on = FALSE
 		update_icon()
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.

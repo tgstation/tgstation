@@ -365,6 +365,9 @@
 		return 1
 	return 0
 
+/obj/machinery/door/window/attack_ai(mob/user)
+	return attack_hand(user)
+
 /obj/machinery/door/window/northleft
 	dir = NORTH
 
