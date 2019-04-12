@@ -331,14 +331,14 @@
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
 
-/obj/item/mortar
-	name = "mortar"
+/obj/item/pestle
+	name = "pestle"
 	desc = "i exist"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "largebottle"
 
-/obj/item/reagent_containers/glass/grinder
-	name = "grinder"
+/obj/item/reagent_containers/glass/mortar
+	name = "mortar"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 100
@@ -349,14 +349,14 @@
 	icon_state = "smallbottle"
 	var/obj/item/grinded
 
-/obj/item/reagent_containers/glass/grinder/AltClick(mob/user)
+/obj/item/reagent_containers/glass/mortar/AltClick(mob/user)
 	if(grinded)
 		grinded.forceMove(drop_location())
 		grinded = null
 		to_chat(user, "<span class='danger'>you eject the item inside </span>")
 
-/obj/item/reagent_containers/glass/grinder/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/mortar))
+/obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/user)
+	if(istype(I,/obj/item/pestle))
 		if(grinded)
 			to_chat(user, "<span class='danger'>you start grinding...</span>")
 		//	if(do_after(user, 20, target = src))
