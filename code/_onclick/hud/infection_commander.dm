@@ -79,10 +79,10 @@
 		I.evolve_menu()
 
 /obj/screen/infection/TurretInfection
-	icon = 'icons/mob/infection.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "ui_turret"
 	name = "Produce Turret Infection (70)"
-	desc = "Produces a turret infection for 70 resources. <br>Turret Infections will automatically fire at nearby intruders."
+	desc = "Produces a turret infection for 70 resources.<br>Turret Infections will automatically fire at nearby intruders."
 
 /obj/screen/infection/TurretInfection/Click()
 	if(iscommander(usr))

@@ -5,8 +5,6 @@
 	desc = "A thin spire of slightly swaying tendrils."
 	max_integrity = 60
 	point_return = 15
-	upgrade_type = "Resource"
-	cost_per_level = 20
 	var/resource_delay = 0
 	var/produced = 1 // points produced
 
@@ -14,12 +12,11 @@
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/infection/resource/do_upgrade()
-	produced += 2
+/obj/structure/infection/resource/upgrade_menu(var/mob/camera/commander/C)
+	return
 
-/obj/structure/infection/resource/extra_description()
-	. = "Currently producing [produced] points every 2 seconds."
-	. += "\nUpgrade: Increases points produced to [produced + 2]."
+/obj/structure/infection/resource/show_description()
+	return
 
 /obj/structure/infection/resource/scannerreport()
 	return "Gradually supplies the infection with resources, increasing the rate of expansion."

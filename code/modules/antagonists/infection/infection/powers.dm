@@ -189,32 +189,15 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set desc = "Improve yourself and your army to be unstoppable."
 	if(upgrade_points > 0)
 		var/list/choices = list(
-			"Summon Sentient Spore" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
-			"Structure Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
+			"Summon Sentient Spore (1)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
+			"Ability Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
 			"Effect Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
 		)
 		var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-		if(choice == "Summon Sentient Spore")
+		if(choice == "Summon Sentient Spore (1)")
 			create_spore()
 		else if(choice == "Structure Upgrades")
-			choices = list(
-				"Upgrade Infection Resource" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
-				"Upgrade Infection Node" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_node_overlay"),
-				"Upgrade Infection Factory" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
-				"Upgrade Infection Shield" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_shield_radial"),
-				"Upgrade Infection Turret" = image(icon = 'icons/mob/infection.dmi', icon_state = "infection_turret")
-			)
-			choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-			if(choice == "Upgrade Infection Resource")
-				upgrade("Resource")
-			else if(choice == "Upgrade Infection Node")
-				upgrade("Node")
-			else if(choice == "Upgrade Infection Factory")
-				upgrade("Factory")
-			else if(choice == "Upgrade Infection Shield")
-				upgrade("Shield")
-			else if(choice == "Upgrade Infection Turret")
-				upgrade("Turret")
+			return
 		else if(choice == "Effect Unlocks")
 			// add stuff like
 			// stronger natural core defenses
@@ -224,15 +207,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 			return
 	else
 		to_chat(src, "We lack the necessary resources to upgrade ourself. Absorb the beacons to gain their power.")
-
-/mob/camera/commander/proc/upgrade(var/stat)
-	if(upgrade_levels[stat] >= max_upgrade_levels[stat])
-		to_chat(src, "You are already at the maximum level for this upgrade.")
-		return FALSE
-	upgrade_levels[stat]++
-	upgrade_points--
-	to_chat(src, "You may now upgrade [stat] infections to level [upgrade_levels[stat]].")
-	return TRUE
 
 /mob/camera/commander/verb/revert()
 	set category = "Infection"

@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 
 /obj/structure/beacon_generator
 	name = "beacon generator"
-	icon = 'icons/mob/infection.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "generator"
 	light_range = 4
 	desc = "It sustains the barriers."
@@ -139,16 +139,9 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 /obj/structure/beacon_generator/singularity_pull()
 	return
 
-/obj/structure/beacon_generator/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/living/simple_animal/hostile/infection))
-		return 0
-	if(istype(mover, /obj/structure/infection))
-		return 0
-	return 1
-
 /obj/structure/beacon_wall
 	name = "beacon wall"
-	icon = 'icons/mob/infection.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "beaconbarrier"
 	light_range = 4
 	desc = "A generated wall keeping any infection out."
@@ -170,7 +163,9 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 
 /obj/structure/beacon_wall/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/infection))
-		return 0
+		return FALSE
 	if(istype(mover, /obj/structure/infection))
-		return 0
-	return 1
+		return FALSE
+	if(istype(mover, /obj/item/projectile/bullet/infection))
+		return FALSE
+	return TRUE

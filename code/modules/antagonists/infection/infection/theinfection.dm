@@ -7,8 +7,8 @@
 	density = FALSE
 	opacity = 0
 	anchored = TRUE
-	layer = BELOW_MOB_LAYER
-	CanAtmosPass = ATMOS_PASS_PROC
+	layer = BELOW_OBJ_LAYER
+	CanAtmosPass = ATMOS_PASS_NO
 	var/point_return = 0 //How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
@@ -21,9 +21,6 @@
 	var/mob/camera/commander/overmind
 	var/list/angles = list() // possible angles for the node to expand on
 	var/timecreated
-	var/infection_level = 1 // upgrade level of infection
-	var/cost_per_level = 0 // multiplied by current level
-	var/upgrade_type = "Base" // stat type of structure upgraded by overmind
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -40,54 +37,27 @@
 /obj/structure/infection/proc/creation_action() //When it's created by the overmind, do this.
 	return
 
-/obj/structure/infection/proc/show_upgrade_menu(var/mob/camera/commander/C)
+/obj/structure/infection/proc/show_infection_menu(var/mob/camera/commander/C)
 	if(C != overmind)
 		return FALSE
 	var/list/choices = list(
-		"Upgrade [upgrade_type] Infection" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
-		"Display Information" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help")
+		"Upgrade Structure" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
+		"Structure Overview" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help_radial")
 	)
 	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
-	if(choice == "Upgrade [upgrade_type] Infection")
-		upgrade_self()
-	if(choice == "Display Information")
-		show_description()
+	if(choice == "Upgrade Structure")
+		upgrade_menu(overmind)
+	else if(choice == "Structure Overview")
+		var/desc = show_description()
+		if(desc)
+			to_chat(overmind, desc)
 	return TRUE
 
+/obj/structure/infection/proc/upgrade_menu(var/mob/camera/commander/C)
+	return
+
 /obj/structure/infection/proc/show_description()
-	to_chat(overmind, "\nCurrent level is [infection_level].\n[cost_to_upgrade()] points to upgrade.\nMax level of this type is [current_max_upgrade()].")
-	if(extra_description())
-		to_chat(overmind, extra_description())
-
-/obj/structure/infection/proc/extra_description()
 	return
-
-/obj/structure/infection/proc/upgrade_self()
-	if(!can_upgrade())
-		to_chat(overmind, "<span class='warning'>Unable, maximum level must be increased through evolution.</span>")
-		return FALSE
-	if(overmind.infection_points >= cost_to_upgrade())
-		infection_level++
-		overmind.infection_points -= cost_to_upgrade()
-		to_chat(overmind, "<span class='warning'>Successfully upgraded structure to level [infection_level].</span>")
-		do_upgrade()
-		return TRUE
-	to_chat(overmind, "<span class='warning'>Unable, we require [cost_to_upgrade()] points.</span>")
-	return FALSE
-
-/obj/structure/infection/proc/do_upgrade()
-	return
-
-/obj/structure/infection/proc/cost_to_upgrade()
-	return infection_level * cost_per_level
-
-/obj/structure/infection/proc/current_max_upgrade()
-	return overmind.upgrade_levels[upgrade_type]
-
-/obj/structure/infection/proc/can_upgrade()
-	if(infection_level < current_max_upgrade())
-		return TRUE
-	return FALSE
 
 /obj/structure/infection/Destroy()
 	if(atmosblock)
@@ -195,7 +165,7 @@
 
 /obj/structure/infection/proc/ConsumeTile()
 	for(var/atom/A in loc)
-		if(isliving(A))
+		if(isliving(A) || ismecha(A))
 			continue
 		A.blob_act(src)
 	if(iswallturf(loc))
@@ -226,7 +196,7 @@
 		I.update_icon()
 		I.ConsumeTile()
 		if(T.dynamic_lighting == 0)
-			T.dynamic_lighting == 1
+			T.dynamic_lighting = 1
 			T.lighting_build_overlay()
 		return I
 	else
@@ -343,7 +313,7 @@
 	health_regen = 1
 	brute_resist = 0.25
 
-/obj/structure/infection/normal/show_upgrade_menu(var/mob/camera/commander/C)
+/obj/structure/infection/normal/show_infection_menu(var/mob/camera/commander/C)
 	return
 
 /obj/structure/infection/normal/CanPass(atom/movable/mover, turf/target)
@@ -358,6 +328,16 @@
 	if(ismob(mover))
 		var/mob/M = mover
 		M.add_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update=TRUE, priority=100, multiplicative_slowdown=3)
+	// ambience, would use area code but fairly certain you cant change areas in runtime properly, if you can just use that for tons of this stuff tbh
+	if(isliving(mover))
+		var/mob/living/L = mover
+		if(prob(35))
+			if(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE))
+				var/sound = pick(MINING)
+				if(!L.client.played)
+					SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
+					L.client.played = TRUE
+					addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
 /obj/structure/infection/normal/Uncrossed(atom/movable/mover)
 	if(ismob(mover))

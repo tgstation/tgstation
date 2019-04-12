@@ -33,6 +33,9 @@
 					   Good luck. I'll be here to notify you should anything change for better or for worse.",
 					  "Biohazard Containment Commander", 'sound/misc/notice1.ogg')
 
+/obj/structure/infection/core/show_infection_menu(var/mob/camera/commander/C)
+	return
+
 /obj/structure/infection/core/scannerreport()
 	return "Directs the infection's expansion, gradually expands, and sustains nearby infection spores and infesternauts."
 
@@ -125,11 +128,7 @@
 	for(var/turf/T in turrets)
 		var/obj/structure/infection/normal/I = locate(/obj/structure/infection/normal) in T.contents
 		if(I && prob(15))
-			I.change_to(/obj/structure/infection/turret, overmind)
-			var/obj/structure/infection/turret/S = locate(/obj/structure/infection/turret) in T.contents
-			S.infection_level = 3
-			S.do_upgrade()
-			S.do_upgrade()
+			var/obj/structure/infection/turret/S = I.change_to(/obj/structure/infection/turret, overmind)
 			S.point_return = 0
 	INVOKE_ASYNC(src, .proc/pulseNodes)
 	..()

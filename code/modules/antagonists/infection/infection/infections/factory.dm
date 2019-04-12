@@ -6,8 +6,6 @@
 	max_integrity = 200
 	health_regen = 1
 	point_return = 25
-	upgrade_type = "Factory"
-	cost_per_level = 30
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
@@ -17,12 +15,11 @@
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/infection/factory/do_upgrade()
-	max_spores += 2
+/obj/structure/infection/factory/upgrade_menu(var/mob/camera/commander/C)
+	return
 
-/obj/structure/infection/factory/extra_description()
-	. = "Currently producing a maximum of [max_spores] spores."
-	. += "\nUpgrade: Increases maximum spores to [max_spores + 2]."
+/obj/structure/infection/factory/show_description()
+	return
 
 /obj/structure/infection/factory/scannerreport()
 	return "Will produce an infection spore every few seconds."
