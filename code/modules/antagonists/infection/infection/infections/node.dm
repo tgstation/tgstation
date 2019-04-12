@@ -17,9 +17,6 @@
 	. = ..()
 	base_pulse_cd = pulse_cooldown
 
-/obj/structure/infection/node/upgrade_menu(var/mob/camera/commander/C)
-	return
-
 /obj/structure/infection/node/show_description()
 	return
 

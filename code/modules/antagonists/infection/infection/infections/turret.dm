@@ -9,6 +9,7 @@
 	var/frequency = 1 // amount of times the turret will fire per process tick (1 second)
 	var/scan_range = 7 // range to search for targets
 	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
+	upgrade_types = list(/datum/infection/upgrade/resistant_turret, /datum/infection/upgrade/infernal_turret, /datum/infection/upgrade/homing_turret)
 
 /obj/structure/infection/turret/Initialize()
 	START_PROCESSING(SSobj, src)
@@ -17,27 +18,6 @@
 /obj/structure/infection/turret/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/obj/structure/infection/turret/upgrade_menu(var/mob/camera/commander/C)
-	var/resistant_cost = 70
-	var/infernal_cost = 70
-	var/homing_cost = 70
-	var/list/choices = list(
-		"Resistant Turret ([resistant_cost])" = image(icon = 'icons/mob/blob.dmi', icon_state = "bullet"),
-		"Infernal Turret ([infernal_cost])" = image(icon = 'icons/mob/blob.dmi', icon_state = "fire_bullet"),
-		"Homing Turret ([homing_cost])" = image(icon = 'icons/mob/blob.dmi', icon_state = "tracking_bullet")
-	)
-	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
-	if(choice == "Resistant Turret ([resistant_cost])" && overmind.can_buy(resistant_cost))
-		src.change_to(/obj/structure/infection/turret/resistant, overmind)
-		to_chat(overmind, "<span class='warning'>Successfully upgraded turret into resistant turret!</span>")
-	else if(choice == "Infernal Turret ([infernal_cost])" && overmind.can_buy(infernal_cost))
-		src.change_to(/obj/structure/infection/turret/infernal, overmind)
-		to_chat(overmind, "<span class='warning'>Successfully upgraded turret into infernal turret!</span>")
-	else if(choice == "Homing Turret ([homing_cost])" && overmind.can_buy(homing_cost))
-		src.change_to(/obj/structure/infection/turret/homing, overmind)
-		to_chat(overmind, "<span class='warning'>Successfully upgraded turret into homing turret!</span>")
-	return
 
 /obj/structure/infection/turret/show_description()
 	return
@@ -171,25 +151,23 @@
 	desc = "A very bulky turret fit for a war of attrition."
 	max_integrity = 450
 
-/obj/structure/infection/turret/resistant/upgrade_menu(var/mob/camera/commander/C)
-	return
+/obj/structure/infection/turret/resistant/alter_projectile(obj/item/projectile/A, atom/movable/target)
+	return A
 
 /obj/structure/infection/turret/infernal
 	name = "infernal turret"
 	desc = "A fiery turret intent on disintegrating its enemies."
 	projectile_type = /obj/item/projectile/bullet/infection/infernal // the bullet fired for this turret
 
-/obj/structure/infection/turret/infernal/upgrade_menu(var/mob/camera/commander/C)
-	return
+/obj/structure/infection/turret/infernal/alter_projectile(obj/item/projectile/A, atom/movable/target)
+	return A
 
 /obj/structure/infection/turret/homing
 	name = "homing turret"
 	desc = "A frail looking turret that seems to track your every movement."
 	max_integrity = 75
 	projectile_type = /obj/item/projectile/bullet/infection/homing // the bullet fired for this turret
-
-/obj/structure/infection/turret/homing/upgrade_menu(var/mob/camera/commander/C)
-	return
+	upgrade_types = list(/datum/infection/upgrade/homing/turn_speed, /datum/infection/upgrade/homing/flak_homing, /datum/infection/upgrade/homing/stamina_damage)
 
 /obj/structure/infection/turret/homing/alter_projectile(obj/item/projectile/A, atom/movable/target)
 	A.set_homing_target(target)

@@ -21,6 +21,8 @@
 	var/mob/camera/commander/overmind
 	var/list/angles = list() // possible angles for the node to expand on
 	var/timecreated
+	var/list/upgrades_list = list() // unlockable upgrades
+	var/list/upgrade_types = list() // the types of upgrades
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -33,27 +35,48 @@
 		air_update_turf(1)
 	ConsumeTile()
 	timecreated = world.time
+	if(upgrade_types.len > 0)
+		for(var/upgrade_type in upgrade_types)
+			upgrades_list += new upgrade_type()
 
 /obj/structure/infection/proc/creation_action() //When it's created by the overmind, do this.
 	return
 
 /obj/structure/infection/proc/show_infection_menu(var/mob/camera/commander/C)
 	if(C != overmind)
-		return FALSE
+		return
 	var/list/choices = list(
 		"Upgrade Structure" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
 		"Structure Overview" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help_radial")
 	)
 	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
-	if(choice == "Upgrade Structure")
+	if(choice == choices[1])
 		upgrade_menu(overmind)
-	else if(choice == "Structure Overview")
-		var/desc = show_description()
-		if(desc)
-			to_chat(overmind, desc)
-	return TRUE
+	if(choice == choices[2])
+		to_chat(overmind, show_description())
+	return
 
 /obj/structure/infection/proc/upgrade_menu(var/mob/camera/commander/C)
+	var/list/choices = list()
+	var/list/upgrades_temp = list()
+	for(var/datum/infection/upgrade/U in upgrades_list)
+		if(U.times == 0)
+			continue
+		var/upgrade_index = "[U.name] ([U.cost])"
+		choices[upgrade_index] = image(icon = U.radial_icon, icon_state = U.radial_icon_state)
+		upgrades_temp += U
+	if(!choices.len)
+		to_chat(src, "<span class='warning'>You have already bought every upgrade for this structure!</span>")
+		return
+	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
+	var/upgrade_index = choices.Find(choice)
+	if(!upgrade_index)
+		return
+	var/datum/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
+	if(overmind.can_buy(Chosen.cost))
+		Chosen.upgrade_effect(src)
+		Chosen.times--
+		Chosen.bought = TRUE
 	return
 
 /obj/structure/infection/proc/show_description()

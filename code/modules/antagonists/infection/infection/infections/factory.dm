@@ -15,9 +15,6 @@
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/infection/factory/upgrade_menu(var/mob/camera/commander/C)
-	return
-
 /obj/structure/infection/factory/show_description()
 	return
 

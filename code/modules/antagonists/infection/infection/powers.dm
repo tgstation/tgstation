@@ -73,6 +73,14 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	add_points(-cost)
 	return 1
 
+/mob/camera/commander/proc/can_upgrade(cost = 1)
+	var/diff = upgrade_points - cost
+	if(diff < 0)
+		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [diff * -1] more upgrade points! Destroy beacons to acquire them!</span>")
+		return 0
+	upgrade_points = diff
+	return 1
+
 /mob/camera/commander/verb/transport_core()
 	set category = "Infection"
 	set name = "Jump to Core"
@@ -187,26 +195,18 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set category = "Infection"
 	set name = "Evolution"
 	set desc = "Improve yourself and your army to be unstoppable."
-	if(upgrade_points > 0)
-		var/list/choices = list(
-			"Summon Sentient Spore (1)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
-			"Ability Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
-			"Effect Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
-		)
-		var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-		if(choice == "Summon Sentient Spore (1)")
-			create_spore()
-		else if(choice == "Structure Upgrades")
-			return
-		else if(choice == "Effect Unlocks")
-			// add stuff like
-			// stronger natural core defenses
-			// extra point for spore evolution?
-			// natural resistance to fire based attacks
-			// other stuff idk
-			return
-	else
-		to_chat(src, "We lack the necessary resources to upgrade ourself. Absorb the beacons to gain their power.")
+	var/list/choices = list(
+		"Summon Sentient Spore (1)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
+		"Ability Unlocks (0)" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
+		"Effect Unlocks (0)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
+	)
+	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+	if(choice == choices[1] && can_upgrade(1))
+		create_spore()
+	if(choice == choices[2])
+		return
+	if(choice == choices[3])
+		return
 
 /mob/camera/commander/verb/revert()
 	set category = "Infection"
