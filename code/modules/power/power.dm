@@ -276,16 +276,9 @@
 //siemens_coeff - layman's terms, conductivity
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
-/mob/living/carbon
-	var/last_shocked = 0
-	var/shocked_cooldown = 10
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
 	if(!M || ismecha(M.loc))
 		return 0	//feckin mechs are dumb
-	if(istype(M))
-		if(M.last_shocked && M.last_shocked+M.shocked_cooldown > world.time)
-			return 0
-		M.last_shocked = world.time
 	if(dist_check)
 		if(!in_range(source,M))
 			return 0

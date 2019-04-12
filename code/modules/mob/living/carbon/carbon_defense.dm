@@ -221,6 +221,9 @@
 		shock_damage *= dna.species.siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
+	if(last_shocked && last_shocked+shocked_cooldown > world.time)
+		return 0
+	last_shocked = world.time
 	if(reagents.has_reagent("teslium"))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	if(illusion)

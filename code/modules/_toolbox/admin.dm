@@ -105,7 +105,7 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 							entry += " - <font color='black'><b>DEAD</b></font>"
 				if(C.mob.mind)
 					if(GLOB.used_antag_tokens[C.mob.mind])
-						entry += " - <font color='#820000'>TOKEN</font>"
+						entry += " - <font color='#820000'><b>TOKEN</b></font>"
 					if(C.mob.mind && istype(C.mob.mind.extra_roles,/list) && C.mob.mind.extra_roles.len)
 						for(var/datum/extra_role/role in C.mob.mind.extra_roles)
 							var/wholisttext = role.get_who_list_info()

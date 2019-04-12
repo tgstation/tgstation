@@ -22,7 +22,7 @@ proc/Initialize_Falaskians_Shit()
 		src << sound('sound/items/bikehorn.ogg')
 		to_chat(src, "<span class='danger'>The discord URL is not set in the server configuration.</span>")
 
-
+/datum/config_entry/flag/show_round_time_on_hub
 GLOBAL_LIST_EMPTY(hub_features)
 /world/proc/update_status()
 	var/theservername = CONFIG_GET(string/servername)
@@ -41,13 +41,13 @@ GLOBAL_LIST_EMPTY(hub_features)
 			dat += "<a href=\"[thediscordlink]\">Discord</a>"
 		dat += ")<br>"
 	if(SSmapping && SSmapping.config.map_name)
-		dat += "Map: [SSmapping.config.map_name]<br>"
+		dat += "Map: [SSmapping.config.map_name]"
 	if(SSticker)
 		if(SSticker.current_state < GAME_STATE_PLAYING)
-			dat += "New Round Starting."
+			dat += "<br>New Round Starting."
 		else if (SSticker.current_state > GAME_STATE_PLAYING)
-			dat += "New round soon."
-		else
+			dat += "<br>New round soon."
+		else if(CONFIG_GET(flag/show_round_time_on_hub))
 			var/worldtime = max(world.time-SSticker.round_start_time,0)
 			var/hours = 0
 			var/minutes = 0
@@ -65,9 +65,9 @@ GLOBAL_LIST_EMPTY(hub_features)
 				minutes++
 			if(length("[minutes]") < 2)
 				minutes = "0[minutes]"
-			dat += "Round Time: [hours]:[minutes]"
+			dat += "<br>Round Time: [hours]:[minutes]"
 	else
-		dat += "Restarting."
+		dat += "<br>Restarting."
 	if(GLOB)
 		if(!GLOB.hub_features.len)
 			GLOB.hub_features = file2list("config/hub_features.txt")
