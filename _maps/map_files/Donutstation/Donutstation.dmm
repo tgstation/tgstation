@@ -10144,10 +10144,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ayu" = (
-/obj/machinery/pipedispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ayv" = (
@@ -10172,10 +10172,10 @@
 /obj/item/radio/intercom{
 	pixel_y = 28
 	},
-/obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ayy" = (
@@ -31817,12 +31817,12 @@
 	pixel_y = 28
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/rnd/production/protolathe/department/engineering,
 /obj/machinery/camera{
 	c_tag = "Atmospherics - Main 3";
 	dir = 2;
 	network = list("ss13","Atmospherics")
 	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "brV" = (
@@ -51153,7 +51153,17 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "dUt" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dUT" = (
@@ -51546,6 +51556,17 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
+"eYK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "eZi" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -51596,6 +51617,12 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
@@ -52523,6 +52550,18 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
+"iiE" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/cable/yellow,
+/turf/open/floor/plating,
+/area/crew_quarters/heads/chief)
 "ijH" = (
 /obj/machinery/light{
 	dir = 4
@@ -53026,7 +53065,20 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "kAG" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "kAU" = (
@@ -53263,10 +53315,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine,
 /area/engine/engine_room/external)
-"lDQ" = (
-/obj/machinery/rnd/production/techfab/department/engineering,
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "lEt" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -55135,6 +55183,23 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
+"rIu" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/cable/yellow,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/heads/chief)
 "rJs" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
@@ -55459,6 +55524,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"sDa" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "sEf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/segment,
@@ -56770,6 +56846,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
+"wPf" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "wPr" = (
 /obj/machinery/power/apc{
 	areastring = "/area/construction";
@@ -93019,7 +93103,7 @@ bps
 aYB
 brG
 acj
-lDQ
+asr
 axP
 bnB
 bpq
@@ -95311,7 +95395,7 @@ mXO
 iUZ
 aaa
 aaa
-dUt
+eYK
 dUa
 aor
 vzQ
@@ -95568,7 +95652,7 @@ aal
 aaa
 aaa
 aaa
-dUt
+wPf
 mUn
 aor
 aor
@@ -95825,7 +95909,7 @@ aal
 aal
 aal
 aal
-dUt
+sDa
 hAI
 vRP
 vRP
@@ -96345,8 +96429,8 @@ apO
 apO
 kAG
 feg
-kAG
-kAG
+rIu
+iiE
 apO
 apO
 aze
