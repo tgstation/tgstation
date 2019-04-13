@@ -359,7 +359,7 @@
 	if(istype(I,/obj/item/pestle))
 		if(grinded)
 			to_chat(user, "You start grinding...")
-			if(do_after(user, 25, target = src))
+			if((do_after(user, 25, target = src)) && grinded)
 				user.adjustStaminaLoss(40)
 				if(grinded.juice_results) //prioritize juicing
 					grinded.on_juice()
@@ -368,6 +368,7 @@
 					qdel(grinded)
 					grinded = null
 					return
+				grinded.on_grind()
 				reagents.add_reagent_list(grinded.grind_results)
 				to_chat(user, "You break [grinded] into powder.")
 				qdel(grinded)
