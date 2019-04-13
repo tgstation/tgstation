@@ -54,11 +54,6 @@
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"s" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
 "t" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/sentinel,
@@ -384,7 +379,7 @@ e
 t
 g
 g
-s
+g
 H
 u
 g
@@ -415,9 +410,9 @@ b
 i
 u
 b
-s
+g
 l
-s
+g
 t
 e
 b
@@ -448,7 +443,7 @@ o
 v
 g
 b
-s
+g
 g
 e
 b
