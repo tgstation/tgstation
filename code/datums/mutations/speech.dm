@@ -240,16 +240,14 @@
 		for(var/word in message_split)
 			var/suffix = copytext(word,-1)
 
-			to_chat(world, suffix)
-
 			// Check if we have a suffix and break it out of the word
 			if(suffix in list(".",",",";","!",":","?"))  
 				word = copytext(word,1,-1)
 			else
 				suffix = ""
-			
-			to_chat(world, word)
 
+			word = html_decode(word)
+		
 			if(lowertext(word) in common_words)
 				new_message += word + suffix
 			else
@@ -257,10 +255,10 @@
 					new_message += pick("uh","erm")
 					break
 				else
-					var/list/charlist = string2charlist(word) // Stupid shit code :)
+					var/list/charlist = string2charlist(word) // Stupid shit code
 					shuffle_inplace(charlist)
 					charlist.len = round(charlist.len * 0.5,1)
-					new_message += html_decode(jointext(charlist,"")) + suffix
+					new_message += html_encode(jointext(charlist,"")) + suffix
 					
 		message = jointext(new_message, " ")
 		
