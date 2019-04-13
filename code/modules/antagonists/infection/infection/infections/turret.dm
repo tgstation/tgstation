@@ -115,7 +115,7 @@
 	for(var/datum/infection/upgrade/turret/U in upgrade_list)
 		if(!U.bought)
 			continue
-		A = U.alter_projectile(A, target)
+		A = U.alter_projectile(src, A, target)
 	return A
 
 /*
@@ -144,7 +144,11 @@
 	for(var/datum/infection/upgrade/turret/U in T.upgrade_list)
 		if(!U.bought)
 			continue
-		U.projectile_hit(target)
+		U.projectile_hit(src.firer, target)
+
+/obj/item/projectile/bullet/infection/core
+	name = "strong spore"
+	speed = 0.8
 
 /obj/item/projectile/bullet/infection/infernal
 	name = "burning spore"
@@ -178,14 +182,20 @@
 /obj/structure/infection/turret/resistant
 	name = "resistant turret"
 	desc = "A very bulky turret fit for a war of attrition."
-	max_integrity = 450
-	upgrade_types = list(/datum/infection/upgrade/turret/turn_speed, /datum/infection/upgrade/turret/flak_homing, /datum/infection/upgrade/turret/stamina_damage)
+	max_integrity = 300
+	upgrade_types = list(/datum/infection/upgrade/turret/knockback, /datum/infection/upgrade/turret/shield_creator, /datum/infection/upgrade/turret/spore_bullets)
+
+/obj/structure/infection/turret/resistant/core
+	name = "core turret"
+	point_return = 0
+	projectile_type = /obj/item/projectile/bullet/infection/core
 
 /obj/structure/infection/turret/infernal
 	name = "infernal turret"
 	desc = "A fiery turret intent on disintegrating its enemies."
 	projectile_type = /obj/item/projectile/bullet/infection/infernal // the bullet fired for this turret
-	upgrade_types = list(/datum/infection/upgrade/turret/turn_speed, /datum/infection/upgrade/turret/flak_homing, /datum/infection/upgrade/turret/stamina_damage)
+	upgrade_types = list(/datum/infection/upgrade/turret/burning_spores, /datum/infection/upgrade/turret/fire_rate, /datum/infection/upgrade/turret/armour_penetration)
+	scan_range = 5
 
 /obj/structure/infection/turret/homing
 	name = "homing turret"

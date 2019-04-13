@@ -74,9 +74,7 @@
 		return
 	var/datum/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
 	if(overmind.can_buy(Chosen.cost))
-		Chosen.upgrade_effect(src)
-		Chosen.times--
-		Chosen.bought = TRUE
+		Chosen.do_upgrade(src)
 	return
 
 /obj/structure/infection/proc/show_description()

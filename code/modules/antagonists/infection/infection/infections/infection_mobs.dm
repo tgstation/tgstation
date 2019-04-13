@@ -15,6 +15,7 @@
 	maxbodytemp = 360
 	unique_name = 1
 	a_intent = INTENT_HARM
+	stat_attack = DEAD
 	var/mob/camera/commander/overmind = null
 	var/obj/structure/infection/factory/factory = null
 
@@ -95,6 +96,7 @@
 	var/mob/living/carbon/human/oldguy
 	var/is_zombie = 0
 	var/upgrade_points = 0
+	var/can_zombify = 1
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	if(istype(linked_node))
@@ -128,7 +130,7 @@
 	return
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Life()
-	if(!is_zombie && isturf(src.loc) && factory)
+	if(!is_zombie && isturf(src.loc) && can_zombify)
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
 				Zombify(H)
@@ -170,19 +172,6 @@
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/infection/infectionspore/death(gibbed)
-	// On death, create a small smoke of harmful gas (s-Acid)
-	var/datum/effect_system/smoke_spread/chem/S = new
-	var/turf/location = get_turf(src)
-
-	// Create the reagents to put into the air
-	create_reagents(10)
-
-	reagents.add_reagent("spore", 10)
-
-	// Attach the smoke spreader and setup/start it.
-	S.attach(location)
-	S.set_up(reagents, death_cloud_size, location, silent = TRUE)
-	S.start()
 	if(factory)
 		factory.spore_delay = world.time + factory.spore_cooldown //put the factory on cooldown
 

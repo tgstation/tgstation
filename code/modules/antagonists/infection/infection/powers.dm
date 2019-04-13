@@ -181,6 +181,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		spore.overmind = src
 		spore.update_icons()
 		spore.adjustHealth(spore.maxHealth * 0.5)
+		spore.can_zombify = 0
 		infection_mobs += spore
 		var/mob/dead/observer/C = pick(candidates)
 		spore.key = C.key
