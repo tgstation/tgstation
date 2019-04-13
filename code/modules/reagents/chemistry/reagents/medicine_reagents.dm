@@ -1104,7 +1104,7 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/syndicate_nanites/overdose_process(mob/living/M) //wtb flavortext messages that hint that you're vomitting up robots
+/datum/reagent/medicine/syndicate_nanites/overdose_process(mob/living/carbon/M) //wtb flavortext messages that hint that you're vomitting up robots
 	if(prob(25))
 		M.reagents.remove_reagent(src.id, metabolization_rate*15) // ~5 units at a rate of 0.4 but i wanted a nice number in code
 		M.vomit(20) // nanite safety protocols make your body expel them to prevent harmies
