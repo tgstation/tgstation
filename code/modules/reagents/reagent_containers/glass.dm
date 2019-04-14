@@ -333,7 +333,7 @@
 
 /obj/item/pestle
 	name = "pestle"
-	desc = "Grind items with a mortar."
+	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
