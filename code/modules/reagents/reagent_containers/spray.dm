@@ -302,7 +302,7 @@
 	for(var/i=1, i<=3, i++) // intialize sprays
 		if(reagents.total_volume < 1)
 			return
-		..(the_targets[i])
+		..(the_targets[i], user)
 
 /obj/item/reagent_containers/spray/chemsprayer/bioterror
 	list_reagents = list("sodium_thiopental" = 100, "coniine" = 100, "venom" = 100, "condensedcapsaicin" = 100, "initropidril" = 100, "polonium" = 100)
