@@ -333,20 +333,19 @@
 
 /obj/item/pestle
 	name = "pestle"
-	desc = "i exist"
-	icon = 'icons/obj/drinks.dmi'
-	icon_state = "largebottle"
+	desc = "Grind items with a mortar."
+	icon_state = "pestle"
+	force = 7
 
 /obj/item/reagent_containers/glass/mortar
 	name = "mortar"
 	desc = "Use this with a pestle to extract chemicals out of items."
+	icon_state = "mortar"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
+	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
 	volume = 100
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
-	icon = 'icons/obj/drinks.dmi'
-	icon_state = "smallbottle"
 	var/obj/item/grinded
 
 /obj/item/reagent_containers/glass/mortar/AltClick(mob/user)
