@@ -192,7 +192,9 @@
 	for(var/datum/mind/M in hivemembers)
 		M.remove_antag_datum(/datum/antagonist/hivevessel)
 		active_one_mind.remove_member(M)
-	var/mob/living/carbon/C = owner?.current.get_real_hivehost()
+	if(!owner?.current)
+		return
+	var/mob/living/carbon/C = owner.current.get_real_hivehost()
 	if(!C)
 		return
 	owner.RemoveSpell(new/obj/effect/proc_holder/spell/self/hive_comms)
