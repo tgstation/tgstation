@@ -73,7 +73,7 @@
 	var/wait_step = max(round(2+3/range), 2)
 	do_spray(A, wait_step, D, range, puff_reagent_left)
 
-/obj/item/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left)
+/obj/item/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left, mob/user)
 	set waitfor = FALSE
 	var/range_left = range
 	for(var/i=0, i<range, i++)
@@ -94,7 +94,7 @@
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
 						var/contained = D.reagents.log_list() // looks like more copypasta but now the reagents are in a different place fuck you old coder
-						log_combat(M, src.user, "sprayed by", src, addition="which had [contained]")
+						log_combat(M, user, "sprayed by", src, addition="which had [contained]")
 				else if(!range_left)
 					D.reagents.reaction(T, VAPOR)
 			else
