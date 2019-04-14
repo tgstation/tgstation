@@ -323,8 +323,8 @@
 "aT" = (
 /obj/structure/table,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/machinery/light{
 	dir = 4
 	},

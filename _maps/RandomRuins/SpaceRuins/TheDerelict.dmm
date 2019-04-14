@@ -2345,7 +2345,7 @@
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "hW" = (
-/obj/item/stack/medical/bruise_pack,
+/obj/item/reagent_containers/medspray/mini/styptic,
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "hX" = (
@@ -2574,13 +2574,13 @@
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "iM" = (
-/obj/item/stack/medical/bruise_pack,
+/obj/item/reagent_containers/medspray/mini/styptic,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/medical)
 "iN" = (
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
@@ -2826,7 +2826,7 @@
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "jB" = (
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "jC" = (

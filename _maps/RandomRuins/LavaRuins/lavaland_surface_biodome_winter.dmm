@@ -3,9 +3,9 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/structure/table,
-/obj/item/stack/medical/bruise_pack,
+/obj/item/reagent_containers/medspray/mini/styptic,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "ad" = (

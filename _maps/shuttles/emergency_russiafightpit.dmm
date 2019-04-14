@@ -363,11 +363,11 @@
 /area/shuttle/escape)
 "bi" = (
 /obj/structure/table,
-/obj/item/stack/medical/bruise_pack{
+/obj/item/reagent_containers/medspray/mini/styptic{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/stack/medical/bruise_pack,
+/obj/item/reagent_containers/medspray/mini/styptic,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bj" = (

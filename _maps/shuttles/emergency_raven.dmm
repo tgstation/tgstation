@@ -1840,8 +1840,8 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment{
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf{
 	pixel_x = 5
 	},
 /turf/open/floor/plasteel/dark,

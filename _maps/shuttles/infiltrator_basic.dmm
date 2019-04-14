@@ -614,8 +614,8 @@
 "bu" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)

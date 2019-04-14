@@ -873,7 +873,7 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/medical/bruise_pack,
+/obj/item/reagent_containers/medspray/mini/styptic,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
