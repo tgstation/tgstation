@@ -154,14 +154,6 @@
 	suffix = "lavaland_surface_ufo_crash.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/xeno_nest
-	name = "Xenomorph Nest"
-	id = "xeno-nest"
-	description = "These xenomorphs got bored of horrifically slaughtering people on space stations, and have settled down on a nice lava filled hellscape to focus on what's really important in life. \
-	Quality memes."
-	suffix = "lavaland_surface_xeno_nest.dmm"
-	cost = 20
-
 /datum/map_template/ruin/lavaland/fountain
 	name = "Fountain Hall"
 	id = "fountain"
