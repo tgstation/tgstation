@@ -887,10 +887,12 @@
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
 	var/mob/living/boss = user.get_real_hivehost()
-	var/datum/objective/objective = new("Ensure the One Mind survives under the leadership of [boss.real_name]!")
+	var/datum/objective/protect/new_objective = new /datum/objective/protect
+	new_objective.target = user.mind
+	new_objective.explanation_text = "Ensure the One Mind survives under the leadership of [boss.real_name]."
 	var/datum/team/hivemind/one_mind_team = new /datum/team/hivemind(user.mind)
 	hive.active_one_mind = one_mind_team
-	one_mind_team.objectives += objective
+	one_mind_team.objectives += new_objective
 	for(var/datum/antagonist/hivevessel/vessel in GLOB.antagonists)
 		var/mob/living/carbon/C = vessel.owner?.current
 		if(C && hive.is_carbon_member(C))
