@@ -78,6 +78,7 @@
 	icon_living = "blobpod"
 	health = 30
 	maxHealth = 30
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	verb_say = "psychically pulses"
 	verb_ask = "psychically probes"
 	verb_exclaim = "psychically yells"
@@ -96,7 +97,9 @@
 	var/mob/living/carbon/human/oldguy
 	var/is_zombie = 0
 	var/upgrade_points = 0
-	var/can_zombify = 1
+	var/can_zombify = FALSE
+	var/list/upgrade_list = list() // upgrades that are unlockable
+	var/list/upgrade_types = list(/datum/infection/upgrade/defensive_spore, /datum/infection/upgrade/offensive_spore, /datum/infection/upgrade/supportive_spore) // types of upgrades
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	if(istype(linked_node))
@@ -109,18 +112,38 @@
 		upgrade_points = overmind.all_upgrade_points
 	else
 		upgrade_points = 5
+	if(upgrade_types.len > 0)
+		for(var/upgrade_type in upgrade_types)
+			upgrade_list += new upgrade_type()
 
 /mob/living/simple_animal/hostile/infection/infectionspore/proc/evolve_menu()
-	if(upgrade_points > 0)
-		var/list/choices = list(
-			"Leap Ability" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay")
-		)
-		var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-		switch(choice)
-			if("Leap Ability")
-				to_chat(src, "upgraded nerd")
-	else
-		to_chat(src, "We lack the necessary resources to upgrade ourself. Absorb the beacons to gain their power.")
+	var/list/choices = list()
+	var/list/upgrades_temp = list()
+	for(var/datum/infection/upgrade/U in upgrade_list)
+		if(U.times == 0)
+			continue
+		var/upgrade_index = "[U.name] ([U.cost])"
+		choices[upgrade_index] = image(icon = U.radial_icon, icon_state = U.radial_icon_state)
+		upgrades_temp += U
+	if(!choices.len)
+		to_chat(src, "<span class='warning'>You have already bought every evolution for yourself!</span>")
+		return
+	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+	var/upgrade_index = choices.Find(choice)
+	if(!upgrade_index)
+		return
+	var/datum/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
+	if(can_upgrade(Chosen.cost))
+		Chosen.do_upgrade(src)
+	return
+
+/mob/living/simple_animal/hostile/infection/infectionspore/proc/can_upgrade(cost = 1)
+	var/diff = upgrade_points - cost
+	if(diff < 0)
+		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [diff * -1] more upgrade points! Destroy beacons to acquire them!</span>")
+		return 0
+	upgrade_points = diff
+	return 1
 
 /mob/living/simple_animal/hostile/infection/infectionspore/proc/infection_help()
 	to_chat(src, "<b>You are a sentient blob spore!</b>")
@@ -174,7 +197,10 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/death(gibbed)
 	if(factory)
 		factory.spore_delay = world.time + factory.spore_cooldown //put the factory on cooldown
-
+	if(overmind.infection_core && !can_zombify) // heroes never die
+		forceMove(get_turf(overmind.infection_core))
+		adjustBruteLoss(-maxHealth / damage_coeff[BRUTE])
+		return
 	..()
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Destroy()
@@ -206,3 +232,42 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	death_cloud_size = 0
+
+/mob/living/simple_animal/hostile/infection/infectionspore/defensive
+	name = "defensive spore"
+	desc = "A hulking spore that blocks your every move."
+	icon_state = "blobbernaut"
+	icon_living = "blobbernaut"
+	health = 150
+	maxHealth = 150
+	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	obj_damage = 20
+	upgrade_types = list() // types of upgrades
+
+/mob/living/simple_animal/hostile/infection/infectionspore/offensive
+	name = "offensive spore"
+	desc = "An aggressive spore that looks like it's out for blood."
+	icon_state = "offensive_spore"
+	icon_living = "offensive_spore"
+	health = 60
+	maxHealth = 60
+	damage_coeff = list(BRUTE = 0.75, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	melee_damage_lower = 30
+	melee_damage_upper = 30
+	obj_damage = 60
+	upgrade_types = list() // types of upgrades
+
+/mob/living/simple_animal/hostile/infection/infectionspore/supportive
+	name = "supportive spore"
+	desc = "A spore that seems to know your every movement."
+	icon_state = "support_spore"
+	icon_living = "support_spore"
+	health = 40
+	maxHealth = 40
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	obj_damage = 40
+	upgrade_types = list() // types of upgrades

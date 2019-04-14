@@ -66,7 +66,7 @@
 		choices[upgrade_index] = image(icon = U.radial_icon, icon_state = U.radial_icon_state)
 		upgrades_temp += U
 	if(!choices.len)
-		to_chat(src, "<span class='warning'>You have already bought every upgrade for this structure!</span>")
+		to_chat(overmind, "<span class='warning'>You have already bought every upgrade for this structure!</span>")
 		return
 	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
 	var/upgrade_index = choices.Find(choice)

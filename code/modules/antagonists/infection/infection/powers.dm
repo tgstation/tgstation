@@ -196,6 +196,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set category = "Infection"
 	set name = "Evolution"
 	set desc = "Improve yourself and your army to be unstoppable."
+	if(!placed)
+		to_chat(src, "<span class='warning'>You must wait until your core is placed!</span>")
+		return
 	var/list/choices = list(
 		"Summon Sentient Spore (1)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
 		"Ability Unlocks (0)" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),

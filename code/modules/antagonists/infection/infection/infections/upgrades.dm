@@ -10,13 +10,61 @@
 	var/times = 1 // times the upgrade can be bought
 	var/bought = 0 // how many times the upgrade has been bought
 
-/datum/infection/upgrade/proc/do_upgrade(var/obj/structure/infection/I)
+/datum/infection/upgrade/proc/do_upgrade(var/atom/P)
 	times--
 	bought++
-	upgrade_effect(I)
+	upgrade_effect(P)
 	return
 
-/datum/infection/upgrade/proc/upgrade_effect(var/obj/structure/infection/I)
+/datum/infection/upgrade/proc/upgrade_effect(var/atom/P)
+	return
+
+/*
+//
+// Spore Upgrades
+//
+*/
+
+/datum/infection/upgrade/defensive_spore
+	name = "Defensive Spore"
+	description = "War of attrition taken to the next level."
+	radial_icon_state = "bullet"
+	cost = 1
+
+/datum/infection/upgrade/defensive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/IS)
+	var/mob/living/simple_animal/hostile/infection/infectionspore/defensive/DS = new /mob/living/simple_animal/hostile/infection/infectionspore/defensive(IS.loc, null, IS.overmind)
+	IS.mind.transfer_to(DS)
+	DS.can_zombify = FALSE
+	DS.upgrade_points = IS.upgrade_points
+	qdel(IS)
+	return
+
+/datum/infection/upgrade/offensive_spore
+	name = "Offensive Spore"
+	description = "Fully prepared to dust your enemies."
+	radial_icon_state = "fire_bullet"
+	cost = 1
+
+/datum/infection/upgrade/offensive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/IS)
+	var/mob/living/simple_animal/hostile/infection/infectionspore/defensive/OS = new /mob/living/simple_animal/hostile/infection/infectionspore/offensive(IS.loc, null, IS.overmind)
+	IS.mind.transfer_to(OS)
+	OS.can_zombify = FALSE
+	OS.upgrade_points = IS.upgrade_points
+	qdel(IS)
+	return
+
+/datum/infection/upgrade/supportive_spore
+	name = "Supportive Spore"
+	description = "Fill the gaps that your allies cannot."
+	radial_icon_state = "tracking_bullet"
+	cost = 1
+
+/datum/infection/upgrade/supportive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/IS)
+	var/mob/living/simple_animal/hostile/infection/infectionspore/defensive/SS = new /mob/living/simple_animal/hostile/infection/infectionspore/supportive(IS.loc, null, IS.overmind)
+	IS.mind.transfer_to(SS)
+	SS.can_zombify = FALSE
+	SS.upgrade_points = IS.upgrade_points
+	qdel(IS)
 	return
 
 /*
