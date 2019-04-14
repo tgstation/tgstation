@@ -6,6 +6,7 @@
 	var/shuttle_id
 
 	var/description
+	var/dangerous_purchase = FALSE // Show a warning message because this is a griff shuttle?
 	var/prerequisites
 	var/admin_notes
 
@@ -220,6 +221,7 @@
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = 15000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+	dangerous_purchase = TRUE
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
@@ -227,6 +229,7 @@
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
+	dangerous_purchase = TRUE
 
 /datum/map_template/shuttle/emergency/discoinferno
 	suffix = "discoinferno"
@@ -234,6 +237,7 @@
 	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
 	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
 	credit_cost = 10000
+	dangerous_purchase = TRUE
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
@@ -241,6 +245,7 @@
 	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
 	admin_notes = "RIP AND TEAR."
 	credit_cost = 10000
+	dangerous_purchase = TRUE
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
 	if("bubblegum" in SSshuttle.shuttle_purchase_requirements_met)
@@ -285,6 +290,7 @@
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5. Has roughly as much space as Hi Daniel, except with explosive crates."
+	dangerous_purchase = TRUE
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
@@ -312,6 +318,7 @@
 	description = "Looks like this shuttle may have wandered into the darkness between the stars on route to the station. Let's not think too hard about where all the bodies came from."
 	admin_notes = "Contains real cult ruins, mob eyeballs, and inactive constructs. Cult mobs will automatically be sentienced by fun balloon. \
 	Cloning pods in 'medbay' area are showcases and nonfunctional."
+	dangerous_purchase = TRUE
 
 /datum/map_template/shuttle/emergency/pubby
 	suffix = "pubby"
@@ -341,6 +348,7 @@
 	Emitters spawn powered on, expect admin notices, they are harmless."
 	credit_cost = 100000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+	dangerous_purchase = TRUE
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
@@ -350,6 +358,7 @@
 	admin_notes = "Tiny, with a single airlock and wooden walls. What could go wrong?"
 	credit_cost = -5000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+	dangerous_purchase = TRUE
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"

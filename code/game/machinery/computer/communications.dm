@@ -565,12 +565,14 @@
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			dat += "Budget: [D.account_balance] Credits.<BR>"
 			dat += "<BR>"
-			dat += "<b>Caution: Purchasing dangerous shuttles may lead to mutiny and/or death.</b><br>"
+			dat += "<b>Caution: Nanotrasen assumes no responsibility for unrest caused by the purchase of unsafe shuttles.</b><br>"
 			dat += "<BR>"
 			for(var/shuttle_id in SSmapping.shuttle_templates)
 				var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
 				if(S.can_be_bought && S.credit_cost < INFINITY)
-					dat += "[S.name] | [S.credit_cost] Credits<BR>"
+					dat += "<b>[S.name]</b> | [S.credit_cost] Credits<BR>"
+					if(S.dangerous_purchase)
+						dat += "<font color=red>Caution: Unsafe shuttle</font><BR>"
 					dat += "[S.description]<BR>"
 					if(S.prerequisites)
 						dat += "Prerequisites: [S.prerequisites]<BR>"
