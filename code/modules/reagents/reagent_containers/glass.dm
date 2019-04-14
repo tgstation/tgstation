@@ -334,6 +334,7 @@
 /obj/item/pestle
 	name = "pestle"
 	desc = "Grind items with a mortar."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
 
