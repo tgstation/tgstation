@@ -45,7 +45,7 @@
 		to_chat(user, "<span class='warning'>Not enough left!</span>")
 		return
 
-	spray(A)
+	spray(A, user)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
@@ -59,7 +59,7 @@
 	return
 
 
-/obj/item/reagent_containers/spray/proc/spray(atom/A)
+/obj/item/reagent_containers/spray/proc/spray(atom/A, mob/user)
 	var/range = max(min(current_range, get_dist(src, A)), 1)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
@@ -71,7 +71,7 @@
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)
-	do_spray(A, wait_step, D, range, puff_reagent_left)
+	do_spray(A, wait_step, D, range, puff_reagent_left, user)
 
 /obj/item/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left, mob/user)
 	set waitfor = FALSE
@@ -94,7 +94,7 @@
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
 						var/contained = D.reagents.log_list() // looks like more copypasta but now the reagents are in a different place fuck you old coder
-						log_combat(M, user, "sprayed by", src, addition="which had [contained]")
+						log_combat(user, M,  "sprayed with", src, addition="which had [contained]")
 				else if(!range_left)
 					D.reagents.reaction(T, VAPOR)
 			else
