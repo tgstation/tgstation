@@ -28095,7 +28095,7 @@
 /area/medical/medbay/central)
 "boO" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -34472,7 +34472,7 @@
 	pixel_x = -24
 	},
 /obj/item/book/manual/wiki/medicine,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -34634,7 +34634,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/clothing/neck/stethoscope,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -38647,7 +38647,7 @@
 /turf/open/floor/engine,
 /area/maintenance/department/engine)
 "bKl" = (
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -39749,7 +39749,7 @@
 "bMN" = (
 /obj/structure/table,
 /obj/item/hemostat,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -46586,7 +46586,7 @@
 /area/chapel/asteroid/monastery)
 "ccN" = (
 /obj/structure/closet/crate/medical,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)

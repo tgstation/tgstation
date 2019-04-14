@@ -1321,8 +1321,8 @@
 /obj/structure/table,
 /obj/item/healthanalyzer,
 /obj/item/healthanalyzer,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
+/obj/item/stack/gauze,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "dc" = (

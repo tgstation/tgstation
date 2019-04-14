@@ -21,7 +21,7 @@
 		/obj/item/clothing/mask/cigarette,
 		/obj/item/flashlight/pen,
 		/obj/item/seeds,
-		/obj/item/stack/medical,
+		/obj/item/stack/gauze,
 		/obj/item/toy/crayon,
 		/obj/item/coin,
 		/obj/item/dice,

@@ -53547,7 +53547,7 @@
 /area/medical/medbay/central)
 "cap" = (
 /obj/structure/table,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/item/reagent_containers/medspray/mini/styptic,
 /obj/effect/turf_decal/tile/blue{

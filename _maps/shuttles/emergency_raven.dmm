@@ -1839,7 +1839,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/medspray/mini/styptic,
 /obj/item/reagent_containers/medspray/mini/silver_sulf{
 	pixel_x = 5

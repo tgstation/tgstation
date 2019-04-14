@@ -101,7 +101,7 @@
 			G.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 			G.glasource = get_or_create_estorage(/datum/robot_energy_storage/glass)
 
-		else if(istype(S, /obj/item/stack/medical))
+		else if(istype(S, /obj/item/stack/gauze))
 			S.cost = 250
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/medical)
 
@@ -277,7 +277,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
-		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/stack/gauze/cyborg,
 		/obj/item/organ_storage,
 		/obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
@@ -595,7 +595,7 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
-		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/stack/gauze/cyborg,
 		/obj/item/gun/medbeam,
 		/obj/item/organ_storage)
 	ratvar_modules = list(

@@ -10,8 +10,8 @@
 /area/ruin/powered/snow_biodome)
 "ad" = (
 /obj/structure/table,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
+/obj/item/stack/gauze,
 /obj/machinery/light/small{
 	dir = 1
 	},

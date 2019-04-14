@@ -456,7 +456,7 @@
 /area/holodeck/rec_center/medical)
 "bs" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/cautery,
 /turf/open/floor/holofloor{
 	icon_state = "white"

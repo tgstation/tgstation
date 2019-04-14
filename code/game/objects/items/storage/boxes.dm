@@ -726,8 +726,8 @@
 
 //////
 /obj/item/storage/box/hug/medical/PopulateContents()
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/reagent_containers/medspray/mini/styptic(src)
+	new /obj/item/reagent_containers/medspray/mini/silver_sulf(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 /obj/item/storage/box/hug/survival/PopulateContents()

@@ -322,7 +322,7 @@
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/table,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/medspray/mini/styptic,
 /obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/machinery/light{

@@ -78249,7 +78249,7 @@
 /area/bridge/showroom/corporate)
 "cBx" = (
 /obj/structure/rack,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/medspray/mini/styptic,
 /obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/item/reagent_containers/syringe/epinephrine{
@@ -86447,7 +86447,7 @@
 /area/medical/medbay/central)
 "cPs" = (
 /obj/structure/table,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/medspray/mini/styptic,
 /obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/effect/turf_decal/tile/blue{
@@ -92741,7 +92741,7 @@
 	name = "medbay camera"
 	},
 /obj/item/book/manual/wiki/medicine,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/medspray/mini/styptic,
 /obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/effect/turf_decal/tile/blue{
@@ -95069,7 +95069,7 @@
 /area/medical/abandoned)
 "ddp" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/medspray/mini/styptic,
 /obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/structure/sign/warning/nosmoking{
@@ -100300,7 +100300,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/medspray/mini/styptic,
 /obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/effect/turf_decal/tile/neutral{

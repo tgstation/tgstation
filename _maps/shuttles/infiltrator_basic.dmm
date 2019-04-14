@@ -613,7 +613,7 @@
 /area/shuttle/syndicate/medical)
 "bu" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/gauze,
 /obj/item/reagent_containers/medspray/mini/styptic,
 /obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/effect/turf_decal/bot_white,

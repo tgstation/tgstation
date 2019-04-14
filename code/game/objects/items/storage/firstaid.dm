@@ -30,7 +30,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/gauze = 1,
 		/obj/item/reagent_containers/medspray/mini/styptic = 1,
 		/obj/item/reagent_containers/medspray/mini/silver_sulf = 1,
 		/obj/item/reagent_containers/glass/bottle/epinephrine = 1,
@@ -47,7 +47,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/gauze = 1,
 		/obj/item/reagent_containers/medspray/mini/styptic = 3,
 		/obj/item/reagent_containers/medspray/mini/silver_sulf = 3)
 	generate_items_inside(items_inside,src)
@@ -133,7 +133,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/styptic = 4,
-		/obj/item/stack/medical/gauze/large = 1,
+		/obj/item/stack/gauze/large = 1,
 		/obj/item/reagent_containers/medspray/styptic = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
@@ -151,7 +151,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-		/obj/item/stack/medical/gauze/large = 1,
+		/obj/item/stack/gauze/large = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -168,7 +168,7 @@
 /obj/item/storage/firstaid/tactical/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/stack/gauze(src)
 	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/reagent_containers/hypospray/combat(src)
 	new /obj/item/reagent_containers/pill/patch/styptic(src)
