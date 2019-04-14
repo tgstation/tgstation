@@ -333,14 +333,14 @@
 
 /obj/item/pestle
 	name = "pestle"
-	desc = "Grind items with a mortar."
+	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
 
 /obj/item/reagent_containers/glass/mortar
 	name = "mortar"
-	desc = "Use this with a pestle to extract chemicals out of items."
+	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting."
 	icon_state = "mortar"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
