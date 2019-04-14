@@ -1514,7 +1514,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fi" = (
-/obj/item/stack/medical/bruise_pack,
+/obj/item/reagent_containers/medspray/mini/styptic,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
