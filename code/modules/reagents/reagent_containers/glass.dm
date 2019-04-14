@@ -358,6 +358,9 @@
 /obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
 	if(istype(I,/obj/item/pestle))
 		if(grinded)
+			if(user.getStaminaLoss() > 50)
+				to_chat(user, "<span class='danger'> You are too tired to work!</span>")
+				return
 			to_chat(user, "You start grinding...")
 			if((do_after(user, 25, target = src)) && grinded)
 				user.adjustStaminaLoss(40)
