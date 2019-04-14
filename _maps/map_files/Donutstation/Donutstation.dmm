@@ -4747,14 +4747,14 @@
 /obj/machinery/computer/cargo,
 /obj/machinery/button/door{
 	dir = 2;
-	id = "cargounload";
+	id = "cargoload";
 	layer = 4;
 	name = "Loading Doors";
 	pixel_x = 8;
 	pixel_y = 24
 	},
 /obj/machinery/button/door{
-	id = "cargoload";
+	id = "cargounload";
 	layer = 4;
 	name = "Loading Doors";
 	pixel_x = -8;
@@ -51243,6 +51243,14 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"elZ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "emg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -51556,17 +51564,6 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
-"eYK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "eZi" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -52550,18 +52547,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"iiE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/cable/yellow,
-/turf/open/floor/plating,
-/area/crew_quarters/heads/chief)
 "ijH" = (
 /obj/machinery/light{
 	dir = 4
@@ -52657,6 +52642,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/cryo)
+"iIq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "iJC" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -54531,6 +54527,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
+"pmD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "poI" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -55183,23 +55190,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
-"rIu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/heads/chief)
 "rJs" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
@@ -55524,17 +55514,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"sDa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "sEf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/segment,
@@ -55652,6 +55631,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"tcB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/cable/yellow,
+/turf/open/floor/plating,
+/area/crew_quarters/heads/chief)
 "tdw" = (
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/heads/cmo";
@@ -56664,6 +56655,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"wpG" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/cable/yellow,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/heads/chief)
 "wrV" = (
 /obj/structure/kitchenspike,
 /obj/item/radio/intercom{
@@ -56846,14 +56854,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
-"wPf" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "wPr" = (
 /obj/machinery/power/apc{
 	areastring = "/area/construction";
@@ -95395,7 +95395,7 @@ mXO
 iUZ
 aaa
 aaa
-eYK
+iIq
 dUa
 aor
 vzQ
@@ -95652,7 +95652,7 @@ aal
 aaa
 aaa
 aaa
-wPf
+elZ
 mUn
 aor
 aor
@@ -95909,7 +95909,7 @@ aal
 aal
 aal
 aal
-sDa
+pmD
 hAI
 vRP
 vRP
@@ -96429,8 +96429,8 @@ apO
 apO
 kAG
 feg
-rIu
-iiE
+wpG
+tcB
 apO
 apO
 aze
