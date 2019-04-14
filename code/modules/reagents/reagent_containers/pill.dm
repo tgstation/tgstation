@@ -200,20 +200,17 @@
 	list_reagents = list("synaptizine" = 10, "nicotine" = 10, "methamphetamine" = 1)
 	icon_state = "pill7"
 
-
 /obj/item/reagent_containers/pill/happy
 	name = "happy pill"
 	desc = "They have little happy faces on them, and they smell like marker pens."
-	list_reagents = list("sugar" = 10, "space_drugs" = 10)
+	list_reagents = list("happiness" = 5, "space_drugs" = 10)
 	icon_state = "pill_happy"
-
 
 /obj/item/reagent_containers/pill/lsd
 	name = "sunshine pill"
 	desc = "Engraved on this split-coloured pill is a half-sun, half-moon."
 	list_reagents = list("mushroomhallucinogen" = 15, "mindbreaker" = 15)
 	icon_state = "pill14"
-
 
 /obj/item/reagent_containers/pill/aranesp
 	name = "smooth pill"

@@ -4956,11 +4956,11 @@
 /area/maintenance/solars/port/fore)
 "ajj" = (
 /obj/structure/table,
-/obj/item/stack/medical/ointment{
+/obj/item/reagent_containers/medspray/mini/silver_sulf{
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/item/stack/medical/bruise_pack{
+/obj/item/reagent_containers/medspray/mini/styptic{
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -47867,8 +47867,8 @@
 /area/bridge/showroom/corporate)
 "bOG" = (
 /obj/structure/rack,
-/obj/item/stack/medical/ointment,
-/obj/item/stack/medical/bruise_pack,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
+/obj/item/reagent_containers/medspray/mini/styptic,
 /obj/item/reagent_containers/syringe/charcoal,
 /obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -1;
@@ -53548,8 +53548,8 @@
 "cap" = (
 /obj/structure/table,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/ointment,
-/obj/item/stack/medical/bruise_pack,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
+/obj/item/reagent_containers/medspray/mini/styptic,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -60005,11 +60005,11 @@
 	pixel_y = -1
 	},
 /obj/item/reagent_containers/dropper,
-/obj/item/stack/medical/bruise_pack{
+/obj/item/reagent_containers/medspray/mini/styptic{
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/item/healthanalyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -61573,9 +61573,9 @@
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/structure/rack,
 /obj/item/storage/firstaid/regular,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/item/clothing/glasses/hud/health,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)

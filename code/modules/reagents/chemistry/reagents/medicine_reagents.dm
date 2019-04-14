@@ -240,6 +240,8 @@
 				to_chat(M, "<span class='danger'>You feel your burns healing! It stings like hell!</span>")
 			M.emote("scream")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+	if (isanimal(M))
+		M.heal_bodypart_damage(reac_volume, reac_volume)
 	..()
 
 /datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/carbon/M)
@@ -289,6 +291,8 @@
 				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
 			M.emote("scream")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+	if (isanimal(M))
+		M.heal_bodypart_damage(reac_volume, reac_volume)
 	..()
 
 
@@ -366,9 +370,10 @@
 				var/datum/surgery/S = s
 				S.success_multiplier = max(0.1, S.success_multiplier)
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
-
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your wounds fade away to nothing!</span>" )
+	if (isanimal(M))
+		M.heal_bodypart_damage(reac_volume*0.2, reac_volume*0.2)
 	..()
 
 /datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
@@ -394,6 +399,8 @@
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+	if (isanimal(M))
+		M.heal_bodypart_damage(reac_volume*2, reac_volume*2)
 	..()
 
 /datum/reagent/medicine/charcoal

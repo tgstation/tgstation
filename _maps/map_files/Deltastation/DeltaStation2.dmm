@@ -78250,8 +78250,8 @@
 "cBx" = (
 /obj/structure/rack,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -3;
 	pixel_y = 3
@@ -86448,8 +86448,8 @@
 "cPs" = (
 /obj/structure/table,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -92742,8 +92742,8 @@
 	},
 /obj/item/book/manual/wiki/medicine,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -95070,8 +95070,8 @@
 "ddp" = (
 /obj/structure/table/glass,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
@@ -100301,8 +100301,8 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

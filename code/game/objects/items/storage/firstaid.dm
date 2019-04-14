@@ -31,9 +31,11 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/bruise_pack = 2,
-		/obj/item/stack/medical/ointment = 2,
-		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/reagent_containers/medspray/mini/styptic = 1,
+		/obj/item/reagent_containers/medspray/mini/silver_sulf = 1,
+		/obj/item/reagent_containers/glass/bottle/epinephrine = 1,
+		/obj/item/reagent_containers/glass/bottle/tricordrazine = 1,
+		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -46,8 +48,8 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/bruise_pack = 3,
-		/obj/item/stack/medical/ointment= 3)
+		/obj/item/reagent_containers/medspray/mini/styptic = 3,
+		/obj/item/reagent_containers/medspray/mini/silver_sulf = 3)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/fire
@@ -70,7 +72,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
 		/obj/item/reagent_containers/pill/oxandrolone = 2,
-		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/reagent_containers/medspray/silver_sulf = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -131,7 +133,8 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/styptic = 4,
-		/obj/item/stack/medical/gauze = 2,
+		/obj/item/stack/medical/gauze/large = 1,
+		/obj/item/reagent_containers/medspray/styptic = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -148,7 +151,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/gauze/large = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 

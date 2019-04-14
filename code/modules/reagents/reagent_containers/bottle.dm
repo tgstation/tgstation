@@ -134,6 +134,11 @@
 	desc = "A small bottle. Contains cold sauce."
 	list_reagents = list("frostoil" = 30)
 
+/obj/item/reagent_containers/glass/bottle/tricordrazine
+	name = "tricordrazine Bottle"
+	desc = "A small bottle. Contains tricordrazine which slighty heal all kind of damage while in the blood stream."
+	list_reagents = list("tricordrazine" = 30)
+
 /obj/item/reagent_containers/glass/bottle/traitor
 	name = "syndicate bottle"
 	desc = "A small bottle. Contains a random nasty chemical."

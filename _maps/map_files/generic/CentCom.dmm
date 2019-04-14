@@ -49,9 +49,7 @@
 /area/holodeck/rec_center/bunker)
 "ak" = (
 /obj/structure/table,
-/obj/item/stack/medical/ointment{
-	heal_burn = 10
-	},
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/bunker)
 "al" = (
@@ -355,9 +353,7 @@
 /area/holodeck/rec_center/lounge)
 "bc" = (
 /obj/structure/table,
-/obj/item/stack/medical/bruise_pack{
-	heal_brute = 10
-	},
+/obj/item/reagent_containers/medspray/mini/styptic,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/bunker)
 "bd" = (
@@ -11138,8 +11134,8 @@
 /area/wizard_station)
 "yD" = (
 /obj/structure/table/wood,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/reagent_containers/medspray/mini/styptic,
+/obj/item/reagent_containers/medspray/mini/silver_sulf,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "yE" = (
