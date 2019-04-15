@@ -664,16 +664,6 @@
 	contains = list(/obj/item/ammo_box/magazine/wt550m9)
 	small_item = TRUE
 
-/datum/supply_pack/security/armory/wt550ammo
-	name = "WT-550 Auto Rifle Ammo Crate"
-	desc = "Contains four 20-round magazines for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
-	cost = 3000
-	contains = list(/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/ammo_box/magazine/wt550m9)
-	crate_name = "auto rifle ammo crate"
-
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1205,36 +1195,18 @@
 	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/medical/firstaidbruises_single
-	name = "Bruise Treatment Kit Crate Single-Pack"
+	name = "Bruise Treatment Kit Single-Pack"
 	desc = "Contains one first aid kit focused on healing bruises and broken bones."
-	cost = 350
+	cost = 330
 	small_item = TRUE
 	contains = list(/obj/item/storage/firstaid/brute)
 
-/datum/supply_pack/medical/firstaidbruises
-	name = "Bruise Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing bruises and broken bones."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/brute)
-	crate_name = "brute treatment kit crate"
-
 /datum/supply_pack/medical/firstaidburns_single
-	name = "Burn Treatment Kit Crate Single-Pack"
+	name = "Burn Treatment Kit Single-Pack"
 	desc = "Contains one first aid kit focused on healing severe burns."
-	cost = 350
+	cost = 330
 	small_item = TRUE
 	contains = list(/obj/item/storage/firstaid/fire)
-
-/datum/supply_pack/medical/firstaidburns
-	name = "Burn Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing severe burns."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/fire,
-					/obj/item/storage/firstaid/fire,
-					/obj/item/storage/firstaid/fire)
-	crate_name = "burn treatment kit crate"
 
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
@@ -1268,53 +1240,11 @@
 
 
 /datum/supply_pack/medical/firstaid_single
-	name = "First Aid Kit Crate Single-Pack"
+	name = "First Aid Kit Single-Pack"
 	desc = "Contains one first aid kit for healing most types of wounds."
-	cost = 300
+	cost = 250
 	small_item = TRUE
 	contains = list(/obj/item/storage/firstaid/regular)
-
-/datum/supply_pack/medical/firstaid
-	name = "First Aid Kit Crate"
-	desc = "Contains four first aid kits for healing most types of wounds."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular)
-	crate_name = "first aid kit crate"
-
-/datum/supply_pack/medical/firstaidoxygen_single
-	name = "Oxygen Deprivation Kit Crate Single-Pack"
-	desc = "Contains three first aid kits focused on helping oxygen deprivation victims."
-	cost = 400
-	small_item = TRUE
-	contains = list(/obj/item/storage/firstaid/o2)
-
-/datum/supply_pack/medical/firstaidoxygen
-	name = "Oxygen Deprivation Kit Crate"
-	desc = "Contains three first aid kits focused on helping oxygen deprivation victims."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/o2)
-	crate_name = "oxygen deprivation kit crate"
-
-/datum/supply_pack/medical/firstaidtoxins_single
-	name = "Toxin Treatment Kit Crate Single-Pack"
-	desc = "Contains one first aid kit focused on healing damage dealt by heavy toxins."
-	cost = 350
-	small_item = TRUE
-	contains = list(/obj/item/storage/firstaid/toxin)
-
-/datum/supply_pack/medical/firstaidtoxins
-	name = "Toxin Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing damage dealt by heavy toxins."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin)
-	crate_name = "toxin treatment kit crate"
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
@@ -1352,6 +1282,13 @@
 					/obj/item/storage/box/bodybags)
 	crate_name = "medical supplies crate"
 
+/datum/supply_pack/medical/firstaidoxygen_single
+	name = "Oxygen Deprivation Kit Single-Pack"
+	desc = "Contains three first aid kits focused on helping oxygen deprivation victims."
+	cost = 330
+	small_item = TRUE
+	contains = list(/obj/item/storage/firstaid/o2)
+
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"
 	desc = "Do you want to perform surgery, but don't have one of those fancy shmancy degrees? Just get started with this crate containing a medical duffelbag, Sterilizine spray and collapsible roller bed."
@@ -1361,14 +1298,12 @@
 					/obj/item/roller)
 	crate_name = "surgical supplies crate"
 
-/datum/supply_pack/medical/firstaidtoxins
-	name = "Toxin Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing damage dealt by heavy toxins."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin)
-	crate_name = "toxin treatment kit crate"
+/datum/supply_pack/medical/firstaidtoxins_single
+	name = "Toxin Treatment Kit Single-Pack"
+	desc = "Contains one first aid kit focused on healing damage dealt by heavy toxins."
+	cost = 330
+	small_item = TRUE
+	contains = list(/obj/item/storage/firstaid/toxin)
 
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
