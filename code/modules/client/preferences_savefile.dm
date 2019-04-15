@@ -52,6 +52,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if((current_version < 21) && features["ethcolor"] && (features["ethcolor"] == "#9c3030"))
 		features["ethcolor"] = "9c3030"
 	if(current_version < 22)
+		job_preferences = list() //It loaded null from nonexistant savefile field.
 		var/job_civilian_high = 0
 		var/job_civilian_med = 0
 		var/job_civilian_low = 0
@@ -102,6 +103,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					else if(job_engsec_low & fval)
 						new_value = JP_LOW
 			if(new_value)
+				to_chat(world,"Updating [initial(J.title)] to [new_value]")
 				job_preferences[initial(J.title)] = new_value
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
