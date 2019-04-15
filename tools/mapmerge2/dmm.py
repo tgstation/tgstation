@@ -343,7 +343,7 @@ def _parse(map_raw_text):
     in_map_block = False
     in_coord_block = False
     in_map_string = False
-    iter_x = 0
+    base_x = 0
     adjust_y = True
 
     curr_num = ""
@@ -487,7 +487,7 @@ def _parse(map_raw_text):
                     curr_x = int(curr_num)
                     if curr_x > maxx:
                         maxx = curr_x
-                    iter_x = 0
+                    base_x = curr_x
                     curr_num = ""
                     reading_coord = "y"
                 elif reading_coord == "y":
@@ -521,21 +521,15 @@ def _parse(map_raw_text):
                     adjust_y = False
                 else:
                     curr_y += 1
-                if curr_x > maxx:
-                    maxx = curr_x
-                if iter_x > 1:
-                    curr_x = 1
-                iter_x = 0
-
+                curr_x = base_x
             else:
                 curr_key = BASE * curr_key + base52_r[char]
                 curr_key_len += 1
                 if curr_key_len == key_length:
-                    iter_x += 1
-                    if iter_x > 1:
-                        curr_x += 1
-
                     grid[curr_x, curr_y, curr_z] = duplicate_keys.get(curr_key, curr_key)
+                    if curr_x > maxx:
+                        maxx = curr_x
+                    curr_x += 1
                     curr_key = 0
                     curr_key_len = 0
 
