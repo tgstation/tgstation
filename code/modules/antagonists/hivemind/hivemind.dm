@@ -192,7 +192,7 @@
 	for(var/datum/mind/M in hivemembers)
 		M.remove_antag_datum(/datum/antagonist/hivevessel)
 		active_one_mind.remove_member(M)
-	if(!owner?.current)
+	if(!(owner?.current))
 		return
 	var/mob/living/carbon/C = owner.current.get_real_hivehost()
 	if(!C)
