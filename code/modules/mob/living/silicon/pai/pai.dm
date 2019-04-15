@@ -57,6 +57,8 @@
 
 	var/holoform = FALSE
 	var/canholo = TRUE
+	var/can_tx = TRUE
+	var/can_rx = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
 	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
