@@ -65,7 +65,8 @@
 	initTemplateBounds(bounds)
 	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
+
+/datum/map_template/proc/load(turf/T, centered = FALSE, placeOnTop=TRUE, overWrite=FALSE)
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
 	if(!T)
@@ -75,7 +76,7 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=placeOnTop, overWrite=overWrite)
 	if(!bounds)
 		return
 

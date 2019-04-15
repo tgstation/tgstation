@@ -1,0 +1,27 @@
+"a" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/turf/closed/wall,/area/maintenance/port/fore)
+"b" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/closed/wall,/area/maintenance/port/fore)
+"c" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 4},/turf/closed/wall,/area/maintenance/port/fore)
+"d" = (/obj/machinery/shower{dir = 1},/obj/item/soap/deluxe{pixel_y = 5},/obj/item/bikehorn/rubberducky,/obj/structure/curtain,/turf/open/floor/plasteel/freezer,/area/maintenance/port/fore)
+"e" = (/obj/structure/urinal{pixel_y = 32},/obj/structure/window/reinforced/tinted{dir = 4},/turf/open/floor/plasteel/freezer,/area/maintenance/port/fore)
+"f" = (/obj/structure/sink{pixel_y = 28},/turf/open/floor/wood,/area/maintenance/port/fore)
+"g" = (/obj/structure/chair{pixel_y = 0},/obj/item/reagent_containers/spray/spraytan{color = "#ffd699"; pixel_x = 15; pixel_y = -10},/turf/open/floor/wood,/area/maintenance/port/fore)
+"h" = (/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/closet/athletic_mixed,/obj/item/reagent_containers/glass/beaker/waterbottle/empty,/turf/open/floor/wood,/area/maintenance/port/fore)
+"i" = (/turf/closed/wall,/area/maintenance/port/fore)
+"j" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/closed/wall,/area/maintenance/port/fore)
+"k" = (/obj/machinery/light/small{dir = 8; pixel_y = 5},/obj/structure/window/reinforced/tinted{dir = 1},/obj/machinery/vending/sustenance{pixel_x = 0},/turf/open/floor/wood,/area/maintenance/port/fore)
+"l" = (/turf/open/floor/wood,/area/maintenance/port/fore)
+"m" = (/obj/structure/door_assembly/door_assembly_mai,/turf/open/floor/plating,/area/maintenance/port/fore)
+"n" = (/obj/item/reagent_containers/glass/beaker/waterbottle/large/empty{pixel_x = -8},/turf/open/floor/wood,/area/maintenance/port/fore)
+"o" = (/obj/structure/weightlifter,/turf/open/floor/wood,/area/maintenance/port/fore)
+"p" = (/obj/item/reagent_containers/glass/beaker/waterbottle/empty{pixel_x = 12; pixel_y = -6},/obj/effect/landmark/blobstart,/turf/open/floor/wood,/area/maintenance/port/fore)
+"q" = (/obj/structure/mirror{icon_state = "mirror_broke"; pixel_y = -32},/turf/open/floor/wood,/area/maintenance/port/fore)
+"r" = (/turf/open/floor/wood{icon_state = "wood-broken7"},/area/maintenance/port/fore)
+
+(1,1,1) = {"
+abbbbbb
+cdefghi
+jkllllm
+jnopoli
+jlqlqri
+jiiiiii
+"}

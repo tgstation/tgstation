@@ -1,0 +1,27 @@
+"a" = (/turf/closed/wall/r_wall,/area/maintenance/starboard/aft)
+"b" = (/obj/structure/table,/obj/item/bodypart/l_leg{dir = 8; pixel_x = 6},/obj/item/bodypart/r_leg{dir = 8},/obj/item/organ/liver{pixel_x = -4; pixel_y = 8},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"c" = (/obj/structure/table,/obj/item/bodypart/chest{dir = 4; pixel_x = -6; pixel_y = 3},/obj/item/bodypart/r_arm{dir = 8; pixel_x = -16; pixel_y = 10},/obj/item/bodypart/l_arm/robot{pixel_x = -15; pixel_y = -1},/obj/item/organ/lungs{pixel_x = 10; pixel_y = 7},/obj/structure/sign/poster/contraband/syndicate_pistol{pixel_y = 32},/obj/item/reagent_containers/glass/rag{pixel_x = 7; pixel_y = 2},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"d" = (/obj/structure/table,/obj/item/kitchen/knife/butcher{color = "#ffc18e"; dir = 2; force = 10; name = "old rusty cleaver"; pixel_y = 6},/obj/item/restraints/handcuffs,/obj/item/reagent_containers/pill/psychiatrist/sedative{desc = "This doesn't look like candy at all and it smells of morphine."; list_reagents = list("morphine" = 10, "chloralhydrate" = 5); name = "maintenance candy"; pixel_x = -11; pixel_y = 10},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"e" = (/obj/structure/mopbucket{pixel_x = 0; pixel_y = 0; reagents = null},/obj/item/mop{pixel_y = 0},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"f" = (/obj/structure/closet,/obj/effect/spawner/lootdrop/maintenance,/obj/item/reagent_containers/glass/rag,/obj/item/reagent_containers/glass/bottle/morphine{volume = 5},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"g" = (/turf/closed/wall,/area/maintenance/starboard/aft)
+"h" = (/obj/effect/decal/cleanable/blood/old,/obj/item/stack/sheet/cardboard,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"i" = (/obj/effect/decal/cleanable/blood/tracks{dir = 4},/obj/item/stack/sheet/cardboard,/obj/item/reagent_containers/syringe{layer = 3.01},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"j" = (/obj/effect/decal/cleanable/blood/tracks{dir = 4},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"k" = (/obj/effect/landmark/blobstart,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/cleanable/blood/tracks{dir = 5},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"l" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/closet/cardboard,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"m" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/closed/wall,/area/maintenance/starboard/aft)
+"n" = (/obj/structure/closet/crate/freezer,/obj/item/organ/stomach,/obj/item/organ/heart,/obj/item/organ/ears,/obj/item/organ/vocal_cords,/obj/item/organ/tongue,/obj/item/reagent_containers/food/drinks/ice{pixel_x = -7; pixel_y = -2},/obj/item/reagent_containers/blood/random,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"o" = (/obj/structure/rack,/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"p" = (/obj/item/organ/eyes,/obj/effect/decal/cleanable/blood/gibs/old,/obj/item/organ/appendix{pixel_x = 3; pixel_y = 3},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/maintenance/starboard/aft)
+"q" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/decal/cleanable/blood/tracks{pixel_y = -12},/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"r" = (/obj/structure/closet,/obj/effect/spawner/lootdrop/maintenance,/obj/item/storage/pill_bottle{desc = "Pill contents: 10u Morphine and 5u Chloral Hydrate. WARNING: Pills can resemble candy."; name = "bottle of sedative pills"},/obj/item/reagent_containers/pill/psychiatrist/sedative{desc = "This doesn't look like candy at all and it smells of morphine."; list_reagents = list("morphine" = 10, "chloralhydrate" = 5); name = "maintenance candy"},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"s" = (/obj/machinery/door/airlock/maintenance/abandoned{name = "Research Delivery access"; req_access_txt = "12"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/decal/cleanable/blood/tracks{pixel_y = -12},/obj/item/restraints/legcuffs/beartrap{armed = 1; icon_state = "beartrap1"},/obj/item/stack/sheet/cardboard{layer = 3.01},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+
+(1,1,1) = {"
+aaaaaaa
+abcdefg
+ahijklm
+anopqrg
+ggggsgg
+"}

@@ -1027,6 +1027,7 @@
 #include "code\modules\_toolbox\modified_guns.dm"
 #include "code\modules\_toolbox\objects.dm"
 #include "code\modules\_toolbox\psychiatrist.dm"
+#include "code\modules\_toolbox\random_station.dm"
 #include "code\modules\_toolbox\rat.dm"
 #include "code\modules\_toolbox\space_jesus.dm"
 #include "code\modules\_toolbox\splash_animation.dm"

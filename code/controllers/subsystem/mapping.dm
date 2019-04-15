@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ruins_templates = list()
 	var/list/space_ruins_templates = list()
 	var/list/lava_ruins_templates = list()
+	var/list/module_templates = list()
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
@@ -75,18 +76,57 @@ SUBSYSTEM_DEF(mapping)
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
 		seedRuins(space_ruins, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
+
 	loading_ruins = FALSE
 #endif
+
+
 	repopulate_sorted_areas()
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
+	randomize_station()
 	QDEL_NULL(loader)
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
    Used by the AI doomsday and the self destruct nuke.
 */
+
+/datum/stationmodule_group
+	var/name
+	var/force
+	var/list/possibilities = list()
+
+/datum/controller/subsystem/mapping/proc/randomize_station()
+	log_world("Randomizing station...")
+	to_chat(world, "<span class='boldannounce'>Randomizing station...</span>")
+	for (var/type in subtypesof(/datum/stationmodule_group))
+		var/datum/stationmodule_group/inited = new type()
+
+		var/list/picklist = inited.possibilities.Copy()
+		picklist.Add("none")
+
+		var/pick = pick(picklist)
+
+		if (inited.force)
+			pick = inited.force
+
+		if (pick == "none")
+			log_world("Group: [inited.name] | Picked: Default")
+		else
+			log_world("Group: [inited.name] | Picked: [pick]")
+			var/datum/map_template/temp = module_templates[pick]
+			if (isnull(temp))
+				log_world("Improperly set up stationgroup (no module template): [pick]")
+			else
+				temp.load(locate(picklist[pick][1], picklist[pick][2], picklist[pick][3]), centered=FALSE, placeOnTop=TRUE, overWrite=TRUE)
+
+	log_world("Finished randomizing station")
+	to_chat(world, "<span class='boldannounce'>Finished randomizing station</span>")
+
+
+
 
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
 	nuke_threats[nuke] = TRUE
@@ -281,6 +321,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
+	preloadModules()
+
+/datum/controller/subsystem/mapping/proc/preloadModules(path = "_maps/modules/")
+	var/list/filelist = flist(path)
+	for (var/map in filelist)
+		var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
+		module_templates[map] = T
+
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename

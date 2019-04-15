@@ -29,21 +29,39 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num, placeOnTop as num)
+
+
+/proc/qdel_contents(turf/T)
+	if (!isturf(T))
+		return
+
+	var/list/atom/allAtoms = list()
+	for (var/atom/A in T)
+		recurse_qdel(A, allAtoms)
+
+	for(var/atom/ToDel in allAtoms)
+		qdel(ToDel)
+
+/proc/recurse_qdel(atom/A, list/L)
+	for (var/atom/nextA in A.contents)
+		recurse_qdel(nextA, L)
+	L.Add(A)
+
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num, placeOnTop as num, overWrite as num)
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	space_key = null
 	#ifdef TESTING
 	turfsSkipped = 0
 	#endif
-	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y, placeOnTop)
+	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y, placeOnTop, overWrite)
 	#ifdef TESTING
 	if(turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
 	Master.StopLoadingMap()
 
-/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, overWrite=FALSE)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -157,7 +175,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 								if(!no_afterchange || (model_key != space_key))
 									if(!grid_models[model_key])
 										throw EXCEPTION("Undefined model key in DMM.")
-									parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion, placeOnTop)
+									parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion, placeOnTop, overWrite)
 								#ifdef TESTING
 								else
 									++turfsSkipped
@@ -199,7 +217,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model as text, model_key as text, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num, placeOnTop as num)
+/dmm_suite/proc/parse_grid(model as text, model_key as text, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num, placeOnTop as num, overWrite as num)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -313,6 +331,8 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
+		if (overWrite)
+			qdel_contents(crds)
 		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop)
 
 	if(T)
