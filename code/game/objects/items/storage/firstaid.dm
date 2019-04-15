@@ -33,9 +33,7 @@
 		/obj/item/stack/gauze = 1,
 		/obj/item/reagent_containers/medspray/mini/styptic = 1,
 		/obj/item/reagent_containers/medspray/mini/silver_sulf = 1,
-		/obj/item/reagent_containers/glass/bottle/epinephrine = 1,
-		/obj/item/reagent_containers/glass/bottle/tricordrazine = 1,
-		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/hypospray/medipen = 3,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
