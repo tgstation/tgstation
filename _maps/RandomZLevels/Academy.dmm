@@ -48,7 +48,7 @@
 	dir = 1;
 	environ = 3;
 	equipment = 3;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/carpet,
@@ -258,7 +258,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aV" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aW" = (
@@ -303,7 +303,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "be" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -336,7 +336,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "bk" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -345,7 +345,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bl" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -1284,7 +1284,7 @@
 	dir = 1;
 	environ = 3;
 	equipment = 3;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/plasteel/grimy,
@@ -2539,7 +2539,7 @@
 	dir = 1;
 	environ = 3;
 	equipment = 3;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/plasteel,
@@ -3571,7 +3571,7 @@
 	dir = 1;
 	environ = 3;
 	equipment = 3;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /obj/structure/cable{
@@ -3915,7 +3915,7 @@
 "lp" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	pixel_y = 32
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-8"

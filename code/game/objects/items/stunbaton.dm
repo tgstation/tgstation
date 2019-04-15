@@ -1,5 +1,5 @@
 /obj/item/melee/baton
-	name = "stunbaton"
+	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
@@ -30,7 +30,7 @@
 	. = ..()
 	if(preload_cell_type)
 		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
-			log_world("### MAP WARNING, [src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
+			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
 	update_icon()
@@ -58,11 +58,11 @@
 
 /obj/item/melee/baton/update_icon()
 	if(status)
-		icon_state = "[initial(name)]_active"
+		icon_state = "[initial(icon_state)]_active"
 	else if(!cell)
-		icon_state = "[initial(name)]_nocell"
+		icon_state = "[initial(icon_state)]_nocell"
 	else
-		icon_state = "[initial(name)]"
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/melee/baton/examine(mob/user)
 	..()
@@ -185,7 +185,7 @@
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
 	desc = "An improvised stun baton."
-	icon_state = "stunprod_nocell"
+	icon_state = "stunprod"
 	item_state = "prod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'

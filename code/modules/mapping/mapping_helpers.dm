@@ -104,11 +104,11 @@
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		log_world("### MAP WARNING, [src] spawned outside of mapload!")
+		log_mapping("[src] spawned outside of mapload!")
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
-		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
+		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 	else
 		payload(airlock)
 
@@ -121,7 +121,7 @@
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.cyclelinkeddir)
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
+		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
 	else
 		airlock.cyclelinkeddir = dir
 
@@ -132,7 +132,7 @@
 
 /obj/effect/mapping_helpers/airlock/locked/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.locked)
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
+		log_mapping("[src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
 	else
 		airlock.locked = TRUE
 
@@ -150,7 +150,7 @@
 
 /obj/effect/mapping_helpers/airlock/abandoned/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.abandoned)
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
+		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
 	else
 		airlock.abandoned = TRUE
 

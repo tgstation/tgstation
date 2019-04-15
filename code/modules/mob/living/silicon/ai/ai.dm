@@ -94,6 +94,9 @@
 	var/max_multicams = 6
 	var/display_icon_override
 
+	var/list/cam_hotkeys = new/list(9)
+	var/cam_prev
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -162,6 +165,25 @@
 	builtInCamera = new (src)
 	builtInCamera.network = list("ss13")
 
+/mob/living/silicon/ai/key_down(_key, client/user)
+	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
+		_key = _key[7] //strings, lists, same thing really
+	switch(_key)
+		if("`", "0")
+			if(cam_prev)
+				eyeobj.setLoc(cam_prev)
+			return
+		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
+			_key = text2num(_key)
+			if(client.keys_held["Ctrl"]) //do we assign a new hotkey?
+				cam_hotkeys[_key] = eyeobj.loc
+				to_chat(src, "Location saved to Camera Group [_key].")
+				return
+			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
+				cam_prev = eyeobj.loc
+				eyeobj.setLoc(cam_hotkeys[_key])
+				return
+	return ..()
 
 /mob/living/silicon/ai/Destroy()
 	GLOB.ai_list -= src
@@ -799,7 +821,7 @@
 /mob/living/silicon/ai/can_buckle()
 	return 0
 
-/mob/living/silicon/ai/incapacitated()
+/mob/living/silicon/ai/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
 	if(aiRestorePowerRoutine)
 		return TRUE
 	return ..()
@@ -908,10 +930,10 @@
 
 	if(!istype(apc) || QDELETED(apc) || apc.stat & BROKEN)
 		to_chat(src, "<span class='danger'>Hack aborted. The designated APC no longer exists on the power network.</span>")
-		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1, ignore_walls = FALSE)
 	else if(apc.aidisabled)
 		to_chat(src, "<span class='danger'>Hack aborted. \The [apc] is no longer responding to our systems.</span>")
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 1, ignore_walls = FALSE)
 	else
 		malf_picker.processing_time += 10
 
@@ -920,7 +942,7 @@
 		apc.locked = TRUE
 		apc.coverlocked = TRUE
 
-		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1, ignore_walls = FALSE)
 		to_chat(src, "Hack complete. \The [apc] is now under your exclusive control.")
 		apc.update_icon()
 

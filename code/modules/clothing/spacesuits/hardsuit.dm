@@ -210,7 +210,7 @@
 	icon_state = "hardsuit0-white"
 	item_state = "ce_helm"
 	item_color = "white"
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 50, "bio" = 100, "rad" = 90, "fire" = 100, "acid" = 90)
+	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 90)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
@@ -423,7 +423,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, FALSE, _blocks_self = FALSE)
+	AddComponent(/datum/component/anti_magic, TRUE, FALSE, INFINITY, FALSE)
 
 
 	//Medical hardsuit

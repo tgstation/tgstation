@@ -105,7 +105,8 @@
 "av" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "cabin APC"
+	name = "cabin APC";
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -314,7 +315,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bd" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "be" = (

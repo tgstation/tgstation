@@ -77,3 +77,16 @@
 /datum/antagonist/hivevessel/farewell()
 	to_chat(owner, "<span class='assimilator'>Your mind closes up once more...</span>")
 	to_chat(owner, "<big><span class='warning'><b>You feel the weight of your objectives disappear! You no longer have to obey them.</b></span></big>")
+	
+/datum/antagonist/hivevessel/roundend_report()
+	if(!owner)
+		CRASH("antagonist datum without owner")
+		
+	if(one_mind)
+		return printplayer(owner)
+	
+	var/list/report = list()
+	report += printplayer(owner)
+	if(objectives.len)
+		report += printobjectives(objectives)
+	return report.Join("<br>")

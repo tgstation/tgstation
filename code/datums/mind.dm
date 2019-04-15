@@ -64,6 +64,8 @@
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 
+	var/list/learned_recipes //List of learned recipe TYPES.
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src

@@ -28,7 +28,7 @@
 	force_string = "robust... against germs"
 	var/uses = 100
 
-/obj/item/soap/Initialize()
+/obj/item/soap/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
 
@@ -39,13 +39,13 @@
 	if(uses != max_uses)
 		var/percentage_left = uses / max_uses
 		switch(percentage_left)
-			if(0 to 14)
+			if(0 to 0.15)
 				msg = "There's just a tiny bit left of what it used to be, you're not sure it'll last much longer."
-			if(15 to 29)
+			if(0.15 to 0.30)
 				msg = "It's dissolved quite a bit, but there's still some life to it."
-			if(30 to 49)
+			if(0.30 to 0.50)
 				msg = "It's past its prime, but it's definitely still good."
-			if(50 to 74)
+			if(0.50 to 0.75)
 				msg = "It's started to get a little smaller than it used to be, but it'll definitely still last for a while."
 			else
 				msg = "It's seen some light use, but it's still pretty fresh."
@@ -147,13 +147,15 @@
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
 	w_class = WEIGHT_CLASS_TINY
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
+	var/component = /datum/component/squeak/bikehorn
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, /datum/outputs/bikehorn, 50)
+	AddComponent(component, 50)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
@@ -169,10 +171,7 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-
-/obj/item/bikehorn/airhorn/Initialize()
-	. = ..()
-	AddComponent(/datum/component/squeak, /datum/outputs/airhorn, 50)
+	component = /datum/component/squeak/airhorn
 
 //golden bikehorn
 /obj/item/bikehorn/golden

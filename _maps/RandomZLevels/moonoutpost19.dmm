@@ -1410,7 +1410,7 @@
 	dir = 2;
 	locked = 1;
 	name = "Worn-out APC";
-	pixel_y = -25;
+	pixel_y = -23;
 	req_access = null;
 	req_access_txt = "150";
 	start_charge = 0
@@ -3413,7 +3413,7 @@
 	dir = 4;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = 25;
+	pixel_x = 24;
 	req_access = null;
 	start_charge = 100
 	},
@@ -3528,7 +3528,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gP" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -4980,7 +4980,7 @@
 	dir = 1;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_y = 25;
+	pixel_y = 23;
 	req_access = null;
 	start_charge = 100
 	},
@@ -6196,8 +6196,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mn" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "freezer";
+/obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "meat fridge";
 	req_access_txt = "201"
@@ -6212,8 +6211,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mo" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "freezer";
+/obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "refrigerator";
 	req_access_txt = "201"

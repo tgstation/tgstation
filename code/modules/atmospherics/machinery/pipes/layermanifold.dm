@@ -132,3 +132,8 @@
 	if((SOUTH|WEST) & dir)
 		user.ventcrawl_layer = CLAMP(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")
+
+/obj/machinery/atmospherics/pipe/layer_manifold/visible
+	level = PIPE_VISIBLE_LEVEL
+	layer = GAS_PIPE_VISIBLE_LAYER
+	

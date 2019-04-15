@@ -199,6 +199,13 @@
 	Has medical facilities."
 	credit_cost = 5000
 
+/datum/map_template/shuttle/emergency/pod
+	suffix = "pod"
+	name = "Emergency Pods"
+	description = "We did not expect an evacuation this quickly. All we have available is two escape pods."
+	admin_notes = "For player punishment."
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/emergency/russiafightpit
 	suffix = "russiafightpit"
 	name = "Mother Russia Bleeds"
