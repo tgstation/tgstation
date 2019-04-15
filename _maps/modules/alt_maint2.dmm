@@ -10,7 +10,7 @@
 "j" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/closed/wall,/area/maintenance/port/fore)
 "k" = (/obj/machinery/light/small{dir = 8; pixel_y = 5},/obj/structure/window/reinforced/tinted{dir = 1},/obj/machinery/vending/sustenance{pixel_x = 0},/turf/open/floor/wood,/area/maintenance/port/fore)
 "l" = (/turf/open/floor/wood,/area/maintenance/port/fore)
-"m" = (/obj/structure/door_assembly/door_assembly_mai,/turf/open/floor/plating,/area/maintenance/port/fore)
+"m" = (/obj/structure/door_assembly/door_assembly_mai{anchored = 1},/turf/open/floor/plating,/area/maintenance/port/fore)
 "n" = (/obj/item/reagent_containers/glass/beaker/waterbottle/large/empty{pixel_x = -8},/turf/open/floor/wood,/area/maintenance/port/fore)
 "o" = (/obj/structure/weightlifter,/turf/open/floor/wood,/area/maintenance/port/fore)
 "p" = (/obj/item/reagent_containers/glass/beaker/waterbottle/empty{pixel_x = 12; pixel_y = -6},/obj/effect/landmark/blobstart,/turf/open/floor/wood,/area/maintenance/port/fore)
