@@ -78,6 +78,9 @@
 	return
 
 /obj/structure/infection/proc/show_description()
+	to_chat(overmind, "<span class='cultlarge'>Upgrades List</span>")
+	for(var/datum/infection/upgrade/U in upgrade_list)
+		to_chat(overmind, "<span class='notice'>[U.name]: [U.description]</span>")
 	return
 
 /obj/structure/infection/Destroy()

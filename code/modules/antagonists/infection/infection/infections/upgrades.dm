@@ -31,10 +31,9 @@
 	radial_icon_state = "bullet"
 	cost = 1
 
-/datum/infection/upgrade/defensive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/IS)
-	var/mob/living/simple_animal/hostile/infection/infectionspore/defensive/DS = new /mob/living/simple_animal/hostile/infection/infectionspore/defensive(IS.loc, null, IS.overmind)
+/datum/infection/upgrade/defensive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/IS)
+	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/defensive/DS = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient/defensive(IS.loc, null, IS.overmind)
 	IS.mind.transfer_to(DS)
-	DS.can_zombify = FALSE
 	DS.upgrade_points = IS.upgrade_points
 	qdel(IS)
 	return
@@ -45,10 +44,9 @@
 	radial_icon_state = "fire_bullet"
 	cost = 1
 
-/datum/infection/upgrade/offensive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/IS)
-	var/mob/living/simple_animal/hostile/infection/infectionspore/defensive/OS = new /mob/living/simple_animal/hostile/infection/infectionspore/offensive(IS.loc, null, IS.overmind)
+/datum/infection/upgrade/offensive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/IS)
+	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive/OS = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive(IS.loc, null, IS.overmind)
 	IS.mind.transfer_to(OS)
-	OS.can_zombify = FALSE
 	OS.upgrade_points = IS.upgrade_points
 	qdel(IS)
 	return
@@ -59,10 +57,9 @@
 	radial_icon_state = "tracking_bullet"
 	cost = 1
 
-/datum/infection/upgrade/supportive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/IS)
-	var/mob/living/simple_animal/hostile/infection/infectionspore/defensive/SS = new /mob/living/simple_animal/hostile/infection/infectionspore/supportive(IS.loc, null, IS.overmind)
+/datum/infection/upgrade/supportive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/IS)
+	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive/SS = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive(IS.loc, null, IS.overmind)
 	IS.mind.transfer_to(SS)
-	SS.can_zombify = FALSE
 	SS.upgrade_points = IS.upgrade_points
 	qdel(IS)
 	return
@@ -227,7 +224,7 @@
 
 /datum/infection/upgrade/turret/shield_creator/projectile_hit(var/obj/structure/infection/turret/T, atom/target)
 	var/turf/target_turf = get_turf(target)
-	var/obj/structure/infection/I = locate(/obj/structure/infection) in target_turf.contents
+	var/obj/structure/infection/normal/I = locate(/obj/structure/infection/normal) in target_turf.contents
 	if(I)
 		I.change_to(/obj/structure/infection/shield, I.overmind)
 	return

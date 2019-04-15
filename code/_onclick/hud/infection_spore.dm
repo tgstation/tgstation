@@ -4,7 +4,7 @@
 	desc = "Help on playing the infection!"
 
 /obj/screen/infection/InfectionSporeHelp/Click()
-	var/mob/living/simple_animal/hostile/infection/infectionspore/I = usr
+	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr
 	I.infection_help()
 
 /obj/screen/infection/EvolveSpore
@@ -13,7 +13,7 @@
 	desc = "Purchase traits that make you stronger."
 
 /obj/screen/infection/EvolveSpore/Click()
-	var/mob/living/simple_animal/hostile/infection/infectionspore/I = usr
+	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr
 	I.evolve_menu()
 
 /datum/hud/infection_spore/New(mob/owner)

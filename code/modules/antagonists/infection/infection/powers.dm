@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 			return //handholdotron 2000
 	if(nearEquals)
 		for(var/obj/structure/infection/L in orange(nearEquals, T))
-			if(L.type == infectionType)
+			if(istype(infectionType, L.type))
 				to_chat(src, "<span class='warning'>There is a similar infection nearby, move more than [nearEquals] tiles away from it!</span>")
 				return
 	if(!can_buy(price))
@@ -174,14 +174,13 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
 	var/turf/T = get_turf(infection_core)
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a sentient infection spore?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as an evolving infection spore?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a sentient spore now.
-		var/mob/living/simple_animal/hostile/infection/infectionspore/spore = new /mob/living/simple_animal/hostile/infection/infectionspore(T.loc)
+		var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient(T.loc)
 		spore.forceMove(T)
 		spore.overmind = src
 		spore.update_icons()
 		spore.adjustHealth(spore.maxHealth * 0.5)
-		spore.can_zombify = 0
 		infection_mobs += spore
 		var/mob/dead/observer/C = pick(candidates)
 		spore.key = C.key
@@ -206,7 +205,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	)
 	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
 	if(choice == choices[1] && can_upgrade(1))
-		create_spore()
+		INVOKE_ASYNC(src, .proc/create_spore)
 	if(choice == choices[2])
 		return
 	if(choice == choices[3])
