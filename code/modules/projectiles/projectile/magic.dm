@@ -162,6 +162,10 @@
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 				Robot.clear_inherent_laws(0)
 				Robot.clear_zeroth_law(0, 0)
+				if(istype(new_mob, /mob/living/silicon/robot/modules/syndicate))
+					var/mob/living/silicon/robot/modules/syndicate/S = new_mob
+					S.playstyle_string = "<span class='big bold'>You are a Syndicate cyborg!</span><br>\
+						<b>However, your laws have been wiped and you are not part of the syndicate organization.</b>"
 				Robot.connected_ai = null
 
 		if("slime")

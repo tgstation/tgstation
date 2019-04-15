@@ -329,6 +329,8 @@
 	var/datum/species/S = dna.species
 	if(S && NOBLOOD in S.species_traits)
 		return
+	if(heart_bypass)
+		return
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!istype(heart))
 		adjustBruteLoss(8)

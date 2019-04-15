@@ -156,6 +156,8 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
+	H.heart_bypass = src //so we dont kill the clone because he has no heart
+
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
 	if(efficiency > 2)
@@ -312,6 +314,9 @@
 			to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
 			return
 		else
+			message_admins("Player [user.real_name]([user.key]) has ejected [mob_occupant.real_name]([mob_occupant.key]) from a clone pod in [get_area(src)] early at [round((mob_occupant.health/mob_occupant.maxHealth)*100,1)]% health")
+			log_game("Player [user.real_name]([user.key]) has ejected [mob_occupant.real_name]([mob_occupant.key]) from a clone pod in [get_area(src)] early at [round((mob_occupant.health/mob_occupant.maxHealth)*100,1)]% health")
+			log_attack("Player [user.real_name]([user.key]) has ejected [mob_occupant.real_name]([mob_occupant.key]) from a clone pod in [get_area(src)] early at [round((mob_occupant.health/mob_occupant.maxHealth)*100,1)]% health")
 			connected_message("Emergency Ejection")
 			SPEAK("An emergency ejection of [clonemind.name] has occurred. Survival not guaranteed.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
@@ -366,6 +371,10 @@
 		mob_occupant.flash_act()
 
 	occupant.forceMove(T)
+	if(istype(occupant,/mob/living/carbon))
+		var/mob/living/carbon/C = occupant
+		if(C.heart_bypass == src)
+			C.heart_bypass = null
 	icon_state = "pod_0"
 	mob_occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
 	for(var/fl in unattached_flesh)

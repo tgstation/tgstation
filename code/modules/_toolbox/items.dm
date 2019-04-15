@@ -113,3 +113,18 @@
 			if(success)
 				to_chat(H, "<span class='notice'>Now you can legally say the N-word. Congratulations!</span>")
 				H.regenerate_icons()
+
+//bughunter
+/obj/item/bughunter
+	name = "The Bug Hunter"
+	desc = "Reward for the Bug Hunter"
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "cockroach"
+	var/used = 0
+
+/obj/item/bughunter/attack_self(mob/user)
+	if(!used)
+		to_chat(user,"You activate the [src].")
+		new /mob/living/simple_animal/cockroach(get_turf(src))
+		used = 1
+	qdel(src)

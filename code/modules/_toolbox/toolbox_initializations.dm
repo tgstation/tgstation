@@ -93,6 +93,10 @@ GLOBAL_LIST_EMPTY(hub_features)
 		return
 	if(!H.wear_mask && H.ckey == "landrydragon")
 		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(H),slot_wear_mask)
+	if(H.ckey == "iksxde")
+		H.equip_to_slot_or_del(new /obj/item/bughunter(H), slot_back)
+	if(H.ckey == "nibberfa0t1337")
+		H.equip_to_slot_or_del(new /obj/item/reagent_containers/food/condiment/saltshaker(H), slot_back)
 	//st patricks day
 	if(themonth == 3 && theday == 17 && !ignore_special_events)
 		if(H.w_uniform)

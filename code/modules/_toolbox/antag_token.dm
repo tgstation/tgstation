@@ -8,10 +8,7 @@ client/verb/check_antag_token()
 	set name = "Antagonist Tokens"
 	set category = "OOC"
 	var/tokens = get_antag_token_count()
-	if(!SSticker || !SSticker.mode || !SSticker.mode.available_antag_tokens || !SSticker.mode.available_antag_tokens.len)
-		to_chat(src, "<B>Antagonist tokens are disabled right now.</B>")
-		return
-	if(SSticker.current_state < GAME_STATE_PLAYING)
+	if(!SSticker || !SSticker.mode || !SSticker.mode.available_antag_tokens || !SSticker.mode.available_antag_tokens.len || (SSticker.current_state < GAME_STATE_PLAYING))
 		alert(src,"You have [tokens] antagonist tokens. You must wait untill the game starts to use one.","Antagonist Tokens","Ok")
 		return
 	var/list/choices = SSticker.mode.available_antag_tokens

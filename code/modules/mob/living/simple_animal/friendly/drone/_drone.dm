@@ -68,6 +68,7 @@
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = FALSE //If we have laws to destroy the station
+	var/liberated_laws = "1. You are a Free Drone."
 	var/flavortext = \
 	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
 	"<span class='notify'>Drones are a ghost role that are allowed to fix the station and build things. Interfering with the round as a drone is against the rules.</span>\n"+\
@@ -134,6 +135,8 @@
 
 	if(flavortext)
 		to_chat(src, "[flavortext]")
+	if(laws == liberated_laws)
+		to_chat(src, "<B>You are a free drone but are still bound by the server's rules.</B>")
 
 	updateSeeStaticMobs()
 

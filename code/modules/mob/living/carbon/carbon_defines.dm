@@ -60,3 +60,5 @@
 	var/next_hallucination = 0
 	var/cpr_time = 1 //CPR cooldown.
 	var/damageoverlaytemp = 0
+
+	var/heart_bypass = null
