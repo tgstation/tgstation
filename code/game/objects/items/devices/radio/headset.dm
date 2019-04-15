@@ -257,8 +257,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/silicon/pai
 	name = "\proper personal Integrated Subspace Transceiver "
-	keyslot = null
-	keyslot2 = null
 
 /obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver "
