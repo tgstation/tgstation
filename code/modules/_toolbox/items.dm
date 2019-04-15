@@ -78,6 +78,15 @@
 	smoketime = 120
 	list_reagents = list("space_drugs" = 30, "lipolicide" = 5, "omnizine" = 2)
 
+// Holy Rollie
+
+/obj/item/clothing/mask/cigarette/rollie/cannabis/holy
+	name = "holy rollie"
+	desc = "Holy healing cannabis leaf grown in heaven rolled up in a thin piece of paper."
+	chem_volume = 60
+	list_reagents = list("space_drugs" = 30, "omnizine" = 15, "mannitol" = 15)
+
+
 // N-word pass
 
 /obj/item/nwordpass
