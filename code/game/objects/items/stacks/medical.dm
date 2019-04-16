@@ -97,7 +97,6 @@
 			var/actual_heal_burn = max(heal_burn - burn_heal_penalty * affecting.burn_dam,0)
 			if(actual_heal_brute + actual_heal_burn <= 0)
 				to_chat(user, "<span class='notice'>These injuries are too severe for the [src] to treat!</span>")
-
 			if(affecting.heal_damage(actual_heal_brute, actual_heal_burn))
 				C.update_damage_overlays()
 		else
