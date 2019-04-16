@@ -61,7 +61,7 @@
 	var/spanned_message = say_quote(msg, get_spans())
 	var/rendered = "<font color=\"#EE4000\"><b>\[Infection Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
-		if(iscommander(M) || isovermind(M) || istype(M, /mob/living/simple_animal/hostile/infection))
+		if(iscommander(M) || isinfectionmonster(M))
 			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
@@ -194,6 +194,11 @@
 		for(var/upgrade_type in upgrade_types)
 			upgrade_list += new upgrade_type()
 
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/Stat()
+	..()
+	if(statpanel("Status"))
+		stat(null, "Upgrade Points: [upgrade_points]")
+
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Life()
 	. = ..()
 	var/list/infection_in_area = range(2, src)
@@ -272,9 +277,8 @@
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round((health / maxHealth) * 100, 0.5)]%</font></div>"
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/death(gibbed)
-	if(overmind.infection_core.respawn_point) // cant die as long as core is still alive
-		forceMove(overmind.infection_core.respawn_point)
-		adjustHealth(-maxHealth * 0.2)
+	if(overmind.infection_core) // cant die as long as core is still alive
+		forceMove(overmind.infection_core)
 		INVOKE_ASYNC(src, .proc/respawn)
 		return
 	. = ..()
@@ -289,11 +293,11 @@
 		time_left--
 	if(overmind.infection_core)
 		to_chat(src, "<b>You have respawned!</b>")
-		var/atom/pos = pick(range(2, overmind.infection_core))
+		var/atom/pos = pick(GLOB.infection_nodes)
+		if(!pos)
+			pos = pick(GLOB.infections)
+		adjustHealth(health * 0.8)
 		forceMove(get_turf(pos))
-	else
-		to_chat(src, "<b>You feel the life draining from you... the last words that echo in your head are those of failure.</b>")
-		death()
 	return
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Zombify(mob/living/carbon/human/H)
@@ -310,6 +314,8 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	obj_damage = 20
+	respawn_time = 45
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	upgrade_types = list() // types of upgrades
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive
@@ -323,7 +329,9 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	obj_damage = 60
-	upgrade_types = list() // types of upgrades
+	respawn_time = 60
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
+	upgrade_types = list(/datum/infection/upgrade/spore/speed_boost) // types of upgrades
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive
 	name = "supportive spore"
@@ -336,4 +344,6 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	obj_damage = 40
+	respawn_time = 30
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	upgrade_types = list() // types of upgrades

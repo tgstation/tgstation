@@ -99,6 +99,10 @@
 		var/mob/living/simple_animal/hostile/blob/B = user
 		B.blob_chat(message)
 		return FALSE
+	if(isinfectionmonster(user))
+		var/mob/living/simple_animal/hostile/infection/I = user
+		I.infection_chat(message)
+		return FALSE
 	if(isdrone(user))
 		var/mob/living/simple_animal/drone/D = user
 		D.drone_chat(message)

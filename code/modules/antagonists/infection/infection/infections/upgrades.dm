@@ -27,7 +27,7 @@
 
 /datum/infection/upgrade/defensive_spore
 	name = "Defensive Spore"
-	description = "War of attrition taken to the next level."
+	description = "War of attrition taken to the next level. 45 second respawn time and able to smash up to regular walls."
 	radial_icon_state = "bullet"
 	cost = 1
 
@@ -40,7 +40,7 @@
 
 /datum/infection/upgrade/offensive_spore
 	name = "Offensive Spore"
-	description = "Fully prepared to dust your enemies."
+	description = "Fully prepared to dust your enemies. 1 minute respawn time and able to smash up to reinforced walls."
 	radial_icon_state = "fire_bullet"
 	cost = 1
 
@@ -53,7 +53,7 @@
 
 /datum/infection/upgrade/supportive_spore
 	name = "Supportive Spore"
-	description = "Fill the gaps that your allies cannot."
+	description = "Fill the gaps that your allies cannot. 30 second respawn time and able to smash up to structures."
 	radial_icon_state = "tracking_bullet"
 	cost = 1
 
@@ -62,6 +62,23 @@
 	IS.mind.transfer_to(SS)
 	SS.upgrade_points = IS.upgrade_points
 	qdel(IS)
+	return
+
+/*
+//
+// Offensive Spore Upgrades
+//
+*/
+
+/datum/infection/upgrade/spore/speed_boost
+	name = "Speed Boost"
+	description = "Increases your movement speed."
+	radial_icon_state = "speed_boost"
+	cost = 1
+	times = 3
+
+/datum/infection/upgrade/spore/speed_boost/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive/OS)
+	OS.move_to_delay *= 0.8
 	return
 
 /*

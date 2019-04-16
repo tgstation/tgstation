@@ -12,7 +12,6 @@
 	var/resource_delay = 0
 	var/point_rate = 2
 	var/list/topulse = list()
-	var/obj/effect/dummy/phased_mob/infection_respawn/respawn_point
 
 
 /obj/structure/infection/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
@@ -25,7 +24,6 @@
 	if(overmind)
 		update_icon()
 	point_rate = new_rate
-	respawn_point = new /obj/effect/dummy/phased_mob/infection_respawn(src.loc)
 	addtimer(CALLBACK(src, .proc/generate_announcement), 40)
 	. = ..()
 
@@ -57,8 +55,13 @@
 	overmind = null
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list -= src
-	qdel(respawn_point)
 	return ..()
+
+/obj/structure/infection/core/relaymove(mob/user)
+	if(buckle_message_cooldown <= world.time)
+		buckle_message_cooldown = world.time + 50
+		to_chat(user, "<span class='warning'>You can't move while you're respawning!</span>")
+	return
 
 /obj/structure/infection/core/ex_act(severity, target)
 	return
@@ -158,27 +161,3 @@
 	if(overmind && is_station_level(new_z))
 		overmind.forceMove(get_turf(src))
 	return ..()
-
-/obj/effect/dummy/phased_mob/infection_respawn
-	name = "respawn point"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
-	density = FALSE
-	anchored = TRUE
-	invisibility = INVISIBILITY_MAXIMUM
-	resistance_flags = INDESTRUCTIBLE
-
-/obj/effect/dummy/phased_mob/infection_respawn/Destroy()
-	// Eject contents if deleted somehow
-	for(var/atom/movable/AM in src)
-		AM.forceMove(get_turf(src))
-	return ..()
-
-/obj/effect/dummy/phased_mob/infection_respawn/ex_act()
-	return
-
-/obj/effect/dummy/phased_mob/infection_respawn/bullet_act()
-	return
-
-/obj/effect/dummy/phased_mob/infection_respawn/singularity_act()
-	return

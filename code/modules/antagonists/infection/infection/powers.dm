@@ -170,7 +170,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	createSpecial(70, /obj/structure/infection/turret, 8, 1)
 
 /mob/camera/commander/proc/create_spore()
-	upgrade_points--
 	to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
 	var/turf/T = get_turf(infection_core)
 
