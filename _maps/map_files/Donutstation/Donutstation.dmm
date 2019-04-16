@@ -55957,22 +55957,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
-"usD" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/vending/modularpc,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "utg" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -87155,7 +87139,7 @@ acf
 acf
 acf
 acf
-usD
+axw
 axE
 axG
 bso
