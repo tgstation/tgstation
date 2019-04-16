@@ -22,3 +22,11 @@
 /datum/stationmodule_group/maint3/New()
 	possibilities["alt_maint3.dmm"] = list(189,83,2)
 	..()
+
+/datum/stationmodule_group/maint_clown
+	name = "Maintenance Clown"
+	force = "alt_maint_clown.dmm"
+
+/datum/stationmodule_group/maint_clown/New()
+	possibilities["alt_maint_clown.dmm"] = list(82,165,2)
+	..()

@@ -1,0 +1,5 @@
+"a" = (/obj/effect/decal/cleanable/dirt,/obj/effect/mob_spawn/human/clown/corpse,/obj/structure/chair/noose/autobuckle,/obj/item/chair/stool,/turf/open/floor/plating,/area/maintenance/port/fore)
+
+(1,1,1) = {"
+a
+"}
