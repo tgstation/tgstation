@@ -89,16 +89,16 @@
 /obj/item/grenade/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		switch(det_time)
-			if ("1")
+			if (1)
 				det_time = 10
 				to_chat(user, "<span class='notice'>You set the [name] for 1 second detonation time.</span>")
-			if ("10")
+			if (10)
 				det_time = 30
 				to_chat(user, "<span class='notice'>You set the [name] for 3 second detonation time.</span>")
-			if ("30")
+			if (30)
 				det_time = 50
 				to_chat(user, "<span class='notice'>You set the [name] for 5 second detonation time.</span>")
-			if ("50")
+			if (50)
 				det_time = 1
 				to_chat(user, "<span class='notice'>You set the [name] for instant detonation.</span>")
 		add_fingerprint(user)

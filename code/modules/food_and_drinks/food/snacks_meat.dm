@@ -27,7 +27,7 @@
 
 /obj/item/reagent_containers/food/snacks/carpmeat/Initialize()
 	. = ..()
-	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
+	eatverb = pick("bite","chew","gnaw","swallow","chomp")
 
 /obj/item/reagent_containers/food/snacks/carpmeat/imitation
 	name = "imitation carp fillet"
@@ -239,7 +239,7 @@
 
 /obj/item/reagent_containers/food/snacks/stewedsoymeat/Initialize()
 	. = ..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
+	eatverb = pick("slurp","sip","inhale","drink")
 
 /obj/item/reagent_containers/food/snacks/boiledspiderleg
 	name = "boiled spider leg"

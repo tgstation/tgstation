@@ -10,7 +10,7 @@
 
 /obj/item/reagent_containers/food/snacks/soup/Initialize()
 	. = ..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
+	eatverb = pick("slurp","sip","inhale","drink")
 
 /obj/item/reagent_containers/food/snacks/soup/wish
 	name = "wish soup"

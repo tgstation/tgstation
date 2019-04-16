@@ -15,13 +15,11 @@
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
-	container_type = OPENCONTAINER
 	var/obj/item/reagent_containers/mixer
 
 /obj/machinery/food_cart/Initialize()
 	. = ..()
-	create_reagents(LIQUID_CAPACIY)
-	reagents.set_reacting(FALSE)
+	create_reagents(LIQUID_CAPACIY, OPENCONTAINER | NO_REACT)
 	mixer = new /obj/item/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 

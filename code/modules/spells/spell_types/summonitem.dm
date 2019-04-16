@@ -25,7 +25,7 @@
 			for(var/obj/item/item in hand_items)
 				if(item.item_flags & ABSTRACT)
 					continue
-				if(item.item_flags & NODROP)
+				if(item.has_trait(TRAIT_NODROP))
 					message += "Though it feels redundant, "
 				marked_item = 		item
 				message += "You mark [item] for recall.</span>"
@@ -61,6 +61,10 @@
 						organ.Remove(organ.owner)
 			else
 				while(!isturf(item_to_retrieve.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
+					if(isitem(item_to_retrieve.loc))
+						var/obj/item/I = item_to_retrieve.loc
+						if(I.item_flags & ABSTRACT) //Being able to summon abstract things because your item happened to get placed there is a no-no
+							break
 					if(ismob(item_to_retrieve.loc)) //If its on someone, properly drop it
 						var/mob/M = item_to_retrieve.loc
 

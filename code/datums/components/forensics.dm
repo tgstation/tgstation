@@ -1,5 +1,6 @@
 /datum/component/forensics
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	can_transfer = TRUE
 	var/list/fingerprints		//assoc print = print
 	var/list/hiddenprints		//assoc ckey = realname/gloves/ckey
 	var/list/blood_DNA			//assoc dna = bloodtype
@@ -21,7 +22,17 @@
 	blood_DNA = new_blood_DNA
 	fibers = new_fibers
 	check_blood()
+
+/datum/component/forensics/RegisterWithParent()
+	check_blood()
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
+
+/datum/component/forensics/UnregisterFromParent()
+    UnregisterSignal(parent, list(COMSIG_COMPONENT_CLEAN_ACT))
+
+/datum/component/forensics/PostTransfer()
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
 
 /datum/component/forensics/proc/wipe_fingerprints()
 	fingerprints = null
@@ -58,7 +69,13 @@
 
 /datum/component/forensics/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
 	if(!isliving(M))
-		return
+		if(!iscameramob(M))
+			return
+		if(isaicamera(M))
+			var/mob/camera/aiEye/ai_camera = M
+			if(!ai_camera.ai)
+				return
+			M = ai_camera.ai
 	add_hiddenprint(M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -122,8 +139,16 @@
 		hiddenprints[i] = _hiddenprints[i]
 	return TRUE
 
-/datum/component/forensics/proc/add_hiddenprint(mob/living/M)
-	if(!isliving(M) || !M.key)
+/datum/component/forensics/proc/add_hiddenprint(mob/M)
+	if(!isliving(M))
+		if(!iscameramob(M))
+			return
+		if(isaicamera(M))
+			var/mob/camera/aiEye/ai_camera = M
+			if(!ai_camera.ai)
+				return
+			M = ai_camera.ai
+	if(!M.key)
 		return
 	var/hasgloves = ""
 	if(ishuman(M))

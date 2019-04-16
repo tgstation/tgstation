@@ -204,6 +204,7 @@
 	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
+	icon_state = "officechair_dark"
 
 
 /obj/structure/chair/office/Moved()
@@ -213,9 +214,6 @@
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
-
-/obj/structure/chair/office/dark
-	icon_state = "officechair_dark"
 
 //Stool
 
@@ -304,6 +302,8 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
+	else if(materials[MAT_METAL])
+		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
 

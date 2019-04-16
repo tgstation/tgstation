@@ -65,7 +65,7 @@
 	//otherwise create new custom antag
 	if(!GLOB.admin_objective_list)
 		generate_admin_objective_list()
-	
+
 	var/selected_type = input("Select objective type:", "Objective type") as null|anything in GLOB.admin_objective_list
 	selected_type = GLOB.admin_objective_list[selected_type]
 	if (!selected_type)
@@ -115,14 +115,14 @@
 	if (!value)
 		return
 
-	message_admins("[key_name_admin(usr)] added [value.name] as a member of [name] team")
-	log_admin("[key_name(usr)] added [value.name] as a member of [name] team")
+	message_admins("[key_name_admin(usr)] added [key_name_admin(value)] as a member of [name] team")
+	log_admin("[key_name(usr)] added [key_name(value)] as a member of [name] team")
 
 	add_member(value)
 
 /datum/team/proc/admin_remove_member(mob/user,datum/mind/M)
-	message_admins("[key_name_admin(usr)] removed [M.name] from [name] team")
-	log_admin("[key_name(usr)] removed [M.name] from [name] team")
+	message_admins("[key_name_admin(usr)] removed [key_name_admin(M)] from [name] team")
+	log_admin("[key_name(usr)] removed [key_name(M)] from [name] team")
 	remove_member(M)
 
 //After a bit of consideration i block team deletion if there's any members left until unified objective handling is in.

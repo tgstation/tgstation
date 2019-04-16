@@ -34,6 +34,7 @@
 
 /datum/component/storage/concrete/pockets/shoes/Initialize()
 	. = ..()
+	cant_hold = typecacheof(list(/obj/item/screwdriver/power)) //Must be specifically called out since normal screwdrivers can fit but not the wrench form of the drill
 	can_hold = typecacheof(list(
 		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
 		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
@@ -44,6 +45,7 @@
 
 /datum/component/storage/concrete/pockets/shoes/clown/Initialize()
 	. = ..()
+	cant_hold = typecacheof(list(/obj/item/screwdriver/power)) //Must be specifically called out since normal screwdrivers can fit but not the wrench form of the drill
 	can_hold = typecacheof(list(
 		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
 		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
@@ -69,3 +71,12 @@
 /datum/component/storage/concrete/pockets/pocketprotector/real_location()
 	// if the component is reparented to a jumpsuit, the items still go in the protector
 	return original_parent
+
+/datum/component/storage/concrete/pockets/small/helmet
+	max_items = 1
+	quickdraw = TRUE
+
+/datum/component/storage/concrete/pockets/small/helmet/Initialize()
+	. = ..()
+	can_hold = typecacheof(list(/obj/item/reagent_containers/glass/bottle,
+								/obj/item/ammo_box/a762))

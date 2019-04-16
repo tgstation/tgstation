@@ -138,11 +138,11 @@
 	. = ..()
 	setDir(t)
 
-/obj/item/assembly/infra/throw_at()
+/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	. = ..()
 	olddir = dir
 
-/obj/item/assembly/infra/throw_impact()
+/obj/item/assembly/infra/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!olddir)
 		return

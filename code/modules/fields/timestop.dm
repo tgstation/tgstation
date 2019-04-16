@@ -9,7 +9,7 @@
 	pixel_x = -64
 	pixel_y = -64
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	var/list/immune = list() // the one who creates the timestop is immune
+	var/list/immune = list() // the one who creates the timestop is immune, which includes wizards and the dead slime you murdered to make this chronofield
 	var/turf/target
 	var/freezerange = 2
 	var/duration = 140
@@ -56,9 +56,8 @@
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
 	requires_processing = TRUE
 	var/list/immune = list()
-	var/list/mob/living/frozen_mobs = list()
-	var/list/obj/item/projectile/frozen_projectiles = list()
-	var/list/atom/movable/frozen_throws = list()
+	var/list/frozen_things = list()
+	var/list/frozen_mobs = list() //cached separately for processing
 	var/check_anti_magic = FALSE
 	var/check_holy = FALSE
 
@@ -74,84 +73,105 @@
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
 	if(immune[A] || global_frozen_atoms[A] || !istype(A))
 		return FALSE
-	if(A.throwing)
-		freeze_throwing(A)
+	var/frozen = TRUE
 	if(isliving(A))
 		freeze_mob(A)
 	else if(istype(A, /obj/item/projectile))
 		freeze_projectile(A)
+	else if(istype(A, /obj/mecha))
+		freeze_mecha(A)
 	else
-		return FALSE
+		frozen = FALSE
+	if(A.throwing)
+		freeze_throwing(A)
+		frozen = TRUE
+	if(!frozen)
+		return
 
+	frozen_things[A] = A.move_resist
+	A.move_resist = INFINITY
+	global_frozen_atoms[A] = src
 	into_the_negative_zone(A)
+	RegisterSignal(A, COMSIG_MOVABLE_PRE_MOVE, .proc/unfreeze_atom)
+	RegisterSignal(A, COMSIG_ITEM_PICKUP, .proc/unfreeze_atom)
 
 	return TRUE
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_all()
-	for(var/i in frozen_projectiles)
-		unfreeze_projectile(i)
-	for(var/i in frozen_mobs)
-		unfreeze_mob(i)
-	for(var/i in frozen_throws)
-		unfreeze_throw(i)
+	for(var/i in frozen_things)
+		unfreeze_atom(i)
+
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_atom(atom/movable/A)
+	if(A.throwing)
+		unfreeze_throwing(A)
+	if(isliving(A))
+		unfreeze_mob(A)
+	else if(istype(A, /obj/item/projectile))
+		unfreeze_projectile(A)
+	else if(istype(A, /obj/mecha))
+		unfreeze_mecha(A)
+
+	UnregisterSignal(A, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(A, COMSIG_ITEM_PICKUP)
+	escape_the_negative_zone(A)
+	A.move_resist = frozen_things[A]
+	frozen_things -= A
+	global_frozen_atoms -= A
+	
+
+/datum/proximity_monitor/advanced/timestop/proc/freeze_mecha(obj/mecha/M)
+	M.completely_disabled = TRUE
+
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_mecha(obj/mecha/M)
+	M.completely_disabled = FALSE
+	
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_throwing(atom/movable/AM)
 	var/datum/thrownthing/T = AM.throwing
 	T.paused = TRUE
-	frozen_throws[AM] = T
-	global_frozen_atoms[AM] = TRUE
 
-/datum/proximity_monitor/advanced/timestop/proc/unfreeze_throw(atom/movable/AM)
-	var/datum/thrownthing/T = frozen_throws[AM]
-	T.paused = FALSE
-	frozen_throws -= AM
-	global_frozen_atoms -= AM
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_throwing(atom/movable/AM)
+	var/datum/thrownthing/T = AM.throwing
+	if(T)
+		T.paused = FALSE
 
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)
 		var/mob/living/m = i
-		if(get_dist(get_turf(m), get_turf(host)) > current_range)
-			unfreeze_mob(m)
-		else
-			m.Stun(20, 1, 1)
+		m.Stun(20, 1, 1)
 
 /datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
 	for(var/i in T.contents)
 		freeze_atom(i)
 	return ..()
 
-/datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/item/projectile/P)
-	escape_the_negative_zone(P)
-	frozen_projectiles -= P
-	P.paused = FALSE
-	global_frozen_atoms -= P
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/item/projectile/P)
-	frozen_projectiles[P] = TRUE
 	P.paused = TRUE
-	global_frozen_atoms[P] = TRUE
+
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/item/projectile/P)
+	P.paused = FALSE
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
+	frozen_mobs += L
 	if(L.anti_magic_check(check_anti_magic, check_holy))
+		immune += L
 		return
 	L.Stun(20, 1, 1)
-	frozen_mobs[L] = L.anchored
-	L.anchored = TRUE
-	global_frozen_atoms[L] = TRUE
+	walk(L, 0) //stops them mid pathing even if they're stunimmune
+	if(isanimal(L))
+		var/mob/living/simple_animal/S = L
+		S.toggle_ai(AI_OFF)
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
-		H.toggle_ai(AI_OFF)
 		H.LoseTarget()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
-	escape_the_negative_zone(L)
 	L.AdjustStun(-20, 1, 1)
-	L.anchored = frozen_mobs[L]
 	frozen_mobs -= L
-	global_frozen_atoms -= L
-	if(ishostile(L))
-		var/mob/living/simple_animal/hostile/H = L
-		H.toggle_ai(initial(H.AIStatus))
+	if(isanimal(L))
+		var/mob/living/simple_animal/S = L
+		S.toggle_ai(initial(S.AIStatus))
 
 //you don't look quite right, is something the matter?
 /datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)

@@ -35,7 +35,7 @@
 
 /obj/item/clockwork/weapon/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	. = ..()
-	if(!QDELETED(target) && target.stat != DEAD && !target.anti_magic_check() && !is_servant_of_ratvar(target)) //we do bonus damage on attacks unless they're a servant, have a null rod, or are dead
+	if(!QDELETED(target) && target.stat != DEAD && !target.anti_magic_check(major = FALSE) && !is_servant_of_ratvar(target)) //we do bonus damage on attacks unless they're a servant, have a null rod, or are dead
 		var/bonus_damage = bonus_burn //normally a total of 20 damage, 30 with ratvar
 		if(issilicon(target))
 			target.visible_message("<span class='warning'>[target] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
@@ -45,10 +45,10 @@
 			bonus_damage *= 3 //total 30 damage on cultists, 50 with ratvar
 		GLOB.clockwork_vitality += target.adjustFireLoss(bonus_damage) //adds the damage done to existing vitality
 
-/obj/item/clockwork/weapon/ratvarian_spear/throw_impact(atom/target)
-	var/turf/T = get_turf(target)
-	if(isliving(target))
-		var/mob/living/L = target
+/obj/item/clockwork/weapon/ratvarian_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/turf/T = get_turf(hit_atom)
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		if(is_servant_of_ratvar(L))
 			if(L.put_in_active_hand(src))
 				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
@@ -72,5 +72,6 @@
 		if(T) //make sure we're not in null or something
 			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
 			new /obj/effect/temp_visual/ratvar/spearbreak(T)
+			qdel(src)
 		action.weapon_reset(RATVARIAN_SPEAR_COOLDOWN)
 

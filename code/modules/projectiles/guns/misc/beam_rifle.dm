@@ -85,31 +85,33 @@
 
 /obj/item/gun/energy/beam_rifle/equipped(mob/user)
 	set_user(user)
-	. = ..()
+	return ..()
 
 /obj/item/gun/energy/beam_rifle/pickup(mob/user)
 	set_user(user)
-	. = ..()
+	return ..()
 
 /obj/item/gun/energy/beam_rifle/dropped(mob/user)
 	set_user()
-	. = ..()
+	return ..()
 
-/obj/item/gun/energy/beam_rifle/ui_action_click(owner, action)
-	if(istype(action, /datum/action/item_action/zoom_lock_action))
+/obj/item/gun/energy/beam_rifle/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, zoom_lock_action))
 		zoom_lock++
 		if(zoom_lock > 3)
 			zoom_lock = 0
 		switch(zoom_lock)
 			if(ZOOM_LOCK_AUTOZOOM_FREEMOVE)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to free directional.</span>")
+				to_chat(user, "<span class='boldnotice'>You switch [src]'s zooming processor to free directional.</span>")
 			if(ZOOM_LOCK_AUTOZOOM_ANGLELOCK)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to locked directional.</span>")
+				to_chat(user, "<span class='boldnotice'>You switch [src]'s zooming processor to locked directional.</span>")
 			if(ZOOM_LOCK_CENTER_VIEW)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to center mode.</span>")
+				to_chat(user, "<span class='boldnotice'>You switch [src]'s zooming processor to center mode.</span>")
 			if(ZOOM_LOCK_OFF)
-				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
-	reset_zooming()
+				to_chat(user, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
+		reset_zooming()
+	else
+		..()
 
 /obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
@@ -149,7 +151,7 @@
 /obj/item/gun/energy/beam_rifle/update_icon()
 	cut_overlays()
 	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
-	if(!QDELETED(cell) && (cell.charge > primary_ammo.e_cost))
+	if(!QDELETED(cell) && (cell.charge >= primary_ammo.e_cost))
 		add_overlay(charged_overlay)
 	else
 		add_overlay(drained_overlay)
@@ -408,7 +410,7 @@
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
-	e_cost = 5000
+	e_cost = 10000
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
 /obj/item/projectile/beam/beam_rifle
@@ -518,13 +520,13 @@
 		return FALSE
 	if(!QDELETED(target))
 		cached = get_turf(target)
-	. = ..()
+	return ..()
 
 /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
 	if(!QDELETED(target))
 		cached = get_turf(target)
 	handle_hit(target)
-	. = ..()
+	return ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
@@ -559,6 +561,7 @@
 	hitscan_light_range = 0
 	hitscan_light_intensity = 0
 	hitscan_light_color_override = "#99ff99"
+	reflectable = REFLECT_FAKEPROJECTILE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
 	qdel(src)
@@ -566,4 +569,4 @@
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
 	qdel(src)
-	return FALSE
+	return BULLET_ACT_HIT

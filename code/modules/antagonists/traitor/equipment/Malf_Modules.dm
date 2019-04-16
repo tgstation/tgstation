@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/unlock_text = "<span class='notice'>Hello World!</span>" //Text shown when an ability is unlocked
 	var/unlock_sound //Sound played when an ability is unlocked
 
-/datum/AI_Module/proc/upgrade(mob/living/silicon/AI/AI) //Apply upgrades!
+/datum/AI_Module/proc/upgrade(mob/living/silicon/ai/AI) //Apply upgrades!
 	return
 
 /datum/AI_Module/large //Big, powerful stuff that can only be used once.
@@ -238,6 +238,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
+	if (active)
+		return //prevent the AI from activating an already active doomsday
 	active = TRUE
 	set_us_up_the_bomb(owner)
 
@@ -397,7 +399,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	unlock_text = "<span class='notice'>You establish a power diversion to your turrets, upgrading their health and damage.</span>"
 	unlock_sound = 'sound/items/rped.ogg'
 
-/datum/AI_Module/large/upgrade_turrets/upgrade(mob/living/silicon/AI/AI)
+/datum/AI_Module/large/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
 	for(var/obj/machinery/porta_turret/ai/turret in GLOB.machines)
 		turret.obj_integrity += 30
 		turret.lethal_projectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
@@ -486,8 +488,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /datum/AI_Module/large/break_fire_alarms
 	module_name = "Thermal Sensor Override"
 	mod_pick_name = "burnpigs"
-	description = "Gives you the ability to override the thermal sensors on all fire alarms. This will remove their ability to scan for fire and thus their ability to alert. \
-	Anyone can check the fire alarm's interface and may be tipped off by its status."
+	description = "Gives you the ability to override the thermal sensors on all fire alarms. This will remove their ability to scan for fire and thus their ability to alert."
 	one_purchase = TRUE
 	cost = 25
 	power_type = /datum/action/innate/ai/break_fire_alarms
@@ -505,6 +506,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		if(!is_station_level(F.z))
 			continue
 		F.obj_flags |= EMAGGED
+		F.update_icon()
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
@@ -826,17 +828,17 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	for(var/V in GLOB.cameranet.cameras)
 		var/obj/machinery/camera/C = V
 		if(C.assembly)
-			var/upgraded = 0
+			var/upgraded = FALSE
 
 			if(!C.isXRay())
-				C.upgradeXRay()
+				C.upgradeXRay(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_xray_firmware_active and clean up isxray()
 				//Update what it can see.
 				GLOB.cameranet.updateVisibility(C, 0)
-				upgraded = 1
+				upgraded = TRUE
 
 			if(!C.isEmpProof())
-				C.upgradeEmpProof()
-				upgraded = 1
+				C.upgradeEmpProof(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_emp_firmware_active and clean up isemp()
+				upgraded = TRUE
 
 			if(upgraded)
 				upgraded_cameras++

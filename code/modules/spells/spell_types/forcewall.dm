@@ -35,6 +35,6 @@
 		return TRUE
 	if(ismob(mover))
 		var/mob/M = mover
-		if(M.anti_magic_check())
+		if(M.anti_magic_check(major = FALSE))
 			return TRUE
 	return FALSE

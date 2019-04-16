@@ -63,7 +63,7 @@
 	clothes_req = FALSE
 	charge_max = 600
 	cooldown_min = 200
-	summon_type = list(/mob/living/simple_animal/hostile/spawner/nether)
+	summon_type = list(/obj/structure/spawner/nether)
 	summon_amt = 1
 	range = 1
 	cast_sound = 'sound/weapons/marauder.ogg'
@@ -80,11 +80,11 @@
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
+	var/delete_old = TRUE //TRUE to delete the last summoned object if it's still there, FALSE for infinite item stream weeeee
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
-	if (item && !QDELETED(item))
-		qdel(item)
-		item = null
+	if (delete_old && item && !QDELETED(item))
+		QDEL_NULL(item)
 	else
 		for(var/mob/living/carbon/C in targets)
 			if(C.dropItemToGround(C.get_active_held_item()))

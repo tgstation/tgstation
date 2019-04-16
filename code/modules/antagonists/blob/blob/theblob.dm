@@ -300,7 +300,7 @@
 
 /obj/structure/blob/proc/change_to(type, controller)
 	if(!ispath(type))
-		throw EXCEPTION("change_to(): invalid type for blob")
+		CRASH("change_to(): invalid type for blob")
 		return
 	var/obj/structure/blob/B = new type(src.loc, controller)
 	B.creation_action()

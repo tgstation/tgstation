@@ -39,6 +39,9 @@
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 
+	if(stat != DEAD)
+		handle_hygiene()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -308,7 +311,7 @@
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_life(src)
+		HM.on_life()
 
 /mob/living/carbon/human/proc/handle_heart()
 	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
@@ -322,7 +325,40 @@
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
 
+/mob/living/carbon/human/proc/handle_hygiene()
+	if(has_trait(TRAIT_ALWAYS_CLEAN))
+		set_hygiene(HYGIENE_LEVEL_CLEAN)
+		return
 
+	var/hygiene_loss = -HYGIENE_FACTOR * 0.25 //Small loss per life
+
+	//If you're covered in blood, you'll start smelling like shit faster.
+	var/obj/item/head = get_item_by_slot(SLOT_HEAD)
+	if(head)
+		IF_HAS_BLOOD_DNA(head)
+			hygiene_loss -= 1 * HYGIENE_FACTOR
+
+	var/obj/item/mask = get_item_by_slot(SLOT_HEAD)
+	if(mask)
+		IF_HAS_BLOOD_DNA(mask)
+			hygiene_loss -= 1 * HYGIENE_FACTOR
+
+	var/obj/item/uniform = get_item_by_slot(SLOT_W_UNIFORM)
+	if(uniform)
+		IF_HAS_BLOOD_DNA(uniform)
+			hygiene_loss -= 4 * HYGIENE_FACTOR
+
+	var/obj/item/suit = get_item_by_slot(SLOT_WEAR_SUIT)
+	if(suit)
+		IF_HAS_BLOOD_DNA(suit)
+			hygiene_loss -= 3 * HYGIENE_FACTOR
+
+	var/obj/item/feet = get_item_by_slot(SLOT_SHOES)
+	if(feet)
+		IF_HAS_BLOOD_DNA(feet)
+			hygiene_loss -= 0.5 * HYGIENE_FACTOR
+
+	adjust_hygiene(hygiene_loss)
 
 
 #undef THERMAL_PROTECTION_HEAD

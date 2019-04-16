@@ -6,6 +6,7 @@
 	caliber = ".50"
 
 /obj/item/ammo_box/magazine/sniper_rounds/update_icon()
+	..()
 	if(ammo_count())
 		icon_state = "[initial(icon_state)]-ammo"
 	else

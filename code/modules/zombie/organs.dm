@@ -80,7 +80,7 @@
 	//Fully heal the zombie's damage the first time they rise
 	owner.setToxLoss(0, 0)
 	owner.setOxyLoss(0, 0)
-	owner.heal_overall_damage(INFINITY, INFINITY, INFINITY, FALSE, FALSE, TRUE)
+	owner.heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE)
 
 	if(!owner.revive())
 		return

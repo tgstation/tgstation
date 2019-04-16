@@ -140,7 +140,7 @@
 			chamber.occupant.investigate_log("was injected with nanites by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("add_program")
-			if(!disk || !chamber || !chamber.occupant)
+			if(!disk?.program || !chamber || !chamber.occupant)
 				return
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
 			chamber.install_program(disk.program)

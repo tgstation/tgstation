@@ -60,7 +60,7 @@
 		else
 			if(isliving(target))
 				var/mob/living/L = target
-				if(!L.anti_magic_check())
+				if(!L.anti_magic_check(major = FALSE))
 					if(isrevenant(L))
 						var/mob/living/simple_animal/revenant/R = L
 						if(R.revealed)
