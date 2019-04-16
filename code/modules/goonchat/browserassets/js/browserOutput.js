@@ -723,7 +723,7 @@ $(function() {
 		$("body").css('line-height', savedConfig.slineHeight);
 		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
 	}
-	if(savedConfig.sdarkmode == 'false'){
+	if(savedConfig.sdarkmode == 'true'){
 		swap(); //They dont want darkmode, so switch!
 	}
 	if (savedConfig.spingDisabled) {
