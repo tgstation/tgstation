@@ -13,6 +13,8 @@
 	novariants = FALSE
 	var/heal_brute = 0
 	var/heal_burn = 0
+	var/burn_heal_penalty = 0
+	var/brute_heal_penalty = 0
 	var/stop_bleeding = 0
 	var/self_delay = 50
 
@@ -91,7 +93,12 @@
 				if(!H.bleedsuppress) //so you can't stack bleed suppression
 					H.suppress_bloodloss(stop_bleeding)
 		if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
-			if(affecting.heal_damage(heal_brute, heal_burn))
+			var/actual_heal_brute = max(heal_brute - brute_damage_penalty * affecting.brute_dam,0)
+			var/actual_heal_burn = max(heal_burn - burn_damage_penalty * affecting.burn_dam,0)
+			if(actual_heal_brute + actual_heal_burn <= 0)
+				to_chat(user, "<span class='notice'>These injuries are too severe for the [src] to treat!</span>")
+				return
+			if(affecting.heal_damage(actual_heal_brute, actual_heal_burn))
 				C.update_damage_overlays()
 		else
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
@@ -105,12 +112,13 @@
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
 	singular_name = "bruise pack"
-	desc = "A therapeutic gel pack and bandages designed to treat blunt-force trauma."
+	desc = "A therapeutic gel pack and bandages designed to treat minor blunt-force trauma."
 	icon_state = "brutepack"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	heal_brute = 40
-	self_delay = 20
+	heal_brute = 30
+	brute_heal_penalty = 0.4
+	self_delay = 15
 	grind_results = list("styptic_powder" = 10)
 
 /obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
@@ -158,14 +166,15 @@
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
-	desc = "Used to treat those nasty burn wounds."
+	desc = "Used to treat those nasty burn wounds. Just not too nasty. For those, you'll need something else."
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	heal_burn = 40
-	self_delay = 20
+	heal_burn = 30
+	burn_heal_penalty = 0.4
+	self_delay = 15
 	grind_results = list("silver_sulfadiazine" = 10)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
