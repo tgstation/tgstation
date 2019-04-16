@@ -162,7 +162,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(SO.pack.small_item) //small_item means it gets piled in the miscbox
 			if(SO.paying_account)
 				if(!miscboxes.len || !miscboxes[D.account_holder]) //if there's no miscbox for this person
-					to_chat(world, "DEBUG -- [SO.orderer_ckey] Has no box, as the value [miscboxes[SO.orderer_ckey]] returned false.")
 					miscboxes[D.account_holder] = new /obj/structure/closet/crate/secure/owned(pick_n_take(empty_turfs), SO.paying_account)
 					miscboxes[D.account_holder].name = "small items crate - purchased by [D.account_holder]"
 				for (var/item in SO.pack.contains)
