@@ -836,6 +836,9 @@
 		return cabin_air
 	return ..()
 
+/obj/mecha/return_analyzable_air()
+	return cabin_air
+
 /obj/mecha/proc/return_pressure()
 	var/datum/gas_mixture/t_air = return_air()
 	if(t_air)

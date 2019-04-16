@@ -54,7 +54,7 @@
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 		if("buddhism")
 			B.name = "The Sutras"
-		if("clownism","honkmother","honk","honkism","comedy")	
+		if("clownism","honkmother","honk","honkism","comedy")
 			B.name = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
 		if("chaos")
 			B.name = "The Book of Lorgar"
@@ -67,11 +67,11 @@
 		if("imperium")
 			B.name = "Uplifting Primer"
 		if("islam")
-			B.name = "Quran"	
+			B.name = "Quran"
 		if("judaism")
 			B.name = "The Torah"
 		if("lampism")
-			B.name = "Fluorescent Incandescence" 
+			B.name = "Fluorescent Incandescence"
 		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
 			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition","F.A.T.A.L. Rulebook")
 			H.adjustBrainLoss(100) // starts off retarded as fuck
@@ -112,6 +112,7 @@
 	jobtype = /datum/job/chaplain
 
 	belt = /obj/item/pda/chaplain
+	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/chaplain
 	backpack_contents = list(/obj/item/camera/spooky = 1)
 	backpack = /obj/item/storage/backpack/cultpack
