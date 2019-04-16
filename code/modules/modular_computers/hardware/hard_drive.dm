@@ -121,7 +121,7 @@
 	return ..()
 
 /obj/item/computer_hardware/hard_drive/Initialize()
-	. = ..()	
+	. = ..()
 	install_default_programs()
 
 
@@ -157,6 +157,7 @@
 	max_capacity = 64
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
+	custom_price = 15
 
 /obj/item/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"

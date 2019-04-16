@@ -53582,17 +53582,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"cau" = (
-/obj/structure/table,
-/obj/item/paper/pamphlet/gateway,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/science/research)
 "cav" = (
 /obj/structure/chair,
 /obj/effect/landmark/start/assistant,
@@ -84310,6 +84299,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
+"vnb" = (
+/obj/machinery/vending/modularpc,
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "vwi" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -112743,7 +112736,7 @@ bVk
 bWx
 bXV
 bZj
-cat
+vnb
 ccd
 ccd
 ceN
@@ -113000,7 +112993,7 @@ aYX
 aXR
 bXW
 bZk
-cau
+cat
 cce
 ccd
 qBh
