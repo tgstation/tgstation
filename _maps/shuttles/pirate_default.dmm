@@ -557,8 +557,8 @@
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bl" = (
@@ -778,9 +778,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "bO" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc{
 	aidisabled = 1;
 	dir = 1;
@@ -791,6 +788,9 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bP" = (
@@ -801,10 +801,10 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bQ" = (
-/obj/structure/cable{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bX" = (
