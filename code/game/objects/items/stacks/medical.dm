@@ -2,8 +2,8 @@
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'icons/obj/stack_objects.dmi'
-	amount = 6
-	max_amount = 6
+	amount = 8
+	max_amount = 8
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
