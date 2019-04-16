@@ -146,8 +146,8 @@
 	new_owner.assigned_role = ROLE_NINJA
 	new_owner.special_role = ROLE_NINJA
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [new_owner.current].")
-	log_admin("[key_name(admin)] has [adj] ninja'ed [new_owner.current].")
+	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has [adj] ninja'ed [key_name(new_owner)].")
 
 /datum/antagonist/ninja/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
 	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]

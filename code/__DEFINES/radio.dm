@@ -1,5 +1,55 @@
 // Radios use a large variety of predefined frequencies.
 
+//say based modes like binary are in living/say.dm
+
+#define RADIO_CHANNEL_COMMON "Common"
+#define RADIO_KEY_COMMON ";"
+
+#define RADIO_CHANNEL_SECURITY "Security"
+#define RADIO_KEY_SECURITY "s"
+#define RADIO_TOKEN_SECURITY ":s"
+
+#define RADIO_CHANNEL_ENGINEERING "Engineering"
+#define RADIO_KEY_ENGINEERING "e"
+#define RADIO_TOKEN_ENGINEERING ":e"
+
+#define RADIO_CHANNEL_COMMAND "Command"
+#define RADIO_KEY_COMMAND "c"
+#define RADIO_TOKEN_COMMAND ":c"
+
+#define RADIO_CHANNEL_SCIENCE "Science"
+#define RADIO_KEY_SCIENCE "n"
+#define RADIO_TOKEN_SCIENCE ":n"
+
+#define RADIO_CHANNEL_MEDICAL "Medical"
+#define RADIO_KEY_MEDICAL "m"
+#define RADIO_TOKEN_MEDICAL ":m"
+
+#define RADIO_CHANNEL_SUPPLY "Supply"
+#define RADIO_KEY_SUPPLY "u"
+#define RADIO_TOKEN_SUPPLY ":u"
+
+#define RADIO_CHANNEL_SERVICE "Service"
+#define RADIO_KEY_SERVICE "v"
+#define RADIO_TOKEN_SERVICE ":v"
+
+#define RADIO_CHANNEL_AI_PRIVATE "AI Private"
+#define RADIO_KEY_AI_PRIVATE "o"
+#define RADIO_TOKEN_AI_PRIVATE ":o"
+
+
+#define RADIO_CHANNEL_SYNDICATE "Syndicate"
+#define RADIO_KEY_SYNDICATE "t"
+#define RADIO_TOKEN_SYNDICATE ":t"
+
+#define RADIO_CHANNEL_CENTCOM "CentCom"
+#define RADIO_KEY_CENTCOM "y"
+#define RADIO_TOKEN_CENTCOM ":y"
+
+#define RADIO_CHANNEL_CTF_RED "Red Team"
+#define RADIO_CHANNEL_CTF_BLUE "Blue Team"
+
+
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------
 // Frequencies are always odd numbers and range from 1201 to 1599.
 

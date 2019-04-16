@@ -12,6 +12,7 @@
 	response_help = "brushes"
 	response_disarm = "pushes"
 	response_harm = "hits"
+	faction = list("plants")
 	speed = 1
 	maxHealth = 250
 	health = 250
@@ -69,3 +70,4 @@
 	icon_gib = "festivus_pole"
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
+	faction = list()

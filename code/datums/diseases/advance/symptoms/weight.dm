@@ -48,4 +48,4 @@ Bonus
 		else
 			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
 			M.overeatduration = max(M.overeatduration - 100, 0)
-			M.nutrition = max(M.nutrition - 100, 0)
+			M.adjust_nutrition(-100)

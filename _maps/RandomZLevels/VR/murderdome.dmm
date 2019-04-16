@@ -144,10 +144,10 @@
 /area/awaymission/vr/murderdome)
 "r" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/boltaction,
-/obj/item/gun/ballistic/shotgun/boltaction,
-/obj/item/gun/ballistic/shotgun/boltaction,
-/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/item/gun/ballistic/rifle/boltaction,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "s" = (
@@ -177,12 +177,12 @@
 /area/awaymission/vr/murderdome)
 "v" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "w" = (

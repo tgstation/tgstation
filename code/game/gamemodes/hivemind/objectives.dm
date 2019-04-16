@@ -33,28 +33,21 @@
 	var/datum/antagonist/hivemind/host = owner.has_antag_datum(/datum/antagonist/hivemind)
 	if(!host)
 		return FALSE
-	for(var/mob/living/L in host.hivemembers)
-		var/datum/mind/M = L.mind
-		if(M)
-			if(considered_escaped(M))
-				count++
+	for(var/datum/mind/M in host.hivemembers)
+		if(considered_escaped(M))
+			count++
 	return count >= target_amount
 
-/datum/objective/hivemind/assimilate
-	explanation_text = "This is a bug. Error:HIVE3"
+/datum/objective/hivemind/biggest
+	explanation_text = "End the round with more vessels than any other hivemind host."
 
-/datum/objective/hivemind/assimilate/update_explanation_text()
-	if(target)
-		explanation_text = "Assimilate [target.name] into the hive and ensure they survive."
-	else
-		explanation_text = "Free Objective."
-
-/datum/objective/hivemind/assimilate/check_completion()
+/datum/objective/hivemind/biggest/check_completion()
 	var/datum/antagonist/hivemind/host = owner.has_antag_datum(/datum/antagonist/hivemind)
 	if(!host)
 		return FALSE
-	for(var/mob/living/L in host.hivemembers)
-		var/datum/mind/M = L.mind
-		if(M == target)
-			return considered_alive(target)
-	return FALSE
+	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
+		if(H == host)
+			continue
+		if(H.hive_size >= host.hive_size)
+			return FALSE
+	return TRUE

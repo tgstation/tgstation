@@ -121,7 +121,7 @@
 				flick(icon_deny, src)
 	if(href_list["purchase"])
 		if(istype(inserted_id))
-			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
+			var/datum/data/mining_equipment/prize = locate(href_list["purchase"]) in prize_list
 			if (!prize || !(prize in prize_list))
 				to_chat(usr, "<span class='warning'>Error: Invalid choice!</span>")
 				flick(icon_deny, src)

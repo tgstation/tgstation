@@ -5,7 +5,6 @@
 	icon_state = "cart"
 	anchored = FALSE
 	density = TRUE
-	container_type = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/storage/bag/trash/mybag	= null
@@ -18,7 +17,7 @@
 
 /obj/structure/janitorialcart/Initialize()
 	. = ..()
-	create_reagents(100)
+	create_reagents(100, OPENCONTAINER)
 
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/mop, mob/user)
 	if(reagents.total_volume < 1)
@@ -26,7 +25,7 @@
 		return 0
 	else
 		var/obj/item/mop/M = mop
-		reagents.trans_to(mop, M.mopcap)
+		reagents.trans_to(mop, M.mopcap, transfered_by = user)
 		to_chat(user, "<span class='notice'>You wet [mop] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		return 1

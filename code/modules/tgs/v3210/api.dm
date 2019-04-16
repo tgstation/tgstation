@@ -171,6 +171,7 @@
 	var/datum/tgs_revision_information/ri = new
 	ri.commit = commit
 	ri.origin_commit = originmastercommit
+	return ri
 
 /datum/tgs_api/v3210/EndProcess()
 	sleep(world.tick_lag)	//flush the buffers

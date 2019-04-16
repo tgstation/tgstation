@@ -53,7 +53,7 @@
 	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"
 	item_state = "crowbar"
-	toolspeed = 0.5
+	toolspeed = 0.7
 
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
@@ -73,7 +73,7 @@
 
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
-	toolspeed = 0.25
+	toolspeed = 0.7
 
 /obj/item/crowbar/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")

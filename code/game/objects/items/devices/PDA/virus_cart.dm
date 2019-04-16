@@ -14,7 +14,7 @@
 	return " (<a href='byond://?src=[REF(loc)];choice=cart;special=virus;target=[REF(target)]'>*Send Virus*</a>)"
 
 /obj/item/cartridge/virus/special(mob/living/user, list/params)
-	var/obj/item/pda/P = locate(params["target"])//Leaving it alone in case it may do something useful, I guess.
+	var/obj/item/pda/P = locate(params["target"]) in GLOB.PDAs  //Leaving it alone in case it may do something useful, I guess.
 	send_virus(P,user)
 
 /obj/item/cartridge/virus/clown

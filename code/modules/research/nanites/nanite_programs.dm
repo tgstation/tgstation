@@ -86,7 +86,8 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
-	copy_extra_settings_to(target)
+	if(istype(target,src))
+		copy_extra_settings_to(target)
 
 /datum/nanite_program/proc/set_extra_setting(user, setting)
 	return
@@ -136,8 +137,10 @@
 	if(timer && timer_counter > timer)
 		if(timer_type == NANITE_TIMER_DEACTIVATE)
 			deactivate()
+			return
 		else if(timer_type == NANITE_TIMER_SELFDELETE)
 			qdel(src)
+			return
 		else if(can_trigger && timer_type == NANITE_TIMER_TRIGGER)
 			trigger()
 			timer_counter = activation_delay

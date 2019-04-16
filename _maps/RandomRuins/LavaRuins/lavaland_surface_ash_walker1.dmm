@@ -308,7 +308,7 @@
 /turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aU" = (
-/mob/living/simple_animal/hostile/spawner/lavaland/ash_walker,
+/obj/structure/lavaland/ash_walker,
 /turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aV" = (

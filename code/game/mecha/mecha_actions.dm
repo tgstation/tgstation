@@ -3,7 +3,8 @@
 /obj/mecha/proc/GrantActions(mob/living/user, human_occupant = 0)
 	if(human_occupant)
 		eject_action.Grant(user, src)
-	internals_action.Grant(user, src)
+	if(enclosed)
+		internals_action.Grant(user, src)
 	cycle_action.Grant(user, src)
 	lights_action.Grant(user, src)
 	stats_action.Grant(user, src)
@@ -43,7 +44,14 @@
 		return
 	if(!chassis || chassis.occupant != owner)
 		return
-	chassis.go_out()
+	chassis.is_currently_ejecting = TRUE
+	to_chat(owner, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.<span>")
+	if(do_after(chassis.occupant,chassis.exit_delay, target = chassis))
+		to_chat(owner, "<span class='notice'>You exit the mech.<span>")
+		chassis.go_out()
+	else
+		to_chat(owner, "<span class='notice'>You stop exiting the mech. Weapons are enabled again.<span>")
+	chassis.is_currently_ejecting = FALSE
 
 
 /datum/action/innate/mecha/mech_toggle_internals
@@ -128,7 +136,7 @@
 
 
 /datum/action/innate/mecha/strafe
-	name = "Toggle Strafing"
+	name = "Toggle Strafing. Disabled when Alt is held."
 	button_icon_state = "strafe"
 
 /datum/action/innate/mecha/strafe/Activate()

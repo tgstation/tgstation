@@ -21,12 +21,12 @@
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/neck/wear_neck = null
 	var/obj/item/tank/internal = null
-	var/obj/item/head = null
+	var/obj/item/clothing/head = null
 
-	var/obj/item/gloves = null //only used by humans
-	var/obj/item/shoes = null //only used by humans.
+	var/obj/item/clothing/gloves = null //only used by humans
+	var/obj/item/clothing/shoes = null //only used by humans.
 	var/obj/item/clothing/glasses/glasses = null //only used by humans.
-	var/obj/item/ears = null //only used by humans.
+	var/obj/item/clothing/ears = null //only used by humans.
 
 	var/datum/dna/dna = null//Carbon
 	var/datum/mind/last_mind = null //last mind to control this mob, for blood-based cloning

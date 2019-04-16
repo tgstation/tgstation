@@ -60,9 +60,13 @@
 	requires_power = TRUE
 	canSmoothWithAreas = /area/shuttle/pirate
 
-/area/shuttle/pirate/vault
-	name = "Pirate Shuttle Vault"
-	requires_power = FALSE
+////////////////////////////Bounty Hunter Shuttles////////////////////////////
+
+/area/shuttle/hunter
+	name = "Hunter Shuttle"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	blob_allowed = FALSE
+	canSmoothWithAreas = /area/shuttle/hunter
 
 ////////////////////////////White Ship////////////////////////////
 

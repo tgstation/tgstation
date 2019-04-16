@@ -11,8 +11,11 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = FALSE
-	baseturfs = /turf/open/space
+	baseturfs = /turf/baseturf_bottom
 	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	var/attachment_holes = TRUE
 
@@ -126,9 +129,20 @@
 		else
 			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
 
+/turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_FLOORWALL)
+		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
+
+/turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	if(passed_mode == RCD_FLOORWALL)
+		to_chat(user, "<span class='notice'>You build a floor.</span>")
+		ChangeTurf(/turf/open/floor/plating)
+		return TRUE
+	return FALSE
+
 /turf/open/floor/plating/foam/ex_act()
 	..()
 	ScrapeAway()
 
-/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/tool/I, tool_type)
+/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
 	return

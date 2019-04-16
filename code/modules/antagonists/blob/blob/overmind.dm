@@ -30,6 +30,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/list/blob_mobs = list()
 	var/list/resource_blobs = list()
 	var/free_chem_rerolls = 1 //one free chemical reroll
+	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
 	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
 	var/base_point_rate = 2 //for blob core placement
@@ -94,6 +95,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
+	else if(!free_chem_rerolls && (last_reroll_time + BLOB_REROLL_TIME<world.time))
+		to_chat(src, "<b><span class='big'><font color=\"#EE4000\">You have gained another free chemical re-roll.</font></span></b>")
+		free_chem_rerolls = 1
 
 	if(!victory_in_progress && max_count < blobs_legit.len)
 		max_count = blobs_legit.len
