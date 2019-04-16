@@ -532,21 +532,6 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
 
-/datum/supply_pack/security/armory/m1911
-	name = "M1911 Sidearm Crate"
-	desc = "For officers prefering a more classic taste in sidearms. Includes one M1911, and one magazine. Requires Armory access to open."
-	cost = 2000
-	small_item = TRUE
-	contains = list(/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag,
-					/obj/item/ammo_box/magazine/m45)
-
-/datum/supply_pack/security/armory/m1911ammo_single
-	name = "M1911 Spare Magazine"
-	desc = "Contains an 8-round magazine for the M1911. Requires Armory access to open."
-	cost = 750
-	contains = list(/obj/item/ammo_box/magazine/m45)
-	small_item = TRUE
-
 /datum/supply_pack/security/armory/mindshield
 	name = "Mindshield Implants Crate"
 	desc = "Prevent against radical thoughts with three Mindshield implants. Requires Armory access to open."
