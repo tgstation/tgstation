@@ -44,8 +44,8 @@
 		if(pai.radio)
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<A href='byond://?src=[REF(src)];toggle_tx=1'>\[[pai.can_tx? "Disable" : "Enable"] Radio Transmission\]</a><br>"
-			dat += "<A href='byond://?src=[REF(src)];toggle_rx=1'>\[[pai.can_rx? "Disable" : "Enable"] Radio Reception\]</a><br>"		else
-		else	
+			dat += "<A href='byond://?src=[REF(src)];toggle_rx=1'>\[[pai.can_rx? "Disable" : "Enable"] Radio Reception\]</a><br>"
+		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
 		if(ishuman(user))
