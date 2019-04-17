@@ -58032,7 +58032,7 @@
 "xiw" = (
 /obj/machinery/door/airlock{
 	name = "Service Hall";
-	req_one_access_txt = "25;26;35;28; 22;37;46;38"
+	req_one_access_txt = "25;26;35;28;22;37;46;38"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
