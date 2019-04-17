@@ -55967,6 +55967,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "jzi" = (
@@ -58473,6 +58476,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"paI" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "pbm" = (
 /obj/machinery/door/airlock/external{
 	name = "Pod Docking Bay"
@@ -60381,6 +60390,12 @@
 	},
 /turf/closed/wall,
 /area/engine/engineering)
+"tQj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "tQJ" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Cold Loop Bypass"
@@ -101554,7 +101569,7 @@ caL
 bZT
 bYw
 cdk
-bYw
+tQj
 bYw
 aht
 fon
@@ -101811,7 +101826,7 @@ caM
 fDm
 ltu
 cdl
-ltu
+paI
 ceA
 aaa
 mau
