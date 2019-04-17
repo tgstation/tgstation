@@ -1235,7 +1235,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.apply_damage(damage*1.5, attack_type, affecting, armor_block)
 			log_combat(user, target, "kicked")
 		else//other attacks to 1/2 raw damage + full in stamina damage
-			target.apply_damage(damage/2, attack_type, affecting, armor_block)
+			target.apply_damage(damage*0.5, attack_type, affecting, armor_block)
 			target.apply_damage(damage, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
 
