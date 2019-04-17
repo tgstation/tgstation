@@ -1207,7 +1207,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(atk_verb == ATTACK_EFFECT_KICK && user.dna.species.punchdamagelow != 0)//kicks never miss (provided your species deals more than 0 damage)
 			miss_chance = 0
-		else if(user.dna.species.punchdamagelow != 0)//don't divide by 0
+		else if(user.dna.species.punchdamagelow)
 			miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
