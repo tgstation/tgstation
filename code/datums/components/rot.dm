@@ -1,6 +1,4 @@
 //This is supposed to help make miasma at certain turfs by reducing the number of atmos changes to do
-var/datum/controller/miasma_processor/miasma_manager
-
 /datum/controller/miasma_processor
 	var/list/tilestodiffuse = list()
 
