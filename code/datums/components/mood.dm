@@ -379,12 +379,6 @@
 	if(istype(H.loc, /obj/structure/closet/crate/coffin)|| istype(H.loc, /obj/structure/closet/body_bag) || istype(H.loc, /obj/structure/bodycontainer))
 		return
 
-	var/turf/T = get_turf(H)
-	var/datum/gas_mixture/stank = new
-	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = MIASMA_HYGIENE_MOLES
-	T.assume_air(stank)
-	T.air_update_turf()
-
+	miasma_manager.tilestodiffuse[get_turf(H)] += MIASMA_HYGIENE_MOLES
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
