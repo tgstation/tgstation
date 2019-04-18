@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	var/integrated = FALSE
 	var/max_dist = 150
 	verb_say = "states coldly"
+	var/list/message_log = list()
 
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
@@ -26,6 +27,9 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 /obj/machinery/doppler_array/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>")
+	for(var/i in 1 to message_log.len)
+		to_chat(user, "<span class='notice'>Log recording #[i]: [message_log[i]].</span>")
+
 
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
@@ -85,6 +89,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	else
 		for(var/message in messages)
 			say(message)
+	LAZYADD(message_log, messages)
+	log_game("[src] logged explosion: [messages]")
 	return TRUE
 
 /obj/machinery/doppler_array/power_change()
