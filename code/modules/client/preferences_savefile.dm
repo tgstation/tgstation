@@ -103,7 +103,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					else if(job_engsec_low & fval)
 						new_value = JP_LOW
 			if(new_value)
-				to_chat(world,"Updating [initial(J.title)] to [new_value]")
 				job_preferences[initial(J.title)] = new_value
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
