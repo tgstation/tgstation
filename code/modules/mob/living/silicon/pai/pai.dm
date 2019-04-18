@@ -55,7 +55,6 @@
 
 	var/obj/item/instrument/piano_synth/internal_instrument
 
-	var/encryptmod = FALSE
 	var/holoform = FALSE
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
@@ -107,7 +106,7 @@
 	card = P
 	signaler = new(src)
 	if(!radio)
-		radio = new /obj/item/radio/headset/silicon/pai(src)
+		radio = new /obj/item/radio(src)
 
 	//PDA
 	pda = new(src)
@@ -290,13 +289,3 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
-
-/obj/item/paicard/attackby(obj/item/W, mob/user, params)
-	user.set_machine(src)
-	if(pai.encryptmod == TRUE)
-		if(W.tool_behaviour == TOOL_SCREWDRIVER)
-			pai.radio.attackby(W, user, params)
-		else if(istype(W, /obj/item/encryptionkey))
-			pai.radio.attackby(W, user, params)
-	else
-		to_chat(user, "Encryption Key ports not configured.")
