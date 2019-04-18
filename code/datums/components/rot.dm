@@ -1,4 +1,9 @@
 //This is supposed to help make miasma at certain turfs by reducing the number of atmos changes to do
+//Needed, since it would attach the processor to null, which would make the process() proc not trigger
+datum/controller/miasma_processor/New()
+	..()
+	Initialize()
+
 /datum/controller/miasma_processor
 	var/list/tilestodiffuse = list()
 
