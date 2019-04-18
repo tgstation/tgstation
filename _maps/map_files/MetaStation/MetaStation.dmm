@@ -82879,6 +82879,18 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"fcn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/cable/cyan{
+	icon_state = "4-8"
+	},
+/obj/structure/transit_tube/horizontal,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/open/space,
+/area/space/nearstation)
 "fdr" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -129424,7 +129436,7 @@ dgO
 dgO
 dgw
 dgO
-bpw
+fcn
 dgO
 dgO
 dgw
