@@ -67,7 +67,7 @@
 		O.forceMove(T)
 		O.start_rotting()
 		organ_spilled = 1
-		. += X
+		. += O
 	if(cavity_item)
 		cavity_item.forceMove(T)
 		. += cavity_item
