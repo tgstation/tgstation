@@ -34,8 +34,7 @@
 				if(no_brain || !istype(X, /obj/item/organ/brain))
 					qdel(X)
 		else //we're going to drop all bodyparts except chest, so the only organs that needs spilling are those inside it.
-			for(var/X in internal_organs)
-				var/obj/item/organ/O = X
+			for(var/obj/item/organ/O in internal_organs)
 				if(no_brain && istype(O, /obj/item/organ/brain))
 					qdel(O) //so the brain isn't transfered to the head when the head drops.
 					continue
@@ -44,9 +43,9 @@
 					O.Remove(src)
 					O.forceMove(Tsec)
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+					O.start_rotting()
 	else
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I in internal_organs)
 			if(no_brain && istype(I, /obj/item/organ/brain))
 				qdel(I)
 				continue
@@ -56,10 +55,10 @@
 			I.Remove(src)
 			I.forceMove(Tsec)
 			I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+			I.start_rotting()
 
 
 /mob/living/carbon/spread_bodyparts()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP in bodyparts)
 		BP.drop_limb()
 		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
