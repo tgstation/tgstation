@@ -530,6 +530,11 @@
 		if(L)
 			L.update_icon()
 
+//Called by dismember(), meaning the organ wasn't carefully (surgically) removed, rather violently
+/obj/item/bodypart/proc/start_rotting()
+	desc += " It smells terrible."
+	AddComponent(/datum/component/rot/bodypart)
+
 /obj/item/bodypart/l_arm/monkey
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_arm"
