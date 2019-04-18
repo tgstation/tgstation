@@ -14,7 +14,11 @@ datum/controller/miasma_processor/New()
 	for(var/turf/T in tilestodiffuse)
 		if(!istype(T))
 			continue
-	
+		//No miasma on cold turf
+		var/datum/gas_mixture/turfgas = T.return_air()
+		if(turfgas.temperature <= T0C-20)
+			continue
+
 		var/datum/gas_mixture/stank = new
 		ADD_GAS(/datum/gas/miasma, stank.gases)
 		stank.gases[/datum/gas/miasma][MOLES] = tilestodiffuse[T]
