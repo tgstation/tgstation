@@ -90,7 +90,6 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		for(var/message in messages)
 			say(message)
 	LAZYADD(message_log, messages)
-	log_game("[src] logged explosion: [messages]")
 	return TRUE
 
 /obj/machinery/doppler_array/power_change()
