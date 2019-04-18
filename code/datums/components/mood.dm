@@ -379,6 +379,6 @@
 	if(istype(H.loc, /obj/structure/closet/crate/coffin)|| istype(H.loc, /obj/structure/closet/body_bag) || istype(H.loc, /obj/structure/bodycontainer))
 		return
 
-	miasma_manager.tilestodiffuse[get_turf(H)] += MIASMA_HYGIENE_MOLES
+	GLOB.MIASMA_PROCESSOR.tilestodiffuse[get_turf(H)] += MIASMA_HYGIENE_MOLES
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
