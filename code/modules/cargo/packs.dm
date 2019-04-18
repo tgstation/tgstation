@@ -1374,16 +1374,12 @@
 	crate_name = "shield generators crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
-/datum/supply_pack/science/tablets
-	name = "Tablet Crate"
-	desc = "What's a computer? Contains five cargo tablets."
+/datum/supply_pack/science/modularpc
+	name = "Deluxe Silicate Selections restocking unit"
+	desc = "What's a computer? Contains Deluxe Silicate Selections restocking unit."
 	cost = 1500
-	contains = list(/obj/item/modular_computer/tablet/preset/cargo,
-					/obj/item/modular_computer/tablet/preset/cargo,
-					/obj/item/modular_computer/tablet/preset/cargo,
-					/obj/item/modular_computer/tablet/preset/cargo,
-					/obj/item/modular_computer/tablet/preset/cargo)
-	crate_name = "tablet crate"
+	contains = list(/obj/item/vending_refill/modularpc)
+	crate_name = "computer supply crate"
 
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
