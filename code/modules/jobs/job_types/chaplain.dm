@@ -54,6 +54,8 @@
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 		if("buddhism")
 			B.name = "The Sutras"
+		if("space bacchus, partying, servicia,")
+			B.name = "The Tenets of Servicia"
 		if("clownism","honkmother","honk","honkism","comedy")
 			B.name = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
 		if("chaos")
