@@ -22,6 +22,9 @@
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
 
+	if(status == BODYPART_ORGANIC)
+		addtimer(CALLBACK(src, .proc/start_rotting), 2 MINUTES)
+
 	if(dam_type == BURN)
 		burn()
 		return 1
