@@ -33,7 +33,8 @@
 
 /datum/component/rot/corpse/process()
 	var/mob/living/carbon/C = parent
-	if(C.stat != DEAD)
+	//There is no way to de-husk and inorganic mobs/ skeletons don't rot: remove the component
+	if(C.stat != DEAD || C.has_trait(TRAIT_HUSK) || (!(MOB_ORGANIC in C.mob_biotypes) && !(MOB_UNDEAD in C.mob_biotypes)))
 		qdel(src)
 		return
 
@@ -46,14 +47,34 @@
 		return
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(C.reagents.has_reagent("formaldehyde", 15) || C.has_trait(TRAIT_HUSK))
+	if(C.reagents.has_reagent("formaldehyde", 15))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
-	if(C.bodytemperature <= T0C-10 || (!(MOB_ORGANIC in C.mob_biotypes) && !(MOB_UNDEAD in C.mob_biotypes)))
+	if(C.bodytemperature <= T0C-10)
 		return
 
 	..()
 
 /datum/component/rot/gibs
 	amount = MIASMA_GIBS_MOLES
+
+/datum/component/rot/bodypart
+	amount = MIASMA_GIBS_MOLES
+
+/datum/component/rot/bodypart/process()
+	var/obj/item/bodypart/BP = parent
+	if(BP.owner || BP.burn_dam > 100)
+		qdel(src)
+		return
+	..()
+
+/datum/component/rot/organ
+	amount = MIASMA_GIBS_MOLES
+
+/datum/component/rot/organ/process()
+	var/obj/item/organ/O = parent
+	if(O.owner)
+		qdel(src)
+		return
+	..()
