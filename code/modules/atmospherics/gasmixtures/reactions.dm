@@ -496,5 +496,5 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (air.temperature*old_heat_capacity + energy_released)/new_heat_capacity
+			air.temperature = CLAMP((air.temperature*old_heat_capacity + energy_released)/new_heat_capacity,TCMB,INFINITY)
 		return REACTING
