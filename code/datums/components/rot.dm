@@ -39,7 +39,7 @@ var/datum/controller/miasma_processor/miasma_manager
 	var/turf/open/T = get_turf(A)
 
 	if(istype(T) && !istype(T,/turf/open/space))
-		miasma_manager.tilestodiffuse[T] += amount
+		GLOB.MIASMA_PROCESSOR.tilestodiffuse[T] += amount
 
 /datum/component/rot/corpse
 	amount = MIASMA_CORPSE_MOLES
