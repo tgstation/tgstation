@@ -636,7 +636,7 @@
 /mob/living/silicon/pai/proc/softwareLoudness()
 	if(!internal_instrument)
 		internal_instrument = new(src)
-	var/dat = "<h3>Sound Synthetizer</h3>"
-	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthetizer Interface</a><br>"
+	var/dat = "<h3>Sound Synthesizer</h3>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthesizer Interface</a><br>"
 	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=2'>Choose Instrument Type</a>"
 	return dat
