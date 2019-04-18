@@ -99,8 +99,9 @@
 		..()
 
 /obj/item/organ/proc/start_rotting()
-	desc += " It smells terrible."
-	AddComponent(/datum/component/rot/organ)
+	if(!synthetic)
+		desc += " It smells terrible."
+		AddComponent(/datum/component/rot/organ)
 
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
