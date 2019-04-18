@@ -35,7 +35,8 @@
 	var/cloneCount = 0
 	var/list/item_reactions = list()
 	var/list/valid_items = list() //valid items for special reactions like transforming
-	var/list/critical_items = list() //items that can cause critical reactions
+	var/list/critical_items_typecache //items that can cause critical reactions
+	var/banned_typecache // items that won't be produced
 
 /obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -45,11 +46,22 @@
 
 
 /obj/machinery/rnd/experimentor/proc/SetTypeReactions()
+	// Don't need to keep this typecache around, only used in this proc once.
+	var/list/banned_typecache = typecacheof(list(
+		/obj/item/stock_parts/cell/infinite,
+		/obj/item/grenade/chem_grenade/tuberculosis,
+		/obj/item/stock_parts/cell/magazine/ep90
+	))
+
 	for(var/I in typesof(/obj/item))
 		if(istype(I, /obj/item/relic))
 			item_reactions["[I]"] = SCANTYPE_DISCOVER
 		else
 			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+
+		if(is_type_in_typecache(I, banned_typecache))
+			continue
+
 		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/kitchen))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
@@ -60,17 +72,21 @@
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items["[I]"] += rand(1,4)
 
-		if(ispath(I, /obj/item/construction/rcd) || ispath(I, /obj/item/grenade) || ispath(I, /obj/item/device/aicard) || ispath(I, /obj/item/storage/backpack/holding) || ispath(I, /obj/item/slime_extract) || ispath(I, /obj/item/device/onetankbomb) || ispath(I, /obj/item/device/transfer_valve))
-			var/obj/item/tempCheck = I
-			if(initial(tempCheck.icon_state) != null)
-				critical_items += I
-
 /obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
 
 	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
 	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
 	SetTypeReactions()
+
+	critical_items_typecache = typecacheof(list(
+		/obj/item/construction/rcd,
+		/obj/item/grenade,
+		/obj/item/device/aicard,
+		/obj/item/storage/backpack/holding,
+		/obj/item/slime_extract,
+		/obj/item/device/onetankbomb,
+		/obj/item/device/transfer_valve))
 
 /obj/machinery/rnd/experimentor/RefreshParts()
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -228,7 +244,7 @@
 	recentlyExperimented = 1
 	icon_state = "h_lathe_wloop"
 	var/chosenchem
-	var/criticalReaction = (exp_on.type in critical_items) ? TRUE : FALSE
+	var/criticalReaction = is_type_in_typecache(exp_on,  critical_items_typecache)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_POKE)
 		visible_message("[src] prods at [exp_on] with mechanical arms.")
