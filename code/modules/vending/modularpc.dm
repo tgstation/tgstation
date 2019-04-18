@@ -1,5 +1,5 @@
 /obj/machinery/vending/modularpc
-	name = "\improper Deluxe Silicon Selections"
+	name = "\improper Deluxe Silicate Selections"
 	desc = "All the parts you need to build your own custom pc."
 	icon_state = "modularpc"
 	icon_deny = "modularpc-deny"
