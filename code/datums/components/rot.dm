@@ -1,3 +1,26 @@
+//This is supposed to help make miasma at certain turfs by reducing the number of atmos changes to do
+var/datum/controller/miasma_processor/miasma_manager
+
+/datum/controller/miasma_processor
+	var/list/tilestodiffuse = list()
+
+/datum/controller/miasma_processor/Initialize()
+	START_PROCESSING(SSprocessing, src)
+
+/datum/controller/miasma_processor/process()
+	for(var/turf/T in tilestodiffuse)
+		if(!istype(T))
+			continue
+	
+		var/datum/gas_mixture/stank = new
+		ADD_GAS(/datum/gas/miasma, stank.gases)
+		stank.gases[/datum/gas/miasma][MOLES] = tilestodiffuse[T]
+		T.assume_air(stank)
+		T.air_update_turf()
+	
+	tilestodiffuse.Cut()	
+
+
 /datum/component/rot
 	var/amount = 1
 
@@ -14,14 +37,9 @@
 	var/atom/A = parent
 
 	var/turf/open/T = get_turf(A)
-	if(!istype(T))
-		return
 
-	var/datum/gas_mixture/stank = new
-	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = amount
-	T.assume_air(stank)
-	T.air_update_turf()
+	if(istype(T) && !istype(T,/turf/open/space))
+		miasma_manager.tilestodiffuse[T] += amount
 
 /datum/component/rot/corpse
 	amount = MIASMA_CORPSE_MOLES
