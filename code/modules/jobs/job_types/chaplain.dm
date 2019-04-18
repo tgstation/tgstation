@@ -56,6 +56,7 @@
 			B.name = "The Sutras"
 		if("space bacchus, partying, servicia,")
 			B.name = "The Tenets of Servicia"
+			B.desc = "Happy, Full, Clean. Live it and give it."
 		if("clownism","honkmother","honk","honkism","comedy")
 			B.name = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
 		if("chaos")
