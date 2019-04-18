@@ -256,7 +256,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/silicon/pai
+<<<<<<< HEAD
 	name = "\proper personal Integrated Subspace Transceiver "
+=======
+	name = "\proper Integrated Subspace Transceiver "
+	subspace_transmission = FALSE
+>>>>>>> 1a8bc1a2ac... Final version
 
 /obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver "
