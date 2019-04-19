@@ -532,6 +532,10 @@
 
 //Called by dismember(), meaning the organ wasn't carefully (surgically) removed, rather violently
 /obj/item/bodypart/proc/start_rotting()
+	if(status == BODYPART_ORGANIC)
+		addtimer(CALLBACK(src, .proc/rot_now), 2 MINUTES)
+
+/obj/item/organ/proc/rot_now()
 	desc += " It smells terrible."
 	AddComponent(/datum/component/rot/bodypart)
 
