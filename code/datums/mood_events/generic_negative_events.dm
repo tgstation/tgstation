@@ -176,9 +176,12 @@
 	mood_change = -15
 
 /datum/mood_event/sad_empath
-	description = "<span class='warning'>People seem upset around here...</span>\n"
+	description = "<span class='warning'>Someone seems upset...</span>\n"
 	mood_change = -2
 	timeout = 600
+
+/datum/mood_event/sad_empath/add_effects(mob/sadtarget)
+	description = "<span class='warning'>[sadtarget.name] seems upset...</span>\n"
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse

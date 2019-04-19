@@ -262,7 +262,7 @@
 		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 		if(mood.sanity <= SANITY_DISTURBED)
 			msg += "[t_He] seem[p_s()] distressed.\n"
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath)
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
 		if (has_trait(TRAIT_BLIND))
 			msg += "[t_He] appear[p_s()] to be staring off into space.\n"
 		if (has_trait(TRAIT_DEAF))
