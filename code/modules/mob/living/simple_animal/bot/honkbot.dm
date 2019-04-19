@@ -54,13 +54,13 @@
 
 //honkbots react with sounds.
 /mob/living/simple_animal/bot/honkbot/proc/react_ping()
-	playsound(src, 'sound/machines/ping.ogg', 50, TRUE, -1) //the first sound upon creation!
+	playsound(src, 'sound/machines/ping.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1) //the first sound upon creation!
 	spam_flag = TRUE
 	sensor_blink()
 	addtimer(CALLBACK(src, .proc/spam_flag_false), 18) // calibrates before starting the honk
 
 /mob/living/simple_animal/bot/honkbot/proc/react_buzz()
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	sensor_blink()
 
 /mob/living/simple_animal/bot/honkbot/bot_reset()
@@ -132,7 +132,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			user << "<span class='danger'>You short out [src]'s sound control system. It gives out an evil laugh!!</span>"
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] gives out an evil laugh!</span>")
-		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, 1, -1) // evil laughter
+		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, DEFAULT_SOUND_VARY, extra_range = -1) // evil laughter
 		update_icon()
 
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/item/projectile/Proj)
@@ -157,7 +157,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
-		playsound(src, honksound, 50, TRUE, -1)
+		playsound(src, honksound, 50, DEFAULT_SOUND_VARY, extra_range = -1)
 		var/obj/item/I = AM
 		if(I.throwforce < health && I.thrownby && (istype(I.thrownby, /mob/living/carbon/human)))
 			var/mob/living/carbon/human/H = I.thrownby
@@ -167,7 +167,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 /mob/living/simple_animal/bot/honkbot/proc/bike_horn() //use bike_horn
 	if (emagged <= 1)
 		if (!spam_flag)
-			playsound(src, honksound, 50, TRUE, -1)
+			playsound(src, honksound, 50, DEFAULT_SOUND_VARY, extra_range = -1)
 			spam_flag = TRUE //prevent spam
 			sensor_blink()
 			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
@@ -181,14 +181,14 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/proc/honk_attack(mob/living/carbon/C) // horn attack
 	if(!spam_flag)
-		playsound(loc, honksound, 50, TRUE, -1)
+		playsound(loc, honksound, 50, DEFAULT_SOUND_VARY, extra_range = -1)
 		spam_flag = TRUE // prevent spam
 		sensor_blink()
 		addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
 
 /mob/living/simple_animal/bot/honkbot/proc/stun_attack(mob/living/carbon/C) // airhorn stun
 	if(!spam_flag)
-		playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1) //HEEEEEEEEEEEENK!!
+		playsound(src, 'sound/items/AirHorn.ogg', 100, DEFAULT_SOUND_VARY, extra_range = -1) //HEEEEEEEEEEEENK!!
 		sensor_blink()
 	if(spam_flag == 0)
 		if(ishuman(C))
@@ -358,7 +358,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						  	"[C] topples over [src]!", \
 						  	"[C] leaps out of [src]'s way!")]</span>")
 			C.Paralyze(10)
-			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1, -1)
+			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 			if(!client)
 				speak("Honk!")
 			sensor_blink()

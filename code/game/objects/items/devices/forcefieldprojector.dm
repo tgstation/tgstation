@@ -39,7 +39,7 @@
 		to_chat(user, "<span class='notice'>[src] cannot sustain any more forcefields!</span>")
 		return
 
-	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
+	playsound(src,'sound/weapons/resonator_fire.ogg',50,DEFAULT_SOUND_VARY)
 	user.visible_message("<span class='warning'>[user] projects a forcefield!</span>","<span class='notice'>You project a forcefield.</span>")
 	var/obj/structure/projected_forcefield/F = new(T, src)
 	current_fields += F
@@ -94,7 +94,7 @@
 
 /obj/structure/projected_forcefield/Destroy()
 	visible_message("<span class='warning'>[src] flickers and disappears!</span>")
-	playsound(src,'sound/weapons/resonator_blast.ogg',25,1)
+	playsound(src,'sound/weapons/resonator_blast.ogg',25,DEFAULT_SOUND_VARY)
 	generator.current_fields -= src
 	generator = null
 	return ..()
@@ -105,7 +105,7 @@
 	return !density
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 80, DEFAULT_SOUND_VARY)
 
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)

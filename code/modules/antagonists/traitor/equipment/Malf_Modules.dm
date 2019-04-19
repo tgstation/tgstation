@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 				AM.upgrade(A)
 				possible_modules -= AM
 				to_chat(A, AM.unlock_text)
-				A.playsound_local(A, AM.unlock_sound, 50, 0)
+				A.playsound_local(A, AM.unlock_sound, 50)
 			else
 				if(AM.power_type)
 					if(!action) //Unlocking for the first time
@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 						if(AM.unlock_text)
 							to_chat(A, AM.unlock_text)
 						if(AM.unlock_sound)
-							A.playsound_local(A, AM.unlock_sound, 50, 0)
+							A.playsound_local(A, AM.unlock_sound, 50)
 					else //Adding uses to an existing module
 						action.uses += initial(action.uses)
 						temp = "Additional use[action.uses > 1 ? "s" : ""] added to [action.name]!"
@@ -253,7 +253,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	sleep(rand(10, 30))
 	if(!owner || QDELETED(owner))
 		return
-	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50)
 	to_chat(owner, "<span class='userdanger'>!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!</span>")
 	to_chat(owner, "<span class='boldannounce'>This is a class-3 security violation. This incident will be reported to Central Command.</span>")
 	for(var/i in 1 to 3)
@@ -265,17 +265,17 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(!owner || QDELETED(owner))
 		return
 	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' ******************</span>")
-	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/items/timer.ogg', 50)
 	sleep(30)
 	if(!owner || QDELETED(owner))
 		return
 	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Welcome, akjv9c88asdf12nb.</span>")
-	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50)
 	sleep(5)
 	if(!owner || QDELETED(owner))
 		return
 	to_chat(owner, "<span class='boldnotice'>Arm self-destruct device? (Y/N)</span>")
-	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50)
 	sleep(20)
 	if(!owner || QDELETED(owner))
 		return
@@ -284,7 +284,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(!owner || QDELETED(owner))
 		return
 	to_chat(owner, "<span class='boldnotice'>Confirm arming of self-destruct device? (Y/N)</span>")
-	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50)
 	sleep(10)
 	if(!owner || QDELETED(owner))
 		return
@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(!owner || QDELETED(owner))
 		return
 	to_chat(owner, "<span class='boldnotice'>Please repeat password to confirm.</span>")
-	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50)
 	sleep(14)
 	if(!owner || QDELETED(owner))
 		return
@@ -302,7 +302,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(!owner || QDELETED(owner))
 		return
 	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Transmitting arming signal...</span>")
-	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50)
 	sleep(30)
 	if(!owner || QDELETED(owner))
 		return
@@ -466,7 +466,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			var/obj/item/construction/rcd/RCD = I
 			RCD.detonate_pulse()
 	to_chat(owner, "<span class='danger'>RCD detonation pulse emitted.</span>")
-	owner.playsound_local(owner, 'sound/machines/twobeep.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/machines/twobeep.ogg', 50)
 
 
 //Unlock Mech Domination: Unlocks the ability to dominate mechs. Big shocker, right?
@@ -508,7 +508,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		F.obj_flags |= EMAGGED
 		F.update_icon()
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
-	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50)
 
 
 //Air Alarm Safety Override: Unlocks the ability to enable flooding on all air alarms.
@@ -535,7 +535,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			continue
 		AA.obj_flags |= EMAGGED
 	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overridden. Air alarms may now use the Flood environmental mode.</span>")
-	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50)
 
 
 //Overload Machine: Allows the AI to overload a machine, detonating it after a delay. Two uses per purchase.
@@ -582,7 +582,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(is_type_in_typecache(target, GLOB.blacklisted_malf_machines))
 		to_chat(ranged_ability_user, "<span class='warning'>You cannot overload that device!</span>")
 		return
-	ranged_ability_user.playsound_local(ranged_ability_user, "sparks", 50, 0)
+	ranged_ability_user.playsound_local(ranged_ability_user, "sparks", 50)
 	attached_action.adjust_uses(-1)
 	target.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [target]!</span>")
 	addtimer(CALLBACK(attached_action, /datum/action/innate/ai/ranged/overload_machine.proc/detonate_machine, target), 50) //kaboom!
@@ -629,7 +629,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(!target.can_be_overridden() || is_type_in_typecache(target, GLOB.blacklisted_malf_machines))
 		to_chat(ranged_ability_user, "<span class='warning'>That machine can't be overridden!</span>")
 		return
-	ranged_ability_user.playsound_local(ranged_ability_user, 'sound/misc/interference.ogg', 50, 0)
+	ranged_ability_user.playsound_local(ranged_ability_user, 'sound/misc/interference.ogg', 50)
 	attached_action.adjust_uses(-1)
 	target.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [target]!</span>")
 	addtimer(CALLBACK(attached_action, /datum/action/innate/ai/ranged/override_machine.proc/animate_machine, target), 50) //kabeep!
@@ -675,7 +675,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/turf/T = get_turf(owner_AI.eyeobj)
 	var/obj/machinery/transformer/conveyor = new(T)
 	conveyor.masterAI = owner
-	playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+	playsound(T, 'sound/effects/phasein.ogg', 100, DEFAULT_SOUND_VARY)
 	owner_AI.can_shunt = FALSE
 	to_chat(owner, "<span class='warning'>You are no longer able to shunt your core to APCs.</span>")
 	adjust_uses(-1)
@@ -736,7 +736,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		else
 			apc.overload++
 	to_chat(owner, "<span class='notice'>Overcurrent applied to the powernet.</span>")
-	owner.playsound_local(owner, "sparks", 50, 0)
+	owner.playsound_local(owner, "sparks", 50)
 
 
 //Disable Emergency Lights
@@ -763,7 +763,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 		CHECK_TICK
 	to_chat(owner, "<span class='notice'>Emergency light connections severed.</span>")
-	owner.playsound_local(owner, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	owner.playsound_local(owner, 'sound/effects/light_flicker.ogg', 50)
 
 
 //Reactivate Camera Network: Reactivates up to 30 cameras across the station.
@@ -802,7 +802,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			fixed_cameras++
 			uses-- //Not adjust_uses() so it doesn't automatically delete or show a message
 	to_chat(owner, "<span class='notice'>Diagnostic complete! Cameras reactivated: <b>[fixed_cameras]</b>. Reactivations remaining: <b>[uses]</b>.</span>")
-	owner.playsound_local(owner, 'sound/items/wirecutter.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/items/wirecutter.ogg', 50)
 	adjust_uses(0, TRUE) //Checks the uses remaining
 	if(src && uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		desc = "[initial(desc)] There are [uses] reactivations remaining."

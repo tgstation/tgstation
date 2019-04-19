@@ -15,7 +15,7 @@ Prismatic extracts:
 	if(!istype(target) || isspaceturf(target))
 		return
 	target.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
-	playsound(target, 'sound/effects/slosh.ogg', 20, 1)
+	playsound(target, 'sound/effects/slosh.ogg', 20, DEFAULT_SOUND_VARY)
 
 /obj/item/slimecross/prismatic/grey/
 	colour = "grey"
@@ -27,7 +27,7 @@ Prismatic extracts:
 		return
 	if(istype(target) && target.color != initial(target.color))
 		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		playsound(target, 'sound/effects/slosh.ogg', 20, 1)
+		playsound(target, 'sound/effects/slosh.ogg', 20, DEFAULT_SOUND_VARY)
 
 /obj/item/slimecross/prismatic/orange
 	paintcolor = "#FFA500"

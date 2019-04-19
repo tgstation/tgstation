@@ -43,7 +43,7 @@
 		A.master = src
 		assemblyattacher = user.ckey
 		to_chat(user, "<span class='notice'>You add [A] to the [name].</span>")
-		playsound(src, 'sound/weapons/tap.ogg', 20, 1)
+		playsound(src, 'sound/weapons/tap.ogg', 20, DEFAULT_SOUND_VARY)
 		update_icon()
 		return
 	if(nadeassembly && I.tool_behaviour == TOOL_WIRECUTTER)

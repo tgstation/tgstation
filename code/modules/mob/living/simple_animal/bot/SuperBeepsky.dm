@@ -27,7 +27,7 @@
 	..()
 	if(ismob(AM) && AM == target)
 		visible_message("[src] flails his swords and cuts [AM]!")
-		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
+		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,DEFAULT_SOUND_VARY,extra_range = -1)
 		stun_attack(AM)
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
@@ -44,12 +44,12 @@
 		return
 	if(prob(block_chance))
 		visible_message("[src] deflects [user]'s attack with his energy swords!")
-		playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
+		playsound(src, 'sound/weapons/blade1.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 		return TRUE
 
 /mob/living/simple_animal/bot/secbot/grievous/stun_attack(mob/living/carbon/C) //Criminals don't deserve to live
 	weapon.attack(C, src)
-	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/weapons/blade1.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	if(C.stat == DEAD)
 		addtimer(CALLBACK(src, .proc/update_icon), 2)
 		back_to_idle()
@@ -67,7 +67,7 @@
 				mode = BOT_START_PATROL	// switch to patrol mode
 		if(BOT_HUNT)		// hunting for perp
 			update_icon()
-			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
+			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,DEFAULT_SOUND_VARY,extra_range = -1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
 				walk_to(src,0)
@@ -117,7 +117,7 @@
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
 			playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-			playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
+			playsound(src,'sound/weapons/saberon.ogg',50,DEFAULT_SOUND_VARY,extra_range = -1)
 			visible_message("[src] ignites his energy swords!")
 			icon_state = "grievous-c"
 			visible_message("<b>[src]</b> points at [C.name]!")

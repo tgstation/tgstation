@@ -58,7 +58,7 @@
 		C.heal_overall_damage(heal_amt,heal_amt)
 		C.adjustToxLoss(-heal_amt)
 	if(!C.InCritical() && prob(4))
-		playsound(C, pick(spooks), 50, TRUE, 10)
+		playsound(C, pick(spooks), 50, DEFAULT_SOUND_VARY, extra_range = 10)
 		
 //Congrats you somehow died so hard you stopped being a zombie
 /datum/species/zombie/infectious/spec_death(mob/living/carbon/C)

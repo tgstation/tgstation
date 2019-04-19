@@ -361,7 +361,7 @@ What a mess.*/
 				if(!( printing ))
 					printing = 1
 					GLOB.data_core.securityPrintCount++
-					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+					playsound(loc, 'sound/items/poster_being_created.ogg', 100, DEFAULT_SOUND_VARY)
 					sleep(30)
 					var/obj/item/paper/P = new /obj/item/paper( loc )
 					P.info = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
@@ -440,7 +440,7 @@ What a mess.*/
 
 						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description, null)
 						if(info)
-							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+							playsound(loc, 'sound/items/poster_being_created.ogg', 100, DEFAULT_SOUND_VARY)
 							printing = 1
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.

@@ -110,7 +110,7 @@
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		if(!spam_flag)
 			spam_flag = TRUE
-			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
+			playsound(loc, 'sound/items/bikehorn.ogg', 50, DEFAULT_SOUND_VARY)
 			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
 
 

@@ -95,7 +95,7 @@
 /obj/structure/bed/roller/Moved()
 	. = ..()
 	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+		playsound(src, 'sound/effects/roll.ogg', 100, DEFAULT_SOUND_VARY)
 
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
 	density = FALSE

@@ -519,10 +519,10 @@
 			box = new(owner.drop_location())
 			owner.forceMove(box)
 			cooldown = world.time
-			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, DEFAULT_SOUND_VARY)
 	else
 		owner.forceMove(box.drop_location())
-		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, DEFAULT_SOUND_VARY)
 		QDEL_NULL(box)
 
 //Preset for spells

@@ -148,7 +148,7 @@
 	update_icon()
 
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
-	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
+	playsound(src, bolt_drop_sound, bolt_drop_sound_volume)
 	if (user)
 		to_chat(user, "<span class='notice'>You drop the [bolt_wording] of \the [src].</span>")
 	chamber_round()
@@ -379,7 +379,7 @@
 			return(OXYLOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(src, dry_fire_sound, 30, TRUE)
+		playsound(src, dry_fire_sound, 30, DEFAULT_SOUND_VARY)
 		return (OXYLOSS)
 #undef BRAINS_BLOWN_THROW_SPEED
 #undef BRAINS_BLOWN_THROW_RANGE

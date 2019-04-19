@@ -109,7 +109,7 @@
 /datum/quirk/monochromatic/post_add()
 	if(quirk_holder.mind.assigned_role == "Detective")
 		to_chat(quirk_holder, "<span class='boldannounce'>Mmm. Nothing's ever clear on this station. It's all shades of gray...</span>")
-		quirk_holder.playsound_local(quirk_holder, 'sound/ambience/ambidet1.ogg', 50, FALSE)
+		quirk_holder.playsound_local(quirk_holder, 'sound/ambience/ambidet1.ogg', 50)
 
 /datum/quirk/monochromatic/remove()
 	if(quirk_holder)

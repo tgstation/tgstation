@@ -16,7 +16,7 @@
 	switch(consoleStatus)
 		if (SP_LINKED)
 			linked = TRUE
-			playsound(src,'sound/machines/twobeep.ogg',50,0)
+			playsound(src,'sound/machines/twobeep.ogg',50, DEFAULT_SOUND_VARY, 2)
 		if (SP_READY)
 			ready = TRUE
 		if (SP_LAUNCH)

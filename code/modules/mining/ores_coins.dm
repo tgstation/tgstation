@@ -252,7 +252,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
 		primed = TRUE
-		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
+		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,DEFAULT_SOUND_VARY)
 		icon_state = "Gibtonite active"
 		var/notify_admins = FALSE
 		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
@@ -468,7 +468,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		cooldown = world.time + 15
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
-		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
+		playsound(user.loc, 'sound/items/coinflip.ogg', 50, DEFAULT_SOUND_VARY)
 		var/oldloc = loc
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())

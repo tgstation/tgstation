@@ -184,7 +184,7 @@
 	flushAnimation()
 	sleep(10)
 	if(last_sound < world.time + 1)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, DEFAULT_SOUND_VARY)
 		last_sound = world.time
 	sleep(5)
 	if(QDELETED(src))
@@ -216,7 +216,7 @@
 
 	var/turf/T = get_turf(src)
 	var/turf/target
-	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+	playsound(src, 'sound/machines/hiss.ogg', 50, DEFAULT_SOUND_VARY)
 
 	for(var/A in H)
 		var/atom/movable/AM = A

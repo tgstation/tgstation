@@ -105,7 +105,7 @@
 	user.visible_message("[user] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \
 		"<span class='italics'>You hear a food processor.</span>")
-	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/blender.ogg', 50, DEFAULT_SOUND_VARY)
 	use_power(500)
 	var/total_time = 0
 	for(var/O in src.contents)

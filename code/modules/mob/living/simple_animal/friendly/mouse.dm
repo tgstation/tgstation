@@ -71,7 +71,7 @@
 			if(C && prob(15))
 				if(C.avail())
 					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
-					playsound(src, 'sound/effects/sparks2.ogg', 100, 1)
+					playsound(src, 'sound/effects/sparks2.ogg', 100, DEFAULT_SOUND_VARY)
 					C.deconstruct()
 					death(toast=1)
 				else

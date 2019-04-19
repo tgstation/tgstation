@@ -50,7 +50,7 @@
 		A.preparePixelProjectile(target, chassis.occupant, params, spread)
 
 		A.fire()
-		playsound(chassis, fire_sound, 50, 1)
+		playsound(chassis, fire_sound, 50, DEFAULT_SOUND_VARY)
 
 		sleep(max(0, projectile_delay))
 
@@ -178,7 +178,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target, params)
 	if(!action_checks(target))
 		return
-	playsound(chassis, 'sound/items/airhorn.ogg', 100, 1)
+	playsound(chassis, 'sound/items/airhorn.ogg', 100, DEFAULT_SOUND_VARY)
 	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(ishuman(M))
@@ -325,7 +325,7 @@
 	if(!action_checks(target))
 		return
 	var/obj/O = new projectile(chassis.loc)
-	playsound(chassis, fire_sound, 50, 1)
+	playsound(chassis, fire_sound, 50, DEFAULT_SOUND_VARY)
 	log_message("Launched a [O.name] from [name], targeting [target].", LOG_MECHA)
 	projectiles--
 	proj_init(O)

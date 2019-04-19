@@ -61,7 +61,7 @@
 
 /obj/item/target/clown/bullet_act(obj/item/projectile/P)
 	. = ..()
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, DEFAULT_SOUND_VARY)
 
 /obj/item/target/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/bullet/reusable)) // If it's a foam dart, don't bother with any of this other shit

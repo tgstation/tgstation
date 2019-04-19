@@ -124,7 +124,7 @@
 					return
 				if(!user.transferItemToLoc(B, src))
 					return
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, DEFAULT_SOUND_VARY)
 				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 				circuit = B
 				icon_state = "box_2"

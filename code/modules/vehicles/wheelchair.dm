@@ -50,7 +50,7 @@
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
 	cut_overlays()
-	playsound(src, 'sound/effects/roll.ogg', 75, 1)
+	playsound(src, 'sound/effects/roll.ogg', 75, DEFAULT_SOUND_VARY)
 	if(has_buckled_mobs())
 		handle_rotation_overlayed()
 

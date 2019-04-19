@@ -17,7 +17,7 @@
 			to_chat(user, "<span class='danger'>You can't do that here!</span>")
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
-		playsound(loccheck,'sound/effects/supermatter.ogg', 200, 1)
+		playsound(loccheck,'sound/effects/supermatter.ogg', 100, DEFAULT_SOUND_VARY)
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
 		log_game("[key_name(user)] detonated a bag of holding at [loc_name(loccheck)].")

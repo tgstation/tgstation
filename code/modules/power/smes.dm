@@ -123,7 +123,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, DEFAULT_SOUND_VARY)
 
 		if(do_after(user, 20, target = src))
 			if(C.get_amount() < 10 || !C)

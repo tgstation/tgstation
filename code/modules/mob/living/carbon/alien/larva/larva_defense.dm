@@ -4,7 +4,7 @@
 	if(..())
 		var/damage = rand(1, 9)
 		if (prob(90))
-			playsound(loc, "punch", 25, 1, -1)
+			playsound(loc, "punch", 25, DEFAULT_SOUND_VARY, extra_range = -1)
 			log_combat(M, src, "attacked")
 			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \
 					"<span class='userdanger'>[M] has kicked [src]!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -14,7 +14,7 @@
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			apply_damage(damage, BRUTE, affecting)
 		else
-			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, DEFAULT_SOUND_VARY, extra_range = -1)
 			visible_message("<span class='danger'>[M] has attempted to kick [src]!</span>", \
 					"<span class='userdanger'>[M] has attempted to kick [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 

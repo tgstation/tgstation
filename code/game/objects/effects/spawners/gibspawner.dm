@@ -22,7 +22,7 @@
 	var/obj/effect/decal/cleanable/blood/gibs/gib = null
 
 	if(sound_to_play && isnum(sound_vol))
-		playsound(src, sound_to_play, sound_vol, TRUE)
+		playsound(src, sound_to_play, sound_vol, DEFAULT_SOUND_VARY)
 
 	if(sparks)
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

@@ -449,7 +449,7 @@ Auto Patrol[]"},
 		return
 
 	var/obj/item/projectile/A = new projectile (loc)
-	playsound(src, shoot_sound, 50, TRUE)
+	playsound(src, shoot_sound, 50, DEFAULT_SOUND_VARY)
 	A.preparePixelProjectile(target, src)
 	A.fire()
 
@@ -540,7 +540,7 @@ Auto Patrol[]"},
 	shootAt(A)
 
 /mob/living/simple_animal/bot/ed209/proc/stun_attack(mob/living/carbon/C)
-	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/weapons/egloves.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	icon_state = "[lasercolor]ed209-c"
 	spawn(2)
 		icon_state = "[lasercolor]ed209[on]"
@@ -560,7 +560,7 @@ Auto Patrol[]"},
 
 /mob/living/simple_animal/bot/ed209/proc/cuff(mob/living/carbon/C)
 	mode = BOT_ARREST
-	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+	playsound(src, 'sound/weapons/cablecuff.ogg', 30, DEFAULT_SOUND_VARY, extra_range = -2)
 	C.visible_message("<span class='danger'>[src] is trying to put zipties on [C]!</span>",\
 						"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 

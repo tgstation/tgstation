@@ -101,7 +101,7 @@ Credit where due:
 			is a meaningless cacophony.</span><br>\
 			<span class='userdanger'>You see an abomination of rusting parts[GLOB.ratvar_awakens ? ", and it is here.<br>It is too late" : \
 			" in an endless grey void.<br>It cannot be allowed to escape"].</span>")
-			L.playsound_local(get_turf(L), 'sound/ambience/antag/clockcultalr.ogg', 40, TRUE, frequency = 100000, pressure_affected = FALSE)
+			L.playsound_local(get_turf(L), 'sound/ambience/antag/clockcultalr.ogg', 40, 0.4, 2.2, pressure_affected = FALSE)
 			flash_color(L, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 5)
 
 
@@ -203,7 +203,7 @@ Credit where due:
 	to_chat(M, "<span class='brass'>You have approximately <b>[ark_time]</b> minutes until the Ark activates.</span>")
 	to_chat(M, "<span class='brass'>Unlock <b>Script</b> scripture by converting a new servant.</span>")
 	to_chat(M, "<span class='brass'><b>Application</b> scripture will be unlocked halfway until the Ark's activation.</span>")
-	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
+	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, pressure_affected = FALSE)
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/M) //Grants a clockwork slab to the mob, with one of each component

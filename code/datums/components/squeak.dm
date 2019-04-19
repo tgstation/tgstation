@@ -43,7 +43,7 @@
 		if(!datum_outputs)
 			CRASH("Squeak datum attempted to play missing datum")
 		else
-			playsound(parent, datum_outputs[1], volume, 1, -1, , , , , , src)
+			playsound(parent, datum_outputs[1], volume, DEFAULT_SOUND_VARY, extra_range = -1, do_owner = src)
 
 /datum/component/squeak/proc/step_squeak()
 	if(steps > step_delay)

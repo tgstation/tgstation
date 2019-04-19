@@ -66,7 +66,7 @@ RLD
 		if(R.ammoamt <= 0)
 			qdel(R)
 		matter += load
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, DEFAULT_SOUND_VARY)
 		loaded = 1
 	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
 		loaded = loadwithsheets(W, sheetmultiplier, user)
@@ -84,7 +84,7 @@ RLD
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 	else if(istype(W, /obj/item/rcd_upgrade))
 		upgrade = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, DEFAULT_SOUND_VARY)
 		qdel(W)
 	else
 		return ..()
@@ -96,14 +96,14 @@ RLD
 		var/amount_to_use = min(S.amount, maxsheets)
 		S.use(amount_to_use)
 		matter += value*amount_to_use
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, DEFAULT_SOUND_VARY)
 		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into [src]. </span>")
 		return 1
 	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into [src]!</span>")
 	return 0
 
 /obj/item/construction/proc/activate()
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, DEFAULT_SOUND_VARY)
 
 /obj/item/construction/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
@@ -442,7 +442,7 @@ RLD
 			if(A.rcd_act(user, src, rcd_results["mode"]))
 				useResource(rcd_results["cost"], user)
 				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				playsound(src.loc, 'sound/machines/click.ogg', 50, DEFAULT_SOUND_VARY)
 				return TRUE
 
 /obj/item/construction/rcd/Initialize()
@@ -709,7 +709,7 @@ RLD
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, DEFAULT_SOUND_VARY)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
 							return 0
@@ -723,7 +723,7 @@ RLD
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, DEFAULT_SOUND_VARY)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 0)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(W))
@@ -738,7 +738,7 @@ RLD
 								candidates += C
 						if(!candidates.len)
 							to_chat(user, "<span class='warning'>Valid target not found...</span>")
-							playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
+							playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, DEFAULT_SOUND_VARY)
 							return FALSE
 						for(var/turf/open/O in candidates)
 							if(istype(O))
@@ -769,8 +769,8 @@ RLD
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, DEFAULT_SOUND_VARY)
+					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, DEFAULT_SOUND_VARY)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(F))
 							return 0

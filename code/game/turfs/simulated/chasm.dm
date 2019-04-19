@@ -55,7 +55,7 @@
 		if(!L)
 			if(R.use(1))
 				to_chat(user, "<span class='notice'>You construct a lattice.</span>")
-				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/genhit.ogg', 50, DEFAULT_SOUND_VARY)
 				// Create a lattice, without reverting to our baseturf
 				new /obj/structure/lattice(src)
 			else
@@ -67,7 +67,7 @@
 			var/obj/item/stack/tile/plasteel/S = C
 			if(S.use(1))
 				qdel(L)
-				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/genhit.ogg', 50, DEFAULT_SOUND_VARY)
 				to_chat(user, "<span class='notice'>You build a floor.</span>")
 				// Create a floor, which has this chasm underneath it
 				PlaceOnTop(/turf/open/floor/plating)

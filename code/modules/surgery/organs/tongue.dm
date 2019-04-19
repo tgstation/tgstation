@@ -164,7 +164,7 @@
 	languages_possible = languages_possible_alien
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
-	playsound(owner, "hiss", 25, 1, 1)
+	playsound(owner, "hiss", 25, 1, DEFAULT_SOUND_VARY)
 	return message
 
 /obj/item/organ/tongue/bone

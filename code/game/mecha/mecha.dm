@@ -596,7 +596,7 @@
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
 	if(turnsound)
-		playsound(src,turnsound,40,1)
+		playsound(src,turnsound,40,DEFAULT_SOUND_VARY)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
@@ -605,13 +605,13 @@
 	if(strafe)
 		setDir(current_dir)
 	if(result && stepsound)
-		playsound(src,stepsound,40,1)
+		playsound(src,stepsound,40,DEFAULT_SOUND_VARY)
 	return result
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
 	if(result && stepsound)
-		playsound(src,stepsound,40,1)
+		playsound(src,stepsound,40,DEFAULT_SOUND_VARY)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -784,7 +784,7 @@
 	silicon_pilot = TRUE
 	icon_state = initial(icon_state)
 	update_icon()
-	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+	playsound(src, 'sound/machines/windowdoor.ogg', 50, DEFAULT_SOUND_VARY)
 	if(!internal_damage)
 		SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 	AI.cancel_camera()
@@ -916,7 +916,7 @@
 		log_message("[H] moved in as pilot.", LOG_MECHA)
 		icon_state = initial(icon_state)
 		setDir(dir_in)
-		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+		playsound(src, 'sound/machines/windowdoor.ogg', 50, DEFAULT_SOUND_VARY)
 		if(!internal_damage)
 			SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 		return 1

@@ -47,8 +47,8 @@
 	if(isbarefoot(LM))
 		playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
 			GLOB.barefootstep[T.barefootstep][2] * v,
-			TRUE,
-			GLOB.barefootstep[T.barefootstep][3] + e)
+			0.22,
+			extra_range = GLOB.barefootstep[T.barefootstep][3] + e)
 		return
 	
 	//for xenomorphs, dogs, and other clawed mobs
@@ -59,16 +59,16 @@
 		
 		playsound(T, pick(GLOB.clawfootstep[T.clawfootstep][1]),
 				GLOB.clawfootstep[T.clawfootstep][2] * v,
-				TRUE,
-				GLOB.clawfootstep[T.clawfootstep][3] + e)
+				0.25,
+				extra_range = GLOB.clawfootstep[T.clawfootstep][3] + e)
 		return
 	
 	//for megafauna and other large and imtimidating mobs such as the bloodminer
 	if(isheavyfoot(LM))
 		playsound(T, pick(GLOB.heavyfootstep[T.heavyfootstep][1]),
 				GLOB.heavyfootstep[T.heavyfootstep][2] * v,
-				TRUE,
-				GLOB.heavyfootstep[T.heavyfootstep][3] + e)
+				0.25,
+				extra_range = GLOB.heavyfootstep[T.heavyfootstep][3] + e)
 		return
 	
 	//for slimes
@@ -81,8 +81,8 @@
 		if(!ishuman(LM))
 			playsound(T, pick(GLOB.footstep[T.footstep][1]),
 				GLOB.footstep[T.footstep][2] * v,
-				TRUE,
-				GLOB.footstep[T.footstep][3] + e)
+				0.25,
+				extra_range = GLOB.footstep[T.footstep][3] + e)
 			return
 		if(ishuman(LM)) //for proper humans, they're special
 			var/mob/living/carbon/human/H = LM
@@ -91,8 +91,8 @@
 			if(H.shoes || feetCover) //are we wearing shoes
 				playsound(T, pick(GLOB.footstep[T.footstep][1]),
 					GLOB.footstep[T.footstep][2] * v,
-					TRUE,
-					GLOB.footstep[T.footstep][3] + e)
+					0.25,
+					extra_range = GLOB.footstep[T.footstep][3] + e)
 			
 			if((!H.shoes && !feetCover)) //are we NOT wearing shoes
 				if(H.dna.species.special_step_sounds)
@@ -100,5 +100,5 @@
 				else
 					playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
 						GLOB.barefootstep[T.barefootstep][2] * v,
-						TRUE,
-						GLOB.barefootstep[T.barefootstep][3] + e)
+						0.25,
+						extra_range = GLOB.barefootstep[T.barefootstep][3] + e)

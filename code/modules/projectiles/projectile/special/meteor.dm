@@ -12,8 +12,6 @@
 		forceMove(A.loc)
 		return
 	A.ex_act(EXPLODE_HEAVY)
-	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
-	for(var/mob/M in urange(10, src))
-		if(!M.stat)
-			shake_camera(M, 3, 1)
+	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, DEFAULT_SOUND_VARY)
+	shake_area(A, 3, 1, 1, 1, 1, 10)
 	qdel(src)

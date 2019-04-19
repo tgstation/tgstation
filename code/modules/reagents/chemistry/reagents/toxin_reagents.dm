@@ -950,7 +950,7 @@
 		if(M.dna.species.type != /datum/species/skeleton && M.dna.species.type != /datum/species/plasmaman) //We're so sorry skeletons, you're so misunderstood
 			if(bp)
 				bp.receive_damage(0, 0, 200)
-				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				playsound(M, get_sfx("desceration"), 50, DEFAULT_SOUND_VARY, extra_range = -1)
 				M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
 				M.say("OOF!!", forced = "bonehurtingjuice")
 			else //SUCH A LUST FOR REVENGE!!!
@@ -958,7 +958,7 @@
 				M.say("Why are we still here, just to suffer?", forced = "bonehurtingjuice")
 		else //you just want to socialize
 			if(bp)
-				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				playsound(M, get_sfx("desceration"), 50, DEFAULT_SOUND_VARY, extra_range = -1)
 				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
 				M.say("OOF!!", forced="bonehurtingjuice")
 				bp.receive_damage(200, 0, 0) //But I don't think we should

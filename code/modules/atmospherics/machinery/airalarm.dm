@@ -735,7 +735,7 @@
 					if (buildstage == 1)
 						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
 						new /obj/item/electronics/airalarm( src.loc )
-						playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+						playsound(src.loc, 'sound/items/deconstruct.ogg', 50, DEFAULT_SOUND_VARY)
 						buildstage = 0
 						update_icon()
 				return
@@ -816,7 +816,7 @@
 		return
 	obj_flags |= EMAGGED
 	visible_message("<span class='warning'>Sparks fly out of [src]!</span>", "<span class='notice'>You emag [src], disabling its safeties.</span>")
-	playsound(src, "sparks", 50, 1)
+	playsound(src, "sparks", 50, DEFAULT_SOUND_VARY)
 
 /obj/machinery/airalarm/obj_break(damage_flag)
 	..()

@@ -24,7 +24,7 @@
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		if((M.client.prefs.toggles & SOUND_MIDI) && is_station_level(M.z))
-			M.playsound_local(M, 'sound/ambience/aurora_caelus.ogg', 20, FALSE, pressure_affected = FALSE)
+			M.playsound_local(M, 'sound/ambience/aurora_caelus.ogg', 20, pressure_affected = FALSE)
 
 /datum/round_event/aurora_caelus/start()
 	for(var/area in GLOB.sortedAreas)

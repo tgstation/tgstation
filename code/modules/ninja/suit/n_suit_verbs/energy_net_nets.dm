@@ -27,9 +27,9 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/weapons/slash.ogg', 80, 1)
+			playsound(src, 'sound/weapons/slash.ogg', 80, DEFAULT_SOUND_VARY)
 		if(BURN)
-			playsound(src, 'sound/weapons/slash.ogg', 80, 1)
+			playsound(src, 'sound/weapons/slash.ogg', 80, DEFAULT_SOUND_VARY)
 
 /obj/structure/energy_net/Destroy()
 	if(!success)
@@ -59,7 +59,7 @@ It is possible to destroy the net by the occupant or someone else.
 				continue
 			H.dropItemToGround(W)
 
-	playsound(affecting, 'sound/effects/sparks4.ogg', 50, 1)
+	playsound(affecting, 'sound/effects/sparks4.ogg', 50, DEFAULT_SOUND_VARY)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location(), affecting.dir)
 
 	visible_message("[affecting] suddenly vanishes!")
@@ -69,8 +69,8 @@ It is possible to destroy the net by the occupant or someone else.
 	if(!QDELETED(master))//As long as they still exist.
 		to_chat(master, "<span class='notice'><b>SUCCESS</b>: transport procedure of [affecting] complete.</span>")
 	do_sparks(5, FALSE, affecting)
-	playsound(affecting, 'sound/effects/phasein.ogg', 25, 1)
-	playsound(affecting, 'sound/effects/sparks2.ogg', 50, 1)
+	playsound(affecting, 'sound/effects/phasein.ogg', 25, DEFAULT_SOUND_VARY)
+	playsound(affecting, 'sound/effects/sparks2.ogg', 50, DEFAULT_SOUND_VARY)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase(affecting.drop_location(), affecting.dir)
 
 /obj/structure/energy_net/attack_paw(mob/user)

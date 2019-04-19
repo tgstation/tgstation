@@ -102,7 +102,7 @@
 		if(!contents.len)
 			to_chat(user, "<span class='warning'>There is nothing left inside [src]!</span>")
 			return
-		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		playsound(loc, 'sound/weapons/slice.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 		user.visible_message("<span class='warning'>[user] begins to cut open [src].</span>",\
 			"<span class='notice'>You begin to cut open [src]...</span>")
 		if(do_after(user, 54, target = src))
@@ -113,7 +113,7 @@
 /obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(status != BODYPART_ROBOTIC)
-		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
+		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
 
@@ -121,7 +121,7 @@
 /obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
-		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
+		playsound(T, 'sound/misc/splort.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	for(var/obj/item/I in src)
 		I.forceMove(T)
 

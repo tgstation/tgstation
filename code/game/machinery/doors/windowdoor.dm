@@ -44,7 +44,7 @@
 	density = FALSE
 	QDEL_LIST(debris)
 	if(obj_integrity == 0)
-		playsound(src, "shatter", 70, 1)
+		playsound(src, "shatter", 70, DEFAULT_SOUND_VARY)
 	electronics = null
 	return ..()
 
@@ -141,7 +141,7 @@
 	if(!operating) //in case of emag
 		operating = TRUE
 	do_animate("opening")
-	playsound(src, 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(src, 'sound/machines/windowdoor.ogg', 100, DEFAULT_SOUND_VARY)
 	icon_state ="[base_state]open"
 	sleep(10)
 
@@ -164,7 +164,7 @@
 			return 0
 	operating = TRUE
 	do_animate("closing")
-	playsound(src, 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(src, 'sound/machines/windowdoor.ogg', 100, DEFAULT_SOUND_VARY)
 	icon_state = base_state
 
 	density = TRUE
@@ -178,9 +178,9 @@
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/glasshit.ogg', 90, 1)
+			playsound(src, 'sound/effects/glasshit.ogg', 90, DEFAULT_SOUND_VARY)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, 1)
+			playsound(src, 'sound/items/welder.ogg', 100, DEFAULT_SOUND_VARY)
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
@@ -209,7 +209,7 @@
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
-		playsound(src, "sparks", 75, 1)
+		playsound(src, "sparks", 75, DEFAULT_SOUND_VARY)
 		sleep(6)
 		operating = FALSE
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"

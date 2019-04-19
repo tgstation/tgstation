@@ -246,6 +246,40 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	animate(pixel_x=oldx, pixel_y=oldy, time=1)
 
 
+// Helper function to shake the screen of every client within an area given a source.
+// Used for things like explosions, where screen shake should be stronger near the source and get weaker the further you are away.
+// max_duration: longest the shake should last
+// min_duration: shortest the shake should last
+// max_strength: highest strength of the explosion
+// min_strength: lowest strength of the explosion
+// The calculated results of these parameters are passed directly to shake_camera
+// max_radius: radius which inside the max values are always used
+// min_radius: radius which outside screen is no longer shaken
+// falloff: rate of falloff; rate is inverse root and this acts as the base to the root, higher numbers means less falloff.
+// lessen_if_floating: halves the duration and strength if the mob is floating when set to true
+// This probably should be adapted to multi-z eventually
+proc/shake_area(atom/source, max_duration, min_duration, max_strength, min_strength, max_radius, min_radius, falloff = 2, lessen_if_floating = TRUE)
+	if(max_duration <= 0)	
+		return
+	
+	var/turf/source_turf = get_turf(source)
+	
+	for(var/mob/M in GLOB.player_list)
+		// Double check for client
+		var/turf/M_turf = get_turf(M)
+		if(M_turf && M_turf.z == source_turf.z)
+			var/dist = get_dist(M_turf, source_turf)
+			if(dist <= min_radius)
+				var/duration = max_duration
+				var/strength = max_strength
+				if(dist >= max_radius)
+					var/falloffmult = 1 / ROOT(falloff, dist)
+					duration = min_duration + ((max_duration - min_duration) * falloffmult)
+					strength = min_strength + ((max_strength - min_strength) * falloffmult)
+				if(lessen_if_floating && (M.movement_type & FLOATING))
+					duration *= 0.5
+					strength *= 0.5
+				shake_camera(M, duration, strength)
 
 /proc/findname(msg)
 	if(!istext(msg))

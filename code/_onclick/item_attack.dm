@@ -43,7 +43,7 @@
 		GET_COMPONENT_FROM(butchering, /datum/component/butchering, I)
 		if(butchering && butchering.butchering_enabled)
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-			playsound(loc, butchering.butcher_sound, 50, TRUE, -1)
+			playsound(loc, butchering.butcher_sound, 50, DEFAULT_SOUND_VARY, extra_range = -1)
 			if(do_mob(user, src, butchering.speed) && Adjacent(I))
 				butchering.Butcher(user, src)
 			return 1
@@ -65,9 +65,9 @@
 		return
 
 	if(!force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), DEFAULT_SOUND_VARY, extra_range = -1)
 	else if(hitsound)
-		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+		playsound(loc, hitsound, get_clamped_volume(), DEFAULT_SOUND_VARY, extra_range = -1)
 
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
@@ -117,7 +117,7 @@
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
 	if(I.force < force_threshold || I.damtype == STAMINA)
-		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
+		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), DEFAULT_SOUND_VARY, extra_range = -1)
 	else
 		return ..()
 

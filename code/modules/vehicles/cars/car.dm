@@ -29,7 +29,7 @@
 	if(world.time < last_enginesound_time + engine_sound_length)
 		return
 	last_enginesound_time = world.time
-	playsound(src, engine_sound, 100, TRUE)
+	playsound(src, engine_sound, 100, DEFAULT_SOUND_VARY)
 	return TRUE
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)

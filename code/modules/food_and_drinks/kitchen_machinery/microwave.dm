@@ -138,7 +138,7 @@
 		var/obj/item/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner", clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent("cleaner", clean_spray.amount_per_transfer_from_this,1)
-			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+			playsound(loc, 'sound/effects/spray3.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -6)
 			user.visible_message("[user] has cleaned \the [src].", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
 			update_icon()
@@ -280,7 +280,7 @@
 
 /obj/machinery/microwave/proc/muck()
 	turn_on()
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, DEFAULT_SOUND_VARY)
 	dirty_anim_playing = TRUE
 	update_icon()
 	loop(MICROWAVE_MUCK, 4)

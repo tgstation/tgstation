@@ -125,7 +125,7 @@
 			log_combat(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
 			L.visible_message("<span class='warning'>A blue light washes over [L], causing [L.p_them()] to briefly glow!</span>", \
 			"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
-		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
+		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, DEFAULT_SOUND_VARY)
 
 		if(has_holy_water)
 			L.reagents.remove_reagent("holywater", 1000)
@@ -154,7 +154,7 @@
 		to_chat(ranged_ability_user, "<span class='brass'>You release the light of Ratvar!</span>")
 		clockwork_say(ranged_ability_user, text2ratvar("Purge all untruths and honor Engine!"))
 		log_combat(ranged_ability_user, U, "fired at with Kindle")
-		playsound(ranged_ability_user, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
+		playsound(ranged_ability_user, 'sound/magic/blink.ogg', 50, DEFAULT_SOUND_VARY, 0.5)
 		var/obj/item/projectile/kindle/A = new(T)
 		A.preparePixelProjectile(target, caller, params)
 		A.fire()
@@ -183,7 +183,7 @@
 		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
 			return BULLET_ACT_HIT
 		var/atom/O = L.anti_magic_check()
-		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
+		playsound(L, 'sound/magic/fireball.ogg', 50, DEFAULT_SOUND_VARY, 1.25)
 		if(O)
 			if(isitem(O))
 				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>", \

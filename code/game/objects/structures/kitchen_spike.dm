@@ -71,7 +71,7 @@
 				return
 			if(user.pulling != L)
 				return
-			playsound(src.loc, 'sound/effects/splat.ogg', 25, 1)
+			playsound(src.loc, 'sound/effects/splat.ogg', 25, DEFAULT_SOUND_VARY)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.forceMove(drop_location())
 			L.emote("scream")

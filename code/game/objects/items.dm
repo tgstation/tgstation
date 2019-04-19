@@ -461,7 +461,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	src.add_fingerprint(user)
 
-	playsound(loc, src.hitsound, 30, 1, -1)
+	playsound(loc, src.hitsound, 30, DEFAULT_SOUND_VARY, extra_range = -1)
 
 	user.do_attack_animation(M)
 
@@ -763,7 +763,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(islist(usesound))
 			played_sound = pick(usesound)
 
-		playsound(target, played_sound, volume, 1)
+		playsound(target, played_sound, volume, DEFAULT_SOUND_VARY)
 
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)

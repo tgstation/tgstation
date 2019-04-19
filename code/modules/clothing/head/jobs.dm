@@ -21,7 +21,7 @@
 	sleep(20)
 	user.visible_message("<span class='suicide'>[user] climbs into an imaginary oven!</span>")
 	user.say("BOOORK!", forced = "chef hat suicide")
-	playsound(user, 'sound/machines/ding.ogg', 50, 1)
+	playsound(user, 'sound/machines/ding.ogg', 50, DEFAULT_SOUND_VARY)
 	return(FIRELOSS)
 
 //Captain

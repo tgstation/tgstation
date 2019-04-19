@@ -82,7 +82,7 @@
 			prey = pick(meals)
 			to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do, heretic.\"</font></span>\n\
 			<span class='userdanger'>You feel something massive turn its crushing focus to you...</span>")
-			L.playsound_local(prey, 'sound/effects/ratvar_reveal.ogg', 100, FALSE, pressure_affected = FALSE)
+			L.playsound_local(prey, 'sound/effects/ratvar_reveal.ogg', 100, pressure_affected = FALSE)
 	else
 		if((!istype(prey, /obj/singularity/narsie) && prob(10) && LAZYLEN(meals) > 1) || prey.z != z || !(prey in meals))
 			if(is_servant_of_ratvar(prey))

@@ -223,11 +223,11 @@
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
-		playsound(src, dry_fire_sound, 30, TRUE)
+		playsound(src, dry_fire_sound, 30, DEFAULT_SOUND_VARY)
 
 /obj/item/gun/ballistic/revolver/russian/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	add_fingerprint(user)
-	playsound(src, dry_fire_sound, 30, TRUE)
+	playsound(src, dry_fire_sound, 30, DEFAULT_SOUND_VARY)
 	user.visible_message("<span class='danger'>[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot.</span>", "<span class='danger'>\The [src]'s anti-combat mechanism prevents you from firing it at the same time!</span>")
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)

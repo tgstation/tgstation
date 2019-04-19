@@ -552,11 +552,11 @@
 	if(mode == TURRET_STUN)
 		use_power(reqpower)
 		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, 1)
+		playsound(loc, stun_projectile_sound, 75, DEFAULT_SOUND_VARY)
 	else
 		use_power(reqpower * 2)
 		A = new lethal_projectile(T)
-		playsound(loc, lethal_projectile_sound, 75, 1)
+		playsound(loc, lethal_projectile_sound, 75, DEFAULT_SOUND_VARY)
 
 
 	//Shooting Code:

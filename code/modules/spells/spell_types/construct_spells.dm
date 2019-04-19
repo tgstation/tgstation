@@ -26,7 +26,7 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/area_conversion/cast(list/targets, mob/user = usr)
-	playsound(get_turf(user), 'sound/items/welder.ogg', 75, 1)
+	playsound(get_turf(user), 'sound/items/welder.ogg', 75, DEFAULT_SOUND_VARY)
 	for(var/turf/T in targets)
 		T.narsie_act(FALSE, TRUE, 100 - (get_dist(user, T) * 25))
 
@@ -207,8 +207,8 @@
 		return
 
 	to_chat(target, "<span class='userdanger'>A freezing darkness surrounds you...</span>")
-	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
-	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
+	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, DEFAULT_SOUND_VARY)
+	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, DEFAULT_SOUND_VARY)
 	target.become_blind(ABYSSAL_GAZE_BLIND)
 	addtimer(CALLBACK(src, .proc/cure_blindness, target), 40)
 	target.adjust_bodytemperature(-200)
@@ -266,7 +266,7 @@
 
 	S.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
 	S.faction = list("cult")
-	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, 1)
+	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, DEFAULT_SOUND_VARY)
 	new /obj/effect/temp_visual/cult/sac(get_turf(S))
 
 /obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)

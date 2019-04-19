@@ -223,7 +223,7 @@
 		processing = TRUE
 		update_icon()
 		updateUsrDialog()
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/blender.ogg', 50, DEFAULT_SOUND_VARY)
 		use_power(S*30)
 		sleep(S+15/productivity)
 		processing = FALSE

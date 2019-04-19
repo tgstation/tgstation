@@ -187,7 +187,7 @@
 				if(!noglass)
 					if(!glass)
 						if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
-							playsound(src, 'sound/items/crowbar.ogg', 100, 1)
+							playsound(src, 'sound/items/crowbar.ogg', 100, DEFAULT_SOUND_VARY)
 							user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 												"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 							if(do_after(user, 40, target = src))
@@ -206,7 +206,7 @@
 						if(istype(G, /obj/item/stack/sheet/mineral) && G.sheettype)
 							var/M = G.sheettype
 							if(G.get_amount() >= 2)
-								playsound(src, 'sound/items/crowbar.ogg', 100, 1)
+								playsound(src, 'sound/items/crowbar.ogg', 100, DEFAULT_SOUND_VARY)
 								user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 												 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 								if(do_after(user, 40, target = src))

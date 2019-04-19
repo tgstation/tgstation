@@ -509,7 +509,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/weapons/egloves.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -527,7 +527,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			return
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
-		playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+		playsound(src, 'sound/weapons/egloves.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 		L.Sleeping(1200)
 		log_combat(user, L, "put to sleep")
 	else
@@ -547,7 +547,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
 		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
-			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+			playsound(src, 'sound/weapons/cablecuff.ogg', 30, DEFAULT_SOUND_VARY, extra_range = -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))

@@ -211,7 +211,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/datum/disease/D = new /datum/disease/heart_failure
 		M.ForceContractDisease(D)
 		to_chat(M, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
-		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
+		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 90)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -1131,7 +1131,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
-		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
+		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, DEFAULT_SOUND_VARY)
 	return ..()
 
 /datum/reagent/consumable/ethanol/erikasurprise

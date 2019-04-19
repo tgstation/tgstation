@@ -9,7 +9,7 @@
 /datum/outputs/New()
 	vfx = mutable_appearance(vfx[1],vfx[2],vfx[3])
 
-/datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, last_played_time)
+/datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, playback_rate, falloff, channel = 0, pressure_affected = TRUE, last_played_time)
 	var/sound/sound_output
 	//Pick sound
 	if(islist(sounds))
@@ -25,10 +25,10 @@
 		sound_output.volume = vol
 
 		if(vary)
-			if(frequency)
-				sound_output.frequency = frequency
-			else
-				sound_output.frequency = get_rand_frequency()
+			var/low = playback_rate - vary
+			var/high = playback_rate + vary
+			var/random_offset = (high - low) * rand()
+			playback_rate = low + random_offset
 
 		if(isturf(turf_source))
 			var/turf/T = get_turf(receiver)
@@ -69,10 +69,10 @@
 			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
 	if(world.time >= last_played_time + cooldown)
-		receiver.display_output(sound_output, vfx, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+		receiver.display_output(sound_output, vfx, text, turf_source, vol, vary, playback_rate, falloff, channel, pressure_affected)
 		. = TRUE //start cooling down text
 	else
-		receiver.display_output(sound_output, vfx, , turf_source, vol, vary, frequency, falloff, channel, pressure_affected) //changing the text takes more cpu time than a single if check
+		receiver.display_output(sound_output, vfx, , turf_source, vol, vary, playback_rate, falloff, channel, pressure_affected) //changing the text takes more cpu time than a single if check
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."

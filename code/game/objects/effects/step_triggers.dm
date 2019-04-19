@@ -178,7 +178,7 @@
 /obj/effect/step_trigger/sound_effect
 	var/sound //eg. path to the sound, inside '' eg: 'growl.ogg'
 	var/volume = 100
-	var/freq_vary = 1 //Should the frequency of the sound vary?
+	var/freq_vary = 0.25 //Should the frequency of the sound vary? By how much?
 	var/extra_range = 0 // eg World.view = 7, extra_range = 1, 7+1 = 8, 8 turfs radius
 	var/happens_once = 0
 	var/triggerer_only = 0 //Whether the triggerer is the only person who hears this

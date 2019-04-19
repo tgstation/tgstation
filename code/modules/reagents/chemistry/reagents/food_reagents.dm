@@ -731,5 +731,5 @@
 		E.adjust_charge(5*REM)
 	else if(prob(25)) //scp13 optimization
 		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
-		playsound(M, "sparks", 50, 1)
+		playsound(M, "sparks", 50, DEFAULT_SOUND_VARY)
 	return ..()

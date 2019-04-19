@@ -366,7 +366,7 @@
 /datum/species/golem/sand/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H))
 		if(P.flag == "bullet" || P.flag == "bomb")
-			playsound(H, 'sound/effects/shovel_dig.ogg', 70, 1)
+			playsound(H, 'sound/effects/shovel_dig.ogg', 70, DEFAULT_SOUND_VARY)
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
 			return BULLET_ACT_BLOCK
@@ -387,7 +387,7 @@
 	special_names = list("Lens", "Prism", "Fiber", "Bead")
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
-	playsound(H, "shatter", 70, 1)
+	playsound(H, "shatter", 70, DEFAULT_SOUND_VARY)
 	H.visible_message("<span class='danger'>[H] shatters!</span>")
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
@@ -428,7 +428,7 @@
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(H))
-	playsound(get_turf(H), "sparks", 50, 1)
+	playsound(get_turf(H), "sparks", 50, DEFAULT_SOUND_VARY)
 	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 
@@ -486,7 +486,7 @@
 /datum/action/innate/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
 	H.visible_message("<span class='warning'>[H] starts vibrating!</span>", "<span class='danger'>You start charging your bluespace core...</span>")
-	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, 1)
+	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, DEFAULT_SOUND_VARY)
 	addtimer(CALLBACK(src, .proc/teleport, H), 15)
 
 /datum/action/innate/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
@@ -567,7 +567,7 @@
 	if(!active)
 		if(world.time > last_honk + honkooldown)
 			active = 1
-			playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, 1)
+			playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, DEFAULT_SOUND_VARY)
 			last_honk = world.time
 			honkooldown = rand(20, 80)
 			active = null
@@ -863,27 +863,27 @@
 			return
 		if(M == H)
 			H.show_message("<span class='narsiesmall'>You cringe with pain as your body rings around you!</span>", 2)
-			H.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
+			H.playsound_local(H, 'sound/effects/gong.ogg', 90, DEFAULT_SOUND_VARY)
 			H.soundbang_act(2, 0, 100, 1)
 			H.jitteriness += 7
 		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))
 		switch(distance)
 			if(0 to 1)
 				M.show_message("<span class='narsiesmall'>GONG!</span>", 2)
-				M.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
+				M.playsound_local(H, 'sound/effects/gong.ogg', 90, DEFAULT_SOUND_VARY)
 				M.soundbang_act(1, 0, 30, 3)
 				M.confused += 10
 				M.jitteriness += 4
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
 			if(2 to 3)
 				M.show_message("<span class='cult'>GONG!</span>", 2)
-				M.playsound_local(H, 'sound/effects/gong.ogg', 75, TRUE)
+				M.playsound_local(H, 'sound/effects/gong.ogg', 75, DEFAULT_SOUND_VARY) 
 				M.soundbang_act(1, 0, 15, 2)
 				M.jitteriness += 3
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
 			else
 				M.show_message("<span class='warning'>GONG!</span>", 2)
-				M.playsound_local(H, 'sound/effects/gong.ogg', 50, TRUE)
+				M.playsound_local(H, 'sound/effects/gong.ogg', 50, DEFAULT_SOUND_VARY)
 
 
 /datum/species/golem/cardboard //Faster but weaker, can also make new shells on its own

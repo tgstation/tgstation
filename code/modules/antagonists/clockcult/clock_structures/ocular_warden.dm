@@ -68,9 +68,9 @@
 						else
 							R.reveal(10)
 					if(prob(50))
-						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot1.ogg',75 * get_efficiency_mod(),1)
+						L.playsound_local(null, 'sound/machines/clockcult/ocularwarden-dot1.ogg', 75 * get_efficiency_mod(), DEFAULT_SOUND_VARY)
 					else
-						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot2.ogg',75 * get_efficiency_mod(),1)
+						L.playsound_local(null, 'sound/machines/clockcult/ocularwarden-dot2.ogg', 75 * get_efficiency_mod(), DEFAULT_SOUND_VARY)
 					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar'Sian cultists take additional damage
 					if(GLOB.ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
@@ -85,7 +85,7 @@
 	if(!target)
 		if(validtargets.len)
 			target = pick(validtargets)
-			playsound(src,'sound/machines/clockcult/ocularwarden-target.ogg',50,1)
+			playsound(src,'sound/machines/clockcult/ocularwarden-target.ogg',50,DEFAULT_SOUND_VARY)
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			if(isliving(target))
 				var/mob/living/L = target

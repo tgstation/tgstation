@@ -228,7 +228,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/proc/cuff(mob/living/carbon/C)
 	mode = BOT_ARREST
-	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+	playsound(src, 'sound/weapons/cablecuff.ogg', 30, DEFAULT_SOUND_VARY, extra_range = -2)
 	C.visible_message("<span class='danger'>[src] is trying to put zipties on [C]!</span>",\
 						"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 	addtimer(CALLBACK(src, .proc/attempt_handcuff, C), 60)
@@ -244,7 +244,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C)
 	var/judgement_criteria = judgement_criteria()
-	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/weapons/egloves.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	icon_state = "secbot-c"
 	addtimer(CALLBACK(src, .proc/update_icon), 2)
 	var/threat = 5

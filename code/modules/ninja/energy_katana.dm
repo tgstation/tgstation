@@ -38,15 +38,15 @@
 		jaunt.Teleport(user, target)
 	if(proximity_flag && (isobj(target) || issilicon(target)))
 		spark_system.start()
-		playsound(user, "sparks", 50, 1)
-		playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
+		playsound(user, "sparks", 50, DEFAULT_SOUND_VARY)
+		playsound(user, 'sound/weapons/blade1.ogg', 50, DEFAULT_SOUND_VARY)
 		target.emag_act(user)
 
 /obj/item/energy_katana/pickup(mob/living/user)
 	. = ..()
 	jaunt.Grant(user, src)
 	user.update_icons()
-	playsound(src, 'sound/items/unsheath.ogg', 25, 1)
+	playsound(src, 'sound/items/unsheath.ogg', 25, DEFAULT_SOUND_VARY)
 
 /obj/item/energy_katana/dropped(mob/user)
 	. = ..()
@@ -74,7 +74,7 @@
 
 	if(doSpark)
 		spark_system.start()
-		playsound(get_turf(src), "sparks", 50, 1)
+		playsound(get_turf(src), "sparks", 50, DEFAULT_SOUND_VARY)
 
 	var/msg = ""
 

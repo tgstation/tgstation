@@ -67,7 +67,7 @@
 	eminence.key = user.key
 	hierophant_message("<span class='bold large_brass'>Ratvar has directly assigned the Eminence!</span>")
 	for(var/mob/M in servants_and_ghosts())
-		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50, FALSE)
+		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50)
 
 /obj/structure/destructible/clockwork/eminence_spire/proc/nomination(mob/living/nominee) //A user is nominating themselves or ghosts to become Eminence
 	var/nomination_choice = alert(nominee, "Who would you like to nominate?", "Eminence Nomination", "Nominate Yourself", "Nominate Ghosts", "Cancel")
@@ -83,7 +83,7 @@
 			eminence_nominee = "ghosts"
 			hierophant_message("<span class='brass'><b>[nominee] proposes selecting an Eminence from ghosts!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
 	for(var/mob/M in servants_and_ghosts())
-		M.playsound_local(M, 'sound/machines/clockcult/ocularwarden-target.ogg', 50, FALSE)
+		M.playsound_local(M, 'sound/machines/clockcult/ocularwarden-target.ogg', 50)
 	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 300, TIMER_STOPPABLE)
 
 /obj/structure/destructible/clockwork/eminence_spire/proc/objection(mob/living/wright)
@@ -91,7 +91,7 @@
 		return
 	hierophant_message("<span class='brass'><b>[wright] objects to the nomination of [eminence_nominee]!</b> The eminence spire has been reset.</span>")
 	for(var/mob/M in servants_and_ghosts())
-		M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50, FALSE)
+		M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50)
 	eminence_nominee = null
 	deltimer(selection_timer)
 
@@ -100,7 +100,7 @@
 		return
 	hierophant_message("<span class='brass'><b>[eminence_nominee] has withdrawn their nomination!</b> The eminence spire has been reset.</span>")
 	for(var/mob/M in servants_and_ghosts())
-		M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50, FALSE)
+		M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50)
 	eminence_nominee = null
 	deltimer(selection_timer)
 
@@ -111,7 +111,7 @@
 		if(!eminence_nominee.client || !eminence_nominee.mind)
 			hierophant_message("<span class='brass'><b>[eminence_nominee] somehow lost their sentience!</b> The eminence spire has been reset.</span>")
 			for(var/mob/M in servants_and_ghosts())
-				M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50, FALSE)
+				M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50)
 			eminence_nominee = null
 			return
 		playsound(eminence_nominee, 'sound/machines/clockcult/ark_damage.ogg', 50, FALSE)
@@ -130,7 +130,7 @@
 		kingmaking = FALSE
 		if(!LAZYLEN(candidates))
 			for(var/mob/M in servants_and_ghosts())
-				M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50, FALSE)
+				M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50)
 			hierophant_message("<span class='brass'><b>No ghosts accepted the offer!</b> The eminence spire has been reset.</span>")
 			eminence_nominee = null
 			return
@@ -141,5 +141,5 @@
 		eminence.key = eminence_nominee.key
 		hierophant_message("<span class='bold large_brass'>A ghost has ascended into the Eminence!</span>")
 	for(var/mob/M in servants_and_ghosts())
-		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50, FALSE)
+		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50)
 	eminence_nominee = null

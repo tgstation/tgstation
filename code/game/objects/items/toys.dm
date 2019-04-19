@@ -206,7 +206,7 @@
 		user.show_message("<span class='warning'>*click*</span>", 2)
 		playsound(src, 'sound/weapons/gun_dry_fire.ogg', 30, TRUE)
 		return
-	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
+	playsound(user, 'sound/weapons/gunshot.ogg', 100, DEFAULT_SOUND_VARY)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
@@ -248,7 +248,7 @@
 	active = !( active )
 	if (active)
 		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
-		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 20, DEFAULT_SOUND_VARY)
 		if(hacked)
 			icon_state = "swordrainbow"
 			item_state = "swordrainbow"
@@ -258,7 +258,7 @@
 		w_class = WEIGHT_CLASS_BULKY
 	else
 		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 20, DEFAULT_SOUND_VARY)
 		icon_state = "sword0"
 		item_state = "sword0"
 		w_class = WEIGHT_CLASS_SMALL
@@ -387,7 +387,7 @@
 	new ash_type(loc)
 	visible_message("<span class='warning'>[src] explodes!</span>",
 		"<span class='italics'>You hear a snap!</span>")
-	playsound(src, 'sound/effects/snap.ogg', 50, 1)
+	playsound(src, 'sound/effects/snap.ogg', 50, DEFAULT_SOUND_VARY)
 	qdel(src)
 
 /obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
@@ -437,7 +437,7 @@
 		to_chat(user, "<span class='notice'>You play with [src].</span>")
 		timer = world.time + cooldown
 		if(!quiet)
-			playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
+			playsound(user, 'sound/mecha/mechstep.ogg', 20, DEFAULT_SOUND_VARY)
 	else
 		. = ..()
 
@@ -531,7 +531,7 @@
 	if(!cooldown)
 		var/list/messages = generate_messages()
 		activation_message(user)
-		playsound(loc, 'sound/machines/click.ogg', 20, 1)
+		playsound(loc, 'sound/machines/click.ogg', 20, DEFAULT_SOUND_VARY)
 
 		spawn(0)
 			for(var/message in messages)
@@ -631,7 +631,7 @@
 
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
+	playsound(src, 'sound/items/cardshuffle.ogg', 50, DEFAULT_SOUND_VARY)
 	return BRUTELOSS
 
 /obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
@@ -712,7 +712,7 @@
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
 		cards = shuffle(cards)
-		playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
+		playsound(src, 'sound/items/cardshuffle.ogg', 50, DEFAULT_SOUND_VARY)
 		user.visible_message("[user] shuffles the deck.", "<span class='notice'>You shuffle the deck.</span>")
 		cooldown = world.time
 
@@ -1017,10 +1017,8 @@
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
-		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
-		for(var/mob/M in urange(10, src))
-			if(!M.stat && !isAI(M))
-				shake_camera(M, 3, 1)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 40, DEFAULT_SOUND_VARY)
+		shake_area(src, 3, 3, 1, 1, 1, 10)
 		qdel(src)
 
 /*
@@ -1039,11 +1037,7 @@
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
 		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0)
-		for(var/mob/M in urange(10, src)) // Checks range
-			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
-				sleep(8) // Short delay to match up with the explosion sound
-				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.
-
+		shake_area(src, 2, 2, 1, 1, 10, 10)
 	else
 		to_chat(user, "<span class='alert'>Nothing happens.</span>")
 
@@ -1065,7 +1059,7 @@
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
-		playsound(src, 'sound/effects/pop.ogg', 20, 1)
+		playsound(src, 'sound/effects/pop.ogg', 20, DEFAULT_SOUND_VARY)
 		qdel(src)
 
 /*
@@ -1143,7 +1137,7 @@
 		audible_message("<span class='danger'>[icon2html(src, viewers(src))] Hiss!</span>")
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
-		playsound(get_turf(src), chosen_sound, 50, 1)
+		playsound(get_turf(src), chosen_sound, 50, DEFAULT_SOUND_VARY)
 		spawn(45)
 			if(src)
 				icon_state = "[initial(icon_state)]"
@@ -1184,7 +1178,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
 		to_chat(user, "<span class='notice'>[src] says \"[toysay]\"</span>")
-		playsound(user, toysound, 20, 1)
+		playsound(user, toysound, 20, DEFAULT_SOUND_VARY)
 
 /obj/item/toy/figure/cmo
 	name = "Chief Medical Officer action figure"

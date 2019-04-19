@@ -53,7 +53,7 @@
 			//we're below minimum, turn off
 			status = 0
 			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(loc, "sparks", 75, DEFAULT_SOUND_VARY, extra_range = -1)
 
 
 /obj/item/melee/baton/update_icon()
@@ -101,7 +101,7 @@
 	if(cell && cell.charge > hitcost)
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, 1, -1)
+		playsound(loc, "sparks", 75, DEFAULT_SOUND_VARY, extra_range = -1)
 	else
 		status = 0
 		if(!cell)
@@ -147,7 +147,7 @@
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
+			playsound(L, 'sound/weapons/genhit.ogg', 50, DEFAULT_SOUND_VARY)
 			return 0
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
@@ -167,7 +167,7 @@
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		log_combat(user, L, "stunned")
 
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L

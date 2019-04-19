@@ -290,22 +290,22 @@
 		if(buckled == M)
 			if(prob(60))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, DEFAULT_SOUND_VARY, extra_range = -1)
 
 			else
 				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>")
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 
 				discipline_slime(M)
 
 		else
 			if(prob(30))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [buckled]!</span>")
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, DEFAULT_SOUND_VARY, extra_range = -1)
 
 			else
 				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [buckled]!</span>")
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 
 				discipline_slime(M)
 	else
@@ -368,7 +368,7 @@
 				hasFound = TRUE
 			if(applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
 				to_chat(user, "<span class='notice'>You feed the slime as many of the extracts from the bag as you can, and it mutates!</span>")
-				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
+				playsound(src, 'sound/effects/attackblob.ogg', 50, DEFAULT_SOUND_VARY)
 				spawn_corecross()
 				hasOutput = TRUE
 				break
@@ -377,14 +377,14 @@
 				to_chat(user, "<span class='warning'>There are no extracts in the bag that this slime will accept!</span>")
 			else
 				to_chat(user, "<span class='notice'>You feed the slime some extracts from the bag.</span>")
-				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
+				playsound(src, 'sound/effects/attackblob.ogg', 50, DEFAULT_SOUND_VARY)
 		return
 	..()
 
 /mob/living/simple_animal/slime/proc/spawn_corecross()
 	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
 	visible_message("<span class='danger'>[src] shudders, its mutated core consuming the rest of its body!</span>")
-	playsound(src, 'sound/magic/smoke.ogg', 50, 1)
+	playsound(src, 'sound/magic/smoke.ogg', 50, DEFAULT_SOUND_VARY)
 	var/crosspath
 	for(var/X in crossbreeds)
 		var/obj/item/slimecross/S = X

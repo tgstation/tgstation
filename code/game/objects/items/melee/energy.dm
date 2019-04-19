@@ -56,7 +56,7 @@
 		if(C.wear_mask)
 			in_mouth = ", barely missing [C.p_their()] nose"
 	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.</span>"
-	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+	playsound(loc, hitsound, get_clamped_volume(), DEFAULT_SOUND_VARY, extra_range = -1)
 	add_fingerprint(user)
 
 /obj/item/melee/transforming/energy/axe

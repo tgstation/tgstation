@@ -23,7 +23,7 @@
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
-	playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, DEFAULT_SOUND_VARY)
 	push_over()
 
 /obj/item/cardboard_cutout/proc/push_over()
@@ -52,9 +52,9 @@
 	if(I.item_flags & NOBLUDGEON)
 		return
 	if(!I.force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), DEFAULT_SOUND_VARY, extra_range = -1)
 	else if(I.hitsound)
-		playsound(loc, I.hitsound, get_clamped_volume(), 1, -1)
+		playsound(loc, I.hitsound, get_clamped_volume(), DEFAULT_SOUND_VARY, extra_range = -1)
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -71,7 +71,7 @@
 	if(istype(P, /obj/item/projectile/bullet/reusable))
 		P.on_hit(src, 0)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
-	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
+	playsound(src, 'sound/weapons/slice.ogg', 50, DEFAULT_SOUND_VARY)
 	if(prob(P.damage))
 		push_over()
 	return BULLET_ACT_HIT

@@ -52,7 +52,7 @@
 
 
 //after spawning
-	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
+	playsound(src, 'sound/weapons/emitter.ogg', 50, DEFAULT_SOUND_VARY)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
 	addtimer(CALLBACK(src, .proc/spawn_hunters), 6000) //10 minutes
 	role_name = "fugitive hunter"

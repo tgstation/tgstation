@@ -187,7 +187,7 @@
 		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
 
 		A.visible_message("<span class = 'danger'><B>[A] throws [D]!</B></span>")
-		playsound(A.loc, "swing_hit", 50, 1)
+		playsound(A.loc, "swing_hit", 50, DEFAULT_SOUND_VARY)
 		var/turf/T = get_edge_target_turf(A, A.dir)
 		if (T && isturf(T))
 			if (!D.stat)
@@ -285,7 +285,7 @@
 				fluff = "atomic [fluff]"
 
 		A.visible_message("<span class = 'danger'><B>[A] [fluff] [D]!</B></span>")
-		playsound(A.loc, "swing_hit", 50, 1)
+		playsound(A.loc, "swing_hit", 50, DEFAULT_SOUND_VARY)
 		if (!D.stat)
 			D.emote("scream")
 			D.Paralyze(40)
@@ -329,7 +329,7 @@
 
 		A.visible_message("<span class = 'danger'><b>[A] headbutts [D]!</b></span>")
 		D.adjustBruteLoss(rand(10,20))
-		playsound(A.loc, "swing_hit", 50, 1)
+		playsound(A.loc, "swing_hit", 50, DEFAULT_SOUND_VARY)
 		D.Unconscious(20)
 	log_combat(A, D, "headbutted")
 
@@ -341,7 +341,7 @@
 	A.setDir(turn(A.dir, 90))
 
 	A.visible_message("<span class = 'danger'><B>[A] roundhouse-kicks [D]!</B></span>")
-	playsound(A.loc, "swing_hit", 50, 1)
+	playsound(A.loc, "swing_hit", 50, DEFAULT_SOUND_VARY)
 	D.adjustBruteLoss(rand(10,20))
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
@@ -403,7 +403,7 @@
 		A.forceMove(D.loc)
 
 		A.visible_message("<span class = 'danger'><B>[A] leg-drops [D]!</B></span>")
-		playsound(A.loc, "swing_hit", 50, 1)
+		playsound(A.loc, "swing_hit", 50, DEFAULT_SOUND_VARY)
 		A.emote("scream")
 
 		if (falling == 1)

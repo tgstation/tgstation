@@ -55,8 +55,6 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
 
-	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range)
-
 	//Zlevel specific bomb cap multiplier
 	var/cap_multiplier = SSmapping.level_trait(epicenter.z, ZTRAIT_BOMBCAP_MULTIPLIER)
 	if (isnull(cap_multiplier))
@@ -105,31 +103,14 @@ GLOBAL_LIST_EMPTY(explosions)
 	far_dist += devastation_range * 20
 
 	if(!silent)
-		var/frequency = get_rand_frequency()
-		var/sound/explosion_sound = sound(get_sfx("explosion"))
-		var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
+		//Used for near sound effect, max_range + the view distance - 2
+		var/inner_range = round(max_range + world.view - 2, 1)
 
-		for(var/mob/M in GLOB.player_list)
-			// Double check for client
-			var/turf/M_turf = get_turf(M)
-			if(M_turf && M_turf.z == z0)
-				var/dist = get_dist(M_turf, epicenter)
-				var/baseshakeamount
-				if(orig_max_distance - dist > 0)
-					baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
-				// If inside the blast radius + world.view - 2
-				if(dist <= round(max_range + world.view - 2, 1))
-					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
-					if(baseshakeamount > 0)
-						shake_camera(M, 25, CLAMP(baseshakeamount, 0, 10))
-				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
-				else if(dist <= far_dist)
-					var/far_volume = CLAMP(far_dist, 30, 50) // Volume is based on explosion size and dist
-					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
-					if(baseshakeamount > 0)
-						shake_camera(M, 10, CLAMP(baseshakeamount*0.25, 0, 2.5))
-			EX_PREPROCESS_CHECK_TICK
+		playsound(epicenter, get_sfx("explosion"), 100, DEFAULT_SOUND_VARY, 1, inner_range, "sound/effects/explosionfar.ogg", far_dist, (inner_range * 1.5))
+
+		shake_area(epicenter, 25, 10, 10, 0.1, (inner_range * 0.5), far_dist)
+
+		EX_PREPROCESS_CHECK_TICK
 
 	//postpone processing for a bit
 	var/postponeCycles = max(round(devastation_range/8),1)

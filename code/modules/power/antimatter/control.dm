@@ -74,7 +74,7 @@
 
 
 /obj/machinery/power/am_control_unit/proc/produce_power()
-	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+	playsound(src.loc, 'sound/effects/bang.ogg', 25, DEFAULT_SOUND_VARY)
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
 	if(core_power <= 0)
 		return 0//Something is wrong
@@ -95,7 +95,7 @@
 		for(var/obj/machinery/am_shielding/AMS in linked_cores)
 			AMS.stability -= core_damage
 			AMS.check_stability(1)
-		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/bang.ogg', 50, DEFAULT_SOUND_VARY)
 	return
 
 
@@ -197,12 +197,12 @@
 		if(BRUTE)
 			if(sound_effect)
 				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, DEFAULT_SOUND_VARY)
 				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+					playsound(loc, 'sound/weapons/tap.ogg', 50, DEFAULT_SOUND_VARY)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder.ogg', 100, DEFAULT_SOUND_VARY)
 		else
 			return
 	if(damage >= 20)

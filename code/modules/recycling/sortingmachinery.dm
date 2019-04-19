@@ -9,7 +9,7 @@
 	var/sortTag = 0
 
 /obj/structure/bigDelivery/interact(mob/user)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, DEFAULT_SOUND_VARY)
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
@@ -30,7 +30,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
-			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
+			playsound(loc, 'sound/machines/twobeep.ogg', 100, DEFAULT_SOUND_VARY, 2)
 
 	else if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
@@ -67,7 +67,7 @@
 			return
 		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
 		O.forceMove(loc)
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, DEFAULT_SOUND_VARY)
 		qdel(src)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
@@ -92,7 +92,7 @@
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, DEFAULT_SOUND_VARY)
 	qdel(src)
 
 /obj/item/smallDelivery/attack_self_tk(mob/user)
@@ -106,7 +106,7 @@
 		for(var/X in contents)
 			var/atom/movable/AM = X
 			AM.forceMove(src.loc)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, DEFAULT_SOUND_VARY)
 	qdel(src)
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
@@ -117,7 +117,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
-			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
+			playsound(loc, 'sound/machines/twobeep.ogg', 100, DEFAULT_SOUND_VARY, 2)
 
 	else if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
@@ -166,7 +166,7 @@
 		to_chat(user, "<span class='notice'>*HELL*</span>")//lizard nerf
 	else
 		to_chat(user, "<span class='notice'>*HEAVEN*</span>")
-	playsound(src, 'sound/machines/twobeep.ogg', 100, 1)
+	playsound(src, 'sound/machines/twobeep.ogg', 100, DEFAULT_SOUND_VARY, 2)
 	return BRUTELOSS
 
 /obj/item/destTagger/proc/openwindow(mob/user)

@@ -108,8 +108,8 @@
 		var/mob/living/carbon/human/jill = loc
 		jill.visible_message("<span class='boldwarning'>[src] goes off in [jill]'s mouth, ripping [jill.p_their()] head apart!</span>", "<span class='userdanger'>[src] goes off!</span>")
 		jill.emote("scream")
-		playsound(src, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
-		playsound(src, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
+		playsound(src, 'sound/effects/snap.ogg', 75, DEFAULT_SOUND_VARY, 0.5)
+		playsound(src, 'sound/effects/splat.ogg', 50, DEFAULT_SOUND_VARY, 0.5)
 		jill.apply_damage(9999, BRUTE, BODY_ZONE_HEAD)
 		jill.death() //just in case, for some reason, they're still alive
 		flash_color(jill, flash_color = "#FF0000", flash_time = 100)

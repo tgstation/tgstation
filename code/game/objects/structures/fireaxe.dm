@@ -69,11 +69,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(broken)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, DEFAULT_SOUND_VARY)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, DEFAULT_SOUND_VARY)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, DEFAULT_SOUND_VARY)
 
 /obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(open)
@@ -86,7 +86,7 @@
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		update_icon()
 		broken = TRUE
-		playsound(src, 'sound/effects/glassbr3.ogg', 100, 1)
+		playsound(src, 'sound/effects/glassbr3.ogg', 100, DEFAULT_SOUND_VARY)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
 
@@ -167,7 +167,7 @@
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, "<span class = 'caution'> Resetting circuitry...</span>")
-	playsound(src, 'sound/machines/locktoggle.ogg', 50, 1)
+	playsound(src, 'sound/machines/locktoggle.ogg', 50, DEFAULT_SOUND_VARY)
 	if(do_after(user, 20, target = src))
 		to_chat(user, "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
 		locked = !locked

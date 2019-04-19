@@ -412,7 +412,7 @@
 			clash_target = null
 			P.clashing = FALSE
 			return
-		playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
+		playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, DEFAULT_SOUND_VARY, 2)
 		sleep(2.4)
 		if(QDELETED(src))
 			P.clashing = FALSE
@@ -431,7 +431,7 @@
 		if(QDELETED(P))
 			clash_target = null
 			return
-		playsound(P, 'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE, frequency = 2)
+		playsound(P, 'sound/magic/clockwork/narsie_attack.ogg', 50, DEFAULT_SOUND_VARY, 2)
 		sleep(3.3)
 		if(QDELETED(src))
 			P.clashing = FALSE
@@ -450,16 +450,16 @@
 	if(a_winnar_is == src)
 		say(pick("DIE.", "ROT."))
 		P.say(pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-"))
-		playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
-		playsound(P, 'sound/magic/demon_dies.ogg', 50, TRUE, frequency = 2)
+		playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, DEFAULT_SOUND_VARY, 2)
+		playsound(P, 'sound/magic/demon_dies.ogg', 50, DEFAULT_SOUND_VARY, 2)
 		explosion(P, 0, 0, 1)
 		qdel(P)
 		clash_target = null
 	else
 		say("NO! I will not be banished again...")
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
-		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
-		playsound(P, /datum/outputs/demonattack, 50, TRUE, frequency = 2)
+		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, DEFAULT_SOUND_VARY, 2)
+		playsound(P, /datum/outputs/demonattack, 50, DEFAULT_SOUND_VARY, 2)
 		explosion(src, 0, 0, 1)
 		qdel(src)
 		P.clashing = FALSE

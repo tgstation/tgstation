@@ -120,8 +120,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		open()
 
 /obj/structure/bodycontainer/proc/open()
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-	playsound(src, 'sound/effects/roll.ogg', 5, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, DEFAULT_SOUND_VARY)
+	playsound(src, 'sound/effects/roll.ogg', 5, DEFAULT_SOUND_VARY)
 	var/turf/T = get_step(src, dir)
 	connected.setDir(dir)
 	for(var/atom/movable/AM in src)
@@ -129,8 +129,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
-	playsound(src, 'sound/effects/roll.ogg', 5, 1)
-	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(src, 'sound/effects/roll.ogg', 5, DEFAULT_SOUND_VARY)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, DEFAULT_SOUND_VARY)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
 			if(ismob(AM) && !isliving(AM))
@@ -280,7 +280,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		if(!QDELETED(src))
 			locked = FALSE
 			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, DEFAULT_SOUND_VARY) //you horrible people
 
 /obj/structure/bodycontainer/crematorium/creamatorium
 	name = "creamatorium"

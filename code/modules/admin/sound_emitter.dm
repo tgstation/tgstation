@@ -126,7 +126,7 @@
 /obj/effect/sound_emitter/proc/activate(mob/user)
 	var/list/hearing_mobs = list()
 	if(motus_operandi == SOUND_EMITTER_LOCAL)
-		playsound(src, sound_file, sound_volume, FALSE)
+		playsound(src, sound_file, sound_volume)
 		return
 	switch(emitter_range)
 		if(SOUND_EMITTER_RADIUS)
@@ -141,7 +141,7 @@
 			hearing_mobs = GLOB.player_list.Copy()
 	for(var/mob/M in hearing_mobs)
 		if(M.client.prefs.toggles & SOUND_MIDI)
-			M.playsound_local(M, sound_file, sound_volume, FALSE, channel = CHANNEL_ADMIN, pressure_affected = FALSE)
+			M.playsound_local(M, sound_file, sound_volume, channel = CHANNEL_ADMIN, pressure_affected = FALSE)
 	if(user)
 		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [AREACOORD(src)]")
 	flick("shield1", src)

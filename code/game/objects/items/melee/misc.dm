@@ -80,13 +80,13 @@
 	..()
 	var/obj/item/storage/belt/sabre/B = S
 	if(istype(B))
-		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+		playsound(B, 'sound/items/unsheath.ogg', 25, DEFAULT_SOUND_VARY)
 
 /obj/item/melee/sabre/on_enter_storage(obj/item/storage/S)
 	..()
 	var/obj/item/storage/belt/sabre/B = S
 	if(istype(B))
-		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+		playsound(B, 'sound/items/sheath.ogg', 25, DEFAULT_SOUND_VARY)
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -121,7 +121,7 @@
 
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
 	if(!QDELETED(affecting) && affecting.dismemberable && affecting.owner == user && !QDELETED(user))
-		playsound(user, hitsound, 25, 1)
+		playsound(user, hitsound, 25, DEFAULT_SOUND_VARY)
 		affecting.dismember(BRUTE)
 		user.adjustBruteLoss(20)
 
@@ -177,7 +177,7 @@
 					return
 				if(check_martial_counter(H, user))
 					return
-			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
+			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, DEFAULT_SOUND_VARY, extra_range = -1)
 			target.Paralyze(60)
 			log_combat(user, target, "stunned", src)
 			src.add_fingerprint(user)
@@ -211,7 +211,7 @@
 	if(!on)
 		src.attack_self(user)
 	else
-		playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
+		playsound(src, 'sound/weapons/batonextend.ogg', 50, DEFAULT_SOUND_VARY)
 		add_fingerprint(user)
 	sleep(3)
 	if (!QDELETED(H))
@@ -239,7 +239,7 @@
 		force = 0 //not so robust now
 		attack_verb = list("hit", "poked")
 
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, DEFAULT_SOUND_VARY)
 	add_fingerprint(user)
 
 /obj/item/melee/supermatter_sword
@@ -331,7 +331,7 @@
 	var/turf/newT = T.ScrapeAway()
 	if(newT.type == oldtype)
 		return
-	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
+	playsound(T, 'sound/effects/supermatter.ogg', 50, DEFAULT_SOUND_VARY)
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
@@ -390,7 +390,7 @@
 			return
 		retract(user)
 
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, DEFAULT_SOUND_VARY)
 	add_fingerprint(user)
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
@@ -449,22 +449,22 @@
 			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
 			to_chat(user, "You send [held_sausage] towards [target].")
-			playsound(src, 'sound/items/rped.ogg', 50, 1)
+			playsound(src, 'sound/items/rped.ogg', 50, DEFAULT_SOUND_VARY)
 			beam = user.Beam(target,icon_state="rped_upgrade",time=100)
 		else if (user.Adjacent(target))
 			to_chat(user, "You extend [src] towards [target].")
-			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, DEFAULT_SOUND_VARY)
 		else
 			return
 		if(do_after(user, 100, target = user))
 			finish_roasting(user, target)
 		else
 			QDEL_NULL(beam)
-			playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
+			playsound(src, 'sound/weapons/batonextend.ogg', 50, DEFAULT_SOUND_VARY)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
 	to_chat(user, "You finish roasting [held_sausage]")
-	playsound(src,'sound/items/welder2.ogg',50,1)
+	playsound(src,'sound/items/welder2.ogg',50,DEFAULT_SOUND_VARY)
 	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."

@@ -19,8 +19,8 @@ Burning extracts:
 		return
 	reagents.remove_reagent("plasma",10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
-	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
-	playsound(src, 'sound/magic/fireball.ogg', 50, 1)
+	playsound(src, 'sound/effects/bubbles.ogg', 50, DEFAULT_SOUND_VARY)
+	playsound(src, 'sound/magic/fireball.ogg', 50, DEFAULT_SOUND_VARY)
 	do_effect(user)
 
 /obj/item/slimecross/burning/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -78,7 +78,7 @@ Burning extracts:
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
 		W.dismantle_wall(1)
-		playsound(W, 'sound/effects/break_stone.ogg', 50, 1)
+		playsound(W, 'sound/effects/break_stone.ogg', 50, DEFAULT_SOUND_VARY)
 	user.visible_message("<span class='danger'>[src] pulses violently, and shatters the walls around it!</span>")
 	..()
 
@@ -87,7 +87,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] explodes into an electrical field!</span>")
-	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, DEFAULT_SOUND_VARY)
 	for(var/mob/living/M in range(4,get_turf(user)))
 		if(M != user)
 			var/mob/living/carbon/C = M
@@ -146,7 +146,7 @@ Burning extracts:
 		if(L != user)
 			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
 			new /obj/effect/particle_effect/sparks(get_turf(L))
-			playsound(get_turf(L), "sparks", 50, 1)
+			playsound(get_turf(L), "sparks", 50, DEFAULT_SOUND_VARY)
 	..()
 
 /obj/item/slimecross/burning/sepia

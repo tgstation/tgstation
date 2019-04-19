@@ -37,12 +37,12 @@
 
 /obj/effect/timestop/Destroy()
 	qdel(chronofield)
-	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
+	playsound(src, 'sound/magic/timeparadox2.ogg', 75, DEFAULT_SOUND_VARY, -1) //reverse!
 	return ..()
 
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
-	playsound(src, 'sound/magic/timeparadox2.ogg', 75, 1, -1)
+	playsound(src, 'sound/magic/timeparadox2.ogg', 75, DEFAULT_SOUND_VARY, extra_range = -1)
 	chronofield = make_field(/datum/proximity_monitor/advanced/timestop, list("current_range" = freezerange, "host" = src, "immune" = immune, "check_anti_magic" = check_anti_magic, "check_holy" = check_holy))
 	QDEL_IN(src, duration)
 

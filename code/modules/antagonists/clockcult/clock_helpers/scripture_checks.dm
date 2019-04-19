@@ -19,7 +19,7 @@
 			update_slab_info()
 			for(var/mob/M in GLOB.player_list)
 				if(is_servant_of_ratvar(M) || isobserver(M))
-					M.playsound_local(M, 'sound/magic/clockwork/scripture_tier_up.ogg', 50, FALSE, pressure_affected = FALSE)
+					M.playsound_local(M, 'sound/magic/clockwork/scripture_tier_up.ogg', 50, pressure_affected = FALSE)
 
 /proc/update_slab_info(obj/item/clockwork/slab/set_slab)
 	generate_all_scripture()

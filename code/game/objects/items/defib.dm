@@ -354,7 +354,7 @@
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(req_defib)
 		defib.deductcharge(revivecost)
-	playsound(src, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+	playsound(src, 'sound/machines/defib_zap.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	return (OXYLOSS)
 
 /obj/item/twohanded/shockpaddles/dropped(mob/user)
@@ -468,7 +468,7 @@
 	M.adjustStaminaLoss(50)
 	M.Paralyze(100)
 	M.updatehealth() //forces health update before next life tick
-	playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
+	playsound(src,  'sound/machines/defib_zap.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	M.emote("gasp")
 	log_combat(user, M, "stunned", src)
 	if(req_defib)
@@ -511,8 +511,8 @@
 				update_icon()
 				return
 			user.visible_message("<span class='boldannounce'><i>[user] shocks [H] with \the [src]!</span>", "<span class='warning'>You shock [H] with \the [src]!</span>")
-			playsound(src, 'sound/machines/defib_zap.ogg', 100, 1, -1)
-			playsound(src, 'sound/weapons/egloves.ogg', 100, 1, -1)
+			playsound(src, 'sound/machines/defib_zap.ogg', 100, DEFAULT_SOUND_VARY, extra_range = -1)
+			playsound(src, 'sound/weapons/egloves.ogg', 100, DEFAULT_SOUND_VARY, extra_range = -1)
 			H.emote("scream")
 			shock_touching(45, H)
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
@@ -562,8 +562,8 @@
 						return
 			if(H.stat == DEAD)
 				H.visible_message("<span class='warning'>[H]'s body convulses a bit.</span>")
-				playsound(src, "bodyfall", 50, 1)
-				playsound(src, 'sound/machines/defib_zap.ogg', 75, 1, -1)
+				playsound(src, "bodyfall", 50, DEFAULT_SOUND_VARY)
+				playsound(src, 'sound/machines/defib_zap.ogg', 75, DEFAULT_SOUND_VARY, extra_range = -1)
 				total_brute	= H.getBruteLoss()
 				total_burn	= H.getFireLoss()
 				shock_touching(30, H)
@@ -632,7 +632,7 @@
 			else if(H.undergoing_cardiac_arrest())
 				H.set_heartattack(FALSE)
 				user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
-				playsound(src, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+				playsound(src, 'sound/machines/defib_zap.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 
 
 			else

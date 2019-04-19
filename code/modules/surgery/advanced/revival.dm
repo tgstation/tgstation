@@ -56,7 +56,7 @@
 
 /datum/surgery_step/revive/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] send a powerful shock to [target]'s brain with [tool]...", "<span class='notice'>You successfully shock [target]'s brain with [tool]...</span>")
-	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, 1)
+	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, DEFAULT_SOUND_VARY)
 	target.adjustOxyLoss(-50, 0)
 	target.updatehealth()
 	if(target.revive())
@@ -70,6 +70,6 @@
 
 /datum/surgery_step/revive/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react.", "<span class='notice'>You shock [target]'s brain with [tool], but [target.p_they()] doesn't react.</span>")
-	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, 1)
+	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, DEFAULT_SOUND_VARY)
 	target.adjustBrainLoss(15, 199)
 	return FALSE

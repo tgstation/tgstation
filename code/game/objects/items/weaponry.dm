@@ -201,7 +201,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 	name = new_name
-	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
+	playsound(user, 'sound/items/screwdriver2.ogg', 50, DEFAULT_SOUND_VARY)
 
 /obj/item/katana
 	name = "katana"
@@ -317,7 +317,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, DEFAULT_SOUND_VARY)
 	if(extended)
 		force = 20
 		w_class = WEIGHT_CLASS_NORMAL
@@ -534,7 +534,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		..()
 		return
 	to_chat(user, "<span class='warning'>You begin gathering strength...</span>")
-	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, 1)
+	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, DEFAULT_SOUND_VARY)
 	if(do_after(user, 90, target = src))
 		to_chat(user, "<span class='userdanger'>You gather power! Time for a home run!</span>")
 		homerun_ready = 1
@@ -547,7 +547,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")
 		target.throw_at(throw_target, rand(8,10), 14, user)
 		target.ex_act(EXPLODE_HEAVY)
-		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, 1)
+		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, DEFAULT_SOUND_VARY)
 		homerun_ready = 0
 		return
 	else if(!target.anchored)
@@ -565,9 +565,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/picksound = rand(1,2)
 	var/turf = get_turf(src)
 	if(picksound == 1)
-		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, 1)
+		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, DEFAULT_SOUND_VARY)
 	if(picksound == 2)
-		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
+		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, DEFAULT_SOUND_VARY)
 	return 1
 
 /obj/item/melee/flyswatter
@@ -634,7 +634,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(L && L.dna && L.dna.species)
 			L.dna.species.stop_wagging_tail(M)
 	user.do_attack_animation(M)
-	playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
+	playsound(M, 'sound/weapons/slap.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
 	"<span class='notice'>You slap [M]!</span>",\
 	"You hear a slap.")

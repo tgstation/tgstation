@@ -162,7 +162,7 @@
 			if(begin_create_message)
 				visible_message("<span class='notice'>[src] [begin_create_message]</span>")
 			if(work_sound)
-				playsound(src, work_sound, 50, 1)
+				playsound(src, work_sound, 50, DEFAULT_SOUND_VARY)
 			mode = DRONE_PRODUCTION
 			timer = world.time + production_time
 			update_icon()
@@ -176,7 +176,7 @@
 			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
 			if(create_sound)
-				playsound(src, create_sound, 50, 1)
+				playsound(src, create_sound, 50, DEFAULT_SOUND_VARY)
 			if(end_create_message)
 				visible_message("<span class='notice'>[src] [end_create_message]</span>")
 
@@ -186,7 +186,7 @@
 
 		if(DRONE_RECHARGING)
 			if(recharge_sound)
-				playsound(src, recharge_sound, 50, 1)
+				playsound(src, recharge_sound, 50, DEFAULT_SOUND_VARY)
 			if(recharge_message)
 				visible_message("<span class='notice'>[src] [recharge_message]</span>")
 
@@ -247,7 +247,7 @@
 			if(break_message)
 				audible_message("<span class='warning'>[src] [break_message]</span>")
 			if(break_sound)
-				playsound(src, break_sound, 50, 1)
+				playsound(src, break_sound, 50, DEFAULT_SOUND_VARY)
 			stat |= BROKEN
 			update_icon()
 

@@ -162,7 +162,7 @@
 
 /obj/item/twohanded/required/cult_bastard/IsReflect()
 	if(spinning)
-		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
+		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, DEFAULT_SOUND_VARY)
 		return TRUE
 	else
 		..()
@@ -171,10 +171,10 @@
 	if(prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
-			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
+			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, DEFAULT_SOUND_VARY)
 			return TRUE
 		else
-			playsound(src, 'sound/weapons/parry.ogg', 75, 1)
+			playsound(src, 'sound/weapons/parry.ogg', 75, DEFAULT_SOUND_VARY)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 			return TRUE
 	return FALSE
@@ -525,7 +525,7 @@
 		if(surplus > 0)
 			SSshuttle.block_recall(surplus)
 		to_chat(user, "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
-		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, 1)
+		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, DEFAULT_SOUND_VARY)
 		qdel(src)
 		sleep(20)
 		var/global/list/curses
@@ -581,7 +581,7 @@
 		uses--
 		if(uses <= 0)
 			icon_state ="shifter_drained"
-		playsound(mobloc, "sparks", 50, 1)
+		playsound(mobloc, "sparks", 50, DEFAULT_SOUND_VARY)
 		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
@@ -589,8 +589,8 @@
 			if(pulled)
 				C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 			new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
-			playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
-			playsound(destination, "sparks", 50, 1)
+			playsound(destination, 'sound/effects/phasein.ogg', 25, DEFAULT_SOUND_VARY)
+			playsound(destination, "sparks", 50, DEFAULT_SOUND_VARY)
 
 	else
 		to_chat(C, "<span class='danger'>The veil cannot be torn here!</span>")
@@ -718,10 +718,10 @@
 	if(prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
-			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
+			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, DEFAULT_SOUND_VARY)
 			return TRUE
 		else
-			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
+			playsound(src, 'sound/weapons/parry.ogg', 100, DEFAULT_SOUND_VARY)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 			return TRUE
 	return FALSE
@@ -844,7 +844,7 @@
 
 /obj/item/blood_beam/proc/charge(mob/user)
 	var/obj/O
-	playsound(src, 'sound/magic/lightning_chargeup.ogg', 100, 1)
+	playsound(src, 'sound/magic/lightning_chargeup.ogg', 100, DEFAULT_SOUND_VARY)
 	for(var/i in 1 to 12)
 		if(!charging)
 			break
@@ -873,13 +873,13 @@
 		second = !second //Handles beam firing in pairs
 		if(!firing)
 			break
-		playsound(src, 'sound/magic/exit_blood.ogg', 75, 1)
+		playsound(src, 'sound/magic/exit_blood.ogg', 75, DEFAULT_SOUND_VARY)
 		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
 		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
 		for(var/turf/T in getline(targets_from,temp_target))
 			if (locate(/obj/effect/blessing, T))
 				temp_target = T
-				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 50, 1)
+				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 50, DEFAULT_SOUND_VARY)
 				new /obj/effect/temp_visual/at_shield(T, T)
 				break
 			T.narsie_act(TRUE, TRUE)
@@ -901,7 +901,7 @@
 					if(L.density)
 						L.Paralyze(20)
 						L.adjustBruteLoss(45)
-						playsound(L, 'sound/hallucinations/wail.ogg', 50, 1)
+						playsound(L, 'sound/hallucinations/wail.ogg', 50, DEFAULT_SOUND_VARY)
 						L.emote("scream")
 		var/datum/beam/current_beam = new(user,temp_target,time=7,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)
 		INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
@@ -943,7 +943,7 @@
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(.)
-			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
+			playsound(src, 'sound/weapons/parry.ogg', 100, DEFAULT_SOUND_VARY)
 			if(illusions > 0)
 				illusions--
 				addtimer(CALLBACK(src, /obj/item/shield/mirror.proc/readd), 450)

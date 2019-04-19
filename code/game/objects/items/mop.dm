@@ -102,7 +102,7 @@
 	else
 		STOP_PROCESSING(SSobj,src)
 	to_chat(user, "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>")
-	playsound(user, 'sound/machines/click.ogg', 30, 1)
+	playsound(user, 'sound/machines/click.ogg', 30, DEFAULT_SOUND_VARY)
 
 /obj/item/mop/advanced/process()
 

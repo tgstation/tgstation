@@ -525,7 +525,7 @@
 				if(!( src.printing ))
 					src.printing = 1
 					GLOB.data_core.medicalPrintCount++
-					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+					playsound(loc, 'sound/items/poster_being_created.ogg', 100, DEFAULT_SOUND_VARY)
 					sleep(30)
 					var/obj/item/paper/P = new /obj/item/paper( src.loc )
 					P.info = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"

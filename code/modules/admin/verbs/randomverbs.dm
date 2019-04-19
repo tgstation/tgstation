@@ -1178,7 +1178,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			continue
 
 		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
-		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, 1, -1)
+		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 
 		wabbajack(M)
 
@@ -1382,13 +1382,13 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 /obj/effect/temp_visual/target/proc/fall(list/flame_hit)
 	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
+	playsound(T,'sound/magic/fleshtostone.ogg', 80, DEFAULT_SOUND_VARY)
 	new /obj/effect/temp_visual/fireball(T)
 	sleep(duration)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
-	playsound(T, "explosion", 80, 1)
+	playsound(T, "explosion", 80, DEFAULT_SOUND_VARY)
 	new /obj/effect/hotspot(T)
 	T.hotspot_expose(700, 50, 1)
 	for(var/mob/living/L in T.contents)

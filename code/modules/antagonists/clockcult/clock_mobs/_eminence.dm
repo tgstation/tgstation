@@ -193,11 +193,11 @@
 		new/obj/effect/temp_visual/ratvar/command_point(get_turf(A), marker_icon)
 		for(var/mob/M in servants_and_ghosts())
 			to_chat(M, "<span class='large_brass'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, command_location)))]</span>")
-			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
+			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, pressure_affected = FALSE)
 	else
 		hierophant_message("<span class='bold large_brass'>[command_text]</span>")
 		for(var/mob/M in servants_and_ghosts())
-			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
+			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, pressure_affected = FALSE)
 
 /mob/camera/eminence/proc/superheat_wall(turf/closed/wall/clockwork/wall)
 	if(!istype(wall))
@@ -258,7 +258,7 @@
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 	if(G)
 		owner.forceMove(get_turf(G))
-		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
+		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, DEFAULT_SOUND_VARY)
 		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 	else
 		to_chat(owner, "<span class='warning'>There is no Ark!</span>")
@@ -272,7 +272,7 @@
 /datum/action/innate/eminence/station_jump/Activate()
 	if(is_reebe(owner.z))
 		owner.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
-		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
+		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, DEFAULT_SOUND_VARY)
 		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 	else
 		to_chat(owner, "<span class='warning'>You're already on the station!</span>")

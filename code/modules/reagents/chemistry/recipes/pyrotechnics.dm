@@ -288,7 +288,7 @@
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(location, 'sound/effects/smoke.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -3)
 	if(S)
 		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
@@ -307,7 +307,7 @@
 	var/smoke_radius = round(sqrt(created_volume / 2), 1)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(location, 'sound/effects/smoke.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -3)
 	if(S)
 		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
@@ -325,7 +325,7 @@
 		return
 	holder.remove_reagent("sonic_powder", created_volume*3)
 	var/location = get_turf(holder.my_atom)
-	playsound(location, 'sound/effects/bang.ogg', 25, 1)
+	playsound(location, 'sound/effects/bang.ogg', 25, DEFAULT_SOUND_VARY)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		C.soundbang_act(1, 100, rand(0, 5))
 
@@ -337,7 +337,7 @@
 
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	playsound(location, 'sound/effects/bang.ogg', 25, 1)
+	playsound(location, 'sound/effects/bang.ogg', 25, DEFAULT_SOUND_VARY)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		C.soundbang_act(1, 100, rand(0, 5))
 
@@ -434,15 +434,15 @@
 	sleep(5)
 	if(created_volume >= 75)
 		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, DEFAULT_SOUND_VARY)
 		sleep(15)
 	if(created_volume >= 40)
 		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, DEFAULT_SOUND_VARY)
 		sleep(15)
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, DEFAULT_SOUND_VARY)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat

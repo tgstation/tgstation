@@ -56,7 +56,7 @@
 	if(devastated)
 		devastate_wall()
 	else
-		playsound(src, 'sound/items/welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, DEFAULT_SOUND_VARY)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we don't /want/ a girder!
 			transfer_fingerprints_to(newgirder)
@@ -109,17 +109,17 @@
 	M.do_attack_animation(src)
 	switch(M.damtype)
 		if(BRUTE)
-			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+			playsound(src, 'sound/weapons/punch4.ogg', 50, DEFAULT_SOUND_VARY)
 			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 			if(prob(hardness + M.force) && M.force > 20)
 				dismantle_wall(1)
-				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+				playsound(src, 'sound/effects/meteorimpact.ogg', 100, DEFAULT_SOUND_VARY)
 			else
 				add_dent(WALL_DENT_HIT)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, 1)
+			playsound(src, 'sound/items/welder.ogg', 100, DEFAULT_SOUND_VARY)
 		if(TOX)
-			playsound(src, 'sound/effects/spray2.ogg', 100, 1)
+			playsound(src, 'sound/effects/spray2.ogg', 100, DEFAULT_SOUND_VARY)
 			return FALSE
 
 /turf/closed/wall/attack_paw(mob/living/user)
@@ -131,18 +131,18 @@
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if((M.environment_smash & ENVIRONMENT_SMASH_WALLS) || (M.environment_smash & ENVIRONMENT_SMASH_RWALLS))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, DEFAULT_SOUND_VARY)
 		dismantle_wall(1)
 		return
 
 /turf/closed/wall/attack_hulk(mob/user, does_attack_animation = 0)
 	..(user, 1)
 	if(prob(hardness))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, DEFAULT_SOUND_VARY)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		dismantle_wall(1)
 	else
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', 50, DEFAULT_SOUND_VARY)
 		add_dent(WALL_DENT_HIT)
 		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 	return TRUE
@@ -153,7 +153,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
-	playsound(src, 'sound/weapons/genhit.ogg', 25, 1)
+	playsound(src, 'sound/weapons/genhit.ogg', 25, DEFAULT_SOUND_VARY)
 	add_fingerprint(user)
 
 /turf/closed/wall/attackby(obj/item/W, mob/user, params)

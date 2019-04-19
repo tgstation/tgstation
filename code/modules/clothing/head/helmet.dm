@@ -126,7 +126,7 @@
 
 			if(active_sound)
 				while(up)
-					playsound(src, "[active_sound]", 100, FALSE, 4)
+					playsound(src, "[active_sound]", 100, 0, extra_range = 4)
 					sleep(15)
 
 /obj/item/clothing/head/helmet/justice

@@ -56,7 +56,7 @@
 		Reset(user)
 		return
 
-	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, DEFAULT_SOUND_VARY)
 	user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 
 	Bolt(user,target,30,5,user)
@@ -66,14 +66,14 @@
 	origin.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 	var/mob/living/carbon/current = target
 	if(current.anti_magic_check())
-		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
+		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 		current.visible_message("<span class='warning'>[current] absorbs the spell, remaining unharmed!</span>", "<span class='userdanger'>You absorb the spell, remaining unharmed!</span>")
 	else if(bounces < 1)
 		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
-		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
+		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	else
 		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
-		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
+		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 		var/list/possible_targets = new
 		for(var/mob/living/M in view_or_range(range,target,"view"))
 			if(user == M || target == M && los_check(current,M)) // || origin == M ? Not sure double shockings is good or not

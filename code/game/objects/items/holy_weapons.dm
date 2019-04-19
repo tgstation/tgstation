@@ -28,7 +28,7 @@
 	if(user.mind && user.mind.isholy)
 		return ..()
 	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, DEFAULT_SOUND_VARY)
 		return FALSE
 
 /obj/item/choice_beacon/holy/generate_display_names()
@@ -44,7 +44,7 @@
 /obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
 	if(!SSreligion.holy_armor_type)
 		..()
-		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, 1)
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, DEFAULT_SOUND_VARY)
 		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 		SSreligion.holy_armor_type = choice
 	else

@@ -22,7 +22,7 @@
 					to_chat(user, "<span class='warning'>Your hand slips, setting off the trigger!</span>")
 					pulse(FALSE)
 		update_icon()
-		playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
+		playsound(src, 'sound/weapons/handcuffs.ogg', 30, DEFAULT_SOUND_VARY, extra_range = -3)
 
 /obj/item/assembly/mousetrap/update_icon()
 	if(armed)
@@ -81,7 +81,7 @@
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
-	playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
+	playsound(src, 'sound/weapons/handcuffs.ogg', 30, DEFAULT_SOUND_VARY, extra_range = -3)
 
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

@@ -32,7 +32,7 @@ Regenerative extracts:
 	core_effect_before(H, user)
 	H.revive(full_heal = 1)
 	core_effect(H, user)
-	playsound(target, 'sound/effects/splat.ogg', 40, 1)
+	playsound(target, 'sound/effects/splat.ogg', 40, DEFAULT_SOUND_VARY)
 	qdel(src)
 
 /obj/item/slimecross/regenerative/grey
@@ -201,14 +201,14 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/gold/core_effect(mob/living/target, mob/user)
 	var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
 	var/obj/item/coin/C = new newcoin(target.loc)
-	playsound(C, 'sound/items/coinflip.ogg', 50, 1)
+	playsound(C, 'sound/items/coinflip.ogg', 50, DEFAULT_SOUND_VARY)
 	target.put_in_hand(C)
 
 /obj/item/slimecross/regenerative/oil
 	colour = "oil"
 
 /obj/item/slimecross/regenerative/oil/core_effect(mob/living/target, mob/user)
-	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, DEFAULT_SOUND_VARY)
 	for(var/mob/living/L in view(user,7))
 		L.flash_act()
 

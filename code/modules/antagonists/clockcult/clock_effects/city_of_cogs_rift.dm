@@ -19,12 +19,7 @@
 /obj/effect/clockwork/city_of_cogs_rift/Initialize()
 	. = ..()
 	visible_message("<span class='warning'>The air above [loc] shimmers and pops as a [name] forms there!</span>")
-	for(var/mob/M in GLOB.player_list)
-		if(M.z == z)
-			if(get_dist(src, M) >= 7)
-				M.playsound_local(src, 'sound/magic/blink.ogg', 10, FALSE, falloff = 10)
-			else
-				M.playsound_local(src, 'sound/magic/blink.ogg', 50, FALSE)
+	playsound(src, "sound/magic/blink.ogg", 50, distance_sound = "sound/magic/blink.ogg", falloff = 10)
 
 /obj/effect/clockwork/city_of_cogs_rift/Destroy()
 	visible_message("<span class='warning'>[src] cracks as it destabilizes and breaks apart!</span>")

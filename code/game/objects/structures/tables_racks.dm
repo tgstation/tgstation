@@ -143,7 +143,7 @@
 		if(I.tool_behaviour == TOOL_WRENCH && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
 			if(I.use_tool(src, user, 40, volume=50))
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, DEFAULT_SOUND_VARY)
 				deconstruct(TRUE, 1)
 			return
 
@@ -228,7 +228,7 @@
 	visible_message("<span class='warning'>[src] breaks!</span>",
 		"<span class='danger'>You hear breaking glass.</span>")
 	var/turf/T = get_turf(src)
-	playsound(T, "shatter", 50, 1)
+	playsound(T, "shatter", 50, DEFAULT_SOUND_VARY)
 	for(var/I in debris)
 		var/atom/movable/AM = I
 		AM.forceMove(T)
@@ -245,7 +245,7 @@
 			return
 		else
 			var/turf/T = get_turf(src)
-			playsound(T, "shatter", 50, 1)
+			playsound(T, "shatter", 50, DEFAULT_SOUND_VARY)
 			for(var/X in debris)
 				var/atom/movable/AM = X
 				AM.forceMove(T)
@@ -511,11 +511,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
+				playsound(loc, 'sound/items/dodgeball.ogg', 80, DEFAULT_SOUND_VARY)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(loc, 'sound/weapons/tap.ogg', 50, DEFAULT_SOUND_VARY)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 40, 1)
+			playsound(loc, 'sound/items/welder.ogg', 40, DEFAULT_SOUND_VARY)
 
 /*
  * Rack destruction

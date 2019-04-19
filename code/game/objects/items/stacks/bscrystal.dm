@@ -28,7 +28,7 @@
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message("<span class='warning'>[user] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>")
 	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, "sparks", 50, 1)
+	playsound(loc, "sparks", 50, DEFAULT_SOUND_VARY)
 	blink_mob(user)
 	use(1)
 
@@ -40,7 +40,7 @@
 		visible_message("<span class='notice'>[src] fizzles and disappears upon impact!</span>")
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/particle_effect/sparks(T)
-		playsound(loc, "sparks", 50, 1)
+		playsound(loc, "sparks", 50, DEFAULT_SOUND_VARY)
 		if(isliving(hit_atom))
 			blink_mob(hit_atom)
 		use(1)

@@ -23,7 +23,7 @@
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "sodiumchloride")
 		H.adjustFireLoss(2)
-		playsound(H, 'sound/weapons/sear.ogg', 30, 1)
+		playsound(H, 'sound/weapons/sear.ogg', 30, DEFAULT_SOUND_VARY)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 

@@ -33,7 +33,7 @@ RSF
 			return
 		qdel(W)
 		matter += 10
-		playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 10, DEFAULT_SOUND_VARY)
 		to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
 	else
 		return ..()
@@ -75,7 +75,7 @@ RSF
 		return
 
 	var/turf/T = get_turf(A)
-	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 10, DEFAULT_SOUND_VARY)
 	switch(mode)
 		if(1)
 			to_chat(user, "Dispensing Drinking Glass...")
@@ -169,7 +169,7 @@ RSF
 			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
 			return
 	var/turf/T = get_turf(A)
-	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 10, DEFAULT_SOUND_VARY)
 	to_chat(user, "Fabricating Cookie..")
 	var/obj/item/reagent_containers/food/snacks/cookie/S = new /obj/item/reagent_containers/food/snacks/cookie(T)
 	if(toxin)

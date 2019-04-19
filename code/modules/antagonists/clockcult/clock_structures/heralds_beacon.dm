@@ -41,7 +41,7 @@
 		hierophant_message("<span class='bold sevtug_small'>[src] has lost its power, and can no longer be activated.</span>")
 		for(var/mob/M in GLOB.player_list)
 			if(isobserver(M) || is_servant_of_ratvar(M))
-				M.playsound_local(M, 'sound/magic/blind.ogg', 50, FALSE)
+				M.playsound_local(M, 'sound/magic/blind.ogg', 50)
 		available = FALSE
 		icon_state = "interdiction_lens_unwrenched"
 		STOP_PROCESSING(SSprocessing, src)
@@ -86,7 +86,7 @@
 	hierophant_message("<span class='brass'><b>[user.real_name]</b> has [voting ? "voted" : "undone their vote"] to activate [src]! The beacon needs [votes_left] more votes to activate.")
 	for(var/mob/M in GLOB.player_list)
 		if(isobserver(M) || is_servant_of_ratvar(M))
-			M.playsound_local(M, 'sound/magic/clockwork/fellowship_armory.ogg', 50, FALSE)
+			M.playsound_local(M, 'sound/magic/clockwork/fellowship_armory.ogg', 50)
 	if(!votes_left)
 		herald_the_justiciar()
 

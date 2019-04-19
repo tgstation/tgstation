@@ -56,7 +56,7 @@
 	master.cut_overlay(overlay)
 	var/obj/effect/overlay/thermite/fakefire = new(master)
 
-	playsound(master, 'sound/items/welder.ogg', 100, 1)
+	playsound(master, 'sound/items/welder.ogg', 100, DEFAULT_SOUND_VARY)
 
 	if(amount >= 50)
 		var/burning_time = max(100, 100-amount)

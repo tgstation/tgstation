@@ -58,7 +58,7 @@
 						visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					else
 						visible_message("<span class='danger'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, DEFAULT_SOUND_VARY)
 					if(!mind.martial_art.reroute_deflection)
 						return BULLET_ACT_BLOCK
 					else
@@ -207,7 +207,7 @@
 		if(check_shields(user, 15, "the [hulk_verb]ing"))
 			return
 		..(user, 1)
-		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
+		playsound(loc, user.dna.species.attack_sound, 25, DEFAULT_SOUND_VARY, extra_range = -1)
 		var/message = "[user] has [hulk_verb]ed [src]!"
 		visible_message("<span class='danger'>[message]</span>", \
 								"<span class='userdanger'>[message]</span>")
@@ -233,11 +233,11 @@
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
-			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/slash.ogg', 25, DEFAULT_SOUND_VARY, extra_range = -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, DEFAULT_SOUND_VARY, extra_range = -1)
 			if (src.IsKnockdown() && !src.IsParalyzed()) 
 				Paralyze(40)
 				log_combat(M, src, "pinned")
@@ -272,7 +272,7 @@
 				w_uniform.add_fingerprint(M)
 			var/damage = prob(90) ? 20 : 0
 			if(!damage)
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
 					"<span class='userdanger'>[M] has lunged at [src]!</span>")
 				return 0
@@ -281,7 +281,7 @@
 				affecting = get_bodypart(BODY_ZONE_CHEST)
 			var/armor_block = run_armor_check(affecting, "melee","","",10)
 
-			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/slice.ogg', 25, DEFAULT_SOUND_VARY, extra_range = -1)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			log_combat(M, src, "attacked")
@@ -292,11 +292,11 @@
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
 			var/obj/item/I = get_active_held_item()
 			if(I && dropItemToGround(I))
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/slash.ogg', 25, DEFAULT_SOUND_VARY, extra_range = -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 						"<span class='userdanger'>[M] disarmed [src]!</span>")
 			else
-				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/pierce.ogg', 25, DEFAULT_SOUND_VARY, extra_range = -1)
 				Paralyze(100)
 				log_combat(M, src, "tackled")
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
@@ -368,10 +368,10 @@
 					if(M.force > 20)
 						Unconscious(20)
 					update |= temp.receive_damage(dmg, 0)
-					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+					playsound(src, 'sound/weapons/punch4.ogg', 50, DEFAULT_SOUND_VARY)
 				if("fire")
 					update |= temp.receive_damage(0, dmg)
-					playsound(src, 'sound/items/welder.ogg', 50, 1)
+					playsound(src, 'sound/items/welder.ogg', 50, DEFAULT_SOUND_VARY)
 				if("tox")
 					M.mech_toxin_damage(src)
 				else

@@ -56,7 +56,7 @@
 
 		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
-			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
+			H.playsound_local(get_turf(H), slowbeat, 40, channel = CHANNEL_HEARTBEAT)
 			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
 		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -64,7 +64,7 @@
 
 		if(H.jitteriness)
 			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
+				H.playsound_local(get_turf(H), fastbeat, 40, channel = CHANNEL_HEARTBEAT)
 				beat = BEAT_FAST
 		else if(beat == BEAT_FAST)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -89,7 +89,7 @@
 
 /obj/item/organ/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
 	if(H == user && istype(H))
-		playsound(user,'sound/effects/singlebeat.ogg',40,1)
+		playsound(user,'sound/effects/singlebeat.ogg',40,DEFAULT_SOUND_VARY)
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		Insert(user)
 	else
@@ -131,7 +131,7 @@
 			return
 
 		cursed_heart.last_pump = world.time
-		playsound(owner,'sound/effects/singlebeat.ogg',40,1)
+		playsound(owner,'sound/effects/singlebeat.ogg',40,DEFAULT_SOUND_VARY)
 		to_chat(owner, "<span class = 'notice'>Your heart beats.</span>")
 
 		var/mob/living/carbon/human/H = owner

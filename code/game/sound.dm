@@ -1,32 +1,52 @@
-/proc/playsound(atom/source, input, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, do_owner)
+// playsound should be the go-to proc for any positional sounds
+// source: where the sound comes from
+// input: the path to the sound or a get_sfx key
+// vary: the amount the sound will vary in pitch by
+// playback_rate: the rate that the sound will playback at; can be a multiplier or a direct sample rate, but you really should use a multiplier
+//                negative values work as well, they reverse the sound
+// extra_range: how much range outside of the view range the sound can still be heard from
+// distance_sound: a seperate path to sound or get_sfx key that will be used if the listening client is outside of extra_range but within max_distance
+// max_distance: how far away as an absolute max any sound can be heard from this source
+// falloff: rate of falloff, higher numbers mean less falloff. This uses the byond falloff var, I can't give you any better of documentation because it's poorly documented itself
+// channel: an override for the sound channel to use, generally don't use this unless you need a special looping sound that can be stopped at will or some kind of ambient sound
+// pressure_affected: whether the sound is affected by pressure variation
+// ignore_walls: whether the sound completely ignores walls or not
+// do_owner: used for output datum as to what owns the do_after. Generally you shouldn't need to use this parameter, but it exists just in case.
+/proc/playsound(atom/source, input, volume, vary = 0, playback_rate = 1, extra_range = 0, distance_sound = null, max_distance = 0, falloff = 1, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, do_owner = null)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 		return
 
 	var/turf/turf_source = get_turf(source)
 
-	if (!turf_source)
+	if (!turf_source) //If the source doesn't exist on a turf, means it's in nullspace or something like that and shouldn't be making sound
 		return
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || open_sound_channel()
-
+  
  	// Looping through the player list has the added bonus of working for mobs inside containers
-	var/maxdistance = (world.view + extrarange)
+	var/inner_max_distance = (world.view + extra_range)
 	var/z = turf_source.z
 	var/list/listeners = SSmobs.clients_by_zlevel[z]
 	if(!ignore_walls) //these sounds don't carry through walls
-		listeners = listeners & hearers(maxdistance,turf_source)
+		listeners = listeners & hearers(inner_max_distance,turf_source)
 	for(var/P in listeners)
 		var/mob/M = P
-		if(get_dist(M, turf_source) <= maxdistance)
-			sound_or_datum(M, turf_source, source, input, do_owner, vol, vary, frequency, falloff, channel, pressure_affected)
+		var/dist = get_dist(M, turf_source)
+		if(dist <= inner_max_distance)
+			sound_or_datum(M, turf_source, source, input, do_owner, volume, vary, playback_rate, falloff, channel, pressure_affected)
+		else if(distance_sound && dist <= max_distance)
+			sound_or_datum(M, turf_source, source, distance_sound, do_owner, volume, vary, playback_rate, falloff, channel, pressure_affected)
 	for(var/P in SSmobs.dead_players_by_zlevel[z])
 		var/mob/M = P
-		if(get_dist(M, turf_source) <= maxdistance)
-			sound_or_datum(M, turf_source, source, input, do_owner, vol, vary, frequency, falloff, channel, pressure_affected)
+		var/dist = get_dist(M, turf_source)
+		if(dist <= inner_max_distance)
+			sound_or_datum(M, turf_source, source, input, do_owner, volume, vary, playback_rate, falloff, channel, pressure_affected)
+		else if(distance_sound && dist <= max_distance)
+			sound_or_datum(M, turf_source, source, distance_sound, do_owner, volume, vary, playback_rate, falloff, channel, pressure_affected)
 
-/proc/sound_or_datum(mob/receiver, turf/turf_source, atom/source, input, datum/do_owner, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+/proc/sound_or_datum(mob/receiver, turf/turf_source, atom/source, input, datum/do_owner, volume, vary, playback_rate, falloff, channel = 0, pressure_affected = TRUE)
 	if(istype(input, /datum/outputs))
 		var/last_played_time
 		if(do_owner)
@@ -34,18 +54,21 @@
 		else
 			last_played_time = source.datum_outputs[input]
 		var/datum/outputs/O = input
-		if(O.send_info(receiver, turf_source, vol, vary, frequency, falloff, channel, pressure_affected, last_played_time))
+		if(O.send_info(receiver, turf_source, volume, vary, playback_rate, falloff, channel, pressure_affected, last_played_time))
 			if(do_owner)
 				do_owner.datum_outputs[input] = world.time
 			else
 				source.datum_outputs[input] = world.time
 	else
 		var/sound/S = sound(get_sfx(input))
-		receiver.playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
+		receiver.playsound_local(turf_source, input, volume, vary, playback_rate, falloff, channel, pressure_affected, FALSE, S)
 
 //kept for legacy support and uploaded admin sounds
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
+/mob/proc/playsound_local(turf/turf_source, soundin, volume, vary = 0, playback_rate = 1, falloff, channel = 0, pressure_affected = TRUE, ignore_environment = TRUE,sound/S = null)
 	if(!client || !can_hear())
+		return
+
+	if(volume <= 0) // If somehow the volume ends up being 0 or less than 0, don't even play the sound
 		return
 
 	if(!S)
@@ -53,13 +76,15 @@
 
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
-	S.volume = vol
+	S.volume = volume
 
 	if(vary)
-		if(frequency)
-			S.frequency = frequency
-		else
-			S.frequency = get_rand_frequency()
+		var/low = playback_rate - vary
+		var/high = playback_rate + vary
+		var/random_offset = (high - low) * rand()
+		playback_rate = low + random_offset
+
+	S.frequency = playback_rate
 
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
@@ -97,17 +122,17 @@
 		S.z = dz
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
-		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
+		//byond falloff is always the default because it makes no sense and is bad
+		S.falloff = 1
 
 	SEND_SOUND(src, S)
 
-/proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, falloff = FALSE, channel = 0, pressure_affected = FALSE, sound/S)
-	if(!S)
-		S = sound(get_sfx(soundin))
+/proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, playback_rate = 0, falloff = FALSE, channel = 0, pressure_affected = FALSE, sound/S = null)
+	soundin = sound(get_sfx(soundin))
 	for(var/m in GLOB.player_list)
 		if(ismob(m) && !isnewplayer(m))
 			var/mob/M = m
-			M.playsound_local(M, null, volume, vary, frequency, falloff, channel, pressure_affected, S)
+			M.playsound_local(M, soundin, volume, vary, playback_rate, falloff, channel, pressure_affected, S)
 
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
@@ -125,8 +150,6 @@
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
-/proc/get_rand_frequency()
-	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
 
 /proc/get_sfx(soundin)
 	if(istext(soundin))

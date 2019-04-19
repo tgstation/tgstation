@@ -19,7 +19,7 @@
 
 /obj/item/grenade/smokebomb/prime()
 	update_mob()
-	playsound(src, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(src, 'sound/effects/smoke.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -3)
 	smoke.set_up(4, src)
 	smoke.start()
 

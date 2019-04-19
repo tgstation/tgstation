@@ -53,7 +53,7 @@
 	if(isliving(loc))
 		var/mob/living/L = loc
 		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures it's tracking algorithms.</span>")
-		playsound(L, 'sound/machines/triple_beep.ogg', 50, 1)
+		playsound(L, 'sound/machines/triple_beep.ogg', 50, DEFAULT_SOUND_VARY)
 	mode = new_mode
 	scan_for_target()
 

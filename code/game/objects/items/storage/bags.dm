@@ -52,7 +52,7 @@
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
-	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
+	playsound(loc, 'sound/items/eatfood.ogg', 50, DEFAULT_SOUND_VARY, extra_range = -1)
 	return (TOXLOSS)
 
 /obj/item/storage/bag/trash/update_icon()
@@ -304,9 +304,9 @@
 					sleep(rand(2,4))
 
 	if(prob(50))
-		playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
+		playsound(M, 'sound/items/trayhit1.ogg', 50, DEFAULT_SOUND_VARY)
 	else
-		playsound(M, 'sound/items/trayhit2.ogg', 50, 1)
+		playsound(M, 'sound/items/trayhit2.ogg', 50, DEFAULT_SOUND_VARY)
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))

@@ -102,7 +102,7 @@
 		new /obj/effect/temp_visual/necropolis(T)
 		visible_message("<span class='boldwarning'>The door slams closed!</span>")
 		sleep(1)
-		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 80000)
+		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, DEFAULT_SOUND_VARY, 2)
 		sleep(1)
 		density = TRUE
 		sleep(1)
@@ -116,7 +116,7 @@
 			sight_blocker.pixel_y = initial(sight_blocker.pixel_y) - (32 * sight_blocker_distance)
 			sight_blocker.forceMove(sight_blocker_turf)
 		sleep(2.5)
-		playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, TRUE, frequency = 15000)
+		playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0.1, 0.35)
 		add_overlay(door_overlay)
 		open = FALSE
 	else
@@ -124,7 +124,7 @@
 		new /obj/effect/temp_visual/necropolis/open(T)
 		sleep(2)
 		visible_message("<span class='warning'>The door starts to grind open...</span>")
-		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 20000)
+		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, 0.1, 0.45)
 		sleep(22)
 		sight_blocker.forceMove(src)
 		sleep(5)
@@ -161,7 +161,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated())
 			return
 		user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
-		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
+		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, DEFAULT_SOUND_VARY)
 		sleep(50)
 	return ..()
 
@@ -180,11 +180,10 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			message_admins("[user ? ADMIN_LOOKUPFLW(user):"Unknown"] has released Legion!")
 			log_game("[user ? key_name(user) : "Unknown"] released Legion.")
 
-		var/sound/legion_sound = sound('sound/creatures/legion_spawn.ogg')
 		for(var/mob/M in GLOB.player_list)
 			if(M.z == z)
 				to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
-				M.playsound_local(T, null, 100, FALSE, 0, FALSE, pressure_affected = FALSE, S = legion_sound)
+				M.playsound_local(T, "sound/creatures/legion_spawn.ogg", 90, FALSE, pressure_affected = FALSE)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)

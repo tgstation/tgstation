@@ -998,7 +998,7 @@
 		return FALSE
 
 	if(istype(I, /obj/item/bikehorn))
-		playsound(parent, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(parent, 'sound/items/bikehorn.ogg', 50, DEFAULT_SOUND_VARY)
 		user.visible_message("HONK!")
 
 	//TODO: better messages.

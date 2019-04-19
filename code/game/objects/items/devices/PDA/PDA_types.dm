@@ -27,7 +27,7 @@
 /obj/item/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
+		playsound(loc, 'sound/items/bikehorn.ogg', 30, DEFAULT_SOUND_VARY)
 	return
 
 /obj/item/pda/ai/pai

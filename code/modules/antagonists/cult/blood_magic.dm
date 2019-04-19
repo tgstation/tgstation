@@ -521,7 +521,7 @@
 
 /obj/item/melee/blood_magic/shackles/proc/CuffAttack(mob/living/carbon/C, mob/living/user)
 	if(!C.handcuffed)
-		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, DEFAULT_SOUND_VARY, extra_range = -2)
 		C.visible_message("<span class='danger'>[user] begins restraining [C] with dark magic!</span>", \
 								"<span class='userdanger'>[user] begins shaping dark magic shackles around your wrists!</span>")
 		if(do_mob(user, C, 30))
@@ -588,7 +588,7 @@
 			var/mob/living/silicon/robot/candidate = target
 			if(candidate.mmi)
 				user.visible_message("<span class='danger'>A dark cloud emanates from [user]'s hand and swirls around [candidate]!</span>")
-				playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, 1)
+				playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, DEFAULT_SOUND_VARY)
 				var/prev_color = candidate.color
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
@@ -615,7 +615,7 @@
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/obj/machinery/door/airlock))
-			playsound(T, 'sound/machines/airlockforced.ogg', 50, 1)
+			playsound(T, 'sound/machines/airlockforced.ogg', 50, DEFAULT_SOUND_VARY)
 			do_sparks(5, TRUE, target)
 			if(do_after(user, 50, target = user))
 				target.narsie_act()

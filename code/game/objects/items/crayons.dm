@@ -353,7 +353,7 @@
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, DEFAULT_SOUND_VARY, extra_range = 5)
 
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
@@ -400,7 +400,7 @@
 
 	if(post_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, DEFAULT_SOUND_VARY, extra_range = 5)
 
 	var/fraction = min(1, . / reagents.maximum_volume)
 	if(affected_turfs.len)
@@ -581,7 +581,7 @@
 		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!</span>")
 		user.say("WITNESS ME!!", forced="spraycan suicide")
 		if(pre_noise || post_noise)
-			playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
+			playsound(src, 'sound/effects/spray.ogg', 5, DEFAULT_SOUND_VARY, extra_range = 5)
 		if(can_change_colour)
 			paint_color = "#C0C0C0"
 		update_icon()
@@ -627,7 +627,7 @@
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 25, 1, 5)
+			playsound(user.loc, 'sound/effects/spray.ogg', 25, DEFAULT_SOUND_VARY, extra_range = 5)
 
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
@@ -665,7 +665,7 @@
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user)
 
 		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			playsound(user.loc, 'sound/effects/spray.ogg', 5, DEFAULT_SOUND_VARY, extra_range = 5)
 		user.visible_message("[user] coats [target] with spray paint!", "<span class='notice'>You coat [target] with spray paint.</span>")
 		return
 

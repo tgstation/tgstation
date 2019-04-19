@@ -76,7 +76,7 @@
 	if(safety_mode)
 		safety_mode = FALSE
 		update_icon()
-	playsound(src, "sparks", 75, 1, -1)
+	playsound(src, "sparks", 75, DEFAULT_SOUND_VARY, extra_range = -1)
 	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
 
 /obj/machinery/recycler/update_icon()
@@ -128,7 +128,7 @@
 			AM.forceMove(loc)
 
 	if(items_recycled && sound)
-		playsound(src, item_recycle_sound, 50, 1)
+		playsound(src, item_recycle_sound, 50, DEFAULT_SOUND_VARY)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
 
@@ -169,9 +169,9 @@
 	L.forceMove(loc)
 
 	if(issilicon(L))
-		playsound(src, 'sound/items/welder.ogg', 50, 1)
+		playsound(src, 'sound/items/welder.ogg', 50, DEFAULT_SOUND_VARY)
 	else
-		playsound(src, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', 50, DEFAULT_SOUND_VARY)
 
 	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)
 	if(iscarbon(L))

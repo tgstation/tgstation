@@ -103,7 +103,7 @@
 		power_change()
 		return
 
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, DEFAULT_SOUND_VARY)
 	flick("[base_state]_flash", src)
 	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	last_flash = world.time
@@ -149,7 +149,7 @@
 			var/obj/item/wallframe/flasher/F = new(get_turf(src))
 			transfer_fingerprints_to(F)
 			F.id = id
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, DEFAULT_SOUND_VARY)
 		else
 			new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)

@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/Bump(atom/A)
 	if(A)
 		ram_turf(get_turf(A))
-		playsound(src.loc, meteorsound, 40, 1)
+		playsound(src.loc, meteorsound, 40, DEFAULT_SOUND_VARY)
 		get_hit()
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
@@ -188,18 +188,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/proc/meteor_effect()
 	if(heavy)
-		var/sound/meteor_sound = sound(meteorsound)
-		var/random_frequency = get_rand_frequency()
-
-		for(var/mob/M in GLOB.player_list)
-			if((M.orbiting) && (SSaugury.watchers[M]))
-				continue
-			var/turf/T = get_turf(M)
-			if(!T || T.z != src.z)
-				continue
-			var/dist = get_dist(M.loc, src.loc)
-			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
-			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, S = meteor_sound)
+		playsound(src, 80, meteorsound, DEFAULT_SOUND_VARY, 255, falloff = 4)
+		shake_area(src, 4, 2, 3, 1, 20, 255)
 
 ///////////////////////
 //Meteor types

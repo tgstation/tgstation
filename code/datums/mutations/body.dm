@@ -306,7 +306,7 @@
 		if(prob(15))
 			owner.acid_act(rand(30,50), 10)
 			owner.visible_message("<span class='warning'>[owner]'s skin bubbles and pops.</span>", "<span class='userdanger'>Your bubbling flesh pops! It burns!</span>")
-			playsound(owner,'sound/weapons/sear.ogg', 50, 1)
+			playsound(owner,'sound/weapons/sear.ogg', 50, DEFAULT_SOUND_VARY)
 
 /datum/mutation/human/gigantism
 	name = "Gigantism"//negative version of dwarfism

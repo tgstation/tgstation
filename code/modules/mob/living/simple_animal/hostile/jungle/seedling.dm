@@ -161,7 +161,7 @@
 			living_target.adjustFireLoss(30)
 			living_target.adjust_fire_stacks(0.2)//Just here for the showmanship
 			living_target.IgniteMob()
-			playsound(living_target,'sound/weapons/sear.ogg', 50, 1)
+			playsound(living_target,'sound/weapons/sear.ogg', 50, DEFAULT_SOUND_VARY)
 			addtimer(CALLBACK(src, .proc/AttackRecovery), 5)
 			return
 	AttackRecovery()
@@ -184,7 +184,7 @@
 		var/obj/item/projectile/seedling/readied_shot = new /obj/item/projectile/seedling(our_turf)
 		readied_shot.preparePixelProjectile(target, src, null, rand(-10, 10))
 		readied_shot.fire()
-		playsound(src, projectilesound, 100, 1)
+		playsound(src, projectilesound, 100, DEFAULT_SOUND_VARY)
 
 /mob/living/simple_animal/hostile/jungle/seedling/proc/AttackRecovery()
 	if(combatant_state == SEEDLING_STATE_ACTIVE)

@@ -54,7 +54,7 @@
 				var/mob/M = V
 				var/turf/T = get_turf(M)
 				if((T && T.z == z) || is_servant_of_ratvar(M) || isobserver(M))
-					M.playsound_local(M, 'sound/machines/clockcult/ark_scream.ogg', 100, FALSE, pressure_affected = FALSE)
+					M.playsound_local(M, 'sound/machines/clockcult/ark_scream.ogg', 100, pressure_affected = FALSE)
 			hierophant_message("<span class='big boldwarning'>The Ark is taking damage!</span>")
 	last_scream = world.time + ARK_SCREAM_COOLDOWN
 
@@ -74,7 +74,7 @@
 	for(var/mob/M in GLOB.player_list)
 		var/turf/T = get_turf(M)
 		if(is_servant_of_ratvar(M) || isobserver(M) || (T && T.z == z))
-			M.playsound_local(M, 'sound/magic/clockwork/ark_activation_sequence.ogg', 30, FALSE, pressure_affected = FALSE)
+			M.playsound_local(M, 'sound/magic/clockwork/ark_activation_sequence.ogg', 30, pressure_affected = FALSE)
 	addtimer(CALLBACK(src, .proc/let_slip_the_dogs), 300)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/let_slip_the_dogs()
@@ -184,7 +184,7 @@
 			for(var/mob/M in GLOB.player_list)
 				var/turf/T = get_turf(M)
 				if((T && T.z == z) || is_servant_of_ratvar(M))
-					M.playsound_local(M, 'sound/machines/clockcult/ark_deathrattle.ogg', 100, FALSE, pressure_affected = FALSE)
+					M.playsound_local(M, 'sound/machines/clockcult/ark_deathrattle.ogg', 100, pressure_affected = FALSE)
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE

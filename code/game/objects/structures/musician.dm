@@ -58,7 +58,6 @@
 
 	// now generate name
 	var/soundfile = "sound/instruments/[instrumentDir]/[ascii2text(note+64)][acc][oct].[instrumentExt]"
-	soundfile = file(soundfile)
 	// make sure the note exists
 	if(!fexists(soundfile))
 		return
@@ -70,7 +69,6 @@
 			LAZYADD(hearing_mobs, M)
 		last_hearcheck = world.time
 
-	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
 		if(HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
@@ -78,7 +76,7 @@
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
 		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 			continue
-		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
+		M.playsound_local(source, soundfile, 100, falloff = 5)
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise

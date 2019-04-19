@@ -82,7 +82,7 @@
 		return ..()
 	user.visible_message("<span class='warning'>[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!</span>", \
 						 "<span class='danger'>An unnatural hunger consumes you. You raise [src] your mouth and devour it!</span>")
-	playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
+	playsound(user, 'sound/magic/demon_consume.ogg', 50, DEFAULT_SOUND_VARY)
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
 			to_chat(user, "<span class='warning'>...and you don't feel any different.</span>")
@@ -170,7 +170,7 @@
 		M.forceMove(T)
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)
-			playsound(T, feast_sound, 50, 1, -1)
+			playsound(T, feast_sound, 50, DEFAULT_SOUND_VARY, extra_range = -1)
 			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace,	and feel ready to take on the world.</span>")
 
 /mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)

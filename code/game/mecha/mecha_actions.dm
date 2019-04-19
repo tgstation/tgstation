@@ -267,7 +267,7 @@
 			chassis.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
-	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
+	playsound(src, 'sound/mecha/mechmove01.ogg', 50, DEFAULT_SOUND_VARY)
 	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_toggle_phasing

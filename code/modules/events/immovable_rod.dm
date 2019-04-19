@@ -111,7 +111,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', 50, DEFAULT_SOUND_VARY)
 		audible_message("<span class='danger'>You hear a CLANG!</span>")
 
 	if(clong && prob(25))
@@ -149,10 +149,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.job in list("Research Director"))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			for(var/mob/M in urange(8, src))
-				if(!M.stat)
-					shake_camera(M, 2, 3)
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, DEFAULT_SOUND_VARY)
+			shake_area(src, 2, 2, 3, 3, 1, 8)
 			if(wizard)
 				U.visible_message("<span class='boldwarning'>[src] transforms into [wizard] as [U] suplexes them!</span>", "<span class='warning'>As you grab [src], it suddenly turns into [wizard] as you suplex them!</span>")
 				to_chat(wizard, "<span class='boldwarning'>You're suddenly jolted out of rod-form as [U] somehow manages to grab you, slamming you into the ground!</span>")
