@@ -329,7 +329,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
             relocate(H)
  
 /area/hilbertshotel/proc/relocate(obj/item/hilbertshotel/H)
-    if(prob((1/737)*100)) //Because screw you
+    if(prob(0.135685) //Because screw you
         qdel(H)
         return
     var/turf/targetturf = find_safe_turf()
