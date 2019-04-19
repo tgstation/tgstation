@@ -117,6 +117,7 @@
 #define NOEYES			16
 #define DYNCOLORS		17 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define AGENDER			18
+#define HIDEYES			19 //Do not draw eyes or eyeless overlay
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
