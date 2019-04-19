@@ -6,6 +6,7 @@
 				CAT_WEAPONRY,
 				CAT_ROBOT,
 				CAT_MISC,
+				CAT_STRUCTURE,	// FULPSTATION addition.
 				CAT_PRIMAL,
 				CAT_FOOD,
 				CAT_CLOTHING)
@@ -15,6 +16,7 @@
 							CAT_AMMO),
 						CAT_NONE, //Robot subcategories
 						CAT_NONE, //Misc subcategories
+						CAT_NONE, //Structure subcategories	// FULPSTATION addition
 						CAT_NONE, //Tribal subcategories
 						list(	//Food subcategories
 							CAT_BREAD,
@@ -317,7 +319,7 @@
 	var/list/cant_craft = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
-		
+
 		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 

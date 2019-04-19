@@ -19,16 +19,11 @@
 /datum/antagonist/bloodsucker/proc/LifeTick() // Should probably run from life.dm, same as handle_changeling
 	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
 
-
-
 	var/notice_healing = FALSE
 	while (owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
 
-		//
-		//if (owner.current.stat != DEAD && !owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker"))
-
 		// Deduct Blood
-		if (owner.current.stat == CONSCIOUS && !poweron_feed)
+		if (owner.current.stat == CONSCIOUS && !poweron_feed && !owner.current.has_trait(TRAIT_DEATHCOMA))
 			AddBloodVolume(-0.2) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
 
 		// Heal
@@ -46,13 +41,13 @@
 		HandleDeath()
 
 		// Standard Update
-		//update_hud()
+		update_hud()
 
 		// Wait before next pass
 		sleep(10)//sleep(30)
 
 	// Free my Vassals! (if I haven't yet)
-	//FreeAllVassals()
+	FreeAllVassals()
 
 
 
@@ -67,7 +62,7 @@
 
 /datum/antagonist/bloodsucker/proc/AddBloodVolume(value)
 	owner.current.blood_volume = CLAMP(owner.current.blood_volume + value, 0, maxBloodVolume)
-	//update_hud()
+	update_hud()
 
 
 /datum/antagonist/bloodsucker/proc/HandleFeeding(mob/living/carbon/target, mult=1)
@@ -120,7 +115,12 @@
 //
 /datum/antagonist/bloodsucker/proc/HandleHealing(mult = 1)
 
+	// NOTE: Mult of 0 is just a TEST to see if we are injured and need to go into Torpor!
+	//		 It is called from your coffin on close (by you only)
+
 	if (poweron_masquerade == TRUE || owner.current.AmStaked())
+		if (mult == 0)
+			to_chat(owner, "<span class='warning'>HEAL TEST 2: FALSE [poweron_masquerade] / [owner.current.AmStaked()]</span>")
 		return FALSE
 
 	owner.current.adjustStaminaLoss(-1 * mult, 0)
@@ -133,68 +133,76 @@
 	// No Bleeding
 	if (ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
-		H.bleed_rate = 0 // NOTE: This is done HERE, not in hande_healing_natural, because
+		H.bleed_rate = 0
 
 	// Damage Heal: Do I have damage to ANY bodypart?
 	if (iscarbon(owner.current))
 		var/mob/living/carbon/C = owner.current
-		var/costMult = 1 // Only goes down being in a coffin
+		var/costMult = 1 // Coffin makes it cheaper
 
 		// BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
 		var/fireheal = 0
-		if(istype(C.loc, /obj/structure/closet/crate/coffin) && C.has_trait(TRAIT_DEATHCOMA, "bloodsucker"))
-			mult *= 3 // Increase multiplier if we're sleeping in a coffin.
-			fireheal = min(C.getFireLoss(), regenRate / 2 * mult) // NOTE: Burn damage heals 5x quicker in Torpor (the only way we can be healing while dead)
-			costMult = 0
+		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || C.has_trait(TRAIT_DEATHCOMA, "bloodsucker")) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
+		if(amInCoffinWhileTorpor)
+			mult *= 5 // Increase multiplier if we're sleeping in a coffin.
+			fireheal = min(C.getFireLoss(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
+			costMult = 0.25
 		else
 			// No Blood? Lower Mult
 			if (owner.current.blood_volume <= 0)
 				mult = 0.25
 			// Crit from burn? Lower damage to maximum allowed.
-			if (C.getFireLoss() > owner.current.getMaxHealth())
-				fireheal = regenRate / 2 * mult
+			//if (C.getFireLoss() > owner.current.getMaxHealth())
+			//	fireheal = regenRate / 2
 		// BRUTE: Always Heal
-		var/bruteheal = min(C.getBruteLoss(), regenRate * mult)
+		var/bruteheal = min(C.getBruteLoss(), regenRate)
 
 		// Heal if Damaged
 		if (bruteheal + fireheal > 0)
-			to_chat(C, "<span class='warning'>TEST:[bruteheal] [fireheal] [mult] [costMult]</span>")
-
-
+			// Just a check? Don't heal/spend, and return.
+			if (mult == 0)
+				return TRUE
 			// We have damage. Let's heal (one time)
-			C.heal_overall_damage(bruteheal * mult, fireheal * mult)			//C.heal_overall_damage(bruteheal, fireheal) 					// Heal BRUTE / BURN in random portions throughout the body.
+			C.heal_overall_damage(bruteheal * mult, fireheal * mult)				// Heal BRUTE / BURN in random portions throughout the body.
 			// Pay Cost
-			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)		//AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult)		// Costs blood to heal (but Mult doesn't affect it...you still pay the same)
+			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
 
+			// Healed! Done for this tick.
+			if (mult == 0)
+				to_chat(owner, "<span class='warning'>HEAL TEST 1: TRUE</span>")
 			return TRUE
 
+		// Limbs? (And I have no other healing)
+		if (amInCoffinWhileTorpor)
+			var/list/missing = owner.current.get_missing_limbs()
+			if (missing.len)
+				// 1) Find ONE Limb and regenerate it.
+				var/targetLimb = pick(missing)
+				owner.current.regenerate_limb(targetLimb, 0)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
+				// 2) Limb returns Damaged
+				var/obj/item/bodypart/L = owner.current.get_bodypart( targetLimb )
+				AddBloodVolume(20 * costMult)	// Costs blood to heal
+				L.brute_dam = 60
+				to_chat(owner.current, "<span class='notice'>Your flesh knits as it regrows [L]!</span>")
+				playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
+				// DONE! After regenerating a limb, we stop here.
+				if (mult == 0)
+					to_chat(owner, "<span class='warning'>HEAL TEST 2: TRUE</span>")
+				return TRUE
+
+			// Cure Final Disabilities
+			owner.current.cure_blind()
+			owner.current.cure_husk()
+			// Remove Embedded!
+			C.remove_all_embedded_objects()
+			// Eyes/Heart
+			CheckVampOrgans() // Heart, Eyes
+
+	if (mult == 0)
+		to_chat(owner, "<span class='warning'>HEAL TEST 2: FALSE</span>")
 	return FALSE
 
 
-/datum/antagonist/bloodsucker/proc/HandleHealing_Limbs()
-
-	var/list/missing = owner.current.get_missing_limbs()
-	if (missing.len)
-		// 1) Find ONE Limb and regenerate it.
-		var/targetLimb = pick(missing)
-		owner.current.regenerate_limb(targetLimb, 0)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
-		// 2) Limb returns Damaged
-		var/obj/item/bodypart/L = owner.current.get_bodypart( targetLimb )
-		L.brute_dam = 50
-		to_chat(owner.current, "<span class='notice'>Your flesh knits as it regrows [L]!</span>")
-		playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
-		// DONE! After regenerating a limb, we stop here.
-		return TRUE
-
-	// Cure Final Disabilities
-	owner.current.cure_blind()
-	owner.current.cure_husk()
-
-	// Remove Embedded!
-	var/mob/living/carbon/C = owner.current
-	C.remove_all_embedded_objects()
-
-	return FALSE
 
 // I am hungry!
 /datum/antagonist/bloodsucker/proc/HandleStarving()
@@ -209,12 +217,12 @@
 
 
 	// BLOOD_VOLUME_BAD: [224]  Jitter
-	if (owner.current.blood_volume < BLOOD_VOLUME_BAD && !prob(5))
-		owner.current.Jitter(10)
+	if (owner.current.blood_volume < BLOOD_VOLUME_BAD && !prob(2))
+		owner.current.Jitter(20)
 
 	// BLOOD_VOLUME_SURVIVE: [122]  Blur Vision
 	if (owner.current.blood_volume < BLOOD_VOLUME_BAD)
-		owner.current.blur_eyes(10 - 10 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
+		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
 
 	// Nutrition
 	owner.current.nutrition = min(owner.current.blood_volume, NUTRITION_LEVEL_FED) // <-- 350  //NUTRITION_LEVEL_FULL
@@ -255,19 +263,13 @@
 	var/total_damage = owner.current.getBruteLoss() + owner.current.getFireLoss()
 	// Died? Convert to Torpor (fake death)
 	if (owner.current.stat >= DEAD)
-		owner.current.fakedeath("bloodsucker")
-		owner.current.add_trait(TRAIT_NODEATH,"bloodsucker")	// Without this, you'll just keep dying while you recover.
-		owner.current.stat = UNCONSCIOUS
-		owner.current.update_stat() //owner.current.stat = UNCONSCIOUS
-		to_chat(owner, "<span class='danger'>Your immortal body will not yet relinquish your soul to the abyss.</span>")
+		Torpor_Begin()
+		to_chat(owner, "<span class='danger'>Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor.</span>")
 		if (poweron_masquerade == TRUE)
 			to_chat(owner, "<span class='warning'>Your wounds will not heal until you disable the <span class='boldnotice'>Masquerade</span> power.</span>")
 	else
-		if (total_damage <= owner.current.getMaxHealth() && owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker"))
-			owner.current.cure_fakedeath("bloodsucker")
-			owner.current.remove_trait(TRAIT_NODEATH,"bloodsucker")
-			owner.current.stat = SOFT_CRIT
-			owner.current.update_stat() //owner.current.stat = CONSCIOUS
+		if (total_damage <= 0 && owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker")) // owner.current.getMaxHealth()
+			Torpor_End()
 		// Fake Unconscious
 		if (poweron_masquerade == TRUE && total_damage >= owner.current.getMaxHealth() - HEALTH_THRESHOLD_FULLCRIT)
 			owner.current.Unconscious(20,1)
@@ -275,6 +277,19 @@
 	//HEALTH_THRESHOLD_CRIT 0
 	//HEALTH_THRESHOLD_FULLCRIT -30
 	//HEALTH_THRESHOLD_DEAD -100
+
+/datum/antagonist/bloodsucker/proc/Torpor_Begin()
+	owner.current.fakedeath("bloodsucker")
+	owner.current.add_trait(TRAIT_NODEATH,"bloodsucker")	// Without this, you'll just keep dying while you recover.
+	owner.current.stat = UNCONSCIOUS
+	owner.current.update_stat() //owner.current.stat = UNCONSCIOUS
+/datum/antagonist/bloodsucker/proc/Torpor_End()
+	owner.current.cure_fakedeath("bloodsucker")
+	owner.current.remove_trait(TRAIT_NODEATH,"bloodsucker")
+	owner.current.stat = SOFT_CRIT
+	owner.current.update_stat() //owner.current.stat = CONSCIOUS
+	to_chat(owner, "<span class='warning'>You have recovered from Torpor.</span>")
+
 
 /datum/antagonist/bloodsucker/proc/AmFinalDeath()
  	return owner && owner.AmFinalDeath()
@@ -291,7 +306,7 @@
 	C.remove_all_embedded_objects()
 
 	// Free my Vassals!
-	//FreeAllVassals()
+	FreeAllVassals()
 
 	// Elders get Dusted
 	if (vamptitle)
@@ -305,6 +320,7 @@
 			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
 			 "<span class='italics'>You hear a wet, bursting sound.</span>")
 		owner.current.gib()
+	playsound(owner.current.loc, 'sound/effects/tendril_destroyed.ogg', 40, 1)
 
 
 
@@ -347,8 +363,12 @@
 	var/sickphase = 0
 	while (foodInGut)
 
+		sleep(50)
+
+		C.adjust_disgust(20 * sickphase)
+
 		// Wait an interval...
-		sleep(100 + 50 * sickphase) // At intervals of 100, 150, and 200. (10 seconds, 15 seconds, and 20 seconds)
+		sleep(50 + 50 * sickphase) // At intervals of 100, 150, and 200. (10 seconds, 15 seconds, and 20 seconds)
 
 		// Died? Cancel
 		if (C.stat == DEAD)

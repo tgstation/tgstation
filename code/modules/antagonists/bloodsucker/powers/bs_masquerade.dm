@@ -16,19 +16,13 @@
 //	-
 
 
-
-
-
-
 /datum/action/bloodsucker/masquerade
 	name = "Masquerade"//"Cellular Emporium"
 	desc = "Feign the vital signs of a mortal, and escape both casual and medical notice as the monster you truly are."
-	icon_icon = 'icons/obj/drinks.dmi'
-	button_icon_state = "changelingsting"
-	background_icon_state = "bg_changeling"
+	button_icon_state = "power_human"
 
 	bloodcost = 10
-	cooldown = 30
+	cooldown = 50
 	amToggle = TRUE
 
 

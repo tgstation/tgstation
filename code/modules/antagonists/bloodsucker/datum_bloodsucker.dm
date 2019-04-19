@@ -5,7 +5,7 @@
 
 
 /datum/antagonist/bloodsucker
-	name = ""//WARNING: DO NOT SELECT" // "Bloodsucker"
+	name = "Bloodsucker"
 	roundend_category = "bloodsuckers"
 	antagpanel_category = "Bloodsucker (UNFINISHED)"
 	job_rank = ROLE_BLOODSUCKER
@@ -17,46 +17,69 @@
 
 	// CLAN
 	var/datum/team/vampireclan/clan
+	var/list/datum/antagonist/vassal/vassals = list()// Vassals under my control. Periodically remove the dead ones.
+	var/datum/mind/creator				// Who made me? For both Vassals AND Bloodsuckers (though Master Vamps won't have one)
 
 	// POWERS
-	var/list/obj/effect/proc_holder/spell/powers = list()// Purchased powers
+	var/list/datum/action/powers = list()// Purchased powers
 	var/poweron_feed = FALSE			// Am I feeding?
 	var/poweron_masquerade = FALSE
 
 	// STATS
-	var/regenRate = 0.3					// How many points of Brute do I heal per tick? Note: Fire never changes its rate (0.1)
+	var/vamplevel = 0
+	var/regenRate = 0.3					// How many points of Brute do I heal per tick?
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding. // BLOOD_VOLUME_NORMAL  550 // BLOOD_VOLUME_SAFE 475 //BLOOD_VOLUME_OKAY 336 //BLOOD_VOLUME_BAD 224 // BLOOD_VOLUME_SURVIVE 122
+
+	// OBJECTIVES
+	var/list/datum/objective/objectives_given = list()	// For removal if needed.
+	var/area/lair
+	var/obj/structure/closet/crate/coffin
 
 	// TRACKING
 	var/foodInGut = 0					// How much food to throw up later. You shouldn't have eaten that.
 
-
 	// LISTS
-	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_COLDBLOODED)
+	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_COLDBLOODED,TRAIT_AGEUSIA)
+	// NOTES: TRAIT_AGEUSIA <-- Doesn't like flavors.
 	// REMOVED: TRAIT_NODEATH
 	// TO ADD:
 	//var/static/list/defaultOrgans = list (/obj/item/organ/heart/vampheart,/obj/item/organ/heart/vampeyes)
 
 
 
-
 /datum/antagonist/bloodsucker/on_gain()
+
+	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
+
+	antag_memory += "Although you were born a mortal, in un-death you earned the name <b>[ReturnFullName(owner.current, 1)]</b>.<br>"
 
 	// Give Powers & Stats
 	AssignStarterPowersAndStats()
 
+	// Objectives & Team
+	forge_bloodsucker_objectives()
+
+	// Add Antag HUD
+	update_bloodsucker_icons_added(owner.current, "bloodsucker")
 
 	// Run Life Function
 	LifeTick()
-
 	. = ..()
 
 
 /datum/antagonist/bloodsucker/on_removal()
 
+	SSticker.mode.bloodsuckers -= owner
+
 	// Clear Powers & Stats
 	ClearAllPowersAndStats()
+
+	// Objectives
+	clear_bloodsucker_objectives()
+
+	// Clear Antag HUD
+	update_bloodsucker_icons_removed(owner.current)
 
 	. = ..()
 
@@ -66,10 +89,10 @@
 	var/fullname = ReturnFullName(owner.current, 1)
 	to_chat(owner, "<span class='userdanger'>You are [fullname], a bloodsucking vampire!</span>")
 	owner.announce_objectives()
-	//to_chat(owner, "<span class='boldannounce'>You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you may find yourself at \
-	risk of Frenzy!<span>")
+	to_chat(owner, "<span class='boldannounce'>You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you will find yourself at \
+	risk of being discovered!<span>")
 	//to_chat(owner, "<span class='boldannounce'>As an immortal, your power is linked to your age. The older you grow, the more abilities you will have access to.<span>")
-	//to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.<span>")
+	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.<span>")
 
 	owner.current.playsound_local(null, 'sound/Fulpsounds/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -127,7 +150,7 @@
 				vampreputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
 	// Reputations [Fledgling]
 	else
-		vampreputation = pick ("Crude","Callow","Unlearned","Neophyte","Novice","Unseasoned","Fledgling","Young","Neonate","Scrapling","Untested","Unproven","Newly Reisen","Born","Scavenger")//,"Fresh")
+		vampreputation = pick ("Crude","Callow","Unlearned","Neophyte","Novice","Unseasoned","Fledgling","Young","Neonate","Scrapling","Untested","Unproven","Newly Reisen","Born","Scavenger","Unknowing","Unspoiled")//,"Fresh")
 
 
 /datum/antagonist/bloodsucker/proc/AmFledgling()
@@ -155,6 +178,10 @@
 
 /datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 
+	// Blood/Rank Counter
+	add_hud()
+	update_hud(TRUE) 	// Set blood value, current rank
+
 	// Powers
 	BuyPower(new /datum/action/bloodsucker/feed)
 	BuyPower(new /datum/action/bloodsucker/masquerade)
@@ -162,6 +189,12 @@
 	// Traits
 	for (var/T in defaultTraits)
 		owner.current.add_trait(T, "bloodsucker")
+	// Traits: Species
+	if (ishuman(owner.current))
+		var/mob/living/carbon/human/H = owner.current
+		var/datum/species/S = H.dna.species
+		S.species_traits |= DRINKSBLOOD
+
 
 	// Stats
 	if (ishuman(owner.current))
@@ -184,6 +217,9 @@
 
 /datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
+	// Blood/Rank Counter
+	remove_hud()
+
 	// Powers
 	while(powers.len)
 		var/datum/action/bloodsucker/power = pick(powers)
@@ -194,6 +230,10 @@
 	// Traits
 	for (var/T in defaultTraits)
 		owner.current.remove_trait(T, "bloodsucker")
+	// Traits: Species
+	if (ishuman(owner.current))
+		var/mob/living/carbon/human/H = owner.current
+		H.set_species(H.dna.species.type)
 
 	// Stats
 	if (ishuman(owner.current))
@@ -205,7 +245,9 @@
 
 
 //datum/antagonist/bloodsucker/proc/LevelUp()
+	//update_hud(TRUE)
 
+	//playsound(src.loc, 'sound/effects/pope_entry.ogg', 25, 1)
 
 
 
@@ -234,19 +276,53 @@
 // Create Objectives
 /datum/antagonist/bloodsucker/proc/forge_bloodsucker_objectives() // Fledgling vampires can have different objectives.
 
-			// ROUND ONE: CREWMATE OBJECTIVES //
-	// Coffin [REQUIRED]
-	// 1a) Embrace Target
-	// 1b) Embrace Total
-	// 2a) Desecrate
-	// 2b) Heart Thief
-	// Survive [REQUIRED]
+	// TEAM
+	//clan = new /datum/team/vampireclan(owner)
 
-	var/datum/objective/assassinate/kill_objective = new
-	kill_objective.owner = owner
-	kill_objective.find_target()
-	objectives += kill_objective
 
+	// Lair Objective:		Create a Lair
+	var/datum/objective/bloodsucker/lair/lair_objective = new
+	lair_objective.owner = owner
+	lair_objective.generate_objective()
+	add_objective(lair_objective)
+
+	// Protege Objective
+	var/datum/objective/bloodsucker/protege/protege_objective = new
+	protege_objective.owner = owner
+	protege_objective.generate_objective()
+	add_objective(protege_objective)
+
+	// Heart Thief Objective:		Steal a quantity of hearts.
+	var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
+	heartthief_objective.owner = owner
+	heartthief_objective.generate_objective()
+	add_objective(heartthief_objective)
+
+	// Survive Objective
+	var/datum/objective/bloodsucker/survive/survive_objective = new
+	survive_objective.owner = owner
+	survive_objective.generate_objective()
+	add_objective(survive_objective)
+
+
+/datum/antagonist/bloodsucker/proc/add_objective(var/datum/objective/O)
+	objectives += O
+	objectives_given += O
+
+/datum/antagonist/bloodsucker/proc/clear_bloodsucker_objectives()
+
+	var/datum/team/team = get_team()
+	if(team)
+		team.remove_member(owner)
+
+	for(var/O in objectives_given)
+		objectives -= O
+		qdel(O)
+	objectives_given = list() // Traitors had this, so I added it. Not sure why.
+
+
+/datum/antagonist/bloodsucker/get_team()
+	return clan
 
 
 //  		2019 Breakdown of Bloodsuckers:
@@ -302,6 +378,9 @@
 //
 
 //					P O W E R S
+//	* BLOOD
+//		ADDICTIVE:	A) Your blood is dangerously addictive, and causes consumers to rendew their own blood at an increased rate (as well as heal). B) Vassals on your blood get special gifts.
+//
 //	* HASTE
 //		SPRINT:	A) Hastily speed in a direction faster than the eye can see. B) Spin and dizzy people you pass. C) Chance to knock down people you pass.
 //		LUNGE:	Leap toward a location and put your target into an agressive hold.
@@ -436,16 +515,18 @@
 /////////////////////////////////////
 
 		// HUD! //
-/*
+
 /datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_added(datum/mind/m)
 	var/datum/atom_hud/antag/vamphud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]
 	vamphud.join_hud(owner.current)
-	set_antag_hud(owner.current, "bloodsucker") // Located in icons/mob/hud.dmi
+	set_antag_hud(owner.current, "bloodsucker") // "bloodsucker"
+	owner.current.hud_list[ANTAG_HUD].icon = image('icons/Fulpicons/fulphud.dmi', owner.current, "bloodsucker")	// FULP ADDITION! Check prepare_huds in mob.dm to see why.
 
 /datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_removed(datum/mind/m)
-	var/datum/atom_hud/antag/vamphud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]//ANTAG_HUD_BLOODSUCKER]
+	var/datum/atom_hud/antag/vamphud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]
 	vamphud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
+
 
 /datum/atom_hud/antag/bloodsucker  // from hud.dm in /datums/   Also see data_huds.dm + antag_hud.dm
 
@@ -460,10 +541,10 @@
 	// GOAL: Vassals can BE seen by their Bloodsucker and his other Vassals.
 	// GOAL: Bloodsuckers can see each other.
 	if (!M || !A || !ismob(A) || !M.mind)// || !A.mind)
-		return 0
+		return FALSE
 	var/mob/A_mob = A
 	if (!A_mob.mind)
-		return 0
+		return FALSE
 
 	// Find Datums: Bloodsucker
 	var/datum/antagonist/bloodsucker/atom_B = A_mob.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
@@ -471,7 +552,7 @@
 
 	// Check 1) Are we both Bloodsuckers?
 	if (atom_B && mob_B)
-		return 1
+		return TRUE
 
 	// Find Datums: Vassal
 	var/datum/antagonist/vassal/atom_V = A_mob.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
@@ -479,19 +560,93 @@
 
 	// Check 2) If they are a BLOODSUCKER, then are they my Master?
 	if (mob_V && atom_B == mob_V.master)
-		return 1 // SUCCESS!
+		return TRUE // SUCCESS!
 
 	// Check 3) If I am a BLOODSUCKER, then are they my Vassal?
 	if (mob_B && atom_V && (atom_V in mob_B.vassals))
-		return 1 // SUCCESS!
+		return TRUE // SUCCESS!
 
 	// Check 4) If we are both VASSAL, then do we have the same master?
 	if (atom_V && mob_V && atom_V.master == mob_V.master)
-		return 1 // SUCCESS!
+		return TRUE // SUCCESS!
 
-	return 0
+	return FALSE
 
-*/
+		/////////////////////////////////////
+
+
+		// BLOOD COUNTER & RANK MARKER ! //
+
+#define ui_blood_display "WEST:6,CENTER-1:15"  // 6 pixels to the right, one tile UP from center and 15 pixels down.
+#define ui_vamprank_display "WEST:6,CENTER-0:5"
+
+/datum/hud
+	var/obj/screen/bloodsucker/blood_counter/blood_display
+	//var/obj/screen/bloodsucker/rank_counter/vamprank_display
+
+/datum/antagonist/bloodsucker/proc/add_hud()
+	return
+
+/datum/antagonist/bloodsucker/proc/remove_hud()
+	// No Hud? Get out.
+	if (!owner.current.hud_used)
+		return
+	owner.current.hud_used.blood_display.invisibility = INVISIBILITY_ABSTRACT
+	//owner.current.hud_used.vamprank_display.invisibility = INVISIBILITY_ABSTRACT
+
+/datum/antagonist/bloodsucker/proc/update_hud(updateRank=FALSE)
+	// No Hud? Get out.
+	if (!owner.current.hud_used)
+		return
+	// Update Blood Counter
+	if (owner.current.hud_used.blood_display)
+		owner.current.hud_used.blood_display.update_counter(owner.current.blood_volume)
+	// Update Rank Counter
+	//if (owner.current.hud_used.vamprank_display)
+	//	owner.current.hud_used.vamprank_display.update_counter(vamplevel)
+		//if (updateRank) // Only change icon on special request.
+		//	owner.current.hud_used.vamprank_display.icon_state = (world.time > nextLevelTick) ? "bloodsucker_rank_up" : "bloodsucker_rank"
+
+/obj/screen/bloodsucker
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/screen/bloodsucker/proc/clear()
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/screen/bloodsucker/proc/update_counter(value)
+	invisibility = 0 // Make Visible
+
+/obj/screen/bloodsucker/blood_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
+	icon = 'icons/Fulpicons/fulpicons.dmi'//'icons/mob/screen_gen.dmi'
+	name = "Blood Consumed"
+	icon_state = "blood_display"//"power_display"
+	screen_loc = ui_blood_display
+
+/obj/screen/bloodsucker/blood_counter/update_counter(value)
+	..()
+	var/valuecolor = "#FF6666"
+	if (value > BLOOD_VOLUME_SAFE)
+		valuecolor =  "#FFDDDD"
+	else if (value > BLOOD_VOLUME_BAD)
+		valuecolor =  "#FFAAAA"
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>"
+
+/obj/screen/bloodsucker/rank_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
+	icon = 'icons/Fulpicons/fulpicons.dmi'//'icons/mob/screen_gen.dmi'
+	name = "Bloodsucker Rank"
+	icon_state = "bloodsucker_rank" // Upgrade to "bloodsucker_rank_up"
+	screen_loc = ui_vamprank_display
+
+	invisibility = INVISIBILITY_ABSTRACT
+	// REMOVE THIS WHEN READY TO USE RANK!!
+
+
+/obj/screen/bloodsucker/rank_counter/update_counter(value)
+	..()
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(value,1)]</font></div>"
+
+
+
 
 
 

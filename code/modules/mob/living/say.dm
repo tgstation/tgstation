@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/list/the_dead = list()
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
-		if(M.stat != DEAD) //not dead, not important
+		if(!M || M.stat != DEAD) //not dead, not important	// FULPFIX: If this person does not exist. 4/13/19
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
 			continue

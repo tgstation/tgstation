@@ -89,6 +89,7 @@
 	else
 		..()
 
+												// NOTE: Look up /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)   inside of closets.dm     for dropping dude onto me.
 
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking

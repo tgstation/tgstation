@@ -12,10 +12,8 @@
 
 /datum/action/bloodsucker/feed
 	name = "Feed"//"Cellular Emporium"
-	desc = "Draw the heartsblood of the living.<br>"
-	icon_icon = 'icons/obj/drinks.dmi'
-	button_icon_state = "changelingsting"
-	background_icon_state = "bg_changeling"
+	desc = "Draw the heartsblood of the living.<br><b>Passive:</b> Feed silently and unnoticed.<br><b>Aggressive:</b>Subdue your target."
+	button_icon_state = "power_feed"
 
 	bloodcost = 0
 	cooldown = 30
@@ -79,26 +77,25 @@
 	// Initial Wait
 	if (amSilent)
 		to_chat(user, "<span class='notice'>You lean quietly toward [target] and secretly draw out your fangs...</span>")
-		if (!do_mob(user, target, 60))//sleep(10)
-			return
 	else
 		to_chat(user, "<span class='warning'>You pull [target] close to you and draw out your fangs...</span>")
-		if (!do_mob(user, target, 30))//sleep(10)
-			return
-	if (!user.pulling || !target) // Cancel. They're gone.
+	if (!do_mob(user, target, (amSilent ? 60 : 30),0,1,extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))//sleep(10)
+		to_chat(user, "<span class='warning'>Your feeding was interrupted.</span>")
+		DeactivatePower(user,target)
 		return
 
 	// Put target to Sleep (Bloodsuckers are immune to their own bite's sleep effect)
 	if (!amSilent)
 		if((!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) && target.stat <= UNCONSCIOUS)
 			ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
+			// Wait, then Cancel if Invalid
+			sleep(5)
+			if (!ContinueActive(user,target)) // Cancel. They're gone.
+				DeactivatePower(user,target)
+				return
 		// Pull Target Close
 		if (!target.density) // Pull target to you if they don't take up space.
 			target.Move(user.loc)
-		// Wait, then Cancel if Invalid
-		sleep(5)
-		if (!user.pulling || !target) // Cancel. They're gone.
-			return
 
 	// Broadcast Message
 	if (amSilent)
@@ -124,7 +121,8 @@
 	while (bloodsuckerdatum && target && active)
 		user.mobility_flags &= ~MOBILITY_MOVE // user.canmove = 0 // Prevents spilling blood accidentally.
 
-		if (!do_mob(user, target, 20, 0, 0, extra_checks=CALLBACK(src, .proc/ContinueActive, user)))
+		// Abort? A bloody mistake.
+		if (!do_mob(user, target, 20, 0, 0, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
 			// May have disabled Feed during do_mob
 			if (!active || !ContinueActive(user))
 				break
@@ -197,8 +195,8 @@
 							 "<span class='warning'>You retract your fangs and release [target] from your bite.</span>")
 
 
-/datum/action/bloodsucker/feed/ContinueActive(mob/living/user)
-	return ..() // Active, and still Antag
+/datum/action/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
+	return ..()  && user.pulling && user.pulling == target // Active, and still Antag
 	// NOTE: We don't check for user.pulling etc. because do_mob does this.
 
 /datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target, powerLevel=1)
