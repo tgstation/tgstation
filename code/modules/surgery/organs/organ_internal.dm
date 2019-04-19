@@ -100,6 +100,9 @@
 
 /obj/item/organ/proc/start_rotting()
 	if(!synthetic)
+		addtimer(CALLBACK(src, .proc/rot_now), 2 MINUTES)
+
+/obj/item/organ/proc/rot_now()
 		desc += " It smells terrible."
 		AddComponent(/datum/component/rot/organ)
 
