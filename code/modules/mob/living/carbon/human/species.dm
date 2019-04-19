@@ -1193,7 +1193,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		switch(atk_verb)//this code is really stupid but some genius apparently made "claw" and "slash" two attack types but also the same one so it's needed i guess
 			if(ATTACK_EFFECT_KICK)
 				user.do_attack_animation(target, ATTACK_EFFECT_KICK)
-			if(ATTACK_EFFECT_SLASH)
+			if(ATTACK_EFFECT_SLASH || ATTACK_EFFECT_CLAW)//smh
 				user.do_attack_animation(target, ATTACK_EFFECT_CLAW)
 			if(ATTACK_EFFECT_SMASH)
 				user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
@@ -1205,10 +1205,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(atk_verb == ATTACK_EFFECT_KICK && user.dna.species.punchdamagelow != 0)//kicks never miss (provided your species deals more than 0 damage)
-			miss_chance = 0
-		else if(user.dna.species.punchdamagelow)
-			miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
+		if(user.dna.species.punchdamagelow)
+			if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
+				miss_chance = 0
+			else
+				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
