@@ -43,8 +43,8 @@
 		dat += "<h3>Device Settings</h3><br>"
 		if(pai.radio)
 			dat += "<b>Radio Uplink</b><br>"
-			dat += "<A href='byond://?src=[REF(src)];toggle_tx=1'>\[[pai.can_tx? "Disable" : "Enable"] Radio Transmission\]</a><br>"
-			dat += "<A href='byond://?src=[REF(src)];toggle_rx=1'>\[[pai.can_rx? "Disable" : "Enable"] Radio Reception\]</a><br>"
+			dat += "<A href='byond://?src=[REF(src)];toggle_transmit=1'>\[[pai.can_transmit? "Disable" : "Enable"] Radio Transmission\]</a><br>"
+			dat += "<A href='byond://?src=[REF(src)];toggle_receive=1'>\[[pai.can_receive? "Disable" : "Enable"] Radio Reception\]</a><br>"
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
@@ -92,24 +92,24 @@
 					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
 					qdel(pai)
-		if(href_list["toggle_tx"])
-			if(pai.can_tx)
+		if(href_list["toggle_transmit"])
+			if(pai.can_transmit)
 				to_chat(pai, "<span class='userdanger'>Your owner has disabled your outgoing radio transmissions!</span>")
-				pai.can_tx = FALSE
+				pai.can_transmit = FALSE
 				to_chat(usr, "<span class='warning'>You disable your pAI's outgoing radio transmissions!</span>")
 			else
 				to_chat(pai, "<span class='boldnotice'>Your owner has enabled your outgoing radio transmissions!</span>")
-				pai.can_tx = TRUE
+				pai.can_transmit = TRUE
 				to_chat(usr, "<span class='notice'>You enable your pAI's outgoing radio transmissions!</span>")
 			pai.radio.wires.cut(WIRE_TX)	
-		if(href_list["toggle_rx"])
-			if(pai.can_rx)
+		if(href_list["toggle_receive"])
+			if(pai.can_receive)
 				to_chat(pai, "<span class='userdanger'>Your owner has disabled your incoming radio transmissions!</span>")
-				pai.can_rx = FALSE
+				pai.can_receive = FALSE
 				to_chat(usr, "<span class='warning'>You disable your pAI's incoming radio transmissions!</span>")
 			else
 				to_chat(pai, "<span class='boldnotice'>Your owner has enabled your incoming radio transmissions!</span>")
-				pai.can_rx = TRUE
+				pai.can_receive = TRUE
 				to_chat(usr, "<span class='notice'>You enable your pAI's incoming radio transmissions!</span>")
 			pai.radio.wires.cut(WIRE_RX)
 		if(href_list["setlaws"])
