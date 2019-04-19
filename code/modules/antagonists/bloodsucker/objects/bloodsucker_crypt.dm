@@ -294,7 +294,7 @@
 				 /obj/item/wrench
 				 )
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 5,
-				/obj/item/stack/sheet/metal = 5)
+				/obj/item/stack/sheet/metal = 10)
 				///obj/item/stack/packageWrap = 8,
 				///obj/item/pipe = 2)
 	time = 200

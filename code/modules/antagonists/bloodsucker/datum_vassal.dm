@@ -98,7 +98,7 @@
 	//icon = 'icons/obj/device.dmi'
 	//icon_state = "pinon"
 
-/datum/status_effect/agent_pinpointer/hunter_edition/on_creation(mob/living/new_owner, ...)
+/datum/status_effect/agent_pinpointer/vassal_edition/on_creation(mob/living/new_owner, ...)
 	..()
 
 	var/datum/antagonist/vassal/antag_datum = new_owner.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
