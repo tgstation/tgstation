@@ -4,6 +4,7 @@
 	icon_state = "repairbot"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	density = FALSE
+	hud_type = /datum/hud/pai
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
@@ -38,6 +39,8 @@
 	var/subscreen			// Which specific function of the main screen is being displayed
 
 	var/obj/item/pda/ai/pai/pda = null
+
+	var/obj/machinery/newscaster			//pAI Newscaster
 
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
@@ -104,10 +107,13 @@
 		P.setPersonality(src)
 	forceMove(P)
 	card = P
+	job = "pAI"
 	signaler = new(src)
 	if(!radio)
 		radio = new /obj/item/radio(src)
-
+	newscaster = new /obj/machinery/newscaster(src)
+	if(!aicamera)
+		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
 	//PDA
 	pda = new(src)
 	spawn(5)

@@ -168,6 +168,9 @@
 					pID = 10
 			card.setEmotion(pID)
 
+		if("news")
+			newscaster.ui_interact(src)
+
 		if("signaller")
 
 			if(href_list["send"])
@@ -287,6 +290,7 @@
 	dat += "<A href='byond://?src=[REF(src)];software=directives'>Directives</A><br>"
 	dat += "<A href='byond://?src=[REF(src)];software=radio;sub=0'>Radio Configuration</A><br>"
 	dat += "<A href='byond://?src=[REF(src)];software=image'>Screen Display</A><br>"
+	dat += "<A href='byond://?src=[REF(src)];software=news'>Newscaster</A><br>"
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
