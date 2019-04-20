@@ -58,7 +58,10 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL))
+		var/strangled = (pulledby && pulledby.grab_state >= GRAB_KILL)
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || strangled)
+			if(strangled)
+				add_logs(user = pulledby, target = src, what_done = "delt strangle damage", object=null, addition=null)
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= HEALTH_THRESHOLD_CRIT)

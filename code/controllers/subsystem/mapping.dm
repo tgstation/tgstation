@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ruins_templates = list()
 	var/list/space_ruins_templates = list()
 	var/list/lava_ruins_templates = list()
-	var/list/module_templates = list()
+	var/list/module_templates = list() //killingtorchers module_templaes list for randized station modules.
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
@@ -49,6 +49,7 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
+	randomize_station() //moving this here to be loaded right after the z-levels load. The game needs to not process any mapping and assume the randomized areas were there always.-falaskian
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
 	while (space_levels_so_far < config.space_ruin_levels)
@@ -85,49 +86,12 @@ SUBSYSTEM_DEF(mapping)
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
-	randomize_station()
 	QDEL_NULL(loader)
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
    Used by the AI doomsday and the self destruct nuke.
 */
-
-/datum/stationmodule_group
-	var/name
-	var/force
-	var/list/possibilities = list()
-
-/datum/controller/subsystem/mapping/proc/randomize_station()
-	log_world("Randomizing station...")
-	to_chat(world, "<span class='boldannounce'>Randomizing station...</span>")
-	for (var/type in subtypesof(/datum/stationmodule_group))
-		var/datum/stationmodule_group/inited = new type()
-
-		var/list/picklist = inited.possibilities.Copy()
-		picklist.Add("none")
-
-		var/pick = pick(picklist)
-
-		if (inited.force)
-			pick = inited.force
-
-		if (pick == "none")
-			log_world("Group: [inited.name] | Picked: Default")
-		else
-			log_world("Group: [inited.name] | Picked: [pick]")
-			var/datum/map_template/temp = module_templates[pick]
-			if (isnull(temp))
-				log_world("Improperly set up stationgroup (no module template): [pick]")
-			else
-				temp.load(locate(picklist[pick][1], picklist[pick][2], picklist[pick][3]), centered=FALSE, placeOnTop=TRUE, overWrite=TRUE)
-
-	log_world("Finished randomizing station")
-	to_chat(world, "<span class='boldannounce'>Finished randomizing station</span>")
-
-
-
-
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
 	nuke_threats[nuke] = TRUE
 	check_nuke_threats()
@@ -321,14 +285,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
-	preloadModules()
-
-/datum/controller/subsystem/mapping/proc/preloadModules(path = "_maps/modules/")
-	var/list/filelist = flist(path)
-	for (var/map in filelist)
-		var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
-		module_templates[map] = T
-
+	preloadModules() //killingtochers random station proc called here
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename

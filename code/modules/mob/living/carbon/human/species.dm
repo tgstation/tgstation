@@ -1533,6 +1533,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
+		add_logs(user = null, target = H, what_done = "Took [burn_damage] heat damage", object = null, addition = null)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
 		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hot")

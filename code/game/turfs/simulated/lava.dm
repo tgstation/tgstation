@@ -132,7 +132,7 @@
 
 				if(S && H && S.flags_2 & LAVA_PROTECT_2 && H.flags_2 & LAVA_PROTECT_2)
 					return
-
+			add_logs(user = null, target = L, what_done = "injured by standing in lava", object=null, addition=null)
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)

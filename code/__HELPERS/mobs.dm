@@ -210,7 +210,7 @@ Proc for attack log creation, because really why not
 
 	var/sattackloc = ""
 	if(attack_location)
-		sattackloc = "([attack_location.x],[attack_location.y],[attack_location.z])"
+		sattackloc = "([attack_location.x],[attack_location.y],[attack_location.z])('[get_area(attack_location)]')"
 
 	if(is_mob_user)
 		var/message = "<font color='red'>has [what_done] [starget] with [sobject][addition] [hp] [sattackloc]</font>"
