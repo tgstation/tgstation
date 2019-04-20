@@ -76,52 +76,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return
 	if(getDockedId() == "supply_away") // Sell when we get home
 		sell()
-/*
-/obj/docking_port/mobile/supply/proc/generateManifest(obj/structure/closet/crate/C, var/id, var/ordernum, var/packname) //generates-the-manifests.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(C, id, 0)
 
-	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
-
-	P.name = "shipping manifest - (Grouped Item Crate)"
-	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
-	P.info += "<hr/>"
-	if(id && !(id == "Cargo"))
-		P.info += "Direct purchase from [id]<br/>"
-		P.name += " - Purchased by [id]"
-	P.info += "Order[packname?"":"s"]: [ordernum]<br/>"
-	P.info += "Destination: [station_name]<br/>"
-	if(packname)
-		P.info += "Item: [packname]<br/>"
-	P.info += "Contents: <br/>"
-	P.info += "<ul>"
-	for(var/atom/movable/AM in C.contents - P)
-		if((P.errors & MANIFEST_ERROR_CONTENTS))
-			if(prob(50))
-				P.info += "<li>[AM.name]</li>"
-			else
-				continue
-		P.info += "<li>[AM.name]</li>"
-	P.info += "</ul>"
-	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
-
-	if(P.errors & MANIFEST_ERROR_ITEM)
-		if(istype(C, /obj/structure/closet/crate/secure) || istype(C, /obj/structure/closet/crate/large))
-			P.errors &= ~MANIFEST_ERROR_ITEM
-		else
-			var/lost = max(round(C.contents.len / 10), 1)
-			while(--lost >= 0)
-				qdel(pick(C.contents))
-
-	P.update_icon()
-	P.forceMove(C)
-	C.manifest = P
-	C.update_icon()
-
-	return P
-*/
 /obj/docking_port/mobile/supply/proc/buy()
 	var/list/miscboxes = list() //miscboxes are combo boxes that contain all small_item orders grouped
-//	var/list/misc_own = list() //list of combo box owners
 	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
 	var/list/misc_contents = list() //list of lists of items that each box will contain
 	if(!SSshuttle.shoppinglist.len)
