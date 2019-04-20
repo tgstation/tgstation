@@ -9,7 +9,7 @@
 "i" = (/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "j" = (/obj/item/rollingpaper,/obj/structure/sign/poster/contraband/have_a_puff{pixel_y = -32},/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "k" = (/obj/item/reagent_containers/glass/bucket,/turf/open/floor/plating,/area/maintenance/starboard/fore)
-"l" = (/obj/effect/decal/cleanable/crayon{color = "#a8e61d"; desc = "A graffiti vandalizing the station."; icon_state = "arrow"; name = "graffiti"; paint_colour = "#a8e61d"; rotation = 90},/turf/open/floor/plating,/area/maintenance/starboard/fore)
+"l" = (/obj/effect/decal/cleanable/crayon{color = "#a8e61d"; desc = "A graffiti vandalizing the station."; icon_state = "arrow"; name = "graffiti"; paint_colour = "#a8e61d"; rotation = 90},/obj/structure/glowshroom/single{dir = 2; icon_state = "glowshroom3"; pixel_y = -32},/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "m" = (/obj/structure/falsewall,/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "n" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/turf/closed/wall,/area/maintenance/starboard/fore)
 
