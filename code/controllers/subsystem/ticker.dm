@@ -410,7 +410,7 @@ SUBSYSTEM_DEF(ticker)
 		queued_players.len = 0
 		queue_delay = 0
 		return
-		
+
 	queue_delay++
 	var/mob/dead/new_player/next_in_line = queued_players[1]
 
@@ -534,6 +534,10 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "The burst of energy released near [station_name()] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
+		if(DISASTER_WIN)
+			news_message = "After suffering disastrous bluespace weather anomalies and monstrous beasts, the crew of [station_name()] was rescued by a Nanotrasen Emergency Rescue Team and are recovering from their ordeal."
+		if(DISASTER_LOSE)
+			news_message = "The remains from the crew of [station_name()] were recently recovered from the surface of a hostile planet after catastrophic bluespace anomalies forced a full evacuation to the planet's surface. Remains are being delivered to families."
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")

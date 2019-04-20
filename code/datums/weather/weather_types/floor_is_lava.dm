@@ -38,3 +38,7 @@
 	if(L.movement_type & FLYING)
 		return
 	L.adjustFireLoss(3)
+
+datum/weather/floor_is_lava/molten
+			target_trait = ZTRAIT_STATION
+			protected_areas = list(/area/shuttle)

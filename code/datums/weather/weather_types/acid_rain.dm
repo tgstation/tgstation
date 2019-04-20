@@ -29,3 +29,9 @@
 	var/resist = L.getarmor(null, "acid")
 	if(prob(max(0,100-resist)))
 		L.acid_act(20,20)
+
+/datum/weather/acid_rain/cloud
+	target_trait = ZTRAIT_STATION
+	barometer_predictable = FALSE
+	area_type = /area
+	protected_areas = list(/area/shuttle)

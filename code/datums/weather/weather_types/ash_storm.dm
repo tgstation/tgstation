@@ -110,3 +110,9 @@
 	aesthetic = TRUE
 
 	probability = 10
+
+datum/weather/ash_storm/cloud
+	target_trait = ZTRAIT_STATION
+	barometer_predictable = FALSE
+	area_type = /area
+	protected_areas = list(/area/shuttle)
