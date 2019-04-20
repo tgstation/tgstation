@@ -91,7 +91,6 @@
 
 #define CAMERA_STATIC_PLANE 19
 #define CAMERA_STATIC_LAYER 19
-
 //HUD layer defines
 
 #define FULLSCREEN_PLANE 20
@@ -101,6 +100,7 @@
 #define BLIND_LAYER 20.3
 #define CRIT_LAYER 20.4
 #define CURSE_LAYER 20.5
+
 
 #define HUD_PLANE 21
 #define HUD_LAYER 21

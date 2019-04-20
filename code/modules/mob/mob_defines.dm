@@ -40,6 +40,7 @@
 	var/eye_blurry = 0		//Carbon
 	var/real_name = null
 	var/spacewalk = FALSE
+	var/audiolocation = FALSE
 
 	var/name_archive //For admin things like possession
 

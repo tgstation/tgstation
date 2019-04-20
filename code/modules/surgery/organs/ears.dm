@@ -116,5 +116,17 @@
 	name = "tin ears"
 	desc = "The robust ears of a bronze golem. "
 	damage_multiplier = 0.1 //STRONK
-	bang_protect = 1 //Fear me weaklings. 
+	bang_protect = 1 //Fear me weaklings.
 
+/obj/item/organ/ears/gehennite
+	name = "gehennite echosensory organ"
+	desc = "This jet black dome allows gehennites to perceive the world around them."
+	actions = list(/datum/action/innate/echo)
+	damage_multiplier = 2 //bane of gehnnites
+	var/datum/component/echolocation
+
+/obj/item/organ/ears/gehennite/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if(istype(H))
+		to_chat(H, "<span class='notice'>You feel far more sensitive to sounds.</span>")
+		echolocation = H.AddComponent(/datum/component/echolocation)

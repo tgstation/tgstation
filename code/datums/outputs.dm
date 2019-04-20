@@ -3,11 +3,15 @@
 /datum/outputs
 	var/text = ""
 	var/list/sounds = 'sound/items/airhorn.ogg' //can be either a sound path or a WEIGHTED list, put multiple for random selection between sounds
-	var/mutable_appearance/vfx = list('icons/sound_icon.dmi',"circle", HUD_LAYER) //syntax: icon, icon_state, layer
+	var/mutable_appearance/sound_ring = list('icons/obj/sound_icon.dmi',"circle", CAMERA_STATIC_LAYER) //syntax: icon, icon_state, layer
+	var/image/echo_override
 	var/cooldown = 100 //ms
 
 /datum/outputs/New()
-	vfx = mutable_appearance(vfx[1],vfx[2],vfx[3])
+	if(sound_ring)
+		sound_ring = mutable_appearance(sound_ring[1],sound_ring[2],sound_ring[3])
+	if(echo_override)
+		echo_override = image(echo_override[1],,echo_override[2])
 
 /datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, last_played_time)
 	var/sound/sound_output
@@ -69,10 +73,10 @@
 			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
 	if(world.time >= last_played_time + cooldown)
-		receiver.display_output(sound_output, vfx, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+		receiver.display_output(sound_output, sound_ring, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
 		. = TRUE //start cooling down text
 	else
-		receiver.display_output(sound_output, vfx, , turf_source, vol, vary, frequency, falloff, channel, pressure_affected) //changing the text takes more cpu time than a single if check
+		receiver.display_output(sound_output, sound_ring, , turf_source, vol, vary, frequency, falloff, channel, pressure_affected) //changing the text takes more cpu time than a single if check
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."
@@ -112,3 +116,6 @@
 /datum/outputs/squelch
 	text = "You hear a horrendous squelching sound."
 	sounds = 'sound/effects/blobattack.ogg'
+
+/datum/outputs/human_echo_override
+	echo_override = list('icons/obj/echo_override.dmi',"human")

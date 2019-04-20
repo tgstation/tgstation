@@ -269,6 +269,9 @@
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
+// /datum/component/echolocation signals
+#define COMSIG_ECHOLOCATION_PING "echolocation_ping"
+
 /*******Non-Signal Component Related Defines*******/
 
 //Redirection component init flags
