@@ -64,7 +64,7 @@ var/finished = 0
 		SSticker.mode_result = "loss - Massacred by Nature"
 		SSticker.news_report = DISASTER_LOSE
 
-/datum/game_mode/revolution/special_report()
+/datum/game_mode/disaster/special_report()
 	if(finished == 1)
 		return "<span class='redtext big'>All of the megafauna have died! The crew wins!</span>"
 	else if(finished == 2)
