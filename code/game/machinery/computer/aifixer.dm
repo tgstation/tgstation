@@ -151,4 +151,4 @@
 
 /obj/machinery/computer/aifixer/on_deconstruction()
 	if(occupier)
-		occupier.Destroy()
+		QDEL_NULL(occupier)
