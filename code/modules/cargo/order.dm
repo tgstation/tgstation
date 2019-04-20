@@ -57,18 +57,18 @@
 	P.update_icon()
 	return P
 
-/datum/supply_order/proc/generateManifest(obj/structure/closet/crate/C, var/owner, var/ordernum, var/packname) //generates-the-manifests.
+/datum/supply_order/proc/generateManifest(obj/structure/closet/crate/C, var/owner, var/packname) //generates-the-manifests.
 	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(C, id, 0)
 
 	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
-	P.name = "shipping manifest - (Grouped Item Crate)"
+	P.name = "shipping manifest - [packname?"#[id] ([pack.name])":"(Grouped Item Crate)"]"
 	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
 	P.info += "<hr/>"
 	if(id && !(id == "Cargo"))
 		P.info += "Direct purchase from [owner]<br/>"
 		P.name += " - Purchased by [owner]"
-	P.info += "Order[packname?"":"s"]: [ordernum]<br/>"
+	P.info += "Order[packname?"":"s"]: [id]<br/>"
 	P.info += "Destination: [station_name]<br/>"
 	if(packname)
 		P.info += "Item: [packname]<br/>"
@@ -101,11 +101,11 @@
 
 /datum/supply_order/proc/generate(atom/A)
 	var/obj/structure/closet/crate/C = pack.generate(A, paying_account)
-	generateManifest(C, paying_account, id, pack)
+	generateManifest(C, paying_account, pack)
 	return C
 
 /datum/supply_order/proc/generateCombo(var/miscbox, var/misc_own, var/misc_contents)
 	for (var/I in misc_contents)
 		new I(miscbox)
-	generateManifest(miscbox, misc_own, id, "")
+	generateManifest(miscbox, misc_own, "")
 	return
