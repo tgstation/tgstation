@@ -149,6 +149,6 @@
 		else if (!occupier)
 			to_chat(user, "<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence.")
 
-obj/machinery/computer/aifixer/on_deconstruction()
+/obj/machinery/computer/aifixer/on_deconstruction()
 	if(occupier)
 		occupier.Destroy()
