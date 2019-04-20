@@ -17,21 +17,8 @@ var/finished = 0
 /datum/game_mode/disaster/generate_report()
 	return "Several disasters are incoming. Evacuate to Lavaland and see to it that work continues. We can't lose money over a little space-weather! While you're at it, if you could kill of the most dangerous wildlife down there, we could arrange for your extraction. Just something to think about."
 
-/datum/game_mode/disaster/announced
-	name = "disaster"
-	config_tag = "disaster"
-	false_report_weight = 0
-
-/datum/game_mode/disaster/announced/generate_station_goals()
-	for(var/T in subtypesof(/datum/station_goal))
-		var/datum/station_goal/G = new T
-		station_goals += G
-		G.on_report()
-
 /datum/game_mode/disaster/announced/send_intercept(report = 0)
 	priority_announce("Due to inclement space weather, all staff are to relocate their work to Lavaland. Hurry up!")
-
-
 
 /datum/gamemode/disaster/proc/check_win()
 	if(check_tamed())
@@ -53,7 +40,6 @@ var/finished = 0
 //	var/surivivingcrew = 25
 	if(living_crew.len / GLOB.joined_player_list.len <= 25) //If a lot of the player base died, it's game over
 		return TRUE
-
 
 /datum/game_mode/disaster/set_round_result()
 	..()
