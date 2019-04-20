@@ -26,7 +26,7 @@
 /datum/weather/snow_storm/weather_act(mob/living/L)
 	L.adjust_bodytemperature(-rand(5,15))
 
-datum/weather/snow_storm/freeze
+/datum/weather/snow_storm/freeze
 	target_trait = ZTRAIT_STATION
 	barometer_predictable = FALSE
 	area_type = /area
