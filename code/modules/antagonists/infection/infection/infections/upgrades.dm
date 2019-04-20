@@ -32,10 +32,7 @@
 	cost = 1
 
 /datum/infection/upgrade/defensive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/IS)
-	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/defensive/DS = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient/defensive(IS.loc, null, IS.overmind)
-	IS.mind.transfer_to(DS)
-	DS.upgrade_points = IS.upgrade_points
-	qdel(IS)
+	IS.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/defensive)
 	return
 
 /datum/infection/upgrade/offensive_spore
@@ -45,10 +42,7 @@
 	cost = 1
 
 /datum/infection/upgrade/offensive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/IS)
-	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive/OS = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive(IS.loc, null, IS.overmind)
-	IS.mind.transfer_to(OS)
-	OS.upgrade_points = IS.upgrade_points
-	qdel(IS)
+	IS.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive)
 	return
 
 /datum/infection/upgrade/supportive_spore
@@ -58,10 +52,7 @@
 	cost = 1
 
 /datum/infection/upgrade/supportive_spore/upgrade_effect(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/IS)
-	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive/SS = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive(IS.loc, null, IS.overmind)
-	IS.mind.transfer_to(SS)
-	SS.upgrade_points = IS.upgrade_points
-	qdel(IS)
+	IS.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive)
 	return
 
 /*

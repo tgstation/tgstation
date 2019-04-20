@@ -75,6 +75,7 @@
 	var/datum/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
 	if(overmind.can_buy(Chosen.cost))
 		Chosen.do_upgrade(src)
+		to_chat(overmind, "<span class='warning'>Successfully upgraded [Chosen.name]!</span>")
 	return
 
 /obj/structure/infection/proc/show_description()
@@ -235,7 +236,7 @@
 	return
 
 /obj/structure/infection/ex_act(severity)
-	take_damage(rand(30/severity, 60/severity), BRUTE, "bomb", 0)
+	take_damage(rand(30/severity, 60/severity) * 4, BRUTE, "bomb", 0)
 
 /obj/structure/infection/tesla_act(power)
 	..()

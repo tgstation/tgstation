@@ -181,6 +181,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	var/respawn_time = 15
 	var/upgrade_points = 0
+	var/times_refunded = 0 // times refunded
 	var/list/upgrade_list = list() // upgrades that are unlockable
 	var/list/upgrade_types = list(/datum/infection/upgrade/defensive_spore, /datum/infection/upgrade/offensive_spore, /datum/infection/upgrade/supportive_spore) // types of upgrades
 
@@ -214,12 +215,25 @@
 		if(overmind)
 			H.color = overmind.color
 
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/find_anchor()
+	var/list/possible_anchors = GLOB.infection_nodes + GLOB.infection_cores
+	var/found_node
+	for(var/obj/structure/infection/I in possible_anchors)
+		if(get_dist(src, I) <= 1 || I == loc)
+			found_node = I
+			break
+	return found_node
+
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/evolve_menu()
 	var/list/choices = list(
 		"Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
 		"Upgrades Overview" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help_radial")
 	)
-	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+	var/found_node = find_anchor()
+	if(!found_node)
+		to_chat(src, "<span class='warning'>We may only upgrade while next to a node, or while next to the core!</span>")
+		return
+	var/choice = show_radial_menu(src, found_node, choices, tooltips = TRUE, require_near = TRUE)
 	if(choice == choices[1])
 		upgrade_menu()
 	if(choice == choices[2])
@@ -238,13 +252,18 @@
 	if(!choices.len)
 		to_chat(src, "<span class='warning'>You have already bought every evolution for yourself!</span>")
 		return
-	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+	var/found_node = find_anchor()
+	if(!found_node)
+		to_chat(src, "<span class='warning'>We may only upgrade while next to a node, or while next to the core!</span>")
+		return
+	var/choice = show_radial_menu(src, found_node, choices, tooltips = TRUE, require_near = TRUE)
 	var/upgrade_index = choices.Find(choice)
 	if(!upgrade_index)
 		return
 	var/datum/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
 	if(can_upgrade(Chosen.cost))
 		Chosen.do_upgrade(src)
+		to_chat(src, "<span class='warning'>Successfully upgraded [Chosen.name]!</span>")
 	return
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/can_upgrade(cost = 1)
@@ -286,8 +305,11 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/respawn()
 	var/time_left = respawn_time
 	while(time_left > 0)
-		to_chat(src, "<b>Respawning in [time_left] seconds.</b>")
+		if(time_left < 10 || time_left % 5 == 0)
+			to_chat(src, "<b>Respawning in [time_left] seconds.</b>")
 		sleep(10)
+		if(!src)
+			return
 		if(!overmind.infection_core)
 			time_left = 0
 		time_left--
@@ -299,6 +321,36 @@
 		adjustHealth(health * 0.8)
 		forceMove(get_turf(pos))
 	return
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/transfer_to_type(var/new_type)
+	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/new_spore = new new_type(loc, null, overmind)
+	mind.transfer_to(new_spore)
+	new_spore.upgrade_points = upgrade_points
+	new_spore.times_refunded = times_refunded
+	// check if we were respawning
+	if(new_spore.loc == overmind.infection_core)
+		// restart respawn timer for new spore
+		INVOKE_ASYNC(new_spore, .proc/respawn)
+	qdel(src)
+	new_spore.update_icons()
+	return new_spore
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/refund_upgrades()
+	if(!overmind)
+		to_chat(src, "<span class='warning'>We lack the power to revert ourselves without our commander!</span>")
+		return
+	if(overmind.all_upgrade_points == (upgrade_points + times_refunded))
+		to_chat(src, "<span class='warning'>We cannot revert our form any further!</span>")
+		return
+	var/new_points = overmind.all_upgrade_points - (times_refunded + 1)
+	if(new_points < 0)
+		to_chat(src, "<span class='warning'>Reverting currently would destroy us! We require more energy from the beacons!</span>")
+		return
+	to_chat(src, "<span class='warning'>Successfully reverted to base evolution!</span>")
+	upgrade_points = new_points
+	times_refunded++
+	// reset the spore to default
+	transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Zombify(mob/living/carbon/human/H)
 	return

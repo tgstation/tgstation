@@ -16,6 +16,15 @@
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr
 	I.evolve_menu()
 
+/obj/screen/infection/Refund
+	icon_state = "ui_factory"
+	name = "Refund Upgrades"
+	desc = "Refund all currently purchased traits at the cost of one upgrade point."
+
+/obj/screen/infection/Refund/Click()
+	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr
+	I.refund_upgrades()
+
 /datum/hud/infection_spore/New(mob/owner)
 	..()
 	var/obj/screen/using
@@ -31,6 +40,10 @@
 
 	healths = new /obj/screen/healths/blob()
 	infodisplay += healths
+
+	using = new /obj/screen/infection/Refund()
+	using.screen_loc = ui_back
+	static_inventory += using
 
 	using = new /obj/screen/infection/InfectionSporeHelp()
 	using.screen_loc = ui_hand_position(2)
