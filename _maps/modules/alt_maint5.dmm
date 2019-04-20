@@ -1,0 +1,49 @@
+"a" = (/obj/structure/alien/weeds,/obj/structure/alien/resin/wall{color = ""; desc = "Thick material shaped into a wall. Eugh."; icon_state = "smooth"; name = "gelatinous wall"},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"c" = (/turf/closed/wall,/area/maintenance/starboard/aft)
+"d" = (/obj/structure/rack,/obj/structure/disposalpipe/segment,/obj/effect/spawner/lootdrop/maintenance{lootcount = 2; name = "2maintenance loot spawner"},/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"e" = (/obj/structure/closet,/obj/effect/spawner/lootdrop/maintenance,/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"f" = (/turf/template_noop,/area/template_noop)
+"h" = (/obj/effect/landmark/xeno_spawn,/obj/structure/disposalpipe/segment,/obj/structure/alien/weeds,/turf/open/floor/plating{icon_state = "platingdmg3"},/area/maintenance/starboard/aft)
+"i" = (/obj/effect/landmark/event_spawn,/obj/structure/alien/weeds,/obj/structure/bed/nest,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"m" = (/obj/structure/disposalpipe/segment,/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"n" = (/obj/structure/alien/weeds,/obj/structure/alien/egg/burst,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"o" = (/obj/structure/grille,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"p" = (/obj/structure/disposalpipe/segment,/obj/effect/spawner/lootdrop/maintenance,/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"q" = (/obj/structure/alien/weeds,/obj/item/clothing/mask/facehugger/dead,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"s" = (/obj/machinery/space_heater,/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"t" = (/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"u" = (/obj/structure/alien/weeds,/obj/item/organ/body_egg/alien_embryo,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"v" = (/obj/structure/disposalpipe/segment{dir = 5},/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"w" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"x" = (/obj/structure/disposalpipe/segment{dir = 10},/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"y" = (/obj/structure/alien/weeds,/obj/structure/table,/obj/item/weldingtool,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"z" = (/obj/structure/reagent_dispensers/watertank,/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"A" = (/obj/structure/reagent_dispensers/fueltank,/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"B" = (/obj/structure/rack,/obj/effect/spawner/lootdrop/maintenance,/obj/structure/alien/weeds,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"C" = (/obj/machinery/door/airlock/maintenance/abandoned{req_access_txt = "12"},/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"D" = (/obj/structure/disposalpipe/segment,/turf/closed/wall,/area/maintenance/starboard/aft)
+"E" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"F" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table_frame,/obj/item/wirerod,/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"G" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"H" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"I" = (/obj/structure/disposaloutlet,/obj/structure/disposalpipe/trunk{dir = 1},/turf/open/floor/plating/airless,/area/space/nearstation)
+"J" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/light/small{dir = 4},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"K" = (/obj/effect/decal/cleanable/xenoblood,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"L" = (/obj/machinery/door/airlock/external{name = "External Access"; req_access_txt = "13"},/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"N" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/xenoblood,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"O" = (/obj/effect/decal/cleanable/dirt,/obj/structure/mecha_wreckage/ripley,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"P" = (/obj/effect/decal/cleanable/dirt,/obj/structure/closet/emcloset,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+"Q" = (/obj/machinery/door/airlock/external{name = "External Access"; req_access_txt = "13"},/obj/effect/decal/cleanable/xenoblood,/turf/open/floor/plating,/area/maintenance/starboard/aft)
+
+(1,1,1) = {"
+ffffcdecffffff
+ffffchicffffff
+ffffcmncccccoc
+ffffcpqaasttuc
+ffffcvwxyzABcc
+ffcccCcDcEEccf
+ffcFGHcIffffff
+EEEGHJcfffffff
+EKLNOPcfffffff
+EQEEEEcfffffff
+"}
