@@ -11,7 +11,7 @@
 var/finished = 0
 
 /datum/game_mode/disaster/pre_setup()
-	SSevents.scheduled = 3000
+	SSevents.scheduled = world.time + 5 MINUTES
 	return 1
 
 /datum/game_mode/disaster/generate_report()
