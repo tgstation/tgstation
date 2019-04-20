@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return
 	if(getDockedId() == "supply_away") // Sell when we get home
 		sell()
-
+/*
 /obj/docking_port/mobile/supply/proc/generateManifest(obj/structure/closet/crate/C, var/id, var/ordernum, var/packname) //generates-the-manifests.
 	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(C, id, 0)
 
@@ -118,10 +118,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	C.update_icon()
 
 	return P
-
+*/
 /obj/docking_port/mobile/supply/proc/buy()
-	var/list/miscboxes = list()
-	var/list/misc_order_num = list()
+	var/list/miscboxes = list() //miscboxes are combo boxes that contain all small_item orders grouped
+//	var/list/misc_own = list() //list of combo box owners
+	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
+	var/list/misc_contents = list() //list of lists of items that each box will contain
 	if(!SSshuttle.shoppinglist.len)
 		return
 
@@ -164,22 +166,24 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				if(!miscboxes.len || !miscboxes[D.account_holder]) //if there's no miscbox for this person
 					miscboxes[D.account_holder] = new /obj/structure/closet/crate/secure/owned(pick_n_take(empty_turfs), SO.paying_account)
 					miscboxes[D.account_holder].name = "small items crate - purchased by [D.account_holder]"
+					misc_contents[D.account_holder] = list()
 				for (var/item in SO.pack.contains)
-					new item(miscboxes[D.account_holder])
+					misc_contents[D.account_holder] += item
 				misc_order_num[D.account_holder] = "[misc_order_num[D.account_holder]]#[SO.id]  "
 			else //No private payment, so we just stuff it all into a generic crate
 				if(!miscboxes.len || !miscboxes["Cargo"])
 					miscboxes["Cargo"] = new /obj/structure/closet/crate/secure(pick_n_take(empty_turfs))
 					miscboxes["Cargo"].name = "small items crate"
+					misc_contents["Cargo"] = list()
 					miscboxes["Cargo"].req_access = list()
 				for (var/item in SO.pack.contains)
-					new item(miscboxes["Cargo"])
+					misc_contents["Cargo"] += item
+					//new item(miscboxes["Cargo"])
 				if(SO.pack.access)
 					miscboxes["Cargo"].req_access += SO.pack.access
 				misc_order_num["Cargo"] = "[misc_order_num["Cargo"]]#[SO.id]  "
 		else
-			var/obj/structure/closet/crate/crate = SO.generate(pick_n_take(empty_turfs))
-			generateManifest(crate, "", "#[SO.id]", SO.pack.name)
+			SO.generate(pick_n_take(empty_turfs))
 
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
@@ -188,7 +192,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		purchases++
 
 	for(var/I in miscboxes)
-		generateManifest(miscboxes[I], I, misc_order_num[I])
+		var/datum/supply_order/SO = new/datum/supply_order()
+		SO.id = misc_order_num[I]
+		SO.generateCombo(miscboxes[I], I, misc_contents[I])
+		qdel(SO)
 
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
