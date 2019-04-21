@@ -27,6 +27,7 @@
 	name = "chief medical officer's cloak"
 	desc = "Worn by Meditopia, the valiant men and women keeping pestilence at bay."
 	icon_state = "cmocloak"
+	resistance_flags = ACID_PROOF
 
 /obj/item/clothing/neck/cloak/ce
 	name = "chief engineer's cloak"
@@ -38,6 +39,7 @@
 	name = "research director's cloak"
 	desc = "Worn by Sciencia, thaumaturges and researchers of the universe."
 	icon_state = "rdcloak"
+	resistance_flags = ACID_PROOF
 
 /obj/item/clothing/neck/cloak/cap
 	name = "captain's cloak"
