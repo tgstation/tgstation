@@ -4,18 +4,18 @@
 "d" = (/obj/structure/table,/obj/item/storage/fancy/rollingpapers{pixel_x = 4; pixel_y = 4},/obj/item/clothing/mask/cigarette/rollie/cannabis{pixel_x = -1; pixel_y = 3},/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "e" = (/obj/structure/rack,/obj/effect/spawner/lootdrop/maintenance{lootcount = 2; name = "2maintenance loot spawner"},/obj/item/reagent_containers/food/snacks/cheesiehonkers,/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "f" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/cannabis{endurance = 50; maturation = 3; production = 9; yield = 6},/turf/open/floor/plating,/area/maintenance/starboard/fore)
-"g" = (/obj/effect/spawner/lootdrop/maintenance,/obj/structure/closet,/obj/item/cultivator,/obj/item/reagent_containers/glass/bottle/nutrient/rh,/turf/open/floor/plating,/area/maintenance/starboard/fore)
+"g" = (/obj/effect/spawner/lootdrop/maintenance,/obj/structure/closet,/obj/item/cultivator,/obj/item/reagent_containers/glass/bottle/nutrient/rh,/obj/structure/glowshroom/single,/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "h" = (/obj/structure/closet,/obj/effect/spawner/lootdrop/maintenance{lootcount = 2; name = "2maintenance loot spawner"},/obj/item/lighter/greyscale,/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "i" = (/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "j" = (/obj/item/rollingpaper,/obj/structure/sign/poster/contraband/have_a_puff{pixel_y = -32},/turf/open/floor/plating,/area/maintenance/starboard/fore)
-"k" = (/obj/item/reagent_containers/glass/bucket,/turf/open/floor/plating,/area/maintenance/starboard/fore)
-"l" = (/obj/effect/decal/cleanable/crayon{color = "#a8e61d"; desc = "A graffiti vandalizing the station."; icon_state = "arrow"; name = "graffiti"; paint_colour = "#a8e61d"; rotation = 90},/obj/structure/glowshroom/single{dir = 2; icon_state = "glowshroom3"; pixel_y = -32},/turf/open/floor/plating,/area/maintenance/starboard/fore)
-"m" = (/obj/structure/falsewall,/turf/open/floor/plating,/area/maintenance/starboard/fore)
+"k" = (/obj/item/reagent_containers/glass/bucket{pixel_y = 4},/obj/machinery/light/small/broken,/turf/open/floor/plating,/area/maintenance/starboard/fore)
+"m" = (/obj/effect/decal/cleanable/crayon{color = "#a8e61d"; desc = "A graffiti vandalizing the station."; icon_state = "arrow"; name = "graffiti"; paint_colour = "#a8e61d"; rotation = 90},/turf/open/floor/plating,/area/maintenance/starboard/fore)
 "n" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/turf/closed/wall,/area/maintenance/starboard/fore)
+"o" = (/obj/structure/falsewall,/turf/open/floor/plating,/area/maintenance/starboard/fore)
 
 (1,1,1) = {"
 aaaaaba
 acdefga
-ahijklm
+ahijkmo
 aaaaaan
 "}
