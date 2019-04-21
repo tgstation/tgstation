@@ -8,7 +8,7 @@
 	announce_span = "danger"
 	announce_text = "Catastrophic disasters in-bound!"
 
-var/finished = 0
+	var/finished = 0
 
 /datum/game_mode/disaster/pre_setup()
 	SSevents.scheduled = world.time + 5 MINUTES
@@ -20,18 +20,18 @@ var/finished = 0
 /datum/game_mode/disaster/announced/send_intercept(report = 0)
 	priority_announce("Due to inclement space weather, all staff are to relocate their work to Lavaland. Hurry up!")
 
-/datum/gamemode/disaster/check_win()
+/datum/game_mode/disaster/check_win()
 	if(check_tamed())
 		finished = 1
 	else if(check_massacre())
 		finished = 2
 
-/datum/gamemode/disaster/proc/check_tamed()
+/datum/game_mode/disaster/proc/check_tamed()
 	if(locate(/mob/living/simple_animal/hostile/megafauna) in GLOB.alive_mob_list)
 		return FALSE
 	return TRUE
 
-/datum/gamemode/disaster/proc/check_massacre()
+/datum/game_mode/disaster/proc/check_massacre()
 	var/list/living_crew = list()
 
 	for(var/mob/Player in GLOB.mob_list)
