@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown
 	name = "Clown"
 	desc = "A denizen of clown planet."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "clown"
 	icon_living = "clown"
 	icon_dead = "clown_dead"
@@ -32,8 +32,10 @@
 	minbodytemp = 270
 	maxbodytemp = 370
 	unsuitable_atmos_damage = 10
-
 	do_footstep = TRUE
+	var/banana_time = 0 // If there's no time set it won't spawn.
+	var/banana_type = /obj/item/grown/bananapeel
+	var/attack_reagent 
 
 /mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
@@ -45,10 +47,24 @@
 	..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 
+/mob/living/simple_animal/hostile/retaliate/clown/Life()
+	. = ..()
+	if(banana_time && banana_time < world.time)
+		var/turf/T = get_turf(src)
+		var/list/adjacent =  T.GetAtmosAdjacentTurfs(1)
+		new banana_type(pick(adjacent))
+		banana_time = world.time + rand(30,60)
+
+/mob/living/simple_animal/hostile/retaliate/clown/AttackingTarget()
+	. = ..()
+	if(attack_reagent && . && isliving(target))
+		var/mob/living/L = target
+		if(L.reagents)
+			L.reagents.add_reagent(attack_reagent, rand(1,5))
+
 /mob/living/simple_animal/hostile/retaliate/clown/lube
 	name = "Living Lube"
 	desc = "A puddle of lube brought to life by the honkmother."
-	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "lube"
 	icon_living = "lube"
 	turns_per_move = 1
@@ -66,7 +82,6 @@
 /mob/living/simple_animal/hostile/retaliate/clown/banana
 	name = "Clownana"
 	desc = "A fusion of clown and banana DNA birthed from a botany experiment gone wrong."
-	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "banana tree"
 	icon_living = "banana tree"
 	response_help = "pokes"
@@ -79,21 +94,11 @@
 	health = 100
 	speed = -10
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana)
-	var/banana_time = 20
-
-/mob/living/simple_animal/hostile/retaliate/clown/banana/Life()
-	. = ..()
-	if(banana_time < world.time)
-		var/turf/T = get_turf(src)
-		var/list/adjacent =  T.GetAtmosAdjacentTurfs(1)
-		new /obj/item/grown/bananapeel/(pick(adjacent))
-		banana_time = world.time + rand(30,60)
+	banana_time = 20
 
 /mob/living/simple_animal/hostile/retaliate/clown/honkling
-	var/datum/reagent/funjuice = "laughter"
 	name = "Honkling"
 	desc = "A divine being sent by the Honkmother to spread joy. It's not dangerous, but it's a bit of a nuisance."
-	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "honkling"
 	icon_living = "honkling"
 	turns_per_move = 1
@@ -103,27 +108,12 @@
 	melee_damage_upper = 1
 	attacktext = "cheers up"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana/bluespace)
-	var/banana_time = 20
-
-/mob/living/simple_animal/hostile/retaliate/clown/honkling/Life()
-	. = ..()
-	if(banana_time < world.time)
-		var/turf/T = get_turf(src)
-		var/list/adjacent =  T.GetAtmosAdjacentTurfs(1)
-		new /obj/item/grown/bananapeel/bluespace(pick(adjacent))
-		banana_time = world.time + rand(30,60)
-
-/mob/living/simple_animal/hostile/retaliate/clown/honkling/AttackingTarget()
-	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent(funjuice, rand(1,5))
+	banana_type = /obj/item/grown/bananapeel
+	attack_reagent = "laughter"
 
 /mob/living/simple_animal/hostile/retaliate/clown/fleshclown
 	name = "Fleshclown"
 	desc = "A being forged out of the pure essence of pranking, cursed into existence by a cruel maker."
-	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "fleshclown"
 	icon_living = "fleshclown"
 	response_help = "reluctantly pokes"
@@ -145,7 +135,6 @@
 /mob/living/simple_animal/hostile/retaliate/clown/longface
 	name = "Longface"
 	desc = "Often found walking into the bar."
-	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "long face"
 	icon_living = "long face"
 	move_resist = INFINITY
@@ -168,7 +157,6 @@
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk
 	name = "Honk Hulk"
 	desc = "A cruel and fearsome clown. Don't make him angry."
-	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "honkhulk"
 	icon_living = "honkhulk"
 	move_resist = INFINITY
@@ -210,7 +198,6 @@
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
 
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus
-	var/datum/reagent/funjuice = "methamphetamine"
 	name = "Honkmunculus"
 	desc = "A slender wiry figure of alchemical origin."
 	icon_state = "honkmunculus"
@@ -229,14 +216,7 @@
 	attacktext = "ferociously mauls"
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap)
-
-/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus/AttackingTarget()
-	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent(funjuice, rand(1,5))
-
+	attack_reagent = "methamphetamine"
 
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer
 	name = "The Destroyer"
@@ -262,7 +242,6 @@
 /mob/living/simple_animal/hostile/retaliate/clown/mutant
 	name = "Unknown"
 	desc = "Kill it for its own sake."
-	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "mutant"
 	icon_living = "mutant"
 	move_resist = INFINITY
@@ -284,10 +263,8 @@
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob
-	var/datum/reagent/funjuice = "skewium"
 	name = "Something that was once a clown"
 	desc = "A grotesque bulging figure far mutated from it's original state."
-	icon = 'icons/mob/clown_mobs.dmi'
 	icon_state = "blob"
 	icon_living = "blob"
 	speak = list("hey, buddy", "HONK!!!", "H-h-h-H-HOOOOONK!!!!", "HONKHONKHONK!!!", "HEY, BUCKO, GET BACK HERE!!!", "HOOOOOOOONK!!!")
@@ -297,10 +274,4 @@
 	speed = 20
 	attacktext = "bounces off of"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
-
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/AttackingTarget()
-	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent(funjuice, rand(1,5))
+	attack_reagent = "skewium"

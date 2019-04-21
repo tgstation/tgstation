@@ -1717,14 +1717,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
-/datum/uplink_item/role_restricted/cluwne
-	name = "C.L.U.W.N.E."
-	desc = "A specialized grenade that unleashes a fearsome clown entity. Entities range from annoying to robust, so it's a bit of a gamble. Honk."
-	cost = 5
-	item = /obj/item/grenade/spawnergrenade/clown
-	restricted_roles = list("Clown")
-	limited_stock = 3
-
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
