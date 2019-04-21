@@ -212,3 +212,15 @@ GLOBAL_LIST_EMPTY(hub_features)
 		var/adminhelptext = input(src,"Enter admin help message.","Admin Help","I have died, is this death legit?") as text
 		if(adminhelptext)
 			adminhelp(adminhelptext)
+
+//fixing the in_range() bug
+/proc/toolbox_in_range(atom/source, atom/user)
+	var/turf/sourceloc = source.loc
+	var/turf/userloc = user.loc
+	if(!istype(sourceloc))
+		sourceloc = get_turf(source)
+	if(!istype(userloc))
+		userloc = get_turf(user)
+	if((sourceloc.z == userloc.z) && (get_dist(sourceloc, userloc) <= 1))
+		return 1
+	return 0

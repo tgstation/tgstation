@@ -2,14 +2,18 @@
 
 #define islist(L) (istype(L, /list))
 
-#if DM_VERSION >= 512
+/*#if DM_VERSION >= 512
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
 #if DM_VERSION > 512
 #warn Remove this check.
 #endif
 #else
 #define in_range(source, user) (get_dist(source, user) <= 1)
-#endif
+#endif*/
+//different versions of byond break this. Ive made a new version of this that works in any byond version. -falaskian
+#define in_range(source, user) (toolbox_in_range(source, user)
+
+#define in_range(source, user) (get_dist(source, user) <= 1)
 
 #define ismovableatom(A) (istype(A, /atom/movable))
 
