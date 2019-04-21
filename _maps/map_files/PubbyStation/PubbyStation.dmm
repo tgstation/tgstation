@@ -21123,7 +21123,7 @@
 /obj/machinery/door/airlock{
 	name = "Service Access";
 	req_access_txt = "0";
-	req_one_access_txt = "25;26;35;28;22;37;46;38"
+	req_one_access_txt = "22;25;26;28;35;37;38;46"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,

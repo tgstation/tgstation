@@ -33980,7 +33980,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;25;46"
+	req_one_access_txt = "12;22;25;37;38;46"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -38121,7 +38121,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;25;46"
+	req_one_access_txt = "12;22;25;37;38;46"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
