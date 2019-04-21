@@ -8,7 +8,7 @@
 	announce_span = "danger"
 	announce_text = "Catastrophic disasters in-bound!"
 
-	var/finished = 0
+var/finished = 0
 
 /datum/game_mode/disaster/pre_setup()
 	SSevents.scheduled = world.time + 5 MINUTES
@@ -20,7 +20,7 @@
 /datum/game_mode/disaster/announced/send_intercept(report = 0)
 	priority_announce("Due to inclement space weather, all staff are to relocate their work to Lavaland. Hurry up!")
 
-/datum/gamemode/disaster/proc/check_win()
+/datum/gamemode/disaster/check_win()
 	if(check_tamed())
 		finished = 1
 	else if(check_massacre())
