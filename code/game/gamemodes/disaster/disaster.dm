@@ -8,7 +8,7 @@
 	announce_span = "danger"
 	announce_text = "Catastrophic disasters in-bound!"
 
-var/finished = 0
+	var/finished = 0
 
 /datum/game_mode/disaster/pre_setup()
 	SSevents.scheduled = world.time + 5 MINUTES
