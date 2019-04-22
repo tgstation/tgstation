@@ -575,15 +575,16 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat/captain
 
 	//Head of Personnel
-/obj/item/clothing/head/helmet/space/hardsuit/swat/hop
+/obj/item/clothing/head/helmet/space/hardsuit/hop
 	name = "HoP's hardsuit helmet"
 	desc = "A tactical MK.II SWAT helmet boasting better protection and a horrible fashion sense. Something about it seems a bit off"
 	clothing_flags = THICKMATERIAL | SHOWEROKAY
 	icon_state = "hopspace"
 	item_state = "hopspacehelmet"
+	armor = list("melee" = 20, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 50, "rad" = 25, "fire" = 50, "acid" = 50)
 
 
-/obj/item/clothing/suit/space/hardsuit/swat/hop
+/obj/item/clothing/suit/space/hardsuit/hop
 	name = "HoP's SWAT suit"
 	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available. Usually reserved for heavy hitter corporate security, this one has a regal finish in Nanotrasen company colors. Better not let the assistants get a hold of it. Something about it seems a bit off."
 	clothing_flags = THICKMATERIAL | SHOWEROKAY
