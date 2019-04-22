@@ -5,7 +5,7 @@
 	icon = null // Not finished
 	desc = "A book containing the secrets of shadows. Summons a Ethereal Bodyguard at the cost of ones well being."
 	var/mob/living/carbon/caster = null // Can be interpreted as owner too
-	var/is_reading = 0 // I made it a variable of the object for simplicity
+	var/is_reading = 0 // A variable to hold if the caster is reading it currently
 	var/times_used = 0 // How many times has the object been used
 
 /obj/item/codex_umbra/pickup(mob/user)
@@ -39,13 +39,13 @@
 // First time used = 50dmg, second time = 100, third time = 200 (should kill you)
 /obj/item/codex_umbra/proc/damage_brain()
 	if(times_used == 0)
-		caster.apply_damage(damage = 50,damage_type = BRUTE, BODY_ZONE_CHEST)
+		caster.adjustBrainLoss(25)
 		++times_used
 	else if(times_used == 1)
-		caster.apply_damage(damage = 100,damage_type = BRUTE, BODY_ZONE_CHEST)
+		caster.adjustBrainLoss(100)
 		++times_used
 	else if(times_used >= 2)
-		caster.apply_damage(damage = 200,damage_type = BRUTE, BODY_ZONE_CHEST)
+		caster.adjustBrainLoss(200)
 		++times_used
 
 
@@ -54,9 +54,6 @@
 TODO:
 Finish the icon
 Make it so others can't pick the item up if they are not the caster
-Make a use var and damage the brain when it needs to be damaged
 Make it so you can also target other people
-
-uhhh
-Play around with the damage_brain proc.
+Actually make the damn thing work by spawning the ethereal minion
 */
