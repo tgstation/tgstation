@@ -23,17 +23,26 @@
 		if(is_reading == 0)
 			if(istype(user, /mob/living/carbon))
 				is_reading = 1
-				to_chat(user, "<span class=warning>You start flipping through the pages.</span>")
+				to_chat(user, "<span class=notice>You start flipping through the pages.</span>")
 				playsound(user.loc, 'sound/effects/pageturn1.ogg', 30, 1)
 				if(do_after(user, 50, target = src))
 					is_reading = 0
 					to_chat(user, "<span class=warning>The shadows under you start to twist.</span>")
 					damage_brain()
+					caster.emote("scream")
 				else
 					is_reading = 0
 					to_chat(user, "<span class=warning>You decide to leave the book alone.</span>")
 		else
 			to_chat(user, "<span class=warning>You are already reading this book.</span>")
+
+/obj/item/codex_umbra/attack(mob/M as mob, mob/user as mob)
+	if(istype(M, /mob/living/carbon))
+		to_chat(user, "<span class=warning>You start focusing on [M]s brain.</span>")
+		if(do_after(user, 100, target = M))
+			playsound(M, 'sound/effects/light_flicker.ogg', 30, 1)
+			to_chat(M, "<span class='userdanger'>You feel your mind dripple out of your head as you try to comprehend what is going on.</span>")
+
 
 
 // First time used = 50dmg, second time = 100, third time = 200 (should kill you)
@@ -56,4 +65,5 @@ Finish the icon
 Make it so others can't pick the item up if they are not the caster
 Make it so you can also target other people
 Actually make the damn thing work by spawning the ethereal minion
+Also add a mood event when you cast it
 */
