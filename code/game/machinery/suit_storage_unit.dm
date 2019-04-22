@@ -40,7 +40,7 @@
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/hop
-	suit_type = /obj/item/clothing/suit/space/hardsuit/hop
+	suit_type = /obj/item/clothing/suit/space/hardsuit/swat/hop
 
 
 /obj/machinery/suit_storage_unit/engine
