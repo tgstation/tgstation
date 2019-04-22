@@ -24598,6 +24598,9 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bgL" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -32
+	},
 /obj/machinery/suit_storage_unit/hop,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
