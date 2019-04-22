@@ -71313,7 +71313,7 @@
 /turf/closed/wall,
 /area/crew_quarters/heads/hop)
 "cpD" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/suit_storage_unit/hop,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "cpE" = (

@@ -39,6 +39,10 @@
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
 
+/obj/machinery/suit_storage_unit/hop
+	suit_type = /obj/item/clothing/suit/space/hardsuit/swat/captain/hop
+
+
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
 	mask_type = /obj/item/clothing/mask/breath

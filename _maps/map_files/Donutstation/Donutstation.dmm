@@ -15601,14 +15601,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
-"aKv" = (
-/obj/structure/table/wood,
-/obj/machinery/recharger,
-/obj/structure/sign/poster/official/ian{
-	pixel_y = 32
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/hop)
 "aKw" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -15646,6 +15638,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/machinery/recharger,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "aKB" = (
@@ -54784,6 +54777,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"qnd" = (
+/obj/structure/table/wood,
+/obj/structure/sign/poster/official/ian{
+	pixel_y = 32
+	},
+/obj/item/toy/figure/hop,
+/obj/item/toy/figure/ian{
+	step_x = 5
+	},
+/turf/open/floor/carpet,
+/area/space/nearstation)
 "qoF" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/stripes/line{
@@ -55069,6 +55073,13 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"rfZ" = (
+/obj/structure/sign/poster/official/ian{
+	pixel_y = 32
+	},
+/obj/machinery/suit_storage_unit/hop,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "ria" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -97952,7 +97963,7 @@ qYJ
 ixd
 qYJ
 ixd
-qYJ
+qnd
 oHN
 aal
 anX
@@ -101794,7 +101805,7 @@ atl
 byO
 bre
 agl
-aKq
+rfZ
 aKy
 aKD
 aiO
@@ -102051,7 +102062,7 @@ agl
 agl
 agl
 agl
-aKv
+aKq
 aKA
 aKE
 bCm

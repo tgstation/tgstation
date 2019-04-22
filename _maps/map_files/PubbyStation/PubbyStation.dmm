@@ -12050,17 +12050,11 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "aCP" = (
-/obj/structure/table/wood,
-/obj/item/pen{
-	layer = 4
-	},
 /obj/machinery/keycard_auth{
 	pixel_x = -26;
 	pixel_y = 6
 	},
-/obj/item/paper_bin{
-	layer = 2.9
-	},
+/obj/machinery/suit_storage_unit/hop,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aCQ" = (

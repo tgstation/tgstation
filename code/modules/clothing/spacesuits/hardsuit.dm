@@ -562,13 +562,31 @@
 	//Captain
 /obj/item/clothing/head/helmet/space/hardsuit/swat/captain
 	name = "captain's hardsuit helmet"
+	desc = "A tactical MK.II SWAT helmet boasting better protection and a horrible fashion sense."
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
-	desc = "A tactical MK.II SWAT helmet boasting better protection and a horrible fashion sense."
+
 
 /obj/item/clothing/suit/space/hardsuit/swat/captain
 	name = "captain's SWAT suit"
 	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available. Usually reserved for heavy hitter corporate security, this one has a regal finish in Nanotrasen company colors. Better not let the assistants get a hold of it."
+	icon_state = "caparmor"
+	item_state = "capspacesuit"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat/captain
+
+	//Head of Personnel
+/obj/item/clothing/head/helmet/space/hardsuit/swat/captain/hop
+	name = "HoP's hardsuit helmet"
+	desc = "A tactical MK.II SWAT helmet boasting better protection and a horrible fashion sense. Something about it seems a bit off"
+	clothing_flags = THICKMATERIAL | SHOWEROKAY
+	icon_state = "capspace"
+	item_state = "capspacehelmet"
+
+
+/obj/item/clothing/suit/space/hardsuit/swat/captain/hop
+	name = "HoP's SWAT suit"
+	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available. Usually reserved for heavy hitter corporate security, this one has a regal finish in Nanotrasen company colors. Better not let the assistants get a hold of it. Something about it seems a bit off."
+	clothing_flags = THICKMATERIAL | SHOWEROKAY
 	icon_state = "caparmor"
 	item_state = "capspacesuit"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat/captain

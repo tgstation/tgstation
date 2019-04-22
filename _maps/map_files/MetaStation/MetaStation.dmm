@@ -37060,7 +37060,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsO" = (
-/mob/living/simple_animal/pet/dog/corgi/Ian,
+/obj/machinery/suit_storage_unit/hop,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsP" = (
@@ -37523,6 +37523,7 @@
 	areastring = "/area/crew_quarters/heads/hop";
 	pixel_y = 23
 	},
+/mob/living/simple_animal/pet/dog/corgi/Ian,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "btI" = (
@@ -48391,10 +48392,8 @@
 /turf/open/floor/wood,
 /area/library)
 "bPQ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/open/floor/wood,
+/mob/living/simple_animal/pet/dog/corgi/Ian,
+/turf/open/floor/carpet,
 /area/library)
 "bPR" = (
 /obj/structure/cable/yellow{
