@@ -1,0 +1,4 @@
+author: "TetraK1"
+delete-after: True
+changes: 
+  - bugfix: "AI integrity restorer no longer drops a free AI core on deconstruction/destruction."
