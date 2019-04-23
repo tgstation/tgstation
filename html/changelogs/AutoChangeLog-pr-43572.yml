@@ -1,0 +1,5 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - balance: "rubbershot does 66 stamina  + 18 damage instead of 150 stamina + 18 damage"
+  - balance: "beanbang does 55 stamina + 5 damge instead of 80 + 5 damage"
