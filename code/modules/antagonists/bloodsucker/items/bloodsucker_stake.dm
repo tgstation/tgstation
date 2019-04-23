@@ -14,6 +14,8 @@
 			return TRUE
 	return FALSE
 
+/mob/living/proc/StakeCanKillMe()
+	return IsSleeping() || stat >= UNCONSCIOUS || blood_volume <= 0 || has_trait(TRAIT_DEATHCOMA) // NOTE: You can't go to sleep in a coffin with a stake in you.
 
 
 ///obj/item/weapon/melee/stake
@@ -82,17 +84,17 @@
 	if (!iscarbon(target) || check_zone(user.zone_selected) != "chest" || user.a_intent != INTENT_HARM)
 		return
 	var/mob/living/carbon/C = target
-	// Needs to be Down/Slipped in some way to Stake. Taken from update_canmove() in mob.dm
+	// Needs to be Down/Slipped in some way to Stake.
 	if (!C.can_be_staked())
+		return
+			// Oops! Can't.
+	if(C.has_trait(TRAIT_PIERCEIMMUNE))
+		to_chat(user, "<span class='danger'>[target]'s chest resists the stake. It won't go in.</span>")
 		return
 	// Make Attempt...
 	to_chat(user, "<span class='notice'>You put all your weight into embedding the stake into [target]'s chest...</span>")
 	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
 	if (!do_mob(user, C, staketime, 0, 1, extra_checks=CALLBACK(C, /mob/living/carbon/proc/can_be_staked))) // user / target / time / uninterruptable / show progress bar / extra checks
-		return
-	// Oops! Can't.
-	if(C.has_trait(TRAIT_PIERCEIMMUNE))
-		to_chat(user, "<span class='danger'>[target]'s chest resists the stake. It won't go in.</span>")
 		return
 
 	// Drop & Embed Stake
@@ -112,7 +114,7 @@
 		var/datum/antagonist/bloodsucker/bloodsucker = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if (bloodsucker)
 			// If DEAD or TORPID...kill vamp!
-			if (C.stat == DEAD || C.has_trait(TRAIT_FAKEDEATH)) // NOTE: This is the ONLY time a staked Torpid vamp dies.
+			if (C.StakeCanKillMe()) // NOTE: This is the ONLY time a staked Torpid vamp dies.
 				bloodsucker.FinalDeath()
 				return
 			else
@@ -121,8 +123,9 @@
 
 // Can this target be staked? If someone stands up before this is complete, it fails. Best used on someone stationary.
 /mob/living/carbon/proc/can_be_staked()
-	return IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH)) || resting || IsStun() || IsFrozen() || (pulledby && pulledby.grab_state >= GRAB_NECK)
-
+	//return resting || IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH)) || resting || IsStun() || IsFrozen() || (pulledby && pulledby.grab_state >= GRAB_NECK)
+	return !(mobility_flags & MOBILITY_MOVE)
+	// ABOVE:  Taken from update_mobility() in living.dm
 
 
 

@@ -245,7 +245,7 @@
 
 /datum/action/bloodsucker/trackvamp/
 	name = "Track Bloodsucker"//"Cellular Emporium"
-	desc = "Take a moment to look for clues of any nearby Bloodsuckers.<br>These creatures are slippery, and often look like the crew. Finding "
+	desc = "Take a moment to look for clues of any nearby Bloodsuckers.<br>These creatures are slippery, and often look like the crew."
 	button_icon = 'icons/Fulpicons/fulpicons.dmi'	//This is the file for the BACKGROUND icon
 	background_icon_state = "vamp_power_off"		//And this is the state for the background icon
 	icon_icon = 'icons/Fulpicons/fulpicons.dmi'		//This is the file for the ACTION icon

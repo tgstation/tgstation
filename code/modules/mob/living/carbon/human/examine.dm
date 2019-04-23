@@ -16,6 +16,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!\n"
 
 	msg += ReturnVampExamine(user) // FULPSTATION: Vamps recognize the names of other vamps.
+	msg += ReturnVassalExamine(user) // FULPSTATION: Vassals recognize each other's marks.
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))

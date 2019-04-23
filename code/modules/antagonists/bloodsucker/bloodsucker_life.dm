@@ -119,8 +119,6 @@
 	//		 It is called from your coffin on close (by you only)
 
 	if (poweron_masquerade == TRUE || owner.current.AmStaked())
-		if (mult == 0)
-			to_chat(owner, "<span class='warning'>HEAL TEST 2: FALSE [poweron_masquerade] / [owner.current.AmStaked()]</span>")
 		return FALSE
 
 	owner.current.adjustStaminaLoss(-1 * mult, 0)
@@ -168,8 +166,6 @@
 			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
 
 			// Healed! Done for this tick.
-			if (mult == 0)
-				to_chat(owner, "<span class='warning'>HEAL TEST 1: TRUE</span>")
 			return TRUE
 
 		// Limbs? (And I have no other healing)
@@ -186,8 +182,6 @@
 				to_chat(owner.current, "<span class='notice'>Your flesh knits as it regrows [L]!</span>")
 				playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
 				// DONE! After regenerating a limb, we stop here.
-				if (mult == 0)
-					to_chat(owner, "<span class='warning'>HEAL TEST 2: TRUE</span>")
 				return TRUE
 
 			// Cure Final Disabilities
@@ -198,8 +192,6 @@
 			// Eyes/Heart
 			CheckVampOrgans() // Heart, Eyes
 
-	if (mult == 0)
-		to_chat(owner, "<span class='warning'>HEAL TEST 2: FALSE</span>")
 	return FALSE
 
 
@@ -217,11 +209,11 @@
 
 
 	// BLOOD_VOLUME_BAD: [224]  Jitter
-	if (owner.current.blood_volume < BLOOD_VOLUME_BAD && !prob(2))
-		owner.current.Jitter(20)
+	if (owner.current.blood_volume < BLOOD_VOLUME_BAD && !prob(0.5))
+		owner.current.Jitter(10)
 
 	// BLOOD_VOLUME_SURVIVE: [122]  Blur Vision
-	if (owner.current.blood_volume < BLOOD_VOLUME_BAD)
+	if (owner.current.blood_volume < BLOOD_VOLUME_BAD / 2)
 		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
 
 	// Nutrition
@@ -244,7 +236,7 @@
 		FinalDeath()
 		return
 	// Staked while "Temp Death" or Asleep
-	if ((owner.current.IsSleeping() || owner.current.stat >= UNCONSCIOUS|| owner.current.blood_volume <= 0) && owner.current.AmStaked())
+	if (owner.current.StakeCanKillMe() && owner.current.AmStaked())
 		FinalDeath()
 		return
 	// Not "Alive"?
@@ -289,6 +281,8 @@
 	owner.current.stat = SOFT_CRIT
 	owner.current.update_stat() //owner.current.stat = CONSCIOUS
 	to_chat(owner, "<span class='warning'>You have recovered from Torpor.</span>")
+
+
 
 
 /datum/antagonist/bloodsucker/proc/AmFinalDeath()
@@ -402,7 +396,63 @@
 
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+//	VAMPIRE LANGUAGE //
+
+/datum/language/vampiric
+	name = "Blah-Sucker"
+	desc = "The native language of the Bloodsucker elders, learned intuitively by Fledglings as they pass from death into immortality."
+	speech_verb = "growls"
+	ask_verb = "growls"
+	exclaim_verb = "snarls"
+	whisper_verb = "hisses"
+	key = "b"
+	space_chance = 40
+	default_priority = 90
+
+	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD // Hide the icon next to your text if someone doesn't know this language.
+	syllables = list(
+		"luk","cha","no","kra","pru","chi","busi","tam","pol","spu","och",		// Start: Vampiric
+		"umf","ora","stu","si","ri","li","ka","red","ani","lup","ala","pro",
+		"to","siz","nu","pra","ga","ump","ort","a","ya","yach","tu","lit",
+		"wa","mabo","mati","anta","tat","tana","prol",
+		"tsa","si","tra","te","ele","fa","inz",									// Start: Romanian
+		"nza","est","sti","ra","pral","tsu","ago","esch","chi","kys","praz",	// Start: Custom
+		"froz","etz","tzil",
+		"t'","k'","t'","k'","th'","tz'"
+		)
+
+	icon_state = "bloodsucker"
+	icon = 'icons/Fulpicons/fulpicons_small.dmi'
+
+//datum/language
+	//var/name = "an unknown language"  // Fluff name of language if any.
+	//var/desc = "A language."          // Short description for 'Check Languages'.
+	//var/speech_verb = "says"          // 'says', 'hisses', 'farts'.
+	//var/ask_verb = "asks"             // Used when sentence ends in a ?
+	//var/exclaim_verb = "exclaims"     // Used when sentence ends in a !
+	//var/whisper_verb = "whispers"     // Optional. When not specified speech_verb + quietly/softly is used instead.
+	//var/list/signlang_verb = list("signs", "gestures") // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
+	//var/key  							// If key is null, then the language isn't real or learnable.
+	//var/flags                         // Various language flags.
+	//var/list/syllables                // Used when scrambling text for a non-speaker.
+	//var/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
+	//var/space_chance = 55        // Likelihood of getting a space in the random scramble string
+	//var/list/spans = list()
+	//var/list/scramble_cache = list()
+	//var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
+
+	// if you are seeing someone speak popcorn language, then something is wrong.
+	//var/icon = 'icons/misc/language.dmi'
+	//var/icon_state = "popcorn"
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

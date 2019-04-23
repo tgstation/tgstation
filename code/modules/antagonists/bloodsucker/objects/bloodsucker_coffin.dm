@@ -134,21 +134,14 @@
 				switch(alert(user,"Do you wish to claim this as your coffin?",,"Yes", "No"))
 					if("Yes")
 						ClaimCoffin(user)
-			// Lock
-			if (user == resident)
-				if (!broken)
-					locked = TRUE
-					to_chat(user, "<span class='notice'>You flip a secret latch and lock yourself inside the [src].</span>")
-				else
-					to_chat(resident, "<span class='notice'>The secret latch to lock the [src] from the inside is broken. You set it back into place...</span>")
-					if (do_mob(resident, src, 50))//sleep(10)
-						to_chat(resident, "<span class='notice'>You fix the mechanism.</span>")
-						broken = FALSE
-						locked = TRUE
+			// Stake? No Heal!
+			if (user.AmStaked())
+				to_chat(bloodsuckerdatum.owner.current, "<span class='userdanger'>You are staked! Remove the offending weapon from your heart before sleeping.</span>")
+				return
 			// Heal
-			to_chat(bloodsuckerdatum.owner.current, "<span class='danger'>TEST COFFIN: [bloodsuckerdatum.HandleHealing(0.1)]</span>")
 			if (bloodsuckerdatum.HandleHealing(0)) // Healing Mult 0 <--- We only want to check if healing is valid!
-				to_chat(bloodsuckerdatum.owner.current, "<span class='danger'>You enter the horrible slumber of deathless Torpor. You will heal until you are renewed.</span>")
+				to_chat(bloodsuckerdatum.owner.current, "<span class='notice'>You enter the horrible slumber of deathless Torpor. You will heal until you are renewed.</span>")
+				LockMe(user)
 				bloodsuckerdatum.Torpor_Begin()
 	return TRUE
 
@@ -173,6 +166,24 @@
 
 
 
+/obj/structure/closet/crate/coffin/AltClick(mob/user)
+	// Distance Check (Inside Of)
+	if (user in src) // user.Adjacent(src)
+		LockMe(user, !locked)
+
+/obj/structure/closet/crate/coffin/proc/LockMe(mob/user, inLocked = TRUE)
+		// Lock
+	if (user == resident)
+		if (!broken)
+			locked = inLocked
+			to_chat(user, "<span class='notice'>You flip a secret latch and [locked?"":"un"]lock yourself inside the [src].</span>")
+		else
+			to_chat(resident, "<span class='notice'>The secret latch to lock the [src] from the inside is broken. You set it back into place...</span>")
+			if (do_mob(resident, src, 50))//sleep(10)
+				if (broken) // Spam Safety
+					to_chat(resident, "<span class='notice'>You fix the mechanism.</span>")
+					broken = FALSE
+					locked = TRUE
 
 
 

@@ -27,11 +27,110 @@
 
 
 
+// Seems to be run by game ONCE, and finds all potential players to be antag.
+/datum/game_mode/bloodsucker/pre_setup()
+
+	// Set Restricted Jobs
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
+		restricted_jobs += protected_jobs
+
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
+		restricted_jobs += "Assistant"
+
+	// Set number of Vamps
+	recommended_enemies = max(1, round(num_players()/8));
+
+	// Select Antags
+	for(var/i = 0, i < recommended_enemies, i++)
+		if (!antag_candidates.len)
+			break
+		var/datum/mind/bloodsucker = pick(antag_candidates)
+		bloodsuckers += bloodsucker
+		bloodsucker.restricted_roles = restricted_jobs
+		log_game("[bloodsucker.key] (ckey) has been selected as a [traitor_name].")
+		antag_candidates.Remove(bloodsucker) // Apparently you can also write antag_candidates -= bloodsucker
+
+	// Do we have enough vamps to continue?
+	return bloodsuckers.len >= required_enemies
+
+
+// Gamemode is all done being set up. We have all our Vamps. We now pick objectives and let them know what's happening.
+/datum/game_mode/bloodsucker/post_setup()
+	for(var/datum/mind/bloodsucker in bloodsuckers)
+		// spawn() --> Run block of code but game continues on past it.
+		// sleep() --> Run block of code and freeze code there (including whoever called us) until it's resolved.
+		make_bloodsucker(bloodsucker)
+	return ..()
+
+// Checking for ACTUALLY Dead Vamps
+/datum/game_mode/bloodsucker/are_special_antags_dead()
+	// Bloodsucker not Final Dead
+	for(var/datum/mind/bloodsucker in bloodsuckers)
+		if(!bloodsucker.AmFinalDeath())
+			return FALSE
+	return TRUE
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+
+
+/datum/game_mode/proc/can_make_bloodsucker(datum/mind/bloodsucker, datum/mind/creator) // Creator is just here so we can display fail messages to whoever is turning us.
+	// No Mind
+	if(!bloodsucker || !bloodsucker.key) // KEY is client login?
+		//if(creator) // REMOVED. You wouldn't see their name if there is no mind, so why say anything?
+		//	to_chat(creator, "<span class='danger'>[bloodsucker] isn't self-aware enough to be raised as a Bloodsucker!</span>")
+		return FALSE
+	// Current body is invalid
+	if(!ishuman(bloodsucker.current))// && !ismonkey(bloodsucker.current))
+		if(creator)
+			to_chat(creator, "<span class='danger'>[bloodsucker] isn't evolved enough to be raised as a Bloodsucker!</span>")
+		return FALSE
+	// Already a Non-Human Antag
+	if(bloodsucker.has_antag_datum(/datum/antagonist/abductor) || bloodsucker.has_antag_datum(/datum/antagonist/devil) || bloodsucker.has_antag_datum(/datum/antagonist/changeling))
+		return FALSE
+	// Already a vamp
+	if(bloodsucker.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		if(creator)
+			to_chat(creator, "<span class='danger'>[bloodsucker] is already a Bloodsucker!</span>")
+		return FALSE
+	// Not High Enough
+	//if(creator)
+	//	var/datum/antagonist/bloodsucker/creator_bloodsucker = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	//	if(istype(creator_bloodsucker) && creator_bloodsucker.vamplevel < creator_bloodsucker.levelToTurnReq)
+	//		to_chat(creator, "<span class='danger'>Your blood is too thin to turn this corpse!</span>")
+	//		return 0
+	return TRUE
 
 
 
 /datum/game_mode/proc/make_bloodsucker(datum/mind/bloodsucker, datum/mind/creator = null) // NOTE: This is a game_mode/proc, NOT a game_mode/bloodsucker/proc! We need to access this function despite the game mode.
-	return
+	if (!can_make_bloodsucker(bloodsucker))
+		return FALSE
+
+	// Create Datum: Fledgling
+	var/datum/antagonist/bloodsucker/A
+
+	// [FLEDGLING]
+	if (creator)
+		A = new ANTAG_DATUM_BLOODSUCKER(bloodsucker)
+		A.creator = creator
+		bloodsucker.add_antag_datum(A)
+		// Log
+		message_admins("[bloodsucker] has become a Bloodsucker, and was created by [creator].")
+		log_admin("[bloodsucker] has become a Bloodsucker, and was created by [creator].")
+
+	// [MASTER]
+	else
+		A = bloodsucker.add_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+
+
+	return TRUE
+
+
+/datum/game_mode/proc/remove_bloodsucker(datum/mind/bloodsucker)
+	bloodsucker.remove_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 
 
 

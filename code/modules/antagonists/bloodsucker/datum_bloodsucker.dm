@@ -52,7 +52,10 @@
 
 	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
 
-	antag_memory += "Although you were born a mortal, in un-death you earned the name <b>[ReturnFullName(owner.current, 1)]</b>.<br>"
+	// Name & Title
+	SelectFirstName(owner.current.gender)
+	SelectTitle(owner.current.gender, creator ? 1 : 0) 		// If I have a creator, then set as Fledgling.
+	SelectReputation(owner.current.gender, creator ? 1 : 0)
 
 	// Give Powers & Stats
 	AssignStarterPowersAndStats()
@@ -95,6 +98,7 @@
 	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.<span>")
 
 	owner.current.playsound_local(null, 'sound/Fulpsounds/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
+	antag_memory += "Although you were born a mortal, in un-death you earned the name <b>[ReturnFullName(owner.current, 1)]</b>.<br>"
 
 
 /datum/antagonist/bloodsucker/farewell()

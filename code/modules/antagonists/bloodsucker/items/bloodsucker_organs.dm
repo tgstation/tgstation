@@ -66,8 +66,6 @@
 	return "<span class='danger'>no</span>"	// Bloodsuckers don't have a heartbeat at all when stopped (default is "an unstable")
 
 
-
-
 // 		EYES 		//
 
 /obj/item/organ/eyes/vampeyes
@@ -76,3 +74,17 @@
 	flash_protect = -1
 	sight_flags = SEE_TURFS // Taken from augmented_eyesight.dm
 
+
+/*
+//		LIVER		//
+/obj/item/organ/liver/vampliver
+	// Livers run on_life(), which calls reagents.metabolize() in holder.dm, which calls on_mob_life.dm in the cheam (medicine_reagents.dm)
+	//															Holder also calls reagents.reaction_mob for the moment it happens
+
+/obj/item/organ/liver/vampliver/on_life()
+	var/mob/living/carbon/C = owner
+
+	if(!istype(C))
+		return
+
+*/

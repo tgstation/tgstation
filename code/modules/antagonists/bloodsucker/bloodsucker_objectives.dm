@@ -35,7 +35,7 @@
 
 //						EXPLANATION
 /datum/objective/bloodsucker/lair/update_explanation_text()
-	explanation_text = "Create a lair by claiming a coffin.  Make sure to keep it safe!"
+	explanation_text = "Create a lair by claiming a coffin."//  Make sure to keep it safe!"
 
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/lair/check_completion()
