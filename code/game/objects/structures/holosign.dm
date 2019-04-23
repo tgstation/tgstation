@@ -168,8 +168,7 @@
 		return
 	if(!shockcd)
 		if(istype(user))
-			var/mob/living/M = user
-			M.electrocute_act(15, "Energy Barrier", safety = TRUE)
+			user.electrocute_act(15, "Energy Barrier", safety = TRUE)
 			shockcd = TRUE
 			addtimer(CALLBACK(src, .proc/cooldown), 5)
 
