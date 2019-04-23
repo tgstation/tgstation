@@ -53582,17 +53582,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"cau" = (
-/obj/structure/table,
-/obj/item/paper/pamphlet/gateway,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/science/research)
 "cav" = (
 /obj/structure/chair,
 /obj/effect/landmark/start/assistant,
@@ -83694,6 +83683,16 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/misc_lab/range)
+"ofy" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/machinery/vending/modularpc,
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "ogE" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -112755,7 +112754,7 @@ bVk
 bWx
 bXV
 bZj
-cat
+ofy
 ccd
 ccd
 ceN
@@ -113012,7 +113011,7 @@ aYX
 aXR
 bXW
 bZk
-cau
+cat
 cce
 ccd
 qBh

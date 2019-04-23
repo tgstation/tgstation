@@ -26324,11 +26324,7 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
 "bks" = (
-/obj/structure/table,
-/obj/item/wrench,
-/obj/item/stack/cable_coil,
-/obj/item/electronics/apc,
-/obj/item/electronics/airlock,
+/obj/machinery/vending/modularpc,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
 "bkt" = (
