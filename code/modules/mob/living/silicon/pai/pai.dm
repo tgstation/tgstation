@@ -293,6 +293,7 @@
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
 
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
+	..()
 	user.set_machine(src)
 	if(pai.encryptmod == TRUE)
 		if(W.tool_behaviour == TOOL_SCREWDRIVER)
