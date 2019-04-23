@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - rscadd: "New quirk: Empath. Gain a better insight on the state of people around you by examining them."
+  - rscadd: "New quirk: Friendly. Your hugs are just the best. Keep yourself in a good mood to give the bestest hugs!"
