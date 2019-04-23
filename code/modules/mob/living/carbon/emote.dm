@@ -92,9 +92,9 @@
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 
-/datum/emote/living/carbon/clap/get_sound(mob/living/C)
-	if(ishuman(C))
-		if(!C.get_bodypart(BODY_ZONE_L_ARM) || !C.get_bodypart(BODY_ZONE_R_ARM))
+/datum/emote/living/carbon/clap/get_sound(mob/living/user)
+	if(ishuman(user))
+		if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
 			return
 		else
 			return pick('sound/misc/clap1.ogg',
@@ -142,7 +142,7 @@
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
 	restraint_check = TRUE
 
-/datum/emote/living/carbon/sign/select_param(mob/C, params)
+/datum/emote/living/carbon/sign/select_param(mob/user, params)
 	. = ..()
 	if(!isnum(text2num(params)))
 		return message
