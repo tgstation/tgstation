@@ -12,27 +12,45 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	var/max_dist = 150
 	verb_say = "states coldly"
 	var/list/message_log = list()
+	var/output_log
 
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
 	GLOB.doppler_arrays += src
 
 /obj/machinery/doppler_array/ComponentInitialize()
+	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
 
 /obj/machinery/doppler_array/Destroy()
 	GLOB.doppler_arrays -= src
 	return ..()
 
-/obj/machinery/doppler_array/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>")
+
+/obj/machinery/doppler_array/ui_interact(mob/user)
+	. = ..()
+	var/dat = {"<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body><br>
+				<h3>Explosion logs</h3>"}
 	for(var/i in 1 to message_log.len)
-		to_chat(user, "<span class='notice'>Log recording #[i]: [message_log[i]].</span>")
+		dat += "Log recording #[i]: [message_log[i]]<br/><br>"
+	dat += "<A href='?src=[REF(src)];delete_log=1'>Delete logs</A><br>"
+	dat += "<hr>"
+	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><br>"
+	dat += "</body></html>"
 
+	user << browse(dat, "window=computer;size=400x500")
+	onclose(user, "computer")
 
-/obj/machinery/doppler_array/process()
-	return PROCESS_KILL
+/obj/machinery/doppler_array/Topic(href, href_list)
+	if(..())
+		return
+	if(href_list["delete_log"])
+		message_log.Cut()
+	if(href_list["refresh"])
+		updateUsrDialog()
+
+	updateUsrDialog()
+	return
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)
@@ -45,8 +63,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			power_change()
 			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
 		I.play_tool_sound(src)
-	else
-		return ..()
+		return
+	return ..()
 
 /obj/machinery/doppler_array/proc/rot_message(mob/user)
 	to_chat(user, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
@@ -89,8 +107,14 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	else
 		for(var/message in messages)
 			say(message)
-	LAZYADD(message_log, messages)
+	output_log = messages.Join(" ")
+	LAZYADD(message_log, output_log)
+	if(output_log)
+		qdel(output_log)
 	return TRUE
+
+/obj/machinery/doppler_array/proc/get_log_info()
+	return
 
 /obj/machinery/doppler_array/power_change()
 	if(stat & BROKEN)
