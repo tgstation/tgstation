@@ -563,7 +563,7 @@
 					/obj/item/clothing/suit/armor/vest/russian,
 					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,
-					/obj/item/clothing/gloves/color/black,
+					/obj/item/clothing/gloves/combat,
 					/obj/item/clothing/under/syndicate/rus_army,
 					/obj/item/clothing/under/soviet,
 					/obj/item/clothing/mask/russian_balaclava,
