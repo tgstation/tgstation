@@ -1,0 +1,5 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - balance: "The hivemind radar's no longer has a minimum range, but has an increased ping time."
+  - balance: "How power use affects the hivemind radar has been tweaked as to ensure that going loud early is punished more."
