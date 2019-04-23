@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an exploit where incompatible magazine could be tactical reloaded into guns, and then still fire."
