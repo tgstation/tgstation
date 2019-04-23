@@ -1,0 +1,5 @@
+author: "Wilchenx"
+delete-after: True
+changes: 
+  - rscadd: "The modular pc vendor"
+  - rscdel: "minor entities on meta/pubby/box/delta to make room for said vendor"
