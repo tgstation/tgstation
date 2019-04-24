@@ -1,11 +1,11 @@
-//					  //
-// -----Vr Stuff----- //
-//					  //
+/area/awaymission/vr/megafauna_arena
+	name = "Virtual Reality Megafauna Trainer Safe Area"
+	icon_state = "awaycontent3"
 
-/area/awaymission/vr/miner
-	name = "VrMining"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+/area/awaymission/vr/megafauna_arena/arena
+	name = "Virtual Reality Megafauna Trainer Fighting Area"
+	icon_state = "awaycontent4"
+	pacifist = FALSE
 
 /datum/outfit/job/miner/equipped/vr
 	name = "Virtual Reality Miner"
@@ -17,8 +17,91 @@
 	backpack_contents = list(
 		/obj/item/gun/energy/kinetic_accelerator=2)
 
-/obj/effect/landmark/vr_spawn/miner
-	vr_outfit = /datum/outfit/job/miner/equipped/vr
+/obj/effect/portal/permanent/one_way/recall/megafauna_arena
+	name = "Megafauna Arena Portal"
+	desc = "Fight against megafauna in the safety of virtual reality."
+	equipment = /datum/outfit/job/miner/equipped/vr
+	recall_equipment = /datum/outfit/vr
+	id = "vr megafauna arena"
+	light_color = LIGHT_COLOR_FIRE
+	light_power = 1
+	light_range = 10
+
+/obj/effect/portal/permanent/one_way/destroy/megafauna_arena
+	name = "Megafauna Arena Exit Portal"
+	id = "vr megafauna arena"
+
+/obj/effect/portal/permanent/one_way/recall/blood_drunk_miner
+	name = "Blood Drunk Miner Arena Portal"
+	desc = "You see a faded miner through the portal. His rippling eyes stare directly at you."
+	id = "vr blood drunk miner"
+
+/obj/effect/portal/permanent/one_way/destroy/blood_drunk_miner
+	name = "Blood Drunk Miner Arena Exit Portal"
+	id = "vr blood drunk miner"
+
+/obj/effect/portal/permanent/one_way/recall/dragon
+	name = "Ash Drake Arena Portal"
+	desc = "The crackling fires of hell burn on the other side."
+	id = "vr ash drake"
+
+/obj/effect/portal/permanent/one_way/destroy/dragon
+	name = "Ash Drake Arena Exit Portal"
+	id = "vr ash drake"
+
+/obj/effect/portal/permanent/one_way/recall/bubblegum
+	name = "Bubblegum Arena Portal"
+	desc = "The arena of the king of the slaughter demons. Doesn't he control all versions of himself?"
+	id = "vr bubblegum"
+
+/obj/effect/portal/permanent/one_way/destroy/bubblegum
+	name = "Bubblegum Arena Exit Portal"
+	id = "vr bubblegum"
+
+/obj/effect/portal/permanent/one_way/recall/colossus
+	name = "Colossus Arena Portal"
+	desc = "Colossus are quite dangerous in close quarters."
+	id = "vr colossus"
+
+/obj/effect/portal/permanent/one_way/destroy/colossus
+	name = "Colossus Arena Exit Portal"
+	id = "vr colossus"
+
+/obj/effect/portal/permanent/one_way/recall/hierophant
+	name = "Hierophant Arena Portal"
+	desc = "They call him the hierophant. He's the king of the rumba beat. When he plays the maracas you go Chick chicky boom Chick chicky boom."
+	id = "vr hierophant"
+
+/obj/effect/portal/permanent/one_way/destroy/hierophant
+	name = "Hierophant Arena Exit Portal"
+	id = "vr hierophant"
+
+/obj/effect/portal/permanent/one_way/recall/legion
+	name = "Legion Arena Portal"
+	desc = "The portal to the defender of the necropolis. He's mostly there for show."
+	id = "vr legion"
+
+/obj/effect/portal/permanent/one_way/destroy/legion
+	name = "Legion Arena Exit Portal"
+	id = "vr legion"
+
+/obj/effect/portal/permanent/one_way/recall/vr_boss_rush
+	name = "Boss Rush Portal"
+	desc = "You're not certain this is even possible."
+	id = "vr boss rush"
+
+/obj/effect/portal/permanent/one_way/destroy/vr_boss_rush
+	name = "Boss Rush Exit Portal"
+	id = "vr boss rush"
+
+/obj/effect/portal/permanent/one_way/keep/vr_boss_rush_continue
+	name = "Boss Rush Continue Portal"
+	desc = "You're halfway there. These next fights are even tougher, however."
+	id = "vr boss rush continue"
+
+/obj/effect/portal/permanent/one_way/destroy/vr_boss_rush_continue
+	name = "Boss Rush Continue Exit Portal"
+	id = "vr boss rush continue"
 
 /obj/structure/closet/crate/necropolis/vr_mining_gear
 	name = "armory chest"
@@ -114,11 +197,8 @@
 		/obj/item/reagent_containers/glass/bottle/potion/flight=1,
 		/obj/item/organ/heart/cursed/wizard=1,
 		/obj/item/immortality_talisman=1,
-		/obj/item/book/granter/spell/summonitem=1)
-
-//										//
-// -----Virtual Megafauna Spawners ---- //
-//										//
+		/obj/item/book/granter/spell/summonitem=1,
+		/obj/item/extinguisher=1)
 
 /datum/component/spawner/megafauna
 	var/spawn_wait_time = 150 // time to next spawn when the megafauna dies, 15 seconds
@@ -193,58 +273,6 @@
 	desc = "Creates holographic versions of a gigantic skull demon guarding the necropolis."
 	icon_state = "legion"
 	mob_types = list(/mob/living/simple_animal/hostile/megafauna/legion/virtual)
-
-//							 //
-// ----- Recall Portals ---- //
-//							 //
-
-/obj/effect/proc_holder/spell/portal_recall
-	name = "Portal Recall"
-	desc = "This will teleport you back to your previously used portal. One use only."
-	clothes_req = FALSE
-	action_icon_state = "blink"
-	var/list/recall_portals = list()
-
-/obj/effect/proc_holder/spell/portal_recall/Click(mob/user = usr)
-	if(!recall_portals.len)
-		user.mind.RemoveSpell(src) // remove spell if no portals left
-	var/turf/recall_turf = get_turf(recall_portals[recall_portals.len])
-	if(recall_turf)
-		do_teleport(user, recall_turf, 0, no_effects = FALSE, channel = TELEPORT_CHANNEL_BLUESPACE)
-		recall_portals -= recall_portals[recall_portals.len]
-		if(!recall_portals.len)
-			user.mind.RemoveSpell(src) // remove spell if no portals left
-
-/obj/effect/portal/permanent/one_way/recall
-	name = "recall portal"
-	desc = "Gives you a one time ability to return to this portal once you have entered."
-	mech_sized = TRUE
-	keep = TRUE
-
-/obj/effect/portal/permanent/one_way/recall/Crossed(atom/movable/AM, oldloc)
-	if(ismob(AM))
-		var/mob/user = AM
-		var/check = locate(/obj/effect/proc_holder/spell/portal_recall) in user.mind.spell_list
-		if(check)
-			var/obj/effect/proc_holder/spell/portal_recall/mob_recall = check
-			for(var/obj/effect/portal/permanent/one_way/recall/P in mob_recall.recall_portals)
-				if(src == P)
-					return ..(AM, oldloc, force_stop = 1) // don't teleport if they have a recall spell with this portal already (or have just teleported onto it)
-	return ..()
-
-/obj/effect/portal/permanent/one_way/recall/teleport(atom/movable/M, force = FALSE)
-	. = ..()
-	if(ismob(M))
-		var/mob/user = M
-		var/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in user.mind.spell_list
-		var/obj/effect/proc_holder/spell/portal_recall/personal_recall = findspell ? findspell : new
-		personal_recall.recall_portals += src
-		if(!findspell)
-			user.mind.AddSpell(personal_recall)
-
-//							   //
-// -----Virtual Megafauna----- //
-//							   //
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual
 	name = "blood-drunk miner hologram"
