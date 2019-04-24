@@ -1275,16 +1275,18 @@
 
 // overload all the lights in this APC area
 
-/obj/machinery/power/apc/proc/overload_lighting()
+/obj/machinery/power/apc/proc/overload_lighting(intensity = 100)
 	if(/* !get_connection() || */ !operating || shorted)
 		return
 	if( cell && cell.charge>=20)
 		cell.use(20)
-		INVOKE_ASYNC(src, .proc/break_lights)
+		INVOKE_ASYNC(src, .proc/break_lights, intensity)
 
-/obj/machinery/power/apc/proc/break_lights()
+/obj/machinery/power/apc/proc/break_lights(intensity = 100)
 	for(var/area/A in area.related)
 		for(var/obj/machinery/light/L in A)
+			if(!(prob(intensity)))
+				continue
 			L.on = TRUE
 			L.break_light_tube()
 			L.on = FALSE

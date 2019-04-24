@@ -1218,6 +1218,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
 			target.visible_message("<span class='danger'>[user] has attempted to [atk_verb] [target]!</span>",\
 			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+			add_logs(user, target, "failed to punched")
 			return FALSE
 
 
@@ -1284,6 +1285,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
 						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+		add_logs(user, target, "failed to disarm")
 
 
 

@@ -82,9 +82,19 @@
 
 	sleep(10)
 
+	var/usertext = null
+	if(istype(loc,/obj))
+		var/obj/O = loc
+		if(O.fingerprintslast)
+			for(var/mob/M in GLOB.mob_list)
+				if(M.ckey == O.fingerprintslast)
+					usertext = M
+					break
+			if(!usertext)
+				usertext = O.fingerprintslast
 	for(var/obj/machinery/mass_driver/M in GLOB.machines)
 		if(M.id == src.id)
-			M.drive()
+			M.drive(user = usertext)
 
 	sleep(60)
 

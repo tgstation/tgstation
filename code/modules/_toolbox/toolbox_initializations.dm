@@ -224,3 +224,10 @@ GLOBAL_LIST_EMPTY(hub_features)
 	if((sourceloc.z == userloc.z) && (get_dist(sourceloc, userloc) <= 1))
 		return 1
 	return 0
+
+//borgs can now unbuckle.
+/atom/movable/attack_robot(mob/living/user)
+	if(can_buckle && has_buckled_mobs())
+		return attack_hand(user)
+	else
+		return ..()

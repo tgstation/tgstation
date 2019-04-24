@@ -7,6 +7,8 @@
 	var/timing = 0
 	var/time = 30
 	var/range = 4
+	var/mob/last_user
+	var/last_ckey
 
 
 /obj/machinery/computer/pod/Initialize()
@@ -22,6 +24,8 @@
 
 	if(!connected)
 		say("Cannot locate mass driver connector. Cancelling firing sequence!")
+		last_user = null
+		last_ckey = null
 		return
 
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
@@ -32,7 +36,14 @@
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			M.power = connected.power
-			M.drive()
+			var/theuser
+			if(last_user)
+				theuser = last_user
+			else if(last_ckey)
+				theuser = last_ckey
+			M.drive(user = theuser)
+	last_user = null
+	last_ckey = null
 
 	sleep(50)
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
@@ -94,8 +105,12 @@
 			if(connected)
 				connected.power = t
 		if(href_list["alarm"])
+			last_user = usr
+			last_ckey = usr.ckey
 			alarm()
 		if(href_list["time"])
+			last_user = usr
+			last_ckey = usr.ckey
 			timing = text2num(href_list["time"])
 		if(href_list["tp"])
 			var/tp = text2num(href_list["tp"])
@@ -112,7 +127,7 @@
 			for(var/obj/machinery/mass_driver/M in range(range, src))
 				if(M.id == id)
 					M.power = connected.power
-					M.drive()
+					M.drive(user = usr)
 		updateUsrDialog()
 
 /obj/machinery/computer/pod/old

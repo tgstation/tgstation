@@ -13,12 +13,22 @@
 	var/drive_range = 50	//this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 
 
-/obj/machinery/mass_driver/proc/drive(amount)
+/obj/machinery/mass_driver/proc/drive(amount,mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	use_power(500)
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, dir)
+	for(var/mob/living/M in GLOB.mob_list)
+		if(!M.ckey || get_turf(M) != loc)
+			continue
+		if(user)
+			if(ismob(user))
+				add_logs(user, M, "mass drivered")
+			else
+				M.log_message("mass drivered by ckey([user])", INDIVIDUAL_ATTACK_LOG)
+		else
+			add_logs(null, M, "got mass drivered")
 	for(var/atom/movable/O in loc)
 		if(!O.anchored || ismecha(O))	//Mechs need their launch platforms.
 			O_limit++

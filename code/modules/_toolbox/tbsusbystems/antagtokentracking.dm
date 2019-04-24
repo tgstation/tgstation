@@ -38,7 +38,25 @@ SUBSYSTEM_DEF(antagtokens)
 						tokens++
 						TS["[t]"] << tokens
 	wipe_cached_tokens(S)
+	merge_antag_tokens()
 	. = ..()
+
+//created because we had to change hosts for a while. This allows us to merge a different antag token file in with the current one.
+/datum/controller/subsystem/proc/merge_antag_tokens()
+	if(fexists("data/other_saves/mergable_antagtokens.sav"))
+		var/savefile/S = new /savefile(GLOB.antagtokenpath)
+		var/savefile/S2 = new /savefile("data/other_saves/mergable_antagtokens.sav")
+		if(S && S2 && istype(S2.dir,/list))
+			for(var/v in S2.dir)
+				var/newtokens = 0
+				S2["[v]"] >> newtokens
+				if(isnum(newtokens) && newtokens > 0)
+					var/existingtokens = 0
+					S["[v]"] >> existingtokens
+					if(isnum(existingtokens))
+						existingtokens = min(existingtokens+newtokens,MAXANTAGTOKENS)
+						S["[v]"] << existingtokens
+		fdel("data/other_saves/mergable_antagtokens.sav")
 
 /datum/controller/subsystem/proc/wipe_cached_tokens(savefile/S)
 	if(!S)
@@ -60,14 +78,15 @@ SUBSYSTEM_DEF(antagtokens)
 /datum/controller/subsystem/antagtokens/fire(resumed)
 	if(!last_check)
 		last_check = world.time
+	var/savefile/Sminutes = new /savefile(ANTAGTOKENMINUTESPATH)
 	if(!istype(minutes_tracked,/list))
-		var/savefile/S = new /savefile(ANTAGTOKENMINUTESPATH)
-		if(S)
-			S["minutes_tracked"] >> minutes_tracked
+		if(Sminutes)
+			Sminutes["minutes_tracked"] >> minutes_tracked
 		if(!istype(minutes_tracked,/list))
 			minutes_tracked = list()
 	if(istype(minutes_tracked,/list) && last_check+(tick_delay*10) <= world.time)
 		last_check = world.time
+		var/savefile/S = new /savefile(GLOB.antagtokenpath)
 		for(var/client/C in GLOB.clients)
 			if(is_special_character(C.mob)) //antags dont get counted
 				continue
@@ -79,6 +98,8 @@ SUBSYSTEM_DEF(antagtokens)
 				continue
 			if(isobserver(C.mob))
 				var/mob/dead/observer/O = C.mob
+				if(O.mind && O.mind.assigned_role == "Space Jesus") //no antag tokens for afk admins as space jesus
+					continue
 				if(O.started_as_observer) //Observers are not given antag tokens.
 					continue
 			else
@@ -101,7 +122,6 @@ SUBSYSTEM_DEF(antagtokens)
 				currentminutes++
 			if(currentminutes >= MINUTESFORANTAGTOKEN)
 				var/tokens = 0
-				var/savefile/S = new /savefile(GLOB.antagtokenpath)
 				if(S)
 					S["[C.ckey]"] >> tokens
 					if(!isnum(tokens) || tokens < 1)
@@ -114,7 +134,6 @@ SUBSYSTEM_DEF(antagtokens)
 						to_chat(C,"<font color='black'>You have accumulated [round(MINUTESFORANTAGTOKEN/60,)] hours of play time, however you are at a maximum of [MAXANTAGTOKENS] antag tokens and can not be awarded any more.</font>")
 				currentminutes = 0
 			minutes_tracked[C.ckey] = currentminutes
-		var/savefile/S = new /savefile(ANTAGTOKENMINUTESPATH)
-		if(S)
-			S["minutes_tracked"] << minutes_tracked
+		if(Sminutes)
+			Sminutes["minutes_tracked"] << minutes_tracked
 
