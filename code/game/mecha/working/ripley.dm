@@ -236,15 +236,15 @@
 /obj/mecha/business
 	desc = "A giant machine built for Big Wig bureaucracy."
 	name = "\improper Loan Shark"
-	icon_state = "ripley"
-	silicon_icon_state = "ripley-empty"
+	icon_state = "business"
+	silicon_icon_state = "business-empty"
 	step_in = 1 //really really fast, for chasing down and stamping assistants
 	max_integrity = 200 //same as ripley
 	deflect_chance = 15
 	armor = list("melee" = 50, "bullet" = 40, "laser" = 0, "energy" = 0, "bomb" = 40, "bio" = 0, "rad" = 20, "fire" = 10, "acid" = 10)
 	max_equip = 4 //all of these are not very useful (unless you are the hop)
-	wreckage = /obj/structure/mecha_wreckage/ripley
-	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
+	wreckage = /obj/structure/mecha_wreckage/ripley//CHANGE THIS
+	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)//AND THIS
 	opacity = FALSE //Just to avoid various clown induced bureaucratic incidents
 
 /obj/mecha/business/Initialize()
@@ -253,9 +253,9 @@
 
 /obj/mecha/business/loaded/Initialize()
 	..()
-	*/
-	var/obj/item/mecha_parts/mecha_equipment/ME = new pen(src)
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/pen(src)
 	ME.attach(src)
+	/*
 	ME = new paper bin(src)
 	ME.attach(src)
 	ME = new photocopier(src)

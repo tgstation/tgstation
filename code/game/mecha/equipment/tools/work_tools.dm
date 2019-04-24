@@ -522,10 +522,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/pen
 	name = "ultra-pen 2000"
-	desc = "The pen is mightier than the sword. Our finest scientists wondered if increasing the size of the pen also increased the mightiness when compared to a sword."
-	icon_state = "mecha_clamp"
-	equip_cooldown = 15
-	energy_drain = 10
+	desc = "The pen is mightier than the sword. It's even mightier if it's a mecha-ultra-pen, if you can believe that."
+	icon_state = "mecha_pen"
 
 /obj/item/mecha_parts/mecha_equipment/pen/can_attach(obj/mecha/business/M as obj)
 	if(..())
@@ -534,53 +532,5 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/pen/action(atom/target)
-	if(!action_checks(target))
-		return
-	if(!cargo_holder)
-		return
-	if(isobj(target))
-		var/obj/O = target
-		if(istype(O, /obj/machinery/door/firedoor))
-			var/obj/machinery/door/firedoor/D = O
-			D.try_to_crowbar(src,chassis.occupant)
-			return
-		if(istype(O, /obj/machinery/door/airlock/))
-			var/obj/machinery/door/airlock/D = O
-			D.try_to_crowbar(src,chassis.occupant)
-			return
-		if(!O.anchored)
-			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
-				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
-				O.anchored = TRUE
-				if(do_after_cooldown(target))
-					cargo_holder.cargo += O
-					O.forceMove(chassis)
-					O.anchored = FALSE
-					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
-					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]", LOG_MECHA)
-				else
-					O.anchored = initial(O.anchored)
-			else
-				occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
-		else
-			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
-
-	else if(isliving(target))
-		var/mob/living/M = target
-		if(M.stat == DEAD)
-			return
-		if(chassis.occupant.a_intent == INTENT_HARM)
-			M.take_overall_damage(dam_force)
-			if(!M)
-				return
-			M.adjustOxyLoss(round(dam_force/2))
-			M.updatehealth()
-			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
-								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
-								"<span class='italics'>You hear something crack.</span>")
-			log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
-		else
-			step_away(M,chassis)
-			occupant_message("You push [target] out of the way.")
-			chassis.visible_message("[chassis] pushes [target] out of the way.")
+//paper code is weird as hell but i'll get it
 		return 1
