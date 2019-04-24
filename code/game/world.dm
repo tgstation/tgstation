@@ -35,7 +35,7 @@ GLOBAL_PROTECT(security_mode)
 
 	//GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 	//This doesnt seem useful. None of the places its used seems like we need this. It only causes confusion in game. Forcing it to be 0 for now. -falaskian
-	GLOB.timezoneOffset = 0
+	GLOB.timezoneOffset = 252000
 
 	if(fexists(RESTART_COUNTER_PATH))
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))

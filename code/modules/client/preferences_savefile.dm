@@ -104,6 +104,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["pda_color"]			>> pda_color
 	S["lastheardlobbytheme"]	>> lastheardlobbytheme
 	S["overridden_unavailable_jobs"] >> overridden_unavailable_jobs
+	S["disable_windowed_admin_who_list"] >> disable_windowed_admin_who_list
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -177,6 +178,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_color"], pda_color)
 	WRITE_FILE(S["lastheardlobbytheme"], lastheardlobbytheme)
 	WRITE_FILE(S["overridden_unavailable_jobs"],overridden_unavailable_jobs)
+	WRITE_FILE(S["disable_windowed_admin_who_list"],disable_windowed_admin_who_list)
 
 	return 1
 

@@ -55,7 +55,13 @@
 		msg += "[line]\n"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
-	to_chat(src, msg)
+	if(holder && prefs && !prefs.disable_windowed_admin_who_list)
+		var/dat = "<B>Who List</B><BR><BR>"
+		for(var/line in Lines)
+			dat += "[line]<br>"
+		src << browse(dat,"size=550x700,window=wholist")
+	else
+		to_chat(src, msg)
 
 /client/verb/adminwho()
 	set category = "Admin"

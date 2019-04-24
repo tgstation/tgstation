@@ -137,6 +137,9 @@ SUBSYSTEM_DEF(job)
 		if(!job)
 			continue
 
+		if(player.client && !job.is_whitelisted(player.client))
+			continue
+
 		if(istype(job, GetJob(SSjob.overflow_role))) // We don't want to give him assistant, that's boring!
 			continue
 

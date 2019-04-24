@@ -197,6 +197,18 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 			Lines += entry
 	return Lines
 
+//toggling admin windowed who list.
+/client/proc/toggle_windowed_admin_who_list()
+	set name = "Toggle Windowed Who List"
+	set desc = "Toggles windowed who list."
+	set category = "Preferences"
+	if(!holder)
+		return
+	if(prefs)
+		prefs.disable_windowed_admin_who_list = !prefs.disable_windowed_admin_who_list
+		prefs.save_preferences()
+		to_chat(usr, "<span class='notice'>You toggle your windowed who list to [prefs.disable_windowed_admin_who_list ? "Off" : "On"].</span>")
+
 //our version of this proc.
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
 	if(!SSticker.HasRoundStarted())

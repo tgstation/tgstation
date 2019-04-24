@@ -18,7 +18,8 @@ GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/cmd_admin_ticket_panel,
-	/client/proc/stop_sounds
+	/client/proc/stop_sounds,
+	/client/proc/toggle_windowed_admin_who_list
 	)
 GLOBAL_PROTECT(admin_verbs_admin)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())

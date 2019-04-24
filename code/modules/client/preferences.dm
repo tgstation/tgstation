@@ -123,6 +123,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/lastheardlobbytheme = 0
 	var/list/overridden_unavailable_jobs = list()
 
+	var/disable_windowed_admin_who_list = FALSE
+
 /datum/preferences/New(client/C)
 	max_save_slots = GLOB.min_player_slots
 	parent = C
