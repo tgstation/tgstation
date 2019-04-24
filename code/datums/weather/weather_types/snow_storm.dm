@@ -28,6 +28,7 @@
 
 datum/weather/snow_storm/freeze
 	target_trait = ZTRAIT_STATION
+	probability = 0
 	barometer_predictable = FALSE
 	area_type = /area
 	protected_areas = list(/area/shuttle)

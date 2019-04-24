@@ -2,8 +2,9 @@
 	name = "Radiation Vortex"
 	weight = 2
 	typepath = /datum/round_event/disaster/radiation_cloud
-	max_occurrences = -1
-	earliest_start = 5 MINUTES
+	max_occurrences = 999
+	earliest_start = 0 MINUTES
+	gamemode_blacklist = list()
 	gamemode_whitelist = list("disaster")
 
 /datum/round_event/disaster/radiation_cloud
