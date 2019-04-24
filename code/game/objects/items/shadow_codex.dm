@@ -4,14 +4,14 @@
 	name = "Shadow Codex"
 	icon = 'icons/obj/library.dmi' // Finished, but could be better. If you want to sprite it.
 	icon_state = "shadowcodex"
-	desc = "A book containing the secrets of shadows, written by a mysterious dapper looking man pictured on the front side. Looking at him fills you with <span class='userdanger'>dread</span>."
+	desc = "A book containing the secrets of shadows, written by a mysterious dapper looking man, pictured on the first page. Looking at him fills you with <span class=warning>dread</span>."
 	var/mob/living/carbon/caster = null // Can be interpreted as owner too
 	var/is_reading = 0 // is the user reading the book
 	var/is_converting = 0 // is the user using the book on someone else
 	var/times_used = 0 // How many times has the object been used
 	var/mob/living/carbon/human/shadowperson // The summoned minion
 
-/obj/item/shadow_codex/pickup(mob/user) // called on pickup
+/obj/item/shadow_codex/pickup(mob/living/carbon/user) // called on pickup
 	if(caster == null || user == caster) // If you spawn this in the world, be sure to be the first to pick it up, or you won't be able to be the owner of it
 		caster = user
 		to_chat(user, "<span class=notice>Use the knowledge contained in this book wisely.</span>")
@@ -19,13 +19,14 @@
 		to_chat(user, "<span class=warning>You try to return to your original body.</span>")
 		if(do_after(user, 50, target = src)) // you can keep smashing the pickup and have multiple bars, it shouldn't break anything so im going to just leave it
 			shadow_pickup(shadowperson)
-			to_chat(user, "<span class='userdanger'>You return to your body, destroying your shadow form.</span>")
+			to_chat(user, "<span class='userdanger'>You return to your body, killing your shadow puppet.</span>")
 		else
+			user.Paralyze(100) // Quite a price to pay if you move when returning to your body
 			to_chat(user, "<span class='userdanger'>You fail to return to your body. Perhaps you should try again.</span>")
 	else // if you are not the caster of the book then this happens
-		return FALSE
 		user.emote("scream")
-		to_chat(user, "<span class=warning>I wouldn't do that if I were you.</span>")
+		to_chat(user, "<span class=warning>You feel as if being watched by the shadows. It's probably best to leave this book alone.</span>")
+		user.adjustBrainLoss(10) // don't touch it your you will go insane and die
 
 
 
@@ -100,7 +101,7 @@
 	C.Unconscious(75)
 	caster.Unconscious(75)
 	qdel(ghost)
-	qdel(shadowperson) // wew lad. im not using the death proc, this would look better with an animation
+	shadowperson.death()
 	shadowperson = null
 
 
