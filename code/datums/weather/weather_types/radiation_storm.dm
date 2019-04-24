@@ -65,5 +65,5 @@
 	var/atom/movable/virtualspeaker/virt = new(null)
 	frequency.post_signal(virt, signal)
 
-datum/weather/rad_storm/cloud
+/datum/weather/rad_storm/cloud
 	protected_areas = list(/area/shuttle)
