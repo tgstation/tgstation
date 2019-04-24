@@ -79,15 +79,21 @@
 	addtimer(CALLBACK(src, .proc/startUp), 50)
 	START_PROCESSING(SSfastprocess, src)
 	
-/obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
+/obj/structure/checkoutmachine/proc/startUp()
 	start_dumping() //The machine doesnt move during this time, giving people close by a small window to grab their funds before it starts running around
-	sleep(10)
+	addtimer(CALLBACK(src, .proc/anim1), 10)
+
+/obj/structure/checkoutmachine/proc/anim1() //very VERY silly code that adds a neat animation when the pod lands.
 	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
 	cut_overlay("flaps")
-	sleep(10)
+	addtimer(CALLBACK(src, .proc/anim2), 10)
+
+/obj/structure/checkoutmachine/proc/anim2()
 	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
 	cut_overlay("hatch")
-	sleep(30)
+	addtimer(CALLBACK(src, .proc/anim3), 30)
+
+/obj/structure/checkoutmachine/proc/anim3()
 	playsound(src,'sound/machines/twobeep.ogg',50,0)
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
 	hologram.pixel_y = 16
@@ -98,21 +104,33 @@
 	add_overlay("legs_extending")
 	cut_overlay("legs_retracted")
 	pixel_z += 4
-	sleep(5)
+	addtimer(CALLBACK(src, .proc/anim4), 5)
+
+/obj/structure/checkoutmachine/proc/anim4()
 	add_overlay("legs_extended")
 	cut_overlay("legs_extending")
 	pixel_z += 4
-	sleep(20)
+	addtimer(CALLBACK(src, .proc/anim5), 20)
+
+/obj/structure/checkoutmachine/proc/anim5()
 	add_overlay("screen_lines")
-	sleep(5)
+	addtimer(CALLBACK(src, .proc/anim6), 5)
+
+/obj/structure/checkoutmachine/proc/anim6()
 	cut_overlay("screen_lines")
-	sleep(5)
+	addtimer(CALLBACK(src, .proc/anim7), 5)
+
+/obj/structure/checkoutmachine/proc/anim7()
 	add_overlay("screen_lines")
 	add_overlay("screen")
-	sleep(5)
+	addtimer(CALLBACK(src, .proc/anim8), 5)
+
+/obj/structure/checkoutmachine/proc/anim8()
 	playsound(src,'sound/machines/triple_beep.ogg',50,0)
 	add_overlay("text")
-	sleep(10)
+	addtimer(CALLBACK(src, .proc/anim9), 10)
+
+/obj/structure/checkoutmachine/proc/anim9()
 	add_overlay("legs")
 	cut_overlay("legs_extended")
 	cut_overlay("screen")
@@ -121,7 +139,7 @@
 	add_overlay("screen_lines")
 	cut_overlay("text")
 	add_overlay("text")
-	canwalk = TRUE
+	canwalk = TRUE //wa la
 
 /obj/structure/checkoutmachine/Destroy()
 	stop_dumping()
