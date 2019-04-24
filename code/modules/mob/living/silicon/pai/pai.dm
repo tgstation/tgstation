@@ -27,6 +27,7 @@
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
+	var/obj/item/radio/headset			// The pAI's headset
 	var/obj/item/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
@@ -58,6 +59,7 @@
 
 	var/obj/item/instrument/piano_synth/internal_instrument
 
+	var/encryptmod = FALSE
 	var/holoform = FALSE
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
@@ -110,10 +112,11 @@
 	job = "personal AI"
 	signaler = new(src)
 	if(!radio)
-		radio = new /obj/item/radio(src)
+		radio = new /obj/item/radio/headset/silicon/pai(src)
 	newscaster = new /obj/machinery/newscaster(src)
 	if(!aicamera)
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
+
 	//PDA
 	pda = new(src)
 	spawn(5)
@@ -282,3 +285,14 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+
+/obj/item/paicard/attackby(obj/item/W, mob/user, params)
+	..()
+	user.set_machine(src)
+	if(pai.encryptmod == TRUE)
+		if(W.tool_behaviour == TOOL_SCREWDRIVER)
+			pai.radio.attackby(W, user, params)
+		else if(istype(W, /obj/item/encryptionkey))
+			pai.radio.attackby(W, user, params)
+	else
+		to_chat(user, "Encryption Key ports not configured.")

@@ -68,6 +68,7 @@
 						to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
 						success = TRUE
 						hive.add_to_hive(target)
+						hive.threat_level = max(0, hive.threat_level-0.1)
 						if(ignore_mindshield)
 							to_chat(user, "<span class='warning'>We are briefly exhausted by the effort required by our enhanced assimilation abilities.</span>")
 							user.Immobilize(50)
@@ -109,6 +110,7 @@
 		return
 	hive.remove_from_hive(M)
 	hive.calc_size()
+	hive.threat_level += 0.1
 	to_chat(user, "<span class='notice'>We remove [target.name] from the hive</span>")
 	if(hive.active_one_mind)
 		var/datum/antagonist/hivevessel/woke = target.is_wokevessel()
@@ -379,7 +381,7 @@
 	if(original_body?.mind)
 		var/datum/antagonist/hivemind/hive = original_body.mind.has_antag_datum(/datum/antagonist/hivemind)
 		if(hive)
-			hive.threat_level += 0.5
+			hive.threat_level += 1
 
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/on_lose(mob/user)
@@ -573,6 +575,9 @@
 		victim.Sleeping(max(80,240/(1+round(victims.len/3))))
 	for(var/mob/living/silicon/victim in victims)
 		victim.Unconscious(240)
+	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(victims.len && hive)
+		hive.threat_level += 1
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack
 	name = "Medullary Failure"
@@ -594,7 +599,7 @@
 		to_chat(user, "<span class='warning'>We are unable to induce a heart attack!</span>")
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	if(hive)
-		hive.threat_level += 2
+		hive.threat_level += 4
 
 /obj/effect/proc_holder/spell/target_hive/hive_warp
 	name = "Distortion Field"
@@ -731,6 +736,7 @@
 			C.gib()
 			hive.track_bonus += TRACKER_BONUS_LARGE
 			hive.size_mod += 5
+			hive.threat_level += 1
 			gibbed = TRUE
 			found_target = TRUE
 		else if(C.IsUnconscious())
@@ -786,10 +792,11 @@
 
 	var/objective = stripped_input(user, "What objective do you want to give to your vessels?", "Objective")
 	
-	if(!objective)
+	if(!objective || !hive)
 		revert_cast()
 		return
-
+	
+	hive.threat_level += 6
 	for(var/i = 0, i < 4, i++)
 		var/mob/living/carbon/C = pick_n_take(valid_targets)
 		C.hive_awaken(objective)
@@ -843,6 +850,9 @@
 	new wall_type(get_turf(user),user)
 	for(var/dir in GLOB.alldirs)
 		new wall_type_b(get_step(user, dir),user)
+	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(hive)
+		hive.threat_level += 0.5
 
 /obj/effect/forcefield/wizard/hive
 	name = "Telekinetic Field"

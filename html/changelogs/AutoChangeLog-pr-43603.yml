@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - rscadd: "pAI's now have the same headset tech as AI. Add and remove keys just like you would with headsets."

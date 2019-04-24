@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - tweak: "Service Halls now allow all Service dept. jobs."
