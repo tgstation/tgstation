@@ -92,26 +92,17 @@
 					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
 					qdel(pai)
-		if(href_list["toggle_transmit"])
-			if(pai.can_transmit)
-				to_chat(pai, "<span class='userdanger'>Your owner has disabled your outgoing radio transmissions!</span>")
-				pai.can_transmit = FALSE
-				to_chat(usr, "<span class='warning'>You disable your pAI's outgoing radio transmissions!</span>")
-			else
-				to_chat(pai, "<span class='boldnotice'>Your owner has enabled your outgoing radio transmissions!</span>")
-				pai.can_transmit = TRUE
-				to_chat(usr, "<span class='notice'>You enable your pAI's outgoing radio transmissions!</span>")
-			pai.radio.wires.cut(WIRE_TX)	
-		if(href_list["toggle_receive"])
-			if(pai.can_receive)
-				to_chat(pai, "<span class='userdanger'>Your owner has disabled your incoming radio transmissions!</span>")
-				pai.can_receive = FALSE
-				to_chat(usr, "<span class='warning'>You disable your pAI's incoming radio transmissions!</span>")
-			else
-				to_chat(pai, "<span class='boldnotice'>Your owner has enabled your incoming radio transmissions!</span>")
-				pai.can_receive = TRUE
-				to_chat(usr, "<span class='notice'>You enable your pAI's incoming radio transmissions!</span>")
-			pai.radio.wires.cut(WIRE_RX)
+		if(href_list["toggle_transmit"] || href_list["toggle_receive"])
+			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving. 
+			var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
+			if(transmitting)
+				pai.can_transmit = !pai.can_transmit
+			else //receiving
+				pai.can_receive = !pai.can_receive
+			pai.radio.wires.cut(transmit_holder)//wires.cut toggles cut and uncut states
+			transmit_holder = (transmitting ? pai.can_transmit : pai.can_receive) //recycling can be fun!
+			to_chat(usr,"<span class='warning'>You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!</span>")
+			to_chat(pai,"<span class='warning'>Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!</span>")
 		if(href_list["setlaws"])
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
