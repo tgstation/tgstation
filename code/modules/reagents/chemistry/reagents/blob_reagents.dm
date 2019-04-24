@@ -459,7 +459,7 @@
 	effectdesc = "will also wet tiles near blobs that are attacked or killed."
 	taste_description = "a sponge"
 	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets, extinguishing them."
-	analyzerdesceffect = "When attacked or killed, wets nearby tiles, extinguishing anything on them."
+	analyzerdesceffect = "When attacked or killed, lubricates nearby tiles, extinguishing anything on them."
 	color = "#AAAABB"
 	complementary_color = "#BBBBAA"
 	blobbernaut_message = "emits slime at"
