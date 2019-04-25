@@ -110,6 +110,7 @@
 		P.setPersonality(src)
 	forceMove(P)
 	card = P
+	job = "personal AI"
 	signaler = new(src)
 	if(!radio)
 		radio = new /obj/item/radio/headset/silicon/pai(src)
