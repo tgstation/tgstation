@@ -58679,8 +58679,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
 	frequency = 1441;
-	id = "inc_in";
-	on = 0
+	id = "inc_in"
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
