@@ -792,7 +792,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			var/mob/living/silicon/ai/R = user
 			targetcam = R.aicamera
 		else if(ispAI(user))
-			var/mob/living/silicon/ai/R = user
+			var/mob/living/silicon/pai/R = user
 			targetcam = R.aicamera
 		else if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
