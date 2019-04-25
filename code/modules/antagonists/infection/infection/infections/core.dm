@@ -49,19 +49,13 @@
 	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
 
 /obj/structure/infection/core/Destroy()
+	. = ..()
 	GLOB.infection_cores -= src
 	if(overmind)
 		overmind.infection_core = null
 	overmind = null
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list -= src
-	return ..()
-
-/obj/structure/infection/core/relaymove(mob/user)
-	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
-		to_chat(user, "<span class='warning'>You can't move while you're respawning!</span>")
-	return
 
 /obj/structure/infection/core/ex_act(severity, target)
 	return
@@ -121,16 +115,18 @@
 	if(overmind)
 		overmind.update_health_hud()
 		Pulse_Area(overmind, 20, 40)
-	for(var/obj/structure/infection/normal/I in range(2, src) + (range(5,src) - range(4, src)))
+	for(var/obj/structure/infection/normal/I in range(1, src) + (range(3, src) - range(2, src)))
+		if((I.x == x || I.y == y) && get_dist(I, src) > 2)
+			continue
 		var/turf/T = get_turf(I)
 		I.change_to(/obj/structure/infection/shield/reflective/strong, overmind)
 		var/obj/structure/infection/shield/reflective/strong/S = locate(/obj/structure/infection/shield/reflective/strong) in T.contents
 		S.point_return = 0
 	var/list/turrets = list()
-	turrets += locate(x-4,y+4,z)
-	turrets += locate(x+4,y+4,z)
-	turrets += locate(x-4,y-4,z)
-	turrets += locate(x+4,y-4,z)
+	turrets += locate(x-2,y+2,z)
+	turrets += locate(x+2,y+2,z)
+	turrets += locate(x-2,y-2,z)
+	turrets += locate(x+2,y-2,z)
 	for(var/turf/T in turrets)
 		var/obj/structure/infection/normal/I = locate(/obj/structure/infection/normal) in T.contents
 		if(I && prob(15))
@@ -140,6 +136,10 @@
 				for(var/i = 1 to times)
 					U.do_upgrade(S)
 	INVOKE_ASYNC(src, .proc/pulseNodes)
+	var/angle = rand(0, 360)
+	for(var/i = 1 to 3)
+		new /obj/effect/particle_effect/smoke/infection_smoke(loc, angle + 120 * i)
+	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
 	..()
 
 /obj/structure/infection/core/proc/pulseNodes()
@@ -161,3 +161,36 @@
 	if(overmind && is_station_level(new_z))
 		overmind.forceMove(get_turf(src))
 	return ..()
+
+/obj/effect/particle_effect/smoke/infection_smoke
+	name = "infectious smoke"
+	color = "#ff5800"
+	opaque = 0
+	animate_movement = SLIDE_STEPS
+	lifetime = 10
+	var/movement_range = 8
+	var/list/move_turfs = list()
+
+/obj/effect/particle_effect/smoke/infection_smoke/Initialize(mapload, var/angle)
+	. = ..()
+	var/range = movement_range
+	var/turf/end_turf = get_turf(src)
+	for(var/i in 1 to range)
+		var/turf/check = locate(src.x + cos(angle) * i, src.y + sin(angle) * i, src.z)
+		if(!check)
+			break
+		end_turf = check
+	move_turfs = getline(get_turf(src), end_turf) - get_turf(src)
+	smoke_movement()
+
+/obj/effect/particle_effect/smoke/infection_smoke/proc/smoke_movement()
+	var/diff = 40 / movement_range
+	INVOKE_ASYNC(src, .proc/fade_out, 40)
+	for(var/i = 1 to movement_range)
+		if(move_turfs.len)
+			var/turf/moveto = move_turfs[1]
+			forceMove(moveto)
+			move_turfs -= moveto
+		sleep(diff)
+	qdel(src)
+

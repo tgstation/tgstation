@@ -148,6 +148,8 @@
 
 /obj/item/projectile/bullet/infection/core
 	name = "strong spore"
+	damage = 20
+	armour_penetration = 45
 	speed = 0.8
 
 /obj/item/projectile/bullet/infection/infernal

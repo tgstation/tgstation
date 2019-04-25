@@ -182,6 +182,7 @@
 	var/respawn_time = 15
 	var/upgrade_points = 0
 	var/times_refunded = 0 // times refunded
+	var/cycle_cooldown = 0 // cooldown before you can cycle nodes again
 	var/list/upgrade_list = list() // upgrades that are unlockable
 	var/list/upgrade_types = list(/datum/infection/upgrade/defensive_spore, /datum/infection/upgrade/offensive_spore, /datum/infection/upgrade/supportive_spore) // types of upgrades
 
@@ -315,11 +316,8 @@
 		time_left--
 	if(overmind.infection_core)
 		to_chat(src, "<b>You have respawned!</b>")
-		var/atom/pos = pick(GLOB.infection_nodes)
-		if(!pos)
-			pos = pick(GLOB.infections)
 		adjustHealth(health * 0.8)
-		forceMove(get_turf(pos))
+		forceMove(get_turf(src))
 	return
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/transfer_to_type(var/new_type)
@@ -328,7 +326,7 @@
 	new_spore.upgrade_points = upgrade_points
 	new_spore.times_refunded = times_refunded
 	// check if we were respawning
-	if(new_spore.loc == overmind.infection_core)
+	if(istype(new_spore.loc, /obj/structure/infection))
 		// restart respawn timer for new spore
 		INVOKE_ASYNC(new_spore, .proc/respawn)
 	qdel(src)
@@ -351,6 +349,25 @@
 	times_refunded++
 	// reset the spore to default
 	transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient)
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/cycle_node()
+	if(cycle_cooldown > world.time)
+		return
+	var/obj/structure/infection/I = loc
+	if(!I)
+		return // we aren't even in an infection why are we cycling?
+	var/curr
+	if(istype(I, /obj/structure/infection/core))
+		curr = 0
+	else
+		curr = GLOB.infection_nodes.Find(I)
+	if(curr == GLOB.infection_nodes.len && GLOB.infection_nodes.len)
+		forceMove(overmind.infection_core)
+		to_chat(src, "<span class='warning'>Shifted spawn location to core.</span>")
+	else
+		forceMove(GLOB.infection_nodes[curr + 1])
+		to_chat(src, "<span class='warning'>Shifted spawn location to node [curr + 1].</span>")
+	cycle_cooldown = world.time + 5
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Zombify(mob/living/carbon/human/H)
 	return
@@ -383,7 +400,7 @@
 	obj_damage = 60
 	respawn_time = 60
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	upgrade_types = list(/datum/infection/upgrade/spore/speed_boost) // types of upgrades
+	upgrade_types = list() // types of upgrades
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive
 	name = "supportive spore"

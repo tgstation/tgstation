@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 			return //handholdotron 2000
 	if(nearEquals)
 		for(var/obj/structure/infection/L in orange(nearEquals, T))
-			if(istype(infectionType, L.type))
+			if(istype(L, infectionType))
 				to_chat(src, "<span class='warning'>There is a similar infection nearby, move more than [nearEquals] tiles away from it!</span>")
 				return
 	if(!can_buy(price))
@@ -175,9 +175,8 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as an evolving infection spore?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a sentient spore now.
-		var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient(T.loc)
+		var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient(T.loc, null, src)
 		spore.forceMove(T)
-		spore.overmind = src
 		spore.update_icons()
 		spore.adjustHealth(spore.maxHealth * 0.5)
 		infection_mobs += spore
