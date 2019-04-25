@@ -4,8 +4,8 @@ GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
 //If I see any GC errors for it I will find you
 //and I will gib you
-/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
-	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
+/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE, cap_modifier)
+	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke, cap_modifier)
 
 //This datum creates 3 async tasks
 //1 GatherSpiralTurfsProc runs spiral_range_turfs(tick_checked = TRUE) to populate the affected_turfs list
@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		EX_PREPROCESS_EXIT_CHECK\
 	}
 
-/datum/explosion/New(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
+/datum/explosion/New(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke, cap_modifier)
 	set waitfor = FALSE
 
 	var/id = ++id_counter
@@ -62,12 +62,16 @@ GLOBAL_LIST_EMPTY(explosions)
 	if (isnull(cap_multiplier))
 		cap_multiplier = 1
 
+	//Argument bomb cap modifier
+	if (isnull(cap_modifier))
+		cap_modifier = 1
+
 	if(!ignorecap)
-		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier, devastation_range)
-		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier, heavy_impact_range)
-		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * cap_multiplier, light_impact_range)
-		flash_range = min(GLOB.MAX_EX_FLASH_RANGE * cap_multiplier, flash_range)
-		flame_range = min(GLOB.MAX_EX_FLAME_RANGE * cap_multiplier, flame_range)
+		devastation_range = min(round(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier * cap_modifier), devastation_range)
+		heavy_impact_range = min(round(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier * cap_modifier), heavy_impact_range)
+		light_impact_range = min(round(GLOB.MAX_EX_LIGHT_RANGE * cap_multiplier * cap_modifier), light_impact_range)
+		flash_range = min(round(GLOB.MAX_EX_FLASH_RANGE * cap_multiplier * cap_modifier), flash_range)
+		flame_range = min(round(GLOB.MAX_EX_FLAME_RANGE * cap_multiplier * cap_modifier), flame_range)
 
 	//DO NOT REMOVE THIS STOPLAG, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
