@@ -11,7 +11,7 @@
 	var/finished = 0
 
 /datum/game_mode/disaster/pre_setup()
-	SSevents.scheduled = world.time + 5 MINUTES
+	SSevents.scheduled = world.time + 10 MINUTES
 	SSevents.frequency_lower = 1500
 	SSevents.frequency_upper = 1800
 	return 1
