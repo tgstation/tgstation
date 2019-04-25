@@ -1,0 +1,7 @@
+author: "RaveRadbury, Art by Navi.OS"
+delete-after: True
+changes: 
+  - rscadd: "pAI Newscaster"
+  - rscadd: "pAI Camera"
+  - rscadd: "New pAI HUD"
+  - imageadd: "unique pAI HUD theme"
