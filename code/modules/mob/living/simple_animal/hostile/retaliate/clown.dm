@@ -91,7 +91,7 @@
 	speak = list("HONK", "Honk!", "YA-HONK!!!")
 	emote_see = list("honks", "bites into the banana", "plucks a banana off its head", "photosynthesizes")
 	maxHealth = 120
-	health = 100
+	health = 120
 	speed = -10
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana)
 	banana_time = 20
@@ -125,7 +125,7 @@
 	dextrous = TRUE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	maxHealth = 140
-	health = 100
+	health = 140
 	speed = -5
 	melee_damage_upper = 15
 	attacktext = "limply slaps"
@@ -168,7 +168,7 @@
 	emote_see = list("honks", "sweats", "grunts")
 	speak_chance = 5
 	maxHealth = 400
-	health = 200
+	health = 400
 	pixel_x = -16
 	speed = 2
 	harm_intent_damage = 15
@@ -190,7 +190,7 @@
 	speak = list("HONK", "Honk!", "Bruh", "cheeaaaahhh?")
 	emote_see = list("asserts his dominance", "emasculates everyone implicitly")
 	maxHealth = 500
-	health = 300
+	health = 500
 	speed = -2
 	armour_penetration = 20
 	attacktext = "steals the girlfriend of"
@@ -208,7 +208,7 @@
 	emote_see = list("squirms", "writhes")
 	speak_chance = 1
 	maxHealth = 200
-	health = 100
+	health = 200
 	speed = -5
 	harm_intent_damage = 5
 	melee_damage_lower = 5
@@ -253,7 +253,7 @@
 	emote_see = list("squirms", "writhes", "pulsates", "froths", "oozes")
 	speak_chance = 10
 	maxHealth = 130
-	health = 35
+	health = 130
 	pixel_x = -16
 	speed = -5
 	harm_intent_damage = 10
