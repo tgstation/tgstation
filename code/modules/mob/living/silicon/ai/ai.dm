@@ -316,7 +316,7 @@
 	var/turf/target = get_turf(A)
 	if (.)
 		return
-	if ((ai.z != target.z) && !is_station_level(ai))
+	if ((ai.z != target.z) && !is_station_level(ai.z))
 		return FALSE
 
 	if (istype(loc, /obj/item/aicard))
