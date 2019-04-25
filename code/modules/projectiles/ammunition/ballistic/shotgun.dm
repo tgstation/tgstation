@@ -111,23 +111,23 @@
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/bullet/dart
 	var/reagent_amount = 30
-	var/reagent_react = TRUE
+
+/obj/item/ammo_casing/shotgun/dart/Initialize()
+	. = ..()
+	create_reagents(reagent_amount, OPENCONTAINER)
+
+/obj/item/ammo_casing/shotgun/dart/attackby()
+	return
 
 /obj/item/ammo_casing/shotgun/dart/noreact
 	name = "cryostasis shotgun dart"
 	desc = "A dart for use in shotguns, using similar technology as cryostatis beakers to keep internal reagents from reacting. Can be injected with up to 10 units of any chemical."
 	icon_state = "cnrshell"
 	reagent_amount = 10
-	reagent_react = FALSE
 
-/obj/item/ammo_casing/shotgun/dart/Initialize()
+/obj/item/ammo_casing/shotgun/dart/noreact/Initialize()
 	. = ..()
-	container_type |= OPENCONTAINER
-	create_reagents(reagent_amount)
-	reagents.set_reacting(reagent_react)
-
-/obj/item/ammo_casing/shotgun/dart/attackby()
-	return
+	ENABLE_BITFIELD(reagents.flags, NO_REACT)
 
 /obj/item/ammo_casing/shotgun/dart/bioterror
 	desc = "A shotgun dart filled with deadly toxins."

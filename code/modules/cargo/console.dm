@@ -87,7 +87,9 @@
 			"name" = P.name,
 			"cost" = P.cost,
 			"id" = pack,
-			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
+			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
+			"small_item" = P.small_item,
+			"access" = P.access
 		))
 
 	data["cart"] = list()
@@ -95,7 +97,9 @@
 		data["cart"] += list(list(
 			"object" = SO.pack.name,
 			"cost" = SO.pack.cost,
-			"id" = SO.id
+			"id" = SO.id,
+			"orderer" = SO.orderer,
+			"paid" = !isnull(SO.paying_account) //paid by requester
 		))
 
 	data["requests"] = list()
@@ -149,6 +153,7 @@
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
+			var/self_paid = text2num(params["self_paid"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
@@ -166,19 +171,33 @@
 				name = usr.real_name
 				rank = "Silicon"
 
+			var/datum/bank_account/account
+			if(self_paid && ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
+				if(!istype(id_card))
+					say("No ID card detected.")
+					return
+				account = id_card.registered_account
+				if(!istype(account))
+					say("Invalid bank account.")
+					return
+
 			var/reason = ""
-			if(requestonly)
+			if(requestonly && !self_paid)
 				reason = stripped_input("Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
-			if(requestonly)
+			if(requestonly && !self_paid)
 				SSshuttle.requestlist += SO
 			else
 				SSshuttle.shoppinglist += SO
+				if(self_paid)
+					say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])

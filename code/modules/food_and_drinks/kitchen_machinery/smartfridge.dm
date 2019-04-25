@@ -18,8 +18,7 @@
 
 /obj/machinery/smartfridge/Initialize()
 	. = ..()
-	create_reagents()
-	reagents.set_reacting(FALSE)
+	create_reagents(100, NO_REACT)
 
 	if(islist(initial_contents))
 		for(var/typekey in initial_contents)
@@ -32,6 +31,11 @@
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
+
+/obj/machinery/smartfridge/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.<span>")
 
 /obj/machinery/smartfridge/power_change()
 	..()
@@ -51,7 +55,11 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
+		cut_overlays()
+		if(panel_open)
+			add_overlay("[initial(icon_state)]-panel")
+		updateUsrDialog()
 		return
 
 	if(default_pry_open(O))

@@ -1,0 +1,4 @@
+author: "TheDreamweaver"
+delete-after: True
+changes: 
+  - bugfix: "Hilbert's Hotel can no longer be brought inside of itself."

@@ -42,9 +42,9 @@
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
 		if(prob(98))
-			M.randmutb()
+			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		else
-			M.randmutg()
+			M.easy_randmut(POSITIVE)
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -427,7 +427,7 @@
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(2*REM, 0)
 	..()
 	. = 1
@@ -660,7 +660,7 @@
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(1*REM, 0)
-	M.nutrition = max(M.nutrition - 3, 0) // making the chef more valuable, one meme trap at a time
+	M.adjust_nutrition(-3) // making the chef more valuable, one meme trap at a time
 	M.overeatduration = 0
 	return ..()
 
@@ -914,14 +914,13 @@
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 50
-	metabolization_rate = 2
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = "bonehurtingjuice")
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(15, 0)
-	if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman)
+	if(M.has_trait(TRAIT_CALCIUM_HEALER))
 		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))

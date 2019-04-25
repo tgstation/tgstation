@@ -58,6 +58,8 @@
 			var/needed_amount = R.reqs[A]
 			for(var/B in contents)
 				if(ispath(B, A))
+					if (R.blacklist.Find(B))
+						continue
 					if(contents[B] >= R.reqs[A])
 						continue main_loop
 					else
@@ -315,6 +317,10 @@
 	var/list/cant_craft = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
+		
+		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+			continue
+
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
 		if(check_contents(R, surroundings))
@@ -331,7 +337,7 @@
 		return
 	switch(action)
 		if("make")
-			var/datum/crafting_recipe/TR = locate(params["recipe"])
+			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
 			busy = TRUE
 			ui_interact(usr) //explicit call to show the busy display
 			var/fail_msg = construct_item(usr, TR)
@@ -429,3 +435,10 @@
 	data["tool_text"] = tool_text
 
 	return data
+
+//Mind helpers
+
+/datum/mind/proc/teach_crafting_recipe(R)
+	if(!learned_recipes)
+		learned_recipes = list()
+	learned_recipes |= R

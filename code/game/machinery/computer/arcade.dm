@@ -1,3 +1,52 @@
+GLOBAL_LIST_INIT(arcade_prize_pool, list(
+		/obj/item/storage/box/snappops = 2,
+		/obj/item/toy/talking/AI = 2,
+		/obj/item/toy/talking/codex_gigas = 2,
+		/obj/item/clothing/under/syndicate/tacticool = 2,
+		/obj/item/toy/sword = 2,
+		/obj/item/toy/gun = 2,
+		/obj/item/gun/ballistic/shotgun/toy/crossbow = 2,
+		/obj/item/storage/box/fakesyndiesuit = 2,
+		/obj/item/storage/crayons = 2,
+		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/prize/ripley = 1,
+		/obj/item/toy/prize/fireripley = 1,
+		/obj/item/toy/prize/deathripley = 1,
+		/obj/item/toy/prize/gygax = 1,
+		/obj/item/toy/prize/durand = 1,
+		/obj/item/toy/prize/honk = 1,
+		/obj/item/toy/prize/marauder = 1,
+		/obj/item/toy/prize/seraph = 1,
+		/obj/item/toy/prize/mauler = 1,
+		/obj/item/toy/prize/odysseus = 1,
+		/obj/item/toy/prize/phazon = 1,
+		/obj/item/toy/prize/reticence = 1,
+		/obj/item/toy/cards/deck = 2,
+		/obj/item/toy/nuke = 2,
+		/obj/item/toy/minimeteor = 2,
+		/obj/item/toy/redbutton = 2,
+		/obj/item/toy/talking/owl = 2,
+		/obj/item/toy/talking/griffin = 2,
+		/obj/item/coin/antagtoken = 2,
+		/obj/item/stack/tile/fakespace/loaded = 2,
+		/obj/item/stack/tile/fakepit/loaded = 2,
+		/obj/item/toy/toy_xeno = 2,
+		/obj/item/storage/box/actionfigure = 1,
+		/obj/item/restraints/handcuffs/fake = 2,
+		/obj/item/grenade/chem_grenade/glitter/pink = 1,
+		/obj/item/grenade/chem_grenade/glitter/blue = 1,
+		/obj/item/grenade/chem_grenade/glitter/white = 1,
+		/obj/item/toy/eightball = 2,
+		/obj/item/toy/windupToolbox = 2,
+		/obj/item/toy/clockwork_watch = 2,
+		/obj/item/toy/toy_dagger = 2,
+		/obj/item/extendohand/acme = 1,
+		/obj/item/hot_potato/harmless/toy = 1,
+		/obj/item/card/emagfake = 1,
+		/obj/item/clothing/shoes/wheelys = 2,
+		/obj/item/clothing/shoes/kindleKicks = 2,
+		/obj/item/storage/belt/military/snack = 2))
+
 /obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "random arcade machine"
@@ -5,56 +54,7 @@
 	icon_keyboard = null
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
-	var/list/prizes = list(
-		/obj/item/storage/box/snappops					= 2,
-		/obj/item/toy/talking/AI								= 2,
-		/obj/item/toy/talking/codex_gigas						= 2,
-		/obj/item/clothing/under/syndicate/tacticool			= 2,
-		/obj/item/toy/sword										= 2,
-		/obj/item/toy/gun										= 2,
-		/obj/item/gun/ballistic/shotgun/toy/crossbow	= 2,
-		/obj/item/storage/box/fakesyndiesuit				= 2,
-		/obj/item/storage/crayons						= 2,
-		/obj/item/toy/spinningtoy								= 2,
-		/obj/item/toy/prize/ripley								= 1,
-		/obj/item/toy/prize/fireripley							= 1,
-		/obj/item/toy/prize/deathripley							= 1,
-		/obj/item/toy/prize/gygax								= 1,
-		/obj/item/toy/prize/durand								= 1,
-		/obj/item/toy/prize/honk								= 1,
-		/obj/item/toy/prize/marauder							= 1,
-		/obj/item/toy/prize/seraph								= 1,
-		/obj/item/toy/prize/mauler								= 1,
-		/obj/item/toy/prize/odysseus							= 1,
-		/obj/item/toy/prize/phazon								= 1,
-		/obj/item/toy/prize/reticence							= 1,
-		/obj/item/toy/cards/deck								= 2,
-		/obj/item/toy/nuke										= 2,
-		/obj/item/toy/minimeteor								= 2,
-		/obj/item/toy/redbutton									= 2,
-		/obj/item/toy/talking/owl								= 2,
-		/obj/item/toy/talking/griffin							= 2,
-		/obj/item/coin/antagtoken						= 2,
-		/obj/item/stack/tile/fakespace/loaded					= 2,
-		/obj/item/stack/tile/fakepit/loaded						= 2,
-		/obj/item/toy/toy_xeno									= 2,
-		/obj/item/storage/box/actionfigure				= 1,
-		/obj/item/restraints/handcuffs/fake              = 2,
-		/obj/item/grenade/chem_grenade/glitter/pink		= 1,
-		/obj/item/grenade/chem_grenade/glitter/blue		= 1,
-		/obj/item/grenade/chem_grenade/glitter/white		= 1,
-		/obj/item/toy/eightball									= 2,
-		/obj/item/toy/windupToolbox								= 2,
-		/obj/item/toy/clockwork_watch							= 2,
-		/obj/item/toy/toy_dagger								= 2,
-		/obj/item/extendohand/acme								= 1,
-		/obj/item/hot_potato/harmless/toy						= 1,
-		/obj/item/card/emagfake									= 1,
-		/obj/item/clothing/shoes/wheelys				= 2,
-		/obj/item/clothing/shoes/kindleKicks				= 2,
-		/obj/item/storage/belt/military/snack					= 2
-		)
-
+	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/arcade/proc/Reset()
@@ -65,8 +65,11 @@
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(subtypesof(/obj/item/circuitboard/computer/arcade))
-		var/obj/item/circuitboard/CB = new choice()
+		var/list/gameodds = list(/obj/item/circuitboard/computer/arcade/battle = 49,
+							/obj/item/circuitboard/computer/arcade/orion_trail = 49,
+							/obj/item/circuitboard/computer/arcade/amputation = 2)
+		var/thegame = pickweight(gameodds)
+		var/obj/item/circuitboard/CB = new thegame()
 		new CB.build_path(loc, CB)
 		return INITIALIZE_HINT_QDEL
 	Reset()
@@ -75,19 +78,26 @@
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
-		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
+		SSmedals.UnlockMedal(MEDAL_PULSE, user.client)
 
 	if(!contents.len)
-		var/prizeselect = pickweight(prizes)
+		var/prizeselect
+		if(prize_override)
+			prizeselect = pickweight(prize_override)
+		else
+			prizeselect = pickweight(GLOB.arcade_prize_pool)
 		new prizeselect(src)
 
-	var/atom/movable/prize = pick(contents)
-	visible_message("<span class='notice'>[src] dispenses [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+	var/atom/movable/the_prize = pick(contents)
+	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
-	prize.forceMove(get_turf(src))
+	the_prize.forceMove(get_turf(src))
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()
+	var/override = FALSE
+	if(prize_override)
+		override = TRUE
 
 	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
@@ -100,7 +110,10 @@
 		if(2)
 			num_of_prizes = rand(0,2)
 	for(var/i = num_of_prizes; i > 0; i--)
-		empprize = pickweight(prizes)
+		if(override)
+			empprize = pickweight(prize_override)
+		else
+			empprize = pickweight(GLOB.arcade_prize_pool)
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
@@ -373,7 +386,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2)
-	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
+	prize_override = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
 	settlers = list("Kirk","Worf","Gene")
 
 /obj/machinery/computer/arcade/orion_trail/Reset()
@@ -429,7 +442,7 @@
 			if(food <= 0)
 				dat += "<br>You ran out of food and starved."
 				if(obj_flags & EMAGGED)
-					user.nutrition = 0 //yeah you pretty hongry
+					user.set_nutrition(0) //yeah you pretty hongry
 					to_chat(user, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
@@ -1102,6 +1115,35 @@
 	explosion(loc, 2,4,8, flame_range = 16)
 	qdel(src)
 
+// ** AMPUTATION ** //
+
+/obj/machinery/computer/arcade/amputation
+	name = "Mediborg's Amputation Adventure"
+	desc = "A picture of a blood-soaked medical cyborg flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
+	icon_state = "arcade"
+	circuit = /obj/item/circuitboard/computer/arcade/amputation
+
+/obj/machinery/computer/arcade/amputation/attack_hand(mob/user)
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/c_user = user
+	if(!c_user.get_bodypart(BODY_ZONE_L_ARM) && !c_user.get_bodypart(BODY_ZONE_R_ARM))
+		return
+	to_chat(c_user, "<span class='warning'>You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it...</span>")
+	if(do_after(c_user, 50, target = src))
+		to_chat(c_user, "<span class='userdanger'>The guillotine drops on your arm, and the machine sucks it in!</span>")
+		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+		var/which_hand = BODY_ZONE_L_ARM
+		if(!(c_user.active_hand_index % 2))
+			which_hand = BODY_ZONE_R_ARM
+		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
+		chopchop.dismember()
+		qdel(chopchop)
+		playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
+		for(var/i=1; i<=rand(3,5); i++)
+			prizevend(user)
+	else
+		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
 
 #undef ORION_TRAIL_WINTURN
 #undef ORION_TRAIL_RAIDERS

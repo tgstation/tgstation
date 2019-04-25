@@ -92,7 +92,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, SLOT_HEAD)
 
-	access_card.item_flags |= NODROP
+	access_card.add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -132,6 +132,12 @@
 	if(!picked)
 		pickVisualAppearence()
 
+/mob/living/simple_animal/drone/auto_deadmin_on_login()
+	if(!client?.holder)
+		return TRUE
+	if(CONFIG_GET(flag/auto_deadmin_silicons) || (client.prefs?.toggles & DEADMIN_POSITION_SILICON))
+		return client.holder.auto_deadmin()
+	return ..()
 
 /mob/living/simple_animal/drone/death(gibbed)
 	..(gibbed)

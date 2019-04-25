@@ -33,6 +33,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
+	var/num_of_res_levels = 1
 
 //dlete dis once #39770 is resolved
 /datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
@@ -73,6 +74,11 @@ SUBSYSTEM_DEF(mapping)
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel()
 
+	// Load the virtual reality hub
+	if(CONFIG_GET(flag/virtual_reality))
+		to_chat(world, "<span class='boldannounce'>Loading virtual reality...</span>")
+		load_new_z_level("_maps/RandomZLevels/VR/vrhub.dmm", "Virtual Reality Hub")
+		to_chat(world, "<span class='boldannounce'>Virtual reality loaded.</span>")
 
 	// Generate mining ruins
 	loading_ruins = TRUE
@@ -94,10 +100,6 @@ SUBSYSTEM_DEF(mapping)
 	generate_station_area_list()
 	initialize_reserved_level()
 	return ..()
-
-/* Nuke threats, for making the blue tiles on the station go RED
-   Used by the AI doomsday and the self destruct nuke.
-*/
 
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
 	if(clearing_reserved_turfs || !initialized)			//in either case this is just not needed.
@@ -127,6 +129,10 @@ SUBSYSTEM_DEF(mapping)
 	if(!error)
 		returning += M
 		qdel(T, TRUE)
+
+/* Nuke threats, for making the blue tiles on the station go RED
+   Used by the AI doomsday and the self destruct nuke.
+*/
 
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
 	nuke_threats[nuke] = TRUE
@@ -256,10 +262,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/asteroid/nearstation))
 	for(var/area/A in world)
-		var/turf/picked = safepick(get_area_turfs(A.type))
-		if(picked && is_station_level(picked.z))
-			if(!(A.type in GLOB.the_station_areas) && !is_type_in_typecache(A, station_areas_blacklist))
-				GLOB.the_station_areas.Add(A.type)
+		if (is_type_in_typecache(A, station_areas_blacklist))
+			continue
+		if (!A.contents.len || !A.unique)
+			continue
+		var/turf/picked = A.contents[1]
+		if (is_station_level(picked.z))
+			GLOB.the_station_areas += A.type
 
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
@@ -444,6 +453,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		for(var/i in levels_by_trait(ZTRAIT_RESERVED))
 			if(reserve.Reserve(width, height, i))
 				return reserve
+		//If we didn't return at this point, theres a good chance we ran out of room on the exisiting reserved z levels, so lets try a new one
+		num_of_res_levels += 1
+		var/newReserved = add_new_zlevel("Transit/Reserved [num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+		if(reserve.Reserve(width, height, newReserved))
+			return reserve
 	else
 		if(!level_trait(z, ZTRAIT_RESERVED))
 			qdel(reserve)
@@ -476,6 +490,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		LAZYINITLIST(unused_turfs["[T.z]"])
 		unused_turfs["[T.z]"] |= T
 		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+		GLOB.areas_by_type[world.area].contents += T
 		CHECK_TICK
 
 //DO NOT CALL THIS PROC DIRECTLY, CALL wipe_reservations().
@@ -494,3 +509,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	unused_turfs.Cut()
 	used_turfs.Cut()
 	reserve_turfs(clearing)
+
+
+
+/datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
+	for(var/B in areas)
+		var/area/A = B
+		A.reg_in_areas_in_z()

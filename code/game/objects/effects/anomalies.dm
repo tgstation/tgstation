@@ -95,7 +95,8 @@
 	for(var/mob/living/M in range(0, src))
 		gravShock(M)
 	for(var/mob/living/M in orange(4, src))
-		step_towards(M,src)
+		if(!M.mob_negates_gravity())
+			step_towards(M,src)
 	for(var/obj/O in range(0,src))
 		if(!O.anchored)
 			var/mob/living/target = locate() in view(4,src)
@@ -190,11 +191,11 @@
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
 	for(var/mob/living/M in range(1,src))
-		do_teleport(M, locate(M.x, M.y, M.z), 4)
+		do_teleport(M, locate(M.x, M.y, M.z), 4, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/Bumped(atom/movable/AM)
 	if(isliving(AM))
-		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8)
+		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/detonate()
 	var/turf/T = safepick(get_area_turfs(impact_area))

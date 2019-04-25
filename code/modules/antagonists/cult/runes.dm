@@ -230,13 +230,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
 	rune_in_use = FALSE
+	
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
 		for(var/M in invokers)
 			to_chat(M, "<span class='danger'>You need at least two invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
 		return 0
-	if(convertee.anti_magic_check(TRUE, TRUE))
+	if(convertee.anti_magic_check(TRUE, TRUE, major = FALSE)) //Not major because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had anti-magic")
@@ -388,6 +389,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	var/movedsomething = FALSE
 	var/moveuserlater = FALSE
+	var/movesuccess = FALSE
 	for(var/atom/movable/A in T)
 		if(ishuman(A))
 			new /obj/effect/temp_visual/dir_setting/cult/phase/out(T, A.dir)
@@ -398,20 +400,26 @@ structure_check() searches for nearby cultist structures required for the invoca
 			continue
 		if(!A.anchored)
 			movedsomething = TRUE
-			A.forceMove(target)
+			if(do_teleport(A, target, forceMove = TRUE, channel = TELEPORT_CHANNEL_CULT))
+				movesuccess = TRUE
 	if(movedsomething)
 		..()
-		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
-		to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
 		if(moveuserlater)
-			user.forceMove(target)
+			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
+				movesuccess = TRUE
+		if(movesuccess)
+			visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
+			to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
+		else
+			to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs briefly, but nothing happens":"  try send everything above the rune away, but the teleportation fails"].</span>")
 		if(is_mining_level(z) && !is_mining_level(target.z)) //No effect if you stay on lavaland
 			actual_selected_rune.handle_portal("lava")
 		else
 			var/area/A = get_area(T)
 			if(A.map_name == "Space")
 				actual_selected_rune.handle_portal("space", T)
-		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
+		if(movesuccess)
+			target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
@@ -757,7 +765,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/atom/I = L.anti_magic_check()
+			var/atom/I = L.anti_magic_check(major = FALSE)
 			if(I)
 				if(isitem(I))
 					to_chat(L, "<span class='userdanger'>[I] suddenly burns hotly before returning to normal!</span>")
@@ -787,7 +795,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			if(L.anti_magic_check())
+			if(L.anti_magic_check(major = FALSE))
 				continue
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 			if(is_servant_of_ratvar(L))
@@ -841,7 +849,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 		var/list/ghosts_on_rune = list()
 		for(var/mob/dead/observer/O in T)
-			if(O.client && !jobban_isbanned(O, ROLE_CULTIST) && !QDELETED(src) && !QDELETED(O))
+			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !QDELETED(O))
 				ghosts_on_rune += O
 		if(!ghosts_on_rune.len)
 			to_chat(user, "<span class='cultitalic'>There are no spirits near [src]!</span>")
@@ -974,7 +982,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, M), duration)
 			var/image/A = image('icons/mob/mob.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
-			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, FALSE)
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
 			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"human_apoc",TRUE), duration)
 			images += A
 			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult.ogg'),sound('sound/spookoween/ghost_whisper.ogg'),sound('sound/spookoween/ghosty_wind.ogg')))
@@ -982,13 +990,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 			var/construct = pick("floater","artificer","behemoth")
 			var/image/B = image('icons/mob/mob.dmi',M,construct, ABOVE_MOB_LAYER)
 			B.override = 1
-			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "mob_apoc", B, FALSE)
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "mob_apoc", B, NONE)
 			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"mob_apoc",TRUE), duration)
 			images += B
 		if(!iscultist(M))
 			if(M.client)
 				var/image/C = image('icons/effects/cult_effects.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
-				add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
+				add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, NONE)
 				addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), duration)
 				images += C
 		else

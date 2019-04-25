@@ -153,6 +153,9 @@
 /obj/structure/transit_tube_pod/return_air()
 	return air_contents
 
+/obj/structure/transit_tube_pod/return_analyzable_air()
+	return air_contents
+
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)
 	return air_contents.merge(giver)
 

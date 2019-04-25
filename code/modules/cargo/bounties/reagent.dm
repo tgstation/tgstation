@@ -35,7 +35,7 @@
 	name = "Simple Drink"
 	reward = 1500
 
-datum/bounty/reagent/simple_drink/New()
+/datum/bounty/reagent/simple_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/antifreeze,\
@@ -91,7 +91,7 @@ datum/bounty/reagent/simple_drink/New()
 	name = "Complex Drink"
 	reward = 4000
 
-datum/bounty/reagent/complex_drink/New()
+/datum/bounty/reagent/complex_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/atomicbomb,\
@@ -125,7 +125,7 @@ datum/bounty/reagent/complex_drink/New()
 	reward = 4000
 	required_volume = 30
 
-datum/bounty/reagent/chemical_simple/New()
+/datum/bounty/reagent/chemical_simple/New()
 	// Chemicals that can be mixed by a single skilled Chemist.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/leporazine,\
@@ -163,7 +163,7 @@ datum/bounty/reagent/chemical_simple/New()
 	reward = 6000
 	required_volume = 20
 
-datum/bounty/reagent/chemical_complex/New()
+/datum/bounty/reagent/chemical_complex/New()
 	// Reagents that require interaction with multiple departments or are a pain to mix. Lower required_volume since acquiring 30u of some is unrealistic
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/pyroxadone,\

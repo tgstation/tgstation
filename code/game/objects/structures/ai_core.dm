@@ -38,7 +38,7 @@
 	return ..()
 
 /obj/structure/AIcore/latejoin_inactive
-	name = "Networked AI core"
+	name = "networked AI core"
 	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
 	can_deconstruct = FALSE
 	icon_state = "ai-empty"
@@ -50,7 +50,8 @@
 
 /obj/structure/AIcore/latejoin_inactive/examine(mob/user)
 	. = ..()
-	to_chat(user, "Its transmitter seems to be [active? "on" : "off"].")
+	to_chat(user, "Its transmitter seems to be <b>[active? "on" : "off"]</b>.")
+	to_chat(user, "<span class='notice'>You could [active? "deactivate" : "activate"] it with a multitool.")
 
 /obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
@@ -74,7 +75,7 @@
 /obj/structure/AIcore/latejoin_inactive/attackby(obj/item/P, mob/user, params)
 	if(P.tool_behaviour == TOOL_MULTITOOL)
 		active = !active
-		to_chat(user, "You [active? "activate" : "deactivate"] [src]'s transmitters.")
+		to_chat(user, "You [active? "activate" : "deactivate"] \the [src]'s transmitters.")
 		return
 	return ..()
 
@@ -195,7 +196,7 @@
 						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
 						return
 
-					if(!CONFIG_GET(flag/allow_ai) || (jobban_isbanned(M.brainmob, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
+					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(M.brainmob.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
 						if(!QDELETED(M))
 							to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
@@ -301,8 +302,8 @@
 	anchored = TRUE
 	state = AI_READY_CORE
 
-/obj/structure/AIcore/deactivated/New()
-	..()
+/obj/structure/AIcore/deactivated/Initialize()
+	. = ..()
 	circuit = new(src)
 
 

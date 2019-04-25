@@ -3,13 +3,14 @@
 	id = "mush"
 	mutant_bodyparts = list("caps")
 	default_features = list("caps" = "Round")
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	fixed_mut_color = "DBBF92"
 	hair_color = "FF4B19" //cap color, spot color uses eye color
 	nojumpsuit = TRUE
 
 	say_mod = "poofs" //what does a mushroom sound like
-	species_traits = list(MUTCOLORS, NOEYES, NO_UNDERWEAR)
+	species_traits = list(MUTCOLORS, NOEYESPRITES,NOFLASH, NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_NOBREATH)
 	speedmod = 1.5 //faster than golems but not by much
 
@@ -25,7 +26,6 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
-	blacklisted = TRUE //See comment below about locking it out of roundstart. The species is not intended to be available to players yet - and this means wizards, too.
 
 /datum/species/mush/check_roundstart_eligible()
 	return FALSE //hard locked out of roundstart on the order of design lead kor, this can be removed in the future when planetstation is here OR SOMETHING but right now we have a problem with races.

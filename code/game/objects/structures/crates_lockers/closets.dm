@@ -147,43 +147,43 @@
 /obj/structure/closet/proc/insert(atom/movable/AM)
 	if(contents.len >= storage_capacity)
 		return -1
+	if(insertion_allowed(AM))
+		AM.forceMove(src)
+		return TRUE
+	else
+		return FALSE
 
-
+/obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
-			return
+			return FALSE
 		var/mob/living/L = AM
 		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
-			return
+			return FALSE
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
-				return
+				return FALSE
 			if(L.mob_size > max_mob_size)
-				return
+				return FALSE
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
 				if(++mobs_stored >= mob_storage_capacity)
-					return
+					return FALSE
 		L.stop_pulling()
+
 	else if(istype(AM, /obj/structure/closet))
-		return
+		return FALSE
 	else if(isobj(AM))
-		if (istype(AM, /obj/item))
-			var/obj/item/I = AM
-			if (I.item_flags & NODROP)
-				return
+		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs())
+			return FALSE
+		else if(isitem(AM) && !AM.has_trait(TRAIT_NODROP))
+			return TRUE
 		else if(!allow_objects && !istype(AM, /obj/effect/dummy/chameleon))
-			return
-		if(!allow_dense && AM.density)
-			return
-		if(AM.anchored || AM.has_buckled_mobs())
-			return
+			return FALSE
 	else
-		return
+		return FALSE
 
-	AM.forceMove(src)
-
-	return 1
+	return TRUE
 
 /obj/structure/closet/proc/close(mob/living/user)
 	if(!opened || !can_close(user))

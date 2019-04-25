@@ -60,7 +60,7 @@
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
 	. = ..()
-	if(user.reagents && (user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty")))
+	if(user.has_trait(TRAIT_SOOTHED_THROAT))
 		return FALSE
 
 /datum/emote/living/dance
@@ -87,8 +87,12 @@
 		message_simple = S.deathmessage
 	. = ..()
 	message_simple = initial(message_simple)
-	if(. && isalienadult(user))
-		playsound(user.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
+	if(. && user.deathsound)
+		if(isliving(user))
+			var/mob/living/L = user
+			if(!L.can_speak_vocal() || L.oxyloss >= 50)
+				return //stop the sound if oxyloss too high/cant speak
+		playsound(user, user.deathsound, 200, TRUE, TRUE)
 
 /datum/emote/living/drool
 	key = "drool"
@@ -200,6 +204,7 @@
 	message = "laughs."
 	message_mime = "laughs silently!"
 	emote_type = EMOTE_AUDIBLE
+	vary = TRUE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
 	. = ..()
@@ -207,15 +212,14 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/laugh/run_emote(mob/user, params)
-	. = ..()
-	if(. && ishuman(user))
+/datum/emote/living/laugh/get_sound(mob/living/user)
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
 			if(user.gender == FEMALE)
-				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
+				return 'sound/voice/human/womanlaugh.ogg'
 			else
-				playsound(H, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+				return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
 
 /datum/emote/living/look
 	key = "look"
@@ -409,7 +413,7 @@
 		. = FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
-	if(jobban_isbanned(user, "emote"))
+	if(is_banned_from(user.ckey, "Emote"))
 		to_chat(user, "You cannot send custom emotes (banned).")
 		return FALSE
 	else if(QDELETED(user))
@@ -471,12 +475,13 @@
 
 	to_chat(user, message)
 
-/datum/emote/sound/beep
+/datum/emote/beep
 	key = "beep"
 	key_third_person = "beeps"
 	message = "beeps."
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
+	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/circle
 	key = "circle"

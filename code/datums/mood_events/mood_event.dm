@@ -3,6 +3,9 @@
 	var/mood_change = 0
 	var/timeout = 0
 	var/hidden = FALSE//Not shown on examine
+	var/category //string of what category this mood was added in as
+	var/special_screen_obj //if it isn't null, it will replace or add onto the mood icon with this (same file). see happiness drug for example
+	var/special_screen_replace = TRUE //if false, it will be an overlay instead
 	var/mob/owner
 
 /datum/mood_event/New(mob/M, param)

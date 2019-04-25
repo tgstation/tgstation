@@ -1,7 +1,17 @@
+
 /obj/item/storage/box/syndicate
 
-/obj/item/storage/box/syndicate/PopulateContents()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
+/obj/item/storage/box/syndicate/bundle_A/PopulateContents()
+	switch (pickweight(list("recon" = 2, "bloodyspai" = 3, "stealth" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "sniper" = 1, "metaops" = 1)))
+		if("recon") // 26 tc
+			new /obj/item/clothing/glasses/thermal/xray(src) // ~8 tc?
+			new /obj/item/storage/briefcase/launchpad(src) //6 tc
+			new	/obj/item/twohanded/binoculars(src) // 2 tc?
+			new /obj/item/encryptionkey/syndicate(src) // 2 tc
+			new /obj/item/storage/box/syndie_kit/space(src) //4 tc
+			new /obj/item/grenade/syndieminibomb/concussion/frag(src) // ~2 tc each?
+			new /obj/item/grenade/syndieminibomb/concussion/frag(src) 
+			
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -23,24 +33,7 @@
 			new /obj/item/chameleon(src)
 			new /obj/item/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
-
-		if("bond") // 29 tc
-			new /obj/item/gun/ballistic/automatic/pistol(src)
-			new /obj/item/suppressor(src)
-			new /obj/item/ammo_box/magazine/m10mm(src)
-			new /obj/item/ammo_box/magazine/m10mm(src)
-			new /obj/item/clothing/under/chameleon(src)
-			new /obj/item/card/id/syndicate(src)
-			new /obj/item/reagent_containers/syringe/stimulants(src)
-
-		if("screwed") // 29 tc
-			new /obj/item/sbeacondrop/bomb(src)
-			new /obj/item/grenade/syndieminibomb(src)
-			new /obj/item/sbeacondrop/powersink(src)
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-			new /obj/item/encryptionkey/syndicate(src)
-
+			
 		if("guns") // 28 tc now
 			new /obj/item/gun/ballistic/revolver(src)
 			new /obj/item/ammo_box/a357(src)
@@ -50,6 +43,14 @@
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
+
+		if("screwed") // 29 tc
+			new /obj/item/sbeacondrop/bomb(src)
+			new /obj/item/grenade/syndieminibomb(src)
+			new /obj/item/sbeacondrop/powersink(src)
+			new /obj/item/clothing/suit/space/syndicate/black/red(src)
+			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			new /obj/item/encryptionkey/syndicate(src)
 
 		if("murder") // 28 tc now
 			new /obj/item/melee/transforming/energy/sword/saber(src)
@@ -89,15 +90,7 @@
 			new /obj/item/sbeacondrop/powersink(src)
 			new /obj/item/cartridge/virus/syndicate(src)
 			new /obj/item/storage/toolbox/syndicate(src) //To actually get to those places
-			new /obj/item/pizzabox/bomb
-
-		if("darklord") //20 tc + tk + summon item close enough for now
-			new /obj/item/twohanded/dualsaber(src)
-			new /obj/item/dnainjector/telemut/darkbundle(src)
-			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-			new /obj/item/card/id/syndicate(src)
-			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
-			new /obj/item/book/granter/spell/summonitem(src)
+			new /obj/item/pizzabox/bomb(src)
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
@@ -109,65 +102,122 @@
 
 		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
-			new /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
+			new /obj/item/gun/ballistic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 6 tc
-
+			
+/obj/item/storage/box/syndicate/bundle_B/PopulateContents()
+	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 2, "mr_freeze" = 2)))
+		if("bond") // 29 tc
+			new /obj/item/gun/ballistic/automatic/pistol(src)
+			new /obj/item/suppressor(src)
+			new /obj/item/ammo_box/magazine/m10mm(src)
+			new /obj/item/ammo_box/magazine/m10mm(src)
+			new /obj/item/clothing/under/chameleon(src)
+			new /obj/item/card/id/syndicate(src)
+			new /obj/item/reagent_containers/syringe/stimulants(src)
+			
 		if("ninja") // 33 tc worth
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/implanter/adrenalin(src) // 8 tc
-			new /obj/item/throwing_star(src) // ~5 tc for all 6
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
+			for(var/i in 1 to 6)
+				new /obj/item/throwing_star(src) // ~5 tc for all 6
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/card/id/syndicate(src) // 2 tc
-			new /obj/item/chameleon(src) // 7 tc
-
+			new /obj/item/chameleon(src) // 7 tc	
+			
+		if("darklord") //20 tc + tk + summon item close enough for now
+			new /obj/item/twohanded/dualsaber(src)
+			new /obj/item/dnainjector/telemut/darkbundle(src)
+			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+			new /obj/item/card/id/syndicate(src)
+			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
+			new /obj/item/book/granter/spell/summonitem(src)
+			
+		if("white_whale_holy_grail") //Unique items that don't appear anywhere else
+			new /obj/item/pneumatic_cannon/speargun(src)
+			new /obj/item/storage/backpack/magspear_quiver(src)
+			new /obj/item/clothing/suit/space/hardsuit/carp(src)
+			new /obj/item/clothing/mask/gas/carp(src)
+			new /obj/item/grenade/spawnergrenade/spesscarp(src)
+			
+		if("mad_scientist") // ~26 tc
+			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
+			new /obj/item/clothing/shoes/jackboots(src) // 0 tc
+			new /obj/item/megaphone(src) // 0 tc (because how else are they to know you're mad?)
+			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
+			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
+			new /obj/item/grenade/chem_grenade/bioterrorfoam(src) // 5 tc
+			new /obj/item/assembly/signaler(src) // 0 tc
+			new /obj/item/assembly/signaler(src) // 0 tc
+			new /obj/item/assembly/signaler(src) // 0 tc
+			new /obj/item/assembly/signaler(src) // 0 tc
+			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
+			
+		if("bee") // ~25 tc
+			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
+			new /obj/item/clothing/suit/hooded/bee_costume(src) // 0 tc
+			new /obj/item/clothing/mask/rat/bee(src) // 0 tc
+			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
+			new /obj/item/storage/box/syndie_kit/bee_grenades(src) // 15 tc
+			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
+			
+		if("mr_freeze")
+			new /obj/item/clothing/glasses/cold(src)
+			new /obj/item/clothing/gloves/color/black(src)
+			new /obj/item/clothing/mask/chameleon(src)
+			new /obj/item/clothing/suit/hooded/wintercoat(src)
+			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/grenade/gluon(src)
+			new /obj/item/grenade/gluon(src)
+			new /obj/item/grenade/gluon(src)
+			new /obj/item/grenade/gluon(src)
+			new /obj/item/dnainjector/geladikinesis(src)
+			new /obj/item/dnainjector/cryokinesis(src)
+			new /obj/item/gun/energy/temperature/security(src)
+			
 /obj/item/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
+/obj/item/storage/box/syndie_kit/origami_bundle
+	name = "origami kit"
+	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."
+
+/obj/item/storage/box/syndie_kit/origami_bundle/PopulateContents()
+	new /obj/item/book/granter/action/origami(src)
+	for(var/i in 1 to 5)
+		new /obj/item/paper(src)
+
 /obj/item/storage/box/syndie_kit/imp_freedom
-	name = "boxed freedom implant (with injector)"
+	name = "freedom implant box"
 
 /obj/item/storage/box/syndie_kit/imp_freedom/PopulateContents()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/freedom(O)
-	O.update_icon()
+	new /obj/item/implanter/freedom(src)
 
 /obj/item/storage/box/syndie_kit/imp_microbomb
-	name = "Microbomb Implant (with injector)"
+	name = "microbomb implant box"
 
 /obj/item/storage/box/syndie_kit/imp_microbomb/PopulateContents()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/explosive(O)
-	O.update_icon()
+	new /obj/item/implanter/explosive(src)
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb
-	name = "Macrobomb Implant (with injector)"
+	name = "macrobomb implant box"
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/explosive/macro(O)
-	O.update_icon()
+	new /obj/item/implanter/explosive_macro(src)
 
 /obj/item/storage/box/syndie_kit/imp_uplink
-	name = "boxed uplink implant (with injector)"
+	name = "uplink implant box"
 
 /obj/item/storage/box/syndie_kit/imp_uplink/PopulateContents()
-	..()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/uplink(O)
-	O.update_icon()
+	new /obj/item/implanter/uplink(src)
 
 /obj/item/storage/box/syndie_kit/bioterror
 	name = "bioterror syringe box"
@@ -177,18 +227,28 @@
 		new /obj/item/reagent_containers/syringe/bioterror(src)
 
 /obj/item/storage/box/syndie_kit/imp_adrenal
-	name = "boxed adrenal implant (with injector)"
+	name = "adrenal implant box"
 
 /obj/item/storage/box/syndie_kit/imp_adrenal/PopulateContents()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/adrenalin(O)
-	O.update_icon()
+	new /obj/item/implanter/adrenalin(src)
 
 /obj/item/storage/box/syndie_kit/imp_storage
-	name = "boxed storage implant (with injector)"
+	name = "storage implant box"
 
 /obj/item/storage/box/syndie_kit/imp_storage/PopulateContents()
 	new /obj/item/implanter/storage(src)
+
+/obj/item/storage/box/syndie_kit/imp_stealth
+	name = "stealth implant box"
+
+/obj/item/storage/box/syndie_kit/imp_stealth/PopulateContents()
+	new /obj/item/implanter/stealth(src)
+
+/obj/item/storage/box/syndie_kit/imp_radio
+	name = "syndicate radio implant box"
+
+/obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
+	new /obj/item/implanter/radio/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
@@ -200,22 +260,24 @@
 	STR.can_hold = typecacheof(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
-	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-
+	if(prob(50))
+		new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
+		new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+		
+	else
+		new /obj/item/clothing/head/helmet/space/syndicate(src)
+		new /obj/item/clothing/suit/space/syndicate(src)
+		
 /obj/item/storage/box/syndie_kit/emp
-	name = "boxed EMP kit"
+	name = "EMP kit"
 
 /obj/item/storage/box/syndie_kit/emp/PopulateContents()
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/empgrenade(src)
 	new /obj/item/implanter/emp(src)
 
 /obj/item/storage/box/syndie_kit/chemical
-	name = "boxed chemical kit"
+	name = "chemical kit"
 
 /obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
 	. = ..()
@@ -256,7 +318,7 @@
 	new /obj/item/paper/guides/antag/supermatter_sliver(src)
 
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade
-	name = "boxed virus grenade kit"
+	name = "virus grenade kit"
 
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade/PopulateContents()
 	new /obj/item/grenade/chem_grenade/tuberculosis(src)
@@ -284,11 +346,10 @@
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
 /obj/item/storage/box/syndie_kit/throwing_weapons/PopulateContents()
-	new /obj/item/throwing_star(src)
-	new /obj/item/throwing_star(src)
-	new /obj/item/throwing_star(src)
-	new /obj/item/throwing_star(src)
-	new /obj/item/throwing_star(src)
+	for(var/i in 1 to 5)
+		new /obj/item/throwing_star(src)
+	for(var/i in 1 to 2)
+		new /obj/item/paperplane/syndicate(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
 
@@ -312,9 +373,6 @@
 /obj/item/storage/box/syndie_kit/mimery/PopulateContents()
 	new /obj/item/book/granter/spell/mimery_blockade(src)
 	new /obj/item/book/granter/spell/mimery_guns(src)
-
-/obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
-	new /obj/item/implanter/radio/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom_officer(src)

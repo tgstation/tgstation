@@ -7,6 +7,7 @@
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	var/volume = 30
+	var/reagent_flags
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
@@ -16,7 +17,7 @@
 	. = ..()
 	if(isnum(vol) && vol > 0)
 		volume = vol
-	create_reagents(volume)
+	create_reagents(volume, reagent_flags)
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
 		var/list/data = list("viruses"= list(F))
@@ -71,16 +72,14 @@
 	reagents.expose_temperature(exposed_temperature)
 	..()
 
-/obj/item/reagent_containers/throw_impact(atom/target)
+/obj/item/reagent_containers/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	SplashReagents(target, TRUE)
+	SplashReagents(hit_atom, TRUE)
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
 	. = FALSE
-	if(target.CanPass(src, get_turf(src)) && thrownby && thrownby.actions)
-		for(var/datum/action/innate/drink_fling/D in thrownby.actions)
-			if(D.active)
-				return TRUE
+	if(target.CanPass(src, get_turf(src)) && thrownby && thrownby.has_trait(TRAIT_BOOZE_SLIDER))
+		. = TRUE
 
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)

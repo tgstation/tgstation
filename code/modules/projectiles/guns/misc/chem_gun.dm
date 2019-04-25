@@ -12,7 +12,6 @@
 	materials = list(MAT_METAL=2000)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
-	container_type = OPENCONTAINER
 	var/time_per_syringe = 250
 	var/syringes_left = 4
 	var/max_syringes = 4
@@ -22,7 +21,7 @@
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun(src)
 	START_PROCESSING(SSobj, src)
-	create_reagents(100)
+	create_reagents(100, OPENCONTAINER)
 
 /obj/item/gun/chem/Destroy()
 	. = ..()

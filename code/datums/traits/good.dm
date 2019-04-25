@@ -18,13 +18,13 @@
 /datum/quirk/apathetic/add()
 	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
 	if(mood)
-		mood.mood_modifier = 0.8
+		mood.mood_modifier -= 0.2
 
 /datum/quirk/apathetic/remove()
 	if(quirk_holder)
 		GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
 		if(mood)
-			mood.mood_modifier = 1 //Change this once/if species get their own mood modifiers.
+			mood.mood_modifier += 0.2
 
 /datum/quirk/drunkhealing
 	name = "Drunken Resilience"
@@ -35,6 +35,14 @@
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
 
+/datum/quirk/empath
+	name = "Empath"
+	desc = "Whether it's a sixth sense or careful study of body language, it only takes you a quick glance at someone to understand how they feel."
+	value = 2
+	mob_trait = TRAIT_EMPATH
+	gain_text = "<span class='notice'>You feel in tune with those around you.</span>"
+	lose_text = "<span class='danger'>You feel isolated from others.</span>"
+
 /datum/quirk/freerunning
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly."
@@ -42,6 +50,15 @@
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
+
+/datum/quirk/friendly
+	name = "Friendly"
+	desc = "You give the best hugs, especially when you're in the right mood."
+	value = 1
+	mob_trait = TRAIT_FRIENDLY
+	gain_text = "<span class='notice'>You want to hug someone.</span>"
+	lose_text = "<span class='danger'>You no longer feel compelled to hug others.</span>"
+	mood_quirk = TRUE
 
 /datum/quirk/jolly
 	name = "Jolly"
@@ -68,12 +85,9 @@
 
 /datum/quirk/musician/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/musicbeacon/B = new(get_turf(H))
+	var/obj/item/choice_beacon/music/B = new(get_turf(H))
 	H.put_in_hands(B)
 	H.equip_to_slot(B, SLOT_IN_BACKPACK)
-	var/obj/item/musicaltuner/musicaltuner = new(get_turf(H))
-	H.put_in_hands(musicaltuner)
-	H.equip_to_slot(musicaltuner, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/night_vision
@@ -120,11 +134,27 @@
 
 /datum/quirk/spiritual
 	name = "Spiritual"
-	desc = "You're in tune with the gods, and your prayers may be more likely to be heard. Or not."
+	desc = "You hold a spiritual belief, whether in God, nature or the arcane rules of the universe. You gain comfort from the presence of holy people, and believe that your prayers are more special than others."
 	value = 1
 	mob_trait = TRAIT_SPIRITUAL
-	gain_text = "<span class='notice'>You feel a little more faithful to the gods today.</span>"
-	lose_text = "<span class='danger'>You feel less faithful in the gods.</span>"
+	gain_text = "<span class='notice'>You have faith in a higher power.</span>"
+	lose_text = "<span class='danger'>You lose faith!</span>"
+
+/datum/quirk/spiritual/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.equip_to_slot_or_del(new /obj/item/storage/fancy/candle_box(H), SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/box/matches(H), SLOT_IN_BACKPACK)
+
+/datum/quirk/spiritual/on_process()
+	var/comforted = FALSE
+	for(var/mob/living/L in oview(5, quirk_holder))
+		if(L.mind && L.mind.isholy && L.stat == CONSCIOUS)
+			comforted = TRUE
+			break
+	if(comforted)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "religious_comfort", /datum/mood_event/religiously_comforted)
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "religious_comfort")
 
 /datum/quirk/tagger
 	name = "Tagger"
@@ -143,8 +173,24 @@
 
 /datum/quirk/voracious
 	name = "Voracious"
-	desc = "Nothing gets between you and your food. You eat twice as fast as everyone else!"
+	desc = "Nothing gets between you and your food. You eat faster and can binge on junk food! Being fat suits you just fine."
 	value = 1
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
+
+/datum/quirk/neet
+	name = "NEET"
+	desc = "For some reason you qualified for social welfare and you don't really care about your own personal hygiene."
+	value = 1
+	mob_trait = TRAIT_NEET
+	gain_text = "<span class='notice'>You feel useless to society.</span>"
+	lose_text = "<span class='danger'>You no longer feel useless to society.</span>"
+	mood_quirk = TRUE
+
+/datum/quirk/neet/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/bank_account/D = H.get_bank_account()
+	if(!D) //if their current mob doesn't have a bank account, likely due to them being a special role (ie nuke op)
+		return
+	D.welfare = TRUE

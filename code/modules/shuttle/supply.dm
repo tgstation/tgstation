@@ -24,7 +24,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/effect/portal,
 		/obj/item/shared_storage,
 		/obj/structure/extraction_point,
-		/obj/machinery/syndicatebomb
+		/obj/machinery/syndicatebomb,
+		/obj/item/hilbertshotel
 	)))
 
 /obj/docking_port/mobile/supply
@@ -77,6 +78,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
+	var/list/miscboxes = list() //miscboxes are combo boxes that contain all small_item orders grouped
+	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
+	var/list/misc_contents = list() //list of lists of items that each box will contain
 	if(!SSshuttle.shoppinglist.len)
 		return
 
@@ -93,22 +97,65 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		var/price = SO.pack.cost
+		var/datum/bank_account/D
+		if(SO.paying_account) //Someone paid out of pocket
+			D = SO.paying_account
+			price *= 1.1 //TODO make this customizable by the quartermaster
+		else
+			D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
-			if(!D.adjust_money(-SO.pack.cost))
+			if(!D.adjust_money(-price))
+				if(SO.paying_account)
+					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [price]")
 				continue
+
+		if(SO.paying_account)
+			D.bank_card_talk("Cargo order #[SO.id] has shipped. [price] credits have been charged to your bank account.")
+			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			cargo.adjust_money(price - SO.pack.cost) //Cargo gets the handling fee
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
 
-		SO.generate(pick_n_take(empty_turfs))
+		if(SO.pack.small_item) //small_item means it gets piled in the miscbox
+			if(SO.paying_account)
+				if(!miscboxes.len || !miscboxes[D.account_holder]) //if there's no miscbox for this person
+					miscboxes[D.account_holder] = new /obj/structure/closet/crate/secure/owned(pick_n_take(empty_turfs), SO.paying_account)
+					miscboxes[D.account_holder].name = "small items crate - purchased by [D.account_holder]"
+					misc_contents[D.account_holder] = list()
+				for (var/item in SO.pack.contains)
+					misc_contents[D.account_holder] += item
+				misc_order_num[D.account_holder] = "[misc_order_num[D.account_holder]]#[SO.id]  "
+			else //No private payment, so we just stuff it all into a generic crate
+				if(!miscboxes.len || !miscboxes["Cargo"])
+					miscboxes["Cargo"] = new /obj/structure/closet/crate/secure(pick_n_take(empty_turfs))
+					miscboxes["Cargo"].name = "small items crate"
+					misc_contents["Cargo"] = list()
+					miscboxes["Cargo"].req_access = list()
+				for (var/item in SO.pack.contains)
+					misc_contents["Cargo"] += item
+					//new item(miscboxes["Cargo"])
+				if(SO.pack.access)
+					miscboxes["Cargo"].req_access += SO.pack.access
+				misc_order_num["Cargo"] = "[misc_order_num["Cargo"]]#[SO.id]  "
+		else
+			SO.generate(pick_n_take(empty_turfs))
+
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
-		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", INVESTIGATE_CARGO)
+		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
-			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)] has shipped.")
+			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
 
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
+	for(var/I in miscboxes)
+		var/datum/supply_order/SO = new/datum/supply_order()
+		SO.id = misc_order_num[I]
+		SO.generateCombo(miscboxes[I], I, misc_contents[I])
+		qdel(SO)
+
+	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)

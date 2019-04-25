@@ -33,6 +33,9 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+/obj/docking_port/has_gravity(turf/T)
+	return FALSE
+
 /obj/docking_port/take_damage()
 	return
 
@@ -238,6 +241,8 @@
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
 	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
 	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
+	var/rechargeTime = 0		// time spent after arrival before being able to begin ignition
+	var/prearrivalTime = 0		// time spent after transit 'landing' before actually arriving
 
 	// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
@@ -251,7 +256,7 @@
 
 	var/launch_status = NOLAUNCH
 
-	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff
@@ -531,7 +536,11 @@
 	// If we can't dock or we don't have a transit slot, wait for 20 ds,
 	// then try again
 	switch(mode)
-		if(SHUTTLE_CALL)
+		if(SHUTTLE_CALL, SHUTTLE_PREARRIVAL)
+			if(prearrivalTime && mode != SHUTTLE_PREARRIVAL)
+				mode = SHUTTLE_PREARRIVAL
+				setTimer(prearrivalTime)
+				return
 			var/error = initiate_docking(destination, preferred_direction)
 			if(error && error & (DOCKING_NULL_DESTINATION | DOCKING_NULL_SOURCE))
 				var/msg = "A mobile dock in transit exited initiate_docking() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous][ADMIN_JMP(previous)] -> [destination][ADMIN_JMP(destination)])"
@@ -541,6 +550,10 @@
 				return
 			else if(error)
 				setTimer(20)
+				return
+			if(rechargeTime)
+				mode = SHUTTLE_RECHARGING
+				setTimer(rechargeTime)
 				return
 		if(SHUTTLE_RECALL)
 			if(initiate_docking(previous) != DOCKING_SUCCESS)
@@ -644,6 +657,10 @@
 			return "ESC"
 		if(SHUTTLE_STRANDED)
 			return "ERR"
+		if(SHUTTLE_RECHARGING)
+			return "RCH"
+		if(SHUTTLE_PREARRIVAL)
+			return "LDN"
 	return ""
 
 // returns 5-letter timer string, used by status screens and mob status panel
@@ -662,7 +679,7 @@
 
 /obj/docking_port/mobile/proc/getStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
-
+	var/docked_at = dockedAt?.name || "unknown"
 	if(istype(dockedAt, /obj/docking_port/stationary/transit))
 		if (timeLeft() > 1 HOURS)
 			return "hyperspace"
@@ -673,8 +690,10 @@
 			else
 				dst = destination
 			. = "transit towards [dst?.name || "unknown location"] ([getTimerStr()])"
+	else if(mode == SHUTTLE_RECHARGING)
+		return "[docked_at], recharging [getTimerStr()]"
 	else
-		return dockedAt?.name || "unknown"
+		return docked_at
 
 
 /obj/docking_port/mobile/proc/getDbgStatusText()
@@ -763,7 +782,7 @@
 
 /obj/docking_port/mobile/proc/in_flight()
 	switch(mode)
-		if(SHUTTLE_CALL,SHUTTLE_RECALL)
+		if(SHUTTLE_CALL,SHUTTLE_RECALL,SHUTTLE_PREARRIVAL)
 			return TRUE
 		if(SHUTTLE_IDLE,SHUTTLE_IGNITING)
 			return FALSE

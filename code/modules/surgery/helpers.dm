@@ -69,7 +69,7 @@
 
 			if(S.ignore_clothes || get_location_accessible(M, selected_zone))
 				var/datum/surgery/procedure = new S.type(M, selected_zone, affecting)
-				user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
+				user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for surgery.", \
 					"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
 
 				log_combat(user, M, "operated on", null, "(OPERATION TYPE: [procedure.name]) (TARGET AREA: [selected_zone])")
