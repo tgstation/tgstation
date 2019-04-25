@@ -44669,9 +44669,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bXF" = (
@@ -44685,17 +44682,11 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bXG" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 9
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -45400,6 +45391,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "bZh" = (
@@ -45411,6 +45405,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
@@ -56070,12 +56067,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"jLW" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/maintenance/disposal/incinerator)
 "jMt" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
@@ -58688,6 +58679,15 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
+"pIh" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1;
+	frequency = 1441;
+	id = "inc_in";
+	on = 0
+	},
+/turf/open/floor/plating/airless,
+/area/maintenance/disposal/incinerator)
 "pKd" = (
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet/crate,
@@ -60846,12 +60846,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "uQR" = (
@@ -101301,7 +101302,7 @@ bVl
 bWc
 bWR
 bXG
-jLW
+bYw
 uPu
 hUX
 cYq
@@ -101823,7 +101824,7 @@ fDm
 ltu
 cdl
 paI
-ceA
+pIh
 aaa
 mau
 aaa
