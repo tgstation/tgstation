@@ -84262,6 +84262,17 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
+"uGa" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/cable/cyan{
+	icon_state = "4-8"
+	},
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/space,
+/area/space/nearstation)
 "uGW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -128664,7 +128675,7 @@ aaa
 aaa
 aaa
 aaf
-bpw
+uGa
 aaf
 aaf
 ack
@@ -129692,7 +129703,7 @@ aaa
 aaa
 aaf
 aaf
-bpw
+uGa
 aaf
 aaf
 aaf
@@ -130463,7 +130474,7 @@ aaa
 aaa
 aaf
 aaf
-bpw
+uGa
 aaf
 aaf
 aaf
@@ -132262,7 +132273,7 @@ aaa
 aaa
 aaf
 aaf
-bpw
+uGa
 aaf
 aaf
 aaa
@@ -134061,7 +134072,7 @@ aaa
 aaa
 aaf
 aaf
-bpw
+uGa
 aaf
 aaf
 aaa
