@@ -38,7 +38,6 @@
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
 	M.setCloneLoss(0, 0)
-	M.blood_volume = BLOOD_VOLUME_NORMAL
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
 	M.heal_bodypart_damage(5,5)
@@ -62,6 +61,9 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
+	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+		M.blood_volume = BLOOD_VOLUME_NORMAL
+		
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
