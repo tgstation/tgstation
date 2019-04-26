@@ -66,10 +66,11 @@
 	key = "a"
 	mode = MODE_ALIEN
 
-/datum/saymode/xeno/handle_message(mob/living/user, message, datum/language/language)
+//this is being reused by perseus. -falaskian
+/*/datum/saymode/xeno/handle_message(mob/living/user, message, datum/language/language)
 	if(user.hivecheck())
 		user.alien_talk(message)
-	return FALSE
+	return FALSE*/
 
 
 /datum/saymode/vocalcords

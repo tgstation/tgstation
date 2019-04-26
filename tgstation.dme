@@ -1066,6 +1066,7 @@
 #include "code\modules\_toolbox\silly\pokerchips.dm"
 #include "code\modules\_toolbox\silly\redphones.dm"
 #include "code\modules\_toolbox\silly\slurm.dm"
+#include "code\modules\_toolbox\silly\thunder_dome_war.dm"
 #include "code\modules\_toolbox\silly\tidepods.dm"
 #include "code\modules\_toolbox\silly\trollcloset.dm"
 #include "code\modules\_toolbox\silly\weeb.dm"

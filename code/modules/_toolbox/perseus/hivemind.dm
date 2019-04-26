@@ -1,7 +1,7 @@
 /*
 interaction with split personality is broken as fuck*/
 
-#define MODE_PERSEUS "perseustalk"
+/*#define MODE_PERSEUS "perseustalk"
 /datum/saymode/perseus
 	key = "a"
 	mode = MODE_PERSEUS
@@ -9,6 +9,14 @@ interaction with split personality is broken as fuck*/
 /datum/saymode/perseus/handle_message(mob/living/user, message, datum/language/language)
 	if(!user.hivecheck() && check_perseus(user))
 		user.perseusHivemindSay(message)
+	return FALSE*/
+
+//It seems perseus and aliens need to share the same saymode datum. -falaskian
+/datum/saymode/xeno/handle_message(mob/living/user, message, datum/language/language)
+	if(check_perseus(user))
+		user.perseusHivemindSay(message)
+	else if(user.hivecheck())
+		user.alien_talk(message)
 	return FALSE
 
 /mob/living/proc/perseusHivemindSay(var/message)

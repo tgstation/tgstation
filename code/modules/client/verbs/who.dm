@@ -51,16 +51,23 @@
 			else
 				Lines += "[C.key] ([round(C.avgping, 1)]ms)"
 
-	for(var/line in sortList(Lines))
-		msg += "[line]\n"
+	var/totalplayers = "<b>Total Players: [length(Lines)]</b>"
 
-	msg += "<b>Total Players: [length(Lines)]</b>"
+	Lines = sortList(Lines)
+
 	if(holder && prefs && !prefs.disable_windowed_admin_who_list)
 		var/dat = "<B>Who List</B><BR><BR>"
-		for(var/line in Lines)
-			dat += "[line]<br>"
-		src << browse(dat,"size=550x700,window=wholist")
+		dat += "<b>Current Players:</b><BR>"
+		for(var/text in Lines)
+			dat += "[text]<BR>"
+		dat += "[totalplayers]"
+		src << browse(dat,"size=650x700,window=wholist")
 	else
+		for(var/line in Lines)
+			msg += "[line]\n"
+
+		msg += "[totalplayers]"
+
 		to_chat(src, msg)
 
 /client/verb/adminwho()

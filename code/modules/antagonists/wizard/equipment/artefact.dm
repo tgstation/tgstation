@@ -178,6 +178,17 @@
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(M, "<span class='userdanger'>[user.p_they(TRUE)] [user.p_are()] your master now, assist them even if it costs you your new life!</span>")
+	if(M.mind)
+		if(!M.mind.special_role)
+			M.mind.special_role = ""
+		else
+			M.mind.special_role += ", "
+		M.mind.special_role += "Skeletal Thrall"
+		if(!M.mind.memory)
+			M.mind.memory = ""
+		else
+			M.mind.memory += "<br>"
+		M.mind.memory += "You are now a Skeletal Thrall. Your master is [user.real_name]"
 
 	equip_roman_skeleton(M)
 

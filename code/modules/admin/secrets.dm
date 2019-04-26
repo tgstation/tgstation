@@ -60,6 +60,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=end_round_thunderdome_war'>End Round Thunderdome War!</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
@@ -541,6 +542,12 @@
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("There Can Be Only One"))
 			usr.client.only_one_delayed()
 			sound_to_playing_players('sound/misc/highlander_delayed.ogg')
+
+		if("end_round_thunderdome_war")
+			if(!check_rights(R_FUN))
+				return
+			if(!Thunder_Dome_War())
+				to_chat(usr,"<B>The round must be over to activate this.</B>")
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))

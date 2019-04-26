@@ -469,13 +469,32 @@ SUBSYSTEM_DEF(job)
 			break
 
 
-/datum/controller/subsystem/job/proc/LoadJobs()
+/*/datum/controller/subsystem/job/proc/LoadJobs()
 	var/jobstext = file2text("[global.config.directory]/jobs.txt")
 	for(var/datum/job/J in occupations)
 		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
 		jobs.Find(jobstext)
 		J.total_positions = text2num(jobs.group[1])
-		J.spawn_positions = text2num(jobs.group[2])
+		J.spawn_positions = text2num(jobs.group[2])*/
+
+/datum/controller/subsystem/job/proc/LoadJobs()
+	var/list/jobsfile = world.file2list("[global.config.directory]/jobs.txt")
+	for(var/line in jobsfile)
+		if(copytext(line,1,2) == "#")
+			continue
+		var/theequals = findtext(line,"=",1,length(line)+1)
+		var/thecomma = findtext(line,",",1,length(line)+1)
+		if(!theequals || !thecomma)
+			continue
+		var/jobtext = copytext(line,1,theequals)
+		if(jobtext)
+			var/datum/job/J = SSjob.GetJob(jobtext)
+			if(J)
+				var/firstdigit = text2num(copytext(line,theequals+1,thecomma))
+				var/seconddigit = text2num(copytext(line,thecomma+1,length(line)+1))
+				if(isnum(firstdigit) && isnum(seconddigit))
+					J.total_positions = firstdigit
+					J.spawn_positions = seconddigit
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
