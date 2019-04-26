@@ -50,12 +50,24 @@
 
 /obj/structure/infection/core/Destroy()
 	. = ..()
+	deathExplosion()
 	GLOB.infection_cores -= src
 	if(overmind)
 		overmind.infection_core = null
 	overmind = null
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list -= src
+
+/obj/structure/infection/core/proc/deathExplosion()
+	var/explodeloc = src.loc
+	for(var/i = 1 to 9)
+		for(var/atom/A in urange(i, explodeloc) - urange(i - 1, explodeloc))
+			var/power = CEILING(i/3, 1)
+			A.ex_act(power)
+			if(istype(A, /obj/structure/infection))
+				var/obj/structure/infection/INF = A
+				INF.take_damage(600 / power, BRUTE, "bomb", 0)
+		sleep(4)
 
 /obj/structure/infection/core/ex_act(severity, target)
 	return
@@ -136,11 +148,14 @@
 				for(var/i = 1 to times)
 					U.do_upgrade(S)
 	INVOKE_ASYNC(src, .proc/pulseNodes)
+	shootSmoke()
+	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
+	..()
+
+/obj/structure/infection/core/proc/shootSmoke()
 	var/angle = rand(0, 360)
 	for(var/i = 1 to 3)
 		new /obj/effect/particle_effect/smoke/infection_smoke(loc, angle + 120 * i)
-	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
-	..()
 
 /obj/structure/infection/core/proc/pulseNodes()
 	if(topulse.len)
