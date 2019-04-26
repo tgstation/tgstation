@@ -61,6 +61,9 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
+	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+		M.blood_volume = BLOOD_VOLUME_NORMAL
+		
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
