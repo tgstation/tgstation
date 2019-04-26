@@ -164,9 +164,7 @@
 
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(check_clothes(L))
-				return
-			else
+			if(!check_clothes(L))
 				H.set_hygiene(HYGIENE_LEVEL_CLEAN)
 				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 
