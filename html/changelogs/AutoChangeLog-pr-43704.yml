@@ -1,0 +1,4 @@
+author: "Mideanon"
+delete-after: True
+changes: 
+  - bugfix: "Adminordrazine now gives blood back"
