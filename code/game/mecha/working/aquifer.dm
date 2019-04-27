@@ -24,7 +24,7 @@
 /obj/mecha/working/aquifer/update_icon()
 	..()
 	cut_overlays()
-	if(reagents.total_volume = 0 || reagents.total_volume = 1000)
+	if(reagents.total_volume == 0 || reagents.total_volume == 1000)
 		add_overlay("botany_[reagents.total_volume]") //full or empty
 	else if(reagents.total_volume >= 500)
 		add_overlay("botany_high")

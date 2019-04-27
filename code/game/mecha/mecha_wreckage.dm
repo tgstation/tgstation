@@ -197,6 +197,10 @@
 			welder_salvage += part
 			parts -= part
 
+/obj/structure/mecha_wreckage/aquifer
+	name = "\improper Aquifer wreckage"
+	icon_state = "aquifer-broken"
+	desc = "Return to nothing... Just kidding, this shit is plastic."
 
 /obj/structure/mecha_wreckage/ripley/deathripley
 	name = "\improper Death-Ripley wreckage"

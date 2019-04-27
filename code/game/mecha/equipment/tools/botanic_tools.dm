@@ -13,23 +13,21 @@
 
 /obj/item/mecha_parts/mecha_equipment/botanic/hose/action(atom/target)
 	if(!action_checks(target) || get_dist(chassis, target)>3)
-		return
-	var/obj/mecha/working/aquifer/M = chassis
-
+		return FALSE
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
 		occupant_message("<span class='warning'>Use the internal menu to siphon the water instead!</span>")
-		return 0
+		return FALSE
 	if(!chassis.reagents.total_volume > 0)
 		occupant_message("<span class='warning'>You are out of water!</span>")
-		return 0
+		return FALSE
 	if(istype(target, /obj/machinery/hydroponics) && get_dist(chassis,target) <= 1)
 		var/obj/machinery/hydroponics/H = target
 		playsound(chassis, 'sound/effects/extinguish.ogg', 75, 1, -3)
 		occupant_message("<span class='warning'>You hose down [H].</span>")
 		chassis.reagents.trans_to(target, H.maxwater - H.waterlevel)
-		return 1
+	//else
 	//extinguisher is gone for the moment, there were some abominations in it. see working_tools.dm
-	if(!chassis.total_volume)
+	if(!chassis.reagents.total_volume)
 		occupant_message("<span class='warning'>You are out of water!</span>")
 
 /obj/item/mecha_parts/mecha_equipment/botanic/cultivator
@@ -45,7 +43,7 @@
 		return 0
 	if(cultivating)
 		if(!H.weedlevel > 0)
-			to_chat(user, "<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>")
+			occupant_message("<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>")
 			return 0
 		stored_weeds += H.weedlevel * 2
 		chassis.visible_message("[chassis] uproots the weeds.")
@@ -53,5 +51,5 @@
 		H.weedlevel = 0
 		update_icon()
 //	else
-		
-		
+
+
