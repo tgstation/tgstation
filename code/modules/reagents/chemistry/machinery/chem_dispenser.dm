@@ -9,7 +9,6 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
-	var/cell_type = /obj/item/stock_parts/cell/high
 	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.1
 	var/amount = 30
@@ -70,7 +69,6 @@
 
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
-	cell = new cell_type
 	dispensable_reagents = sortList(dispensable_reagents)
 	update_icon()
 
@@ -394,10 +392,9 @@
 	return final_list
 
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	replace_beaker(user)
-	return
+	..()
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		replace_beaker(user)
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()
@@ -512,7 +509,9 @@
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake"
+		"sake",
+		"champagne",
+		"applejack"
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(

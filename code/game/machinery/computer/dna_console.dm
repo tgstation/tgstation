@@ -716,7 +716,7 @@
 						I.name = "[HM.name] activator"
 						I.damage_coeff = connected.damage_coeff*4
 						I.research = TRUE
-						injectorready = world.time + INJECTOR_TIMEOUT
+						injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected.precision_coeff) //precision_coeff being the manipulator rating
 		if("mutator")
 			if(injectorready < world.time)
 				var/mutation = text2path(href_list["path"])
@@ -728,7 +728,7 @@
 						I.doitanyway = TRUE
 						I.name = "[HM.name] injector"
 						I.damage_coeff = connected.damage_coeff
-						injectorready = world.time + INJECTOR_TIMEOUT*5
+						injectorready = world.time + INJECTOR_TIMEOUT*5 * (1 - 0.1 * connected.precision_coeff)
 		if("nullify")
 			if(viable_occupant)
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)

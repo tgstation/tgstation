@@ -396,6 +396,26 @@
 	list_reagents = list("grenadine" = 100)
 	foodtype = FRUIT
 
+/obj/item/reagent_containers/food/drinks/bottle/applejack
+	name = "Buckin' Bronco's Applejack"
+	desc = "Kicks like a horse, tastes like an apple!"
+	custom_price = 10
+	icon_state = "applejack_bottle"
+	isGlass = TRUE
+	list_reagents = list("applejack" = 100)
+	foodtype = FRUIT
+
+/obj/item/reagent_containers/food/drinks/bottle/champagne
+	name = "Eau d' Dandy Brut Champagne"
+	desc = "Finely sourced from only the most pretentious French vineyards."
+	custom_price = 100
+	icon_state = "champagne_bottle"
+	isGlass = TRUE
+	list_reagents = list("champagne" = 100)
+
+
+
+
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov

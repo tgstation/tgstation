@@ -19,16 +19,17 @@
 	text_lose_indication = "<span class='notice'>Your sense of smell goes back to normal.</span>"
 	power = /obj/effect/proc_holder/spell/targeted/olfaction
 	instability = 30
+	synchronizer_coeff = 1
 	var/reek = 200
 
 /datum/mutation/human/olfaction/on_life()
 	var/hygiene_now = owner.hygiene
 
 	if(hygiene_now < 100 && prob(5))
-		owner.adjust_disgust(rand(3,5))
+		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * (rand(3,5)))
 	if(hygiene_now < HYGIENE_LEVEL_DIRTY && prob(50))
 		to_chat(owner,"<span class='danger'>You get a whiff of your stench and feel sick!</span>")
-		owner.adjust_disgust(rand(5,10))
+		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * rand(5,10))
 
 	if(hygiene_now < HYGIENE_LEVEL_NORMAL && reek >= HYGIENE_LEVEL_NORMAL)
 		to_chat(owner,"<span class='warning'>Your inhumanly strong nose picks up a faint odor. Maybe you should shower soon.</span>")

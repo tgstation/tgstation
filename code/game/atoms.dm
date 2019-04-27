@@ -42,7 +42,7 @@
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		GLOB._preloader.load(src)
+		world.preloader_load(src)
 
 	if(datum_flags & DF_USE_TAG)
 		GenerateTag()
@@ -204,6 +204,9 @@
 		return loc.return_air()
 	else
 		return null
+
+/atom/proc/return_analyzable_air()
+	return null
 
 /atom/proc/check_eye(mob/user)
 	return

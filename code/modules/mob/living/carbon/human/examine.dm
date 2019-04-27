@@ -1,4 +1,4 @@
-/mob/living/carbon/human/examine(mob/user) //User is the person being examined
+/mob/living/carbon/human/examine(mob/user)
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)
@@ -251,6 +251,22 @@
 				msg += "[t_He] look[p_s()] like a drunken mess.\n"
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
+
+	if(user.has_trait(TRAIT_EMPATH) && !appears_dead && (src != user))
+		if (a_intent != INTENT_HELP)
+			msg += "[t_He] seem[p_s()] to be on guard.\n"
+		if (getOxyLoss() >= 10)
+			msg += "[t_He] seem[p_s()] winded.\n"
+		if (getToxLoss() >= 10)
+			msg += "[t_He] seem[p_s()] sickly.\n"
+		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+		if(mood.sanity <= SANITY_DISTURBED)
+			msg += "[t_He] seem[p_s()] distressed.\n"
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
+		if (has_trait(TRAIT_BLIND))
+			msg += "[t_He] appear[p_s()] to be staring off into space.\n"
+		if (has_trait(TRAIT_DEAF))
+			msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
 
 	msg += "</span>"
 
