@@ -189,38 +189,38 @@
 	var/space_key = modelCache[SPACE_KEY]
 	var/list/bounds
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
+	var/turn_angle = 0
 
 	//Under normal: Y goes down, X goes up.
 	var/invert_y = FALSE
-	//var/invert_x = FALSE
 	var/swap_xy = FALSE
 	var/xi = 1
 	var/yi = -1
 	switch(orientation)
 		if(NORTH)
 			invert_y = TRUE
-			//invert_x = TRUE
 			swap_xy = FALSE
 			xi = -1
 			yi = 1
+			turn_angle = 180
 		if(SOUTH)
 			invert_y = FALSE
-			//invert_x = FALSE
 			swap_xy = FALSE
 			xi = 1
 			yi = -1
+			turn_angle = 0
 		if(EAST)
 			invert_y = TRUE
-			//invert_x = FALSE
 			swap_xy = TRUE
 			xi = 1
 			yi = 1
+			turn_angle = 90
 		if(WEST)
 			invert_y = FALSE
-			//invert_x = TRUE
 			swap_xy = TRUE
 			xi = -1
 			yi = -1
+			turn_angle = 270
 	var/lower_left_y = y_offset
 	var/lower_left_x = x_offset
 	var/delta_swap = lower_left_x - lower_left_y
@@ -281,8 +281,7 @@
 					var/list/cache = modelCache[model_key]
 					if(!cache)
 						CRASH("Undefined model key in DMM: [model_key]")
-					build_coordinate(areaCache, cache, locate(placement_x, placement_y, parsed_z), no_afterchange, placeOnTop, annihilate_tiles)
-
+					build_coordinate(areaCache, cache, locate(placement_x, placement_y, parsed_z), no_afterchange, placeOnTop, turn_angle, annihilate_tiles, swap_xy, invert_y)
 					// only bother with bounds that actually exist
 					bounds[MAP_MINX] = min(bounds[MAP_MINX], placement_x)
 					bounds[MAP_MINY] = min(bounds[MAP_MINY], placement_y)
@@ -392,7 +391,7 @@
 
 		.[model_key] = list(members, members_attributes)
 
-/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num, orientation as num, annihilate_tiles = FALSE)
+/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num, turn_angle as num, annihilate_tiles = FALSE, swap_xy, invert_y)
 	var/index
 	var/list/members = model[1]
 	var/list/members_attributes = model[2]
@@ -432,20 +431,20 @@
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop,orientation)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop,turn_angle, swap_xy, invert_y)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
 		while(index <= members.len - 1) // Last item is an /area
 			var/underlay = T.appearance
-			T = instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop,orientation)//instance new turf
+			T = instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop,turn_angle, swap_xy, invert_y)//instance new turf
 			T.underlays += underlay
 			index++
 
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
-		instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop,orientation)
+		instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop,turn_angle, swap_xy, invert_y)
 	//Restore initialization to the previous value
 	SSatoms.map_loader_stop()
 
@@ -454,7 +453,22 @@
 ////////////////
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop, orientation = SOUTH)
+/datum/parsed_map/proc/instance_atom(path, list/attributes, turf/crds, no_changeturf, placeOnTop, turn_angle = 0, swap_xy, invert_y)
+	if(turn_angle != 0)
+		attributes["dir"] = turn((attributes["dir"] || SOUTH), turn_angle)
+		var/px = attributes["pixel_x"] || 0
+		var/py = attributes["pixel_y"] || 0
+		if(invert_y)
+			py = -py
+		if(swap_xy)
+			var/opx = px
+			px = py
+			py = opx
+		if(px)
+			attributes["pixel_x"] = px
+		if(py)
+			attributes["pixel_y"] = py
+
 	world.preloader_setup(attributes, path)
 
 	if(crds)
@@ -476,11 +490,6 @@
 		SSatoms.map_loader_stop()
 		stoplag()
 		SSatoms.map_loader_begin()
-
-	// Rotate the atom now that it exists, rather than changing its orientation beforehand through the fields["dir"]
-	if(orientation != SOUTH) // 0 means no rotation
-		var/atom/A = .
-		A.setDir(orientation)
 
 /datum/parsed_map/proc/create_atom(path, crds)
 	set waitfor = FALSE

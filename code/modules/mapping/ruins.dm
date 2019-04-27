@@ -25,7 +25,7 @@
 			for(var/obj/structure/flora/ash/plant in T)
 				qdel(plant)
 
-		load(central_turf,centered = TRUE)
+		load(central_turf, centered = TRUE)
 
 		for(var/turf/T in get_affected_turfs(central_turf, 1))
 			T.flags_1 |= NO_RUINS_1
