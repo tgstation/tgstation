@@ -1,7 +1,5 @@
 //Landmarks and other helpers which speed up the mapping process and reduce the number of unique instances/subtypes of items/turf/ect
 
-
-
 /obj/effect/baseturf_helper //Set the baseturfs of every turf in the /area/ it is placed.
 	name = "baseturf editor"
 	icon = 'icons/effects/mapping_helpers.dmi'

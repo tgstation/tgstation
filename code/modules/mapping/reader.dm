@@ -19,8 +19,12 @@
 
 	/// Unoffset bounds. Null on parse failure.
 	var/list/parsed_bounds
+	var/width
+	var/height
 	/// Offset bounds. Same as parsed_bounds until load().
 	var/list/bounds
+
+	var/datum/map_template/template_host
 
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
@@ -41,14 +45,33 @@
 /// - `no_changeturf`: When true, [turf/AfterChange] won't be called on loaded turfs
 /// - `x_lower`, `x_upper`, `y_lower`, `y_upper`: Coordinates (relative to the map) to crop to (Optional).
 /// - `placeOnTop`: Whether to use [turf/PlaceOnTop] rather than [turf/ChangeTurf] (Optional).
-/proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
-	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly)
+/proc/load_map(
+	dmm_file as file,
+	x_offset as num,
+	y_offset as num,
+	z_offset as num,
+	cropMap as num,
+	measureOnly as num,
+	no_changeturf as num,
+	x_lower = -INFINITY as num,
+	x_upper = INFINITY as num,
+	y_lower = -INFINITY as num,
+	y_upper = INFINITY as num,
+	placeOnTop = FALSE as num,
+	orientation = SOUTH as num,
+	annihilate_tiles = FALSE,
+	z_lower = -INFINITY as num,
+	z_upper = INFINITY as num
+	)
+	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
 	if(parsed.bounds && !measureOnly)
-		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles)
 	return parsed
 
 /// Parse a map, possibly cropping it.
-/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, measureOnly=FALSE)
+//WHY THE HECK DO WE EVEN SUPPORT NEGATIVE COORDINATES, ALL IT IS IS A WASTE OF TIME AND CPU!!!???
+//DO NOT USE THIS TO TRIM MAPS UNLESS STRICTLY NEEDED! IT IS EXTREMELY EXPENSIVE TO DO SO!
+/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = -INFINITY, z_upper = INFINITY, measureOnly = FALSE)
 	if(isfile(tfile))
 		original_path = "[tfile]"
 		tfile = file2text(tfile)
@@ -57,6 +80,9 @@
 		return
 
 	bounds = parsed_bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
+	ASSERT(x_upper >= x_lower)
+	ASSERT(y_upper >= y_lower)
+	ASSERT(z_upper >= z_lower)
 	var/stored_index = 1
 
 	//multiz lool
@@ -82,20 +108,23 @@
 				CRASH("Coords before model definition in DMM")
 
 			var/curr_x = text2num(dmmRegex.group[3])
+			var/curr_y = text2num(dmmRegex.group[4])
+			var/curr_z = text2num(dmmRegex.group[5])
 
-			if(curr_x < x_lower || curr_x > x_upper)
+			if(curr_x < x_lower || curr_y < y_lower || curr_z < z_lower || curr_z > z_upper)
 				continue
 
 			var/datum/grid_set/gridSet = new
 
 			gridSet.xcrd = curr_x
-			//position of the currently processed square
-			gridSet.ycrd = text2num(dmmRegex.group[4])
-			gridSet.zcrd = text2num(dmmRegex.group[5])
+			gridSet.ycrd = curr_y
+			gridSet.zcrd = curr_z
 
-			bounds[MAP_MINX] = min(bounds[MAP_MINX], CLAMP(gridSet.xcrd, x_lower, x_upper))
-			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], gridSet.zcrd)
-			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], gridSet.zcrd)
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], curr_x)			//since down is up for y/gridlines, we now know the lower left corner.
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], curr_y)
+			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], curr_z)
+
+			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], curr_z)			//we know max z now
 
 			var/list/gridLines = splittext(dmmRegex.group[6], "\n")
 			gridSet.gridLines = gridLines
@@ -105,102 +134,172 @@
 			if(leadingBlanks > 1)
 				gridLines.Cut(1, leadingBlanks) // Remove all leading blank lines.
 
-			if(!gridLines.len) // Skip it if only blank lines exist.
-				continue
-
 			gridSets += gridSet
 
-			if(gridLines.len && gridLines[gridLines.len] == "")
-				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
+			var/lines = length(gridLines)
+			if(lines)
+				if(gridLines[gridLines.len] == "")
+					gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
+				var/right_length = y_upper - curr_y + 1
+				if(lines > right_length)
+					gridLines.len = right_length			//this can't be negative due to our ASSERTions above, hopefully.
 
-			bounds[MAP_MINY] = min(bounds[MAP_MINY], CLAMP(gridSet.ycrd, y_lower, y_upper))
+			if(!gridLines.len) // Skip it if there's no content.
+				continue
+
+			//do not use curr_y after this point, ycrd has changed. use it before because local var.
 			gridSet.ycrd += gridLines.len - 1 // Start at the top and work down
-			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(gridSet.ycrd, y_lower, y_upper))
+			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], gridSet.ycrd)			//we know max y now
 
-			var/maxx = gridSet.xcrd
-			if(gridLines.len) //Not an empty map
-				maxx = max(maxx, gridSet.xcrd + length(gridLines[1]) / key_len - 1)
+			var/linelength = length(gridLines[1])		//yes it only samples the first line, this is why you use TGM instead of DMM!
+			var/xlength = linelength / key_len
 
-			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], maxx), x_lower, x_upper)
+			var/maxx = gridSet.xcrd + xlength - 1
+			if(maxx > x_upper)
+				for(var/i in 1 to length(gridLines))
+					gridLines[i] = copytext(gridLines[i], 1, key_len * (x_upper - curr_x + 1))
+			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], maxx)
 		CHECK_TICK
 
 	// Indicate failure to parse any coordinates by nulling bounds
 	if(bounds[1] == 1.#INF)
 		bounds = null
+	else
+		width = bounds[MAP_MAXX] - bounds[MAP_MINX] + 1
+		height = bounds[MAP_MAXY] - bounds[MAP_MINY] + 1
 	parsed_bounds = bounds
 
+/datum/parsed_map/Destroy()
+	if(template_host && template_host.cached_map == src)
+		template_host.cached_map = null
+	return ..()
+
 /// Load the parsed map into the world. See [/proc/load_map] for arguments.
-/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles)
 	Master.StopLoadingMap()
 
 // Do not call except via load() above.
-/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+// Lower/upper here refers to the actual map template's parsed coordinates, NOT ACTUAL COORDINATES! Figure it out yourself my head hurts too much to implement that too.
+/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, orientation = SOUTH, annihilate_tiles = FALSE)
 	var/list/areaCache = list()
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
 	var/list/bounds
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 
-	for(var/I in gridSets)
-		var/datum/grid_set/gset = I
-		var/ycrd = gset.ycrd + y_offset - 1
-		var/zcrd = gset.zcrd + z_offset - 1
-		if(!cropMap && ycrd > world.maxy)
-			world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
-		var/zexpansion = zcrd > world.maxz
+	//Under normal: Y goes down, X goes up.
+	var/invert_y = FALSE
+	//var/invert_x = FALSE
+	var/swap_xy = FALSE
+	var/xi = 1
+	var/yi = -1
+	switch(orientation)
+		if(NORTH)
+			invert_y = TRUE
+			//invert_x = TRUE
+			swap_xy = FALSE
+			xi = -1
+			yi = 1
+		if(SOUTH)
+			invert_y = FALSE
+			//invert_x = FALSE
+			swap_xy = FALSE
+			xi = 1
+			yi = -1
+		if(EAST)
+			invert_y = TRUE
+			//invert_x = FALSE
+			swap_xy = TRUE
+			xi = 1
+			yi = 1
+		if(WEST)
+			invert_y = FALSE
+			//invert_x = TRUE
+			swap_xy = TRUE
+			xi = -1
+			yi = -1
+	var/lower_left_y = y_offset
+	var/lower_left_x = x_offset
+	var/delta_swap = lower_left_x - lower_left_y
+
+	for(var/__I in gridSets)
+		var/datum/grid_set/gridset = __I
+		//parsed = the spot on the world on a SOUTH/default orientation load it would load into
+		//actual = after inversions for NORTH/SOUTH/flipping in general
+		//placement = after x/y swap for 90 degree rotation.
+
+		var/parsed_y = gridset.ycrd + y_offset - 1
+		var/parsed_z = gridset.zcrd + z_offset - 1
+		//var/lower_left_y = parsed_y - length(gridset.gridLines)
+		//var/lower_left_x = x_offset + gridset.xcrd - 1
+		//var/delta_swap = lower_left_x - lower_left_y
+		//to_chat(world, "DEBUG: Delta swap is [delta_swap], swap_xy [swap_xy], lower left [lower_left_x]/[lower_left_y], parsed [gridset.xcrd + x_offset - 1]/[parsed_y], grid crds [gridset.xcrd]/[gridset.ycrd]")
+		var/zexpansion = parsed_z > world.maxz
 		if(zexpansion)
 			if(cropMap)
 				continue
 			else
-				while (zcrd > world.maxz) //create a new z_level if needed
+				while(parsed_z > world.maxz)
 					world.incrementMaxZ()
 			if(!no_changeturf)
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
+		var/actual_y = invert_y? y_offset : parsed_y
+		for(var/line in gridset.gridLines)
+			var/parsed_x = gridset.xcrd + x_offset - 1
+			var/actual_x = parsed_x
+			for(var/pos = 1 to (length(line) - key_len + 1) step key_len)
+				var/placement_x = swap_xy? (actual_y + delta_swap) : actual_x
+				var/placement_y = swap_xy? (actual_x - delta_swap) : actual_y
+				if(placement_x > world.maxx)
+					if(cropMap)
+						parsed_x++
+						actual_x += xi
+						continue
+					else
+						world.maxx = placement_x
+				if(placement_y > world.maxy)
+					if(cropMap)
+						parsed_y--
+						actual_y += yi
+						break
+					else
+						world.maxy = placement_y
+				if(placement_x < 1)
+					parsed_x++
+					actual_x += xi
+					continue
+				if(placement_y < 1)
+					parsed_y--
+					actual_y += yi
+					break
+				var/model_key = copytext(line, pos, pos + key_len)
+				var/no_afterchange = no_changeturf || zexpansion
+				if(!no_afterchange || (model_key != space_key))
+					var/list/cache = modelCache[model_key]
+					if(!cache)
+						CRASH("Undefined model key in DMM: [model_key]")
+					build_coordinate(areaCache, cache, locate(placement_x, placement_y, parsed_z), no_afterchange, placeOnTop, annihilate_tiles)
 
-		for(var/line in gset.gridLines)
-			if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
-				--ycrd
-				continue
-			if(ycrd <= world.maxy && ycrd >= 1)
-				var/xcrd = gset.xcrd + x_offset - 1
-				for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
-					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
-						++xcrd
-						continue								//X cropping.
-					if(xcrd > world.maxx)
-						if(cropMap)
-							break
-						else
-							world.maxx = xcrd
-
-					if(xcrd >= 1)
-						var/model_key = copytext(line, tpos, tpos + key_len)
-						var/no_afterchange = no_changeturf || zexpansion
-						if(!no_afterchange || (model_key != space_key))
-							var/list/cache = modelCache[model_key]
-							if(!cache)
-								CRASH("Undefined model key in DMM: [model_key]")
-							build_coordinate(areaCache, cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
-
-							// only bother with bounds that actually exist
-							bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrd)
-							bounds[MAP_MINY] = min(bounds[MAP_MINY], ycrd)
-							bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
-							bounds[MAP_MAXX] = max(bounds[MAP_MAXX], xcrd)
-							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], ycrd)
-							bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
-						#ifdef TESTING
-						else
-							++turfsSkipped
-						#endif
-						CHECK_TICK
-					++xcrd
-			--ycrd
-
-		CHECK_TICK
+					// only bother with bounds that actually exist
+					bounds[MAP_MINX] = min(bounds[MAP_MINX], placement_x)
+					bounds[MAP_MINY] = min(bounds[MAP_MINY], placement_y)
+					bounds[MAP_MINZ] = min(bounds[MAP_MINZ], parsed_z)
+					bounds[MAP_MAXX] = max(bounds[MAP_MAXX], placement_x)
+					bounds[MAP_MAXY] = max(bounds[MAP_MAXY], placement_y)
+					bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], parsed_z)
+				#ifdef TESTING
+				else
+					++turfsSkipped
+				#endif
+				parsed_x++
+				actual_x += xi
+				CHECK_TICK
+			parsed_y--
+			actual_y += yi
+			CHECK_TICK
 
 	if(!no_changeturf)
 		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
@@ -293,7 +392,7 @@
 
 		.[model_key] = list(members, members_attributes)
 
-/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num)
+/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num, orientation as num, annihilate_tiles = FALSE)
 	var/index
 	var/list/members = model[1]
 	var/list/members_attributes = model[2]
@@ -305,9 +404,11 @@
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
 	index = members.len
-	if(members[index] != /area/template_noop)		
+	if(annihilate_tiles && crds)
+		crds.empty(null)
+	if(members[index] != /area/template_noop)
 		var/atype = members[index]
-		world.preloader_setup(members_attributes[index], atype)//preloader for assigning  set variables on atom creation
+		GLOB._preloader.setup(members_attributes[index], atype)//preloader for assigning  set variables on atom creation
 		var/atom/instance = areaCache[atype]
 		if (!instance)
 			instance = GLOB.areas_by_type[atype]
@@ -318,7 +419,7 @@
 			instance.contents.Add(crds)
 
 		if(GLOB.use_preloader && instance)
-			world.preloader_load(instance)
+			GLOB._preloader.load(instance)
 
 	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
 
@@ -331,20 +432,20 @@
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop,orientation)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
 		while(index <= members.len - 1) // Last item is an /area
 			var/underlay = T.appearance
-			T = instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop)//instance new turf
+			T = instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop,orientation)//instance new turf
 			T.underlays += underlay
 			index++
 
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
-		instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop)
+		instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop,orientation)
 	//Restore initialization to the previous value
 	SSatoms.map_loader_stop()
 
@@ -353,8 +454,8 @@
 ////////////////
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop)
-	world.preloader_setup(attributes, path)
+/datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop, orientation = SOUTH)
+	GLOB._preloader.setup(attributes, path)
 
 	if(crds)
 		if(ispath(path, /turf))
@@ -375,6 +476,11 @@
 		SSatoms.map_loader_stop()
 		stoplag()
 		SSatoms.map_loader_begin()
+
+	// Rotate the atom now that it exists, rather than changing its orientation beforehand through the fields["dir"]
+	if(orientation != SOUTH) // 0 means no rotation
+		var/atom/A = .
+		A.setDir(orientation)
 
 /datum/parsed_map/proc/create_atom(path, crds)
 	set waitfor = FALSE
