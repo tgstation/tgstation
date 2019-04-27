@@ -408,7 +408,7 @@
 		crds.empty(null)
 	if(members[index] != /area/template_noop)
 		var/atype = members[index]
-		world.__preloader.setup(members_attributes[index], atype)//preloader for assigning  set variables on atom creation
+		world.preloader.setup(members_attributes[index], atype)//preloader for assigning  set variables on atom creation
 		var/atom/instance = areaCache[atype]
 		if (!instance)
 			instance = GLOB.areas_by_type[atype]
@@ -419,7 +419,7 @@
 			instance.contents.Add(crds)
 
 		if(GLOB.use_preloader && instance)
-			world.__preloader.load(instance)
+			world.preloader.load(instance)
 
 	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
 
@@ -455,7 +455,7 @@
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop, orientation = SOUTH)
-	world.__preloader.setup(attributes, path)
+	world.preloader.setup(attributes, path)
 
 	if(crds)
 		if(ispath(path, /turf))
