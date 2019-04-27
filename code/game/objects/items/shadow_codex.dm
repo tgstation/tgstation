@@ -24,6 +24,7 @@
 			user.Paralyze(100) // Quite a price to pay if you move when returning to your body
 			to_chat(user, "<span class='userdanger'>You fail to return to your body. Perhaps you should try again.</span>")
 	else // if you are not the caster of the book then this happens
+		user.Paralyze(10)
 		user.emote("scream")
 		to_chat(user, "<span class=warning>You feel as if being watched by the shadows. It's probably best to leave this book alone.</span>")
 		user.adjustBrainLoss(10) // don't touch it your you will go insane and die
@@ -50,7 +51,7 @@
 			to_chat(user, "<span class=warning>You are already reading this book.</span>")
 
 /obj/item/shadow_codex/attack(mob/M as mob, mob/user as mob)
-	if(istype(M, /mob/living/carbon/human) && M != caster && is_converting == 0) // you can only used this on a human and it can't be you, also you can't cast this multiple times at once
+	if(istype(M, /mob/living/carbon/human) && M != caster && is_converting == 0 && M.stat != DEAD) // you can only used this on a human and it can't be you, also you can't cast this multiple times at once
 		is_converting = 1
 		to_chat(user, "<span class=warning>You start focusing on [M]s brain, while reciting the words written in the book.</span>")
 		to_chat(M, "<span class='userdanger'>You begin to feel your mind drip</span>")
@@ -81,7 +82,7 @@
 		C.adjustBrainLoss(200)
 		++times_used
 
-// This will be used to spawn the minion, woop woop! The book won't listen to you when you are a shadow person, instead that will return you to your original body
+// This will be used to spawn the minion, The book won't listen to you when you are a shadow person, instead that will return you to your original body
 /obj/item/shadow_codex/proc/spawn_minion(mob/living/carbon/human/H)
 	H.visible_message("<span class='userdanger'>As the shadows form into a humanoid figure. You suddenly find yourself in the mind of another being.</span>")
 	var/mob/living/carbon/human/shadowperson_holder = new(H.loc)
@@ -101,13 +102,24 @@
 	C.Unconscious(75)
 	caster.Unconscious(75)
 	qdel(ghost)
-	shadowperson.death()
+	shadowperson.gib()
 	shadowperson = null
+
+
+// This is called after the shadowperson dies.
+/obj/item/shadow_codex/after_death()
+			to_chat(shadowperson, "<span class='userdanger'>You have died. You feel your mind shifting back to its original host.</span>")
+			var/mob/dead/observer/ghost = shadowperson.ghostize(0)
+			caster.key = ghost.key
+			caster.Unconscious(50)
+			caster.adjustBrainLoss(100)
+			shadowperson = null
+
 
 
 /*
 TODO:
 Make it, so you can return to your old body, when you click on the shadow codex when you are a shadow person
-Make it so others can't pick the item up if they are not the caster
+Make it so others can't pick the item up if they are not the caster ( ehh )
 Make it so if you die, as a shadowperson, your body suffers some additional damage
 */
