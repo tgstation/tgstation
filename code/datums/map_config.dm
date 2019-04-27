@@ -23,6 +23,8 @@
 
 	var/minetype = "lavaland"
 
+	var/orientation = SOUTH		//oh no. this determines what orientation it'll be loaded in.
+
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
 		"cargo" = "cargo_box",
@@ -124,6 +126,11 @@
 
 	if ("minetype" in json)
 		minetype = json["minetype"]
+
+	if ("orientation" in json)
+		orientation = json["orientation"]
+		if(!(orientation in GLOB.cardinals))
+			orientation = SOUTH
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 

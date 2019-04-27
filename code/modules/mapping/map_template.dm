@@ -17,6 +17,7 @@
 		preload_size(mappath, cache)
 	if(rename)
 		name = rename
+
 /datum/map_template/Destroy()
 	QDEL_NULL(cached_map)
 	return ..()
@@ -49,7 +50,6 @@
 	if(rotate)
 		return list(height, width, zdepth)
 	return list(width, height, zdepth)
-
 
 /datum/parsed_map/proc/initTemplateBounds()
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
