@@ -158,6 +158,10 @@
 /obj/screen/fullscreen/color_vision/blue
 	color = "#0000ff"
 
+/obj/screen/fullscreen/color_vision/black
+	color = "#000000"
+	alpha = 255
+
 /obj/screen/fullscreen/lighting_backdrop
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "flash"

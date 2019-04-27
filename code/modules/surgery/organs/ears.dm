@@ -130,3 +130,9 @@
 	if(istype(H))
 		to_chat(H, "<span class='notice'>You feel far more sensitive to sounds.</span>")
 		echolocation = H.AddComponent(/datum/component/echolocation)
+
+/obj/item/organ/ears/gehennite/Remove(mob/living/carbon/human/H,  special = 0)
+	. = ..()
+	if(istype(H))
+		to_chat(H, "<span class='notice'>You feel a lot more lost.</span>")
+		QDEL_NULL(echolocation)

@@ -6,7 +6,6 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
-	datum_outputs = list(/datum/outputs/human_echo_override)
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"

@@ -390,8 +390,12 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
+
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		var/datum/species/S = H.dna.species
 	if(is_organic_limb())
-		if(should_draw_greyscale)
+		if(should_draw_greyscale && !S.alternative_body_icon)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
@@ -399,6 +403,8 @@
 				limb.icon_state = "digitigrade_[use_digitigrade]_[body_zone]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
+		else if(S.alternative_body_icon)
+			limb.icon = S.alternative_body_icon
 		else
 			limb.icon = 'icons/mob/human_parts.dmi'
 			if(should_draw_gender)

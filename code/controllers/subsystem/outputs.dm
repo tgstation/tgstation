@@ -6,19 +6,23 @@ SUBSYSTEM_DEF(outputs)
 
 	//echo lists
 	var/list/echo_blacklist
-	var/list/needs_flattening
+	var/list/uniques
 
 /datum/controller/subsystem/outputs/Initialize(timeofday)
 	for(var/A in subtypesof(/datum/outputs))
 		outputs[A] = new A
 	echo_blacklist = typecacheof(list(
+	/atom/movable/lighting_object,
 	/obj/effect,
 	/obj/screen,
-	/image)
+	/image,
+	/turf/open,
+	/area)
 	)
 
-	needs_flattening = typecacheof(list(
-	/obj/structure/table)
+	uniques = typecacheof(list(
+	/obj/structure/table,
+	/mob/living/carbon/human)
 	)
 
 	return ..()
