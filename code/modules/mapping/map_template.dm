@@ -1,6 +1,6 @@
 /datum/map_template
 	var/name = "Default Template Name"
-	var/width = 0
+	var/width = 0				//all these are for SOUTH!
 	var/height = 0
 	var/zdepth = 1
 	var/mappath
@@ -137,9 +137,9 @@
 	parsed.initTemplateBounds()
 
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
-	return bounds
 	on_map_loaded(T.z, parsed.bounds)
 
+	return bounds
 
 //This, get_affected_turfs, and load() calculations for bounds/center can probably be optimized. Later.
 /datum/map_template/proc/annihilate_bounds(turf/origin, centered = FALSE, orientation = SOUTH)
