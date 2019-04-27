@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - bugfix: "pAI HUD appears as it should."
