@@ -72,7 +72,7 @@
 	else
 		dropdownoptions = D.vv_get_dropdown()
 		//LEGACY SUPPORT
-		dropdownoptions += D.get_view_variables_options()
+		dropdownoptions += D.vv_get_dropdown_old()
 		//END
 
 	var/list/names = list()

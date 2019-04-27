@@ -915,7 +915,7 @@
 		var/obj/item/bodypart/BP = B
 		BP.update_disabled()
 
-/mob/living/carbon/vv_get_dropdown()
+/mob/living/carbon/vv_get_dropdown_old()
 	. = ..()
 	. += "---"
 	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=[REF(src)]"

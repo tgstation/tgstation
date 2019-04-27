@@ -12,7 +12,7 @@
 		method = vv_subtype_prompt(A.type)
 
 	src.massmodify_variables(A, var_name, method)
-	feedback_add_details("admin_verb","MVV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Edit Variables") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/massmodify_variables(datum/O, var_name = "", method = 0)
 	if(!check_rights(R_VAREDIT))
@@ -197,7 +197,7 @@
 	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]] ([accepted] objects modified)")
 	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]] ([accepted] objects modified)")
 
-
+//not using global lists as vv is a debug function and debug functions should rely on as less things as possible.
 /proc/get_all_of_type(var/T, subtypes = TRUE)
 	var/list/typecache = list()
 	typecache[T] = 1
@@ -205,7 +205,7 @@
 		typecache = typecacheof(typecache)
 	. = list()
 	if (ispath(T, /mob))
-		for(var/mob/thing in mob_list)
+		for(var/mob/thing in world)
 			if (typecache[thing.type])
 				. += thing
 			CHECK_TICK
@@ -217,7 +217,13 @@
 			CHECK_TICK
 
 	else if (ispath(T, /obj/machinery))
-		for(var/obj/machinery/thing in GLOB.machines)
+		for(var/obj/machinery/thing in world)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /obj/item))
+		for(var/obj/item/thing in world)
 			if (typecache[thing.type])
 				. += thing
 			CHECK_TICK

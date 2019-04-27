@@ -536,7 +536,7 @@
 		if("color")
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
 
-/atom/vv_get_dropdown()
+/atom/vv_get_dropdown_old()
 	. = ..()
 	. += "---"
 	var/turf/curturf = get_turf(src)
@@ -546,6 +546,12 @@
 	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=[REF(src)]"
 	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=[REF(src)]"
 	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=[REF(src)]"
+
+/atom/vv_get_header()
+	. = ..()
+	var/refid = REF(src)
+	. += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b id='name'>[src]</b></a>"
+	. += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 
 /atom/proc/drop_location()
 	var/atom/L = loc

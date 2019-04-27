@@ -811,7 +811,7 @@
 		return 1
 	..()
 
-/mob/living/carbon/human/vv_get_dropdown()
+/mob/living/carbon/human/vv_get_dropdown_old()
 	. = ..()
 	. += "---"
 	.["Make monkey"] = "?_src_=vars;[HrefToken()];makemonkey=[REF(src)]"

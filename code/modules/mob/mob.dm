@@ -918,7 +918,7 @@
 /mob/proc/get_idcard(hand_first)
 	return
 
-/mob/vv_get_dropdown()
+/mob/vv_get_dropdown_old()
 	. = ..()
 	. += "---"
 	.["Gib"] = "?_src_=vars;[HrefToken()];gib=[REF(src)]"

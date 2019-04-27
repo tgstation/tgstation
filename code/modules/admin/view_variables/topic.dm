@@ -5,7 +5,7 @@
 		return
 	var/target = GET_VV_TARGET
 	vv_do_basic(target, href_list, href)
-	if(isdatum(target))
+	if(istype(target, /datum))
 		var/datum/D = target
 		D.vv_do_topic(href_list)
 	else if(islist(target))

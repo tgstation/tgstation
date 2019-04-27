@@ -75,3 +75,6 @@
 // /atom
 #define VV_HK_ATOM_EXPLODE "turf_explode"
 #define VV_HK_ATOM_EMP "turf_emp"
+
+// misc
+#define VV_HK_SPACEVINE_PURGE "spacevine_purge"

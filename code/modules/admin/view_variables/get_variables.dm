@@ -166,7 +166,7 @@
 			.["value"] = things[value]
 
 		if(VV_MOB_REFERENCE)
-			var/type = pick_closest_path(FALSE, get_typepath_shortnames(typesof(/mob)))
+			var/type = pick_closest_path(FALSE, make_types_fancy(typesof(/mob)))
 			var/subtypes = vv_subtype_prompt(type)
 			if(subtypes == null)
 				.["class"] = null

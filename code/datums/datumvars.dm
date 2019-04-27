@@ -22,14 +22,16 @@
 
 //please call . = ..() first and append to the result, that way parent items are always at the top and child items are further down
 //add separaters by doing . += "---"
-/datum/proc/_vv_get_dropdown()
+/datum/proc/vv_get_dropdown()
 	. = list()
 	VV_DROPDOWN_OPTION("", "---")
 	VV_DROPDOWN_OPTION(VV_HK_CALLPROC, "Call Proc")
 	VV_DROPDOWN_OPTION(VV_HK_MARK, "Mark Object")
 	VV_DROPDOWN_OPTION(VV_HK_DELETE, "Delete")
 	VV_DROPDOWN_OPTION(VV_HK_EXPOSE, "Show VV To Player")
-	//VV_DROPDOWN_OPTION(VV_HK_REJUVENATE, "Rejuvenate")
+
+/datum/proc/vv_get_dropdown_old()
+	return list()
 
 //This proc is only called if everything topic-wise is verified. The only verifications that should happen here is things like permission checks!
 //href_list is a reference, modifying it in these procs WILL change the rest of the proc in topic.dm of admin/view_variables!
@@ -38,28 +40,10 @@
 	if(!usr || !usr.client.holder)
 		return			//This is VV, not to be called by anything else.
 
-	/*									Too hard to log as of now/not worth effort yet. Use SDQL2.
-	IF_VV_OPTION(VV_HK_REJUVENATE)
-		if(!check_rights(R_ADMIN, FALSE))
-			return
-		log_rejuvenate(usr)
-		rejuvenate(TRUE)
-	*/
-
-/datum/proc/_vv_get_header()
+/datum/proc/vv_get_header()
 	. = list()
 	if(("name" in vars) && !isatom(src))
 		. += "<b>[vars["name"]]</b><br>"
 
 /datum/proc/on_reagent_change(changetype)
 	return
-
-/*
-/datum/proc/log_rejuvenate(mob/user)
-	message_admins("[key_name_admin(user)] rejuvenated datum [src](R[REF(src)])!")
-	log_admin("Admin [key_name(user)] rejuvenated datum [src](R[REF(src)])!")
-*/
-
-/datum/proc/rejuvenate(fully_heal = TRUE, admin_revive = FALSE)
-	return TRUE
-

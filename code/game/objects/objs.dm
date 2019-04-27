@@ -214,7 +214,7 @@
 /obj/proc/check_uplink_validity()
 	return 1
 
-/obj/vv_get_dropdown()
+/obj/vv_get_dropdown_old()
 	. = ..()
 	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=[REF(src)]"
 	.["Osay"] = "?_src_=vars;[HrefToken()];osay[REF(src)]"
