@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndicate/bundle_A
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear)
-	
+
 /datum/uplink_item/bundles_TC/bundle_B
 	name = "Syndi-kit Special"
 	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
@@ -860,6 +860,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/x4
 	cost = 4 //
 	cant_discount = TRUE
+
+/datum/uplink_item/explosives/doorcharge
+	name = "Airlock Charge"
+	desc = "An easily-concealable charge of explosives designed to fit snugly in the maintenance panels of airlocks, becoming set to explode when the airlock is opened, resulting in the activator to be ignited and stunned. \
+			To install, remove an airlock's maintenance panel with a screwdriver and place the device within to prime it. Screwdriver not included. \
+			WARNING: Device lacks proper identification equipment, activation of airlock by agent may result in premature and accidental detonation."
+	item = /obj/item/doorCharge
+	cost = 6 //These things fucking hurt.
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/explosives/clown_bomb_clownops
 	name = "Clown Bomb"
@@ -1547,7 +1556,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 	restricted_roles = list("Assistant")
 	surplus = 0
-	
+
 /datum/uplink_item/role_restricted/oldtoolboxclean
 	name = "Ancient Toolbox"
 	desc = "An iconic toolbox design notorious with Assistants everywhere, this design was especially made to become more robust the more telecrystals it has inside it! Tools and insulated gloves included."
