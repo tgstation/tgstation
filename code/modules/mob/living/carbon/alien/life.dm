@@ -52,3 +52,12 @@
 	if(.) //if the mob isn't on fire anymore
 		return
 	adjust_bodytemperature(BODYTEMP_HEATING_MAX) //If you're on fire, you heat up!
+	
+/mob/living/carbon/alien/handle_liver()
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
+	if(liver)
+		if(liver.damage >= liver.maxHealth)
+			liver.failing = TRUE
+			liver_failure()
+	else
+		liver_failure()
