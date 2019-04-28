@@ -116,20 +116,24 @@
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!can_use(A))
-		return FALSE
-	add_to_streak("G",D)
-	if(check_streak(A,D))
-		return TRUE
 	if(A.grab_state >= GRAB_AGGRESSIVE)
 		D.grabbedby(A, 1)
 	else
 		A.start_pulling(D, supress_message = TRUE)
 		if(A.pulling)
+			D.drop_all_held_items()
 			D.stop_pulling()
-			log_combat(A, D, "grabbed", addition="aggressively")
-			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
-
+			if(A.a_intent == INTENT_GRAB)
+				add_to_streak("G",D)
+				if(check_streak(A,D))
+					return TRUE
+				log_combat(A, D, "grabbed", addition="aggressively")
+				D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
+				  "<span class='userdanger'>[A] violently grabs you!</span>")
+				A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
+			else
+				log_combat(A, D, "grabbed", addition="passively")
+				A.grab_state = GRAB_PASSIVE
 	return TRUE
 
 /datum/martial_art/cqc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
