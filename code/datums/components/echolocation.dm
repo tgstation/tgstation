@@ -7,6 +7,9 @@
 	RegisterSignal(parent, COMSIG_ECHOLOCATION_PING, .proc/echolocate)
 	var/mob/M = parent
 	M.audiolocation = TRUE
+	var/mob/living/carbon/human/H = parent
+	var/datum/species/gehennite/G = H.dna.species
+	G.awaken(H)
 
 /datum/component/echolocation/proc/echolocate()
 	var/mob/living/carbon/human/H = parent

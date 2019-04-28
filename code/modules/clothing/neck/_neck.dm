@@ -206,6 +206,12 @@
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
+
+/obj/item/clothing/neck/gene_suppressor
+	name = "gene suppression device"
+	desc = "Never forget, the day of retribution is coming, thieves of our blood."
+
+
 //////////////
 //DOPE BLING//
 //////////////
