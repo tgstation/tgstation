@@ -1606,6 +1606,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/shadowcodex
+	name = "Shadow Codex"
+	desc = "A book found by the Syndicate in a abandoned space derelict. When used, it sacrifices a part of the users mind. It can also target a living victim, sacrificing their mind instead. \
+	Shifting it into a shadow puppet clone controlled by the user. The more it is used, the bigger part of the brain it will sacrifice, which can lead to instant death. \
+	While in the shadow form. The user can click the book to return to his original body, killing the puppet. \
+	If one dies in the form of a shadow puppet, the mind shall finds its way to its original body, suffering additional ailments of the mind."
+	cost = 13
+	item = /obj/item/shadow_codex
+	restricted_roles = list("Curator")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"

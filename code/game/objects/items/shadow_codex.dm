@@ -4,20 +4,20 @@
 	name = "Shadow Codex"
 	icon = 'icons/obj/library.dmi' // Finished, but could be better. If you want to sprite it.
 	icon_state = "shadowcodex"
-	desc = "A book containing the secrets of shadows, written by a mysterious dapper looking man, pictured on the first page. Looking at him fills you with <span class=warning>dread</span>."
-	var/mob/living/carbon/caster = null // Can be interpreted as owner too
-	var/is_reading = 0 // is the user reading the book
-	var/is_converting = 0 // is the user using the book on someone else
-	var/times_used = 0 // How many times has the object been used
+	desc = "A book containing the secrets of shadows, with a large M on the cover. The author of this book is a mysterious dapper looking man, pictured on the first page. Looking at him <span color=blue>chills</span> you to the bone."
+	var/mob/living/carbon/caster = null
+	var/is_reading = 0
+	var/is_converting = 0
+	var/times_used = 0
 	var/mob/living/carbon/human/shadowperson // The variable that holds the summoned minion
 
-/obj/item/shadow_codex/pickup(mob/living/carbon/user) // called on pickup
+/obj/item/shadow_codex/pickup(mob/living/carbon/user)
 	if(caster == null || user == caster) // If you spawn this in the world, be sure to be the first to pick it up, or you won't be able to be the owner of it
 		caster = user
 		to_chat(user, "<span class=notice>Use the knowledge contained in this book wisely.</span>")
 	else if(shadowperson != null && user == shadowperson) // if you try to pickup the book as a shadow person
 		to_chat(user, "<span class=warning>You try to return to your original body.</span>")
-		if(do_after(user, 50, target = src)) // you can keep smashing the pickup and have multiple bars, it shouldn't break anything so im going to just leave it
+		if(do_after(user, 50, target = src))
 			shadow_pickup(shadowperson)
 			to_chat(user, "<span class='userdanger'>You return to your body, killing your shadow puppet.</span>")
 		else
@@ -26,13 +26,13 @@
 	else // if you are not the caster of the book then this happens
 		user.Paralyze(10)
 		user.emote("scream")
-		to_chat(user, "<span class=warning>You feel as if being watched by the shadows. It's probably best to leave this book alone.</span>")
-		user.adjustBrainLoss(10) // don't touch it your you will go insane and die
+		to_chat(user, "<span class=warning>You feel something watching you. It's probably best to leave this book alone.</span>")
+		user.adjustBrainLoss(10)
 
 /obj/item/shadow_codex/attack_self(mob/user) // when used inhand
-	if(user.can_read(src))
-		if(is_reading == 0) // is he already reading this
-			if(istype(user, /mob/living/carbon/human))
+	if(user.can_read(src) && user == caster)
+		if(is_reading == 0)
+			if(istype(user, /mob/living/carbon/human)) // ehhh, incase someone would become the caster of the book and he isn't human? better be safe
 				is_reading = 1
 				to_chat(user, "<span class=notice>You start flipping through its pages, with each page, you feel more insane.</span>")
 				playsound(user.loc, 'sound/effects/pageturn1.ogg', 30, 1)
@@ -45,8 +45,10 @@
 				else // when you don't finish reading the book
 					is_reading = 0
 					to_chat(user, "<span class=notice>You decide to leave the book alone.</span>")
-		else //when you are already reading it
+		else
 			to_chat(user, "<span class=warning>You are already reading this book.</span>")
+	else if(caster == null)
+		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
 
 /obj/item/shadow_codex/attack(mob/M as mob, mob/user as mob)
 	if(istype(M, /mob/living/carbon/human) && M != caster && is_converting == 0 && M.stat != DEAD) // you can only used this on a human and it can't be you, also you can't cast this multiple times at once
