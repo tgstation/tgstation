@@ -108,7 +108,7 @@
 		P.setPersonality(src)
 	forceMove(P)
 	card = P
-	job = "personal AI"
+	job = "Personal AI"
 	signaler = new(src)
 	hostscan = new /obj/item/healthanalyzer(src)
 	if(!radio)

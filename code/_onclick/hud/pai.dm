@@ -1,3 +1,5 @@
+#define PAI_MISSING_SOFTWARE_MESSAGE "<span class='warning'>You must download the required software to use this.</span>"
+
 /obj/screen/pai
 	icon = 'icons/mob/screen_pai.dmi'
 
@@ -56,16 +58,19 @@
 /obj/screen/pai/newscaster
 	name = "pAI Newscaster"
 	icon_state = "newscaster"
+//	color = rgb(128,128,128) need to find a proper way to do this or abandon it
 
 /obj/screen/pai/newscaster/Click()
 	var/mob/living/silicon/pai/pAI = usr
 	if(pAI.software.Find("newscaster"))
+//		color = rgb(256,256,256)
 		pAI.newscaster.ui_interact(usr)
-	else to_chat(pAI, "<span class='warning'>You must download the required software to use this.</span>")
+	else to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
 
 /obj/screen/pai/host_monitor
 	name = "Host Health Scan"
 	icon_state = "host_monitor"
+//	color = rgb(128,128,128)
 
 /obj/screen/pai/host_monitor/Click()
 	if(..())
@@ -74,20 +79,23 @@
 	if(pAI.software.Find("host scan"))
 		var/mob/living/M = pAI.card.loc
 		pAI.hostscan.attack(M, pAI)
+//		color = rgb(256,256,256)
 	else
-		to_chat(pAI, "<span class='warning'>You must download the required software to use this.</span>")
+		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
 
 /obj/screen/pai/crew_manifest
 	name = "Crew Manifest"
 	icon_state = "manifest"
+//	color = rgb(128,128,128)
 
 /obj/screen/pai/crew_manifest/Click()
 	if(..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	if(pAI.software.Find("crew manifest"))
+//		color = rgb(256,256,256)
 		pAI.ai_roster()
-	else to_chat(pAI, "<span class='warning'>You must download the required software to use this.</span>")
+	else to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
 
 ///obj/screen/pai/announcement
 //	name = "Make Vox Announcement"
@@ -112,32 +120,37 @@
 /obj/screen/pai/pda_msg_send
 	name = "PDA - Send Message"
 	icon_state = "pda_send"
+//	color = rgb(128,128,128)
 
 /obj/screen/pai/pda_msg_send/Click()
 	if(..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	if(pAI.software.Find("digital messenger"))
+//		color = rgb(256,256,256)
 		pAI.cmd_send_pdamesg(usr)
 	else
-		to_chat(pAI, "<span class='warning'>You must download the required software to use this.</span>")
+		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
 
 /obj/screen/pai/pda_msg_show
 	name = "PDA - Show Message Log"
 	icon_state = "pda_receive"
+//	color = rgb(128,128,128)
 
 /obj/screen/pai/pda_msg_show/Click()
 	if(..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	if(pAI.software.Find("digital messenger"))
+//		color = rgb(256,256,256)
 		pAI.cmd_show_message_log(usr)
 	else
-		to_chat(pAI, "<span class='warning'>You must download the required software to use this.</span>")
+		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
 
 /obj/screen/pai/image_take
 	name = "Take Image"
 	icon_state = "take_picture"
+//	color = rgb(128,128,128)
 
 /obj/screen/pai/image_take/Click()
 	if(..())
@@ -145,9 +158,10 @@
 	if(issilicon(usr))
 		var/mob/living/silicon/pai/pAI = usr
 		if(pAI.software.Find("photo"))
+//			color = rgb(256,256,256)
 			pAI.aicamera.toggle_camera_mode(usr)
 		else
-			to_chat(pAI, "<span class='warning'>You must download the required software to use this.</span>")
+			to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
 
 /obj/screen/pai/image_view
 	name = "View Images"
@@ -163,6 +177,7 @@
 /obj/screen/pai/sensors
 	name = "Sensor Augmentation"
 	icon_state = "ai_sensor"
+//	color = rgb(128,128,128)
 
 /obj/screen/pai/sensors/Click()
 	if(..())
@@ -170,10 +185,12 @@
 	var/mob/living/silicon/pai/pAI = usr
 	if(pAI.software.Find("medical HUD"))
 		pAI.Topic("medicalhud","toggle")
+//		color = rgb(256,256,256)
 	if(pAI.software.Find("security HUD"))
 		pAI.Topic("securityhud","toggle")
+//		color = rgb(256,256,256)
 	else
-		to_chat(pAI, "<span class='warning'>You must download the required software to use this.</span>")
+		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
 
 /obj/screen/pai/radio
 	name = "radio"
@@ -230,42 +247,44 @@
 	using.screen_loc = ui_pai_host_monitor
 	static_inventory += using
 
-//Crew Manifest
+// Crew Manifest
 	using = new /obj/screen/pai/crew_manifest()
 	using.screen_loc = ui_pai_crew_manifest
 	static_inventory += using
 
-//Laws
+// Laws
 	using = new /obj/screen/pai/state_laws()
 	using.screen_loc = ui_pai_state_laws
 	static_inventory += using
 
-//PDA message
+// PDA message
 	using = new /obj/screen/pai/pda_msg_send()
 	using.screen_loc = ui_pai_pda_send
 	static_inventory += using
 
-//PDA log
+// PDA log
 	using = new /obj/screen/pai/pda_msg_show()
 	using.screen_loc = ui_pai_pda_log
 	static_inventory += using
 
-//Take image
+// Take image
 	using = new /obj/screen/pai/image_take()
 	using.screen_loc = ui_pai_take_picture
 	static_inventory += using
 
-//View images
+// View images
 	using = new /obj/screen/pai/image_view()
 	using.screen_loc = ui_pai_view_images
 	static_inventory += using
 
-//Medical/Security sensors
+// Medical/Security sensors
 	using = new /obj/screen/pai/sensors()
 	using.screen_loc = ui_pai_sensor
 	static_inventory += using
 
-//Radio
+// Radio
 	using = new /obj/screen/pai/radio()
 	using.screen_loc = ui_borg_radio
 	static_inventory += using
+
+	#undef PAI_MISSING_SOFTWARE_MESSAGE

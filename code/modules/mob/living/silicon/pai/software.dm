@@ -277,7 +277,7 @@
 				var/mob/living/silicon/pai/pAI = usr
 				pAI.hostscan.attack_self(usr)
 			if(href_list["toggle2"])
-				var/mob/living/silcion/pai/pAI = usr
+				var/mob/living/silicon/pai/pAI = usr
 				pAI.hostscan.toggle_mode()
 
 		if("encryptionkeys")
