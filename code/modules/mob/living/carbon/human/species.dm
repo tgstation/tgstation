@@ -715,6 +715,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.apply_overlay(BODY_ADJ_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
 
+/datum/species/proc/hand_icon_override()
+	return 0
 
 //This exists so sprite accessories can still be per-layer without having to include that layer's
 //number in their sprite name, which causes issues when those numbers change.

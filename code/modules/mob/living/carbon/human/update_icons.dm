@@ -566,19 +566,6 @@ generate/load female uniform sprites matching all previously decided variables
 
 //Can't think of a better way to do this, sadly
 /mob/proc/get_item_offsets_for_index(i)
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		var/list/offsets
-		if(OFFSET_LEFT_HAND in H.dna.species.offset_features)
-			offsets = list()
-			offsets["x"] = H.dna.species.offset_features[OFFSET_LEFT_HAND][1]
-			offsets["y"] = H.dna.species.offset_features[OFFSET_LEFT_HAND][2]
-		if(OFFSET_RIGHT_HAND in H.dna.species.offset_features)
-			offsets = list()
-			offsets["x"] = H.dna.species.offset_features[OFFSET_RIGHT_HAND][1]
-			offsets["y"] = H.dna.species.offset_features[OFFSET_RIGHT_HAND][2]
-		if(offsets)
-			return offsets
 	switch(i)
 		if(3) //odd = left hands
 			return list("x" = 0, "y" = 16)

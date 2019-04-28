@@ -352,6 +352,7 @@
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forced_gravity.dm"
 #include "code\datums\components\forensics.dm"
+#include "code\datums\components\hand_offsets.dm"
 #include "code\datums\components\heirloom.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\jousting.dm"
