@@ -7330,7 +7330,6 @@
 /obj/machinery/button/door{
 	id = "brigexternalblastentry";
 	name = "External Blast Door Toggle";
-	pixel_x = 0;
 	pixel_y = 38
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -42562,7 +42561,6 @@
 /obj/machinery/button/door{
 	id = "aishuttersexternal";
 	name = "External Privacy Shutter Control";
-	pixel_x = 0;
 	pixel_y = -40
 	},
 /turf/open/floor/circuit,
