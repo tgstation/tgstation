@@ -30,6 +30,3 @@
 				adjust_blindness(-1)
 	update_damage_hud()
 	update_health_hud()
-
-/mob/living/carbon/alien/larva/handle_liver()
-	return
