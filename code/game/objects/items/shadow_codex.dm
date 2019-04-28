@@ -101,7 +101,6 @@
 	C.Unconscious(75)
 	caster.Unconscious(75)
 	qdel(ghost)
-	shadowperson.gib()
 	shadowperson = null
 
 // the human type you get transfered into
