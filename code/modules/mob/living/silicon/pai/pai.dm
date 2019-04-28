@@ -4,6 +4,7 @@
 	icon_state = "repairbot"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	density = FALSE
+	hud_type = /datum/hud/pai
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
@@ -26,7 +27,6 @@
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
-	var/obj/item/radio/headset			// The pAI's headset
 	var/obj/item/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
@@ -37,10 +37,6 @@
 	var/temp				// General error reporting text contained here will typically be shown once and cleared
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
-
-	var/obj/item/pda/ai/pai/pda = null
-	
-	var/obj/machinery/newscaster			//pAI Newscaster
 
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
@@ -57,6 +53,8 @@
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
 	var/obj/item/instrument/piano_synth/internal_instrument
+	var/obj/machinery/newscaster			//pAI Newscaster
+	var/obj/item/healthanalyzer/hostscan				//pAI healthanalyzer
 
 	var/encryptmod = FALSE
 	var/holoform = FALSE
@@ -112,6 +110,7 @@
 	card = P
 	job = "personal AI"
 	signaler = new(src)
+	hostscan = new /obj/item/healthanalyzer(src)
 	if(!radio)
 		radio = new /obj/item/radio/headset/silicon/pai(src)
 	newscaster = new /obj/machinery/newscaster(src)
@@ -119,11 +118,10 @@
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
 
 	//PDA
-	pda = new(src)
-	spawn(5)
-		pda.ownjob = "pAI Messenger"
-		pda.owner = text("[]", src)
-		pda.name = pda.owner + " (" + pda.ownjob + ")"
+	aiPDA = new/obj/item/pda/ai(src)
+	aiPDA.owner = real_name
+	aiPDA.ownjob = "pAI Messenger"
+	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 	. = ..()
 

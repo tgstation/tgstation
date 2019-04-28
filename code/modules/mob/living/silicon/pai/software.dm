@@ -6,21 +6,30 @@
 
 
 /mob/living/silicon/pai/var/list/available_software = list(
+															//Nightvision
+															//T-Ray
+															//radiation eyes
+															//chem goggs
+															//mesons
 															"crew manifest" = 5,
 															"digital messenger" = 5,
-															"medical records" = 15,
-															"security records" = 15,
-															//"camera jack" = 10,
-															"door jack" = 30,
 															"atmosphere sensor" = 5,
+															"photo" = 5,
+															"remote signaller" = 10,
+															"medical records" = 10,
+															"security records" = 10,
+															"camera zoom" = 10,
+															"host scan" = 10,
+															//"camera jack" = 10,
 															//"heartbeat sensor" = 10,
-															"security HUD" = 20,
+															//"projection array" = 15,
 															"medical HUD" = 20,
-															"universal translator" = 35,
-															//"projection array" = 15
-															"remote signaller" = 5,
-															"loudness booster" = 25,
-															"encryption keys" = 20
+															"security HUD" = 20,
+															"loudness booster" = 20,
+															"newscaster" = 20,
+															"door jack" = 25,
+															"encryption keys" = 25,
+															"universal translator" = 35
 															)
 
 /mob/living/silicon/pai/proc/paiInterface()
@@ -69,6 +78,9 @@
 				left_part = softwareSignal()
 			if("loudness")
 				left_part = softwareLoudness()
+			if("hostscan")
+				left_part = softwareHostScan()
+
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -173,8 +185,10 @@
 		if("news")
 			newscaster.ui_interact(src)
 
-		if("signaller")
+		if("camzoom")
+			aicamera.AltClick(src)
 
+		if("signaller")
 			if(href_list["send"])
 				signaler.send_activation()
 				audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
@@ -192,8 +206,6 @@
 				signaler.code = min(100, signaler.code)
 				signaler.code = max(1, signaler.code)
 
-
-
 		if("directive")
 			if(href_list["getdna"])
 				var/mob/living/M = card.loc
@@ -209,17 +221,17 @@
 				spawn CheckDNA(M, src)
 
 		if("pdamessage")
-			if(!isnull(pda))
+			if(!isnull(aiPDA))
 				if(href_list["toggler"])
-					pda.toff = !pda.toff
+					aiPDA.toff = !aiPDA.toff
 				else if(href_list["ringer"])
-					pda.silent = !pda.silent
+					aiPDA.silent = !aiPDA.silent
 				else if(href_list["target"])
 					if(silent)
 						return alert("Communications circuits remain uninitialized.")
 
 					var/target = locate(href_list["target"]) in GLOB.PDAs
-					pda.create_message(src, target)
+					aiPDA.create_message(src, target)
 
 		// Accessing medical records
 		if("medicalrecord")
@@ -239,6 +251,7 @@
 				if(!securityActive2)
 					securityActive1 = null
 					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
+
 		if("securityhud")
 			if(href_list["toggle"])
 				secHUD = !secHUD
@@ -248,6 +261,7 @@
 				else
 					var/datum/atom_hud/sec = GLOB.huds[sec_hud]
 					sec.remove_hud_from(src)
+
 		if("medicalhud")
 			if(href_list["toggle"])
 				medHUD = !medHUD
@@ -257,13 +271,23 @@
 				else
 					var/datum/atom_hud/med = GLOB.huds[med_hud]
 					med.remove_hud_from(src)
-		if("encryptionkeys")
+
+		if("hostscan")
 			if(href_list["toggle"])
-				encryptmod = TRUE
+				var/mob/living/silicon/pai/pAI = usr
+				pAI.hostscan.attack_self(usr)
+			if(href_list["toggle2"])
+				var/mob/living/silcion/pai/pAI = usr
+				pAI.hostscan.toggle_mode()
+
+		if("encryptionkeys")
+			encryptmod = TRUE
+
 		if("translator")
 			if(href_list["toggle"])
 				grant_all_languages(TRUE)
 					// this is PERMAMENT.
+
 		if("doorjack")
 			if(href_list["jack"])
 				if(cable && cable.machine)
@@ -275,6 +299,7 @@
 				var/turf/T = get_turf(loc)
 				cable = new /obj/item/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+
 		if("loudness")
 			if(subscreen == 1) // Open Instrument
 				internal_instrument.interact(src)
@@ -295,7 +320,6 @@
 	dat += "<A href='byond://?src=[REF(src)];software=directives'>Directives</A><br>"
 	dat += "<A href='byond://?src=[REF(src)];software=radio;sub=0'>Radio Configuration</A><br>"
 	dat += "<A href='byond://?src=[REF(src)];software=image'>Screen Display</A><br>"
-	dat += "<A href='byond://?src=[REF(src)];software=news'>Newscaster</A><br>"
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
@@ -306,6 +330,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=[REF(src)];software=manifest;sub=0'>Crew Manifest</a> <br>"
+		if(s == "host scan")
+			dat += "<a href='byond://?src=[REF(src)];software=hostscan;sub=0'>Host Health Scan</a>"
 		if(s == "medical records")
 			dat += "<a href='byond://?src=[REF(src)];software=medicalrecord;sub=0'>Medical Records</a> <br>"
 		if(s == "security records")
@@ -321,6 +347,8 @@
 	// Advanced
 	dat += "<b>Advanced</b> <br>"
 	for(var/s in software)
+		if(s == "camera zoom")
+			dat += "<a href='byond://?src=[REF(src)];software=camzoom;sub=0'>Adjust Camera Zoom</a> <br>"
 		if(s == "atmosphere sensor")
 			dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Atmospheric Sensor</a> <br>"
 		if(s == "heartbeat sensor")
@@ -482,7 +510,7 @@
 			. += "<BR>\n<A href='?src=[REF(src)];software=securityrecord;sub=0'>Back</A><BR>"
 	return .
 
-// Encryption kets
+// Encryption Keys
 /mob/living/silicon/pai/proc/softwareEncryptionKeys()
 	var/dat = {"<h3>Encryption Key Firmware</h3><br>
 				When enabled, this device will be able to use up to two (2) encryption keys for departmental channel access.<br><br>
@@ -500,7 +528,7 @@
 
 // Security HUD
 /mob/living/silicon/pai/proc/facialRecognition()
-	var/dat = {"<h3>Facial Recognition Suite</h3><br>
+	var/dat = {"<h3>Facial Recognition Overlay</h3><br>
 				When enabled, this package will scan all viewable faces and compare them against the known criminal database, providing real-time graphical data about any detected persons of interest.<br><br>
 				The package is currently [ (secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 				<a href='byond://?src=[REF(src)];software=securityhud;sub=0;toggle=1'>Toggle Package</a><br>
@@ -510,47 +538,24 @@
 // Medical HUD
 /mob/living/silicon/pai/proc/medicalAnalysis()
 	var/dat = ""
-	if(subscreen == 0)
-		dat += {"<h3>Medical Analysis Suite</h3><br>
-				 <h4>Visual Status Overlay</h4><br>
-					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
-					The suite is currently [ (medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
-					<a href='byond://?src=[REF(src)];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
-					<br>
-					<a href='byond://?src=[REF(src)];software=medicalhud;sub=1'>Host Bioscan</a><br>
-					"}
-	if(subscreen == 1)
-		dat += {"<h3>Medical Analysis Suite</h3><br>
-				 <h4>Host Bioscan</h4><br>
-				"}
-		var/mob/living/M = card.loc
-		if(!isliving(M))
-			while(!isliving(M))
-				if(isturf(M))
-					temp = "Error: No biological host found. <br>"
-					subscreen = 0
-					return dat
-				M = M.loc
-		dat += {"Bioscan Results for [M]: <br>"
-		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br>
-		Scan Breakdown: <br>
-		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
-		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getToxLoss()]</font><br>
-		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getFireLoss()]</font><br>
-		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
-		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
-		"}
-		for(var/thing in M.diseases)
-			var/datum/disease/D = thing
-			dat += {"<h4>Infection Detected.</h4><br>
-					 Name: [D.name]<br>
-					 Type: [D.spread_text]<br>
-					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure_text]<br>
-					"}
-		dat += "<a href='byond://?src=[REF(src)];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
+	dat += {"<h3>Medical Analysis Overlay</h3><br>
+			When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
+			The suite is currently [ (medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+			<a href='byond://?src=[REF(src)];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
+			"}
 	return dat
 
+//Health Scanner
+/mob/living/silicon/pai/proc/softwareHostScan()
+
+	var/dat = ""
+	dat += {"<h3>Host Bisoscan Settings</h3><br>
+
+			<a href='byond://?src=[REF(src)];software=hostscan;sub=0;toggle=1'>Change Scan Type</a><br>
+
+			<a href='byond://?src=[REF(src)];software=hostscan;sub=0;toggle2=1'>Toggle Verbosity</a><br>
+			"}
+	return dat
 // Atmospheric Scanner
 /mob/living/silicon/pai/proc/softwareAtmo()
 	var/dat = "<h3>Atmospheric Sensor</h4>"
@@ -636,19 +641,19 @@
 
 	var/dat = "<h3>Digital Messenger</h3>"
 	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=[REF(src)];software=pdamessage;toggler=1'>
-	[(pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
+	[(aiPDA.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
 	<b>Ringer Status:</b> <A href='byond://?src=[REF(src)];software=pdamessage;ringer=1'>
-	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
+	[(aiPDA.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
-	if(!pda.toff)
+	if(!aiPDA.toff)
 		for (var/obj/item/pda/P in sortNames(get_viewable_pdas()))
-			if (P == pda)
+			if (P == aiPDA)
 				continue
 			dat += "<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"
 	dat += "<br><br>"
-	dat += "Messages: <hr> [pda.tnote]"
+	dat += "Messages: <hr> [aiPDA.tnote]"
 	return dat
 
 // Loudness Booster
