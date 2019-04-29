@@ -15,7 +15,7 @@
 		to_chat(user, "<span class='warning'>You already activated Protocol CRAB-17.</span>")
 		return FALSE
 	if(alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", "Yes", "No") == "Yes")
-		if(dumped) //Prevents fuckers from cheesing alert
+		if(dumped || !src || QDELETED(src)) //Prevents fuckers from cheesing alert
 			return FALSE
 		var/turf/targetturf = get_random_station_turf()
 		new /obj/effect/dumpeetTarget(targetturf, user)
