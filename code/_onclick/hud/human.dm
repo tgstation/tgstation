@@ -84,19 +84,29 @@
 	..()
 	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
+	var/widescreen_layout = FALSE
+	if(owner.client && owner.client.prefs && owner.client.prefs.widescreenpref)
+		widescreen_layout = TRUE
+
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
 	using = new /obj/screen/craft
 	using.icon = ui_style
+	if(!widescreen_layout)
+		using.screen_loc = ui_boxcraft
 	static_inventory += using
 
 	using = new/obj/screen/language_menu
 	using.icon = ui_style
+	if(!widescreen_layout)
+		using.screen_loc = ui_boxlang
 	static_inventory += using
 
 	using = new /obj/screen/area_creator
 	using.icon = ui_style
+	if(!widescreen_layout)
+		using.screen_loc = ui_boxarea
 	static_inventory += using
 
 	action_intent = new /obj/screen/act_intent/segmented
