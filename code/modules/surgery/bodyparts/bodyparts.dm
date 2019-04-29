@@ -42,7 +42,6 @@
 	var/species_id = ""
 	var/should_draw_gender = FALSE
 	var/should_draw_greyscale = FALSE
-	var/alternate_icon
 	var/species_color = ""
 	var/mutation_color = ""
 	var/no_update = 0
@@ -308,8 +307,6 @@
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
 		species_flags_list = H.dna.species.species_traits
-		if(S.alternative_body_icon)
-			alternate_icon = S.alternative_body_icon
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
@@ -404,12 +401,6 @@
 				limb.icon_state = "[species_id]_[body_zone]"
 		else
 			limb.icon = 'icons/mob/human_parts.dmi'
-			if(should_draw_gender)
-				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
-			else
-				limb.icon_state = "[species_id]_[body_zone]"
-		if(alternate_icon)
-			limb.icon = alternate_icon
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
