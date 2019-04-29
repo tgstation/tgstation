@@ -1,0 +1,4 @@
+author: "81Denton"
+delete-after: True
+changes: 
+  - bugfix: "Dead AIs no longer get stuck in place and become movable again."
