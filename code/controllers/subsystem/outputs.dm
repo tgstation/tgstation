@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(outputs)
 	//echo lists
 	var/list/echo_blacklist
 	var/list/uniques
+	var/list/echo_images
 
 /datum/controller/subsystem/outputs/Initialize(timeofday)
 	for(var/A in subtypesof(/datum/outputs))
@@ -24,6 +25,8 @@ SUBSYSTEM_DEF(outputs)
 	/obj/structure/table,
 	/mob/living/carbon/human)
 	)
+
+	echo_images = list()
 
 	return ..()
 

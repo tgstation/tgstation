@@ -32,15 +32,15 @@
 				turfs += I
 	for(var/F in filtered)
 		var/atom/S = F
-		if(GLOB.echo_images[S.type])
-			image_output = mutable_appearance(GLOB.echo_images[S.type].icon, GLOB.echo_images[S.type].icon_state, GLOB.echo_images[S.type].layer, GLOB.echo_images[S.type].plane)
-			image_output.filters = GLOB.echo_images[S.type].filters
+		if(SSoutputs.echo_images[S.type])
+			image_output = mutable_appearance(SSoutputs.echo_images[S.type].icon, SSoutputs.echo_images[S.type].icon_state, SSoutputs.echo_images[S.type].layer, SSoutputs.echo_images[S.type].plane)
+			image_output.filters = SSoutputs.echo_images[S.type].filters
 			realign_icon(image_output, S)
 		else
 			image_output = generate_image(S)
 			realign_icon(image_output, S)
 			if(!(SSoutputs.uniques[S.type]))
-				GLOB.echo_images[S.type] = image_output
+				SSoutputs.echo_images[S.type] = image_output
 		for(var/D in S.datum_outputs)
 			var/datum/outputs/O = D
 			if(O.echo_override)

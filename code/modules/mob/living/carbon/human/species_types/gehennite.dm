@@ -10,6 +10,7 @@
 	alternative_body_icon = 'icons/mob/gehennite_parts.dmi'
 	var/awoken = FALSE
 	var/datum/component/hand_offset
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 
 /datum/species/gehennite/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
