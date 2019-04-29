@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_WIZARD = /datum/game_mode/wizard,
 	ROLE_MALF,
 	ROLE_REV = /datum/game_mode/revolution,
-	ROLE_ALIEN,
+	ROLE_ALIEN = /datum/game_mode/ayylmaos,
 	ROLE_PAI,
 	ROLE_CULTIST = /datum/game_mode/cult,
 	ROLE_BLOB,

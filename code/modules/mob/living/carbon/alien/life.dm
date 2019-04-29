@@ -1,5 +1,10 @@
 /mob/living/carbon/alien/Life()
 	findQueen()
+	if(SSticker.mode && istype(SSticker.mode,/datum/game_mode/ayylmaos))
+		var/datum/game_mode/ayylmaos/gmode = SSticker.mode
+		if(gmode.digital_camo_timer > 0 && gmode.digital_camo_timer > world.time)
+			digitalcamo = 1
+			digitalinvis = 1
 	return..()
 
 /mob/living/carbon/alien/check_breath(datum/gas_mixture/breath)

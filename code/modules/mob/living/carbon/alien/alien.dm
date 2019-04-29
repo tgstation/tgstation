@@ -144,6 +144,11 @@ Des: Removes all infected images from the alien.
 		new_xeno.real_name = real_name
 	if(mind)
 		mind.transfer_to(new_xeno)
+	if(SSticker.mode && istype(SSticker.mode,/datum/game_mode/ayylmaos))
+		var/datum/game_mode/ayylmaos/gmode = SSticker.mode
+		if(gmode.digital_camo_timer > 0 && gmode.digital_camo_timer > world.time)
+			new_xeno.digitalcamo = digitalcamo
+			new_xeno.digitalinvis = digitalinvis
 	qdel(src)
 
 #undef HEAT_DAMAGE_LEVEL_1
