@@ -8,6 +8,8 @@
 	announce_span = "notice"
 	announce_text = "Just have fun and enjoy the game!"
 
+	title_icon = "extended_white"
+
 /datum/game_mode/extended/pre_setup()
 	return 1
 

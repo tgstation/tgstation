@@ -11,6 +11,8 @@
 	announce_span = "danger"
 	announce_text = "A major meteor shower is bombarding the station! The crew needs to evacuate or survive the onslaught."
 
+	title_icon = "meteor"
+
 
 /datum/game_mode/meteor/process()
 	if(nometeors || meteordelay > world.time - SSticker.round_start_time)

@@ -20,6 +20,8 @@
 		+	<span class='danger'>Devils</span>: Purchase souls and tempt the crew to sin!\n\
 		+	<span class='notice'>Crew</span>: Resist the lure of sin and remain pure!"
 
+	title_icon = "devil"
+
 /datum/game_mode/devil/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
@@ -81,3 +83,22 @@
 	var/datum/antagonist/devil_datum = L.mind.has_antag_datum(/datum/antagonist/devil)
 	devil_datum.on_removal()
 	return TRUE
+
+/datum/game_mode/devil/generate_credit_text()
+	var/list/round_credits = list()
+	var/len_before_addition
+
+	round_credits += "<center><h1>The Tempting Devils:</h1></center>"
+	len_before_addition = round_credits.len
+	var/datum/antagonist/devil/devil_info
+	for(var/datum/mind/devil in devils)
+		devil_info = devil.has_antag_datum(ANTAG_DATUM_DEVIL)
+		if(devil_info) // This should never fail, but better to be sure
+			round_credits += "<center><h2>[devil_info.truename] in the form of [devil.name]</h2>"
+			devil_info = null
+	if(len_before_addition == round_credits.len)
+		round_credits += list("<center><h2>The devils were all utterly destroyed!</h2>", "<center><h2>The love of Space Jesus shines through!</h2>")
+	round_credits += "<br>"
+
+	round_credits += ..()
+	return round_credits
