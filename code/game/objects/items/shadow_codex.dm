@@ -30,7 +30,9 @@
 		user.adjustBrainLoss(10)
 
 /obj/item/shadow_codex/attack_self(mob/user) // when used inhand
-	if(user.can_read(src) && user == caster)
+	if(!user.can_read(src))
+		return
+	if(user == caster)
 		if(is_reading == 0)
 			if(istype(user, /mob/living/carbon/human)) // ehhh, incase someone would become the caster of the book and he isn't human? better be safe
 				is_reading = 1
@@ -51,7 +53,7 @@
 		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
 
 /obj/item/shadow_codex/attack(mob/M as mob, mob/user as mob)
-	if(istype(M, /mob/living/carbon/human) && M != caster && is_converting == 0 && M.stat != DEAD) // you can only used this on a human and it can't be you, also you can't cast this multiple times at once
+	if(istype(M, /mob/living/carbon/human) && M != caster && is_converting == 0 && M.stat != DEAD && M != shadowperson) // you can only used this on a human and it can't be you, also you can't cast this multiple times at once
 		is_converting = 1
 		to_chat(user, "<span class=warning>You start focusing on [M]s brain, while reciting the words written in the book.</span>")
 		to_chat(M, "<span class='userdanger'>You try to resist the books power.</span>")

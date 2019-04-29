@@ -1608,8 +1608,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/role_restricted/shadowcodex
 	name = "Shadow Codex"
-	desc = "A book found by the Syndicate in an abandoned space derelict. When used, it uses the brain as its fuel, applying brain damage, shifting it into a shadow puppet clone controlled by the user. \
-	It can also target a living victim, sacrificing their mind instead. The more it is used, the bigger part of the brain it will sacrifice, which can lead to instant death. \
+	desc = "A book found by the Syndicate in an abandoned space derelict. When used, it sacrifices the brain as its source of fuel (applying brain damage), shifting it into a shadow puppet clone controlled by the user. \
+	It can also target a living victim, using up their mind instead. The more it is used, the bigger part of the brain it will require, which can lead to instant death. \
 	While in the shadow form, the user can click the book to return to his original body, leaving the puppet empty. \
 	If one dies in the form of a shadow puppet, the mind will finds its way to its original body, suffering additional ailments of the mind."
 	cost = 13
