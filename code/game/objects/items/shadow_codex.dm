@@ -4,7 +4,7 @@
 	name = "Shadow Codex"
 	icon = 'icons/obj/library.dmi' // Finished, but could be better. If you want to sprite it.
 	icon_state = "shadowcodex"
-	desc = "A book containing the secrets of shadows, with a large M on the cover. The author of this book is a mysterious dapper looking man, pictured on the first page. Looking at him <span color=blue>chills</span> you to the bone."
+	desc = "A book containing the secrets of shadows, with a large M on the cover. The author of this book is a mysterious dapper looking man, pictured on the first page. Just thinking about him <span color=blue>chills</span> you to the bone."
 	var/mob/living/carbon/caster = null
 	var/is_reading = 0
 	var/is_converting = 0
@@ -14,7 +14,7 @@
 /obj/item/shadow_codex/pickup(mob/living/carbon/user)
 	if(caster == null || user == caster) // If you spawn this in the world, be sure to be the first to pick it up, or you won't be able to be the owner of it
 		caster = user
-		to_chat(user, "<span class=notice>Use the knowledge contained in this book wisely.</span>")
+		to_chat(user, "<span class=notice>The knowledge written in this book is dangerous. Use it wisely.</span>")
 	else if(shadowperson != null && user == shadowperson) // if you try to pickup the book as a shadow person
 		to_chat(user, "<span class=warning>You try to return to your original body.</span>")
 		if(do_after(user, 50, target = src))
@@ -26,7 +26,7 @@
 	else // if you are not the caster of the book then this happens
 		user.Paralyze(10)
 		user.emote("scream")
-		to_chat(user, "<span class=warning>You feel something watching you. It's probably best to leave this book alone.</span>")
+		to_chat(user, "<span class=warning>You sense something watching you. Perhaps it's best to forget that the book exists.</span>")
 		user.adjustBrainLoss(10)
 
 /obj/item/shadow_codex/attack_self(mob/user) // when used inhand
@@ -109,7 +109,7 @@
 /mob/living/carbon/human/shadowperson_holder
 	name = "Shadow creature"
 	real_name = "Shadow creature"
-	var/is_dead = 0
+	var/is_dead = 0 // this could be useless or not
 	var/mob/living/carbon/human/original_caster = null
 
 // when the minion dies
