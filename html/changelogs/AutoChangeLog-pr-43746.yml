@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Fixes bathsalts and beepsky smash transfering their respective brain traumas after cloning."
