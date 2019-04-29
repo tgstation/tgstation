@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "Removed a workaround for a compiler bug that has since been fixed."
