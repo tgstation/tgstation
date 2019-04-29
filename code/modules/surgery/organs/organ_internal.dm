@@ -32,7 +32,7 @@
 	M.internal_organs_slot[slot] = src
 	moveToNullspace()
 	for(var/X in actions)
-		var/datum/action/A = new X
+		var/datum/action/A = X
 		A.Grant(M)
 
 //Special is for instant replacement like autosurgeons
