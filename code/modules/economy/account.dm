@@ -1,3 +1,5 @@
+#define DUMPTIME 3000
+
 /datum/bank_account
 	var/account_holder = "Rusty Venture"
 	var/account_balance = 0
@@ -23,7 +25,7 @@
 
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
-	canWithdraw = world.time + 3000
+	canWithdraw = world.time + DUMPTIME
 
 /datum/bank_account/proc/_adjust_money(amt)
 	account_balance += amt
@@ -101,3 +103,5 @@
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
 	SSeconomy.generated_accounts += src
+	
+#undef DUMPTIME
