@@ -486,7 +486,7 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 
 
 ##Default screen resolution, in tiles.
-##	By default, this is 15x15, which gets simplified to 7 by BYOND, as it is a 1:1 screen ratio.
-##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
+##	By default, this is 21x15, which matches goonstation's default
+##  15x15 would be the standard square view.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
 DEFAULT_VIEW 21x15
