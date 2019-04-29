@@ -122,7 +122,7 @@
 	name = "gehennite echosensory organ"
 	desc = "This jet black dome allows gehennites to perceive the world around them."
 	actions = list(/datum/action/innate/echo)
-	damage_multiplier = 2 //bane of gehnnites
+	damage_multiplier = 2 //bane of gehennites
 	var/datum/component/echolocation
 
 /obj/item/organ/ears/gehennite/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
