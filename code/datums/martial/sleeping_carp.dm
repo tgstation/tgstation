@@ -101,7 +101,7 @@
 	log_combat(A, D, "elbow dropped (Sleeping Carp)")
 	return basic_hit(A,D)
 
-/datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(A.grab_state >= GRAB_AGGRESSIVE)
 		D.grabbedby(A, 1)
 	else
@@ -112,7 +112,7 @@
 			if(A.a_intent == INTENT_GRAB)
 				add_to_streak("G",D)
 				if(check_streak(A,D))
-					return 1
+					return TRUE
 				log_combat(A, D, "grabbed", addition="aggressively")
 				D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 				  "<span class='userdanger'>[A] violently grabs you!</span>")
@@ -120,7 +120,7 @@
 			else
 				log_combat(A, D, "grabbed", addition="passively")
 				A.grab_state = GRAB_PASSIVE
-	return 1
+	return TRUE
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
