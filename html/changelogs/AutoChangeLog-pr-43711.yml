@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - balance: "Robotics control console can now only blow/lockdown borgs and drones on current z-level."
