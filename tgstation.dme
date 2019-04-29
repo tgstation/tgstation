@@ -346,6 +346,7 @@
 #include "code\datums\components\decal.dm"
 #include "code\datums\components\earhealing.dm"
 #include "code\datums\components\earprotection.dm"
+#include "code\datums\components\echolocation.dm"
 #include "code\datums\components\edit_complainer.dm"
 #include "code\datums\components\empprotection.dm"
 #include "code\datums\components\footstep.dm"

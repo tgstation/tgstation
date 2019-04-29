@@ -93,6 +93,8 @@
 
 	var/deathsound //leave null for no sound. used for *deathgasp
 
+	var/audiolocation = FALSE
+
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 
 	var/list/observers = null	//The list of people observing this mob.
