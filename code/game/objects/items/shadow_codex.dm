@@ -53,7 +53,7 @@
 		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
 
 /obj/item/shadow_codex/attack(mob/M as mob, mob/user as mob)
-	if(istype(M, /mob/living/carbon/human) && M != caster && is_converting == 0 && M.stat != DEAD && M != shadowperson) // you can only used this on a human and it can't be you, also you can't cast this multiple times at once
+	if(istype(M, /mob/living/carbon/human) && M != caster && is_converting == 0 && M.stat != DEAD && caster != null && !istype(M, /mob/living/carbon/human/shadowperson_holder)) // you can only used this on a human and it can't be you, also you can't cast this multiple times at once
 		is_converting = 1
 		to_chat(user, "<span class=warning>You start focusing on [M]s brain, while reciting the words written in the book.</span>")
 		to_chat(M, "<span class='userdanger'>You try to resist the books power.</span>")
@@ -109,22 +109,18 @@
 /mob/living/carbon/human/shadowperson_holder
 	name = "Shadow creature"
 	real_name = "Shadow creature"
-	var/is_dead = 0 // this could be useless or not
 	var/mob/living/carbon/human/original_caster = null
 
 // when the minion dies
 /mob/living/carbon/human/shadowperson_holder/death()
-	src.is_dead = 1
 	after_death()
 	..()
 
 // This is called after the shadowperson dies.
 /mob/living/carbon/human/shadowperson_holder/proc/after_death()
-	if(src.is_dead == 1)
-		to_chat(src, "<span class='userdanger'>You have died. You hear shadows whisper your name. Your mind returns back to its own body.</span>")
-		var/mob/dead/observer/ghost = src.ghostize(0)
-		original_caster.key = ghost.key
-		original_caster.Unconscious(50)
-		original_caster.adjustBrainLoss(100) // oh boy more brain damage if you fuck up
-		qdel(ghost)
-		src.is_dead = 0
+	to_chat(src, "<span class='userdanger'>You have died. You hear shadows whisper your name. Your mind returns back to its own body.</span>")
+	var/mob/dead/observer/ghost = src.ghostize(0)
+	original_caster.key = ghost.key
+	original_caster.Unconscious(50)
+	original_caster.adjustBrainLoss(100) // oh boy more brain damage if you fuck up
+	qdel(ghost)
