@@ -12,7 +12,7 @@
 	var/mob/living/carbon/human/shadowperson // The variable that holds the summoned minion
 
 /obj/item/shadow_codex/pickup(mob/living/carbon/user)
-	if(caster == null)
+	if(caster == null) // the first person to pick this up will become the owner of the book
 		to_chat(user, "<span class=warning>You feel a uncanny presence probing your mind.</span>")
 		caster = user
 		..()
@@ -23,7 +23,7 @@
 		to_chat(user, "<span class=warning>You sense something watching you. Perhaps it's best to forget that the book exists.</span>")
 		user.adjustBrainLoss(10)
 		return
-	if(user == caster) // If you spawn this in the world, be sure to be the first to pick it up, or you won't be able to be the owner of it
+	if(user == caster)
 		to_chat(user, "<span class=notice>The knowledge written in this book is dangerous. Use it wisely.</span>")
 	else if(shadowperson != null && user == shadowperson) // if you try to pickup the book as a shadow person
 		to_chat(user, "<span class=warning>You try to return to your original body.</span>")
@@ -35,9 +35,12 @@
 			to_chat(user, "<span class='userdanger'>You fail to return to your body. Perhaps you should try again.</span>")
 
 /obj/item/shadow_codex/attack_self(mob/user) // when used inhand
+	if(caster == null)
+		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
+		return
 	if(!user.can_read(src))
 		return
-	if(!istype(user, /mob/living/carbon/human)) // monkeys cant use this anyways but lets leave this
+	if(!istype(user, /mob/living/carbon/human)) // monkeys cant use this anyways but lets leave this here just to be sure
 		to_chat(user, "<span class=notice>The book won't open to such a foolish person like you.</span>")
 		return
 	if(user == caster)
@@ -51,13 +54,11 @@
 				damage_brain(caster)
 				spawn_minion(caster)
 				caster.emote("scream")
-			else // when you don't finish reading the book
+			else // if you don't finish reading the book
 				is_reading = 0
 				to_chat(user, "<span class=notice>You decide to leave the book alone.</span>")
 		else
 			to_chat(user, "<span class=warning>You are already reading this book.</span>")
-	else if(caster == null)
-		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
 
 /obj/item/shadow_codex/attack(mob/M as mob, mob/user as mob)
 	if(caster == null)
@@ -65,6 +66,9 @@
 		return
 	if(!istype(user, /mob/living/carbon/human)) // okay this monkeys can use, even though there is a small chance this would even happen
 		to_chat(user, "<span class=notice>The book won't open itself to such a foolish person like you.</span>")
+		return
+	if(!istype(M, /mob/living/carbon/human))
+		to_chat(user, "<span class=warning>[M] is a unsuitable target for the spell.</span>")
 		return
 	if(istype(M, /mob/living/carbon/human/shadowperson_holder))
 		to_chat(user, "<span class='userdanger'>Cleverness killed the carrot.</span>")
@@ -76,7 +80,7 @@
 	if(M.stat == DEAD)
 		to_chat(user, "<span class=warning>The targets subconscious is no longer there.</span>")
 		return
-	if(istype(M, /mob/living/carbon/human) && is_converting == 0)
+	if(is_converting == 0)
 		is_converting = 1
 		to_chat(user, "<span class=warning>You start focusing on [M]s brain, while reciting the words written in the book.</span>")
 		to_chat(M, "<span class='userdanger'>You try to resist the books power.</span>")
@@ -90,11 +94,8 @@
 			is_converting = 0
 			to_chat(user, "<span class='userdanger'>The spell has been disrupted.</span>")
 			to_chat(M, "<span class='userdanger'>You succeed. The spell has been disrupted, leaving your mind intact.</span>")
-	else
-		if(is_converting == 1)
-			to_chat(user, "<span class=notice>You are already casting a spell on [M]s brain.</span>")
-		else
-			to_chat(user, "<span class=warning>[M] is a unsuitable target for the spell.</span>")
+	else if(is_converting == 1)
+		to_chat(user, "<span class=notice>You are already casting a spell on [M]s brain.</span>")
 
 // First time used 75 brain damge, second time 200 which should kill you
 /obj/item/shadow_codex/proc/damage_brain(mob/living/carbon/C) // C is the target off the proc
