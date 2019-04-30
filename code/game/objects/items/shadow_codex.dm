@@ -4,7 +4,7 @@
 	name = "Shadow Codex"
 	icon = 'icons/obj/library.dmi' // Finished, but could be better. If you want to sprite it.
 	icon_state = "shadowcodex"
-	desc = "A book containing the secrets of shadows, with a large M on the cover. The book is filled with comments from the previous owner of this book, which is most-likely a mysterious man wearing a dapper suit. You can see <span class=warning>blood</span> on the last page."
+	desc = "A book containing the secrets of shadows, with a large M on the cover. The book is filled with comments from and about the previous owner of this book, which is a mysterious man wearing a dapper suit. You can see <span class=warning>blood</span> on the last page."
 	var/mob/living/carbon/caster = null
 	var/is_reading = 0
 	var/is_converting = 0
@@ -76,7 +76,7 @@
 		return
 	if(is_converting == 0)
 		is_converting = 1
-		to_chat(user, "<span class=warning>You start focusing on [M]s brain, while reciting the words written in the book.</span>")
+		to_chat(user, "<span class=warning>You start focusing on [M]s brain, his mind will serve purpose in servitude.</span>")
 		to_chat(M, "<span class='userdanger'>You try to resist the books power.</span>")
 		M.emote("scream")
 		if(do_after(user, 100, target = M))
@@ -136,6 +136,9 @@
 
 // This is called after the shadowperson dies.
 /mob/living/carbon/human/shadowperson_holder/proc/after_death()
+	if(prob(25)) // now you fucked up, thats just life man
+		to_chat(src, "<span class='userdanger'>C'est la vie.</span>")
+		return
 	to_chat(src, "<span class='userdanger'>You have died. You hear shadows whisper your name. Your mind returns back to its own body.</span>")
 	var/mob/dead/observer/ghost = src.ghostize(0)
 	original_caster.key = ghost.key

@@ -1611,7 +1611,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A book found by the Syndicate in an abandoned space derelict. When used, it sacrifices the brain as its source of fuel (applying brain damage), shifting it into a shadow puppet clone controlled by the user. \
 	It can also target a living victim, consuming their mind instead. The more it is used, the bigger part of the brain it will require, which can lead to instant death. \
 	While in the shadow form, the user can click the book to return to his original body, leaving the puppet empty. \
-	If one dies in the form of a shadow puppet, the subconscious will find its way to its original body. This will result in some additional ailments of the mind."
+	If one dies in the form of a shadow puppet, the subconscious will find its way to its original body. This will result in some additional ailments of the mind. Even the Syndicate couldn't make something so devious."
 	cost = 13
 	item = /obj/item/shadow_codex
 	restricted_roles = list("Curator")
