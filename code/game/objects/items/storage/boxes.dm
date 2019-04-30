@@ -765,6 +765,15 @@
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 
+/obj/item/storage/box/stunslug
+  name = "box of stun-slugs"
+  desc = "A box full of Stun Slugs."
+  icon_state = "box"
+
+/obj/item/storage/box/stunslug/PopulateContents()
+  for(var/i in 1 to 6)
+    new /obj/item/ammo_casing/shotgun/stunslug
+
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"
 	desc = "The latest set of collectable action figures."
