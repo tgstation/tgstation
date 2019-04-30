@@ -16,6 +16,9 @@
 	SSevents.frequency_upper = 1800
 	return 1
 
+/datum/game_mode/disaster/post_setup()
+	SSshuttle.registerHostileEnvironment(src)
+
 /datum/game_mode/disaster/generate_report()
 	return "Several disasters are incoming. Evacuate to Lavaland and see to it that work continues. We can't lose money over a little space-weather! While you're at it, if you could kill of the most dangerous wildlife down there, we could arrange for your extraction. Just something to think about."
 
