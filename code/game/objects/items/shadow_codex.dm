@@ -11,12 +11,12 @@
 	var/times_used = 0
 	var/mob/living/carbon/human/shadowperson // The variable that holds the summoned minion
 
+/obj/item/shadow_codex/New(Loc)
+	to_chat(usr, "<span class=warning>You feel a uncanny presence probing your mind.</span>")
+	caster = usr
+	..()
+
 /obj/item/shadow_codex/pickup(mob/living/carbon/user)
-	if(caster == null) // the first person to pick this up will become the owner of the book
-		to_chat(user, "<span class=warning>You feel a uncanny presence probing your mind.</span>")
-		caster = user
-		..()
-		return
 	if(user != caster && user != shadowperson)
 		user.Paralyze(10)
 		user.emote("scream")
@@ -35,12 +35,9 @@
 			to_chat(user, "<span class='userdanger'>You fail to return to your body. Perhaps you should try again.</span>")
 
 /obj/item/shadow_codex/attack_self(mob/user) // when used inhand
-	if(caster == null)
-		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
-		return
 	if(!user.can_read(src))
 		return
-	if(!istype(user, /mob/living/carbon/human)) // monkeys cant use this anyways but lets leave this here just to be sure
+	if(!istype(user, /mob/living/carbon/human)) // might as well leavy this here
 		to_chat(user, "<span class=notice>The book won't open to such a foolish person like you.</span>")
 		return
 	if(user == caster)
@@ -61,9 +58,6 @@
 			to_chat(user, "<span class=warning>You are already reading this book.</span>")
 
 /obj/item/shadow_codex/attack(mob/M as mob, mob/user as mob)
-	if(caster == null)
-		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
-		return
 	if(!istype(user, /mob/living/carbon/human)) // okay this monkeys can use, even though there is a small chance this would even happen
 		to_chat(user, "<span class=notice>The book won't open itself to such a foolish person like you.</span>")
 		return
