@@ -24150,6 +24150,10 @@
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
+/obj/machinery/camera{
+	c_tag = "Civilian - Disposals Waste Management";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bcV" = (
@@ -55752,6 +55756,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room)
+"tzv" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/radio/intercom{
+	pixel_x = 29
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "tzD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -97538,7 +97554,7 @@ bca
 bcA
 bcS
 bdf
-bdf
+tzv
 bwF
 bwJ
 bxf
