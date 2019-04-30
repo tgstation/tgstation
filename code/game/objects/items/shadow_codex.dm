@@ -12,8 +12,18 @@
 	var/mob/living/carbon/human/shadowperson // The variable that holds the summoned minion
 
 /obj/item/shadow_codex/pickup(mob/living/carbon/user)
-	if(caster == null || user == caster) // If you spawn this in the world, be sure to be the first to pick it up, or you won't be able to be the owner of it
+	if(caster == null)
+		to_chat(user, "<span class=warning>You feel a uncanny presence probing your mind.</span>")
 		caster = user
+		..()
+		return
+	if(user != caster && user != shadowperson)
+		user.Paralyze(10)
+		user.emote("scream")
+		to_chat(user, "<span class=warning>You sense something watching you. Perhaps it's best to forget that the book exists.</span>")
+		user.adjustBrainLoss(10)
+		return
+	if(user == caster) // If you spawn this in the world, be sure to be the first to pick it up, or you won't be able to be the owner of it
 		to_chat(user, "<span class=notice>The knowledge written in this book is dangerous. Use it wisely.</span>")
 	else if(shadowperson != null && user == shadowperson) // if you try to pickup the book as a shadow person
 		to_chat(user, "<span class=warning>You try to return to your original body.</span>")
@@ -23,16 +33,11 @@
 		else
 			user.Paralyze(100)
 			to_chat(user, "<span class='userdanger'>You fail to return to your body. Perhaps you should try again.</span>")
-	else // if you are not the caster of the book then this happens
-		user.Paralyze(10)
-		user.emote("scream")
-		to_chat(user, "<span class=warning>You sense something watching you. Perhaps it's best to forget that the book exists.</span>")
-		user.adjustBrainLoss(10)
 
 /obj/item/shadow_codex/attack_self(mob/user) // when used inhand
 	if(!user.can_read(src))
 		return
-	if(!istype(user, /mob/living/carbon/human))
+	if(!istype(user, /mob/living/carbon/human)) // monkeys cant use this anyways but lets leave this
 		to_chat(user, "<span class=notice>The book won't open to such a foolish person like you.</span>")
 		return
 	if(user == caster)
@@ -57,6 +62,9 @@
 /obj/item/shadow_codex/attack(mob/M as mob, mob/user as mob)
 	if(caster == null)
 		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
+		return
+	if(!istype(user, /mob/living/carbon/human)) // okay this monkeys can use, even though there is a small chance this would even happen
+		to_chat(user, "<span class=notice>The book won't open itself to such a foolish person like you.</span>")
 		return
 	if(istype(M, /mob/living/carbon/human/shadowperson_holder))
 		to_chat(user, "<span class='userdanger'>Cleverness killed the carrot.</span>")
