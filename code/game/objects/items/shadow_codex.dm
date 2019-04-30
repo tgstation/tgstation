@@ -32,28 +32,43 @@
 /obj/item/shadow_codex/attack_self(mob/user) // when used inhand
 	if(!user.can_read(src))
 		return
+	if(!istype(user, /mob/living/carbon/human))
+		to_chat(user, "<span class=notice>The book won't open to such a foolish person like you.</span>")
+		return
 	if(user == caster)
 		if(is_reading == 0)
-			if(istype(user, /mob/living/carbon/human)) // ehhh, incase someone would become the caster of the book and he isn't human? better be safe
-				is_reading = 1
-				to_chat(user, "<span class=notice>You start flipping through its pages, with each page, you feel more insane.</span>")
-				playsound(user.loc, 'sound/effects/pageturn1.ogg', 30, 1)
-				if(do_after(user, 50, target = src))
-					is_reading = 0
-					to_chat(user, "<span class='userdanger'>You recite the words written in the book. As they start to glow, you suddenly feel a sharp pain in your head.</span>")
-					damage_brain(caster)
-					spawn_minion(caster)
-					caster.emote("scream")
-				else // when you don't finish reading the book
-					is_reading = 0
-					to_chat(user, "<span class=notice>You decide to leave the book alone.</span>")
+			is_reading = 1
+			to_chat(user, "<span class=notice>You start flipping through its pages, with each page, you feel more insane.</span>")
+			playsound(user.loc, 'sound/effects/pageturn1.ogg', 30, 1)
+			if(do_after(user, 50, target = src))
+				is_reading = 0
+				to_chat(user, "<span class='userdanger'>You recite the words written in the book. As they start to glow, you suddenly feel a sharp pain in your head.</span>")
+				damage_brain(caster)
+				spawn_minion(caster)
+				caster.emote("scream")
+			else // when you don't finish reading the book
+				is_reading = 0
+				to_chat(user, "<span class=notice>You decide to leave the book alone.</span>")
 		else
 			to_chat(user, "<span class=warning>You are already reading this book.</span>")
 	else if(caster == null)
 		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
 
 /obj/item/shadow_codex/attack(mob/M as mob, mob/user as mob)
-	if(istype(M, /mob/living/carbon/human) && M != caster && is_converting == 0 && M.stat != DEAD && caster != null && !istype(M, /mob/living/carbon/human/shadowperson_holder)) // you can only used this on a human and it can't be you, also you can't cast this multiple times at once
+	if(caster == null)
+		to_chat(user, "<span class=warning>Initiate the ritual by dropping the book and picking it up again.</span>")
+		return
+	if(istype(M, /mob/living/carbon/human/shadowperson_holder))
+		to_chat(user, "<span class='userdanger'>Cleverness killed the carrot.</span>")
+		M.gib()
+		return
+	if(M == caster)
+		to_chat(user, "<span class=warning>This would gain you no benefit.</span>")
+		return
+	if(M.stat == DEAD)
+		to_chat(user, "<span class=warning>The targets subconscious is no longer there.</span>")
+		return
+	if(istype(M, /mob/living/carbon/human) && is_converting == 0)
 		is_converting = 1
 		to_chat(user, "<span class=warning>You start focusing on [M]s brain, while reciting the words written in the book.</span>")
 		to_chat(M, "<span class='userdanger'>You try to resist the books power.</span>")
