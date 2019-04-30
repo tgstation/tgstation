@@ -135,4 +135,3 @@ Naksuasdf = Game Master
 MrDoomBringer = Game Master
 shizcalev = Game Master
 NicBR = Game Master
-
