@@ -160,11 +160,11 @@
 //Murmuring Tree
 /obj/item/seeds/murmuring_wood
 	name = "pack of murmuring tree seeds"
-	desc = "These seeds grow into murmuring trees."
+	desc = "This seed grows into a murmuring tree."
 	icon_state = "seed-murmuring"
 	species = "murmuring"
 	plantname = "Murmuring Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/shell/gatfruit
+	//doesn't use product, see harvest()
 	genes = list(/datum/plant_gene/trait/settled_traits)
 	lifespan = 20
 	endurance = 20
@@ -172,10 +172,37 @@
 	production = 10
 	yield = 1
 	potency = 60
-	growthstages = 2
+	growthstages = 3
 	rarity = 60 // Just stick to buying it from cargo, OK?
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	reagents_add = list("sulfur" = 0.1, "carbon" = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)
+
+/obj/item/seeds/murmuring_wood/harvest(mob/user)//only one mech at a time, please
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc
+	if(!getYield())
+		return
+	var/obj/structure/flora/shell/shell = new obj/structure/flora/shell(output_loc, src)
+	. = shell
+	SSblackbox.record_feedback("tally", "food_harvested", 1, shell.name)
+	parent.update_tray(user)
+
+/obj/structure/flora/shell
+	name = Giant Wooden Shell
+	desc = "Worst piñata ever."
+	density = TRUE
+	icon_state = "pine_c"
+	var/obj/item/seeds/seed = null
+
+/obj/structure/flora/shell/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	if(new_seed)
+		seed = new_seed.Copy()
+
+/obj/structure/flora/shell/Destroy()
+	visible_message("<span class='warning'>[src] cracks open, revealing an exosuit!</span>")
+	..()
+	new /obj/mecha/working/tree(mapload, seed)
 
 // Lavaland cactus
 
