@@ -13,7 +13,7 @@ Format:
 endmap
 
 map boxstation
-	Default
+	default
 	#voteweight 1.5
 endmap
 
