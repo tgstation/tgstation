@@ -8,16 +8,27 @@
 	icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	var/internal_can = FALSE
+	var/start_can = null
+	var/cantype = null
 	var/mob/living/carbon/attached = null
 	var/mode = IV_INJECTING
 	var/obj/item/reagent_containers/beaker = null
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
 									/obj/item/reagent_containers/glass))
+/obj/machinery/iv_drip/saline
+	name = "Saline drip"
+	desc = "An all-you-can-drip saline canister designed to supply a hospital without running out, with a scary looking pump rigged to inject saline into containers, but filling people directly might be a bad idea."
+	icon_state = "saline"
+	density = TRUE
+	internal_can = /obj/item/reagent_containers/blood/saline
 
 /obj/machinery/iv_drip/Initialize()
 	. = ..()
 	update_icon()
+	if (internal_can)
+		beaker = new internal_can
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
@@ -25,6 +36,8 @@
 	return ..()
 
 /obj/machinery/iv_drip/update_icon()
+	if (internal_can)
+		return
 	if(attached)
 		if(mode)
 			icon_state = "injecting"
@@ -182,7 +195,8 @@
 
 	if(usr.incapacitated())
 		return
-
+	if(internal_can)
+		return
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
@@ -199,7 +213,8 @@
 
 	if(usr.incapacitated())
 		return
-
+	if(internal_can)
+		return
 	mode = !mode
 	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 	update_icon()
