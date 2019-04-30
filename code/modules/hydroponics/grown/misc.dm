@@ -188,7 +188,7 @@
 	parent.update_tray(user)
 
 /obj/structure/flora/shell
-	name = Giant Wooden Shell
+	name = "Giant Wooden Shell"
 	desc = "Worst piñata ever."
 	density = TRUE
 	icon_state = "pine_c"
