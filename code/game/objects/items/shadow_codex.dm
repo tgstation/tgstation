@@ -4,7 +4,7 @@
 	name = "Shadow Codex"
 	icon = 'icons/obj/library.dmi' // Finished, but could be better. If you want to sprite it.
 	icon_state = "shadowcodex"
-	desc = "A book containing the secrets of shadows, with a large M on the cover. The author of this book is a mysterious dapper looking man, pictured on the first page. Just thinking about him <span color=blue>chills</span> you to the bone."
+	desc = "A book containing the secrets of shadows, with a large M on the cover. The book is filled with comments from the previous owner of this book, which is most-likely a mysterious man wearing a dapper suit. You can see <span class=warning>blood</span> on the last page."
 	var/mob/living/carbon/caster = null
 	var/is_reading = 0
 	var/is_converting = 0
@@ -25,7 +25,7 @@
 		return
 	if(user == caster)
 		to_chat(user, "<span class=notice>The knowledge written in this book is dangerous. Use it wisely.</span>")
-	else if(shadowperson != null && user == shadowperson) // if you try to pickup the book as a shadow person
+	else if(shadowperson != null && user == shadowperson) // if you try to pickup the book as a shadow person you will instead try to return to your original body
 		to_chat(user, "<span class=warning>You try to return to your original body.</span>")
 		if(do_after(user, 50, target = src))
 			shadow_pickup(shadowperson)
@@ -91,7 +91,7 @@
 	else if(is_converting == 1)
 		to_chat(user, "<span class=notice>You are already casting a spell on [M]s brain.</span>")
 
-// First time used 75 brain damge, second time 200 which should kill you
+// First time used 75 (not enough to trigger a severe brain trauma) brain damge, second time 200 which should kill you
 /obj/item/shadow_codex/proc/damage_brain(mob/living/carbon/C) // C is the target off the proc
 	if(times_used == 0)
 		C.adjustBrainLoss(75)
