@@ -488,17 +488,6 @@
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
 	siemens_coeff *= physiology.siemens_coeff
-	if(ishuman(pulling))
-		var/mob/living/carbon/human/L = pulling
-		if(!has_trait(TRAIT_SHOCKIMMUNE) && !(gloves && gloves.siemens_coefficient <= 0) && !dna.species.siemens_coeff <= 0)
-			stop_pulling()
-			L.electrocute_act(shock_damage*siemens_coeff*0.75, src)
-	if(ishuman(pulledby))
-		var/mob/living/carbon/human/L = pulledby
-		if(!L.has_trait(TRAIT_SHOCKIMMUNE) && !(L.gloves && L.gloves.siemens_coefficient <= 0) && !L.dna.species.siemens_coeff <= 0)
-			L.stop_pulling()
-			L.electrocute_act(shock_damage*0.75, src)
-
 	dna.species.spec_electrocute_act(src, shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)

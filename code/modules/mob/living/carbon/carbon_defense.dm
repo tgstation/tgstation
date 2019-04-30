@@ -244,6 +244,20 @@
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack.</span>" \
 		)
+	if(iscarbon(pulling) && !illusion && source != pulling)
+		if(ishuman(pulling))
+			var/mob/living/carbon/human/H = pulling
+			H.electrocute_act(shock_damage*0.75, src, 1, safety, override, tesla_shock, illusion, stun)
+		else
+			var/mob/living/carbon/C = pulling
+			C.electrocute_act(shock_damage*0.75, src, 1, safety, override, tesla_shock, illusion, stun)
+	if(iscarbon(pulledby) && !illusion && source != pulledby)
+		if(ishuman(pulledby))
+			var/mob/living/carbon/human/H = pulledby
+			H.electrocute_act(shock_damage*0.75, src, 1, safety, override, tesla_shock, illusion, stun)
+		else
+			var/mob/living/carbon/C = pulledby
+			C.electrocute_act(shock_damage*0.75, src, 1, safety, override, tesla_shock, illusion, stun)
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
@@ -253,6 +267,7 @@
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
 		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
 			Paralyze(60)
+	
 	if(override)
 		return override
 	else

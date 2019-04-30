@@ -451,15 +451,11 @@
 	return TRUE
 
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
-	if(!ishuman(H.pulledby))		//CLEAR!
-		return
-	var/mob/living/carbon/human/M = H.pulledby
-	if(M.has_trait(TRAIT_SHOCKIMMUNE) || (M.gloves && M.gloves.siemens_coefficient <= 0) || M.dna.species.siemens_coeff <= 0)
-		return
-	M.stop_pulling()
-	M.electrocute_act(30, src)
-	M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
-	M.emote("scream")
+	if(isliving(H.pulledby))		//CLEAR!
+		var/mob/living/M = H.pulledby
+		if(M.electrocute_act(30, H))
+			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
+			M.emote("scream")
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(req_defib && defib.safety)
