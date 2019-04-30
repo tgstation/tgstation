@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Blob factories can no longer create more than one blobbernaut at a time."

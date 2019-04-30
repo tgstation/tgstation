@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - tweak: "The \"draggable\" cursor is now shown when folding a closed bodybag."
-  - tweak: "Failing to fold a bodybag because it is open or full now tells you why."
