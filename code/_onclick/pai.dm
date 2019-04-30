@@ -1,4 +1,14 @@
 /mob/living/silicon/pai/ClickOn(var/atom/A, params)
+	if(world.time <= next_click)
+		return
+	next_click = world.time + 1
+
+	if(check_click_intercept(params,A))
+		return
+
+	if(stat || lockcharge || IsParalyzed() || IsStun() || IsUnconscious())
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
@@ -18,7 +28,13 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
-	if(aicamera.in_camera_mode)
+
+	if(next_move >= world.time)
+		return
+
+	face_atom(A) // change direction to face what you clicked on
+	
+	if(aicamera.in_camera_mode) //pAI picture taking
 		aicamera.camera_mode_off()
 		aicamera.captureimage(A, usr)
 		return
