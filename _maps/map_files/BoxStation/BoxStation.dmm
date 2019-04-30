@@ -19389,6 +19389,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/computer/rdconsole/bridge{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/bridge)
 "aTZ" = (

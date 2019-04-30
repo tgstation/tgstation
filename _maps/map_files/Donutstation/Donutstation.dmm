@@ -54748,6 +54748,12 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
+"qao" = (
+/obj/machinery/computer/rdconsole/bridge{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/bridge)
 "qkE" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical,
@@ -104372,7 +104378,7 @@ ajK
 bJk
 bLS
 aJO
-ajK
+qao
 bJO
 bKM
 aEH

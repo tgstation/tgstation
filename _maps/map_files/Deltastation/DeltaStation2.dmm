@@ -45055,6 +45055,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/computer/rdconsole/bridge{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bBH" = (

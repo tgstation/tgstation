@@ -31877,10 +31877,6 @@
 /turf/open/floor/plating,
 /area/bridge)
 "biZ" = (
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -31897,6 +31893,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bja" = (
@@ -32786,17 +32783,13 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bkE" = (
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/machinery/computer/rdconsole/bridge,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bkF" = (
