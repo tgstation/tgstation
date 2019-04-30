@@ -120,7 +120,14 @@
 			target = null
 			interact(user)
 			return
-
+		var/datum/plant_gene/trait/settle = seed.get_gene(/datum/plant_gene/trait/settled_traits)
+		if(settle)
+			dat += "<span class='line'><h3>Error</h3></span>"
+			dat += "<div class='statusDisplay'><span class='highlight'>The [settle.get_name()]</span> gene is preventing you from removing any traits from this plant!"
+			dat += "</div><a href='?src=[REF(src)];abort=1'>Abort</a></div>"
+			popup.set_content(dat)
+			popup.open()
+			return
 		dat += "<div class='line'><h3>Confirm Operation</h3></div>"
 		dat += "<div class='statusDisplay'>Are you sure you want to [operation] "
 		switch(operation)

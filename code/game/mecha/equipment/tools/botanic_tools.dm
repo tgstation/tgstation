@@ -2,7 +2,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/botanic
 
-/obj/item/mecha_parts/mecha_equipment/botanic/can_attach(obj/mecha/working/aquifer/M)
+/obj/item/mecha_parts/mecha_equipment/botanic/can_attach(obj/mecha/working/tree/M)
 	if(..() && istype(M))
 		return 1
 
@@ -32,10 +32,14 @@
 
 /obj/item/mecha_parts/mecha_equipment/botanic/cultivator
 	name = "Touch of Gaia"
-	desc = "Arguably the most powerful tool of the Aquifer, this specialized hand allows the user to remove weeds and turn them into an improved fertilizer."
+	desc = "A very useful multipurpose tool that allows the user to remove weeds and turn them into an improved fertilizer."
 	icon_state = "mecha_exting"
 	var/cultivating = TRUE
-	var/stored_weeds = 0
+
+/obj/item/mecha_parts/mecha_equipment/botanic/cultivator/Initialize()
+	. = ..()
+	create_reagents(100)
+	update_icon()
 
 /obj/item/mecha_parts/mecha_equipment/botanic/cultivator/action(atom/target)
 	var/obj/machinery/hydroponics/H = target
@@ -45,11 +49,12 @@
 		if(!H.weedlevel > 0)
 			occupant_message("<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>")
 			return 0
-		stored_weeds += H.weedlevel * 2
+		reagents.add_reagent("water", H.weedlevel*2)
 		chassis.visible_message("[chassis] uproots the weeds.")
 		occupant_message("<span class='notice'>Created [H.weedlevel*2] units of fertilizer!</span>")
 		H.weedlevel = 0
 		update_icon()
-//	else
-
-
+	else
+		if(!reagents.total_volume)
+			occupant_message("<span class='warning'>You are out of fertilizer! Uproot some weeds first!</span>")
+			return 0

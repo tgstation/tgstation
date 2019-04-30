@@ -157,6 +157,26 @@
 	reagents.chem_temp = 1000 //Sets off the black powder
 	reagents.handle_reactions()
 
+//Murmuring Tree
+/obj/item/seeds/murmuring_wood
+	name = "pack of murmuring tree seeds"
+	desc = "These seeds grow into murmuring trees."
+	icon_state = "seed-murmuring"
+	species = "murmuring"
+	plantname = "Murmuring Tree"
+	product = /obj/item/reagent_containers/food/snacks/grown/shell/gatfruit
+	genes = list(/datum/plant_gene/trait/settled_traits)
+	lifespan = 20
+	endurance = 20
+	maturation = 40
+	production = 10
+	yield = 1
+	potency = 60
+	growthstages = 2
+	rarity = 60 // Just stick to buying it from cargo, OK?
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	reagents_add = list("sulfur" = 0.1, "carbon" = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)
+
 // Lavaland cactus
 
 /obj/item/seeds/lavaland/cactus

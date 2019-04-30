@@ -394,6 +394,10 @@
 	if(!(G.resistance_flags & FIRE_PROOF))
 		G.resistance_flags |= FIRE_PROOF
 
+/datum/plant_gene/trait/settled_traits
+	//The traits cannot be changed on this plant. Would make for a pretty funny traitor item, because you could give this but not take it away.
+	name = "Settled Traits"
+
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"
 	trait_id = "plant_type"
