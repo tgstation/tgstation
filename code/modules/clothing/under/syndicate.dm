@@ -54,5 +54,5 @@
 	icon_state = "rus_under"
 	item_color = "rus_under"
 	can_adjust = FALSE
-	armor = list("melee" = 5, "bullet" = 10, "laser" = 0,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 20, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = NONE

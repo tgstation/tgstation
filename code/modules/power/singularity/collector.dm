@@ -1,9 +1,9 @@
-// stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+// stored_energy += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 #define RAD_COLLECTOR_EFFICIENCY 80 	// radiation needs to be over this amount to get power
 #define RAD_COLLECTOR_COEFFICIENT 100
 #define RAD_COLLECTOR_STORED_OUT 0.04	// (this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
 #define RAD_COLLECTOR_MINING_CONVERSION_RATE 0.00001 //This is gonna need a lot of tweaking to get right. This is the number used to calculate the conversion of watts to research points per process()
-#define RAD_COLLECTOR_OUTPUT min(stored_power, (stored_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
+#define RAD_COLLECTOR_OUTPUT min(stored_energy, (stored_energy*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
@@ -19,7 +19,7 @@
 	circuit = /obj/item/circuitboard/machine/rad_collector
 	rad_insulation = RAD_EXTREME_INSULATION
 	var/obj/item/tank/internals/plasma/loaded_tank = null
-	var/stored_power = 0
+	var/stored_energy = 0
 	var/active = 0
 	var/locked = FALSE
 	var/drainratio = 1
@@ -52,7 +52,7 @@
 
 			var/power_produced = RAD_COLLECTOR_OUTPUT
 			add_avail(power_produced)
-			stored_power-=power_produced
+			stored_energy-=power_produced
 	else if(is_station_level(z) && SSresearch.science_tech)
 		if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
@@ -69,7 +69,7 @@
 			if(D)
 				D.adjust_money(bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
-			stored_power-=bitcoins_mined
+			stored_energy-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/interact(mob/user)
 	if(anchored)
@@ -169,17 +169,23 @@
 	to_chat(user, "<span class='warning'>You [bitcoinmining ? "enable":"disable"] the research point production feature of [src].</span>")
 	return TRUE
 
-/obj/machinery/power/rad_collector/analyzer_act(mob/living/user, obj/item/I)
+/obj/machinery/power/rad_collector/return_analyzable_air()
 	if(loaded_tank)
-		loaded_tank.analyzer_act(user, I)
+		return loaded_tank.return_analyzable_air()
+	else
+		return null
 
 /obj/machinery/power/rad_collector/examine(mob/user)
 	. = ..()
 	if(active)
 		if(!bitcoinmining)
-			to_chat(user, "<span class='notice'>[src]'s display states that it has stored <b>[DisplayPower(stored_power)]</b>, and processing <b>[DisplayPower(RAD_COLLECTOR_OUTPUT)]</b>.</span>")
+			// stored_energy is converted directly to watts every SSmachines.wait * 0.1 seconds.
+			// Therefore, its units are joules per SSmachines.wait * 0.1 seconds.
+			// So joules = stored_energy * SSmachines.wait * 0.1
+			var/joules = stored_energy * SSmachines.wait * 0.1
+			to_chat(user, "<span class='notice'>[src]'s display states that it has stored <b>[DisplayJoules(joules)]</b>, and is processing <b>[DisplayPower(RAD_COLLECTOR_OUTPUT)]</b>.</span>")
 		else
-			to_chat(user, "<span class='notice'>[src]'s display states that it has stored a total of <b>[stored_power*RAD_COLLECTOR_MINING_CONVERSION_RATE]</b>, and producing [RAD_COLLECTOR_OUTPUT*RAD_COLLECTOR_MINING_CONVERSION_RATE] research points per minute.</span>")
+			to_chat(user, "<span class='notice'>[src]'s display states that it has stored a total of <b>[stored_energy*RAD_COLLECTOR_MINING_CONVERSION_RATE]</b>, and is producing [RAD_COLLECTOR_OUTPUT*RAD_COLLECTOR_MINING_CONVERSION_RATE] research points per minute.</span>")
 	else
 		if(!bitcoinmining)
 			to_chat(user,"<span class='notice'><b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma</b>. Use a multitool to change production modes.\"</span>")
@@ -208,7 +214,7 @@
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	. = ..()
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+		stored_energy += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
 /obj/machinery/power/rad_collector/update_icon()
 	cut_overlays()

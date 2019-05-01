@@ -2549,7 +2549,7 @@
 	dir = 2;
 	locked = 0;
 	name = "Hydroponics APC";
-	pixel_y = -25;
+	pixel_y = -23;
 	req_access = null;
 	start_charge = 100
 	},
@@ -5013,7 +5013,7 @@
 	dir = 1;
 	locked = 0;
 	name = "UO45 Bar APC";
-	pixel_y = 25;
+	pixel_y = 23;
 	req_access = null;
 	start_charge = 100
 	},
@@ -6161,7 +6161,7 @@
 	dir = 2;
 	locked = 0;
 	name = "UO45 Research Division APC";
-	pixel_y = -25;
+	pixel_y = -23;
 	req_access = null;
 	start_charge = 100
 	},
@@ -6719,7 +6719,7 @@
 	dir = 2;
 	locked = 0;
 	name = "UO45 Gateway APC";
-	pixel_y = -25;
+	pixel_y = -23;
 	req_access = null;
 	start_charge = 100
 	},
@@ -10227,7 +10227,7 @@
 	dir = 2;
 	locked = 0;
 	name = "UO45 Mining APC";
-	pixel_y = -25;
+	pixel_y = -23;
 	req_access = null;
 	start_charge = 100
 	},
