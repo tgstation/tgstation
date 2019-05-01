@@ -535,3 +535,13 @@
 	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
+
+/datum/quirk/diabetic
+	name = "Diabetic"
+	desc = "You have diabetes type 1, better watch your sugars!"
+	value = -2
+	gain_text = "<span class='notice'>The thought of sugar makes you shudder.</span>"
+	lose_text = "<span class='notice'>You feel like you have enough insulin.</span>"
+	medical_record_text = "Patient has Type 1 Diabetes, and should watch their sugar intake carefully."
+	mob_trait = TRAIT_DIABETIC
+	mob/living/quirk_holder

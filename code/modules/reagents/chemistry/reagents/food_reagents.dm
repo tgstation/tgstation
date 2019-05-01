@@ -155,8 +155,13 @@
 	taste_mult = 1.5 // stop sugar drowning out other flavours
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	metabolization_rate = 2 * REAGENTS_METABOLISM
-	overdose_threshold = 200 // Hyperglycaemic shock
+	overdose_threshold = 75 // Hyperglycaemic shock
 	taste_description = "sweetness"
+
+/datum/reagent/consumable/sugar/on_mob_life(mob/living/carbon/C)
+	if(C.has_trait(TRAIT_DIABETIC))
+		/datum/reagent/consumable/sugar
+		overdose_threshold = 15
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")

@@ -1016,6 +1016,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//metabolism change
 	if(H.nutrition > NUTRITION_LEVEL_FAT)
 		H.metabolism_efficiency = 1
+	if(H.has_trait(TRAIT_DIABETIC))
+		H.metabolism_efficiency = 1.5
 	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
 		if(H.metabolism_efficiency != 1.25 && !H.has_trait(TRAIT_NOHUNGER))
 			to_chat(H, "<span class='notice'>You feel vigorous.</span>")
