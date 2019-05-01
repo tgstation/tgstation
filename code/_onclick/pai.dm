@@ -6,9 +6,6 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(stat || lockcharge || IsParalyzed() || IsStun() || IsUnconscious())
-		return
-
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
