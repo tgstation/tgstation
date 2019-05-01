@@ -350,11 +350,11 @@
  *	Grenade bag
  */
 
-/obj/item/storage/bag/grenade
-	name = "grenade bag"
+/obj/item/storage/bag/grenade_parts
+	name = "grenade maker's bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bag_grenade"
-	desc = "A bag for storing grenades and grenade components."
+	desc = "A bag for storing grenade components."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
@@ -364,7 +364,7 @@
 	STR.max_combined_w_class = 200
 	STR.max_items = 90
 	STR.insert_preposition = "in"
-	STR.can_hold = typecacheof(list(/obj/item/grenade,/obj/item/reagent_containers/glass/beaker,/obj/item/assembly/igniter,/obj/item/assembly/health,/obj/item/assembly/infra,/obj/item/assembly/mousetrap,/obj/item/assembly/prox_sensor,/obj/item/assembly/signaler,/obj/item/assembly/timer,/obj/item/assembly/voice))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/glass/beaker,/obj/item/assembly/igniter,/obj/item/assembly/health,/obj/item/assembly/infra,/obj/item/assembly/mousetrap,/obj/item/assembly/prox_sensor,/obj/item/assembly/signaler,/obj/item/assembly/timer,/obj/item/assembly/voice,/obj/item/stack/cable_coil))
 
 /*
  *  Biowaste bag (mostly for xenobiologists)
