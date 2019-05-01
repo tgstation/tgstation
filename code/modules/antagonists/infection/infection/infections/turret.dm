@@ -9,7 +9,9 @@
 	var/frequency = 1 // amount of times the turret will fire per process tick (1 second)
 	var/scan_range = 7 // range to search for targets
 	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
-	upgrade_types = list(/datum/infection/upgrade/resistant_turret, /datum/infection/upgrade/infernal_turret, /datum/infection/upgrade/homing_turret)
+	upgrade_types = list(/datum/component/infection/upgrade/turret/resistant_turret,
+						 /datum/component/infection/upgrade/turret/infernal_turret,
+						 /datum/component/infection/upgrade/turret/homing_turret)
 
 /obj/structure/infection/turret/Initialize()
 	START_PROCESSING(SSobj, src)
@@ -102,20 +104,13 @@
 
 	update_icon()
 	var/obj/item/projectile/bullet/infection/A = new projectile_type(T)
-	A = alter_projectile(A, target)
+	SEND_SIGNAL(src, COMSIG_INFECTION_ALTER_PROJECTILE, A, target)
 	playsound(loc, 'sound/weapons/gunshot_smg.ogg', 75, 1)
 
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)
 	A.firer = src
 	A.fire()
-	return A
-
-/obj/structure/infection/turret/proc/alter_projectile(obj/item/projectile/A, atom/movable/target)
-	for(var/datum/infection/upgrade/turret/U in upgrade_list)
-		if(!U.bought)
-			continue
-		A = U.alter_projectile(src, A, target)
 	return A
 
 /*
@@ -137,14 +132,6 @@
 	flag = "bullet"
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
-
-/obj/item/projectile/bullet/infection/on_hit(atom/target, blocked = FALSE)
-	. = ..()
-	var/obj/structure/infection/T = firer
-	for(var/datum/infection/upgrade/turret/U in T.upgrade_list)
-		if(!U.bought)
-			continue
-		U.projectile_hit(src.firer, target)
 
 /obj/item/projectile/bullet/infection/core
 	name = "strong spore"
@@ -185,7 +172,9 @@
 	name = "resistant turret"
 	desc = "A very bulky turret fit for a war of attrition."
 	max_integrity = 300
-	upgrade_types = list(/datum/infection/upgrade/turret/knockback, /datum/infection/upgrade/turret/shield_creator, /datum/infection/upgrade/turret/spore_bullets)
+	upgrade_types = list(/datum/component/infection/upgrade/turret/knockback,
+						 /datum/component/infection/upgrade/turret/shield_creator,
+						 /datum/component/infection/upgrade/turret/spore_bullets)
 
 /obj/structure/infection/turret/resistant/core
 	name = "core turret"
@@ -196,7 +185,9 @@
 	name = "infernal turret"
 	desc = "A fiery turret intent on disintegrating its enemies."
 	projectile_type = /obj/item/projectile/bullet/infection/infernal // the bullet fired for this turret
-	upgrade_types = list(/datum/infection/upgrade/turret/burning_spores, /datum/infection/upgrade/turret/fire_rate, /datum/infection/upgrade/turret/armour_penetration)
+	upgrade_types = list(/datum/component/infection/upgrade/turret/burning_spores,
+						 /datum/component/infection/upgrade/turret/fire_rate,
+						 /datum/component/infection/upgrade/turret/armour_penetration)
 	scan_range = 5
 
 /obj/structure/infection/turret/homing
@@ -204,10 +195,8 @@
 	desc = "A frail looking turret that seems to track your every movement."
 	max_integrity = 75
 	projectile_type = /obj/item/projectile/bullet/infection/homing // the bullet fired for this turret
-	upgrade_types = list(/datum/infection/upgrade/turret/turn_speed, /datum/infection/upgrade/turret/flak_homing, /datum/infection/upgrade/turret/stamina_damage)
-
-/obj/structure/infection/turret/homing/alter_projectile(obj/item/projectile/A, atom/movable/target)
-	A = ..()
-	A.set_homing_target(target)
-	return A
+	upgrade_types = list(/datum/component/infection/upgrade/turret/home_target,
+						 /datum/component/infection/upgrade/turret/turn_speed,
+						 /datum/component/infection/upgrade/turret/flak_homing,
+						 /datum/component/infection/upgrade/turret/stamina_damage)
 

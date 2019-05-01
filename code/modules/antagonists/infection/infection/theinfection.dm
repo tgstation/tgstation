@@ -21,7 +21,6 @@
 	var/mob/camera/commander/overmind
 	var/list/angles = list() // possible angles for the node to expand on
 	var/timecreated
-	var/list/upgrade_list = list() // unlockable upgrades
 	var/list/upgrade_types = list() // the types of upgrades
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
@@ -35,9 +34,8 @@
 		air_update_turf(1)
 	ConsumeTile()
 	timecreated = world.time
-	if(upgrade_types.len > 0)
-		for(var/upgrade_type in upgrade_types)
-			upgrade_list += new upgrade_type()
+	for(var/upgrade_type in upgrade_types)
+		AddComponent(upgrade_type)
 
 /obj/structure/infection/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -59,7 +57,7 @@
 /obj/structure/infection/proc/upgrade_menu(var/mob/camera/commander/C)
 	var/list/choices = list()
 	var/list/upgrades_temp = list()
-	for(var/datum/infection/upgrade/U in upgrade_list)
+	for(var/datum/component/infection/upgrade/U in get_upgrades())
 		if(U.times == 0)
 			continue
 		var/upgrade_index = "[U.name] ([U.cost])"
@@ -72,15 +70,20 @@
 	var/upgrade_index = choices.Find(choice)
 	if(!upgrade_index)
 		return
-	var/datum/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
+	var/datum/component/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
 	if(overmind.can_buy(Chosen.cost))
-		Chosen.do_upgrade(src)
+		Chosen.do_upgrade()
 		to_chat(overmind, "<span class='warning'>Successfully upgraded [Chosen.name]!</span>")
 	return
 
+/obj/structure/infection/proc/get_upgrades()
+	return GetComponents(/datum/component/infection/upgrade)
+
 /obj/structure/infection/proc/show_description()
 	to_chat(overmind, "<span class='cultlarge'>Upgrades List</span>")
-	for(var/datum/infection/upgrade/U in upgrade_list)
+	for(var/datum/component/infection/upgrade/U in get_upgrades())
+		if(U.times == 0)
+			continue
 		to_chat(overmind, "<span class='notice'>[U.name]: [U.description]</span>")
 	return
 

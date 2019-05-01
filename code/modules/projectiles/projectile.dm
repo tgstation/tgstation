@@ -133,6 +133,7 @@
 	return TRUE
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
+	SEND_SIGNAL(firer, COMSIG_PROJECTILE_ON_HIT, target, blocked)
 	var/turf/target_loca = get_turf(target)
 
 	var/hitx

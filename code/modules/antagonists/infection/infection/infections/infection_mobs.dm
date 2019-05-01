@@ -183,8 +183,9 @@
 	var/upgrade_points = 0
 	var/times_refunded = 0 // times refunded
 	var/cycle_cooldown = 0 // cooldown before you can cycle nodes again
-	var/list/upgrade_list = list() // upgrades that are unlockable
-	var/list/upgrade_types = list(/datum/infection/upgrade/defensive_spore, /datum/infection/upgrade/offensive_spore, /datum/infection/upgrade/supportive_spore) // types of upgrades
+	var/list/upgrade_types = list(/datum/component/infection/upgrade/spore/myconid_spore,
+								  /datum/component/infection/upgrade/spore/offensive_spore,
+								  /datum/component/infection/upgrade/spore/supportive_spore)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	. = ..()
@@ -192,9 +193,8 @@
 		upgrade_points = overmind.all_upgrade_points
 	else
 		upgrade_points = 5
-	if(upgrade_types.len > 0)
-		for(var/upgrade_type in upgrade_types)
-			upgrade_list += new upgrade_type()
+	for(var/upgrade_type in upgrade_types)
+		AddComponent(upgrade_type)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Stat()
 	..()
@@ -244,7 +244,7 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/upgrade_menu()
 	var/list/choices = list()
 	var/list/upgrades_temp = list()
-	for(var/datum/infection/upgrade/U in upgrade_list)
+	for(var/datum/component/infection/upgrade/U in get_upgrades())
 		if(U.times == 0)
 			continue
 		var/upgrade_index = "[U.name] ([U.cost])"
@@ -261,11 +261,14 @@
 	var/upgrade_index = choices.Find(choice)
 	if(!upgrade_index)
 		return
-	var/datum/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
+	var/datum/component/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
 	if(can_upgrade(Chosen.cost))
-		Chosen.do_upgrade(src)
+		Chosen.do_upgrade()
 		to_chat(src, "<span class='warning'>Successfully upgraded [Chosen.name]!</span>")
 	return
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/get_upgrades()
+	return GetComponents(/datum/component/infection/upgrade)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/can_upgrade(cost = 1)
 	var/diff = upgrade_points - cost
@@ -277,7 +280,9 @@
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/show_description()
 	to_chat(src, "<span class='cultlarge'>Upgrades List</span>")
-	for(var/datum/infection/upgrade/U in upgrade_list)
+	for(var/datum/component/infection/upgrade/U in get_upgrades())
+		if(U.times == 0)
+			continue
 		to_chat(src, "<span class='notice'>[U.name]: [U.description]</span>")
 	return
 
@@ -372,11 +377,11 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Zombify(mob/living/carbon/human/H)
 	return
 
-/mob/living/simple_animal/hostile/infection/infectionspore/sentient/defensive
-	name = "defensive spore"
-	desc = "A hulking spore that blocks your every move."
-	icon_state = "blobbernaut"
-	icon_living = "blobbernaut"
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/myconid
+	name = "myconid spore"
+	desc = "A small, weak, but intelligent spore. It is the only spore with the capability to cross beacon walls."
+	icon_state = "blob_spore_temp"
+	icon_living = "blob_spore_temp"
 	health = 150
 	maxHealth = 150
 	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -390,8 +395,8 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive
 	name = "offensive spore"
 	desc = "An aggressive spore that looks like it's out for blood."
-	icon_state = "offensive_spore"
-	icon_living = "offensive_spore"
+	icon_state = "blobbernaut"
+	icon_living = "blobbernaut"
 	health = 60
 	maxHealth = 60
 	damage_coeff = list(BRUTE = 0.75, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -405,8 +410,8 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive
 	name = "supportive spore"
 	desc = "A spore that seems to know your every movement."
-	icon_state = "support_spore"
-	icon_living = "support_spore"
+	icon_state = "blobbernaut_death_loop"
+	icon_living = "blobbernaut_death_loop"
 	health = 40
 	maxHealth = 40
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)

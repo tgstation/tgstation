@@ -143,7 +143,7 @@
 		var/obj/structure/infection/normal/I = locate(/obj/structure/infection/normal) in T.contents
 		if(I && prob(15))
 			var/obj/structure/infection/turret/resistant/core/S = I.change_to(/obj/structure/infection/turret/resistant/core, overmind)
-			for(var/datum/infection/upgrade/U in S.upgrade_list)
+			for(var/datum/component/infection/upgrade/U in S.get_upgrades())
 				var/times = U.times
 				for(var/i = 1 to times)
 					U.do_upgrade(S)
