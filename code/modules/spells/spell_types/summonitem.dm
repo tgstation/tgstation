@@ -25,7 +25,7 @@
 			for(var/obj/item/item in hand_items)
 				if(item.item_flags & ABSTRACT)
 					continue
-				if(item.GetComponent(/datum/component/stationloving){
+				if(item.GetComponent(/datum/component/stationloving)){
 					continue;
 				}
 				if(item.has_trait(TRAIT_NODROP))
