@@ -1,3 +1,4 @@
+/datum/config_entry/flag/perma_dock_arrivals_shuttle //is the arrival shuttle always docked at station? Can reduce lag.
 /obj/docking_port/mobile/arrivals
 	name = "arrivals shuttle"
 	id = "arrivals"
@@ -21,6 +22,8 @@
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	. = ..()
+	if(CONFIG_GET(flag/perma_dock_arrivals_shuttle))
+		perma_docked = TRUE
 	preferred_direction = dir
 	return INITIALIZE_HINT_LATELOAD	//for latejoin list
 

@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(discord_bot)
 /datum/controller/subsystem/discord_bot/fire(resumed)
 	if(CONFIG_GET(flag/use_discord_bot))
 		//Server status file
-		if(!last_status_report || (last_status_report+(status_report_interval*10) <= world.time))
+		/*if(!last_status_report || (last_status_report+(status_report_interval*10) <= world.time))
 			last_status_report = world.time
 			if(fexists("data/discordbot/statics/server_status.txt"))
 				fdel("data/discordbot/statics/server_status.txt")
@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(discord_bot)
 			report += "}"
 			var/thefile = file("data/discordbot/statics/server_status.txt")
 			if(thefile)
-				thefile << "[report]"
+				thefile << "[report]"*/
 		//Reading commands from the discord bot
 		var/list/filelist = flist("data/discordbot/commands/")
 		if(istype(filelist,/list) && filelist.len)

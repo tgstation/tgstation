@@ -166,6 +166,8 @@
 
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client
+	if(!istype(C.eye,/atom))
+		mymob.reset_perspective(null)
 	var/turf/posobj = get_turf(C.eye)
 	var/area/areaobj = posobj.loc
 

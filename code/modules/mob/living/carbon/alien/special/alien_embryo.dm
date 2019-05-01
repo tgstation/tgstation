@@ -74,19 +74,29 @@
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
-	if(!candidates.len || !owner)
+	if((!istype(SSticker.mode,/datum/game_mode/ayylmaos) && !candidates.len) || !owner)
 		bursting = FALSE
 		stage = 4
 		return
 
-	var/mob/dead/observer/ghost = pick(candidates)
+	var/candidateckey
+	if(candidates.len)
+		var/mob/G = pick(candidates)
+		candidateckey = G.ckey
+	else
+		candidateckey = owner.ckey
+
+	if(!candidateckey)
+		bursting = FALSE
+		stage = 4
+		return
 
 	var/mutable_appearance/overlay = mutable_appearance('icons/mob/alien.dmi', "burst_lie")
 	owner.add_overlay(overlay)
 
 	var/atom/xeno_loc = get_turf(owner)
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
-	new_xeno.key = ghost.key
+	new_xeno.key = candidateckey
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100))	//To get the player's attention
 	new_xeno.canmove = 0 //so we don't move during the bursting animation
 	new_xeno.notransform = 1
