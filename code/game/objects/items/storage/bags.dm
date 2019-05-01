@@ -362,7 +362,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_combined_w_class = 200
-	STR.max_items = 90
+	STR.max_items = 50
 	STR.insert_preposition = "in"
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/glass/beaker, /obj/item/assembly/igniter, /obj/item/assembly/health, /obj/item/assembly/infra, /obj/item/assembly/mousetrap, /obj/item/assembly/prox_sensor, /obj/item/assembly/signaler, /obj/item/assembly/timer, /obj/item/assembly/voice, /obj/item/stack/cable_coil, /obj/item/screwdriver))
 
