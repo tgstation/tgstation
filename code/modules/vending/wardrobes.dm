@@ -331,8 +331,9 @@
 					/obj/item/storage/backpack/satchel/chem = 2,
 					/obj/item/storage/bag/chemistry = 3,
 					/obj/item/storage/bag/grenade_parts = 2)
-	premium = list(/obj/item/storage/belt/grenade = 2)
+	premium = list(/obj/item/storage/belt/grenade = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
+	extra_price = 125
 	payment_department = ACCOUNT_MED
 /obj/item/vending_refill/wardrobe/chem_wardrobe
 	machine_name = "ChemDrobe"
