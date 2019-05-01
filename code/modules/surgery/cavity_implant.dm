@@ -10,6 +10,7 @@
 	name = "implant item"
 	accept_hand = 1
 	accept_any_item = 1
+	repeatable = TRUE
 	time = 32
 	var/obj/item/IC = null
 
