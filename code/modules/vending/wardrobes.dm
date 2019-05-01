@@ -329,7 +329,9 @@
 					/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
 					/obj/item/storage/backpack/chemistry = 2,
 					/obj/item/storage/backpack/satchel/chem = 2,
-					/obj/item/storage/bag/chemistry = 2)
+					/obj/item/storage/bag/chemistry = 2,
+					/obj/item/storage/bag/grenade_parts = 2)
+	premium = list(/obj/item/storage/belt/grenade = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 	payment_department = ACCOUNT_MED
 /obj/item/vending_refill/wardrobe/chem_wardrobe
