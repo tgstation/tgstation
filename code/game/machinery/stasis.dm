@@ -18,11 +18,6 @@
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
 
-/obj/machinery/stasis/Initialize(mapload)
-	if(mattress_state)
-		mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, layer, plane, dir, alpha = 0, unique = TRUE)
-	return ..()
-
 /obj/machinery/stasis/examine(mob/user)
 	..()
 	var/turn_on_or_off = stasis_enabled ? "turn off" : "turn on"
@@ -59,13 +54,21 @@
 /obj/machinery/stasis/update_icon()
 	. = ..()
 	var/_running = stasis_running()
+	var/list/overlays_to_remove = managed_vis_overlays
 
-	if(mattress_on.alpha ? !_running : _running) //check the inverse of _running compared to truthy alpha, to see if they differ
-		var/new_alpha = _running ? 255 : 0
-		var/easing_direction = _running ? EASE_OUT : EASE_IN
-		animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
+	if(mattress_state)
+		if(!mattress_on || !managed_vis_overlays)
+			mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, layer, plane, dir, alpha = 0, unique = TRUE)
 
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays - mattress_on)
+		if(mattress_on.alpha ? !_running : _running) //check the inverse of _running compared to truthy alpha, to see if they differ
+			var/new_alpha = _running ? 255 : 0
+			var/easing_direction = _running ? EASE_OUT : EASE_IN
+			animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
+
+		overlays_to_remove = managed_vis_overlays - mattress_on
+
+	SSvis_overlays.remove_vis_overlay(src, overlays_to_remove)
+
 	if(occupant)
 		SSvis_overlays.add_vis_overlay(src, 'icons/obj/machines/stasis.dmi', "tubes", LYING_MOB_LAYER + 0.1, plane, dir) //using vis_overlays instead of normal overlays for mouse_opacity here
 
