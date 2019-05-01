@@ -195,10 +195,10 @@
 		return
 	D.welfare = TRUE
 
-/datum/quirk/prepared	//thanks to the coder of "Family Heirloom!" -Len
+/datum/quirk/prepared	//thanks to the coder of "Family Heirloom!"
 	name = "Came Prepared"
 	desc = "You knew what job you were getting at the station, and brought something helpful to your new job!"
-	value = 3
+	value = 4
 	var/obj/item/prepared
 	var/where
 
@@ -218,24 +218,24 @@
 		if("Botanist")
 			prepared_job = pick(/obj/item/multitool, /obj/item/reagent_containers/glass/bottle/mutagen, /obj/item/seeds/random, /obj/item/circuitboard/machine/chem_dispenser)
 		if("Bartender")
-			prepared_job = pick(/obj/item/storage/box/stunslug, /obj/item/storage/box/rubbershot)
+			prepared_job = pick(/obj/item/storage/box/stunslug, /obj/item/storage/box/rubbershot, subtypesof(/obj/item/reagent_containers/food/drinks))
 		if("Curator")
 			prepared_job = pick(/obj/item/stack/sheet/mineral/wood, /obj/item/pen/fourcolor, /obj/item/pen/invisible)
 		if("Assistant")
 			prepared_job = pick(/obj/item/stack/tile/fakepit, /obj/item/storage/box/fakesyndiesuit, /obj/item/stack/tile/fakespace)
 		//Security/Command
 		if("Captain")
-			prepared_job = pick(/obj/item/reagent_containers/food/drinks/flask/gold, /obj/item/gun/ballistic/automatic/pistol/deagle/gold, /obj/item/gun/energy/e_gun/stun)
+			prepared_job = pick(/obj/item/restraints/handcuffs, /obj/item/gun/ballistic/automatic/pistol/deagle/gold, /obj/item/gun/energy/e_gun/stun)
 		if("Head of Security")
-			prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas)
+			prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas, /obj/item/restraints/handcuffs)
 		if("Warden")
-			prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas)
+			prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas, /obj/item/restraints/handcuffs)
 		if("Security Officer")
-			prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas)
+			prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas, /obj/item/restraints/handcuffs)
 		if("Detective")
-			prepared_job = pick(/obj/item/reagent_containers/food/drinks/bottle/whiskey, /obj/item/gun/energy/e_gun/stun, /obj/item/reagent_containers/food/drinks/flask/gold)
+			prepared_job = pick(/obj/item/reagent_containers/food/drinks/bottle/whiskey, /obj/item/restraints/handcuffs, /obj/item/clothing/glasses/hud/security)
 		if("Lawyer")
-			prepared_job = pick(/obj/item/gavelhammer, /obj/item/gun/energy/e_gun/stun, /obj/item/clothing/mask/gas)
+			prepared_job = pick(/obj/item/gavelhammer, /obj/item/reagent_containers/spray/pepper, /obj/item/clothing/mask/gas)
 		//RnD
 		if("Research Director")
 			prepared_job = pick(subtypesof(/obj/item/slime_extract), /obj/item/clothing/mask/gas/welding)

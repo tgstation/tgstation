@@ -208,9 +208,9 @@
 	icon_state = "laughter"
 	list_reagents = list("laughter" = 50)
 
-//Honk-MAG, great fuckin idea @Orangebottle
+//Honk-MAG
 /obj/item/card/emagfake/honkmag
-  desc ="It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica.HONK!"
+  desc ="It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica. HONK!"
   hitsound = 'sound/items/bikehorn.ogg' //HONK
 
 /obj/item/card/emagfake/honkmag/examine(mob/user)
