@@ -35,17 +35,16 @@
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/driver_move(mob/living/user, direction)
-	var/mob/living/carbon/human/H = user
-	if(istype(H))
-		if(canmove && (H.get_num_arms() < arms_required))
-			to_chat(H, "<span class='warning'>You don't have enough arms to operate the wheels!</span>")
+	if(istype(user))
+		if(canmove && (user.get_num_arms() < arms_required))
+			to_chat(user, "<span class='warning'>You don't have enough arms to operate the wheels!</span>")
 			canmove = FALSE
-			addtimer(VARSET_CALLBACK(src, canmove , TRUE), 20)
+			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 			return FALSE
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
 		//1.5 (movespeed as of this change) multiplied by 6.7 gets ABOUT 10 (rounded), the old constant for the wheelchair that gets divided by how many arms they have
 		//if that made no sense this simply makes the wheelchair speed change along with movement speed delay
-		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / min(H.get_num_arms(), 2)
+		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / min(user.get_num_arms(), 2)
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/Moved()
@@ -104,8 +103,7 @@
 	return FALSE
 
 /obj/vehicle/ridden/wheelchair/the_whip/driver_move(mob/living/user, direction)
-	var/mob/living/carbon/human/H = user
-	if(istype(H))
+	if(istype(user))
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / H.get_num_arms()
+		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / user.get_num_arms()
 	return ..()
