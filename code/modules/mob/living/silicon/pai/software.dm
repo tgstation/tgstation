@@ -1,5 +1,4 @@
 // TODO:
-//	- Additional radio modules
 //	- Potentially roll HUDs and Records into one
 //	- Shock collar/lock system for prisoner pAIs?
 //  - Put cable in user's hand instead of on the ground
@@ -20,7 +19,8 @@
 															"universal translator" = 35,
 															//"projection array" = 15
 															"remote signaller" = 5,
-															"loudness booster" = 25
+															"loudness booster" = 25,
+															"encryption keys" = 20
 															)
 
 /mob/living/silicon/pai/proc/paiInterface()
@@ -51,6 +51,8 @@
 				left_part = softwareMedicalRecord()
 			if("securityrecord")
 				left_part = softwareSecurityRecord()
+			if("encryptionkeys")
+				left_part = softwareEncryptionKeys()
 			if("translator")
 				left_part = softwareTranslator()
 			if("atmosensor")
@@ -168,6 +170,9 @@
 					pID = 10
 			card.setEmotion(pID)
 
+		if("news")
+			newscaster.ui_interact(src)
+
 		if("signaller")
 
 			if(href_list["send"])
@@ -252,6 +257,9 @@
 				else
 					var/datum/atom_hud/med = GLOB.huds[med_hud]
 					med.remove_hud_from(src)
+		if("encryptionkeys")
+			if(href_list["toggle"])
+				encryptmod = TRUE
 		if("translator")
 			if(href_list["toggle"])
 				grant_all_languages(TRUE)
@@ -287,6 +295,7 @@
 	dat += "<A href='byond://?src=[REF(src)];software=directives'>Directives</A><br>"
 	dat += "<A href='byond://?src=[REF(src)];software=radio;sub=0'>Radio Configuration</A><br>"
 	dat += "<A href='byond://?src=[REF(src)];software=image'>Screen Display</A><br>"
+	dat += "<A href='byond://?src=[REF(src)];software=news'>Newscaster</A><br>"
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
@@ -320,6 +329,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=securityhud;sub=0'>Facial Recognition Suite</a>[(secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=[REF(src)];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+		if(s == "encryption keys")
+			dat += "<a href='byond://?src=[REF(src)];software=encryptionkeys;sub=0'>Channel Encryption Firmware</a>[(encryptmod) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
 			var/datum/language_holder/H = get_language_holder()
 			dat += "<a href='byond://?src=[REF(src)];software=translator;sub=0'>Universal Translator</a>[H.omnitongue ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
@@ -470,6 +481,14 @@
 				. += "<pre>Requested security record not found,</pre><BR>"
 			. += "<BR>\n<A href='?src=[REF(src)];software=securityrecord;sub=0'>Back</A><BR>"
 	return .
+
+// Encryption kets
+/mob/living/silicon/pai/proc/softwareEncryptionKeys()
+	var/dat = {"<h3>Encryption Key Firmware</h3><br>
+				When enabled, this device will be able to use up to two (2) encryption keys for departmental channel access.<br><br>
+				The device is currently [encryptmod ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[encryptmod ? "" : "<a href='byond://?src=[REF(src)];software=encryptionkeys;sub=0;toggle=1'>Activate Encryption Key Ports</a><br>"]"}
+	return dat
+
 
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
@@ -636,7 +655,7 @@
 /mob/living/silicon/pai/proc/softwareLoudness()
 	if(!internal_instrument)
 		internal_instrument = new(src)
-	var/dat = "<h3>Sound Synthetizer</h3>"
-	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthetizer Interface</a><br>"
+	var/dat = "<h3>Sound Synthesizer</h3>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthesizer Interface</a><br>"
 	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=2'>Choose Instrument Type</a>"
 	return dat

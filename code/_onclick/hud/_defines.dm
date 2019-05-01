@@ -138,6 +138,17 @@
 #define ui_ai_multicam "SOUTH+1:6,WEST+13"
 #define ui_ai_add_multicam "SOUTH+1:6,WEST+14"
 
+// pAI
+
+#define ui_pai_software "SOUTH:6,WEST"
+#define ui_pai_shell "SOUTH:6,WEST+1"
+#define ui_pai_chassis "SOUTH:6,WEST+2"
+#define ui_pai_rest "SOUTH:6,WEST+3"
+#define ui_pai_light "SOUTH:6,WEST+4"
+#define ui_pai_newscaster "SOUTH:6,WEST+5"
+#define ui_pai_take_picture "SOUTH:6,WEST+12"
+#define ui_pai_view_images "SOUTH:6,WEST+13"
+
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"
 
