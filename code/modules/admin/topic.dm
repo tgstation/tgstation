@@ -314,6 +314,8 @@
 			if(isnull(SSticker.admin_delay_notice))
 				return
 		else
+			if(alert(usr, "Really cancel current round end delay?", "Undelay round end", "Yes", "No") != "Yes")
+				return
 			SSticker.admin_delay_notice = null
 		SSticker.delay_end = !SSticker.delay_end
 		var/reason = SSticker.delay_end ? "for reason: [SSticker.admin_delay_notice]" : "."//laziness
