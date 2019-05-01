@@ -347,6 +347,26 @@
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/medspray, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/dropper))
 
 /*
+ *	Grenade bag
+ */
+
+/obj/item/storage/bag/grenade
+	name = "grenade bag"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bag_grenade"
+	desc = "A bag for storing grenades and grenade components."
+	w_class = WEIGHT_CLASS_TINY
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/grenade/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 200
+	STR.max_items = 90
+	STR.insert_preposition = "in"
+	STR.can_hold = typecacheof(list(/obj/item/grenade,/obj/item/reagent_containers/glass/beaker,/obj/item/assembly/igniter,/obj/item/assembly/health,/obj/item/assembly/infra,/obj/item/assembly/mousetrap,/obj/item/assembly/prox_sensor,/obj/item/assembly/signaler,/obj/item/assembly/timer,/obj/item/assembly/voice))
+
+/*
  *  Biowaste bag (mostly for xenobiologists)
  */
 
