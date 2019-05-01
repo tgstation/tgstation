@@ -103,7 +103,7 @@
 // This will be used to spawn the minion, The book won't listen to you when you are a shadow person, instead that will return you to your original body
 // Shadow person holder is a sublass of human, it is what you get transfered into [it has some special variables and methods]
 /obj/item/shadow_codex/proc/spawn_minion(mob/living/carbon/human/H)
-	H.visible_message("<span class='userdanger'>The shadows form into a humanoid figure. You see the mind of [H] leave its body.</span>")
+	H.visible_message("<span class='userdanger'>The shadows twist and form into a humanoid figure.</span>")
 	var/mob/living/carbon/human/shadowperson_holder/sph = new(H.loc) // This is where the shadowperson gets made
 	var/mob/dead/observer/ghost = H.ghostize(0)
 	sph.set_species(/datum/species/shadow)
