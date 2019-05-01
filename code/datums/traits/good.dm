@@ -194,3 +194,12 @@
 	if(!D) //if their current mob doesn't have a bank account, likely due to them being a special role (ie nuke op)
 		return
 	D.welfare = TRUE
+
+/datum/quirk/insomniac
+	name = "Insomniac"
+	desc = "You have a hard time staying asleep, and wake up much faster than others."
+	value = 1
+	mob_trait = TRAIT_LIGHT_SLEEPER
+	gain_text = "<span class='notice'>You can't seem to stay asleep.</span>"
+	lose_text = "<span class='notice'>You feel like you can finally sleep again.</span>"
+	medical_record_text = "Patient is a diagnosed insomniac, and is unable to sleep properly."
