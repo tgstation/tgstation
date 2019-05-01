@@ -489,4 +489,4 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ##	By default, this is 21x15, which matches goonstation's default
 ##  15x15 would be the standard square view.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
-DEFAULT_VIEW 21x15
+DEFAULT_VIEW 15x15
