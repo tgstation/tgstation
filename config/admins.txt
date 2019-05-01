@@ -135,6 +135,3 @@ Naksuasdf = Game Master
 MrDoomBringer = Game Master
 shizcalev = Game Master
 NicBR = Game Master
-Randomguy523 = Game Master
-V2LenKagamine = Host
-RiskyFlamingo = Game Master
