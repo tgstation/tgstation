@@ -12,6 +12,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/list/offset_features = list()
 	var/alternative_body_icon
+	var/gendered_limbs = FALSE
 
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -25,6 +26,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/disliked_food = GROSS
 	var/toxic_food = TOXIC
 	var/list/no_equip = list()	// slots the race can't equip stuff to
+	var/list/covered_blacklist = list() //blacklist items that cover specific bodyparts, e.g block suits that cover feet in a hooved species
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
@@ -257,6 +259,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
 			C.dropItemToGround(thing)
+		for(var/A in covered_blacklist)
+			if(thing && thing.body_parts_covered & A)
+				C.dropItemToGround(thing)
+				break
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
@@ -494,24 +500,38 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
+		var/mutable_appearance/underwear_overlay
+		var/mutable_appearance/undershirt_overlay
+		var/mutable_appearance/socks_overlay
 		if(H.underwear)
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
 			if(underwear)
-				standing += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
-
+				underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+				standing += underwear_overlay
 		if(H.undershirt)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
 			if(undershirt)
 				if(H.dna.species.sexes && H.gender == FEMALE)
-					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+					undershirt_overlay = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+					standing += undershirt_overlay
 				else
-					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
-
+					undershirt_overlay = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+					standing += undershirt_overlay
 		if(H.socks && H.get_num_legs(FALSE) >= 2 && !(DIGITIGRADE in species_traits))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 			if(socks)
-				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
-
+				socks_overlay = mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+				standing += socks_overlay
+		if(OFFSET_UNIFORM in H.dna.species.offset_features)
+			if(underwear_overlay)
+				underwear_overlay.pixel_x += H.dna.species.offset_features[OFFSET_UNIFORM][1]
+				underwear_overlay.pixel_y += H.dna.species.offset_features[OFFSET_UNIFORM][2]
+			if(undershirt_overlay)
+				undershirt_overlay.pixel_x += H.dna.species.offset_features[OFFSET_UNIFORM][1]
+				undershirt_overlay.pixel_y += H.dna.species.offset_features[OFFSET_UNIFORM][2]
+		if(socks_overlay && (OFFSET_SHOES in H.dna.species.offset_features))
+			socks_overlay.pixel_x += H.dna.species.offset_features[OFFSET_SHOES][1]
+			socks_overlay.pixel_y += H.dna.species.offset_features[OFFSET_SHOES][2]
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
 
@@ -749,6 +769,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
+			return FALSE
+	for(var/A in covered_blacklist)
+		if(I.body_parts_covered & A)
 			return FALSE
 
 	var/num_arms = H.get_num_arms(FALSE)

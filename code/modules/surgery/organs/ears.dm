@@ -121,7 +121,6 @@
 /obj/item/organ/ears/gehennite
 	name = "gehennite echosensory organ"
 	desc = "This jet black dome allows gehennites to perceive the world around them."
-	actions = list(/datum/action/innate/echo)
 	damage_multiplier = 2 //bane of gehnnites
 	var/datum/component/echolocation
 

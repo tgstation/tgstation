@@ -243,7 +243,6 @@
 
 #define OFFSET_UNIFORM "uniform"
 #define OFFSET_ID "id"
-#define OFFSET_GLOVES "gloves"
 #define OFFSET_GLASSES "glasses"
 #define OFFSET_EARS "ears"
 #define OFFSET_SHOES "shoes"
@@ -255,6 +254,7 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_HANDS "hands"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN				17	//youngest a character can be
