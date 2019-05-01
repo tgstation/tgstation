@@ -195,94 +195,89 @@
 		return
 	D.welfare = TRUE
 
-	/datum/quirk/prepared	//thanks to the coder of "Family Heirloom!" -Len
-		name = "Came Prepared"
-		desc = "You knew what job you were getting at the station, and brought something helpful to your new job!"
-		value = 3
-		var/obj/item/prepared
-		var/where
-	
-	/datum/quirk/prepared/on_spawn()
-		var/mob/living/carbon/human/H = quirk_holder
-		var/obj/item/prepared_job
-		switch(quirk_holder.mind.assigned_role)
-			//Service jobs
-			if("Clown")
-				prepared_job = pick(/obj/item/reagent_containers/spray/waterflower/lube, /obj/item/reagent_containers/glass/bottle/fake_gbs, /obj/item/disk/nuclear/fake, /obj/item/card/emagfake/honkmag)
-			if("Mime")
-				prepared_job = pick(/obj/item/reagent_containers/food/snacks/baguette, /obj/item/card/emagfake/honkmag, /obj/item/disk/nuclear/fake)
-			if("Janitor")
-				prepared_job = pick(/obj/item/storage/bag/trash, /obj/item/reagent_containers/spray/cleaner, /obj/item/janiupgrade)
-			if("Cook")
-				prepared_job = pick(/obj/item/kitchen/knife/butcher, /obj/item/kitchen/rollingpin,/obj/item/reagent_containers/food/snacks/dough)
-			if("Botanist")
-				prepared_job = pick(/obj/item/multitool, /obj/item/reagent_containers/glass/bottle/mutagen, /obj/item/seeds/random, /obj/item/circuitboard/machine/chem_dispenser)
-			if("Bartender")
-				prepared_job = pick(/obj/item/storage/box/stunslug, /obj/item/storage/box/rubbershot)
-			if("Curator")
-				prepared_job = pick(/obj/item/stack/sheet/mineral/wood,/obj/item/pen/fourcolor, /obj/item/pen/invisible)
-			if("Assistant")
-				prepared_job = pick(/obj/item/stack/tile/fakepit, /obj/item/storage/box/fakesyndiesuit, /obj/item/stack/tile/fakespace)
-			//Security/Command
-			if("Captain")
-				prepared_job = pick(/obj/item/reagent_containers/food/drinks/flask/gold, /obj/item/gun/ballistic/automatic/pistol/deagle/gold, /obj/item/gun/energy/e_gun/stun)
-			if("Head of Security")
-				prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas)
-			if("Warden")
-				prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas)
-			if("Security Officer")
-				prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas)
-			if("Detective")
-				prepared_job = pick(/obj/item/reagent_containers/food/drinks/bottle/whiskey, /obj/item/gun/energy/e_gun/stun, /obj/item/reagent_containers/food/drinks/flask/gold)
-			if("Lawyer")
-				prepared_job = pick(/obj/item/gavelhammer, /obj/item/gun/energy/e_gun/stun, /obj/item/clothing/mask/gas)
-			//RnD
-			if("Research Director")
-				prepared_job = pick(subtypesof(/obj/item/slime_extract), /obj/item/clothing/mask/gas/welding)
-			if("Scientist")
-				prepared_job = pick(/obj/item/clothing/mask/gas/welding, /obj/item/stack/sheet/mineral/plasma)
-			if("Roboticist")
-				prepared_job = pick(/obj/item/borg/upgrade/rename, /obj/item/borg/upgrade/restart, /obj/item/borg/upgrade/selfrepair, /obj/item/stack/sheet/mineral/plasma)
-			//Medical
-			if("Chief Medical Officer")
-				prepared_job = pick(/obj/item/reagent_containers/pill/patch/synthflesh, /obj/item/storage/pill_bottle, /obj/item/gun/syringe/rapidsyringe)
-			if("Medical Doctor")
-				prepared_job = pick(/obj/item/storage/pill_bottle, /obj/item/gun/syringe, /obj/item/reagent_containers/pill/patch/synthflesh)
-			if("Chemist")
-				prepared_job = pick(/obj/item/gun/syringe, /obj/item/stock_parts/cell/high)
-			if("Virologist")
-				prepared_job =  pick(/obj/item/gun/syringe,/obj/item/stack/sheet/mineral/plasma, /obj/item/stack/sheet/mineral/uranium, /obj/item/reagent_containers/glass/bottle/random_virus)
-			//Engineering
-			if("Chief Engineer")
-				prepared_job = pick(/obj/item/reagent_containers/food/drinks/beer, /obj/item/clothing/mask/gas/welding, /obj/item/reagent_containers/food/drinks/flask/gold)
-			if("Station Engineer")
-				prepared_job = pick(/obj/item/clothing/suit/space/hardsuit/engine,/obj/item/reagent_containers/food/drinks/beer/light)
-			if("Atmospheric Technician")
-				prepared_job = pick(/obj/item/clothing/suit/space/hardsuit/engine/atmos, /obj/item/reagent_containers/food/drinks/beer/light)
-			//Supply
-			if("Quartermaster")
-				prepared_job = pick(/obj/item/stamp, /obj/item/reagent_containers/food/drinks/beer, /obj/item/banner/cargo)
-			if("Cargo Technician")
-				prepared_job = pick(/obj/item/stamp, /obj/item/reagent_containers/food/drinks/beer, /obj/item/banner/cargo/mundane)
-			if("Shaft Miner")
-				prepared_job = pick(/obj/item/borg/upgrade/modkit/range, /obj/item/borg/upgrade/modkit/damage, /obj/item/borg/upgrade/modkit/aoe/mobs, /obj/item/storage/bag/ore/holding, /obj/item/resonator)
+/datum/quirk/prepared	//thanks to the coder of "Family Heirloom!" -Len
+	name = "Came Prepared"
+	desc = "You knew what job you were getting at the station, and brought something helpful to your new job!"
+	value = 3
+	var/obj/item/prepared
+	var/where
 
-		if(!prepared)
-			prepared = pick(
-			/obj/item/toy/cards/deck,
-			/obj/item/lighter,
-			/obj/item/dice/d20)
-		prepared = new prepared_job(get_turf(quirk_holder))
-		var/list/slots = list(
-			"in your left pocket" = SLOT_L_STORE,
-			"in your right pocket" = SLOT_R_STORE,
-			"in your backpack" = SLOT_IN_BACKPACK
+/datum/quirk/prepared/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/prepared_job
+	switch(quirk_holder.mind.assigned_role)
+		//Service jobs
+		if("Clown")
+			prepared_job = pick(/obj/item/reagent_containers/spray/waterflower/lube, /obj/item/reagent_containers/glass/bottle/fake_gbs, /obj/item/disk/nuclear/fake, /obj/item/card/emagfake/honkmag)
+		if("Mime")
+			prepared_job = pick(/obj/item/reagent_containers/food/snacks/baguette, /obj/item/card/emagfake/honkmag, /obj/item/disk/nuclear/fake)
+		if("Janitor")
+			prepared_job = pick(/obj/item/storage/bag/trash, /obj/item/reagent_containers/spray/cleaner, /obj/item/janiupgrade)
+		if("Cook")
+			prepared_job = pick(/obj/item/kitchen/knife/butcher, /obj/item/kitchen/rollingpin,/obj/item/reagent_containers/food/snacks/dough)
+		if("Botanist")
+			prepared_job = pick(/obj/item/multitool, /obj/item/reagent_containers/glass/bottle/mutagen, /obj/item/seeds/random, /obj/item/circuitboard/machine/chem_dispenser)
+		if("Bartender")
+			prepared_job = pick(/obj/item/storage/box/stunslug, /obj/item/storage/box/rubbershot)
+		if("Curator")
+			prepared_job = pick(/obj/item/stack/sheet/mineral/wood, /obj/item/pen/fourcolor, /obj/item/pen/invisible)
+		if("Assistant")
+			prepared_job = pick(/obj/item/stack/tile/fakepit, /obj/item/storage/box/fakesyndiesuit, /obj/item/stack/tile/fakespace)
+		//Security/Command
+		if("Captain")
+			prepared_job = pick(/obj/item/reagent_containers/food/drinks/flask/gold, /obj/item/gun/ballistic/automatic/pistol/deagle/gold, /obj/item/gun/energy/e_gun/stun)
+		if("Head of Security")
+			prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas)
+		if("Warden")
+			prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas)
+		if("Security Officer")
+			prepared_job = pick(/obj/item/gun/energy/e_gun/stun, /obj/item/melee/baton/loaded, /obj/item/clothing/mask/gas)
+		if("Detective")
+			prepared_job = pick(/obj/item/reagent_containers/food/drinks/bottle/whiskey, /obj/item/gun/energy/e_gun/stun, /obj/item/reagent_containers/food/drinks/flask/gold)
+		if("Lawyer")
+			prepared_job = pick(/obj/item/gavelhammer, /obj/item/gun/energy/e_gun/stun, /obj/item/clothing/mask/gas)
+		//RnD
+		if("Research Director")
+			prepared_job = pick(subtypesof(/obj/item/slime_extract), /obj/item/clothing/mask/gas/welding)
+		if("Scientist")
+			prepared_job = pick(/obj/item/clothing/mask/gas/welding, /obj/item/stack/sheet/mineral/plasma, /obj/item/storage/part_replacer)
+		if("Roboticist")
+			prepared_job = pick(/obj/item/borg/upgrade/rename, /obj/item/borg/upgrade/restart, /obj/item/borg/upgrade/selfrepair, /obj/item/stack/sheet/mineral/plasma)
+		//Medical
+		if("Chief Medical Officer")
+			prepared_job = pick(/obj/item/reagent_containers/pill/patch/synthflesh, /obj/item/storage/pill_bottle, /obj/item/gun/syringe/rapidsyringe)
+		if("Medical Doctor")
+			prepared_job = pick(/obj/item/storage/pill_bottle, /obj/item/gun/syringe, /obj/item/reagent_containers/pill/patch/synthflesh)
+		if("Chemist")
+			prepared_job = pick(/obj/item/gun/syringe, /obj/item/stock_parts/cell/high)
+		if("Virologist")
+			prepared_job =  pick(/obj/item/gun/syringe,/obj/item/stack/sheet/mineral/plasma, /obj/item/stack/sheet/mineral/uranium, /obj/item/reagent_containers/glass/bottle/random_virus)
+		//Engineering
+		if("Chief Engineer")
+			prepared_job = pick(/obj/item/reagent_containers/food/drinks/beer, /obj/item/clothing/mask/gas/welding, /obj/item/reagent_containers/food/drinks/flask/gold)
+		if("Station Engineer")
+			prepared_job = pick(/obj/item/clothing/suit/space/hardsuit/engine,/obj/item/reagent_containers/food/drinks/beer/light)
+		if("Atmospheric Technician")
+			prepared_job = pick(/obj/item/clothing/suit/space/hardsuit/engine/atmos, /obj/item/reagent_containers/food/drinks/beer/light)
+		//Supply
+		if("Quartermaster")
+			prepared_job = pick(/obj/item/stamp, /obj/item/reagent_containers/food/drinks/beer, /obj/item/banner/cargo)
+		if("Cargo Technician")
+			prepared_job = pick(/obj/item/stamp, /obj/item/reagent_containers/food/drinks/beer, /obj/item/banner/cargo/mundane)
+		if("Shaft Miner")
+			prepared_job = pick(/obj/item/borg/upgrade/modkit/range, /obj/item/borg/upgrade/modkit/damage, /obj/item/borg/upgrade/modkit/aoe/mobs, /obj/item/storage/bag/ore/holding, /obj/item/resonator)
+
+	prepared = new prepared_job(get_turf(quirk_holder))
+	var/list/slots = list(
+		"in your left pocket" = SLOT_L_STORE,
+		"in your right pocket" = SLOT_R_STORE,
+		"in your backpack" = SLOT_IN_BACKPACK
 		)
-		where = H.equip_in_one_of_slots(prepared, slots, FALSE) || "at your feet"
+	where = H.equip_in_one_of_slots(prepared, slots, FALSE) || "at your feet"
 
-	/datum/quirk/prepared/post_add()
-		if(where == "in your backpack")
-			var/mob/living/carbon/human/H = quirk_holder
-			SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+/datum/quirk/prepared/post_add()
+	if(where == "in your backpack")
+		var/mob/living/carbon/human/H = quirk_holder
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-		to_chat(quirk_holder, "<span class='boldnotice'>You thought a [prepared.name] might be useful, so you hid it [where].</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>You thought a [prepared.name] might be useful, so you hid one [where].</span>")

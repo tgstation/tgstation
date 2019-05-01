@@ -207,11 +207,11 @@
 	desc = "Just looking at this makes you want to giggle."
 	icon_state = "laughter"
 	list_reagents = list("laughter" = 50)
-  
-  //Honk-MAG, great fuckin idea @Orangebottle
+
+//Honk-MAG, great fuckin idea @Orangebottle
 /obj/item/card/emagfake/honkmag
-desc ="It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica.HONK!"
-hitsound = 'sound/items/bikehorn.ogg' //HONK
+  desc ="It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica.HONK!"
+  hitsound = 'sound/items/bikehorn.ogg' //HONK
 
 /obj/item/card/emagfake/honkmag/examine(mob/user)
-playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+  playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
