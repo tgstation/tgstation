@@ -26,7 +26,7 @@
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent, forced = forced)
 		if(BRAIN)
-			adjustBrainLoss(damage * hit_percent, forced = forced)
+			adjustBrainLoss(damage * hit_percent)
 	return 1
 
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
