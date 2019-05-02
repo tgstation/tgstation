@@ -19,14 +19,14 @@
 	amount = dna.species.spec_stun(src,amount)
 	if(has_trait(TRAIT_HEAVY_SLEEPER))
 		amount *= 1.25
-	if(has_trait(TRAIT_LIGHT_SLEEPER && !TRAIT_HEAVY_SLEEPER))
+	if(has_trait(TRAIT_LIGHT_SLEEPER))
 		amount *= 0.75
 	return ..()
 
 /mob/living/carbon/human/Sleeping(amount, updating = 1, ignore_sleepimmune = 0)
 	if(has_trait(TRAIT_HEAVY_SLEEPER))
 		amount *= 1.25
-	if(has_trait(TRAIT_LIGHT_SLEEPER && !TRAIT_HEAVY_SLEEPER))
+	if(has_trait(TRAIT_LIGHT_SLEEPER))
 		amount *= 0.75
 	return ..()
 
