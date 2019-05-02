@@ -16,5 +16,5 @@
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
 	var/mob/victim = AM
 	if(istype(victim) && !victim.is_flying() && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
-		SSblackbox.record_feedback("amount", "slips", 1)
+		SSblackbox.record_feedback("tally", "slips", 1, source.type)
 		callback.Invoke(victim)
