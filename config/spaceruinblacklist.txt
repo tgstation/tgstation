@@ -23,6 +23,7 @@
 #_maps/RandomRuins/SpaceRuins/derelict4.dmm
 #_maps/RandomRuins/SpaceRuins/derelict5.dmm
 #_maps/RandomRuins/SpaceRuins/derelict6.dmm
+#_maps/RandomRuins/SpaceRuins/DerelictOmega.dmm
 #_maps/RandomRuins/SpaceRuins/djstation.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
 #_maps/RandomRuins/SpaceRuins/gasthelizards.dmm
