@@ -156,6 +156,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
+
+			SSblackbox.record_feedback("associative", "power_alert", 1, list( "area" = src, "time" = time_stamp("YYYY-MM-DD hh:mm:ss", 1)))
+
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
 				if (state == 1)
