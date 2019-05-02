@@ -99,6 +99,12 @@
 	description = "The hush-hush of Nanotrasen when it comes to stations seemingly vanishing off the radar is an interesting topic, theories of nuclear destruction float about while Nanotrasen \
 	flat-out denies said stations ever existing."
 
+/datum/map_template/ruin/space/derelictomega
+	id = "derelictomega"
+	suffix = "derelictomega.dmm"
+	name = "Derelict Omega"
+	description = "An outdated Nanotrasen space station pattern, decomissioned due to design flaws and costly maintenance."
+
 /datum/map_template/ruin/space/empty_shell
 	id = "empty-shell"
 	suffix = "emptyshell.dmm"
