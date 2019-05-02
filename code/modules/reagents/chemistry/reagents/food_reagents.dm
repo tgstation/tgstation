@@ -158,9 +158,8 @@
 	overdose_threshold = 75 // Hyperglycaemic shock
 	taste_description = "sweetness"
 
-/datum/reagent/consumable/sugar/on_mob_life(mob/living/carbon/C)
-	if(C.has_trait(TRAIT_DIABETIC))
-		/datum/reagent/consumable/sugar
+/datum/quirk/diabetic/on_gain
+	/datum/reagent/consumable/sugar
 		overdose_threshold = 15
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
