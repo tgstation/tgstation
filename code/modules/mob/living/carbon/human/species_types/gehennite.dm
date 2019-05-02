@@ -24,13 +24,3 @@
 /datum/species/gehennite/on_species_loss(mob/living/carbon/human/H)
 	.=..()
 	H.clear_fullscreen("total")
-
-/datum/action/innate/echo
-	name = "Echolocate"
-	check_flags = AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "meson"
-
-/datum/action/innate/echo/Activate()
-	SEND_SIGNAL(owner, COMSIG_ECHOLOCATION_PING)
-

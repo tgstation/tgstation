@@ -270,7 +270,7 @@
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
 // /datum/component/echolocation signals
-#define COMSIG_ECHOLOCATION_PING "echolocation_ping"
+#define COMSIG_ECHOLOCATION_PING "echolocation_ping"				//called from datum/action/innate/echo()
 
 /*******Non-Signal Component Related Defines*******/
 
