@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" href="dmdoc.css">
+    <title>&#x2F;mob - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob.html#var">Var Details</a> - <a href="mob.html#proc">Proc Details</a></header>
+<main>
+<h1>/<a href="mob.html">mob</a><aside> inherits /<a href="atom.html">atom</a>/movable</aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/_onclick/hud/alert.dm#L636">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;alert.dm 636"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob.html#var/open_uis">open_uis</a></th><td>global</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob.html#proc/Dizzy">Dizzy</a></th><td>DIZZINESS</td></tr>
+            <tr><th><a href="mob.html#proc/Jitter">Jitter</a></th><td>JITTERINESS</td></tr>
+            <tr><th><a href="mob.html#proc/Process_Spacemove">Process_Spacemove</a></th><td>Process_Spacemove
+Called by /client/Move()
+For moving in space
+return TRUE for movement 0 for none</td></tr>
+            <tr><th><a href="mob.html#proc/adjust_bodytemperature">adjust_bodytemperature</a></th><td>TEMPERATURE</td></tr>
+            <tr><th><a href="mob.html#proc/adjust_disgust">adjust_disgust</a></th><td>GROSSED OUT</td></tr>
+            <tr><th><a href="mob.html#proc/adjust_drugginess">adjust_drugginess</a></th><td>DRUGGY</td></tr>
+            <tr><th><a href="mob.html#proc/blind_eyes">blind_eyes</a></th><td>EYE_BLIND</td></tr>
+            <tr><th><a href="mob.html#proc/blur_eyes">blur_eyes</a></th><td>EYE_BLURRY</td></tr>
+            <tr><th><a href="mob.html#proc/damage_eyes">damage_eyes</a></th><td>EYE DAMAGE</td></tr>
+            <tr><th><a href="mob.html#proc/onShuttleMove">onShuttleMove</a></th><td>Mob move procs</td></tr>
+            <tr><th><a href="mob.html#proc/set_species">set_species</a></th><td>DNA MOB-PROCS</td></tr>
+            <tr><th><a href="mob.html#proc/shared_ui_interaction">shared_ui_interaction</a></th><td>public</td></tr>
+            <tr><th><a href="mob.html#proc/shuttleRotate">shuttleRotate</a></th><td>Mob rotate procs</td></tr></table>
+    <h2><a name="var">Var Details</a></h2><h3><aside class="declaration">var </aside><a name="var/open_uis">open_uis</a>
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/tgui/external.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 82"/></a></h3>
+        <p>global</p>
+<p>Used to track UIs for a mob.</p><h2><a name="proc">Proc Details</a></h2><h3><aside class="declaration">proc </aside><a name="proc/Dizzy">Dizzy</a><aside>(amount) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mob/status_procs.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 15"/></a></aside>
+        </h3>
+        <p>DIZZINESS</p><h3><aside class="declaration">proc </aside><a name="proc/Jitter">Jitter</a><aside>(amount) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mob/status_procs.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 10"/></a></aside>
+        </h3>
+        <p>JITTERINESS</p><h3><a name="proc/Process_Spacemove">Process_Spacemove</a><aside>(movement_dir) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mob/mob_movement.dm#L209">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 209"/></a></aside>
+        </h3>
+        <p>Process_Spacemove
+Called by /client/Move()
+For moving in space
+return TRUE for movement 0 for none</p><h3><aside class="declaration">proc </aside><a name="proc/adjust_bodytemperature">adjust_bodytemperature</a><aside>(amount, min_temp, max_temp) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mob/status_procs.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 126"/></a></aside>
+        </h3>
+        <p>TEMPERATURE</p><h3><aside class="declaration">proc </aside><a name="proc/adjust_disgust">adjust_disgust</a><aside>(amount) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mob/status_procs.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 118"/></a></aside>
+        </h3>
+        <p>GROSSED OUT</p><h3><aside class="declaration">proc </aside><a name="proc/adjust_drugginess">adjust_drugginess</a><aside>(amount) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mob/status_procs.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 110"/></a></aside>
+        </h3>
+        <p>DRUGGY</p><h3><aside class="declaration">proc </aside><a name="proc/blind_eyes">blind_eyes</a><aside>(amount) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mob/status_procs.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 34"/></a></aside>
+        </h3>
+        <p>EYE_BLIND</p><h3><aside class="declaration">proc </aside><a name="proc/blur_eyes">blur_eyes</a><aside>(amount) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mob/status_procs.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 87"/></a></aside>
+        </h3>
+        <p>EYE_BLURRY</p><h3><aside class="declaration">proc </aside><a name="proc/damage_eyes">damage_eyes</a><aside>(amount) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mob/status_procs.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 23"/></a></aside>
+        </h3>
+        <p>EYE DAMAGE</p><h3><a name="proc/onShuttleMove">onShuttleMove</a><aside>(/<a href="turf.html">turf</a>/newT, /<a href="turf.html">turf</a>/oldT, /list/movement_force, move_dir, /<a href="obj.html">obj</a>/docking_port/stationary/old_dock, /<a href="obj.html">obj</a>/<a href="obj/docking_port/mobile.html">docking_port/mobile</a>/moving_dock) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/shuttle/on_move.dm#L297">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;shuttle&#x2F;on_move.dm 297"/></a></aside>
+        </h3>
+        <p>Mob move procs</p><h3><aside class="declaration">proc </aside><a name="proc/set_species">set_species</a><aside>(/<a href="datum.html">datum</a>/species/mrace, icon_update) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/datums/dna.dm#L290">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;dna.dm 290"/></a></aside>
+        </h3>
+        <p>DNA MOB-PROCS</p><h3><aside class="declaration">proc </aside><a name="proc/shared_ui_interaction">shared_ui_interaction</a><aside>(src_object) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/tgui/states.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;states.dm 58"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Standard interaction/sanity checks. Different mob types may have overrides.</p>
+<p>return UI_state The state of the UI.</p><h3><a name="proc/shuttleRotate">shuttleRotate</a><aside>(rotation, params) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/shuttle/shuttle_rotate.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;shuttle&#x2F;shuttle_rotate.dm 37"/></a></aside>
+        </h3>
+        <p>Mob rotate procs</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Lett1/tgstation/tree/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb">8693e64</a>
+        (photoroom) &mdash; dmdoc 0.1.0
+</footer>
+</body>
+</html>

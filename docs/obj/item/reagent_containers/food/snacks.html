@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <base href="../../../../">
+    <link rel="stylesheet" href="dmdoc.css">
+    <title>&#x2F;obj&#x2F;item&#x2F;reagent_containers&#x2F;food&#x2F;snacks - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+</header>
+<main>
+<h1>snack <aside>/<a href="obj.html">obj</a>/<a href="obj/item/reagent_containers/food/snacks.html">item/reagent_containers/food/snacks</a></aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/food_and_drinks/food/snacks.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;food_and_drinks&#x2F;food&#x2F;snacks.dm 31"/></a></h1>
+
+<ul>
+<li>
+<h1>Snacks</h1>
+</li>
+</ul>
+<p>Items in the &quot;Snacks&quot; subcategory are food items that people actually eat. The key points are that they are created
+already filled with reagents and are destroyed when empty. Additionally, they make a &quot;munching&quot; noise when eaten.</p>
+<p>Notes by Darem: Food in the &quot;snacks&quot; subtype can hold a maximum of 50 units. Generally speaking, you don't want to go over 40
+total for the item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
+it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use omnizine). On use
+effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).</p>
+<p>The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
+2 of the old heal_amt variable. Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a
+bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
+the bites. No more contained reagents = no more bites.</p>
+<p>Here is an example of the new formatting for anyone who wants to add more food items.</p>
+<pre><code>/obj/item/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
+    name = &quot;Xenoburger&quot;													//Name that displays in the UI.
+    desc = &quot;Smells caustic. Tastes like heresy.&quot;						//Duh
+    icon_state = &quot;xburger&quot;												//Refers to an icon in food.dmi
+/obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
+    . = ..()														//Same here.
+    reagents.add_reagent(&quot;xenomicrobes&quot;, 10)						//This is what is in the food item. you may copy/paste
+    reagents.add_reagent(&quot;nutriment&quot;, 2)							//this line of code for all the contents.
+    bitesize = 3													//This is the amount each bite consumes.
+</code></pre>
+<p>All foods are distributed among various categories. Use common sense.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Lett1/tgstation/tree/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb">8693e64</a>
+        (photoroom) &mdash; dmdoc 0.1.0
+</footer>
+</body>
+</html>

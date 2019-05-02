@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" href="dmdoc.css">
+    <title>&#x2F;procpath - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="procpath.html#var">Var Details</a></header>
+<main>
+<h1>/<a href="procpath.html">procpath</a><aside> inherits /<a href="datum.html">datum</a></aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/__DEFINES/procpath.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;procpath.dm 13"/></a></h1>
+
+<p>Represents a proc or verb path.</p>
+<p>Despite having no DM-defined static type, proc paths have some variables,
+listed below. These are not modifiable, but for a given procpath P,
+<code>new P(null, &quot;Name&quot;, &quot;Desc&quot;)</code> can be used to create a new procpath with the
+same code but new <code>name</code> and <code>desc</code> values. The other variables cannot be
+changed in this way.</p>
+<p>This type exists only to act as an annotation, providing reasonable static
+typing for procpaths. Previously, types like <code>/atom/verb</code> were used, with
+the <code>name</code> and <code>desc</code> vars of <code>/atom</code> thus being accessible. Proc and verb
+paths will fail <code>istype</code> and <code>ispath</code> checks against <code>/procpath</code>.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="procpath.html#var/category">category</a></th><td>The category or tab the verb will appear in.</td></tr>
+            <tr><th><a href="procpath.html#var/desc">desc</a></th><td>The verb's help text or description.</td></tr>
+            <tr><th><a href="procpath.html#var/invisibility">invisibility</a></th><td>Only clients/mobs with <code>see_invisibility</code> higher can use the verb.</td></tr>
+            <tr><th><a href="procpath.html#var/name">name</a></th><td>A text string of the verb's name.</td></tr></table>
+    <h2><a name="var">Var Details</a></h2><h3><aside class="declaration">var </aside><a name="var/category">category</a>
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/__DEFINES/procpath.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;procpath.dm 22"/></a></h3>
+        <p>The category or tab the verb will appear in.</p><h3><aside class="declaration">var </aside><a name="var/desc">desc</a>
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/__DEFINES/procpath.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;procpath.dm 20"/></a></h3>
+        <p>The verb's help text or description.</p><h3><aside class="declaration">var </aside><a name="var/invisibility">invisibility</a>
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/__DEFINES/procpath.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;procpath.dm 24"/></a></h3>
+        <p>Only clients/mobs with <code>see_invisibility</code> higher can use the verb.</p><h3><aside class="declaration">var </aside><a name="var/name">name</a>
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/__DEFINES/procpath.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;procpath.dm 18"/></a></h3>
+        <p>A text string of the verb's name.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Lett1/tgstation/tree/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb">8693e64</a>
+        (photoroom) &mdash; dmdoc 0.1.0
+</footer>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <base href="../">
+    <link rel="stylesheet" href="dmdoc.css">
+    <title>&#x2F;datum&#x2F;parsed_map - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/parsed_map.html#var">Var Details</a> - <a href="datum/parsed_map.html#proc">Proc Details</a></header>
+<main>
+<h1>/<a href="datum.html">datum</a>/<a href="datum/parsed_map.html">parsed_map</a>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mapping/reader.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;reader.dm 12"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/parsed_map.html#var/bounds">bounds</a></th><td>Offset bounds. Same as parsed_bounds until load().</td></tr>
+            <tr><th><a href="datum/parsed_map.html#var/parsed_bounds">parsed_bounds</a></th><td>Unoffset bounds. Null on parse failure.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/parsed_map.html#proc/New">New</a></th><td>Parse a map, possibly cropping it.</td></tr>
+            <tr><th><a href="datum/parsed_map.html#proc/check_for_errors">check_for_errors</a></th><td>Check a parsed but not yet loaded map for errors.</td></tr>
+            <tr><th><a href="datum/parsed_map.html#proc/load">load</a></th><td>Load the parsed map into the world. See [/proc/load_map] for arguments.</td></tr></table>
+    <h2><a name="var">Var Details</a></h2><h3><aside class="declaration">var </aside><a name="var/bounds">bounds</a>
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mapping/reader.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;reader.dm 23"/></a></h3>
+        <p>Offset bounds. Same as parsed_bounds until load().</p><h3><aside class="declaration">var </aside><a name="var/parsed_bounds">parsed_bounds</a>
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mapping/reader.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;reader.dm 21"/></a></h3>
+        <p>Unoffset bounds. Null on parse failure.</p><h2><a name="proc">Proc Details</a></h2><h3><a name="proc/New">New</a><aside>(tfile, x_lower, x_upper, y_lower, y_upper, measureOnly) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mapping/reader.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;reader.dm 51"/></a></aside>
+        </h3>
+        <p>Parse a map, possibly cropping it.</p><h3><aside class="declaration">proc </aside><a name="proc/check_for_errors">check_for_errors</a><aside>() 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mapping/verify.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;verify.dm 56"/></a></aside>
+        </h3>
+        <p>Check a parsed but not yet loaded map for errors.</p>
+<p>Returns a [/datum/map_report] if there are errors or <code>FALSE</code> otherwise.</p><h3><aside class="declaration">proc </aside><a name="proc/load">load</a><aside>(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mapping/reader.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;reader.dm 133"/></a></aside>
+        </h3>
+        <p>Load the parsed map into the world. See [/proc/load_map] for arguments.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Lett1/tgstation/tree/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb">8693e64</a>
+        (photoroom) &mdash; dmdoc 0.1.0
+</footer>
+</body>
+</html>

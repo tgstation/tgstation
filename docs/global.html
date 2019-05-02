@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" href="dmdoc.css">
+    <title>(global) - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="global.html#var">Var Details</a> - <a href="global.html#proc">Proc Details</a></header>
+<main>
+<h1>(global)
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/(unknown)">
+        <img src="git.png" width="16" height="16" title="(unknown)"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="global.html#var/Failsafe">Failsafe</a></th><td>Failsafe</td></tr>
+            <tr><th><a href="global.html#var/Master">Master</a></th><td>StonedMC</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="global.html#proc/completed_bounty_count">completed_bounty_count</a></th><td>Subtype Gens</td></tr>
+            <tr><th><a href="global.html#proc/getleftblocks">getleftblocks</a></th><td>DNA HELPER-PROCS</td></tr>
+            <tr><th><a href="global.html#proc/load_map">load_map</a></th><td>Shortcut function to parse a map and apply it to the world.</td></tr>
+            <tr><th><a href="global.html#proc/make_datum_references_lists">make_datum_references_lists</a></th><td>Initial Building</td></tr>
+            <tr><th><a href="global.html#proc/voice_of_god">voice_of_god</a></th><td>VOICE OF GOD</td></tr></table>
+    <h2><a name="var">Var Details</a></h2><h3><aside class="declaration">var </aside><a name="var/Failsafe">Failsafe</a>
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/controller/failsafe</aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/controllers/failsafe.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;failsafe.dm 7"/></a></h3>
+        <p>Failsafe</p>
+<p>Pretty much pokes the MC to make sure it's still alive.</p><h3><aside class="declaration">var </aside><a name="var/Master">Master</a>
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/controller/master</aside>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/controllers/master.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 11"/></a></h3>
+        <p>StonedMC</p>
+<p>Designed to properly split up a given tick among subsystems
+Note: if you read parts of this code and think &quot;why is it doing it that way&quot;
+Odds are, there is a reason</p><h2><a name="proc">Proc Details</a></h2><h3><aside class="declaration">proc </aside><a name="proc/completed_bounty_count">completed_bounty_count</a><aside>() 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/cargo/bounty.dm#L177">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;bounty.dm 177"/></a></aside>
+        </h3>
+        <p>Subtype Gens</p>
+<p>Strict Type Gens</p>
+<p>Dynamic Gens</p>
+<p>Cutoff for Non-Low Priority Bounties</p>
+<p>Low Priority Gens</p><h3><aside class="declaration">proc </aside><a name="proc/getleftblocks">getleftblocks</a><aside>(input, blocknumber, blocksize) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/datums/dna.dm#L457">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;dna.dm 457"/></a></aside>
+        </h3>
+        <p>DNA HELPER-PROCS</p><h3><aside class="declaration">proc </aside><a name="proc/load_map">load_map</a><aside>(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/mapping/reader.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;reader.dm 44"/></a></aside>
+        </h3>
+        <p>Shortcut function to parse a map and apply it to the world.</p>
+<ul>
+<li><code>dmm_file</code>: A .dmm file to load (Required).</li>
+<li><code>x_offset</code>, <code>y_offset</code>, <code>z_offset</code>: Positions representign where to load the map (Optional).</li>
+<li><code>cropMap</code>: When true, the map will be cropped to fit the existing world dimensions (Optional).</li>
+<li><code>measureOnly</code>: When true, no changes will be made to the world (Optional).</li>
+<li><code>no_changeturf</code>: When true, [turf/AfterChange] won't be called on loaded turfs</li>
+<li><code>x_lower</code>, <code>x_upper</code>, <code>y_lower</code>, <code>y_upper</code>: Coordinates (relative to the map) to crop to (Optional).</li>
+<li><code>placeOnTop</code>: Whether to use [turf/PlaceOnTop] rather than [turf/ChangeTurf] (Optional).</li>
+</ul><h3><aside class="declaration">proc </aside><a name="proc/make_datum_references_lists">make_datum_references_lists</a><aside>() 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/__HELPERS/global_lists.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;global_lists.dm 5"/></a></aside>
+        </h3>
+        <p>Initial Building</p><h3><aside class="declaration">proc </aside><a name="proc/voice_of_god">voice_of_god</a><aside>(message, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /list/span_list, base_multiplier, include_speaker, message_admins) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/modules/surgery/organs/vocal_cords.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;vocal_cords.dm 122"/></a></aside>
+        </h3>
+        <p>VOICE OF GOD</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Lett1/tgstation/tree/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb">8693e64</a>
+        (photoroom) &mdash; dmdoc 0.1.0
+</footer>
+</body>
+</html>

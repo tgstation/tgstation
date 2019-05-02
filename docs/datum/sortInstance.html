@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <base href="../">
+    <link rel="stylesheet" href="dmdoc.css">
+    <title>&#x2F;datum&#x2F;sortInstance - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/sortInstance.html#proc">Proc Details</a></header>
+<main>
+<h1>/<a href="datum.html">datum</a>/<a href="datum/sortInstance.html">sortInstance</a>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/__HELPERS/sorts/__main.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;sorts&#x2F;__main.dm 13"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/sortInstance.html#proc/gallopRight">gallopRight</a></th><td>Like gallopLeft, except that if the range contains an element equal to
+key, gallopRight returns the index after the rightmost equal element.</td></tr></table><h2><a name="proc">Proc Details</a></h2><h3><aside class="declaration">proc </aside><a name="proc/gallopRight">gallopRight</a><aside>(key, base, len, hint) 
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/__HELPERS/sorts/__main.dm#L318">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;sorts&#x2F;__main.dm 318"/></a></aside>
+        </h3>
+        <p>Like gallopLeft, except that if the range contains an element equal to
+key, gallopRight returns the index after the rightmost equal element.</p>
+<p>@param key the key whose insertion point to search for
+@param a the array in which to search
+@param base the index of the first element in the range
+@param len the length of the range; must be &gt; 0
+@param hint the index at which to begin the search, 0 &lt;= hint &lt; n.
+The closer hint is to the result, the faster this method will run.
+@param c the comparator used to order the range, and to search
+@return the int k,  0 &lt;= k &lt;= n such that a[b + k - 1] &lt;= key &lt; a[b + k]</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Lett1/tgstation/tree/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb">8693e64</a>
+        (photoroom) &mdash; dmdoc 0.1.0
+</footer>
+</body>
+</html>

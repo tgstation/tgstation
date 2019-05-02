@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <base href="../../../">
+    <link rel="stylesheet" href="dmdoc.css">
+    <title>code&#x2F;datums&#x2F;components&#x2F;README.md - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+</header>
+<main>
+<h1>Datum Component System (DCS) <aside>code/datums/components/README.md</aside> 
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/datums/components/README.md">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;README.md"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><td colspan="2"><h2>Concept</h2>
+<p>Loosely adapted from /vg/. This is an entity component system for adding behaviours to datums when inheritance doesn't quite cut it. By using signals and events instead of direct inheritance, you can inject behaviours without hacky overloads. It requires a different method of thinking, but is not hard to use correctly. If a behaviour can have application across more than one thing. Make it generic, make it a component. Atom/mob/obj event? Give it a signal, and forward it's arguments with a <code>SendSignal()</code> call. Now every component that want's to can also know about this happening.</p>
+<h3>In the code</h3>
+<h4>Slippery things</h4>
+<p>At the time of this writing, every object that is slippery overrides atom/Crossed does some checks, then slips the mob. Instead of all those Crossed overrides they could add a slippery component to all these objects. And have the checks in one proc that is run by the Crossed event</p>
+<h4>Powercells</h4>
+<p>A lot of objects have powercells. The <code>get_cell()</code> proc was added to give generic access to the cell var if it had one. This is just a specific use case of <code>GetComponent()</code></p>
+<h4>Radios</h4>
+<p>The radio object as it is should not exist, given that more things use the <em>concept</em> of radios rather than the object itself. The actual function of the radio can exist in a component which all the things that use it (Request consoles, actual radios, the SM shard) can add to themselves.</p>
+<h4>Standos</h4>
+<p>Stands have a lot of procs which mimic mob procs. Rather than inserting hooks for all these procs in overrides, the same can be accomplished with signals</p>
+<h2>API</h2>
+<h3>Defines</h3>
+<ol>
+<li><code>COMPONENT_INCOMPATIBLE</code> Return this from <code>/datum/component/Initialize</code> or <code>datum/component/OnTransfer</code> to have the component be deleted if it's applied to an incorrect type. <code>parent</code> must not be modified if this is to be returned. This will be noted in the runtime logs</li>
+</ol>
+<h3>Vars</h3>
+<ol>
+<li><code>/datum/var/list/datum_components</code> (private)
+<ul>
+<li>Lazy associated list of type -&gt; component/list of components.</li>
+</ul>
+</li>
+<li><code>/datum/var/list/comp_lookup</code> (private)
+<ul>
+<li>Lazy associated list of signal -&gt; registree/list of registrees</li>
+</ul>
+</li>
+<li><code>/datum/var/list/signal_procs</code> (private)
+<ul>
+<li>Associated lazy list of signals -&gt; <code>/datum/callback</code>s that will be run when the parent datum receives that signal</li>
+</ul>
+</li>
+<li><code>/datum/var/signal_enabled</code> (protected, boolean)
+<ul>
+<li>If the datum is signal enabled. If not, it will not react to signals</li>
+<li><code>FALSE</code> by default, set to <code>TRUE</code> when a signal is registered</li>
+</ul>
+</li>
+<li><code>/datum/component/var/dupe_mode</code> (protected, enum)
+<ul>
+<li>How duplicate component types are handled when added to the datum.
+<ul>
+<li><code>COMPONENT_DUPE_HIGHLANDER</code> (default): Old component will be deleted, new component will first have <code>/datum/component/proc/InheritComponent(datum/component/old, FALSE)</code> on it</li>
+<li><code>COMPONENT_DUPE_ALLOWED</code>: The components will be treated as separate, <code>GetComponent()</code> will return the first added</li>
+<li><code>COMPONENT_DUPE_UNIQUE</code>: New component will be deleted, old component will first have <code>/datum/component/proc/InheritComponent(datum/component/new, TRUE)</code> on it</li>
+<li><code>COMPONENT_DUPE_UNIQUE_PASSARGS</code>: New component will never exist and instead its initialization arguments will be passed on to the old component.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>/datum/component/var/dupe_type</code> (protected, type)
+<ul>
+<li>Definition of a duplicate component type
+<ul>
+<li><code>null</code> means exact match on <code>type</code> (default)</li>
+<li>Any other type means that and all subtypes</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>/datum/component/var/datum/parent</code> (protected, read-only)
+<ul>
+<li>The datum this component belongs to</li>
+<li>Never <code>null</code> in child procs</li>
+</ul>
+</li>
+<li><code>report_signal_origin</code> (protected, boolean)
+<ul>
+<li>If <code>TRUE</code>, will invoke the callback when signalled with the signal type as the first argument.</li>
+<li><code>FALSE</code> by default.</li>
+</ul>
+</li>
+</ol>
+<h3>Procs</h3>
+<ol>
+<li><code>/datum/proc/GetComponent(component_type(type)) -&gt; datum/component?</code> (public, final)
+<ul>
+<li>Returns a reference to a component of component_type if it exists in the datum, null otherwise</li>
+</ul>
+</li>
+<li><code>/datum/proc/GetComponents(component_type(type)) -&gt; list</code> (public, final)
+<ul>
+<li>Returns a list of references to all components of component_type that exist in the datum</li>
+</ul>
+</li>
+<li><code>/datum/proc/GetExactComponent(component_type(type)) -&gt; datum/component?</code> (public, final)
+<ul>
+<li>Returns a reference to a component whose type MATCHES component_type if that component exists in the datum, null otherwise</li>
+</ul>
+</li>
+<li><code>GET_COMPONENT(varname, component_type)</code> OR <code>GET_COMPONENT_FROM(varname, component_type, src)</code>
+<ul>
+<li>Shorthand for <code>var/component_type/varname = src.GetComponent(component_type)</code></li>
+</ul>
+</li>
+<li><code>SEND_SIGNAL(target, sigtype, ...)</code> (public, final)
+<ul>
+<li>Use to send signals to target datum</li>
+<li>Extra arguments are to be specified in the signal definition</li>
+<li>Returns a bitflag with signal specific information assembled from all activated components</li>
+<li>Arguments are packaged in a list and handed off to _SendSignal()</li>
+</ul>
+</li>
+<li><code>/datum/proc/AddComponent(component_type(type), ...) -&gt; datum/component</code>  (public, final)
+<ul>
+<li>Creates an instance of <code>component_type</code> in the datum and passes <code>...</code> to its <code>Initialize()</code> call</li>
+<li>Sends the <code>COMSIG_COMPONENT_ADDED</code> signal to the datum</li>
+<li>All components a datum owns are deleted with the datum</li>
+<li>Returns the component that was created. Or the old component in a dupe situation where <code>COMPONENT_DUPE_UNIQUE</code> was set</li>
+<li>If this tries to add an component to an incompatible type, the component will be deleted and the result will be <code>null</code>. This is very unperformant, try not to do it</li>
+<li>Properly handles duplicate situations based on the <code>dupe_mode</code> var</li>
+</ul>
+</li>
+<li><code>/datum/proc/LoadComponent(component_type(type), ...) -&gt; datum/component</code> (public, final)
+<ul>
+<li>Equivalent to calling <code>GetComponent(component_type)</code> where, if the result would be <code>null</code>, returns <code>AddComponent(component_type, ...)</code> instead</li>
+</ul>
+</li>
+<li><code>/datum/proc/ComponentActivated(datum/component/C)</code> (abstract, async)
+<ul>
+<li>Called on a component's <code>parent</code> after a signal received causes it to activate. <code>src</code> is the parameter</li>
+<li>Will only be called if a component's callback returns <code>TRUE</code></li>
+</ul>
+</li>
+<li><code>/datum/proc/TakeComponent(datum/component/C)</code> (public, final)
+<ul>
+<li>Properly transfers ownership of a component from one datum to another</li>
+<li>Signals <code>COMSIG_COMPONENT_REMOVING</code> on the parent</li>
+<li>Called on the datum you want to own the component with another datum's component</li>
+</ul>
+</li>
+<li><code>/datum/proc/_SendSignal(signal, list/arguments)</code> (private, final)
+<ul>
+<li>Handles most of the actual signaling procedure</li>
+<li>Will runtime if used on datums with an empty component list</li>
+</ul>
+</li>
+<li><code>/datum/proc/RegisterSignal(datum/target, signal(string/list of strings), proc_ref(type), override(boolean))</code> (protected, final)
+<ul>
+<li>If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments</li>
+<li>Makes the datum listen for the specified <code>signal</code> on it's <code>parent</code> datum.</li>
+<li>When that signal is received <code>proc_ref</code> will be called on the component, along with associated arguments</li>
+<li>Example proc ref: <code>.proc/OnEvent</code></li>
+<li>If a previous registration is overwritten by the call, a runtime occurs. Setting <code>override</code> to TRUE prevents this</li>
+<li>These callbacks run asyncronously</li>
+<li>Returning <code>TRUE</code> from these callbacks will trigger a <code>TRUE</code> return from the <code>SendSignal()</code> that initiated it</li>
+</ul>
+</li>
+<li><code>/datum/component/New(datum/parent, ...)</code> (private, final)
+<ul>
+<li>Runs internal setup for the component</li>
+<li>Extra arguments are passed to <code>Initialize()</code></li>
+</ul>
+</li>
+<li><code>/datum/component/Initialize(...)</code> (abstract, no-sleep)
+<ul>
+<li>Called by <code>New()</code> with the same argments excluding <code>parent</code></li>
+<li>Component does not exist in <code>parent</code>'s <code>datum_components</code> list yet, although <code>parent</code> is set and may be used</li>
+<li>Signals will not be received while this function is running</li>
+<li>Component may be deleted after this function completes without being attached</li>
+<li>Do not call <code>qdel(src)</code> from this function</li>
+</ul>
+</li>
+<li><code>/datum/component/Destroy(force(bool), silent(bool))</code> (virtual, no-sleep)
+<ul>
+<li>Sends the <code>COMSIG_COMPONENT_REMOVING</code> signal to the parent datum if the <code>parent</code> isn't being qdeleted</li>
+<li>Properly removes the component from <code>parent</code> and cleans up references</li>
+<li>Setting <code>force</code> makes it not check for and remove the component from the parent</li>
+<li>Setting <code>silent</code> deletes the component without sending a <code>COMSIG_COMPONENT_REMOVING</code> signal</li>
+</ul>
+</li>
+<li><code>/datum/component/proc/InheritComponent(datum/component/C, i_am_original(boolean))</code> (abstract, no-sleep)
+<ul>
+<li>Called on a component when a component of the same type was added to the same parent</li>
+<li>See <code>/datum/component/var/dupe_mode</code></li>
+<li><code>C</code>'s type will always be the same of the called component</li>
+</ul>
+</li>
+<li><code>/datum/component/proc/AfterComponentActivated()</code> (abstract, async)
+<ul>
+<li>Called on a component that was activated after it's <code>parent</code>'s <code>ComponentActivated()</code> is called</li>
+</ul>
+</li>
+<li><code>/datum/component/proc/OnTransfer(datum/new_parent)</code> (abstract, no-sleep)
+<ul>
+<li>Called before <code>new_parent</code> is assigned to <code>parent</code> in <code>TakeComponent()</code></li>
+<li>Allows the component to react to ownership transfers</li>
+</ul>
+</li>
+<li><code>/datum/component/proc/_RemoveFromParent()</code> (private, final)
+<ul>
+<li>Clears <code>parent</code> and removes the component from it's component list</li>
+</ul>
+</li>
+<li><code>/datum/component/proc/_JoinParent</code> (private, final)
+<ul>
+<li>Tries to add the component to it's <code>parent</code>s <code>datum_components</code> list</li>
+</ul>
+</li>
+<li><code>/datum/component/proc/RegisterWithParent</code> (abstract, no-sleep)
+<ul>
+<li>Used to register the signals that should be on the <code>parent</code> object</li>
+<li>Use this if you plan on the component transfering between parents</li>
+</ul>
+</li>
+<li><code>/datum/component/proc/UnregisterFromParent</code> (abstract, no-sleep)
+<ul>
+<li>Counterpart to <code>RegisterWithParent()</code></li>
+<li>Used to unregister the signals that should only be on the <code>parent</code> object</li>
+</ul>
+</li>
+</ol>
+<h3>See/Define signals and their arguments in __DEFINES\components.dm</h3></td></tr></table></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Lett1/tgstation/tree/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb">8693e64</a>
+        (photoroom) &mdash; dmdoc 0.1.0
+</footer>
+</body>
+</html>

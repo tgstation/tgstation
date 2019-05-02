@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <base href="../../">
+    <link rel="stylesheet" href="dmdoc.css">
+    <title>&#x2F;datum&#x2F;signal&#x2F;subspace - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+</header>
+<main>
+<h1>/<a href="datum.html">datum</a>/<a href="datum/signal/subspace.html">signal/subspace</a>
+        
+    
+            <a href="https://github.com/Lett1/tgstation/blob/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb/code/game/machinery/telecomms/broadcasting.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;telecomms&#x2F;broadcasting.dm 57"/></a></h1>
+
+<p>Here is the big, bad function that broadcasts a message given the appropriate
+parameters.</p>
+<p>@param M:
+Reference to the mob/speaker, stored in signal.data[&quot;mob&quot;]</p>
+<p>@param vmask:
+Boolean value if the mob is &quot;hiding&quot; its identity via voice mask, stored in
+signal.data[&quot;vmask&quot;]</p>
+<p>@param vmessage:
+If specified, will display this as the message; such as &quot;chimpering&quot;
+for monkeys if the mob is not understood. Stored in signal.data[&quot;vmessage&quot;].</p>
+<p>@param radio:
+Reference to the radio broadcasting the message, stored in signal.data[&quot;radio&quot;]</p>
+<p>@param message:
+The actual string message to display to mobs who understood mob M. Stored in
+signal.data[&quot;message&quot;]</p>
+<p>@param name:
+The name to display when a mob receives the message. signal.data[&quot;name&quot;]</p>
+<p>@param job:
+The name job to display for the AI when it receives the message. signal.data[&quot;job&quot;]</p>
+<p>@param realname:
+The &quot;real&quot; name associated with the mob. signal.data[&quot;realname&quot;]</p>
+<p>@param vname:
+If specified, will use this name when mob M is not understood. signal.data[&quot;vname&quot;]</p>
+<p>@param data:
+If specified:
+1 -- Will only broadcast to intercoms
+2 -- Will only broadcast to intercoms and station-bounced radios
+3 -- Broadcast to syndicate frequency
+4 -- AI can't track down this person. Useful for imitation broadcasts where you can't find the actual mob</p>
+<p>@param compression:
+If 0, the signal is audible
+If nonzero, the signal may be partially inaudible or just complete gibberish.</p>
+<p>@param level:
+The list of Z levels that the sending radio is broadcasting to. Having 0 in the list broadcasts on all levels</p>
+<p>@param freq
+The frequency of the signal</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Lett1/tgstation/tree/8693e6414c71111c54e0a3eee5aad4d9ed28d7eb">8693e64</a>
+        (photoroom) &mdash; dmdoc 0.1.0
+</footer>
+</body>
+</html>
