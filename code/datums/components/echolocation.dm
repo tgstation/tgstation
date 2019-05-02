@@ -69,9 +69,9 @@
 			if(!(uniques[S.type]))
 				echo_images[S.type] = image_output
 		for(var/D in S.datum_outputs)
-			var/datum/outputs/O = D
-			if(O.echo_override)
-				image_output = mutable_appearance(O.echo_override.icon, O.echo_override.icon_state, O.echo_override.layer, O.echo_override.plane)
+			if(istype(D, /datum/outputs/echo_override))
+				var/datum/outputs/echo_override/O = D
+				image_output = mutable_appearance(O.vfx.icon, O.vfx.icon_state, O.vfx.layer, O.vfx.plane)
 				realign_icon(image_output, S)
 		show_image(receivers, image_output, S)
 	for(var/T in turfs)
