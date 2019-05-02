@@ -33,7 +33,7 @@
 	A.Grant(M)
 
 /datum/component/echolocation/proc/echolocate()
-	if(!(cooldown < world.time - 30))
+	if(!(cooldown < world.time - 10))
 		return
 	cooldown = world.time
 	var/mob/H = parent
@@ -69,9 +69,9 @@
 			if(!(uniques[S.type]))
 				echo_images[S.type] = image_output
 		for(var/D in S.datum_outputs)
-			var/datum/outputs/O = D
-			if(O.echo_override)
-				image_output = mutable_appearance(O.echo_override.icon, O.echo_override.icon_state, O.echo_override.layer, O.echo_override.plane)
+			if(istype(D, /datum/outputs/echo_override))
+				var/datum/outputs/echo_override/O = D
+				image_output = mutable_appearance(O.vfx.icon, O.vfx.icon_state, O.vfx.layer, O.vfx.plane)
 				realign_icon(image_output, S)
 		show_image(receivers, image_output, S)
 	for(var/T in turfs)
@@ -89,10 +89,10 @@
 		var/mob/receiving_mob = M
 		if(receiving_mob.client)
 			receiving_mob.client.images += image_echo
-			addtimer(CALLBACK(src, .proc/remove_image, image_echo, receiving_mob), 20)
+			addtimer(CALLBACK(src, .proc/remove_image, image_echo, receiving_mob), 30)
 
 /datum/component/echolocation/proc/remove_image(sound_image, mob/M)
-	if(sound_image)
+	if(M.client && sound_image)
 		M.client.images -= sound_image
 		qdel(sound_image)
 
@@ -148,7 +148,7 @@
 	name = "Automatic Echolocation"
 
 /datum/action/innate/echo/auto/Activate()
-	addtimer(CALLBACK(src, .proc/echolocate), 20)
+	addtimer(CALLBACK(src, .proc/echolocate), 10)
 	to_chat(owner, "Instinct takes over your echolocation.")
 	active = TRUE
 
@@ -159,6 +159,4 @@
 /datum/action/innate/echo/auto/proc/echolocate()
 	if(active)
 		SEND_SIGNAL(owner, COMSIG_ECHOLOCATION_PING)
-		addtimer(CALLBACK(src, .proc/echolocate), 30)
-
-
+		addtimer(CALLBACK(src, .proc/echolocate), 10)
