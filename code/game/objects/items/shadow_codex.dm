@@ -106,8 +106,9 @@
 	H.visible_message("<span class='userdanger'>The shadows twist and form into a humanoid figure.</span>")
 	var/mob/living/carbon/human/shadowperson_holder/sph = new(H.loc) // This is where the shadowperson gets made
 	var/mob/dead/observer/ghost = H.ghostize(0)
+	ghost.mind.transfer_to(sph)
 	sph.set_species(/datum/species/shadow)
-	sph.original_caster = caster // spaghetti code but ok
+	sph.original_caster = caster
 	sph.key = ghost.key // this is where the transfer happens
 	H.Unconscious(75)
 	sph.Unconscious(75) // both of them unconscious
@@ -118,6 +119,7 @@
 /obj/item/shadow_codex/proc/shadow_pickup(mob/living/carbon/human/C)
 	var/mob/dead/observer/ghost = C.ghostize(0)
 	caster.key = ghost.key
+	ghost.mind.transfer_to(caster)
 	C.Unconscious(75)
 	caster.Unconscious(75)
 	qdel(ghost)
@@ -136,11 +138,12 @@
 
 // This is called after the shadowperson dies.
 /mob/living/carbon/human/shadowperson_holder/proc/after_death()
-	if(prob(25)) // now you fucked up, thats just life man
+	if(prob(25)) // lets just put this here so people are careful with this
 		to_chat(src, "<span class='userdanger'>C'est la vie.</span>")
 		return
 	to_chat(src, "<span class='userdanger'>You have died. You hear shadows whisper your name. Your mind returns back to its own body.</span>")
 	var/mob/dead/observer/ghost = src.ghostize(0)
+	ghost.mind.transfer_to(original_caster)
 	original_caster.key = ghost.key
 	original_caster.Unconscious(50)
 	original_caster.adjustBrainLoss(100) // oh boy more brain damage if you fuck up
