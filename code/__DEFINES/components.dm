@@ -224,7 +224,7 @@
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"					//called on an object to clean it of cleanables. Usualy with soap: (num/strength)
 
 //Echolocation signals
-#define COMSIG_ECHOLOCATION_PING "echolocation_ping"
+#define COMSIG_ECHOLOCATION_PING "echolocation_ping"			//called from datum/action/innate/echo()
 
 //Food
 #define COMSIG_FOOD_EATEN "food_eaten"		//from base of obj/item/reagent_containers/food/snacks/attack(): (mob/living/eater, mob/feeder)
