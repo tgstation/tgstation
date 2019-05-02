@@ -78,8 +78,6 @@
 /datum/objective/bloodsucker/protege/generate_objective()
 	target_role = rand(0,2) ? "HEAD" : pick(departs)
 
-	target_role = pick(departs)
-
 	// Heads?
 	if (target_role == "HEAD")
 		target_amount = rand(1, round(SSticker.mode.num_players() / 20))
@@ -203,8 +201,6 @@
 // Defile a facility with blood
 /datum/objective/bloodsucker/desecrate
 
-// HOW: Search station for solars and computers
-
 	// Space_Station_13_areas.dm  <--- all the areas
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -213,7 +209,17 @@
 // Destroy the Solar Arrays
 /datum/objective/bloodsucker/solars
 
-// HOW: Check if solar computers are set up by the end. Destroyed works too.
+// Space_Station_13_areas.dm  <--- all the areas
+/datum/objective/bloodsucker/solars/update_explanation_text()
+	explanation_text = "Prevent all solar arrays on the station from functioning."
+
+/datum/objective/bloodsucker/solars/check_completion()
+	// Sort through all /obj/machinery/power/solar_control in the station ONLY, and check that they are functioning.
+	// Make sure that lastgen is 0 or connected_panels.len is 0. Doesnt matter if it's tracking.
+	for (var/obj/machinery/power/solar_control/SC in SSsun.solars)
+		if (SC && SC.lastgen > 0 && SC.connected_panels.len > 0 && SC.connected_tracker)
+			return FALSE
+	return TRUE
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -225,6 +231,7 @@
 //						 GENERATE!
 /datum/objective/bloodsucker/heartthief/generate_objective()
 	target_amount = rand(2,3)
+
 	update_explanation_text()
 	//dangerrating += target_amount * 2
 
@@ -265,7 +272,6 @@
 	if (!owner.current || !isliving(owner.current))
 		return FALSE
 	// Dead, without a head or heart? Cya
-	//message_admins("[owner] DEBUG OBJECTIVE: Survive: [owner.current.stat] / [owner.current.BloodsuckerCanUsePowers()] .")
 	return owner.current.stat != DEAD// || owner.current.HaveBloodsuckerBodyparts()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

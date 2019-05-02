@@ -19,7 +19,7 @@
 /datum/antagonist/vassal
 	name = "Vassal"//WARNING: DO NOT SELECT" // "Vassal"
 	roundend_category = "vassals"
-	antagpanel_category = "Bloodsucker (UNFINISHED)"
+	antagpanel_category = "Bloodsucker"
 	job_rank = ROLE_BLOODSUCKER
 	var/datum/antagonist/bloodsucker/master		// Who made me?
 
@@ -29,16 +29,21 @@
 	SSticker.mode.vassals |= owner // Add if not already in here (and you might be, if you were picked at round start)
 
 	// Mindslave Add
-	var/datum/antagonist/bloodsucker/B = master.owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	if (B)
-		B.vassals |= src
-	owner.enslave_mind_to_creator(master.owner.current)
+	if (master)
+		var/datum/antagonist/bloodsucker/B = master.owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if (B)
+			B.vassals |= src
+		owner.enslave_mind_to_creator(master.owner.current)
 
 	// Master Pinpointer
 	owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
 
 	// Add Antag HUD
 	update_vassal_icons_added(owner.current, "vassal")
+
+	// Powers
+	var/datum/action/bloodsucker/vassal/recuperate/new_Recuperate = new ()
+	new_Recuperate.Grant(owner.current)
 
 	. = ..()
 
@@ -134,7 +139,7 @@
 /datum/antagonist/vamphunter
 	name = "Hunter"//WARNING: DO NOT SELECT" // "Vassal"
 	roundend_category = "hunters"
-	antagpanel_category = "Bloodsucker (UNFINISHED)"
+	antagpanel_category = "Bloodsucker"
 	job_rank = ROLE_BLOODSUCKER
 
 
@@ -241,29 +246,19 @@
 
 
 
-
-
 /datum/action/bloodsucker/trackvamp/
 	name = "Track Bloodsucker"//"Cellular Emporium"
 	desc = "Take a moment to look for clues of any nearby Bloodsuckers.<br>These creatures are slippery, and often look like the crew."
 	button_icon = 'icons/Fulpicons/fulpicons.dmi'	//This is the file for the BACKGROUND icon
 	background_icon_state = "vamp_power_off"		//And this is the state for the background icon
 	icon_icon = 'icons/Fulpicons/fulpicons.dmi'		//This is the file for the ACTION icon
-	button_icon_state = "power_human" 				//And this is the state for the action icon
-	//background_icon_state = "bg_changeling"
-	//icon_icon = 'icons/mob/actions/actions_changeling.dmi'
+	button_icon_state = "power_hunter" 				//And this is the state for the action icon
 
 	// Action-Related
 	amToggle = FALSE
 	cooldown = 200 // 10 ticks, 1 second.
 	bloodcost = 0
 
-	//icon_icon = 'icons/obj/drinks.dmi'
-	//button_icon_state = "changelingsting"
-	//background_icon_state = "bg_changeling"
-
-	// Power-Related
-	need_bloodsucker = FALSE  // Must be a bloodsucker to use this power.
 
 
 /datum/action/bloodsucker/trackvamp/ActivatePower()
@@ -280,3 +275,4 @@
 
 	// NOTE: DON'T DEACTIVATE!
 	//DeactivatePower()
+

@@ -150,7 +150,7 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.dna.species.grab_sound)
-				sound_to_play = H.dna.species.grab_sound 	
+				sound_to_play = H.dna.species.grab_sound
 		playsound(src.loc, sound_to_play, 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous

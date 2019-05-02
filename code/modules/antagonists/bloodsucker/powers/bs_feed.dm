@@ -11,17 +11,15 @@
 	still_recharging_msg = "That gift is not ready yet."*/
 
 /datum/action/bloodsucker/feed
-	name = "Feed"//"Cellular Emporium"
-	desc = "Draw the heartsblood of the living.<br><b>Passive:</b> Feed silently and unnoticed.<br><b>Aggressive:</b>Subdue your target."
+	name = "Feed"
+	desc = "Draw the heartsblood of the living.<br><b>Passive:</b> Feed silently and unnoticed by your victim.<br><b>Aggressive: </b>Subdue your target quickly."
 	button_icon_state = "power_feed"
 
 	bloodcost = 0
 	cooldown = 30
 	amToggle = TRUE
 	//var/datum/cellular_emporium/cellular_emporium
-
-
-
+	bloodsucker_can_buy = TRUE
 
 /datum/action/bloodsucker/feed/CheckCanUse(display_error)
 	if(!..(display_error))// DEFAULT CHECKS
@@ -52,11 +50,11 @@
 		return FALSE
 	// Not in correct state
 	if (owner.grab_state < GRAB_PASSIVE)//GRAB_AGGRESSIVEs)
-		to_chat(owner, "<span class='warning'>You aren't grabbing anyone!</span>") // You don't have a tight enough grip on your victim!
+		to_chat(owner, "<span class='warning'>You aren't grabbing anyone!</span>")
 		return FALSE
 	// Subtle targets MUST be carbon!
 	if (owner.grab_state < GRAB_AGGRESSIVE && !iscarbon(owner.pulling))//GRAB_AGGRESSIVEs)
-		to_chat(owner, "<span class='warning'>Lesser beings require a tighter grip!</span>") // You don't have a tight enough grip on your victim!
+		to_chat(owner, "<span class='warning'>Lesser beings require a tighter grip!</span>")
 		return FALSE
 
 	// DONE!
@@ -66,6 +64,7 @@
 
 //	NOTE: QUIET VS LOUD FEEDING!!!
 /datum/action/bloodsucker/feed/ActivatePower()
+	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up Activate(), so Deactivate() can happen after.
 
 	var/mob/living/target = owner.pulling
 	var/mob/living/user = owner
@@ -81,7 +80,7 @@
 		to_chat(user, "<span class='warning'>You pull [target] close to you and draw out your fangs...</span>")
 	if (!do_mob(user, target, (amSilent ? 60 : 30),0,1,extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))//sleep(10)
 		to_chat(user, "<span class='warning'>Your feeding was interrupted.</span>")
-		DeactivatePower(user,target)
+		//DeactivatePower(user,target)
 		return
 
 	// Put target to Sleep (Bloodsuckers are immune to their own bite's sleep effect)
@@ -91,7 +90,7 @@
 			// Wait, then Cancel if Invalid
 			sleep(5)
 			if (!ContinueActive(user,target)) // Cancel. They're gone.
-				DeactivatePower(user,target)
+				//DeactivatePower(user,target)
 				return
 		// Pull Target Close
 		if (!target.density) // Pull target to you if they don't take up space.
@@ -112,7 +111,8 @@
 	var/warning_target_dead = FALSE
 	var/warning_full = FALSE
 	var/warning_target_bloodvol = 99999
-
+	var/amount_taken = 0
+	var/was_alive = target.stat < DEAD && ishuman(target)
 	// Activate Effects
 	//target.add_trait(TRAIT_MUTE, "bloodsucker_victim")  // <----- Make mute a power you buy?
 
@@ -148,27 +148,41 @@
 				target.take_overall_damage(10,0)
 				target.emote("scream")
 
-			DeactivatePower(user,target)
+			//DeactivatePower(user,target)
+
+			// Killed Target?
+			if (was_alive)
+				CheckKilledTarget(user,target)
+
 			return
 
 		///////////////////////////////////////////////////////////
 		// 		Handle Feeding! User & Victim Effects (per tick)
 		bloodsuckerdatum.HandleFeeding(target, amSilent ? 0.2 : 1)
+		amount_taken += amSilent ? 0.2 : 1
 		if (!amSilent)
 			ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
+		if (amount_taken > 5 && target.stat < DEAD && ishuman(target))
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood) // GOOD // in bloodsucker_life.dm
+
 		///////////////////////////////////////////////////////////
 		// Done?
 		if (target.blood_volume <= 0)
 			to_chat(user, "<span class='notice'>You have bled your victim dry.</span>")
 			break
 		// Not Human?
-		if (!warning_target_inhuman && !ishuman(target))
-			to_chat(user, "<span class='notice'>You recoil at the taste of a lesser lifeform.</span>")
-			warning_target_inhuman = TRUE
+		if (!ishuman(target))
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood_bad) // BAD // in bloodsucker_life.dm
+			if (!warning_target_inhuman)
+				to_chat(user, "<span class='notice'>You recoil at the taste of a lesser lifeform.</span>")
+				warning_target_inhuman = TRUE
 		// Dead Blood?
-		if (!warning_target_dead && target.stat == DEAD)
-			to_chat(user, "<span class='notice'>Your victim is dead. [target.p_their()] blood barely nourishes you.</span>")
-			warning_target_dead = TRUE
+		if (target.stat >= DEAD)
+			if (ishuman(target))
+				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood_dead) // BAD // in bloodsucker_life.dm
+			if (!warning_target_dead)
+				to_chat(user, "<span class='notice'>Your victim is dead. [target.p_their(TRUE)] blood barely nourishes you.</span>")
+				warning_target_dead = TRUE
 		// Full?
 		if (!warning_full && user.blood_volume >= bloodsuckerdatum.maxBloodVolume)
 			to_chat(user, "<span class='notice'>You are full. Further blood will be wasted.</span>")
@@ -183,28 +197,40 @@
 				to_chat(user, "<span class='notice'>Your victim's blood is at an unsafe level.</span>")
 			warning_target_bloodvol = target.blood_volume // If we had a warning to give, it's been given by now.
 
+
 		// Blood Gulp Sound
 		owner.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 
 	// DONE!
-	DeactivatePower(user,target)
+	//DeactivatePower(user,target)
 	if (amSilent)
-		to_chat(user, "<span class='notice'>You slowly release [target]'s wrist. [target.p_their(TRUE)] face lacks expression, like you've already been forgotten.</span>")
+		to_chat(user, "<span class='notice'>You slowly release [target]'s wrist." + (target.stat == 0 ? "[target.p_their(TRUE)] face lacks expression, like you've already been forgotten.</span>" : ""))
 	else
 		user.visible_message("<span class='warning'>[user] unclenches their teeth from [target]'s neck.</span>", \
 							 "<span class='warning'>You retract your fangs and release [target] from your bite.</span>")
+	// Killed Target?
+	if (was_alive)
+		CheckKilledTarget(user,target)
 
+
+/datum/action/bloodsucker/feed/proc/CheckKilledTarget(mob/living/user, mob/living/target)
+	// Bad Vampire. You shouldn't do that.
+	if (target && target.stat >= DEAD && ishuman(target))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankkilled", /datum/mood_event/drankkilled) // BAD // in bloodsucker_life.dm
 
 /datum/action/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
 	return ..()  && user.pulling && user.pulling == target // Active, and still Antag
 	// NOTE: We don't check for user.pulling etc. because do_mob does this.
 
 /datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target, powerLevel=1)
-	//target.Sleeping(100,0) 	  // SetSleeping() only changes sleep if the input is higher than the current value. AdjustSleeping() adds or subtracts //
-	//target.Unconscious(100,1)  // SetUnconscious() only changes sleep if the input is higher than the current value. AdjustUnconscious() adds or subtracts //
-	target.Paralyze(50 * powerLevel,1)
-	//target.Knockdown(50 * powerLevel,1)  <--- Too weak! They can still crawl away.
+	if (level_current >= 2)
+		target.Unconscious(50,0)
+	if (level_current >= 3)
+		target.Sleeping(100,0)
+
+	target.Paralyze(40 + 10 * powerLevel,1)
 	// NOTE: THis is based on level of power!
+	target.adjustStaminaLoss(2.5, forced = TRUE)// Base Stamina Damage
 
 /datum/action/bloodsucker/feed/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE

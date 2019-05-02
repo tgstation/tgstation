@@ -7,7 +7,7 @@
 /datum/antagonist/bloodsucker
 	name = "Bloodsucker"
 	roundend_category = "bloodsuckers"
-	antagpanel_category = "Bloodsucker (UNFINISHED)"
+	antagpanel_category = "Bloodsucker"
 	job_rank = ROLE_BLOODSUCKER
 				// New Vars
 	// NAME
@@ -26,7 +26,8 @@
 	var/poweron_masquerade = FALSE
 
 	// STATS
-	var/vamplevel = 0
+	var/vamplevel = 1
+	var/vamplevel_unspent = 0
 	var/regenRate = 0.3					// How many points of Brute do I heal per tick?
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding. // BLOOD_VOLUME_NORMAL  550 // BLOOD_VOLUME_SAFE 475 //BLOOD_VOLUME_OKAY 336 //BLOOD_VOLUME_BAD 224 // BLOOD_VOLUME_SURVIVE 122
@@ -52,6 +53,9 @@
 
 	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
 
+	// Start Sunlight? (if first Vamp)
+	SSticker.mode.check_start_sunlight()
+
 	// Name & Title
 	SelectFirstName(owner.current.gender)
 	SelectTitle(owner.current.gender, creator ? 1 : 0) 		// If I have a creator, then set as Fledgling.
@@ -75,6 +79,9 @@
 
 	SSticker.mode.bloodsuckers -= owner
 
+	// End Sunlight? (if last Vamp)
+	SSticker.mode.check_cancel_sunlight()
+
 	// Clear Powers & Stats
 	ClearAllPowersAndStats()
 
@@ -93,9 +100,11 @@
 	to_chat(owner, "<span class='userdanger'>You are [fullname], a bloodsucking vampire!</span>")
 	owner.announce_objectives()
 	to_chat(owner, "<span class='boldannounce'>You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you will find yourself at \
-	risk of being discovered!<span>")
+	risk of being discovered!</span><br><br>")
 	//to_chat(owner, "<span class='boldannounce'>As an immortal, your power is linked to your age. The older you grow, the more abilities you will have access to.<span>")
-	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.<span>")
+	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.</span><br><br>")
+	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Rest in a <i>Coffin</i> to claim it.</span><br><br>")
+	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Fear the daylight! Solar flares will bombard the station periodically, and only your coffin can guarantee your safety.</span><br><br>")
 
 	owner.current.playsound_local(null, 'sound/Fulpsounds/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 	antag_memory += "Although you were born a mortal, in un-death you earned the name <b>[ReturnFullName(owner.current, 1)]</b>.<br>"
@@ -199,6 +208,8 @@
 		var/datum/species/S = H.dna.species
 		S.species_traits |= DRINKSBLOOD
 
+	// Clear Addictions
+	owner.current.reagents.addiction_list = list() // Start over from scratch. Lucky you! At least you're not addicted to blood anymore (if you were)
 
 	// Stats
 	if (ishuman(owner.current))
@@ -207,17 +218,27 @@
 		// Make Changes
 		S.brutemod *= 0.5
 		S.burnmod += 0.2 // 0.5													//  <--------------------  Start small, but burn mod increases based on blood pool!
-		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		S.coldmod = 0
 		S.stunmod *= 0.8 // 0.5
+		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
+		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
+		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
 		S.punchdamagelow += 1       //lowest possible punch damage   0
 		S.punchdamagehigh += 1      //highest possible punch damage	 9
-		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
-		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 
 	// Physiology
 	CheckVampOrgans() // Heart, Eyes
 
+	// Language
+	owner.current.grant_language(/datum/language/vampiric)
+
+	// Soul
+	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
+	owner.isholy = FALSE 		// is this person a chaplain or admin role allowed to use bibles
+
+	// Disabilities
+	owner.current.cure_husk()//owner.current.disabilities = 0	// Can't do this. You get stuck with Husk if you just clear disabilities.
+	owner.current.cure_blind()
 
 /datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
@@ -244,15 +265,89 @@
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(H.dna.species.type)
 
+	// NOTE: Use initial() to return things to default!
+
 	// Physiology
 	owner.current.regenerate_organs()
 
+	// Update Health
+	owner.current.setMaxHealth(100)
 
-//datum/antagonist/bloodsucker/proc/LevelUp()
-	//update_hud(TRUE)
+	// Language
+	owner.current.remove_language(/datum/language/vampiric)
 
-	//playsound(src.loc, 'sound/effects/pope_entry.ogg', 25, 1)
+	// Soul
+	if (owner.soulOwner == owner) // Return soul, if *I* own it.
+		owner.hasSoul = TRUE
 
+
+datum/antagonist/bloodsucker/proc/RankUp()
+	if (!owner || !owner.current)
+		return
+
+	vamplevel_unspent ++
+
+	// Spend Rank Immediately?
+	if (istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+		SpendRank()
+	else
+		to_chat(owner, "<EM><span class='notice'>You have grown more ancient! Sleep in a coffin that you have claimed to thicken your blood and become more powerful.</span></EM>")
+
+	update_hud(TRUE) 	// Set blood value, current rank
+
+
+datum/antagonist/bloodsucker/proc/SpendRank()
+	if (vamplevel_unspent <= 0 || !owner || !owner.current || !owner.current.client)
+		return
+
+	/////////
+	// Powers
+
+		// Purchase Power Prompt
+	var/list/options = list() // Taken from gasmask.dm, for Clown Masks.
+	for(var/pickedpower in typesof(/datum/action/bloodsucker))
+		var/datum/action/bloodsucker/power = pickedpower
+		// If I don't own it, and I'm allowed to buy it.
+		if (!(locate(power) in powers) && initial(power.bloodsucker_can_buy))
+			options[initial(power.name)] = power // TESTING: After working with TGUI, it seems you can use initial() to view the variables inside a path?
+	options["\[ Not Now \]"] = null
+
+	// Abort?
+	if (options.len > 1)
+		var/choice = input(owner.current, "You have the opportunity to grow more ancient. Select a power to advance your Rank.", "Your Blood Thickens...") in options
+		if (!choice || !options[choice])
+			to_chat(owner.current, "<span class='notice'>You prevent your blood from thickening just yet, but you may try again later.</span>")
+			return
+		var/datum/action/bloodsucker/P = options[choice]
+		BuyPower(new P)
+	else
+		to_chat(owner.current, "<span class='notice'>You grow more ancient by the night!</span>")
+
+	/////////
+	// Advance Stats
+	if (ishuman(owner.current))
+		var/mob/living/carbon/human/H = owner.current
+		var/datum/species/S = H.dna.species
+		S.burnmod += 0.05 			// Slightly more burn damage
+		S.stunmod *= 0.95			// Slightly less stun time.
+		S.punchdamagelow += 0.5
+		S.punchdamagehigh += 0.5    // NOTE: This affects the hitting power of Brawn.
+	// More Health
+	owner.current.setMaxHealth(owner.current.maxHealth + 5)
+	// Vamp Stats
+	regenRate += 0.02			// Points of brute healed (starts at 0.3)
+	feedAmount += 2				// Increase how quickly I munch down vics (15)
+	maxBloodVolume += 25		// Increase my max blood (600)
+
+
+	/////////
+
+	vamplevel ++
+	vamplevel_unspent --
+
+	update_hud(TRUE)
+
+	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -296,11 +391,19 @@
 	protege_objective.generate_objective()
 	add_objective(protege_objective)
 
-	// Heart Thief Objective:		Steal a quantity of hearts.
-	var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
-	heartthief_objective.owner = owner
-	heartthief_objective.generate_objective()
-	add_objective(heartthief_objective)
+	if (rand(0,1) == 0)
+		// Heart Thief Objective
+		var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
+		heartthief_objective.owner = owner
+		heartthief_objective.generate_objective()
+		add_objective(heartthief_objective)
+
+	else
+		// Solars Objective
+		var/datum/objective/bloodsucker/solars/solars_objective = new
+		solars_objective.owner = owner
+		solars_objective.generate_objective()
+		add_objective(solars_objective)
 
 	// Survive Objective
 	var/datum/objective/bloodsucker/survive/survive_objective = new
@@ -381,46 +484,7 @@
 //		** To rest in a coffin, either SLEEP or CLOSE THE LID while you're in it. You will be given a prompt to sleep until healed. Healing in a coffin costs NO blood!
 //
 
-//					P O W E R S
-//	* BLOOD
-//		ADDICTIVE:	A) Your blood is dangerously addictive, and causes consumers to rendew their own blood at an increased rate (as well as heal). B) Vassals on your blood get special gifts.
-//
-//	* HASTE
-//		SPRINT:	A) Hastily speed in a direction faster than the eye can see. B) Spin and dizzy people you pass. C) Chance to knock down people you pass.
-//		LUNGE:	Leap toward a location and put your target into an agressive hold.
-//
-//	* AGILITY
-//		CELERITY:	Dodge projectiles and even bullets. Perhaps avoid explosions!
-//		REFLEXES	TRAIT_NOSLIPWATER, TRAIT_NOSLIPALL
-//
-//	* STEALTH
-//		CLOAK:  	A) Vanish into the shadows when stationary. B) Moving does not break your current level of invisibility (but stops you from hiding further).
-//		DISGUISE:	A) Bear the face and voice of a new person. B) Bear a random outfit of an unknown profession.
-//
-//	* FEED
-//		A) Mute victim while Feeding (and slowly deal Stamina damage) B) Paralyze victim while feeding C) Sleep victim while Feeding
-//
-//	* MEZMERIZE
-//		LOVE:		Target falls in love with you. Being harmed directly causes them harm if they see it?
-//		STAY:		Target will do everything they can to stand in the same place.
-//		FOLLOW:		Target follows you, spouting random phrases from their history (or maybe Poly's or NPC's vocab?)
-//		ATTACK:		Target finds a nearby non-Bloodsucker victim to attack.
-//
-//	* EXPEL
-//		TAINT:		Mark areas with your corrupting blood. Your coffin must remain in an area so marked to gain any benefit. Spiders, roaches, and rats will infest the area, cobwebs grow rapidly, and trespassers are overcome with fear.
-//		SERVITUDE:	Your blood binds a mortal to your will. Vassals feel your pain and can locate you anywhere. Your death causes them agony.
-//		HEIR:		Raise a moral corpse into a Bloodsucker. The change will take a while, and the body must be brought to a tainted coffin to rise.
-//
-//	* NIGHTMARE
-//		BOGEYMAN:	Terrify those who view you in your death-form, causing them to shake, pale, and drop possessions.
-//		HORROR:		Horrified characters cannot speak, shake, and slowly push away from the source.
-//
 
-//					F L A W S
-//
-//	Bestial: Your eyes glow red when hungry
-//	Craven:
-//
 
 // 					O B J E C T I V E S
 //
@@ -576,17 +640,21 @@
 
 	return FALSE
 
+
+
 		/////////////////////////////////////
 
 
 		// BLOOD COUNTER & RANK MARKER ! //
 
-#define ui_blood_display "WEST:6,CENTER-1:15"  // 6 pixels to the right, one tile UP from center and 15 pixels down.
-#define ui_vamprank_display "WEST:6,CENTER-0:5"
+#define ui_sunlight_display "WEST:6,CENTER-0:0"  // 6 pixels to the right, zero tiles & 5 pixels DOWN.
+#define ui_blood_display "WEST:6,CENTER-1:0"  	  // 1 tile down
+#define ui_vamprank_display "WEST:6,CENTER-2:-5"   // 2 tiles down
 
 /datum/hud
 	var/obj/screen/bloodsucker/blood_counter/blood_display
-	//var/obj/screen/bloodsucker/rank_counter/vamprank_display
+	var/obj/screen/bloodsucker/rank_counter/vamprank_display
+	var/obj/screen/bloodsucker/sunlight_counter/sunlight_display
 
 /datum/antagonist/bloodsucker/proc/add_hud()
 	return
@@ -596,7 +664,8 @@
 	if (!owner.current.hud_used)
 		return
 	owner.current.hud_used.blood_display.invisibility = INVISIBILITY_ABSTRACT
-	//owner.current.hud_used.vamprank_display.invisibility = INVISIBILITY_ABSTRACT
+	owner.current.hud_used.vamprank_display.invisibility = INVISIBILITY_ABSTRACT
+	owner.current.hud_used.sunlight_display.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/antagonist/bloodsucker/proc/update_hud(updateRank=FALSE)
 	// No Hud? Get out.
@@ -604,12 +673,20 @@
 		return
 	// Update Blood Counter
 	if (owner.current.hud_used.blood_display)
-		owner.current.hud_used.blood_display.update_counter(owner.current.blood_volume)
+		var/valuecolor = "#FF6666"
+		if (owner.current.blood_volume > BLOOD_VOLUME_SAFE)
+			valuecolor =  "#FFDDDD"
+		else if (owner.current.blood_volume > BLOOD_VOLUME_BAD)
+			valuecolor =  "#FFAAAA"
+		owner.current.hud_used.blood_display.update_counter(owner.current.blood_volume, valuecolor)
+
 	// Update Rank Counter
-	//if (owner.current.hud_used.vamprank_display)
-	//	owner.current.hud_used.vamprank_display.update_counter(vamplevel)
-		//if (updateRank) // Only change icon on special request.
-		//	owner.current.hud_used.vamprank_display.icon_state = (world.time > nextLevelTick) ? "bloodsucker_rank_up" : "bloodsucker_rank"
+	if (owner.current.hud_used.vamprank_display)
+		var/valuecolor = vamplevel_unspent ? "#FFFF00" : "#FF0000"
+		owner.current.hud_used.vamprank_display.update_counter(vamplevel, valuecolor)
+		if (updateRank) // Only change icon on special request.
+			owner.current.hud_used.vamprank_display.icon_state = (vamplevel_unspent > 0) ? "rank_up" : "rank"
+
 
 /obj/screen/bloodsucker
 	invisibility = INVISIBILITY_ABSTRACT
@@ -617,7 +694,7 @@
 /obj/screen/bloodsucker/proc/clear()
 	invisibility = INVISIBILITY_ABSTRACT
 
-/obj/screen/bloodsucker/proc/update_counter(value)
+/obj/screen/bloodsucker/proc/update_counter(value, valuecolor)
 	invisibility = 0 // Make Visible
 
 /obj/screen/bloodsucker/blood_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
@@ -626,32 +703,45 @@
 	icon_state = "blood_display"//"power_display"
 	screen_loc = ui_blood_display
 
-/obj/screen/bloodsucker/blood_counter/update_counter(value)
+/obj/screen/bloodsucker/blood_counter/update_counter(value, valuecolor)
 	..()
-	var/valuecolor = "#FF6666"
-	if (value > BLOOD_VOLUME_SAFE)
-		valuecolor =  "#FFDDDD"
-	else if (value > BLOOD_VOLUME_BAD)
-		valuecolor =  "#FFAAAA"
 	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>"
 
 /obj/screen/bloodsucker/rank_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
 	icon = 'icons/Fulpicons/fulpicons.dmi'//'icons/mob/screen_gen.dmi'
 	name = "Bloodsucker Rank"
-	icon_state = "bloodsucker_rank" // Upgrade to "bloodsucker_rank_up"
+	icon_state = "rank" // Upgrade to "bloodsucker_rank_up"
 	screen_loc = ui_vamprank_display
 
-	invisibility = INVISIBILITY_ABSTRACT
-	// REMOVE THIS WHEN READY TO USE RANK!!
-
-
-/obj/screen/bloodsucker/rank_counter/update_counter(value)
+/obj/screen/bloodsucker/rank_counter/update_counter(value, valuecolor)
 	..()
-	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(value,1)]</font></div>"
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>"
+
+/obj/screen/bloodsucker/sunlight_counter
+	icon = 'icons/Fulpicons/fulpicons.dmi'//'icons/mob/screen_gen.dmi'
+	name = "Solar Flare Timer"
+	icon_state = "sunlight_night" // Upgrade to "bloodsucker_rank_up"
+	screen_loc = ui_sunlight_display
 
 
+/datum/antagonist/bloodsucker/proc/update_sunlight(value, amDay = FALSE)
+	// No Hud? Get out.
+	if (!owner.current.hud_used)
+		return
+	// Update Sun Time
+	if (owner.current.hud_used.sunlight_display)
+		var/valuecolor = "#BBBBFF"
+		if (amDay)
+			valuecolor =  "#FF5555"
+		else if(value <= 25)
+			valuecolor =  "#FFCCCC"
+		else if(value < 10)
+			valuecolor =  "#FF5555"
+		var/value_string = (value >= 60) ? "[round(value / 60, 1)] m" : "[round(value,1)] s"
+		owner.current.hud_used.sunlight_display.update_counter( value_string, valuecolor )
+		owner.current.hud_used.sunlight_display.icon_state = "sunlight_" + (amDay ? "day":"night")
 
 
-
-
-
+/obj/screen/bloodsucker/sunlight_counter/update_counter(value, valuecolor)
+	..()
+	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"

@@ -27,3 +27,78 @@
 	if (laircoffins.len == 0)
 		return
 		*/
+
+
+
+
+/datum/antagonist/bloodsucker/proc/RunLair()
+	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
+
+	while (!AmFinalDeath() && coffin && lair)
+
+		// WAit 10 Sec and Repeat
+		sleep(100)
+
+		// Coffin Moved SOMEHOW?
+		if (lair != get_area(coffin))
+			lair = get_area(coffin)
+			break
+
+		var/list/turf/area_turfs = get_area_turfs(lair)
+
+
+		// Create Dirt etc.
+		var/turf/T_Dirty = pick(area_turfs)
+		if (T_Dirty && !T_Dirty.density)
+			// Default: Dirt
+
+			// CHECK: Cobweb already there?
+			//if (!locate(var/obj/effect/decal/cleanable/cobweb) in T_Dirty)	// REMOVED! Cleanables don't stack.
+
+			// STEP ONE: COBWEBS
+
+			// CHECK: Wall to North?
+			var/turf/check_N = get_step(T_Dirty, NORTH)
+			if (istype(check_N, /turf/closed/wall))
+				// CHECK: Wall to West?
+				var/turf/check_W = get_step(T_Dirty, WEST)
+				if (istype(check_W, /turf/closed/wall))
+					new /obj/effect/decal/cleanable/cobweb (T_Dirty)
+				// CHECK: Wall to East?
+				var/turf/check_E = get_step(T_Dirty, EAST)
+				if (istype(check_E, /turf/closed/wall))
+					new /obj/effect/decal/cleanable/cobweb/cobweb2 (T_Dirty)
+
+			// STEP TWO: DIRT
+			new /obj/effect/decal/cleanable/dirt/dust (T_Dirty)
+
+
+		// Find Animals in Area
+		if (rand(0,2) == 0)
+			var/mobCount = 0
+			var/mobMax = CLAMP(area_turfs.len / 25, 1, 4)
+			for (var/turf/T in area_turfs)
+				if (!T) continue
+				var/mob/living/simple_animal/SA = locate() in T
+				if (SA)
+					mobCount ++
+					if (mobCount >= mobMax) // Already at max
+						break
+			// Spawn One
+			if (mobCount < mobMax)
+				// Seek Out Location
+				while (area_turfs.len > 0)
+					var/turf/T = pick(area_turfs)
+					if (T && !T.density)
+						var/mob/living/simple_animal/SA = /mob/living/simple_animal/mouse // pick(/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/retaliate/bat) //prob(300) /mob/living/simple_animal/mouse,
+						new SA (T)
+						break
+					area_turfs -= T
+
+		// NOTE: area_turfs is now cleared out!
+
+
+	// Done (somehow)
+	lair = null
+
+

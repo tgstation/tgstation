@@ -1,5 +1,13 @@
 
 
+
+//									IDEAS		--
+//					An object that disguises your coffin while you're in it!
+//
+//					An object that lets your lair itself protect you from sunlight, like a coffin would (no healing tho)
+
+
+
 // 		CRYPT OBJECTS
 //
 //
@@ -15,9 +23,9 @@
 //
 //	RUG			Ornate, and creaks when stepped upon by any humanoid other than yourself and your vassals.
 //
-//	COFFIN		(Handled elsewhere)
+//	X COFFIN		(Handled elsewhere)
 //
-//	CANDELABRA	(Handled elsewhere)
+//	X CANDELABRA	(Handled elsewhere)
 //
 //	THRONE		Your mental powers work at any range on anyone inside your crypt.
 //
@@ -51,7 +59,7 @@
 /obj/structure/bloodsucker
 	var/mob/living/owner
 
-
+/*
 /obj/structure/bloodsucker/bloodthrone
 	name = "wicked throne"
 	desc = "Twisted metal shards jut from the arm rests. Very uncomfortable looking. It would take a sadistic sort to sit on this jagged piece of furniture."
@@ -75,7 +83,7 @@
 /obj/structure/bloodsucker/bloodmirror
 	name = "faded mirror"
 	desc = "You get the sense that the foggy reflection looking back at you has an alien intelligence to it."
-
+*/
 
 
 /obj/structure/bloodsucker/vassalrack
@@ -100,17 +108,7 @@
 	new /obj/item/stack/rods(loc, 4)
 	qdel(src)
 
-
 /*
-			/obj/structure/closet/AltClick(mob/user)
-				..()
-				if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
-					return
-				if(opened || !secure)
-					return
-				else
-					togglelock(user)
-
 			/obj/structure/closet/CtrlShiftClick(mob/living/user)
 				if(!user.has_trait(TRAIT_SKITTISH))
 					return ..()
@@ -118,7 +116,12 @@
 					return
 				dive_into(user)
 */
+
+
+
 //					adding a STRAP on top of an icon:   look at update_icon in closets.dm, and the use of overlays.dm cut_overlay() and add_overlay()
+
+
 
 
 /obj/structure/bloodsucker/vassalrack/MouseDrop_T(atom/movable/O, mob/user)
@@ -139,7 +142,7 @@
 	attach_victim(O,user)
 
 /obj/structure/bloodsucker/vassalrack/AltClick(mob/user)
-	if (!has_buckled_mobs() || !isliving(user))
+	if (!has_buckled_mobs() || !isliving(user) || useLock)
 		return
 	// Attempt Release (Owner vs Non Owner)
 	var/mob/living/carbon/C = pick(buckled_mobs)
@@ -194,7 +197,7 @@
 	m180.Turn(180)//-90)//180
 	animate(buckled_mob, transform = m180, time = 2)
 	buckled_mob.pixel_y = buckled_mob.get_standard_pixel_y_offset(180)
-	src.visible_message(text("<span class='danger'>[buckled_mob] slides off of the rack.</span>"))
+	src.visible_message(text("<span class='danger'>[buckled_mob][buckled_mob.stat==DEAD?"'s corpse":""] slides off of the rack.</span>"))
 	density = FALSE
 	buckled_mob.AdjustParalyzed(30)
 
@@ -226,7 +229,7 @@
 		if (bloodsuckerdatum.lair != get_area(src))
 			to_chat(user, "<span class='danger'>You may only activate this structure in your lair: [bloodsuckerdatum.lair].</span>")
 			return
-		switch(alert(user,"Do you wish to afix this structure here?",,"Yes", "No"))
+		switch(alert(user,"Do you wish to afix this structure here?","Secure [src]","Yes", "No"))
 			if("Yes")
 				owner = user
 				density = FALSE
@@ -247,7 +250,7 @@
 	// Bloodsucker Owner! Let the boy go.
 	if (C.mind)
 		var/datum/antagonist/vassal/vassaldatum = C.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-		if (istype(vassaldatum) && vassaldatum.master == bloodsuckerdatum)
+		if (istype(vassaldatum) && vassaldatum.master == bloodsuckerdatum || C.stat >= DEAD)
 			unbuckle_mob(C)
 			useLock = FALSE // Failsafe
 			return
@@ -267,13 +270,23 @@
 	useLock = TRUE
 
 	// Conversion Process
-	to_chat(user, "<span class='notice'>You prepare to initiate [target] into your service.</span>")
-	while(convert_progress > 0)		// <--- Convert Progress resets when a character is attached to this object.
+	if (convert_progress > 0)
+		to_chat(user, "<span class='notice'>You prepare to initiate [target] into your service.</span>")
 		if (!do_torture(user,target))
 			to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
-			useLock = FALSE
-			return
-		convert_progress --
+		else
+			convert_progress --
+			if (convert_progress <= 0)
+				if (!SSticker.mode.can_make_vassal(target,user,display_warning=FALSE))
+					to_chat(user, "<span class='danger'>[target] doesn't respond to your persuasion. It doesn't appear they can be converted to follow you.</span>")
+				else
+					to_chat(user, "<span class='notice'>[target] looks ready for the <b>Dark Communion</b>.</span>")
+			else
+				to_chat(user, "<span class='notice'>[target] could use [convert_progress == 1?"a little":"some"] more <i>persuasion</i>.</span>")
+
+		useLock = FALSE
+		return
+
 
 	// Check: Blood
 	if (user.blood_volume < 20)
@@ -309,7 +322,7 @@
 
 /obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/target)
 
-	var/torture_time = 150 // Fifteen seconds if you aren't using anything. Shorter with weapons and such.
+	var/torture_time = 15 // Fifteen seconds if you aren't using anything. Shorter with weapons and such.
 	var/torture_dmg_brute = 2
 	var/torture_dmg_burn = 0
 
@@ -320,7 +333,7 @@
 		var/mob/living/carbon/C = target
 		BP = pick(C.bodyparts)
 		if (BP)
-			target_string += "'s " + BP.name
+			target_string += BP.name
 
 	// Get Weapon
 	var/obj/item/I = user.get_active_held_item()
@@ -332,8 +345,8 @@
 
 	// Weapon Bonus + SFX
 	if (I)
-		torture_time -= force / 2
-		torture_dmg_brute += force
+		torture_time -= I.force / 4
+		torture_dmg_brute += I.force / 4
 		//torture_dmg_burn += I.
 		if (I.sharpness == IS_SHARP)
 			torture_time -= 1
@@ -346,7 +359,7 @@
 			torture_dmg_burn += 5
 
 		I.play_tool_sound(target)
-	torture_time = max(50, torture_time)
+	torture_time = max(50, torture_time * 10) // Minimum 5 seconds.
 
 	// Now run process.
 	if (!do_mob(user, target, torture_time))
@@ -357,7 +370,7 @@
 		playsound(loc, I.hitsound, 30, 1, -1)
 		I.play_tool_sound(target)
 
-	target.visible_message("<span class='danger'>[user] has [method_string] [target][target_string] with [user.p_their()] [weapon_string]!</span>", \
+	target.visible_message("<span class='danger'>[user] has [method_string] [target]'s [target_string] with [user.p_their()] [weapon_string]!</span>", \
 						   "<span class='userdanger'>[user] has [method_string] your [target_string] with [user.p_their()] [weapon_string]!</span>")
 	if (!target.is_muzzled())
 		target.emote("scream")
@@ -367,6 +380,48 @@
 	return TRUE
 
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/structure/bloodsucker/candelabrum
+	name = "candelabrum"
+	desc = "It burns slowly, but doesn't radiate any heat."
+	icon = 'icons/Fulpicons/fulpobjects.dmi'
+	icon_state = "candelabrum"
+	light_color = "#66FFFF"//LIGHT_COLOR_BLUEGREEN // lighting.dm
+	light_power = 3
+	light_range = 0 // to 2
+	density = FALSE
+	anchored = TRUE
+	var/lit = FALSE
+
+///obj/structure/bloodsucker/candelabrum/is_hot() // candle.dm
+	//return FALSE
+
+/obj/structure/bloodsucker/candelabrum/update_icon()
+	icon_state = "candelabrum[lit ? "_lit" : ""]"
+
+/obj/structure/bloodsucker/candelabrum/attack_hand(mob/user)
+	// Unlight (only a Vamp can light it)
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if (istype(bloodsuckerdatum))
+		lit = !lit
+		if (lit)
+			set_light(2,3,"#66FFFF")
+			to_chat(user, "You wave your hand over the candelabrum. It springs to life.")
+		else
+			set_light(0)
+		update_icon()
+
+/obj/structure/bloodsucker/candelabrum/AltClick(mob/user)
+	// Bloodsuckers can turn their candles on from a distance. SPOOOOKY.
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if (istype(bloodsuckerdatum))
+		attack_hand(user)
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /datum/crafting_recipe/bloodsucker/vassalrack
@@ -378,9 +433,36 @@
 				 /obj/item/wrench
 				 )
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 5,
-				/obj/item/stack/sheet/metal = 10)
-				///obj/item/stack/packageWrap = 8,
-				///obj/item/pipe = 2)
+				/obj/item/stack/sheet/metal = 10,
+				/obj/item/stack/sheet/animalhide = 1, // /obj/item/stack/sheet/leather = 1,
+				/obj/item/restraints/handcuffs/cable = 1,
+				/obj/item/storage/belt = 1
+				// /obj/item/stack/sheet/plasteel = 5
+				)
+	//parts = list(/obj/item/storage/belt = 1
+	//			 )
+
 	time = 200
 	category = CAT_STRUCTURE
 	always_availible = FALSE	// Disabled til learned
+
+
+/datum/crafting_recipe/bloodsucker/candelabrum
+	name = "Candelabrum"
+	//desc = "For converting crewmembers into loyal Vassals."
+	result = /obj/structure/bloodsucker/candelabrum
+	tools = list(/obj/item/weldingtool,
+				 /obj/item/wrench
+				 )
+	reqs = list(/obj/item/stack/sheet/metal = 5,
+				/obj/item/stack/rods = 1,
+				/obj/item/candle = 1
+				)
+	time = 100
+	category = CAT_STRUCTURE
+	always_availible = FALSE	// Disabled til learned
+
+
+
+
+//   OTHER THINGS TO USE: HUMAN BLOOD. /obj/effect/decal/cleanable/blood

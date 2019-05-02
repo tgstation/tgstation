@@ -29,7 +29,8 @@
 //	CORPSE:			-Your Masquerade turns off when unconscious or crit.
 //
 //	FERAL:			-
-
+//
+//	CRAVEN
 
 
 

@@ -43,6 +43,11 @@
 		// Standard Update
 		update_hud()
 
+		// Daytime Sleep in Coffin
+		if (SSticker.mode.is_daylight() && !owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker"))
+			if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+				Torpor_Begin()
+
 		// Wait before next pass
 		sleep(10)//sleep(30)
 
@@ -86,7 +91,7 @@
 	///////////
 
 	// Reduce Value Quantity
-	if (target.stat == DEAD)	// Penalty for Dead Blood			<------ **** ALSO make drunk????!
+	if (target.stat == DEAD)	// Penalty for Dead Blood
 		blood_taken /= 3
 	if (!ishuman(target))		// Penalty for Non-Human Blood
 		blood_taken /= 2
@@ -105,6 +110,42 @@
 	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 
 
+/datum/mood_event/drankblood
+	description = "<span class='nicegreen'>I have fed greedly from that which nourishes me.</span>\n"
+	mood_change = 10
+	timeout = 900
+/datum/mood_event/drankblood_bad
+	description = "<span class='boldwarning'>I drank the blood of a lesser creature. Disgusting.</span>\n"
+	mood_change = -4
+	timeout = 900
+/datum/mood_event/drankblood_dead
+	description = "<span class='boldwarning'>I drank dead blood. I am better than this.</span>\n"
+	mood_change = -7
+	timeout = 900
+/datum/mood_event/drankkilled
+	description = "<span class='boldwarning'>I drank from my victim until they died. I feel...less human.</span>\n"
+	mood_change = -12
+	timeout = 6000
+/datum/mood_event/madevamp
+	description = "<span class='boldwarning'>A soul has been cursed to undeath by my own hand.</span>\n"
+	mood_change = -10
+	timeout = 10000
+/datum/mood_event/vampatefood
+	description = "<span class='boldwarning'>Mortal nourishment no longer sustains me. I feel unwell.</span>\n"
+	mood_change = -6
+	timeout = 1000
+/datum/mood_event/coffinsleep
+	description = "<span class='nicegreen'>I slept in a coffin during the day. I feel whole again.</span>\n"
+	mood_change = 8
+	timeout = 1200
+/datum/mood_event/daylight_1
+	description = "<span class='boldwarning'>I slept poorly in a makeshift coffin during the day.</span>\n"
+	mood_change = -3
+	timeout = 1000
+/datum/mood_event/daylight_2
+	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
+	mood_change = -6
+	timeout = 1200
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -145,6 +186,8 @@
 			mult *= 5 // Increase multiplier if we're sleeping in a coffin.
 			fireheal = min(C.getFireLoss(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
 			costMult = 0.25
+			// Extinguish Fire
+			C.ExtinguishMob()
 		else
 			// No Blood? Lower Mult
 			if (owner.current.blood_volume <= 0)
@@ -244,6 +287,9 @@
 		FinalDeath()
 		return
 	// Missing Brain or Heart?
+	if (!owner.current.HaveBloodsuckerBodyparts())
+		FinalDeath()
+		return
 
 				// Disable Powers: Masquerade	* NOTE * This should happen as a FLAW!
 				//if (stat >= UNCONSCIOUS)
@@ -259,8 +305,9 @@
 		to_chat(owner, "<span class='danger'>Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor.</span>")
 		if (poweron_masquerade == TRUE)
 			to_chat(owner, "<span class='warning'>Your wounds will not heal until you disable the <span class='boldnotice'>Masquerade</span> power.</span>")
+	// End Torpor: No Damage, Not Daytime
 	else
-		if (total_damage <= 0 && owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker")) // owner.current.getMaxHealth()
+		if (total_damage <= 0 && !SSticker.mode.is_daylight() && owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker")) // owner.current.getMaxHealth()
 			Torpor_End()
 		// Fake Unconscious
 		if (poweron_masquerade == TRUE && total_damage >= owner.current.getMaxHealth() - HEALTH_THRESHOLD_FULLCRIT)
@@ -270,17 +317,19 @@
 	//HEALTH_THRESHOLD_FULLCRIT -30
 	//HEALTH_THRESHOLD_DEAD -100
 
-/datum/antagonist/bloodsucker/proc/Torpor_Begin()
-	owner.current.fakedeath("bloodsucker")
-	owner.current.add_trait(TRAIT_NODEATH,"bloodsucker")	// Without this, you'll just keep dying while you recover.
+/datum/antagonist/bloodsucker/proc/Torpor_Begin(amInCoffin=FALSE)
 	owner.current.stat = UNCONSCIOUS
-	owner.current.update_stat() //owner.current.stat = UNCONSCIOUS
+	owner.current.fakedeath("bloodsucker") // Come after UNCONSCIOUS or else it fails
+	owner.current.update_stat()
+	owner.current.add_trait(TRAIT_NODEATH,"bloodsucker")	// Without this, you'll just keep dying while you recover.
+
 /datum/antagonist/bloodsucker/proc/Torpor_End()
-	owner.current.cure_fakedeath("bloodsucker")
-	owner.current.remove_trait(TRAIT_NODEATH,"bloodsucker")
 	owner.current.stat = SOFT_CRIT
-	owner.current.update_stat() //owner.current.stat = CONSCIOUS
+	owner.current.cure_fakedeath("bloodsucker") // Come after SOFT_CRIT or else it fails
+	owner.current.update_stat()
+	owner.current.remove_trait(TRAIT_NODEATH,"bloodsucker")
 	to_chat(owner, "<span class='warning'>You have recovered from Torpor.</span>")
+
 
 
 
@@ -336,6 +385,8 @@
 
 
 /datum/antagonist/bloodsucker/proc/handle_eat_human_food(var/food_nutrition) // Called from snacks.dm and drinks.dm
+	set waitfor = FALSE
+
 	if (!owner.current || !iscarbon(owner.current))
 		return
 	var/mob/living/carbon/C = owner.current
@@ -349,7 +400,7 @@
 		return
 	// Haven't eaten, but I'm in a Human Disguise.
 	else if (poweron_masquerade)
-		to_chat(C, "<span class='notice'>Your stomach turns, but your Human Disguise keeps the food down...for now.</span>")
+		to_chat(C, "<span class='notice'>Your stomach turns, but your \"human disguise\" keeps the food down...for now.</span>")
 
 	// First Food
 
@@ -377,15 +428,17 @@
 		switch(sickphase)
 			if (1)
 				to_chat(C, "<span class='warning'>You feel unwell. You can taste ash on your tongue.</span>")
+				C.Immobilize(10)
 			if (2)
 				to_chat(C, "<span class='warning'>Your stomach turns. Whatever you ate tastes of grave dirt and brimstone.</span>")
-				C.Dizzy(15)
+				//C.Dizzy(15)
+				C.Immobilize(20)
 			if (3)
 				to_chat(C, "<span class='warning'>You purge the food of the living from your viscera! You've never felt worse.</span>")
 				C.vomit(foodInGut * 4, foodInGut * 2, 0)  // (var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
 				C.blood_volume = max(0, C.blood_volume - foodInGut * 2)
-				C.Stun(rand(20,30))
-				C.Dizzy(50)
+				C.Stun(30)
+				//C.Dizzy(50)
 				foodInGut = 0
 
 		sickphase ++

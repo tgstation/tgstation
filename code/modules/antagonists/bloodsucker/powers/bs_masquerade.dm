@@ -17,13 +17,14 @@
 
 
 /datum/action/bloodsucker/masquerade
-	name = "Masquerade"//"Cellular Emporium"
-	desc = "Feign the vital signs of a mortal, and escape both casual and medical notice as the monster you truly are."
+	name = "Masquerade"
+	desc = "Feign the vital signs of a mortal, and escape both casual and medical notice as the monster you truly are.<br><br><i>Your over-time blood consumption increases while Masquerade is active.</i>"
 	button_icon_state = "power_human"
 
 	bloodcost = 10
 	cooldown = 50
 	amToggle = TRUE
+	bloodsucker_can_buy = TRUE
 
 
 
@@ -71,7 +72,7 @@
 
 		sleep(20) // Check every few ticks that we haven't disabled this power
 
-	DeactivatePower()
+	//DeactivatePower()
 
 
 

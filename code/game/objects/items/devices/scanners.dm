@@ -320,7 +320,7 @@ GENE SCANNER
 				var/mob/living/carbon/human/H = C
 				if(H.bleed_rate)
 					to_chat(user, "<span class='danger'>Subject is bleeding!</span>")
-			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+			var/blood_percent =  round((C.scan_blood_volume() / BLOOD_VOLUME_NORMAL)*100)		// FULPSTATION: Vamps don't show blood % when using Masquerade.
 			var/blood_type = C.dna.blood_type
 			if(blood_id != "blood")//special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]

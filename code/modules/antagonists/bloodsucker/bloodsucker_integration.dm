@@ -16,6 +16,21 @@
 	return TRUE
 
 
+/mob/living/proc/HaveBloodsuckerBodyparts(var/displaymessage="") // displaymessage can be something such as "rising from death" for Torpid Sleep. givewarningto is the person receiving messages.
+	if (!getorganslot("heart"))
+		if (displaymessage != "")
+			to_chat(src, "<span class='warning'>Without a heart, you are incapable of [displaymessage].</span>")
+		return FALSE
+	if (!get_bodypart("head"))
+		if (displaymessage != "")
+			to_chat(src, "<span class='warning'>Without a head, you are incapable of [displaymessage].</span>")
+		return FALSE
+	if (!getorgan(/obj/item/organ/brain)) // NOTE: This is mostly just here so we can do one scan for all needed parts when creating a vamp. You probably won't be trying to use powers w/out a brain.
+		if (displaymessage != "")
+			to_chat(src, "<span class='warning'>Without a brain, you are incapable of [displaymessage].</span>")
+		return FALSE
+	return TRUE
+
 
 
 
@@ -32,8 +47,16 @@
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	if (!bloodsuckerdatum)
 		return ""
+
+	// Viewer is Target's Vassal?
+	if (viewer.mind.has_antag_datum(ANTAG_DATUM_VASSAL) in bloodsuckerdatum.vassals)
+		var/returnString = "\[<span class='warning'><EM>This is your Master!</EM></span>\]"
+		var/returnIcon = "[icon2html('icons/Fulpicons/fulpicons_small.dmi', world, "bloodsucker")]"
+		returnString += "\n"
+		return returnIcon + returnString
+
 	// Viewer not a Vamp AND not the target's vassal?
-	if (!viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))// && !(viewer in bloodsuckerdatum.vassals))
+	if (!viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) && !(viewer in bloodsuckerdatum.vassals))
 		return ""
 
 	// Default String
@@ -68,7 +91,7 @@
 		returnIcon = "[icon2html('icons/Fulpicons/fulpicons_small.dmi', world, "vassal")]"
 	// Am I someone ELSE'S Vassal?
 	else if (viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		returnString +=	"<span class='boldwarning'>This [dna.species.name] bears the mark of [vassaldatum.master.ReturnFullName(vassaldatum.master.owner.current,1)]</span>"
+		returnString +=	"This [dna.species.name] bears the mark of <span class='boldwarning'>[vassaldatum.master.ReturnFullName(vassaldatum.master.owner.current,1)]</span>"
 		returnIcon = "[icon2html('icons/Fulpicons/fulpicons_small.dmi', world, "vassal_grey")]"
 	// Are you serving the same master as I am?
 	else if (viewer.mind.has_antag_datum(ANTAG_DATUM_VASSAL) in vassaldatum.master.vassals)
@@ -76,7 +99,7 @@
 		returnIcon = "[icon2html('icons/Fulpicons/fulpicons_small.dmi', world, "vassal")]"
 	// You serve a different Master than I do.
 	else
-		returnString += "<span class='boldwarning'>[p_they(TRUE)] bears the mark of another Bloodsucker</span>"
+		returnString += "[p_they(TRUE)] bears the mark of another Bloodsucker"
 		returnIcon = "[icon2html('icons/Fulpicons/fulpicons_small.dmi', world, "vassal_grey")]"
 
 	returnString += "</span>\]\n"
@@ -97,3 +120,13 @@
 	// If a Bloodsucker is malnourished, AND if his temperature matches his surroundings (aka he hasn't fed recently and looks COLD)...
 	return  blood_volume < BLOOD_VOLUME_OKAY // && !(bodytemperature <= get_temperature() + 2)
 
+
+
+/mob/living/carbon/proc/scan_blood_volume()
+	// Vamps don't show up normally to scanners unless Masquerade power is on ----> scanner.dm
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if (istype(bloodsuckerdatum) && bloodsuckerdatum.poweron_masquerade)
+		return BLOOD_VOLUME_NORMAL
+
+	else
+		return blood_volume
