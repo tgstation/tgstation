@@ -271,6 +271,7 @@
 #include "code\controllers\subsystem\vis_overlays.dm"
 #include "code\controllers\subsystem\vote.dm"
 #include "code\controllers\subsystem\weather.dm"
+#include "code\controllers\subsystem\processing\echolocation.dm"
 #include "code\controllers\subsystem\processing\fastprocess.dm"
 #include "code\controllers\subsystem\processing\fields.dm"
 #include "code\controllers\subsystem\processing\nanites.dm"

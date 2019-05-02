@@ -13,7 +13,9 @@
 	RegisterSignal(parent, COMSIG_ECHOLOCATION_PING, .proc/echolocate)
 	echo_blacklist = typecacheof(list(
 	/atom/movable/lighting_object,
-	/obj/effect,
+	/obj/effect/decal/cleanable/blood,
+	/obj/effect/decal/cleanable/xenoblood,
+	/obj/effect/decal/cleanable/oil,
 	/obj/screen,
 	/image,
 	/turf/open,
@@ -33,7 +35,7 @@
 	A.Grant(M)
 
 /datum/component/echolocation/proc/echolocate()
-	if(!(cooldown < world.time - 10))
+	if(!(cooldown < world.time - 15))
 		return
 	cooldown = world.time
 	var/mob/H = parent
@@ -75,8 +77,14 @@
 				realign_icon(image_output, S)
 		show_image(receivers, image_output, S)
 	for(var/T in turfs)
-		image_output = generate_wall_image(T)
-		image_output.loc = T
+		var/key = generate_wall_key(T)
+		if(echo_images[key])
+			image_output = mutable_appearance(echo_images[key].icon, echo_images[key].icon_state, echo_images[key].layer, echo_images[key].plane)
+			image_output.filters = echo_images[key].filters
+		else
+			image_output = generate_wall_image(T)
+			image_output.loc = T
+			echo_images[generate_wall_key(T)] = image_output
 		show_image(receivers, image_output, T)
 
 /datum/component/echolocation/proc/show_image(list/receivers, mutable_appearance/mutable_echo, atom/input)
@@ -126,6 +134,15 @@
 				I.DrawBox(null,1,2,1,31)
 	return mutable_appearance(I, null, CURSE_LAYER, 50)
 
+/datum/component/echolocation/proc/generate_wall_key(turf/input)
+	var/list/dirs = list()
+	for(var/direction in GLOB.cardinals)
+		var/turf/T = get_step(input, direction)
+		if(istype(T, /turf/closed))
+			dirs += direction
+	var/key = dirs.Join()
+	return key
+
 /datum/component/echolocation/proc/realign_icon(mutable_appearance/I, atom/input)
 	I.dir = input.dir
 	I.loc = input.loc
@@ -133,7 +150,6 @@
 	I.pixel_y = input.pixel_y
 
 //actions
-
 
 /datum/action/innate/echo
 	name = "Echolocate"
@@ -148,15 +164,14 @@
 	name = "Automatic Echolocation"
 
 /datum/action/innate/echo/auto/Activate()
-	addtimer(CALLBACK(src, .proc/echolocate), 10)
-	to_chat(owner, "Instinct takes over your echolocation.")
-	active = TRUE
+	START_PROCESSING(SSecholocation, src)
+	to_chat(owner, "<span class='notice'>Instinct takes over your echolocation.</span>")
 
 /datum/action/innate/echo/auto/Deactivate()
-	active = FALSE
-	to_chat(owner, "You pay more attention on when to echolocate.")
+	STOP_PROCESSING(SSecholocation, src)
+	to_chat(owner, "<span class='notice'>You pay more attention on when to echolocate.</span>")
 
-/datum/action/innate/echo/auto/proc/echolocate()
-	if(active)
-		SEND_SIGNAL(owner, COMSIG_ECHOLOCATION_PING)
-		addtimer(CALLBACK(src, .proc/echolocate), 10)
+/datum/action/innate/echo/auto/process()
+	if(!owner.client)
+		STOP_PROCESSING(SSecholocation, src)
+	SEND_SIGNAL(owner, COMSIG_ECHOLOCATION_PING)
