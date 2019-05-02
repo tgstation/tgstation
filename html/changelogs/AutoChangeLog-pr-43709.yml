@@ -1,0 +1,6 @@
+author: "Wilchenx"
+delete-after: True
+changes: 
+  - bugfix: "Deluxe Silicate Selections vendor now has circuitboards"
+  - bugfix: "fixes a typo"
+  - tweak: "Added pAI cards to the vendor"

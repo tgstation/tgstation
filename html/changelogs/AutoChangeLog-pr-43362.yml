@@ -1,0 +1,7 @@
+author: "as334"
+delete-after: True
+changes: 
+  - rscadd: "New Gas Reaction, Stimulum Energy Balls. Combine 100 degree Pluoxium, Stimulum and small amounts of Plasma and Nitryl to shoot off a deadly radioactive energy ball."
+  - rscadd: "The reaction will consume the plasma, pluoxium and stimulum and release small amounts of heat. The presence of water vapor will change the direction in which it shoots. See if you can figure out how to aim it."
+  - tweak: "Nitryl now forms at 22,000 degrees, a significantly lower temperature."
+  - rscdel: "Removed some old left-behind fusion test canisters."
