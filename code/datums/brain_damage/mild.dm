@@ -201,7 +201,7 @@
 			var/suffix = copytext(word,-1)
 
 			// Check if we have a suffix and break it out of the word
-			if(suffix in list(".",",",";","!",":","?"))  
+			if(suffix in list("." , "," , ";" , "!" , ":" , "?"))  
 				word = copytext(word,1,-1)
 			else
 				suffix = ""
