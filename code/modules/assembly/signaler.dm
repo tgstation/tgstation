@@ -60,18 +60,22 @@
 <A href='byond://?src=[REF(src)];send=1'>Send Signal</A><BR>
 <B>Frequency/Code</B> for signaler:<BR>
 Frequency:
+<A href='byond://?src=[REF(src)];freq=-50'>-</A>
 <A href='byond://?src=[REF(src)];freq=-10'>-</A>
 <A href='byond://?src=[REF(src)];freq=-2'>-</A>
 [format_frequency(src.frequency)]
 <A href='byond://?src=[REF(src)];freq=2'>+</A>
-<A href='byond://?src=[REF(src)];freq=10'>+</A><BR>
+<A href='byond://?src=[REF(src)];freq=10'>+</A>
+<A href='byond://?src=[REF(src)];freq=50'>+</A><BR>
 
 Code:
+<A href='byond://?src=[REF(src)];code=-10'>-</A>
 <A href='byond://?src=[REF(src)];code=-5'>-</A>
 <A href='byond://?src=[REF(src)];code=-1'>-</A>
 [src.code]
 <A href='byond://?src=[REF(src)];code=1'>+</A>
-<A href='byond://?src=[REF(src)];code=5'>+</A><BR>
+<A href='byond://?src=[REF(src)];code=5'>+</A>
+<A href='byond://?src=[REF(src)];code=10'>+</A><BR>
 [t1]
 </TT>"}
 		user << browse(dat, "window=radio")
@@ -90,7 +94,7 @@ Code:
 	if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
 		if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
-			new_frequency = sanitize_frequency(new_frequency)
+			new_frequency = sanitize_frequency(new_frequency, TRUE)
 		set_frequency(new_frequency)
 
 	if(href_list["code"])
