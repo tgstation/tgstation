@@ -16,7 +16,7 @@
 	AddComponent(component_type)
 
 /obj/item/storage/AllowDrop()
-	return TRUE
+	return FALSE
 
 /obj/item/storage/contents_explosion(severity, target)
 	for(var/atom/A in contents)
