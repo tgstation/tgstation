@@ -67,6 +67,10 @@
 	dir = 8
 	},
 /area/hallway/secondary/exit/departure_lounge)
+"aaj" = (
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "aak" = (
 /turf/closed/wall,
 /area/medical/morgue)
@@ -99828,7 +99832,7 @@ aar
 cba
 aar
 aYm
-aar
+aaj
 aov
 aTi
 byM

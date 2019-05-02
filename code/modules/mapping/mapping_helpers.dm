@@ -205,3 +205,23 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		CRASH("Wrong disease type passed in.")
 	var/datum/disease/D = new disease_type()
 	return list(component_type,D)
+
+/obj/effect/mapping_helpers/dead_body_placer
+	name = "Dead Body placer"
+	icon_state = "deadbodyplacer"
+
+/obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
+	var/area/a = get_area(src)
+	var/trays = list()
+	for (var/i in a.contents)
+		if (istype(i, /obj/structure/bodycontainer/morgue))
+			trays += i
+	for (var/i = 1 to 2)
+		var/obj/structure/bodycontainer/morgue/j = pick(trays)
+		var/mob/living/carbon/human/h = new /mob/living/carbon/human(j.loc, 1)
+		h.death()
+		h.forceMove(j)
+		j.contents += h
+		j.update_icon()
+	qdel(src)
+	return
