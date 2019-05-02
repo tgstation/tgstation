@@ -221,7 +221,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		var/mob/living/carbon/human/h = new /mob/living/carbon/human(j.loc, 1)
 		h.death()
 		h.forceMove(j)
-		j.contents += h
 		j.update_icon()
 	qdel(src)
 	return
