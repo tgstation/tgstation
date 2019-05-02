@@ -362,6 +362,39 @@
 	name = "Derelict Atmospherics"
 	icon_state = "red"
 
+//DERELICT OMEGA
+/area/ruin/space/has_grav/omega/aft
+	name = "Omega Aft"
+	icon_state = "yellow"
+
+/area/ruin/space/has_grav/omega/starboard
+	name = "Omega Starboard"
+	icon_state = "yellow"
+
+/area/ruin/space/has_grav/omega/fore
+	name = "Omega Fore"
+	icon_state = "yellow"
+
+/area/ruin/space/has_grav/omega/central
+	name = "Omega Central Area"
+	icon_state = "crew_quarters"
+
+/area/ruin/space/has_grav/omega/bridge
+	name = "Omega Bridge"
+	icon_state = "bridge"
+
+/area/ruin/space/has_grav/omega/med
+	name = "Omega Medbay"
+	icon_state = "medbay"
+
+/area/ruin/space/has_grav/omega/sci
+	name = "Omega Science"
+	icon_state = "toxlab"
+
+/area/ruin/space/has_grav/omega/sec
+	name = "Omega Security"
+	icon_state = "security"
+
 //DJSTATION
 
 /area/ruin/space/djstation
