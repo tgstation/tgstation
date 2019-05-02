@@ -133,11 +133,6 @@
 
 // when the minion dies
 /mob/living/carbon/human/shadowperson_holder/death()
-	after_death()
-	..()
-
-// This is called after the shadowperson dies.
-/mob/living/carbon/human/shadowperson_holder/proc/after_death()
 	if(prob(25)) // lets just put this here so people are careful with this
 		to_chat(src, "<span class='userdanger'>C'est la vie.</span>")
 		return
@@ -148,3 +143,4 @@
 	original_caster.Unconscious(50)
 	original_caster.adjustBrainLoss(100) // oh boy more brain damage if you fuck up
 	qdel(ghost)
+	..()
