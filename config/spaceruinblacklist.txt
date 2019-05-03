@@ -1,7 +1,7 @@
-Listing maps here will blacklist them from generating in space.
-Maps must be the full path to them
-A list of maps valid to blacklist can be found in #_maps\RandomRuins\SpaceRuins
-SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+#Listing maps here will blacklist them from generating in space.
+#Maps must be the full path to them
+#A list of maps valid to blacklist can be found in #_maps\RandomRuins\SpaceRuins
+#SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
 
 #_maps/RandomRuins/SpaceRuins/abandonedteleporter.dmm
 #_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm
