@@ -81,16 +81,6 @@
 	desc = "A single use autosurgeon that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
 	starting_organ = /obj/item/organ/cyberimp/eyes/hud/medical
-	
-/obj/item/autosurgeon/hos
-	desc = "A single use autosurgeon that contains a security heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
-	uses = 1
-	starting_organ = /obj/item/organ/cyberimp/eyes/hud/security
-
-/obj/item/autosurgeon/rd
-	desc = "A single use autosurgeon that contains a diagnostic heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
-	uses = 1
-	starting_organ = /obj/item/organ/cyberimp/eyes/hud/diagnostic
 
 /obj/item/autosurgeon/thermal_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/thermals
