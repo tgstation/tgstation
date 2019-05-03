@@ -649,7 +649,7 @@
 	name = "Follower Hoodie"
 	result = /obj/item/clothing/suit/hooded/chaplain_hoodie
 	time = 10
-	tools = list(/obj/item/clothing/suit/hooded/chaplain_hoodie)
+	tools = list(/obj/item/clothing/suit/hooded/chaplain_hoodie, /obj/item/storage/book/bible)
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
 
