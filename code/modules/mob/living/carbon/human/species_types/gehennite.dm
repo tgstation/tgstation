@@ -4,7 +4,7 @@
 	heatmod = 1.2
 	id = "gehennite"
 	no_equip = list(SLOT_GLASSES)
-	inherent_traits = list(TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTLOWPRESSURE)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTLOWPRESSURE)
 	species_traits = list(DIGITIGRADE, NOEYESPRITES)
 	mutantears = /obj/item/organ/ears/gehennite
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
