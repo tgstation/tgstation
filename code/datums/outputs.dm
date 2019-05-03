@@ -3,7 +3,7 @@
 /datum/outputs
 	var/text = ""
 	var/list/sounds = 'sound/items/airhorn.ogg' //can be either a sound path or a WEIGHTED list, put multiple for random selection between sounds
-	var/mutable_appearance/vfx = list('icons/obj/sound_icon.dmi',"circle", CURSE_LAYER) //syntax: icon, icon_state, layer
+	var/mutable_appearance/vfx
 	var/cooldown = 100 //ms
 
 /datum/outputs/New()
