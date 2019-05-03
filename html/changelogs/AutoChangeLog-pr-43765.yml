@@ -1,0 +1,4 @@
+author: "81Denton"
+delete-after: True
+changes: 
+  - bugfix: "Donutstation: The Atmospherics incinerator airlocks now cycle properly."
