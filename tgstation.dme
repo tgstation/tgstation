@@ -1310,7 +1310,7 @@
 #include "code\modules\antagonists\infection\infection\theinfection.dm"
 #include "code\modules\antagonists\infection\infection\infections\core.dm"
 #include "code\modules\antagonists\infection\infection\infections\factory.dm"
-#include "code\modules\antagonists\infection\infection\infections\infection_bosses.dm"
+#include "code\modules\antagonists\infection\infection\infections\infection_events.dm"
 #include "code\modules\antagonists\infection\infection\infections\infection_mobs.dm"
 #include "code\modules\antagonists\infection\infection\infections\node.dm"
 #include "code\modules\antagonists\infection\infection\infections\resource.dm"

@@ -91,13 +91,13 @@
 		var/random_y = rand(-32, 32)
 		AT.pixel_y += random_y
 		playsound(src.loc, 'sound/effects/bang.ogg', 100, 1, 10, pressure_affected = FALSE)
-		user.visible_message("[user]'s [I] plinks off of [src] not even leaving a scratch!", "<span class='notice'>[user]'s [I] plinks off of [src]!</span>")
+		user.visible_message("[user]'s [I] plinks off of [src]!", "<span class='notice'>[user]'s [I] plinks off of [src]!</span>")
 		return
 	if(I.force)
 		visible_message("<span class='danger'>[src] bellows as [user] hits it with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
-	take_damage(I.force, I.damtype, "melee", 1, override = "infection_core")
+	take_damage(I.force*5, I.damtype, "melee", 1, override = "infection_core")
 
 /obj/structure/infection/core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, var/override = "")
 	if(override != "infection_core")
