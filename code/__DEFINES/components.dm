@@ -223,9 +223,6 @@
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"						//(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"					//called on an object to clean it of cleanables. Usualy with soap: (num/strength)
 
-//Echolocation signals
-#define COMSIG_ECHOLOCATION_PING "echolocation_ping"			//called from datum/action/innate/echo()
-
 //Food
 #define COMSIG_FOOD_EATEN "food_eaten"		//from base of obj/item/reagent_containers/food/snacks/attack(): (mob/living/eater, mob/feeder)
 
