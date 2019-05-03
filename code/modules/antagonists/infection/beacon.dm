@@ -188,6 +188,8 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 		should_die = TRUE
 	if(facingdir == WEST && edge.x <= parentatom.x)
 		should_die = TRUE
+	if(isobj(parentatom.loc))
+		should_die = FALSE // don't kill them if they're in a locker, or something is holding them
 	if(should_die)
 		// time to go
 		parentatom.visible_message("[parentatom] dissolves into nothing as the energy of the beacons destroys it!")

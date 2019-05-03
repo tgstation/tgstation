@@ -190,6 +190,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	obj_damage = 20
 	var/respawn_time = 30
+	var/current_respawn_time = 0
 	var/upgrade_points = 0
 	var/times_refunded = 0 // times refunded
 	var/cycle_cooldown = 0 // cooldown before you can cycle nodes again
@@ -322,17 +323,18 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/dust()
 	death()
 
-/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/respawn()
-	var/time_left = respawn_time
-	while(time_left > 0)
-		if(time_left < 10 || time_left % 5 == 0)
-			to_chat(src, "<b>Respawning in [time_left] seconds.</b>")
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/respawn(var/set_time = respawn_time)
+	current_respawn_time = set_time
+	while(current_respawn_time > 0)
+		if(current_respawn_time < 10 || current_respawn_time % 5 == 0)
+			to_chat(src, "<b>Respawning in [current_respawn_time] seconds.</b>")
 		sleep(10)
 		if(!src)
 			return
 		if(!overmind.infection_core)
-			time_left = 0
-		time_left--
+			death()
+			return
+		current_respawn_time--
 	if(overmind.infection_core)
 		to_chat(src, "<b>You have respawned!</b>")
 		playsound(src, 'sound/effects/genetics.ogg', 100)
@@ -347,8 +349,8 @@
 	new_spore.times_refunded = times_refunded
 	// check if we were respawning
 	if(istype(new_spore.loc, /obj/structure/infection))
-		// restart respawn timer for new spore
-		INVOKE_ASYNC(new_spore, .proc/respawn)
+		// restart respawn for new spore
+		INVOKE_ASYNC(new_spore, .proc/respawn, current_respawn_time)
 	qdel(src)
 	new_spore.update_icons()
 	return new_spore
