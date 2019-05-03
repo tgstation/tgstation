@@ -36,7 +36,7 @@
 	return bounds
 
 /datum/map_template/proc/get_parsed_bounds()
-	. = preload_size(mappath)
+	return preload_size(mappath)
 
 /datum/map_template/proc/get_last_loaded_bounds()
 	if(cached_map)
