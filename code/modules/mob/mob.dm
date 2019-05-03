@@ -115,7 +115,7 @@
 	if(text)
 		to_chat(src, "<span class='italics'>[text]</span>")
 	//Process icon
-	if(sound_ring && audiolocation)
+	if(sound_ring)
 		var/image/sound_icon = image(sound_ring)
 		sound_icon.loc = turf_source
 		if(vol && S)

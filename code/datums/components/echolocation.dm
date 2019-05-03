@@ -1,6 +1,9 @@
 /datum/component/echolocation
 	var/echo_range = 4
-	var/cooldown = 0
+
+	var/cooldown_time = 15
+	var/image_expiry_time = 30
+	var/cooldown_last = 0
 	var/list/static/echo_blacklist
 	var/list/static/uniques
 	var/list/static/echo_images
@@ -10,7 +13,6 @@
 	var/mob/M = parent
 	if(!istype(M))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ECHOLOCATION_PING, .proc/echolocate)
 	echo_blacklist = typecacheof(list(
 	/atom/movable/lighting_object,
 	/obj/effect/decal/cleanable/blood,
@@ -33,11 +35,19 @@
 	var/datum/action/innate/echo/auto/A = new
 	E.Grant(M)
 	A.Grant(M)
+	RegisterSignal(E, COMSIG_ACTION_TRIGGER, .proc/echolocate)
+	RegisterSignal(A, COMSIG_ACTION_TRIGGER, .proc/toggle_auto)
+
+/datum/component/echolocation/process()
+	var/mob/M = parent
+	if(!M.client)
+		STOP_PROCESSING(SSecholocation, src)
+	echolocate()
 
 /datum/component/echolocation/proc/echolocate()
-	if(!(cooldown < world.time - 15))
+	if(world.time < cooldown_last)
 		return
-	cooldown = world.time
+	cooldown_last = world.time + cooldown_time
 	var/mob/H = parent
 	var/mutable_appearance/image_output
 	var/list/filtered = list()
@@ -97,7 +107,7 @@
 		var/mob/receiving_mob = M
 		if(receiving_mob.client)
 			receiving_mob.client.images += image_echo
-			addtimer(CALLBACK(src, .proc/remove_image, image_echo, receiving_mob), 30)
+			addtimer(CALLBACK(src, .proc/remove_image, image_echo, receiving_mob), image_expiry_time)
 
 /datum/component/echolocation/proc/remove_image(sound_image, mob/M)
 	if(M.client && sound_image)
@@ -149,7 +159,15 @@
 	I.pixel_x = input.pixel_x
 	I.pixel_y = input.pixel_y
 
-//actions
+//AUTO
+
+/datum/component/echolocation/proc/toggle_auto()
+	if(!(datum_flags & DF_ISPROCESSING))
+		to_chat(parent, "<span class='notice'>Instinct takes over your echolocation.</span>")
+		START_PROCESSING(SSecholocation, src)
+	else
+		to_chat(parent, "<span class='notice'>You pay more attention on when to echolocate.</span>")
+		STOP_PROCESSING(SSecholocation, src)
 
 /datum/action/innate/echo
 	name = "Echolocate"
@@ -157,21 +175,5 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "meson"
 
-/datum/action/innate/echo/Activate()
-	SEND_SIGNAL(owner, COMSIG_ECHOLOCATION_PING)
-
 /datum/action/innate/echo/auto
 	name = "Automatic Echolocation"
-
-/datum/action/innate/echo/auto/Activate()
-	START_PROCESSING(SSecholocation, src)
-	to_chat(owner, "<span class='notice'>Instinct takes over your echolocation.</span>")
-
-/datum/action/innate/echo/auto/Deactivate()
-	STOP_PROCESSING(SSecholocation, src)
-	to_chat(owner, "<span class='notice'>You pay more attention on when to echolocate.</span>")
-
-/datum/action/innate/echo/auto/process()
-	if(!owner.client)
-		STOP_PROCESSING(SSecholocation, src)
-	SEND_SIGNAL(owner, COMSIG_ECHOLOCATION_PING)
