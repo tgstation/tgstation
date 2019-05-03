@@ -16,8 +16,15 @@
 	unique_name = 1
 	a_intent = INTENT_HARM
 	stat_attack = DEAD
+	var/can_cross_beacons = FALSE
 	var/mob/camera/commander/overmind = null
 	var/obj/structure/infection/factory/factory = null
+
+/mob/living/simple_animal/hostile/infection/Initialize(mapload, owner_overmind)
+	. = ..()
+	verbs -= /mob/living/verb/pulled
+	if(!can_cross_beacons)
+		AddComponent(/datum/component/no_beacon_crossing)
 
 /mob/living/simple_animal/hostile/infection/update_icons()
 	if(overmind)
@@ -42,6 +49,8 @@
 
 /mob/living/simple_animal/hostile/infection/fire_act(exposed_temperature, exposed_volume)
 	..()
+	if(istype(src, /mob/living/simple_animal/hostile/infection/infectionspore/sentient))
+		return
 	if(exposed_temperature)
 		adjustFireLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
 	else
@@ -179,13 +188,15 @@
 	desc = "An extremely strong spore in the early stages of life, what will it become next?"
 	hud_type = /datum/hud/infection_spore
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	var/respawn_time = 15
+	obj_damage = 20
+	var/respawn_time = 30
 	var/upgrade_points = 0
 	var/times_refunded = 0 // times refunded
 	var/cycle_cooldown = 0 // cooldown before you can cycle nodes again
 	var/list/upgrade_types = list(/datum/component/infection/upgrade/spore/myconid_spore,
-								  /datum/component/infection/upgrade/spore/offensive_spore,
-								  /datum/component/infection/upgrade/spore/supportive_spore)
+								  /datum/component/infection/upgrade/spore/infector_spore,
+								  /datum/component/infection/upgrade/spore/hunter_spore,
+								  /datum/component/infection/upgrade/spore/destructive_spore)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	. = ..()
@@ -283,12 +294,12 @@
 	for(var/datum/component/infection/upgrade/U in get_upgrades())
 		if(U.times == 0)
 			continue
-		to_chat(src, "<span class='notice'>[U.name]: [U.description]</span>")
+		to_chat(src, "<b>[U.name]:</b> [U.description]")
 	return
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/infection_help()
-	to_chat(src, "<b>You are an evolving infection spore!</b>")
-	to_chat(src, "You are an evolving creature that gets stronger as the infection does \n<span class='cultlarge'>You are impossible to kill as long as the core still exists.</span>")
+	to_chat(src, "<b>You are an evolving spore!</b>")
+	to_chat(src, "You are an evolving creature that can select evolutions in order to become stronger \n<b>You will respawn as long as the core still exists.</b>")
 	to_chat(src, "You can communicate with other infectious creatures via <b>:b</b>")
 	return
 
@@ -308,6 +319,9 @@
 		return
 	. = ..()
 
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/dust()
+	death()
+
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/respawn()
 	var/time_left = respawn_time
 	while(time_left > 0)
@@ -321,6 +335,7 @@
 		time_left--
 	if(overmind.infection_core)
 		to_chat(src, "<b>You have respawned!</b>")
+		playsound(src, 'sound/effects/genetics.ogg', 100)
 		adjustHealth(health * 0.8)
 		forceMove(get_turf(src))
 	return
@@ -379,45 +394,48 @@
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/myconid
 	name = "myconid spore"
-	desc = "A small, weak, but intelligent spore. It is the only spore with the capability to cross beacon walls."
-	icon_state = "blob_spore_temp"
-	icon_living = "blob_spore_temp"
-	health = 150
-	maxHealth = 150
-	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	melee_damage_lower = 10
-	melee_damage_upper = 10
-	obj_damage = 20
-	respawn_time = 45
-	environment_smash = ENVIRONMENT_SMASH_WALLS
-	upgrade_types = list() // types of upgrades
-
-/mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive
-	name = "offensive spore"
-	desc = "An aggressive spore that looks like it's out for blood."
-	icon_state = "blobbernaut"
-	icon_living = "blobbernaut"
-	health = 60
-	maxHealth = 60
-	damage_coeff = list(BRUTE = 0.75, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	melee_damage_lower = 30
-	melee_damage_upper = 30
-	obj_damage = 60
-	respawn_time = 60
-	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	upgrade_types = list() // types of upgrades
-
-/mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive
-	name = "supportive spore"
-	desc = "A spore that seems to know your every movement."
-	icon_state = "blobbernaut_death_loop"
-	icon_living = "blobbernaut_death_loop"
+	desc = "A weak spore with fungi poking out of every end. It is the only spore with the capability to cross beacon walls."
+	icon_state = "myconid"
+	icon_living = "myconid"
 	health = 40
 	maxHealth = 40
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	melee_damage_lower = 5
-	melee_damage_upper = 5
-	obj_damage = 40
-	respawn_time = 30
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	upgrade_types = list() // types of upgrades
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	can_cross_beacons = TRUE
+	upgrade_types = list(/datum/component/infection/upgrade/spore/pulling)
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector
+	name = "infector spore"
+	desc = "A spore that oozes infective pus from all of it's pores. It can reanimate corpses of the dead to do its bidding."
+	icon_state = "infector"
+	icon_living = "infector"
+	health = 80
+	maxHealth = 80
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	upgrade_types = list(/datum/component/infection/upgrade/spore/zombification)
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter
+	name = "hunter spore"
+	desc = "A congealed but fast moving spore with the abilities to hunt down and consume intruders of the infection."
+	icon_state = "hunter"
+	icon_living = "hunter"
+	health = 60
+	maxHealth = 60
+	speed = -1
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	upgrade_types = list(/datum/component/infection/upgrade/spore/lifesteal)
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive
+	name = "destructive spore"
+	desc = "A slow moving but bulky and heavily damaging spore that is useful for taking out buildings and walls, as well as defending infection structures."
+	icon_state = "destructive"
+	icon_living = "destructive"
+	health = 100
+	maxHealth = 100
+	speed = 1
+	melee_damage_lower = 40
+	melee_damage_upper = 40
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
+	upgrade_types = list(/datum/component/infection/upgrade/spore/knockback)

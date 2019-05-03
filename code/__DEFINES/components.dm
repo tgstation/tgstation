@@ -209,8 +209,9 @@
 // /obj/item/pen signals
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
 
-// /obj/item/projectile signals
-#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// called in projectile on_hit and sends signal to the firer of the projectile
+// /obj/item/projectile signals (sent to the firer)
+#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/item/projectile/proc/on_hit(): (atom/target, blocked)
+#define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/item/projectile/proc/fire(): (/obj/item/projectile, target)
 
 
 // /mob/living/carbon/human signals
@@ -273,9 +274,6 @@
 // /datum/action signals
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
-
-// /datum/component/infection/upgrade signals
-#define COMSIG_INFECTION_ALTER_PROJECTILE "infection_alter_projectile" 			// /obj/structure/infection/turret before projectile is shot
 
 /*******Non-Signal Component Related Defines*******/
 

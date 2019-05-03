@@ -1,13 +1,5 @@
-GLOBAL_LIST_INIT(commander_phrases, list("Fight and work together, that's the only way to defeat anything this strong.",
-										 "The infection is weak to heat based attacks.",
-										 "Defend the inner part of the station, you never know what might make it past the barriers.",
-										 "Target the infection infrastructure, it only gets exponentially stronger the more it creates.",
-										 "We can create equipment to battle the infection if you retrieve parts from monsters it creates. Bring them to the emergency shuttle outpost.",
-										 "The infection only gets stronger the more beacons it destroys, don't let that happen.",
-										 "It's dangerous to travel inside the infection, I'd recommend a mech and strong weaponry.",
-										 "The beacons automatically repair themselves after taking damage.",
-										 "The infection can recycle its own important structures to gain resources, don't leave anything alive.",
-										 "The infection feeds on everything, especially the living, protect your allies to protect yourself."))
+GLOBAL_LIST_INIT(commander_phrases, list("He says the phrase."))
+
 GLOBAL_LIST_EMPTY(infection_beacons)
 GLOBAL_LIST_EMPTY(beacon_spawns)
 
@@ -162,10 +154,46 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	return
 
 /obj/structure/beacon_wall/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/living/simple_animal/hostile/infection))
-		return FALSE
-	if(istype(mover, /obj/structure/infection))
-		return FALSE
-	if(istype(mover, /obj/item/projectile/bullet/infection))
+	if(mover.GetComponent(/datum/component/no_beacon_crossing))
 		return FALSE
 	return TRUE
+
+/datum/component/no_beacon_crossing
+	var/atom/parentatom
+
+/datum/component/no_beacon_crossing/Initialize()
+	parentatom = parent
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_passed)
+
+/datum/component/no_beacon_crossing/proc/check_passed()
+	// if you somehow got past a beacon wall then time to die
+	var/obj/structure/beacon_generator/closest
+	var/obj/structure/infection/core/C = GLOB.infection_cores[1]
+	if(!C)
+		return
+	for(var/obj/structure/beacon_generator/BG in GLOB.infection_beacons)
+		if(!closest)
+			closest = BG
+			continue
+		if(get_dist(C, closest) > get_dist(C, BG))
+			closest = BG
+	var/obj/structure/beacon_wall/edge = closest.walls[1]
+	var/facingdir = closest.dir
+	var/should_die = FALSE
+	if(facingdir == NORTH && edge.y <= parentatom.y)
+		should_die = TRUE
+	if(facingdir == SOUTH && edge.y >= parentatom.y)
+		should_die = TRUE
+	if(facingdir == EAST && edge.x >= parentatom.x)
+		should_die = TRUE
+	if(facingdir == WEST && edge.x <= parentatom.x)
+		should_die = TRUE
+	if(should_die)
+		// time to go
+		parentatom.visible_message("[parentatom] dissolves into nothing as the energy of the beacons destroys it!")
+		playsound(get_turf(parentatom), 'sound/effects/supermatter.ogg', 50, 1)
+		if(isliving(parent))
+			var/mob/living/todie = parent
+			todie.death()
+		else
+			qdel(parent)

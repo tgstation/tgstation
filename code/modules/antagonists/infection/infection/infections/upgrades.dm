@@ -29,8 +29,10 @@
 
 /datum/component/infection/upgrade/spore
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/parentspore
+	cost = 1
 
 /datum/component/infection/upgrade/spore/Initialize()
+	. = ..()
 	parentspore = parent
 	RegisterSignal(parentspore, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/check_attackingtarget)
 	RegisterSignal(parentspore, COMSIG_MOVABLE_MOVED, .proc/check_moved)
@@ -53,30 +55,104 @@
 
 /datum/component/infection/upgrade/spore/myconid_spore
 	name = "Myconid Spore"
-	description = "A small, weak, but intelligent spore. It is the only spore with the capability to cross beacon walls."
-	radial_icon_state = "bullet"
-	cost = 1
+	description = "Has the capability to pass beacon walls and cause trouble for humans hiding behind them. Can upgrade to be able to grab humans."
+	radial_icon_state = "myconid"
 
 /datum/component/infection/upgrade/spore/myconid_spore/upgrade_effect()
 	parentspore.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/myconid)
 
-/datum/component/infection/upgrade/spore/offensive_spore
-	name = "Offensive Spore"
-	description = "Fully prepared to dust your enemies. 1 minute respawn time and able to smash up to reinforced walls."
+/datum/component/infection/upgrade/spore/infector_spore
+	name = "Infector Spore"
+	description = "An underboss of the infection. Can upgrade to repair buildings around it, and can create spore possessed humans with dead bodies. "
+	radial_icon_state = "infector"
+
+/datum/component/infection/upgrade/spore/infector_spore/upgrade_effect()
+	parentspore.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector)
+
+/datum/component/infection/upgrade/spore/hunter_spore
+	name = "Hunter Spore"
+	description = "A fast spore with abilities useful for hunting down humans. Works well with myconid spores that can grab humans past the beacon walls."
+	radial_icon_state = "hunter"
+
+/datum/component/infection/upgrade/spore/hunter_spore/upgrade_effect()
+	parentspore.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter)
+
+/datum/component/infection/upgrade/spore/destructive_spore
+	name = "Destructive Spore"
+	description = "A generally slow, tanky, and damaging spore useful for destroying structures. Effective for defending and advancing infectious structures."
+	radial_icon_state = "destructive"
+
+/datum/component/infection/upgrade/spore/destructive_spore/upgrade_effect()
+	parentspore.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive)
+
+/*
+//
+// Myconid Spore Upgrades
+//
+*/
+
+
+/datum/component/infection/upgrade/spore/pulling
+	name = "Suction Cup Fungi"
+	description = "Allows you to pull enemies with the amazing ability of lower internal pressure."
+	radial_icon_state = "suction"
+
+/datum/component/infection/upgrade/spore/pulling/upgrade_effect()
+	parentspore.verbs += /mob/living/verb/pulled
+
+/*
+//
+// Infector Spore Upgrades
+//
+*/
+
+/datum/component/infection/upgrade/spore/zombification
+	name = "Zombifying Fluid"
+	description = "Allows you to attack dead targets to instantly possess them with a zombified spore."
+	radial_icon_state = "blobpod"
+
+/datum/component/infection/upgrade/spore/zombification/on_attackingtarget(datum/source, var/atom/target)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.stat == DEAD)
+			var/mob/living/simple_animal/hostile/infection/infectionspore/IS = new /mob/living/simple_animal/hostile/infection/infectionspore(H.loc)
+			IS.Zombify(H)
+
+/*
+//
+// Hunter Spore Upgrades
+//
+*/
+
+/datum/component/infection/upgrade/spore/lifesteal
+	name = "Lifesteal"
+	description = "Does true damage to living targets by sapping health directly from them as well as healing you."
 	radial_icon_state = "fire_bullet"
-	cost = 1
 
-/datum/component/infection/upgrade/spore/offensive_spore/upgrade_effect()
-	parentspore.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/offensive)
+/datum/component/infection/upgrade/spore/lifesteal/on_attackingtarget(datum/source, var/atom/target)
+	if(isliving(target))
+		var/mob/living/M = target
+		if(M.stat != DEAD)
+			var/healedanddamage = 10
+			M.apply_damage(healedanddamage)
+			parentspore.adjustHealth(-healedanddamage)
 
-/datum/component/infection/upgrade/spore/supportive_spore
-	name = "Supportive Spore"
-	description = "Fill the gaps that your allies cannot. 30 second respawn time and able to smash up to structures."
-	radial_icon_state = "tracking_bullet"
-	cost = 1
+/*
+//
+// Destructive Spore Upgrades
+//
+*/
 
-/datum/component/infection/upgrade/spore/supportive_spore/upgrade_effect()
-	parentspore.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/supportive)
+/datum/component/infection/upgrade/spore/knockback
+	name = "Hydraulic Fists"
+	description = "The compressed fluid in your arms allows you to deal much greater impacts which throw hit objects backward."
+	radial_icon_state = "blobbernaut"
+
+/datum/component/infection/upgrade/spore/knockback/on_attackingtarget(datum/source, var/atom/target)
+	if(ismovableatom(target))
+		var/atom/movable/throwTarget = target
+		if(!throwTarget.anchored)
+			throwTarget.throw_at(get_ranged_target_turf(throwTarget, get_dir(parentspore, throwTarget), 3), 3, 4)
 
 /*
 //
@@ -88,21 +164,22 @@
 	var/obj/structure/infection/turret/parentturret
 
 /datum/component/infection/upgrade/turret/Initialize()
+	. = ..()
 	parentturret = parent
-	RegisterSignal(parentturret, COMSIG_INFECTION_ALTER_PROJECTILE, .proc/check_alter_projectile)
+	RegisterSignal(parentturret, COMSIG_PROJECTILE_BEFORE_FIRE, .proc/check_before_fire)
 	RegisterSignal(parentturret, COMSIG_PROJECTILE_ON_HIT, .proc/check_projectile_hit)
 
-/datum/component/infection/upgrade/turret/proc/check_alter_projectile(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/turret/proc/check_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	if(!bought)
 		return
-	on_alter_projectile(source, A, target)
+	on_before_fire(source, A, target)
 
 /datum/component/infection/upgrade/turret/proc/check_projectile_hit(datum/source, atom/target, blocked)
 	if(!bought)
 		return
 	on_projectile_hit(source, target, blocked)
 
-/datum/component/infection/upgrade/turret/proc/on_alter_projectile(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/turret/proc/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	return
 
 /datum/component/infection/upgrade/turret/proc/on_projectile_hit(datum/source, atom/target, blocked)
@@ -145,7 +222,7 @@
 	times = 0
 	bought = 1
 
-/datum/component/infection/upgrade/turret/home_target/on_alter_projectile(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/turret/home_target/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	A.set_homing_target(target)
 
 /datum/component/infection/upgrade/turret/turn_speed
@@ -155,7 +232,7 @@
 	cost = 60
 	times = 3
 
-/datum/component/infection/upgrade/turret/turn_speed/on_alter_projectile(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/turret/turn_speed/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	A.homing_turn_speed *= 2 * bought
 
 /datum/component/infection/upgrade/turret/flak_homing
@@ -185,7 +262,7 @@
 	radial_icon_state = "omnilaser"
 	cost = 60
 
-/datum/component/infection/upgrade/turret/stamina_damage/on_alter_projectile(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/turret/stamina_damage/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	A.damage_type = STAMINA
 	A.damage *= 1.5
 
@@ -225,7 +302,7 @@
 	cost = 50
 	times = 3
 
-/datum/component/infection/upgrade/turret/armour_penetration/on_alter_projectile(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/turret/armour_penetration/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	A.armour_penetration += 15 * bought
 
 /*

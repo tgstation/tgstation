@@ -1,13 +1,12 @@
 /obj/structure/infection
 	name = "infection"
 	icon = 'icons/mob/blob.dmi'
-	light_color = LIGHT_COLOR_FIRE
 	light_range = 4
 	desc = "A thick wall of writhing tendrils."
 	density = FALSE
 	opacity = 0
 	anchored = TRUE
-	layer = BELOW_OBJ_LAYER
+	layer = TABLE_LAYER
 	CanAtmosPass = ATMOS_PASS_NO
 	var/point_return = 0 //How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	max_integrity = 30
@@ -34,6 +33,7 @@
 		air_update_turf(1)
 	ConsumeTile()
 	timecreated = world.time
+	AddComponent(/datum/component/no_beacon_crossing)
 	for(var/upgrade_type in upgrade_types)
 		AddComponent(upgrade_type)
 
@@ -84,7 +84,7 @@
 	for(var/datum/component/infection/upgrade/U in get_upgrades())
 		if(U.times == 0)
 			continue
-		to_chat(overmind, "<span class='notice'>[U.name]: [U.description]</span>")
+		to_chat(overmind, "<b>[U.name]:</b> [U.description]")
 	return
 
 /obj/structure/infection/relaymove(mob/user)

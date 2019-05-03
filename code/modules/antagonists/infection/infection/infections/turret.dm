@@ -104,7 +104,6 @@
 
 	update_icon()
 	var/obj/item/projectile/bullet/infection/A = new projectile_type(T)
-	SEND_SIGNAL(src, COMSIG_INFECTION_ALTER_PROJECTILE, A, target)
 	playsound(loc, 'sound/weapons/gunshot_smg.ogg', 75, 1)
 
 	//Shooting Code:
