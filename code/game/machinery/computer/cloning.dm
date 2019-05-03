@@ -84,7 +84,7 @@
 		var/result = grow_clone_from_record(pod, R)
 		if(result & CLONING_SUCCESS)
 			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
-			log_cloning("Cloning of [key_name(active_record.fields["mindref"])] automatically started via autoprocess - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
+			log_cloning("Cloning of [key_name(R.fields["mindref"])] automatically started via autoprocess - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 		if(result & CLONING_DELETE_RECORD)
 			records -= R
 
