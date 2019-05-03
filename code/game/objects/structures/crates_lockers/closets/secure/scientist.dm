@@ -23,6 +23,7 @@
 	new /obj/item/clothing/suit/armor/reactive/teleport(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/laser_pointer(src)
+	new /obj/item/autosurgeon/rd(src)
 	new /obj/item/door_remote/research_director(src)
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
 	new /obj/item/storage/photo_album/RD(src)
