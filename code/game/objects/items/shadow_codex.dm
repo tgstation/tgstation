@@ -37,7 +37,7 @@
 /obj/item/shadow_codex/attack_self(mob/user) // when used inhand
 	if(!user.can_read(src))
 		return
-	if(!istype(user, /mob/living/carbon/human)) // might as well leavy this here
+	if(!istype(user, /mob/living/carbon/human)) // might as well leave this here
 		to_chat(user, "<span class=notice>The book won't open to such a foolish person like you.</span>")
 		return
 	if(user == caster)
