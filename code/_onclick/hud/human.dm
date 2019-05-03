@@ -85,7 +85,7 @@
 	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 	var/widescreen_layout = FALSE
-	if(owner.client && owner.client.prefs && owner.client.prefs.widescreenpref)
+	if(owner.client?.prefs?.widescreenpref)
 		widescreen_layout = TRUE
 
 	var/obj/screen/using
