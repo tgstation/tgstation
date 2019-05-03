@@ -26,9 +26,13 @@
 	var/start_time = 0
 	var/alien_victory_timer = 40 //how many minutes in to the round untill aliens can win
 
-	var/list/important_jobs = list("Warden", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer") //All of these jobs must be dead in order to gain victory for the aliens
+	var/list/important_jobs = list("Warden", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director") //All of these jobs must be dead in order to gain victory for the aliens
 
 	var/Ayys_win = 0
+
+	var/debug_check = 0 //Activated by admin to check information about the round.
+
+	var/debug_mode = 0 //is the round running in debug mode?
 
 /datum/game_mode/ayylmaos/pre_setup()
 
@@ -68,7 +72,7 @@
 					if(M.mind && M.mind.assigned_role != ROLE_ALIEN && get_dist(temp_vent,M) <= 15)
 						too_close = 1
 						break
-				if(too_close)
+				if(!too_close)
 					safe_vents += temp_vent
 				vents += temp_vent
 	digital_camo_timer = world.time+digital_camo_time
@@ -124,40 +128,54 @@
 	for(var/mob/living/M in GLOB.player_list)
 		if(!M.client || !istype(M,/mob/living) || M.stat == DEAD || QDELETED(M) || !M.loc )
 			continue
-		else if(istype(M,/mob/living/carbon/alien/humanoid))
+		var/turf/T = get_turf(M)
+		if(!T || !is_station_level(T.z))
+			continue
+		if(istype(M,/mob/living/carbon/alien/humanoid))
 			if(istype(M,/mob/living/carbon/alien/humanoid/royal/queen) && !queen)
-				var/turf/T = get_turf(M)
-				if(T && is_station_level(T.z))
-					queen = M
-					SSshuttle.registerHostileEnvironment(queen)
+				queen = M
+				SSshuttle.registerHostileEnvironment(queen)
 			alien_count++
 		else if((M.mind && M.mind in GLOB.Original_Minds) && (istype(M,/mob/living/carbon/human)))
 			if(M.client && (M.mind.assigned_role in src.important_jobs))
-				var/turf/T = get_turf(M)
-				if(T && is_station_level(T.z))
-					important_jobs_still_active += M.mind
+				important_jobs_still_active += M.mind
 			living_count++
+	if(debug_check && debug_mode)
+		var/threshold = round(alien_count*0.7,1)
+		message_admins("DEBUG: Xeno check results. living_count = \"[living_count]\", alien_count = \"[alien_count]\", threshold = \"[threshold]\"")
+		var/important_job_text = ""
+		var/count = 1
+		for(var/datum/mind/M in important_jobs_still_active)
+			important_job_text += "[M.assigned_role]"
+			if(count < important_jobs_still_active.len)
+				important_job_text += ", "
+			count++
+		message_admins("DEBUG: Active important jobs. ([important_job_text])")
+		debug_check = 0
 	if(world.time+src.start_time >= ((alien_victory_timer*60)*10))
 		var/threshold = round(alien_count*0.7,1)
 		if((queen) && (living_count <= threshold) && (!important_jobs_still_active.len))
 			if(!Ayys_win)
-				for(var/client/C in GLOB.admins)
-					spawn(0)
-						C << sound('sound/misc/notice2.ogg',0,0,0,50)
-						sleep(5)
-						C << sound('sound/misc/notice2.ogg',0,0,0,50)
-						sleep(5)
-						C << sound('sound/misc/notice2.ogg',0,0,0,50)
-				message_admins("DEBUG: The xenomorph game mode has completed. living_count = \"[living_count]\", alien_count = \"[alien_count]\", threshold = \"[threshold]\"")
-				message_admins("DEBUG: Click <A href='?src=[REF(src)];debugfinish=1'>Here</A> call proc /proc/end_xeno_round to end the round.")
-				Ayys_win = 1
+				if(debug_mode)
+					for(var/client/C in GLOB.admins)
+						spawn(0)
+							C << sound('sound/misc/notice2.ogg',0,0,0,50)
+							sleep(5)
+							C << sound('sound/misc/notice2.ogg',0,0,0,50)
+							sleep(5)
+							C << sound('sound/misc/notice2.ogg',0,0,0,50)
+					message_admins("DEBUG: The xenomorph game mode has completed. living_count = \"[living_count]\", alien_count = \"[alien_count]\", threshold = \"[threshold]\"")
+					message_admins("DEBUG: Click <A href='?src=[REF(src)];debugfinish=1'>Here</A> or call proc /proc/end_xeno_round to end the round.")
+					Ayys_win = 1
+				else
+					Ayys_win = 2
 	if(Ayys_win == 2)
 		return TRUE
 	return ..()
 
 /datum/game_mode/ayylmaos/Topic(href, href_list)
 	..()
-	if(href_list["debugfinish"])
+	if(href_list["debugfinish"] && debug_mode)
 		var/thechoice = alert(usr,"This will end the round. Are you sure?","End Xenomorph Gamoemode","Yes","No")
 		if(thechoice == "Yes")
 			Ayys_win = 2
@@ -172,7 +190,7 @@
 	if(Ayys_win)
 		return "<span class='redtext big'>The Aliens have taken over the station!</span>"
 	else
-		return "<span class='greentext big'>The crew managed to stop the Aliens from taking over the station.</span>"
+		return "<span class='greentext big'>The crew managed to stop the Alien threat.</span>"
 
 /datum/game_mode/ayylmaos/generate_report()
 	return "An alien infestation has been detected on the station. The crew will to have arm themselves and seek out and destroy the aliens. Remember to wear head protection to protect against facehuggers. Medical staff may have to remove alien parasites surgically. The ultimate goal is to destroy the Alien Queen."
@@ -188,3 +206,18 @@
 		qdel(M)
 		return L
 	return null
+
+//debug proc to end the round in alien victory
+/proc/end_xeno_round()
+	if(istype(SSticker.mode, /datum/game_mode/ayylmaos))
+		var/datum/game_mode/ayylmaos/A = SSticker.mode
+		if(!A.debug_mode)
+			return
+		A.Ayys_win = 2
+
+/proc/check_xeno_round()
+	if(istype(SSticker.mode, /datum/game_mode/ayylmaos))
+		var/datum/game_mode/ayylmaos/A = SSticker.mode
+		if(!A.debug_mode)
+			return
+		A.debug_check = 1

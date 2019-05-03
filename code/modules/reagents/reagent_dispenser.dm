@@ -15,6 +15,10 @@
 	. = ..()
 	if(. && obj_integrity > 0)
 		if(tank_volume && (damage_flag == "bullet" || damage_flag == "laser"))
+			var/turf/T = get_turf(src)
+			if(T)
+				message_admins("[name] explosion caused by [damage_flag] at ([T.x],[T.y],[T.z])")
+				log_game("[name] explosion caused by [damage_flag] at ([T.x],[T.y],[T.z])")
 			boom()
 
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
@@ -36,6 +40,10 @@
 /obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
+			var/turf/T = get_turf(src)
+			if(T)
+				message_admins("[name] explosion caused by improper disesembly by ckey([fingerprintslast]) at ([T.x],[T.y],[T.z])")
+				log_game("[name] explosion caused by improper disesembly by ckey([fingerprintslast]) at ([T.x],[T.y],[T.z])")
 			boom()
 	else
 		qdel(src)
@@ -63,16 +71,32 @@
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
+	var/turf/T = get_turf(src)
+	if(T)
+		message_admins("[name] explosion caused by blob at ([T.x],[T.y],[T.z])")
+		log_game("[name] explosion caused by blob at ([T.x],[T.y],[T.z])")
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
+	var/turf/T = get_turf(src)
+	if(T)
+		message_admins("[name] explosion caused by chained explosion or c4 at ([T.x],[T.y],[T.z])")
+		log_game("[name] explosion caused by chained explosion or c4 at ([T.x],[T.y],[T.z])")
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
+	var/turf/T = get_turf(src)
+	if(T)
+		message_admins("[name] explosion caused by exposure to fire at ([T.x],[T.y],[T.z])")
+		log_game("[name] explosion caused by exposure to fire at ([T.x],[T.y],[T.z])")
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/tesla_act()
 	..() //extend the zap
+	var/turf/T = get_turf(src)
+	if(T)
+		message_admins("[name] explosion caused by interacting with a tesla at ([T.x],[T.y],[T.z])")
+		log_game("[name] explosion caused by interacting with a tesla at ([T.x],[T.y],[T.z])")
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/P)
@@ -85,6 +109,10 @@
 			var/log_message = "triggered a fueltank explosion via projectile."
 			P.firer.log_message(log_message, INDIVIDUAL_ATTACK_LOG)
 			log_attack("[key_name(P.firer)] [log_message]")
+			var/turf/T = get_turf(src)
+			if(T)
+				message_admins("[name] explosion caused by [src] at ([T.x],[T.y],[T.z])")
+				log_game("[name] explosion caused by [src] at ([T.x],[T.y],[T.z])")
 			boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
@@ -109,6 +137,10 @@
 			var/message_log = "triggered a fueltank explosion via welding tool."
 			user.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
 			log_attack("[key_name(user)] [message_log]")
+			var/turf/T = get_turf(src)
+			if(T)
+				message_admins("[name] explosion caused by being attacked by a welder by [user.real_name] ckey([user.ckey]) at ([T.x],[T.y],[T.z])")
+				log_game("[name] explosion caused by being attacked by a welder by [user.real_name] ckey([user.ckey]) at ([T.x],[T.y],[T.z])")
 			boom()
 		return
 	return ..()
