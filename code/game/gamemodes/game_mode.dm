@@ -586,3 +586,6 @@
 		SSticker.news_report = STATION_EVACUATED
 		if(SSshuttle.emergency.is_hijacked())
 			SSticker.news_report = SHUTTLE_HIJACK
+
+/datum/game_mode/proc/AdminPanelEntry()
+	return
