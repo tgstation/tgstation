@@ -25,13 +25,18 @@
 	var/level_current = 1		// Can increase to yield new abilities
 	var/level_max = 1			//
 	var/bloodcost = 10
-	var/needs_button = TRUE // Taken from Changeling - for passive abilities that dont need a button
-	var/bloodsucker_can_buy = FALSE //var/need_bloodsucker = TRUE 	// Must be a bloodsucker to use this power.
+	var/needs_button = TRUE 			// Taken from Changeling - for passive abilities that dont need a button
+	var/bloodsucker_can_buy = FALSE 	// Must be a bloodsucker to use this power.
+	var/warn_constant_cost = FALSE		// Some powers charge you for staying on. Masquerade, Cloak, Veil, etc.
+	var/can_use_in_torpor = FALSE		// Most powers don't function if you're in torpor.
+
 	//var/not_bloodsucker = FALSE		// This goes to Vassals or Hunters, but NOT bloodsuckers.
 
 /datum/action/bloodsucker/New()
 	if (bloodcost > 0)
 		desc += "<br><br><b>COST:</b> [bloodcost] Blood"	// Modify description to add cost.
+	if (warn_constant_cost)
+		desc += "<br><br><i>Your over-time blood consumption increases while [name] is active.</i>"
 	..()
 
 
@@ -74,18 +79,22 @@
 	//		to_chat(owner, "Only a Bloodsucker may use this dark gift.")
 	//	return FALSE
 	// owner for actions is the mob, not mind.
-	var/mob/living/L = owner
 	// Cooldown?
 	if (cooldownUntil > world.time)
 		if (display_error)
 			to_chat(owner, "[src] is unavailable. Wait [(cooldownUntil - world.time) / 10] seconds.")
 		return FALSE
+	// Torpor?
+	if (!can_use_in_torpor && owner.has_trait(TRAIT_DEATHCOMA))
+		if (display_error)
+			to_chat(owner, "<span class='warning'>Not while you're in Torpor.</span>")
+		return FALSE
 	// Have enough blood?
+	var/mob/living/L = owner
 	if (L.blood_volume < bloodcost)
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You need at least [bloodcost] blood to activate [name]</span>")
 		return FALSE
-
 	return TRUE
 
 /datum/action/bloodsucker/proc/StartCooldown()
@@ -126,7 +135,7 @@
 	StartCooldown()
 
 /datum/action/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
-	return active// && user.mind && user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	return active && (!warn_constant_cost || user.blood_volume > 0)
 
 
 

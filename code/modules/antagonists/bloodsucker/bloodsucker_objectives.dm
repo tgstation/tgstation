@@ -76,7 +76,7 @@
 
 //						 GENERATE!
 /datum/objective/bloodsucker/protege/generate_objective()
-	target_role = rand(0,2) ? "HEAD" : pick(departs)
+	target_role = rand(0,2) == 0 ? "HEAD" : pick(departs)
 
 	// Heads?
 	if (target_role == "HEAD")
@@ -105,7 +105,6 @@
 		if (target_amount == 1)
 			explanation_text = "Guarantee a Vassal ends up as a Department Head or in a Leadership role."
 		else
-
 			explanation_text = "Guarantee [target_amount] Vassals end up as different Leadership or Department Heads."
 	else
 		explanation_text = "Have [target_amount] Vassal[target_amount==1?"":"s"] in the [department_string] department."

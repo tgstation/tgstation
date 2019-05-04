@@ -5,7 +5,7 @@
 
 /datum/action/bloodsucker/targeted/lunge
 	name = "Predatory Lunge"
-	desc = "Spring at your target and grapple them without warning."
+	desc = "Spring at your target and aggressively grapple them without warning. Attacks from the rear may even knock them down."
 	button_icon_state = "power_lunge"
 	bloodcost = 10
 	cooldown = 100
@@ -82,10 +82,15 @@
 
 	// Step Two: Check if I'm at/adjectent to Target's CURRENT turf (not original...that was just a destination)
 	if (target.Adjacent(owner))
+		// LEVEL 2: If behind target, mute or unconscious!
+		if (!is_A_facing_B(target,owner)) // && level_current >= 1)
+			target.Paralyze(20 + 5 * level_current,1)
+		// Cancel Walk (we were close enough to contact them)
+		walk(owner,0)
+		//target.Paralyze(10,1)
 		target.grabbedby(owner) 										// Taken from mutations.dm under changelings
 		target.grippedby(owner, instant = TRUE) //instant aggro grab
-		// LEVEL 2: If behind target, mute or unconscious!
-		//if (level_current >= 1)
+
 		//	UNCONSCIOUS or MUTE!
 		//owner.start_pulling(target,GRAB_AGGRESSIVE)    // GRAB_PASSIVE, GRAB_AGGRESSIVE, GRAB_NECK, GRAB_KILL
 

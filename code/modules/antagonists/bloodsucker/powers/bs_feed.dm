@@ -148,8 +148,6 @@
 				target.take_overall_damage(10,0)
 				target.emote("scream")
 
-			//DeactivatePower(user,target)
-
 			// Killed Target?
 			if (was_alive)
 				CheckKilledTarget(user,target)
@@ -166,10 +164,6 @@
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood) // GOOD // in bloodsucker_life.dm
 
 		///////////////////////////////////////////////////////////
-		// Done?
-		if (target.blood_volume <= 0)
-			to_chat(user, "<span class='notice'>You have bled your victim dry.</span>")
-			break
 		// Not Human?
 		if (!ishuman(target))
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood_bad) // BAD // in bloodsucker_life.dm
@@ -196,7 +190,10 @@
 			else if (target.blood_volume <= BLOOD_VOLUME_SAFE && warning_target_bloodvol > BLOOD_VOLUME_SAFE)
 				to_chat(user, "<span class='notice'>Your victim's blood is at an unsafe level.</span>")
 			warning_target_bloodvol = target.blood_volume // If we had a warning to give, it's been given by now.
-
+		// Done?
+		if (target.blood_volume <= 0)
+			to_chat(user, "<span class='notice'>You have bled your victim dry.</span>")
+			break
 
 		// Blood Gulp Sound
 		owner.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
@@ -223,14 +220,15 @@
 	// NOTE: We don't check for user.pulling etc. because do_mob does this.
 
 /datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target, powerLevel=1)
-	if (level_current >= 2)
-		target.Unconscious(50,0)
-	if (level_current >= 3)
-		target.Sleeping(100,0)
+	//if (level_current >= 2)
+	target.Unconscious(50,0)
+	//if (level_current >= 3)
+	//	target.Sleeping(100,0)
 
 	target.Paralyze(40 + 10 * powerLevel,1)
 	// NOTE: THis is based on level of power!
-	target.adjustStaminaLoss(2.5, forced = TRUE)// Base Stamina Damage
+	if (ishuman(target))
+		target.adjustStaminaLoss(2.5, forced = TRUE)// Base Stamina Damage
 
 /datum/action/bloodsucker/feed/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE

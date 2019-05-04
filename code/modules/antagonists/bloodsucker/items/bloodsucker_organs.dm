@@ -69,10 +69,10 @@
 // 		EYES 		//
 
 /obj/item/organ/eyes/vampeyes
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_alpha = 180 //  LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE  <--- This is too low a value at 128. We need to SEE what the darkness is so we can hide in it.
 	see_in_dark = 8
 	flash_protect = -1
-	sight_flags = SEE_TURFS // Taken from augmented_eyesight.dm
+	//sight_flags = SEE_TURFS // Taken from augmented_eyesight.dm
 
 
 /*

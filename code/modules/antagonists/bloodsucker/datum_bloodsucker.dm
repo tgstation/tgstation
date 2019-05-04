@@ -97,14 +97,15 @@
 
 /datum/antagonist/bloodsucker/greet()
 	var/fullname = ReturnFullName(owner.current, 1)
-	to_chat(owner, "<span class='userdanger'>You are [fullname], a bloodsucking vampire!</span>")
+	to_chat(owner, "<span class='userdanger'>You are [fullname], a bloodsucking vampire!</span><br>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='boldannounce'>You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you will find yourself at \
-	risk of being discovered!</span><br><br>")
+	to_chat(owner, "<span class='boldannounce'>* You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you will find yourself at \
+	risk of being discovered!</span><br>")
 	//to_chat(owner, "<span class='boldannounce'>As an immortal, your power is linked to your age. The older you grow, the more abilities you will have access to.<span>")
-	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.</span><br><br>")
-	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Rest in a <i>Coffin</i> to claim it.</span><br><br>")
-	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Fear the daylight! Solar flares will bombard the station periodically, and only your coffin can guarantee your safety.</span><br><br>")
+	to_chat(owner, "<span class='boldannounce'>* Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.</span><br>")
+	to_chat(owner, "<span class='boldannounce'><i>* Use \",b\" to speak your ancient Bloodsucker language.</span><br>")
+	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Rest in a <i>Coffin</i> to claim it, and that area, as your lair.</span><br>")
+	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Fear the daylight! Solar flares will bombard the station periodically, and only your coffin can guarantee your safety.</span><br>")
 
 	owner.current.playsound_local(null, 'sound/Fulpsounds/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 	antag_memory += "Although you were born a mortal, in un-death you earned the name <b>[ReturnFullName(owner.current, 1)]</b>.<br>"
@@ -320,8 +321,10 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 			return
 		var/datum/action/bloodsucker/P = options[choice]
 		BuyPower(new P)
+		to_chat(owner.current, "<span class='notice'>You have learned [P]!</span>")
 	else
 		to_chat(owner.current, "<span class='notice'>You grow more ancient by the night!</span>")
+
 
 	/////////
 	// Advance Stats
@@ -344,6 +347,8 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 
 	vamplevel ++
 	vamplevel_unspent --
+	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, resistence, health, feed rate, regen rate, and maximum blood have all increased!</span>")
+	to_chat(owner.current, "<span class='warning'>However, your weakness to fire and sunlight have also increased!</span>")
 
 	update_hud(TRUE)
 

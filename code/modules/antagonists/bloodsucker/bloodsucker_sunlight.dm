@@ -26,16 +26,20 @@
 
 		// Part 1: Night (all is well)
 		sleep(TIME_BLOODSUCKER_NIGHT - TIME_BLOODSUCKER_DAY_WARN)
-		warn_daylight("<span class = 'danger'>Solar Flares will bombard the station with dangerous UV in [TIME_BLOODSUCKER_DAY_WARN / 600] minutes. Prepare to seek cover in a coffin or closet.</span>")  // time2text <-- use Help On
+		warn_daylight(1,"<span class = 'danger'>Solar Flares will bombard the station with dangerous UV in [TIME_BLOODSUCKER_DAY_WARN / 600] minutes. <b>Prepare to seek cover in a coffin or closet.</b></span>")  // time2text <-- use Help On
 
 		// Part 2: Night Ending
 		sleep(TIME_BLOODSUCKER_DAY_WARN - TIME_BLOODSUCKER_DAY_FINAL_WARN)
-		warn_daylight("<span class = 'userdanger'>Solar Flares are about to bombard the station! You have [TIME_BLOODSUCKER_DAY_FINAL_WARN / 10] seconds to find cover!</span>",\
+		warn_daylight(2,"<span class = 'userdanger'>Solar Flares are about to bombard the station! You have [TIME_BLOODSUCKER_DAY_FINAL_WARN / 10] seconds to find cover!</span>",\
 					  "<span class = 'danger'>In [TIME_BLOODSUCKER_DAY_FINAL_WARN / 10], your master will be at risk of a Solar Flare. Make sure they find cover!</span>")
 
+		// (FINAL LIL WARNING)
+		sleep(TIME_BLOODSUCKER_DAY_FINAL_WARN - 50)
+		warn_daylight(3,"<span class = 'userdanger'>Seek cover, for Sol rises!</span>")
+
 		// Part 3: Night Ending
-		sleep(TIME_BLOODSUCKER_DAY_FINAL_WARN)
-		warn_daylight("<span class = 'userdanger'>Solar flares bombard the station with deadly UV light!</span><br><span class = ''>Stay in cover for the next [TIME_BLOODSUCKER_DAY / 600] minutes or risk Final Death!</span>",\
+		sleep(50)
+		warn_daylight(4,"<span class = 'userdanger'>Solar flares bombard the station with deadly UV light!</span><br><span class = ''>Stay in cover for the next [TIME_BLOODSUCKER_DAY / 600] minutes or risk Final Death!</span>",\
 				  	  "<span class = 'danger'>Solar flares bombard the station with UV light!</span>")
 
 		// Part 4: Day
@@ -53,7 +57,7 @@
 				issued_XP = TRUE
 				vamps_rank_up()
 
-		warn_daylight("<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>",\
+		warn_daylight(5,"<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>",\
 				  	  "<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>")
 		amDay = FALSE
 
@@ -73,11 +77,23 @@
 		sleep(10)
 		time_til_cycle --
 
-/obj/effect/sunlight/proc/warn_daylight(vampwarn = "", vassalwarn = "")
+/obj/effect/sunlight/proc/warn_daylight(danger_level=0, vampwarn = "", vassalwarn = "")
 	for (var/datum/mind/M in SSticker.mode.bloodsuckers)
 		if (!istype(M))
 			continue
 		to_chat(M,vampwarn)
+		if (M.current)
+			if (danger_level == 1)
+				M.current.playsound_local(null, 'sound/chatter/griffin_3.ogg', 50 + danger_level, 1)
+			else if (danger_level == 2)
+				M.current.playsound_local(null, 'sound/chatter/griffin_5.ogg', 50 + danger_level, 1)
+			else if (danger_level == 3)
+				M.current.playsound_local(null, 'sound/effects/alert.ogg', 75, 1)
+			else if (danger_level == 4)
+				M.current.playsound_local(null, 'sound/ambience/ambimystery.ogg', 90, 1)
+			else if (danger_level == 5)
+				M.current.playsound_local(null, 'sound/spookoween/ghosty_wind.ogg', 85, 1)
+
 	if (vassalwarn != "")
 		for (var/datum/mind/M in SSticker.mode.vassals)
 			if (!istype(M))

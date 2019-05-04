@@ -232,6 +232,8 @@
 			owner.current.cure_husk()
 			// Remove Embedded!
 			C.remove_all_embedded_objects()
+			// Heal Organs (will respawn original eyes etc. but we replace right away, next)
+			owner.current.regenerate_organs()
 			// Eyes/Heart
 			CheckVampOrgans() // Heart, Eyes
 
@@ -305,10 +307,12 @@
 		to_chat(owner, "<span class='danger'>Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor.</span>")
 		if (poweron_masquerade == TRUE)
 			to_chat(owner, "<span class='warning'>Your wounds will not heal until you disable the <span class='boldnotice'>Masquerade</span> power.</span>")
-	// End Torpor: No Damage, Not Daytime
-	else
-		if (total_damage <= 0 && !SSticker.mode.is_daylight() && owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker")) // owner.current.getMaxHealth()
-			Torpor_End()
+	// End Torpor:
+	else	// No damage, OR brute healed and NOT in coffin (since you cannot heal burn)
+		if (total_damage <= 0 || owner.current.getBruteLoss() <= 0 && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+			// Not Daytime, Not in Torpor
+			if (!SSticker.mode.is_daylight() && owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker"))
+				Torpor_End()
 		// Fake Unconscious
 		if (poweron_masquerade == TRUE && total_damage >= owner.current.getMaxHealth() - HEALTH_THRESHOLD_FULLCRIT)
 			owner.current.Unconscious(20,1)
@@ -320,13 +324,21 @@
 /datum/antagonist/bloodsucker/proc/Torpor_Begin(amInCoffin=FALSE)
 	owner.current.stat = UNCONSCIOUS
 	owner.current.fakedeath("bloodsucker") // Come after UNCONSCIOUS or else it fails
-	owner.current.update_stat()
+	//owner.current.update_stat()
 	owner.current.add_trait(TRAIT_NODEATH,"bloodsucker")	// Without this, you'll just keep dying while you recover.
+	// Visuals
+	owner.current.update_sight()
+	owner.current.reload_fullscreen()
+	// Disable ALL Powers
+	for (var/datum/action/bloodsucker/power in powers)
+		if (power.active && !power.can_use_in_torpor)
+			power.DeactivatePower()
+
 
 /datum/antagonist/bloodsucker/proc/Torpor_End()
 	owner.current.stat = SOFT_CRIT
 	owner.current.cure_fakedeath("bloodsucker") // Come after SOFT_CRIT or else it fails
-	owner.current.update_stat()
+	//owner.current.update_stat()
 	owner.current.remove_trait(TRAIT_NODEATH,"bloodsucker")
 	to_chat(owner, "<span class='warning'>You have recovered from Torpor.</span>")
 

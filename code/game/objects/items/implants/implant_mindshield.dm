@@ -23,6 +23,9 @@
 			target.sec_hud_set_implants()
 			return TRUE
 
+		if(target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) // FULPSTATION: Remove Vassal if Loyalty implant
+			SSticker.mode.remove_vassal(target.mind)
+
 		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 

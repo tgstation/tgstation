@@ -36,6 +36,7 @@
 	// DONE
 	to_chat(owner, "<span class='userdanger'>You have claimed the [claimed] as your place of immortal rest! Your lair is now the [lair].</span>")
 	to_chat(owner, "<span class='danger'>You have learned new construction recipes to improve your lair.</span>")
+	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Find your new lair recipes in the Structures tab of the <i>Crafting Menu</i> at the bottom of the screen.</span><br><br>")
 
 	RunLair() // Start
 	return TRUE
@@ -81,13 +82,14 @@
 
 /obj/structure/closet/crate/coffin/Destroy()
 	if (resident)
-		to_chat(resident, "<span class='danger'><span class='italics'>You sense that your [src], your sacred place of rest, has been destroyed! You will need to seek another.</span></span>")
-		resident = null // Remove resident. Because this object isnt removed from the game immediately (GC?) we need to give them a way to see they don't have a home anymore.
 		// Vamp Un-Claim
 		var/datum/antagonist/bloodsucker/bloodsuckerdatum = resident.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if (bloodsuckerdatum && bloodsuckerdatum.coffin == src)
 			bloodsuckerdatum.coffin = null
 			bloodsuckerdatum.lair = null
+		to_chat(resident, "<span class='danger'><span class='italics'>You sense that your [src], your sacred place of rest, has been destroyed! You will need to seek another.</span></span>")
+		resident = null // Remove resident. Because this object isnt removed from the game immediately (GC?) we need to give them a way to see they don't have a home anymore.
+
 	return ..()
 
 
@@ -114,6 +116,7 @@
 		// Bloodsucker Only
 		var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if (bloodsuckerdatum)
+			LockMe(user)
 			// Claim?
 			if (!bloodsuckerdatum.coffin && !resident)
 				switch(alert(user,"Do you wish to claim this as your coffin? [get_area(src)] will be your lair.","Claim Lair","Yes", "No"))
@@ -126,7 +129,6 @@
 			// Heal
 			if (bloodsuckerdatum.HandleHealing(0)) // Healing Mult 0 <--- We only want to check if healing is valid!
 				to_chat(bloodsuckerdatum.owner.current, "<span class='notice'>You enter the horrible slumber of deathless Torpor. You will heal until you are renewed.</span>")
-				LockMe(user)
 				bloodsuckerdatum.Torpor_Begin()
 			// Level Up?
 			bloodsuckerdatum.SpendRank() // Auto-Fails if not appropriate

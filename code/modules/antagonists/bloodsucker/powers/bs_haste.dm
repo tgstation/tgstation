@@ -5,7 +5,7 @@
 
 /datum/action/bloodsucker/targeted/haste
 	name = "Immortal Haste"
-	desc = "Select a person or location to sprint there in the blink of an eye. Your target may be knocked to the floor."
+	desc = "Sprint anywhere in the blink of an eye, slipping past open doors. Those nearby may be knocked away."
 	button_icon_state = "power_speed"
 	bloodcost = 6
 	cooldown = 50
@@ -15,8 +15,6 @@
 	bloodsucker_can_buy = TRUE
 
 	var/datum/martial_art/vamphaste/haste_cqc	// Assign this when
-
-
 
 
 
@@ -57,10 +55,10 @@
 
 	// Step One: Heatseek toward Target's Turf
 	walk_to(owner, T, 0, 0.05, 20) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
+	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	var/safety = 20
 	while(get_turf(owner) != T && safety > 0 && !(isliving(target) && target.Adjacent(owner)))
 		user.mobility_flags &= ~MOBILITY_MOVE // No Motion Bro
-		sleep(1)
 		safety --
 
 		// Did I get knocked down?
@@ -74,13 +72,16 @@
 		// Spin/Stun people we pass.
 		var/mob/living/newtarget = locate(/mob/living) in oview(1, owner)
 		if (newtarget && newtarget != target)//!newtarget.IsKnockdown())
-			//if (rand(0,2) == 0)
-				//playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
-				//newtarget.Knockdown(10)
+			if (rand(0,5) == 0)
+				playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
+				newtarget.Knockdown(10)
 			newtarget.Stun(5)
 			if(newtarget.IsStun())
 				newtarget.spin(10,1)
+		sleep(1)
 
+	if (user)
+		user.update_mobility()
 
 
 /datum/action/bloodsucker/targeted/haste/DeactivatePower(mob/living/user = owner, mob/living/target)

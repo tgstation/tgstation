@@ -18,15 +18,15 @@
 
 /datum/action/bloodsucker/masquerade
 	name = "Masquerade"
-	desc = "Feign the vital signs of a mortal, and escape both casual and medical notice as the monster you truly are.<br><br><i>Your over-time blood consumption increases while Masquerade is active.</i>"
+	desc = "Feign the vital signs of a mortal, and escape both casual and medical notice as the monster you truly are."
 	button_icon_state = "power_human"
 
 	bloodcost = 10
 	cooldown = 50
 	amToggle = TRUE
 	bloodsucker_can_buy = TRUE
-
-
+	warn_constant_cost = TRUE
+	can_use_in_torpor = TRUE // Masquerade is maybe the only one that can do this. It stops your healing.
 
 // NOTE: Firing off vulgar powers disables your Masquerade!
 
@@ -67,21 +67,17 @@
 		// Don't vomit food
 		// Don't Heal
 
-		// Pay Blood Toll
-		bloodsuckerdatum.AddBloodVolume(-0.2)
+		// Pay Blood Toll (if awake)
+		if (user.stat == CONSCIOUS)
+			bloodsuckerdatum.AddBloodVolume(-0.2)
 
 		sleep(20) // Check every few ticks that we haven't disabled this power
-
-	//DeactivatePower()
-
-
-
 
 
 /datum/action/bloodsucker/masquerade/ContinueActive(mob/living/user)
 	// Disable if unable to use power anymore.
-	if (user.stat == DEAD || user.blood_volume <= 0) // not conscious or soft critor uncon, just dead
-		return FALSE
+	//if (user.stat == DEAD || user.blood_volume <= 0) // not conscious or soft critor uncon, just dead
+	//	return FALSE
 	return ..() // Active, and still Antag
 
 
