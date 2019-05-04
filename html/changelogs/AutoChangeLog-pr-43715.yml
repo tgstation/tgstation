@@ -1,7 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Mining bags will no longer drop ore into backpack."
-  - bugfix: "Mining bags in backpack no longer interferes with other mining bags."
-  - bugfix: ".357 casings now always drops on floor when speedloaded."
-  - bugfix: "Fixes some storage size circumventions."
