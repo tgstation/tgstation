@@ -1,4 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - tweak: "Failing the \"which clothes are shower-safe\" guessing minigame no longer punishes with a mood debuff (though you still won't get clean until you get it right)."

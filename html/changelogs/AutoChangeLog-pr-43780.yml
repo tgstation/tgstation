@@ -1,4 +1,0 @@
-author: "81Denton"
-delete-after: True
-changes: 
-  - admin: "Admins who want to cancel round end delay now have to confirm a popup first."
