@@ -414,7 +414,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.job == "Cook")
-			if(prob(15)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
+			if(prob(7)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 				H.heal_bodypart_damage(1,1, 0)
 				. = 1
 		else //chefs' robust space-Italian metabolism lets them eat garlic without producing allyl methyl sulfide
