@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "Diagnostic HUD eyes, now printable at your local Medical Lathe/Exosuit Fabricator!"
