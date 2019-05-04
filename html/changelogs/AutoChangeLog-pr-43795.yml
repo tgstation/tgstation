@@ -1,0 +1,4 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Cargo manifests no longer list the purchaser as \"/datum/bank_account\" under certain circumstances"
