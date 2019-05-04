@@ -209,6 +209,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/dead_body_placer
 	name = "Dead Body placer"
 	icon_state = "deadbodyplacer"
+	var/bodycount = 2 //number of bodies to spawn
 
 /obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
 	var/area/a = get_area(src)
@@ -216,11 +217,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	for (var/i in a.contents)
 		if (istype(i, /obj/structure/bodycontainer/morgue))
 			trays += i
-	for (var/i = 1 to 2)
+	for (var/i = 1 to bodycount)
 		var/obj/structure/bodycontainer/morgue/j = pick(trays)
-		var/mob/living/carbon/human/h = new /mob/living/carbon/human(j.loc, 1)
+		var/mob/living/carbon/human/h = new /mob/living/carbon/human(j, 1)
 		h.death()
-		h.forceMove(j)
+		for (var/part in h.internal_organs) //randomly remove organs from each body
+			if (rand(0,10) <=2)
+				qdel(part)
 		j.update_icon()
 	qdel(src)
-	return
