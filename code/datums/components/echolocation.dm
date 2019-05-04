@@ -121,7 +121,7 @@
 	else
 		I = icon(input.icon, input.icon_state)
 	I.MapColors(rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,255), rgb(0,0,0,-254))
-	var/mutable_appearance/final_image = mutable_appearance(I, input.icon_state, CURSE_LAYER, 50)
+	var/mutable_appearance/final_image = mutable_appearance(I, input.icon_state, CURSE_LAYER, input.plane)
 	final_image.filters += filter(type="outline", size=1, color="#FFFFFF")
 	return final_image
 
@@ -142,7 +142,7 @@
 				I.DrawBox(null,32,2,32,31)
 			if(WEST)
 				I.DrawBox(null,1,2,1,31)
-	return mutable_appearance(I, null, CURSE_LAYER, 50)
+	return mutable_appearance(I, null, CURSE_LAYER, input.plane)
 
 /datum/component/echolocation/proc/generate_wall_key(turf/input)
 	var/list/dirs = list()

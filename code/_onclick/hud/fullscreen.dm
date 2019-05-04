@@ -1,4 +1,4 @@
-
+a
 /mob
 	var/list/screens = list()
 
@@ -161,6 +161,8 @@
 /obj/screen/fullscreen/color_vision/black
 	color = "#000000"
 	alpha = 255
+	layer = BLIND_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/lighting_backdrop
 	icon = 'icons/mob/screen_gen.dmi'
