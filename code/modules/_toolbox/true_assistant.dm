@@ -25,6 +25,7 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 	var/sacrifices = 0
 	var/toolbox_points = 0
 	var/prob_success = 2
+	var/chance_increase = 5 //how much prob_success increases each round.
 	var/list/upgrades = list()
 	var/list/sacrificed_ckeys = list()
 	var/all_access_toolbox = 0
@@ -182,6 +183,7 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 		name = "statue of the chaos maiden"
 		desc = "An ancient marble statue. The subject is depicted with a floor-length braid and is missing a toolbox. Something is very eerie about this statue. You could swear its eyes follow your movements..."
 		make_True_Assistant(user)
+		reset_chaos_assistant_chance()
 	else
 		failed_ckeys += user.ckey
 		user.visible_message("<span class='boldannounce'>[user] failed to take the toolbox from the pure maiden.</span>")
@@ -386,3 +388,36 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 /obj/item/paper/chaos_guide/New()
 	..()
 	icon_state = "pamphlet"
+
+//Making this happen more often -falaskian
+
+GLOBAL_VAR_INIT(chaosassistantchancepath,"data/other_saves/chaos_assistant_chance.sav")
+/proc/load_chaos_assistant_chance()
+	if(GLOB && GLOB.chaosassistantchancepath)
+		var/savefile/S = new(GLOB.chaosassistantchancepath)
+		if(S)
+			var/increase = 0
+			var/next_increase = 0
+			S["chance_increase"] >> increase
+			for(var/obj/structure/statue/toolbox/statue in world)
+				if(!next_increase)
+					next_increase = increase+statue.chance_increase
+				if(increase)
+					statue.prob_success = increase
+			if(next_increase)
+				S["chance_increase"] << min(next_increase,100)
+
+/proc/reset_chaos_assistant_chance()
+	if(GLOB && GLOB.chaosassistantchancepath)
+		var/savefile/S = new(GLOB.chaosassistantchancepath)
+		if(S)
+			var/new_value = 0
+			for(var/obj/structure/statue/toolbox/statue in world)
+				new_value = initial(statue.prob_success)
+				break
+			if(isnum(new_value))
+				S["chance_increase"] << new_value
+
+
+
+

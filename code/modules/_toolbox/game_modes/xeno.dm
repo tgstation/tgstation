@@ -26,6 +26,8 @@
 	var/start_time = 0
 	var/alien_victory_timer = 40 //how many minutes in to the round untill aliens can win
 
+	var/alert_crew_timer = 15
+
 	var/list/important_jobs = list("Warden", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director") //All of these jobs must be dead in order to gain victory for the aliens
 
 	var/Ayys_win = 0
@@ -120,6 +122,9 @@
 	if(!queen)
 		for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in SSshuttle.hostileEnvironments)
 			SSshuttle.clearHostileEnvironment(Q)
+	if(alert_crew_timer != -1 && (world.time+src.start_time >= ((alert_crew_timer*60)*10)))
+		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
+		alert_crew_timer = -1
 
 /datum/game_mode/ayylmaos/check_finished()
 	var/alien_count = 0

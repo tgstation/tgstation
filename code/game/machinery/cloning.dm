@@ -27,7 +27,7 @@
 	var/efficiency
 
 	var/datum/mind/clonemind
-	var/grab_ghost_when = CLONER_MATURE_CLONE
+	var/grab_ghost_when = CLONER_FRESH_CLONE
 
 	var/internal_radio = TRUE
 	var/obj/item/device/radio/radio

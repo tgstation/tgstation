@@ -264,6 +264,8 @@ SUBSYSTEM_DEF(ticker)
 			qdel(mode)
 			mode = null
 			SSjob.ResetOccupations()
+			if(GLOB.master_mode == "secret" && GLOB.secret_force_mode != "secret")
+				GLOB.secret_force_mode = "secret"
 			var/i=1
 			while(i<=5)
 				CHECK_TICK

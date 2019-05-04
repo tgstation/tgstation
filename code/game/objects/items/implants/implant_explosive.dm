@@ -43,6 +43,7 @@
 	var/turf/boomturf = get_turf(imp_in)
 	var/area/A = get_area(boomturf)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [A.name] [ADMIN_JMP(boomturf)], with cause of [cause].")
+	log_game("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [A.name] [ADMIN_JMP(boomturf)], with cause of [cause].")
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)
@@ -79,6 +80,10 @@
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
 	sleep(delay*0.25)
 	explosion(src,heavy,medium,weak,weak, flame_range = weak)
+	var/turf/boomturf = get_turf(imp_in)
+	var/area/A = get_area(boomturf)
+	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [A.name] [ADMIN_JMP(boomturf)], this was set on a timer.")
+	log_game("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [A.name] [ADMIN_JMP(boomturf)], this was set on a timer.")
 	if(imp_in)
 		imp_in.gib(1)
 	qdel(src)
