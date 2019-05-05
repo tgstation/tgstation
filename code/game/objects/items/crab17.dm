@@ -15,7 +15,7 @@
 		to_chat(user, "<span class='warning'>You already activated Protocol CRAB-17.</span>")
 		return FALSE
 	if(alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", "Yes", "No") == "Yes")
-		if(dumped || !src || QDELETED(src)) //Prevents fuckers from cheesing alert
+		if(dumped || QDELETED(src)) //Prevents fuckers from cheesing alert
 			return FALSE
 		var/turf/targetturf = get_random_station_turf()
 		new /obj/effect/dumpeetTarget(targetturf, user)
@@ -29,14 +29,15 @@
 	layer = TABLE_LAYER //So that the crate inside doesn't appear underneath
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	density = TRUE
-	var/list/accounts_to_rob
-	var/mob/living/carbon/human/bogdanoff
-	var/canwalk = FALSE
 	pixel_z = -8
 	layer = LARGE_MOB_LAYER
 	max_integrity = 3000
+	var/list/accounts_to_rob
+	var/mob/living/carbon/human/bogdanoff
+	var/canwalk = FALSE
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
+	..()
 	to_chat(user, "<span class='info'>It's integrated integrity meter reads: <b>HEALTH: [obj_integrity]</b>.</span>")
 
 /obj/structure/checkoutmachine/proc/check_if_finished()
@@ -82,17 +83,17 @@
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
 	start_dumping() //The machine doesnt move during this time, giving people close by a small window to grab their funds before it starts running around
 	sleep(10)
-	if(!src || QDELETED(src))
+	if(QDELETED(src))
 		return
 	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
 	cut_overlay("flaps")
 	sleep(10)
-	if(!src || QDELETED(src))
+	if(QDELETED(src))
 		return
 	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
 	cut_overlay("hatch")
 	sleep(30)
-	if(!src || QDELETED(src))
+	if(QDELETED(src))
 		return
 	playsound(src,'sound/machines/twobeep.ogg',50,0)
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
@@ -105,31 +106,31 @@
 	cut_overlay("legs_retracted")
 	pixel_z += 4
 	sleep(5)
-	if(!src || QDELETED(src))
+	if(QDELETED(src))
 		return
 	add_overlay("legs_extended")
 	cut_overlay("legs_extending")
 	pixel_z += 4
 	sleep(20)
-	if(!src || QDELETED(src))
+	if(QDELETED(src))
 		return
 	add_overlay("screen_lines")
 	sleep(5)
-	if(!src || QDELETED(src))
+	if(QDELETED(src))
 		return
 	cut_overlay("screen_lines")
 	sleep(5)
-	if(!src || QDELETED(src))
+	if(QDELETED(src))
 		return
 	add_overlay("screen_lines")
 	add_overlay("screen")
 	sleep(5)
-	if(!src || QDELETED(src))
+	if(QDELETED(src))
 		return
 	playsound(src,'sound/machines/triple_beep.ogg',50,0)
 	add_overlay("text")
 	sleep(10)
-	if(!src || QDELETED(src))
+	if(QDELETED(src))
 		return
 	add_overlay("legs")
 	cut_overlay("legs_extended")
