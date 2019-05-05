@@ -320,6 +320,8 @@
 
 /obj/item/radio/examine(mob/user)
 	..()
+	if (frequency && in_range(src, user))
+		to_chat(user, "<span class='notice'>It is set to broadcast over the [frequency/10] frequency.</span>")
 	if (unscrewed)
 		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
 	else

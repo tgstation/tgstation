@@ -182,3 +182,44 @@
 			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 12)
 		owner.emote("cough")
 	..()
+
+/datum/brain_trauma/mild/expressive_aphasia
+	name = "Expressive Aphasia"
+	desc = "Patient is affected by partial loss of speech leading to a reduced vocabulary."
+	scan_desc = "inability to form complex sentences"
+	gain_text = "<span class='warning'>You lose your grasp on complex words.</span>"
+	lose_text = "<span class='notice'>You feel your vocabulary returning to normal again.</span>"
+
+	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
+
+/datum/brain_trauma/mild/expressive_aphasia/on_say(message)
+	if(message)
+		var/list/message_split = splittext(message, " ")
+		var/list/new_message = list()
+
+		for(var/word in message_split)
+			var/suffix = copytext(word,-1)
+
+			// Check if we have a suffix and break it out of the word
+			if(suffix in list("." , "," , ";" , "!" , ":" , "?"))  
+				word = copytext(word,1,-1)
+			else
+				suffix = ""
+
+			word = html_decode(word)
+		
+			if(lowertext(word) in common_words)
+				new_message += word + suffix
+			else
+				if(prob(30) && message_split.len > 2)
+					new_message += pick("uh","erm")
+					break
+				else
+					var/list/charlist = string2charlist(word) // Stupid shit code
+					shuffle_inplace(charlist)
+					charlist.len = round(charlist.len * 0.5,1)
+					new_message += html_encode(jointext(charlist,"")) + suffix
+					
+		message = jointext(new_message, " ")
+		
+	return trim(message)

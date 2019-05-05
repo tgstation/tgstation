@@ -68,7 +68,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 8;
 	name = "Syndicate Fighter APC";
-	pixel_x = -24;
+	pixel_x = -25;
 	req_access = null;
 	req_access_txt = "150"
 	},

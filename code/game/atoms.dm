@@ -205,6 +205,9 @@
 	else
 		return null
 
+/atom/proc/return_analyzable_air()
+	return null
+
 /atom/proc/check_eye(mob/user)
 	return
 
