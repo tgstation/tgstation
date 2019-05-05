@@ -6,8 +6,8 @@
 	icon_state = "shadowcodex"
 	desc = "A book containing the secrets of shadows, with a large M on the cover. The book is filled with comments from and about the previous owner of this book, which is a mysterious man wearing a dapper suit. You can see <span class=warning>blood</span> on the last page."
 	var/mob/living/carbon/caster = null
-	var/is_reading = 0
-	var/is_converting = 0
+	var/is_reading = FALSE
+	var/is_converting = FALSE
 	var/times_used = 0
 	var/mob/living/carbon/human/shadowperson // The variable that holds the summoned minion
 
@@ -43,18 +43,18 @@
 	if(user != caster)
 		to_chat(user, "<span class=notice>You thought you could outsmart us.</span>") // how did we get here
 		return
-	if(is_reading == 0)
-		is_reading = 1
+	if(!is_reading)
+		is_reading = TRUE
 		to_chat(user, "<span class=notice>You start flipping through its pages, with each page, you feel more insane.</span>")
 		playsound(user.loc, 'sound/effects/pageturn1.ogg', 30, 1)
 		if(do_after(user, 50, target = src))
-			is_reading = 0
+			is_reading = FALSE
 			to_chat(user, "<span class='userdanger'>You recite the words written in the book. As they start to glow, you suddenly feel a sharp pain in your head.</span>")
 			damage_brain(caster)
 			spawn_minion(caster)
 			caster.emote("scream")
 		else // if you don't finish reading the book
-			is_reading = 0
+			is_reading = FALSE
 			to_chat(user, "<span class=notice>You decide to leave the book alone.</span>")
 	else
 		to_chat(user, "<span class=warning>You are already reading this book.</span>")
@@ -76,21 +76,21 @@
 	if(M.stat == DEAD)
 		to_chat(user, "<span class=warning>The targets subconscious is no longer there.</span>")
 		return
-	if(is_converting == 0)
-		is_converting = 1
+	if(!is_converting)
+		is_converting = TRUE
 		to_chat(user, "<span class=warning>You start focusing on [M]s brain, his mind will serve purpose in servitude.</span>")
 		to_chat(M, "<span class='userdanger'>You try to resist the books power.</span>")
 		M.emote("scream")
 		if(do_after(user, 100, target = M))
-			is_converting = 0
+			is_converting = FALSE
 			playsound(M, 'sound/effects/light_flicker.ogg', 30, 1)
 			damage_brain(M)
 			spawn_minion(caster)
 		else
-			is_converting = 0
+			is_converting = FALSE
 			to_chat(user, "<span class='userdanger'>The spell has been disrupted.</span>")
 			to_chat(M, "<span class='userdanger'>You succeed. The spell has been disrupted, leaving your mind intact.</span>")
-	else if(is_converting == 1)
+	else if(is_converting)
 		to_chat(user, "<span class=notice>You are already casting a spell on [M]s brain.</span>")
 
 // First time used 75 (not enough to trigger a severe brain trauma) brain damge, second time 200 which should kill you
