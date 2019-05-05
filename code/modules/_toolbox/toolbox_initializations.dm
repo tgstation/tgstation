@@ -232,3 +232,59 @@ GLOBAL_LIST_EMPTY(hub_features)
 		return attack_hand(user)
 	else
 		return ..()
+
+//give acting captain
+/mob/living/carbon/human/proc/give_acting_captaincy()
+	var/obj/item/card/id/id = wear_id.GetID()
+	if(istype(id) && id.access)
+		if(!(ACCESS_CAPTAIN in id.access))
+			id.access += ACCESS_CAPTAIN
+			to_chat(src,"<span class='big bold'><font color='blue'>You are the acting captain.</font><span>")
+			to_chat(src,"<B>You have been given access to the Captain's Office on your ID. It is recommended that you head over to the Captain's Office and secure the Captain's personal belongings.</B>")
+			for(var/mob/M in GLOB.player_list)
+				if(istype(M,/mob/dead/new_player) || M == src)
+					continue
+				to_chat(M,"<span class='big bold'><font color='blue'>[real_name] is the acting captain!</font><span>")
+				CHECK_TICK
+
+/proc/create_acting_captain()
+	var/list/chain_of_command = list(
+		"Head of Personnel",
+		"Head of Security",
+		"Chief Engineer",
+		"Research Director",
+		"Chief Medical Officer")
+	var/heads_found = 0
+	for(var/mob/living/M in GLOB.player_list)
+		if(!M.mind)
+			continue
+		if(M.mind && M.mind.assigned_role in chain_of_command)
+			heads_found = 1
+			chain_of_command[M.mind.assigned_role] = M
+	if(heads_found)
+		for(var/job in chain_of_command)
+			if(istype(chain_of_command[job],/mob/living/carbon/human))
+				var/mob/living/carbon/human/H = chain_of_command[job]
+				H.give_acting_captaincy()
+				return 1
+	return 0
+
+/proc/create_latejoin_acting_captain(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+	if(!SSjob || !SSticker || SSticker.current_state != GAME_STATE_PLAYING)
+		return
+	if(!H.mind || !(H.mind.assigned_role in GLOB.command_positions))
+		return
+	var/foundexistinghead = 0
+	for(var/command_position in GLOB.command_positions)
+		if(command_position == H.mind.assigned_role)
+			continue
+		var/datum/job/j = SSjob.GetJob(command_position)
+		if(!j)
+			continue
+		if(j.current_positions >= 1)
+			foundexistinghead = 1
+			break
+	if(!foundexistinghead)
+		H.give_acting_captaincy()
