@@ -240,9 +240,7 @@
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 
-	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(src.loc, /obj/item/transfer_valve))
-			log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
+	if(pressure > TANK_FRAGMENT_PRESSURE && istype(src.loc, /obj/item/transfer_valve))
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		air_contents.react(src)
