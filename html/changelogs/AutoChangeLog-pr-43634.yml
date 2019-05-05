@@ -1,4 +1,0 @@
-author: "RaveRadbury"
-delete-after: True
-changes: 
-  - bugfix: "The radio configuration menu for masters of pAI will now toggle properly."
