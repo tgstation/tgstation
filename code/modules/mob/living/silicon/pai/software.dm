@@ -14,7 +14,7 @@
 															"crew manifest" = 5,
 															"digital messenger" = 5,
 															"atmosphere sensor" = 5,
-															"photo" = 5,
+															"photography module" = 5,
 															"remote signaller" = 10,
 															"medical records" = 10,
 															"security records" = 10,
@@ -137,7 +137,7 @@
 		screen = soft
 		if(sub)
 			subscreen = text2num(sub)
-		switch(soft) 
+		switch(soft)
 			if("buy") // Purchasing new software
 				if(subscreen == 1)
 					var/target = href_list["buy"]
@@ -151,7 +151,7 @@
 					else
 						temp = "Trunk <TT> \"[target]\"</TT> not found."
 
-		
+
 			if("radio") // Configuring onboard radio
 				radio.attack_self(src)
 
@@ -186,7 +186,7 @@
 				newscaster.ui_interact(src)
 
 			if("camzoom")
-				aicamera.AltClick(src)
+				aicamera.adjust_zoom(usr)
 
 			if("signaller")
 				if(href_list["send"])

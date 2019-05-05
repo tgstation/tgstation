@@ -157,7 +157,7 @@
 		return
 	if(issilicon(usr))
 		var/mob/living/silicon/pai/pAI = usr
-		if(pAI.software.Find("photo"))
+		if(pAI.software.Find("photography module"))
 //			color = rgb(256,256,256)
 			pAI.aicamera.toggle_camera_mode(usr)
 		else
