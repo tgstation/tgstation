@@ -1818,7 +1818,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Fernet Cola"
 	id = "fernet_cola"
 	description = "A very popular and bittersweet digestif, ideal after a heavy meal. Best served on a sawed-off cola bottle as per tradition."
-	color = "#390600" // rgb: 57, 6, 0
+	color = "#390600" // rgb: 57, 6,
 	boozepwr = 25
 	quality = DRINK_NICE
 	taste_description = "sweet relief"
@@ -2085,3 +2085,170 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "jack_rose"
 	glass_name = "Jack Rose"
 	glass_desc = "Enough of these, and you really will start to suppose your toeses are roses."
+
+/datum/reagent/consumable/ethanol/turbo
+	name = "Turbo"
+	id = "turbo"
+	description = "A turbulent cocktail associated with outlaw hoverbike racing.Not for the faint of heart."
+	color = "#e94c3a"
+	boozepwr = 85
+	quality = DRINK_VERYGOOD
+	taste_description = "the outlaw spirit"
+	glass_icon_state = "turbo"
+	glass_name = "Turbo"
+	glass_desc = "A turbulent cocktail for outlaw hoverbikers."
+
+/datum/reagent/consumable/ethanol/turbo/on_mob_add(mob/living/M)
+	..()
+	M.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-0.20, blacklisted_movetypes=(FLYING|FLOATING))
+
+/datum/reagent/consumable/ethanol/turbo/on_mob_delete(mob/living/M)
+	M.remove_movespeed_modifier(id)
+	..()
+
+
+/datum/reagent/consumable/ethanol/turbo/on_mob_life(mob/living/carbon/M)
+	if(prob(7))
+		to_chat(M, "<span class='notice'>[pick("You feel disregard for the rule of law.", "You want to go fast.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]</span>")
+	M.adjustStaminaLoss(-8)
+	return ..()
+
+/datum/reagent/consumable/ethanol/old_timer
+	name = "Old Timer"
+	id = "old_timer"
+	description = "an archaic potation enjoyed by old coots of all ages."
+	color = "#996835"
+	boozepwr = 35
+	quality = DRINK_NICE
+	taste_description = "simpler times"
+	glass_icon_state = "old_timer"
+	glass_name = "Old Timer"
+	glass_desc = "WARNING! May cause premature aging!"
+
+/datum/reagent/consumable/ethanol/old_timer/on_mob_life(mob/living/carbon/M)
+	if(prob(20))
+		if(ishuman(M))
+			var/mob/living/carbon/human/N = M
+			N.age += 1
+			if(N.age > 70)
+				N.facial_hair_color = "ccc"
+				N.hair_color = "ccc"
+				N.update_hair()
+				if(N.age > 100)
+					N.become_nearsighted(id)
+					if(N.gender == MALE)
+						N.facial_hair_style = "Beard (Very Long)"
+						N.update_hair()
+
+				if(N.age > 969) //Best not let people get older than this or i might incur G-ds wrath
+					M.visible_message("<span class='notice'>[M] becomes older than any man should be.. and crumbles into dust!</span>")
+					M.dust(0,1,0)
+
+	return ..()
+
+/datum/reagent/consumable/ethanol/catsip
+	name = "Catsip"
+	id = "catsip"
+	description = "a kawaii drink from space-Japan."
+	color ="#ff99ac"
+	boozepwr = 50
+	quality = DRINK_NICE
+	taste_description = "sweet milkies"
+	glass_icon_state = "catsip"
+	glass_name = "Catsip"
+	glass_desc = "Unfortunately has a tendency to induce the perculiar vocal tics of a wapanese mutant in the imbiber."
+
+/datum/reagent/consumable/ethanol/catsip/on_mob_life(mob/living/M)
+	if(prob(8))
+		M.say(pick("Nya.", "N-nya!", "NYA!"), forced = "catsip")
+	return ..()
+
+/datum/reagent/consumable/ethanol/catsip/on_mob_add(mob/living/carbon/human/M)
+	if(!M.dna.species.is_wagging_tail())
+		M.emote("wag")
+	return ..()
+
+/datum/reagent/consumable/ethanol/rubberneck
+	name = "Rubberneck"
+	id = "rubberneck"
+	description = "A quality rubberneck should not contain any gross natural ingredients."
+	color = "#ffe65b"
+	boozepwr = 60
+	quality = DRINK_GOOD
+	taste_description = "artifical fruityness"
+	glass_icon_state = "rubberneck"
+	glass_name = "Rubberneck"
+	glass_desc = "A popular drink amongst those adhering to an all synthetic diet."
+
+/datum/reagent/consumable/ethanol/duplex
+	name = "Duplex"
+	id = "duplex"
+	description = "An insperable combination of two fruity drinks."
+	color = "#50e5cf"
+	boozepwr = 25
+	quality = DRINK_NICE
+	taste_description = "green apples and blue raspberries"
+	glass_icon_state = "duplex"
+	glass_name = "Duplex"
+	glass_desc = "To imbibe one component separately from the other is consider a great faux pas."
+
+/datum/reagent/consumable/ethanol/trappist
+	name = "Trappist Beer"
+	id = "trappist"
+	description = "A strong dark ale brewed by space-monks."
+	color = "#390c00"
+	boozepwr = 40
+	quality = DRINK_VERYGOOD
+	taste_description = "dried plums and malt"
+	glass_icon_state = "trappistglass"
+	glass_name = "Trappist Beer"
+	glass_desc = "boozy Catholicism in a glass."
+
+/datum/reagent/consumable/ethanol/trappist/on_mob_life(mob/living/carbon/M)
+	if(!M.mind.isholy)
+		return ..()
+	M.adjustFireLoss(-2.5, 0)
+	M.jitteriness = max(0, M.jitteriness-1)
+	M.stuttering = max(0, M.stuttering-1)
+	return ..()
+
+/datum/reagent/consumable/ethanol/blazaam
+	name = "Blazaam"
+	id = "blazaam"
+	description = "A strange drink that few people seem to remember excisting. Doubles as a Berenstain remover."
+	boozepwr = 70
+	quality = DRINK_FANTASTIC
+	taste_description = "alternate realities"
+	glass_icon_state = "blazaamglass"
+	glass_name = "Blazaam"
+	glass_desc = "The glass seems to be sliding between realities. Doubles as a Berenstain remover"
+	var/stored_teleports = 0
+	var/mandelamessage
+
+/datum/reagent/consumable/ethanol/blazaam/on_mob_life(mob/living/carbon/M)
+	if(M.drunkenness > 40)
+		if(stored_teleports)
+			do_teleport(M, get_turf(M), rand(1,3), channel = TELEPORT_CHANNEL_BLUESPACE)
+			stored_teleports--
+		if(prob(10))
+			stored_teleports += rand(2,6)
+			M.vomit()
+		if(prob(1))
+			mandelamessage = pick("Friend, we don't have much time, I need you to come rescue me.", "[M], i am still alive.", "Wake up. Please wake up.", "A winner is a dreamer who never gives up.", "[M], the fate of this world is in your hands.")
+			to_chat(M, "<span class='name'>Nelson Mandela </span><span class='message'>says, \"[mandelamessage]\"</span>")
+	return ..()
+
+
+/datum/reagent/consumable/ethanol/planet_cracker
+	name = "Planet Cracker"
+	id = "planet_cracker"
+	description = "This jubilant drink celebrates humanity's triumph over the alien menace. May be offensive to non-human crewmembers."
+	boozepwr = 50
+	quality = DRINK_FANTASTIC
+	taste_description = "triumph with a hint of bitterness"
+	glass_icon_state = "planet_cracker"
+	glass_name = "Planet Cracker"
+	glass_desc = "Although historians believe the drink was originally was created to commemorate the end of an important conflict in mans past, its origins have largely been forgotten and it is today seen more as a general symbol of human supremacy."
+
+
+

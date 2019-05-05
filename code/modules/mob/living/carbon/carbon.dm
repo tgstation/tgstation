@@ -492,6 +492,9 @@
 				add_splatter_floor(T)
 			if(stun)
 				adjustBruteLoss(3)
+		else if(src.reagents.has_reagent("blazaam"))
+			if(T)
+				T.add_vomit_floor(src, FALSE, TRUE)
 		else
 			if(T)
 				T.add_vomit_floor(src, toxic)//toxic barf looks different

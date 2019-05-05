@@ -504,7 +504,7 @@
 /datum/reagent/consumable/pwr_game
 	name = "Pwr Game"
 	description = "The only drink with the PWR that true gamers crave."
-	id = "pwr_game"
+	id = ""
 	color = "#9385bf" // rgb: 58, 52, 75
 	taste_description = "sweet and salty tang"
 	glass_icon_state = "glass_red"
@@ -749,6 +749,10 @@
 	glass_name = "glass of grape juice"
 	glass_desc = "It's grape (soda)!"
 
+/datum/reagent/consumable/grape_soda/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
 /datum/reagent/consumable/milk/chocolate_milk
 	name = "Chocolate Milk"
 	id = "chocolate_milk"
@@ -779,3 +783,63 @@
 	taste_description = "sweet pomegranates"
 	glass_name = "glass of grenadine"
 	glass_desc = "Delicious flavored syrup."
+
+/datum/reagent/consumable/parsnipjuice
+	name = "Parsnip Juice"
+	id = "parsnipjuice"
+	description = "Why..."
+	color = "#FFA500"
+	taste_description = "parsnip"
+	glass_name = "glass of parsnip juice"
+
+/datum/reagent/consumable/peachjuice //Intended to be extremely rare due to being the limiting ingredients in the blazaam drink
+	name = "Peach Juice"
+	id = "peachjuice"
+	description = "Just peachy,"
+	color = "#E78108"
+	taste_description = "peaches"
+	glass_name = "glass of peach juice"
+
+/datum/reagent/consumable/cream_soda
+	name = "Cream Soda"
+	id = "cream_soda"
+	description = "A classic space-American vanilla flavoured soft drink."
+	color = "#dcb137"
+	quality = DRINK_VERYGOOD
+	taste_description = "fizzy vanilla"
+	glass_icon_state = "cream_soda"
+	glass_name = "Cream Soda"
+	glass_desc = "A classic space-American vanilla flavoured soft drink."
+
+/datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/red_queen
+	name = "Red Queen"
+	id = "red_queen"
+	description = "DRINK ME."
+	color = "#e6ddc3"
+	quality = DRINK_GOOD
+	taste_description = "wonder"
+	glass_icon_state = "red_queen"
+	glass_name = "Red Queen"
+	glass_desc = "DRINK ME."
+	var/current_size = 1
+
+/datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/H)
+	if(!prob(25))
+		return ..()
+	var/newsize = current_size
+	newsize = pick(0.5, 0.75, 1, 1.50, 2)
+	H.resize = newsize/current_size
+	current_size = newsize
+	H.update_transform()
+	if(prob(40))
+		H.emote("sneeze")
+	..()
+
+/datum/reagent/consumable/red_queen/on_mob_delete(mob/living/M)
+	M.resize = 1/current_size
+	M.update_transform()
+	..()
