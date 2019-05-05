@@ -408,23 +408,23 @@
 	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
 	color = "#FEFEFE"
 	taste_description = "garlic"
-	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M)
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
-		if(prob(min(35,current_cycle)))
-			to_chat(M, "<span class='danger'>You can't get the scent of garlic out of your nose! You feel sick...</span>")
-			M.Paralyze(20)
+		if(prob(min(25,current_cycle)))
+			to_chat(M, "<span class='danger'>You can't get the scent of garlic out of your nose! You can barely think...</span>")
+			M.Paralyze(10)
 			M.Jitter(10)
 	else
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.job == "Cook")
-				if(prob(7)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
+				if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 					H.heal_bodypart_damage(1,1, 0)
 					. = 1
 			else //chefs' robust space-Italian metabolism lets them eat garlic without producing allyl methyl sulfide
-				H.adjust_hygiene(-0.5 * volume)
+				H.adjust_hygiene(-0.15 * volume)
 	..()
 
 /datum/reagent/consumable/sprinkles
