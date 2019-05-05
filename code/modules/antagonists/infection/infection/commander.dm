@@ -1,8 +1,8 @@
 //Few global vars to track the infections
 GLOBAL_LIST_EMPTY(infections) //complete list of all infections made.
-GLOBAL_LIST_EMPTY(infection_cores)
 GLOBAL_LIST_EMPTY(infection_nodes)
-GLOBAL_LIST_EMPTY(infection_commanders)
+GLOBAL_VAR(infection_core)
+GLOBAL_VAR(infection_commander)
 
 /mob/camera/commander
 	name = "Infection Commander"
@@ -40,7 +40,9 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	var/infection_color = "#ff5800"
 
 /mob/camera/commander/Initialize(mapload, starting_points = max_infection_points)
-	GLOB.infection_commanders += src
+	if(GLOB.infection_commander)
+		return INITIALIZE_HINT_QDEL // there can be only one
+	GLOB.infection_commander = src
 	infection_points = starting_points
 	autoplace_time += world.time
 	last_attack = world.time
@@ -136,7 +138,7 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	SSticker.force_ending = 1
 
 /mob/camera/commander/Destroy()
-	GLOB.infection_commanders -= src
+	GLOB.infection_commander = null
 	for(var/IN in GLOB.infections)
 		var/obj/structure/infection/I = IN
 		if(I && I.overmind == src)
@@ -227,9 +229,3 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 		return 0
 	forceMove(NewLoc)
 	return 1
-
-/mob/camera/commander/mind_initialize()
-	. = ..()
-	var/datum/antagonist/infection/I = mind.has_antag_datum(/datum/antagonist/infection)
-	if(!I)
-		mind.add_antag_datum(/datum/antagonist/infection)

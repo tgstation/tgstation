@@ -181,7 +181,6 @@ SUBSYSTEM_DEF(events)
 	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
 
-
 /datum/controller/subsystem/events/proc/resetFrequency()
 	frequency_lower = initial(frequency_lower)
 	frequency_upper = initial(frequency_upper)

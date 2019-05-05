@@ -6,10 +6,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	if(placed)
 		return
 	var/turf/start = pick(GLOB.infection_spawns)
-	if(!start)
-		qdel(src)
-		message_admins("Unable to find spawn position for infection core.")
-		return
 	var/obj/effect/meteor/infection/M = new/obj/effect/meteor/infection(start, start, src)
 	M.pixel_x = pick(-32, 32)
 	M.pixel_y = pick(-32, 32)
@@ -171,20 +167,12 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 
 /mob/camera/commander/proc/create_spore()
 	to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
-	var/turf/T = get_turf(infection_core)
 
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as an evolving infection spore?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a sentient spore now.
-		var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient(T.loc, null, src)
-		spore.forceMove(T)
-		spore.update_icons()
-		spore.adjustHealth(spore.maxHealth * 0.5)
-		infection_mobs += spore
 		var/mob/dead/observer/C = pick(candidates)
-		spore.key = C.key
-		SEND_SOUND(spore, sound('sound/effects/blobattack.ogg'))
-		SEND_SOUND(spore, sound('sound/effects/attackblob.ogg'))
-		spore.infection_help()
+		var/datum/mind/spore_mind = C.mind
+		spore_mind.add_antag_datum(/datum/antagonist/infection/spore)
 		return TRUE
 	to_chat(src, "<span class='warning'>You could not conjure a sentience for your spore. Try again later.</span>")
 	upgrade_points++

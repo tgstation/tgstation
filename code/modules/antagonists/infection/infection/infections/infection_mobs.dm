@@ -229,7 +229,7 @@
 			H.color = overmind.color
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/find_anchor()
-	var/list/possible_anchors = GLOB.infection_nodes + GLOB.infection_cores
+	var/list/possible_anchors = GLOB.infection_nodes + GLOB.infection_core
 	var/found_node
 	for(var/obj/structure/infection/I in possible_anchors)
 		if(get_dist(src, I) <= 1 || I == loc)

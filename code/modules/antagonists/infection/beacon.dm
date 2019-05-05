@@ -52,11 +52,11 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	for(var/obj/structure/beacon_wall/D in walls)
 		qdel(D)
 	GLOB.infection_beacons -= src
-	for(var/mob/camera/commander/C in GLOB.infection_commanders)
-		C.upgrade_points++
-		C.all_upgrade_points++
-		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in C.infection_mobs)
-			spore.upgrade_points++
+	var/mob/camera/commander/C = GLOB.infection_commander
+	C.upgrade_points++
+	C.all_upgrade_points++
+	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in C.infection_mobs)
+		spore.upgrade_points++
 	if(GLOB.infection_beacons.len > 1)
 		addtimer(CALLBACK(src, .proc/destroyed_announcement), 80)
 	return ..()
@@ -73,9 +73,8 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	update_icon()
 	if(obj_integrity <= 0)
 		playsound(src.loc, 'sound/magic/repulse.ogg', 300, 1, 10, pressure_affected = FALSE)
-		for(var/obj/structure/infection/core/C in GLOB.infection_cores)
-			var/mob/camera/commander/OM = C.overmind
-			OM.playsound_local(OM, 'sound/magic/repulse.ogg', 300, 1)
+		var/mob/camera/commander/OM = GLOB.infection_commander
+		OM.playsound_local(OM, 'sound/magic/repulse.ogg', 300, 1)
 		var/explodeloc = src.loc
 		qdel(src)
 		for(var/i = 1 to 5)
@@ -168,7 +167,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 /datum/component/no_beacon_crossing/proc/check_passed()
 	// if you somehow got past a beacon wall then time to die
 	var/obj/structure/beacon_generator/closest
-	var/obj/structure/infection/core/C = GLOB.infection_cores[1]
+	var/obj/structure/infection/core/C = GLOB.infection_core
 	if(!C)
 		return
 	for(var/obj/structure/beacon_generator/BG in GLOB.infection_beacons)

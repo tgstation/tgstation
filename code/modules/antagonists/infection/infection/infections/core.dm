@@ -15,7 +15,7 @@
 
 
 /obj/structure/infection/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
-	GLOB.infection_cores += src
+	GLOB.infection_core = src
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
 	update_icon() //so it atleast appears
@@ -25,6 +25,9 @@
 		update_icon()
 	point_rate = new_rate
 	addtimer(CALLBACK(src, .proc/generate_announcement), 40)
+	SSevents.frequency_lower = DOOM_CLOCK_EVENT_DELAY
+	SSevents.frequency_upper = DOOM_CLOCK_EVENT_DELAY
+	SSevents.reschedule()
 	. = ..()
 
 /obj/structure/infection/core/proc/generate_announcement()
@@ -51,7 +54,7 @@
 /obj/structure/infection/core/Destroy()
 	. = ..()
 	deathExplosion()
-	GLOB.infection_cores -= src
+	GLOB.infection_core = null
 	if(overmind)
 		overmind.infection_core = null
 	overmind = null
