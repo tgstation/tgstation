@@ -1,3 +1,9 @@
+/proc/isvampire(mob/living/M)
+	if(!ishuman(M))
+		return FALSE
+	var/mob/living/carbon/human/H = M
+	return(H.dna.species.id == "vampire")
+
 /datum/species/vampire
 	name = "Vampire"
 	id = "vampire"
@@ -98,6 +104,10 @@
 			if(victim.anti_magic_check(FALSE, TRUE, FALSE))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
+				return
+			if(victim.reagents && victim.reagents.has_reagent("garlic"))
+				to_chat(victim, "<span class='warning'>[H] tries to bite you, but recoils in disgust!</span>")
+				to_chat(H, "<span class='warning'>[victim] reeks of garlic! you can't bring yourself to drain such tainted blood.</span>")
 				return
 			if(!do_after(H, 30, target = victim))
 				return

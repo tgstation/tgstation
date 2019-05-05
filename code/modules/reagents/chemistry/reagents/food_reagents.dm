@@ -402,7 +402,7 @@
 				M.emote(pick("twitch","giggle"))
 	..()
 
-/datum/reagent/consumable/garlic
+/datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
 	name = "Garlic Juice"
 	id = "garlic"
 	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
@@ -413,7 +413,12 @@
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.job == "Cook")
+		if(isvampire(H)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
+			if(prob(min(35,current_cycle)))
+				to_chat(H, "<span class='danger'>You can't get the scent of garlic out of your nose! You feel sick...</span>")
+				M.Paralyse(20)
+				M.Jitter(10)
+		else if(H.job == "Cook")
 			if(prob(7)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 				H.heal_bodypart_damage(1,1, 0)
 				. = 1
