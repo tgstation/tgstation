@@ -1,4 +1,3 @@
-
 /datum/species/vampire
 	name = "Vampire"
 	id = "vampire"
