@@ -64,7 +64,7 @@
 				return
 			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>")
 			card.registered_account.being_dumped = FALSE	
-			card.registered_account.canWithdraw = 0
+			card.registered_account.withdrawDelay = 0
 			if(check_if_finished())
 				qdel(src)
 				return
@@ -214,11 +214,10 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src).name] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
-	addtimer(CALLBACK(src, .proc/endLaunch), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
-	addtimer(CALLBACK(src, .proc/playFallingSound), 1, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
-
-/obj/effect/dumpeetTarget/proc/playFallingSound()
 	playsound(src,  'sound/weapons/mortar_whistle.ogg', 80, 1, 6)
+	addtimer(CALLBACK(src, .proc/endLaunch), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
+	
+
 
 /obj/effect/dumpeetTarget/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears

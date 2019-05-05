@@ -9,7 +9,7 @@
 	var/account_id
 	var/welfare = FALSE
 	var/being_dumped = FALSE //pink levels are rising
-	var/canWithdraw = FALSE
+	var/withdrawDelay = 0
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -25,7 +25,7 @@
 
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
-	canWithdraw = world.time + DUMPTIME
+	withdrawDelay = world.time + DUMPTIME
 
 /datum/bank_account/proc/_adjust_money(amt)
 	account_balance += amt
