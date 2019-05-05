@@ -416,15 +416,14 @@
 			to_chat(M, "<span class='danger'>You can't get the scent of garlic out of your nose! You can barely think...</span>")
 			M.Paralyze(10)
 			M.Jitter(10)
-	else
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.job == "Cook")
-				if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
-					H.heal_bodypart_damage(1,1, 0)
-					. = 1
-			else //chefs' robust space-Italian metabolism lets them eat garlic without producing allyl methyl sulfide
-				H.adjust_hygiene(-0.15 * volume)
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.job == "Cook")
+			if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
+				H.heal_bodypart_damage(1,1, 0)
+				. = 1
+		else //chefs' robust space-Italian metabolism lets them eat garlic without producing allyl methyl sulfide
+			H.adjust_hygiene(-0.15 * volume)
 	..()
 
 /datum/reagent/consumable/sprinkles
