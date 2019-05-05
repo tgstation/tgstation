@@ -341,7 +341,7 @@
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(C.has_trait(TRAIT_NODISMEMBER))
+		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 			return ..()		//ATTACK!
 		var/list/parts = list()
 		var/undismembermerable_limbs = 0

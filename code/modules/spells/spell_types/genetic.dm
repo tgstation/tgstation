@@ -26,7 +26,7 @@
 		for(var/A in mutations)
 			target.dna.add_mutation(A)
 		for(var/A in traits)
-			target.add_trait(A, GENETICS_SPELL)
+			ADD_TRAIT(target, A, GENETICS_SPELL)
 		active_on += target
 		addtimer(CALLBACK(src, .proc/remove, target), duration)
 
@@ -41,4 +41,4 @@
 		for(var/A in mutations)
 			target.dna.remove_mutation(A)
 		for(var/A in traits)
-			target.remove_trait(A, GENETICS_SPELL)
+			REMOVE_TRAIT(target, A, GENETICS_SPELL)

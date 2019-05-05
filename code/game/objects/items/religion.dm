@@ -189,7 +189,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/command/check_inspiration(mob/living/carbon/human/H)
-	return H.has_trait(TRAIT_MINDSHIELD) //Command is stalwart but rewards their allies.
+	return HAS_TRAIT(H, TRAIT_MINDSHIELD) //Command is stalwart but rewards their allies.
 
 /datum/crafting_recipe/command_banner
 	name = "Command Banner"

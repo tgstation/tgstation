@@ -11,7 +11,7 @@
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.status_flags |= GODMODE
-	owner.add_trait(TRAIT_PACIFISM, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
 	owner.visible_message("<span class='warning'>[owner] shines with a brilliant rainbow light.</span>",
 		"<span class='notice'>You feel protected by an unknown force!</span>")
 	originalcolor = owner.color
@@ -24,7 +24,7 @@
 /datum/status_effect/rainbow_protection/on_remove()
 	owner.status_flags &= ~GODMODE
 	owner.color = originalcolor
-	owner.remove_trait(TRAIT_PACIFISM, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
 	owner.visible_message("<span class='notice'>[owner] stops glowing, the rainbow light fading away.</span>",
 		"<span class='warning'>You no longer feel protected...</span>")
 
@@ -417,7 +417,7 @@ datum/status_effect/rebreathing/tick()
 	return ..()
 
 /datum/status_effect/plur/on_remove()
-	owner.remove_trait(TRAIT_PACIFISM, "peacecookie")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "peacecookie")
 
 /datum/status_effect/adamantinecookie
 	id = "adamantinecookie"
@@ -515,7 +515,7 @@ datum/status_effect/rebreathing/tick()
 	return ..()
 
 datum/status_effect/stabilized/blue/on_remove()
-	owner.remove_trait(TRAIT_NOSLIPWATER, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
@@ -594,7 +594,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
-	owner.remove_trait(TRAIT_RESISTHEATHANDS, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
 	qdel(fire)
 
 /datum/status_effect/stabilized/darkblue

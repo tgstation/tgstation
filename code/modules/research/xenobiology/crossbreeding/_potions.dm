@@ -60,7 +60,7 @@ Slimecrossing Potions
 	else
 		to_chat(user, "<span class='warning'>You drink the pacification potion!</span>")
 	if(isanimal(M))
-		M.add_trait(TRAIT_PACIFISM, MAGIC_TRAIT)
+		ADD_TRAIT(M, TRAIT_PACIFISM, MAGIC_TRAIT)
 	else if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY)
