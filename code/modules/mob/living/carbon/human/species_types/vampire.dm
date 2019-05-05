@@ -1,8 +1,3 @@
-/proc/isvampire(mob/living/M)
-	if(!ishuman(M))
-		return FALSE
-	var/mob/living/carbon/human/H = M
-	return(H.dna.species.id == "vampire")
 
 /datum/species/vampire
 	name = "Vampire"
