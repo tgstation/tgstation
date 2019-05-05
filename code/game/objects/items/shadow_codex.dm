@@ -37,31 +37,33 @@
 /obj/item/shadow_codex/attack_self(mob/user) // when used inhand
 	if(!user.can_read(src))
 		return
-	if(!istype(user, /mob/living/carbon/human)) // might as well leavy this here
+	if(!ishuman(user)) // might as well leave this here
 		to_chat(user, "<span class=notice>The book won't open to such a foolish person like you.</span>")
 		return
-	if(user == caster)
-		if(is_reading == 0)
-			is_reading = 1
-			to_chat(user, "<span class=notice>You start flipping through its pages, with each page, you feel more insane.</span>")
-			playsound(user.loc, 'sound/effects/pageturn1.ogg', 30, 1)
-			if(do_after(user, 50, target = src))
-				is_reading = 0
-				to_chat(user, "<span class='userdanger'>You recite the words written in the book. As they start to glow, you suddenly feel a sharp pain in your head.</span>")
-				damage_brain(caster)
-				spawn_minion(caster)
-				caster.emote("scream")
-			else // if you don't finish reading the book
-				is_reading = 0
-				to_chat(user, "<span class=notice>You decide to leave the book alone.</span>")
-		else
-			to_chat(user, "<span class=warning>You are already reading this book.</span>")
+	if(user != caster)
+		to_chat(user, "<span class=notice>You thought you could outsmart us.</span>") // how did we get here
+		return
+	if(is_reading == 0)
+		is_reading = 1
+		to_chat(user, "<span class=notice>You start flipping through its pages, with each page, you feel more insane.</span>")
+		playsound(user.loc, 'sound/effects/pageturn1.ogg', 30, 1)
+		if(do_after(user, 50, target = src))
+			is_reading = 0
+			to_chat(user, "<span class='userdanger'>You recite the words written in the book. As they start to glow, you suddenly feel a sharp pain in your head.</span>")
+			damage_brain(caster)
+			spawn_minion(caster)
+			caster.emote("scream")
+		else // if you don't finish reading the book
+			is_reading = 0
+			to_chat(user, "<span class=notice>You decide to leave the book alone.</span>")
+	else
+		to_chat(user, "<span class=warning>You are already reading this book.</span>")
 
 /obj/item/shadow_codex/attack(mob/M as mob, mob/user as mob)
-	if(!istype(user, /mob/living/carbon/human)) // okay this monkeys can use, even though there is a small chance this would even happen
+	if(!ishuman(user)) // monkeys cant read the book by default but they can still use it at others
 		to_chat(user, "<span class=notice>The book won't open itself to such a foolish person like you.</span>")
 		return
-	if(!istype(M, /mob/living/carbon/human))
+	if(!ishuman(M))
 		to_chat(user, "<span class=warning>[M] is a unsuitable target for the spell.</span>")
 		return
 	if(istype(M, /mob/living/carbon/human/shadowperson_holder))
@@ -133,7 +135,7 @@
 
 // when the minion dies
 /mob/living/carbon/human/shadowperson_holder/death()
-	if(prob(25)) // lets just put this here so people are careful with this
+	if(prob(25)) // make this balanced and not boring as suggested
 		to_chat(src, "<span class='userdanger'>C'est la vie.</span>")
 		return
 	to_chat(src, "<span class='userdanger'>You have died. You hear shadows whisper your name. Your mind returns back to its own body.</span>")
