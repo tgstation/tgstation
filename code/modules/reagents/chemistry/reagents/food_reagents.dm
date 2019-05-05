@@ -416,7 +416,7 @@
 		if(isvampire(H)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
 			if(prob(min(35,current_cycle)))
 				to_chat(H, "<span class='danger'>You can't get the scent of garlic out of your nose! You feel sick...</span>")
-				M.Paralyse(20)
+				M.Paralyze(20)
 				M.Jitter(10)
 		else if(H.job == "Cook")
 			if(prob(7)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
