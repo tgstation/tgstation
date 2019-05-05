@@ -11,7 +11,7 @@
 	var/times_used = 0
 	var/mob/living/carbon/human/shadowperson // The variable that holds the summoned minion
 
-/obj/item/shadow_codex/New(Loc)
+/obj/item/shadow_codex/Initialize()
 	to_chat(usr, "<span class=warning>You feel a uncanny presence probing your mind.</span>")
 	caster = usr
 	..()
