@@ -129,186 +129,183 @@
 
 
 /mob/living/silicon/pai/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	var/soft = href_list["software"]
 	var/sub = href_list["sub"]
 	if(soft)
 		screen = soft
-	if(sub)
-		subscreen = text2num(sub)
-	switch(soft)
-		// Purchasing new software
-		if("buy")
-			if(subscreen == 1)
-				var/target = href_list["buy"]
-				if(available_software.Find(target) && !software.Find(target))
-					var/cost = available_software[target]
-					if(ram >= cost)
-						software.Add(target)
-						ram -= cost
+		if(sub)
+			subscreen = text2num(sub)
+		switch(soft) 
+			if("buy") // Purchasing new software
+				if(subscreen == 1)
+					var/target = href_list["buy"]
+					if(available_software.Find(target) && !software.Find(target))
+						var/cost = available_software[target]
+						if(ram >= cost)
+							software.Add(target)
+							ram -= cost
+						else
+							temp = "Insufficient RAM available."
 					else
-						temp = "Insufficient RAM available."
-				else
-					temp = "Trunk <TT> \"[target]\"</TT> not found."
+						temp = "Trunk <TT> \"[target]\"</TT> not found."
 
-		// Configuring onboard radio
-		if("radio")
-			radio.attack_self(src)
+		
+			if("radio") // Configuring onboard radio
+				radio.attack_self(src)
 
-		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
-			var/pID = 1
+			if("image") // Set pAI card display face
+				var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+				var/pID = 1
 
-			switch(newImage)
-				if("Happy")
-					pID = 1
-				if("Cat")
-					pID = 2
-				if("Extremely Happy")
-					pID = 3
-				if("Face")
-					pID = 4
-				if("Laugh")
-					pID = 5
-				if("Off")
-					pID = 6
-				if("Sad")
-					pID = 7
-				if("Angry")
-					pID = 8
-				if("What")
-					pID = 9
-				if("Null")
-					pID = 10
-			card.setEmotion(pID)
+				switch(newImage)
+					if("Happy")
+						pID = 1
+					if("Cat")
+						pID = 2
+					if("Extremely Happy")
+						pID = 3
+					if("Face")
+						pID = 4
+					if("Laugh")
+						pID = 5
+					if("Off")
+						pID = 6
+					if("Sad")
+						pID = 7
+					if("Angry")
+						pID = 8
+					if("What")
+						pID = 9
+					if("Null")
+						pID = 10
+				card.setEmotion(pID)
 
-		if("news")
-			newscaster.ui_interact(src)
+			if("news")
+				newscaster.ui_interact(src)
 
-		if("camzoom")
-			aicamera.AltClick(src)
+			if("camzoom")
+				aicamera.AltClick(src)
 
-		if("signaller")
-			if(href_list["send"])
-				signaler.send_activation()
-				audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
-				playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+			if("signaller")
+				if(href_list["send"])
+					signaler.send_activation()
+					audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+					playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 
-			if(href_list["freq"])
-				var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
-				if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
-					new_frequency = sanitize_frequency(new_frequency)
-				signaler.set_frequency(new_frequency)
+				if(href_list["freq"])
+					var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
+					if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
+						new_frequency = sanitize_frequency(new_frequency)
+					signaler.set_frequency(new_frequency)
 
-			if(href_list["code"])
-				signaler.code += text2num(href_list["code"])
-				signaler.code = round(signaler.code)
-				signaler.code = min(100, signaler.code)
-				signaler.code = max(1, signaler.code)
+				if(href_list["code"])
+					signaler.code += text2num(href_list["code"])
+					signaler.code = round(signaler.code)
+					signaler.code = min(100, signaler.code)
+					signaler.code = max(1, signaler.code)
 
-		if("directive")
-			if(href_list["getdna"])
-				var/mob/living/M = card.loc
-				var/count = 0
-				while(!isliving(M))
-					if(!M || !M.loc)
-						return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
-					M = M.loc
-					count++
-					if(count >= 6)
-						to_chat(src, "You are not being carried by anyone!")
-						return 0
-				spawn CheckDNA(M, src)
+			if("directive")
+				if(href_list["getdna"])
+					var/mob/living/M = card.loc
+					var/count = 0
+					while(!isliving(M))
+						if(!M || !M.loc)
+							return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
+						M = M.loc
+						count++
+						if(count >= 6)
+							to_chat(src, "You are not being carried by anyone!")
+							return 0
+					spawn CheckDNA(M, src)
 
-		if("pdamessage")
-			if(!isnull(aiPDA))
-				if(href_list["toggler"])
-					aiPDA.toff = !aiPDA.toff
-				else if(href_list["ringer"])
-					aiPDA.silent = !aiPDA.silent
-				else if(href_list["target"])
-					if(silent)
-						return alert("Communications circuits remain uninitialized.")
+			if("pdamessage")
+				if(!isnull(aiPDA))
+					if(href_list["toggler"])
+						aiPDA.toff = !aiPDA.toff
+					else if(href_list["ringer"])
+						aiPDA.silent = !aiPDA.silent
+					else if(href_list["target"])
+						if(silent)
+							return alert("Communications circuits remain uninitialized.")
+						var/target = locate(href_list["target"]) in GLOB.PDAs
+						aiPDA.create_message(src, target)
 
-					var/target = locate(href_list["target"]) in GLOB.PDAs
-					aiPDA.create_message(src, target)
+			if("medicalrecord") // Accessing medical records
+				if(subscreen == 1)
+					medicalActive1 = find_record("id", href_list["med_rec"], GLOB.data_core.general)
+					if(medicalActive1)
+						medicalActive2 = find_record("id", href_list["med_rec"], GLOB.data_core.medical)
+					if(!medicalActive2)
+						medicalActive1 = null
+						temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
 
-		// Accessing medical records
-		if("medicalrecord")
-			if(subscreen == 1)
-				medicalActive1 = find_record("id", href_list["med_rec"], GLOB.data_core.general)
-				if(medicalActive1)
-					medicalActive2 = find_record("id", href_list["med_rec"], GLOB.data_core.medical)
-				if(!medicalActive2)
-					medicalActive1 = null
-					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
+			if("securityrecord")
+				if(subscreen == 1)
+					securityActive1 = find_record("id", href_list["sec_rec"], GLOB.data_core.general)
+					if(securityActive1)
+						securityActive2 = find_record("id", href_list["sec_rec"], GLOB.data_core.security)
+					if(!securityActive2)
+						securityActive1 = null
+						temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
 
-		if("securityrecord")
-			if(subscreen == 1)
-				securityActive1 = find_record("id", href_list["sec_rec"], GLOB.data_core.general)
-				if(securityActive1)
-					securityActive2 = find_record("id", href_list["sec_rec"], GLOB.data_core.security)
-				if(!securityActive2)
-					securityActive1 = null
-					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
+			if("securityhud")
+				if(href_list["toggle"])
+					secHUD = !secHUD
+					if(secHUD)
+						var/datum/atom_hud/sec = GLOB.huds[sec_hud]
+						sec.add_hud_to(src)
+					else
+						var/datum/atom_hud/sec = GLOB.huds[sec_hud]
+						sec.remove_hud_from(src)
 
-		if("securityhud")
-			if(href_list["toggle"])
-				secHUD = !secHUD
-				if(secHUD)
-					var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-					sec.add_hud_to(src)
-				else
-					var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-					sec.remove_hud_from(src)
+			if("medicalhud")
+				if(href_list["toggle"])
+					medHUD = !medHUD
+					if(medHUD)
+						var/datum/atom_hud/med = GLOB.huds[med_hud]
+						med.add_hud_to(src)
+					else
+						var/datum/atom_hud/med = GLOB.huds[med_hud]
+						med.remove_hud_from(src)
 
-		if("medicalhud")
-			if(href_list["toggle"])
-				medHUD = !medHUD
-				if(medHUD)
-					var/datum/atom_hud/med = GLOB.huds[med_hud]
-					med.add_hud_to(src)
-				else
-					var/datum/atom_hud/med = GLOB.huds[med_hud]
-					med.remove_hud_from(src)
+			if("hostscan")
+				if(href_list["toggle"])
+					var/mob/living/silicon/pai/pAI = usr
+					pAI.hostscan.attack_self(usr)
+				if(href_list["toggle2"])
+					var/mob/living/silicon/pai/pAI = usr
+					pAI.hostscan.toggle_mode()
 
-		if("hostscan")
-			if(href_list["toggle"])
-				var/mob/living/silicon/pai/pAI = usr
-				pAI.hostscan.attack_self(usr)
-			if(href_list["toggle2"])
-				var/mob/living/silicon/pai/pAI = usr
-				pAI.hostscan.toggle_mode()
+			if("encryptionkeys")
+				if(href_list["toggle"])
+					encryptmod = TRUE
 
-		if("encryptionkeys")
-			encryptmod = TRUE
+			if("translator")
+				if(href_list["toggle"])
+					grant_all_languages(TRUE)
+						// this is PERMAMENT.
 
-		if("translator")
-			if(href_list["toggle"])
-				grant_all_languages(TRUE)
-					// this is PERMAMENT.
+			if("doorjack")
+				if(href_list["jack"])
+					if(cable && cable.machine)
+						hackdoor = cable.machine
+						hackloop()
+				if(href_list["cancel"])
+					hackdoor = null
+				if(href_list["cable"])
+					var/turf/T = get_turf(loc)
+					cable = new /obj/item/pai_cable(T)
+					T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 
-		if("doorjack")
-			if(href_list["jack"])
-				if(cable && cable.machine)
-					hackdoor = cable.machine
-					hackloop()
-			if(href_list["cancel"])
-				hackdoor = null
-			if(href_list["cable"])
-				var/turf/T = get_turf(loc)
-				cable = new /obj/item/pai_cable(T)
-				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+			if("loudness")
+				if(subscreen == 1) // Open Instrument
+					internal_instrument.interact(src)
+				if(subscreen == 2) // Change Instrument type
+					internal_instrument.selectInstrument()
 
-		if("loudness")
-			if(subscreen == 1) // Open Instrument
-				internal_instrument.interact(src)
-			if(subscreen == 2) // Change Instrument type
-				internal_instrument.selectInstrument()
-
-	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
-	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
-	return
+		paiInterface()
 
 // MENUS
 
