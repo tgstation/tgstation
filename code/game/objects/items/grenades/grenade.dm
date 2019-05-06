@@ -114,7 +114,5 @@
 		
 /obj/item/grenade/afterattack(atom/target, mob/user)
 	. = ..()
-	if(active && user.dropItemToGround(src))
-		visible_message("<span class='danger'>[user] has thrown [name].</span>")
-		log_message("has thrown [name]", LOG_ATTACK)
-		throw_at(target, throw_range, throw_speed)
+	if(active)
+		user.throw_item(target)
