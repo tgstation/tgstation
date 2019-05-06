@@ -86,6 +86,15 @@
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	var/mob/living/M = pAI.card.loc
+	var/count = 0
+	while(!isliving(M))
+		if(!M || !M.loc)
+			return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
+		M = M.loc
+		count++
+		if(count >= 6)
+			to_chat(src, "You are not being carried by anyone!")
+			return 0
 	pAI.hostscan.attack(M, pAI)
 
 /obj/screen/pai/crew_manifest
