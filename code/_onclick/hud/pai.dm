@@ -70,7 +70,6 @@
 	name = "pAI Newscaster"
 	icon_state = "newscaster"
 	required_software = "newscaster"
-	color = rgb(128,128,128)
 
 /obj/screen/pai/newscaster/Click()
 	if(!..())
@@ -81,7 +80,6 @@
 /obj/screen/pai/host_monitor
 	name = "Host Health Scan"
 	icon_state = "host_monitor"
-//	color = rgb(128,128,128)
 
 /obj/screen/pai/host_monitor/Click()
 	if(!..())
@@ -93,7 +91,6 @@
 /obj/screen/pai/crew_manifest
 	name = "Crew Manifest"
 	icon_state = "manifest"
-	color = rgb(128,128,128)
 	required_software = "crew manifest"
 
 /obj/screen/pai/crew_manifest/Click()
@@ -125,7 +122,6 @@
 /obj/screen/pai/pda_msg_send
 	name = "PDA - Send Message"
 	icon_state = "pda_send"
-	color = rgb(128,128,128)
 	required_software = "digital messenger"
 
 /obj/screen/pai/pda_msg_send/Click()
@@ -137,7 +133,6 @@
 /obj/screen/pai/pda_msg_show
 	name = "PDA - Show Message Log"
 	icon_state = "pda_receive"
-	color = rgb(128,128,128)
 	required_software = "digital messenger"
 
 /obj/screen/pai/pda_msg_show/Click()
@@ -149,7 +144,6 @@
 /obj/screen/pai/image_take
 	name = "Take Image"
 	icon_state = "take_picture"
-	color = rgb(128,128,128)
 	required_software = "photography module"
 
 /obj/screen/pai/image_take/Click()
@@ -161,6 +155,7 @@
 /obj/screen/pai/image_view
 	name = "View Images"
 	icon_state = "view_images"
+	required_software = "photography module"
 
 /obj/screen/pai/image_view/Click()
 	if(!..())
@@ -171,7 +166,6 @@
 /obj/screen/pai/sensors
 	name = "Sensor Augmentation"
 	icon_state = "ai_sensor"
-//	color = rgb(128,128,128)
 
 /obj/screen/pai/sensors/Click()
 	if(!..())
@@ -280,7 +274,7 @@
 	static_inventory += using
 
 	for(var/obj/screen/pai/button in static_inventory)
-		if(button.required_software && owner.software.Find(button.required_software))
-			button.color = null
+		if(button.required_software)
+			button.color = owner.software.Find(button.required_software) || "#808080"
 
 	#undef PAI_MISSING_SOFTWARE_MESSAGE
