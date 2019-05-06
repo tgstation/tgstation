@@ -6,12 +6,12 @@
 	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage_amount)
+			adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
-			adjustFireLoss(damage_amount)
+			adjustFireLoss(damage_amount, forced = forced)
 		if(OXY)
-			if(damage < 0) //we shouldn't be taking oxygen damage through this proc, but we'll let it heal.
-				adjustOxyLoss(damage_amount)
+			if(damage < 0 || forced) //we shouldn't be taking oxygen damage through this proc, but we'll let it heal.
+				adjustOxyLoss(damage_amount, forced = forced)
 	return 1
 
 
