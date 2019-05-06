@@ -6,7 +6,8 @@
 	if(enclosed)
 		internals_action.Grant(user, src)
 	cycle_action.Grant(user, src)
-	lights_action.Grant(user, src)
+	if(lights_power)
+		lights_action.Grant(user, src)
 	stats_action.Grant(user, src)
 	strafing_action.Grant(user, src)
 

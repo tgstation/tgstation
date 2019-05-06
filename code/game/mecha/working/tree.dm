@@ -9,7 +9,6 @@
 	deflect_chance = 0
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 40, "bio" = 0, "rad" = 20, "fire" = 100, "acid" = 100)
 	max_equip = 2
-	wreckage = /obj/structure/mecha_wreckage/aquifer
 	operation_req_access = list()
 	internals_req_access = list()
 	enclosed = FALSE//not spaceproof
@@ -28,10 +27,10 @@
 	if(seed.potency > 5)
 		max_equip += 2
 
-/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/working/tree/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	overload_action.Grant(user, src)
 
-/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/working/tree/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	overload_action.Remove(user)

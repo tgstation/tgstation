@@ -164,7 +164,6 @@
 	icon_state = "seed-murmuring"
 	species = "murmuring"
 	plantname = "Murmuring Tree"
-	//doesn't use product, see harvest()
 	genes = list(/datum/plant_gene/trait/settled_traits)
 	lifespan = 20
 	endurance = 20
@@ -182,19 +181,19 @@
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc
 	if(!getYield())
 		return
-	var/obj/structure/flora/shell/shell = new obj/structure/flora/shell(output_loc, src)
+	var/obj/structure/flora/shell/shell = new /obj/structure/flora/shell(output_loc, src)
 	. = shell
 	SSblackbox.record_feedback("tally", "food_harvested", 1, shell.name)
 	parent.update_tray(user)
 
 /obj/structure/flora/shell
 	name = "Giant Wooden Shell"
-	desc = "Worst piñata ever."
+	desc = "Like a hollowed nut, except the walls are barky."
 	density = TRUE
 	icon_state = "pine_c"
 	var/obj/item/seeds/seed = null
 
-/obj/structure/flora/shell/Initialize(mapload, obj/item/seeds/new_seed)
+/obj/structure/flora/shell/Initialize(obj/item/seeds/new_seed)
 	. = ..()
 	if(new_seed)
 		seed = new_seed.Copy()
@@ -202,7 +201,7 @@
 /obj/structure/flora/shell/Destroy()
 	visible_message("<span class='warning'>[src] cracks open, revealing an exosuit!</span>")
 	..()
-	new /obj/mecha/working/tree(mapload, seed)
+	new /obj/mecha/working/tree(seed)
 
 // Lavaland cactus
 
