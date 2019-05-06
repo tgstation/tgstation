@@ -287,6 +287,21 @@
 /obj/item/clothing/head/welding,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
+"aaH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/plasteel,
+/area/medical/morgue)
 "aaO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -126881,20 +126896,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/explab)
-"jBE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/medical/morgue)
 "jEz" = (
 /obj/machinery/camera{
 	c_tag = "Science - Lab Access";
@@ -169456,7 +169457,7 @@ dzR
 dAU
 dCA
 dDM
-jBE
+aaH
 dGl
 dHH
 iQh
