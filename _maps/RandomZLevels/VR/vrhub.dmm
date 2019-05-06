@@ -1995,7 +1995,7 @@
 /obj/machinery/camera{
 	c_tag = "Virtual Reality";
 	dir = 1;
-	network = list("ss13","virtual");
+	network = list("virtual");
 	pixel_x = 16;
 	pixel_y = 0;
 	resistance_flags = 64
@@ -2323,7 +2323,7 @@
 /obj/machinery/camera{
 	c_tag = "Virtual Reality";
 	dir = 8;
-	network = list("ss13","virtual");
+	network = list("virtual");
 	pixel_x = 0;
 	pixel_y = -16;
 	resistance_flags = 64
