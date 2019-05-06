@@ -1,0 +1,6 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Transferring quirks now properly removes the roundstart trait from the person losing the quirk."
+  - bugfix: "Roundstart traits no longer block the removal of other sources of that trait"
+  - code_imp: "Trait accessors are now defines rather than functions"
