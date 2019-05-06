@@ -2089,7 +2089,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/turbo
 	name = "Turbo"
 	id = "turbo"
-	description = "A turbulent cocktail associated with outlaw hoverbike racing.Not for the faint of heart."
+	description = "A turbulent cocktail associated with outlaw hoverbike racing. Not for the faint of heart."
 	color = "#e94c3a"
 	boozepwr = 85
 	quality = DRINK_VERYGOOD
