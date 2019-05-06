@@ -87,7 +87,7 @@
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		if(H.has_trait(TRAIT_CLUMSY) && prob(25))
+		if(HAS_TRAIT(H, TRAIT_CLUMSY) && prob(25))
 			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
@@ -313,7 +313,7 @@
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	if(P.is_hot())
-		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)

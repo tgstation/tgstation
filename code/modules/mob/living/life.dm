@@ -126,7 +126,7 @@
 /mob/living/proc/handle_traits()
 	//Eyes
 	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(has_trait(TRAIT_BLIND)))
+		if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
 			eye_blind = max(eye_blind-1,0)
 			if(client && !eye_blind)
 				clear_alert("blind")

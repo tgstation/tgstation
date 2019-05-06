@@ -33,7 +33,7 @@
 		qdel(src)
 
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
-	var/clumsy = user.has_trait(TRAIT_CLUMSY)
+	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
 	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
 		if(prob(50))
 			to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")

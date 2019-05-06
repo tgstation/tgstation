@@ -242,7 +242,7 @@
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"

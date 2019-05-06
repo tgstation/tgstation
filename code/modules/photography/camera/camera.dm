@@ -126,7 +126,7 @@
 
 	var/realcooldown = cooldown
 	var/mob/living/carbon/human/H = user
-	if (H.has_trait(TRAIT_PHOTOGRAPHER))
+	if (HAS_TRAIT(H, TRAIT_PHOTOGRAPHER))
 		realcooldown *= 0.5
 	addtimer(CALLBACK(src, .proc/cooldown), realcooldown)
 

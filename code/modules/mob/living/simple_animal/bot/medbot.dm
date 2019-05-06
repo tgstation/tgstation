@@ -343,7 +343,7 @@
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
-	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
+	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		return FALSE	//welp too late for them!
 
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
@@ -421,7 +421,7 @@
 		soft_reset()
 		return
 
-	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
+	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)

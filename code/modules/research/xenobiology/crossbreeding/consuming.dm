@@ -72,7 +72,7 @@ Consuming extracts:
 	if(fed)
 		var/mob/living/carbon/human/H = M
 
-		if(!istype(H) || !H.has_trait(TRAIT_AGEUSIA))
+		if(!istype(H) || !HAS_TRAIT(H, TRAIT_AGEUSIA))
 			to_chat(M, "Tastes like [taste].")
 		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, 1)
 		if(nutrition)

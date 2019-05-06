@@ -69,7 +69,7 @@
 
 /obj/item/pinpointer/syndicate_cyborg/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/pinpointer/syndicate_cyborg/cyborg_unequip(mob/user)
 	if(!active)

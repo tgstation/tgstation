@@ -66,7 +66,7 @@
 	//do actions on H but send messages to M as the key may not have been transferred_yet
 	if(mind_traits)
 		for(var/t in mind_traits)
-			H.mind.add_trait(t, JOB_TRAIT)
+			ADD_TRAIT(H.mind, t, JOB_TRAIT)
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)

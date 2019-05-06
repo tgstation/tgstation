@@ -62,7 +62,7 @@
 
 /mob/living/carbon/human/handle_traits()
 	if(eye_blind)			//blindness, heals slowly over time
-		if(has_trait(TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
+		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
 			adjust_blindness(-3)
 		else
 			adjust_blindness(-1)
@@ -89,7 +89,7 @@
 	if(!L)
 		if(health >= crit_threshold)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!has_trait(TRAIT_NOCRITDAMAGE))
+		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = 1
@@ -314,7 +314,7 @@
 		HM.on_life()
 
 /mob/living/carbon/human/proc/handle_heart()
-	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
+	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
 
 	if(!undergoing_cardiac_arrest())
 		return
@@ -326,7 +326,7 @@
 	adjustBruteLoss(2)
 
 /mob/living/carbon/human/proc/handle_hygiene()
-	if(has_trait(TRAIT_ALWAYS_CLEAN))
+	if(HAS_TRAIT(src, TRAIT_ALWAYS_CLEAN))
 		set_hygiene(HYGIENE_LEVEL_CLEAN)
 		return
 

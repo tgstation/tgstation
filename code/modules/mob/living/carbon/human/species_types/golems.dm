@@ -73,10 +73,10 @@
 
 /datum/species/golem/adamantine/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.add_trait(TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
 
 /datum/species/golem/adamantine/on_species_loss(mob/living/carbon/C)
-	C.remove_trait(TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
 	..()
 
 //The suicide bombers of golemkind
@@ -174,10 +174,10 @@
 
 /datum/species/golem/silver/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 
 /datum/species/golem/silver/on_species_loss(mob/living/carbon/C)
-	C.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 	..()
 
 //Harder to stun, deals more damage, massively slowpokes, but gravproof and obstructive. Basically, The Wall.
@@ -202,10 +202,10 @@
 
 /datum/species/golem/plasteel/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.add_trait(TRAIT_NOMOBSWAP, SPECIES_TRAIT) //THE WALL THE WALL THE WALL
+	ADD_TRAIT(C, TRAIT_NOMOBSWAP, SPECIES_TRAIT) //THE WALL THE WALL THE WALL
 
 /datum/species/golem/plasteel/on_species_loss(mob/living/carbon/C)
-	C.remove_trait(TRAIT_NOMOBSWAP, SPECIES_TRAIT) //NOTHING ON ERF CAN MAKE IT FALL
+	REMOVE_TRAIT(C, TRAIT_NOMOBSWAP, SPECIES_TRAIT) //NOTHING ON ERF CAN MAKE IT FALL
 	..()
 
 //Immune to ash storms
@@ -707,10 +707,10 @@
 
 /datum/species/golem/cloth/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 
 /datum/species/golem/cloth/on_species_loss(mob/living/carbon/C)
-	C.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 	..()
 
 /datum/species/golem/cloth/check_roundstart_eligible()
@@ -1017,7 +1017,7 @@
 	else
 		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))
-		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L) || L.has_trait(TRAIT_RESISTCOLD))
+		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L) || HAS_TRAIT(L, TRAIT_RESISTCOLD))
 			return //Do not affect our brothers
 
 		to_chat(L, "<span class='cultlarge'>A spine-chilling sound chills you to the bone!</span>")
