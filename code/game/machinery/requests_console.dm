@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(req_console_assistance)
 GLOBAL_LIST_EMPTY(req_console_supplies)
 GLOBAL_LIST_EMPTY(req_console_information)
 GLOBAL_LIST_EMPTY(allConsoles)
+GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 
 #define REQ_SCREEN_MAIN 			0
@@ -34,8 +35,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		// 0 = none (not listed, can only replied to)
 		// assistance 	= 1
 		// supplies 	= 2
-		// info 		= 4 				** happens to be in order
-		// assistance + supplies 	= 3 	** but these two are swapped
+		// info 		= 4
+		// assistance + supplies 	= 3
 		// assistance + info 		= 5
 		// supplies + info 			= 6
 		// assistance + supplies + info = 7
@@ -59,9 +60,9 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/announceAuth = FALSE //Will be set to 1 when you authenticate yourself for announcements
 	var/msgVerified = "" //Will contain the name of the person who verified it
 	var/msgStamped = "" //If a message is stamped, this will contain the stamp name
-	var/message = "";
-	var/dpt = ""; //the department which will be receiving the message
-	var/priority = -1 ; //Priority of the message being sent
+	var/message = ""
+	var/to_department = "" //the department which will be receiving the message
+	var/priority = REQ_NO_NEW_MESSAGE //Priority of the message being sent
 	var/obj/item/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
@@ -111,6 +112,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		if((departmentType & REQ_DEP_TYPE_INFORMATION) && !("[department]" in GLOB.req_console_information))
 			GLOB.req_console_information += department
 
+	GLOB.req_console_ckey_departments[ckey(department)] = department
+
 	Radio = new /obj/item/radio(src)
 	Radio.listening = 0
 
@@ -153,48 +156,15 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					dat += "Speaker <A href='?src=[REF(src)];setSilent=1'>ON</A>"
 			if(REQ_SCREEN_REQ_ASSISTANCE)
 				dat += "Which department do you need assistance from?<BR><BR>"
-				dat += "<table width='100%'>"
-				for(var/dpt in GLOB.req_console_assistance)
-					if (dpt != department)
-						dat += "<tr>"
-						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=[REQ_HIGH_MESSAGE_PRIORITY]'>High</A>"
-						if(hackState)
-							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=[REQ_EXTREME_MESSAGE_PRIORITY]'>EXTREME</A>"
-						dat += "</td>"
-						dat += "</tr>"
-				dat += "</table>"
-				dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
+				dat += departments_table(GLOB.req_console_assistance)
 
 			if(REQ_SCREEN_REQ_SUPPLIES)
 				dat += "Which department do you need supplies from?<BR><BR>"
-				dat += "<table width='100%'>"
-				for(var/dpt in GLOB.req_console_supplies)
-					if (dpt != department)
-						dat += "<tr>"
-						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=[REQ_HIGH_MESSAGE_PRIORITY]'>High</A>"
-						if(hackState)
-							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=[REQ_EXTREME_MESSAGE_PRIORITY]'>EXTREME</A>"
-						dat += "</td>"
-						dat += "</tr>"
-				dat += "</table>"
-				dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
+				dat += departments_table(GLOB.req_console_supplies)
 
 			if(REQ_SCREEN_RELAY)
 				dat += "Which department would you like to send information to?<BR><BR>"
-				dat += "<table width='100%'>"
-				for(var/dpt in GLOB.req_console_information)
-					if (dpt != department)
-						dat += "<tr>"
-						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=[REQ_HIGH_MESSAGE_PRIORITY]'>High</A>"
-						if(hackState)
-							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=[REQ_EXTREME_MESSAGE_PRIORITY]'>EXTREME</A>"
-						dat += "</td>"
-						dat += "</tr>"
-				dat += "</table>"
-				dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
+				dat += departments_table(GLOB.req_console_information)
 
 			if(REQ_SCREEN_SENT)
 				dat += "<span class='good'>Message sent.</span><BR><BR>"
@@ -220,11 +190,11 @@ GLOBAL_LIST_EMPTY(allConsoles)
 
 			if(REQ_SCREEN_AUTHENTICATE)
 				dat += "<B>Message Authentication</B><BR><BR>"
-				dat += "<b>Message for [dpt]: </b>[message]<BR><BR>"
+				dat += "<b>Message for [to_department]: </b>[message]<BR><BR>"
 				dat += "<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>"
 				dat += "<b>Validated by:</b> [msgVerified ? msgVerified : "<i>Not Validated</i>"]<br>"
 				dat += "<b>Stamped by:</b> [msgStamped ? msgStamped : "<i>Not Stamped</i>"]<br><br>"
-				dat += "<A href='?src=[REF(src)];department=[dpt]'>Send Message</A><BR>"
+				dat += "<A href='?src=[REF(src)];send=[TRUE]'>Send Message</A><BR>"
 				dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Discard Message</A><BR>"
 
 			if(REQ_SCREEN_ANNOUNCE)
@@ -249,6 +219,22 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		popup.open()
 	return
 
+/obj/machinery/requests_console/proc/departments_table(list/req_consoles)
+	var/dat = ""
+	dat += "<table width='100%'>"
+	for(var/req_dpt in req_consoles)
+		if (req_dpt != department)
+			dat += "<tr>"
+			dat += "<td width='55%'>[req_dpt]</td>"
+			dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(req_dpt)];priority=[REQ_NORMAL_MESSAGE_PRIORITY]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(req_dpt)];priority=[REQ_HIGH_MESSAGE_PRIORITY]'>High</A>"
+			if(hackState)
+				dat += "<A href='?src=[REF(src)];write=[ckey(req_dpt)];priority=[REQ_EXTREME_MESSAGE_PRIORITY]'>EXTREME</A>"
+			dat += "</td>"
+			dat += "</tr>"
+	dat += "</table>"
+	dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
+	return dat
+
 /obj/machinery/requests_console/Topic(href, href_list)
 	if(..())
 		return
@@ -256,25 +242,20 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	add_fingerprint(usr)
 
 	if(reject_bad_text(href_list["write"]))
-		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
+		to_department = ckey(href_list["write"]) //write contains the string of the receiving department's name
 
-		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
+		var/new_message = (to_department in GLOB.req_console_ckey_departments) && copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
+			to_department = GLOB.req_console_ckey_departments[to_department]
 			message = new_message
 			screen = REQ_SCREEN_AUTHENTICATE
-			priority = CLAMP(text2num(href_list["priority"]) || 0, REQ_NO_NEW_MESSAGE, REQ_EXTREME_MESSAGE_PRIORITY)
-		else
-			dpt = "";
-			msgVerified = ""
-			msgStamped = ""
-			screen = REQ_SCREEN_MAIN
-			priority = -1
+			priority = CLAMP(text2num(href_list["priority"]), REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
 
 	if(href_list["writeAnnouncement"])
 		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
-			priority = CLAMP(text2num(href_list["priority"]) || 0, REQ_NO_NEW_MESSAGE, REQ_EXTREME_MESSAGE_PRIORITY)
+			priority = CLAMP(text2num(href_list["priority"]) || REQ_NORMAL_MESSAGE_PRIORITY, REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
 		else
 			message = ""
 			announceAuth = FALSE
@@ -311,15 +292,12 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				Radio.set_frequency(radio_freq)
 				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq,get_spans(),get_default_language())
 				update_icon()
-				addtimer(CALLBACK(src, .proc/clear_emergency), 3000)
+				addtimer(CALLBACK(src, .proc/clear_emergency), 5 MINUTES)
 
-	if( reject_bad_text(href_list["department"]) && message )
-		var/recipient = href_list["department"]
+	if(href_list["send"] && message && to_department && priority)
 
-		screen = REQ_SCREEN_ERR
-
-		var/radio_freq = FREQ_COMMON
-		switch(recipient)
+		var/radio_freq
+		switch(ckey(to_department))
 			if("bridge")
 				radio_freq = FREQ_COMMAND
 			if("medbay")
@@ -335,24 +313,24 @@ GLOBAL_LIST_EMPTY(allConsoles)
 
 		var/datum/signal/subspace/messaging/rc/signal = new(src, list(
 			"sender" = department,
-			"rec_dpt" = recipient,
+			"rec_dpt" = to_department,
 			"send_dpt" = department,
-			"request" = message,
+			"message" = message,
 			"verified" = msgVerified,
 			"stamped" = msgStamped,
-			"priority" = priority
-		), radio_freq)
+			"priority" = priority,
+			"notify_freq" = radio_freq
+		))
 		signal.send_to_receivers()
 
-		if(signal.data["done"])
-			screen = REQ_SCREEN_SENT
+		screen = signal.data["done"] ? REQ_SCREEN_SENT : REQ_SCREEN_ERR
 
 	//Handle screen switching
 	if(href_list["setScreen"])
 		var/set_screen = CLAMP(text2num(href_list["setScreen"]) || 0, REQ_SCREEN_MAIN, REQ_SCREEN_ANNOUNCE)
 		switch(set_screen)
 			if(REQ_SCREEN_MAIN)
-				dpt = ""
+				to_department = ""
 				msgVerified = ""
 				msgStamped = ""
 				message = ""
@@ -379,50 +357,51 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	emergency = null
 	update_icon()
 
-//from message_server.dm: Console.createmessage(data["sender"], data["send_dpt"], data["request"], data["verified"], data["stamped"], data["priority"], frequency)
+//from message_server.dm: Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
 /obj/machinery/requests_console/proc/createmessage(source, source_department, message, msgVerified, msgStamped, priority, radio_freq)
 	var/linkedsender
 
-	message = "[message]<br>"
+	var/sending = "[message]<br>"
 	if(msgVerified)
-		message = "[message][msgVerified]<br>"
+		sending = "[sending][msgVerified]<br>"
 	if(msgStamped)
-		message = "[message][msgStamped]<br>"
+		sending = "[sending][msgStamped]<br>"
 
-	linkedsender = source_department ? "<a href='?src=[REF(src)];write=[source_department]'>[source_department]</a>" : (source || "unknown")
+	linkedsender = source_department ? "<a href='?src=[REF(src)];write=[ckey(source_department)]'>[source_department]</a>" : (source || "unknown")
 
 	var/authentic = (msgVerified || msgStamped) && " (Authenticated)"
 	var/alert = "Message from [source][authentic]"
 	var/silenced = silent
+	var/header = "<b>From:</b> [linkedsender] Received: [station_time_timestamp()]<BR>"
 
 	switch(priority)
 		if(REQ_NORMAL_MESSAGE_PRIORITY)
-			messages += "<b>From:</b> [linkedsender]<BR>[message]"
 			if(newmessagepriority < REQ_NORMAL_MESSAGE_PRIORITY)
 				newmessagepriority = REQ_NORMAL_MESSAGE_PRIORITY
 				update_icon()
 
 		if(REQ_HIGH_MESSAGE_PRIORITY)
-			messages += "<span class='bad'>High Priority</span><BR><b>From:</b> [linkedsender]<BR>[message]"
+			header = "<span class='bad'>High Priority</span><BR>[header]"
 			alert = "PRIORITY Alert from [source][authentic]"
 			if(newmessagepriority < REQ_HIGH_MESSAGE_PRIORITY)
 				newmessagepriority = REQ_HIGH_MESSAGE_PRIORITY
 				update_icon()
 
 		if(REQ_EXTREME_MESSAGE_PRIORITY)
-			messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [linkedsender]<BR>[message]"
+			header = "<span class='bad'>!!!Extreme Priority!!!</span><BR>[header]"
 			alert = "EXTREME PRIORITY Alert from [source][authentic]"
 			silenced = FALSE
 			if(newmessagepriority < REQ_EXTREME_MESSAGE_PRIORITY)
 				newmessagepriority = REQ_EXTREME_MESSAGE_PRIORITY
 				update_icon()
 
+	messages += "[header][sending]"
+
 	if(!silenced)
 		playsound(src, 'sound/machines/twobeep_high.ogg', 50, 1)
 		say(alert)
 
-	var/static/list/radio_announce_freqs = list(FREQ_COMMAND, FREQ_MEDICAL, FREQ_SCIENCE, FREQ_ENGINEERING, FREQ_SECURITY, FREQ_SUPPLY)
-	if(radio_freq in radio_announce_freqs)
+	if(radio_freq)
 		Radio.set_frequency(radio_freq)
 		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq, get_spans(), get_default_language())
 
@@ -450,7 +429,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 
 	var/obj/item/card/id/ID = O.GetID()
 	if(ID)
-		if(screen == REQ_SCREEN_ANNOUNCE)
+		if(screen == REQ_SCREEN_AUTHENTICATE)
 			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == REQ_SCREEN_ANNOUNCE)

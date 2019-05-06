@@ -78,5 +78,5 @@
 
 /obj/machinery/telecomms/bus/preset_one/birdstation
 	name = "Bus"
-	autolinkers = list("processor1", "common")
+	autolinkers = list("processor1", "common", "messaging")
 	freq_listening = list()

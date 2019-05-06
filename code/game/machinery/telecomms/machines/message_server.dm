@@ -21,8 +21,7 @@
 
 // The message server itself.
 /obj/machinery/telecomms/message_server
-	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "server"
+	icon_state = "message_server"
 	name = "Messaging Server"
 	desc = "A machine that processes and routes PDA and request console messages."
 	density = TRUE
@@ -43,7 +42,7 @@
 
 	if (calibrating)
 		calibrating += world.time
-		say("Calibrating... Expected wait time: [rand(3, 9)] minutes.")
+		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
 		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()]")
 	else
 		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
@@ -68,44 +67,37 @@
 
 /obj/machinery/telecomms/message_server/process()
 	. = ..()
-	if(calibrating && calibrating >= world.time)
+	if(calibrating && calibrating <= world.time)
 		calibrating = 0
 		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/messaging/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-message signals
-	if(!istype(signal) || !on || calibrating)
+	if(!istype(signal) || !signal.data["message"] || !on || calibrating)
 		return
 
 	// log the signal
 	if(istype(signal, /datum/signal/subspace/messaging/pda))
-		if(!signal.data["message"])
-			return
 		var/datum/signal/subspace/messaging/pda/PDAsignal = signal
 		var/datum/data_pda_msg/M = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
 		pda_msgs += M
 		signal.logged = M
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
-		if(!signal.data["request"])
-			return
-		var/datum/data_rc_msg/M = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["request"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
+		var/datum/data_rc_msg/M = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
 		signal.logged = M
 		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
 			rc_msgs += M
+	signal.data["reject"] = FALSE
 
 	// pass it along to either the hub or the broadcaster
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 /obj/machinery/telecomms/message_server/update_icon()
-	if(panel_open)
-		icon_state = "server-t"
-	else if (!on)
-		icon_state = "server-nopower"
-	else if(calibrating)
-		icon_state = "server-off"
-	else
-		icon_state = "server-on"
+	..()
+	cut_overlays()
+	if(calibrating)
+		add_overlay("message_server_calibrate")
 
 
 // Root messaging signal datum
@@ -114,13 +106,13 @@
 	server_type = /obj/machinery/telecomms/message_server
 	var/datum/logged
 
-/datum/signal/subspace/messaging/New(init_source, init_data, init_frequency)
+/datum/signal/subspace/messaging/New(init_source, init_data)
 	source = init_source
 	data = init_data
-	if(!isnull(init_frequency))
-		frequency = init_frequency
 	var/turf/T = get_turf(source)
 	levels = list(T.z)
+	if(!("reject" in data))
+		data["reject"] = TRUE
 
 /datum/signal/subspace/messaging/copy()
 	var/datum/signal/subspace/messaging/copy = new type(source, data.Copy())
@@ -150,9 +142,10 @@
 /datum/signal/subspace/messaging/rc/broadcast()
 	if (!logged)  // Like /pda, only if logged
 		return
+	var/rec_dpt = ckey(data["rec_dpt"])
 	for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
-		if((Console.department == data["rec_dpt"]) || (data["ore_update"] && Console.receive_ore_updates))
-			Console.createmessage(data["sender"], data["send_dpt"], data["request"], data["verified"], data["stamped"], data["priority"], frequency)
+		if(ckey(Console.department) == rec_dpt || (data["ore_update"] && Console.receive_ore_updates))
+			Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
 
 // Log datums stored by the message server.
 /datum/data_pda_msg
