@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscadd: "Shocks now propagate to people you are pulling or pulled by."
+  - code_imp: "Grounded nerves now uses the shock immune trait."
