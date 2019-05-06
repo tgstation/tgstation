@@ -9,20 +9,20 @@
 /datum/surgery_step/handle_cavity
 	name = "implant item"
 	accept_hand = 1
-	accept_any_item = 1
+	implements = list(/obj/item = 100)
 	repeatable = TRUE
 	time = 32
 	var/obj/item/IC = null
+
+/datum/surgery_step/handle_cavity/tool_check(mob/user, obj/item/tool)
+	if(istype(tool, /obj/item/cautery) || istype(tool, /obj/item/gun/energy/laser))
+		return FALSE
+	return !tool.is_hot()
 
 /datum/surgery_step/handle_cavity/preop(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/chest/CH = target.get_bodypart(BODY_ZONE_CHEST)
 	IC = CH.cavity_item
 	if(tool)
-		if(istype(tool, /obj/item/surgical_drapes) || istype(tool, /obj/item/bedsheet))
-			var/obj/item/inactive = user.get_inactive_held_item()
-			if(istype(inactive, /obj/item/cautery) || inactive.tool_behaviour == TOOL_SCREWDRIVER || iscyborg(user))
-				attempt_cancel_surgery(surgery, tool, target, user)
-				return -1
 		user.visible_message("[user] begins to insert [tool] into [target]'s [target_zone].", "<span class='notice'>You begin to insert [tool] into [target]'s [target_zone]...</span>")
 	else
 		user.visible_message("[user] checks for items in [target]'s [target_zone].", "<span class='notice'>You check for items in [target]'s [target_zone]...</span>")
