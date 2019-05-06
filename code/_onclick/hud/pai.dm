@@ -80,6 +80,7 @@
 /obj/screen/pai/host_monitor
 	name = "Host Health Scan"
 	icon_state = "host_monitor"
+	required_software = "host scan"
 
 /obj/screen/pai/host_monitor/Click()
 	if(!..())
