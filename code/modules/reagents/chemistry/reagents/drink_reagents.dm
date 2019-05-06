@@ -504,7 +504,7 @@
 /datum/reagent/consumable/pwr_game
 	name = "Pwr Game"
 	description = "The only drink with the PWR that true gamers crave."
-	id = ""
+	id = "pwr_game"
 	color = "#9385bf" // rgb: 58, 52, 75
 	taste_description = "sweet and salty tang"
 	glass_icon_state = "glass_red"
