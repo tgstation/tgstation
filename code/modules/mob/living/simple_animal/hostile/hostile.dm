@@ -444,12 +444,14 @@
 
 /mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
 	var/turf/T = get_step(targets_from, direction)
-	if(T?.Adjacent(targets_from))
+	if(!T)
+		return
+	if(T.Adjacent(targets_from))
 		if(CanSmashTurfs(T))
 			T.attack_animal(src)
 			return
 	for(var/obj/O in T.contents)
-		if(O?.Adjacent(targets_from))
+		if(O.Adjacent(targets_from))
 			if((ismachinery(O) || isstructure(O)) && O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
 				O.attack_animal(src)
 				return
