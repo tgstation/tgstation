@@ -1,7 +1,7 @@
 
 /mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
 	var/hit_percent = (100-blocked)/100
-	if(!forced && (!damage || (hit_percent <= 0)))
+	if((!damage || (!forced && hit_percent <= 0)))
 		return 0
 	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
