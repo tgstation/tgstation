@@ -116,6 +116,7 @@
 	newscaster = new /obj/machinery/newscaster(src)
 	if(!aicamera)
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
+		aicamera.flash_enabled = TRUE
 
 	//PDA
 	aiPDA = new/obj/item/pda/ai(src)
