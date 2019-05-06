@@ -370,7 +370,7 @@
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
 			return BULLET_ACT_BLOCK
-	return BULLET_ACT_HIT
+	return ..()
 
 //Reflects lasers and resistant to burn damage, but very vulnerable to brute damage. Shatters on death.
 /datum/species/golem/glass
@@ -407,7 +407,7 @@
 				// redirect the projectile
 				P.preparePixelProjectile(locate(CLAMP(target.x + new_x, 1, world.maxx), CLAMP(target.y + new_y, 1, world.maxy), H.z), H)
 			return BULLET_ACT_FORCE_PIERCE
-	return BULLET_ACT_HIT
+	return ..()
 
 //Teleports when hit or when it wants to
 /datum/species/golem/bluespace
@@ -831,10 +831,10 @@
 
 /datum/species/golem/bronze/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(world.time > last_gong_time + gong_cooldown))
-		return BULLET_ACT_HIT
+		return ..()
 	if(P.flag == "bullet" || P.flag == "bomb")
 		gong(H)
-		return BULLET_ACT_HIT
+		return ..()
 
 /datum/species/golem/bronze/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	..()

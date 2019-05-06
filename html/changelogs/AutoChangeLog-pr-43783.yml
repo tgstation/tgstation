@@ -1,0 +1,4 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - bugfix: "Fixed sand, glass, and bronze golems being unaffected by projectiles they should have been affected by."
