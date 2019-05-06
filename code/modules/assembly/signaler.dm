@@ -61,11 +61,11 @@
 <B>Frequency/Code</B> for signaler:<BR>
 Frequency:
 [format_frequency(src.frequency)]
-<A href='byond://?src=[REF(src)];set=freq'>+</A><BR>
+<A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
 
 Code:
 [src.code]
-<A href='byond://?src=[REF(src)];set=code'>+</A><BR>
+<A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
 [t1]
 </TT>"}
 		user << browse(dat, "window=radio")
@@ -84,7 +84,7 @@ Code:
 	if (href_list["set"])
 
 		if(href_list["set"] == "freq")
-			var/new_freq = input(usr, "Input a new signalling frequency", "Remote Signaller Frequency", frequency) as num|null
+			var/new_freq = input(usr, "Input a new signalling frequency", "Remote Signaller Frequency", format_frequency(frequency)) as num|null
 			new_freq = unformat_frequency(new_freq)
 			new_freq = sanitize_frequency(new_freq, TRUE)
 			set_frequency(new_freq)
