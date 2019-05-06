@@ -504,7 +504,7 @@
 /datum/reagent/consumable/pwr_game
 	name = "Pwr Game"
 	description = "The only drink with the PWR that true gamers crave."
-	id = ""
+	id = "pwr_game"
 	color = "#9385bf" // rgb: 58, 52, 75
 	taste_description = "sweet and salty tang"
 	glass_icon_state = "glass_red"
@@ -795,7 +795,7 @@
 /datum/reagent/consumable/peachjuice //Intended to be extremely rare due to being the limiting ingredients in the blazaam drink
 	name = "Peach Juice"
 	id = "peachjuice"
-	description = "Just peachy,"
+	description = "Just peachy."
 	color = "#E78108"
 	taste_description = "peaches"
 	glass_name = "glass of peach juice"
@@ -803,13 +803,13 @@
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"
 	id = "cream_soda"
-	description = "A classic space-American vanilla flavoured soft drink."
+	description = "A classic space-American vanilla flavored soft drink."
 	color = "#dcb137"
 	quality = DRINK_VERYGOOD
 	taste_description = "fizzy vanilla"
 	glass_icon_state = "cream_soda"
 	glass_name = "Cream Soda"
-	glass_desc = "A classic space-American vanilla flavoured soft drink."
+	glass_desc = "A classic space-American vanilla flavored soft drink."
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)

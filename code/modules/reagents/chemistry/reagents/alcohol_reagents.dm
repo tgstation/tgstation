@@ -2089,7 +2089,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/turbo
 	name = "Turbo"
 	id = "turbo"
-	description = "A turbulent cocktail associated with outlaw hoverbike racing.Not for the faint of heart."
+	description = "A turbulent cocktail associated with outlaw hoverbike racing. Not for the faint of heart."
 	color = "#e94c3a"
 	boozepwr = 85
 	quality = DRINK_VERYGOOD
@@ -2116,7 +2116,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/old_timer
 	name = "Old Timer"
 	id = "old_timer"
-	description = "an archaic potation enjoyed by old coots of all ages."
+	description = "An archaic potation enjoyed by old coots of all ages."
 	color = "#996835"
 	boozepwr = 35
 	quality = DRINK_NICE
@@ -2149,14 +2149,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/catsip
 	name = "Catsip"
 	id = "catsip"
-	description = "a kawaii drink from space-Japan."
+	description = "A kawaii drink from space-Japan."
 	color ="#ff99ac"
 	boozepwr = 50
 	quality = DRINK_NICE
 	taste_description = "sweet milkies"
 	glass_icon_state = "catsip"
 	glass_name = "Catsip"
-	glass_desc = "Unfortunately has a tendency to induce the perculiar vocal tics of a wapanese mutant in the imbiber."
+	glass_desc = "Unfortunately has a tendency to induce the peculiar vocal tics of a wapanese mutant in the imbiber."
 
 /datum/reagent/consumable/ethanol/catsip/on_mob_life(mob/living/M)
 	if(prob(8))
@@ -2183,7 +2183,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/duplex
 	name = "Duplex"
 	id = "duplex"
-	description = "An insperable combination of two fruity drinks."
+	description = "An inseparable combination of two fruity drinks."
 	color = "#50e5cf"
 	boozepwr = 25
 	quality = DRINK_NICE
@@ -2215,13 +2215,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/blazaam
 	name = "Blazaam"
 	id = "blazaam"
-	description = "A strange drink that few people seem to remember excisting. Doubles as a Berenstain remover."
+	description = "A strange drink that few people seem to remember existing. Doubles as a Berenstain remover."
 	boozepwr = 70
 	quality = DRINK_FANTASTIC
 	taste_description = "alternate realities"
 	glass_icon_state = "blazaamglass"
 	glass_name = "Blazaam"
-	glass_desc = "The glass seems to be sliding between realities. Doubles as a Berenstain remover"
+	glass_desc = "The glass seems to be sliding between realities. Doubles as a Berenstain remover."
 	var/stored_teleports = 0
 	var/mandelamessage
 
@@ -2234,7 +2234,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			stored_teleports += rand(2,6)
 			M.vomit()
 		if(prob(1))
-			mandelamessage = pick("Friend, we don't have much time, I need you to come rescue me.", "[M], i am still alive.", "Wake up. Please wake up.", "A winner is a dreamer who never gives up.", "[M], the fate of this world is in your hands.")
+			mandelamessage = pick("Friend, we don't have much time, I need you to come rescue me.", "[M], I am still alive.", "Wake up. Please wake up.", "A winner is a dreamer who never gives up.", "[M], the fate of this world is in your hands.")
 			to_chat(M, "<span class='name'>Nelson Mandela </span><span class='message'>says, \"[mandelamessage]\"</span>")
 	return ..()
 
@@ -2248,7 +2248,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "triumph with a hint of bitterness"
 	glass_icon_state = "planet_cracker"
 	glass_name = "Planet Cracker"
-	glass_desc = "Although historians believe the drink was originally was created to commemorate the end of an important conflict in mans past, its origins have largely been forgotten and it is today seen more as a general symbol of human supremacy."
+	glass_desc = "Although historians believe the drink was originally created to commemorate the end of an important conflict in man's past, its origins have largely been forgotten and it is today seen more as a general symbol of human supremacy."
 
 
 

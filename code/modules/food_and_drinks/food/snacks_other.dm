@@ -590,6 +590,6 @@
 
 /obj/item/reagent_containers/food/snacks/cannedpeaches/maint
 	name = "Maintenance Peaches"
-	desc = "I have a mouth and i must eat."
+	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
 	tastes = list("peaches" = 1, "tin" = 7)
