@@ -138,14 +138,6 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 	category = list ("Medical Machinery")
 
-/datum/design/board/vr_sleeper
-	name = "Machine Design (VR Sleeper Board)"
-	desc = "The circuit board for a VR sleeper."
-	id = "vr_sleeper"
-	build_path = /obj/item/circuitboard/machine/vr_sleeper
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-	category = list ("Medical Machinery")
-
 /datum/design/board/cryotube
 	name = "Machine Design (Cryotube Board)"
 	desc = "The circuit board for a cryotube."

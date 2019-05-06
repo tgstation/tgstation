@@ -1396,7 +1396,6 @@
 /turf/closed/wall,
 /area/crew_quarters/fitness)
 "adP" = (
-/obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4609,7 +4608,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
 "alw" = (
-/obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
