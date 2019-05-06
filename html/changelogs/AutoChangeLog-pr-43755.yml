@@ -1,0 +1,4 @@
+author: "pigeonsk"
+delete-after: True
+changes: 
+  - tweak: "Air contents inside a tank react additionally once instead of thrice when exploding"
