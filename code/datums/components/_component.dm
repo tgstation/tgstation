@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(componentstuff, list("new" = list(), "addcomponent" = list(), "removecomponent" = list()))
+
 /datum/component
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	var/dupe_type
@@ -8,6 +10,7 @@
 	var/can_transfer = FALSE
 
 /datum/component/New(datum/P, ...)
+	GLOB.componentstuff["new"][type]++
 	parent = P
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
@@ -214,6 +217,7 @@
 		return list(.)
 
 /datum/proc/AddComponent(new_type, ...)
+	GLOB.componentstuff["addcomponent"][new_type]++
 	var/datum/component/nt = new_type
 	var/dm = initial(nt.dupe_mode)
 	var/dt = initial(nt.dupe_type)
@@ -271,6 +275,7 @@
 		return AddComponent(arglist(args))
 
 /datum/component/proc/RemoveComponent()
+	GLOB.componentstuff["removecomponent"][type]++
 	if(!parent)
 		return
 	var/datum/old_parent = parent
