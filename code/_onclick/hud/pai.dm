@@ -99,16 +99,6 @@
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.ai_roster()
 
-///obj/screen/pai/announcement
-//	name = "Make Vox Announcement"
-//	icon_state = "announcement"
-
-///obj/screen/pai/announcement/Click()
-//	if(..())
-//		return
-//	var/mob/living/silicon/ai/pAI = usr
-//	pAI.announcement()
-
 /obj/screen/pai/state_laws
 	name = "State Laws"
 	icon_state = "state_laws"
@@ -162,21 +152,6 @@
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.aicamera.viewpictures(usr)
-
-/obj/screen/pai/sensors
-	name = "Sensor Augmentation"
-	icon_state = "ai_sensor"
-
-/obj/screen/pai/sensors/Click()
-	if(!..())
-		return
-	var/mob/living/silicon/pai/pAI = usr
-	if(pAI.software.Find("medical HUD"))
-		pAI.Topic("medicalhud","toggle")
-	if(pAI.software.Find("security HUD"))
-		pAI.Topic("securityhud","toggle")
-	else
-		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
 
 /obj/screen/pai/radio
 	name = "radio"
@@ -261,11 +236,6 @@
 // View images
 	using = new /obj/screen/pai/image_view()
 	using.screen_loc = ui_pai_view_images
-	static_inventory += using
-
-// Medical/Security sensors
-	using = new /obj/screen/pai/sensors()
-	using.screen_loc = ui_pai_sensor
 	static_inventory += using
 
 // Radio
