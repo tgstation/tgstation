@@ -4468,7 +4468,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aij" = (
-/obj/item/vending_refill/coffee,
+/obj/machinery/pipedispenser/disposal,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -6451,6 +6451,7 @@
 	dir = 9
 	},
 /obj/item/bot_assembly/cleanbot,
+/obj/item/vending_refill/coffee,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "alI" = (
@@ -7637,7 +7638,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "anM" = (
-/obj/machinery/space_heater,
+/obj/machinery/pipedispenser,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "anN" = (

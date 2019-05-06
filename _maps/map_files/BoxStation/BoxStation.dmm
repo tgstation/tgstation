@@ -55592,6 +55592,10 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
+"eTd" = (
+/obj/machinery/pipedispenser/disposal,
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "eUr" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "testlab";
@@ -55807,6 +55811,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"gwp" = (
+/obj/machinery/pipedispenser,
+/turf/open/floor/plasteel,
+/area/construction)
 "gwQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -72172,7 +72180,7 @@ bgj
 bgj
 bjc
 cAF
-cAF
+eTd
 bja
 aaa
 aaa
@@ -85814,7 +85822,7 @@ bJm
 bFa
 bHO
 bCs
-cCd
+gwp
 cCd
 aYg
 cjL
