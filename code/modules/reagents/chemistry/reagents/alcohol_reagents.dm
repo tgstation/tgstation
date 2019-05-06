@@ -2215,7 +2215,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/blazaam
 	name = "Blazaam"
 	id = "blazaam"
-	description = "A strange drink that few people seem to remember excisting. Doubles as a Berenstain remover."
+	description = "A strange drink that few people seem to remember existing. Doubles as a Berenstain remover."
 	boozepwr = 70
 	quality = DRINK_FANTASTIC
 	taste_description = "alternate realities"
