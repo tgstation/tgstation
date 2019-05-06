@@ -223,7 +223,7 @@
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
 	if(has_trait(TRAIT_SHOCKIMMUNE))
@@ -244,6 +244,12 @@
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack.</span>" \
 		)
+	if(iscarbon(pulling) && !illusion && source != pulling)
+		var/mob/living/carbon/C = pulling
+		C.electrocute_act(shock_damage*0.75, src, 1, safety, override, tesla_shock, illusion, stun)
+	if(iscarbon(pulledby) && !illusion && source != pulledby)
+		var/mob/living/carbon/C = pulledby
+		C.electrocute_act(shock_damage*0.75, src, 1, safety, override, tesla_shock, illusion, stun)
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
