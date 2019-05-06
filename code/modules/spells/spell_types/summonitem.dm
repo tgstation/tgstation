@@ -25,6 +25,9 @@
 			for(var/obj/item/item in hand_items)
 				if(item.item_flags & ABSTRACT)
 					continue
+				if(SEND_SIGNAL(item, COMSIG_ITEM_MARK_RETRIEVAL) & COMPONENT_BLOCK_MARK_RETRIEVAL)
+					continue
+				
 				if(item.has_trait(TRAIT_NODROP))
 					message += "Though it feels redundant, "
 				marked_item = 		item
