@@ -1,7 +1,7 @@
 
 
 /mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
-	var/hit_percent = (100-blocked)/100
+	var/hit_percent = forced ? 1 : (100-blocked)/100
 	if(!damage || hit_percent <= 0)
 		return 0
 
@@ -21,25 +21,25 @@
 				if(BP.receive_damage(damage * hit_percent, 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage * hit_percent)
+				adjustBruteLoss(damage * hit_percent, forced = forced)
 		if(BURN)
 			if(BP)
 				if(BP.receive_damage(0, damage * hit_percent))
 					update_damage_overlays()
 			else
-				adjustFireLoss(damage * hit_percent)
+				adjustFireLoss(damage * hit_percent, forced = forced)
 		if(TOX)
-			adjustToxLoss(damage * hit_percent)
+			adjustToxLoss(damage * hit_percent, forced = forced)
 		if(OXY)
-			adjustOxyLoss(damage * hit_percent)
+			adjustOxyLoss(damage * hit_percent, forced = forced)
 		if(CLONE)
-			adjustCloneLoss(damage * hit_percent)
+			adjustCloneLoss(damage * hit_percent, forced = forced)
 		if(STAMINA)
 			if(BP)
 				if(BP.receive_damage(0, 0, damage * hit_percent))
 					update_damage_overlays()
 			else
-				adjustStaminaLoss(damage * hit_percent)
+				adjustStaminaLoss(damage * hit_percent, forced = forced)
 		if(BRAIN)
 			adjustBrainLoss(damage * hit_percent)
 	return TRUE

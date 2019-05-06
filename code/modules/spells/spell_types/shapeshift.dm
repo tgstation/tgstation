@@ -162,7 +162,7 @@
 		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
 		var/damapply = stored.maxHealth * damage_percent
 
-		stored.apply_damage(damapply, source.convert_damage_type)
+		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
 	qdel(shape)
 	qdel(src)
 
