@@ -298,6 +298,7 @@
 	new /obj/item/reagent_containers/glass/bottle/coniine(src)
 	new /obj/item/reagent_containers/glass/bottle/curare(src)
 	new /obj/item/reagent_containers/glass/bottle/amanitin(src)
+	new /obj/item/reagent_containers/glass/bottle/woodium(src)
 	new /obj/item/reagent_containers/syringe(src)
 
 /obj/item/storage/box/syndie_kit/nuke

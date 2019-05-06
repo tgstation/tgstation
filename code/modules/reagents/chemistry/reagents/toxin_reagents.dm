@@ -703,6 +703,51 @@
 		C.vomit(0, TRUE, TRUE, 4)
 		to_chat(C, "<span class='userdanger'>You feel something lumpy come up as you vomit.</span>")
 
+/datum/reagent/toxin/woodium
+	name = "Woodium"
+	id = "woodium"
+	description = "A toxin of unspeakable evil."
+	reagent_state = LIQUID
+	metabolization_rate = REAGENTS_METABOLISM
+	taste_description = "urine and flavored lube"
+	toxpwr = 0
+
+/datum/reagent/toxin/woodium/on_mob_life(mob/living/carbon/C)
+	.=..()
+	if(ishuman(C) && current_cycle >= 10 && current_cycle % 5 == 0)
+		var/mob/living/carbon/human/H = C
+		var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+		if(ears)
+			ears.deaf += 1
+		var/old_self_awareness = H.aware_of_own_speech
+		H.aware_of_own_speech = FALSE
+		switch(current_cycle/5 % 11)
+			if(2)
+				H.say(";One day while Andy was masturbating, Woody got wood.", forced = "woodium")
+			if(3)
+				H.say(";He could no longer help himself!", forced = "woodium")
+			if(4)
+				H.say(";He watched as Andy stroked his juicy kawaii cock.", forced = "woodium")
+			if(5)
+				H.say(";He approached Andy which startled him and make him pee everywhere on the floor and on Woody too.", forced = "woodium")
+			if(6)
+				H.say(";Being drenched in his urine made him harder than ever!", forced = "woodium")
+			if(7)
+				H.say(";Woody:\"Andy Senpai! I'm alive and I want to be INSIDE OF YOU.\"", forced = "woodium")
+			if(8)
+				H.say(";Andy: \"Oh Woody Chan!", forced = "woodium")
+			if(9)
+				H.say(";I always knew you were alive! I want to stuff you up my kawaii ass!\"", forced = "woodium")
+			if(10)
+				H.say(";Woody grabbed a bunch of flavored lube and rubbed it all over his head", forced = "woodium")
+			if(0)
+				H.say(";Woody: \"Oh my! It's cherry flavored lube! Cherry is my favorite!\"", forced = "woodium")
+			if(1)
+				H.say(";Woody then stuffed his head up into Andy's tight ass! The other toys around the room watched intently as Woody shoved his head back and forth into Andy's nice ass, continuously making a squishy wet noise. The other toys also became aroused and they all gathered around Woody and Andy and started to urinate all over them, and then they started to masturbate.", forced = "woodium")
+		if(ears)
+			ears.deaf -= 1
+		H.aware_of_own_speech = old_self_awareness
+
 /datum/reagent/toxin/curare
 	name = "Curare"
 	id = "curare"

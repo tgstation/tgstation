@@ -59,6 +59,11 @@
 	name = "spewium bottle"
 	desc = "A small bottle of spewium."
 	list_reagents = list("spewium" = 30)
+	
+/obj/item/reagent_containers/glass/bottle/woodium
+	name = "woodium bottle"
+	desc = "A small bottle of woodium."
+	list_reagents = list("woodium" = 30)
 
 /obj/item/reagent_containers/glass/bottle/morphine
 	name = "morphine bottle"

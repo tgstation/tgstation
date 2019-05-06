@@ -90,6 +90,8 @@
 
 	var/list/status_effects //a list of all status effects the mob has
 	var/druggy = 0
+	
+	var/aware_of_own_speech = TRUE
 
 	//Speech
 	var/stuttering = 0

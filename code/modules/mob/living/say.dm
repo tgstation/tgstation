@@ -223,8 +223,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
 			deaf_type = 1
 	else
-		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
-		deaf_type = 2 // Since you should be able to hear yourself without looking
+		if(aware_of_own_speech)
+			deaf_message = "<span class='notice'>You can't hear yourself!</span>"
+			deaf_type = 2 // Since you should be able to hear yourself without looking
+		else
+			deaf_type = 1
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
