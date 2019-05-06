@@ -408,7 +408,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
-	custom_premium_price = 100
+	custom_premium_price = 200
 	icon_state = "champagne_bottle"
 	isGlass = TRUE
 	list_reagents = list("champagne" = 100)
