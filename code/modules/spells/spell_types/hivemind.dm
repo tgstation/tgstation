@@ -582,7 +582,7 @@
 /obj/effect/proc_holder/spell/target_hive/hive_attack
 	name = "Medullary Failure"
 	desc = "We overload the target's medulla, inducing an immediate heart attack."
-
+	range = 7
 	charge_max = 3000
 	action_icon_state = "attack"
 
