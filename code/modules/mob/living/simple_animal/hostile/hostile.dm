@@ -444,7 +444,7 @@
 
 /mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
 	var/turf/T = get_step(targets_from, direction)
-	if(!T)
+	if(QDELETED(T))
 		return
 	if(T.Adjacent(targets_from))
 		if(CanSmashTurfs(T))
