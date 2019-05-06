@@ -285,29 +285,30 @@
 /obj/effect/proc_holder/spell/dumbfire/juggernaut
 	name = "Gauntlet Echo"
 	desc = "Channels energy into your gauntlet - firing its essence forward in a slow moving, yet devastating, attack."
-	proj_icon_state = "cultfist"
-	proj_name = "gauntlet echo"
-	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut" //IMPORTANT use only subtypes of this
-	proj_lifespan = 15
-	proj_step_delay = 7
+	proj_type = /obj/item/projectile/magic/dumbfire/juggernaut
 	charge_max = 350
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "cultfist"
 	action_background_icon_state = "bg_demon"
 	sound = 'sound/weapons/resonator_blast.ogg'
-	proj_trigger_range = 0
-	ignore_factions = list("cult")
-	check_holy = TRUE
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut
+/obj/item/projectile/magic/dumbfire/juggernaut
 	name = "Gauntlet Echo"
+	icon_state = "cultfist"
 	alpha = 180
-	amt_dam_brute = 30
-	amt_knockdown = 50
-	sound = 'sound/weapons/punch3.ogg'
+	damage = 30
+	damage_type = BRUTE
+	knockdown = 50
+	hitsound = 'sound/weapons/punch3.ogg'
+	trigger_range = 0
+	check_holy = TRUE
+	ignored_factions = list("cult")
+	range = 15
+	speed = 7
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut/cast(list/targets,mob/user = usr)
+/obj/item/projectile/magic/dumbfire/juggernaut/on_hit(atom/target, blocked)
+	. = ..()
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
 	new /obj/effect/temp_visual/cult/sac(T)
@@ -315,4 +316,3 @@
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
 			O.take_damage(90, BRUTE, "melee", 0)
 			new /obj/effect/temp_visual/cult/turf/floor
-	..()
