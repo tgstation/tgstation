@@ -254,7 +254,7 @@
 	static_inventory += using
 
 	for(var/obj/screen/pai/button in static_inventory)
-		if(button.required_software)
-			button.color = owner.software.Find(button.required_software) || "#808080"
+		if(button.required_software && !owner.software.Find(button.required_software))
+    		button.color =  "#808080"
 
 	#undef PAI_MISSING_SOFTWARE_MESSAGE
