@@ -31,8 +31,8 @@
 
 /datum/bioware/grounded_nerves/on_gain()
 	..()
-	owner.add_trait(TRAIT_SHOCKIMMUNE, "grounded_nerves")
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "grounded_nerves")
 
 /datum/bioware/grounded_nerves/on_lose()
 	..()
-	owner.remove_trait(TRAIT_SHOCKIMMUNE, "grounded_nerves")
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "grounded_nerves")
