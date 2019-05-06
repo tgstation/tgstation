@@ -2,17 +2,24 @@
 
 /obj/screen/pai
 	icon = 'icons/mob/screen_pai.dmi'
+	var/required_software
 
 /obj/screen/pai/Click()
 	if(isobserver(usr) || usr.incapacitated())
-		return TRUE
+		return FALSE
+	var/mob/living/silicon/pai/pAI = usr
+	if(required_software && !pAI.software.Find(required_software))
+		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
+		return FALSE
+	return TRUE
 
 /obj/screen/pai/software
 	name = "Software Interface"
 	icon_state = "pai"
 
 /obj/screen/pai/software/Click()
-	..()
+	if(!..())
+		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.paiInterface()
 
@@ -21,7 +28,8 @@
 	icon_state = "pai_holoform"
 
 /obj/screen/pai/shell/Click()
-	..()
+	if(!..())
+		return
 	var/mob/living/silicon/pai/pAI = usr
 	if(pAI.holoform)
 		pAI.fold_in(0)
@@ -33,7 +41,8 @@
 	icon_state = "pai_chassis"
 
 /obj/screen/pai/chassis/Click()
-	..()
+	if(!..())
+		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.choose_chassis()
 
@@ -42,7 +51,8 @@
 	icon_state = "pai_rest"
 
 /obj/screen/pai/rest/Click()
-	..()
+	if(!..())
+		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.lay_down()
 
@@ -51,21 +61,22 @@
 	icon_state = "light"
 
 /obj/screen/pai/light/Click()
-	..()
+	if(!..())
+		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.toggle_integrated_light()
 
 /obj/screen/pai/newscaster
 	name = "pAI Newscaster"
 	icon_state = "newscaster"
-//	color = rgb(128,128,128) need to find a proper way to do this or abandon it
+	required_software = "newscaster"
+	color = rgb(128,128,128)
 
 /obj/screen/pai/newscaster/Click()
+	if(!..())
+		return
 	var/mob/living/silicon/pai/pAI = usr
-	if(pAI.software.Find("newscaster"))
-//		color = rgb(256,256,256)
-		pAI.newscaster.ui_interact(usr)
-	else to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
+	pAI.newscaster.ui_interact(usr)
 
 /obj/screen/pai/host_monitor
 	name = "Host Health Scan"
@@ -73,29 +84,23 @@
 //	color = rgb(128,128,128)
 
 /obj/screen/pai/host_monitor/Click()
-	if(..())
+	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	if(pAI.software.Find("host scan"))
-		var/mob/living/M = pAI.card.loc
-		pAI.hostscan.attack(M, pAI)
-//		color = rgb(256,256,256)
-	else
-		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
+	var/mob/living/M = pAI.card.loc
+	pAI.hostscan.attack(M, pAI)
 
 /obj/screen/pai/crew_manifest
 	name = "Crew Manifest"
 	icon_state = "manifest"
-//	color = rgb(128,128,128)
+	color = rgb(128,128,128)
+	required_software = "crew manifest"
 
 /obj/screen/pai/crew_manifest/Click()
-	if(..())
+	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	if(pAI.software.Find("crew manifest"))
-//		color = rgb(256,256,256)
-		pAI.ai_roster()
-	else to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
+	pAI.ai_roster()
 
 ///obj/screen/pai/announcement
 //	name = "Make Vox Announcement"
@@ -112,7 +117,7 @@
 	icon_state = "state_laws"
 
 /obj/screen/pai/state_laws/Click()
-	if(..())
+	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.checklaws()
@@ -120,59 +125,48 @@
 /obj/screen/pai/pda_msg_send
 	name = "PDA - Send Message"
 	icon_state = "pda_send"
-//	color = rgb(128,128,128)
+	color = rgb(128,128,128)
+	required_software = "digital messenger"
 
 /obj/screen/pai/pda_msg_send/Click()
-	if(..())
+	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	if(pAI.software.Find("digital messenger"))
-//		color = rgb(256,256,256)
-		pAI.cmd_send_pdamesg(usr)
-	else
-		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
+	pAI.cmd_send_pdamesg(usr)
 
 /obj/screen/pai/pda_msg_show
 	name = "PDA - Show Message Log"
 	icon_state = "pda_receive"
-//	color = rgb(128,128,128)
+	color = rgb(128,128,128)
+	required_software = "digital messenger"
 
 /obj/screen/pai/pda_msg_show/Click()
-	if(..())
+	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	if(pAI.software.Find("digital messenger"))
-//		color = rgb(256,256,256)
-		pAI.cmd_show_message_log(usr)
-	else
-		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
+	pAI.cmd_show_message_log(usr)
 
 /obj/screen/pai/image_take
 	name = "Take Image"
 	icon_state = "take_picture"
-//	color = rgb(128,128,128)
+	color = rgb(128,128,128)
+	required_software = "photography module"
 
 /obj/screen/pai/image_take/Click()
-	if(..())
+	if(!..())
 		return
-	if(issilicon(usr))
-		var/mob/living/silicon/pai/pAI = usr
-		if(pAI.software.Find("photography module"))
-//			color = rgb(256,256,256)
-			pAI.aicamera.toggle_camera_mode(usr)
-		else
-			to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
+	var/mob/living/silicon/pai/pAI = usr
+	pAI.aicamera.toggle_camera_mode(usr)
 
 /obj/screen/pai/image_view
 	name = "View Images"
 	icon_state = "view_images"
 
 /obj/screen/pai/image_view/Click()
-	if(..())
+	if(!..())
 		return
-	if(issilicon(usr))
-		var/mob/living/silicon/pai/pAI = usr
-		pAI.aicamera.viewpictures(usr)
+	var/mob/living/silicon/pai/pAI = usr
+	pAI.aicamera.viewpictures(usr)
 
 /obj/screen/pai/sensors
 	name = "Sensor Augmentation"
@@ -180,15 +174,13 @@
 //	color = rgb(128,128,128)
 
 /obj/screen/pai/sensors/Click()
-	if(..())
+	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	if(pAI.software.Find("medical HUD"))
 		pAI.Topic("medicalhud","toggle")
-//		color = rgb(256,256,256)
 	if(pAI.software.Find("security HUD"))
 		pAI.Topic("securityhud","toggle")
-//		color = rgb(256,256,256)
 	else
 		to_chat(pAI, PAI_MISSING_SOFTWARE_MESSAGE)
 
@@ -198,12 +190,12 @@
 	icon_state = "radio"
 
 /obj/screen/pai/radio/Click()
-	if(..())
+	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.radio.interact(usr)
 
-/datum/hud/pai/New(mob/owner)
+/datum/hud/pai/New(mob/living/silicon/pai/owner)
 	..()
 	var/obj/screen/using
 
@@ -286,5 +278,9 @@
 	using = new /obj/screen/pai/radio()
 	using.screen_loc = ui_borg_radio
 	static_inventory += using
+
+	for(var/obj/screen/pai/button in static_inventory)
+		if(button.required_software && owner.software.Find(button.required_software))
+			button.color = null
 
 	#undef PAI_MISSING_SOFTWARE_MESSAGE
