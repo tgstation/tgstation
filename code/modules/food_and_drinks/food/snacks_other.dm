@@ -580,7 +580,7 @@
 
 /obj/item/reagent_containers/food/snacks/cannedpeaches
 	name = "Canned Peaches"
-	desc = "Just a nice can of ripe peaches swimming in their own juices"
+	desc = "Just a nice can of ripe peaches swimming in their own juices."
 	icon_state = "peachcan"
 	list_reagents = list("peachjuice" = 20, "sugar" = 8, "nutriment" = 2)
 	filling_color = "#ffdf26"
