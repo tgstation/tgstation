@@ -92,7 +92,7 @@
 	
 /obj/item/clothing/head/beanie/rasta
 	name = "rastacap"
-	desc = "Perfect for tucking in those dredlocks."
+	desc = "Perfect for tucking in those dreadlocks."
 	icon_state = "rastabeanie"
 	item_color = "rastabeanie"	
 
