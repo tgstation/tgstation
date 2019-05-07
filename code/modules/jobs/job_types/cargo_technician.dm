@@ -1,7 +1,7 @@
 /datum/job/cargo_tech
 	title = "Cargo Technician"
 	flag = CARGOTECH
-	department_head = list("Head of Personnel")
+	department_head = list("Head of Personnel", "Quartermaster") // FULPSTATION FIX: Why was Quartermaster not included in this list? It says it below in supervisor.
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 3

@@ -22,7 +22,14 @@
 	antagpanel_category = "Bloodsucker"
 	job_rank = ROLE_BLOODSUCKER
 	var/datum/antagonist/bloodsucker/master		// Who made me?
+	var/list/datum/action/powers = list()// Purchased powers
+	var/list/datum/objective/objectives_given = list()	// For removal if needed.
 
+/datum/antagonist/vassal/can_be_owned(datum/mind/new_owner)
+	// If we weren't created by a bloodsucker, then we cannot be a vassal (assigned from antag panel)
+	if (!master)
+		return FALSE
+	return ..()
 
 /datum/antagonist/vassal/on_gain()
 
@@ -38,12 +45,20 @@
 	// Master Pinpointer
 	owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
 
-	// Add Antag HUD
-	update_vassal_icons_added(owner.current, "vassal")
-
 	// Powers
 	var/datum/action/bloodsucker/vassal/recuperate/new_Recuperate = new ()
 	new_Recuperate.Grant(owner.current)
+	powers += new_Recuperate
+
+	// Give Vassal Objective
+	var/datum/objective/bloodsucker/vassal/vassal_objective = new
+	vassal_objective.owner = owner
+	vassal_objective.generate_objective()
+	objectives += vassal_objective
+	objectives_given += vassal_objective
+
+	// Add Antag HUD
+	update_vassal_icons_added(owner.current, "vassal")
 
 	. = ..()
 
@@ -52,13 +67,26 @@
 	SSticker.mode.vassals -= owner // Add if not already in here (and you might be, if you were picked at round start)
 
 	// Mindslave Remove
-	if (master)
+	if (master && master.owner)
 		master.vassals -= src
-		if (owner.enslaved_to == master.owner)
+		if (owner.enslaved_to == master.owner.current)
 			owner.enslaved_to = null
 
 	// Master Pinpointer
 	owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
+
+	// Powers
+	while(powers.len)
+		var/datum/action/power = pick(powers)
+		powers -= power
+		power.Remove(owner.current)
+
+	// Remove Hunter Objectives
+	for(var/O in objectives_given)
+		objectives -= O
+		qdel(O)
+	objectives_given = list()
+
 
 	// Clear Antag HUD
 	update_vassal_icons_removed(owner.current)
@@ -141,6 +169,8 @@
 	roundend_category = "hunters"
 	antagpanel_category = "Bloodsucker"
 	job_rank = ROLE_BLOODSUCKER
+	var/list/datum/action/powers = list()// Purchased powers
+	var/list/datum/objective/objectives_given = list()	// For removal if needed.
 
 
 /datum/antagonist/vamphunter/on_gain()
@@ -153,6 +183,13 @@
 	// Give Hunter Power
 	var/datum/action/P = new /datum/action/bloodsucker/trackvamp
 	P.Grant(owner.current)
+
+	// Give Hunter Objective
+	var/datum/objective/bloodsucker/vamphunter/vamphunter_objective = new
+	vamphunter_objective.owner = owner
+	vamphunter_objective.generate_objective()
+	objectives += vamphunter_objective
+	objectives_given += vamphunter_objective
 
 	. = ..()
 
@@ -168,6 +205,12 @@
 		for (var/datum/action/bloodsucker/P in owner.current.actions)
 			P.Remove(owner.current)
 
+	// Remove Hunter Objectives
+	for(var/O in objectives_given)
+		objectives -= O
+		qdel(O)
+	objectives_given = list()
+
 	. = ..()
 
 /datum/antagonist/vamphunter/greet()
@@ -175,6 +218,7 @@
 	to_chat(owner, "<span class='boldannounce'>You know there's at least one filthy Bloodsucker on the station. It's your job to root them out, destroy their nests, and save the crew.<span>")
 	antag_memory += "You remember your training: Bloodsuckers are weak to fire, or a stake to the heart. Removing their head or heart will also destroy them permanently.<br>"
 	antag_memory += "You remember your training: Wooden stakes can be made from planks, and your recipes list has ways of making them stronger.<br>"
+	owner.current.playsound_local(null, 'sound/weapons/sawclose.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/vamphunter/farewell()
 	to_chat(owner, "<span class='userdanger'>Your hunt has ended: you are no longer a vampire hunter!</span>")

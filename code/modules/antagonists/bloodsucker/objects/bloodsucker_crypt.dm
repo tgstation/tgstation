@@ -91,7 +91,7 @@
 	desc = "If this wasn't meant for torture, then someone has some fairly horrifying hobbies."
 	icon = 'icons/Fulpicons/fulpobjects.dmi'
 	icon_state = "vassalrack"
-	buckle_lying = TRUE
+	buckle_lying = FALSE
 	anchored = FALSE
 	density = TRUE	// Start dense. Once fixed in place, go non-dense.
 	can_buckle = TRUE
@@ -125,21 +125,18 @@
 
 
 /obj/structure/bloodsucker/vassalrack/MouseDrop_T(atom/movable/O, mob/user)
-	if (!O.Adjacent(src))
+	if (!O.Adjacent(src) || O == user || !isliving(O) || !isliving(user) || useLock || has_buckled_mobs() || user.incapacitated())
 		return
-	if (O == user || !isliving(O) && !isliving(user) || useLock || has_buckled_mobs() || !anchored)
-		if (!anchored && user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-			to_chat(user, "<span class='danger'>Until this rack is secured in place, it cannot serve its purpose.</span>")
+	if (!anchored && user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		to_chat(user, "<span class='danger'>Until this rack is secured in place, it cannot serve its purpose.</span>")
 		return
 	//user.visible_message("<span class='notice'>[user] lifts [O] up onto the rack!</span>", \
 	//				  "<span class='notice'>You lift [O] up onto the rack.</span>")
 	O.forceMove(drop_location())
 	useLock = TRUE
-	if(!do_mob(user, O, 50))
-		useLock = FALSE
-		return
+	if(do_mob(user, O, 50))
+		attach_victim(O,user)
 	useLock = FALSE
-	attach_victim(O,user)
 
 /obj/structure/bloodsucker/vassalrack/AltClick(mob/user)
 	if (!has_buckled_mobs() || !isliving(user) || useLock)
@@ -187,10 +184,10 @@
 		if(!do_mob(user, M, 100))
 			return
 	// Did the time. Now try to do it.
+	..()
 	unbuckle_mob(M)
 
-/obj/structure/bloodsucker/vassalrack/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
-
+/obj/structure/bloodsucker/vassalrack/unbuckle_mob(mob/living/buckled_mob)//, force=FALSE)
 	if (!..())
 		return
 	var/matrix/m180 = matrix(buckled_mob.transform)
@@ -433,11 +430,11 @@
 				 /obj/item/wrench
 				 )
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 5,
-				/obj/item/stack/sheet/metal = 10,
-				/obj/item/stack/sheet/animalhide = 1, // /obj/item/stack/sheet/leather = 1,
+				/obj/item/stack/sheet/metal = 5,
 				/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/storage/belt = 1
-				// /obj/item/stack/sheet/plasteel = 5
+				///obj/item/stack/sheet/animalhide = 1, // /obj/item/stack/sheet/leather = 1,
+				///obj/item/stack/sheet/plasteel = 5
 				)
 	//parts = list(/obj/item/storage/belt = 1
 	//			 )
@@ -454,7 +451,7 @@
 	tools = list(/obj/item/weldingtool,
 				 /obj/item/wrench
 				 )
-	reqs = list(/obj/item/stack/sheet/metal = 5,
+	reqs = list(/obj/item/stack/sheet/metal = 3,
 				/obj/item/stack/rods = 1,
 				/obj/item/candle = 1
 				)

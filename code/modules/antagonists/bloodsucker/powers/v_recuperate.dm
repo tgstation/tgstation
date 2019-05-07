@@ -7,7 +7,7 @@
 	desc = "Slowly heal brute damage while active. This process is exhausting, and requires some of your tainted blood."
 	button_icon_state = "power_recup"
 	amToggle = TRUE
-	bloodcost = 10
+	bloodcost = 5
 	cooldown = 100
 
 
@@ -18,6 +18,11 @@
 	if(!..(display_error))// DEFAULT CHECKS
 		return FALSE
 	if (owner.stat >= DEAD)
+		return FALSE
+	var/mob/living/carbon/C = owner
+	if (C.getBruteLoss() <= 0)
+		if (display_error)
+			to_chat(owner, "You have no brute damage to recover from.")
 		return FALSE
 	return TRUE
 
@@ -30,11 +35,11 @@
 		H = owner
 
 	while (ContinueActive(owner))
-		var/bruteheal = min(C.getBruteLoss(), 0.3)
+		var/bruteheal = min(C.getBruteLoss(), 1.5)
 		C.heal_overall_damage(bruteheal)
-		C.blood_volume -= 0.3
-		if (C.getStaminaLoss() < 90)
-			C.adjustStaminaLoss(5, forced = TRUE)
+		C.blood_volume -= 0.6
+		if (C.getStaminaLoss() < 60)
+			C.adjustStaminaLoss(25, forced = TRUE)
 		// Stop Bleeding
 		if (istype(H) && H.bleed_rate > 0 && rand(20) == 0)
 			H.bleed_rate --
@@ -49,4 +54,4 @@
 
 
 /datum/action/bloodsucker/vassal/recuperate/ContinueActive(mob/living/user, mob/living/target)
-	return ..() && user.stat <= DEAD && user.blood_volume > 0
+	return ..() && user.stat <= DEAD && user.blood_volume > 0 && user.getBruteLoss() > 0

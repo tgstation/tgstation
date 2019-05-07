@@ -18,6 +18,7 @@ SERVERNAME Fulpstation
 
 ## Server Caption: Shows next to the server name in the BYOND hub.
 SERVERCAPTION The Problems of the Future, Today!
+#SERVERCAPTION 100% Crash-Free since 2019!
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 SERVERSQLNAME fulpstation
@@ -60,7 +61,7 @@ ENABLE_LOCALHOST_RANK
 #USE_AGE_RESTRICTION_FOR_JOBS
 
 ## Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
-USE_ACCOUNT_AGE_FOR_JOBS
+#USE_ACCOUNT_AGE_FOR_JOBS
 
 ## Unhash this to track player playtime in the database. Requires database to be enabled.
 USE_EXP_TRACKING
@@ -68,7 +69,7 @@ USE_EXP_TRACKING
 USE_EXP_RESTRICTIONS_HEADS
 ## Unhash this to override head jobs' playtime requirements with this number of hours.
 ## Leave this commented out to use the values defined in the job datums. Values in the datums are stored as minutes.
-#USE_EXP_RESTRICTIONS_HEADS_HOURS 3
+USE_EXP_RESTRICTIONS_HEADS_HOURS 5
 ## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
 USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
 ## Unhash this to enable playtime requirements for certain non-head jobs, like Engineer and Scientist.
@@ -315,25 +316,22 @@ NOTE_STALE_DAYS 365.2422
 ##Note: all population caps can be used with each other if desired.
 
 ## Uncomment for 'soft' population caps, players will be warned while joining if the living crew exceeds the listed number.
-SOFT_POPCAP 50
+#SOFT_POPCAP 100
 
 ## Message for soft cap
-SOFT_POPCAP_MESSAGE Fulpstation has a high population currently - this may affect lag and gameplay!
+SOFT_POPCAP_MESSAGE Be warned that the server is currently serving a high number of users, consider using alternative game servers.
 
 ## Uncomment for 'hard' population caps, players will not be allowed to spawn if the living crew exceeds the listed number, though they may still observe or wait for the living crew to decrease in size.
-HARD_POPCAP 80
+#HARD_POPCAP 150
 
 ## Message for hard cap
-HARD_POPCAP_MESSAGE Fulpstation is currently serving a high number of users - you cannot join until the living crew member count decreases!
+HARD_POPCAP_MESSAGE The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers.
 
 ## Uncomment for 'extreme' population caps, players will not be allowed to join the server if living crew exceeds the listed number.
-EXTREME_POPCAP 120
+#EXTREME_POPCAP 200
 
 ## Message for extreme cap
-EXTREME_POPCAP_MESSAGE The server is currently serving its maximum number of users...come back in a little bit!
-
-## Uncomment to allow BYOND subscribers to bypassing server connection population cap. (Living player population cap still applies.)
-BYOND_MEMBER_BYPASS_POPCAP
+EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, find alternative servers.
 
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
 ##	Requres database

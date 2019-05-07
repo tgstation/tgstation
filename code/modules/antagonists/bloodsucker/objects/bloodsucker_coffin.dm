@@ -36,7 +36,7 @@
 	// DONE
 	to_chat(owner, "<span class='userdanger'>You have claimed the [claimed] as your place of immortal rest! Your lair is now the [lair].</span>")
 	to_chat(owner, "<span class='danger'>You have learned new construction recipes to improve your lair.</span>")
-	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Find your new lair recipes in the Structures tab of the <i>Crafting Menu</i> at the bottom of the screen.</span><br><br>")
+	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Find new lair recipes in the Structures tab of the <i>Crafting Menu</i> at the bottom of the screen, including the <i>Persuasion Rack</i> for converting crew into Vassals.</span><br><br>")
 
 	RunLair() // Start
 	return TRUE
@@ -188,9 +188,9 @@
 	result = /obj/structure/closet/crate/coffin/blackcoffin
 	tools = list(/obj/item/weldingtool,
 				 /obj/item/screwdriver)
-	reqs = list(/obj/item/stack/sheet/cloth = 4,
+	reqs = list(/obj/item/stack/sheet/cloth = 1,
 				/obj/item/stack/sheet/mineral/wood = 5,
-				/obj/item/stack/sheet/metal = 2)
+				/obj/item/stack/sheet/metal = 1)
 				///obj/item/stack/packageWrap = 8,
 				///obj/item/pipe = 2)
 	time = 150

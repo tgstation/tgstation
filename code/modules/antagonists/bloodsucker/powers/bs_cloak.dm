@@ -4,8 +4,8 @@
 	name = "Cloak of Darkness"
 	desc = "Blend into the shadows and become invisible to the untrained eye."
 	button_icon_state = "power_cloak"
-	bloodcost = 10
-	cooldown = 100
+	bloodcost = 8
+	cooldown = 50
 	bloodsucker_can_buy = TRUE
 	amToggle = TRUE
 	warn_constant_cost = TRUE

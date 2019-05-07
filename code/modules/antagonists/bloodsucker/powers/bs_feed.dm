@@ -124,7 +124,7 @@
 		// Abort? A bloody mistake.
 		if (!do_mob(user, target, 20, 0, 0, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
 			// May have disabled Feed during do_mob
-			if (!active || !ContinueActive(user))
+			if (!active || !ContinueActive(user, target))
 				break
 
 			if (amSilent)

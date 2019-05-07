@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_OVERTHROW = /datum/game_mode/overthrow,
 	ROLE_HIVE = /datum/game_mode/hivemind,
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
-	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker,
+	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker, // FULPSTATION
 	ROLE_SENTIENCE
 ))
 

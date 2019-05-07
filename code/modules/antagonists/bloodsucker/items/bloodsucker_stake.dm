@@ -206,7 +206,7 @@
 	name = "Silver Stake"
 	result = /obj/item/stake/hardened/silver
 	tools = list(/obj/item/weldingtool)
-	reqs = list(/obj/item/stack/sheet/mineral/silver = 2,
+	reqs = list(/obj/item/stack/sheet/mineral/silver = 1,
 				/obj/item/stake/hardened = 1)
 				///obj/item/stack/packageWrap = 8,
 				///obj/item/pipe = 2)

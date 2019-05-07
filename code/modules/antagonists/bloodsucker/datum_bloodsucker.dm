@@ -41,7 +41,8 @@
 	var/foodInGut = 0					// How much food to throw up later. You shouldn't have eaten that.
 
 	// LISTS
-	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_COLDBLOODED,TRAIT_AGEUSIA)
+	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, \
+										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_COLDBLOODED, TRAIT_AGEUSIA)
 	// NOTES: TRAIT_AGEUSIA <-- Doesn't like flavors.
 	// REMOVED: TRAIT_NODEATH
 	// TO ADD:
@@ -287,12 +288,14 @@ datum/antagonist/bloodsucker/proc/RankUp()
 		return
 
 	vamplevel_unspent ++
-
 	// Spend Rank Immediately?
 	if (istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 		SpendRank()
 	else
 		to_chat(owner, "<EM><span class='notice'>You have grown more ancient! Sleep in a coffin that you have claimed to thicken your blood and become more powerful.</span></EM>")
+		if (vamplevel_unspent >= 2)
+			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, they can be built from wooden planks.</span><br>")
+
 
 	update_hud(TRUE) 	// Set blood value, current rank
 

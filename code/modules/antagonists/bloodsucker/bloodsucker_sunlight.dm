@@ -1,8 +1,8 @@
-#define TIME_BLOODSUCKER_NIGHT	7200 		// 12 minutes
-#define TIME_BLOODSUCKER_DAY	900 		// 1.5 minutes // 10 is a second, 600 is a minute.
-#define TIME_BLOODSUCKER_DAY_WARN	900 	// 1.5 minutes
-#define TIME_BLOODSUCKER_DAY_FINAL_WARN	250 // 25 sec
-#define TIME_BLOODSUCKER_BURN_INTERVAL	100 // 10 sec
+#define TIME_BLOODSUCKER_NIGHT	720 		// 12 minutes
+#define TIME_BLOODSUCKER_DAY	90 			// 1.5 minutes // 10 is a second, 600 is a minute.
+#define TIME_BLOODSUCKER_DAY_WARN	90 		// 1.5 minutes
+#define TIME_BLOODSUCKER_DAY_FINAL_WARN	25 	// 25 sec
+#define TIME_BLOODSUCKER_BURN_INTERVAL	4 	// 4 sec
 
 
 // Over Time, tick down toward a "Solar Flare" of UV buffeting the station. This period is harmful to vamps.
@@ -13,7 +13,6 @@
 	var/time_til_cycle = 0
 
 /obj/effect/sunlight/Initialize()
-	message_admins("Created Sun")
 	countdown()
 	hud_tick()
 
@@ -22,44 +21,66 @@
 
 	while(!cancel_me)
 
-		time_til_cycle = TIME_BLOODSUCKER_NIGHT / 10
+		time_til_cycle = TIME_BLOODSUCKER_NIGHT
 
 		// Part 1: Night (all is well)
-		sleep(TIME_BLOODSUCKER_NIGHT - TIME_BLOODSUCKER_DAY_WARN)
-		warn_daylight(1,"<span class = 'danger'>Solar Flares will bombard the station with dangerous UV in [TIME_BLOODSUCKER_DAY_WARN / 600] minutes. <b>Prepare to seek cover in a coffin or closet.</b></span>")  // time2text <-- use Help On
+		while (time_til_cycle > TIME_BLOODSUCKER_DAY_WARN)
+			sleep(10)
+			if (cancel_me)
+				return
+		//sleep(TIME_BLOODSUCKER_NIGHT - TIME_BLOODSUCKER_DAY_WARN)
+		warn_daylight(1,"<span class = 'danger'>Solar Flares will bombard the station with dangerous UV in [TIME_BLOODSUCKER_DAY_WARN / 60] minutes. <b>Prepare to seek cover in a coffin or closet.</b></span>")  // time2text <-- use Help On
 
 		// Part 2: Night Ending
-		sleep(TIME_BLOODSUCKER_DAY_WARN - TIME_BLOODSUCKER_DAY_FINAL_WARN)
-		warn_daylight(2,"<span class = 'userdanger'>Solar Flares are about to bombard the station! You have [TIME_BLOODSUCKER_DAY_FINAL_WARN / 10] seconds to find cover!</span>",\
+		while (time_til_cycle > TIME_BLOODSUCKER_DAY_FINAL_WARN)
+			sleep(10)
+			if (cancel_me)
+				return
+		//sleep(TIME_BLOODSUCKER_DAY_WARN - TIME_BLOODSUCKER_DAY_FINAL_WARN)
+		message_admins("BLOODSUCKER NOTICE: Daylight beginning in [TIME_BLOODSUCKER_DAY_FINAL_WARN] seconds.)")
+		warn_daylight(2,"<span class = 'userdanger'>Solar Flares are about to bombard the station! You have [TIME_BLOODSUCKER_DAY_FINAL_WARN] seconds to find cover!</span>",\
 					  "<span class = 'danger'>In [TIME_BLOODSUCKER_DAY_FINAL_WARN / 10], your master will be at risk of a Solar Flare. Make sure they find cover!</span>")
 
 		// (FINAL LIL WARNING)
-		sleep(TIME_BLOODSUCKER_DAY_FINAL_WARN - 50)
+		while (time_til_cycle > 50)
+			sleep(10)
+			if (cancel_me)
+				return
+		//sleep(TIME_BLOODSUCKER_DAY_FINAL_WARN - 50)
 		warn_daylight(3,"<span class = 'userdanger'>Seek cover, for Sol rises!</span>")
 
 		// Part 3: Night Ending
-		sleep(50)
+		while (time_til_cycle > 0)
+			sleep(10)
+			if (cancel_me)
+				return
+		//sleep(50)
 		warn_daylight(4,"<span class = 'userdanger'>Solar flares bombard the station with deadly UV light!</span><br><span class = ''>Stay in cover for the next [TIME_BLOODSUCKER_DAY / 600] minutes or risk Final Death!</span>",\
 				  	  "<span class = 'danger'>Solar flares bombard the station with UV light!</span>")
 
 		// Part 4: Day
 		amDay = TRUE
-		time_til_cycle = TIME_BLOODSUCKER_DAY / 10
+		message_admins("BLOODSUCKER NOTICE: Daylight Beginning (Lasts for [TIME_BLOODSUCKER_DAY / 60] minutes.)")
+		time_til_cycle = TIME_BLOODSUCKER_DAY
 		sleep(10) // One second grace period.
-		var/daylight_time = TIME_BLOODSUCKER_DAY
+		//var/daylight_time = TIME_BLOODSUCKER_DAY
 		var/issued_XP = FALSE
-		while(daylight_time > 0)
+		while(time_til_cycle > 0)
 			punish_vamps()
 			sleep(TIME_BLOODSUCKER_BURN_INTERVAL)
-			daylight_time -= TIME_BLOODSUCKER_BURN_INTERVAL
+			if (cancel_me)
+				return
+			//daylight_time -= TIME_BLOODSUCKER_BURN_INTERVAL
 			// Issue Level Up!
-			if (!issued_XP && daylight_time <= 100)
+			if (!issued_XP && time_til_cycle <= 15)
 				issued_XP = TRUE
 				vamps_rank_up()
 
 		warn_daylight(5,"<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>",\
 				  	  "<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>")
 		amDay = FALSE
+		message_admins("BLOODSUCKER NOTICE: Daylight Ended. Resetting to Night (Lasts for [TIME_BLOODSUCKER_NIGHT / 60] minutes.)")
+
 
 /obj/effect/sunlight/proc/hud_tick()
 	set waitfor = FALSE
@@ -90,9 +111,9 @@
 			else if (danger_level == 3)
 				M.current.playsound_local(null, 'sound/effects/alert.ogg', 75, 1)
 			else if (danger_level == 4)
-				M.current.playsound_local(null, 'sound/ambience/ambimystery.ogg', 90, 1)
+				M.current.playsound_local(null, 'sound/ambience/ambimystery.ogg', 100, 1)
 			else if (danger_level == 5)
-				M.current.playsound_local(null, 'sound/spookoween/ghosty_wind.ogg', 85, 1)
+				M.current.playsound_local(null, 'sound/spookoween/ghosty_wind.ogg', 90, 1)
 
 	if (vassalwarn != "")
 		for (var/datum/mind/M in SSticker.mode.vassals)
@@ -117,15 +138,17 @@
 				continue
 			else
 				to_chat(M, "<span class='warning'>Your skin sizzles. The [M.current] doesn't protect well against UV bombardment.</span>")
-				M.current.adjustFireLoss(2)
+				M.current.fireloss += bloodsuckerdatum.vamplevel  //  Do DIRECT damage. Being spaced was causing this to not occur. setFireLoss(bloodsuckerdatum.vamplevel)
+				M.current.updatehealth()
 				SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/daylight_1)
 		else
 			if (M.current.fire_stacks <= 0)
 				M.current.fire_stacks = 0
 				to_chat(M, "<span class='userdanger'>The solar flare sets your skin ablaze!</span>")
-			M.current.adjust_fire_stacks(0.25 + bloodsuckerdatum.vamplevel / 5)
-			M.current.adjustFireLoss(1 + bloodsuckerdatum.vamplevel / 5)
+			M.current.adjust_fire_stacks(0.4)
 			M.current.IgniteMob()
+			M.current.fireloss += 2 + bloodsuckerdatum.vamplevel   //  Do DIRECT damage. Being spaced was causing this to not occur.  //setFireLoss(2 + bloodsuckerdatum.vamplevel)
+			M.current.updatehealth()
 			SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/daylight_2)
 
 

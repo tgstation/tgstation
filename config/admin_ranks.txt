@@ -45,12 +45,12 @@ Exclude =
 Edit =
 
 Name = Admin Candidate
-Include = @
+Include = @ BAN
 Exclude =
 Edit =
 
 Name = Admin Jr.
-Include = @ SPAWN VAREDIT BAN
+Include = @ SPAWN VAREDIT
 Exclude =
 Edit =
 
@@ -68,6 +68,11 @@ Name = Fulp Crew
 Include = EVERYTHING
 Exclude =
 Edit = EVERYTHING
+
+Name = Fu1p Crew
+Include = EVERYTHING
+Exclude = SERVER DEBUG
+Edit =
 
 Name = Lazy Master
 Include = EVERYTHING

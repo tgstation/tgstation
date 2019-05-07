@@ -53,7 +53,7 @@
 		DeactivatePower()
 		return
 
-	if (!CheckCanUse(TRUE))
+	if (!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
 		return
 
 	PayCost()
@@ -70,24 +70,13 @@
 	if (active) // Did we not manually disable? Handle it here.
 		DeactivatePower()
 
-
-/datum/action/bloodsucker/proc/CheckCanUse(display_error)
+/datum/action/bloodsucker/proc/CheckCanPayCost(display_error)
 	if(!owner || !owner.mind)
 		return FALSE
-	//if (need_bloodsucker && !owner.mind.has_antag_datum(/datum/antagonist/bloodsucker))
-	//	if (display_error)
-	//		to_chat(owner, "Only a Bloodsucker may use this dark gift.")
-	//	return FALSE
-	// owner for actions is the mob, not mind.
 	// Cooldown?
 	if (cooldownUntil > world.time)
 		if (display_error)
 			to_chat(owner, "[src] is unavailable. Wait [(cooldownUntil - world.time) / 10] seconds.")
-		return FALSE
-	// Torpor?
-	if (!can_use_in_torpor && owner.has_trait(TRAIT_DEATHCOMA))
-		if (display_error)
-			to_chat(owner, "<span class='warning'>Not while you're in Torpor.</span>")
 		return FALSE
 	// Have enough blood?
 	var/mob/living/L = owner
@@ -96,6 +85,24 @@
 			to_chat(owner, "<span class='warning'>You need at least [bloodcost] blood to activate [name]</span>")
 		return FALSE
 	return TRUE
+
+/datum/action/bloodsucker/proc/CheckCanUse(display_error)	// These checks can be scanned every frame while a ranged power is on.
+	if(!owner || !owner.mind)
+		return FALSE
+	// Torpor?
+	if (!can_use_in_torpor && owner.has_trait(TRAIT_DEATHCOMA))
+		if (display_error)
+			to_chat(owner, "<span class='warning'>Not while you're in Torpor.</span>")
+		return FALSE
+	// Constant Cost (out of blood)
+	if (warn_constant_cost)
+		var/mob/living/L = owner
+		if (L.blood_volume <= 0)
+			if (display_error)
+				to_chat(owner, "<span class='warning'>You don't have the blood to upkeep [src].</span>")
+			return FALSE
+	return TRUE
+
 
 /datum/action/bloodsucker/proc/StartCooldown()
 	set waitfor = FALSE
@@ -193,7 +200,7 @@
 		DeactivatePower()
 		return
 
-	if (!CheckCanUse(TRUE))
+	if (!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
 		return
 
 	active = !active
@@ -207,6 +214,14 @@
 
 	if (message_Trigger != "")
 		to_chat(owner, "<span class='announce'>[message_Trigger]</span>")
+
+/datum/action/bloodsucker/targeted/CheckCanUse(display_error)
+	if (!..())
+		return FALSE
+	if (!owner.client)	// <--- We don't allow non client usage so that using powers like mesmerize will FAIL if you try to use them as ghost. Why? because ranged_abvility in spell.dm
+		return FALSE	//		doesn't let you remove powers if you're not there. So, let's just cancel the power entirely.
+	return TRUE
+
 
 /datum/action/bloodsucker/targeted/DeactivatePower(mob/living/user = owner, mob/living/target)
 	// Don't run ..(), we don't want to engage the cooldown until we USE this power!
@@ -238,9 +253,10 @@
 	if (power_in_use || !CheckValidTarget(A))
 		return FALSE
 	// Valid? (return true means DON'T cancel power!)
-	if (!CheckCanUse(TRUE) || !CheckCanTarget(A, TRUE))
+	if (!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE) || !CheckCanTarget(A, TRUE))
 		return TRUE
 
+	// Skip this part so we can return TRUE right away.
 	if (power_activates_immediately)
 		PowerActivatedSuccessfully() // Mesmerize pays only after success.
 
@@ -255,6 +271,7 @@
 
 /datum/action/bloodsucker/targeted/proc/PowerActivatedSuccessfully()
 	// The power went off! We now pay the cost of the power.
+
 	PayCost()
 	DeactivateRangedAbility()
 	DeactivatePower()

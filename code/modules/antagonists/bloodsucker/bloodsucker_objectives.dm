@@ -288,8 +288,8 @@
 
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/vamphunter/check_completion()
-	for (var/datum/antagonist/bloodsucker/antag_datum in SSticker.mode.bloodsuckers)
-		if (antag_datum.owner && antag_datum.owner.current && antag_datum.owner.current.stat != DEAD)
+	for (var/datum/mind/M in SSticker.mode.bloodsuckers)
+		if (M && M.current && M.current.stat != DEAD && get_turf(M.current))
 			return FALSE
 	return TRUE
 

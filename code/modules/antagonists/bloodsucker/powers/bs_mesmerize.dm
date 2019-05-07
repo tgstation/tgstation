@@ -100,11 +100,6 @@
 			if (istype(target) && istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
 				to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
 
-	//DeactivatePower()  DO NOT DO THIS ON TARGETED POWERS!!! They are already deactivated when you click a valid target.
-
-
-
-
 
 /datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)
 	return ..() && CheckCanUse() && CheckCanTarget(target)

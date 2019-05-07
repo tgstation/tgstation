@@ -1,5 +1,3 @@
-#define ROLE_BLOODSUCKER			"Bloodsucker"
-#define BLOODSUCKER_LEVEL_TO_EMBRACE	3
 
 /datum/game_mode
 	var/list/datum/mind/bloodsuckers = list() 	// List of minds belonging to this game mode.

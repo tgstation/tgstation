@@ -5,10 +5,10 @@
 #If SQL-based admin loading is enabled, admins listed here will always be loaded first and will override any duplicate entries in the database.
 
 TheSwain = Fulp Crew
-Clowno = Fulp Crew
-fulpstation = Fulp Crew
-Oney = Fulp Crew
-tomamoto = Host
+Clowno = Fu1p Crew
+#fulpstation = Fulp Crew
+Oney = Fu1p Crew
+tomamoto = Fulp Crew
 Grupert87 = Admin
 Grupert99 = Admin
 Krinkels = Admin
@@ -18,7 +18,6 @@ FaKanza	 = Admin
 Trickytyfly = Admin
 
 #ADMINS
-Ss4gogeta0 = Fulp Crew
 saladata = Admin
 RootVeggie = Admin
 Hugh Mann = Admin
@@ -30,7 +29,8 @@ ChocolateJ = Admin
 Axolotl123 = Admin
 Qustinnus = Admin
 Idontcareacount = Admin
-Windarkata = Admin
+Ss4gogeta0 = Fulp Crew
+Windarkata = Fulp Crew
 Bricksqwad = Admin
 Ishiro = Admin
 hiimchros = Admin
@@ -39,6 +39,16 @@ Kasabaru = Admin
 RaveMaster93 = Admin
 
 #MODERATORS
+Coolsurf6 = Admin Jr.
+tamaguen = Admin Jr.
+Hydraliks = Moderator
+Dr. Fake Name = Admin Candidate
+DrTarry = Moderator
+Eli m = Moderator
+HorusTheHelpful = Moderator
+M.Green = Moderator
+Bobalobdob = Moderator
 
 #TRIAL ADMINS
 BLANK = Admin Jr.
+

@@ -326,6 +326,8 @@
 	owner.current.fakedeath("bloodsucker") // Come after UNCONSCIOUS or else it fails
 	//owner.current.update_stat()
 	owner.current.add_trait(TRAIT_NODEATH,"bloodsucker")	// Without this, you'll just keep dying while you recover.
+	owner.current.add_trait(TRAIT_RESISTHIGHPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	owner.current.add_trait(TRAIT_RESISTLOWPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
 	// Visuals
 	owner.current.update_sight()
 	owner.current.reload_fullscreen()
@@ -340,6 +342,8 @@
 	owner.current.cure_fakedeath("bloodsucker") // Come after SOFT_CRIT or else it fails
 	//owner.current.update_stat()
 	owner.current.remove_trait(TRAIT_NODEATH,"bloodsucker")
+	owner.current.remove_trait(TRAIT_RESISTHIGHPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	owner.current.remove_trait(TRAIT_RESISTLOWPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
 	to_chat(owner, "<span class='warning'>You have recovered from Torpor.</span>")
 
 
@@ -414,7 +418,6 @@
 	else if (poweron_masquerade)
 		to_chat(C, "<span class='notice'>Your stomach turns, but your \"human disguise\" keeps the food down...for now.</span>")
 
-	// First Food
 
 	// Keep looping until we purge. If we have activated our Human Disguise, we ignore the food. But it'll come up eventually...
 	var/sickphase = 0
@@ -422,7 +425,7 @@
 
 		sleep(50)
 
-		C.adjust_disgust(20 * sickphase)
+		C.adjust_disgust(10 * sickphase)
 
 		// Wait an interval...
 		sleep(50 + 50 * sickphase) // At intervals of 100, 150, and 200. (10 seconds, 15 seconds, and 20 seconds)
