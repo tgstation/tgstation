@@ -11,7 +11,7 @@
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.status_flags |= GODMODE
-	owner.add_trait(TRAIT_PACIFISM, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
 	owner.visible_message("<span class='warning'>[owner] shines with a brilliant rainbow light.</span>",
 		"<span class='notice'>You feel protected by an unknown force!</span>")
 	originalcolor = owner.color
@@ -24,7 +24,7 @@
 /datum/status_effect/rainbow_protection/on_remove()
 	owner.status_flags &= ~GODMODE
 	owner.color = originalcolor
-	owner.remove_trait(TRAIT_PACIFISM, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
 	owner.visible_message("<span class='notice'>[owner] stops glowing, the rainbow light fading away.</span>",
 		"<span class='warning'>You no longer feel protected...</span>")
 
@@ -246,12 +246,12 @@ datum/status_effect/rebreathing/tick()
 	duration = 100
 
 /datum/status_effect/firecookie/on_apply()
-	owner.add_trait(TRAIT_RESISTCOLD,"firecookie")
+	ADD_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
 	owner.adjust_bodytemperature(110)
 	return ..()
 
 /datum/status_effect/firecookie/on_remove()
-	owner.remove_trait(TRAIT_RESISTCOLD,"firecookie")
+	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
 
 /datum/status_effect/watercookie
 	id = "watercookie"
@@ -260,7 +260,7 @@ datum/status_effect/rebreathing/tick()
 	duration = 100
 
 /datum/status_effect/watercookie/on_apply()
-	owner.add_trait(TRAIT_NOSLIPWATER,"watercookie")
+	ADD_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
 	return ..()
 
 /datum/status_effect/watercookie/tick()
@@ -268,7 +268,7 @@ datum/status_effect/rebreathing/tick()
 		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 /datum/status_effect/watercookie/on_remove()
-	owner.remove_trait(TRAIT_NOSLIPWATER,"watercookie")
+	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
@@ -313,11 +313,11 @@ datum/status_effect/rebreathing/tick()
 	duration = 600
 
 /datum/status_effect/toxincookie/on_apply()
-	owner.add_trait(TRAIT_TOXINLOVER,"toxincookie")
+	ADD_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
 	return ..()
 
 /datum/status_effect/toxincookie/on_remove()
-	owner.remove_trait(TRAIT_TOXINLOVER,"toxincookie")
+	REMOVE_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
 
 /datum/status_effect/timecookie
 	id = "timecookie"
@@ -413,11 +413,11 @@ datum/status_effect/rebreathing/tick()
 	duration = 30
 
 /datum/status_effect/plur/on_apply()
-	owner.add_trait(TRAIT_PACIFISM, "peacecookie")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "peacecookie")
 	return ..()
 
 /datum/status_effect/plur/on_remove()
-	owner.remove_trait(TRAIT_PACIFISM, "peacecookie")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "peacecookie")
 
 /datum/status_effect/adamantinecookie
 	id = "adamantinecookie"
@@ -511,11 +511,11 @@ datum/status_effect/rebreathing/tick()
 	colour = "blue"
 
 /datum/status_effect/stabilized/blue/on_apply()
-	owner.add_trait(TRAIT_NOSLIPWATER, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 	return ..()
 
 datum/status_effect/stabilized/blue/on_remove()
-	owner.remove_trait(TRAIT_NOSLIPWATER, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
@@ -576,7 +576,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	examine_text = "<span class='notice'>Their fingertips burn brightly!</span>"
 
 /datum/status_effect/stabilized/darkpurple/on_apply()
-	owner.add_trait(TRAIT_RESISTHEATHANDS, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
 	fire = new(owner)
 	return ..()
 
@@ -594,7 +594,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
-	owner.remove_trait(TRAIT_RESISTHEATHANDS, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
 	qdel(fire)
 
 /datum/status_effect/stabilized/darkblue

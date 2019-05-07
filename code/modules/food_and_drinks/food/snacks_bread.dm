@@ -180,6 +180,18 @@
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
 
+/obj/item/reagent_containers/food/snacks/garlicbread
+	name = "garlic bread"
+	desc = "Alas, it is limited."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "garlicbread"
+	item_state = "garlicbread"
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 2)
+	list_reagents = list("nutriment" = 5, "vitamin" = 4, "garlic" = 2)
+	bitesize = 3
+	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
+	foodtype = GRAIN
+
 /obj/item/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
 	desc = "If you can see this description the code for the deep fryer fucked up."

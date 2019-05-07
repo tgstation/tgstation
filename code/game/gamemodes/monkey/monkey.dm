@@ -100,9 +100,9 @@
 
 /datum/game_mode/monkey/special_report()
 	if(check_monkey_victory())
-		return "<span class='redtext big'>The monkeys have overthrown their captors! Eeek eeeek!!</span>"
+		return "<div class='panel redborder'><span class='redtext big'>The monkeys have overthrown their captors! Eeek eeeek!!</span></div>"
 	else
-		return "<span class='redtext big'>The staff managed to contain the monkey infestation!</span>"
+		return "<div class='panel redborder'><span class='redtext big'>The staff managed to contain the monkey infestation!</span></div>"
 
 /datum/game_mode/monkey/generate_report()
 	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."

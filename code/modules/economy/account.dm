@@ -1,3 +1,5 @@
+#define DUMPTIME 3000
+
 /datum/bank_account
 	var/account_holder = "Rusty Venture"
 	var/account_balance = 0
@@ -6,6 +8,8 @@
 	var/add_to_accounts = TRUE
 	var/account_id
 	var/welfare = FALSE
+	var/being_dumped = FALSE //pink levels are rising
+	var/withdrawDelay = 0
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -18,6 +22,10 @@
 	if(add_to_accounts)
 		SSeconomy.bank_accounts -= src
 	return ..()
+
+/datum/bank_account/proc/dumpeet()
+	being_dumped = TRUE
+	withdrawDelay = world.time + DUMPTIME
 
 /datum/bank_account/proc/_adjust_money(amt)
 	account_balance += amt
@@ -95,3 +103,5 @@
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
 	SSeconomy.generated_accounts += src
+	
+#undef DUMPTIME

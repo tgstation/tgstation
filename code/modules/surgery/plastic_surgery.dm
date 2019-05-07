@@ -13,8 +13,8 @@
 	user.visible_message("[user] begins to alter [target]'s appearance.", "<span class='notice'>You begin to alter [target]'s appearance...</span>")
 
 /datum/surgery_step/reshape_face/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.has_trait(TRAIT_DISFIGURED, TRAIT_GENERIC))
-		target.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+	if(HAS_TRAIT_FROM(target, TRAIT_DISFIGURED, TRAIT_GENERIC))
+		REMOVE_TRAIT(target, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		user.visible_message("[user] successfully restores [target]'s appearance!", "<span class='notice'>You successfully restore [target]'s appearance.</span>")
 	else
 		var/list/names = list()
