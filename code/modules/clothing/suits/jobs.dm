@@ -32,6 +32,15 @@
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
+/obj/item/clothing/suit/bishoprobe
+	name = "bishop's robes"
+	desc = "Glad to see the tithes you collected were well spent."
+	icon_state = "bishoprobe"
+	item_state = "bishoprobe"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
 /obj/item/clothing/suit/studentuni
 	name = "student robe"
 	desc = "The uniform of a bygone institute of learning."
@@ -46,6 +55,40 @@
 	icon_state = "witchhunter"
 	item_state = "witchhunter"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/clothing/suit/hooded/monkfrock
+	name = "monk's frock"
+	desc = "A few steps above rended sackcloth."
+	icon_state = "monkfrock"
+	item_state = "monkfrock"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/clothing/head/hooded/monkfrock
+	name = "monkhood"
+	desc = "For when a man wants to cover up his tonsure."
+	icon_state = "monkhood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/suit/monkrobeeast
+	name = "eastern monk's robes"
+	desc = "Best combined with a shaved head."
+	icon_state = "monkrobeeast"
+	item_state = "monkrobeeast"
+	body_parts_covered = GROIN|LEGS
+	flags_inv = HIDEJUMPSUIT
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/clothing/suit/whiterobe
+	name = "white robe"
+	desc = "Good for clerics and sleepy crewmembers."
+	icon_state = "whiterobe"
+	item_state = "whiterobe"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 //Chef
