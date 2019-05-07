@@ -20,14 +20,14 @@ Slimecrossing Armor
 /obj/item/clothing/mask/nobreath/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == SLOT_WEAR_MASK)
-		user.add_trait(TRAIT_NOBREATH, "breathmask_[REF(src)]")
+		ADD_TRAIT(user, TRAIT_NOBREATH, "breathmask_[REF(src)]")
 		user.failed_last_breath = FALSE
 		user.clear_alert("not_enough_oxy")
 		user.apply_status_effect(/datum/status_effect/rebreathing)
 
 /obj/item/clothing/mask/nobreath/dropped(mob/living/carbon/human/user)
 	..()
-	user.remove_trait(TRAIT_NOBREATH, "breathmask_[REF(src)]")
+	REMOVE_TRAIT(user, TRAIT_NOBREATH, "breathmask_[REF(src)]")
 	user.remove_status_effect(/datum/status_effect/rebreathing)
 
 /obj/item/clothing/glasses/prism_glasses
@@ -112,11 +112,11 @@ Slimecrossing Armor
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == SLOT_HEAD)
-		user.add_trait(TRAIT_PACIFISM, "peaceflower_[REF(src)]")
+		ADD_TRAIT(user, TRAIT_PACIFISM, "peaceflower_[REF(src)]")
 
 /obj/item/clothing/head/peaceflower/dropped(mob/living/carbon/human/user)
 	..()
-	user.remove_trait(TRAIT_PACIFISM, "peaceflower_[REF(src)]")
+	REMOVE_TRAIT(user, TRAIT_PACIFISM, "peaceflower_[REF(src)]")
 
 /obj/item/clothing/head/peaceflower/attack_hand(mob/user)
 	if(iscarbon(user))

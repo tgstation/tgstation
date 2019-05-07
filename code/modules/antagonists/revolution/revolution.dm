@@ -17,7 +17,7 @@
 			return FALSE
 		if(new_owner.unconvertable)
 			return FALSE
-		if(new_owner.current && new_owner.current.has_trait(TRAIT_MINDSHIELD))
+		if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
 			return FALSE
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)

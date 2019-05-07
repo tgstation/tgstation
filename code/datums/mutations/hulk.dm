@@ -14,8 +14,8 @@
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_STUNIMMUNE, TRAIT_HULK)
-	owner.add_trait(TRAIT_PUSHIMMUNE, TRAIT_HULK)
+	ADD_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_HULK)
+	ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_HULK)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
 
@@ -31,8 +31,8 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_STUNIMMUNE, TRAIT_HULK)
-	owner.remove_trait(TRAIT_PUSHIMMUNE, TRAIT_HULK)
+	REMOVE_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_HULK)
+	REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_HULK)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "hulk")
 

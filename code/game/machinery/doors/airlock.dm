@@ -750,7 +750,7 @@
 
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
-		if((H.has_trait(TRAIT_DUMB)) && Adjacent(user))
+		if((HAS_TRAIT(H, TRAIT_DUMB)) && Adjacent(user))
 			playsound(src, 'sound/effects/bang.ogg', 25, TRUE)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \

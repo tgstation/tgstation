@@ -240,7 +240,7 @@
 
 /obj/item/clothing/suit/poncho/ponchoshame/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/suit/whitedress
 	name = "white dress"

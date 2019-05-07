@@ -167,6 +167,8 @@
 	if(!can_buy(40))
 		return
 
+	B.naut = TRUE	//temporary placeholder to prevent creation of more than one per factory.
+	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a blobbernaut now.
 		B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
@@ -194,6 +196,7 @@
 	else
 		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
 		add_points(40)
+		B.naut = null
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
