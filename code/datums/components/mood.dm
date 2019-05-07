@@ -192,6 +192,7 @@
 			setSanity(sanity+0.4, maximum=INFINITY)
 
 	HandleNutrition(owner)
+	HandleHygiene(owner)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
 	var/mob/living/owner = parent
@@ -343,6 +344,10 @@
 			clear_event(null, "charge")
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
+
+/datum/component/mood/proc/HandleHygiene(mob/living/carbon/human/H)
+	if(H.hygiene <= HYGIENE_LEVEL_DIRTY)
+		HygieneMiasma(H)
 
 /datum/component/mood/proc/HygieneMiasma(mob/living/carbon/human/H)
 	// Properly stored humans shouldn't create miasma
