@@ -2108,6 +2108,7 @@
 #include "code\modules\mob\living\simple_animal\guardian\types\dextrous.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\explosive.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\fire.dm"
+#include "code\modules\mob\living\simple_animal\guardian\types\gravitokinetic.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\lightning.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\protector.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\ranged.dm"
