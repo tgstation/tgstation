@@ -177,6 +177,15 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
+/obj/item/clothing/suit/clownpriest
+	name = "Robes of the Honkmother"
+	desc = "Meant for a clown of the cloth."
+	icon_state = "clownpriest"
+	item_state = "clownpriest"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
 /obj/item/clothing/suit/cardborg
 	name = "cardborg suit"
 	desc = "An ordinary cardboard box with holes cut in the sides."
