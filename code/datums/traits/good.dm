@@ -67,6 +67,10 @@
 	mob_trait = TRAIT_JOLLY
 	mood_quirk = TRUE
 
+/datum/quirk/jolly/on_process()
+	if(prob(0.05))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
+
 /datum/quirk/light_step
 	name = "Light Step"
 	desc = "You walk with a gentle step; stepping on sharp objects is quieter, less painful and you won't leave footprints behind you."
