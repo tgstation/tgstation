@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - bugfix: "The Tenets of Servicia are properly available through \"servicianism\" and \"partying\" religions"
