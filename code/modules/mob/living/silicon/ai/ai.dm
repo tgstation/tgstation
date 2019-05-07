@@ -316,6 +316,10 @@
 	var/turf/target = get_turf(A)
 	if (.)
 		return
+
+	if(!target)
+		return
+
 	if ((ai.z != target.z) && !is_station_level(ai.z))
 		return FALSE
 
