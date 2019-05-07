@@ -46,7 +46,7 @@
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/add_gravity(atom/A, new_gravity = 2)
 	if(!gravito_targets.len)//we are adding one, so start processing
 		START_PROCESSING(SSfastprocess, src)
-	gravito_targets.Add(target)
+	gravito_targets.Add(A)
 	A.AddComponent(/datum/component/forced_gravity,new_gravity)
 	//sound
 
