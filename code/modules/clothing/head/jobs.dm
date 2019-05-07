@@ -122,7 +122,7 @@
 
 /obj/item/clothing/head/beret/highlander/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"

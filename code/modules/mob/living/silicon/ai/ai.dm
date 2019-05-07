@@ -148,7 +148,7 @@
 	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
-	radio = new /obj/item/radio/headset/ai(src)
+	radio = new /obj/item/radio/headset/silicon/ai(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
 
 	deploy_action.Grant(src)
@@ -316,7 +316,7 @@
 	var/turf/target = get_turf(A)
 	if (.)
 		return
-	if ((ai.z != target.z) && !is_station_level(ai))
+	if ((ai.z != target.z) && !is_station_level(ai.z))
 		return FALSE
 
 	if (istype(loc, /obj/item/aicard))

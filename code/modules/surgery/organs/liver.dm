@@ -30,7 +30,7 @@
 			damage = max(0, damage - 0.1)
 
 			var/provide_pain_message = HAS_NO_TOXIN
-			if(filterToxins && !owner.has_trait(TRAIT_TOXINLOVER))
+			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
 				for(var/I in C.reagents.reagent_list)
 					var/datum/reagent/pickedreagent = I

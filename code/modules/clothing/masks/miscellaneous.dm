@@ -90,7 +90,7 @@
 
 /obj/item/clothing/mask/pig/cursed/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CURSED_MASK_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, 1)
 
 ///frog mask - reeee!!
@@ -116,11 +116,11 @@
 
 /obj/item/clothing/mask/frog/cursed/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CURSED_MASK_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 
 /obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
 	var/mob/living/carbon/C = user
-	if(C.wear_mask == src && has_trait(TRAIT_NODROP, CURSED_MASK_TRAIT))
+	if(C.wear_mask == src && HAS_TRAIT_FROM(src, TRAIT_NODROP, CURSED_MASK_TRAIT))
 		to_chat(user, "<span class='userdanger'>[src] was cursed! Ree!!</span>")
 	return ..()
 
@@ -146,7 +146,7 @@
 
 /obj/item/clothing/mask/cowmask/cursed/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CURSED_MASK_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, 1)
 
 /obj/item/clothing/mask/horsehead
@@ -171,7 +171,7 @@
 
 /obj/item/clothing/mask/horsehead/cursed/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CURSED_MASK_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, 1)
 
 /obj/item/clothing/mask/rat

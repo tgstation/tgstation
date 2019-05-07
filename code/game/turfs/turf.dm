@@ -62,7 +62,7 @@
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-		CalculateAdjacentTurfs()
+		CALCULATE_ADJACENT_TURFS(src)
 		SSair.add_to_active(src)
 
 	if (light_power && light_range)
@@ -85,7 +85,7 @@
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
-	CalculateAdjacentTurfs()
+	CALCULATE_ADJACENT_TURFS(src)
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
