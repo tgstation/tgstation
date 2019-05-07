@@ -1650,9 +1650,9 @@
 	if(!user_allowed(user))
 		return
 	if(welded)
-		to_chat(user, text("The airlock has been welded shut!"))
+		to_chat(user, "The airlock has been welded shut!"))
 	else if(locked)
-		to_chat(user, text("The door bolts are down!"))
+		to_chat(user, "The door bolts are down!"))
 	else if(!density)
 		close()
 	else

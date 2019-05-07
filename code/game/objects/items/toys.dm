@@ -183,10 +183,10 @@
 			return 1
 		if (A.amount_left < (7 - src.bullets))
 			src.bullets += A.amount_left
-			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", A.amount_left))
+			to_chat(user, "<span class='notice'>You reload [] cap\s.</span>", A.amount_left))
 			A.amount_left = 0
 		else
-			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", 7 - src.bullets))
+			to_chat(user, "<span class='notice'>You reload [] cap\s.</span>", 7 - src.bullets))
 			A.amount_left -= 7 - src.bullets
 			src.bullets = 7
 		A.update_icon()
