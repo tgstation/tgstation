@@ -371,7 +371,7 @@
 /obj/item/clothing/head/clownmitre
 	name = "Hat of the Honkmother"
 	desc = "It's hard for parishoners to see a banana peel on the floor when they're looking up at your glorious chapeau."
-	icon_state = "bishopmitre"
+	icon_state = "clownmitre"
 	
 /obj/item/clothing/head/kippah
 	name = "kippah"
