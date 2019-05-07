@@ -54,9 +54,6 @@
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 		if("buddhism")
 			B.name = "The Sutras"
-		if("space dionysus","space bacchus, partying, servicia,")
-			B.name = "The Tenets of Servicia"
-			B.desc = "Happy, Full, Clean. Live it and give it."
 		if("clownism","honkmother","honk","honkism","comedy")
 			B.name = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
 		if("chaos")
@@ -92,6 +89,10 @@
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		if("scientology")
 			B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+		if("servicianism", "partying")
+			B.name = "The Tenets of Servicia"
+			B.deity_name = pick("Servicia", "Space Bacchus", "Space Dionysus")
+			B.desc = "Happy, Full, Clean. Live it and give it."
 		if("subgenius")
 			B.name = "Book of the SubGenius"
 		if("toolboxia","greytide")
