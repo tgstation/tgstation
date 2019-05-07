@@ -133,11 +133,11 @@
 		user.start_pulling(src, supress_message = supress_message)
 		return
 
-	if(!(status_flags & CANPUSH) || has_trait(TRAIT_PUSHIMMUNE))
+	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return FALSE
 
-	if(user.has_trait(TRAIT_PACIFISM))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
 	grippedby(user)
@@ -165,7 +165,10 @@
 					log_combat(user, src, "attempted to strangle", addition="kill grab")
 			if(!do_mob(user, src, grab_upgrade_time))
 				return 0
-			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != INTENT_GRAB)
+			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
+				return 0
+			if(user.a_intent != INTENT_GRAB)
+				to_chat(user, "<span class='notice'>You must be on grab intent to upgrade your grab further!<span>")
 				return 0
 		user.grab_state++
 		switch(user.grab_state)
@@ -203,7 +206,7 @@
 			M.Feedstop()
 		return // can't attack while eating!
 
-	if(has_trait(TRAIT_PACIFISM))
+	if(HAS_TRAIT(src, TRAIT_PACIFISM))
 		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 		return FALSE
 
@@ -220,7 +223,7 @@
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return FALSE
 	else
-		if(M.has_trait(TRAIT_PACIFISM))
+		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -239,7 +242,7 @@
 		return FALSE
 
 	if (M.a_intent == INTENT_HARM)
-		if(M.has_trait(TRAIT_PACIFISM))
+		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -265,7 +268,7 @@
 			return FALSE
 
 		else
-			if(L.has_trait(TRAIT_PACIFISM))
+			if(HAS_TRAIT(L, TRAIT_PACIFISM))
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return
 
@@ -290,7 +293,7 @@
 			grabbedby(M)
 			return FALSE
 		if("harm")
-			if(M.has_trait(TRAIT_PACIFISM))
+			if(HAS_TRAIT(M, TRAIT_PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
 			M.do_attack_animation(src)
@@ -310,11 +313,11 @@
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage)
 	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
-	if(has_trait(TRAIT_SHOCKIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
@@ -384,7 +387,7 @@
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
-	if(get_eye_protection() < intensity && (override_blindness_check || !(has_trait(TRAIT_BLIND))))
+	if(get_eye_protection() < intensity && (override_blindness_check || !(HAS_TRAIT(src, TRAIT_BLIND))))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
 		return TRUE

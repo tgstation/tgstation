@@ -47,7 +47,7 @@
 	no_drops += H.get_item_by_slot(SLOT_GLASSES)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
+		ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /datum/outfit/synthetic
 	name = "Factory Error Synth"

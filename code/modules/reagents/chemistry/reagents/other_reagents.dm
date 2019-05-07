@@ -192,10 +192,10 @@
 
 /datum/reagent/water/holywater/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_HOLY, id)
+	ADD_TRAIT(L, TRAIT_HOLY, id)
 
 /datum/reagent/water/holywater/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_HOLY, id)
+	REMOVE_TRAIT(L, TRAIT_HOLY, id)
 	..()
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -1239,12 +1239,12 @@
 
 /datum/reagent/stimulum/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_STUNIMMUNE, id)
-	L.add_trait(TRAIT_SLEEPIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 
 /datum/reagent/stimulum/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_STUNIMMUNE, id)
-	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 	..()
 
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
@@ -1770,10 +1770,10 @@
 
 /datum/reagent/pax/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_PACIFISM, id)
+	ADD_TRAIT(L, TRAIT_PACIFISM, id)
 
 /datum/reagent/pax/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_PACIFISM, id)
+	REMOVE_TRAIT(L, TRAIT_PACIFISM, id)
 	..()
 
 /datum/reagent/bz_metabolites
@@ -1786,11 +1786,11 @@
 
 /datum/reagent/bz_metabolites/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(CHANGELING_HIVEMIND_MUTE, id)
+	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, id)
 
 /datum/reagent/bz_metabolites/on_mob_delete(mob/living/L)
 	..()
-	L.remove_trait(CHANGELING_HIVEMIND_MUTE, id)
+	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, id)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/L)
 	if(L.mind)

@@ -61,7 +61,7 @@ GENE SCANNER
 		if(O.level != 1)
 			continue
 
-		if(O.invisibility == INVISIBILITY_MAXIMUM || O.has_trait(TRAIT_T_RAY_VISIBLE))
+		if(O.invisibility == INVISIBILITY_MAXIMUM || HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128
@@ -106,7 +106,7 @@ GENE SCANNER
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
-	if ((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))
+	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
 		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")
@@ -136,7 +136,7 @@ GENE SCANNER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
-	if(M.has_trait(TRAIT_FAKEDEATH) && !advanced)
+	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && !advanced)
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
@@ -209,10 +209,10 @@ GENE SCANNER
 			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b></span>")
 			if(istype(ears))
 				var/healthy = TRUE
-				if(C.has_trait(TRAIT_DEAF, GENETIC_MUTATION))
+				if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is genetically deaf.</span>")
-				else if(C.has_trait(TRAIT_DEAF))
+				else if(HAS_TRAIT(C, TRAIT_DEAF))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is deaf.</span>")
 				else
@@ -230,10 +230,10 @@ GENE SCANNER
 			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b></span>")
 			if(istype(eyes))
 				var/healthy = TRUE
-				if(C.has_trait(TRAIT_BLIND))
+				if(HAS_TRAIT(C, TRAIT_BLIND))
 					to_chat(user, "\t<span class='alert'>Subject is blind.</span>")
 					healthy = FALSE
-				if(C.has_trait(TRAIT_NEARSIGHT))
+				if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
 					to_chat(user, "\t<span class='alert'>Subject is nearsighted.</span>")
 					healthy = FALSE
 				if(eyes.eye_damage > 30)
@@ -300,7 +300,7 @@ GENE SCANNER
 	to_chat(user, "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>")
 
 	// Time of death
-	if(M.tod && (M.stat == DEAD || ((M.has_trait(TRAIT_FAKEDEATH)) && !advanced)))
+	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
 		to_chat(user, "<span class='info'>Time of Death:</span> [M.tod]")
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
@@ -682,7 +682,7 @@ GENE SCANNER
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if (!M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
 		user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
 
 		gene_scan(M, user, src)

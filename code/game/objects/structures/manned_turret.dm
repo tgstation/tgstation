@@ -186,7 +186,7 @@
 
 /obj/item/gun_control/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	turret = loc
 	if(!istype(turret))
 		return INITIALIZE_HINT_QDEL

@@ -48,13 +48,13 @@
 	if(..())
 		return
 
-	owner.add_trait(visionflag, GENETIC_MUTATION)
+	ADD_TRAIT(owner, visionflag, GENETIC_MUTATION)
 	owner.update_sight()
 
 /datum/mutation/human/thermal/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(visionflag, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, visionflag, GENETIC_MUTATION)
 	owner.update_sight()
 
 //X-ray Vision lets you see through walls.

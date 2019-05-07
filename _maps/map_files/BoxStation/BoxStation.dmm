@@ -4997,6 +4997,10 @@
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
+"ajY" = (
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "ajZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external{
@@ -36454,9 +36458,12 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bIH" = (
-/obj/machinery/pipedispenser/disposal,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/space_heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -36857,10 +36864,14 @@
 /turf/closed/wall/r_wall,
 /area/medical/medbay/central)
 "bJF" = (
-/obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/space_heater,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bJG" = (
@@ -38172,7 +38183,10 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bMR" = (
-/obj/machinery/pipedispenser,
+/obj/machinery/space_heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMS" = (
@@ -42396,10 +42410,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bXR" = (
-/obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bXS" = (
@@ -43972,6 +43986,9 @@
 /area/maintenance/port/aft)
 "cbz" = (
 /obj/machinery/vending/wardrobe/atmos_wardrobe,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cbA" = (
@@ -43979,17 +43996,15 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cbB" = (
-/obj/machinery/space_heater,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cbC" = (
-/obj/machinery/space_heater,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cbD" = (
@@ -55581,6 +55596,10 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
+"eTd" = (
+/obj/machinery/pipedispenser/disposal,
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "eUr" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "testlab";
@@ -55796,6 +55815,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"gwp" = (
+/obj/machinery/pipedispenser,
+/turf/open/floor/plasteel,
+/area/construction)
 "gwQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -72161,7 +72184,7 @@ bgj
 bgj
 bjc
 cAF
-cAF
+eTd
 bja
 aaa
 aaa
@@ -85803,7 +85826,7 @@ bJm
 bFa
 bHO
 bCs
-cCd
+gwp
 cCd
 aYg
 cjL
@@ -97088,7 +97111,7 @@ bdc
 bfL
 beY
 bhm
-bhm
+ajY
 bhm
 bkR
 bfL

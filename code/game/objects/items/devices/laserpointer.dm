@@ -77,7 +77,7 @@
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	if(user.has_trait(TRAIT_NOGUNS))
+	if(HAS_TRAIT(user, TRAIT_NOGUNS))
 		to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
 		return
 	if(ishuman(user))
