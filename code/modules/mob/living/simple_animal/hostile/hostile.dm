@@ -451,7 +451,7 @@
 			T.attack_animal(src)
 			return
 	for(var/obj/O in T.contents)
-		if(O.Adjacent(targets_from))
+		if(!O.Adjacent(targets_from))
 			continue
 		if((ismachinery(O) || isstructure(O)) && O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
 			O.attack_animal(src)
