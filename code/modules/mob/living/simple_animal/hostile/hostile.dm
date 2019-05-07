@@ -452,9 +452,10 @@
 			return
 	for(var/obj/O in T.contents)
 		if(O.Adjacent(targets_from))
-			if((ismachinery(O) || isstructure(O)) && O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
-				O.attack_animal(src)
-				return
+			continue
+		if((ismachinery(O) || isstructure(O)) && O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
+			O.attack_animal(src)
+			return
 
 /mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
 	if(environment_smash)
