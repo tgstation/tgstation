@@ -19,7 +19,7 @@
 /datum/species/gehennite/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
 	H.become_blind(ROUNDSTART_TRAIT)
-	H.overlay_fullscreen("total", /obj/screen/fullscreen/color_vision/black)
+	H.clear_fullscreen("blind")
 
 /datum/species/gehennite/on_species_loss(mob/living/carbon/human/H)
 	.=..()

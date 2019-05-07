@@ -4,6 +4,7 @@
 	var/cooldown_time = 15
 	var/image_expiry_time = 30
 	var/cooldown_last = 0
+	var/colors = FALSE
 	var/list/static/echo_blacklist
 	var/list/static/uniques
 	var/list/static/echo_images
@@ -18,6 +19,7 @@
 	/obj/effect/decal/cleanable/blood,
 	/obj/effect/decal/cleanable/xenoblood,
 	/obj/effect/decal/cleanable/oil,
+	/obj/effect/turf_decal,
 	/obj/screen,
 	/image,
 	/turf/open,
@@ -27,7 +29,8 @@
 	uniques = typecacheof(list(
 	/obj/structure/table,
 	/mob/living/carbon/human,
-	/obj/machinery/door/airlock)
+	/obj/machinery/door/airlock,
+	/obj/machinery/atmospherics/pipe/manifold)
 	)
 
 	echo_images = list()
@@ -37,6 +40,8 @@
 	A.Grant(M)
 	RegisterSignal(E, COMSIG_ACTION_TRIGGER, .proc/echolocate)
 	RegisterSignal(A, COMSIG_ACTION_TRIGGER, .proc/toggle_auto)
+
+	M.overlay_fullscreen("total", /obj/screen/fullscreen/color_vision/black)
 
 /datum/component/echolocation/process()
 	var/mob/M = parent
@@ -74,17 +79,14 @@
 		if(echo_images[S.type])
 			image_output = mutable_appearance(echo_images[S.type].icon, echo_images[S.type].icon_state, echo_images[S.type].layer, echo_images[S.type].plane)
 			image_output.filters = echo_images[S.type].filters
-			realign_icon(image_output, S)
 		else
 			image_output = generate_image(S)
-			realign_icon(image_output, S)
 			if(!(uniques[S.type]))
 				echo_images[S.type] = image_output
 		for(var/D in S.datum_outputs)
 			if(istype(D, /datum/outputs/echo_override))
 				var/datum/outputs/echo_override/O = D
 				image_output = mutable_appearance(O.vfx.icon, O.vfx.icon_state, O.vfx.layer, O.vfx.plane)
-				realign_icon(image_output, S)
 		show_image(receivers, image_output, S)
 	for(var/T in turfs)
 		var/key = generate_wall_key(T)
@@ -93,26 +95,31 @@
 			image_output.filters = echo_images[key].filters
 		else
 			image_output = generate_wall_image(T)
-			image_output.loc = T
 			echo_images[generate_wall_key(T)] = image_output
 		show_image(receivers, image_output, T)
 
 /datum/component/echolocation/proc/show_image(list/receivers, mutable_appearance/mutable_echo, atom/input)
 	var/image/image_echo = image(mutable_echo)
-	if(istype(input, /turf))
+	var/obj/effect/overlay/echo/echo_overlay
+	if(!input.color || colors)
 		image_echo.loc = input
 	else
-		image_echo.loc = input.loc
+		echo_overlay = new
+		echo_overlay.dir = input.dir
+		echo_overlay.loc = input.loc
+		image_echo.loc = echo_overlay
 	for(var/M in receivers)
 		var/mob/receiving_mob = M
 		if(receiving_mob.client)
 			receiving_mob.client.images += image_echo
-			addtimer(CALLBACK(src, .proc/remove_image, image_echo, receiving_mob), image_expiry_time)
+			addtimer(CALLBACK(src, .proc/remove_image, image_echo, receiving_mob, echo_overlay), image_expiry_time)
 
-/datum/component/echolocation/proc/remove_image(sound_image, mob/M)
+/datum/component/echolocation/proc/remove_image(sound_image, mob/M, obj/O)
 	if(M.client && sound_image)
 		M.client.images -= sound_image
 		qdel(sound_image)
+	if(O)
+		qdel(O)
 
 /datum/component/echolocation/proc/generate_image(atom/input)
 	var/icon/I
@@ -121,7 +128,7 @@
 	else
 		I = icon(input.icon, input.icon_state)
 	I.MapColors(rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,255), rgb(0,0,0,-254))
-	var/mutable_appearance/final_image = mutable_appearance(I, input.icon_state, CURSE_LAYER, input.plane)
+	var/mutable_appearance/final_image = mutable_appearance(I, input.icon_state, input.layer, FULLSCREEN_PLANE)
 	final_image.filters += filter(type="outline", size=1, color="#FFFFFF")
 	return final_image
 
@@ -142,7 +149,7 @@
 				I.DrawBox(null,32,2,32,31)
 			if(WEST)
 				I.DrawBox(null,1,2,1,31)
-	return mutable_appearance(I, null, CURSE_LAYER, input.plane)
+	return mutable_appearance(I, null, input.layer, FULLSCREEN_PLANE)
 
 /datum/component/echolocation/proc/generate_wall_key(turf/input)
 	var/list/dirs = list()
@@ -153,9 +160,8 @@
 	var/key = dirs.Join()
 	return key
 
-/datum/component/echolocation/proc/realign_icon(mutable_appearance/I, atom/input)
+/datum/component/echolocation/proc/realign_icon(image/I, atom/input)
 	I.dir = input.dir
-	I.loc = input.loc
 	I.pixel_x = input.pixel_x
 	I.pixel_y = input.pixel_y
 
@@ -177,3 +183,8 @@
 
 /datum/action/innate/echo/auto
 	name = "Automatic Echolocation"
+
+/obj/effect/overlay/echo
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	invisibility = INVISIBILITY_ABSTRACT

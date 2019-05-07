@@ -77,16 +77,11 @@
 		if(get_held_index_of_item(I) % 2 == 0)
 			icon_file = I.righthand_file
 
-		var/mutable_appearance/hand_overlay = I.build_worn_icon(state = t_state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			if(OFFSET_HANDS in H.dna.species.offset_features)
-				hand_overlay.pixel_x += H.dna.species.offset_features[OFFSET_HANDS][1]
-				hand_overlay.pixel_y += H.dna.species.offset_features[OFFSET_HANDS][2]
-		hands += hand_overlay
+		hands += I.build_worn_icon(state = t_state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)
+
 
 /mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
 	remove_overlay(FIRE_LAYER)
@@ -178,11 +173,7 @@
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
-		if(OFFSET_HANDS in dna.species.offset_features)
-			handcuff_overlay.pixel_x += dna.species.offset_features[OFFSET_HANDS][1]
-			handcuff_overlay.pixel_y += dna.species.offset_features[OFFSET_HANDS][2]
-		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
+		overlays_standing[HANDCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		apply_overlay(HANDCUFF_LAYER)
 
 
