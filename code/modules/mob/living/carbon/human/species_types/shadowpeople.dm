@@ -8,7 +8,7 @@
 	sexes = 0
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	species_traits = list(NOBLOOD,NOEYES)
+	species_traits = list(NOBLOOD,NOEYESPRITES,NOFLASH)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 
@@ -36,7 +36,7 @@
 	limbs_id = "shadow"
 	burnmod = 1.5
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYES)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES,NOFLASH)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
 	mutant_organs = list(/obj/item/organ/heart/nightmare)
@@ -172,7 +172,7 @@
 
 /obj/item/light_eater/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/light_eater/afterattack(atom/movable/AM, mob/user, proximity)

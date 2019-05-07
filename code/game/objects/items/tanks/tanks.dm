@@ -130,7 +130,7 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
-		H.add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		H.bleed_rate = 5
 		H.gib_animation()
 		sleep(3)
@@ -244,8 +244,6 @@
 		if(!istype(src.loc, /obj/item/transfer_valve))
 			log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
 		//Give the gas a chance to build up more pressure through reacting
-		air_contents.react(src)
-		air_contents.react(src)
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE

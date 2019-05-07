@@ -120,7 +120,7 @@
 	if(I.loc != src)
 		I.forceMove(src)
 	modules += I
-	I.add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	ADD_TRAIT(I, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += I
@@ -390,8 +390,11 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
+		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
 		/obj/item/mop/cyborg,
+		/obj/item/reagent_containers/glass/bucket,
+		/obj/item/paint/paint_remover,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/holosign_creator/janibarrier,
 		/obj/item/reagent_containers/spray/cyborg_drying)
