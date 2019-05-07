@@ -1423,6 +1423,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "The Protocol CRAB-17 Phone, a phone borrowed from an unknown third party, it can be used to crash the space market, funneling the losses of the crew to your bank account.\
 	The crew can move their funds to a new banking site though, unless they HODL, in which case they deserve it."
 	item = /obj/item/suspiciousphone
+	restricted = TRUE
 	cost = 7
 
 // Implants
