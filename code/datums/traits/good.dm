@@ -198,3 +198,10 @@
 	if(!D) //if their current mob doesn't have a bank account, likely due to them being a special role (ie nuke op)
 		return
 	D.welfare = TRUE
+
+/datum/quirk/neet/on_process()
+	var/mob/living/carbon/human/H = quirk_holder
+	if (H.hygiene <= HYGIENE_LEVEL_DIRTY)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "NEET", /datum/mood_event/happy_neet)
+	else
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "NEET")
