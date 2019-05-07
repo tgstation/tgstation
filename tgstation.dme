@@ -2640,7 +2640,6 @@
 #include "code\modules\spells\spell_types\curse.dm"
 #include "code\modules\spells\spell_types\devil.dm"
 #include "code\modules\spells\spell_types\devil_boons.dm"
-#include "code\modules\spells\spell_types\dumbfire.dm"
 #include "code\modules\spells\spell_types\emplosion.dm"
 #include "code\modules\spells\spell_types\ethereal_jaunt.dm"
 #include "code\modules\spells\spell_types\explosion.dm"

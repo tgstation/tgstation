@@ -146,11 +146,14 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	proj_lifespan = 10
 	max_targets = 6
 	action_icon_state = "magicm"
 	action_background_icon_state = "bg_demon"
+	proj_type = /obj/item/projectile/magic/spell/magic_missile/lesser
 
+/obj/item/projectile/magic/spell/magic_missile/lesser
+	color = "red" //Looks more culty this way
+	range = 10
 
 /obj/effect/proc_holder/spell/targeted/smoke/disable
 	name = "Paralysing Smoke"
@@ -282,10 +285,10 @@
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
 
-/obj/effect/proc_holder/spell/dumbfire/juggernaut
+/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut
 	name = "Gauntlet Echo"
 	desc = "Channels energy into your gauntlet - firing its essence forward in a slow moving, yet devastating, attack."
-	proj_type = /obj/item/projectile/magic/dumbfire/juggernaut
+	proj_type = /obj/item/projectile/magic/spell/juggernaut
 	charge_max = 350
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
@@ -293,7 +296,7 @@
 	action_background_icon_state = "bg_demon"
 	sound = 'sound/weapons/resonator_blast.ogg'
 
-/obj/item/projectile/magic/dumbfire/juggernaut
+/obj/item/projectile/magic/spell/juggernaut
 	name = "Gauntlet Echo"
 	icon_state = "cultfist"
 	alpha = 180
@@ -307,7 +310,7 @@
 	range = 15
 	speed = 7
 
-/obj/item/projectile/magic/dumbfire/juggernaut/on_hit(atom/target, blocked)
+/obj/item/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
 	. = ..()
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
