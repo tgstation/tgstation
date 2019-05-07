@@ -42,7 +42,7 @@
 	lose_text = "<span class='notice'>You feel smart again.</span>"
 
 /datum/brain_trauma/mild/dumbness/on_gain()
-	owner.add_trait(TRAIT_DUMB, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
 	..()
 
@@ -55,7 +55,7 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-	owner.remove_trait(TRAIT_DUMB, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
 	owner.derpspeech = 0
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "dumb")
 	..()
@@ -68,11 +68,11 @@
 	lose_text = "<span class='danger'>Your mind feels more clear.</span>"
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
-	owner.add_trait(TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/mild/speech_impediment/on_lose()
-	owner.remove_trait(TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/mild/concussion
@@ -173,7 +173,7 @@
 	lose_text = "<span class='notice'>Your throat stops itching.</span>"
 
 /datum/brain_trauma/mild/nervous_cough/on_life()
-	if(prob(12) && !owner.has_trait(TRAIT_SOOTHED_THROAT))
+	if(prob(12) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
 		if(prob(5))
 			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
 			owner.Immobilize(20)

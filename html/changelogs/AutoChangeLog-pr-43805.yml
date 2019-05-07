@@ -1,4 +1,0 @@
-author: "PKPenguin321"
-delete-after: True
-changes: 
-  - bugfix: "Mindswapping with a stand instead mindswaps you with that stand's owner, giving you ownership of their stand."

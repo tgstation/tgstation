@@ -90,7 +90,7 @@
 	if(!..())
 		return FALSE
 	// True surgeons (like abductor scientists) need no instructions
-	if(user.has_trait(TRAIT_SURGEON))
+	if(HAS_TRAIT(user, TRAIT_SURGEON))
 		return TRUE
 
 	if(iscyborg(user))
