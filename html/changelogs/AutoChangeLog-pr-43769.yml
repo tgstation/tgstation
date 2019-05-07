@@ -1,0 +1,5 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - tweak: "all medbay jobs have access to viro during skeleton shifts"
+  - tweak: "chemist, doctor, and virologist share increased mutual access"
