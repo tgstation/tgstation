@@ -318,4 +318,4 @@
 	for(var/obj/O in range(src,1))
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
 			O.take_damage(90, BRUTE, "melee", 0)
-			new /obj/effect/temp_visual/cult/turf/floor
+			new /obj/effect/temp_visual/cult/turf/floor(get_turf(O))
