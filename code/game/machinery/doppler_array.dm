@@ -29,6 +29,9 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 
 /obj/machinery/doppler_array/ui_interact(mob/user)
 	. = ..()
+	if(stat)
+		return FALSE
+
 	var/dat = {"<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body><br>
 				<h3>Explosion logs</h3>"}
 	for(var/i in 1 to message_log.len)
@@ -38,8 +41,10 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><br>"
 	dat += "</body></html>"
 
-	user << browse(dat, "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", name, 400, 500)
+	popup.set_content(dat)
+	popup.open()
+	return
 
 /obj/machinery/doppler_array/Topic(href, href_list)
 	if(..())
