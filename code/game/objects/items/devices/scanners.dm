@@ -679,17 +679,19 @@ GENE SCANNER
 	throw_range = 7
 	materials = list(MAT_METAL=200)
 	var/list/discovered = list() //hit a dna console to update the scanners database
+	var/list/buffer
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if (!M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
 		user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
+		gene_scan(M, user)
 
-		gene_scan(M, user, src)
 	else
-
 		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
 
+/obj/item/sequence_scanner/attack_self(mob/user)
+	display_sequence(user)
 
 /obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
 	. = ..()
@@ -704,23 +706,31 @@ GENE SCANNER
 		else
 			to_chat(user,"<span class='warning'>No database to update from.</span>")
 
-/proc/gene_scan(mob/living/carbon/C, mob/living/user, obj/item/sequence_scanner/G)
+/obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/C, mob/living/user)
 	if(!iscarbon(C) || !C.has_dna())
 		return
-	to_chat(user, "<span class='notice'>[C.name]'s potential mutations.")
-	for(var/A in C.dna.mutation_index)
+	to_chat(user, "<span class='notice'>Subject [C.name]'s DNA sequence has been saved to buffer.</span>")
+	buffer = C.dna.mutation_index
+
+/obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
+	if(!LAZYLEN(buffer))
+		return
+	var/datum/browser/popup = new(user, "sequencer", "Genetic Sequencer", 500, 250)
+	var/html
+	for(var/A in buffer)
+		var/sequence = buffer[A]
 		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(A)
 		var/mut_name
-		if(G && (A in G.discovered))
+		if(A in discovered)
 			mut_name = "[HM.name] ([HM.alias])"
 		else
 			mut_name = HM.alias
-		var/temp = GET_GENE_STRING(HM.type, C.dna)
 		var/display
-		for(var/i in 0 to length(temp) / DNA_MUTATION_BLOCKS-1)
+		for(var/i in 0 to length(sequence) / DNA_MUTATION_BLOCKS-1)
 			if(i)
 				display += "-"
-			display += copytext(temp, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+			display += copytext(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
 
-
-		to_chat(user, "<span class='boldnotice'>- [mut_name] > [display]</span>")
+		html += "<span class='boldnotice'>- [mut_name] > [display]</span><br>"
+	popup.set_content(html)
+	popup.open()
