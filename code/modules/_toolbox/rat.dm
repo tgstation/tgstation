@@ -18,7 +18,7 @@
 	maxHealth = 50
 	health = 50
 
-	obj_damage = 60
+	obj_damage = 10
 	melee_damage_lower = 5
 	melee_damage_upper = 15
 	attacktext = "bites"
