@@ -14,30 +14,50 @@
 	. = ..()
 	if(isliving(target))
 		to_chat(target, "<span class='danger'><B>Your punch has applied heavy gravity to [target]</span></B>")
-		gravito_targets += target
-		target.AddComponent(/datum/component/forced_gravity,2)
+		add_gravity(target, 2)
 		to_chat(target, "<span class='userdanger'>You are hit by an immense weight!</span>")
-		//sound
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AltClickOn(atom/A)
-	if(isturf(A))
+	if(isopenturf(A))
 		var/turf/T = A
+		if(isspaceturf(T))
+			to_chat(src, "<span class='warning'>You cannot add gravity to space!</span>")
+			return
 		visible_message("<span class='danger'>[src] slams their fist into the [T]!</span>", "<span class='notice'>You modify the gravity of the [T].</span>")
 		do_attack_animation(T)
-		T.AddComponent(/datum/component/forced_gravity,4)
-		gravito_targets += T
-		//sound
+		add_gravity(T, 4)
+		return
+	..()
+
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/Recall(forced)
+	. = ..()
+	to_chat(src, "<span class='danger'><B>You have released your gravitokinetic powers!</span></B>")
+	for(var/atom/target in gravito_targets)
+		qdel(target.GetComponent(/datum/component/forced_gravity))
+	gravito_targets = list()
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Life()
 	. = ..()
-	if(gravito_targets.len)
-		if(loc == summoner)
-			to_chat(src, "<span class='danger'><B>You have released your gravitokinetic powers!</span></B>")
-			for(var/atom/i in gravito_targets)
-				qdel(i.GetComponent(/datum/component/forced_gravity))
-				gravito_targets -= i
-			return //no more targets confirmed
-		for(var/atom/target in gravito_targets)
-			if(get_dist(src, target) > gravity_power_range)
-				qdel(target.GetComponent(/datum/component/forced_gravity))
-				gravito_targets -= target
+	for(var/atom/target in gravito_targets)
+		if(get_dist(src, target) > gravity_power_range)
+			qdel(target.GetComponent(/datum/component/forced_gravity))
+			gravito_targets.Remove(target)
+
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/add_gravity(atom/A, new_gravity = 2)
+	if(!gravito_targets.len)//we are adding one, so start processing
+		START_PROCESSING(SSfastprocess, src)
+	gravito_targets.Add(target)
+	A.AddComponent(/datum/component/forced_gravity,new_gravity)
+	//sound
+
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/process()
+	if(!gravito_targets.len)
+		return PROCESS_KILL
+	for(var/atom/A in gravito_targets)
+		var/matrix/M = new
+		if(isliving(A))
+			M.Translate(rand(-2, 2), rand(0, 1))
+		else
+			M.Translate(rand(-1, 1))
+		animate(A, transform=M, time=1)
+		animate(transform=matrix(), time=1)
