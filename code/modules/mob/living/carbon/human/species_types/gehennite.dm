@@ -24,3 +24,4 @@
 /datum/species/gehennite/on_species_loss(mob/living/carbon/human/H)
 	.=..()
 	H.clear_fullscreen("total")
+	H.cure_blind(ROUNDSTART_TRAIT)
