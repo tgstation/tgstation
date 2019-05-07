@@ -207,7 +207,7 @@
 	if(get_dist(user, src) > 2)
 		return
 
-	to_chat(user, "The IV drip is [mode ? "injecting" : "taking blood"].")
+	to_chat(user, "The [src] is [mode ? "injecting" : "taking blood"].")
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
@@ -228,7 +228,7 @@
 
 /obj/machinery/iv_drip/saline/Initialize(mapload)
     . = ..()
-    beaker = new /obj/item/reagent_containers/blood/saline(src)
+    beaker = new /obj/item/reagent_containers/glass/saline(src)
 
 /obj/machinery/iv_drip/saline/update_icon()
     return
