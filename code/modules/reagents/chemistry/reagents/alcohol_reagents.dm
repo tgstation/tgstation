@@ -15,6 +15,7 @@
 	taste_description = "alcohol"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
+	foodtype = ALCOHOL
 
 /*
 Boozepwr Chart
@@ -89,6 +90,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "piss water"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
+	foodtype = ALCOHOL | GRAIN
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
@@ -98,6 +100,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "dish water"
 	glass_name = "glass of light beer"
 	glass_desc = "A freezing pint of watery light beer."
+	foodtype = ALCOHOL | GRAIN
 
 /datum/reagent/consumable/ethanol/beer/green
 	name = "Green Beer"
@@ -108,6 +111,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "greenbeerglass"
 	glass_name = "glass of green beer"
 	glass_desc = "A freezing pint of green beer. Festive."
+	foodtype = ALCOHOL | GRAIN
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/carbon/M)
 	if(M.color != color)
@@ -163,6 +167,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "thirteen_loko_glass"
 	glass_name = "glass of Thirteen Loko"
 	glass_desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
+	foodtype = ALCOHOL | JUNKFOOD
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(0,M.drowsyness-7)
@@ -240,6 +245,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of bilk"
 	glass_desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
+	foodtype = ALCOHOL | GRAIN | DAIRY
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(10))
@@ -258,6 +264,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "threemileislandglass"
 	glass_name = "Three Mile Island Ice Tea"
 	glass_desc = "A glass of this is sure to prevent a meltdown."
+	foodtype = ALCOHOL | FRUIT | SUGAR
 
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
@@ -273,6 +280,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "ginvodkaglass"
 	glass_name = "glass of gin"
 	glass_desc = "A crystal clear glass of Griffeater gin."
+	foodtype = ALCOHOL | FRUIT //I guess juniper berries count as fruit
 
 /datum/reagent/consumable/ethanol/rum
 	name = "Rum"
@@ -309,6 +317,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of vermouth"
 	glass_desc = "You wonder why you're even drinking this straight."
 	shot_glass_icon_state = "shotglassclear"
+	foodtype = ALCOHOL | FUIT | MEDICINAL
 
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
@@ -321,6 +330,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of wine"
 	glass_desc = "A very classy looking drink."
 	shot_glass_icon_state = "shotglassred"
+	foodtype = ALCOHOL | FRUIT
 
 /datum/reagent/consumable/ethanol/lizardwine
 	name = "Lizard wine"
@@ -330,6 +340,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 45
 	quality = DRINK_FANTASTIC
 	taste_description = "scaley sweetness"
+	foodtype = ALCOHOL | MEAT
 
 /datum/reagent/consumable/ethanol/grappa
 	name = "Grappa"
@@ -365,6 +376,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of absinthe"
 	glass_desc = "It's as strong as it smells."
 	shot_glass_icon_state = "shotglassgreen"
+	foodtype = ALCOHOL | MEDICINAL
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/M)
 	if(prob(10) && !M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
@@ -381,6 +393,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "glass_brown2"
 	glass_name = "Hooch"
 	glass_desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
+	foodtype = ALCOHOL | GROSS
 
 /datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.assigned_role == "Assistant")
@@ -398,6 +411,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "aleglass"
 	glass_name = "glass of ale"
 	glass_desc = "A freezing pint of delicious Ale."
+	foodtype = ALCOHOL | GRAIN
 
 /datum/reagent/consumable/ethanol/goldschlager
 	name = "Goldschlager"
@@ -436,6 +450,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "gintonicglass"
 	glass_name = "Gin and Tonic"
 	glass_desc = "A mild but still great cocktail. Drink up, like a true Englishman."
+	foodtype = ALCOHOL | FRUIT | MEDICINAL
 
 /datum/reagent/consumable/ethanol/rum_coke
 	name = "Rum and Coke"
@@ -448,6 +463,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "whiskeycolaglass"
 	glass_name = "Rum and Coke"
 	glass_desc = "The classic go-to of space-fratboys."
+	foodtype = ALCOHOL | SUGAR
 
 /datum/reagent/consumable/ethanol/cuba_libre
 	name = "Cuba Libre"
@@ -460,6 +476,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "cubalibreglass"
 	glass_name = "Cuba Libre"
 	glass_desc = "A classic mix of rum, cola, and lime. A favorite of revolutionaries everywhere!"
+	foodtype = ALCOHOL | SUGAR | FRUIT
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
@@ -481,6 +498,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "whiskeycolaglass"
 	glass_name = "whiskey cola"
 	glass_desc = "An innocent-looking mixture of cola and Whiskey. Delicious."
+	foodtype = ALCOHOL | SUGAR
 
 
 /datum/reagent/consumable/ethanol/martini
@@ -494,6 +512,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "martiniglass"
 	glass_name = "Classic Martini"
 	glass_desc = "Damn, the bartender even stirred it, not shook it."
+	foodtype = ALCOHOL | FRUIT | MEDICINAL
 
 /datum/reagent/consumable/ethanol/vodkamartini
 	name = "Vodka Martini"
@@ -506,6 +525,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "martiniglass"
 	glass_name = "Vodka martini"
 	glass_desc ="A bastardisation of the classic martini. Still great."
+	foodtype = ALCOHOL | FRUIT
 
 /datum/reagent/consumable/ethanol/white_russian
 	name = "White Russian"
@@ -518,6 +538,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "whiterussianglass"
 	glass_name = "White Russian"
 	glass_desc = "A very nice looking drink. But that's just, like, your opinion, man."
+	foodtype = ALCOHOL | DAIRY
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail
 	name = "Screwdriver"
@@ -530,6 +551,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "screwdriverglass"
 	glass_name = "Screwdriver"
 	glass_desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
+	foodtype = ALCOHOL | FRUIT
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.assigned_role in list("Station Engineer", "Atmospheric Technician", "Chief Engineer")) //Engineers lose radiation poisoning at a massive rate.
@@ -546,6 +568,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "booger"
 	glass_name = "Booger"
 	glass_desc = "Ewww..."
+	foodtype = ALCOHOL | FRUIT | DAIRY
 
 /datum/reagent/consumable/ethanol/bloody_mary
 	name = "Bloody Mary"
@@ -558,6 +581,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "bloodymaryglass"
 	glass_name = "Bloody Mary"
 	glass_desc = "Tomato juice, mixed with Vodka and a lil' bit of lime. Tastes like liquid murder."
+	foodtype = ALCOHOL | FRUIT | VEGETABLE
 
 /datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/C)
 	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -600,6 +624,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "tequila Sunrise"
 	glass_desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
 	var/obj/effect/light_holder
+	foodtype = ALCOHOL | FRUIT | SUGAR
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_add(mob/living/M)
 	to_chat(M, "<span class='notice'>You feel gentle warmth spread through your body!</span>")
@@ -629,6 +654,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Toxins Special"
 	glass_desc = "Whoah, this thing is on FIRE!"
 	shot_glass_icon_state = "toxinsspecialglass"
+	foodtype = ALCOHOL | FRUIT | MEDICINAL | TOXIC
 
 /datum/reagent/consumable/ethanol/toxins_special/on_mob_life(var/mob/living/M)
 	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL + 20) //310.15 is the normal bodytemp.

@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/skinned_type
 	var/liked_food = NONE
-	var/disliked_food = GROSS
+	var/disliked_food = GROSS | MEDICINAL
 	var/toxic_food = TOXIC
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
