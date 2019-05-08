@@ -31,17 +31,16 @@ Slimecrossing Items
 	stamina_dam = part.stamina_dam
 
 /proc/apply_saved_bodyparts(mob/living/carbon/M, list/datum/saved_bodypart/parts)
-	M.fully_heal(TRUE) //I am an admin
 	var/list/dont_chop = list()
 	for(var/zone in parts)
 		var/datum/saved_bodypart/saved_part = parts[zone]
 		var/obj/item/bodypart/already = M.get_bodypart(zone)
-		if(!already || already.type != saved_part.bodypart_type)
-			already = saved_part.old_part
-			if(QDELETED(already))
-				already = new saved_part.bodypart_type
-			already.replace_limb(M, TRUE)
-		already.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam)
+		if(QDELETED(saved_part.old_part))
+			saved_part.old_part = new saved_part.bodypart_type
+		if(!already || already != saved_part.old_part)
+			saved_part.old_part.replace_limb(M, TRUE)
+		saved_part.old_part.heal_damage(INFINITY, INFINITY, INFINITY, null, FALSE)
+		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam)
 		dont_chop[zone] = TRUE
 	for(var/_part in M.bodyparts)
 		var/obj/item/bodypart/part = _part
@@ -63,6 +62,10 @@ Slimecrossing Items
 /datum/component/dejavu
 	var/health	//health for simple animals, and integrity for objects
 	var/list/datum/saved_bodypart/saved_bodyparts //maps bodypart slots to health
+	var/clone_loss = 0
+	var/tox_loss = 0
+	var/oxy_loss = 0
+	var/brain_loss = 0
 	var/x
 	var/y
 	var/z
@@ -74,6 +77,12 @@ Slimecrossing Items
 		x = T.x
 		y = T.y
 		z = T.z
+	if(isliving(parent))
+		var/mob/living/L = parent
+		clone_loss = L.getCloneLoss()
+		tox_loss = L.getToxLoss()
+		oxy_loss = L.getOxyLoss()
+		brain_loss = L.getBrainLoss()
 	if(iscarbon(parent))
 		var/mob/living/carbon/C = parent
 		saved_bodyparts = save_bodyparts(C)
@@ -87,20 +96,30 @@ Slimecrossing Items
 
 /datum/component/dejavu/proc/rewind()
 	to_chat(parent, "<span class=notice>You remember a time not so long ago...</span>")
+
+	if(isliving(parent))
+		var/mob/living/L = parent
+		L.setCloneLoss(clone_loss)
+		L.setToxLoss(tox_loss)
+		L.setOxyLoss(oxy_loss)
+		L.setBrainLoss(brain_loss)
+
+	if(iscarbon(parent))
+		if(saved_bodyparts)
+			apply_saved_bodyparts(parent, saved_bodyparts)
+	else if(isanimal(parent))
+		var/mob/living/simple_animal/M = parent
+		M.adjustHealth(M.bruteloss - health)
+	else if(isobj(parent))
+		var/obj/O = parent
+		O.obj_integrity = health
+
+	//comes after healing so new limbs comically drop to the floor
 	if(!isnull(x) && istype(parent, /atom/movable))
 		var/atom/movable/AM = parent
 		var/turf/T = locate(x,y,z)
 		AM.forceMove(T)
-	if(iscarbon(parent))
-		if(saved_bodyparts)
-			apply_saved_bodyparts(parent, saved_bodyparts)
-			
-	if(isanimal(parent))
-		var/mob/living/simple_animal/M = parent
-		M.adjustHealth(health)
-	else if(isobj(parent))
-		var/obj/O = parent
-		O.obj_integrity = health
+
 	rewinds_remaining --
 	if(rewinds_remaining)
 		addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
