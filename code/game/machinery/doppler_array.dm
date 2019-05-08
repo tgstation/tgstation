@@ -12,7 +12,6 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	var/max_dist = 150
 	verb_say = "states coldly"
 	var/list/message_log = list()
-	var/output_log
 
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
@@ -32,17 +31,15 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	if(stat)
 		return FALSE
 
-	var/dat = {"<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body><br>
-				<h3>Explosion logs</h3>"}
+	var/list/dat = list()
 	for(var/i in 1 to message_log.len)
 		dat += "Log recording #[i]: [message_log[i]]<br/><br>"
 	dat += "<A href='?src=[REF(src)];delete_log=1'>Delete logs</A><br>"
 	dat += "<hr>"
 	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><br>"
 	dat += "</body></html>"
-
 	var/datum/browser/popup = new(user, "computer", name, 400, 500)
-	popup.set_content(dat)
+	popup.set_content(dat.Join(" "))
 	popup.open()
 	return
 
@@ -112,10 +109,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	else
 		for(var/message in messages)
 			say(message)
-	output_log = messages.Join(" ")
-	LAZYADD(message_log, output_log)
-	if(output_log)
-		qdel(output_log)
+	LAZYADD(message_log, messages.Join(" "))
 	return TRUE
 
 /obj/machinery/doppler_array/proc/get_log_info()
