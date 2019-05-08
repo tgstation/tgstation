@@ -13,9 +13,9 @@
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget()
 	. = ..()
 	if(isliving(target))
-		to_chat(target, "<span class='danger'><B>Your punch has applied heavy gravity to [target]</span></B>")
+		to_chat(src, "<span class='danger'><B>Your punch has applied heavy gravity to [target]</span></B>")
 		add_gravity(target, 2)
-		to_chat(target, "<span class='userdanger'>You are hit by an immense weight!</span>")
+		to_chat(target, "<span class='userdanger'>Everything feels really heavy!</span>")
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AltClickOn(atom/A)
 	if(isopenturf(A))
@@ -42,6 +42,10 @@
 		if(get_dist(src, target) > gravity_power_range)
 			qdel(target.GetComponent(/datum/component/forced_gravity))
 			gravito_targets.Remove(target)
+			continue
+
+//		if(!isopenturf(target))
+//			turf_effect(target)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/add_gravity(atom/A, new_gravity = 2)
 	if(!gravito_targets.len)//we are adding one, so start processing
@@ -50,12 +54,18 @@
 	A.AddComponent(/datum/component/forced_gravity,new_gravity)
 	//sound
 
+/*
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/turf_effect(turf/open/T, new_gravity = 2)
+	if(!T.get_filter("gravity"))
+		T.add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=0))
+*/
+
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/process()
 	if(!gravito_targets.len)
 		return PROCESS_KILL
 	for(var/atom/A in gravito_targets)
 		var/matrix/M = new
-		if(isliving(A))
+		if(!isliving(A))
 			M.Translate(rand(-2, 2), rand(0, 1))
 		else
 			M.Translate(rand(-1, 1))
