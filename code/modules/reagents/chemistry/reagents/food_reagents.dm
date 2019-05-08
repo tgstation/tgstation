@@ -112,6 +112,7 @@
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 	var/boiling //Used in mob life to determine if the oil kills, and only on touch application
+	foodtype = FRIED
 
 /datum/reagent/consumable/cooking_oil/reaction_obj(obj/O, reac_volume)
 	if(holder && holder.chem_temp >= fry_temperature)
@@ -157,6 +158,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
+	foodtype = SUGAR | JUNKFOOD
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
@@ -175,6 +177,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
+	foodtype = DAIRY | GROSS
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -183,6 +186,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
 	taste_description = "umami"
+	foodtype = MEAT
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
@@ -191,7 +195,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "ketchup"
-
+	foodtype = JUNKFOOD
 
 /datum/reagent/consumable/capsaicin
 	name = "Capsaicin Oil"
@@ -325,6 +329,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 	taste_description = "salt"
+	foodtype = JUNKFOOD
 
 /datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
@@ -346,6 +351,7 @@
 	reagent_state = SOLID
 	// no color (ie, black)
 	taste_description = "pepper"
+	foodtype = HERBAL
 
 /datum/reagent/consumable/coco
 	name = "Coco Powder"
@@ -366,6 +372,7 @@
 	glass_icon_state  = "chocolateglass"
 	glass_name = "glass of chocolate"
 	glass_desc = "Tasty."
+	foodtype = SUGAR | JUNKFOOD
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
@@ -408,6 +415,7 @@
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
+	foodtype = SUGAR
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
 	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
@@ -441,6 +449,7 @@
 	description = "A universal enzyme used in the preperation of certain chemicals and foods."
 	color = "#365E30" // rgb: 54, 94, 48
 	taste_description = "sweetness"
+	foodtype = SUGAR | MEAT | GROSS
 
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
@@ -449,6 +458,7 @@
 	reagent_state = SOLID
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "dry and cheap noodles"
+	foodtype = GRAIN | GROSS //you aren't chara
 
 /datum/reagent/consumable/hot_ramen
 	name = "Hot Ramen"
@@ -457,6 +467,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
+	foodtype = GRAIN | MEAT | JUNKFOOD
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
@@ -469,6 +480,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles on fire"
+	foodtype = GRAIN | MEAT | JUNKFOOD
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
@@ -481,6 +493,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "chalky wheat"
+	foodtype = GRAIN | RAW
 
 /datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
@@ -495,6 +508,7 @@
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_description = "cherry"
+	foodtype = FRUIT | SUGAR
 
 /datum/reagent/consumable/bluecherryjelly
 	name = "Blue Cherry Jelly"
@@ -502,6 +516,7 @@
 	description = "Blue and tastier kind of cherry jelly."
 	color = "#00F0FF"
 	taste_description = "blue cherry"
+	foodtype = FRUIT | SUGAR
 
 /datum/reagent/consumable/rice
 	name = "Rice"
@@ -511,6 +526,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "rice"
+	foodtype = GRAIN
 
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
@@ -520,6 +536,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#FFFACD"
 	taste_description = "vanilla"
+	foodtype = HERBAL
 
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
@@ -528,6 +545,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFB500"
 	taste_description = "egg"
+	foodtype = MEAT
 
 /datum/reagent/consumable/corn_starch
 	name = "Corn Starch"
@@ -535,6 +553,7 @@
 	description = "A slippery solution."
 	color = "#C8A5DC"
 	taste_description = "slime"
+	foodtype = GRAIN | RAW
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
@@ -543,6 +562,7 @@
 	color = "#C8A5DC"
 	metabolization_rate = 3 * REAGENTS_METABOLISM
 	taste_description = "sweet slime"
+	foodtype = SUGAR | JUNKFOOD
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M)
 	holder.add_reagent("sugar", 3)
@@ -556,6 +576,7 @@
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
+	foodtype = SUGAR
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
 	M.reagents.add_reagent("sugar",3)
@@ -580,6 +601,7 @@
 	description = "An white and oily mixture of mixed egg yolks."
 	color = "#DFDFDF"
 	taste_description = "mayonnaise"
+	foodtype = MEAT | JUNKFOOD
 
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"
@@ -587,6 +609,7 @@
 	description = "A blinding substance extracted from certain onions."
 	color = "#c0c9a0"
 	taste_description = "bitterness"
+	foodtype = VEGETABLE | HERBAL
 
 /datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
@@ -641,6 +664,7 @@
 	description = "An ichor, derived from a certain mushroom, makes for a bad time."
 	color = "#1d043d"
 	taste_description = "bitter mushroom"
+	foodtype = HERBAL | TOXIC
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
@@ -661,6 +685,7 @@
 	description = "A stimulating ichor which causes luminescent fungi to grow on the skin. "
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
+	foodtype = HERBAL
 
 /datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
 	M.set_light(2)
@@ -675,6 +700,7 @@
 	color = "#d3a308"
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "fruity mushroom"
+	foodtype = HERBAL
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
@@ -690,6 +716,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
+	foodtype = FRUIT //?
 
 
 /datum/reagent/consumable/liquidelectricity

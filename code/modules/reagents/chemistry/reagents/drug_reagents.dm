@@ -46,6 +46,7 @@
 	trippy = FALSE
 	overdose_threshold=15
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	foodtype = HERBAL
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	if(prob(1))
@@ -74,6 +75,7 @@
 	color = "#FA00C8"
 	overdose_threshold = 20
 	addiction_threshold = 10
+	foodtype = TOXIC
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -175,6 +177,7 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	foodtype = GROSS
 
 /datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
 	..()
@@ -260,6 +263,7 @@
 	addiction_threshold = 10
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
+	foodtype = TOXIC
 
 /datum/reagent/drug/bath_salts/on_mob_add(mob/living/L)
 	..()
