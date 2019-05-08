@@ -60,7 +60,8 @@ Slimecrossing Items
 	
 
 /datum/component/dejavu
-	var/health	//health for simple animals, and integrity for objects
+	var/integrity	//for objects
+	var/brute_loss //for simple animals
 	var/list/datum/saved_bodypart/saved_bodyparts //maps bodypart slots to health
 	var/clone_loss = 0
 	var/tox_loss = 0
@@ -88,10 +89,10 @@ Slimecrossing Items
 		saved_bodyparts = save_bodyparts(C)
 	else if(isanimal(parent))
 		var/mob/living/simple_animal/M = parent
-		health = M.health
+		brute_loss = M.bruteloss
 	else if(isobj(parent))
 		var/obj/O = parent
-		health = O.obj_integrity
+		integrity = O.obj_integrity
 	addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
 
 /datum/component/dejavu/proc/rewind()
@@ -109,10 +110,11 @@ Slimecrossing Items
 			apply_saved_bodyparts(parent, saved_bodyparts)
 	else if(isanimal(parent))
 		var/mob/living/simple_animal/M = parent
-		M.adjustHealth(M.bruteloss - health)
+		M.bruteloss = brute_loss
+		M.updatehealth()
 	else if(isobj(parent))
 		var/obj/O = parent
-		O.obj_integrity = health
+		O.obj_integrity = integrity
 
 	//comes after healing so new limbs comically drop to the floor
 	if(!isnull(x) && istype(parent, /atom/movable))
