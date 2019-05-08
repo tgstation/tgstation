@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Secondary shocks should no longer some times ignore insulated gloves."
