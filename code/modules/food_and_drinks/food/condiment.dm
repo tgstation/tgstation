@@ -51,9 +51,7 @@
 		user.visible_message("<span class='warning'>[user] feeds [M] from [src].</span>")
 		log_combat(user, M, "fed", reagents.log_list())
 
-	var/fraction = min(10/reagents.total_volume, 1)
-	reagents.reaction(M, INGEST, fraction)
-	reagents.trans_to(M, 10, transfered_by = user)
+	feed_reagents(M,user,10)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 

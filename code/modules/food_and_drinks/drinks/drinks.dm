@@ -48,10 +48,7 @@
 		M.visible_message("<span class='danger'>[user] feeds the contents of [src] to [M].</span>", "<span class='userdanger'>[user] feeds the contents of [src] to [M].</span>")
 		log_combat(user, M, "fed", reagents.log_list())
 
-	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	checkLiked(fraction, M)
-	reagents.reaction(M, INGEST, fraction)
-	reagents.trans_to(M, gulp_size, transfered_by = user)
+	feed_reagents(M,user,gulp_size)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 

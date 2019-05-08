@@ -12,6 +12,8 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
+	var/foodtype = NONE
+	var/last_check_time
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -61,6 +63,15 @@
 		return 0
 	return 1
 
+/obj/item/reagent_containers/proc/feed_reagents(mob/M, mob/user, var/bitesize)
+	if(reagents.total_volume)
+		var/fraction = min(bitesize / reagents.total_volume, 1)
+		reagents.reaction(M, INGEST, fraction)
+		reagents.trans_to(M, bitesize, transfered_by = user)
+		checkLiked(fraction, M)
+		return TRUE
+
+
 /obj/item/reagent_containers/ex_act()
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
@@ -75,6 +86,29 @@
 /obj/item/reagent_containers/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	SplashReagents(hit_atom, TRUE)
+
+/obj/item/reagent_containers/proc/checkLiked(var/fraction, mob/M)
+	if(last_check_time + 50 < world.time)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.has_trait(TRAIT_AGEUSIA))
+				if(foodtype & H.dna.species.toxic_food)
+					to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")
+					H.adjust_disgust(25 + 30 * fraction)
+					SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "toxic_food", /datum/mood_event/disgusting_food)
+				else if(foodtype & H.dna.species.disliked_food)
+					to_chat(H,"<span class='notice'>That didn't taste very good...</span>")
+					H.adjust_disgust(11 + 15 * fraction)
+					SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "gross_food", /datum/mood_event/gross_food)
+				else if(foodtype & H.dna.species.liked_food)
+					to_chat(H,"<span class='notice'>I love this taste!</span>")
+					H.adjust_disgust(-5 + -2.5 * fraction)
+					SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
+			else
+				if(foodtype & H.dna.species.toxic_food)
+					to_chat(H, "<span class='warning'>You don't feel so good...</span>")
+					H.adjust_disgust(25 + 30 * fraction)
+			last_check_time = world.time
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
 	. = FALSE
