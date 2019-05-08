@@ -129,9 +129,9 @@
 	addtimer(CALLBACK(src, .proc/delete_image, sound_image, M), image_expiry_time, fade_out_time)
 
 /datum/component/echolocation/proc/delete_image(sound_image, mob/M)
-	if(M.client && sound_image)
+	if(M.client)
 		M.client.images -= sound_image
-		qdel(sound_image)
+	qdel(sound_image)
 
 /datum/component/echolocation/proc/generate_image(atom/input)
 	var/icon/I
