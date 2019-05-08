@@ -131,7 +131,7 @@
 /datum/component/echolocation/proc/delete_image(sound_image, mob/M)
 	if(M.client && sound_image)
 		M.client.images -= sound_image
-		qdel(sound_image)
+	qdel(sound_image)
 
 /datum/component/echolocation/proc/generate_image(atom/input)
 	var/icon/I
