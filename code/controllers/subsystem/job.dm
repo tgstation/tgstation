@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			JobDebug("FOC incompatible with antagonist role, Player: [player]")
 			continue
-		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+		if(player.client.prefs.job_preferences[job.title] == level)
 			JobDebug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
 	return candidates
@@ -332,7 +332,7 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				// If the player wants that job on this level, then try give it to him.
-				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+				if(player.client.prefs.job_preferences[job.title] == level)
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 						JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
@@ -516,13 +516,15 @@ SUBSYSTEM_DEF(job)
 			if(job.required_playtime_remaining(player.client))
 				young++
 				continue
-			if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
-				high++
-			else if(player.client.prefs.GetJobDepartment(job, 2) & job.flag)
-				medium++
-			else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
-				low++
-			else never++ //not selected
+			switch(player.client.prefs.job_preferences[job.title])
+				if(JP_HIGH)
+					high++
+				if(JP_MEDIUM)
+					medium++
+				if(JP_LOW)
+					low++
+				else
+					never++
 		SSblackbox.record_feedback("nested tally", "job_preferences", high, list("[job.title]", "high"))
 		SSblackbox.record_feedback("nested tally", "job_preferences", medium, list("[job.title]", "medium"))
 		SSblackbox.record_feedback("nested tally", "job_preferences", low, list("[job.title]", "low"))
