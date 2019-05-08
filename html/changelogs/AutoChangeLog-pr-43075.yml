@@ -1,4 +1,0 @@
-author: "JJRcop and Kmc2000 (sprites)"
-delete-after: True
-changes: 
-  - rscadd: "Replaced Sleepers with Lifeform Stasis Units. These place patients in stasis, a new status effect that halts biological functions indefinitely. It also prevents corpse decay."

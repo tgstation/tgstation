@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "switching to the SS13 camera network will no longer send you to the VR area."

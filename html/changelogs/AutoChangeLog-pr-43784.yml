@@ -1,7 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "transform spell transfers damage correctly instead of healing most of the time"
-  - bugfix: "0% simplemob health maps to 0 carbon health, 100% simplemob to 100% carbon"
-  - bugfix: "transforming to a form with brute resistance no longer heals you"
-  - bugfix: "transforming back to a species with brute resistance no longer heals you"
