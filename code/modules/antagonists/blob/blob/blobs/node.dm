@@ -22,7 +22,7 @@
 	color = null
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)
-		blob_overlay.color = overmind.blob_reagent_datum.color
+		blob_overlay.color = overmind.blobtype.color
 	add_overlay(blob_overlay)
 	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_node_overlay"))
 
