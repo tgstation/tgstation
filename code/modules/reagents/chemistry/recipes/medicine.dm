@@ -188,7 +188,7 @@
 	name = "Cryoxadone"
 	id = "cryoxadone"
 	results = list("cryoxadone" = 3)
-	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
+	required_reagents = list("plasma" = 1, "acetone" = 1, "mutagen" = 1)
 
 /datum/chemical_reaction/pyroxadone
 	name = "Pyroxadone"
