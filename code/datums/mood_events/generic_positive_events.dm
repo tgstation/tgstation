@@ -120,6 +120,7 @@
 /datum/mood_event/religiously_comforted
 	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>"
 	mood_change = 3
+	timeout = 3000
 
 /datum/mood_event/clownshoes
 	description = "<span class='nicegreen'>The shoes are a clown's legacy, I never want to take them off!</span>\n"

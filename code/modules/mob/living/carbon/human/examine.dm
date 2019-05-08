@@ -270,6 +270,9 @@
 
 	msg += "</span>"
 
+	if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && !appears_dead && (src != user) && src.mind.isholy)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "religious_comfort", /datum/mood_event/religiously_comforted)
+
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
