@@ -10,6 +10,7 @@
 	glass_name = "glass of tomato juice"
 	glass_desc = "Are you sure this is tomato juice?"
 	shot_glass_icon_state = "shotglassred"
+	foodtype = MEAT
 
 /datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
@@ -89,6 +90,7 @@
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
 	shot_glass_icon_state = "shotglassred"
+	foodtype = MEAT | RAW | GROSS
 
 /datum/reagent/vaccine
 	//data must contain virus type
@@ -96,6 +98,7 @@
 	id = "vaccine"
 	color = "#C81040" // rgb: 200, 16, 64
 	taste_description = "slime"
+	foodtype = GROSS
 
 /datum/reagent/vaccine/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(islist(data) && (method == INGEST || method == INJECT))
@@ -328,6 +331,7 @@
 	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.  But this changes on an overdose
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
 	taste_description = "sour oranges"
+	foodtype = TOXIC
 
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(ishuman(M))
@@ -425,6 +429,7 @@
 	taste_description = "slime"
 	var/datum/species/race = /datum/species/human
 	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
+	foodtype = GROSS
 
 /datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
@@ -614,6 +619,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY
 	taste_description = "slime"
+	foodtype = GROSS
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
 	..()
@@ -641,6 +647,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	can_synth = FALSE
 	taste_description = "decay"
+	foodtype = MEAT | VEGETABLES | RAW | JUNKFOOD | GRAIN | FRUIT | DAIRY | FRIED | SUGAR | PINEAPPLE | HERBAL
 
 /datum/reagent/gluttonytoxin/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	L.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
@@ -652,6 +659,7 @@
 	color = "#202040" // rgb: 20, 20, 40
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	foodtype = GROSS
 
 /datum/reagent/serotrotium/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
@@ -752,6 +760,7 @@
 	reagent_state = SOLID
 	color = "#BF8C00" // rgb: 191, 140, 0
 	taste_description = "rotten eggs"
+	foodtype = GROSS
 
 /datum/reagent/carbon
 	name = "Carbon"
@@ -774,6 +783,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "chlorine"
+	foodtype = TOXIC
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M)
 	M.take_bodypart_damage(1*REM, 0, 0, 0)
@@ -787,6 +797,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "acid"
+	foodtype = TOXIC
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(1*REM, 0)
@@ -800,6 +811,7 @@
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "salty metal"
+	foodtype = TOXIC
 
 /datum/reagent/phosphorus
 	name = "Phosphorus"
@@ -808,6 +820,7 @@
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
 	taste_description = "vinegar"
+	foodtype = TOXIC
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -816,6 +829,7 @@
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "metal"
+	foodtype = GROSS
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/M)
 	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
@@ -830,6 +844,7 @@
 	description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "sweetness"
+	foodtype = SUGAR
 
 /datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
@@ -837,6 +852,7 @@
 	description = "Sterilizes wounds in preparation for surgery."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	taste_description = "bitterness"
+	foodtype = GROSS
 
 /datum/reagent/space_cleaner/sterilizine/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(method in list(TOUCH, VAPOR, PATCH))
@@ -966,6 +982,7 @@
 	glass_icon_state = "dr_gibb_glass"
 	glass_name = "glass of welder fuel"
 	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
+	foodtype = TOXIC
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(method == TOUCH || method == VAPOR)
@@ -985,6 +1002,7 @@
 	color = "#A5F0EE" // rgb: 165, 240, 238
 	taste_description = "sourness"
 	reagent_weight = 0.6 //so it sprays further
+	foodtype = TOXIC
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/effect/decal/cleanable))
@@ -1063,6 +1081,7 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "sourness"
+	foodtype = GROSS
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/M)
 	M.Dizzy(1)
@@ -1119,6 +1138,7 @@
 	color = "#92D17D" // rgb: 146, 209, 125
 	can_synth = FALSE
 	taste_description = "slime"
+	foodtype = FUNGAL | GROSS
 
 /datum/reagent/fungalspores/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
@@ -1131,6 +1151,7 @@
 	color = "#003300" // rgb(0, 51, 0)
 	taste_description = "goo"
 	can_synth = FALSE //special orange man request
+	foodtype = GROSS
 
 /datum/reagent/snail/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
@@ -1166,6 +1187,7 @@
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
 	taste_description = "mordant"
+	foodtype = GROSS
 
 /datum/reagent/diethylamine
 	name = "Diethylamine"
@@ -1405,6 +1427,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "oil"
+	foodtype = GROSS
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
@@ -1414,6 +1437,7 @@
 	color = "#C8A5DC"
 	taste_description = "bitterness"
 	taste_mult = 1.5
+	foodtype = TOXIC
 
 /datum/reagent/stable_plasma/on_mob_life(mob/living/carbon/C)
 	C.adjustPlasma(10)
@@ -1426,6 +1450,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "metal"
+	foodtype = GROSS
 
 /datum/reagent/carpet
 	name = "Carpet"
@@ -1434,6 +1459,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "carpet" // Your tounge feels furry.
+	foodtype = GROSS
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
@@ -1448,6 +1474,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "chemicals"
+	foodtype = TOXIC
 
 /datum/reagent/phenol
 	name = "Phenol"
@@ -1472,6 +1499,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "acid"
+	foodtype = GROSS
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
@@ -1481,6 +1509,7 @@
 	color = "#C8A5DC"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 	taste_description = "rainbows"
+	foodtype = SUGAR
 
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
@@ -1509,6 +1538,7 @@
 	color = "#C8A5DC"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
 	taste_description = "sourness"
+	foodtype = GROSS
 
 /datum/reagent/hair_dye/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1525,6 +1555,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "sourness"
+	foodtype = GROSS
 
 /datum/reagent/barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1559,6 +1590,7 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	taste_description = "cool salt"
+	foodtype = GROSS
 
 /datum/reagent/lye
 	name = "Lye"
@@ -1567,6 +1599,7 @@
 	reagent_state = LIQUID
 	color = "#FFFFD6" // very very light yellow
 	taste_description = "acid"
+	foodtype = TOXIC
 
 /datum/reagent/drying_agent
 	name = "Drying agent"
@@ -1593,18 +1626,21 @@
 	id = "mutagenvirusfood"
 	color = "#A3C00F" // rgb: 163,192,15
 	taste_description = "sourness"
+	foodtype = GROSS
 
 /datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
 	name = "sucrose agar"
 	id = "sugarvirusfood"
 	color = "#41B0C0" // rgb: 65,176,192
 	taste_description = "sweetness"
+	foodtype = GROSS
 
 /datum/reagent/medicine/synaptizine/synaptizinevirusfood
 	name = "virus rations"
 	id = "synaptizinevirusfood"
 	color = "#D18AA5" // rgb: 209,138,165
 	taste_description = "bitterness"
+	foodtype = GROSS
 
 /datum/reagent/toxin/plasma/plasmavirusfood
 	name = "virus plasma"
@@ -1612,6 +1648,7 @@
 	color = "#A69DA9" // rgb: 166,157,169
 	taste_description = "bitterness"
 	taste_mult = 1.5
+	foodtype = GROSS
 
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
 	name = "weakened virus plasma"
@@ -1619,24 +1656,28 @@
 	color = "#CEC3C6" // rgb: 206,195,198
 	taste_description = "bitterness"
 	taste_mult = 1.5
+	foodtype = GROSS
 
 /datum/reagent/uranium/uraniumvirusfood
 	name = "decaying uranium gel"
 	id = "uraniumvirusfood"
 	color = "#67ADBA" // rgb: 103,173,186
 	taste_description = "the inside of a reactor"
+	foodtype = GROSS
 
 /datum/reagent/uranium/uraniumvirusfood/unstable
 	name = "unstable uranium gel"
 	id = "uraniumplasmavirusfood_unstable"
 	color = "#2FF2CB" // rgb: 47,242,203
 	taste_description = "the inside of a reactor"
+	foodtype = GROSS
 
 /datum/reagent/uranium/uraniumvirusfood/stable
 	name = "stable uranium gel"
 	id = "uraniumplasmavirusfood_stable"
 	color = "#04506C" // rgb: 4,80,108
 	taste_description = "the inside of a reactor"
+	foodtype = GROSS
 
 // Bee chemicals
 
@@ -1646,6 +1687,7 @@
 	description = "Royal Bee Jelly, if injected into a Queen Space Bee said bee will split into two bees."
 	color = "#00ff80"
 	taste_description = "strange honey"
+	foodtype = SUGAR
 
 /datum/reagent/royal_bee_jelly/on_mob_life(mob/living/carbon/M)
 	if(prob(2))
@@ -1667,6 +1709,7 @@
 	metabolization_rate = INFINITY
 	can_synth = FALSE
 	taste_description = "brains"
+	foodtype = MEAT
 
 /datum/reagent/romerol/reaction_mob(mob/living/carbon/human/H, method=TOUCH, reac_volume)
 	// Silently add the zombie infection organ to be activated upon death
@@ -1681,6 +1724,7 @@
 	description = "An experimental serum which causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	reagent_state = LIQUID
 	color = "#00f041"
+	foodtype = GROSS
 
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
 	..()
@@ -1848,6 +1892,7 @@
 	color = "#9A6750" //RGB: 154, 103, 80
 	taste_description = "inner peace"
 	can_synth = FALSE
+	foodtype = JUNKFOOD
 
 /datum/reagent/tranquility/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))

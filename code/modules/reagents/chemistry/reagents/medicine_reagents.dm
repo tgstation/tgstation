@@ -9,6 +9,7 @@
 	name = "Medicine"
 	id = "medicine"
 	taste_description = "bitterness"
+	foodtype = GROSS
 
 /datum/reagent/medicine/on_mob_life(mob/living/carbon/M)
 	current_cycle++
@@ -230,6 +231,7 @@
 	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	foodtype = TOXIC
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -279,6 +281,7 @@
 	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#FF9696"
+	foodtype = TOXIC
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -407,6 +410,7 @@
 	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "ash"
+	foodtype = NONE
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -424,6 +428,7 @@
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	foodtype = HERBAL //they put it in food, it probably tastes alright
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-0.5*REM, 0)
@@ -449,6 +454,7 @@
 	color = "#19C832"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "acid"
+	foodtype = TOXIC
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
@@ -1087,6 +1093,7 @@
 	reagent_state = LIQUID
 	color = "#91D865"
 	taste_description = "jelly"
+	foodtype = FRUIT | MEAT //?
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1.5*REM, 0)
@@ -1127,6 +1134,7 @@
 	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
 	color = rgb(255, 175, 0)
 	overdose_threshold = 25
+	foodtype = HERBAL
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-3 * REM, 0)
