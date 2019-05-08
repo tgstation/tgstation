@@ -133,11 +133,11 @@
 /obj/machinery/teleport/station/examine(mob/user)
 	..()
 	if(!panel_open)
-		to_chat(user, "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device and wiring panel.</span>")
+		to_chat(user, "<span class='info'>The panel is <i>screwed</i> in, obstructing the linking device and wiring panel.</span>")
 	else
-		to_chat(user, "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned</i> with a multitool.<br>The <i>wiring</i> can be <i>connected<i> to a nearby console and hub with a pair of wirecutters.</span>")
+		to_chat(user, "<span class='info'>The <i>linking</i> device is now able to be <i>scanned</i> with a multitool.<br>The <i>wiring</i> can be <i>connected<i> to a nearby console and hub with a pair of wirecutters.</span>")
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: This station can be linked to <b>[efficiency]</b> other station(s).<span>")
+		to_chat(user, "<span class='info'>The status display reads: This station can be linked to <b>[efficiency]</b> other station(s).<span>")
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
 	for(var/direction in GLOB.cardinals)

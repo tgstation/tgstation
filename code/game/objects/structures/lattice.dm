@@ -22,7 +22,7 @@
 	deconstruction_hints(user)
 
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
-	to_chat(user, "<span class='notice'>The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.</span>")
+	to_chat(user, "<span class='info'>The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.</span>")
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
@@ -102,7 +102,7 @@
 	canSmoothWith = null
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
-	to_chat(user, "<span class='notice'>The supporting rods look like they could be <b>cut</b>.</span>")
+	to_chat(user, "<span class='info'>The supporting rods look like they could be <b>cut</b>.</span>")
 
 /obj/structure/lattice/catwalk/ratvar_act()
 	new /obj/structure/lattice/catwalk/clockwork(loc)

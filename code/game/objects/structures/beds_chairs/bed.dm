@@ -25,7 +25,7 @@
 /obj/structure/bed/examine(mob/user)
 	..()
 	if(bolts)
-		to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+		to_chat(user, "<span class='info'>It's held together by a couple of <b>bolts</b>.</span>")
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
