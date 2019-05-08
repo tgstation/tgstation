@@ -112,9 +112,6 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	LAZYADD(message_log, messages.Join(" "))
 	return TRUE
 
-/obj/machinery/doppler_array/proc/get_log_info()
-	return
-
 /obj/machinery/doppler_array/power_change()
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
