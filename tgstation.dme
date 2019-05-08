@@ -1610,6 +1610,7 @@
 #include "code\modules\events\dust.dm"
 #include "code\modules\events\electrical_storm.dm"
 #include "code\modules\events\false_alarm.dm"
+#include "code\modules\events\fugitive_spawning.dm"
 #include "code\modules\events\ghost_role.dm"
 #include "code\modules\events\grid_check.dm"
 #include "code\modules\events\heart_attack.dm"
