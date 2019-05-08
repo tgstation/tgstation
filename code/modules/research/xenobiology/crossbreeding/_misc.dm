@@ -16,8 +16,53 @@ Slimecrossing Items
 	default_picture_name = "A nostalgic picture"
 	var/used = FALSE
 
+/datum/saved_bodypart
+	var/obj/item/bodypart/old_part
+	var/bodypart_type
+	var/brute_dam
+	var/burn_dam
+	var/stamina_dam
+
+/datum/saved_bodypart/New(obj/item/bodypart/part)
+	old_part = part
+	bodypart_type = part.type
+	brute_dam = part.brute_dam
+	burn_dam = part.burn_dam
+	stamina_dam = part.stamina_dam
+
+/proc/apply_saved_bodyparts(mob/living/carbon/M, list/datum/saved_bodypart/parts)
+	M.fully_heal(TRUE) //I am an admin
+	var/list/dont_chop = list()
+	for(var/zone in parts)
+		var/datum/saved_bodypart/saved_part = parts[zone]
+		var/obj/item/bodypart/already = M.get_bodypart(zone)
+		if(!already || already.type != saved_part.bodypart_type)
+			already = saved_part.old_part
+			if(QDELETED(already))
+				already = new saved_part.bodypart_type
+			already.replace_limb(M, TRUE)
+		already.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam)
+		dont_chop[zone] = TRUE
+	for(var/_part in M.bodyparts)
+		var/obj/item/bodypart/part = _part
+		if(dont_chop[part.body_zone])
+			continue
+		part.drop_limb(TRUE)
+
+/proc/save_bodyparts(mob/living/carbon/M)
+	var/list/datum/saved_bodypart/ret = list()
+	for(var/_part in M.bodyparts)
+		var/obj/item/bodypart/part = _part
+		var/datum/saved_bodypart/saved_part = new(part)
+		
+		ret[part.body_zone] = saved_part
+	return ret
+
+	
+
 /datum/component/dejavu
 	var/health	//health for simple animals, and integrity for objects
+	var/list/datum/saved_bodypart/saved_bodyparts //maps bodypart slots to health
 	var/x
 	var/y
 	var/z
@@ -29,10 +74,13 @@ Slimecrossing Items
 		x = T.x
 		y = T.y
 		z = T.z
-	if(istype(parent, /mob/living/simple_animal))
+	if(iscarbon(parent))
+		var/mob/living/carbon/C = parent
+		saved_bodyparts = save_bodyparts(C)
+	else if(isanimal(parent))
 		var/mob/living/simple_animal/M = parent
 		health = M.health
-	else if(istype(parent, /obj))
+	else if(isobj(parent))
 		var/obj/O = parent
 		health = O.obj_integrity
 	addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
@@ -43,10 +91,14 @@ Slimecrossing Items
 		var/atom/movable/AM = parent
 		var/turf/T = locate(x,y,z)
 		AM.forceMove(T)
-	if(istype(parent, /mob/living/simple_animal))
+	if(iscarbon(parent))
+		if(saved_bodyparts)
+			apply_saved_bodyparts(parent, saved_bodyparts)
+			
+	if(isanimal(parent))
 		var/mob/living/simple_animal/M = parent
 		M.adjustHealth(health)
-	else if(istype(parent, /obj))
+	else if(isobj(parent))
 		var/obj/O = parent
 		O.obj_integrity = health
 	rewinds_remaining --
