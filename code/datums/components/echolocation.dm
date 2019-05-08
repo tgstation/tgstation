@@ -47,13 +47,14 @@
 	RegisterSignal(E, COMSIG_ACTION_TRIGGER, .proc/echolocate)
 	RegisterSignal(A, COMSIG_ACTION_TRIGGER, .proc/toggle_auto)
 
-	M.overlay_fullscreen("total", /obj/screen/fullscreen/color_vision/black)
+	M.overlay_fullscreen("echo", /obj/screen/fullscreen/echo)
 
-/datum/component/echolocation/RemoveComponent()
+
+/datum/component/echolocation/_RemoveFromParent()
+	..()
 	var/mob/M = parent
 	E.Remove(M)
 	A.Remove(M)
-	. = ..()
 
 /datum/component/echolocation/process()
 	var/mob/M = parent

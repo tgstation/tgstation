@@ -157,9 +157,8 @@
 /obj/screen/fullscreen/color_vision/blue
 	color = "#0000ff"
 
-/obj/screen/fullscreen/color_vision/black
-	color = "#000000"
-	alpha = 255
+/obj/screen/fullscreen/echo
+	icon_state = "echo"
 	layer = CAMERA_STATIC_LAYER
 	plane = CAMERA_STATIC_PLANE
 
