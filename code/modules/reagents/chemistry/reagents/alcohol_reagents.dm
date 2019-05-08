@@ -961,6 +961,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "vodkatonicglass"
 	glass_name = "vodka and tonic"
 	glass_desc = "For when a gin and tonic isn't Russian enough."
+	foodtype = ALCOHOL | HERBAL
 
 
 /datum/reagent/consumable/ethanol/ginfizz
