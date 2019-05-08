@@ -62,6 +62,7 @@
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
+	foodtype = TOXIC
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("epinephrine"))
@@ -94,6 +95,7 @@
 	color = "#7DC3A0"
 	toxpwr = 0
 	taste_description = "acid"
+	foodtype = TOXIC
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
 	. = TRUE
@@ -116,6 +118,7 @@
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 1.3
+	foodtype = GROSS
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -134,6 +137,7 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
 	taste_description = "mint"
+	foodtype = HERBAL
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
 	if(M.has_trait(TRAIT_FAT))
@@ -148,6 +152,7 @@
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
 	taste_description = "fish"
+	foodtype = MEAT
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
@@ -158,6 +163,7 @@
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 	taste_description = "death"
+	foodtype = GROSS
 
 /datum/reagent/toxin/zombiepowder/on_mob_add(mob/living/L)
 	..()
@@ -180,6 +186,7 @@
 	color = "#664700" // rgb: 102, 71, 0
 	toxpwr = 0.8
 	taste_description = "death"
+	foodtype = GROSS
 
 /datum/reagent/toxin/ghoulpowder/on_mob_add(mob/living/L)
 	..()
@@ -201,6 +208,7 @@
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	taste_description = "sourness"
+	foodtype = GROSS
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M)
 	M.hallucination += 5
@@ -237,6 +245,7 @@
 	id = "weedkiller"
 	description = "A harmful toxic mixture to kill weeds. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
+	foodtype = TOXIC
 
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
@@ -244,6 +253,7 @@
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
+	foodtype = HERBAL | TOXIC
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
@@ -330,6 +340,7 @@
 	glass_icon_state = "beerglass"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
+	foodtype = ALCOHOL | GRAIN
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
@@ -347,6 +358,7 @@
 	reagent_state = SOLID
 	color = "#5B2E0D" // rgb: 91, 46, 13
 	toxpwr = 0.5
+	foodtype = HERBAL
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
@@ -355,6 +367,7 @@
 	reagent_state = SOLID
 	color = "#7F8400" // rgb: 127, 132, 0
 	toxpwr = 0.5
+	foodtype = HERBAL
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
@@ -513,6 +526,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 	taste_description = "bad cooking"
+	foodtype = GROSS
 
 /datum/reagent/toxin/itching_powder
 	name = "Itching Powder"
@@ -687,6 +701,7 @@
 	overdose_threshold = 29
 	toxpwr = 0
 	taste_description = "vomit"
+	foodtype = GROSS
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C)
 	.=..()
@@ -748,6 +763,7 @@
 	metabolization_rate = 0.6 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 	taste_description = "spinning"
+	foodtype = GROSS
 
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/M)
 	if(M.hud_used)
@@ -776,6 +792,7 @@
 	metabolization_rate = 0.8 * REAGENTS_METABOLISM
 	toxpwr = 0.25
 	taste_description = "skewing"
+	foodtype = GROSS
 
 /datum/reagent/toxin/skewium/on_mob_life(mob/living/carbon/M)
 	if(M.hud_used)
@@ -832,6 +849,7 @@
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
 	self_consuming = TRUE
+	foodtype = TOXIC
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
@@ -914,6 +932,7 @@
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 50
+	foodtype = GROSS
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = "bonehurtingjuice")

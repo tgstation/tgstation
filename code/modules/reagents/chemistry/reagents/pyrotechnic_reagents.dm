@@ -39,6 +39,7 @@
 	color = "#FFC8C8"
 	metabolization_rate = 4
 	taste_description = "burning"
+	foodtype = TOXIC
 
 /datum/reagent/clf3/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
@@ -82,6 +83,7 @@
 	reagent_state = LIQUID
 	color = "#5A64C8"
 	taste_description = "air and bitterness"
+	foodtype = GROSS
 
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
@@ -90,6 +92,7 @@
 	reagent_state = LIQUID
 	color = "#210021"
 	taste_description = "compressed bitterness"
+	foodtype = GROSS
 
 /datum/reagent/blackpowder
 	name = "Black Powder"
@@ -99,6 +102,7 @@
 	color = "#000000"
 	metabolization_rate = 0.05
 	taste_description = "salt"
+	foodtype = GROSS
 
 /datum/reagent/blackpowder/on_mob_life(mob/living/carbon/M)
 	..()
@@ -143,6 +147,7 @@
 	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
+	foodtype = TOXIC
 
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.adjust_fire_stacks(1)
@@ -165,6 +170,7 @@
 	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
+	foodtype = GROSS
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(1)
@@ -182,6 +188,7 @@
 	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	foodtype = GROSS
 
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M) //TODO: code freezing into an ice cube
@@ -202,6 +209,7 @@
 	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	foodtype = GROSS
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M)
 	if(M.reagents.has_reagent("oxygen"))
@@ -218,6 +226,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "charged metal"
 	var/shock_timer = 0
+	foodtype = GROSS
 
 /datum/reagent/teslium/on_mob_life(mob/living/carbon/M)
 	shock_timer++
@@ -234,6 +243,7 @@
 	reagent_state = LIQUID
 	color = "#CAFF43"
 	taste_description = "jelly"
+	foodtype = FRUIT //?
 
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/M)
 	if(isjellyperson(M))
@@ -253,6 +263,7 @@
 	reagent_state = LIQUID
 	color = "#A6FAFF55"
 	taste_description = "the inside of a fire extinguisher"
+	foodtype = GROSS
 
 /datum/reagent/firefighting_foam/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
