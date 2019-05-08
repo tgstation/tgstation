@@ -386,7 +386,7 @@
 	owner.staminaloss *= 0.1
 	owner.updatehealth()
 	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
