@@ -528,15 +528,15 @@
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = FALSE, purpvomit = FALSE)
+/turf/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = NONE)
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
 	// If the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(V))
 		V = locate() in src
 	// Make toxins and blazaam vomit look different
-	if(purpvomit)
+	if(toxvomit == VOMIT_PURPLE)
 		V.icon_state = "vomitpurp_[pick(1,4)]"
-	else if(toxvomit)
+	else if(toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
 	if(M.reagents)
 		clear_reagents_to_vomit_pool(M,V)

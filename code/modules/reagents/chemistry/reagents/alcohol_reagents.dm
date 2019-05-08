@@ -2206,11 +2206,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "boozy Catholicism in a glass."
 
 /datum/reagent/consumable/ethanol/trappist/on_mob_life(mob/living/carbon/M)
-	if(!M.mind.isholy)
-		return ..()
-	M.adjustFireLoss(-2.5, 0)
-	M.jitteriness = max(0, M.jitteriness-1)
-	M.stuttering = max(0, M.stuttering-1)
+	if(M.mind.isholy)
+		M.adjustFireLoss(-2.5, 0)
+		M.jitteriness = max(0, M.jitteriness-1)
+		M.stuttering = max(0, M.stuttering-1)
 	return ..()
 
 /datum/reagent/consumable/ethanol/blazaam
@@ -2224,19 +2223,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Blazaam"
 	glass_desc = "The glass seems to be sliding between realities. Doubles as a Berenstain remover."
 	var/stored_teleports = 0
-	var/mandelamessage
 
 /datum/reagent/consumable/ethanol/blazaam/on_mob_life(mob/living/carbon/M)
 	if(M.drunkenness > 40)
 		if(stored_teleports)
-			do_teleport(M, get_turf(M), rand(1,3), channel = TELEPORT_CHANNEL_BLUESPACE)
+			do_teleport(M, get_turf(M), rand(1,3), channel = TELEPORT_CHANNEL_WORMHOLE)
 			stored_teleports--
 		if(prob(10))
 			stored_teleports += rand(2,6)
-			M.vomit()
-		if(prob(1))
-			mandelamessage = pick("Friend, we don't have much time, I need you to come rescue me.", "[M], I am still alive.", "Wake up. Please wake up.", "A winner is a dreamer who never gives up.", "[M], the fate of this world is in your hands.")
-			to_chat(M, "<span class='name'>Nelson Mandela </span><span class='message'>says, \"[mandelamessage]\"</span>")
+			if(prob(70))
+				M.vomit()
 	return ..()
 
 
