@@ -5,6 +5,14 @@ obj/item/clowthing/suit/chaplainsuit
 obj/item/clowthing/suit/hooded/chaplainsuit
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
+/obj/item/clothing/suit/chaplainsuit/holidaypriest
+	name = "holiday priest"
+	desc = "This is a nice holiday, my son."
+	icon_state = "holidaypriest"
+	item_state = "w_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
+
 /obj/item/clothing/suit/chaplainsuit/nun
 	name = "nun robe"
 	desc = "Maximum piety in this star system."
