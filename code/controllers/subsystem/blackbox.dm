@@ -30,6 +30,23 @@ SUBSYSTEM_DEF(blackbox)
 /datum/controller/subsystem/blackbox/fire()
 	set waitfor = FALSE	//for population query
 
+	if(!CONFIG_GET(flag/sql_enabled))
+		return
+
+	if(!SSdbcore.IsConnected(advanced=TRUE))
+		log_admin("Database not connected! Attempting to reconnect.")
+		message_admins("Database not connected! Attempting to reconnect.")
+
+		SSdbcore.Disconnect()
+
+		if(SSdbcore.Connect())
+			log_admin("Database connection re-established!")
+			message_admins("Database connection re-established!")
+		else
+			log_admin("Database connection failed: " + SSdbcore.ErrorMsg())
+			message_admins("Database connection failed: " + SSdbcore.ErrorMsg())
+			return
+
 	CheckPlayerCount()
 
 	if(CONFIG_GET(flag/use_exp_tracking))
