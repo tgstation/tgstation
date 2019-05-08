@@ -144,7 +144,7 @@
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		add_dent(WALL_DENT_HIT)
-		to_chat(user, "<span class='notice'>You punch the wall.</span>"))
+		to_chat(user, "<span class='notice'>You punch the wall.</span>")
 	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)
