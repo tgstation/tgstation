@@ -39,9 +39,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
 	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 		var/booze_power = boozepwr
-		if(C.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
-		if(C.has_trait(TRAIT_LIGHT_DRINKER))
+		if(HAS_TRAIT(C, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
 		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
@@ -137,7 +137,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
 	..()
 	. = 1
@@ -173,7 +173,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.drowsyness = max(0,M.drowsyness-7)
 	M.AdjustSleeping(-40)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
 	return ..()
 
@@ -194,7 +194,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		to_chat(M, "<span class='notice'>[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
 
 	if(prob(5) && iscarbon(M))
-		if(M.has_trait(TRAIT_BLIND))
+		if(HAS_TRAIT(M, TRAIT_BLIND))
 			var/obj/item/organ/eyes/eye = M.getorganslot(ORGAN_SLOT_EYES)
 			if(istype(eye))
 				eye.Remove(M)
@@ -379,7 +379,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	foodtype = ALCOHOL | HERBAL
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/M)
-	if(prob(10) && !M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(prob(10) && !HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.hallucination += 4 //Reference to the urban myth
 	..()
 
@@ -679,16 +679,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	foodtype = ALCOHOL | HERBAL | FRUIT
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_add(mob/living/carbon/M)
-	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		metabolization_rate = 0.8
-	if(!M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	if(!HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		B = new()
 		M.gain_trauma(B, TRAUMA_RESILIENCE_ABSOLUTE)
 	..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M)
 	M.Jitter(2)
-	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	if(HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.adjustStaminaLoss(-10, 0)
 		if(prob(20))
 			new /datum/hallucination/items_other(M)
@@ -703,7 +703,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash/overdose_start(mob/living/carbon/M)
-	if(!M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	if(!HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.gain_trauma(/datum/brain_trauma/mild/phobia/security, TRAUMA_RESILIENCE_BASIC)
 
 /datum/reagent/consumable/ethanol/irish_cream
@@ -736,7 +736,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_add(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna.check_mutation(DWARFISM) || H.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		if(H.dna.check_mutation(DWARFISM) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE))
 			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
 			boozepwr = 5 //We've had worse in the mines
 			dorf_mode = TRUE
@@ -1372,7 +1372,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.confused = max(M.confused+2,0)
 		M.Dizzy(10)
 	if (!M.slurring)
@@ -1445,7 +1445,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		to_chat(M, "<span class='notice'>You cant feel your hands!</span>")
 	if(current_cycle > 5)
 		if(prob(20))
-			M.add_trait(pickt(), "neurotoxin")
+			var/t = pickt()
+			ADD_TRAIT(M, t, id)
 			M.adjustStaminaLoss(10)
 		if(current_cycle > 30)
 			M.adjustBrainLoss(2*REM)
@@ -1458,10 +1459,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_delete(mob/living/carbon/M)
-	M.remove_trait(TRAIT_PARALYSIS_L_ARM, "neurotoxin")
-	M.remove_trait(TRAIT_PARALYSIS_R_ARM, "neurotoxin")
-	M.remove_trait(TRAIT_PARALYSIS_R_LEG, "neurotoxin")
-	M.remove_trait(TRAIT_PARALYSIS_L_LEG, "neurotoxin")
+	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_ARM, id)
+	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_ARM, id)
+	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_LEG, id)
+	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_LEG, id)
 	M.adjustStaminaLoss(10)
 	..()
 
@@ -1595,7 +1596,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/M)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes
-	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	if(HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1, 1)
 		M.adjustBruteLoss(-2,0)
 		. = 1
@@ -1616,7 +1617,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/M)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
-	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	if(HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(2,2,2)
 		M.adjustBruteLoss(-5,0)
 		M.adjustOxyLoss(-5,0)
@@ -2183,4 +2184,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "jack_rose"
 	glass_name = "Jack Rose"
 	glass_desc = "Enough of these, and you really will start to suppose your toeses are roses."
+
 	foodtype = ALCOHOL | SUGAR | FRUIT
+

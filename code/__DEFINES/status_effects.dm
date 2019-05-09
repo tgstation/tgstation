@@ -94,6 +94,8 @@
 
 #define STATUS_EFFECT_GO_AWAY /datum/status_effect/go_away //makes you launch through walls in a single direction for a while
 
+#define STATUS_EFFECT_STASIS /datum/status_effect/incapacitating/stasis //Halts biological functions like bleeding, chemical processing, blood regeneration, walking, etc
+
 /////////////
 // NEUTRAL //
 /////////////

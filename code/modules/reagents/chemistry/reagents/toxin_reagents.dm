@@ -100,7 +100,7 @@
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
 	. = TRUE
 
-	if(C.has_trait(TRAIT_NOBREATH))
+	if(HAS_TRAIT(C, TRAIT_NOBREATH))
 		. = FALSE
 
 	if(.)
@@ -140,7 +140,7 @@
 	foodtype = HERBAL
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
-	if(M.has_trait(TRAIT_FAT))
+	if(HAS_TRAIT(M, TRAIT_FAT))
 		M.gib()
 	return ..()
 
@@ -190,10 +190,10 @@
 
 /datum/reagent/toxin/ghoulpowder/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_FAKEDEATH, id)
+	ADD_TRAIT(L, TRAIT_FAKEDEATH, id)
 
 /datum/reagent/toxin/ghoulpowder/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_FAKEDEATH, id)
+	REMOVE_TRAIT(L, TRAIT_FAKEDEATH, id)
 	..()
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/M)
@@ -918,10 +918,10 @@
 	taste_description = "stillness"
 
 /datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
-	L.add_trait(TRAIT_EMOTEMUTE, id)
+	ADD_TRAIT(L, TRAIT_EMOTEMUTE, id)
 
 /datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_EMOTEMUTE, id)
+	REMOVE_TRAIT(L, TRAIT_EMOTEMUTE, id)
 
 /datum/reagent/toxin/bonehurtingjuice //oof ouch
 	name = "Bone Hurting Juice"
@@ -939,7 +939,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(15, 0)
-	if(M.has_trait(TRAIT_CALCIUM_HEALER))
+	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
 		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
