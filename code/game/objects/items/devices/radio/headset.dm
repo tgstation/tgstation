@@ -147,6 +147,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "medsci_headset"
 	keyslot = new /obj/item/encryptionkey/headset_medsci
 
+/obj/item/radio/headset/headset_srvsec
+	name = "law and order headset"
+	desc = "In the criminal justice headset, the encryption key represents two separate but equally important groups. Sec, who investigate crime, and Service, who provide services. These are their comms."
+	icon_state = "srvsec_headset"
+	keyslot = new /obj/item/encryptionkey/headset_srvsec
+
 /obj/item/radio/headset/headset_com
 	name = "command radio headset"
 	desc = "A headset with a commanding channel."
@@ -255,12 +261,17 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
-/obj/item/radio/headset/ai
+/obj/item/radio/headset/silicon/pai
+	name = "\proper mini Integrated Subspace Transceiver "
+	subspace_transmission = FALSE
+
+
+/obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
 
-/obj/item/radio/headset/ai/can_receive(freq, level)
+/obj/item/radio/headset/silicon/can_receive(freq, level)
 	return ..(freq, level, TRUE)
 
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, params)

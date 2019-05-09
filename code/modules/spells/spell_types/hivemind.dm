@@ -57,17 +57,18 @@
 	var/success = FALSE
 
 	if(target.mind && target.client && target.stat != DEAD)
-		if(!target.has_trait(TRAIT_MINDSHIELD) || ignore_mindshield)
-			if(target.has_trait(TRAIT_MINDSHIELD) && ignore_mindshield)
+		if(!HAS_TRAIT(target, TRAIT_MINDSHIELD) || ignore_mindshield)
+			if(HAS_TRAIT(target, TRAIT_MINDSHIELD) && ignore_mindshield)
 				to_chat(user, "<span class='notice'>We bruteforce our way past the mental barriers of [target.name] and begin linking our minds!</span>")
 			else
 				to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
 			if(do_after(user,5*(1.5**get_dist(user, target)),0,user) && target in view(range))
 				if(do_after(user,5*(1.5**get_dist(user, target)),0,user) && target in view(range))
-					if((!target.has_trait(TRAIT_MINDSHIELD) || ignore_mindshield) && target in view(range))
+					if((!HAS_TRAIT(target, TRAIT_MINDSHIELD) || ignore_mindshield) && target in view(range))
 						to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
 						success = TRUE
 						hive.add_to_hive(target)
+						hive.threat_level = max(0, hive.threat_level-0.1)
 						if(ignore_mindshield)
 							to_chat(user, "<span class='warning'>We are briefly exhausted by the effort required by our enhanced assimilation abilities.</span>")
 							user.Immobilize(50)
@@ -109,6 +110,7 @@
 		return
 	hive.remove_from_hive(M)
 	hive.calc_size()
+	hive.threat_level += 0.1
 	to_chat(user, "<span class='notice'>We remove [target.name] from the hive</span>")
 	if(hive.active_one_mind)
 		var/datum/antagonist/hivevessel/woke = target.is_wokevessel()
@@ -379,7 +381,7 @@
 	if(original_body?.mind)
 		var/datum/antagonist/hivemind/hive = original_body.mind.has_antag_datum(/datum/antagonist/hivemind)
 		if(hive)
-			hive.threat_level += 0.5
+			hive.threat_level += 1
 
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/on_lose(mob/user)
@@ -573,6 +575,9 @@
 		victim.Sleeping(max(80,240/(1+round(victims.len/3))))
 	for(var/mob/living/silicon/victim in victims)
 		victim.Unconscious(240)
+	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(victims.len && hive)
+		hive.threat_level += 1
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack
 	name = "Medullary Failure"
@@ -594,7 +599,7 @@
 		to_chat(user, "<span class='warning'>We are unable to induce a heart attack!</span>")
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	if(hive)
-		hive.threat_level += 2
+		hive.threat_level += 4
 
 /obj/effect/proc_holder/spell/target_hive/hive_warp
 	name = "Distortion Field"
@@ -731,6 +736,7 @@
 			C.gib()
 			hive.track_bonus += TRACKER_BONUS_LARGE
 			hive.size_mod += 5
+			hive.threat_level += 1
 			gibbed = TRUE
 			found_target = TRUE
 		else if(C.IsUnconscious())
@@ -786,10 +792,11 @@
 
 	var/objective = stripped_input(user, "What objective do you want to give to your vessels?", "Objective")
 	
-	if(!objective)
+	if(!objective || !hive)
 		revert_cast()
 		return
-
+	
+	hive.threat_level += 6
 	for(var/i = 0, i < 4, i++)
 		var/mob/living/carbon/C = pick_n_take(valid_targets)
 		C.hive_awaken(objective)
@@ -843,6 +850,9 @@
 	new wall_type(get_turf(user),user)
 	for(var/dir in GLOB.alldirs)
 		new wall_type_b(get_step(user, dir),user)
+	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(hive)
+		hive.threat_level += 0.5
 
 /obj/effect/forcefield/wizard/hive
 	name = "Telekinetic Field"
@@ -887,10 +897,12 @@
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
 	var/mob/living/boss = user.get_real_hivehost()
-	var/datum/objective/objective = new("Ensure the One Mind survives under the leadership of [boss.real_name]!")
+	var/datum/objective/protect/new_objective = new /datum/objective/protect
+	new_objective.target = user.mind
+	new_objective.explanation_text = "Ensure the One Mind survives under the leadership of [boss.real_name]."
 	var/datum/team/hivemind/one_mind_team = new /datum/team/hivemind(user.mind)
 	hive.active_one_mind = one_mind_team
-	one_mind_team.objectives += objective
+	one_mind_team.objectives += new_objective
 	for(var/datum/antagonist/hivevessel/vessel in GLOB.antagonists)
 		var/mob/living/carbon/C = vessel.owner?.current
 		if(C && hive.is_carbon_member(C))
@@ -919,7 +931,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, "<span class='boldwarning'>You try to remember who you are...</span>"), 90)
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, "<span class='assimilator'>There is no you...</span>"), 110)
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, "<span class='bigassimilator'>...there is only us.</span>"), 130)
-		addtimer(CALLBACK(C, /mob/living/proc/hive_awaken, objective, one_mind_team), 150)
+		addtimer(CALLBACK(C, /mob/living/proc/hive_awaken, new_objective, one_mind_team), 150)
 
 /obj/effect/proc_holder/spell/self/hive_comms
 	name = "Hive Communication"

@@ -92,7 +92,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, SLOT_HEAD)
 
-	access_card.add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -277,5 +277,5 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring

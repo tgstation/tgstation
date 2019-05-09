@@ -309,6 +309,7 @@
 		last_staminaloss = owner.getStaminaLoss()
 		owner.log_message("gained blood-drunk stun immunity", LOG_ATTACK)
 		owner.add_stun_absorption("blooddrunk", INFINITY, 4)
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
 		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
 
 /datum/status_effect/blooddrunk/tick() //multiply the effect of healing by 10
@@ -385,6 +386,7 @@
 	owner.staminaloss *= 0.1
 	owner.updatehealth()
 	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
@@ -403,12 +405,12 @@
 	owner.spin(duration,1)
 	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
-	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
 	return ..()
 
 
 /datum/status_effect/sword_spin/tick()
-	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
 	var/obj/item/slashy
 	slashy = owner.get_active_held_item()
 	for(var/mob/living/M in orange(1,owner))
@@ -468,13 +470,13 @@
 
 /datum/status_effect/hippocraticOath/on_apply()
 	//Makes the user passive, it's in their oath not to harm!
-	owner.add_trait(TRAIT_PACIFISM, "hippocraticOath")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.add_hud_to(owner)
 	return ..()
 
 /datum/status_effect/hippocraticOath/on_remove()
-	owner.remove_trait(TRAIT_PACIFISM, "hippocraticOath")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)
 
@@ -570,7 +572,7 @@
 	alert_type = /obj/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
-	owner.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
@@ -578,7 +580,7 @@
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
-	owner.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
 
 /datum/status_effect/antimagic
 	id = "antimagic"
@@ -587,11 +589,11 @@
 
 /datum/status_effect/antimagic/on_apply()
 	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
-	owner.add_trait(TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	//glowing wings overlay
-	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
 	return ..()
 
 /datum/status_effect/antimagic/on_remove()
-	owner.remove_trait(TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
