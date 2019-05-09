@@ -2099,19 +2099,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Turbo"
 	glass_desc = "A turbulent cocktail for outlaw hoverbikers."
 
-/datum/reagent/consumable/ethanol/turbo/on_mob_add(mob/living/M)
-	..()
-	M.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-0.20, blacklisted_movetypes=(FLYING|FLOATING))
-
-/datum/reagent/consumable/ethanol/turbo/on_mob_delete(mob/living/M)
-	M.remove_movespeed_modifier(id)
-	..()
-
-
 /datum/reagent/consumable/ethanol/turbo/on_mob_life(mob/living/carbon/M)
-	if(prob(7))
-		to_chat(M, "<span class='notice'>[pick("You feel disregard for the rule of law.", "You want to go fast.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]</span>")
-	M.adjustStaminaLoss(-8)
+	if(prob(4))
+		to_chat(M, "<span class='notice'>[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]</span>")
+	M.adjustStaminaLoss(-M.drunkenness * 0.25)
 	return ..()
 
 /datum/reagent/consumable/ethanol/old_timer
