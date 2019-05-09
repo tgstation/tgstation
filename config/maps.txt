@@ -33,6 +33,10 @@ map donutstation
 	minplayers 50
 endmap
 
+map kilostation
+	minplayers 25
+endmap
+
 map runtimestation
 endmap
 
