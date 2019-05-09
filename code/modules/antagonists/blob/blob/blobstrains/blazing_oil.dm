@@ -1,6 +1,6 @@
 
 //sets you on fire, does burn damage, explodes into flame when burnt, weak to water
-/datum/blobtype/reagent/blazing_oil
+/datum/blobstrain/reagent/blazing_oil
 	name = "Blazing Oil"
 	description = "will do medium burn damage and set targets on fire."
 	effectdesc = "will also release bursts of flame when burnt, but takes damage from water."
@@ -12,14 +12,14 @@
 	message_living = ", and you feel your skin char and melt"
 	reagent = /datum/reagent/blob/blazing_oil
 
-/datum/blobtype/reagent/blob/blazing_oil/extinguish_reaction(obj/structure/blob/B)
+/datum/blobstrain/reagent/blob/blazing_oil/extinguish_reaction(obj/structure/blob/B)
 	B.take_damage(1.5, BURN, "energy")
 
-/datum/blobtype/reagent/blob/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+/datum/blobstrain/reagent/blob/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BURN && damage_flag != "energy")
 		for(var/turf/open/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
-			if(!(C && C.overmind && C.overmind.blobtype.type == B.overmind.blobtype.type) && prob(80))
+			if(!(C && C.overmind && C.overmind.blobstrain.type == B.overmind.blobstrain.type) && prob(80))
 				new /obj/effect/hotspot(T)
 	if(damage_flag == "fire")
 		return 0

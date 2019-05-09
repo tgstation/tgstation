@@ -1,10 +1,10 @@
 //does burn damage and EMPs, slightly fragile
-/datum/blobtype/reagent/electromagnetic_web
+/datum/blobstrain/reagent/electromagnetic_web
 	name = "Electromagnetic Web"
 	complementary_color = "#EC8383"
 	reagent = /datum/reagent/blob/electromagnetic_web
 
-/datum/blobtype/reagent/electromagnetic_web/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+/datum/blobstrain/reagent/electromagnetic_web/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BRUTE) //take full brute
 		switch(B.brute_resist)
 			if(0.5)
@@ -15,7 +15,7 @@
 				return damage * 10
 	return damage * 1.25 //a laser will do 25 damage, which will kill any normal blob
 
-/datum/blobtype/reagent/electromagnetic_web/death_reaction(obj/structure/blob/B, damage_flag)
+/datum/blobstrain/reagent/electromagnetic_web/death_reaction(obj/structure/blob/B, damage_flag)
 	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser")
 		empulse(B.loc, 1, 3) //less than screen range, so you can stand out of range to avoid it
 

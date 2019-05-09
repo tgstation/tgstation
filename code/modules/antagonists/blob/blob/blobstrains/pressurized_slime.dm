@@ -1,5 +1,5 @@
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
-/datum/blobtype/reagent/pressurized_slime
+/datum/blobstrain/reagent/pressurized_slime
 	name = "Pressurized Slime"
 	description = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
 	effectdesc = "will also wet tiles near blobs that are attacked or killed."
@@ -11,17 +11,17 @@
 	message_living = ", and you gasp for breath"
 	reagent = /datum/reagent/blob/pressurized_slime
 
-/datum/blobtype/reagent/pressurized_slime/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+/datum/blobstrain/reagent/pressurized_slime/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") || damage_type != BURN)
 		extinguisharea(B, damage)
 	return ..()
 
-/datum/blobtype/reagent/pressurized_slime/death_reaction(obj/structure/blob/B, damage_flag)
+/datum/blobstrain/reagent/pressurized_slime/death_reaction(obj/structure/blob/B, damage_flag)
 	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser")
 		B.visible_message("<span class='boldwarning'>The blob ruptures, spraying the area with liquid!</span>")
 		extinguisharea(B, 50)
 
-/datum/blobtype/reagent/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
+/datum/blobstrain/reagent/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
 		if(prob(probchance))
 			T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)

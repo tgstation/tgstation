@@ -1,5 +1,5 @@
 //does brute damage, bonus damage for each nearby blob, and spreads damage out
-/datum/blobtype/reagent/synchronous_mesh
+/datum/blobstrain/reagent/synchronous_mesh
 	name = "Synchronous Mesh"
 	description = "will do massively increased brute damage for each blob near the target."
 	effectdesc = "will also spread damage between each blob near the attacked blob."
@@ -9,14 +9,14 @@
 	blobbernaut_message = "synchronously strikes"
 	message = "The blobs strike you"
 
-/datum/blobtype/reagent/synchronous_mesh/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+/datum/blobstrain/reagent/synchronous_mesh/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") //the cause isn't fire or bombs, so split the damage
 		var/damagesplit = 1 //maximum split is 9, reducing the damage each blob takes to 11% but doing that damage to 9 blobs
 		for(var/obj/structure/blob/C in orange(1, B))
-			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blobtype.type == B.overmind.blobtype.type) //if it doesn't have the same chemical or is a core or node, don't split damage to it
+			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blobstrain.type == B.overmind.blobstrain.type) //if it doesn't have the same chemical or is a core or node, don't split damage to it
 				damagesplit += 1
 		for(var/obj/structure/blob/C in orange(1, B))
-			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blobtype.type == B.overmind.blobtype.type) //only hurt blobs that have the same overmind chemical and aren't cores or nodes
+			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blobstrain.type == B.overmind.blobstrain.type) //only hurt blobs that have the same overmind chemical and aren't cores or nodes
 				C.take_damage(damage/damagesplit, CLONE, 0, 0)
 		return damage / damagesplit
 	else

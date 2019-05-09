@@ -20,7 +20,7 @@
 
 /mob/living/simple_animal/hostile/blob/update_icons()
 	if(overmind)
-		add_atom_colour(overmind.blobtype.color, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
@@ -34,7 +34,7 @@
 		for(var/i in 1 to 2)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
-				H.color = overmind.blobtype.complementary_color
+				H.color = overmind.blobstrain.complementary_color
 			else
 				H.color = "#000000"
 		adjustHealth(-maxHealth*0.0125)
@@ -144,8 +144,8 @@
 
 
 
-	if(overmind && overmind.blobtype)
-		overmind.blobtype.on_sporedeath(src)
+	if(overmind && overmind.blobstrain)
+		overmind.blobstrain.on_sporedeath(src)
 	else
 		reagents.add_reagent("spore", 10)
 
@@ -169,14 +169,14 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
 	if(overmind)
-		add_atom_colour(overmind.blobtype.complementary_color, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(overmind.blobstrain.complementary_color, FIXED_COLOUR_PRIORITY)
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
 		copy_overlays(oldguy, TRUE)
 		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_head")
 		if(overmind)
-			blob_head_overlay.color = overmind.blobtype.complementary_color
+			blob_head_overlay.color = overmind.blobstrain.complementary_color
 		color = initial(color)//looks better.
 		add_overlay(blob_head_overlay)
 
@@ -240,14 +240,14 @@
 				adjustHealth(-maxHealth*0.1)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 				if(overmind)
-					H.color = overmind.blobtype.complementary_color
+					H.color = overmind.blobstrain.complementary_color
 				else
 					H.color = "#000000"
 			if(locate(/obj/structure/blob/node) in blobs_in_area)
 				adjustHealth(-maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
 				if(overmind)
-					H.color = overmind.blobtype.complementary_color
+					H.color = overmind.blobstrain.complementary_color
 				else
 					H.color = "#000000"
 		if(damagesources)
@@ -256,7 +256,7 @@
 			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 			I.appearance_flags = RESET_COLOR
 			if(overmind)
-				I.color = overmind.blobtype.complementary_color
+				I.color = overmind.blobstrain.complementary_color
 			flick_overlay_view(I, src, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -271,14 +271,14 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()
 	if(. && isliving(target) && overmind)
-		overmind.blobtype.blobbernaut_attack(target)
+		overmind.blobstrain.blobbernaut_attack(target)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()
 	if(overmind) //if we have an overmind, we're doing chemical reactions instead of pure damage
 		melee_damage_lower = 4
 		melee_damage_upper = 4
-		attacktext = overmind.blobtype.blobbernaut_message
+		attacktext = overmind.blobstrain.blobbernaut_message
 	else
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)

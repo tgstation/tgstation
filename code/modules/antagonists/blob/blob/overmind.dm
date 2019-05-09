@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/last_attack = 0
-	var/datum/blobtype/blobtype
+	var/datum/blobstrain/blobstrain
 	var/list/blob_mobs = list()
 	var/list/resource_blobs = list()
 	var/free_chem_rerolls = 1 //one free chemical reroll
@@ -51,9 +51,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
-	var/datum/blobtype/BT = pick(GLOB.valid_blobtypes)
-	blobtype = new BT
-	color = blobtype.complementary_color
+	var/datum/blobstrain/BT = pick(GLOB.valid_blobstrains)
+	blobstrain = new BT
+	color = blobstrain.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
@@ -133,7 +133,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				continue
 			if(!A.blob_allowed)
 				continue
-			A.color = blobtype.color
+			A.color = blobstrain.color
 			A.name = "blob"
 			A.icon = 'icons/mob/blob.dmi'
 			A.icon_state = "blob_shield"
@@ -175,8 +175,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/examine(mob/user)
 	..()
-	if(blobtype)
-		to_chat(user, "Its chemical is <font color=\"[blobtype.color]\">[blobtype.name]</font>.")
+	if(blobstrain)
+		to_chat(user, "Its chemical is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>.")
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
@@ -215,7 +215,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	src.log_talk(message, LOG_SAY)
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blobtype.color]\">[blobtype.name]</font>)</b> [message_a]</font></span>"
+	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]</font></span>"
 
 	for(var/mob/M in GLOB.mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))

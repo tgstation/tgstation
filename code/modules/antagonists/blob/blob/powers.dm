@@ -71,13 +71,13 @@
 		var/list/nodes = list()
 		for(var/i in 1 to GLOB.blob_nodes.len)
 			var/obj/structure/blob/node/B = GLOB.blob_nodes[i]
-			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blobtype.name]":"No Chemical"])"] = B
+			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blobstrain.name]":"No Chemical"])"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			forceMove(chosen_node.loc)
 
-/mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, needsNode, turf/T)
+/mob/camera/blob/proc/createSpecial(price, blobstrain, nearEquals, needsNode, turf/T)
 	if(!T)
 		T = get_turf(src)
 	var/obj/structure/blob/B = (locate(/obj/structure/blob) in T)
@@ -93,12 +93,12 @@
 			return //handholdotron 2000
 	if(nearEquals)
 		for(var/obj/structure/blob/L in orange(nearEquals, T))
-			if(L.type == blobType)
+			if(L.type == blobstrain)
 				to_chat(src, "<span class='warning'>There is a similar blob nearby, move more than [nearEquals] tiles away from it!</span>")
 				return
 	if(!can_buy(price))
 		return
-	var/obj/structure/blob/N = B.change_to(blobType, src)
+	var/obj/structure/blob/N = B.change_to(blobstrain, src)
 	return N
 
 /mob/camera/blob/verb/toggle_node_req()
@@ -169,7 +169,7 @@
 
 	B.naut = TRUE	//temporary placeholder to prevent creation of more than one per factory.
 	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a [blobtype.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a blobbernaut now.
 		B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
 		B.obj_integrity = min(B.obj_integrity, B.max_integrity)
@@ -191,8 +191,8 @@
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
 		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='cultlarge'>but will slowly die if not near the blob</span> or if the factory that made you is killed.")
 		to_chat(blobber, "You can communicate with other blobbernauts and overminds via <b>:b</b>")
-		to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font>!")
-		to_chat(blobber, "The <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font> reagent [blobtype.shortdesc ? "[blobtype.shortdesc]" : "[blobtype.description]"]")
+		to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+		to_chat(blobber, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
 	else
 		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
 		add_points(40)
@@ -269,7 +269,7 @@
 				continue
 			if(L.stat != DEAD)
 				attacksuccess = TRUE
-			blobtype.attack_living(L)
+			blobstrain.attack_living(L)
 		var/obj/structure/blob/B = locate() in T
 		if(B)
 			if(attacksuccess) //if we successfully attacked a turf with a blob on it, only give an attack refund
@@ -347,31 +347,31 @@
 		last_reroll_time = world.time
 
 /mob/camera/blob/proc/set_chemical()
-	var/datum/blobtype/bt = pick((GLOB.valid_blobtypes - blobtype.type))
-	blobtype = new bt
-	color = blobtype.complementary_color
+	var/datum/blobstrain/bt = pick((GLOB.valid_blobstrains - blobstrain.type))
+	blobstrain = new bt
+	color = blobstrain.complementary_color
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
 		B.update_icon()
 	for(var/BLO in blob_mobs)
 		var/mob/living/simple_animal/hostile/blob/BM = BLO
 		BM.update_icons() //If it's getting a new chemical, tell it what it does!
-		to_chat(BM, "Your overmind's blob reagent is now: <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font>!")
-		to_chat(BM, "The <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font> reagent [blobtype.shortdesc ? "[blobtype.shortdesc]" : "[blobtype.description]"]")
-	to_chat(src, "Your reagent is now: <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font>!")
-	to_chat(src, "The <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font> reagent [blobtype.description]")
-	if(blobtype.effectdesc)
-		to_chat(src, "The <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font> reagent [blobtype.effectdesc]")
+		to_chat(BM, "Your overmind's blob reagent is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+		to_chat(BM, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
+	to_chat(src, "Your reagent is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+	to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.description]")
+	if(blobstrain.effectdesc)
+		to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.effectdesc]")
 
 /mob/camera/blob/verb/blob_help()
 	set category = "Blob"
 	set name = "*Blob Help*"
 	set desc = "Help on how to blob."
 	to_chat(src, "<b>As the overmind, you can control the blob!</b>")
-	to_chat(src, "Your blob reagent is: <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font>!")
-	to_chat(src, "The <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font> reagent [blobtype.description]")
-	if(blobtype.effectdesc)
-		to_chat(src, "The <b><font color=\"[blobtype.color]\">[blobtype.name]</b></font> reagent [blobtype.effectdesc]")
+	to_chat(src, "Your blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+	to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.description]")
+	if(blobstrain.effectdesc)
+		to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.effectdesc]")
 	to_chat(src, "<b>You can expand, which will attack people, damage objects, or place a Normal Blob if the tile is clear.</b>")
 	to_chat(src, "<i>Normal Blobs</i> will expand your reach and can be upgraded into special blobs that perform certain functions.")
 	to_chat(src, "<b>You can upgrade normal blobs into the following types of blob:</b>")

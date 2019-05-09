@@ -1,5 +1,5 @@
 //does massive brute and burn damage, but can only expand manually
-/datum/blobtype/reagent/networked_fibers
+/datum/blobstrain/reagent/networked_fibers
 	name = "Networked Fibers"
 	description = "will do high brute and burn damage and will generate resources quicker, but can only expand manually."
 	shortdesc = "will do high brute and burn damage."
@@ -10,7 +10,7 @@
 	complementary_color = "#FFF68F"
 	reagent = /datum/reagent/blob/networked_fibers
 
-/datum/blobtype/reagent/networked_fibers/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
+/datum/blobstrain/reagent/networked_fibers/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(!O && newB.overmind)
 		if(!istype(B, /obj/structure/blob/node))
 			newB.overmind.add_points(1)

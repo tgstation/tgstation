@@ -32,7 +32,7 @@
 	color = null
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)
-		blob_overlay.color = overmind.blobtype.color
+		blob_overlay.color = overmind.blobstrain.color
 	add_overlay(blob_overlay)
 	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
 
@@ -61,7 +61,7 @@
 	if(!overmind)
 		qdel(src)
 	if(overmind)
-		overmind.blobtype.on_life()
+		overmind.blobstrain.on_life()
 		overmind.update_health_hud()
 	Pulse_Area(overmind, 12, 4, 3)
 	for(var/obj/structure/blob/normal/B in range(1, src))

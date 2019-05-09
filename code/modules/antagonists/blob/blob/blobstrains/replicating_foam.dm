@@ -1,4 +1,4 @@
-/datum/blobtype/reagent/replicating_foam
+/datum/blobstrain/reagent/replicating_foam
 	description = "will do medium brute damage and occasionally expand again when expanding."
 	shortdesc = "will do medium brute damage."
 	effectdesc = "will also expand when attacked with burn damage, but takes more brute damage."
@@ -9,7 +9,7 @@
 	reagent = /datum/reagent/blob/replicating_foam
 
 
-/datum/blobtype/reagent/replicating_foam/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+/datum/blobstrain/reagent/replicating_foam/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BRUTE)
 		damage = damage * 2
 	else if(damage_type == BURN && damage > 0 && B.obj_integrity - damage > 0 && prob(60))
@@ -20,7 +20,7 @@
 	return ..()
 
 
-/datum/blobtype/reagent/replicating_foam/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
+/datum/blobstrain/reagent/replicating_foam/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(prob(30))
 		newB.expand(null, null, 0) //do it again!
 

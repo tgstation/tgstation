@@ -1,5 +1,5 @@
 //does brute damage through armor and bio resistance
-/datum/blobtype/reagent/reactive_spines
+/datum/blobstrain/reagent/reactive_spines
 	name = "Reactive Spines"
 	description = "will do medium brute damage through armor and bio resistance."
 	effectdesc = "will also react when attacked with brute damage, attacking all near the attacked blob."
@@ -10,7 +10,7 @@
 	message = "The blob stabs you"
 	reagent = /datum/reagent/blob/reactive_spines
 
-/datum/blobtype/reagent/reactive_spines/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+/datum/blobstrain/reagent/reactive_spines/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage && damage_type == BRUTE && B.obj_integrity - damage > 0) //is there any damage, is it brute, and will we be alive
 		if(damage_flag == "melee")
 			B.visible_message("<span class='boldwarning'>The blob retaliates, lashing out!</span>")

@@ -1,5 +1,5 @@
 //does aoe brute damage when hitting targets, is immune to explosions
-/datum/blobtype/reagent/explosive_lattice
+/datum/blobstrain/reagent/explosive_lattice
 	name = "Explosive Lattice"
 	description = "will do brute damage in an area around targets."
 	effectdesc = "will also resist explosions, but takes increased damage from fire and other energy sources."
@@ -10,7 +10,7 @@
 	message = "The blob blasts you"
 	reagent = /datum/reagent/blob/explosive_lattice
 
-/datum/blobtype/reagent/explosive_lattice/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+/datum/blobstrain/reagent/explosive_lattice/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_flag == "bomb")
 		return 0
 	else if(damage_flag != "melee" && damage_flag != "bullet" && damage_flag != "laser")

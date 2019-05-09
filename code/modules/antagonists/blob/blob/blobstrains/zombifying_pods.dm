@@ -1,5 +1,5 @@
 //kills sleeping targets and turns them into blob zombies, produces fragile spores when killed or on expanding
-/datum/blobtype/reagent/zombifying_pods
+/datum/blobstrain/reagent/zombifying_pods
 	name = "Zombifying Pods"
 	description = "will do very low toxin damage and harvest sleeping targets for additional resources and a blob zombie."
 	effectdesc = "will also produce fragile spores when killed and on expanding."
@@ -10,7 +10,7 @@
 	message_living = ", and you feel tired"
 	reagent = /datum/reagent/blob/zombifying_pods
 
-/datum/blobtype/reagent/zombifying_pods/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+/datum/blobstrain/reagent/zombifying_pods/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage <= 20 && B.obj_integrity - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
 		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
@@ -19,7 +19,7 @@
 		B.overmind.blob_mobs.Add(BS)
 	return ..()
 
-/datum/blobtype/reagent/zombifying_pods/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
+/datum/blobstrain/reagent/zombifying_pods/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(prob(10))
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
 		BS.overmind = B.overmind
