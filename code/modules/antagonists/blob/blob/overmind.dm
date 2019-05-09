@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/datum/blobstrain/blobstrain
 	var/list/blob_mobs = list()
 	var/list/resource_blobs = list()
-	var/free_chem_rerolls = 1 //one free chemical reroll
+	var/free_strain_rerolls = 1 //one free strain reroll
 	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
 	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
@@ -51,8 +51,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
-	var/datum/blobstrain/BT = pick(GLOB.valid_blobstrains)
-	blobstrain = new BT
+	var/datum/blobstrain/BS = pick(GLOB.valid_blobstrains)
+	blobstrain = new BS(src)
 	color = blobstrain.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
@@ -95,9 +95,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
-	else if(!free_chem_rerolls && (last_reroll_time + BLOB_REROLL_TIME<world.time))
-		to_chat(src, "<b><span class='big'><font color=\"#EE4000\">You have gained another free chemical re-roll.</font></span></b>")
-		free_chem_rerolls = 1
+	else if(!free_strain_rerolls && (last_reroll_time + BLOB_REROLL_TIME<world.time))
+		to_chat(src, "<b><span class='big'><font color=\"#EE4000\">You have gained another free strain re-roll.</font></span></b>")
+		free_strain_rerolls = 1
 
 	if(!victory_in_progress && max_count < blobs_legit.len)
 		max_count = blobs_legit.len
@@ -176,7 +176,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/camera/blob/examine(mob/user)
 	..()
 	if(blobstrain)
-		to_chat(user, "Its chemical is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>.")
+		to_chat(user, "Its strain is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>.")
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
@@ -234,8 +234,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			stat(null, "Core Health: [blob_core.obj_integrity]")
 			stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 			stat(null, "Blobs to Win: [blobs_legit.len]/[blobwincount]")
-		if(free_chem_rerolls)
-			stat(null, "You have [free_chem_rerolls] Free Chemical Reroll\s Remaining")
+		if(free_strain_rerolls)
+			stat(null, "You have [free_strain_rerolls] Free Strain Reroll\s Remaining")
 		if(!placed)
 			if(manualplace_min_time)
 				stat(null, "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]")

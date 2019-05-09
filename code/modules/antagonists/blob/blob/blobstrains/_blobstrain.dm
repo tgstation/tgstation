@@ -17,10 +17,12 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 	var/point_rate = 2
 	var/mob/camera/blob/overmind
 
-/datum/blobstrain/proc/on_sporedeath(mob/living/spore)
+/datum/blobstrain/New(mob/camera/blob/new_overmind)
+	if (!istype(new_overmind))
+		stack_trace("blobstrain created without overmind")
+	overmind = new_overmind
 
-/datum/blobstrain/reagent/on_sporedeath(mob/living/spore)
-	spore.reagents.add_reagent(reagent.id, 10)
+/datum/blobstrain/proc/on_sporedeath(mob/living/spore)
 
 /datum/blobstrain/proc/send_message(mob/living/M)
 	var/totalmessage = message

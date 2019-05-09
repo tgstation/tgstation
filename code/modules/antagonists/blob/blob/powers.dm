@@ -71,7 +71,7 @@
 		var/list/nodes = list()
 		for(var/i in 1 to GLOB.blob_nodes.len)
 			var/obj/structure/blob/node/B = GLOB.blob_nodes[i]
-			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blobstrain.name]":"No Chemical"])"] = B
+			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blobstrain.name]":"No Strain"])"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
@@ -336,32 +336,32 @@
 		if(BM.stat == CONSCIOUS)
 			BM.say(speak_text)
 
-/mob/camera/blob/verb/chemical_reroll()
+/mob/camera/blob/verb/strain_reroll()
 	set category = "Blob"
-	set name = "Reactive Chemical Adaptation (40)"
-	set desc = "Replaces your chemical with a random, different one."
-	if(free_chem_rerolls || can_buy(40))
-		set_chemical()
-		if(free_chem_rerolls)
-			free_chem_rerolls--
+	set name = "Reactive Strain Adaptation (40)"
+	set desc = "Replaces your strain with a random, different one."
+	if(free_strain_rerolls || can_buy(40))
+		set_strain()
+		if(free_strain_rerolls)
+			free_strain_rerolls--
 		last_reroll_time = world.time
 
-/mob/camera/blob/proc/set_chemical()
-	var/datum/blobstrain/bt = pick((GLOB.valid_blobstrains - blobstrain.type))
-	blobstrain = new bt
+/mob/camera/blob/proc/set_strain()
+	var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains - blobstrain.type))
+	blobstrain = new bs(src)
 	color = blobstrain.complementary_color
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
 		B.update_icon()
 	for(var/BLO in blob_mobs)
 		var/mob/living/simple_animal/hostile/blob/BM = BLO
-		BM.update_icons() //If it's getting a new chemical, tell it what it does!
-		to_chat(BM, "Your overmind's blob reagent is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-		to_chat(BM, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
-	to_chat(src, "Your reagent is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-	to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.description]")
+		BM.update_icons() //If it's getting a new strain, tell it what it does!
+		to_chat(BM, "Your overmind's blob strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+		to_chat(BM, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
+	to_chat(src, "Your strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+	to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.description]")
 	if(blobstrain.effectdesc)
-		to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.effectdesc]")
+		to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
 
 /mob/camera/blob/verb/blob_help()
 	set category = "Blob"

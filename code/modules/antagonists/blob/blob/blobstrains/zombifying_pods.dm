@@ -6,6 +6,7 @@
 	shortdesc = "will do very low toxin damage and harvest sleeping targets for additional resources(for your overmind) and a blob zombie."
 	analyzerdescdamage = "Does very low toxin damage and kills unconscious humans, turning them into blob zombies."
 	analyzerdesceffect = "Produces spores when expanding and when killed."
+	color = "#E88D5D"
 	complementary_color = "#823ABB"
 	message_living = ", and you feel tired"
 	reagent = /datum/reagent/blob/zombifying_pods

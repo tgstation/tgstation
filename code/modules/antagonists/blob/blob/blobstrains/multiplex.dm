@@ -2,11 +2,14 @@
 	var/list/blobstrains
 	var/typeshare
 
-/datum/blobstrain/multiplex/New(list/blobstrains)
+/datum/blobstrain/multiplex/New(mob/camera/blob/new_overmind, list/blobstrains)
+	. = ..()
 	for (var/bt in blobstrains)
 		if (ispath(bt))
-			src.blobstrains |= new bt()
+			src.blobstrains |= new bt(overmind)
 		else if (istype(bt, /datum/blobstrain))
+			var/datum/blobstrain/bts = bt
+			bts.overmind = overmind
 			src.blobstrains += bt
 	 typeshare = (0.8 * length(src.blobstrains)) - (length(src.blobstrains)-1) // 1 is 80%, 2 are 60% etc
 

@@ -1,6 +1,7 @@
 //does burn damage and EMPs, slightly fragile
 /datum/blobstrain/reagent/electromagnetic_web
 	name = "Electromagnetic Web"
+	color = "#83ECEC"
 	complementary_color = "#EC8383"
 	reagent = /datum/reagent/blob/electromagnetic_web
 

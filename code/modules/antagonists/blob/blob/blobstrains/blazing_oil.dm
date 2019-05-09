@@ -6,16 +6,17 @@
 	effectdesc = "will also release bursts of flame when burnt, but takes damage from water."
 	analyzerdescdamage = "Does medium burn damage and sets targets on fire."
 	analyzerdesceffect = "Releases fire when burnt, but takes damage from water and other extinguishing liquids."
+	color = "#B68D00"
 	complementary_color = "#BE5532"
 	blobbernaut_message = "splashes"
 	message = "The blob splashes you with burning oil"
 	message_living = ", and you feel your skin char and melt"
 	reagent = /datum/reagent/blob/blazing_oil
 
-/datum/blobstrain/reagent/blob/blazing_oil/extinguish_reaction(obj/structure/blob/B)
+/datum/blobstrain/reagent/blazing_oil/extinguish_reaction(obj/structure/blob/B)
 	B.take_damage(1.5, BURN, "energy")
 
-/datum/blobstrain/reagent/blob/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+/datum/blobstrain/reagent/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BURN && damage_flag != "energy")
 		for(var/turf/open/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
