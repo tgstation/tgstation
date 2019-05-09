@@ -92,7 +92,6 @@
 /obj/machinery/stasis/proc/chill_out(mob/living/target)
 	if(target != occupant)
 		return
-	var/freq = rand(24750, 26550)
 	playsound(src, 'sound/effects/spray.ogg', 5, 0.05, 0.55, extra_range = 2)
 	target.SetStasis(TRUE)
 	target.ExtinguishMob()
