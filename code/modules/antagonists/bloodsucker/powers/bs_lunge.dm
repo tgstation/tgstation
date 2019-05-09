@@ -5,13 +5,14 @@
 
 /datum/action/bloodsucker/targeted/lunge
 	name = "Predatory Lunge"
-	desc = "Spring at your target and aggressively grapple them without warning. Attacks from the rear may even knock them down."
+	desc = "Spring at your target and aggressively grapple them without warning. Attacks from concealment or the rear may even knock them down."
 	button_icon_state = "power_lunge"
 	bloodcost = 10
 	cooldown = 100
 	target_range = 3
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
+	must_be_capacitated = TRUE
 	bloodsucker_can_buy = TRUE
 
 
@@ -22,11 +23,6 @@
 	if (owner.pulledby && owner.pulledby.grab_state >= GRAB_AGGRESSIVE)
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You're being grabbed!</span>")
-		return FALSE
-	// Not Correct State
-	if (owner.incapacitated())
-		if (display_error)
-			to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
 		return FALSE
 	return TRUE
 
@@ -63,6 +59,9 @@
 	// Clear Vars
 	owner.pulling = null
 
+	// Will we Knock them Down?
+	var/do_knockdown = !is_A_facing_B(target,owner) || istype(owner.loc, /obj/structure/closet)
+
 	// Step One: Heatseek toward Target's Turf
 	walk_towards(owner, T, 0.1, 10) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
 	var/safety = 10
@@ -83,8 +82,8 @@
 	// Step Two: Check if I'm at/adjectent to Target's CURRENT turf (not original...that was just a destination)
 	if (target.Adjacent(owner))
 		// LEVEL 2: If behind target, mute or unconscious!
-		if (!is_A_facing_B(target,owner)) // && level_current >= 1)
-			target.Paralyze(20 + 5 * level_current,1)
+		if (do_knockdown) // && level_current >= 1)
+			target.Paralyze(25 + 5 * level_current,1)
 		// Cancel Walk (we were close enough to contact them)
 		walk(owner,0)
 		//target.Paralyze(10,1)

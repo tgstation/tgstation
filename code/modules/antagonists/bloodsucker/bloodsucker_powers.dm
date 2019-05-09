@@ -29,7 +29,7 @@
 	var/bloodsucker_can_buy = FALSE 	// Must be a bloodsucker to use this power.
 	var/warn_constant_cost = FALSE		// Some powers charge you for staying on. Masquerade, Cloak, Veil, etc.
 	var/can_use_in_torpor = FALSE		// Most powers don't function if you're in torpor.
-
+	var/must_be_capacitated = FALSE		// Some powers require you to be standing and ready.
 	//var/not_bloodsucker = FALSE		// This goes to Vassals or Hunters, but NOT bloodsuckers.
 
 /datum/action/bloodsucker/New()
@@ -90,10 +90,17 @@
 	if(!owner || !owner.mind)
 		return FALSE
 	// Torpor?
-	if (!can_use_in_torpor && owner.has_trait(TRAIT_DEATHCOMA))
+	if (!can_use_in_torpor && HAS_TRAIT(owner, TRAIT_DEATHCOMA))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Not while you're in Torpor.</span>")
 		return FALSE
+	// Incap?
+	if (must_be_capacitated)
+		var/mob/living/L = owner
+		if (L.incapacitated() || L.lying)
+			if (display_error)
+				to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
+			return FALSE
 	// Constant Cost (out of blood)
 	if (warn_constant_cost)
 		var/mob/living/L = owner
@@ -142,7 +149,7 @@
 	StartCooldown()
 
 /datum/action/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
-	return active && (!warn_constant_cost || user.blood_volume > 0)
+	return active && user && (!warn_constant_cost || user.blood_volume > 0)
 
 
 
@@ -187,6 +194,7 @@
 	var/power_in_use = FALSE // Is this power LOCKED due to being used?
 
 /datum/action/bloodsucker/targeted/New(Target)
+	desc += "<br>\[<i>Targeted Power</i>\]"	// Modify description to add notice that this is aimed.
 	..()
 	// Create Proc Holder for intercepting clicks
 	bs_proc_holder = new ()

@@ -74,7 +74,7 @@
 	prev_undershirt = H.undershirt
 	prev_socks = H.socks
 	//prev_eye_color
-	prev_disfigured = H.has_trait(TRAIT_DISFIGURED) // I was disfigured! //prev_disabilities = H.disabilities
+	prev_disfigured = HAS_TRAIT(H, TRAIT_DISFIGURED) // I was disfigured! //prev_disabilities = H.disabilities
 	prev_features = H.dna.features
 
 	// Change Appearance
@@ -88,7 +88,7 @@
 	H.undershirt = random_undershirt(H.gender)
 	H.socks = random_socks(H.gender)
 	//H.eye_color = random_eye_color()
-	H.remove_trait(TRAIT_DISFIGURED) //
+	REMOVE_TRAIT(H, TRAIT_DISFIGURED, null) //
 	H.dna.features = random_features()
 
 	// Apply Appearance
@@ -131,7 +131,7 @@
 
 		//H.disabilities = prev_disabilities // Restore HUSK, CLUMSY, etc.
 		if (prev_disfigured)
-			H.add_trait(TRAIT_DISFIGURED, "husk") // NOTE: We are ASSUMING husk. // H.status_flags |= DISFIGURED	// Restore "Unknown" disfigurement
+			ADD_TRAIT(H, TRAIT_DISFIGURED, "husk") // NOTE: We are ASSUMING husk. // H.status_flags |= DISFIGURED	// Restore "Unknown" disfigurement
 		H.dna.features = prev_features
 
 		// Apply Appearance

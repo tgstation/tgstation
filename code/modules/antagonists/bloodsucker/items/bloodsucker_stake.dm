@@ -15,7 +15,7 @@
 	return FALSE
 
 /mob/living/proc/StakeCanKillMe()
-	return IsSleeping() || stat >= UNCONSCIOUS || blood_volume <= 0 || has_trait(TRAIT_DEATHCOMA) // NOTE: You can't go to sleep in a coffin with a stake in you.
+	return IsSleeping() || stat >= UNCONSCIOUS || blood_volume <= 0 || HAS_TRAIT(src, TRAIT_DEATHCOMA) // NOTE: You can't go to sleep in a coffin with a stake in you.
 
 
 ///obj/item/weapon/melee/stake
@@ -88,7 +88,7 @@
 	if (!C.can_be_staked())
 		return
 			// Oops! Can't.
-	if(C.has_trait(TRAIT_PIERCEIMMUNE))
+	if(HAS_TRAIT(C, TRAIT_PIERCEIMMUNE))
 		to_chat(user, "<span class='danger'>[target]'s chest resists the stake. It won't go in.</span>")
 		return
 	// Make Attempt...

@@ -31,12 +31,12 @@
 // NOTE: Firing off vulgar powers disables your Masquerade!
 
 
-/datum/action/bloodsucker/masquerade/CheckCanUse(display_error)
+/*/datum/action/bloodsucker/masquerade/CheckCanUse(display_error)
 	if(!..(display_error))// DEFAULT CHECKS
 		return FALSE
 	// DONE!
 	return TRUE
-
+*/
 
 
 /datum/action/bloodsucker/masquerade/ActivatePower()
@@ -49,14 +49,14 @@
 
 
 	// Remove ColdBlooded & Hard/SoftCrit
-	user.remove_trait(TRAIT_COLDBLOODED, "bloodsucker")
-	user.remove_trait(TRAIT_NOHARDCRIT, "bloodsucker")
-	user.remove_trait(TRAIT_NOSOFTCRIT, "bloodsucker")
+	REMOVE_TRAIT(user, TRAIT_COLDBLOODED, "bloodsucker")
+	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT, "bloodsucker")
+	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT, "bloodsucker")
 	var/obj/item/organ/heart/vampheart/H = user.getorganslot(ORGAN_SLOT_HEART)
 
 	// WE ARE ALIVE! //
 	bloodsuckerdatum.poweron_masquerade = TRUE
-	while(ContinueActive(user))
+	while(bloodsuckerdatum && ContinueActive(user))
 
 		// HEART
 		if (istype(H))
@@ -87,9 +87,9 @@
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	bloodsuckerdatum.poweron_masquerade = FALSE
 
-	user.add_trait(TRAIT_COLDBLOODED, "bloodsucker")
-	user.add_trait(TRAIT_NOHARDCRIT, "bloodsucker")
-	user.add_trait(TRAIT_NOSOFTCRIT, "bloodsucker")
+	ADD_TRAIT(user, TRAIT_COLDBLOODED, "bloodsucker")
+	ADD_TRAIT(user, TRAIT_NOHARDCRIT, "bloodsucker")
+	ADD_TRAIT(user, TRAIT_NOSOFTCRIT, "bloodsucker")
 
 	// HEART
 	var/obj/item/organ/heart/H = user.getorganslot(ORGAN_SLOT_HEART)

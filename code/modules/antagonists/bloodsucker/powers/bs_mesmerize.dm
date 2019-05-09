@@ -15,18 +15,19 @@
 	target_range = 5
 	power_activates_immediately = FALSE
 	message_Trigger = "Whom will you subvert to your will?"
+	must_be_capacitated = TRUE
 	bloodsucker_can_buy = TRUE
 
 /datum/action/bloodsucker/targeted/mesmerize/CheckCanUse(display_error)
 	if(!..(display_error))// DEFAULT CHECKS
 		return FALSE
-	if (!owner.getorganslot("heart"))
+	if (!owner.getorganslot(ORGAN_SLOT_EYES))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You have no eyes with which to mesmerize.</span>")
 		return FALSE
 	// Check: Eyes covered?
 	var/mob/living/L = owner
-	if (istype(L) && L.is_eyes_covered())
+	if (istype(L) && L.is_eyes_covered() || !isturf(owner.loc))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your eyes are concealed from sight.</span>")
 		return FALSE
@@ -47,7 +48,7 @@
 	// Dead/Unconscious
 	if (target.stat > CONSCIOUS)
 		if (display_error)
-			to_chat(owner, "<span class='warning'>Your victim is not [(target.stat == DEAD || target.has_trait(TRAIT_FAKEDEATH))?"alive":"conscious"].</span>")
+			to_chat(owner, "<span class='warning'>Your victim is not [(target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))?"alive":"conscious"].</span>")
 		return FALSE
 	// Check: Target has eyes?
 	if (!target.getorganslot("heart"))
@@ -74,7 +75,7 @@
 			to_chat(owner, "<span class='warning'>You must be facing your victim.</span>")
 		return FALSE
 	// Check: Target facing me?
-	if (!target.resting && !is_A_facing_B(target,owner))
+	if (!target.lying && !is_A_facing_B(target,owner))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your victim must be facing you to see into your eyes.</span>")
 		return FALSE

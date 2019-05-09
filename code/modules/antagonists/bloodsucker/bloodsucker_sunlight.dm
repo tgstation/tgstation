@@ -1,7 +1,7 @@
 #define TIME_BLOODSUCKER_NIGHT	720 		// 12 minutes
-#define TIME_BLOODSUCKER_DAY	90 			// 1.5 minutes // 10 is a second, 600 is a minute.
 #define TIME_BLOODSUCKER_DAY_WARN	90 		// 1.5 minutes
 #define TIME_BLOODSUCKER_DAY_FINAL_WARN	25 	// 25 sec
+#define TIME_BLOODSUCKER_DAY	60 			// 1.5 minutes // 10 is a second, 600 is a minute.
 #define TIME_BLOODSUCKER_BURN_INTERVAL	4 	// 4 sec
 
 
@@ -42,7 +42,7 @@
 					  "<span class = 'danger'>In [TIME_BLOODSUCKER_DAY_FINAL_WARN / 10], your master will be at risk of a Solar Flare. Make sure they find cover!</span>")
 
 		// (FINAL LIL WARNING)
-		while (time_til_cycle > 50)
+		while (time_til_cycle > 5)
 			sleep(10)
 			if (cancel_me)
 				return
@@ -55,7 +55,7 @@
 			if (cancel_me)
 				return
 		//sleep(50)
-		warn_daylight(4,"<span class = 'userdanger'>Solar flares bombard the station with deadly UV light!</span><br><span class = ''>Stay in cover for the next [TIME_BLOODSUCKER_DAY / 600] minutes or risk Final Death!</span>",\
+		warn_daylight(4,"<span class = 'userdanger'>Solar flares bombard the station with deadly UV light!</span><br><span class = ''>Stay in cover for the next [TIME_BLOODSUCKER_DAY / 60] minutes or risk Final Death!</span>",\
 				  	  "<span class = 'danger'>Solar flares bombard the station with UV light!</span>")
 
 		// Part 4: Day
@@ -153,6 +153,7 @@
 
 
 /obj/effect/sunlight/proc/vamps_rank_up()
+	set waitfor = FALSE
 	// Cycle through all vamp antags and check if they're inside a closet.
 	for (var/datum/mind/M in SSticker.mode.bloodsuckers)
 		if (!istype(M) || !istype(M.current))

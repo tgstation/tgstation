@@ -13,8 +13,8 @@
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
 	bloodsucker_can_buy = TRUE
-
-	var/datum/martial_art/vamphaste/haste_cqc	// Assign this when
+	must_be_capacitated = TRUE
+	//var/datum/martial_art/vamphaste/haste_cqc	// Assign this when
 
 
 
@@ -26,11 +26,6 @@
 	if (owner.pulledby && owner.pulledby.grab_state >= GRAB_AGGRESSIVE)
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You're being grabbed!</span>")
-		return FALSE
-	// Not Correct State
-	if (owner.incapacitated())
-		if (display_error)
-			to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
 		return FALSE
 	return TRUE
 

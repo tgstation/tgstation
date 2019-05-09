@@ -42,7 +42,7 @@
 
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, \
-										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_COLDBLOODED, TRAIT_AGEUSIA)
+										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL)
 	// NOTES: TRAIT_AGEUSIA <-- Doesn't like flavors.
 	// REMOVED: TRAIT_NODEATH
 	// TO ADD:
@@ -203,7 +203,7 @@
 
 	// Traits
 	for (var/T in defaultTraits)
-		owner.current.add_trait(T, "bloodsucker")
+		ADD_TRAIT(owner.current, T, "bloodsucker")
 	// Traits: Species
 	if (ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
@@ -256,7 +256,7 @@
 
 	// Traits
 	for (var/T in defaultTraits)
-		owner.current.remove_trait(T, "bloodsucker")
+		REMOVE_TRAIT(owner.current, T, "bloodsucker")
 	// Traits: Species
 	if (ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
@@ -284,6 +284,7 @@
 
 
 datum/antagonist/bloodsucker/proc/RankUp()
+	set waitfor = FALSE
 	if (!owner || !owner.current)
 		return
 
@@ -297,10 +298,8 @@ datum/antagonist/bloodsucker/proc/RankUp()
 			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, they can be built from wooden planks.</span><br>")
 
 
-	update_hud(TRUE) 	// Set blood value, current rank
-
-
 datum/antagonist/bloodsucker/proc/SpendRank()
+	set waitfor = FALSE
 	if (vamplevel_unspent <= 0 || !owner || !owner.current || !owner.current.client)
 		return
 
@@ -319,12 +318,15 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	// Abort?
 	if (options.len > 1)
 		var/choice = input(owner.current, "You have the opportunity to grow more ancient. Select a power to advance your Rank.", "Your Blood Thickens...") in options
+		if (!istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+			to_chat(owner.current, "<span class='warning'>Return to your coffin to advance your Rank.</span>")
+			return
 		if (!choice || !options[choice])
 			to_chat(owner.current, "<span class='notice'>You prevent your blood from thickening just yet, but you may try again later.</span>")
 			return
 		var/datum/action/bloodsucker/P = options[choice]
 		BuyPower(new P)
-		to_chat(owner.current, "<span class='notice'>You have learned [P]!</span>")
+		to_chat(owner.current, "<span class='notice'>You have learned [initial(P.name)]!</span>")
 	else
 		to_chat(owner.current, "<span class='notice'>You grow more ancient by the night!</span>")
 
@@ -621,6 +623,9 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	var/mob/A_mob = A
 	if (!A_mob.mind)
 		return FALSE
+	// Ghost Admins always see Bloodsuckers/Vassals
+	if (isobserver(M))
+		return TRUE
 
 	// Find Datums: Bloodsucker
 	var/datum/antagonist/bloodsucker/atom_B = A_mob.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)

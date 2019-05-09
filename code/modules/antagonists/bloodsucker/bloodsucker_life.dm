@@ -23,7 +23,7 @@
 	while (owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
 
 		// Deduct Blood
-		if (owner.current.stat == CONSCIOUS && !poweron_feed && !owner.current.has_trait(TRAIT_DEATHCOMA))
+		if (owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))
 			AddBloodVolume(-0.2) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
 
 		// Heal
@@ -44,7 +44,7 @@
 		update_hud()
 
 		// Daytime Sleep in Coffin
-		if (SSticker.mode.is_daylight() && !owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker"))
+		if (SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
 			if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 				Torpor_Begin()
 
@@ -181,7 +181,7 @@
 
 		// BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
 		var/fireheal = 0
-		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || C.has_trait(TRAIT_DEATHCOMA, "bloodsucker")) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
+		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || HAS_TRAIT(C, TRAIT_DEATHCOMA)) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
 		if(amInCoffinWhileTorpor)
 			mult *= 5 // Increase multiplier if we're sleeping in a coffin.
 			fireheal = min(C.getFireLoss(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
@@ -204,7 +204,9 @@
 			if (mult == 0)
 				return TRUE
 			// We have damage. Let's heal (one time)
-			C.heal_overall_damage(bruteheal * mult, fireheal * mult)				// Heal BRUTE / BURN in random portions throughout the body.
+			C.adjustBruteLoss(-bruteheal * mult, forced=TRUE)// Heal BRUTE / BURN in random portions throughout the body.
+			C.adjustFireLoss(-fireheal * mult, forced=TRUE)
+			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
 			// Pay Cost
 			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
 
@@ -311,7 +313,7 @@
 	else	// No damage, OR brute healed and NOT in coffin (since you cannot heal burn)
 		if (total_damage <= 0 || owner.current.getBruteLoss() <= 0 && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			// Not Daytime, Not in Torpor
-			if (!SSticker.mode.is_daylight() && owner.current.has_trait(TRAIT_DEATHCOMA, "bloodsucker"))
+			if (!SSticker.mode.is_daylight() && HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
 				Torpor_End()
 		// Fake Unconscious
 		if (poweron_masquerade == TRUE && total_damage >= owner.current.getMaxHealth() - HEALTH_THRESHOLD_FULLCRIT)
@@ -325,9 +327,9 @@
 	owner.current.stat = UNCONSCIOUS
 	owner.current.fakedeath("bloodsucker") // Come after UNCONSCIOUS or else it fails
 	//owner.current.update_stat()
-	owner.current.add_trait(TRAIT_NODEATH,"bloodsucker")	// Without this, you'll just keep dying while you recover.
-	owner.current.add_trait(TRAIT_RESISTHIGHPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
-	owner.current.add_trait(TRAIT_RESISTLOWPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	ADD_TRAIT(owner.current, TRAIT_NODEATH,"bloodsucker")	// Without this, you'll just keep dying while you recover.
+	ADD_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	ADD_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
 	// Visuals
 	owner.current.update_sight()
 	owner.current.reload_fullscreen()
@@ -341,9 +343,9 @@
 	owner.current.stat = SOFT_CRIT
 	owner.current.cure_fakedeath("bloodsucker") // Come after SOFT_CRIT or else it fails
 	//owner.current.update_stat()
-	owner.current.remove_trait(TRAIT_NODEATH,"bloodsucker")
-	owner.current.remove_trait(TRAIT_RESISTHIGHPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
-	owner.current.remove_trait(TRAIT_RESISTLOWPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	REMOVE_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")
+	REMOVE_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	REMOVE_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
 	to_chat(owner, "<span class='warning'>You have recovered from Torpor.</span>")
 
 

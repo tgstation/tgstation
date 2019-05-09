@@ -208,7 +208,7 @@
 			to_chat(creator, "<span class='danger'>[target] is already your loyal Vassal!</span>")
 		return FALSE
 	// Already Antag or Loyal (Vamp Hunters count as antags)
-	if (target.mind.antag_datums && target.mind.antag_datums.len > 0 || (target.mind in SSticker.mode.vassals) || target.mind.enslaved_to || target.has_trait(TRAIT_MINDSHIELD))
+	if (target.mind.antag_datums && target.mind.antag_datums.len > 0 || (target.mind in SSticker.mode.vassals) || target.mind.enslaved_to || HAS_TRAIT(target, TRAIT_MINDSHIELD))
 		//message_admins("DEBUG6: can_make_vassal() Abort: Am Bad Guy Already [target.mind.antag_datums] [target.mind.current.isloyal()]")
 		if (display_warning)
 			to_chat(creator, "<span class='danger'>[target] resists the power of your blood to dominate their mind!</span>")

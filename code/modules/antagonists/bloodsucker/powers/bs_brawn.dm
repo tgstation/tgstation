@@ -9,6 +9,7 @@
 	target_range = 1
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
+	must_be_capacitated = TRUE
 	bloodsucker_can_buy = TRUE
 	// Level Up
 	var/upgrade_canLocker = FALSE
@@ -34,6 +35,9 @@
 
 
 /datum/action/bloodsucker/targeted/brawn/CheckCanTarget(mob/living/target,display_error)
+	// Must outside Closet to target anyone!
+	if (!isturf(owner.loc))
+		return FALSE
 	// Check: Self
 	if (target == owner)
 		return FALSE
@@ -43,7 +47,7 @@
 	// Target Type: Door
 	else if (upgrade_canDoor && istype(target, /obj/machinery/door))
 		return TRUE
-		// Target Type: Closet
+	// Target Type: Closet
 	else if (upgrade_canLocker && istype(target, /obj/structure/closet))
 		return TRUE
 

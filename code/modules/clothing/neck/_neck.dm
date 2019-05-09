@@ -76,7 +76,7 @@
 			if (!do_mob(user,M,30))	// FULPSTATION: Stethoscope should take a moment to listen
 				return // FAIL
 
-			if(!(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH))))
+			if(!(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH))))
 				if(heart && istype(heart))		// FULPCHANGE: Display Heart Message
 					heart_strength = heart.HeartStrengthMessage()
 				if(lungs && istype(lungs))
