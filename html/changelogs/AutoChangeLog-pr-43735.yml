@@ -1,0 +1,6 @@
+author: "Okand37"
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen Shipyards have released a set of Kilo-pattern shuttles including a new Kilo Emergency Shuttle, purchasable for 5000 credits!"
+  - rscadd: "Syndicate Skunkworks have ushered in a new model of the infiltrator-pattern shuttle designed for operative insertion and extraction. Rumours report the new shuttle to be an up-armoured version of the original design that Nanotrasen Intelligence workers have taken to calling the \"tortoise.\""
+  - admin: "New shuttles are accessible from the shuttle loader!"
