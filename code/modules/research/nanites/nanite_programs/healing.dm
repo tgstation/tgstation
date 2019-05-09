@@ -70,7 +70,7 @@
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
 /datum/nanite_program/brain_heal/check_conditions()
-	if(!host_mob.getBrainLoss())
+	if(!(host_mob.getBrainLoss() || length(get_traumas()))
 		return FALSE
 	return ..()
 
