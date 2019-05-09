@@ -31,6 +31,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/structure/blob/node/Life()
+/obj/structure/blob/node/process()
 	if(overmind)
 		Pulse_Area(overmind, 10, 3, 2)

@@ -33,7 +33,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
 	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
-	var/base_point_rate = 2 //for blob core placement
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 	var/list/blobs_legit = list()
@@ -57,7 +56,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(blob_core)
 		blob_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
-	.= ..()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		return FALSE
 	return TRUE
 
-/mob/camera/blob/Life()
+/mob/camera/blob/process()
 	if(!blob_core)
 		if(!placed)
 			if(manualplace_min_time && world.time >= manualplace_min_time)
@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
 				manualplace_min_time = 0
 			if(autoplace_max_time && world.time >= autoplace_max_time)
-				place_blob_core(base_point_rate, 1)
+				place_blob_core(1)
 		else
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
@@ -101,8 +101,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	if(!victory_in_progress && max_count < blobs_legit.len)
 		max_count = blobs_legit.len
-	..()
-
 
 /mob/camera/blob/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')
@@ -163,6 +161,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	GLOB.overminds -= src
 
 	SSshuttle.clearHostileEnvironment(src)
+	STOP_PROCESSING(SSobj, src)
 
 	return ..()
 

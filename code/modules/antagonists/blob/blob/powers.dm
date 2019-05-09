@@ -7,7 +7,7 @@
 
 // Power verbs
 
-/mob/camera/blob/proc/place_blob_core(point_rate, placement_override , pop_override = FALSE)
+/mob/camera/blob/proc/place_blob_core(placement_override, pop_override = FALSE)
 	if(placed && placement_override != -1)
 		return 1
 	if(!placement_override)
@@ -47,7 +47,7 @@
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/structure/blob/core/core = new(get_turf(src), src, point_rate, 1)
+		var/obj/structure/blob/core/core = new(get_turf(src), src, 1)
 		core.overmind = src
 		blobs_legit += src
 		blob_core = core

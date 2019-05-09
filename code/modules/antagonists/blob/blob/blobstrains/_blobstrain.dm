@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobstrain/reagent)
+GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/blobstrain/reagent, /datum/blobstrain/multiplex))
 
 /datum/blobstrain
 	var/name
@@ -31,10 +31,10 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 	totalmessage += "!"
 	to_chat(M, "<span class='userdanger'>[totalmessage]</span>")
 
-/datum/blobstrain/proc/on_life()
+/datum/blobstrain/proc/core_process()
 	if(resource_delay <= world.time)
 		resource_delay = world.time + 10 // 1 second
-		overmind.blobstrain.on_life()
+		overmind.add_points(point_rate)
 	overmind.blob_core.obj_integrity = min(overmind.blob_core.max_integrity, overmind.blob_core.obj_integrity+core_regen)
 
 /datum/blobstrain/proc/attack_living(var/mob/living/L) // When the blob attacks people

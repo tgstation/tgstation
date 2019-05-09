@@ -55,13 +55,13 @@
 		if(overmind) //we should have an overmind, but...
 			overmind.update_health_hud()
 
-/obj/structure/blob/core/Life()
+/obj/structure/blob/core/process()
 	if(QDELETED(src))
 		return
 	if(!overmind)
 		qdel(src)
 	if(overmind)
-		overmind.blobstrain.on_life()
+		overmind.blobstrain.core_process()
 		overmind.update_health_hud()
 	Pulse_Area(overmind, 12, 4, 3)
 	for(var/obj/structure/blob/normal/B in range(1, src))
