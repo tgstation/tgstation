@@ -52,6 +52,7 @@
 	icon_state = "ambrosiadeus"
 	filling_color = "#008B8B"
 	wine_power = 50
+	foodtype = VEGETABLES | HERBAL
 
 //Ambrosia Gaia
 /obj/item/seeds/ambrosia/gaia
@@ -77,3 +78,4 @@
 	seed = /obj/item/seeds/ambrosia/gaia
 	wine_power = 70
 	wine_flavor = "the earthmother's blessing"
+	foodtype = VEGETABLES | HERBAL

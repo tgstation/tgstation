@@ -317,7 +317,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of vermouth"
 	glass_desc = "You wonder why you're even drinking this straight."
 	shot_glass_icon_state = "shotglassclear"
-	foodtype = ALCOHOL | FUIT | HERBAL
+	foodtype = ALCOHOL | FRUIT | HERBAL
 
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
@@ -759,7 +759,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Long Island Iced Tea"
 	glass_desc = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
 	foodtype = ALCOHOL | HERBAL | SUGAR
-	
+
 
 
 /datum/reagent/consumable/ethanol/moonshine

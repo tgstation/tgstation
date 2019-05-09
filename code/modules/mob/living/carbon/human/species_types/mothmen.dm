@@ -12,7 +12,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
 	liked_food = VEGETABLES | DAIRY
-	disliked_food = FRUIT | GROSS | MEDICINAL
+	disliked_food = FRUIT | GROSS | HERBAL
 	toxic_food = MEAT | RAW
 	mutanteyes = /obj/item/organ/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT

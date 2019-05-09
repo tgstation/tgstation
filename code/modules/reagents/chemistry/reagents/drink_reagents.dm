@@ -63,7 +63,7 @@
 	glass_icon_state = "carrotjuice"
 	glass_name = "glass of  carrot juice"
 	glass_desc = "It's just like a carrot but without crunching."
-	foodtype = VEGETABLE
+	foodtype = VEGETABLES
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/M)
 	M.adjust_blurriness(-1)
@@ -207,7 +207,7 @@
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of potato juice"
 	glass_desc = "Bleh..."
-	foodtype = VEGETABLE
+	foodtype = VEGETABLES
 
 /datum/reagent/consumable/grapejuice
 	name = "Grape Juice"
@@ -738,7 +738,7 @@
 	glass_icon_state = "pumpkin_latte"
 	glass_name = "pumpkin latte"
 	glass_desc = "A mix of coffee and pumpkin juice."
-	foodtype = VEGETABLE | HERBAL | DAIRY
+	foodtype = VEGETABLES | HERBAL | DAIRY
 
 /datum/reagent/consumable/gibbfloats
 	name = "Gibb Floats"
@@ -759,7 +759,7 @@
 	description = "Juiced from real pumpkin."
 	color = "#FFA500"
 	taste_description = "pumpkin"
-	foodtype = VEGETABLE //don't you dare tell me pumpkins are fruit
+	foodtype = VEGETABLES //don't you dare tell me pumpkins are fruit
 
 /datum/reagent/consumable/blumpkinjuice
 	name = "Blumpkin Juice"
@@ -767,7 +767,7 @@
 	description = "Juiced from real blumpkin."
 	color = "#00BFFF"
 	taste_description = "a mouthful of pool water"
-	foodtype = VEGETABLE
+	foodtype = VEGETABLES
 
 /datum/reagent/consumable/triple_citrus
 	name = "Triple Citrus"

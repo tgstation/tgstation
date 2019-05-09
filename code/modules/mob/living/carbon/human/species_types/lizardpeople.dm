@@ -19,7 +19,7 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY | MEDICINAL
+	disliked_food = GRAIN | DAIRY
 	liked_food = GROSS | MEAT
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'

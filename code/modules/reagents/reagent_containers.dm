@@ -66,9 +66,9 @@
 /obj/item/reagent_containers/proc/feed_reagents(mob/M, mob/user, var/bitesize)
 	if(reagents.total_volume)
 		var/fraction = min(bitesize / reagents.total_volume, 1)
+		checkLiked(fraction, M)
 		reagents.reaction(M, INGEST, fraction)
 		reagents.trans_to(M, bitesize, transfered_by = user)
-		checkLiked(fraction, M)
 		return TRUE
 
 
@@ -90,11 +90,13 @@
 /obj/item/reagent_containers/proc/checkLiked(var/fraction, mob/M)
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
-			var/total_foodtype = foodtype
-			for(var/reagent in reagents)
-				var/datum/reagent/T = reagent
-				total_foodtype |= T.foodtype
 			var/mob/living/carbon/human/H = M
+			var/total_foodtype = foodtype
+			if(reagents.reagent_list)
+				for(var/reagent in reagents.reagent_list)
+					var/datum/reagent/T = reagent
+					total_foodtype |= T.foodtype
+			else
 			if(!H.has_trait(TRAIT_AGEUSIA))
 				if(total_foodtype & H.dna.species.toxic_food)
 					to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")

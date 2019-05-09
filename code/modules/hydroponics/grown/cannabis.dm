@@ -90,7 +90,7 @@
 	icon_state = "cannabis"
 	filling_color = "#00FF00"
 	bitesize_mod = 2
-	foodtype = VEGETABLES //i dont really know what else weed could be to be honest
+	foodtype = HERBAL
 	tastes = list("cannabis" = 1)
 	wine_power = 20
 

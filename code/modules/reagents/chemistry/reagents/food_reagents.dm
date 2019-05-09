@@ -609,7 +609,7 @@
 	description = "A blinding substance extracted from certain onions."
 	color = "#c0c9a0"
 	taste_description = "bitterness"
-	foodtype = VEGETABLE | HERBAL
+	foodtype = VEGETABLES | HERBAL
 
 /datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
