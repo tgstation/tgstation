@@ -732,12 +732,6 @@
 	results = list("old_timer" = 6)
 	required_reagents = list("whiskeysoda" = 3, "parsnipjuice" = 2, "alexander" = 1)
 
-/datum/chemical_reaction/catsip
-	name = "Catsip"
-	id = "catsip"
-	results = list("catsip" = 4)
-	required_reagents = list("sake" = 2, "soymilk" = 2, "corn_syrup" = 1, "grenadine" = 1)
-
 /datum/chemical_reaction/rubberneck
 	name = "Rubberneck"
 	id = "rubberneck"

@@ -830,8 +830,7 @@
 /datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/H)
 	if(prob(75))
 		return ..()
-	var/newsize = current_size
-	newsize = pick(0.5, 0.75, 1, 1.50, 2)
+	var/newsize = pick(0.5, 0.75, 1, 1.50, 2)
 	H.resize = newsize/current_size
 	current_size = newsize
 	H.update_transform()
