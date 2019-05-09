@@ -208,7 +208,7 @@
 	. = ..()
 	bogdanoff = user
 	addtimer(CALLBACK(src, .proc/startLaunch), 100)
-	sound_to_playing_players('sound/items/dump_it.ogg', 75)
+	sound_to_playing_players('sound/items/dump_it.ogg', 50)
 	deadchat_broadcast("<span class='deadsay'>Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!</span>", turf_target = get_turf(src))
 
 /obj/effect/dumpeetTarget/proc/startLaunch()
@@ -216,7 +216,7 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src).name] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
-	playsound(src,  'sound/weapons/mortar_whistle.ogg', 80, 1, 6)
+	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, 1, 6)
 	addtimer(CALLBACK(src, .proc/endLaunch), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 
