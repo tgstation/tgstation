@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
 	if(!threshold)
 		return
-
+	
 	var/alive = 0
 	for(var/I in GLOB.player_list)
 		var/mob/M = I
@@ -135,6 +135,8 @@ SUBSYSTEM_DEF(shuttle)
 			++alive
 
 	var/total = GLOB.joined_player_list.len
+	if(total <= 0)
+		return //no players no autoevac
 
 	if(alive / total <= threshold)
 		var/msg = "Automatically dispatching shuttle due to crew death."
