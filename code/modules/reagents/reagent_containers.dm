@@ -96,7 +96,6 @@
 				for(var/reagent in reagents.reagent_list)
 					var/datum/reagent/T = reagent
 					total_foodtype |= T.foodtype
-			else
 			if(!H.has_trait(TRAIT_AGEUSIA))
 				if(total_foodtype & H.dna.species.toxic_food)
 					to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")
