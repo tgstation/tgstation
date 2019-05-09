@@ -37,6 +37,7 @@
 	overlay.layer = FLOAT_LAYER
 	overlay.plane = FLOAT_PLANE
 	notification.add_overlay(overlay)
+	RemoveComponent()
 
 /obj/screen/alert/toggle_suit_sensors
 	name = "Toggle Suit Sensors"

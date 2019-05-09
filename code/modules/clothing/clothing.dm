@@ -216,7 +216,6 @@ BLIND     // can't see anything
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
 
-	usr.GetComponent(/datum/component/suit_sensors_reminder)?.RemoveComponent()
 	usr.clear_alert("toggle_suit_sensors")
 
 /obj/item/clothing/under/AltClick(mob/user)
