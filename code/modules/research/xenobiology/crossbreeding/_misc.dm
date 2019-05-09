@@ -70,9 +70,10 @@ Slimecrossing Items
 	var/x
 	var/y
 	var/z
-	var/rewinds_remaining = 1
+	var/rewinds_remaining
 
-/datum/component/dejavu/Initialize()
+/datum/component/dejavu/Initialize(rewinds = 1)
+	rewinds_remaining = rewinds
 	var/turf/T = get_turf(parent)
 	if(T)
 		x = T.x
@@ -142,7 +143,7 @@ Slimecrossing Items
 		to_chat(target, "<span class=notice>You'll remember this moment forever!</span>")
 			
 		used = TRUE
-		target.AddComponent(/datum/component/dejavu)
+		target.AddComponent(/datum/component/dejavu, 2)
 	.=..()
 		
 		
