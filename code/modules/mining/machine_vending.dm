@@ -21,7 +21,7 @@
 		new /datum/data/mining_equipment("Alien Toy",					/obj/item/clothing/mask/facehugger/toy,								300),
 		new /datum/data/mining_equipment("Stabilizing Serum",			/obj/item/hivelordstabilizer,										400),
 		new /datum/data/mining_equipment("Fulton Beacon",				/obj/item/fulton_core,												400),
-		new /datum/data/mining_equipment("Shelter Capsule",				/obj/item/survivalcapsule,											400),
+		new /datum/data/mining_equipment("Shelter Capsule",				/obj/item/survivalcapsule,											50),
 		new /datum/data/mining_equipment("GAR Meson Scanners",			/obj/item/clothing/glasses/meson/gar,								500),
 		new /datum/data/mining_equipment("Explorer's Webbing",			/obj/item/storage/belt/mining,										500),
 		new /datum/data/mining_equipment("Point Transfer Card",			/obj/item/card/mining_point_card,									500),
