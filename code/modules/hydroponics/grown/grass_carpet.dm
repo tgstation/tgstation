@@ -8,8 +8,8 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/grass
 	lifespan = 40
 	endurance = 40
-	maturation = 3
-	production = 4
+	maturation = 2
+	production = 5
 	yield = 5
 	growthstages = 2
 	icon_grow = "grass-grow"
