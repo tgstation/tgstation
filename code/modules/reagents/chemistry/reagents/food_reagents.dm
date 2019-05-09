@@ -416,7 +416,7 @@
 	color = "#FEFEFE"
 	taste_description = "garlic"
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
-	foodtype = VEGETABLE | HERBAL
+	foodtype = VEGETABLES | HERBAL
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M)
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
