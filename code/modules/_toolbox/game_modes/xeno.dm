@@ -106,6 +106,7 @@
 			var/turf/T = find_safe_turf(SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
 			if(T)
 				L.forceMove(T)
+	return ..()
 
 /datum/game_mode/ayylmaos/process()
 	if(digital_camo_timer && digital_camo_timer <= world.time)

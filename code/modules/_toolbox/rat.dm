@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/rat
 	name = "rabid rat"
 	desc = "Eeek! A huge rabid rat."
+	icon = 'icons/oldschool/simple_animals.dmi'
 	icon_state = "rat"
 	icon_living = "rat"
 	icon_dead = "rat_dead"

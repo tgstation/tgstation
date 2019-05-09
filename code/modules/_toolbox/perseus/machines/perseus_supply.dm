@@ -212,8 +212,9 @@ GLOBAL_LIST_EMPTY(perseus_supplypacks)
 			var/list/spawned_items = ""
 			for(var/T in chosen.contains)
 				var/obj/O = new T(C)
-				for(var/obj/machinery/computer/percsecuritysystem/percsec in world)
-					percsec.gather_equipment(O)
+				if(GLOB.Perseus_Data["Perseus_Security_Systems"] && istype(GLOB.Perseus_Data["Perseus_Security_Systems"],/list))
+					for(var/obj/machinery/computer/percsecuritysystem/percsec in GLOB.Perseus_Data["Perseus_Security_Systems"])
+						percsec.gather_equipment(O)
 				supplied += O
 				spawned_items += "[O.name]<BR>"
 			for(var/obj/item/stack/S in C)
@@ -267,8 +268,9 @@ GLOBAL_LIST_EMPTY(perseus_supplypacks)
 			C = new chosen2.containertype()
 			for(var/T in chosen2.contains)
 				var/obj/O = new T(C)
-				for(var/obj/machinery/computer/percsecuritysystem/percsec in world)
-					percsec.gather_equipment(O)
+				if(GLOB.Perseus_Data["Perseus_Security_Systems"] && istype(GLOB.Perseus_Data["Perseus_Security_Systems"],/list))
+					for(var/obj/machinery/computer/percsecuritysystem/percsec in GLOB.Perseus_Data["Perseus_Security_Systems"])
+						percsec.gather_equipment(O)
 			if(chosen2.amount)
 				for(var/obj/item/stack/S in C)
 					S.amount = chosen2.amount

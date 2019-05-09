@@ -29,8 +29,9 @@ var/global/list/perseus_managers = list()
 		whitelist = list()
 	return whitelist
 
-/proc/is_pwhitelisted(ckey)
-	var/list/pwhitelist = get_pwhitelist()
+/proc/is_pwhitelisted(ckey,list/pwhitelist)
+	if(!pwhitelist)
+		pwhitelist = get_pwhitelist()
 	if(ckey && ckey in pwhitelist)
 		var/list/paramslist = params2list(pwhitelist[ckey])
 		if(paramslist)

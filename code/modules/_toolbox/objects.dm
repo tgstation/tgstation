@@ -431,3 +431,32 @@
 					heated = "cooled"
 				dat += "Must be [heated] to a temperature of [C.required_temp]<BR>"
 			dat += "<BR>"
+
+//Making it so borgs can set up the engine -falaskian
+/obj/machinery/portable_atmospherics/MouseDrop_T(atom/dropping, mob/user)
+	if(istype(dropping, /obj/item/tank) && isturf(dropping.loc) && user.Adjacent(src) && dropping.Adjacent(user))
+		src.attackby(dropping, user)
+	else
+		return ..()
+
+/obj/machinery/power/rad_collector/MouseDrop_T(atom/dropping, mob/user)
+	if(istype(dropping, /obj/item/tank/internals/plasma) && isturf(dropping.loc) && user.Adjacent(src) && dropping.Adjacent(user))
+		src.attackby(dropping, user)
+	else
+		return ..()
+
+//making certain things again useable by silicons. -falaskian
+/obj/machinery/power/rad_collector/attack_robot(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/power/rad_collector/attack_ai(mob/user)
+	return attack_hand(user)
+
+/obj/structure/tank_dispenser/attack_robot(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/conveyor_switch/attack_ai(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/conveyor_switch/attack_robot(mob/user)
+	return attack_hand(user)

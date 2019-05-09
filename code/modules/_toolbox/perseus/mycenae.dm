@@ -167,6 +167,7 @@
 	allow_duplicates = FALSE
 	prefix = "_maps/toolbox/Mycenae3.dmm"
 
+GLOBAL_LIST_EMPTY(Perseus_Data)
 /var/global/Mycenae_In_Space = 0
 /proc/Create_Mycenae()
 	if(Mycenae_In_Space)
@@ -177,9 +178,10 @@
 		for(var/i=50,i>0,i--)
 			if(S.try_to_place(pick(z_levels),/area/space))
 				Mycenae_In_Space = 1
-				for(var/obj/machinery/computer/percsecuritysystem/C in world)
-					C.preparecells()
-					C.gather_equipment()
+				if(GLOB.Perseus_Data["Perseus_Security_Systems"] && istype(GLOB.Perseus_Data["Perseus_Security_Systems"],/list))
+					for(var/obj/machinery/computer/percsecuritysystem/C in GLOB.Perseus_Data["Perseus_Security_Systems"])
+						C.preparecells()
+						C.gather_equipment()
 				return 1
 
 	return 0

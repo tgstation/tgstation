@@ -1,5 +1,20 @@
 //Use this file to for things related to round start or new spawn initializations.
 
+//for debugging purposes -falaskian
+/*var/global/debug_time_check_start = 0
+var/global/debug_time_check = 0
+var/global/debug_check_count = 1
+/proc/falaskian_debug(reset = 0)
+	if(reset)
+		debug_check_count = 1
+		debug_time_check_start = 0
+		debug_time_check = 0
+	if(debug_time_check_start == 0)
+		debug_time_check_start = world.timeofday
+	debug_time_check = world.timeofday
+	to_chat(world,"DEBUG: [debug_check_count], [(debug_time_check-debug_time_check_start)/10] seconds.")
+	debug_check_count++*/
+
 proc/Initialize_Falaskians_Shit()
 	initialize_discord_channel_list()
 	save_perseus_manager_whitelist()

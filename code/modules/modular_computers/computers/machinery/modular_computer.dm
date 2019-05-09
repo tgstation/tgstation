@@ -40,8 +40,8 @@
 	. = ..()
 	if(.)
 		return
-	if(cpu)
-		cpu.attack_ghost(user)
+	/*if(cpu) //this really has no purpose
+		cpu.attack_ghost(user)*/
 
 /obj/machinery/modular_computer/emag_act(mob/user)
 	return cpu ? cpu.emag_act(user) : 1
