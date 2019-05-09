@@ -242,12 +242,7 @@ SUBSYSTEM_DEF(ticker)
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
 	CHECK_TICK
-	if(hide_mode)
-		var/list/modes = new
-		for (var/datum/game_mode/M in runnable_modes)
-			modes += M.name
-		modes = sortList(modes)
-	else
+	if(!hide_mode)
 		mode.announce()
 
 	if(!CONFIG_GET(flag/ooc_during_round))
