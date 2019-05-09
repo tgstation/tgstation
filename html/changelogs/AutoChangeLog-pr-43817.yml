@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - tweak: "Activating a grenade no longer puts you in throwmode."
-  - tweak: "You always throw active grenades now."
