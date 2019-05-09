@@ -26,18 +26,17 @@
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
 	if(last_stasis_sound != _running)
-		var/sound_freq = rand(5120, 8800)
 		if(_running)
-			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth_yes.ogg', 50, 0.05, 0.15)
 		else
-			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth_no.ogg', 50, 0.05, 0.15)
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/AltClick(mob/user)
 	if(world.time >= stasis_can_toggle && user.canUseTopic(src))
 		stasis_enabled = !stasis_enabled
 		stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
-		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+		playsound(src, 'sound/machines/click.ogg', 60, DEFAULT_SOUND_VARY)
 		play_power_sound()
 		update_icon()
 
@@ -94,7 +93,7 @@
 	if(target != occupant)
 		return
 	var/freq = rand(24750, 26550)
-	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
+	playsound(src, 'sound/effects/spray.ogg', 5, 0.05, 0.55, extra_range = 2)
 	target.SetStasis(TRUE)
 	target.ExtinguishMob()
 	use_power = ACTIVE_POWER_USE
