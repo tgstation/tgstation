@@ -377,6 +377,7 @@
 #include "code\datums\components\spooky.dm"
 #include "code\datums\components\squeak.dm"
 #include "code\datums\components\stationloving.dm"
+#include "code\datums\components\suit_sensors_reminder.dm"
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\uplink.dm"

@@ -28,6 +28,7 @@
 #define COMSIG_GLOB_MOB_CREATED "!mob_created"					//mob was created somewhere : (mob)
 #define COMSIG_GLOB_MOB_DEATH "!mob_death"						//mob died somewhere : (mob , gibbed)
 #define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"			//global living say plug - use sparingly: (mob/speaker , message)
+#define COMSIG_GLOB_AI_VOX "!ai_vox"							//ai used vox announcements : (mob/living/silicon/ai, list/words)
 
 //////////////////////////////////////////////////////////////////
 

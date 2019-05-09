@@ -37,6 +37,7 @@
 
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/suit_sensors_reminder)
 	if(!CONFIG_GET(flag/disable_human_mood))
 		AddComponent(/datum/component/mood)
 

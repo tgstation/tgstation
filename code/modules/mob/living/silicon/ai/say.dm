@@ -131,6 +131,7 @@
 	announcing_vox = world.time + VOX_DELAY
 
 	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_AI_VOX, src, words)
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
