@@ -11,7 +11,7 @@
 #define GROSS 		(1<<10)
 #define TOXIC 		(1<<11)
 #define PINEAPPLE	(1<<12)
-#define HERBAL   (1<<13)
+#define HERBAL      (1<<13)
 
 #define DRINK_NICE	1
 #define DRINK_GOOD	2
