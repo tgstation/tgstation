@@ -10594,8 +10594,7 @@
 	departmentType = 5;
 	name = "Telecomms RC";
 	pixel_x = -30;
-	pixel_y = 0;
-	step_y = 0
+	pixel_y = 0
 	},
 /obj/machinery/camera{
 	c_tag = "Telecomms Monitoring";
