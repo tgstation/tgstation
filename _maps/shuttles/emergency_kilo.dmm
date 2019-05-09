@@ -332,6 +332,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "aJ" = (
@@ -821,7 +824,9 @@
 	dir = 1
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
+	icon_state = "plant-21";
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -898,7 +903,8 @@
 	dir = 8
 	},
 /obj/machinery/status_display/evac{
-	pixel_x = 32
+	pixel_x = 32;
+	pixel_y = 0
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -1153,7 +1159,9 @@
 	dir = 1
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
+	icon_state = "plant-21";
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -1256,6 +1264,7 @@
 	pixel_y = 6
 	},
 /obj/item/radio{
+	pixel_x = 0;
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1665,14 +1674,15 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "dc" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/airlock/command{
+	name = "Shuttle Control";
+	req_one_access_txt = "19"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "dd" = (
 /obj/structure/shuttle/engine/propulsion/left,
@@ -1681,6 +1691,29 @@
 /area/shuttle/escape)
 "de" = (
 /obj/structure/shuttle/engine/propulsion/right,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"df" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"dg" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"dh" = (
+/obj/structure/shuttle/engine/heater,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
+"di" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/shuttle/engine/large,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"dj" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -1816,9 +1849,9 @@ bg
 as
 cM
 cV
-ac
-dc
-dd
+cK
+dg
+di
 "}
 (6,1,1) = {"
 ac
@@ -1843,9 +1876,9 @@ cu
 cE
 cN
 cW
-cL
-dc
-cT
+cK
+dg
+dj
 "}
 (7,1,1) = {"
 ac
@@ -1870,8 +1903,8 @@ cv
 cF
 cO
 cX
-ac
-dc
+cL
+dh
 de
 "}
 (8,1,1) = {"
@@ -1882,8 +1915,8 @@ au
 aF
 aL
 aV
-aN
-aO
+dc
+df
 bx
 bF
 bL
@@ -1924,8 +1957,8 @@ cx
 cH
 cP
 cZ
-ac
-dc
+cL
+dh
 dd
 "}
 (10,1,1) = {"
@@ -1951,9 +1984,9 @@ cy
 cI
 cQ
 da
-cL
-dc
-cT
+cK
+dg
+di
 "}
 (11,1,1) = {"
 ab
@@ -1978,9 +2011,9 @@ bg
 as
 cR
 db
-ac
-dc
-de
+cK
+dg
+dj
 "}
 (12,1,1) = {"
 aa

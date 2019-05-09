@@ -10588,20 +10588,18 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Telecomms Admin";
-	departmentType = 5;
-	name = "Telecomms RC";
-	pixel_x = -30;
-	pixel_y = 0;
-	step_y = 0
-	},
 /obj/machinery/camera{
 	c_tag = "Telecomms Monitoring";
 	dir = 4;
 	name = "telecomms camera";
 	network = list("ss13","tcomms")
+	},
+/obj/machinery/requests_console{
+	announcementConsole = 1;
+	department = "Telecomms Admin";
+	departmentType = 5;
+	name = "Telecomms RC";
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
