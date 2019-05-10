@@ -443,8 +443,7 @@
 	var/dat = ""
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 		var/timeleft = SSshuttle.emergency.timeLeft()
-		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]"
-
+		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
 
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
@@ -455,8 +454,7 @@
 			dat +=  dat2
 			popup.set_content(dat)
 			popup.open()
-			popup.set_content(dat)
-			popup.open()			// set_content() and open() intentionally called twice.
+			popup.open()				// open called twice intentionally
 		return
 
 	switch(state)
@@ -582,8 +580,7 @@
 
 	popup.set_content(dat)
 	popup.open()
-	popup.set_content(dat)
-	popup.open()							// set_content() and open() intentionally called twice.
+	popup.open()						// open called twice intentionally
 
 /obj/machinery/computer/communications/proc/get_javascript_header(form_id)
 	var/dat = {"<script type="text/javascript">
