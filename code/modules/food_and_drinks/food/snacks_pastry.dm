@@ -204,6 +204,7 @@
 	desc = "The heated food of choice for the seasoned traitor."
 	bonus_reagents = list("omnizine" = 3)
 	list_reagents = list("nutriment" = 4, "omnizine" = 3)
+	cooked_type = null
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN
 
