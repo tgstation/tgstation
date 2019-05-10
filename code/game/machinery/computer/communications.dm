@@ -455,6 +455,8 @@
 			dat +=  dat2
 			popup.set_content(dat)
 			popup.open()
+			popup.set_content(dat)
+			popup.open()
 		return
 
 	switch(state)
