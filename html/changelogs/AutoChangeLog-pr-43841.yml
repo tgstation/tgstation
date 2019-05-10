@@ -1,0 +1,5 @@
+author: "Farquaar"
+delete-after: True
+changes: 
+  - rscadd: "Added a number of Nanotrasen-approved religious clothing items to the chaplain vendor, autodrobe and clothesmate."
+  - imageadd: "sprites and icons for several new clothing items, including some in-hand sprites."
