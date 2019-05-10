@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - tweak: "the contents on the smartfridge icon now change depending on how many items it contains"
-  - bugfix: "opening the maintenance panel of smartfridges now correctly updates the icon"

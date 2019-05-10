@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - tweak: "Only the first generation of spiders can change directives for their offsprings."
-  - admin: "Spider directives are now logged."
