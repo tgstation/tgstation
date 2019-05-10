@@ -443,7 +443,6 @@ SUBSYSTEM_DEF(job)
 			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
 	if(ishuman(H))
 		var/mob/living/carbon/human/wageslave = H
-		to_chat(M, "<b>Your account ID is [wageslave.account_id].</b>")
 		H.add_memory("Your account ID is [wageslave.account_id].")
 	if(job && H)
 		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
