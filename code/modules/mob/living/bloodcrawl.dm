@@ -143,7 +143,7 @@
 
 /obj/item/bloodcrawl/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 50, 1, -1)

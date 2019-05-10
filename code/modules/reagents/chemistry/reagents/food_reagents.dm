@@ -19,13 +19,13 @@
 	current_cycle++
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!H.has_trait(TRAIT_NOHUNGER))
+		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
 			H.adjust_nutrition(nutriment_factor)
 	holder.remove_reagent(src.id, metabolization_rate)
 
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == INGEST)
-		if (quality && !M.has_trait(TRAIT_AGEUSIA))
+		if (quality && !HAS_TRAIT(M, TRAIT_AGEUSIA))
 			switch(quality)
 				if (DRINK_NICE)
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
@@ -402,6 +402,30 @@
 				M.emote(pick("twitch","giggle"))
 	..()
 
+/datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
+	name = "Garlic Juice"
+	id = "garlic"
+	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
+	color = "#FEFEFE"
+	taste_description = "garlic"
+	metabolization_rate = 0.15 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M)
+	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
+		if(prob(min(25,current_cycle)))
+			to_chat(M, "<span class='danger'>You can't get the scent of garlic out of your nose! You can barely think...</span>")
+			M.Paralyze(10)
+			M.Jitter(10)
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.job == "Cook")
+			if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
+				H.heal_bodypart_damage(1,1, 0)
+				. = 1
+		else //chefs' robust space-Italian metabolism lets them eat garlic without producing allyl methyl sulfide
+			H.adjust_hygiene(-0.15 * volume)
+	..()
+
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	id = "sprinkles"
@@ -410,7 +434,7 @@
 	taste_description = "childhood whimsy"
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
-	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	if(HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()

@@ -235,7 +235,7 @@
 
 /obj/item/nullrod/godhand/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/nullrod/staff
 	icon_state = "godstaff-red"
@@ -481,7 +481,7 @@
 
 /obj/item/nullrod/chainsaw/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
 
 /obj/item/nullrod/clown
@@ -553,7 +553,7 @@
 
 /obj/item/nullrod/armblade/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/nullrod/armblade/tentacle

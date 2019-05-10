@@ -100,7 +100,7 @@
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
 		return
 	var/target_dir = get_dir(src,target)
-	
+
 	var/static/list/cardinal_sidestep_directions = list(-90,-45,0,45,90)
 	var/static/list/diagonal_sidestep_directions = list(-45,0,45)
 	var/chosen_dir = 0
@@ -296,7 +296,7 @@
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				MeleeAction()
-			else 
+			else
 				if(rapid_melee > 1 && target_distance <= melee_queue_distance)
 					MeleeAction(FALSE)
 				in_melee = FALSE //If we're just preparing to strike do not enter sidestep mode
@@ -444,14 +444,18 @@
 
 /mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
 	var/turf/T = get_step(targets_from, direction)
-	if(T && T.Adjacent(targets_from))
+	if(QDELETED(T))
+		return
+	if(T.Adjacent(targets_from))
 		if(CanSmashTurfs(T))
 			T.attack_animal(src)
-		for(var/obj/O in T)
-			if(O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
-				O.attack_animal(src)
-				return
-
+			return
+	for(var/obj/O in T.contents)
+		if(!O.Adjacent(targets_from))
+			continue
+		if((ismachinery(O) || isstructure(O)) && O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
+			O.attack_animal(src)
+			return
 
 /mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
 	if(environment_smash)

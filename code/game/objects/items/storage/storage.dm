@@ -29,7 +29,7 @@
 		return TRUE
 
 /obj/item/storage/doStrip(mob/who)
-	if(has_trait(TRAIT_NODROP) && rummage_if_nodrop)
+	if(HAS_TRAIT(src, TRAIT_NODROP) && rummage_if_nodrop)
 		GET_COMPONENT(CP, /datum/component/storage)
 		CP.do_quick_empty()
 		return TRUE

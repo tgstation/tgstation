@@ -1,0 +1,5 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - bugfix: "Chem has viro access during skeleton shifts"
+  - bugfix: "Doctor, Chemist and Viro lost mutual expanded access."

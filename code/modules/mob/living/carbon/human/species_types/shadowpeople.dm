@@ -172,7 +172,7 @@
 
 /obj/item/light_eater/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/light_eater/afterattack(atom/movable/AM, mob/user, proximity)

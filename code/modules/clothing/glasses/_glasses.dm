@@ -45,7 +45,7 @@
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
-		if(!(H.has_trait(TRAIT_BLIND)))
+		if(!(HAS_TRAIT(H, TRAIT_BLIND)))
 			if(H.glasses == src)
 				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)
@@ -202,11 +202,11 @@
 /obj/item/clothing/glasses/sunglasses/reagent/equipped(mob/user, slot)
 	. = ..()
 	if(ishuman(user) && slot == SLOT_GLASSES)
-		user.add_trait(TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
 
 /obj/item/clothing/glasses/sunglasses/reagent/dropped(mob/user)
 	. = ..()
-	user.remove_trait(TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
 
 /obj/item/clothing/glasses/sunglasses/garb
 	name = "black gar glasses"
@@ -421,7 +421,7 @@
 
 /obj/item/clothing/glasses/godeye/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, EYE_OF_GOD_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)

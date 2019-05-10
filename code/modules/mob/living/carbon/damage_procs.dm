@@ -1,8 +1,8 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
 	var/hit_percent = (100-blocked)/100
-	if(!damage || hit_percent <= 0)
+	if(!damage || (!forced && hit_percent <= 0))
 		return 0
 
 	var/obj/item/bodypart/BP = null
@@ -15,33 +15,34 @@
 		if(!BP)
 			BP = bodyparts[1]
 
+	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(BP.receive_damage(damage * hit_percent, 0))
+				if(BP.receive_damage(damage_amount, 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage * hit_percent)
+				adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			if(BP)
-				if(BP.receive_damage(0, damage * hit_percent))
+				if(BP.receive_damage(0, damage_amount))
 					update_damage_overlays()
 			else
-				adjustFireLoss(damage * hit_percent)
+				adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)
-			adjustToxLoss(damage * hit_percent)
+			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			adjustOxyLoss(damage * hit_percent)
+			adjustOxyLoss(damage_amount, forced = forced)
 		if(CLONE)
-			adjustCloneLoss(damage * hit_percent)
+			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			if(BP)
-				if(BP.receive_damage(0, 0, damage * hit_percent))
+				if(BP.receive_damage(0, 0, damage_amount))
 					update_damage_overlays()
 			else
-				adjustStaminaLoss(damage * hit_percent)
+				adjustStaminaLoss(damage_amount, forced = forced)
 		if(BRAIN)
-			adjustBrainLoss(damage * hit_percent)
+			adjustBrainLoss(damage_amount)
 	return TRUE
 
 
@@ -80,7 +81,7 @@
 	return amount
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && has_trait(TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
+	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
 			blood_volume -= 5*amount
