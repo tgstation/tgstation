@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - tweak: "Goofbegone was applied to roundstart messages to reduce spam a little."
