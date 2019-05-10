@@ -8,8 +8,9 @@
 
 	var/cooldown_last = 0
 	var/list/static/echo_blacklist
-	var/list/static/uniques
+	var/list/static/needs_flattening
 	var/list/static/echo_images
+	var/list/static/special_smoothing
 
 	var/datum/action/innate/echo/E
 	var/datum/action/innate/echo/auto/A
@@ -32,11 +33,14 @@
 	/area)
 	)
 
-	uniques = typecacheof(list(
+	special_smoothing = typecacheof(list( //for things with unique method of icon generation
+	/turf/closed)
+	)
+
+	needs_flattening = typecacheof(list(,
 	/obj/structure/table,
-	/mob/living/carbon/human,
 	/obj/machinery/door/airlock,
-	/obj/machinery/atmospherics/pipe/manifold)
+	/mob/living)
 	)
 
 	echo_images = list()
@@ -69,46 +73,49 @@
 	var/mob/H = parent
 	var/mutable_appearance/image_output
 	var/list/filtered = list()
-	var/list/turfs = list()
+	var/list/special = list()
 	var/list/seen = oview(echo_range, H)
 	var/list/receivers = list()
 	receivers += H
 	for(var/I in seen)
 		var/atom/A = I
 		if(!(A.type in echo_blacklist) && !A.invisibility)
+			if(A.type in special_smoothing)
+				special += I
+				seen -= I
 			if(istype(I, /obj))
 				if(istype(A.loc, /turf))
 					filtered += I
-			if(istype(I, /mob/living))
-				filtered += I
-			if(istype(I, /turf/closed/wall))
-				turfs += I
 	for(var/mob/M in seen)
 		var/datum/component/echolocation/E = M.GetComponent(/datum/component/echolocation)
 		if(E)
 			receivers += M
 	for(var/F in filtered)
 		var/atom/S = F
+		for(var/D in S.datum_outputs)
+			if(istype(D, /datum/outputs/echo_override))
+				var/datum/outputs/echo_override/O = D
+				image_output = mutable_appearance(O.vfx.icon, O.vfx.icon_state, S.layer, O.vfx.plane)
+				echo_images["[S.icon]-[S.icon_state]"] = image_output
 		if(echo_images["[S.icon]-[S.icon_state]"])
 			image_output = mutable_appearance(echo_images["[S.icon]-[S.icon_state]"].icon, echo_images["[S.icon]-[S.icon_state]"].icon_state, echo_images["[S.icon]-[S.icon_state]"].layer, echo_images["[S.icon]-[S.icon_state]"].plane)
 			image_output.filters = echo_images["[S.icon]-[S.icon_state]"].filters
 		else
 			image_output = generate_image(S)
-			if(!(uniques[S.type]))
+			if(istype(S, /obj/structure/table))
+				echo_images["[generate_special_key(S)]-[S.icon]"] = image_output
+			else if(istype(S, /obj/machinery/door))
+				echo_images["[S.density]-[S.icon]"] = image_output
+			else
 				echo_images["[S.icon]-[S.icon_state]"] = image_output
-		for(var/D in S.datum_outputs)
-			if(istype(D, /datum/outputs/echo_override))
-				var/datum/outputs/echo_override/O = D
-				image_output = mutable_appearance(O.vfx.icon, O.vfx.icon_state, O.vfx.layer, O.vfx.plane)
 		show_image(receivers, image_output, S)
-	for(var/T in turfs)
-		var/key = generate_wall_key(T)
+	for(var/T in special)
+		var/key = generate_special_key(T)
 		if(echo_images[key])
 			image_output = mutable_appearance(echo_images[key].icon, echo_images[key].icon_state, echo_images[key].layer, echo_images[key].plane)
-			image_output.filters = echo_images[key].filters
 		else
-			image_output = generate_wall_image(T)
-			echo_images[generate_wall_key(T)] = image_output
+			image_output = generate_special_image(T)
+			echo_images[key] = image_output
 		show_image(receivers, image_output, T)
 
 /datum/component/echolocation/proc/show_image(list/receivers, mutable_appearance/mutable_echo, atom/input)
@@ -129,13 +136,13 @@
 	addtimer(CALLBACK(src, .proc/delete_image, sound_image, M), image_expiry_time, fade_out_time)
 
 /datum/component/echolocation/proc/delete_image(sound_image, mob/M)
-	if(M.client && sound_image)
+	if(M.client)
 		M.client.images -= sound_image
 	qdel(sound_image)
 
 /datum/component/echolocation/proc/generate_image(atom/input)
 	var/icon/I
-	if(uniques[input.type])
+	if(needs_flattening[input.type])
 		I = getFlatIcon(input)
 	else
 		I = icon(input.icon, input.icon_state)
@@ -144,30 +151,32 @@
 	final_image.filters += filter(type="outline", size=1, color="#FFFFFF")
 	return final_image
 
-/datum/component/echolocation/proc/generate_wall_image(turf/input)
-	var/icon/I = icon('icons/obj/echo_override.dmi',"wall")
+/datum/component/echolocation/proc/generate_special_image(atom/input)
+	var/icon/I
 	var/list/dirs = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(input, direction)
-		if(istype(T, /turf/closed))
+		if(istype(T, input.type) || (locate(input.type) in T))
 			dirs += direction
+	I = icon('icons/obj/echo_override.dmi',"wall")
 	for(var/dir in dirs)
 		switch(dir)
 			if(NORTH)
-				I.DrawBox(null,2,32,31,31)
+				I.DrawBox(null, 2, 32, 31, 31)
 			if(SOUTH)
-				I.DrawBox(null,2,1,31,1)
+				I.DrawBox(null, 2, 1, 31, 1)
 			if(EAST)
-				I.DrawBox(null,32,2,32,31)
+				I.DrawBox(null, 32, 2, 32, 31)
 			if(WEST)
-				I.DrawBox(null,1,2,1,31)
-	return mutable_appearance(I, null, input.layer, FULLSCREEN_PLANE)
+				I.DrawBox(null, 1, 2, 1, 31)
 
-/datum/component/echolocation/proc/generate_wall_key(turf/input)
+
+
+/datum/component/echolocation/proc/generate_special_key(atom/input)
 	var/list/dirs = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(input, direction)
-		if(istype(T, /turf/closed))
+		if(istype(T, input.type) || (locate(input.type) in T))
 			dirs += direction
 	var/key = dirs.Join()
 	return key

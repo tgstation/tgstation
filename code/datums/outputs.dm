@@ -116,4 +116,7 @@
 	sounds = 'sound/effects/blobattack.ogg'
 
 /datum/outputs/echo_override
-	vfx = list('icons/obj/echo_override.dmi',"circle", CURSE_LAYER)
+	vfx = list('icons/obj/echo_override.dmi',"wall", FULLSCREEN_LAYER)
+
+/datum/outputs/echo_override/human
+	vfx = list('icons/obj/echo_override.dmi',"human", FULLSCREEN_LAYER)
