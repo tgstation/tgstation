@@ -180,3 +180,49 @@
 
 /obj/effect/turf_decal/raven/nine
 	icon_state = "RAVEN9"
+
+
+/obj/effect/turf_decal/trimline
+	name = "trim line box decal"
+	icon_state = "trimline_box"
+	alpha = 110
+
+/obj/effect/turf_decal/trimline/line
+	name = "trim decal"
+	icon_state = "trimline"
+
+/obj/effect/turf_decal/trimline/corner
+	icon_state = "trimline_corner"
+
+/obj/effect/turf_decal/trimline/end
+	icon_state = "trimline_end"
+
+/obj/effect/turf_decal/trimline/filled/line
+	icon_state = "trimline_line_fill"
+
+/obj/effect/turf_decal/trimline/filled/corner
+	icon_state = "trimline_corner_fill"
+
+/obj/effect/turf_decal/trimline/filled/end
+	icon_state = "trimline_end_fill"
+
+/obj/effect/turf_decal/trimline/red
+	color = "#DE3A3A"
+
+/obj/effect/turf_decal/trimline/red/line
+	icon_state = "trimline"
+
+/obj/effect/turf_decal/trimline/red/corner
+	icon_state = "trimline_corner"
+
+/obj/effect/turf_decal/trimline/red/end
+	icon_state = "trimline_end"
+
+/obj/effect/turf_decal/trimline/red/filled/line
+	icon_state = "trimline_line_fill"
+
+/obj/effect/turf_decal/trimline/red/filled/corner
+	icon_state = "trimline_corner_fill"
+
+/obj/effect/turf_decal/trimline/red/filled/end
+	icon_state = "trimline_end_fill"
