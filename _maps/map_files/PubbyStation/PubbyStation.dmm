@@ -47605,8 +47605,8 @@
 /area/hydroponics/garden/monastery)
 "cgL" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/holidaypriest,
-/obj/item/clothing/suit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell1";
@@ -47975,8 +47975,8 @@
 /area/space/nearstation)
 "cio" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/holidaypriest,
-/obj/item/clothing/suit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell2";
@@ -50627,8 +50627,8 @@
 /obj/structure/closet,
 /obj/item/storage/backpack/cultpack,
 /obj/item/clothing/head/nun_hood,
-/obj/item/clothing/suit/nun,
-/obj/item/clothing/suit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
