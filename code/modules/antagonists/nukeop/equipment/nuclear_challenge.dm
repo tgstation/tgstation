@@ -64,10 +64,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/orphan_nukies
 	var/list/uplinks = list()
 
- 	for (var/datum/antagonist/nukeop/O in GLOB.antagonists)
+	for (var/datum/antagonist/nukeop/O in GLOB.antagonists)
 		var/datum/mind/opmind = O.owner
 		if (!istype(opmind))
-			orphan_nukies++
 			continue
 		var/datum/component/uplink/uplink = opmind.find_syndicate_uplink()
 		if (!uplink)
@@ -83,12 +82,19 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		uplink.telecrystals += tc_per_nukie
 		tc_to_distribute -= tc_per_nukie
 
+
+	if (orphan_nukies)
+		new /obj/item/stack/telecrystal(user.drop_location(), orphan_nukies*tc_per_nukie)
+		visible_message("<span class='warning'>Undistributed TC belonging to [orphan_nukies] unlocated uplinks appears at [user]'s feet.</span>")
+		tc_to_distribute -= orphan_nukies*tc_per_nukie
+
 	if (tc_to_distribute > 0) // What shall we do with the remainder...
 		for (var/mob/living/simple_animal/hostile/carp/cayenne/C in GLOB.mob_living_list)
-			var/obj/item/stack/telecrystal/TC = new(C, tc_to_distribute)
-			TC.throw_at(get_step(C, C.dir), 3, 3)
-			C.visible_message("<span class='warning'>[C] coughs up a half-digested telecrystal</span>","<span class='userdanger'>You cough up a half-digested telecrystal!</span>")
-			break
+			if (C.stat != DEAD)
+				var/obj/item/stack/telecrystal/TC = new(C.drop_location(), tc_to_distribute)
+				TC.throw_at(get_step(C, C.dir), 3, 3)
+				C.visible_message("<span class='notice'>[C] coughs up a half-digested telecrystal</span>","<span class='usernotice'>You cough up a half-digested telecrystal!</span>")
+				break
 
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
