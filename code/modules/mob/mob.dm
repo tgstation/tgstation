@@ -540,6 +540,10 @@
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
+		if(SSevents.infectionmode)
+			var/TILL = SSevents.timetonext()
+			if(TILL)
+				stat(null, "Doom Event: [TILL]")
 
 	if(client && client.holder)
 		if(statpanel("MC"))

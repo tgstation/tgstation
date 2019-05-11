@@ -13,6 +13,7 @@ SUBSYSTEM_DEF(events)
 
 	var/list/holidays			//List of all holidays occuring today or null if no holidays
 	var/wizardmode = FALSE
+	var/infectionmode = FALSE
 
 /datum/controller/subsystem/events/Initialize(time, zlevel)
 	for(var/type in typesof(/datum/round_event_control))
@@ -180,6 +181,21 @@ SUBSYSTEM_DEF(events)
 	wizardmode = !wizardmode
 	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
+
+/datum/controller/subsystem/events/proc/toggleInfectionmode()
+	infectionmode = !infectionmode
+	message_admins("Doom Clock Events have been [infectionmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
+	log_game("Doom Clock Events Events are [infectionmode ? "enabled" : "disabled"]!")
+
+// gives the time to the next event formatted
+/datum/controller/subsystem/events/proc/timetonext()
+	var/timeleft = round((scheduled - world.time) / 10)
+	if(timeleft > 1 HOURS)
+		return "--:--"
+	else if(timeleft > 0)
+		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
+	else
+		return "00:00"
 
 /datum/controller/subsystem/events/proc/resetFrequency()
 	frequency_lower = initial(frequency_lower)

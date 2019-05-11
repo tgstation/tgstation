@@ -177,11 +177,10 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 
-/*
-//
-// Player Controlled
-//
-*/
+
+//////////////////////
+// Player Controlled//
+//////////////////////
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient
 	name = "evolving spore"
@@ -386,7 +385,7 @@
 	if(curr == GLOB.infection_nodes.len && GLOB.infection_nodes.len)
 		forceMove(overmind.infection_core)
 		to_chat(src, "<span class='warning'>Shifted spawn location to core.</span>")
-	else
+	else if(GLOB.infection_nodes.len)
 		forceMove(GLOB.infection_nodes[curr + 1])
 		to_chat(src, "<span class='warning'>Shifted spawn location to node [curr + 1].</span>")
 	cycle_cooldown = world.time + 5

@@ -165,6 +165,8 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_passed)
 
 /datum/component/no_beacon_crossing/proc/check_passed()
+	if(isobj(parentatom.loc))
+		return
 	// if you somehow got past a beacon wall then time to die
 	var/obj/structure/beacon_generator/closest
 	var/obj/structure/infection/core/C = GLOB.infection_core
