@@ -97,7 +97,7 @@ Code:
 				return
 			new_code = round(new_code)
 			new_code = CLAMP(new_code, 1, 100)
-			src.code = new_code
+			code = new_code
 
 	if(href_list["send"])
 		spawn( 0 )
