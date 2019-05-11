@@ -55385,6 +55385,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard)
+"bys" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/closet{
+	name = "chapel locker"
+	},
+/obj/item/clothing/shoes/sandal,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port/fore)
 "byt" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -92133,20 +92145,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"cAb" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/closet{
-	name = "chapel locker"
-	},
-/obj/item/clothing/suit/nun,
-/obj/item/clothing/head/nun_hood,
-/obj/item/clothing/shoes/sandal,
-/turf/open/floor/plasteel/dark,
-/area/maintenance/port/fore)
 "cAc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -121888,7 +121886,7 @@ czu
 cwp
 cwq
 afp
-cAb
+bys
 asi
 aNN
 asi
