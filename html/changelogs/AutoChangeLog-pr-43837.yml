@@ -1,0 +1,4 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - balance: "Medullary Failure now has a maximum range"
