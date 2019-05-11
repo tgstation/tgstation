@@ -21,20 +21,6 @@
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon()
-	// Silicons only need a very basic preview since there is no customization for them.
-	var/datum/job/J = SSjob.GetJobType(/datum/job/ai)
-	if(job_preferences[J.title] == JP_HIGH)
-		parent.show_character_previews(image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(preferred_ai_core_display), dir = SOUTH))
-		return
-	J = SSjob.GetJobType(/datum/job/cyborg)
-	if(job_preferences[J.title] == JP_HIGH)
-		parent.show_character_previews(image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH))
-		return
-
-	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
-	copy_to(mannequin)
-
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
 	var/highest_pref = 0
@@ -44,8 +30,22 @@
 			highest_pref = job_preferences[job]
 
 	if(previewJob)
+		// Silicons only need a very basic preview since there is no customization for them.
+		if(istype(previewJob,/datum/job/ai))
+			parent.show_character_previews(image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(preferred_ai_core_display), dir = SOUTH))
+			return
+		if(istype(previewJob,/datum/job/cyborg))
+			parent.show_character_previews(image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH))
+			return
+
+	// Set up the dummy for its photoshoot
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+	copy_to(mannequin)
+
+	if(previewJob)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE, preference_source = parent)
+
 	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
