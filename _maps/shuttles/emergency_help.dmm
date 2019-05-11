@@ -1,0 +1,9 @@
+"a" = (/obj/machinery/computer/communications,/obj/structure/window/plasma/reinforced{dir = 1},/obj/structure/window/plasma/reinforced{dir = 4},/obj/structure/window/plasma/reinforced{dir = 8},/obj/machinery/door/window/survival_pod{dir = 2; name = "Cockpit"; req_access_txt = "20"},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"b" = (/obj/machinery/sleeper/syndie/fullupgrade,/obj/structure/window/plasma/reinforced{dir = 4},/obj/machinery/door/window/survival_pod{dir = 8; name = "Emergency Shuttle Entrance"; req_access_txt = "20"},/obj/docking_port/mobile/emergency{name = "Captain's Private Shuttle"},/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
+"c" = (/obj/structure/chair/office{dir = 1},/obj/structure/window/plasma/reinforced,/obj/structure/window/plasma/reinforced{dir = 4},/obj/structure/window/plasma/reinforced{dir = 8},/obj/machinery/door/window/survival_pod{dir = 1; name = "Brig"; req_access_txt = "20"},/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+b
+c
+"}
