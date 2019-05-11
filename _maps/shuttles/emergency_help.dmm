@@ -1,7 +1,0 @@
-"a" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/chair{dir = 4},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1; layer = 2.9},/obj/machinery/door/window/brigdoor/security/cell/eastright{name = "Brig"; req_access = null; req_access_txt = "20"},/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
-"b" = (/obj/structure/window/reinforced,/obj/machinery/door/window/northleft{name = "Emergency Shuttle Entrance"; req_access_txt = "20"},/obj/docking_port/mobile/emergency,/obj/machinery/sleeper/syndie/fullupgrade{dir = 8},/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
-"c" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/machinery/computer/emergency_shuttle{dir = 8},/obj/machinery/door/window/brigdoor/westleft{name = "Cockpit"; req_access_txt = "20"},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
-
-(1,1,1) = {"
-abc
-"}
