@@ -17134,6 +17134,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aOc" = (
@@ -17612,6 +17615,19 @@
 /area/hallway/secondary/exit)
 "aPr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Escape Arm Holding Area";
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	pixel_x = -25
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aPs" = (
@@ -51526,21 +51542,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/hallway)
-"cwd" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Station Intercom (AI Private)";
-	pixel_x = -28;
-	pixel_y = -29
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/hallway)
 "cwe" = (
 /obj/structure/sign/warning/securearea,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -56569,6 +56570,12 @@
 	},
 /turf/open/space/basic,
 /area/solar/starboard/fore)
+"mvb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/exit)
 "mBm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -57970,6 +57977,16 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"wXs" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit)
 "wZy" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -96634,7 +96651,7 @@ cvT
 cBS
 cwc
 cvz
-cwd
+cvz
 cwf
 cwj
 cwo
@@ -106815,9 +106832,9 @@ aaf
 aMZ
 aOb
 aPr
-aQC
+wXs
 aRU
-aQC
+mvb
 aQC
 aQC
 czO
