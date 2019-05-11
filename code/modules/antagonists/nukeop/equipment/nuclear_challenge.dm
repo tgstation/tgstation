@@ -101,7 +101,6 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	if(declaring_war)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
 		return FALSE
-	return TRUE
 	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
 		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
 		return FALSE
