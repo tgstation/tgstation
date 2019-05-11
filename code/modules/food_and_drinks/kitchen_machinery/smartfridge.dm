@@ -42,11 +42,18 @@
 	update_icon()
 
 /obj/machinery/smartfridge/update_icon()
-	var/startstate = initial(icon_state)
 	if(!stat)
-		icon_state = startstate
+		switch(contents.len)
+			if(0)
+				icon_state = "[initial(icon_state)]"
+			if(1 to 25)
+				icon_state = "[initial(icon_state)]1"
+			if(26 to 75)
+				icon_state = "[initial(icon_state)]2"
+			if(76 to INFINITY)
+				icon_state = "[initial(icon_state)]3"
 	else
-		icon_state = "[startstate]-off"
+		icon_state = "[initial(icon_state)]-off"
 
 
 
@@ -83,6 +90,7 @@
 			load(O)
 			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 			updateUsrDialog()
+			update_icon()
 			return TRUE
 
 		if(istype(O, /obj/item/storage/bag))
@@ -105,6 +113,7 @@
 										 "<span class='notice'>You load \the [src] with \the [O].</span>")
 				if(O.contents.len > 0)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
+				update_icon()
 				return TRUE
 			else
 				to_chat(user, "<span class='warning'>There is nothing in [O] to put in [src]!</span>")
@@ -195,6 +204,7 @@
 							O.forceMove(drop_location())
 							adjust_item_drop_location(O)
 						break
+				update_icon()
 				return TRUE
 
 			for(var/obj/item/O in src)
@@ -204,6 +214,7 @@
 					O.forceMove(drop_location())
 					adjust_item_drop_location(O)
 					desired--
+			update_icon()
 			return TRUE
 	return FALSE
 

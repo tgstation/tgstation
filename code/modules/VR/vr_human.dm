@@ -50,11 +50,11 @@
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 		dust()
 		return
-	if(A.pacifist && !has_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT))
-		add_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT)
+	if(A.pacifist && !HAS_TRAIT_FROM(src, TRAIT_PACIFISM, VR_ZONE_TRAIT))
+		ADD_TRAIT(src, TRAIT_PACIFISM, VR_ZONE_TRAIT)
 		to_chat(src, "<span class='notice'>You feel like your ability to fight other living beings is being suppressed.</span>")
-	else if(!A.pacifist && has_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT))
-		remove_trait(TRAIT_PACIFISM, VR_ZONE_TRAIT)
+	else if(!A.pacifist && HAS_TRAIT_FROM(src, TRAIT_PACIFISM, VR_ZONE_TRAIT))
+		REMOVE_TRAIT(src, TRAIT_PACIFISM, VR_ZONE_TRAIT)
 		to_chat(src, "<span class='notice'>You feel that your ability to fight is no longer being suppressed.</span>")
 
 /mob/living/carbon/human/virtual_reality/proc/revert_to_reality(deathchecks = TRUE)

@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - tweak: "LateInitialize no longer waits for sleepers, moved some book/bookcase initialization sql over there."

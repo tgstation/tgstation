@@ -161,11 +161,6 @@
 	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
 	description = "<span class='boldwarning'>THEY NEEEEEEED [unhinged]!!</span>\n"
 
-/datum/mood_event/idiot_shower
-	description = "<span class='warning'>I showered with my clothes on, I'm a fucking idiot.</span>\n"
-	mood_change = -3
-	timeout = 900
-
 /datum/mood_event/sapped
 	description = "<span class='boldwarning'>Some unexplainable sadness is consuming me...</span>\n"
 	mood_change = -15

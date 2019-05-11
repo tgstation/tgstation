@@ -151,7 +151,7 @@
 			// If the human is losing too much blood, beep.
 			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
 				visible_message("[src] beeps loudly.")
-				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, 1)
 			attached.transfer_blood_to(beaker, amount)
 			update_icon()
 

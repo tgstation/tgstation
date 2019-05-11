@@ -1,0 +1,5 @@
+author: "Tetr4"
+delete-after: True
+changes: 
+  - tweak: "Remote signallers now use input boxes instead of inc/dec buttons."
+  - bugfix: "Remote signaller freq range no longer clamps to the wrong range."

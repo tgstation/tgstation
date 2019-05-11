@@ -165,8 +165,8 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(check_clothes(L))
-				to_chat(L, "<span class='warning'>You shower with your clothes on, and feel like an idiot.</span>")
-				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "badshower", /datum/mood_event/idiot_shower)
+				if(H.hygiene <= 75)
+					to_chat(H, "<span class='warning'>You have to remove your clothes to get clean!</span>")
 			else
 				H.set_hygiene(HYGIENE_LEVEL_CLEAN)
 				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
