@@ -61,32 +61,28 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
 
-	var/orphan_nukies
+	var/list/orphans = list()
 	var/list/uplinks = list()
 
-	for (var/datum/antagonist/nukeop/O in GLOB.antagonists)
-		var/datum/mind/opmind = O.owner
-		if (!istype(opmind))
-			continue
-		var/datum/component/uplink/uplink = opmind.find_syndicate_uplink()
+	for (var/datum/mind/M in get_antag_minds(/datum/antagonist/nukeop))
+		var/datum/component/uplink/uplink = M.find_syndicate_uplink()
 		if (!uplink)
-			orphan_nukies++
+			orphans += M.current
 			continue
 		uplinks += uplink
 
 
 	var/tc_to_distribute = CHALLENGE_TELECRYSTALS
-	var/tc_per_nukie = round((tc_to_distribute / (length(uplinks)+orphan_nukies)))
+	var/tc_per_nukie = round((tc_to_distribute / length(get_antag_minds(/datum/antagonist/nukeop))))
 
 	for (var/datum/component/uplink/uplink in uplinks)
 		uplink.telecrystals += tc_per_nukie
 		tc_to_distribute -= tc_per_nukie
 
-
-	if (orphan_nukies)
-		new /obj/item/stack/telecrystal(user.drop_location(), orphan_nukies*tc_per_nukie)
-		visible_message("<span class='warning'>Undistributed TC belonging to [orphan_nukies] unlocated uplinks appears at [user]'s feet.</span>")
-		tc_to_distribute -= orphan_nukies*tc_per_nukie
+	for (var/mob/living/L in orphans)
+		var/TC = new /obj/item/stack/telecrystal(user.drop_location(), tc_per_nukie)
+		to_chat(L, "<span class='warning'>Your uplink could not be found so your share of the team's bonus telecrystals has been bluespaced to your [L.put_in_hands(TC) ? "hands" : "feet"].</span>")
+		tc_to_distribute -= tc_per_nukie
 
 	if (tc_to_distribute > 0) // What shall we do with the remainder...
 		for (var/mob/living/simple_animal/hostile/carp/cayenne/C in GLOB.mob_living_list)
