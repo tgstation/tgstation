@@ -76,6 +76,7 @@
 			headarmor = H.head.armor.melee
 		else
 			headarmor = 0
+
 		//Calculate the knockdown duration for the target.
 		armor_duration = (duration - headarmor) + force
 
@@ -84,6 +85,7 @@
 		armor_block = target.run_armor_check(affecting, "melee")
 		if(affecting == BODY_ZONE_HEAD)
 			armor_duration = duration + force
+
 	//Apply the damage!
 	armor_block = min(90,armor_block)
 	target.apply_damage(force, BRUTE, affecting, armor_block)
@@ -109,6 +111,7 @@
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	SplashReagents(target)
+
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)
 
