@@ -59,6 +59,11 @@
 	icon_state = "nun_hood"
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
+	
+/obj/item/clothing/head/bishopmitre
+	name = "bishop mitre"
+	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
+	icon_state = "bishopmitre"
 
 //Detective
 /obj/item/clothing/head/fedora/det_hat
@@ -99,6 +104,18 @@
 	dog_fashion = /datum/dog_fashion/head/beret
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/head/beret/vintage
+	name = "vintage beret"
+	desc = "A well-worn beret."
+	icon_state = "vintageberet"
+	dog_fashion = null
+
+/obj/item/clothing/head/beret/archaic
+	name = "archaic beret"
+	desc = "An absolutely ancient beret, allegedly worn by the first mime to ever step foot on a NanoTrasen station."
+	icon_state = "archaicberet"
+	dog_fashion = null
+
 /obj/item/clothing/head/beret/black
 	name = "black beret"
 	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
@@ -110,7 +127,7 @@
 
 /obj/item/clothing/head/beret/highlander/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"

@@ -36,7 +36,7 @@
 		A.Grant(M)
 
 //Special is for instant replacement like autosurgeons
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -90,7 +90,7 @@
 	if(M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(status == ORGAN_ORGANIC)
-			var/obj/item/reagent_containers/food/snacks/S = prepare_eat()
+			var/obj/item/reagent_containers/food/snacks/S = prepare_eat(H)
 			if(S)
 				qdel(src)
 				if(H.put_in_active_hand(S))

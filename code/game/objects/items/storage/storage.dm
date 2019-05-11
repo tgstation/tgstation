@@ -16,7 +16,7 @@
 	AddComponent(component_type)
 
 /obj/item/storage/AllowDrop()
-	return TRUE
+	return FALSE
 
 /obj/item/storage/contents_explosion(severity, target)
 	for(var/atom/A in contents)
@@ -29,7 +29,7 @@
 		return TRUE
 
 /obj/item/storage/doStrip(mob/who)
-	if(has_trait(TRAIT_NODROP) && rummage_if_nodrop)
+	if(HAS_TRAIT(src, TRAIT_NODROP) && rummage_if_nodrop)
 		GET_COMPONENT(CP, /datum/component/storage)
 		CP.do_quick_empty()
 		return TRUE

@@ -61,11 +61,11 @@ Bonus
 					M.become_nearsighted(EYE_DAMAGE)
 				if(prob(eyes.eye_damage - 10 + 1))
 					if(!remove_eyes)
-						if(!M.has_trait(TRAIT_BLIND))
+						if(!HAS_TRAIT(M, TRAIT_BLIND))
 							to_chat(M, "<span class='userdanger'>You go blind!</span>")
 						M.become_blind(EYE_DAMAGE)
 					else
-						M.visible_message("<span class='warning'>[M]'s eyes fall off their sockets!</span>", "<span class='userdanger'>Your eyes fall off their sockets!</span>")
+						M.visible_message("<span class='warning'>[M]'s eyes fall out of their sockets!</span>", "<span class='userdanger'>Your eyes fall out of their sockets!</span>")
 						eyes.Remove(M)
 						eyes.forceMove(get_turf(M))
 				else

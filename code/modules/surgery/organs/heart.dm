@@ -113,6 +113,10 @@
 	if(owner)
 		to_chat(owner, "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
 
+/obj/item/organ/heart/cursed/Remove(mob/living/carbon/M, special = 0)
+	..()
+	M.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+
 /datum/action/item_action/organ_action/cursed_heart
 	name = "Pump your blood"
 

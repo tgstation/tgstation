@@ -10,6 +10,7 @@
 	var/chem_catalysts[] = list() //like tools but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
+	var/always_availible = TRUE //Set to FALSE if it needs to be learned first.
 
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
@@ -142,7 +143,7 @@
 				/obj/item/bodypart/r_leg/robot = 1,
 				/obj/item/stack/sheet/metal = 1,
 				/obj/item/stack/cable_coil = 1,
-				/obj/item/gun/energy/e_gun/advtaser = 1,
+				/obj/item/gun/energy/e_gun/dragnet = 1,
 				/obj/item/stock_parts/cell = 1,
 				/obj/item/assembly/prox_sensor = 1)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER)
@@ -643,6 +644,14 @@
 	name = "Mummification Bandages (Body)"
 	result = /obj/item/clothing/under/mummy
 	reqs = list(/obj/item/stack/sheet/cloth = 5)
+
+/datum/crafting_recipe/chaplain_hood
+	name = "Follower Hoodie"
+	result = /obj/item/clothing/suit/hooded/chaplain_hoodie
+	time = 10
+	tools = list(/obj/item/clothing/suit/hooded/chaplain_hoodie, /obj/item/storage/book/bible)
+	reqs = list(/obj/item/stack/sheet/cloth = 4)
+	category = CAT_CLOTHING
 
 /datum/crafting_recipe/guillotine
 	name = "Guillotine"

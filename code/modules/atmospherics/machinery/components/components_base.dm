@@ -145,7 +145,7 @@
 	for(var/i in 1 to device_type)
 		var/datum/pipeline/parent = parents[i]
 		if(!parent)
-			throw EXCEPTION("Component is missing a pipenet! Rebuilding...")
+			WARNING("Component is missing a pipenet! Rebuilding...")
 			build_network()
 		parent.update = 1
 
@@ -164,5 +164,5 @@
 
 // Tool acts
 
-/obj/machinery/atmospherics/components/analyzer_act(mob/living/user, obj/item/I)
-	atmosanalyzer_scan(airs, user, src)
+/obj/machinery/atmospherics/components/return_analyzable_air()
+	return airs

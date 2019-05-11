@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
 	if(!threshold)
 		return
-
+	
 	var/alive = 0
 	for(var/I in GLOB.player_list)
 		var/mob/M = I
@@ -135,6 +135,8 @@ SUBSYSTEM_DEF(shuttle)
 			++alive
 
 	var/total = GLOB.joined_player_list.len
+	if(total <= 0)
+		return //no players no autoevac
 
 	if(alive / total <= threshold)
 		var/msg = "Automatically dispatching shuttle due to crew death."
@@ -169,7 +171,7 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \
 			shuttle was called. Using the backup shuttle instead.")
 		if(!backup_shuttle)
-			throw EXCEPTION("requestEvac(): There is no emergency shuttle, \
+			CRASH("requestEvac(): There is no emergency shuttle, \
 			or backup shuttle! The game will be unresolvable. This is \
 			possibly a mapping error, more likely a bug with the shuttle \
 			manipulation system, or badminry. It is possible to manually \
@@ -401,7 +403,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
-		throw EXCEPTION("[M] is not a mobile docking port")
+		CRASH("[M] is not a mobile docking port")
 
 	if(M.assigned_transit)
 		return

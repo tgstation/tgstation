@@ -10,7 +10,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 2
 	var/stage = EMPTY
-	var/list/beakers = list()
+	var/list/obj/item/reagent_containers/glass/beakers = list()
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
 	var/list/banned_containers = list(/obj/item/reagent_containers/glass/beaker/bluespace) //Containers to exclude from specific grenade subtypes
 	var/affected_area = 3

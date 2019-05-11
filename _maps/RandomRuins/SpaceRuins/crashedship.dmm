@@ -499,7 +499,7 @@
 	dir = 1;
 	environ = 0;
 	equipment = 3;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/carpet,
@@ -877,7 +877,7 @@
 	dir = 1;
 	environ = 0;
 	equipment = 3;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/plating,
@@ -1006,24 +1006,9 @@
 /area/awaymission/BMPship/Aft)
 "do" = (
 /obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/awaymission/BMPship/Aft)
-"dp" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "dq" = (
 /obj/item/multitool,
@@ -1198,7 +1183,7 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 28;
+	pixel_y = 23;
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -1314,25 +1299,10 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "eb" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/power/terminal{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/awaymission/BMPship/Aft)
-"ec" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "ed" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -1345,7 +1315,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
 "ef" = (
-/obj/structure/chair/office{
+/obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -1452,15 +1422,6 @@
 /obj/item/storage/belt/utility/full,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/BMPship/Aft)
-"eu" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
@@ -1639,15 +1600,6 @@
 /obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/awaymission/BMPship/Aft)
-"eR" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "eS" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -5294,12 +5246,12 @@ aa
 aa
 ac
 cX
-dp
-eu
-ec
-eu
-eu
-eR
+fr
+cX
+cX
+cX
+cX
+cX
 cX
 fr
 fH

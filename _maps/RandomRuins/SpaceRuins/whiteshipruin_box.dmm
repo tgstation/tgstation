@@ -84,7 +84,6 @@
 "p" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	icon_state = "mass_driver";
 	id = "oldship_ruin_gun"
 	},
 /turf/open/floor/plating,

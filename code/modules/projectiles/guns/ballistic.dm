@@ -53,7 +53,7 @@
 	var/cartridge_wording = "bullet"
 	var/rack_delay = 5
 	var/recent_rack = 0
-	var/tac_reloads = FALSE //Snowflake mechanic no more.
+	var/tac_reloads = TRUE //Snowflake mechanic no more.
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -117,14 +117,14 @@
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
-	if (chamber_next_round && (magazine.max_ammo > 1))
+	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
-/obj/item/gun/ballistic/proc/chamber_round()
+/obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE)
 	if (chambered || !magazine)
 		return
 	if (magazine.ammo_count())
-		chambered = magazine.get_round((bolt_type == BOLT_TYPE_NO_BOLT))
+		chambered = magazine.get_round(keep_bullet || bolt_type == BOLT_TYPE_NO_BOLT)
 		if (bolt_type != BOLT_TYPE_OPEN)
 			chambered.forceMove(src)
 
@@ -134,7 +134,7 @@
 	if (bolt_type == BOLT_TYPE_OPEN)
 		if(!bolt_locked)	//If it's an open bolt, racking again would do nothing
 			if (user)
-				to_chat(user, "<span class='notice'>\The [src] is already ready to fire!</span>")
+				to_chat(user, "<span class='notice'>\The [src]'s [bolt_wording] is already cocked!</span>")
 			return
 		bolt_locked = FALSE
 	if (user)
@@ -156,13 +156,16 @@
 	update_icon()
 
 /obj/item/gun/ballistic/proc/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message = TRUE)
+	if(!istype(AM, mag_type))
+		to_chat(user, "<span class='warning'>\The [AM] doesn't seem to fit into \the [src]...</span>")
+		return FALSE
 	if(user.transferItemToLoc(AM, src))
 		magazine = AM
 		if (display_message)
 			to_chat(user, "<span class='notice'>You load a new [magazine_wording] into \the [src].</span>")
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
-			chamber_round()
+			chamber_round(TRUE)
 		update_icon()
 		return TRUE
 	else
@@ -179,12 +182,15 @@
 	magazine.forceMove(drop_location())
 	var/obj/item/ammo_box/magazine/old_mag = magazine
 	if (tac_load)
-		insert_magazine(user, tac_load, FALSE)
-		to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
+		if (insert_magazine(user, tac_load, FALSE))
+			to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
+		else
+			to_chat(user, "<span class='warning'>You dropped the old [magazine_wording], but the new one doesn't fit. How embarassing.</span>")
+			magazine = null
+	else
+		magazine = null
 	user.put_in_hands(old_mag)
 	old_mag.update_icon()
-	if (!tac_load)
-		magazine = null
 	if (display_message)
 		to_chat(user, "<span class='notice'>You pull the [magazine_wording] out of \the [src].</span>")
 	update_icon()
@@ -198,10 +204,10 @@
 		return
 	if (!internal_magazine && istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
+		if (!magazine)
 			insert_magazine(user, AM)
-		else if (magazine)
-			if(tac_reloads)
+		else
+			if (tac_reloads)
 				eject_magazine(user, FALSE, AM)
 			else
 				to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
@@ -325,7 +331,7 @@
 
 /obj/item/gun/ballistic/examine(mob/user)
 	..()
-	var/count_chambered = !((bolt_type == BOLT_TYPE_NO_BOLT) || (bolt_type == BOLT_TYPE_OPEN))
+	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
 	to_chat(user, "It has [get_ammo(count_chambered)] round\s remaining.")
 	if (!chambered)
 		to_chat(user, "It does not seem to have a round chambered.")
