@@ -369,21 +369,6 @@
 	M.silent = max(M.silent, 3)
 	..()
 
-/datum/reagent/toxin/staminatoxin
-	name = "Tirizene"
-	id = "tirizene"
-	description = "A nonlethal poison that causes extreme fatigue and weakness in its victim."
-	silent_toxin = TRUE
-	color = "#6E2828"
-	data = 13
-	toxpwr = 0
-
-/datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(REM * data, 0)
-	data = max(data - 1, 3)
-	..()
-	. = 1
-
 /datum/reagent/toxin/polonium
 	name = "Polonium"
 	id = "polonium"
@@ -597,23 +582,6 @@
 	if(prob(20))
 		M.losebreath += 4
 	..()
-
-/datum/reagent/toxin/sodium_thiopental
-	name = "Sodium Thiopental"
-	id = "sodium_thiopental"
-	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness."
-	silent_toxin = TRUE
-	reagent_state = LIQUID
-	color = "#6496FA"
-	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	toxpwr = 0
-
-/datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/M)
-	if(current_cycle >= 10)
-		M.Sleeping(40, 0)
-	M.adjustStaminaLoss(10*REM, 0)
-	..()
-	return TRUE
 
 /datum/reagent/toxin/sulfonal
 	name = "Sulfonal"
@@ -905,7 +873,59 @@
 /datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_EMOTEMUTE, id)
 
-/datum/reagent/toxin/bonehurtingjuice //oof ouch
+/datum/reagent/toxin/staminatoxin
+	name = "Stamina Toxin"
+	id = "stamtox"
+	description = "A toxin that deals stamina damage"
+	silent_toxin = TRUE
+	color = "#6E2828"
+	toxpwr = 0
+	var/stampwr = 10
+
+/datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
+	var/obj/item/bodypart/chest = M.get_bodypart(BODY_ZONE_CHEST)
+	if(chest)
+		chest.receive_damage(0, 0, REM * stampwr)
+	..()
+	. = 1
+	
+/datum/reagent/toxin/staminatoxin/tirizene
+	name = "Tirizene"
+	id = "tirizene"
+	description = "A nonlethal poison that causes extreme fatigue and weakness in its victim."
+	silent_toxin = TRUE
+	color = "#6E2828"
+	stampwr = 12
+	toxpwr = 0
+
+/datum/reagent/toxin/staminatoxin/tirizene/on_mob_life(mob/living/carbon/M)
+	stampwr = max(stampwr - 1, 2) //steadily decreasing damage. It won't disable the victim on it's own but sure will make them immobile.
+	var/obj/item/bodypart/ll = M.get_bodypart(BODY_ZONE_L_LEG)
+	if(ll)
+		ll.receive_damage(0, 0, 15)
+	var/obj/item/bodypart/rl = M.get_bodypart(BODY_ZONE_R_LEG)
+	if(rl)
+		rl.receive_damage(0, 0, 15)
+	..()
+
+/datum/reagent/toxin/staminatoxin/sodium_thiopental
+	name = "Sodium Thiopental"
+	id = "sodium_thiopental"
+	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness."
+	silent_toxin = TRUE
+	reagent_state = LIQUID
+	color = "#6496FA"
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	toxpwr = 0
+	stampwr = 10
+	
+/datum/reagent/toxin/staminatoxin/sodium_thiopental/on_mob_life(mob/living/carbon/M)
+	if(current_cycle >= 10)
+		M.Sleeping(40, 0)
+	..()
+	return TRUE
+
+/datum/reagent/toxin/staminatoxin/bonehurtingjuice //oof ouch
 	name = "Bone Hurting Juice"
 	id = "bonehurtingjuice"
 	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
@@ -914,13 +934,13 @@
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 50
+	stampwr = 6 //this is still fairly good. Passive regeneration is 3. It deals the same amount of damage as plasma.
 
-/datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
+/datum/reagent/toxin/staminatoxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = "bonehurtingjuice")
 
-/datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(15, 0)
-	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
+/datum/reagent/toxin/staminatoxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
+	if(M.has_trait(TRAIT_CALCIUM_HEALER))
 		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
@@ -934,7 +954,7 @@
 				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
 	return ..()
 
-/datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
+/datum/reagent/toxin/staminatoxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
 	if(prob(4) && iscarbon(M)) //big oof
 		var/selected_part
 		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
