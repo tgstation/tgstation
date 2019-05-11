@@ -443,9 +443,9 @@
 	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
 		crushed_can.icon_state = icon_state
-		qdel(src)
 		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
 		crushed_can.throw_at(throw_target, rand(1,2), 7)
+		qdel(src)
 		return
 
 /obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
