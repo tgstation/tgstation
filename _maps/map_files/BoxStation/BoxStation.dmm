@@ -17127,7 +17127,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aOb" = (
-/obj/structure/chair,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -17137,6 +17136,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aOc" = (
@@ -17627,6 +17628,9 @@
 	},
 /obj/item/radio/intercom{
 	pixel_x = -25
+	},
+/obj/structure/chair{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -57984,6 +57988,9 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/structure/chair{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
