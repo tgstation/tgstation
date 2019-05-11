@@ -61,7 +61,35 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
 
-	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
+	var/orphan_nukies
+	var/list/uplinks = list()
+
+ 	for (var/datum/antagonist/nukeop/O in GLOB.antagonists)
+		var/datum/mind/opmind = O.owner
+		if (!istype(opmind))
+			orphan_nukies++
+			continue
+		var/datum/component/uplink/uplink = opmind.find_syndicate_uplink()
+		if (!uplink)
+			orphan_nukies++
+			continue
+		uplinks += uplink
+
+
+	var/tc_to_distribute = CHALLENGE_TELECRYSTALS
+	var/tc_per_nukie = round((tc_to_distribute / (length(uplinks)+orphan_nukies)))
+
+	for (var/datum/component/uplink/uplink in uplinks)
+		uplink.telecrystals += tc_per_nukie
+		tc_to_distribute -= tc_per_nukie
+
+	if (tc_to_distribute > 0) // What shall we do with the remainder...
+		for (var/mob/living/simple_animal/hostile/carp/cayenne/C in GLOB.mob_living_list)
+			var/obj/item/stack/telecrystal/TC = new(C, tc_to_distribute)
+			TC.throw_at(get_step(C, C.dir), 3, 3)
+			C.visible_message("<span class='warning'>[C] coughs up a half-digested telecrystal</span>","<span class='userdanger'>You cough up a half-digested telecrystal!</span>")
+			break
+
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
@@ -71,6 +99,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	if(declaring_war)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
 		return FALSE
+	return TRUE
 	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
 		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
 		return FALSE
