@@ -12,8 +12,7 @@
 /mob/camera/aiEye/remote/holo/setLoc()
 	. = ..()
 	var/obj/machinery/holopad/H = origin
-	if(H)
-		H.move_hologram(eye_user, loc)
+	H?.move_hologram(eye_user, loc)
 
 /obj/machinery/holopad/remove_eye_control(mob/living/user)
 	if(user.client)
