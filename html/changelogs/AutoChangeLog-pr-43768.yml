@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - rscadd: "hitting a bottle or a soda can with a bullet will make them break"
