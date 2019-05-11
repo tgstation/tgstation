@@ -171,7 +171,7 @@
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
-				var/time = is_stack ? 32 : 32*coeff*multiplier
+				var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
 				addtimer(CALLBACK(src, .proc/make_item, power, metal_cost, glass_cost, multiplier, coeff, is_stack), time)
 
 		if(href_list["search"])

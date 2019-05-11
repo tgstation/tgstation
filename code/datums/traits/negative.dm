@@ -1,7 +1,22 @@
 //predominantly negative traits
 
+/datum/quirk/badback
+	name = "Bad Back"
+	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."
+	value = -2
+	mood_quirk = TRUE
+	gain_text = "<span class='danger'>Your back REALLY hurts!</span>"
+	lose_text = "<span class='notice'>Your back feels better.</span>"
+
+/datum/quirk/badback/on_process()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H.back && istype(H.back, /obj/item/storage/backpack))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "back_pain", /datum/mood_event/back_pain)
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "back_pain")
+
 /datum/quirk/blooddeficiency
-	name = "Acute Blood Deficiency"
+	name = "Blood Deficiency"
 	desc = "Your body can't produce enough blood to sustain itself."
 	value = -2
 	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
@@ -13,7 +28,8 @@
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 	else
-		quirk_holder.blood_volume -= 0.275
+		if (H.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
+			H.blood_volume -= 0.275
 
 /datum/quirk/blindness
 	name = "Blind"

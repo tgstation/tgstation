@@ -153,8 +153,8 @@
 /datum/chemical_reaction/beepsky_smash
 	name = "Beepksy Smash"
 	id = "beepksysmash"
-	results = list("beepskysmash" = 4)
-	required_reagents = list("limejuice" = 2, "whiskey" = 2, "iron" = 1)
+	results = list("beepskysmash" = 5)
+	required_reagents = list("limejuice" = 2, "quadruple_sec" = 2, "iron" = 1)
 
 /datum/chemical_reaction/doctor_delight
 	name = "The Doctor's Delight"
@@ -694,3 +694,28 @@
 	id = "blank_paper"
 	results = list("blank_paper" = 3)
 	required_reagents = list("silencer" = 1, "nothing" = 1, "nuka_cola" = 1)
+
+
+/datum/chemical_reaction/wizz_fizz
+	name = "Wizz Fizz"
+	id = "wizz_fizz"
+	results = list("wizz_fizz" = 3)
+	required_reagents = list("triple_sec" = 1, "sodawater" = 1, "champagne" = 1)
+	mix_message = "The beverage starts to froth with an almost mystical zeal!"
+	mix_sound = 'sound/effects/bubbles2.ogg'
+
+
+/datum/chemical_reaction/bug_spray
+	name = "Bug Spray"
+	id = "bug_spray"
+	results = list("bug_spray" = 5)
+	required_reagents = list("triple_sec" = 2, "lemon_lime" = 1, "rum" = 2, "vodka" = 1)
+	mix_message = "The faint aroma of summer camping trips wafts through the air; but what's that buzzing noise?"
+	mix_sound = 'sound/creatures/bee.ogg'
+
+/datum/chemical_reaction/jack_rose
+	name = "Jack Rose"
+	id = "jack_rose"
+	results = list("jack_rose" = 4)
+	required_reagents = list("grenadine" = 1, "applejack" = 2, "limejuice" = 1)
+	mix_message = "As the grenadine incorporates, the beverage takes on a mellow, red-orange glow."

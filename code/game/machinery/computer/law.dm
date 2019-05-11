@@ -3,11 +3,28 @@
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
+	var/obj/item/gps/internal/ai_upload/embedded_gps
+	var/obj/item/gps/internal/ai_upload/embedded_gps_type = /obj/item/gps/internal/ai_upload
+	time_to_scewdrive = 60
+
+/obj/item/gps/internal/ai_upload
+	icon_state = null
+	gpstag = "Encrypted Upload Signal"
+	desc = "Signal used to connect remotely with silicons."
+	invisibility = 100
+
+/obj/machinery/computer/upload/Initialize()
+	embedded_gps = new embedded_gps_type(src)
+	return ..()
+
+/obj/machinery/computer/upload/Destroy()
+	QDEL_NULL(embedded_gps)
+	return ..()
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/aiModule))
 		var/obj/item/aiModule/M = O
-		if(src.stat & (NOPOWER|BROKEN|MAINT))
+		if(stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(!current)
 			to_chat(user, "<span class='caution'>You haven't selected anything to transmit laws to!</span>")
@@ -27,8 +44,8 @@
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
 	if(S.stat == DEAD)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/upload/ai
 	name = "\improper AI upload console"
@@ -36,18 +53,18 @@
 	circuit = /obj/item/circuitboard/computer/aiupload
 
 /obj/machinery/computer/upload/ai/interact(mob/user)
-	src.current = select_active_ai(user)
+	current = select_active_ai(user)
 
-	if (!src.current)
+	if (!current)
 		to_chat(user, "<span class='caution'>No active AIs detected!</span>")
 	else
-		to_chat(user, "[src.current.name] selected for law changes.")
+		to_chat(user, "[current.name] selected for law changes.")
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
-		return 0
+		return FALSE
 	if(A.control_disabled)
-		return 0
+		return FALSE
 	return ..()
 
 
@@ -57,16 +74,16 @@
 	circuit = /obj/item/circuitboard/computer/borgupload
 
 /obj/machinery/computer/upload/borg/interact(mob/user)
-	src.current = select_active_free_borg(user)
+	current = select_active_free_borg(user)
 
-	if(!src.current)
+	if(!current)
 		to_chat(user, "<span class='caution'>No active unslaved cyborgs detected!</span>")
 	else
-		to_chat(user, "[src.current.name] selected for law changes.")
+		to_chat(user, "[current.name] selected for law changes.")
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !iscyborg(B))
-		return 0
+		return FALSE
 	if(B.scrambledcodes || B.emagged)
-		return 0
+		return FALSE
 	return ..()

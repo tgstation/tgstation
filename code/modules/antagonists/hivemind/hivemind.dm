@@ -161,8 +161,13 @@
 	to_chat(real_C, "<span class='userdanger'>[user_warning]!</span>")
 
 /datum/antagonist/hivemind/proc/destroy_hive()
+	go_back_to_sleep()
 	hivemembers = list()
 	calc_size()
+	for(var/power in upgrade_tiers)
+		if(!upgrade_tiers[power])
+			continue
+		owner.RemoveSpell(power)
 
 /datum/antagonist/hivemind/antag_panel_data()
 	return "Vessels Assimilated: [hive_size] (+[size_mod])"
@@ -180,6 +185,26 @@
 	C.add_trait(TRAIT_NOLIMBDISABLE, HIVEMIND_ONE_MIND_TRAIT)
 	C.add_trait(TRAIT_NOHUNGER, HIVEMIND_ONE_MIND_TRAIT)
 	C.add_trait(TRAIT_NODISMEMBER, HIVEMIND_ONE_MIND_TRAIT)
+
+/datum/antagonist/hivemind/proc/go_back_to_sleep()
+	if(!active_one_mind)
+		return
+	for(var/datum/mind/M in hivemembers)
+		M.remove_antag_datum(/datum/antagonist/hivevessel)
+		active_one_mind.remove_member(M)
+	if(!(owner?.current))
+		return
+	var/mob/living/carbon/C = owner.current.get_real_hivehost()
+	if(!C)
+		return
+	owner.RemoveSpell(new/obj/effect/proc_holder/spell/self/hive_comms)
+	C.remove_trait(TRAIT_STUNIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	C.remove_trait(TRAIT_SLEEPIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	C.remove_trait(TRAIT_VIRUSIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	C.remove_trait(TRAIT_NOLIMBDISABLE, HIVEMIND_ONE_MIND_TRAIT)
+	C.remove_trait(TRAIT_NOHUNGER, HIVEMIND_ONE_MIND_TRAIT)
+	C.remove_trait(TRAIT_NODISMEMBER, HIVEMIND_ONE_MIND_TRAIT)
+	active_one_mind.Destroy()
 
 /datum/antagonist/hivemind/on_gain()
 	owner.special_role = special_role

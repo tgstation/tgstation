@@ -12,18 +12,19 @@
 	casing_ejector = FALSE
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
+	tac_reloads = FALSE
 	var/spin_delay = 10
 	var/recent_spin = 0
 
-/obj/item/gun/ballistic/revolver/chamber_round(spin = 1)
-	if(spin)
-		chambered = magazine.get_round(1)
+/obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE)
+	if(spin_cylinder)
+		chambered = magazine.get_round(TRUE)
 	else
 		chambered = magazine.stored_ammo[1]
 
 /obj/item/gun/ballistic/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	..()
-	chamber_round(1)
+	chamber_round(TRUE)
 
 /obj/item/gun/ballistic/revolver/AltClick(mob/user)
 	..()
@@ -38,7 +39,7 @@
 
 	if(M.stat || !in_range(M,src))
 		return
-	
+
 	if (recent_spin > world.time)
 		return
 	recent_spin = world.time + spin_delay
@@ -54,7 +55,7 @@
 	. = istype(C)
 	if(.)
 		C.spin()
-		chamber_round(0)
+		chamber_round(FALSE)
 
 /obj/item/gun/ballistic/revolver/get_ammo(countchambered = FALSE, countempties = TRUE)
 	var/boolets = 0 //mature var names for mature people
@@ -72,17 +73,21 @@
 		to_chat(user, "It can be spun with <b>alt+click</b>")
 
 /obj/item/gun/ballistic/revolver/detective
-	name = "\improper .38 Mars Special"
-	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
+	name = "\improper Colt Detective Special"
+	desc = "A classic, if not outdated, law enforcement firearm. Uses .38-special rounds."
 	fire_sound = 'sound/weapons/revolver38shot.ogg'
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "detective",
-						"Leopard Spots" = "detective_leopard",
-						"Black Panther" = "detective_panther",
+						"Fitz Special" = "detective_fitz",
+						"Police Positive Special" = "detective_police",
+						"Blued Steel" = "detective_blued",
+						"Stainless Steel" = "detective_stainless",
 						"Gold Trim" = "detective_gold",
-						"The Peacemaker" = "detective_peacemaker"
+						"Leopard Spots" = "detective_leopard",
+						"The Peacemaker" = "detective_peacemaker",
+						"Black Panther" = "detective_panther"
 						)
 
 /obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
@@ -157,6 +162,7 @@
 /obj/item/gun/ballistic/revolver/russian
 	name = "\improper Russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
+	icon_state = "russianrevolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 

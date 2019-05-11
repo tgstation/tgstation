@@ -31,6 +31,8 @@
 					/obj/item/clothing/head/that = 1,
 					/obj/item/clothing/under/kilt = 1,
 					/obj/item/clothing/head/beret = 1,
+					/obj/item/clothing/head/beret/vintage = 1,
+					/obj/item/clothing/head/beret/archaic = 1,
 					/obj/item/clothing/accessory/waistcoat = 1,
 					/obj/item/clothing/glasses/monocle =1,
 					/obj/item/clothing/head/bowler = 1,

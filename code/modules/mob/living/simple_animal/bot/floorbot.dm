@@ -21,13 +21,13 @@
 
 	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
 	var/targetdirection
-	var/replacetiles = 0
-	var/placetiles = 0
+	var/replacetiles = FALSE
+	var/placetiles = FALSE
 	var/specialtiles = 0
 	var/maxtiles = 100
 	var/obj/item/stack/tile/tiletype
-	var/fixfloors = 0
-	var/autotile = 0
+	var/fixfloors = TRUE
+	var/autotile = FALSE
 	var/max_targets = 50
 	var/turf/target
 	var/oldloc = null
@@ -136,7 +136,7 @@
 
 /mob/living/simple_animal/bot/floorbot/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 
 	switch(href_list["operation"])
 		if("replace")
@@ -269,9 +269,9 @@
 /mob/living/simple_animal/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
 	var/area/t_area = get_area(t)
 	if(t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 //Floorbots, having several functions, need sort out special conditions here.
 /mob/living/simple_animal/bot/floorbot/process_scan(scan_target)
@@ -337,8 +337,8 @@
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 			sleep(50)
 			if(mode == BOT_REPAIRING && F && src.loc == F)
-				F.broken = 0
-				F.burnt = 0
+				F.broken = FALSE 
+				F.burnt = FALSE
 				F.PlaceOnTop(/turf/open/floor/plasteel)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
@@ -348,8 +348,8 @@
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
 			sleep(50)
 			if(mode == BOT_REPAIRING && F && src.loc == F)
-				F.broken = 0
-				F.burnt = 0
+				F.broken = FALSE
+				F.burnt = FALSE
 				F.PlaceOnTop(initial(tiletype.turf_type))
 				specialtiles -= 1
 				if(specialtiles == 0)

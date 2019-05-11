@@ -46,6 +46,12 @@
 	icon_state = "horribletie"
 	item_color = "horribletie"
 
+/obj/item/clothing/neck/tie/detective
+	name = "loose tie"
+	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."
+	icon_state = "detective"
+	item_color = "detective"
+
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."

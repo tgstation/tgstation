@@ -35,6 +35,7 @@
 #define LOG_ASAY			(1 << 14)
 #define LOG_MECHA			(1 << 15)
 #define LOG_VIRUS			(1 << 16)
+#define LOG_CLONING			(1 << 17)
 
 //Individual logging panel pages
 #define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)

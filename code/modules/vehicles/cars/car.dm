@@ -30,6 +30,7 @@
 		return
 	last_enginesound_time = world.time
 	playsound(src, engine_sound, 100, TRUE)
+	return TRUE
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
 	if(M.stat || M.restrained())
@@ -78,10 +79,14 @@
 		return FALSE
 	if(occupant_amount() >= max_occupants)
 		return FALSE
-	if(do_mob(forcer, get_enter_delay(M), target = src))
+	var/atom/old_loc = loc
+	if(do_mob(forcer, M, get_enter_delay(M), extra_checks=CALLBACK(src, /obj/vehicle/sealed/car/proc/is_car_stationary, old_loc)))
 		mob_forced_enter(M, silent)
 		return TRUE
 	return FALSE
+
+/obj/vehicle/sealed/car/proc/is_car_stationary(atom/old_loc)
+	return (old_loc == loc)
 
 /obj/vehicle/sealed/car/proc/mob_forced_enter(mob/M, silent = FALSE)
 	if(!silent)

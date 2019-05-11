@@ -1,5 +1,6 @@
 /datum/component/wet_floor
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	can_transfer = TRUE
 	var/highest_strength = TURF_DRY
 	var/lube_flags = NONE			//why do we have this?
 	var/list/time_left_list			//In deciseconds.
@@ -26,13 +27,18 @@
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	add_wet(strength, duration_minimum, duration_add, duration_maximum)
-	RegisterSignal(parent, COMSIG_TURF_IS_WET, .proc/is_wet)
-	RegisterSignal(parent, COMSIG_TURF_MAKE_DRY, .proc/dry)
 	permanent = _permanent
 	if(!permanent)
 		START_PROCESSING(SSwet_floors, src)
 	addtimer(CALLBACK(src, .proc/gc, TRUE), 1)		//GC after initialization.
 	last_process = world.time
+
+/datum/component/wet_floor/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_TURF_IS_WET, .proc/is_wet)
+	RegisterSignal(parent, COMSIG_TURF_MAKE_DRY, .proc/dry)
+
+/datum/component/wet_floor/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_TURF_IS_WET, COMSIG_TURF_MAKE_DRY))
 
 /datum/component/wet_floor/Destroy()
 	STOP_PROCESSING(SSwet_floors, src)
@@ -136,12 +142,19 @@
 /datum/component/wet_floor/PreTransfer()
 	var/turf/O = parent
 	O.cut_overlay(current_overlay)
+	//That turf is no longer slippery, we're out of here
+	//Slippery components don't transfer due to callbacks
+	qdel(O.GetComponent(/datum/component/slippery))
 
 /datum/component/wet_floor/PostTransfer()
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/turf/T = parent
 	T.add_overlay(current_overlay)
+	//Make sure to add/update any slippery component on the new turf (update_flags calls LoadComponent)
+	update_flags()
+
+	//NB it's possible we get deleted after this, due to inherit
 
 /datum/component/wet_floor/proc/add_wet(type, duration_minimum = 0, duration_add = 0, duration_maximum = MAXIMUM_WET_TIME, _permanent = FALSE)
 	var/static/list/allowed_types = list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST)

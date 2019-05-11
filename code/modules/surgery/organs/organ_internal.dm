@@ -5,7 +5,7 @@
 	var/status = ORGAN_ORGANIC
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
-	var/broken_cyber_organ = TRUE //if the organ stopped working.
+	var/broken_cyber_organ = FALSE //if the organ stopped working.
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
@@ -36,7 +36,7 @@
 		A.Grant(M)
 
 //Special is for instant replacement like autosurgeons
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -90,7 +90,7 @@
 	if(M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(status == ORGAN_ORGANIC)
-			var/obj/item/reagent_containers/food/snacks/S = prepare_eat()
+			var/obj/item/reagent_containers/food/snacks/S = prepare_eat(H)
 			if(S)
 				qdel(src)
 				if(H.put_in_active_hand(S))

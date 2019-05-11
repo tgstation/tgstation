@@ -53,3 +53,13 @@
 	desc = "Worn by robust fighters who are willing to do anything to win."
 	icon_state = "luchar"
 	item_state = "luchar"
+
+/obj/item/clothing/mask/russian_balaclava
+	name = "russian balaclava"
+	desc = "Protects your face from snow."
+	icon_state = "rus_balaclava"
+	item_state = "rus_balaclava"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+
