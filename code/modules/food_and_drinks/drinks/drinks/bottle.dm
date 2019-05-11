@@ -15,6 +15,7 @@
 	isGlass = TRUE
 	foodtype = ALCOHOL
 
+
 /obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	if(bartender_check(target) && ranged)
@@ -23,10 +24,12 @@
 	if(!ranged && thrower)
 		thrower.put_in_hands(B)
 	B.icon_state = icon_state
+
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
+
 	if(isGlass)
 		if(prob(33))
 			var/obj/item/shard/S = new(drop_location())
@@ -38,26 +41,36 @@
 		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
 	B.name = "broken [name]"
 	transfer_fingerprints_to(B)
+
 	qdel(src)
 	target.Bumped(B)
 
 /obj/item/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
+
 	if(!target)
 		return
+
 	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
+
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return
+
 	force = 15 //Smashing bottles over someoen's head hurts.
+
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
+
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
 	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
+
 	//Calculating duration and calculating damage.
 	if(ishuman(target))
+
 		var/mob/living/carbon/human/H = target
 		var/headarmor = 0 // Target's head armor
 		armor_block = H.run_armor_check(affecting, "melee","","",armour_penetration) // For normal attack damage
+
 		//If they have a hat/helmet and the user is targeting their head.
 		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
 			headarmor = H.head.armor.melee
@@ -65,6 +78,7 @@
 			headarmor = 0
 		//Calculate the knockdown duration for the target.
 		armor_duration = (duration - headarmor) + force
+
 	else
 		//Only humans can have armor, right?
 		armor_block = target.run_armor_check(affecting, "melee")
@@ -73,6 +87,7 @@
 	//Apply the damage!
 	armor_block = min(90,armor_block)
 	target.apply_damage(force, BRUTE, affecting, armor_block)
+
 	// You are going to knock someone down for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
 	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
@@ -80,6 +95,7 @@
 		//Knock down the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
 			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN)
+
 	//Display an attack message.
 	if(target != user)
 		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>", \
@@ -87,12 +103,15 @@
 	else
 		user.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
 				"<span class='userdanger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>")
+
 	//Attack logs
 	log_combat(user, target, "attacked", src)
+
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	SplashReagents(target)
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)
+
 	return
 
 //Keeping this here for now, I'll ask if I should keep it here.
