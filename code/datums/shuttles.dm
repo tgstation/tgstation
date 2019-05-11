@@ -304,6 +304,12 @@
 	credit_cost = 1000
 	description = "Despite its namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
+/datum/map_template/shuttle/emergency/help
+	suffix = "help"
+	name = "Captain's Private Shuttle"
+	credit_cost = 50000
+	description = "Shuttle only fit for the one true king!"
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
