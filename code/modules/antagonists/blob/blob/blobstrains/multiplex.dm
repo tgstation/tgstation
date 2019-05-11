@@ -5,8 +5,8 @@
 /datum/blobstrain/multiplex/New(mob/camera/blob/new_overmind, list/blobstrains)
 	. = ..()
 	for (var/bt in blobstrains)
-		if (ispath(bt))
-			src.blobstrains |= new bt(overmind)
+		if (ispath(bt, /datum/blobstrain))
+			src.blobstrains += new bt(overmind)
 		else if (istype(bt, /datum/blobstrain))
 			var/datum/blobstrain/bts = bt
 			bts.overmind = overmind
