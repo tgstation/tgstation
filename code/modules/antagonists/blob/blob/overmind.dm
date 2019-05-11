@@ -20,7 +20,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	call_life = TRUE
 	hud_type = /datum/hud/blob_overmind
 	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
