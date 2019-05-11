@@ -940,7 +940,7 @@
 	M.say("oof ouch my bones", forced = "bonehurtingjuice")
 
 /datum/reagent/toxin/staminatoxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
-	if(M.has_trait(TRAIT_CALCIUM_HEALER))
+	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
 		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
