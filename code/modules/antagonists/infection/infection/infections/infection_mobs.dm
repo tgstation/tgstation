@@ -350,6 +350,7 @@
 	if(istype(new_spore.loc, /obj/structure/infection))
 		// restart respawn for new spore
 		INVOKE_ASYNC(new_spore, .proc/respawn, current_respawn_time)
+	overmind.infection_mobs += new_spore
 	qdel(src)
 	new_spore.update_icons()
 	return new_spore
