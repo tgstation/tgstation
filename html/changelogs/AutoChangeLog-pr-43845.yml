@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - code_imp: "Mood quirks are now only processed by the quirk holders"
