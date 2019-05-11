@@ -308,7 +308,8 @@
 	suffix = "help"
 	name = "Captain's Private Shuttle"
 	credit_cost = 50000
-	description = "Shuttle only fit for the one true king!"
+	description = "Shuttle only fit for the one true king! Comes with a full equipped Medbay, Brig and Bridge!"
+	admin_notes = "3x1 shuttle with a syndie sleeper for medbay and a chair + reinforced window for brig."
 
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
