@@ -95060,12 +95060,13 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/item/stack/rods/ten,
+/obj/item/stock_parts/capacitor,
+/obj/item/circuitboard/machine/stasis,
+/obj/item/stock_parts/manipulator,
 /turf/open/floor/plasteel,
 /area/medical/abandoned)
 "ddn" = (
@@ -95751,12 +95752,10 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
 "deC" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "deD" = (
@@ -95776,15 +95775,13 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "deF" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "deG" = (

@@ -107,12 +107,21 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	GLOB.cable_list -= src							//remove it from global cable list
+
+	//If we have a stored item at this point, lets just delete it, since that should be
+	//handled by deconstruction
+	if(stored)
+		QDEL_NULL(stored)
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/turf/T = loc
-		stored.forceMove(T)
+		var/turf/T = get_turf(loc)
+		if(T)
+			stored.forceMove(T)
+			stored = null
+		else
+			qdel(stored)
 	qdel(src)
 
 ///////////////////////////////////

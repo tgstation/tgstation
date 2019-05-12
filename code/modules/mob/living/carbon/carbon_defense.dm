@@ -246,10 +246,10 @@
 		)
 	if(iscarbon(pulling) && !illusion && source != pulling)
 		var/mob/living/carbon/C = pulling
-		C.electrocute_act(shock_damage*0.75, src, 1, safety, override, tesla_shock, illusion, stun)
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
 	if(iscarbon(pulledby) && !illusion && source != pulledby)
 		var/mob/living/carbon/C = pulledby
-		C.electrocute_act(shock_damage*0.75, src, 1, safety, override, tesla_shock, illusion, stun)
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2

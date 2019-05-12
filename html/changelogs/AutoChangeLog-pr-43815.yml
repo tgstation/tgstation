@@ -1,6 +1,0 @@
-author: "blessedmulligan"
-delete-after: True
-changes: 
-  - rscadd: "Garlic! Heals chefs and makes everyone else stinky. Keeps vampires away."
-  - rscadd: "Garlic Bread. Made with a bread slice, butter, and garlic."
-  - tweak: "Khinkalis now require garlic to make, and are slightly more filling."

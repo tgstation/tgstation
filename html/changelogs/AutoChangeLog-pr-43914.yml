@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - tweak: "vending machines now use spritesheets"
