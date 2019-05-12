@@ -568,7 +568,7 @@
 			M.Jitter(10)
 
 	M.AdjustAllImmobility(-20, FALSE)
-	M.adjustStaminaLoss(-1*REM, FALSE)
+	M.adjustStaminaLoss(-5*REM, FALSE)
 	..()
 	return TRUE
 
@@ -807,7 +807,7 @@
 		M.losebreath -= 2
 	if(M.losebreath < 0)
 		M.losebreath = 0
-	M.adjustStaminaLoss(-0.5*REM, 0)
+	M.adjustStaminaLoss(-2*REM, 0)
 	. = 1
 	if(prob(20))
 		M.AdjustAllImmobility(-20, FALSE)
@@ -815,6 +815,11 @@
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
 	if(prob(33))
+		if(istype(M, /mob/living/carbon))
+			var/mob/living/carbon/C = M
+			C.adjustFatigueLoss(10*REM)
+		else
+			M.adjustStaminaLoss(10*REM)
 		M.adjustStaminaLoss(2.5*REM, 0)
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
@@ -940,17 +945,22 @@
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
 	M.AdjustAllImmobility(-60, FALSE)
-	M.adjustStaminaLoss(-5*REM, 0)
+	M.adjustStaminaLoss(-10*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/M)
 	if(prob(33))
-		M.adjustStaminaLoss(2.5*REM, 0)
+		if(istype(M, /mob/living/carbon))
+			var/mob/living/carbon/C = M
+			C.adjustFatigueLoss(8*REM)
+		else
+			M.adjustStaminaLoss(8*REM)
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
 		. = 1
 	..()
+
 
 /datum/reagent/medicine/insulin
 	name = "Insulin"
@@ -1135,7 +1145,7 @@
 	M.adjustToxLoss(-3 * REM, 0)
 	M.adjustBrainLoss(2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
-	M.adjustStaminaLoss(-30 * REM, 0)
+	M.adjustStaminaLoss(-15 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
 	M.druggy = min(max(0, M.druggy + 10), 15) //See above
 	..()
@@ -1199,7 +1209,7 @@
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	M.AdjustAllImmobility(-20, FALSE)
-	M.adjustStaminaLoss(-1, 0)
+	M.adjustStaminaLoss(-5, 0)
 	..()
 	return TRUE
 
@@ -1281,7 +1291,7 @@
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
 		M.AdjustAllImmobility(-5, FALSE)
-		M.adjustStaminaLoss(-0.5*REM, 0)
+		M.adjustStaminaLoss(-2*REM, 0)
 		M.Jitter(1)
 		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
 		. = TRUE
@@ -1302,7 +1312,6 @@
 				M.losebreath++
 		if(41 to 80)
 			M.adjustOxyLoss(0.1*REM, 0)
-			M.adjustStaminaLoss(0.1*REM, 0)
 			M.jitteriness = min(M.jitteriness+1, 20)
 			M.stuttering = min(M.stuttering+1, 20)
 			M.Dizzy(10)
@@ -1319,7 +1328,6 @@
 		if(82 to INFINITY)
 			M.Sleeping(100, 0, TRUE)
 			M.adjustOxyLoss(1.5*REM, 0)
-			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
 	return TRUE
 
