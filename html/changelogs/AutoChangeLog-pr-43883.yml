@@ -1,5 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - soundadd: "PDA beep, grenade arm, and flesh impact sounds have been fixed"
-  - soundadd: "When you get a quick rundown, your ears bleed less."
