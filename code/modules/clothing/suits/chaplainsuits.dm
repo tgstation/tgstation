@@ -57,6 +57,7 @@
 	name = "monk's hood"
 	desc = "For when a man wants to cover up his tonsure."
 	icon_state = "monkhood"
+	item_state = "monkhood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 
