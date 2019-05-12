@@ -164,6 +164,10 @@
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)
+		var/turf/T = get_turf(src)
+		if(T)
+			message_admins("A [name] has detonated at ([T.x],[T.y],[T.z]) ([get_area(T)])")
+			log_game("A [name] has detonated at ([T.x],[T.y],[T.z]) ([get_area(T)])")
 		explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
 	else
 		new /obj/effect/particle_effect/sparks(loc)

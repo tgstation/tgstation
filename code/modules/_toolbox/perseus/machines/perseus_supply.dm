@@ -19,6 +19,26 @@ GLOBAL_LIST_EMPTY(perseus_supplypacks)
 	var/datum/perseus_supply_packs/chosen2 = null
 	var/list/supplied = list()
 	var/list/spawned_crates = list()
+	var/list/black_list = list(
+	/datum/supply_pack/emergency/droneshells,
+	/datum/supply_pack/medical/virus,
+	/datum/supply_pack/science/robotics/mecha_odysseus,
+	/datum/supply_pack/science/robotics/mecha_ripley,
+	/datum/supply_pack/science/shieldwalls,
+	/datum/supply_pack/science/transfer_valves,
+	/datum/supply_pack/security,
+	/datum/supply_pack/emergency/spacesuit,
+	/datum/supply_pack/engineering/engine,
+	/datum/supply_pack/engineering/grounding_rods,
+	/datum/supply_pack/organic/hydroponics/beekeeping_fullkit,
+	/datum/supply_pack/misc/mule
+	)
+	var/list/white_list = list( //Things in this list will be allowed even if in the black_list. Use this to add a specific child of a blacklisted item.
+	/datum/supply_pack/security/armory/mindshield,
+	/datum/supply_pack/security/wall_flash,
+	/datum/supply_pack/security/securitybarriers,
+	/datum/supply_pack/security/forensics
+	)
 
 /obj/machinery/computer/perseussupply/New()
 	var/image/implantimage = new(src)
@@ -33,22 +53,6 @@ GLOBAL_LIST_EMPTY(perseus_supplypacks)
 	I.layer = 5
 	var/list/overlaytemp = list(I)
 	overlays = overlaytemp
-	var/list/hide_type_list = list(
-	/datum/supply_pack/emergency/droneshells,
-	/datum/supply_pack/emergency/weedcontrol,
-	/datum/supply_pack/medical/virus,
-	/datum/supply_pack/science/robotics/mecha_odysseus,
-	/datum/supply_pack/science/robotics/mecha_ripley,
-	/datum/supply_pack/science/shieldwalls,
-	/datum/supply_pack/science/transfer_valves,
-	/datum/supply_pack/security,
-	/datum/supply_pack/emergency/spacesuit,
-	/datum/supply_pack/engineering/shuttle_engine,
-	/datum/supply_pack/engineering/engine,
-	/datum/supply_pack/engineering/grounding_rods,
-	/datum/supply_pack/organic/hydroponics/beekeeping_fullkit,
-	/datum/supply_pack/misc/mule
-	)
 	spawn(0)
 		while(!SSticker || !SSshuttle)
 			sleep(1)
@@ -56,13 +60,19 @@ GLOBAL_LIST_EMPTY(perseus_supplypacks)
 			sleep(10)
 		for(var/N in SSshuttle.supply_packs)
 			var/datum/supply_pack/S = SSshuttle.supply_packs[N]
-			var/inhide_type_list = 0
-			for(var/T in hide_type_list)
+			var/white_listed = 0
+			for(var/T in white_listed)
 				if(istype(S,T))
-					inhide_type_list = 1
+					white_listed = 1
 					break
-			if(inhide_type_list)
-				continue
+			if(!white_listed)
+				var/black_listed = 0
+				for(var/T in black_list)
+					if(istype(S,T))
+						black_listed = 1
+						break
+				if(black_listed)
+					continue
 			if(S.contraband || S.hidden || S.special || S.special_enabled || S.DropPodOnly || S.dangerous)
 				continue
 			if(convert_supply_cost(S.cost) > supply_cap)

@@ -1,4 +1,7 @@
 /mob/living/Login()
+	if(!loc)
+		message_admins("DEBUG: A mob has been logged in to while in null space. mob name: \"[name]\" mob type: \"[type]\". The key logging in was [client.ckey]. This is a bug, Report this to Falaskian.")
+		log_game("DEBUG: A mob has been logged in to while in null space. mob name: \"[name]\" mob type: \"[type]\". The key logging in was [client.ckey]. This is a bug, Report this to Falaskian.")
 	..()
 	//Mind updates
 	sync_mind()

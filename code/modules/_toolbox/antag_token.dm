@@ -12,15 +12,21 @@ client/verb/check_antag_token()
 		alert(src,"You have [tokens] antagonist tokens. You must wait untill the game starts to use one.","Antagonist Tokens","Ok")
 		return
 	var/list/choices = SSticker.mode.available_antag_tokens
+	if(istype(choices,/list) && GLOB && SSantagtokens)
+		for(var/t in choices)
+			var/minplayers = SSantagtokens.token_role_min_players[t]
+			if(minplayers && isnum(minplayers) && (minplayers < GLOB.clients))
+				choices -= t
+	if(!choices || !choices.len)
+		alert(src,"Antagonist tokens are unavialable at this time.","Antagonist Tokens","Ok")
+		return
 	if(!istype(mob,/mob/living/carbon/human) || !mob.mind)
 		if(!tokens)
 			alert(src,"You have [tokens] antagonist tokens","Antagonist Tokens","Ok")
 		else
 			alert(src,"You have [tokens] antagonist tokens but you can not use one at this time.","Antagonist Tokens","Ok")
 		return
-	if(!isnum(tokens))
-		return
-	if(tokens < 1)
+	if(!isnum(tokens) || tokens < 1)
 		alert(src,"You have 0 antagonist tokens.","Antagonist Tokens","Ok")
 		return
 	else
@@ -66,8 +72,8 @@ client/verb/check_antag_token()
 		to_chat(src, "<B>You must be a part of the original crew to use an antagonist token.</B>")
 		return 0
 	var/timesincestart = GLOB.Original_Minds[mob.mind]
-	if(world.time > timesincestart+3000)
-		to_chat(src, "<B>It is to late to use an antagonist token, You must use it with in the first 5 minutes of joining the station.</B>")
+	if(world.time > timesincestart+1200)
+		to_chat(src, "<B>It is to late to use an antagonist token, You must use it with in the first 2 minutes of joining the station.</B>")
 		return 0
 	var/path = GLOB.antagtokenpath
 	var/savefile/S
@@ -87,8 +93,13 @@ client/verb/check_antag_token()
 			if(mob.mind.assigned_role)
 				var/datum/job/J = SSjob.GetJob("[mob.mind.assigned_role]")
 				if((CONFIG_GET(flag/protect_roles_from_antagonist) && (mob.mind.assigned_role in GLOB.memorized_restricted_jobs))||(J && J.antagonist_immune))
-					to_chat(src, "<B>A [mob.mind.assigned_role] cannot be an antagonist.</B>")
+					to_chat(src, "<B>A [mob.mind.assigned_role] cannot be an antagonist at this time.</B>")
 					return 0
+			if(antagtype && GLOB && SSantagtokens)
+				var/minplayers = SSantagtokens.token_role_min_players[antagtype]
+				if(minplayers && isnum(minplayers) && (minplayers < GLOB.clients))
+					to_chat(src, "<B>The role of [antagtype] is unavialable at this time.</B>")
+					return
 			switch(antagtype)
 				if("traitor")
 					if(istype(mob,/mob/living/carbon/human))

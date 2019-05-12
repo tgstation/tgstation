@@ -29,6 +29,8 @@
 	var/antag_datum = /datum/antagonist/traitor //what type of antag to create
 	var/traitors_required = TRUE //Will allow no traitors
 	var/minimum_traitors = 1
+	var/max_traitors = -1 //a limit on how many traitors there can be. leave as -1 to have no limit
+	var/block_late_join_traitors = 0
 
 
 /datum/game_mode/traitor/pre_setup()
@@ -46,6 +48,9 @@
 		num_traitors = max(minimum_traitors, min(round(num_players() / (tsc * 2)) + 2 + num_modifier, round(num_players() / tsc) + num_modifier))
 	else
 		num_traitors = max(minimum_traitors, min(num_players(), traitors_possible))
+
+	if(max_traitors > 0)
+		num_traitors = min(max_traitors,num_traitors)
 
 	for(var/j = 0, j < num_traitors, j++)
 		if (!antag_candidates.len)
@@ -74,16 +79,17 @@
 	return TRUE
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
-	var/traitorcap = min(round(GLOB.joined_player_list.len / (tsc * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len / tsc) + num_modifier)
-	if((SSticker.mode.traitors.len + pre_traitors.len) >= traitorcap) //Upper cap for number of latejoin antagonists
-		return
-	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (tsc * 2)))
-		if(ROLE_TRAITOR in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, ROLE_SYNDICATE))
-				if(age_check(character.client))
-					if(!(character.job in restricted_jobs))
-						add_latejoin_traitor(character.mind)
+	if(!block_late_join_traitors)
+		var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+		var/traitorcap = min(round(GLOB.joined_player_list.len / (tsc * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len / tsc) + num_modifier)
+		if((SSticker.mode.traitors.len + pre_traitors.len) >= traitorcap) //Upper cap for number of latejoin antagonists
+			return
+		if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (tsc * 2)))
+			if(ROLE_TRAITOR in character.client.prefs.be_special)
+				if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, ROLE_SYNDICATE))
+					if(age_check(character.client))
+						if(!(character.job in restricted_jobs))
+							add_latejoin_traitor(character.mind)
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
 	var/datum/antagonist/traitor/new_antag = new antag_datum()

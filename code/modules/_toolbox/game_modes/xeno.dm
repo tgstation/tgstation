@@ -2,7 +2,7 @@
 
 /datum/game_mode/ayylmaos
 	name = "xenomorphs"
-	config_tag = "aliens"
+	config_tag = "xenomorphs"
 	antag_flag = ROLE_ALIEN
 	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")

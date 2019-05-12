@@ -12,11 +12,11 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_players = 8 //formerly 15
+	required_players = 15 //formerly 15
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
-	divider_for_antagonists = 3.76
+	divider_for_antagonists = 7.5
 	minimum_enemies = 1
 
 	announce_span = "green"
@@ -35,13 +35,14 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
-	var/num_changelings = 1
+	var/num_players = num_players()
+	var/num_changelings = max(1, round(num_players/divider_for_antagonists,1))
 
-	var/csc = CONFIG_GET(number/changeling_scaling_coeff)
+	/*var/csc = CONFIG_GET(number/changeling_scaling_coeff)
 	if(csc)
 		num_changelings = max(1, min(round(num_players() / (csc * 2)) + 2, round(num_players() / csc)))
 	else
-		num_changelings = max(1, min(num_players(), changeling_amount))
+		num_changelings = max(1, min(num_players(), changeling_amount))*/
 
 	if(antag_candidates.len>0)
 		for(var/i = 0, i < num_changelings, i++)

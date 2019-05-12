@@ -152,7 +152,7 @@ SUBSYSTEM_DEF(ticker)
 				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
 			current_state = GAME_STATE_PREGAME
 			if(!informed_discord_of_new_round)
-				send_admin_notice_to_discord(Message = null,Title="New Round Starting!",Channel="#new_round_notifications",zeroadmins = 0)
+				send_admin_notice_to_discord(Message = null,Title="New Round Starting with [GLOB.clients.len] players online.",Channel="#new_round_notifications",zeroadmins = 0)
 				informed_discord_of_new_round = 1
 			world.update_status()
 			//Everyone who wants to be an observer is now spawned

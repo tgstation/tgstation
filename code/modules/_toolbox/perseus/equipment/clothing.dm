@@ -210,7 +210,7 @@
 	icon = 'icons/oldschool/perseus.dmi'
 	alternate_worn_icon = 'icons/oldschool/perseus_worn.dmi'
 	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1
-	flags_cover = HEADCOVERSEYES
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	flags_inv = HIDEFACE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = 0
@@ -226,7 +226,7 @@
 	icon = 'icons/oldschool/perseus.dmi'
 	alternate_worn_icon = 'icons/oldschool/perseus_worn.dmi'
 	flags_1 = THICKMATERIAL_1 | STOPSPRESSUREDMAGE_1
-	flags_cover = HEADCOVERSEYES
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	flags_inv = HIDEFACE | HIDEHAIR
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list("melee" = 35, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0)

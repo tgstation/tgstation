@@ -18,6 +18,7 @@
 	var/const/min_team_size = 2
 	required_players = 5
 	traitors_required = FALSE //Only teams are possible
+	var/force_team_size = 2
 
 /datum/game_mode/traitor/bros/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -38,7 +39,7 @@
 			break
 		var/datum/team/brother_team/team = new
 		var/team_size = 2
-		if(num_players() > 13)
+		if(!force_team_size && num_players() > 13)
 			team_size = prob(10) ? min(3, possible_brothers.len) : 2
 		for(var/k = 1 to team_size)
 			var/datum/mind/bro = antag_pick(possible_brothers)
@@ -49,9 +50,7 @@
 			bro.restricted_roles = restricted_jobs
 			log_game("[bro.key] (ckey) has been selected as a Brother")
 		pre_brother_teams += team
-	if(num_players <= 10)
-		minimum_traitors = 0
-		traitors_possible = 0
+	max_traitors = round(num_teams/2)
 	return ..()
 
 /datum/game_mode/traitor/bros/post_setup()

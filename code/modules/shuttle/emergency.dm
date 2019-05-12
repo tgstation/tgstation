@@ -102,7 +102,7 @@
 		if(other.registered_name == ID.registered_name)
 			return FALSE // No using IDs with the same name
 
-	authorized += ID
+	authorized[ID] = user.ckey
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch", 0, 1)
 	log_game("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
@@ -127,11 +127,38 @@
 	// Check to see if we've reached criteria for early launch
 	if((authorized.len >= auth_need) || (obj_flags & EMAGGED))
 		// shuttle timers use 1/10th seconds internally
+		var/authorized_ckeys = ""
+		for(var/i=1,i<=authorized.len,i++)
+			var/t = authorized[i]
+			if(i == authorized.len)
+				authorized_ckeys += " and "
+			else if(i != 1 && i < authorized.len)
+				authorized_ckeys += ", "
+			authorized_ckeys += authorized[t]
+		var/oldtimer = SSshuttle.emergency.timer
+		var/oldlast_timer_length = SSshuttle.emergency.last_timer_length
 		SSshuttle.emergency.setTimer(ENGINES_START_TIME)
 		var/system_error = obj_flags & EMAGGED ? "SYSTEM ERROR:" : null
 		minor_announce("The emergency shuttle will launch in \
 			[TIME_LEFT] seconds", system_error, alert=TRUE)
+		message_admins("Emergency shuttle: Emergency shuttle has been authorized for early launch. Authorizors are ckeys ([authorized_ckeys])")
+		message_admins("Emergency shuttle: Click <a href='?src=[REF(SSshuttle.emergency)];admincancelearlylaunch=1;timer=[oldtimer];last_timer_length=[oldlast_timer_length];machine=[REF(src)]'>Here</a> to cancel the early launch.")
+		log_game("Emergency shuttle has been authorized for early launch. Authorizors are ckeys ([authorized_ckeys])")
 		. = TRUE
+
+/obj/docking_port/mobile/emergency/Topic(href,href_list)
+	..()
+	if(href_list["admincancelearlylaunch"] && (mode == SHUTTLE_DOCKED || mode == SHUTTLE_IGNITING))
+		if(usr && usr.client && usr.client.holder)
+			var/obj/machinery/computer/emergency_shuttle/E = locate(href_list["machine"])
+			if(istype(E))
+				E.authorized.Cut()
+				E.obj_flags &= ~EMAGGED
+				minor_announce("Early launch authorization revoked, [max(0, E.auth_need - E.authorized.len)] authorizations needed")
+			mode = SHUTTLE_DOCKED
+			timer = text2num(href_list["timer"])
+			last_timer_length = text2num(href_list["last_timer_length"])
+			message_admins("[usr.key] canceled the shuttle launch authorization.")
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
 	// How did you even get on the shuttle before it go to the station?

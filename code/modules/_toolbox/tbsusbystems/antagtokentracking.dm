@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(antagtokens)
 		/obj/structure/closet,
 		/obj/machinery/disposal)
 	var/list/minutes_tracked
+	var/list/token_role_min_players = list("changeling" = 15)
 
 /datum/controller/subsystem/Initialize(start_timeofday)
 	var/datum/game_mode/traitor/T = new()

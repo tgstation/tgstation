@@ -1,6 +1,7 @@
 /datum/stationmodule_group
 	var/name
 	var/force
+	var/station_map //Checks if the necessary map is loaded. Leave empty to always spawn regardless of map.
 	var/list/possibilities = list()
 
 /datum/controller/subsystem/mapping/proc/randomize_station()
@@ -8,7 +9,8 @@
 	to_chat(world, "<span class='boldannounce'>Randomizing station...</span>")
 	for (var/type in subtypesof(/datum/stationmodule_group))
 		var/datum/stationmodule_group/inited = new type()
-
+		if(inited.station_map && inited.station_map != SSmapping.config.map_name)
+			continue
 		var/list/picklist = inited.possibilities.Copy()
 		picklist.Add("none")
 
@@ -84,6 +86,7 @@
 
 /datum/stationmodule_group/maint1
 	name = "Maintenance 1"
+	station_map = "Box Station"
 	//force = "alt_maint1.dmm"
 
 /datum/stationmodule_group/maint1/New()
@@ -92,6 +95,7 @@
 
 /datum/stationmodule_group/maint2
 	name = "Maintenance 2"
+	station_map = "Box Station"
 	//force = "alt_maint2.dmm"
 
 /datum/stationmodule_group/maint2/New()
@@ -100,6 +104,7 @@
 
 /datum/stationmodule_group/maint3
 	name = "Maintenance 3"
+	station_map = "Box Station"
 	//force = "alt_maint3.dmm"
 
 /datum/stationmodule_group/maint3/New()
@@ -108,6 +113,7 @@
 
 /datum/stationmodule_group/maint4
 	name = "Maintenance 4"
+	station_map = "Box Station"
 	//force = "alt_maint4.dmm"
 
 /datum/stationmodule_group/maint4/New()
@@ -116,6 +122,7 @@
 
 /datum/stationmodule_group/maint5
 	name = "Maintenance 5"
+	station_map = "Box Station"
 	//force = "alt_maint5.dmm"
 
 /datum/stationmodule_group/maint5/New()
@@ -124,6 +131,7 @@
 
 /datum/stationmodule_group/maint_clown
 	name = "Maintenance Clown"
+	station_map = "Box Station"
 	//force = "alt_maint_clown.dmm"
 
 /datum/stationmodule_group/maint_clown/New()

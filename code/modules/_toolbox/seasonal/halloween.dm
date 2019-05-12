@@ -128,6 +128,7 @@ GLOBAL_VAR_INIT(parallax_planet_icon, 'icons/effects/parallax.dmi')
 	icon = 'icons/oldschool/objects.dmi'
 	icon_state = "jackolantern"
 	density = 1
+	anchored = 0
 	var/pumpkin_light_strength = 1
 	var/pumpkin_light_range = 2
 

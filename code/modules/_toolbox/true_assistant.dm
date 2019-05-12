@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 	var/sacrifices = 0
 	var/toolbox_points = 0
 	var/prob_success = 2
-	var/chance_increase = 5 //how much prob_success increases each round.
+	var/chance_increase = 2 //how much prob_success increases each round.
 	var/list/upgrades = list()
 	var/list/sacrificed_ckeys = list()
 	var/all_access_toolbox = 0
