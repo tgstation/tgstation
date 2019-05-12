@@ -417,6 +417,7 @@
 "E" = (
 /obj/machinery/power/apc/highcap{
 	dir = 4;
+	locked = 0;
 	name = "Mining Shuttle APC";
 	pixel_x = 24
 	},
