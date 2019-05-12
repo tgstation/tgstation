@@ -4879,6 +4879,7 @@
 /area/crew_quarters/fitness/recreation)
 "aiT" = (
 /obj/effect/landmark/start/atmospheric_technician,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aiU" = (
