@@ -24,6 +24,18 @@
 			streak = ""
 			quick_choke(A,D)
 			return 1
+		if("eye_strike")
+			streak = ""
+			eye_strike(A,D)
+			return 1
+		if("unarm")
+			streak = ""
+			unarm(A,D)
+			return 1
+		if("headbutt")
+			streak = ""
+			headbutt(A,D)
+			return 1
 	return 0
 
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -55,6 +67,47 @@
 	if(D.silent <= 10)
 		D.silent = CLAMP(D.silent + 10, 0, 10)
 	log_combat(A, D, "neck chopped")
+	return 1
+
+/datum/martial_art/krav_maga/proc/eye_strike(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	D.visible_message("<span class='warning'>[A] eye strikes [D]!</span>", \
+				  	"<span class='userdanger'>[A] strikes your eye!</span>")
+	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
+	D.apply_damage(5, BRUTE)
+	D.eyestab
+	log_combat(A, D, "eye striked")
+	return 1
+
+/datum/martial_art/krav_maga/proc/unarm(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	var/obj/item/I = null
+		I = D.get_active_held_item()
+		if(I)
+			if(D.temporarilyRemoveItemFromInventory(I))
+				A.put_in_hands(I)
+		D.visible_message("<span class='danger'>[A] has unarmed [D]!</span>", \
+							"<span class='userdanger'>[A] has unarmed you!</span>")
+		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
+	return 1
+
+/datum/martial_art/krav_maga/proc/headbutt(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	D.visible_message("<span class='warning'>[A] headbutts [D]!</span>", \
+				  	"<span class='userdanger'>[A] headbutts you!</span>")
+	playsound(get_turf(A), 'sound/effects/meteorimpact.ogg', 50, 1, -1)
+	A.apply_damage(10 BRUTE)
+	D.
+	log_combat(A, D, "headbutted")
+	return 1
+
+/datum/martial_art/krav_maga/proc/groin_kick(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	D.visible_message("<span class='warning'>[A] groin kicks [D]!</span>", \
+				  	"<span class='userdanger'>[A] kicks your groin! You scream out!</span>")
+	playsound(get_turf(A), 'sound/effects/meteorimpact.ogg', 50, 1, -1)
+	D.apply_damage(10, A.dna.species.attack_type)
+	D.add_movespeed_modifier(MOVESPEED_ID_KRAV_MAGA, update=TRUE, priority=100, multiplicative_slowdown=1)
+	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, MOVESPEED_ID_KRAV_MAGA, TRUE), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	D.emote("scream")
+	log_combat(A, D, "groin kicked")
 	return 1
 
 /datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -102,7 +155,7 @@
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
 	return 1
-
+	
 //Krav Maga Gloves
 
 /obj/item/clothing/gloves/krav_maga
@@ -156,7 +209,7 @@
 
 	to_chat(usr, "<span class='notice'>Neck Chop</span>: Mouth. Injures the neck, stopping the victim from speaking for a while.")
 	to_chat(usr, "<span class='notice'>Eye Strike</span>: Eye. Causes eye damage to the victim, may make him blind after considerable usage.")
-	to_chat(usr, "<span class='notice'>Headbutt</span>: Head. Locks opponents into a restraining position, disarm to knock them out with a chokehold.")
+	to_chat(usr, "<span class='notice'>Headbutt</span>: Head. Smashes your skull into the victim's, giving you small damage while making his life worse.")
 	to_chat(usr, "<span class='notice'>Lung Punch</span>: Chest. Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time.")
 	to_chat(usr, "<span class='notice'>Unarm</span>: Arm. Knocks the victim's items out of their hands.")
 	to_chat(usr, "<span class='notice'>Leg Sweep</span>: Leg. Trips the victim, knocking them down for a brief moment.")
