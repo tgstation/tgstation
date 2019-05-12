@@ -37,5 +37,5 @@
 	else if(damage_coeff[CLONE])
 		. = adjustHealth(amount * damage_coeff[CLONE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/simple_animal/adjustStaminaLoss(amount, updating_health)
+/mob/living/simple_animal/adjustStaminaLoss(amount, updating_health, forced = FALSE)
 	return

@@ -12,7 +12,7 @@
 		return FALSE
 	if(C.status_flags & GODMODE)
 		return FALSE
-	if(C.has_trait(TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
@@ -49,7 +49,7 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return FALSE
-	if(C.has_trait(TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 	. = list()
 	var/organ_spilled = 0

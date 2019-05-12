@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - rscdel: "Removed VR"

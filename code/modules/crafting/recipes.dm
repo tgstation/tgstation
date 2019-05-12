@@ -645,6 +645,14 @@
 	result = /obj/item/clothing/under/mummy
 	reqs = list(/obj/item/stack/sheet/cloth = 5)
 
+/datum/crafting_recipe/chaplain_hood
+	name = "Follower Hoodie"
+	result = /obj/item/clothing/suit/hooded/chaplain_hoodie
+	time = 10
+	tools = list(/obj/item/clothing/suit/hooded/chaplain_hoodie, /obj/item/storage/book/bible)
+	reqs = list(/obj/item/stack/sheet/cloth = 4)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/guillotine
 	name = "Guillotine"
 	result = /obj/structure/guillotine

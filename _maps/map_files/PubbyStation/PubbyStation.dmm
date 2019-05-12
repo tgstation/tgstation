@@ -2,6 +2,10 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -33197,9 +33201,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "bzP" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -33220,6 +33221,7 @@
 	network = list("ss13","medbay");
 	dir = 4
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzQ" = (
@@ -34445,9 +34447,6 @@
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bCj" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -34458,6 +34457,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bCl" = (
@@ -41382,7 +41382,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQH" = (
-/obj/machinery/pipedispenser,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQI" = (
@@ -41390,10 +41393,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQJ" = (
-/obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQK" = (
@@ -41761,7 +41764,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRv" = (
-/obj/machinery/pipedispenser/disposal,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -41769,6 +41771,10 @@
 	c_tag = "Atmospherics Central";
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRw" = (
@@ -42089,10 +42095,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
-"bSe" = (
-/obj/machinery/pipedispenser/disposal/transit_tube,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSf" = (
@@ -43638,6 +43640,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/machinery/pipedispenser,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bVv" = (
@@ -47602,8 +47605,8 @@
 /area/hydroponics/garden/monastery)
 "cgL" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/holidaypriest,
-/obj/item/clothing/suit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell1";
@@ -47972,8 +47975,8 @@
 /area/space/nearstation)
 "cio" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/holidaypriest,
-/obj/item/clothing/suit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell2";
@@ -50624,8 +50627,8 @@
 /obj/structure/closet,
 /obj/item/storage/backpack/cultpack,
 /obj/item/clothing/head/nun_hood,
-/obj/item/clothing/suit/nun,
-/obj/item/clothing/suit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -53178,7 +53181,6 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "dbi" = (
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "dci" = (
@@ -54288,7 +54290,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "fIN" = (
@@ -59792,9 +59793,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "srZ" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/machinery/pipedispenser/disposal,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "ssx" = (
@@ -89183,7 +89182,7 @@ bil
 biY
 bjT
 ble
-bmq
+aab
 bmq
 boC
 bpI
@@ -97948,7 +97947,7 @@ bOS
 bPQ
 bQH
 bRv
-bSe
+bQH
 bPQ
 bTL
 uRj

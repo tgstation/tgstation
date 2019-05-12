@@ -17,6 +17,10 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"aae" = (
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "aaf" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -4468,7 +4472,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aij" = (
-/obj/item/vending_refill/coffee,
+/obj/machinery/pipedispenser/disposal,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -6219,7 +6223,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "alk" = (
-/obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6451,6 +6454,7 @@
 	dir = 9
 	},
 /obj/item/bot_assembly/cleanbot,
+/obj/item/vending_refill/coffee,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "alI" = (
@@ -7637,7 +7641,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "anM" = (
-/obj/machinery/space_heater,
+/obj/machinery/pipedispenser,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "anN" = (
@@ -48209,10 +48213,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bPr" = (
-/obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bPs" = (
@@ -50654,10 +50658,10 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "bUA" = (
-/obj/machinery/pipedispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUB" = (
@@ -50667,19 +50671,19 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/pipedispenser/disposal,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUC" = (
 /obj/item/radio/intercom{
 	pixel_y = 28
 	},
-/obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUD" = (
@@ -51248,6 +51252,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
@@ -59031,9 +59036,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "cld" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -59044,6 +59046,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cle" = (
@@ -59084,9 +59087,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "clh" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -59100,6 +59100,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cli" = (
@@ -82837,7 +82838,6 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "etr" = (
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "eFN" = (
@@ -84326,7 +84326,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
 "vlx" = (
-/obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -109708,7 +109707,7 @@ ctA
 cCj
 cCj
 cDY
-cCj
+aae
 cCj
 cCe
 cHJ

@@ -167,7 +167,7 @@
 
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	if(synthetic)
@@ -251,7 +251,7 @@
 
 /obj/item/gun/magic/tentacle/Initialize(mapload, silent)
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		if(!silent)
 			loc.visible_message("<span class='warning'>[loc.name]\'s arm starts stretching inhumanly!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a tentacle.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -432,7 +432,7 @@
 
 /obj/item/shield/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
@@ -478,7 +478,7 @@
 
 /obj/item/clothing/suit/space/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
@@ -499,7 +499,7 @@
 
 /obj/item/clothing/head/helmet/space/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 /***************************************\
 |*****************ARMOR*****************|
@@ -532,7 +532,7 @@
 
 /obj/item/clothing/suit/armor/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
@@ -546,4 +546,4 @@
 
 /obj/item/clothing/head/helmet/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)

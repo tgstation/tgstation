@@ -69,7 +69,7 @@
 		if(defib)
 			to_chat(user, "<span class='warning'>There's already a defibrillator in [src]!</span>")
 			return
-		if(I.has_trait(TRAIT_NODROP) || !user.transferItemToLoc(I, src))
+		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \

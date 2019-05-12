@@ -192,7 +192,7 @@
 
 /obj/item/rod_of_asclepius/proc/activated()
 	item_flags = DROPDEL
-	add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -225,9 +225,9 @@
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
-		user.add_trait(TRAIT_NODEATH, "memento_mori")
-		user.add_trait(TRAIT_NOHARDCRIT, "memento_mori")
-		user.add_trait(TRAIT_NOCRITDAMAGE, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NODEATH, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NOHARDCRIT, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, "memento_mori")
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -692,7 +692,7 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 

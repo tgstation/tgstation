@@ -91,6 +91,8 @@
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
 		return 1
 	key = user.key
+	if(directive)
+		log_game("[key_name(src)] took control of [name] with the objective: '[directive]'.")
 	return 1
 
 //nursemaids - these create webs and eggs
@@ -480,12 +482,24 @@
 	desc = "Set a directive for your children to follow."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "directive"
+	
+/datum/action/innate/spider/set_directive/IsAvailable()
+	if(..())
+		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))
+			return FALSE
+		var/mob/living/simple_animal/hostile/poison/giant_spider/S = owner
+		if(S.playable_spider)
+			return FALSE
+		return TRUE
 
 /datum/action/innate/spider/set_directive/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
-	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
+	if(!S.playable_spider)
+		S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
+		message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[S.directive]'.")
+		log_game("[key_name(owner)] set its directive to: '[S.directive]'.")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()
