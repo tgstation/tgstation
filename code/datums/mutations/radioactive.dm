@@ -6,7 +6,7 @@
 	time_coeff = 5
 	instability = 5
 	difficulty = 8
-	power = 1
+	power_coeff = 1
 
 
 /datum/mutation/human/radioactive/on_life()

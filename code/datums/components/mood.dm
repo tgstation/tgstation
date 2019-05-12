@@ -191,15 +191,6 @@
 		if(9)
 			setSanity(sanity+0.4, maximum=INFINITY)
 
-	if(HAS_TRAIT(owner, TRAIT_DEPRESSION))
-		if(prob(0.05))
-			add_event(null, "depression", /datum/mood_event/depression)
-			clear_event(null, "jolly")
-	if(HAS_TRAIT(owner, TRAIT_JOLLY))
-		if(prob(0.05))
-			add_event(null, "jolly", /datum/mood_event/jolly)
-			clear_event(null, "depression")
-
 	HandleNutrition(owner)
 	HandleHygiene(owner)
 
@@ -354,25 +345,9 @@
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
 
-
 /datum/component/mood/proc/HandleHygiene(mob/living/carbon/human/H)
-	switch(H.hygiene)
-		if(0 to HYGIENE_LEVEL_DIRTY)
-			if(HAS_TRAIT(H, TRAIT_NEAT))
-				add_event(null, "neat", /datum/mood_event/dirty)
-			if(HAS_TRAIT(H, TRAIT_NEET))
-				add_event(null, "NEET", /datum/mood_event/happy_neet)
-			HygieneMiasma(H)
-		if(HYGIENE_LEVEL_DIRTY to HYGIENE_LEVEL_NORMAL)
-			if(HAS_TRAIT(H, TRAIT_NEAT))
-				clear_event(null, "neat")
-			if(HAS_TRAIT(H, TRAIT_NEET))
-				clear_event(null, "NEET")
-		if(HYGIENE_LEVEL_NORMAL to HYGIENE_LEVEL_CLEAN)
-			if(HAS_TRAIT(H, TRAIT_NEAT))
-				add_event(null, "neat", /datum/mood_event/neat)
-			if(HAS_TRAIT(H, TRAIT_NEET))
-				clear_event(null, "NEET")
+	if(H.hygiene <= HYGIENE_LEVEL_DIRTY)
+		HygieneMiasma(H)
 
 /datum/component/mood/proc/HygieneMiasma(mob/living/carbon/human/H)
 	// Properly stored humans shouldn't create miasma
