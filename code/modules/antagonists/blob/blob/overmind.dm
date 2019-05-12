@@ -20,20 +20,18 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	call_life = TRUE
 	hud_type = /datum/hud/blob_overmind
 	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/last_attack = 0
-	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
+	var/datum/blobstrain/blobstrain
 	var/list/blob_mobs = list()
 	var/list/resource_blobs = list()
-	var/free_chem_rerolls = 1 //one free chemical reroll
+	var/free_strain_rerolls = 1 //one free strain reroll
 	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
 	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
-	var/base_point_rate = 2 //for blob core placement
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 	var/list/blobs_legit = list()
@@ -51,13 +49,14 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
-	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob)))
-	blob_reagent_datum = new BC
-	color = blob_reagent_datum.complementary_color
+	var/datum/blobstrain/BS = pick(GLOB.valid_blobstrains)
+	blobstrain = new BS(src)
+	color = blobstrain.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
-	.= ..()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
@@ -77,7 +76,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		return FALSE
 	return TRUE
 
-/mob/camera/blob/Life()
+/mob/camera/blob/process()
 	if(!blob_core)
 		if(!placed)
 			if(manualplace_min_time && world.time >= manualplace_min_time)
@@ -85,7 +84,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
 				manualplace_min_time = 0
 			if(autoplace_max_time && world.time >= autoplace_max_time)
-				place_blob_core(base_point_rate, 1)
+				place_blob_core(1)
 		else
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
@@ -95,14 +94,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
-	else if(!free_chem_rerolls && (last_reroll_time + BLOB_REROLL_TIME<world.time))
-		to_chat(src, "<b><span class='big'><font color=\"#EE4000\">You have gained another free chemical re-roll.</font></span></b>")
-		free_chem_rerolls = 1
+	else if(!free_strain_rerolls && (last_reroll_time + BLOB_REROLL_TIME<world.time))
+		to_chat(src, "<b><span class='big'><font color=\"#EE4000\">You have gained another free strain re-roll.</font></span></b>")
+		free_strain_rerolls = 1
 
 	if(!victory_in_progress && max_count < blobs_legit.len)
 		max_count = blobs_legit.len
-	..()
-
 
 /mob/camera/blob/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')
@@ -133,7 +130,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				continue
 			if(!A.blob_allowed)
 				continue
-			A.color = blob_reagent_datum.color
+			A.color = blobstrain.color
 			A.name = "blob"
 			A.icon = 'icons/mob/blob.dmi'
 			A.icon_state = "blob_shield"
@@ -163,6 +160,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	GLOB.overminds -= src
 
 	SSshuttle.clearHostileEnvironment(src)
+	STOP_PROCESSING(SSobj, src)
 
 	return ..()
 
@@ -175,8 +173,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/examine(mob/user)
 	..()
-	if(blob_reagent_datum)
-		to_chat(user, "Its chemical is <font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>.")
+	if(blobstrain)
+		to_chat(user, "Its strain is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>.")
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
@@ -215,7 +213,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	src.log_talk(message, LOG_SAY)
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
+	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]</font></span>"
 
 	for(var/mob/M in GLOB.mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
@@ -234,8 +232,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			stat(null, "Core Health: [blob_core.obj_integrity]")
 			stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 			stat(null, "Blobs to Win: [blobs_legit.len]/[blobwincount]")
-		if(free_chem_rerolls)
-			stat(null, "You have [free_chem_rerolls] Free Chemical Reroll\s Remaining")
+		if(free_strain_rerolls)
+			stat(null, "You have [free_strain_rerolls] Free Strain Reroll\s Remaining")
 		if(!placed)
 			if(manualplace_min_time)
 				stat(null, "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]")

@@ -188,9 +188,6 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-/mob/proc/Life()
-	set waitfor = FALSE
-
 /mob/proc/get_item_by_slot(slot_id)
 	return null
 
