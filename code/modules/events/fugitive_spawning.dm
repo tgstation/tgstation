@@ -12,7 +12,11 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
-	var/turf/landing_turf = pick(GLOB.xeno_spawn)
+	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
+	for(var/turf/X in GLOB.xeno_spawn)
+		if(istype(get_area(X), /area/maintenance))
+			spawn_locs += T
+	var/turf/landing_turf = pick(possible_spawns)
 	if(!landing_turf)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
@@ -54,7 +58,7 @@
 //after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
-	addtimer(CALLBACK(src, .proc/spawn_hunters), 6000) //10 minutes
+	addtimer(CALLBACK(src, .proc/spawn_hunters), 10) //10 minutes
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
@@ -102,6 +106,7 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
+	to_chat(world, "<span class='danger'>SPAWNING HUNTERS</span>")
 	var/backstory = pick("space cop", "russian")
 	var/static/list/hunter_ship_types = list(
 		"space cop"		= /datum/map_template/space_cop_ship,
