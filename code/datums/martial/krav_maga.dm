@@ -1,74 +1,14 @@
 /datum/martial_art/krav_maga
 	name = "Krav Maga"
 	id = MARTIALART_KRAVMAGA
-	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
-	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
-	var/datum/action/lung_punch/lungpunch = new/datum/action/lung_punch()
-
-/datum/action/neck_chop
-	name = "Neck Chop - Injures the neck, stopping the victim from speaking for a while."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "neckchop"
-
-/datum/action/neck_chop/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
-		return
-	var/mob/living/carbon/human/H = owner
-	if (H.mind.martial_art.streak == "neck_chop")
-		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.mind.martial_art.streak = ""
-	else
-		owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>", "<b><i>Your next attack will be a Neck Chop.</i></b>")
-		H.mind.martial_art.streak = "neck_chop"
-
-/datum/action/leg_sweep
-	name = "Leg Sweep - Trips the victim, knocking them down for a brief moment."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "legsweep"
-
-/datum/action/leg_sweep/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
-		return
-	var/mob/living/carbon/human/H = owner
-	if (H.mind.martial_art.streak == "leg_sweep")
-		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.mind.martial_art.streak = ""
-	else
-		owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>", "<b><i>Your next attack will be a Leg Sweep.</i></b>")
-		H.mind.martial_art.streak = "leg_sweep"
-
-/datum/action/lung_punch//referred to internally as 'quick choke'
-	name = "Lung Punch - Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "lungpunch"
-
-/datum/action/lung_punch/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
-		return
-	var/mob/living/carbon/human/H = owner
-	if (H.mind.martial_art.streak == "quick_choke")
-		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.mind.martial_art.streak = ""
-	else
-		owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
-		H.mind.martial_art.streak = "quick_choke"//internal name for lung punch
+	help_verb = /mob/living/carbon/human/proc/krav_maga_help
 
 /datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(..())
 		to_chat(H, "<span class = 'userdanger'>You know the arts of [name]!</span>")
-		to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
-		neckchop.Grant(H)
-		legsweep.Grant(H)
-		lungpunch.Grant(H)
 
 /datum/martial_art/krav_maga/on_remove(mob/living/carbon/human/H)
 	to_chat(H, "<span class = 'userdanger'>You suddenly forget the arts of [name]...</span>")
-	neckchop.Remove(H)
-	legsweep.Remove(H)
-	lungpunch.Remove(H)
 
 /datum/martial_art/krav_maga/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	switch(streak)
@@ -207,3 +147,17 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+	
+	/mob/living/carbon/human/proc/krav_maga_help()
+	set name = "Remember The Basics"
+	set desc = "You try to remember some of the basics of Krav Maga."
+	set category = "Krav Maga"
+	to_chat(usr, "<b><i>You try to remember some of the basics of Krav Maga.</i></b>")
+
+	to_chat(usr, "<span class='notice'>Neck Chop</span>: Mouth. Injures the neck, stopping the victim from speaking for a while.")
+	to_chat(usr, "<span class='notice'>Eye Strike</span>: Eye. Causes eye damage to the victim, may make him blind after considerable usage.")
+	to_chat(usr, "<span class='notice'>Headbutt</span>: Head. Locks opponents into a restraining position, disarm to knock them out with a chokehold.")
+	to_chat(usr, "<span class='notice'>Lung Punch</span>: Chest. Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time.")
+	to_chat(usr, "<span class='notice'>Unarm</span>: Arm. Knocks the victim's items out of their hands.")
+	to_chat(usr, "<span class='notice'>Leg Sweep</span>: Leg. Trips the victim, knocking them down for a brief moment.")
+	to_chat(usr, "<span class='notice'>Groin Kick</span>: Groin. Slows down the victim and deals decent damage, may include screaming.")
