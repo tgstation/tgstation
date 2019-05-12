@@ -111,13 +111,6 @@
 		return
 	adjustStaminaLoss(diff, updating_health, forced)
 	
-/mob/living/carbon/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
-	var/current = getStaminaLoss()
-	var/diff = amount - current
-	if(!diff)
-		return
-	adjustStaminaLoss(diff, updating_health, forced)
-	
 //Only adjust stamina damage on the chest.
 /mob/living/carbon/proc/adjustFatigueLoss(amount, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
