@@ -1248,7 +1248,7 @@
 	..()
 
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(-2*REM, 0)
+	M.adjustStaminaLoss(-10*REM, 0)
 	..()
 
 /datum/reagent/nitryl
@@ -1837,7 +1837,7 @@
 	var/obj/item/bodypart/chest = M.get_bodypart(BODY_ZONE_CHEST)
 	if(chest)
 		var/sleepydamage = min(10 * REM, chest.max_stamina_damage - 55 - chest.stamina_dam)
-		chest.receive_damage(0, 0, sleepydamage)
+		M.adjustFatigueLoss(0, 0, sleepydamage)
 	if(prob(15))
 		to_chat(M, "You should sit down and take a rest...")
 	..()
