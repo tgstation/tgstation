@@ -51,7 +51,6 @@
 	icon_state = "monkfrock"
 	item_state = "monkfrock"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
 	hoodtype = /obj/item/clothing/head/hooded/monkfrock
 	
 /obj/item/clothing/head/hooded/monkfrock
