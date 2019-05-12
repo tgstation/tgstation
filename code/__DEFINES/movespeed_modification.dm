@@ -61,4 +61,5 @@
 #define MOVESPEED_ID_SLAUGHTER                          "SLAUGHTER"
 #define MOVESPEED_ID_DIE_OF_FATE                        "DIE_OF_FATE"
 
-#define MOVESPEED_ID_SHOVE "SHOVE"
+#define MOVESPEED_ID_KRAV_MAGA                          "KRAV_MAGA"
+#define MOVESPEED_ID_SHOVE                              "SHOVE"
