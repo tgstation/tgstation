@@ -1,5 +1,6 @@
 //does brute damage, shifts away when damaged
 /datum/blobstrain/reagent/shifting_fragments
+	name = "Shifting Fragments"
 	description = "will do medium brute damage."
 	effectdesc = "will also cause blob parts to shift away when attacked."
 	analyzerdescdamage = "Does medium brute damage."
