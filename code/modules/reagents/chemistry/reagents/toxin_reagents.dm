@@ -347,6 +347,9 @@
 	reagent_state = SOLID
 	color = "#5B2E0D" // rgb: 91, 46, 13
 	toxpwr = 0.5
+	
+/datum/reagent/toxin/coffeepowder/on_mob_life(mob/living/carbon/M)
+	holder.add_reagent("caffeine", 0.25)
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
@@ -883,11 +886,9 @@
 	var/stampwr = 10
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
-	var/obj/item/bodypart/chest = M.get_bodypart(BODY_ZONE_CHEST)
-	if(chest)
-		chest.receive_damage(0, 0, REM * stampwr)
-	..()
+	M.adjustFatigueLoss(stampwr)
 	. = 1
+	..()
 	
 /datum/reagent/toxin/staminatoxin/tirizene
 	name = "Tirizene"
