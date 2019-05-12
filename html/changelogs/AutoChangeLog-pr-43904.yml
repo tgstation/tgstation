@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Borgs using the wrong tools during a repeatable surgery step will no longer have to restart surgery."
+  - bugfix: "Starting and stopping the closing step during repeatable surgery will no longer advance you to the closing step."
