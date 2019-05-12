@@ -64,3 +64,6 @@
 			We cannot currently track the cores location at this time as it seems to have noticed and evolved to stop us, now seemingly invisible to any of our methods. \
 			It is believed that we will be able to spot the core once it enters any solar system, giving very little time to prepare against it. \
 			Ensure that you are prepared at all times to fight back as evacuation requests will be denied due to the danger of spreading this infection."
+
+/datum/game_mode/infection/send_intercept()
+	return // handled in the antagonist due to it being round changing (consumes the whole station)

@@ -34,8 +34,8 @@ GLOBAL_VAR(infection_commander)
 	var/nodes_required = 1 //if the infection needs nodes to place resource and factory blobs
 	var/placed = 0
 	var/base_point_rate = 10 //for core placement
-	var/autoplace_time = 100 // a few seconds, just so it isnt sudden at game start
-	var/place_beacons_delay = 50
+	var/autoplace_time = 200 // a few seconds, just so it isnt sudden at game start
+	var/place_beacons_delay = 100
 	var/victory_in_progress = FALSE
 	var/infection_color = "#ff5800"
 
@@ -57,8 +57,7 @@ GLOBAL_VAR(infection_commander)
 	priority_announce("Unfortunate news, [station_name()]. An infectious core is headed to your station on a meteor.\n\n\
 					   Infectious cores are almost indestructible beings that consume everything around them in order to replicate themselves. They adapt to almost any environment.\n\n\
 					   Our calculations estimate the infection core will arrive in [(autoplace_time - world.time)/600] minutes.\n\n\
-					   Defensive beacons will be landing soon. Most infectious creatures are unable to pass the barriers these generate. Protect them to the last man if any of you want to live.\n\n\
-					   If you find any interesting artifacts, bring them to your stations destructive analyzer. You may be able to reverse engineer these to destroy the core of the infection.",
+					   Forcefield Generators are being deployed to defend specific sections of your station. Defend these from the bulk of the infection.",
 					  "Biohazard Containment Commander", 'sound/misc/notice1.ogg')
 
 /mob/camera/commander/proc/defeated_announcement()

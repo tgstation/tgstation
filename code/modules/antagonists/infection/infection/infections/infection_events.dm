@@ -1,9 +1,30 @@
 /datum/round_event_control/infection
 	name = "Doom Clock Event"
 	weight = 1
-	max_occurrences = 1
+	max_occurrences = 3
 	earliest_start = 0 MINUTES
 	infectionevent = TRUE
+
+/datum/round_event_control/infection/preRunEvent()
+	var/doom_delay = 300 // 30 seconds
+	INVOKE_ASYNC(src, .proc/doom_smash_sounds, doom_delay)
+	sleep(doom_delay - 90)
+	. = ..()
+
+/datum/round_event_control/infection/proc/doom_smash_sounds(var/total_delay = 300)
+	var/sound_delay = 14
+	var/sounds_played = FLOOR(total_delay / sound_delay, 1)
+	var/list/smashsounds = list('sound/weapons/wpnMonsterSmashBig.ogg', 'sound/weapons/wpnMonsterSmashBig2.ogg', 'sound/weapons/wpnMonsterSmashBig3.ogg')
+	var/list/tempsounds = smashsounds.Copy()
+	for(var/i = 1 to sounds_played)
+		if(!tempsounds.len)
+			tempsounds = smashsounds.Copy()
+		var/s = sound(pick_n_take(tempsounds))
+		for(var/mob/M in GLOB.player_list)
+			if(!isnewplayer(M) && M.can_hear())
+				if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
+					SEND_SOUND(M, s)
+		sleep(sound_delay)
 
 /datum/round_event/infection
 	var/boss_type // boss mob type (one lucky spore)
@@ -36,15 +57,8 @@
 		minion.loot = minion_drop_list
 		minion.faction += ROLE_INFECTION
 		minion.pass_flags |= PASSBLOB
-	if(warning_message)
-		priority_announce("[warning_message]","Biohazard Containment Commander", 'sound/misc/notice1.ogg')
-	if(warning_jingle)
-		var/s = sound(warning_jingle)
-		for(var/mob/M in GLOB.player_list)
-			if(!isnewplayer(M) && M.can_hear())
-				if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
-					SEND_SOUND(M, s)
-
+	if(warning_message && warning_jingle)
+		priority_announce("[warning_message]","Biohazard Containment Commander", warning_jingle)
 
 /datum/component/spore_controlled
 	var/mob/parentmob
@@ -77,4 +91,4 @@
 	minion_types = list(/mob/living/simple_animal/hostile/carp/ranged, /mob/living/simple_animal/hostile/carp/ranged/chaos)
 	minion_drop_list = list()
 	warning_message = "Magical Carp Creatures are invading the station!"
-	warning_jingle = 'sound/ambience/doomevent4.ogg'
+	warning_jingle = 'sound/weapons/bite.ogg'

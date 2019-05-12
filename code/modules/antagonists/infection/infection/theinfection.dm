@@ -217,10 +217,6 @@
 	return O //just in case you want to do something to the animation.
 
 /obj/structure/infection/proc/expand(turf/T = null, controller = null)
-	var/area/turfArea = T.loc
-	// do not expand to areas that were space at roundstart
-	if(istype(turfArea, /area/space))
-		return null
 	infection_attack_animation(T)
 	if(locate(/obj/structure/beacon_wall) in T.contents || locate(/obj/structure/infection) in T.contents)
 		return
