@@ -87,7 +87,7 @@
 		D.visible_message("<span class='danger'>[A] has unarmed [D]!</span>", \
 							"<span class='userdanger'>[A] has unarmed you!</span>")
 		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
+	log_combat(A, D, "unarmed", "[I ? " removing \the [I]" : ""]")
 	return 1
 
 /datum/martial_art/krav_maga/proc/headbutt(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
