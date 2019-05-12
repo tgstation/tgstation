@@ -5,7 +5,9 @@
 	flavour_text = "" //the flavor text will be the backstory argument called on the antagonist's greet, see hunter.dm for details
 	roundstart = FALSE
 	death = FALSE
+	random = TRUE
 	show_flavour = FALSE
+	density = TRUE
 
 /obj/effect/mob_spawn/human/fugitive/Initialize(mapload)
 	. = ..()
@@ -21,12 +23,11 @@
 /obj/effect/mob_spawn/human/fugitive/spacepol
 	name = "police pod"
 	desc = "A small sleeper typically used to put people to sleep for briefing on the mission."
-	mob_name = "spacepol officer"
+	mob_name = "a spacepol officer"
 	flavour_text = "space cop"
 	outfit = /datum/outfit/spacepol
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	density = TRUE
 
 /obj/effect/mob_spawn/human/fugitive/russian
 	name = "russian pod"
@@ -36,4 +37,3 @@
 	outfit = /datum/outfit/russiancorpse
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	density = TRUE

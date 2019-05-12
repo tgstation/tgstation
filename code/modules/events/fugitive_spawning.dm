@@ -15,7 +15,7 @@
 	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
 	for(var/turf/X in GLOB.xeno_spawn)
 		if(istype(get_area(X), /area/maintenance))
-			spawn_locs += T
+			possible_spawns += X
 	var/turf/landing_turf = pick(possible_spawns)
 	if(!landing_turf)
 		message_admins("No valid spawn locations found, aborting...")
@@ -24,11 +24,9 @@
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
 	if(candidates.len >= 1) //solo refugees
-		possible_backstories += "waldo"
+		possible_backstories.Add("waldo")
 	if(candidates.len >= 4)//group refugees
-		possible_backstories += "prisoner"
-		possible_backstories += "cultists"
-		possible_backstories += "synth"
+		possible_backstories.Add("prisoner", "cultist", "synth")
 	if(!possible_backstories.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -36,7 +34,7 @@
 	var/member_size = 3
 	var/leader
 	switch(backstory)
-		if("cultists" || "synth")
+		if("cultist" || "synth")
 			leader = pick_n_take(candidates)
 		if("waldo")
 			member_size = 0 //solo refugees have no leader so the member_size gets bumped to one a bit later
@@ -54,11 +52,10 @@
 	if(!isnull(leader))
 		gear_fugitive_leader(leader, landing_turf, backstory)
 
-
 //after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
-	addtimer(CALLBACK(src, .proc/spawn_hunters), 10) //10 minutes
+	addtimer(CALLBACK(src, .proc/spawn_hunters), 10 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
@@ -106,11 +103,10 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
-	to_chat(world, "<span class='danger'>SPAWNING HUNTERS</span>")
 	var/backstory = pick("space cop", "russian")
 	var/static/list/hunter_ship_types = list(
-		"space cop"		= /datum/map_template/space_cop_ship,
-		"russian"		= /datum/map_template/russian_ship)
+		"space cop"		= /datum/map_template/shuttle/hunter/space_cop,
+		"russian"		= /datum/map_template/shuttle/hunter/russian)
 
 	var/datum/map_template/ship = hunter_ship_types[backstory]
 	ship = new

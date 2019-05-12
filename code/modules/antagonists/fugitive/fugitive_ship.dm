@@ -23,11 +23,3 @@
 	fug.is_captured = TRUE
 	to_chat(target, "<span class='userdanger'>You are thrown into a vast void of bluespace, and as you fall further into oblivion the comparatively small entrance to reality gets smaller and smaller until you cannot see it anymore. You have failed to avoid capture.</span>")
 	target.ghostize(TRUE) //so they cannot suicide, round end stuff.
-
-/datum/map_template/space_cop_ship
-	name = "Police Spacevan"
-	mappath = "_maps/shuttles/fugitive_hunter_space_cop.dmm"
-
-/datum/map_template/russian_ship
-	name = "Russian Cargo Ship"
-	mappath = "_maps/shuttles/fugitive_hunter_russian.dmm"

@@ -31,26 +31,26 @@
 
 /mob/camera/yalp_elor/Login()
 	..()
-	to_chat(src, "<B>I must protect my followers!</B>")
-	to_chat(src, "<B>Only my followers can heal me</B>")
-	to_chat(src, "<B>I sense Nanotrasen has once again tracked us, and they will reach us in about 10 minutes. I must make sure my followers are ready when they arrive.</B>")
+	to_chat(src, "<B>You must protect your followers from Nanotrasen!</B>")
+	to_chat(src, "<B>Only your followers can hear you, and you can speak to send messages to all of them, wherever they are. You can also locally whisper to anyone.</B>")
+	to_chat(src, "<B>Nanotrasen will reach you and your followers in about 10 minutes. Make sure they are ready when the time is up.</B>")
 
 /mob/camera/yalp_elor/Move(NewLoc, direct)
-	var/OldLoc = loc
-	if(NewLoc)
-		var/turf/T = get_turf(NewLoc)
-		if(locate(/obj/effect/blessing, T))
-			if((world.time - lastWarning) >= 30)
-				lastWarning = world.time
-				to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
-			return
-		if(istype(get_area(T), /area/chapel))
-			if((world.time - lastWarning) >= 30)
-				lastWarning = world.time
-				to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a much, MUCH stronger deity, and can't be accessed!</span>")
-			return
-		forceMove(T)
-		Moved(OldLoc, direct)
+	if(!NewLoc)
+		return
+	var/turf/T = get_turf(NewLoc)
+	if(locate(/obj/effect/blessing, T))
+		if((world.time - lastWarning) >= 30)
+			lastWarning = world.time
+			to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
+		return
+	if(istype(get_area(T), /area/chapel))
+		if((world.time - lastWarning) >= 30)
+			lastWarning = world.time
+			to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a much, MUCH stronger deity, and can't be accessed!</span>")
+		return
+	forceMove(T)
+	Moved(loc, direct)
 
 /mob/camera/yalp_elor/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(client)
