@@ -1,0 +1,4 @@
+author: "Farquaar"
+delete-after: True
+changes: 
+  - bugfix: "Caught the wizard who was turning the rastacap shipments invisible."
