@@ -110,6 +110,33 @@
 	if(!diff)
 		return
 	adjustStaminaLoss(diff, updating_health, forced)
+	
+/mob/living/carbon/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
+	var/current = getStaminaLoss()
+	var/diff = amount - current
+	if(!diff)
+		return
+	adjustStaminaLoss(diff, updating_health, forced)
+	
+//Only adjust stamina damage on the chest.
+/mob/living/carbon/proc/adjustFatigueLoss(amount, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+	if(!chest)
+		return FALSE
+	if(amount > 0)
+		chest.receive_damage(0, 0, amount)
+		..()
+	else
+		chest.heal_damage(0, 0, abs(amount))
+	return amount
+	
+/mob/living/carbon/proc/getFatigueLoss()
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+	if(!chest)
+		return FALSE
+	return chest.stamina_dam
 
 ////////////////////////////////////////////
 
