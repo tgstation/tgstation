@@ -20,9 +20,9 @@
 			streak = ""
 			leg_sweep(A,D)
 			return 1
-		if("quick_choke")//is actually lung punch
+		if("lung_punch")
 			streak = ""
-			quick_choke(A,D)
+			lung_punch(A,D)
 			return 1
 		if("eye_strike")
 			streak = ""
@@ -49,14 +49,14 @@
 	log_combat(A, D, "leg sweeped")
 	return 1
 
-/datum/martial_art/krav_maga/proc/quick_choke(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)//is actually lung punch
+/datum/martial_art/krav_maga/proc/lung_punch(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
 				  	"<span class='userdanger'>[A] slams your chest! You can't breathe!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	if(D.losebreath <= 10)
 		D.losebreath = CLAMP(D.losebreath + 5, 0, 10)
 	D.adjustOxyLoss(10)
-	log_combat(A, D, "quickchoked")
+	log_combat(A, D, "lung punched")
 	return 1
 
 /datum/martial_art/krav_maga/proc/neck_chop(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -94,8 +94,13 @@
 	D.visible_message("<span class='warning'>[A] headbutts [D]!</span>", \
 				  	"<span class='userdanger'>[A] headbutts you!</span>")
 	playsound(get_turf(A), 'sound/effects/meteorimpact.ogg', 50, 1, -1)
-	A.apply_damage(10 BRUTE)
-	D.
+	A.apply_damage(10, BRUTE)
+	D.adjustBrainLoss(10)
+	if(D.stat == CONSCIOUS)
+		D.confused = max(D.confused, 20)
+		D.adjust_blurriness(10)
+	if(prob(10))
+		D.gain_trauma(/datum/brain_trauma/mild/concussion)
 	log_combat(A, D, "headbutted")
 	return 1
 
@@ -138,22 +143,18 @@
 	return 1
 
 /datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(check_streak(A,D))
-		return 1
-	var/obj/item/I = null
-	if(prob(60))
-		I = D.get_active_held_item()
-		if(I)
-			if(D.temporarilyRemoveItemFromInventory(I))
-				A.put_in_hands(I)
-		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
-							"<span class='userdanger'>[A] has disarmed [D]!</span>")
-		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-	else
-		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
-							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
-		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
+	if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		H.mind.martial_art.streak = "neck_chop"
+	if(user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG)
+		H.mind.martial_art.streak = "leg_sweep"
+	if(user.zone_selected == BODY_ZONE_CHEST)
+		H.mind.martial_art.streak = "lung_punch"
+	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
+		H.mind.martial_art.streak = "eye_strike"
+	if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM)
+		H.mind.martial_art.streak = "unarm"
+	if(user.zone_selected == BODY_ZONE_HEAD)
+		H.mind.martial_art.streak = "headbutt"
 	return 1
 	
 //Krav Maga Gloves
@@ -209,7 +210,7 @@
 
 	to_chat(usr, "<span class='notice'>Neck Chop</span>: Mouth. Injures the neck, stopping the victim from speaking for a while.")
 	to_chat(usr, "<span class='notice'>Eye Strike</span>: Eye. Causes eye damage to the victim, may make him blind after considerable usage.")
-	to_chat(usr, "<span class='notice'>Headbutt</span>: Head. Smashes your skull into the victim's, giving you small damage while making his life worse.")
+	to_chat(usr, "<span class='notice'>Headbutt</span>: Head. Smashes your skull into the victim's, giving you small damage while giving the victim concussions.")
 	to_chat(usr, "<span class='notice'>Lung Punch</span>: Chest. Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time.")
 	to_chat(usr, "<span class='notice'>Unarm</span>: Arm. Knocks the victim's items out of their hands.")
 	to_chat(usr, "<span class='notice'>Leg Sweep</span>: Leg. Trips the victim, knocking them down for a brief moment.")
