@@ -445,3 +445,31 @@
 		M.emote(pick("twitch","laugh","frown"))
 	..()
 	. = 1
+	
+/datum/reagent/drug/caffeine
+	name = "Caffeine"
+	id = "caffeine"
+	description = "Restores your stamina. Reduces drowsiness. Makes you survive the morning."
+	color = "F2F4F4"
+	addiction_threshold = 10
+	taste_description = "bitterness"
+	trippy = FALSE
+	overdose_threshold = 20
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/caffeine/on_mob_life(mob/living/carbon/human/M)
+	M.adjustFatigueLoss(-3*REM)
+	M.drowsyness = max(0,M.drowsyness-3)
+	M.AdjustSleeping(-40, FALSE)
+	..()
+	. = 1
+	
+/datum/reagent/drug/caffeine/overdose_process(mob/living/M)
+	M.Jitter(5)
+	if(istype(M, /mob/living/carbon))
+		var/mob/living/carbon/C = M
+		C.adjustFatigueLoss(3*REM)
+	else
+		M.adjustStaminaLoss(3*REM)
+	..()
+	
