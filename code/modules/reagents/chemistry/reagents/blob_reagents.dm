@@ -269,10 +269,14 @@
 
 /datum/reagent/blob/energized_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.losebreath += round(0.2*reac_volume)
-	M.adjustStaminaLoss(0.4*reac_volume)
 	if(M)
+		M.losebreath += round(0.2*reac_volume)
 		M.apply_damage(0.6*reac_volume, OXY)
+		if(istype(M, /mob/living/carbon))
+			var/mob/living/carbon/C = M
+			C.adjustFatigueLoss(0.4*reac_volume)
+		else
+			M.adjustStaminaLoss(0.4*reac_volume)
 
 /datum/reagent/blob/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.obj_integrity - damage <= 0 && prob(10))
@@ -476,8 +480,11 @@
 	M.apply_damage(0.4*reac_volume, BRUTE)
 	if(M)
 		M.apply_damage(0.4*reac_volume, OXY)
-	if(M)
-		M.adjustStaminaLoss(0.2*reac_volume)
+		if(istype(M, /mob/living/carbon))
+			var/mob/living/carbon/C = M
+			C.adjustFatigueLoss(0.2*reac_volume)
+		else
+			M.adjustStaminaLoss(0.2*reac_volume)
 
 /datum/reagent/blob/pressurized_slime/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") || damage_type != BURN)
