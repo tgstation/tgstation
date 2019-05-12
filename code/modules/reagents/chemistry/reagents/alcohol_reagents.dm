@@ -165,7 +165,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M)
-	M.drowsyness = max(0,M.drowsyness-7)
+	holder.add_reagent("caffeine", 0.15)
 	M.AdjustSleeping(-40)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
@@ -448,6 +448,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "whiskeycolaglass"
 	glass_name = "Rum and Coke"
 	glass_desc = "The classic go-to of space-fratboys."
+	
+/datum/reagent/consumable/ethanol/rum_coke/on_mob_life(mob/living/carbon/M)
+	holder.add_reagent("caffeine", 0.12)
+	..()
 
 /datum/reagent/consumable/ethanol/cuba_libre
 	name = "Cuba Libre"
@@ -462,6 +466,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A classic mix of rum, cola, and lime. A favorite of revolutionaries everywhere!"
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/M)
+	holder.add_reagent("caffeine", 0.12)
 	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
 		M.adjustBruteLoss(-1, 0)
 		M.adjustFireLoss(-1, 0)
@@ -481,7 +486,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "whiskeycolaglass"
 	glass_name = "whiskey cola"
 	glass_desc = "An innocent-looking mixture of cola and Whiskey. Delicious."
-
+	
+/datum/reagent/consumable/ethanol/whiskey_cola/on_mob_life(mob/living/carbon/M)
+	holder.add_reagent("caffeine", 0.12)
+	..()
 
 /datum/reagent/consumable/ethanol/martini
 	name = "Classic Martini"
@@ -660,7 +668,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M)
 	M.Jitter(2)
 	if(HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.adjustStaminaLoss(-10, 0)
+		M.adjustStaminaLoss(-5, 0)
 		if(prob(20))
 			new /datum/hallucination/items_other(M)
 		if(prob(10))
@@ -1372,14 +1380,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.dizziness +=2
 	M.adjustBrainLoss(1*REM, 150)
 	if(prob(20))
-		M.adjustStaminaLoss(10)
+		M.adjustFatigueLoss(10*REM)
 		M.drop_all_held_items()
 		to_chat(M, "<span class='notice'>You cant feel your hands!</span>")
 	if(current_cycle > 5)
 		if(prob(20))
 			var/t = pickt()
 			ADD_TRAIT(M, t, id)
-			M.adjustStaminaLoss(10)
+			M.adjustFatigueLoss(10*REM)
 		if(current_cycle > 30)
 			M.adjustBrainLoss(2*REM)
 			if(current_cycle > 50 && prob(15))
@@ -1395,7 +1403,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_ARM, id)
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_LEG, id)
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_LEG, id)
-	M.adjustStaminaLoss(10)
 	..()
 
 /datum/reagent/consumable/ethanol/hippies_delight
@@ -1828,6 +1835,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A sawed-off cola bottle filled with Fernet Cola. Nothing better after eating like a lardass."
 
 /datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/M)
+	holder.add_reagent("caffeine", 0.12)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(0.5*REM, 0)
 	M.adjust_nutrition(- 3)
@@ -1854,7 +1862,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_add(mob/living/M)
 	if(M.health > 0)
-		M.adjustStaminaLoss(20)
+		if(istype(M, /mob/living/carbon))
+			var/mob/living/carbon/C = M
+			C.adjustFatigueLoss(8*REM)
+		else
+			M.adjustStaminaLoss(8*REM)
 		. = TRUE
 	..()
 
@@ -1878,7 +1890,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_add(mob/living/M)
 	if(M.health > 0)
-		M.adjustStaminaLoss(35)
+		if(istype(M, /mob/living/carbon))
+			var/mob/living/carbon/C = M
+			C.adjustFatigueLoss(10*REM)
+		else
+			M.adjustStaminaLoss(10*REM)
 		. = TRUE
 	..()
 
