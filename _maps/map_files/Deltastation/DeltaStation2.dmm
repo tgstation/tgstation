@@ -75058,7 +75058,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cwd" = (
-/obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -128117,7 +128116,6 @@
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "twt" = (
-/obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
