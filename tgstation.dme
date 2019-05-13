@@ -1191,6 +1191,7 @@
 #include "code\modules\antagonists\blob\blobstrains\_reagent.dm"
 #include "code\modules\antagonists\blob\blobstrains\blazing_oil.dm"
 #include "code\modules\antagonists\blob\blobstrains\cryogenic_poison.dm"
+#include "code\modules\antagonists\blob\blobstrains\debris_devourer.dm"
 #include "code\modules\antagonists\blob\blobstrains\electromagnetic_web.dm"
 #include "code\modules\antagonists\blob\blobstrains\energized_jelly.dm"
 #include "code\modules\antagonists\blob\blobstrains\explosive_lattice.dm"
