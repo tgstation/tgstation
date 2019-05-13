@@ -460,3 +460,22 @@
 
 /obj/machinery/conveyor_switch/attack_robot(mob/user)
 	return attack_hand(user)
+
+//Degenerals large airlocks
+
+/obj/machinery/door/airlock/glass_large/security
+	name = "large glass airlock"
+	icon = 'icons/oldschool/airlock_large_security.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
+	opacity = 0
+	assemblytype = /obj/structure/door_assembly/large_sec
+	glass = TRUE
+	bound_width = 64 // 2x1
+
+/obj/structure/door_assembly/large_sec
+	name = "security airlock assembly"
+	icon = 'icons/oldschool/airlock_large_security.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
+	glass_type = /obj/machinery/door/airlock/glass_large/security
+	airlock_type = /obj/machinery/door/airlock/glass_large/security
+	bound_width = 64 // 2x1
