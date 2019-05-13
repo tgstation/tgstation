@@ -130,7 +130,7 @@
 	playsound(get_turf(A), 'sound/effects/meteorimpact.ogg', 50, 1, -1)
 	A.apply_damage(10, BRUTE, A.zone_selected)
 	D.apply_damage(15, A.dna.species.attack_type, A.zone_selected)
-	if(!istype(D.head, /obj/item/clothing/head/helmet))
+	if(!istype(D.head, (/obj/item/clothing/head/helmet || /obj/item/clothing/head/hardhat)))
 		if (prob(75))
 			D.adjustBrainLoss(10)
 			if(D.stat == CONSCIOUS)
