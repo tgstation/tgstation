@@ -2,6 +2,7 @@
 	name = "Krav Maga"
 	id = MARTIALART_KRAVMAGA
 	help_verb = /mob/living/carbon/human/proc/krav_maga_help
+	var/cooldown = 0
 
 /datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(..())
@@ -14,15 +15,23 @@
 	switch(streak)
 		if("neck_chop")
 			streak = ""
+			if(cooldown < world.time)
+				return
 			neck_chop(A,D)
+			cooldown = world.time + 50
 			return 1
 		if("leg_sweep")
-			streak = ""
+			if(cooldown < world.time)
+				return
 			leg_sweep(A,D)
+			cooldown = world.time + 20
 			return 1
 		if("lung_punch")
 			streak = ""
+			if(cooldown < world.time)
+				return
 			lung_punch(A,D)
+			cooldown = world.time + 30
 			return 1
 		if("eye_strike")
 			streak = ""
@@ -34,7 +43,17 @@
 			return 1
 		if("headbutt")
 			streak = ""
+			if(cooldown < world.time)
+				return
 			headbutt(A,D)
+			cooldown = world.time + 30
+			return 1
+		if("groin_kick")
+			streak = ""
+			if(cooldown < world.time)
+				return
+			groin_kick(A,D)
+			cooldown = world.time + 30
 			return 1
 	return 0
 
@@ -44,7 +63,7 @@
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
-	D.apply_damage(5, BRUTE)
+	D.apply_damage(5, BRUTE, A.zone_selected)
 	D.Paralyze(40)
 	log_combat(A, D, "leg sweeped")
 	return 1
@@ -63,30 +82,50 @@
 	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
 				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.apply_damage(5, A.dna.species.attack_type)
+	D.apply_damage(5, A.dna.species.attack_type, A.zone_selected)
 	if(D.silent <= 10)
 		D.silent = CLAMP(D.silent + 10, 0, 10)
 	log_combat(A, D, "neck chopped")
 	return 1
 
 /datum/martial_art/krav_maga/proc/eye_strike(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	D.visible_message("<span class='warning'>[A] eye strikes [D]!</span>", \
+	D.visible_message("<span class='warning'>[A] eye struck [D]!</span>", \
 				  	"<span class='userdanger'>[A] strikes your eye!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.apply_damage(5, BRUTE)
-	D.eyestab
-	log_combat(A, D, "eye striked")
+	D.apply_damage(3, BRUTE, A.zone_selected)
+	D.adjust_blurriness(3)
+	D.adjust_eye_damage(rand(1,3))
+	var/obj/item/organ/eyes/eyes = D.getorganslot(ORGAN_SLOT_EYES)
+	if (!eyes)
+		return
+	if(eyes.eye_damage >= 10)
+		D.adjust_blurriness(15)
+		if(D.stat != DEAD)
+			to_chat(D, "<span class='danger'>Your eyes start to bleed profusely!</span>")
+		to_chat(D, "<span class='danger'>You become nearsighted!</span>")
+		D.become_nearsighted(EYE_DAMAGE)
+		if(prob(50))
+			if(D.stat != DEAD)
+				if(D.drop_all_held_items())
+					to_chat(D, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
+			D.adjust_blurriness(10)
+			D.Unconscious(20)
+			D.Paralyze(40)
+		if (prob(eyes.eye_damage - 10 + 1))
+			D.become_blind(EYE_DAMAGE)
+			to_chat(D, "<span class='danger'>You go blind!</span>")
+	log_combat(A, D, "eye struck")
 	return 1
 
 /datum/martial_art/krav_maga/proc/unarm(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	var/obj/item/I = null
-		I = D.get_active_held_item()
-		if(I)
-			if(D.temporarilyRemoveItemFromInventory(I))
-				A.put_in_hands(I)
-		D.visible_message("<span class='danger'>[A] has unarmed [D]!</span>", \
-							"<span class='userdanger'>[A] has unarmed you!</span>")
-		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	I = D.get_active_held_item()
+	if(I)
+		if(D.temporarilyRemoveItemFromInventory(I))
+			A.put_in_hands(I)
+	D.visible_message("<span class='danger'>[A] has unarmed [D]!</span>", \
+					"<span class='userdanger'>[A] has unarmed you!</span>")
+	playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	log_combat(A, D, "unarmed", "[I ? " removing \the [I]" : ""]")
 	return 1
 
@@ -94,36 +133,34 @@
 	D.visible_message("<span class='warning'>[A] headbutts [D]!</span>", \
 				  	"<span class='userdanger'>[A] headbutts you!</span>")
 	playsound(get_turf(A), 'sound/effects/meteorimpact.ogg', 50, 1, -1)
-	A.apply_damage(10, BRUTE)
-	D.adjustBrainLoss(10)
-	if(D.stat == CONSCIOUS)
-		D.confused = max(D.confused, 20)
-		D.adjust_blurriness(10)
-	if(prob(10))
-		D.gain_trauma(/datum/brain_trauma/mild/concussion)
+	A.apply_damage(10, BRUTE, A.zone_selected)
+	D.apply_damage(15, A.dna.species.attack_type, A.zone_selected)
+	if (prob(50))
+		D.adjustBrainLoss(10)
+		if(D.stat == CONSCIOUS)
+			D.confused = max(D.confused, 20)
+			D.adjust_blurriness(10)
+		if(prob(10))
+			D.gain_trauma(/datum/brain_trauma/mild/concussion)
 	log_combat(A, D, "headbutted")
 	return 1
 
 /datum/martial_art/krav_maga/proc/groin_kick(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] groin kicks [D]!</span>", \
 				  	"<span class='userdanger'>[A] kicks your groin! You scream out!</span>")
-	playsound(get_turf(A), 'sound/effects/meteorimpact.ogg', 50, 1, -1)
-	D.apply_damage(10, A.dna.species.attack_type)
+	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
+	D.apply_damage(10, A.dna.species.attack_type, A.zone_selected)
 	D.add_movespeed_modifier(MOVESPEED_ID_KRAV_MAGA, update=TRUE, priority=100, multiplicative_slowdown=1)
-	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, MOVESPEED_ID_KRAV_MAGA, TRUE), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(D, /mob/.proc/remove_movespeed_modifier, MOVESPEED_ID_KRAV_MAGA, TRUE), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	D.emote("scream")
 	log_combat(A, D, "groin kicked")
 	return 1
 
 /datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(check_streak(A,D))
-		return 1
 	log_combat(A, D, "grabbed (Krav Maga)")
 	..()
 
 /datum/martial_art/krav_maga/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(check_streak(A,D))
-		return 1
 	log_combat(A, D, "punched")
 	var/picked_hit_type = pick("punches", "kicks")
 	var/bonus_damage = 10
@@ -143,20 +180,24 @@
 	return 1
 
 /datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		H.mind.martial_art.streak = "neck_chop"
-	if(user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG)
-		H.mind.martial_art.streak = "leg_sweep"
-	if(user.zone_selected == BODY_ZONE_CHEST)
-		H.mind.martial_art.streak = "lung_punch"
-	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		H.mind.martial_art.streak = "eye_strike"
-	if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM)
-		H.mind.martial_art.streak = "unarm"
-	if(user.zone_selected == BODY_ZONE_HEAD)
-		H.mind.martial_art.streak = "headbutt"
-	return 1
-	
+	if(A.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		A.mind.martial_art.streak = "neck_chop"
+	if(A.zone_selected == BODY_ZONE_L_LEG || A.zone_selected == BODY_ZONE_R_LEG)
+		A.mind.martial_art.streak = "leg_sweep"
+	if(A.zone_selected == BODY_ZONE_CHEST)
+		A.mind.martial_art.streak = "lung_punch"
+	if(A.zone_selected == BODY_ZONE_PRECISE_EYES)
+		A.mind.martial_art.streak = "eye_strike"
+	if(A.zone_selected == BODY_ZONE_L_ARM || A.zone_selected == BODY_ZONE_R_ARM)
+		A.mind.martial_art.streak = "unarm"
+	if(A.zone_selected == BODY_ZONE_HEAD)
+		A.mind.martial_art.streak = "headbutt"
+	if(A.zone_selected == BODY_ZONE_PRECISE_GROIN)
+		A.mind.martial_art.streak = "groin_kick"
+	if(check_streak(A,D))
+		return 1
+	return 0
+
 //Krav Maga Gloves
 
 /obj/item/clothing/gloves/krav_maga
@@ -201,8 +242,8 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
-	
-	/mob/living/carbon/human/proc/krav_maga_help()
+
+/mob/living/carbon/human/proc/krav_maga_help()
 	set name = "Remember The Basics"
 	set desc = "You try to remember some of the basics of Krav Maga."
 	set category = "Krav Maga"
