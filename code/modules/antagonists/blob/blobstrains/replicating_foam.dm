@@ -1,4 +1,5 @@
 /datum/blobstrain/reagent/replicating_foam
+	name = "Replicating Foam"
 	description = "will do medium brute damage and occasionally expand again when expanding."
 	shortdesc = "will do medium brute damage."
 	effectdesc = "will also expand when attacked with burn damage, but takes more brute damage."
