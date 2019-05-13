@@ -1175,7 +1175,7 @@
 		M.hallucination -= 5
 	if(prob(20))
 		M.adjustBrainLoss(1*REM, 50)
-	M.adjustStaminaLoss(2.5*REM, 0)
+	M.adjustFatigueLoss(3*REM, 0)
 	..()
 	return TRUE
 
