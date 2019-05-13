@@ -234,7 +234,8 @@
 	if(statpanel("Status"))
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
-			stat(null, text("Backup Power: [battery/2]%"))
+			if(isturf(loc)) //only show if we're "in" a core
+				stat(null, text("Backup Power: [battery/2]%"))
 			stat(null, text("Connected cyborgs: [connected_robots.len]"))
 			for(var/mob/living/silicon/robot/R in connected_robots)
 				var/robot_status = "Nominal"
