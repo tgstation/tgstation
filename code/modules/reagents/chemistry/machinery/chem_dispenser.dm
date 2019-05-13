@@ -510,7 +510,6 @@
 		"creme_de_cacao",
 		"triple_sec",
 		"sake",
-		"champagne",
 		"applejack"
 	)
 	upgrade_reagents = null

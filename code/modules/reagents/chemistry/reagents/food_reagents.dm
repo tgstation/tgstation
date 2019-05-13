@@ -733,3 +733,21 @@
 		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
 		playsound(M, "sparks", 50, 1)
 	return ..()
+
+/datum/reagent/consumable/astrotame
+	name = "Astrotame"
+	id = "astrotame"
+	description = "A space age artifical sweetener."
+	nutriment_factor = 0
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	reagent_state = SOLID
+	color = "#FFFFFF" // rgb: 255, 255, 255
+	taste_mult = 8
+	taste_description = "sweetness"
+	overdose_threshold = 17
+
+/datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M)
+	if(M.disgust < 80)
+		M.adjust_disgust(10)
+	..()
+	. = 1
