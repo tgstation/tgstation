@@ -14,15 +14,20 @@
 /datum/martial_art/krav_maga/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	switch(streak)
 		if("neck_chop")
-			streak = ""
-			neck_chop(A,D)
+			if(cooldown < world.time)
+				streak = ""
+				neck_chop(A,D)
+				cooldown = world.time + 30
 			return 1
 		if("leg_sweep")
+			streak = ""
 			leg_sweep(A,D)
 			return 1
 		if("lung_punch")
-			streak = ""
-			lung_punch(A,D)
+			if(cooldown < world.time)
+				streak = ""
+				lung_punch(A,D)
+				cooldown = world.time + 20
 			return 1
 		if("eye_strike")
 			streak = ""
@@ -33,12 +38,16 @@
 			unarm(A,D)
 			return 1
 		if("headbutt")
-			streak = ""
-			headbutt(A,D)
+			if(cooldown < world.time)
+				streak = ""
+				headbutt(A,D)
+				cooldown = world.time + 30
 			return 1
 		if("groin_kick")
-			streak = ""
-			groin_kick(A,D)
+			if(cooldown < world.time)
+				streak = ""
+				groin_kick(A,D)
+				cooldown = world.time + 25
 			return 1
 	return 0
 
@@ -64,8 +73,8 @@
 	return 1
 
 /datum/martial_art/krav_maga/proc/neck_chop(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
-				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>")
+	D.visible_message("<span class='warning'>[A] neck chops [D]'s neck!</span>", \
+				  	"<span class='userdanger'>[A] neck chops your neck, rendering you unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	D.apply_damage(5, A.dna.species.attack_type, A.zone_selected)
 	if(D.silent <= 10)
