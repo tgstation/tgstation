@@ -129,7 +129,6 @@
 					state = EMPTY_CORE
 					update_icon()
 					circuit.forceMove(loc)
-
 					circuit = null
 					return
 			if(SCREWED_CORE)
