@@ -9,6 +9,7 @@
 	complementary_color = "#AD6570"
 	blobbernaut_message = "synchronously strikes"
 	message = "The blobs strike you"
+	reagent = /datum/reagent/blob/synchronous_mesh
 
 /datum/blobstrain/reagent/synchronous_mesh/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") //the cause isn't fire or bombs, so split the damage
