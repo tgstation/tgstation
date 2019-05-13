@@ -210,7 +210,6 @@
 /obj/machinery/telecomms/message_server/preset
 	id = "Messaging Server"
 	network = "tcommsat"
-	freq_listening = list(FREQ_COMMON, FREQ_MEDICAL, FREQ_SCIENCE, FREQ_ENGINEERING, FREQ_SECURITY, FREQ_SUPPLY)
 	autolinkers = list("messaging")
 	decryptkey = null //random
 	calibrating = 0
