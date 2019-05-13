@@ -1837,7 +1837,7 @@
 	var/obj/item/bodypart/chest = M.get_bodypart(BODY_ZONE_CHEST)
 	if(chest)
 		var/sleepydamage = min(10 * REM, chest.max_stamina_damage - 55 - chest.stamina_dam)
-		M.adjustFatigueLoss(sleepydamage)
+		M.adjustFatigueLoss(sleepydamage*REM)
 	if(prob(15))
 		to_chat(M, "You should sit down and take a rest...")
 	..()
