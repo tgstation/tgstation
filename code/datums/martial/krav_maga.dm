@@ -15,23 +15,14 @@
 	switch(streak)
 		if("neck_chop")
 			streak = ""
-			if(cooldown < world.time)
-				return
 			neck_chop(A,D)
-			cooldown = world.time + 50
 			return 1
 		if("leg_sweep")
-			if(cooldown < world.time)
-				return
 			leg_sweep(A,D)
-			cooldown = world.time + 20
 			return 1
 		if("lung_punch")
 			streak = ""
-			if(cooldown < world.time)
-				return
 			lung_punch(A,D)
-			cooldown = world.time + 30
 			return 1
 		if("eye_strike")
 			streak = ""
@@ -43,17 +34,11 @@
 			return 1
 		if("headbutt")
 			streak = ""
-			if(cooldown < world.time)
-				return
 			headbutt(A,D)
-			cooldown = world.time + 30
 			return 1
 		if("groin_kick")
 			streak = ""
-			if(cooldown < world.time)
-				return
 			groin_kick(A,D)
-			cooldown = world.time + 30
 			return 1
 	return 0
 
