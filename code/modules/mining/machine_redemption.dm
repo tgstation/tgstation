@@ -141,7 +141,7 @@
 	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
 		"ore_update" = TRUE,
 		"sender" = "Ore Redemption Machine",
-		"request" = msg,
+		"message" = msg,
 		"verified" = "<font color='green'><b>Verified by Ore Redemption Machine</b></font>",
 		"priority" = REQ_NORMAL_MESSAGE_PRIORITY
 	))
