@@ -213,17 +213,11 @@
 
 			if("directive")
 				if(href_list["getdna"])
-					var/mob/living/M = card.loc
-					var/count = 0
-					while(!isliving(M))
-						if(!M || !M.loc)
-							return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
-						M = M.loc
-						count++
-						if(count >= 6)
-							to_chat(src, "You are not being carried by anyone!")
-							return 0
-					spawn CheckDNA(M, src)
+					if(iscarbon(card.loc))
+						CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
+					else
+						to_chat(src, "You are not being carried by anyone!")
+						return 0 // FALSE ? If you return here you won't call paiinterface() below
 
 			if("pdamessage")
 				if(!isnull(aiPDA))
@@ -420,6 +414,8 @@
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
+	if(!istype(M))
+		return
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
 		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
