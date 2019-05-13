@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			smack = 0
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(!istype(D.head, (/obj/item/clothing/head/helmet || /obj/item/clothing/head/hardhat)))
+			if(!istype(C.head, (/obj/item/clothing/head/helmet || /obj/item/clothing/head/hardhat)))
 				C.adjustBrainLoss(5, 60)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
