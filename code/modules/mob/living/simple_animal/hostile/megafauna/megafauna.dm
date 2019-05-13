@@ -63,6 +63,8 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, var/list/force_grant)
+	if(SSticker.mode)
+		SSticker.mode.check_win() //Calls the rounds wincheck, to see if all megafauna have died
 	if(health > 0)
 		return
 	else
