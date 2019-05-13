@@ -6223,7 +6223,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "alk" = (
-/obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -82839,7 +82838,6 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "etr" = (
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "eFN" = (
@@ -84328,7 +84326,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
 "vlx" = (
-/obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},

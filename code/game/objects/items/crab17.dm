@@ -31,7 +31,7 @@
 	density = TRUE
 	pixel_z = -8
 	layer = LARGE_MOB_LAYER
-	max_integrity = 300
+	max_integrity = 600
 	var/list/accounts_to_rob
 	var/mob/living/carbon/human/bogdanoff
 	var/canwalk = FALSE
@@ -215,7 +215,7 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src).name] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
-	playsound(src,  'sound/weapons/mortar_whistle.ogg', 80, 1, 6)
+	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, 1, 6)
 	addtimer(CALLBACK(src, .proc/endLaunch), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 

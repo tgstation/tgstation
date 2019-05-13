@@ -6,15 +6,19 @@
 	icon = 'icons/mob/cameramob.dmi'
 	icon_state = "yalp_elor"
 	invisibility = INVISIBILITY_OBSERVER
-	call_life = TRUE
 	var/lastWarning = 0
 
 /mob/camera/yalp_elor/Initialize()
-	..()
+	. = ..()
 	var/datum/action/innate/yalp_transmit/transmit = new
 	transmit.Grant(src)
 	var/datum/action/innate/yalp_transport/transport = new
 	transport.Grant(src)
+	START_PROCESSING(SSobj, src)
+
+/mob/camera/yalp_elor/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /mob/camera/yalp_elor/CanPass(atom/movable/mover, turf/target)
 	return TRUE
@@ -64,8 +68,7 @@
 			var/link = FOLLOW_LINK(V, src)
 			to_chat(V, "[link] [message]")
 
-/mob/camera/yalp_elor/Life()
-	..()
+/mob/camera/yalp_elor/process()
 	var/safe = FALSE
 	for(var/mob/V in GLOB.player_list)
 		if(!V.mind)

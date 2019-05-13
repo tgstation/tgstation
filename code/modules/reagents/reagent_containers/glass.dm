@@ -389,3 +389,8 @@
 		grinded = I
 		return
 	to_chat(user, "<span class='danger'>You can't grind this!</span>")
+
+/obj/item/reagent_containers/glass/saline
+	name = "saline canister"
+	volume = 5000
+	list_reagents = list("salglu_solution" = 5000)

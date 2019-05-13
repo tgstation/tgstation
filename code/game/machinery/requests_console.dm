@@ -463,7 +463,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				newmessagepriority = HIGH_MESSAGE_PRIORITY
 				update_icon()
 			if(!silent)
-				playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+				playsound(src, 'sound/machines/twobeep_high.ogg', 50, 1)
 				say(title)
 				messages += "<span class='bad'>High Priority</span><BR><b>From:</b> [linkedsender]<BR>[message]"
 
@@ -472,7 +472,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				newmessagepriority = EXTREME_MESSAGE_PRIORITY
 				update_icon()
 			if(1)
-				playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+				playsound(src, 'sound/machines/twobeep_high.ogg', 50, 1)
 				say(title)
 			messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [linkedsender]<BR>[message]"
 
@@ -481,7 +481,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				newmessagepriority = NORMAL_MESSAGE_PRIORITY
 				update_icon()
 			if(!src.silent)
-				playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+				playsound(src, 'sound/machines/twobeep_high.ogg', 50, 1)
 				say(title)
 			messages += "<b>From:</b> [linkedsender]<BR>[message]"
 

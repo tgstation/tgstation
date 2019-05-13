@@ -1,0 +1,5 @@
+author: "MrFluffster"
+delete-after: True
+changes: 
+  - rscadd: "An extra tile to the Box chapel's width"
+  - rscdel: "One barely noticeable tile of width from escape(one escape brig chair dead [*] )"
