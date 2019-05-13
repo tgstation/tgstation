@@ -322,9 +322,17 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/happiness(src)
 
+/obj/item/storage/pill_bottle/potass_iodide
+	name = "bottle of potassium iodide pills"
+	desc = "Contains pills to expunge radiation."
+
+/obj/item/storage/pill_bottle/potass_iodide/PopulateContents()
+		for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/potass_iodide(src)
+
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
-	desc = "Contains pills to expunge radioation and toxins"
+	desc = "Contains pills to expunge radiation and toxins."
 
 /obj/item/storage/pill_bottle/penacid/PopulateContents()
 	for(var/i in 1 to 3)
