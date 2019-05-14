@@ -559,7 +559,7 @@
 			if(!IsParalyzed())
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			stam_full_regen = TRUE
-			Paralyze(20)
+			Paralyze(100)
 			update_health_hud()
 
 /mob/living/carbon/update_sight()
