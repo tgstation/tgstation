@@ -1,5 +1,0 @@
-author: "Flatgub"
-delete-after: True
-changes: 
-  - rscadd: "Added RCL wiring menu"
-  - bugfix: "RCL change cable colour button now applies changes immediately"
