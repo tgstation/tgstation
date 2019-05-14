@@ -435,7 +435,7 @@ Auto Patrol[]"},
 			projectile = /obj/item/projectile/beam/lasertag/redtag
 
 /mob/living/simple_animal/bot/ed209/proc/shootAt(mob/target)
-	if(lastfired && world.time <= lastfired + shot_delay)
+	if(world.time <= lastfired + shot_delay)
 		return
 	lastfired = world.time
 	var/turf/T = loc
