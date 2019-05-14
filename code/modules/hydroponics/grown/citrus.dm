@@ -178,7 +178,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange_3d
 	seed = /obj/item/seeds/orange
-	name = "extradminesional orange"
+	name = "extradimensional orange"
 	desc = "You can hardly wrap your head around this thing."
 	icon_state = "orang"
 	filling_color = "#FFA500"
