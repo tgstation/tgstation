@@ -62,3 +62,5 @@
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+	var/stam_regen_start_time = 0 //used to halt stamina regen temporarily
+	var/stam_full_regen = FALSE

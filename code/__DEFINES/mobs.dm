@@ -71,6 +71,12 @@
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 
+#define STAMINA_REGEN_BLOCK_TIME (10 SECONDS)
+
+#define STAMINA_REGEN_NONE 0
+#define STAMINA_REGEN_ORDINARY 1
+#define STAMINA_REGEN_FULL 2
+
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
