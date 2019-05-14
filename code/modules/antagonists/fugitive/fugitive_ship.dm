@@ -23,3 +23,6 @@
 	fug.is_captured = TRUE
 	to_chat(target, "<span class='userdanger'>You are thrown into a vast void of bluespace, and as you fall further into oblivion the comparatively small entrance to reality gets smaller and smaller until you cannot see it anymore. You have failed to avoid capture.</span>")
 	target.ghostize(TRUE) //so they cannot suicide, round end stuff.
+
+/obj/machinery/computer/shuttle/pirate/hunter
+	name = "shuttle console"

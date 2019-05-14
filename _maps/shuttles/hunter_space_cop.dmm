@@ -1,4 +1,39 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "Interpolship"
+	},
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 11;
+	height = 16;
+	id = "pirateship_home";
+	name = "Deep Space";
+	width = 17
+	},
+/obj/docking_port/mobile/pirate{
+	callTime = 100;
+	dheight = 0;
+	dir = 4;
+	dwidth = 11;
+	height = 16;
+	id = "pirateship";
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Hunter Ship";
+	port_direction = 2;
+	preferred_direction = 1;
+	width = 17
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ab" = (
+/obj/machinery/computer/shuttle/pirate/hunter{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
 "bY" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
@@ -59,18 +94,12 @@
 "RO" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
-"WY" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
 
 (1,1,1) = {"
 Pq
 ku
 te
-te
+aa
 te
 ku
 Pq
@@ -160,7 +189,7 @@ hB
 Pq
 An
 RA
-WY
+ab
 RO
 An
 Pq
