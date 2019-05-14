@@ -1,4 +1,12 @@
 
+
+// Hide a random object somewhere on the station:
+//		var/turf/targetturf = get_random_station_turf()
+//		var/turf/targetturf = get_safe_random_station_turf()
+
+
+
+
 /datum/objective/bloodsucker
 	martyr_compatible = TRUE
 

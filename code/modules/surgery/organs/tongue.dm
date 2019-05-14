@@ -100,7 +100,7 @@
 
 /obj/item/organ/tongue/abductor/examine(mob/M)
 	. = ..()
-	if(HAS_TRAIT(M, TRAIT_ABDUCTOR_TRAINING) || isobserver(M))
+	if(HAS_TRAIT(M, TRAIT_ABDUCTOR_TRAINING) || HAS_TRAIT(M.mind, TRAIT_ABDUCTOR_TRAINING) || isobserver(M))
 		if(!mothership)
 			to_chat(M, "<span class='notice'>It is not attuned to a specific mothership.</span>")
 		else

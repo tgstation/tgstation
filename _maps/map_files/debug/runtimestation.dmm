@@ -1575,7 +1575,6 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "eD" = (
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "eE" = (
