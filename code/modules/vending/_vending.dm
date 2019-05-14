@@ -621,6 +621,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return TRUE
 	else
 		var/do_you_have_access = FALSE
+		var/req_access_txt_holder = req_access_txt
 		for(var/i in canload_access_list)
 			req_access_txt = i
 			if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
@@ -628,7 +629,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			else
 				do_you_have_access = TRUE
 				break //you passed don't bother looping anymore
-		req_access_txt = "0" //revert to normal
+		req_access_txt = req_access_txt_holder // revert to normal (before the proc ran)
 		if(do_you_have_access)
 			return TRUE
 		else
