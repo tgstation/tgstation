@@ -316,7 +316,7 @@
 	if(stam_regen_start_time <= world.time)
 		if(stam_full_regen)
 			stam_regen_type = STAMINA_REGEN_FULL
-			user.SetParalyzed(0)
+			SetParalyzed(0)
 			stam_full_regen = FALSE
 		else
 			stam_regen_type = STAMINA_REGEN_ORDINARY
