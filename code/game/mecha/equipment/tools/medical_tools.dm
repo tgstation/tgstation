@@ -116,7 +116,7 @@
 		return
 	if(href_list["inject"])
 		var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate() in chassis
-		var/datum/reagent/R = href_list["inject"]
+		var/datum/reagent/R = locate(href_list["inject"]) in SG.reagents.reagent_list
 		if (istype(R))
 			inject_reagent(R, SG)
 	return

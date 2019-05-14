@@ -341,7 +341,7 @@
 					break
 		return update_queue_on_page()
 	if(href_list["remove_from_queue"])
-		remove_from_queue(href_list["remove_from_queue"])
+		remove_from_queue(text2num(href_list["remove_from_queue"]))
 		return update_queue_on_page()
 	if(href_list["partset_to_queue"])
 		add_part_set_to_queue(href_list["partset_to_queue"])
@@ -358,8 +358,8 @@
 	if(href_list["screen"])
 		screen = href_list["screen"]
 	if(href_list["queue_move"] && href_list["index"])
-		var/index = href_list["index"]
-		var/new_index = index + href_list["queue_move"]
+		var/index = text2num(href_list["index"])
+		var/new_index = index + text2num(href_list["queue_move"])
 		if(isnum(index) && isnum(new_index) && ISINTEGER(index) && ISINTEGER(new_index))
 			if(ISINRANGE(new_index,1,queue.len))
 				queue.Swap(index,new_index)

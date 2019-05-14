@@ -31,7 +31,9 @@
 	if(..())
 		return
 	if(href_list["send_message"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = href_list["send_message"]
+		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["send_message"])
+		if (!istype(MT))
+			return
 		var/message = stripped_input(usr,"Input message","Transmit message")
 		var/obj/mecha/M = MT.in_mecha()
 		if(trim(message) && M)
