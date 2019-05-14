@@ -80,6 +80,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 	var/list/vending_machine_input = list()
 	var/input_display_header = "Custom Compartment"
+	var/inputs_give_cash_now = TRUE //if we find out it's crazy lucrative we can just change it on individuals
 
 	var/obj/item/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
@@ -305,14 +306,18 @@ GLOBAL_LIST_EMPTY(vending_products)
 		..()
 
 /obj/machinery/vending/proc/loadingAttempt(obj/item/I,mob/user)
-  . = TRUE
-  if(!user.transferItemToLoc(I, src))
-    return FALSE
-  if(vending_machine_input[I.name])
-    vending_machine_input[I.name]++
-  else
-    vending_machine_input[I.name] = 1
-  to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
+	. = TRUE
+	if(!user.transferItemToLoc(I, src))
+		return FALSE
+	if(vending_machine_input[I.name])
+		vending_machine_input[I.name]++
+	else
+		vending_machine_input[I.name] = 1
+		to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
+	if(ishuman(user) && inputs_give_cash_now)
+		var/mob/living/carbon/human/the_vending_janitor = user
+		the_vending_janitor.get_idcard(TRUE)?.registered_account?.adjust_money(round(default_price*0.4,1)) //not the most lucrative but hey to each their own.
+
 
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
