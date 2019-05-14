@@ -18,6 +18,8 @@
 		if(dumped || QDELETED(src)) //Prevents fuckers from cheesing alert
 			return FALSE
 		var/turf/targetturf = get_safe_random_station_turf()
+		if (!targetturf)
+			return FALSE
 		new /obj/effect/dumpeetTarget(targetturf, user)
 		dumped = TRUE
 
