@@ -6,6 +6,9 @@
 	extra_price = 75
 	payment_department = NO_FREEBIES
 
+/obj/machinery/vending/wardrobe/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
+
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
 	desc = "A vending machine for security and security-related clothing!"
@@ -320,7 +323,7 @@
 					/obj/item/toy/plush/narplush = 1,
 					/obj/item/clothing/head/medievaljewhat = 3,
 					/obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
-					/obj/item/clothing/head/clownmitre = 1)		
+					/obj/item/clothing/head/clownmitre = 1)
 	premium = list(/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
 					/obj/item/clothing/head/bishopmitre = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
