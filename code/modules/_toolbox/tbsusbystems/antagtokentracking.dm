@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(antagtokens)
 	var/list/minutes_tracked
 	var/list/token_role_min_players = list("changeling" = 15)
 
-/datum/controller/subsystem/Initialize(start_timeofday)
+/datum/controller/subsystem/antagtokens/Initialize(start_timeofday)
 	var/datum/game_mode/traitor/T = new()
 	GLOB.memorized_restricted_jobs = T.protected_jobs
 	qdel(T)
@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(antagtokens)
 	. = ..()
 
 //created because we had to change hosts for a while. This allows us to merge a different antag token file in with the current one.
-/datum/controller/subsystem/proc/merge_antag_tokens()
+/datum/controller/subsystem/antagtokens/proc/merge_antag_tokens()
 	if(fexists("data/other_saves/mergable_antagtokens.sav"))
 		var/savefile/S = new /savefile(GLOB.antagtokenpath)
 		var/savefile/S2 = new /savefile("data/other_saves/mergable_antagtokens.sav")
@@ -59,13 +59,13 @@ SUBSYSTEM_DEF(antagtokens)
 						S["[v]"] << existingtokens
 		fdel("data/other_saves/mergable_antagtokens.sav")
 
-/datum/controller/subsystem/proc/wipe_cached_tokens(savefile/S)
+/datum/controller/subsystem/antagtokens/proc/wipe_cached_tokens(savefile/S)
 	if(!S)
 		S = new /savefile(ANTAGTOKENMINUTESPATH)
 	if(S)
 		S["activated_tokens"] << list()
 
-/datum/controller/subsystem/proc/cache_a_token(ckey)
+/datum/controller/subsystem/antagtokens/proc/cache_a_token(ckey)
 	if(!ckey || !istext(ckey))
 		return
 	var/savefile/S = new /savefile(ANTAGTOKENMINUTESPATH)

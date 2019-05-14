@@ -37,11 +37,65 @@
 	health = maxHealth
 	. = ..()
 
-/mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
+//Making megafauna do an admin message when teleported off z-level. -falaskian
+/mob/living/simple_animal/hostile/megafauna
+	var/list/past_targets = list()
+	var/last_target = null
+	var/turf/last_turf = null
+
+/mob/living/simple_animal/hostile/megafauna/Life()
+	alert_location_to_admin()
 	. = ..()
-	if(maxHealth >= initial(maxHealth))
-		ranged = initial(ranged)
-		projectiletype = initial(projectiletype)
-	else
-		ranged = 0
-		projectiletype = null
+
+/mob/living/simple_animal/hostile/megafauna/compute_target()
+	if(!ismob(target))
+		return
+	var/mob/M = target
+	if(!M.ckey)
+		return
+	past_targets[M.ckey] = world.time
+	last_target = M.ckey
+
+/mob/living/simple_animal/hostile/megafauna/proc/alert_location_to_admin()
+	var/turf/T = get_turf(src)
+	if(isturf(T) && (!isturf(last_turf) || last_turf.z != T.z))
+		var/last_turf_text = "null space"
+		if(isturf(last_turf))
+			last_turf_text = "[ADMIN_COORDJMP(last_turf)]"
+		var/the_message = "A megafauna \"[name]\" has been moved accross z-levels from [last_turf_text] to [ADMIN_COORDJMP(T)]."
+		var/kiters = ""
+		var/last_target_text = ""
+		if(past_targets.len)
+			var/listlen = past_targets.len
+			for(var/t in past_targets)
+				if(!t || !istext(t))
+					past_targets.Remove(t)
+			var/listnumber = 0
+			for(var/t in past_targets)
+				listnumber++
+				var/mob/the_mob
+				var/is_last_target = 0
+				for(var/mob/M in GLOB.player_list)
+					if(M.ckey == t)
+						the_mob = M
+						if(last_target && M.ckey == last_target)
+							is_last_target = 1
+						break
+				var/time_ago = world.time-past_targets[t]
+				var/ckey_text = "[t]"
+				if(the_mob)
+					ckey_text = "[the_mob.real_name]([t])"
+				ckey_text = "[ckey_text] - [round(time_ago/10)] seconds ago"
+				if(is_last_target)
+					last_target_text = "Last target was [ckey_text]."
+				kiters += "[ckey_text]"
+				if(listnumber < listlen)
+					kiters += "|"
+			the_message += " The megafauna targeted these players ([kiters])."
+			if(last_target_text)
+				the_message += " [last_target_text]"
+		else
+			the_message += " The megafauna never targeted anyone."
+		message_admins("[the_message]")
+		log_game("[the_message]")
+	last_turf = T

@@ -460,3 +460,9 @@
 
 /obj/machinery/conveyor_switch/attack_robot(mob/user)
 	return attack_hand(user)
+
+/obj/machinery/disposal/bin/attack_ai(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/disposal/bin/attack_robot(mob/user)
+	return attack_hand(user)

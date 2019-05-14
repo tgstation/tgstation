@@ -234,6 +234,7 @@
 	target = new_target
 	LosePatience()
 	if(target != null)
+		compute_target()
 		GainPatience()
 		Aggro()
 		return 1
@@ -516,3 +517,6 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 				. += M
 			else if (M.loc.type in hostile_machines)
 				. += M.loc
+
+/mob/living/simple_animal/hostile/proc/compute_target() //used for megafauna -falaskian
+	return

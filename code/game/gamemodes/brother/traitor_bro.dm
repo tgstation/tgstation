@@ -19,6 +19,7 @@
 	required_players = 5
 	traitors_required = FALSE //Only teams are possible
 	var/force_team_size = 2
+	block_late_join_traitors = 1
 
 /datum/game_mode/traitor/bros/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))

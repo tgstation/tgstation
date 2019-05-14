@@ -44,6 +44,7 @@
 	var/recovery_time = 0
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
+	last_turf = get_turf(src)
 	. = ..()
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 
@@ -135,3 +136,4 @@
 		SSmedals.SetScore(BOSS_SCORE, C, 1)
 		SSmedals.SetScore(score_type, C, 1)
 	return TRUE
+

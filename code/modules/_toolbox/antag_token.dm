@@ -15,7 +15,7 @@ client/verb/check_antag_token()
 	if(istype(choices,/list) && GLOB && SSantagtokens)
 		for(var/t in choices)
 			var/minplayers = SSantagtokens.token_role_min_players[t]
-			if(minplayers && isnum(minplayers) && (minplayers < GLOB.clients))
+			if(minplayers && isnum(minplayers) && (minplayers < GLOB.clients.len))
 				choices -= t
 	if(!choices || !choices.len)
 		alert(src,"Antagonist tokens are unavialable at this time.","Antagonist Tokens","Ok")
@@ -87,7 +87,7 @@ client/verb/check_antag_token()
 	if(isnum(tokens) && tokens >= 1)
 		var/success = 0
 		if(mob.mind)
-			if(mob.mind.special_role)
+			if(is_special_character(mob))
 				to_chat(src, "<B>You are already an antagonist.</B>")
 				return 0
 			if(mob.mind.assigned_role)
@@ -97,7 +97,7 @@ client/verb/check_antag_token()
 					return 0
 			if(antagtype && GLOB && SSantagtokens)
 				var/minplayers = SSantagtokens.token_role_min_players[antagtype]
-				if(minplayers && isnum(minplayers) && (minplayers < GLOB.clients))
+				if(minplayers && isnum(minplayers) && (minplayers < GLOB.clients.len))
 					to_chat(src, "<B>The role of [antagtype] is unavialable at this time.</B>")
 					return
 			switch(antagtype)

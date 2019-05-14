@@ -33,7 +33,7 @@ GLOBAL_PROTECT(security_mode)
 		load_whitelist()
 	LoadBans()
 
-	GLOB.timezoneOffset = (text2num(time2text(0,"hh"))-1) * 36000
+	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(fexists(RESTART_COUNTER_PATH))
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))

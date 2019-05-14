@@ -49,8 +49,9 @@
 	else
 		num_traitors = max(minimum_traitors, min(num_players(), traitors_possible))
 
-	if(max_traitors > 0)
-		num_traitors = min(max_traitors,num_traitors)
+	if(max_traitors >= 0)
+		var/the_num_traitors = num_traitors
+		num_traitors = min(max_traitors,the_num_traitors)
 
 	for(var/j = 0, j < num_traitors, j++)
 		if (!antag_candidates.len)

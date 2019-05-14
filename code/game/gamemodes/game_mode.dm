@@ -518,8 +518,9 @@
 						continue //Ghosted while alive
 
 
-	for (var/C in GLOB.admins)
-		to_chat(C, msg.Join())
+	for (var/client/C in GLOB.admins)
+		if(C.holder)
+			to_chat(C, msg.Join())
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)
