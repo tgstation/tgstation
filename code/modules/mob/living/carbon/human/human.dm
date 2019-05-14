@@ -732,7 +732,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = max(health, maxHealth - getStaminaLoss())
+			var/health_amount = min(health, maxHealth - getStaminaLoss())
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
