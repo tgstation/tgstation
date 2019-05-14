@@ -719,3 +719,58 @@
 	results = list("jack_rose" = 4)
 	required_reagents = list("grenadine" = 1, "applejack" = 2, "limejuice" = 1)
 	mix_message = "As the grenadine incorporates, the beverage takes on a mellow, red-orange glow."
+
+/datum/chemical_reaction/turbo
+	name = "Turbo"
+	id = "turbo"
+	results = list("turbo" = 5)
+	required_reagents = list("moonshine" = 2, "nitrous_oxide" = 1, "sugar_rush" = 1, "pwr_game" = 1)
+
+/datum/chemical_reaction/old_timer
+	name = "Old Timer"
+	id = "old_timer"
+	results = list("old_timer" = 6)
+	required_reagents = list("whiskeysoda" = 3, "parsnipjuice" = 2, "alexander" = 1)
+
+/datum/chemical_reaction/rubberneck
+	name = "Rubberneck"
+	id = "rubberneck"
+	results = list("rubberneck" = 10)
+	required_reagents = list("ethanol" = 4, "grey_bull" = 5, "astrotame" = 1)
+
+/datum/chemical_reaction/duplex
+	name = "Duplex"
+	id = "duplex"
+	results = list("duplex" = 4)
+	required_reagents = list("hcider" = 2, "applejuice" = 1, "berryjuice" = 1)
+
+/datum/chemical_reaction/trappist
+	name = "Trappist"
+	id = "trappist"
+	results = list("trappist" = 5)
+	required_reagents = list("ale" = 2, "holywater" = 2, "sugar" = 1)
+
+/datum/chemical_reaction/cream_soda
+	name = "Cream Soda"
+	id = "cream_soda"
+	results = list("cream_soda" = 4)
+	required_reagents = list("sugar" = 2, "sodawater" = 2, "vanilla" = 1)
+
+/datum/chemical_reaction/blazaam
+	name = "Blazaam"
+	id = "blazaam"
+	results = list("blazaam" = 3)
+	required_reagents = list("gin" = 2, "peachjuice" = 1, "bluespace" = 1)
+
+/datum/chemical_reaction/planet_cracker
+	name = "Planet Cracker"
+	id = "planet_cracker"
+	results = list("planet_cracker" = 4)
+	required_reagents = list("champagne" = 2, "lizardwine" = 2, "eggyolk" = 1, "gold" = 1)
+	mix_message = "The liquid's color starts shifting as the nanogold is alternately corroded and redeposited."
+
+/datum/chemical_reaction/red_queen
+	name = "Red Queen"
+	id = "red_queen"
+	results = list("red_queen" = 10)
+	required_reagents = list("tea" = 6, "mercury" = 2, "blackpepper" = 1, "growthserum" = 1)

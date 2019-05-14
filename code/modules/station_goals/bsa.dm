@@ -182,7 +182,8 @@
 		T.ex_act(EXPLODE_DEVASTATE)
 	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
 
-	message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
+	log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)].")
 	explosion(bullseye,ex_power,ex_power*2,ex_power*4)
 
 	reload()

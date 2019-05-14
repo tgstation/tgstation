@@ -11,17 +11,6 @@
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF
 	move_on_shuttle = FALSE
-	var/call_life = FALSE //TRUE if Life() should be called on this camera every tick of the mobs subystem, as if it were a living mob
-
-/mob/camera/Initialize()
-	. = ..()
-	if(call_life)
-		GLOB.living_cameras += src
-
-/mob/camera/Destroy()
-	. = ..()
-	if(call_life)
-		GLOB.living_cameras -= src
 
 /mob/camera/experience_pressure_difference()
 	return

@@ -6513,9 +6513,6 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "oV" = (
-/obj/machinery/vr_sleeper{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -13003,9 +13000,6 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/evac)
 "CT" = (
-/obj/machinery/vr_sleeper{
-	dir = 4
-	},
 /turf/open/floor/wood,
 /area/centcom/holding)
 "CV" = (
@@ -13201,9 +13195,6 @@
 /turf/closed/indestructible/riveted,
 /area/ai_multicam_room)
 "Dj" = (
-/obj/machinery/vr_sleeper{
-	dir = 8
-	},
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Dq" = (
@@ -17545,7 +17536,6 @@
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/four)
 "Px" = (
-/obj/machinery/vr_sleeper,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Pz" = (
@@ -17560,9 +17550,6 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "PF" = (
-/obj/machinery/vr_sleeper{
-	dir = 1
-	},
 /turf/open/floor/wood,
 /area/centcom/holding)
 "PI" = (
@@ -17670,9 +17657,6 @@
 /turf/open/indestructible/binary,
 /area/fabric_of_reality)
 "Qu" = (
-/obj/machinery/vr_sleeper{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -18566,9 +18550,6 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Zt" = (
-/obj/machinery/vr_sleeper{
-	dir = 1
-	},
 /obj/machinery/light,
 /turf/open/floor/wood,
 /area/centcom/holding)

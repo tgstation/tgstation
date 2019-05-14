@@ -53181,7 +53181,6 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "dbi" = (
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "dci" = (
@@ -54291,7 +54290,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "fIN" = (
