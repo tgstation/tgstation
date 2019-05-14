@@ -222,7 +222,7 @@
 /obj/item/bodypart/proc/get_damage(include_stamina = FALSE)
 	var/total = brute_dam + burn_dam
 	if(include_stamina)
-		total += stamina_dam
+		total = max(total, stamina_dam)
 	return total
 
 //Checks disabled status thresholds
