@@ -49,7 +49,7 @@
 	charge_max = 50
 	range = 7
 	target_external = 1
-	var/ignore_mindshield = FALSE
+	var/bruteforce = FALSE
 
 /obj/effect/proc_holder/spell/target_hive/hive_add/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/target = targets[1]
@@ -59,27 +59,33 @@
 		to_chat(user, "<span class='notice'>We detect no neural activity in this body.</span>")
 	var/shielded = HAS_TRAIT(target, TRAIT_MINDSHIELD)
 	var/foiled = HAS_TRAIT(target, TRAIT_TINFOILSHIELD)
-	if(shielded && !ignore_mindshield)
+	if(shielded && !bruteforce)
 		to_chat(user, "<span class='warning'>Powerful technology protects [target.name]'s mind.</span>")
 		revert_cast()
 		return
-	if((shielded || foiled) && ignore_mindshield)
+	if((shielded || foiled) && bruteforce)
 		to_chat(user, "<span class='notice'>We bruteforce our way past the mental barriers of [target.name] and begin linking our minds!</span>")
 	else
 		to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
-	var/multiplier = (!foiled || ignore_mindshield) ? 5 : 9
+	var/multiplier = (!foiled || bruteforce) ? 5 : 10
 	if(!do_after(user,multiplier*(1.5**get_dist(user, target)),0,user) || !(target in view(range)))
 		to_chat(user, "<span class='notice'>We fail to connect to [target.name].</span>")
 		revert_cast()
 		return
-	if((HAS_TRAIT(target, TRAIT_MINDSHIELD) && !ignore_mindshield))
+	if((HAS_TRAIT(target, TRAIT_MINDSHIELD) && !bruteforce))
 		to_chat(user, "<span class='notice'>We fail to connect to [target.name].</span>")
 		revert_cast()
 		return
 	to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
 	hive.add_to_hive(target)
 	hive.threat_level = max(0, hive.threat_level-0.1)
-	if(ignore_mindshield)
+	if(bruteforce)
+		if(HAS_TRAIT(target, TRAIT_TINFOILSHIELD))
+			target.electrocute_act(10, user, safety = TRUE)
+			target.adjustBrainLoss(10)
+			var/obj/item/clothing/head/foilhat/hat = target.get_item_by_slot(SLOT_HEAD)
+			if(istype(hat))
+				hat.warp_up(target)
 		to_chat(user, "<span class='warning'>We are briefly exhausted by the effort required by our enhanced assimilation abilities.</span>")
 		user.Immobilize(50)
 		SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
@@ -832,7 +838,7 @@
 
 /obj/effect/proc_holder/spell/self/hive_loyal
 	name = "Bruteforce"
-	desc = "Our ability to assimilate is boosted at the cost of, allowing us to crush the technology shielding the minds of Security and Command personnel and assimilate them. This power comes at a small price, and we will be immobilized for a few seconds after assimilation."
+	desc = "Our ability to assimilate is boosted at the cost of, allowing us to crush the technology shielding the minds of savyy personnel and assimilate them. This power comes at a small price, and we will be immobilized for a few seconds after assimilation."
 	panel = "Hivemind Abilities"
 	charge_max = 600
 	invocation_type = "none"
@@ -852,7 +858,7 @@
 	if(!the_spell)
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE5</span>")
 		return
-	the_spell.ignore_mindshield = !active
+	the_spell.bruteforce = !active
 	to_chat(user, "<span class='notice'>We [active?"let our minds rest and cancel our crushing power.":"prepare to crush mindshielding technology!"]</span>")
 	active = !active
 	if(active)
@@ -905,47 +911,6 @@
 	pixel_x = 0
 	pixel_y = 0
 	invisibility = INVISIBILITY_MAXIMUM
-
-/obj/effect/proc_holder/spell/target_hive/microwave_shock
-	name = "Microwave Shock"
-	desc = "We work around the properties of tinfoil protection to deliver a powerful shock to a nearby target and possibly warping up their shielding, This ability has short delay under which we'll be required to stay within 14 tiles from our target for it to work."
-	selection_type = "view"
-	action_icon_state = "microwave"
-	charge_max = 400
-	range = 7
-	target_external = TRUE
-	var/datum/looping_sound/microwave/soundloop
-
-/obj/effect/proc_holder/spell/target_hive/microwave_shock/Initialize(mapload)
-	. = ..()
-	soundloop = new (null, FALSE, TRUE)
-
-/obj/effect/proc_holder/spell/target_hive/microwave_shock/can_target(mob/living/target)
-	return HAS_TRAIT(target, TRAIT_TINFOILSHIELD)
-
-/obj/effect/proc_holder/spell/target_hive/microwave_shock/cast(list/targets, mob/living/user = usr)
-	var/mob/living/carbon/target = targets[1]
-	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
-	if(!hive)
-		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
-		return
-	to_chat(user, "<span class='notice'>We start surging of power toward the tinfoil shielding of [target.name].</span>")
-	to_chat(target, "<span class='danger'>An ominous microwave buzzing begins haunting your mind!</span>")
-	soundloop.output_atoms = list(src, target)
-	soundloop.start()
-	addtimer(CALLBACK(src, .proc/what_a_shock, user, target), 7 SECONDS)
-
-/obj/effect/proc_holder/spell/target_hive/microwave_shock/proc/what_a_shock(mob/living/user, mob/living/target)
-	soundloop.stop()
-	soundloop.output_atoms = null
-	if(QDELETED(user) || QDELETED(target) || !HAS_TRAIT(target, TRAIT_TINFOILSHIELD) || !(target in urange(range * 2)))
-		return
-	var/distance = get_dist(user, target)
-	target.electrocute_act(40 - (distance * 2), user, safety = TRUE)
-	target.adjustBrainLoss(20 - distance)
-	var/obj/item/clothing/head/foilhat/hat = target.get_item_by_slot(SLOT_HEAD)
-	if(prob(60 - (distance * 3)) && istype(hat))
-		hat.warp_up(target)
 
 /obj/effect/proc_holder/spell/self/one_mind
 	name = "One Mind"
