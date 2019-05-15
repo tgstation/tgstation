@@ -9,6 +9,47 @@
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
+	var/obj/item/assembly_holder/assembly = null
+	
+/obj/item/organ/heart/attackby(obj/item/I, mob/user, params)
+	if(!assembly && istype(I, /obj/item/assembly_holder))
+		. = 1
+		var/obj/item/assembly_holder/A = I
+		if(isigniter(A.a_left) == isigniter(A.a_right))
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		assembly = A
+		A.master = src
+	return ..()
+	
+/obj/item/organ/heart/screwdriver_act(mob/user, obj/item/tool)
+	if(..())
+		return TRUE
+	if(assembly)
+		to_chat(user, "<span class='notice'>You remove [assembly]!</span>")
+		assembly.forceMove(drop_location())
+		assembly.master = null
+		assembly = null
+	
+/obj/item/organ/heart/IsAssemblyHolder()
+	return TRUE
+	
+/obj/item/organ/heart/receive_signal()
+	if(beating)
+		Stop()
+	else
+		Restart()
+		addtimer(CALLBACK(src, .proc/stop_if_unowned), 80) //The heart is a vunerable muscle.
+
+/obj/item/organ/heart/Crossed(atom/movable/AM)
+	if(assembly)
+		assembly.Crossed(AM)
+
+/obj/item/organ/heart/on_found(mob/finder)
+	if(assembly)
+		assembly.on_found(finder)
+
 
 /obj/item/organ/heart/update_icon()
 	if(beating)
@@ -27,6 +68,9 @@
 
 /obj/item/organ/heart/attack_self(mob/user)
 	..()
+	if(assembly)
+		assembly.attack_self(user)
+		return
 	if(!beating)
 		user.visible_message("<span class='notice'>[user] squeezes [src] to \
 			make it beat again!</span>","<span class='notice'>You squeeze [src] to make it beat again!</span>")
@@ -42,6 +86,11 @@
 	beating = 1
 	update_icon()
 	return 1
+	
+/obj/item/organ/heart/examine(mob/user)
+	..()
+	if(assembly)
+		to_chat(user, "<span class='notice'>An assembly is <b>screwed</b> on.</span>")
 
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()
@@ -110,6 +159,7 @@
 
 /obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0)
 	..()
+	last_pump = world.time //hugbox
 	if(owner)
 		to_chat(owner, "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
 
