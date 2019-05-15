@@ -64,7 +64,7 @@
 		revert_cast()
 		return
 	if((shielded || foiled) && bruteforce)
-		to_chat(user, "<span class='notice'>We bruteforce our way past the mental barriers of [target.name] and begin linking our minds!</span>")
+		to_chat(user, "<span class='notice'>We [bruteforce ? "bruteforce" : "force"] our way past the mental barriers of [target.name] and begin linking our minds!</span>")
 	else
 		to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
 	var/multiplier = (!foiled || bruteforce) ? 5 : 10
