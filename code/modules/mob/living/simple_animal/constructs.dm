@@ -174,6 +174,12 @@
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
 	return ..()
+	
+//////////////////////////Angelic-Juggernaut////////////////////////////
+/mob/living/simple_animal/hostile/construct/armored/angelic
+	icon_state = "behemoth_angelic"
+	icon_living = "behemoth_angelic"
+	
 
 ////////////////////////Wraith/////////////////////////////////////////////
 /mob/living/simple_animal/hostile/construct/wraith
@@ -220,7 +226,10 @@
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
 
-
+//////////////////////////Angelic-Wraith////////////////////////////
+/mob/living/simple_animal/hostile/construct/wraith/angelic
+	icon_state = "floating_angelic"
+	icon_living = "floating_angelic"
 
 /////////////////////////////Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder
@@ -297,8 +306,10 @@
 	AIStatus = AI_ON
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
 
-/////////////////////////////Non-cult Artificer/////////////////////////
-/mob/living/simple_animal/hostile/construct/builder/noncult
+/////////////////////////////Angelic Artificer/////////////////////////
+/mob/living/simple_animal/hostile/construct/builder/angelic
+	icon_state = "artificer_angelic"
+	icon_living = "artificer_angelic"
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
