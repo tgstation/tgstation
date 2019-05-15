@@ -14,7 +14,7 @@
 	//Display max infection points for infectiowns that lost
 	var/mob/camera/commander/overmind = owner.current
 	if(!overmind.victory_in_progress) //if it won this doesn't really matter
-		var/point_report = "<br><b>[owner.name]</b> left [GLOB.infection_beacons.len] beacons in its destructive path."
+		var/point_report = "<br><b>[overmind.name]</b> left [GLOB.infection_beacons.len] beacons in its destructive path."
 		return basic_report+point_report
 	return basic_report
 

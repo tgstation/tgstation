@@ -12,9 +12,6 @@
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/infection/resource/scannerreport()
-	return "Gradually supplies the infection with resources, increasing the rate of expansion."
-
 /obj/structure/infection/resource/creation_action()
 	if(overmind)
 		overmind.resource_infection += src

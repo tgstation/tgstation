@@ -39,24 +39,27 @@
 	var/mob/camera/commander/C = GLOB.infection_commander
 	var/turf/start = get_turf(GLOB.infection_core)
 	// one lucky nerd
-	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/boss_spore = locate(/mob/living/simple_animal/hostile/infection/infectionspore/sentient) in C.infection_mobs
-	boss_spore.forceMove(GLOB.infection_core)
-	var/mob/living/simple_animal/boss = new boss_type(start)
-	boss.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
-	boss.AddComponent(/datum/component/spore_controlled, boss_spore)
-	boss.loot = boss_drop_list
-	boss.faction += ROLE_INFECTION
-	boss.pass_flags |= PASSBLOB
+	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/boss_spore
+	if(boss_type)
+		boss_spore = locate(/mob/living/simple_animal/hostile/infection/infectionspore/sentient) in C.infection_mobs
+		boss_spore.forceMove(GLOB.infection_core)
+		var/mob/living/simple_animal/boss = new boss_type(start)
+		boss.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
+		boss.AddComponent(/datum/component/spore_controlled, boss_spore)
+		boss.loot = boss_drop_list
+		boss.faction += ROLE_INFECTION
+		boss.pass_flags |= PASSBLOB
 	// everyone else gets minions
-	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in (C.infection_mobs - boss_spore))
-		spore.forceMove(GLOB.infection_core)
-		var/minion_type = pick(minion_types)
-		var/mob/living/simple_animal/minion = new minion_type(start)
-		minion.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
-		minion.AddComponent(/datum/component/spore_controlled, spore)
-		minion.loot = minion_drop_list
-		minion.faction += ROLE_INFECTION
-		minion.pass_flags |= PASSBLOB
+	if(minion_types.len)
+		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in (C.infection_mobs - boss_spore))
+			spore.forceMove(GLOB.infection_core)
+			var/minion_type = pick(minion_types)
+			var/mob/living/simple_animal/minion = new minion_type(start)
+			minion.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
+			minion.AddComponent(/datum/component/spore_controlled, spore)
+			minion.loot = minion_drop_list
+			minion.faction += ROLE_INFECTION
+			minion.pass_flags |= PASSBLOB
 	if(warning_message && warning_jingle)
 		priority_announce("[warning_message]","Biohazard Containment Commander", warning_jingle)
 
@@ -69,11 +72,12 @@
 	parentmob = parent
 	realmob = real
 	// transfer spore mind to temp body
-	realmob.mind.transfer_to(parentmob, TRUE)
+	parentmob.key = realmob.key
 
 /datum/component/spore_controlled/proc/return_to_spore()
-	parentmob.mind.transfer_to(realmob, TRUE)
+	realmob.key = parentmob.key
 	realmob.death()
+	qdel(src)
 
 /*
 //

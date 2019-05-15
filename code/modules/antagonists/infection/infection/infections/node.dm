@@ -17,9 +17,6 @@
 	. = ..()
 	base_pulse_cd = pulse_cooldown
 
-/obj/structure/infection/node/scannerreport()
-	return "Gradually expands and sustains nearby infectious structures."
-
 /obj/structure/infection/node/Pulse_Area(mob/camera/commander/pulsing_overmind)
 	..(claim_range = expansion_range, count = expansion_amount)
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)

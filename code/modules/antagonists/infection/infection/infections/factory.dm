@@ -15,9 +15,6 @@
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/infection/factory/scannerreport()
-	return "Will produce an infection spore every few seconds."
-
 /obj/structure/infection/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/spore in spores)
 		if(spore.factory == src)

@@ -8,6 +8,7 @@
 	recommended_enemies = 5
 	antag_flag = ROLE_INFECTION
 	enemy_minimum_age = 14 // these should be somewhat experienced players for an all out war mode
+	round_ends_with_antag_death = TRUE
 
 	announce_span = "danger"
 	announce_text = "An infectious core is approaching on a meteor in an attempt to consume the station!\n\
@@ -53,10 +54,13 @@
 	return ..()
 
 /datum/game_mode/infection/check_finished()
+	var/mob/camera/commander/C = GLOB.infection_commander
 	// end if beacons are gone (infection win) or core is destroyed (station win)
-	if(GLOB.infection_beacons.len && GLOB.infection_commander)
+	if(GLOB.infection_beacons.len && C)
 		return FALSE
-	return ..()
+	if(C && !C.placed)
+		return FALSE
+	return TRUE
 
 /datum/game_mode/infection/generate_report()
 	return "An extremely dangerous infectious core was recently shot out into space at incredible speed after some form of planetary explosion. \

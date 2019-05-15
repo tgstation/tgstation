@@ -38,6 +38,11 @@ GLOBAL_VAR(infection_commander)
 	var/place_beacons_delay = 100
 	var/victory_in_progress = FALSE
 	var/infection_color = "#ff5800"
+	var/list/default_actions = list(/datum/action/innate/infection/creator/shield,
+									/datum/action/innate/infection/creator/resource,
+									/datum/action/innate/infection/creator/node,
+									/datum/action/innate/infection/creator/factory)
+	var/list/unlockable_actions = list(/datum/action/innate/infection/creator/turret)
 
 /mob/camera/commander/Initialize(mapload, starting_points = max_infection_points)
 	if(GLOB.infection_commander)
@@ -51,6 +56,9 @@ GLOBAL_VAR(infection_commander)
 	SSshuttle.registerHostileEnvironment(src)
 	addtimer(CALLBACK(src, .proc/generate_announcement), place_beacons_delay / 2)
 	addtimer(CALLBACK(src, .proc/place_beacons), place_beacons_delay)
+	for(var/type_action in default_actions)
+		var/datum/action/innate/infection/add_action = new type_action()
+		add_action.Grant(src)
 	.= ..()
 
 /mob/camera/commander/proc/generate_announcement()

@@ -44,9 +44,6 @@
 /obj/structure/infection/core/show_infection_menu(var/mob/camera/commander/C)
 	return
 
-/obj/structure/infection/core/scannerreport()
-	return "Directs the infection's expansion, gradually expands, and sustains nearby infection spores and infesternauts."
-
 /obj/structure/infection/core/update_icon()
 	cut_overlays()
 	color = null
@@ -151,7 +148,7 @@
 	for(var/turf/T in turrets)
 		var/obj/structure/infection/normal/I = locate(/obj/structure/infection/normal) in T.contents
 		if(I && prob(15))
-			var/obj/structure/infection/turret/resistant/core/S = I.change_to(/obj/structure/infection/turret/resistant/core, overmind)
+			var/obj/structure/infection/turret/core/S = I.change_to(/obj/structure/infection/turret/core, overmind)
 			for(var/datum/component/infection/upgrade/U in S.get_upgrades())
 				var/times = U.times
 				for(var/i = 1 to times)

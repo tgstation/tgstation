@@ -25,10 +25,9 @@
 	if(T)
 		rally_spores(T)
 
-/mob/camera/commander/CtrlClickOn(atom/A) //Create a shield
-	var/turf/T = get_turf(A)
-	if(T)
-		create_shield(T)
+/mob/camera/commander/CtrlClickOn(atom/A)
+	// new stuff
+	return 1
 
 /mob/camera/commander/AltClickOn(atom/A) //Remove an infection
 	var/turf/T = get_turf(A)

@@ -237,22 +237,15 @@
 	return found_node
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/evolve_menu()
-	var/list/choices = list(
-		"Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
-		"Upgrades Overview" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help_radial")
-	)
 	var/found_node = find_anchor()
 	if(!found_node)
 		to_chat(src, "<span class='warning'>We may only upgrade while next to a node, or while next to the core!</span>")
 		return
-	var/choice = show_radial_menu(src, found_node, choices, tooltips = TRUE, require_near = TRUE)
-	if(choice == choices[1])
-		upgrade_menu()
-	if(choice == choices[2])
-		to_chat(src, show_description())
+	to_chat(src, show_description())
+	upgrade_menu(found_node)
 	return
 
-/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/upgrade_menu()
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/upgrade_menu(var/found_node)
 	var/list/choices = list()
 	var/list/upgrades_temp = list()
 	for(var/datum/component/infection/upgrade/U in get_upgrades())
@@ -263,10 +256,6 @@
 		upgrades_temp += U
 	if(!choices.len)
 		to_chat(src, "<span class='warning'>You have already bought every evolution for yourself!</span>")
-		return
-	var/found_node = find_anchor()
-	if(!found_node)
-		to_chat(src, "<span class='warning'>We may only upgrade while next to a node, or while next to the core!</span>")
 		return
 	var/choice = show_radial_menu(src, found_node, choices, tooltips = TRUE, require_near = TRUE)
 	var/upgrade_index = choices.Find(choice)
@@ -343,7 +332,7 @@
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/transfer_to_type(var/new_type)
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/new_spore = new new_type(loc, null, overmind)
-	mind.transfer_to(new_spore)
+	new_spore.key = key
 	new_spore.upgrade_points = upgrade_points
 	new_spore.times_refunded = times_refunded
 	// check if we were respawning

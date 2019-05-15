@@ -38,36 +38,6 @@
 		var/mob/camera/commander/I = usr
 		I.transport_core()
 
-/obj/screen/infection/ResourceInfection
-	icon_state = "ui_resource"
-	name = "Produce Resource Infection (40)"
-	desc = "Produces a resource infection for 40 resources.<br>Resource infections will give you resources every few seconds."
-
-/obj/screen/infection/ResourceInfection/Click()
-	if(iscommander(usr))
-		var/mob/camera/commander/I = usr
-		I.create_resource()
-
-/obj/screen/infection/NodeInfection
-	icon_state = "ui_node"
-	name = "Produce Node Infection (50)"
-	desc = "Produces a node infection for 50 resources.<br>Node infections will expand and activate nearby resource and factory infections."
-
-/obj/screen/infection/NodeInfection/Click()
-	if(iscommander(usr))
-		var/mob/camera/commander/I = usr
-		I.create_node()
-
-/obj/screen/infection/FactoryInfection
-	icon_state = "ui_factory"
-	name = "Produce Factory Infection (60)"
-	desc = "Produces a factory infection for 60 resources.<br>Factory infections will produce spores every few seconds."
-
-/obj/screen/infection/FactoryInfection/Click()
-	if(iscommander(usr))
-		var/mob/camera/commander/I = usr
-		I.create_factory()
-
 /obj/screen/infection/Evolve
 	icon_state = "ui_swap"
 	name = "Evolution"
@@ -77,17 +47,6 @@
 	if(iscommander(usr))
 		var/mob/camera/commander/I = usr
 		I.evolve_menu()
-
-/obj/screen/infection/TurretInfection
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "ui_turret"
-	name = "Produce Turret Infection (70)"
-	desc = "Produces a turret infection for 70 resources.<br>Turret Infections will automatically fire at nearby intruders."
-
-/obj/screen/infection/TurretInfection/Click()
-	if(iscommander(usr))
-		var/mob/camera/commander/I = usr
-		I.create_turret()
 
 /datum/hud/infection_commander/New(mob/owner)
 	..()
@@ -105,10 +64,6 @@
 	healths = new /obj/screen/healths/blob()
 	infodisplay += healths
 
-	using = new /obj/screen/infection/InfectionHelp()
-	using.screen_loc = "WEST:6,NORTH:-3"
-	static_inventory += using
-
 	using = new /obj/screen/infection/JumpToNode()
 	using.screen_loc = ui_inventory
 	static_inventory += using
@@ -119,21 +74,9 @@
 	static_inventory += using
 
 	using = new /obj/screen/infection/Evolve()
-	using.screen_loc = ui_belt
-	static_inventory += using
-
-	using = new /obj/screen/infection/ResourceInfection()
-	using.screen_loc = ui_back
-	static_inventory += using
-
-	using = new /obj/screen/infection/NodeInfection()
-	using.screen_loc = ui_hand_position(2)
-	static_inventory += using
-
-	using = new /obj/screen/infection/FactoryInfection()
 	using.screen_loc = ui_hand_position(1)
 	static_inventory += using
 
-	using = new /obj/screen/infection/TurretInfection()
-	using.screen_loc = ui_storage1
+	using = new /obj/screen/infection/InfectionHelp()
+	using.screen_loc = ui_hand_position(2)
 	static_inventory += using

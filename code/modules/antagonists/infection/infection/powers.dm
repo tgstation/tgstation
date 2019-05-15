@@ -108,6 +108,8 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	if(!istype(I, /obj/structure/infection/normal))
 		to_chat(src, "<span class='warning'>Unable to use this infection, find a normal one.</span>")
 		return
+	if(locate(/obj/structure/infection/core) in orange(10, T))
+		to_chat(src, "<span class='warning'>You cannot place structures so close to the core!</span>")
 	if(needsNode && nodes_required)
 		if(!(locate(/obj/structure/infection/node) in orange(3, T)) && !(locate(/obj/structure/infection/core) in orange(4, T)))
 			to_chat(src, "<span class='warning'>You need to place this infection closer to a node or core!</span>")
@@ -132,38 +134,84 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	else
 		to_chat(src, "<span class='warning'>You no longer require a nearby node or core to place factory and resource infections.</span>")
 
-/mob/camera/commander/verb/create_shield_power()
-	set category = "Infection"
-	set name = "Create Shield Infection (15)"
-	set desc = "Create a shield infection, which will block fire and is hard to kill."
-	create_shield()
+/datum/action/innate/infection
+	name = "Infection Power"
+	desc = "New Infection Power"
+	var/cost = 0 // cost to actually use
+	var/upgrade_cost = 0 // cost to buy from the evolution shop
+	icon_icon = 'icons/mob/blob.dmi'
+	button_icon_state = "blank_blob"
 
-/mob/camera/commander/proc/create_shield(turf/T)
-	createSpecial(15, /obj/structure/infection/shield, 0, 0, T)
+/datum/action/innate/infection/New()
+	name = name + " ([cost])"
+	. = ..()
 
-/mob/camera/commander/verb/create_resource()
-	set category = "Infection"
-	set name = "Create Resource Infection (40)"
-	set desc = "Create a resource tower which will generate resources for you."
-	createSpecial(40, /obj/structure/infection/resource, 4, 1)
+/datum/action/innate/infection/Activate()
+	if(!iscommander(owner))
+		return 0
+	var/mob/camera/commander/I = owner
+	var/turf/T = get_turf(I)
+	if(T)
+		fire(I, T)
+		return 1
+	return 0
 
-/mob/camera/commander/verb/create_node()
-	set category = "Infection"
-	set name = "Create Node Infection (50)"
-	set desc = "Create a node, which will power nearby factory and resource infections."
-	createSpecial(50, /obj/structure/infection/node, 5, 0)
+/datum/action/innate/infection/proc/fire(mob/camera/commander/I, turf/T)
+	return 1
 
-/mob/camera/commander/verb/create_factory()
-	set category = "Infection"
-	set name = "Create Factory Infection (60)"
-	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(60, /obj/structure/infection/factory, 7, 1)
+/datum/action/innate/infection/creator
+	name = "Create"
+	desc = "New Creation Power"
+	var/type_to_create
+	var/distance_from_similar = 0
+	var/needs_node = 0
 
-/mob/camera/commander/verb/create_turret()
-	set category = "Infection"
-	set name = "Create Turret Infection (70)"
-	set desc = "Create a turret that will fire at enemies."
-	createSpecial(70, /obj/structure/infection/turret, 8, 1)
+/datum/action/innate/infection/creator/fire(mob/camera/commander/I, turf/T)
+	I.createSpecial(cost, type_to_create, distance_from_similar, needs_node, T)
+	return 1
+
+/datum/action/innate/infection/creator/shield
+	name = "Create Shield Infection"
+	desc = "Create a shield infection, which is harder to kill. Using this on an existing shield blob turns it into a reflective shield, capable of reflecting most projectiles."
+	cost = 15
+	button_icon_state = "blob_shield"
+	type_to_create = /obj/structure/infection/shield
+
+/datum/action/innate/infection/creator/resource
+	name = "Create Resource Infection"
+	desc = "Create a resource tower which will generate resources for you."
+	cost = 40
+	button_icon_state = "blob_resource"
+	type_to_create = /obj/structure/infection/resource
+	distance_from_similar = 4
+	needs_node = 1
+
+/datum/action/innate/infection/creator/node
+	name = "Create Node Infection"
+	desc = "Create a node, which will power nearby factory and resource structures."
+	cost = 50
+	button_icon_state = "blob_node"
+	type_to_create = /obj/structure/infection/node
+	distance_from_similar = 5
+
+/datum/action/innate/infection/creator/factory
+	name = "Create Factory Infection"
+	desc = "Create a spore tower that will spawn spores to harass your enemies."
+	cost = 60
+	button_icon_state = "blob_factory"
+	type_to_create = /obj/structure/infection/factory
+	distance_from_similar = 7
+	needs_node = 1
+
+/datum/action/innate/infection/creator/turret
+	name = "Create Turret Infection"
+	desc = "Create a turret that will automatically fire at your enemies."
+	cost = 70
+	button_icon_state = "infection_turret"
+	type_to_create = /obj/structure/infection/turret
+	distance_from_similar = 8
+	needs_node = 1
+	upgrade_cost = 1
 
 /mob/camera/commander/proc/create_spore()
 	to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
@@ -186,13 +234,36 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		return
 	var/list/choices = list(
 		"Summon Sentient Spore (1)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
-		"Ability Unlocks (0)" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
-		"Effect Unlocks (0)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
+		"Ability Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
+		"Effect Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
 	)
 	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
 	if(choice == choices[1] && can_upgrade(1))
 		INVOKE_ASYNC(src, .proc/create_spore)
 	if(choice == choices[2])
+		var/list/actions_temp = list()
+		choices = list()
+		for(var/type in unlockable_actions)
+			var/datum/action/innate/infection/temp_action = new type()
+			var/no_cost_name = initial(temp_action.name)
+			var/upgrade_index = "[no_cost_name] ([temp_action.upgrade_cost])"
+			choices[upgrade_index] = image(icon = temp_action.icon_icon, icon_state = temp_action.button_icon_state)
+			actions_temp += temp_action
+		if(!actions_temp.len)
+			to_chat(src, "<span class='warning'>You have already unlocked every single ability!</span>")
+		choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+		var/action_index = choices.Find(choice)
+		if(!action_index)
+			return
+		var/datum/action/innate/infection/Chosen = actions_temp[action_index]
+		if(can_upgrade(Chosen.upgrade_cost))
+			Chosen.Grant(src)
+			unlockable_actions -= Chosen.type
+			to_chat(src, "<span class='notice'>Successfully unlocked [initial(Chosen.name)]!</span>")
+		else
+			qdel(Chosen)
+		for(var/temp_action in (actions_temp - Chosen))
+			qdel(temp_action)
 		return
 	if(choice == choices[3])
 		return

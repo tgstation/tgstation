@@ -12,11 +12,6 @@
 	var/damaged_desc = "A wall of twitching tendrils."
 	var/damaged_name = "weakened strong infection"
 
-/obj/structure/infection/shield/scannerreport()
-	if(atmosblock)
-		return "Will prevent the spread of atmospheric changes."
-	return "N/A"
-
 /obj/structure/infection/shield/show_infection_menu(var/mob/camera/commander/C)
 	return
 

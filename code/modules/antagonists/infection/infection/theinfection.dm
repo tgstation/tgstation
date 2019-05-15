@@ -256,24 +256,8 @@
 /obj/structure/infection/hulk_damage()
 	return 15
 
-/obj/structure/infection/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_ANALYZER)
-		user.changeNext_move(CLICK_CD_MELEE)
-		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
-		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
-		if(!overmind)
-			to_chat(user, "<b>Infection core neutralized. Critical mass no longer attainable.</b>")
-		typereport(user)
-	else
-		return ..()
-
-/obj/structure/infection/proc/typereport(mob/user)
-	to_chat(user, "<b>Infection Type:</b> <span class='notice'>[uppertext(initial(name))]</span>")
-	to_chat(user, "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>")
-	to_chat(user, "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
-
 /obj/structure/infection/attack_animal(mob/living/simple_animal/M)
-	if(ROLE_INFECTION in M.faction) //sorry, but you can't kill the infection as a sentient infection
+	if(ROLE_INFECTION in M.faction) //sorry, but you can't kill the infection as an infectious creature
 		return
 	..()
 
@@ -321,20 +305,6 @@
 	qdel(src)
 	return I
 
-/obj/structure/infection/examine(mob/user)
-	..()
-	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	if(user.research_scanner || hud_to_check.hudusers[user])
-		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
-		if(!overmind)
-			to_chat(user, "<b>Core neutralized. Critical mass no longer attainable.</b>")
-		typereport(user)
-	else
-		to_chat(user, "It seems to radiate light.")
-
-/obj/structure/infection/proc/scannerreport()
-	return "An infection. Looks like someone forgot to override this proc, adminhelp this."
-
 /obj/structure/infection/normal
 	name = "normal infection"
 	icon_state = "blob"
@@ -365,9 +335,6 @@
 	if(ismob(mover))
 		var/mob/M = mover
 		M.remove_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update = TRUE)
-
-/obj/structure/infection/normal/scannerreport()
-	return "N/A"
 
 /obj/structure/infection/normal/update_icon()
 	..()

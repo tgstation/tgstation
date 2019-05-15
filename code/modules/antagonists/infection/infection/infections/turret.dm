@@ -134,13 +134,12 @@
 
 /obj/item/projectile/bullet/infection/core
 	name = "strong spore"
+	icon_state = "tracking_bullet"
 	damage = 20
-	armour_penetration = 45
-	speed = 0.8
+	homing_turn_speed = 15
 
 /obj/item/projectile/bullet/infection/infernal
 	name = "burning spore"
-	icon = 'icons/mob/blob.dmi'
 	icon_state = "fire_bullet"
 	speed = 1
 	damage_type = BURN
@@ -148,14 +147,12 @@
 
 /obj/item/projectile/bullet/infection/homing
 	name = "tracking spore"
-	icon = 'icons/mob/blob.dmi'
 	icon_state = "tracking_bullet"
 	range = 150
 	homing_turn_speed = 15
 
 /obj/item/projectile/bullet/infection/flak
 	name = "flak spore"
-	icon = 'icons/mob/blob.dmi'
 	icon_state = "flak_bullet"
 	damage = 8
 	range = 2
@@ -167,6 +164,16 @@
 //
 */
 
+/obj/structure/infection/turret/core
+	name = "core turret"
+	desc = "A turret for the core of the infection. It holds destructive capabilities that many might find unbeatable."
+	point_return = 0
+	projectile_type = /obj/item/projectile/bullet/infection/core
+	upgrade_types = list(/datum/component/infection/upgrade/turret/fire_rate,
+						 /datum/component/infection/upgrade/turret/home_target,
+						 /datum/component/infection/upgrade/turret/spore_bullets)
+	scan_range = 5
+
 /obj/structure/infection/turret/resistant
 	name = "resistant turret"
 	desc = "A very bulky turret fit for a war of attrition."
@@ -174,11 +181,6 @@
 	upgrade_types = list(/datum/component/infection/upgrade/turret/knockback,
 						 /datum/component/infection/upgrade/turret/shield_creator,
 						 /datum/component/infection/upgrade/turret/spore_bullets)
-
-/obj/structure/infection/turret/resistant/core
-	name = "core turret"
-	point_return = 0
-	projectile_type = /obj/item/projectile/bullet/infection/core
 
 /obj/structure/infection/turret/infernal
 	name = "infernal turret"
@@ -198,4 +200,5 @@
 						 /datum/component/infection/upgrade/turret/turn_speed,
 						 /datum/component/infection/upgrade/turret/flak_homing,
 						 /datum/component/infection/upgrade/turret/stamina_damage)
+
 
