@@ -11,6 +11,11 @@
 	var/times = 1 // times the upgrade can be bought
 	var/bought = 0 // how many times the upgrade has been bought
 
+/datum/component/infection/upgrade/Initialize()
+	. = ..()
+	RegisterSignal(parent, COMSIG_INFECTION_LIFE_TICK, .proc/check_life_tick)
+	RegisterSignal(parent, COMSIG_INFECTION_TAKE_DAMAGE, .proc/check_take_damage)
+
 /datum/component/infection/upgrade/proc/do_upgrade()
 	times--
 	bought++
@@ -21,11 +26,25 @@
 /datum/component/infection/upgrade/proc/upgrade_effect()
 	return
 
-/*
-//
-// Spore Upgrades
-//
-*/
+/datum/component/infection/upgrade/proc/check_life_tick(datum/source)
+	if(!bought)
+		return
+	on_life_tick(source)
+
+/datum/component/infection/upgrade/proc/on_life_tick(datum/source)
+	return
+
+/datum/component/infection/upgrade/proc/check_take_damage(datum/source)
+	if(!bought)
+		return
+	on_take_damage(source)
+
+/datum/component/infection/upgrade/proc/on_take_damage(datum/source)
+	return
+
+///////////////////
+// Spore Upgrades//
+///////////////////
 
 /datum/component/infection/upgrade/spore
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/parentspore
@@ -85,11 +104,9 @@
 /datum/component/infection/upgrade/spore/destructive_spore/upgrade_effect()
 	parentspore.transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive)
 
-/*
-//
-// Myconid Spore Upgrades
-//
-*/
+///////////////////////////
+// Myconid Spore Upgrades//
+///////////////////////////
 
 
 /datum/component/infection/upgrade/spore/pulling
@@ -100,11 +117,9 @@
 /datum/component/infection/upgrade/spore/pulling/upgrade_effect()
 	parentspore.verbs += /mob/living/verb/pulled
 
-/*
-//
-// Infector Spore Upgrades
-//
-*/
+////////////////////////////
+// Infector Spore Upgrades//
+////////////////////////////
 
 /datum/component/infection/upgrade/spore/zombification
 	name = "Zombifying Fluid"
@@ -118,11 +133,9 @@
 			var/mob/living/simple_animal/hostile/infection/infectionspore/IS = new /mob/living/simple_animal/hostile/infection/infectionspore(H.loc)
 			IS.Zombify(H)
 
-/*
-//
-// Hunter Spore Upgrades
-//
-*/
+//////////////////////////
+// Hunter Spore Upgrades//
+//////////////////////////
 
 /datum/component/infection/upgrade/spore/lifesteal
 	name = "Lifesteal"
@@ -137,11 +150,9 @@
 			M.apply_damage(healedanddamage)
 			parentspore.adjustHealth(-healedanddamage)
 
-/*
-//
-// Destructive Spore Upgrades
-//
-*/
+///////////////////////////////
+// Destructive Spore Upgrades//
+///////////////////////////////
 
 /datum/component/infection/upgrade/spore/knockback
 	name = "Hydraulic Fists"
@@ -154,199 +165,281 @@
 		if(!throwTarget.anchored)
 			throwTarget.throw_at(get_ranged_target_turf(throwTarget, get_dir(parentspore, throwTarget), 3), 3, 4)
 
-/*
-//
-// Turret Upgrades
-//
-*/
+///////////////////////
+// Structure Upgrades//
+///////////////////////
 
-/datum/component/infection/upgrade/turret
+/datum/component/infection/upgrade/structure
+	var/obj/structure/infection/parentinfection
+
+/datum/component/infection/upgrade/structure/Initialize()
+	. = ..()
+	parentinfection = parent
+	RegisterSignal(parentinfection, COMSIG_INFECTION_PULSED, .proc/check_be_pulsed)
+
+/datum/component/infection/upgrade/structure/proc/check_be_pulsed(datum/source)
+	if(!bought)
+		return
+	on_be_pulsed(source)
+
+/datum/component/infection/upgrade/structure/proc/on_be_pulsed(datum/source)
+	return
+
+////////////////////
+// Turret Upgrades//
+////////////////////
+
+/datum/component/infection/upgrade/structure/turret
 	var/obj/structure/infection/turret/parentturret
 
-/datum/component/infection/upgrade/turret/Initialize()
+/datum/component/infection/upgrade/structure/turret/Initialize()
 	. = ..()
 	parentturret = parent
 	RegisterSignal(parentturret, COMSIG_PROJECTILE_BEFORE_FIRE, .proc/check_before_fire)
 	RegisterSignal(parentturret, COMSIG_PROJECTILE_ON_HIT, .proc/check_projectile_hit)
 
-/datum/component/infection/upgrade/turret/proc/check_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/structure/turret/proc/check_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	if(!bought)
 		return
 	on_before_fire(source, A, target)
 
-/datum/component/infection/upgrade/turret/proc/check_projectile_hit(datum/source, atom/target, blocked)
+/datum/component/infection/upgrade/structure/turret/proc/check_projectile_hit(datum/source, atom/target, blocked)
 	if(!bought)
 		return
 	on_projectile_hit(source, target, blocked)
 
-/datum/component/infection/upgrade/turret/proc/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/structure/turret/proc/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	return
 
-/datum/component/infection/upgrade/turret/proc/on_projectile_hit(datum/source, atom/target, blocked)
+/datum/component/infection/upgrade/structure/turret/proc/on_projectile_hit(datum/source, atom/target, blocked)
 	return
 
-/datum/component/infection/upgrade/turret/resistant_turret
+/datum/component/infection/upgrade/structure/turret/resistant_turret
 	name = "Resistant Turret"
 	description = "Triples the structural integrity of your turret."
 	radial_icon_state = "bullet"
-	cost = 70
+	cost = 30
 
-/datum/component/infection/upgrade/turret/resistant_turret/upgrade_effect()
+/datum/component/infection/upgrade/structure/turret/resistant_turret/upgrade_effect()
 	parentturret.change_to(/obj/structure/infection/turret/resistant, parentturret.overmind)
 
-/datum/component/infection/upgrade/turret/infernal_turret
+/datum/component/infection/upgrade/structure/turret/infernal_turret
 	name = "Infernal Turret"
 	description = "Increases speed of bullets and changes damage to burn."
 	radial_icon_state = "fire_bullet"
-	cost = 70
+	cost = 30
 
-/datum/component/infection/upgrade/turret/infernal_turret/upgrade_effect()
+/datum/component/infection/upgrade/structure/turret/infernal_turret/upgrade_effect()
 	parentturret.change_to(/obj/structure/infection/turret/infernal, parentturret.overmind)
 
-/datum/component/infection/upgrade/turret/homing_turret
+/datum/component/infection/upgrade/structure/turret/homing_turret
 	name = "Homing Turret"
 	description = "Shoots spores that have increased range and track their target."
 	radial_icon_state = "tracking_bullet"
-	cost = 70
+	cost = 30
 
-/datum/component/infection/upgrade/turret/homing_turret/upgrade_effect()
+/datum/component/infection/upgrade/structure/turret/homing_turret/upgrade_effect()
 	parentturret.change_to(/obj/structure/infection/turret/homing, parentturret.overmind)
 
-/*
-//
-// Homing Turret Upgrades
-//
-*/
+///////////////////////////
+// Homing Turret Upgrades//
+///////////////////////////
 
-/datum/component/infection/upgrade/turret/home_target
+/datum/component/infection/upgrade/structure/turret/home_target
+	name = "Homing Bullets"
+	description = "Causes the bullets of this turret to home in on their target."
 	times = 0
 	bought = 1
 
-/datum/component/infection/upgrade/turret/home_target/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/structure/turret/home_target/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	A.set_homing_target(target)
 
-/datum/component/infection/upgrade/turret/turn_speed
+/datum/component/infection/upgrade/structure/turret/turn_speed
 	name = "Turn Speed"
 	description = "Increases turn speed of shot homing spores."
 	radial_icon_state = "tracking_bullet"
-	cost = 60
+	cost = 10
 	times = 3
 
-/datum/component/infection/upgrade/turret/turn_speed/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/structure/turret/turn_speed/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	A.homing_turn_speed *= 2 * bought
 
-/datum/component/infection/upgrade/turret/flak_homing
+/datum/component/infection/upgrade/structure/turret/flak_homing
 	name = "Flak Homing"
 	description = "Homings that hit targets will break into tiny spores that do damage to other living creatures around the target."
 	radial_icon_state = "blob_spore_temp"
-	cost = 60
+	cost = 10
 	times = 3
 
-/datum/component/infection/upgrade/turret/flak_homing/on_projectile_hit(datum/source, atom/target)
+/datum/component/infection/upgrade/structure/turret/flak_homing/on_projectile_hit(datum/source, atom/target)
 	for(var/dir in GLOB.cardinals + GLOB.diagonals)
 		var/obj/item/projectile/A = new /obj/item/projectile/bullet/infection/flak(target)
 		playsound(target, 'sound/weapons/gunshot_smg.ogg', 75, 1)
 		A.damage *= bought
 
-		//Shooting Code:
 		var/turf/newTarget = get_ranged_target_turf(target, dir, A.range)
 		A.preparePixelProjectile(newTarget, target)
 		if(ismovableatom(target))
 			A.firer = target
 		A.fire()
 
-/datum/component/infection/upgrade/turret/stamina_damage
+/datum/component/infection/upgrade/structure/turret/stamina_damage
 	name = "Stamina Damage"
 	description = "Homing spores deal only stamina damage, 1.5x damage bonus."
 	radial_icon = 'icons/obj/projectiles.dmi'
 	radial_icon_state = "omnilaser"
-	cost = 60
+	cost = 10
 
-/datum/component/infection/upgrade/turret/stamina_damage/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/structure/turret/stamina_damage/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	A.damage_type = STAMINA
 	A.damage *= 1.5
 
-/*
-//
-// Infernal Turret Upgrades
-//
-*/
+/////////////////////////////
+// Infernal Turret Upgrades//
+/////////////////////////////
 
-/datum/component/infection/upgrade/turret/burning_spores
+/datum/component/infection/upgrade/structure/turret/burning_spores
 	name = "Burning Spores"
 	description = "Sets fire to the target on hit."
 	radial_icon = 'icons/effects/fire.dmi'
 	radial_icon_state = "fire"
-	cost = 100
+	cost = 15
 
-/datum/component/infection/upgrade/turret/burning_spores/on_projectile_hit(datum/source, atom/target)
+/datum/component/infection/upgrade/structure/turret/burning_spores/on_projectile_hit(datum/source, atom/target)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(4)
 		M.IgniteMob()
 
-/datum/component/infection/upgrade/turret/fire_rate
+/datum/component/infection/upgrade/structure/turret/fire_rate
 	name = "Fire Rate"
 	description = "Increases the fire rate of the turret."
 	radial_icon_state = "fire_bullet"
-	cost = 100
+	cost = 15
 	times = 3
 
-/datum/component/infection/upgrade/turret/fire_rate/upgrade_effect()
+/datum/component/infection/upgrade/structure/turret/fire_rate/upgrade_effect()
 	parentturret.frequency++
 
-/datum/component/infection/upgrade/turret/armour_penetration
+/datum/component/infection/upgrade/structure/turret/armour_penetration
 	name = "Armour Penetration"
 	description = "Increases the armour penetration of the turret."
 	radial_icon_state = "tracking_bullet"
-	cost = 50
+	cost = 15
 	times = 3
 
-/datum/component/infection/upgrade/turret/armour_penetration/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
+/datum/component/infection/upgrade/structure/turret/armour_penetration/on_before_fire(datum/source, obj/item/projectile/A, atom/movable/target)
 	A.armour_penetration += 15 * bought
 
-/*
-//
-// Resistant Turret Upgrades
-//
-*/
+//////////////////////////////
+// Resistant Turret Upgrades//
+//////////////////////////////
 
-/datum/component/infection/upgrade/turret/knockback
+/datum/component/infection/upgrade/structure/turret/knockback
 	name = "Knockback Spores"
 	description = "Knocks the target back on hit."
 	radial_icon_state = "blobbernaut"
-	cost = 100
+	cost = 10
 
-/datum/component/infection/upgrade/turret/knockback/on_projectile_hit(datum/source, atom/target)
+/datum/component/infection/upgrade/structure/turret/knockback/on_projectile_hit(datum/source, atom/target)
 	if(ismovableatom(target))
 		var/atom/movable/throwTarget = target
 		if(!throwTarget.anchored)
 			throwTarget.throw_at(get_ranged_target_turf(throwTarget, get_dir(parentturret, throwTarget), 3), 3, 4)
 
-/datum/component/infection/upgrade/turret/shield_creator
+/datum/component/infection/upgrade/structure/turret/shield_creator
 	name = "Shield Creator"
-	description = "Changes infection where the bullet is hit into shield infection."
+	description = "Has a chance to change infection where the bullet is hit into shield infection."
 	radial_icon_state = "blob_shield_radial"
-	cost = 100
+	cost = 10
 
-/datum/component/infection/upgrade/turret/shield_creator/on_projectile_hit(datum/source, atom/target)
-	if(prob(80))
+/datum/component/infection/upgrade/structure/turret/shield_creator/on_projectile_hit(datum/source, atom/target)
+	if(prob(90))
 		return
 	var/turf/target_turf = get_turf(target)
 	var/obj/structure/infection/normal/I = locate(/obj/structure/infection/normal) in target_turf.contents
 	if(I)
 		I.change_to(/obj/structure/infection/shield, I.overmind)
 
-/datum/component/infection/upgrade/turret/spore_bullets
+/datum/component/infection/upgrade/structure/turret/spore_bullets
 	name = "Spore Bullets"
 	description = "Has a chance to create infection spores on the target the bullet hits."
 	radial_icon_state = "blobpod"
-	cost = 100
+	cost = 10
 
-/datum/component/infection/upgrade/turret/spore_bullets/on_projectile_hit(datum/source, atom/target)
-	if(prob(80))
+/datum/component/infection/upgrade/structure/turret/spore_bullets/on_projectile_hit(datum/source, atom/target)
+	if(prob(90))
 		return
 	var/mob/living/simple_animal/hostile/infection/infectionspore/IS = new/mob/living/simple_animal/hostile/infection/infectionspore(target.loc, null, parentturret.overmind)
 	if(parentturret.overmind)
 		IS.update_icons()
 		parentturret.overmind.infection_mobs.Add(IS)
+
+//////////////////////
+// Resource Upgrades//
+//////////////////////
+
+/datum/component/infection/upgrade/structure/resource
+	var/obj/structure/infection/resource/parentresource
+
+/datum/component/infection/upgrade/structure/resource/Initialize()
+	. = ..()
+	parentresource = parent
+
+/datum/component/infection/upgrade/structure/resource/production_rate
+	name = "Production Rate"
+	description = "Increases the points produced per tick by the resource structure."
+	radial_icon_state = "ui_increase"
+	cost = 10
+	increasing_cost = 10
+	times = 3
+
+/datum/component/infection/upgrade/structure/resource/production_rate/upgrade_effect()
+	parentresource.produced++
+
+/datum/component/infection/upgrade/structure/resource/storage_unit
+	name = "Storage Unit"
+	description = "Increases the point return of this infection every time it produces, up to a maximum of 100 points. You can remove the structure at any time to claim the extra points."
+	radial_icon_state = "block2"
+	cost = 40
+
+/datum/component/infection/upgrade/structure/resource/storage_unit/on_life_tick(datum/source)
+	parentresource.point_return = min(parentresource.point_return + 0.1, 100)
+
+//////////////////////
+// Factory Upgrades///
+//////////////////////
+
+/datum/component/infection/upgrade/structure/factory
+	var/obj/structure/infection/factory/parentfactory
+
+/datum/component/infection/upgrade/structure/factory/Initialize()
+	. = ..()
+	parentfactory = parent
+
+/datum/component/infection/upgrade/structure/factory/royal_guard
+	name = "Royal Guard"
+	description = "Attempts to produce a spore automatically whenever this structure takes damage. Can only produce 3 more than maximum spores."
+	radial_icon_state = "blobpod"
+	cost = 10
+
+/datum/component/infection/upgrade/structure/factory/royal_guard/on_take_damage(datum/source)
+	if(parentfactory.spores.len >= (parentfactory.max_spores + 3))
+		return
+	var/mob/living/simple_animal/hostile/infection/infectionspore/IS = new/mob/living/simple_animal/hostile/infection/infectionspore(parentfactory.loc, parentfactory, parentfactory.overmind)
+	if(parentfactory.overmind) //if we don't have an overmind, we don't need to do anything but make a spore
+		IS.update_icons()
+		parentfactory.overmind.infection_mobs.Add(IS)
+
+/datum/component/infection/upgrade/structure/factory/defensive_shield
+	name = "Defensive Shield"
+	description = "Automatically produces shield infection from all normal infection that are adjacent."
+	radial_icon_state = "blob_shield_radial"
+	cost = 20
+
+/datum/component/infection/upgrade/structure/factory/defensive_shield/on_life_tick(datum/source)
+	for(var/obj/structure/infection/normal/I in range(1, parentfactory))
+		if(prob(80))
+			continue
+		var/obj/structure/infection/shield/new_shield = I.change_to(/obj/structure/infection/shield, parentfactory.overmind)
+		new_shield.point_return = 0

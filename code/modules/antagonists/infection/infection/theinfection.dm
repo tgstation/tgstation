@@ -82,8 +82,6 @@
 /obj/structure/infection/proc/show_description()
 	to_chat(overmind, "<span class='cultlarge'>Upgrades List</span>")
 	for(var/datum/component/infection/upgrade/U in get_upgrades())
-		if(U.times == 0)
-			continue
 		to_chat(overmind, "<b>[U.name]:</b> [U.description]")
 	return
 
@@ -198,6 +196,7 @@
 	ConsumeTile()
 	obj_integrity = min(max_integrity, obj_integrity+health_regen)
 	update_icon()
+	SEND_SIGNAL(src, COMSIG_INFECTION_PULSED)
 
 /obj/structure/infection/proc/ConsumeTile()
 	for(var/atom/A in loc)
@@ -290,6 +289,7 @@
 	. = ..()
 	if(. && obj_integrity > 0)
 		update_icon()
+		SEND_SIGNAL(src, COMSIG_INFECTION_TAKE_DAMAGE)
 
 /obj/structure/infection/obj_destruction(damage_flag)
 	..()

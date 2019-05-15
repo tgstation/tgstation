@@ -6,7 +6,7 @@
 	max_integrity = 150
 	brute_resist = 0.25
 	explosion_block = 3
-	point_return = 4
+	point_return = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 	var/damaged_icon = "blob_shield_damaged"
 	var/damaged_desc = "A wall of twitching tendrils."
@@ -37,7 +37,6 @@
 	damaged_name = "weakened reflective infection"
 	icon_state = "blob_glow"
 	flags_1 = CHECK_RICOCHET_1
-	point_return = 8
 	max_integrity = 200
 	brute_resist = 0.5
 	explosion_block = 2

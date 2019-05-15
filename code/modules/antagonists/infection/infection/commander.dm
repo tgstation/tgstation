@@ -25,15 +25,15 @@ GLOBAL_VAR(infection_commander)
 	var/obj/structure/infection/core/infection_core = null // The infection commanders's core
 	var/obj/effect/meteor/infection/meteor = null // The infection's incoming meteor
 	var/infection_points = 0
-	var/max_infection_points = 1000
-	var/upgrade_points = 6 // obtained by destroying beacons
-	var/all_upgrade_points = 6 // all upgrade points earned so far
+	var/max_infection_points = 300
+	var/upgrade_points = 0 // obtained by destroying beacons
+	var/all_upgrade_points = 0 // all upgrade points earned so far
 	var/last_attack = 0
 	var/list/infection_mobs = list()
 	var/list/resource_infection = list()
 	var/nodes_required = 1 //if the infection needs nodes to place resource and factory blobs
 	var/placed = 0
-	var/base_point_rate = 10 //for core placement
+	var/base_point_rate = 2 //for core placement
 	var/autoplace_time = 200 // a few seconds, just so it isnt sudden at game start
 	var/place_beacons_delay = 100
 	var/victory_in_progress = FALSE
@@ -44,7 +44,7 @@ GLOBAL_VAR(infection_commander)
 									/datum/action/innate/infection/creator/factory)
 	var/list/unlockable_actions = list(/datum/action/innate/infection/creator/turret)
 
-/mob/camera/commander/Initialize(mapload, starting_points = max_infection_points)
+/mob/camera/commander/Initialize(mapload, starting_points = 0)
 	if(GLOB.infection_commander)
 		return INITIALIZE_HINT_QDEL // there can be only one
 	GLOB.infection_commander = src

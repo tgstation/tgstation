@@ -4,14 +4,14 @@
 	icon_state = "blob"
 	desc = "A solid wall with a radiating material on the inside."
 	max_integrity = 150
-	point_return = 4
+	point_return = 10
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 	var/frequency = 1 // amount of times the turret will fire per process tick (1 second)
 	var/scan_range = 7 // range to search for targets
 	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
-	upgrade_types = list(/datum/component/infection/upgrade/turret/resistant_turret,
-						 /datum/component/infection/upgrade/turret/infernal_turret,
-						 /datum/component/infection/upgrade/turret/homing_turret)
+	upgrade_types = list(/datum/component/infection/upgrade/structure/turret/resistant_turret,
+						 /datum/component/infection/upgrade/structure/turret/infernal_turret,
+						 /datum/component/infection/upgrade/structure/turret/homing_turret)
 
 /obj/structure/infection/turret/Initialize()
 	START_PROCESSING(SSobj, src)
@@ -169,26 +169,26 @@
 	desc = "A turret for the core of the infection. It holds destructive capabilities that many might find unbeatable."
 	point_return = 0
 	projectile_type = /obj/item/projectile/bullet/infection/core
-	upgrade_types = list(/datum/component/infection/upgrade/turret/fire_rate,
-						 /datum/component/infection/upgrade/turret/home_target,
-						 /datum/component/infection/upgrade/turret/spore_bullets)
+	upgrade_types = list(/datum/component/infection/upgrade/structure/turret/fire_rate,
+						 /datum/component/infection/upgrade/structure/turret/home_target,
+						 /datum/component/infection/upgrade/structure/turret/spore_bullets)
 	scan_range = 5
 
 /obj/structure/infection/turret/resistant
 	name = "resistant turret"
 	desc = "A very bulky turret fit for a war of attrition."
 	max_integrity = 300
-	upgrade_types = list(/datum/component/infection/upgrade/turret/knockback,
-						 /datum/component/infection/upgrade/turret/shield_creator,
-						 /datum/component/infection/upgrade/turret/spore_bullets)
+	upgrade_types = list(/datum/component/infection/upgrade/structure/turret/knockback,
+						 /datum/component/infection/upgrade/structure/turret/shield_creator,
+						 /datum/component/infection/upgrade/structure/turret/spore_bullets)
 
 /obj/structure/infection/turret/infernal
 	name = "infernal turret"
 	desc = "A fiery turret intent on disintegrating its enemies."
 	projectile_type = /obj/item/projectile/bullet/infection/infernal // the bullet fired for this turret
-	upgrade_types = list(/datum/component/infection/upgrade/turret/burning_spores,
-						 /datum/component/infection/upgrade/turret/fire_rate,
-						 /datum/component/infection/upgrade/turret/armour_penetration)
+	upgrade_types = list(/datum/component/infection/upgrade/structure/turret/burning_spores,
+						 /datum/component/infection/upgrade/structure/turret/fire_rate,
+						 /datum/component/infection/upgrade/structure/turret/armour_penetration)
 	scan_range = 5
 
 /obj/structure/infection/turret/homing
@@ -196,9 +196,9 @@
 	desc = "A frail looking turret that seems to track your every movement."
 	max_integrity = 75
 	projectile_type = /obj/item/projectile/bullet/infection/homing // the bullet fired for this turret
-	upgrade_types = list(/datum/component/infection/upgrade/turret/home_target,
-						 /datum/component/infection/upgrade/turret/turn_speed,
-						 /datum/component/infection/upgrade/turret/flak_homing,
-						 /datum/component/infection/upgrade/turret/stamina_damage)
+	upgrade_types = list(/datum/component/infection/upgrade/structure/turret/home_target,
+						 /datum/component/infection/upgrade/structure/turret/turn_speed,
+						 /datum/component/infection/upgrade/structure/turret/flak_homing,
+						 /datum/component/infection/upgrade/structure/turret/stamina_damage)
 
 

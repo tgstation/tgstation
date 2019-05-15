@@ -5,11 +5,13 @@
 	desc = "A thick spire of tendrils."
 	max_integrity = 200
 	health_regen = 1
-	point_return = 25
+	point_return = 5
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/spore_cooldown = 80 //8 seconds between spores and after spore death
+	upgrade_types = list(/datum/component/infection/upgrade/structure/factory/royal_guard,
+						 /datum/component/infection/upgrade/structure/factory/defensive_shield)
 
 /obj/structure/infection/factory/Initialize()
 	START_PROCESSING(SSobj, src)
@@ -25,6 +27,7 @@
 
 /obj/structure/infection/factory/Life()
 	. = ..()
+	SEND_SIGNAL(src, COMSIG_INFECTION_LIFE_TICK)
 	if(spores.len >= max_spores)
 		return
 	if(spore_delay > world.time)

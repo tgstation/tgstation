@@ -279,6 +279,11 @@
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
+//Infection signals
+#define COMSIG_INFECTION_LIFE_TICK "infection_life_tick"					//called on a successful life tick for any infection monster or structure
+#define COMSIG_INFECTION_PULSED	"infection_structure_pulsed"				//called from base of /obj/structure/infection, whenever the structure is pulsed
+#define COMSIG_INFECTION_TAKE_DAMAGE "infection_take_damage"				//called whenever an infection structure or monster takes damage
+
 /*******Non-Signal Component Related Defines*******/
 
 //Redirection component init flags

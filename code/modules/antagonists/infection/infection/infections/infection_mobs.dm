@@ -200,10 +200,6 @@
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	. = ..()
-	if(overmind)
-		upgrade_points = overmind.all_upgrade_points
-	else
-		upgrade_points = 5
 	for(var/upgrade_type in upgrade_types)
 		AddComponent(upgrade_type)
 
@@ -281,8 +277,6 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/show_description()
 	to_chat(src, "<span class='cultlarge'>Upgrades List</span>")
 	for(var/datum/component/infection/upgrade/U in get_upgrades())
-		if(U.times == 0)
-			continue
 		to_chat(src, "<b>[U.name]:</b> [U.description]")
 	return
 
@@ -296,6 +290,7 @@
 	. = ..()
 	if(updating_health)
 		update_health_hud()
+		SEND_SIGNAL(src, COMSIG_INFECTION_TAKE_DAMAGE)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/update_health_hud()
 	if(hud_used)

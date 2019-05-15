@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	if(!overmind.infection_core)
 		overmind.forceMove(get_turf(src))
 
-/mob/camera/commander/proc/can_buy(cost = 15)
+/mob/camera/commander/proc/can_buy(cost = 0)
 	if(infection_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>")
 		return 0
@@ -173,14 +173,14 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 /datum/action/innate/infection/creator/shield
 	name = "Create Shield Infection"
 	desc = "Create a shield infection, which is harder to kill. Using this on an existing shield blob turns it into a reflective shield, capable of reflecting most projectiles."
-	cost = 15
+	cost = 5
 	button_icon_state = "blob_shield"
 	type_to_create = /obj/structure/infection/shield
 
 /datum/action/innate/infection/creator/resource
 	name = "Create Resource Infection"
 	desc = "Create a resource tower which will generate resources for you."
-	cost = 40
+	cost = 10
 	button_icon_state = "blob_resource"
 	type_to_create = /obj/structure/infection/resource
 	distance_from_similar = 4
@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 /datum/action/innate/infection/creator/node
 	name = "Create Node Infection"
 	desc = "Create a node, which will power nearby factory and resource structures."
-	cost = 50
+	cost = 15
 	button_icon_state = "blob_node"
 	type_to_create = /obj/structure/infection/node
 	distance_from_similar = 5
@@ -197,7 +197,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 /datum/action/innate/infection/creator/factory
 	name = "Create Factory Infection"
 	desc = "Create a spore tower that will spawn spores to harass your enemies."
-	cost = 60
+	cost = 20
 	button_icon_state = "blob_factory"
 	type_to_create = /obj/structure/infection/factory
 	distance_from_similar = 7
@@ -206,7 +206,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 /datum/action/innate/infection/creator/turret
 	name = "Create Turret Infection"
 	desc = "Create a turret that will automatically fire at your enemies."
-	cost = 70
+	cost = 30
 	button_icon_state = "infection_turret"
 	type_to_create = /obj/structure/infection/turret
 	distance_from_similar = 8
@@ -229,9 +229,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set category = "Infection"
 	set name = "Evolution"
 	set desc = "Improve yourself and your army to be unstoppable."
-	if(!placed)
-		to_chat(src, "<span class='warning'>You must wait until your core is placed!</span>")
-		return
 	var/list/choices = list(
 		"Summon Sentient Spore (1)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
 		"Ability Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
