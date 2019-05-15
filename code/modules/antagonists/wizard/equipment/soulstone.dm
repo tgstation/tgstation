@@ -200,7 +200,7 @@
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
 
 						else
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/angelic, A, user, 0, T.loc)
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
 						SSticker.mode.cult -= A.mind
