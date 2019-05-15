@@ -35,6 +35,14 @@
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
 
+/datum/quirk/empath
+	name = "Empath"
+	desc = "Whether it's a sixth sense or careful study of body language, it only takes you a quick glance at someone to understand how they feel."
+	value = 2
+	mob_trait = TRAIT_EMPATH
+	gain_text = "<span class='notice'>You feel in tune with those around you.</span>"
+	lose_text = "<span class='danger'>You feel isolated from others.</span>"
+
 /datum/quirk/freerunning
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly."
@@ -43,12 +51,25 @@
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
 
+/datum/quirk/friendly
+	name = "Friendly"
+	desc = "You give the best hugs, especially when you're in the right mood."
+	value = 1
+	mob_trait = TRAIT_FRIENDLY
+	gain_text = "<span class='notice'>You want to hug someone.</span>"
+	lose_text = "<span class='danger'>You no longer feel compelled to hug others.</span>"
+	mood_quirk = TRUE
+
 /datum/quirk/jolly
 	name = "Jolly"
 	desc = "You sometimes just feel happy, for no reason at all."
 	value = 1
 	mob_trait = TRAIT_JOLLY
 	mood_quirk = TRUE
+
+/datum/quirk/jolly/on_process()
+	if(prob(0.05))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
 
 /datum/quirk/light_step
 	name = "Light Step"
@@ -177,3 +198,10 @@
 	if(!D) //if their current mob doesn't have a bank account, likely due to them being a special role (ie nuke op)
 		return
 	D.welfare = TRUE
+
+/datum/quirk/neet/on_process()
+	var/mob/living/carbon/human/H = quirk_holder
+	if (H.hygiene <= HYGIENE_LEVEL_DIRTY)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "NEET", /datum/mood_event/happy_neet)
+	else
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "NEET")

@@ -138,6 +138,26 @@
 	else
 		add_overlay("sleeper_cover")
 
+//Lifeform Stasis Unit
+/obj/machinery/stasis/survival_pod
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "sleeper"
+	mattress_state = null
+	buckle_lying = 270
+
+/obj/machinery/stasis/survival_pod/play_power_sound()
+	return
+
+/obj/machinery/stasis/survival_pod/update_icon()
+	return
+
+//NanoMed
+/obj/machinery/vending/wallmed/survival_pod
+	name = "survival pod medical supply"
+	desc = "Wall-mounted Medical Equipment dispenser. This one seems just a tiny bit smaller."
+	refill_canister = null
+	onstation = FALSE
+
 //Computer
 /obj/item/gps/computer
 	name = "pod computer"

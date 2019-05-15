@@ -81,8 +81,11 @@
 /mob/living/silicon/pai/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_health)
-	take_holo_damage(amount * 0.25)
+/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_health, forced = FALSE)
+	if(forced)
+		take_holo_damage(amount)
+	else
+		take_holo_damage(amount * 0.25)
 
 /mob/living/silicon/pai/adjustBrainLoss(amount)
 	Paralyze(amount * 0.2)

@@ -58,7 +58,7 @@
 		LAZYREMOVE(top_atom.light_sources, src)
 
 	if (needs_update)
-		GLOB.lighting_update_lights -= src
+		SSlighting.sources_queue -= src
 
 	. = ..()
 
@@ -67,7 +67,7 @@
 // Actually that'd be great if you could!
 #define EFFECT_UPDATE(level)                \
 	if (needs_update == LIGHTING_NO_UPDATE) \
-		GLOB.lighting_update_lights += src; \
+		SSlighting.sources_queue += src; \
 	if (needs_update < level)               \
 		needs_update            = level;    \
 

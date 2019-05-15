@@ -23,11 +23,11 @@
 			speak("neutral", prob(25))
 
 /datum/brain_trauma/special/godwoken/on_gain()
-	owner.add_trait(TRAIT_HOLY, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/godwoken/on_lose()
-	owner.remove_trait(TRAIT_HOLY, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/godwoken/proc/speak(type, include_owner = FALSE)
@@ -142,6 +142,7 @@
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
 	name = "Chemical Violent Psychosis"
+	clonable = FALSE
 
 /datum/brain_trauma/special/tenacity
 	name = "Tenacity"
@@ -151,13 +152,13 @@
 	lose_text = "<span class='warning'>You realize you can feel pain again.</span>"
 
 /datum/brain_trauma/special/tenacity/on_gain()
-	owner.add_trait(TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	owner.add_trait(TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/tenacity/on_lose()
-	owner.remove_trait(TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	owner.remove_trait(TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/death_whispers
@@ -179,12 +180,12 @@
 	..()
 
 /datum/brain_trauma/special/death_whispers/proc/whispering()
-	owner.add_trait(TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
 
 /datum/brain_trauma/special/death_whispers/proc/cease_whispering()
-	owner.remove_trait(TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = FALSE
 
 /datum/brain_trauma/special/beepsky
@@ -193,6 +194,7 @@
 	scan_desc = "criminal mind"
 	gain_text = "<span class='warning'>Justice is coming for you.</span>"
 	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
+	clonable = FALSE
 	var/obj/effect/hallucination/simple/securitron/beepsky
 
 /datum/brain_trauma/special/beepsky/on_gain()
