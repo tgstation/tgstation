@@ -247,8 +247,12 @@
 	using.screen_loc = ui_borg_radio
 	static_inventory += using
 
+	update_software_buttons()
+
+/datum/hud/pai/proc/update_software_buttons()
+	var/mob/living/silicon/pai/owner = mymob
 	for(var/obj/screen/pai/button in static_inventory)
-		if(button.required_software && !owner.software.Find(button.required_software))
-			button.color =  "#808080"
+		if(button.required_software)
+			button.color = owner.software.Find(button.required_software) ? null : "#808080"
 
 	#undef PAI_MISSING_SOFTWARE_MESSAGE
