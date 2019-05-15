@@ -53,7 +53,7 @@
 	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
 
-	if(user.has_trait(TRAIT_PACIFISM))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return
 
@@ -131,8 +131,8 @@
 	item_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
-	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 	sharpness = IS_SHARP
+	var/static/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
 /obj/item/broken_bottle/Initialize()
 	. = ..()
@@ -408,13 +408,24 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
-	custom_price = 100
+	custom_premium_price = 200
 	icon_state = "champagne_bottle"
 	isGlass = TRUE
 	list_reagents = list("champagne" = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/blazaam
+	name = "Ginbad's Blazaam"
+	desc = "You feel like you should give the bottle a good rub before opening."
+	icon_state = "blazaambottle"
+	list_reagents = list("blazaam" = 100)
 
-
+/obj/item/reagent_containers/food/drinks/bottle/trappist
+	name = "Mont de Requin Trappistes Bleu"
+	desc = "Brewed in space-Belgium. Fancy!"
+	custom_premium_price = 50
+	icon_state = "trappistbottle"
+	volume = 50
+	list_reagents = list("trappist" = 50)
 
 
 ////////////////////////// MOLOTOV ///////////////////////

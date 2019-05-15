@@ -188,9 +188,6 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-/mob/proc/Life()
-	set waitfor = FALSE
-
 /mob/proc/get_item_by_slot(slot_id)
 	return null
 
@@ -710,7 +707,7 @@
 			return pick(protection_sources)
 		else
 			return src
-	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
+	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
 		return src
 
 //You can buckle on mobs if you're next to them since most are dense

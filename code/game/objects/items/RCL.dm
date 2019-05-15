@@ -14,13 +14,14 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/max_amount = 90
 	var/active = FALSE
-	actions_types = list(/datum/action/item_action/rcl)
+	actions_types = list(/datum/action/item_action/rcl_col,/datum/action/item_action/rcl_gui,)
 	var/list/colors = list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
 	var/current_color_index = 1
 	var/ghetto = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	var/datum/component/mobhook
+	var/datum/radial_menu/persistent/wiring_gui_menu
 
 /obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -85,7 +86,8 @@
 /obj/item/twohanded/rcl/Destroy()
 	QDEL_NULL(loaded)
 	last = null
-	setActive(FALSE, null) // setactive(FALSE) removes mobhook
+	QDEL_NULL(mobhook)
+	QDEL_NULL(wiring_gui_menu)
 	return ..()
 
 /obj/item/twohanded/rcl/update_icon()
@@ -115,20 +117,28 @@
 		if(loaded)
 			QDEL_NULL(loaded)
 			loaded = null
+		QDEL_NULL(wiring_gui_menu)
 		unwield(user)
-		setActive(wielded, user)
+		active = wielded
 		return TRUE
 	return FALSE
+
+/obj/item/twohanded/rcl/pickup(mob/user)
+	..()
+	getMobhook(user)
+
 
 /obj/item/twohanded/rcl/dropped(mob/wearer)
 	..()
 	if(mobhook)
-		setActive(FALSE, mobhook.parent)
+		active = FALSE
+		QDEL_NULL(mobhook)
 	last = null
+	QDEL_NULL(wiring_gui_menu)
 
 /obj/item/twohanded/rcl/attack_self(mob/user)
 	..()
-	setActive(wielded, user)
+	active = wielded
 	if(!active)
 		last = null
 	else if(!last)
@@ -137,17 +147,25 @@
 				last = C
 				break
 
-/obj/item/twohanded/rcl/proc/setActive(toggle, mob/user)
-	active = toggle
-	if (active && user)
-		if (mobhook && mobhook.parent != user)
+/obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
+	if(to_hook)
+		if(mobhook && mobhook.parent != to_hook)
 			QDEL_NULL(mobhook)
 		if (!mobhook)
-			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/trigger)))
+			mobhook = to_hook.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/trigger)))
 	else
 		QDEL_NULL(mobhook)
 
+
 /obj/item/twohanded/rcl/proc/trigger(mob/user)
+	if(active)
+		layCable(user)
+	if(wiring_gui_menu) //update the wire options as you move
+		wiringGuiUpdate(user)
+
+
+//previous contents of trigger(), lays cable each time the player moves
+/obj/item/twohanded/rcl/proc/layCable(mob/user)
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
@@ -156,7 +174,7 @@
 
 	if(prob(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
 		to_chat(user, "<span class='warning'>[src]'s wires jam!</span>")
-		setActive(FALSE, user)
+		active = FALSE
 		return
 	else
 		if(last)
@@ -180,6 +198,92 @@
 	update_icon()
 
 
+//searches the current tile for a stub cable of the same colour
+/obj/item/twohanded/rcl/proc/findLinkingCable(mob/user)
+	var/turf/T
+	if(!isturf(user.loc))
+		return
+
+	T = get_turf(user)
+	if(T.intact || !T.can_have_cabling())
+		return
+
+	for(var/obj/structure/cable/C in T)
+		if(!C)
+			continue
+		if(C.cable_color != GLOB.cable_colors[colors[current_color_index]])
+			continue
+		if(C.d1 == 0)
+			return C
+			break
+	return
+
+
+/obj/item/twohanded/rcl/proc/wiringGuiGenerateChoices(mob/user)
+	var/fromdir = 0
+	var/obj/structure/cable/linkingCable = findLinkingCable(user)
+	if(linkingCable)
+		fromdir = linkingCable.d2
+
+	var/list/wiredirs = list("1","5","4","6","2","10","8","9")
+	for(var/icondir in wiredirs)
+		var/dirnum = text2num(icondir)
+		var/cablesuffix = "[min(fromdir,dirnum)]-[max(fromdir,dirnum)]"
+		if(fromdir == dirnum) //cables can't loop back on themselves
+			cablesuffix = "invalid"
+		var/image/img = image(icon = 'icons/mob/radial.dmi', icon_state = "cable_[cablesuffix]")
+		img.color = GLOB.cable_colors[colors[current_color_index]]
+		wiredirs[icondir] = img
+	return wiredirs
+
+/obj/item/twohanded/rcl/proc/showWiringGui(mob/user)
+	var/list/choices = wiringGuiGenerateChoices(user)
+
+	wiring_gui_menu = show_radial_menu_persistent(user, src , choices, select_proc = CALLBACK(src, .proc/wiringGuiReact, user), radius = 42)
+
+/obj/item/twohanded/rcl/proc/wiringGuiUpdate(mob/user)
+	if(!wiring_gui_menu)
+		return
+
+	wiring_gui_menu.entry_animation = FALSE //stop the open anim from playing each time we update
+	var/list/choices = wiringGuiGenerateChoices(user)
+
+	wiring_gui_menu.change_choices(choices,FALSE)
+
+
+//Callback used to respond to interactions with the wiring menu
+/obj/item/twohanded/rcl/proc/wiringGuiReact(mob/living/user,choice)
+	if(!choice) //close on a null choice (the center button)
+		QDEL_NULL(wiring_gui_menu)
+		return
+
+	choice = text2num(choice)
+
+	if(!isturf(user.loc))
+		return
+	if(is_empty(user, 0))
+		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
+		return
+
+	var/turf/T = get_turf(user)
+	if(T.intact || !T.can_have_cabling())
+		return
+
+	loaded.item_color	 = colors[current_color_index]
+
+	var/obj/structure/cable/linkingCable = findLinkingCable(user)
+	if(linkingCable)
+		if(choice != linkingCable.d2)
+			loaded.cable_join(linkingCable, user, FALSE, choice)
+			last = null
+	else
+		last = loaded.place_turf(get_turf(src), user, choice)
+
+	is_empty(user) //If we've run out, display message
+
+	wiringGuiUpdate(user)
+
+
 /obj/item/twohanded/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
 	. = ..()
 	loaded = new()
@@ -192,12 +296,21 @@
 	update_icon()
 
 /obj/item/twohanded/rcl/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/rcl))
+	if(istype(action, /datum/action/item_action/rcl_col))
 		current_color_index++;
 		if (current_color_index > colors.len)
 			current_color_index = 1
 		var/cwname = colors[current_color_index]
 		to_chat(user, "Color changed to [cwname]!")
+		if(loaded)
+			loaded.item_color= colors[current_color_index]
+		if(wiring_gui_menu)
+			wiringGuiUpdate(user)
+	else if(istype(action, /datum/action/item_action/rcl_gui))
+		if(wiring_gui_menu) //The menu is already open, close it
+			QDEL_NULL(wiring_gui_menu)
+		else //open the menu
+			showWiringGui(user)
 
 /obj/item/twohanded/rcl/ghetto
 	actions_types = list()

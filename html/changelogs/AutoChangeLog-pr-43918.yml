@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - balance: "The crabphone will no longer deafen everyone who didn't have the foreknowledge that it was coming."
+  - balance: "The crabphone has 80% less HP, as befits something that costs 7 TC and is not two bubblegums stacked on top of eachother."

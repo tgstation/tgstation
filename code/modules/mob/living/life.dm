@@ -1,4 +1,5 @@
-/mob/living/Life(seconds, times_fired)
+/mob/living/proc/Life(seconds, times_fired)
+	set waitfor = FALSE
 	set invisibility = 0
 
 	if(digitalinvis)
@@ -33,43 +34,44 @@
 		return
 	if(!loc)
 		return
-	var/datum/gas_mixture/environment = loc.return_air()
 
-	if(stat != DEAD)
-		//Mutations and radiation
-		handle_mutations_and_radiation()
+	if(!IsInStasis())
 
-	if(stat != DEAD)
-		//Breathing, if applicable
-		handle_breathing(times_fired)
+		if(stat != DEAD)
+			//Mutations and radiation
+			handle_mutations_and_radiation()
 
-	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+		if(stat != DEAD)
+			//Breathing, if applicable
+			handle_breathing(times_fired)
 
-	if (QDELETED(src)) // diseases can qdel the mob via transformations
-		return
+		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
-	if(stat != DEAD)
-		//Random events (vomiting etc)
-		handle_random_events()
+		if (QDELETED(src)) // diseases can qdel the mob via transformations
+			return
 
-	//Handle temperature/pressure differences between body and environment
-	if(environment)
-		handle_environment(environment)
+		if(stat != DEAD)
+			//Random events (vomiting etc)
+			handle_random_events()
+
+		//Handle temperature/pressure differences between body and environment
+		var/datum/gas_mixture/environment = loc.return_air()
+		if(environment)
+			handle_environment(environment)
+
+		//stuff in the stomach
+		handle_stomach()
+
+		handle_gravity()
+
+		if(stat != DEAD)
+			handle_traits() // eye, ear, brain damages
+			handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	handle_fire()
 
-	//stuff in the stomach
-	handle_stomach()
-
-	handle_gravity()
-
 	if(machine)
 		machine.check_eye(src)
-
-	if(stat != DEAD)
-		handle_traits() // eye, ear, brain damages
-	if(stat != DEAD)
-		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	if(stat != DEAD)
 		return 1
@@ -126,7 +128,7 @@
 /mob/living/proc/handle_traits()
 	//Eyes
 	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(has_trait(TRAIT_BLIND)))
+		if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
 			eye_blind = max(eye_blind-1,0)
 			if(client && !eye_blind)
 				clear_alert("blind")

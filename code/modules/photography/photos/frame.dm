@@ -46,7 +46,7 @@
 /obj/item/wallframe/picture/update_icon()
 	cut_overlays()
 	if(displayed)
-		add_overlay(getFlatIcon(displayed))
+		add_overlay(image(displayed))
 
 /obj/item/wallframe/picture/after_attach(obj/O)
 	..()
@@ -148,7 +148,7 @@
 /obj/structure/sign/picture_frame/update_icon()
 	cut_overlays()
 	if(framed)
-		add_overlay(getFlatIcon(framed))
+		add_overlay(image(framed))
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

@@ -1,5 +1,5 @@
 /datum/job
-	//The name of the job
+	//The name of the job , used for preferences, bans and more. Make sure you know what you're doing before changing this.
 	var/title = "NOPE"
 
 	//Job access. The use of minimal_access or access is determined by a config setting: config.jobs_have_minimal_access
@@ -13,8 +13,8 @@
 	var/list/head_announce = null
 
 	//Bitflags for the job
-	var/flag = NONE
-	var/department_flag = NONE
+	var/flag = NONE //Deprecated
+	var/department_flag = NONE //Deprecated
 	var/auto_deadmin_role_flags = NONE
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
@@ -66,7 +66,7 @@
 	//do actions on H but send messages to M as the key may not have been transferred_yet
 	if(mind_traits)
 		for(var/t in mind_traits)
-			H.mind.add_trait(t, JOB_TRAIT)
+			ADD_TRAIT(H.mind, t, JOB_TRAIT)
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
@@ -139,8 +139,8 @@
 		return 0
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0
-	if(!isnum(C.player_age))
-		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
+	if(!SSdbcore.Connect())
+		return 0 //Without a database connection we can't get a player's age so we'll assume they're old enough for all jobs
 	if(!isnum(minimal_player_age))
 		return 0
 

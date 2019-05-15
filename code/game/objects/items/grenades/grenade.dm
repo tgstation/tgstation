@@ -33,7 +33,7 @@
 		qdel(src)
 
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
-	var/clumsy = user.has_trait(TRAIT_CLUMSY)
+	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
 	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
 		if(prob(50))
 			to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
@@ -68,9 +68,6 @@
 	log_grenade(user, T) //Inbuilt admin procs already handle null users
 	if(user)
 		add_fingerprint(user)
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			C.throw_mode_on()
 		if(msg)
 			to_chat(user, "<span class='warning'>You prime [src]! [DisplayTimeText(det_time)]!</span>")
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
@@ -114,3 +111,8 @@
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 		prime()
 		return TRUE //It hit the grenade, not them
+		
+/obj/item/grenade/afterattack(atom/target, mob/user)
+	. = ..()
+	if(active)
+		user.throw_item(target)

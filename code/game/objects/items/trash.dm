@@ -72,6 +72,11 @@
 	resistance_flags = NONE
 	grind_results = list("aluminium" = 10)
 
+/obj/item/trash/can/Initialize()
+	. = ..()
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)
+
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
 

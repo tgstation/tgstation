@@ -93,7 +93,7 @@
 
 //called if Initialize returns INITIALIZE_HINT_LATELOAD
 /atom/proc/LateInitialize()
-	return
+	set waitfor = FALSE
 
 // Put your AddComponent() calls here
 /atom/proc/ComponentInitialize()
