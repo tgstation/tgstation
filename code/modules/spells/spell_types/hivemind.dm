@@ -80,13 +80,15 @@
 	hive.add_to_hive(target)
 	hive.threat_level = max(0, hive.threat_level-0.1)
 	if(bruteforce)
-		if(target.anti_magic_check(FALSE, FALSE, TRUE, 5))
+		if(target.anti_magic_check(FALSE, FALSE, TRUE, 6))
 			target.adjustBrainLoss(10)
 		to_chat(user, "<span class='warning'>We are briefly exhausted by the effort required by our enhanced assimilation abilities.</span>")
 		user.Immobilize(50)
 		SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
 		for(var/obj/item/implant/mindshield/M in target.implants)
 			qdel(M)
+	else
+		target.anti_magic_check(FALSE, FALSE, TRUE)
 
 /obj/effect/proc_holder/spell/target_hive/hive_remove
 	name = "Release Vessel"
@@ -630,7 +632,7 @@
 		revert_cast()
 		return
 	if(!target.undergoing_cardiac_arrest() && target.can_heartattack())
-		to_chat(target, "<span class='userdanger'>You feel a sharp pain, and foreign presence in your mind!!</span>")
+		to_chat(target, "<span class='userdanger'>You start feeling a sharp pain, and foreign presence in your mind!!</span>")
 		var/success = TRUE
 		if(target.anti_magic_check(FALSE, FALSE, TRUE))
 			to_chat(user, "<span class='notice'>We begin bruteforcing the tinfoil barriers of [target.name] and overload [target.p_their()] medulla.</span>")
@@ -828,11 +830,7 @@
 	var/list/valid_targets = list()
 	for(var/datum/mind/M in hive.hivemembers)
 		var/mob/living/carbon/C = M.current
-		if(!C)
-			continue
-		if(is_hivehost(C) || C.is_wokevessel())
-			continue
-		if(C.stat == DEAD || C.InCritical())
+		if(!C || is_hivehost(C) || C.is_wokevessel() || C.stat == DEAD || C.InCritical() || C.anti_magic_check(FALSE, FALSE, TRUE, 4))
 			continue
 		valid_targets += C
 
@@ -977,6 +975,7 @@
 			continue
 		C.Jitter(15)
 		C.Unconscious(150)
+		C.anti_magic_check(FALSE, FALSE, TRUE, 6)
 		to_chat(C, "<span class='boldwarning'>Something's wrong...</span>")
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, "<span class='boldwarning'>...your memories are becoming fuzzy.</span>"), 45)
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, "<span class='boldwarning'>You try to remember who you are...</span>"), 90)

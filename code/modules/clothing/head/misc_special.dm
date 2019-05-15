@@ -270,7 +270,7 @@
 
 /obj/item/clothing/head/foilhat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, SLOT_HEAD, 5, TRUE, null, CALLBACK(src, .proc/warp_up))
+	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, SLOT_HEAD, 6, TRUE, null, CALLBACK(src, .proc/warp_up))
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -303,11 +303,12 @@
 	desc = "A badly warped up hat. Quite unprobable this will still work against any of fictional and contemporary dangers it used to."
 	var/datum/component/anti_magic/C = GetComponent(/datum/component/anti_magic)
 	C.RemoveComponent()
-	if(ismob(loc))
-		var/mob/target = loc
+	if(isliving(loc))
+		var/mob/living/target = loc
 		if(target?.get_item_by_slot(SLOT_HEAD) == src)
 			QDEL_NULL(paranoia)
-			to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
+			if(!target.IsUnconscious())
+				to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
 
 /obj/item/clothing/head/foilhat/attack_hand(mob/user)
 	if(GetComponent(/datum/component/anti_magic) && iscarbon(user))
