@@ -27,6 +27,7 @@
 		/obj/effect/proc_holder/spell/targeted/hive_reclaim = 5,
 		/obj/effect/proc_holder/spell/targeted/hive_hack = 5,
 		//Tier 3 - Combat related powers
+		/obj/effect/proc_holder/spell/target_hive/microwave_shock = 10,
 		/obj/effect/proc_holder/spell/self/hive_drain = 10,
 		/obj/effect/proc_holder/spell/targeted/induce_panic = 10,
 		/obj/effect/proc_holder/spell/targeted/forcewall/hive = 10,
