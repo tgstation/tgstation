@@ -58,7 +58,7 @@
 	if(!target.mind || !target.client || target.stat == DEAD)
 		to_chat(user, "<span class='notice'>We detect no neural activity in this body.</span>")
 	var/shielded = HAS_TRAIT(target, TRAIT_MINDSHIELD)
-	var/foiled = HAS_TRAIT(target, TRAIT_TINFOILSHIELD)
+	var/foiled = target.anti_magic_check(FALSE, FALSE, TRUE, 0)
 	if(shielded && !bruteforce)
 		to_chat(user, "<span class='warning'>Powerful technology protects [target.name]'s mind.</span>")
 		revert_cast()
@@ -80,12 +80,8 @@
 	hive.add_to_hive(target)
 	hive.threat_level = max(0, hive.threat_level-0.1)
 	if(bruteforce)
-		if(HAS_TRAIT(target, TRAIT_TINFOILSHIELD))
-			target.electrocute_act(10, user, safety = TRUE)
+		if(target.anti_magic_check(FALSE, FALSE, TRUE, 5))
 			target.adjustBrainLoss(10)
-			var/obj/item/clothing/head/foilhat/hat = target.get_item_by_slot(SLOT_HEAD)
-			if(istype(hat))
-				hat.warp_up(target)
 		to_chat(user, "<span class='warning'>We are briefly exhausted by the effort required by our enhanced assimilation abilities.</span>")
 		user.Immobilize(50)
 		SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
@@ -128,6 +124,7 @@
 	action_icon_state = "see"
 	var/mob/living/carbon/vessel
 	var/mob/living/host //Didn't really have any other way to auto-reset the perspective if the other mob got qdeled
+	var/limited = FALSE
 
 	charge_max = 20
 
@@ -139,6 +136,13 @@
 	if(!active)
 		vessel = targets[1]
 		if(vessel)
+			if(vessel.anti_magic_check(FALSE, FALSE, TRUE, 0))
+				if(get_dist(src, vessel) > 42)
+					to_chat(user, "<span class='warning'>We were unable to link our view with [vessel.name]. A barrier of tinfoil prevents us to do so at this distance.</span>")
+					revert_cast()
+					return
+				limited = TRUE
+				to_chat(user, "<span class='warning'>A barrier of tinfoil drastically dampens our link with [vessel.name]. We'll be able to sustain the link as long as they remain within 42 tiles from us.</span>")
 			vessel.apply_status_effect(STATUS_EFFECT_BUGGED, user)
 			user.reset_perspective(vessel)
 			active = TRUE
@@ -154,14 +158,16 @@
 		if(the_spell && the_spell.active)
 			user.overlay_fullscreen("hive_mc", /obj/screen/fullscreen/hive_mc)
 		active = FALSE
+		limited = FALSE
 		revert_cast()
 
 /obj/effect/proc_holder/spell/target_hive/hive_see/process()
-	if(active && (!vessel || !is_hivemember(vessel) || QDELETED(vessel)))
+	if(active && (!vessel || !is_hivemember(vessel) || QDELETED(vessel) || (limited && get_dist(vessel, host) > 42)))
 		to_chat(host, "<span class='warning'>Our vessel is one of us no more!</span>")
 		host.reset_perspective()
 		host.clear_fullscreen("hive_eyes")
 		active = FALSE
+		limited = FALSE
 		if(!QDELETED(vessel))
 			vessel.remove_status_effect(STATUS_EFFECT_BUGGED)
 	..()
@@ -199,7 +205,7 @@
 					power *= 2.5
 				else
 					power *= 3
-		if(HAS_TRAIT(target, TRAIT_TINFOILSHIELD))
+		if(target.anti_magic_check(FALSE, FALSE, TRUE))
 			power *= 0.5
 		if(power > 50 && user.z == target.z)
 			to_chat(user, "<span class='notice'>We have overloaded the vessel for a short time!</span>")
@@ -245,7 +251,7 @@
 		if(user.z != L.z || L.stat == DEAD)
 			message += " could not be found."
 		else
-			var/multiplier = HAS_TRAIT(L, TRAIT_TINFOILSHIELD) ? rand(0.6, 1.4) : 1
+			var/multiplier = L.anti_magic_check(FALSE, FALSE, TRUE) ? rand(0.6, 1.4) : 1
 			switch(distance*multiplier)
 				if(0 to 2)
 					message += " is right next to us!"
@@ -263,14 +269,14 @@
 		var/mob/living/carbon/C = enemy.owner?.current
 		if(!C)
 			continue
-		var/multiplier = HAS_TRAIT(C, TRAIT_TINFOILSHIELD) ? rand(0.6, 1.4) : 1
+		var/multiplier = C.anti_magic_check(FALSE, FALSE, TRUE) ? rand(0.6, 1.4) : 1
 		var/mob/living/real_enemy = C.get_real_hivehost()
 		distance = get_dist(user, real_enemy)
 		message = "A host that we can track for [(hive.individual_track_bonus[enemy])/10] extra seconds"
 		if(user.z != real_enemy.z || real_enemy.stat == DEAD)
 			message += " could not be found."
 		else
-			multiplier = HAS_TRAIT(real_enemy, TRAIT_TINFOILSHIELD) ? rand(0.6, 1.4) : 1
+			multiplier = real_enemy.anti_magic_check(FALSE, FALSE, TRUE) ? rand(0.6, 1.4) : 1
 			switch(distance*multiplier)
 				if(0 to 2)
 					message += " is right next to us!"
@@ -319,7 +325,7 @@
 		if(!target)
 			to_chat(user, "<span class='warning'>We have run out of vessels to drain.</span>")
 			break
-		var/regen = HAS_TRAIT(target, TRAIT_TINFOILSHIELD) ? 3 : 5
+		var/regen = target.anti_magic_check(FALSE, FALSE, TRUE) ? 2.5 : 5
 		target.adjustBrainLoss(regen)
 		if(user.getBruteLoss() > user.getFireLoss())
 			user.heal_ordered_damage(regen, list(CLONE, BRUTE, BURN))
@@ -360,6 +366,7 @@
 	var/power = 600
 	var/time_initialized = 0
 	var/out_of_range = FALSE
+	var/restricted_range = FALSE
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/proc/release_control() //If the spell is active, force everybody into their original bodies if they exist, ghost them otherwise, delete the backseat
 	if(!active)
@@ -393,6 +400,8 @@
 		if(hive)
 			hive.threat_level += 1
 
+	restricted_range = FALSE
+
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/on_lose(mob/user)
 	release_control()
@@ -407,12 +416,15 @@
 		original_body = user
 		vessel = targets[1]
 		to_chat(user, "<span class='notice'>We begin merging our mind with [vessel.name].</span>")
-		var/timely = HAS_TRAIT(vessel, TRAIT_TINFOILSHIELD) ? 100 : 50
-		if(!do_after(user,timely,0,user))
+		var/timely = 50
+		if(vessel.anti_magic_check(FALSE, FALSE, TRUE))
+			timely = 100
+			restricted_range = TRUE
+		if(!do_after(user, timely, FALSE, user))
 			to_chat(user, "<span class='notice'>We fail to assume control of the target.</span>")
 			revert_cast()
 			return
-		if(user.z != vessel.z)
+		if(user.z != vessel.z || (restricted_range && get_dist(vessel, user) > 35))
 			to_chat(user, "<span class='notice'>Our vessel is too far away to control.</span>")
 			revert_cast()
 			return
@@ -459,6 +471,10 @@
 	else
 		release_control()
 
+/obj/effect/proc_holder/spell/target_hive/hive_control/revert_cast()
+	. = ..()
+	restricted_range = FALSE
+
 /obj/effect/proc_holder/spell/target_hive/hive_control/process()
 	if(active)
 		if(QDELETED(vessel)) //If we've been gibbed or otherwise deleted, ghost both of them and kill the original
@@ -478,7 +494,7 @@
 			to_chat(vessel, "<span class='userdanger'>Our body has been destroyed, the hive cannot survive without its host!</span>")
 			release_control()
 		else
-			var/multiplier = HAS_TRAIT(vessel, TRAIT_TINFOILSHIELD) ? 0.7 : 1
+			var/multiplier = restricted_range ? 0.5 : 1
 			if(!out_of_range && get_dist(starting_spot, vessel) > 14*multiplier)
 				out_of_range = TRUE
 				flash_color(vessel, flash_color="#800080", flash_time=10)
@@ -526,7 +542,7 @@
 			continue
 		target.Jitter(14)
 		target.apply_damage(35 + rand(0,15), STAMINA, target.get_bodypart(BODY_ZONE_HEAD))
-		if(target.is_real_hivehost() || HAS_TRAIT(target, TRAIT_TINFOILSHIELD))
+		if(target.is_real_hivehost() || target.anti_magic_check(FALSE, FALSE, TRUE))
 			continue
 		if(prob(20))
 			var/text = pick(";HELP!","I'm losing control of the situation!!","Get me outta here!")
@@ -586,7 +602,7 @@
 		victims += target
 	var/sleepytime = max(80,240/(1+round(victims.len/3)))
 	for(var/mob/living/carbon/victim in victims)
-		if(victims.len >= 4 && HAS_TRAIT(victim, TRAIT_TINFOILSHIELD))
+		if(victim.anti_magic_check(FALSE, FALSE, TRUE))
 			to_chat(victim, "You suddendly feel so tired you could take a nap")
 			victim.apply_damage(max(30 - victims.len, 15), STAMINA, victim.get_bodypart(BODY_ZONE_HEAD))
 			victim.drowsyness += max(30 - victims.len, 15)
@@ -594,7 +610,7 @@
 		else
 			victim.Sleeping(sleepytime)
 	for(var/mob/living/silicon/victim in victims)
-		var/multiplier = (victims.len >= 4 && HAS_TRAIT(victim, TRAIT_TINFOILSHIELD)) ? 0.5 : 1
+		var/multiplier = victim.anti_magic_check(FALSE, FALSE, TRUE) ? 0.5 : 1
 		victim.Unconscious(sleepytime * multiplier)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	if(victims.len && hive)
@@ -616,9 +632,9 @@
 	if(!target.undergoing_cardiac_arrest() && target.can_heartattack())
 		to_chat(target, "<span class='userdanger'>You feel a sharp pain, and foreign presence in your mind!!</span>")
 		var/success = TRUE
-		if(HAS_TRAIT(target, TRAIT_TINFOILSHIELD))
-			to_chat(user, "<span class='notice'>We begin bruteforcing past the mental barriers of [target.name] and overload [target.p_their()] medulla.</span>")
-			if(!do_after(user, 7 * get_dist(user, target), FALSE, user) || !(target in view(range)))
+		if(target.anti_magic_check(FALSE, FALSE, TRUE))
+			to_chat(user, "<span class='notice'>We begin bruteforcing the tinfoil barriers of [target.name] and overload [target.p_their()] medulla.</span>")
+			if(!do_after(user, 50, FALSE, user) || !(target in view(range)))
 				to_chat(user, "<span class='warning'>we fail to overload the vessel's medulla.</span>")
 				success = FALSE
 		if(success)
@@ -653,11 +669,11 @@
 	var/pulse_cap = min(12, 8+(round(hive.hive_size/20)))
 	distort(user, target, pulse_cap)
 
-/obj/effect/proc_holder/spell/target_hive/hive_warp/proc/distort(user, target, pulse_cap, pulses = 0)
+/obj/effect/proc_holder/spell/target_hive/hive_warp/proc/distort(user, target, pulse_cap, pulses = 0, chargecost = 1)
 	for(var/mob/living/carbon/human/victim in view(7,target))
 		if(user == victim || victim.is_real_hivehost())
 			continue
-		var/multiplier = HAS_TRAIT(victim, TRAIT_TINFOILSHIELD) ? 0.5 : 1
+		var/multiplier = victim.anti_magic_check(FALSE, FALSE, TRUE, chargecost) ? 0.5 : 1
 		if(pulses < 4)
 			victim.apply_damage(10*multiplier, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 25 over 10 seconds when taking stamina regen (3 per tick(2 seconds)) into account
 			victim.hallucination += 5*multiplier
@@ -669,7 +685,7 @@
 			victim.hallucination += 15*multiplier
 
 	if(pulses < pulse_cap && user && target)
-		addtimer(CALLBACK(src, "distort", user, target, pulse_cap, pulses+1), 25)
+		addtimer(CALLBACK(src, "distort", user, target, pulse_cap, pulses+1, 0), 25)
 
 /obj/effect/proc_holder/spell/targeted/hive_hack
 	name = "Network Invasion"
@@ -696,7 +712,7 @@
 
 	to_chat(user, "<span class='notice'>We begin probing [target.name]'s mind!</span>")
 	if(!do_after(user,100,0,target))
-		var/foiled = HAS_TRAIT(target, TRAIT_TINFOILSHIELD)
+		var/foiled = target.anti_magic_check(FALSE, FALSE, TRUE)
 		if(!in_hive || foiled)
 			var/timely = !in_hive ? 200 : 100
 			to_chat(user, "<span class='notice'>Their mind slowly opens up to us.</span>")

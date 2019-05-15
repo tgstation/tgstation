@@ -267,11 +267,14 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
 	equip_delay_other = 140
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
-	var/warped = FALSE
+
+/obj/item/clothing/head/foilhat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, SLOT_HEAD, 5, TRUE, null, CALLBACK(src, .proc/warp_up))
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if(slot == SLOT_HEAD && !warped)
+	. = ..()
+	if(slot == SLOT_HEAD && GetComponent(/datum/component/anti_magic))
 		if(paranoia)
 			QDEL_NULL(paranoia)
 		paranoia = new()
@@ -279,12 +282,11 @@
 
 		user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 		to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
-		ADD_TRAIT(user, TRAIT_TINFOILSHIELD, TINFOIL_HAT_TRAIT)
 
 
 /obj/item/clothing/head/foilhat/MouseDrop(atom/over_object)
 	//God Im sorry
-	if(!warped && usr)
+	if(usr && GetComponent(/datum/component/anti_magic))
 		var/mob/living/carbon/C = usr
 		if(src == C.head)
 			to_chat(C, "<span class='userdanger'>Why would you want to take this off? Do you want them to get into your mind?!</span>")
@@ -293,27 +295,22 @@
 
 /obj/item/clothing/head/foilhat/dropped(mob/user)
 	. = ..()
-	if(warped)
-		return
-	if(paranoia)
+	if(GetComponent(/datum/component/anti_magic) && paranoia)
 		QDEL_NULL(paranoia)
-	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //conceptually copied from judical visors, as dropped is called while the item still resides the slot.
 
-/obj/item/clothing/head/foilhat/proc/check_on_mob(mob/living/user)
-	if(user && src != user.get_item_by_slot(SLOT_HEAD))
-		REMOVE_TRAIT(user, TRAIT_TINFOILSHIELD, TINFOIL_HAT_TRAIT)
-
-/obj/item/clothing/head/foilhat/proc/warp_up(mob/living/target)
+/obj/item/clothing/head/foilhat/proc/warp_up()
 	name = "scorched tinfoil hat"
 	desc = "A badly warped up hat. Quite unprobable this will still work against any of fictional and contemporary dangers it used to."
-	warped = TRUE
-	if(target?.get_item_by_slot(SLOT_HEAD) == src)
-		REMOVE_TRAIT(target, TRAIT_TINFOILSHIELD, TINFOIL_HAT_TRAIT)
-		QDEL_NULL(paranoia)
-		to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
+	var/datum/component/anti_magic/C = GetComponent(/datum/component/anti_magic)
+	C.RemoveComponent()
+	if(ismob(loc))
+		var/mob/target = loc
+		if(target?.get_item_by_slot(SLOT_HEAD) == src)
+			QDEL_NULL(paranoia)
+			to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
 
 /obj/item/clothing/head/foilhat/attack_hand(mob/user)
-	if(!warped && iscarbon(user))
+	if(GetComponent(/datum/component/anti_magic) && iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head)
 			to_chat(user, "<span class='userdanger'>Why would you want to take this off? Do you want them to get into your mind?!</span>")
@@ -322,4 +319,5 @@
 
 /obj/item/clothing/head/foilhat/microwave_act(obj/machinery/microwave/M)
 	. = ..()
-	warp_up()
+	if(GetComponent(/datum/component/anti_magic))
+		warp_up()

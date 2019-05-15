@@ -59,7 +59,7 @@
 
 /obj/effect/proc_holder/spell/targeted/mindread/cast(list/targets, mob/living/carbon/human/user = usr)
 	for(var/mob/living/M in targets)
-		if(HAS_TRAIT(usr, TRAIT_TINFOILSHIELD) || HAS_TRAIT(M, TRAIT_TINFOILSHIELD))
+		if(usr.anti_magic_check(FALSE, FALSE, TRUE) || M.anti_magic_check(FALSE, FALSE, TRUE))
 			to_chat(usr, "<span class='warning'>As you reach out with your mind, you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 			return
 		if(M.stat == DEAD)
