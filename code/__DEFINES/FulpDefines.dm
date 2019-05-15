@@ -20,3 +20,9 @@
 
 // RECIPES
 #define CAT_STRUCTURE	"Structures"
+
+
+
+// MISSING REF
+/obj/item/circuitboard/machine/vr_sleeper
+	var/whydoesthisexist = "because somebody fucked up putting this on TG, and vr_sleeper.dm is pointing to an object that was never defined. Here it is as a temp ref, so we can compile."
