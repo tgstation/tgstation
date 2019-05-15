@@ -11,12 +11,9 @@ client/verb/check_antag_token()
 	if(!SSticker || !SSticker.mode || !SSticker.mode.available_antag_tokens || !SSticker.mode.available_antag_tokens.len || (SSticker.current_state < GAME_STATE_PLAYING))
 		alert(src,"You have [tokens] antagonist tokens. You must wait untill the game starts to use one.","Antagonist Tokens","Ok")
 		return
-	var/list/choices = SSticker.mode.available_antag_tokens
-	if(istype(choices,/list) && GLOB && SSantagtokens)
-		for(var/t in choices)
-			var/minplayers = SSantagtokens.token_role_min_players[t]
-			if(minplayers && isnum(minplayers) && (minplayers < GLOB.clients.len))
-				choices -= t
+	var/list/choices = SSticker.mode.available_antag_tokens.Copy()
+	if(SSantagtokens)
+		choices = SSantagtokens.remove_unavailable_token_roles(choices)
 	if(!choices || !choices.len)
 		alert(src,"Antagonist tokens are unavialable at this time.","Antagonist Tokens","Ok")
 		return
@@ -95,11 +92,12 @@ client/verb/check_antag_token()
 				if((CONFIG_GET(flag/protect_roles_from_antagonist) && (mob.mind.assigned_role in GLOB.memorized_restricted_jobs))||(J && J.antagonist_immune))
 					to_chat(src, "<B>A [mob.mind.assigned_role] cannot be an antagonist at this time.</B>")
 					return 0
-			if(antagtype && GLOB && SSantagtokens)
-				var/minplayers = SSantagtokens.token_role_min_players[antagtype]
-				if(minplayers && isnum(minplayers) && (minplayers < GLOB.clients.len))
-					to_chat(src, "<B>The role of [antagtype] is unavialable at this time.</B>")
-					return
+			var/list/choices = SSticker.mode.available_antag_tokens.Copy()
+			if(SSantagtokens)
+				choices = SSantagtokens.remove_unavailable_token_roles(choices)
+			if(!(antagtype in choices))
+				to_chat(src, "<B>The antagonist role [antagtype] is unavailable right now.</B>")
+				return
 			switch(antagtype)
 				if("traitor")
 					if(istype(mob,/mob/living/carbon/human))

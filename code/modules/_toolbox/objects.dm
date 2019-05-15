@@ -461,6 +461,12 @@
 /obj/machinery/conveyor_switch/attack_robot(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/disposal/bin/attack_ai(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/disposal/bin/attack_robot(mob/user)
+	return attack_hand(user)
+
 //Degenerals large airlocks
 
 /obj/machinery/door/airlock/glass_large/security

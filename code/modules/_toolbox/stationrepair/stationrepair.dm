@@ -258,6 +258,7 @@ proc
 										break
 							if(updateair)
 								F.air.parse_gas_string(F.initial_gas_mix)
+								F.update_icon()
 		for(var/text in GLOB.savedstationwalls)
 			var/spacepos = findtext(text," ",1,length(text)+1)
 			var/turf/T = locate(text2num(copytext(text,1,spacepos)), text2num(copytext(text,spacepos+1,length(text)+1)),stationz)

@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(antagtokens)
 
 /datum/controller/subsystem/antagtokens/Initialize(start_timeofday)
 	var/datum/game_mode/traitor/T = new()
-	GLOB.memorized_restricted_jobs = T.protected_jobs
+	GLOB.memorized_restricted_jobs = T.protected_jobs.Copy()
 	qdel(T)
 	//seeing who used an antag token when the server crashed, if it crashed.
 	var/savefile/S = new /savefile(ANTAGTOKENMINUTESPATH)
@@ -75,6 +75,19 @@ SUBSYSTEM_DEF(antagtokens)
 		if(istype(uncanceled_antag_tokens) && !(ckey in uncanceled_antag_tokens))
 			uncanceled_antag_tokens += ckey
 			S["activated_tokens"] << uncanceled_antag_tokens
+
+/datum/controller/subsystem/antagtokens/proc/remove_unavailable_token_roles(list/choices)
+	if(istype(choices,/list))
+		for(var/t in choices)
+			var/minplayers
+			if(t in token_role_min_players)
+				minplayers = token_role_min_players[t]
+			var/num_players = GLOB.clients.len
+			if((minplayers && isnum(minplayers)) && (minplayers > num_players))
+				choices -= t
+	else
+		choices = list()
+	return choices
 
 /datum/controller/subsystem/antagtokens/fire(resumed)
 	if(!last_check)
