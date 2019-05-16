@@ -179,8 +179,8 @@
 /mob/living/simple_animal/hostile/construct/armored/angelic
 	icon_state = "behemoth_angelic"
 	icon_living = "behemoth_angelic"
+	loot = list(/obj/item/angelplasm)
 	
-
 ////////////////////////Wraith/////////////////////////////////////////////
 /mob/living/simple_animal/hostile/construct/wraith
 	name = "Wraith"
@@ -230,6 +230,7 @@
 /mob/living/simple_animal/hostile/construct/wraith/angelic
 	icon_state = "floating_angelic"
 	icon_living = "floating_angelic"
+	loot = list(/obj/item/angelplasm)
 
 /////////////////////////////Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder
@@ -310,6 +311,7 @@
 /mob/living/simple_animal/hostile/construct/builder/angelic
 	icon_state = "artificer_angelic"
 	icon_living = "artificer_angelic"
+	loot = list(/obj/item/angelplasm)
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
