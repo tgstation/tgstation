@@ -271,6 +271,7 @@
 	msg += "</span>"
 
 	if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && !appears_dead && (src != user) && src.mind.isholy)
+		msg += "[t_He] [t_has] a holy aura about [t_him].\n"
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "religious_comfort", /datum/mood_event/religiously_comforted)
 
 	if(!appears_dead)
