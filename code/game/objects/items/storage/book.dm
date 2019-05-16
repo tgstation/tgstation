@@ -211,7 +211,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 				qdel(SS)
 				new /obj/item/soulstone/anybody/purified
 					transfer_soul("VICTIM", M, user)	
-				EX.name = "Purified [EX.name]"
 			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
 
 /obj/item/storage/book/bible/booze
