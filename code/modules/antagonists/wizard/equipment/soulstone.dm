@@ -28,6 +28,8 @@
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
+	if(icon_state = "soulstone2")
+		icon_state = "purified_soulstone2"
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
