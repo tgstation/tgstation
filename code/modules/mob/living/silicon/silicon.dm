@@ -323,13 +323,8 @@
 	usr << browse(list, "window=laws")
 
 /mob/living/silicon/proc/ai_roster()
-	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 400, 500)
-	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
-
-	dat += GLOB.data_core.get_manifest()
-	dat += "</body></html>"
-
-	popup.set_content(dat)
+	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 387, 420)
+	popup.set_content(GLOB.data_core.get_manifest())
 	popup.open()
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
