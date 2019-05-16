@@ -141,11 +141,11 @@
 	..()
 
 //singulo module
-/datum/stationmodule_group/box_singulo
+/datum/stationmodule_group/engi_singulo
 	name = "Boxstation Singulo"
 	station_map = "Box Station"
 	//always = 1
 	//force = "BoxStationSingulo.dmm"
 
-/datum/stationmodule_group/box_singulo/New()
-	possibilities["BoxStationSingulo.dmm"] = list(97,53,2)
+/datum/stationmodule_group/engi_singulo/New()
+	possibilities["alt_engi_singularity.dmm"] = list(97,52,2)
