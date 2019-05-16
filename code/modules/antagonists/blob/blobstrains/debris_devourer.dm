@@ -1,3 +1,5 @@
+#define DEBRIS_DENSITY (length(core.contents) / length(overmind.blobs_legit)) // items per blob
+
 // Accumulates junk liberally
 /datum/blobstrain/debris_devourer
 	name = "Debris Devourer"
@@ -8,7 +10,6 @@
 	complementary_color = "#00558B"
 	blobbernaut_message = "blasts"
 	message = "The blob blasts you"
-	var/list/debris = list()
 
 
 /datum/blobstrain/debris_devourer/attack_living(var/mob/living/L, var/list/nearby_blobs)
@@ -29,7 +30,7 @@
 
 /datum/blobstrain/debris_devourer/proc/debris_attack(mob/living/L, source)
 	var/obj/structure/blob/core/core = overmind.blob_core
-	if (prob(20 * (length(core.contents) / length(overmind.blobs_legit)))) // Pretend the items are spread through the blob and its mobs and not in the core.
+	if (prob(20 * DEBRIS_DENSITY)) // Pretend the items are spread through the blob and its mobs and not in the core.
 		var/obj/item/I = locate() in core
 		if (I && !QDELETED(I))
 			I.forceMove(get_turf(source))
@@ -37,3 +38,9 @@
 
 /datum/blobstrain/debris_devourer/blobbernaut_attack(mob/living/L, mob/living/blobbernaut) // When this blob's blobbernaut attacks people
 	debris_attack(L,blobbernaut)
+
+/datum/blobstrain/debris_devourer/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
+	var/obj/structure/blob/core/core = overmind.blob_core
+	return round(max((coefficient*damage)-min(coefficient*DEBRIS_DENSITY, 10), 0)) // reduce damage taken by items per blob, up to 10
+
+#undef DEBRIS_DENSITY
