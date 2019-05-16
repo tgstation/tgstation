@@ -115,7 +115,7 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/space_heater
-	name = "Space Heater (Machine Board)"
+	name = "Air Conditioner (Machine Board)"
 	build_path = /obj/machinery/space_heater
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 1,
