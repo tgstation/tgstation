@@ -17,7 +17,9 @@
 	if(alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", "Yes", "No") == "Yes")
 		if(dumped || QDELETED(src)) //Prevents fuckers from cheesing alert
 			return FALSE
-		var/turf/targetturf = get_random_station_turf()
+		var/turf/targetturf = get_safe_random_station_turf()
+		if (!targetturf)
+			return FALSE
 		new /obj/effect/dumpeetTarget(targetturf, user)
 		dumped = TRUE
 
@@ -31,7 +33,7 @@
 	density = TRUE
 	pixel_z = -8
 	layer = LARGE_MOB_LAYER
-	max_integrity = 3000
+	max_integrity = 600
 	var/list/accounts_to_rob
 	var/mob/living/carbon/human/bogdanoff
 	var/canwalk = FALSE
@@ -63,7 +65,7 @@
 			if(!card.registered_account.being_dumped)
 				return
 			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>")
-			card.registered_account.being_dumped = FALSE	
+			card.registered_account.being_dumped = FALSE
 			card.registered_account.withdrawDelay = 0
 			if(check_if_finished())
 				qdel(src)
@@ -78,8 +80,8 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	START_PROCESSING(SSfastprocess, src)
-	
+
+
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
 	start_dumping() //The machine doesnt move during this time, giving people close by a small window to grab their funds before it starts running around
 	sleep(10)
@@ -141,6 +143,7 @@
 	cut_overlay("text")
 	add_overlay("text")
 	canwalk = TRUE
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/checkoutmachine/Destroy()
 	stop_dumping()
@@ -155,7 +158,7 @@
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
 		B.dumpeet()
-	dump()	
+	dump()
 
 /obj/structure/checkoutmachine/proc/dump()
 	var/percentage_lost = (rand(1, 10) / 100)
@@ -163,14 +166,14 @@
 		var/datum/bank_account/B = i
 		if(!B.being_dumped)
 			continue
-		var/amount = B.account_balance * percentage_lost 
-		bogdanoff.get_bank_account().transfer_money(B, amount)
-		B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src).name].")
+		var/amount = B.account_balance * percentage_lost
+		var/datum/bank_account/account = bogdanoff.get_bank_account()
+		if (account) // get_bank_account() may return FALSE
+			account.transfer_money(B, amount)
+			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src).name].")
 	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
 
 /obj/structure/checkoutmachine/process()
-	if(!canwalk)
-		return
 	var/anydir = pick(GLOB.cardinals)
 	if(Process_Spacemove(anydir))
 		Move(get_step(src, anydir), anydir)
@@ -206,7 +209,7 @@
 	. = ..()
 	bogdanoff = user
 	addtimer(CALLBACK(src, .proc/startLaunch), 100)
-	sound_to_playing_players('sound/items/dump_it.ogg', 75)
+	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("<span class='deadsay'>Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!</span>", turf_target = get_turf(src))
 
 /obj/effect/dumpeetTarget/proc/startLaunch()
@@ -214,9 +217,9 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src).name] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
-	playsound(src,  'sound/weapons/mortar_whistle.ogg', 80, 1, 6)
+	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, 1, 6)
 	addtimer(CALLBACK(src, .proc/endLaunch), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
-	
+
 
 
 /obj/effect/dumpeetTarget/proc/endLaunch()

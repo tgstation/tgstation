@@ -424,6 +424,7 @@
 	plant_health = 0
 	harvest = 0
 	pestlevel = 0 // Pests die
+	lastproduce = 0
 	if(!dead)
 		update_icon()
 		dead = 1
@@ -812,6 +813,7 @@
 			if(myseed) //Could be that they're just using it as a de-weeder
 				age = 0
 				plant_health = 0
+				lastproduce = 0
 				if(harvest)
 					harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
 				qdel(myseed)

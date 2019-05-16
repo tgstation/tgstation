@@ -83,7 +83,7 @@
 	spawned_mobs += S
 	return S
 
- //special spawn for one member. it can be used for a special mob or simply to give one normal member special items. for special items you can
+ //special spawn for one member. it can be used for a special mob or simply to give one normal member special items.
 /datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(var/mob/dead/leader, var/turf/landing_turf, backstory)
 	var/datum/mind/player_mind = new /datum/mind(leader.key)
 	player_mind.active = TRUE
@@ -97,8 +97,8 @@
 		if("synth")
 			var/mob/living/carbon/human/S = gear_fugitive(leader, landing_turf, backstory)
 			var/obj/item/choice_beacon/augments/A = new(S)
-			H.put_in_hands(A))
-			var/obj/item/autosurgeon/auto = new(landing_turf)
+			S.put_in_hands(A)
+			new /obj/item/autosurgeon(landing_turf)
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
@@ -118,7 +118,6 @@
 	if(!ship.load(T))
 		CRASH("Loading hunter ship failed!")
 	priority_announce("Unidentified armed ship detected near the station.")
-	var/list/spawner_spots = list()
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/structure/chair/chair in A) //every chair gets a spawner on it.
 			switch(backstory)

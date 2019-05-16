@@ -8,12 +8,8 @@
 	explosion_block = 6
 	point_return = -1
 	health_regen = 0 //we regen in Life() instead of when pulsed
-	var/core_regen = 2
-	var/resource_delay = 0
-	var/point_rate = 2
 
-
-/obj/structure/blob/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
+/obj/structure/blob/core/Initialize(mapload, client/new_overmind = null, placed = 0)
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
@@ -22,7 +18,6 @@
 		return INITIALIZE_HINT_QDEL
 	if(overmind)
 		update_icon()
-	point_rate = new_rate
 	addtimer(CALLBACK(src, .proc/generate_announcement), 1800)
 	. = ..()
 
@@ -37,7 +32,7 @@
 	color = null
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)
-		blob_overlay.color = overmind.blob_reagent_datum.color
+		blob_overlay.color = overmind.blobstrain.color
 	add_overlay(blob_overlay)
 	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
 
@@ -60,17 +55,13 @@
 		if(overmind) //we should have an overmind, but...
 			overmind.update_health_hud()
 
-/obj/structure/blob/core/Life()
+/obj/structure/blob/core/process()
 	if(QDELETED(src))
 		return
 	if(!overmind)
 		qdel(src)
-	else
-		if(resource_delay <= world.time)
-			resource_delay = world.time + 10 // 1 second
-			overmind.add_points(point_rate)
-	obj_integrity = min(max_integrity, obj_integrity+core_regen)
 	if(overmind)
+		overmind.blobstrain.core_process()
 		overmind.update_health_hud()
 	Pulse_Area(overmind, 12, 4, 3)
 	for(var/obj/structure/blob/normal/B in range(1, src))

@@ -1290,6 +1290,13 @@
 	small_item = TRUE
 	contains = list(/obj/item/storage/firstaid/toxin)
 
+/datum/supply_pack/medical/salglucanister
+	name = "Heavy-Duty Saline Canister"
+	desc = "Contains a bulk supply of saline-glucose condensed into a single canister that should last several days, with a large pump to fill containers with. Direct injection of saline should be left to medical professionals as the pump is capable of overdosing patients. Requires medbay access to open."
+	cost = 3000
+	access = ACCESS_MEDICAL
+	contains = list(/obj/machinery/iv_drip/saline)
+
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
 	desc = "Contains twelve different bottles, containing several viral samples for virology research. Also includes seven beakers and syringes. Balled-up jeans not included. Requires CMO access to open."
