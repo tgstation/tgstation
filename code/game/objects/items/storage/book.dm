@@ -207,7 +207,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			SS.usability = TRUE
 			for(var/mob/living/simple_animal/shade/EX in SS)
-				icon = "purified_soulstone2"			
+				SSticker.mode.remove_cultist(EX.mind, 1, 0)
+				EX.icon_state = "purified_soulstone"
+				SS.release_shades(user)
 			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
 
 /obj/item/storage/book/bible/booze
