@@ -83,7 +83,7 @@
 		if(istype(M,/mob/living/carbon/alien))
 			continue
 		if(M.ckey && M.mind && M.mind.assigned_role == ROLE_ALIEN)
-			the_aliens += spawn_the_alien(M)
+			the_aliens += M
 	var/list/chosen_vents = list()
 	for(var/i=1,i<=the_aliens.len,i++)
 		var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent
@@ -97,15 +97,15 @@
 		if(temp_vent)
 			chosen_vents += temp_vent
 	if(chosen_vents.len >= the_aliens.len)
-		for(var/mob/living/carbon/alien/larva/L in the_aliens)
+		for(var/mob/living/L in the_aliens)
 			var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent = pick(chosen_vents)
 			chosen_vents -= temp_vent
-			L.forceMove(temp_vent.loc)
+			spawn_the_alien(L,temp_vent.loc)
 	else
-		for(var/mob/living/carbon/alien/larva/L in the_aliens)
+		for(var/mob/living/L in the_aliens)
 			var/turf/T = find_safe_turf(SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
 			if(T)
-				L.forceMove(T)
+				spawn_the_alien(L,T)
 	return ..()
 
 /datum/game_mode/ayylmaos/process()
@@ -201,9 +201,9 @@
 /datum/game_mode/ayylmaos/generate_report()
 	return "An alien infestation has been detected on the station. The crew will to have arm themselves and seek out and destroy the aliens. Remember to wear head protection to protect against facehuggers. Medical staff may have to remove alien parasites surgically. The ultimate goal is to destroy the Alien Queen."
 
-/datum/game_mode/ayylmaos/proc/spawn_the_alien(mob/M)
+/datum/game_mode/ayylmaos/proc/spawn_the_alien(mob/M,atom/new_loc)
 	if(istype(M) && M.ckey)
-		var/mob/living/carbon/alien/larva/L = new()
+		var/mob/living/carbon/alien/larva/L = new(new_loc)
 		L.sync_mind()
 		if(digital_camo_timer > world.time)
 			L.digitalcamo = 1

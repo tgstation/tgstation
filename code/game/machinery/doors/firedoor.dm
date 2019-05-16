@@ -25,7 +25,7 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	var/boltslocked = TRUE
-	var/list/affecting_areas
+	var/list/affecting_areas = list()
 
 /obj/machinery/door/firedoor/Initialize()
 	. = ..()

@@ -44,7 +44,8 @@
 	LAZYADD(myarea.firealarms, src)
 
 /obj/machinery/firealarm/Destroy()
-	LAZYREMOVE(myarea.firealarms, src)
+	if(myarea)
+		LAZYREMOVE(myarea.firealarms, src)
 	return ..()
 
 /obj/machinery/firealarm/power_change()

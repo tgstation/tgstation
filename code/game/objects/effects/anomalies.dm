@@ -296,6 +296,7 @@
 			if(S.client)
 				S.set_colour(pick("blue","green"))
 				to_chat(S, "<font size='3' color='blue'>You are a <B>Good</B> slime. Try to be nice and helpful. Feel free to defend your self should it be needed.</font>")
+				S.mind.assigned_role = "Good Slime"
 
 /////////////////////
 

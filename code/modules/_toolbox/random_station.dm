@@ -1,6 +1,7 @@
 /datum/stationmodule_group
 	var/name
 	var/force
+	var/always
 	var/station_map //Checks if the necessary map is loaded. Leave empty to always spawn regardless of map.
 	var/list/possibilities = list()
 
@@ -12,7 +13,8 @@
 		if(inited.station_map && inited.station_map != SSmapping.config.map_name)
 			continue
 		var/list/picklist = inited.possibilities.Copy()
-		picklist.Add("none")
+		if(!inited.always)
+			picklist.Add("none")
 
 		var/pick = pick(picklist)
 
@@ -137,3 +139,13 @@
 /datum/stationmodule_group/maint_clown/New()
 	possibilities["alt_maint_clown.dmm"] = list(82,165,2)
 	..()
+
+//singulo module
+/datum/stationmodule_group/box_singulo
+	name = "Boxstation Singulo"
+	station_map = "Box Station"
+	//always = 1
+	//force = "BoxStationSingulo.dmm"
+
+/datum/stationmodule_group/box_singulo/New()
+	possibilities["BoxStationSingulo.dmm"] = list(97,53,2)
