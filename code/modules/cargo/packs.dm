@@ -642,6 +642,15 @@
 					/obj/item/gun/ballistic/automatic/wt550)
 	crate_name = "auto rifle crate"
 
+/datum/supply_pack/security/armory/wt550ammo
+	name = "WT-550 Auto Rifle Ammo Crate"
+	desc = "Contains four 20-round magazine for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
+	cost = 3000
+	contains = list(/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9)
+
 /datum/supply_pack/security/armory/wt550ammo_single
 	name = "WT-550 Auto Rifle Ammo Single-Pack"
 	desc = "Contains a 20-round magazine for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
@@ -676,14 +685,27 @@
 					/obj/item/mecha_parts/part/ripley_right_leg,
 					/obj/item/mecha_parts/part/ripley_left_leg,
 					/obj/item/stock_parts/capacitor,
-					/obj/item/stock_parts/scanning_module)
+					/obj/item/stock_parts/scanning_module,
+					/obj/item/circuitboard/mecha/ripley/main,
+					/obj/item/circuitboard/mecha/ripley/peripherals,
+					/obj/item/mecha_parts/mecha_equipment/drill,
+					/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp)
 	crate_name= "APLU MK-I kit"
 
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
-	desc = "Keep production moving along with six conveyor belts. Conveyor switch included. If you have any questions, check out the enclosed instruction book."
+	desc = "Keep production moving along with fifteen conveyor belts. Conveyor switch included. If you have any questions, check out the enclosed instruction book."
 	cost = 1500
 	contains = list(/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
 					/obj/item/conveyor_construct,
 					/obj/item/conveyor_construct,
 					/obj/item/conveyor_construct,
@@ -1238,7 +1260,7 @@
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
 
-/datum/supply_pack/medical/supplies
+/datum/supply_pack/medical/supplies //Wip
 	name = "Medical Supplies Crate"
 	desc = "Contains seven beakers, syringes, and bodybags. Six morphine bottles, four insulin pills. Two charcoal bottles, epinephrine bottles, antitoxin bottles, and large beakers. Finally, a single roll of medical gauze. German doctor not included."
 	cost = 2000
@@ -1835,6 +1857,7 @@
 	name = "Hydroponics Vending Machines Refills"
 	desc = "When the clown takes all the banana seeds. Contains a NutriMax refill and an MegaSeed Servitor refill."
 	cost = 2000
+	crate_type = /obj/structure/closet/crate
 	contains = list(/obj/item/vending_refill/hydroseeds,
 					/obj/item/vending_refill/hydronutrients)
 	crate_name = "hydroponics supply crate"
@@ -1961,6 +1984,7 @@
 	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"
 	cost = 2000
 	contains = list (/obj/item/storage/box/monkeycubes)
+	crate_type = /obj/structure/closet/crate
 	crate_name = "monkey cube crate"
 
 /datum/supply_pack/critter/pug
