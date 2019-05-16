@@ -98,7 +98,11 @@
 	GLOB.infections -= src //it's no longer in the all infections list either
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I in contents)
 		I.cycle_node()
-	return ..()
+	var/turf/T = get_turf(src)
+	var/list/stored_contents = T.contents
+	. = ..()
+	for(var/atom/movable/M in stored_contents)
+		Uncrossed(M) // so the overlay and move speed effects don't stay after destruction
 
 /obj/structure/infection/blob_act()
 	return
@@ -330,11 +334,15 @@
 	if(ismob(mover))
 		var/mob/M = mover
 		M.add_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update=TRUE, priority=100, multiplicative_slowdown=3)
+		var/obj/screen/fullscreen/added_overlay = M.overlay_fullscreen("infectionvision", /obj/screen/fullscreen/curse, 1)
+		added_overlay.alpha = 0
+		animate(added_overlay, alpha = 255, time = 10)
 
 /obj/structure/infection/normal/Uncrossed(atom/movable/mover)
-	if(ismob(mover))
+	if(ismob(mover) && !locate(/obj/structure/infection/normal) in get_turf(mover))
 		var/mob/M = mover
 		M.remove_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update = TRUE)
+		M.clear_fullscreen("infectionvision")
 
 /obj/structure/infection/normal/update_icon()
 	..()
