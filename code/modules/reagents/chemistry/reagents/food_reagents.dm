@@ -573,7 +573,7 @@
 	..()
 
 /datum/reagent/consumable/honey
-	name = "honey"
+	name = "Honey"
 	id = "honey"
 	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"

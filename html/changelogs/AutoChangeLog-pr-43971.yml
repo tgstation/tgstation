@@ -1,0 +1,5 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "glass golems properly redirect projectiles"
+  - bugfix: "glass golem reflected projectiles can damage the original firer"

@@ -138,4 +138,10 @@
 
 /obj/machinery/stasis/nap_violation(mob/violator)
 	unbuckle_mob(violator, TRUE)
+
+/obj/machinery/stasis/attack_robot(mob/user)
+	if(Adjacent(user) && occupant)
+		unbuckle_mob(occupant)
+	else
+		..()
 #undef STASIS_TOGGLE_COOLDOWN
