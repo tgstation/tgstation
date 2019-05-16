@@ -4,7 +4,7 @@
 	//set src in world
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
-	if(!usr.client || !usr.client.holder) //The usr vs src abuse in this proc is intentional and must not be changed
+	if(!usr.client || !usr.client.holder)		//This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
 		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>")
 		return
 
@@ -26,14 +26,6 @@
 		sprite = getFlatIcon(D)
 		hash = md5(sprite)
 		src << browse_rsc(sprite, "vv[hash].png")
-
-		/*		//getFlatIcon is expensive, this is the old code that just got the icon without using GFI
-		if(AT.icon && AT.icon_state)
-			sprite = new /icon(AT.icon, AT.icon_state)
-			hash = md5(AT.icon)
-			hash = md5(hash + AT.icon_state)
-			src << browse_rsc(sprite, "vv[hash].png")
-		*/
 
 	title = "[D] ([REF(D)]) = [type]"
 	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
@@ -71,8 +63,13 @@
 			dropdownoptions[i] = "<option value[link? "='[link]'":""]>[name]</option>"
 	else
 		dropdownoptions = D.vv_get_dropdown()
-		//LEGACY SUPPORT
-		dropdownoptions += D.vv_get_dropdown_old()
+		//LEGACY SUPPORT UNTIL CONVERSIONS ARE DONE
+		var/list/dropdown_old = D.vv_get_dropdown_old()
+		if(dropdown_old)								//the old style requires post-conversion.
+			for(var/i in 1 to length(dropdown_old))
+				var/name = dropdown_old[i]
+				var/link = dropdown_old[name]
+				dropdownoptions[i] += "<option value[link? "='[link]'":""]>[name]</option>"
 		//END
 
 	var/list/names = list()
