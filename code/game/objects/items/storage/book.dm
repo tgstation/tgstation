@@ -200,7 +200,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			qdel(sword)
 
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
-		var/obj/item/soulstone/SS = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
 		if(do_after(user, 40, target = SS))
@@ -209,7 +208,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			for(var/mob/living/simple_animal/shade/EX in SS)
 				icon = "purified_soulstone2"			
 			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
-			qdel(SS)
 
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."
