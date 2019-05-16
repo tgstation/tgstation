@@ -126,12 +126,6 @@
 	onclose(src, "pai")
 	temp = null
 
-/mob/living/silicon/pai/proc/LoadedSoftware(software)
-	if(client)
-		for(var/obj/screen/pai/button in client.screen)
-			if(button.required_software == software)
-				button.color = null
-
 /mob/living/silicon/pai/Topic(href, href_list)
 	if(..())
 		return
@@ -150,7 +144,8 @@
 						if(ram >= cost)
 							software.Add(target)
 							ram -= cost
-							LoadedSoftware(target)
+							var/datum/hud/pai/pAIhud = hud_used
+							pAIhud?.update_software_buttons()
 						else
 							temp = "Insufficient RAM available."
 					else
