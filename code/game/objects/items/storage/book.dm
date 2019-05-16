@@ -207,10 +207,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			SS.usability = TRUE
 			for(var/mob/living/simple_animal/shade/EX in SS)
-				SSticker.mode.remove_cultist(EX.mind, 1, 0)
-				EX.icon_state = "ghost1"
-				EX.name = "Purified [EX.name]"
-				SS.release_shades(user)
+				icon = "purified_soulstone2"			
 			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
 			qdel(SS)
 
