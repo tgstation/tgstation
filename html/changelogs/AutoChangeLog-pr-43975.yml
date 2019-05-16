@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Explosive holoparasite bombs now explode if you bump into them, instead of the other way around."
