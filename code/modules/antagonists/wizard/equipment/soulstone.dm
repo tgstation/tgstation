@@ -29,9 +29,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
 
-/obj/item/soulstone/anybody/purified/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
-	icon_state = "soulstone2"
-
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
 	old_shard = TRUE
