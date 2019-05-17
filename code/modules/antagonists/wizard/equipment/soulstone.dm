@@ -28,8 +28,6 @@
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
-	if(icon_state = "soulstone2")
-		icon_state = "purified_soulstone2"
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -99,6 +97,10 @@
 		else if(iscultist(user))
 			to_chat(A, "<b>You have been released from your prison, but you are still bound to the cult's will. Help them succeed in their goals at all costs.</b>")
 		was_used()
+		
+/obj/item/soulstone/anybody/purified/proc/release_shades(mob/user)
+	for(var/mob/living/simple_animal/shade/A in src)
+		icon_state = "purified_soulstone"
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
@@ -181,7 +183,11 @@
 				T.status_flags |= GODMODE
 				T.mobility_flags = NONE
 				T.health = T.maxHealth
-				icon_state = "soulstone2"
+				if(/obj/item/soulstone/anybody/purified)
+					icon_state = "purified_soulstone2"
+				else
+					icon_state = "soulstone2"
+					return
 				name = "soulstone: Shade of [T.real_name]"
 				to_chat(T, "<span class='notice'>Your soul has been captured by the soulstone. Its arcane energies are reknitting your ethereal form.</span>")
 				if(user != T)
@@ -257,7 +263,11 @@
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
-	icon_state = "soulstone2"
+	if(/obj/item/soulstone/anybody/purified)
+		icon_state = "purified_soulstone2"
+	else
+		icon_state = "soulstone2"
+		return
 	if(U && (iswizard(U) || usability))
 		to_chat(S, "Your soul has been captured! You are now bound to [U.real_name]'s will. Help [U.p_them()] succeed in [U.p_their()] goals at all costs.")
 	else if(U && iscultist(U))
