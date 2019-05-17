@@ -2373,7 +2373,7 @@
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"
-	desc = "High stacks of papers on your desk Are a big problem - make it Pea-sized with these bureaucratic supplies! Contains six pens, some camera film, hand labeler supplies, a paper bin, three folders, two clipboards and two stamps."//that was too forced
+	desc = "High stacks of papers on your desk Are a big problem - make it Pea-sized with these bureaucratic supplies! Contains six pens, some camera film, hand labeler supplies, a paper bin, three folders, a laser pointer, two clipboards and two stamps."//that was too forced
 	cost = 1500
 	contains = list(/obj/structure/filingcabinet/chestdrawer/wheeled,
 					/obj/item/camera_film,
@@ -2393,7 +2393,8 @@
 					/obj/item/clipboard,
 					/obj/item/clipboard,
 					/obj/item/stamp,
-					/obj/item/stamp/denied)
+					/obj/item/stamp/denied,
+					/obj/item/laser_pointer/purple)
 	crate_name = "bureaucracy crate"
 
 /datum/supply_pack/misc/fountainpens
