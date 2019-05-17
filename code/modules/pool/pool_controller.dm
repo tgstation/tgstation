@@ -8,7 +8,7 @@
 //Modified a lot by Kokojo and Tortellini Tony for hippiestation.
 /obj/machinery/poolcontroller
 	name = "\improper Pool Controller"
-	desc = "An advanced filtration and substance generation system that can refill the contents of a pool to a completely different substance in minutes."
+	desc = "An advanced substance generation and fluid tank management system that can refill the contents of a pool to a completely different substance in minutes."
 	icon = 'icons/turf/pool.dmi'
 	icon_state = "poolc_3"
 	anchored = TRUE
