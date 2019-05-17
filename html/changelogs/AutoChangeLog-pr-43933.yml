@@ -1,6 +1,0 @@
-author: "pireamaineach"
-delete-after: True
-changes: 
-  - rscadd: "Added a 3rd atmos tech locker and rad locker to the incinerators on Meta and Box, and an atmos tech locker to the incinerator on Pubby since it already had a rad-suit."
-  - rscdel: "Reverts https://github.com/tgstation/tgstation/pull/43557"
-  - tweak: "Makes the doors to the incinerator on meta require atmos access."

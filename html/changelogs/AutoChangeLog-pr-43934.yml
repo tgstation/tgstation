@@ -1,5 +1,0 @@
-author: "pireamaineach"
-delete-after: True
-changes: 
-  - bugfix: "Axes some hairstyles that didn't make the final cut but never got fully removed, removes an unused sprite."
-  - bugfix: "Also fixes the cornrows because they were bRoek"
