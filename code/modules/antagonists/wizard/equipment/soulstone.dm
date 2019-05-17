@@ -90,17 +90,17 @@
 		A.mobility_flags = MOBILITY_FLAGS_DEFAULT
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
-		icon_state = "soulstone"
+		if(/obj/item/soulstone/anybody/purified)
+			icon_state = "purified_soulstone"
+		else
+			icon_state = "soulstone"
+			return
 		name = initial(name)
 		if(iswizard(user) || usability)
 			to_chat(A, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.</b>")
 		else if(iscultist(user))
 			to_chat(A, "<b>You have been released from your prison, but you are still bound to the cult's will. Help them succeed in their goals at all costs.</b>")
 		was_used()
-		
-/obj/item/soulstone/anybody/purified/proc/release_shades(mob/user)
-	for(var/mob/living/simple_animal/shade/A in src)
-		icon_state = "purified_soulstone"
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
