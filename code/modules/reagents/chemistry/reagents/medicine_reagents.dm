@@ -560,6 +560,7 @@
 		M.adjustOxyLoss(oxycalc, 0)
 		M.adjustToxLoss(-oxycalc/2.5, 0)
 
+	metabolization_rate += 1
 	..()
 
 
