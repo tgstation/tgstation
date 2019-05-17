@@ -1,3 +1,4 @@
+#define PERF_BASE_DAMAGE		0.5
 
 //////////////////////////////////////////////////////////////////////////////////////////
 					// MEDICINE REAGENTS
@@ -531,7 +532,7 @@
 /datum/reagent/medicine/perfluorodecalin
 	name = "Perfluorodecalin"
 	id = "perfluorodecalin"
-	description = "An emergency medication used to rapidly treat oxygen deprivation. The mechanism becomes more potent as exposure is increased. Overdose causes the mechanism to run regardless if the user has oxygen deprivation."
+	description = "Restores oxygen deprivation while producing a lesser amount of toxic byproducts. Both scale with exposure to the drug and current amount of oxygen deprivation. Overdose causes toxic byproducts regardless of oxygen deprivation."
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -539,7 +540,7 @@
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
 	var/oxycalc = 2.5*REM*current_cycle
-	oxycalc = min(oxycalc, M.oxyloss)
+	oxycalc = min(oxycalc, M.oxyloss + PERF_BASE_DAMAGE) // this is so you always take at least PERF_BASE_DAMAGE tox even if you don't have oxygen loss to deter stacking (it is an emergency chem after all!)
 	if(oxycalc)
 		M.adjustOxyLoss(-oxycalc, 0)
 		M.adjustToxLoss(oxycalc/2.5, 0) //1*REM*current_cycle
@@ -554,7 +555,7 @@
 	M.adjustOxyLoss(-oxycalc, 0)
 	M.adjustToxLoss(oxycalc/2.5, 0)
 	//we then cancel out any healing done by on_mob_life since we want to simulate the same mechanism and NOT doubledip. losebreath is done regardless so *shrug*
-	oxycalc = min(oxycalc,0)
+	oxycalc = min(oxycalc,M.oxyloss + PERF_BASE_DAMAGE)
 	if(oxycalc)
 		M.adjustOxyLoss(oxycalc, 0)
 		M.adjustToxLoss(-oxycalc/2.5, 0)
@@ -1376,3 +1377,6 @@
 	M.adjustToxLoss(1, 0)
 	..()
 	. = 1
+
+
+#undef PERF_BASE_DAMAGE
