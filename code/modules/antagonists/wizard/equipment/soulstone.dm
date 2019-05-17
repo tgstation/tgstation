@@ -13,6 +13,7 @@
 
 	var/old_shard = FALSE
 	var/spent = FALSE
+	var/purified = FALSE
 
 /obj/item/soulstone/proc/was_used()
 	if(old_shard)
@@ -29,6 +30,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
 	var/purified = TRUE
+	
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -91,7 +93,7 @@
 		A.mobility_flags = MOBILITY_FLAGS_DEFAULT
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
-		if(purified = TRUE)
+		if(purified)
 			icon_state = "purified_soulstone"
 		else
 			icon_state = "soulstone"
@@ -184,7 +186,7 @@
 				T.status_flags |= GODMODE
 				T.mobility_flags = NONE
 				T.health = T.maxHealth
-				if(purified = TRUE)
+				if(purified)
 					icon_state = "purified_soulstone2"
 				else
 					icon_state = "soulstone2"
@@ -264,7 +266,7 @@
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
-	if(purified = TRUE)
+	if(purified)
 		icon_state = "purified_soulstone2"
 	else
 		icon_state = "soulstone2"
