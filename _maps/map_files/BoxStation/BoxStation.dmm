@@ -8298,6 +8298,9 @@
 /area/crew_quarters/dorms)
 "ass" = (
 /obj/structure/table/glass,
+/obj/item/clothing/under/shorts/blue{
+	desc = "So comfy and easy to wear!"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "asu" = (
@@ -55047,6 +55050,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
+"eDU" = (
+/obj/structure/table/glass,
+/obj/item/clothing/mask/breath{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/stack/medical/bruise_pack{
+	pixel_x = 3;
+	pixel_y = 10
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "eRu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -56787,6 +56802,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/security/detectives_office)
+"qPm" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/hypospray/medipen,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "qQC" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot{
@@ -92150,7 +92171,7 @@ aus
 axT
 aus
 aAl
-ass
+qPm
 aCr
 aDR
 aFl
@@ -94463,7 +94484,7 @@ asb
 asb
 asb
 asb
-ass
+eDU
 arj
 aaf
 alP
