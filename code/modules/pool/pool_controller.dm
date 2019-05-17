@@ -1,9 +1,11 @@
+//TODO: move these to their own file
 #define FRIGID 1
 #define COOL 2
 #define NORMAL 3
 #define WARM 4
 #define SCALDING 5
 #define REAGENT_TICK_INTERVAL 5
+GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 
 //Originally stolen from paradise. Credits to tigercat2000.
 //Modified a lot by Kokojo and Tortellini Tony for hippiestation.
@@ -76,8 +78,10 @@
 
 	if(istype(W,/obj/item/reagent_containers))
 		if(W.reagents.total_volume >= 100) //check if there's enough reagent
-			for(var/X in W.reagents.reagent_list)
-				var/datum/reagent/R = X
+			for(var/datum/reagent/R in W.reagents.reagent_list)
+				if(R.id in GLOB.blacklisted_pool_reagents)
+					to_chat(user, "\The [src] cannot accept [R.name]")
+					return
 				if(R.reagent_state == SOLID)
 					to_chat(user, "The pool cannot accept reagents in solid form!.")
 					return
