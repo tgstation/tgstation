@@ -18,7 +18,7 @@
 		to_chat(target, "<span class='userdanger'>Everything feels really heavy!</span>")
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AltClickOn(atom/A)
-	if(isopenturf(A))
+	if(isopenturf(A) && is_deployed())
 		var/turf/T = A
 		if(isspaceturf(T))
 			to_chat(src, "<span class='warning'>You cannot add gravity to space!</span>")
@@ -32,42 +32,19 @@
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Recall(forced)
 	. = ..()
 	to_chat(src, "<span class='danger'><B>You have released your gravitokinetic powers!</span></B>")
-	for(var/atom/target in gravito_targets)
-		qdel(target.GetComponent(/datum/component/forced_gravity))
-	gravito_targets = list()
+	for(var/datum/component/C in gravito_targets)
+		gravito_targets.Remove(C)
+		qdel(C)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Life()
 	. = ..()
-	for(var/atom/target in gravito_targets)
-		if(get_dist(src, target) > gravity_power_range)
-			qdel(target.GetComponent(/datum/component/forced_gravity))
-			gravito_targets.Remove(target)
+	for(var/datum/component/C in gravito_targets)
+		if(get_dist(src, C.parent) > gravity_power_range)
+			gravito_targets.Remove(C)
+			qdel(C)
 			continue
 
-//		if(!isopenturf(target))
-//			turf_effect(target)
-
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/add_gravity(atom/A, new_gravity = 2)
-	if(!gravito_targets.len)//we are adding one, so start processing
-		START_PROCESSING(SSfastprocess, src)
-	gravito_targets.Add(A)
-	A.AddComponent(/datum/component/forced_gravity,new_gravity)
-	//sound
-
-/*
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/turf_effect(turf/open/T, new_gravity = 2)
-	if(!T.get_filter("gravity"))
-		T.add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=0))
-*/
-
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/process()
-	if(!gravito_targets.len)
-		return PROCESS_KILL
-	for(var/atom/A in gravito_targets)
-		var/matrix/M = new
-		if(!isliving(A))
-			M.Translate(rand(-2, 2), rand(0, 1))
-		else
-			M.Translate(rand(-1, 1))
-		animate(A, transform=M, time=1)
-		animate(transform=matrix(), time=1)
+		var/datum/component/C = A.AddComponent(/datum/component/forced_gravity,new_gravity)
+		gravito_targets.Add(C)
+		playsound(src, 'sound/effects/gravhit.ogg', 100, 1)
