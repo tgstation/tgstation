@@ -184,6 +184,7 @@
 	if(on)
 		on = FALSE
 		force = initial(force)
+		throw_speed = initial(throw_speed)
 		w_class = initial(w_class)
 		name = initial(name)
 		hitsound = initial(hitsound)
@@ -194,6 +195,7 @@
 	else
 		on = TRUE
 		force = 18
+		throw_speed = 4
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'

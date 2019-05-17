@@ -54,6 +54,7 @@
 	icon_state = "parsnip"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	juice_results = list("parsnipjuice" = 0)
 	wine_power = 35
 
 

@@ -19,7 +19,7 @@
 
 /obj/item/melee/touch_attack/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
 	if(!iscarbon(user)) //Look ma, no hands

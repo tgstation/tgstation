@@ -107,12 +107,21 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	GLOB.cable_list -= src							//remove it from global cable list
+
+	//If we have a stored item at this point, lets just delete it, since that should be
+	//handled by deconstruction
+	if(stored)
+		QDEL_NULL(stored)
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/turf/T = loc
-		stored.forceMove(T)
+		var/turf/T = get_turf(loc)
+		if(T)
+			stored.forceMove(T)
+			stored = null
+		else
+			qdel(stored)
 	qdel(src)
 
 ///////////////////////////////////
@@ -640,7 +649,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
-/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user, var/showerror = TRUE)
+/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user, var/showerror = TRUE, forceddir)
 	var/turf/U = user.loc
 	if(!isturf(U))
 		return
@@ -655,14 +664,16 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		return
 
 
-	if(U == T) //if clicked on the turf we're standing on, try to put a cable in the direction we're facing
+	if(U == T && !forceddir) //if clicked on the turf we're standing on and a direction wasn't supplied, try to put a cable in the direction we're facing
 		place_turf(T,user)
 		return
 
 	var/dirn = get_dir(C, user)
+	if(forceddir)
+		dirn = forceddir
 
-	// one end of the clicked cable is pointing towards us
-	if(C.d1 == dirn || C.d2 == dirn)
+	// one end of the clicked cable is pointing towards us and no direction was supplied
+	if((C.d1 == dirn || C.d2 == dirn) && !forceddir)
 		if(!U.can_have_cabling())						//checking if it's a plating or catwalk
 			if (showerror)
 				to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
@@ -707,7 +718,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 			return
 
-	// exisiting cable doesn't point at our position, so see if it's a stub
+	// exisiting cable doesn't point at our position or we have a supplied direction, so see if it's a stub
 	else if(C.d1 == 0)
 							// if so, make it a full cable pointing from it's old direction to our dirn
 		var/nd1 = C.d2	// these will be the new directions

@@ -13,7 +13,7 @@
 	var/capacity = 4
 
 /obj/structure/guncase/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		for(var/obj/item/I in loc.contents)
 			if(istype(I, gun_category))

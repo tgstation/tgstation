@@ -23,12 +23,12 @@
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_synd_icons_added(M)
-	owner.add_trait(TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
+	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_synd_icons_removed(M)
-	owner.remove_trait(TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
@@ -53,6 +53,13 @@
 	memorize_code()
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
+		// grant extra TC for the people who start in the nukie base ie. not the lone op
+		var/extra_tc = CEILING(GLOB.joined_player_list.len/5, 5)
+		var/datum/component/uplink/U = owner.find_syndicate_uplink()
+		if (U)
+			U.telecrystals += extra_tc
+
+
 
 /datum/antagonist/nukeop/get_team()
 	return nuke_team

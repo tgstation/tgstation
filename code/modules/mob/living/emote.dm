@@ -60,7 +60,7 @@
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
 	. = ..()
-	if(user.has_trait(TRAIT_SOOTHED_THROAT))
+	if(HAS_TRAIT(user, TRAIT_SOOTHED_THROAT))
 		return FALSE
 
 /datum/emote/living/dance
