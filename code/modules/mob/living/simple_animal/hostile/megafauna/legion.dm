@@ -31,7 +31,7 @@ Difficulty: Medium
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	speed = 2
+	speed = 5
 	ranged = 1
 	del_on_death = 1
 	retreat_distance = 5
@@ -50,6 +50,56 @@ Difficulty: Medium
 	elimination = 1
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
+	attack_action_types = list(/datum/action/innate/megafauna_attack/create_skull,
+							   /datum/action/innate/megafauna_attack/charge_target)
+	small_sprite_type = /datum/action/small_sprite/megafauna/legion
+
+/datum/action/innate/megafauna_attack/create_skull
+	name = "Create Legion Skull"
+	icon_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "legion_head"
+	chosen_message = "<span class='colossus'>You are now creating legion skulls.</span>"
+	chosen_attack_num = 1
+
+/datum/action/innate/megafauna_attack/charge_target
+	name = "Charge Target"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "sniper_zoom"
+	chosen_message = "<span class='colossus'>You are now charging at your target.</span>"
+	chosen_attack_num = 2
+
+/mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
+	if(charging)
+		return
+	ranged_cooldown = world.time + ranged_cooldown_time
+
+	if(client)
+		if(chosen_attack == 1)
+			create_legion_skull()
+		else if(chosen_attack == 2)
+			charge_target()
+		return
+
+	if(prob(75))
+		create_legion_skull()
+	else
+		charge_target()
+
+/mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_skull()
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
+	A.GiveTarget(target)
+	A.friends = friends
+	A.faction = faction
+
+/mob/living/simple_animal/hostile/megafauna/legion/proc/charge_target()
+	visible_message("<span class='warning'><b>[src] charges!</b></span>")
+	SpinAnimation(speed = 20, loops = 5)
+	ranged = 0
+	retreat_distance = 0
+	minimum_distance = 0
+	speed = 0
+	charging = 1
+	addtimer(CALLBACK(src, .proc/reset_charge), 50)
 
 /mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
 	. = ..()
@@ -68,24 +118,6 @@ Difficulty: Medium
 		if(L.stat == UNCONSCIOUS)
 			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 			A.infest(L)
-
-/mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
-	if(world.time >= ranged_cooldown && !charging)
-		if(prob(75))
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-			A.GiveTarget(target)
-			A.friends = friends
-			A.faction = faction
-			ranged_cooldown = world.time + ranged_cooldown_time
-		else
-			visible_message("<span class='warning'><b>[src] charges!</b></span>")
-			SpinAnimation(speed = 20, loops = 5)
-			ranged = 0
-			retreat_distance = 0
-			minimum_distance = 0
-			speed = 0
-			charging = 1
-			addtimer(CALLBACK(src, .proc/reset_charge), 50)
 
 /mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
 	ranged = 1

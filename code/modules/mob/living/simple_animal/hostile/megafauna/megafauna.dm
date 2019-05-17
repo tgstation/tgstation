@@ -37,6 +37,9 @@
 	var/recovery_time = 0
 	var/true_spawn = 1 // if this is a megafauna that should grant achievements, or have a gps signal
 	var/nest_range = 10
+	var/chosen_attack = 1 // chosen attack num
+	var/list/attack_action_types = list()
+	var/small_sprite_type
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -44,6 +47,12 @@
 		internal = new internal_type(src)
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
+	for(var/action_type in attack_action_types)
+		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
+		attack_action.Grant(src)
+	if(small_sprite_type)
+		var/datum/action/small_sprite/small_action = new small_sprite_type()
+		small_action.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
@@ -149,3 +158,21 @@
 		SSmedals.SetScore(BOSS_SCORE, C, 1)
 		SSmedals.SetScore(score_type, C, 1)
 	return TRUE
+
+/datum/action/innate/megafauna_attack
+	name = "Megafauna Attack"
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = ""
+	var/mob/living/simple_animal/hostile/megafauna/M
+	var/chosen_message = ""
+	var/chosen_attack_num = 0
+
+/datum/action/innate/megafauna_attack/Grant(mob/living/L)
+	if(istype(L, /mob/living/simple_animal/hostile/megafauna))
+		M = L
+		return ..()
+	return FALSE
+
+/datum/action/innate/megafauna_attack/Activate()
+	M.chosen_attack = chosen_attack_num
+	to_chat(M, chosen_message)

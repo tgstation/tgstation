@@ -39,7 +39,7 @@ Difficulty: Hard
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
-	speed = 1
+	speed = 5
 	move_to_delay = 5
 	retreat_distance = 5
 	minimum_distance = 5
@@ -51,66 +51,18 @@ Difficulty: Hard
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
-	var/charging = 0
+	var/charging = FALSE
 	var/enrage_till = null
+	var/revving_charge = FALSE
 	internal_type = /obj/item/gps/internal/bubblegum
 	medal_type = BOSS_MEDAL_BUBBLEGUM
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	deathsound = 'sound/magic/enter_blood.ogg'
-
-/obj/item/gps/internal/bubblegum
-	icon_state = null
-	gpstag = "Bloody Signal"
-	desc = "You're not quite sure how a signal can be bloody."
-	invisibility = 100
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(. > 0 && prob(25))
-		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
-		if(prob(40))
-			step(B, pick(GLOB.cardinals))
-		else
-			B.setDir(pick(GLOB.cardinals))
-
-/obj/effect/decal/cleanable/blood/gibs/bubblegum
-	name = "thick blood"
-	desc = "Thick, splattered blood."
-	random_icon_states = list("gib3", "gib5", "gib6")
-	bloodiness = 20
-
-/obj/effect/decal/cleanable/blood/gibs/bubblegum/can_bloodcrawl_in()
-	return TRUE
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
-	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
-	if(charging)
-		return
-	ranged_cooldown = world.time + 50
-	if(!try_bloodattack())
-		blood_warp()
-
-	if(health > maxHealth * 0.5)
-		if(prob(50 + anger_modifier))
-			charge(delay = 6)
-			charge(delay = 4) // The FitnessGram Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues.
-			charge(delay = 2)
-			SetRecoveryTime(15)
-		else
-			hallucination_charge_around(times = 6, delay = 10 - anger_modifier / 5)
-			SetRecoveryTime(10)
-	else
-		if(prob(50 - anger_modifier))
-			hallucination_charge_around(times = 4, delay = 9)
-			hallucination_charge_around(times = 4, delay = 8)
-			hallucination_charge_around(times = 4, delay = 7)
-			SetRecoveryTime(15)
-		else
-			for(var/i = 1 to 5)
-				INVOKE_ASYNC(src, .proc/hallucination_charge_around, 2, 10, 2, 0)
-				sleep(5)
-			SetRecoveryTime(10)
+	attack_action_types = list(/datum/action/innate/megafauna_attack/triple_charge,
+							   /datum/action/innate/megafauna_attack/hallucination_charge,
+							   /datum/action/innate/megafauna_attack/hallucination_surround)
+	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
@@ -123,59 +75,78 @@ Difficulty: Hard
 	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
 		bloodspell.phased = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
-	. = ..()
-	if(.)
-		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
+/datum/action/innate/megafauna_attack/triple_charge
+	name = "Triple Charge"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "sniper_zoom"
+	chosen_message = "<span class='colossus'>You are now triple charging at the target you click on.</span>"
+	chosen_attack_num = 1
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
-	if(!charging)
-		..()
+/datum/action/innate/megafauna_attack/hallucination_charge
+	name = "Hallucination Charge"
+	icon_icon = 'icons/effects/bubblegum.dmi'
+	button_icon_state = "smack ya one"
+	chosen_message = "<span class='colossus'>You are now charging with hallucinations at the target you click on.</span>"
+	chosen_attack_num = 2
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
-	if(!charging)
-		. = ..()
-		if(.)
-			recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
+/datum/action/innate/megafauna_attack/hallucination_surround
+	name = "Surround Target"
+	icon_icon = 'icons/turf/walls/wall.dmi'
+	button_icon_state = "wall"
+	chosen_message = "<span class='colossus'>You are now surrounding the target you click on with hallucinations.</span>"
+	chosen_attack_num = 3
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/item/projectile/P)
-	if(is_enraged())
-		visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 300, 1)
-		return 0
-	return ..()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/ex_act(severity, target)
-	if(severity >= EXPLODE_LIGHT)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
+	if(charging)
 		return
-	severity = EXPLODE_LIGHT // puny mortals
-	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
-		return 1
-	return ..()
+	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
+	ranged_cooldown = world.time + 50
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
-	if(!charging)
-		..()
+	if(client)
+		if(chosen_attack == 1)
+			triple_charge()
+		else if(chosen_attack == 2)
+			hallucination_charge()
+		else if(chosen_attack == 3)
+			surround_with_hallucinations()
+		return
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/MoveToTarget(list/possible_targets)
-	if(!charging)
-		..()
+	if(!try_bloodattack())
+		blood_warp()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
-	if(charging)
-		new /obj/effect/temp_visual/decoy/fading(loc,src)
-		DestroySurroundings()
-	..()
+	if(health > maxHealth * 0.5)
+		if(prob(50 + anger_modifier))
+			triple_charge()
+		else
+			hallucination_charge()
+	else
+		if(prob(50 - anger_modifier))
+			hallucination_charge()
+		else
+			surround_with_hallucinations()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Moved()
-	new /obj/effect/decal/cleanable/blood(src.loc)
-	if(charging)
-		DestroySurroundings()
-	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
-	return ..()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/triple_charge()
+	charge(delay = 6)
+	charge(delay = 4) // The FitnessGram Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues.
+	charge(delay = 2)
+	SetRecoveryTime(15)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge()
+	if(health > maxHealth * 0.5)
+		hallucination_charge_around(times = 6, delay = 10 - anger_modifier / 5)
+		SetRecoveryTime(10)
+	else
+		hallucination_charge_around(times = 4, delay = 9)
+		hallucination_charge_around(times = 4, delay = 8)
+		hallucination_charge_around(times = 4, delay = 7)
+		SetRecoveryTime(15)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/surround_with_hallucinations()
+	for(var/i = 1 to 5)
+		INVOKE_ASYNC(src, .proc/hallucination_charge_around, 2, 10, 2, 0)
+		sleep(5)
+	SetRecoveryTime(10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(var/atom/chargeat = target, var/delay = 3, var/chargepast = 2)
 	if(!chargeat)
@@ -189,33 +160,20 @@ Difficulty: Hard
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
 	charging = 1
+	revving_charge = TRUE
 	DestroySurroundings()
 	walk(src, 0)
 	setDir(dir)
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	sleep(delay)
+	revving_charge = FALSE
 	var/movespeed = 0.7
 	walk_towards(src, T, movespeed)
 	sleep(get_dist(src, T) * movespeed)
 	walk(src, 0) // cancel the movement
 	try_bloodattack()
 	charging = 0
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
-	if(charging)
-		if(isturf(A) || isobj(A) && A.density)
-			A.ex_act(EXPLODE_HEAVY)
-		DestroySurroundings()
-		if(isliving(A))
-			var/mob/living/L = A
-			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] tramples you into the ground!</span>")
-			src.forceMove(get_turf(L))
-			L.apply_damage(istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination) ? 15 : 30, BRUTE)
-			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
-			shake_camera(L, 4, 3)
-			shake_camera(src, 2, 3)
-	..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()
 	var/list/targets = ListTargets()
@@ -297,33 +255,6 @@ Difficulty: Hard
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
 	sleep(1)
 
-/obj/effect/temp_visual/dragon_swoop/bubblegum
-	duration = 10
-
-/obj/effect/temp_visual/bubblegum_hands
-	icon = 'icons/effects/bubblegum.dmi'
-	duration = 9
-
-/obj/effect/temp_visual/bubblegum_hands/rightthumb
-	icon_state = "rightthumbgrab"
-
-/obj/effect/temp_visual/bubblegum_hands/leftthumb
-	icon_state = "leftthumbgrab"
-
-/obj/effect/temp_visual/bubblegum_hands/rightpaw
-	icon_state = "rightpawgrab"
-	layer = BELOW_MOB_LAYER
-
-/obj/effect/temp_visual/bubblegum_hands/leftpaw
-	icon_state = "leftpawgrab"
-	layer = BELOW_MOB_LAYER
-
-/obj/effect/temp_visual/bubblegum_hands/rightsmack
-	icon_state = "rightsmack"
-
-/obj/effect/temp_visual/bubblegum_hands/leftsmack
-	icon_state = "leftsmack"
-
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
 	if(Adjacent(target) || (enrage_till + 30 > world.time))
 		return FALSE
@@ -383,6 +314,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/change_move_delay(var/newmove = initial(move_to_delay))
 	move_to_delay = newmove
+	speed = move_to_delay
 	handle_automated_action() // need to recheck movement otherwise move_to_delay won't update until the next checking aka will be wrong speed for a bit
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_pools(turf/T, range)
@@ -420,6 +352,140 @@ Difficulty: Hard
 		INVOKE_ASYNC(B, .proc/charge, chargeat, delay, chargepast)
 	if(useoriginal)
 		charge(chargeat, delay, chargepast)
+
+/obj/item/gps/internal/bubblegum
+	icon_state = null
+	gpstag = "Bloody Signal"
+	desc = "You're not quite sure how a signal can be bloody."
+	invisibility = 100
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(. > 0 && prob(25))
+		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
+		if(prob(40))
+			step(B, pick(GLOB.cardinals))
+		else
+			B.setDir(pick(GLOB.cardinals))
+
+/obj/effect/decal/cleanable/blood/gibs/bubblegum
+	name = "thick blood"
+	desc = "Thick, splattered blood."
+	random_icon_states = list("gib3", "gib5", "gib6")
+	bloodiness = 20
+
+/obj/effect/decal/cleanable/blood/bubblegum_step
+	name = "blood step"
+	desc = "An imprinted step of bubblegum's foot."
+	bloodiness = 0
+	icon_state = "bubblegumfoot"
+
+/obj/effect/decal/cleanable/blood/bubblegum_step/Initialize(mapload, set_dir)
+	if(set_dir)
+		setDir(set_dir)
+	. = ..()
+
+/obj/effect/decal/cleanable/blood/gibs/bubblegum/can_bloodcrawl_in()
+	return TRUE
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
+	. = ..()
+	if(.)
+		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
+	if(!charging)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
+	if(!charging)
+		. = ..()
+		if(.)
+			recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/item/projectile/P)
+	if(is_enraged())
+		visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 300, 1)
+		return 0
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/ex_act(severity, target)
+	if(severity >= EXPLODE_LIGHT)
+		return
+	severity = EXPLODE_LIGHT // puny mortals
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
+		return 1
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
+	if(!charging)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/MoveToTarget(list/possible_targets)
+	if(!charging)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
+	if(revving_charge)
+		return FALSE
+	if(charging)
+		new /obj/effect/temp_visual/decoy/fading(loc,src)
+		DestroySurroundings()
+	..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	if(Dir)
+		new /obj/effect/decal/cleanable/blood/bubblegum_step(src.loc, Dir)
+	if(charging)
+		DestroySurroundings()
+	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
+	if(charging)
+		if(isturf(A) || isobj(A) && A.density)
+			A.ex_act(EXPLODE_HEAVY)
+		DestroySurroundings()
+		if(isliving(A))
+			var/mob/living/L = A
+			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] tramples you into the ground!</span>")
+			src.forceMove(get_turf(L))
+			L.apply_damage(istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination) ? 15 : 30, BRUTE)
+			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
+			shake_camera(L, 4, 3)
+			shake_camera(src, 2, 3)
+	..()
+
+/obj/effect/temp_visual/dragon_swoop/bubblegum
+	duration = 10
+
+/obj/effect/temp_visual/bubblegum_hands
+	icon = 'icons/effects/bubblegum.dmi'
+	duration = 9
+
+/obj/effect/temp_visual/bubblegum_hands/rightthumb
+	icon_state = "rightthumbgrab"
+
+/obj/effect/temp_visual/bubblegum_hands/leftthumb
+	icon_state = "leftthumbgrab"
+
+/obj/effect/temp_visual/bubblegum_hands/rightpaw
+	icon_state = "rightpawgrab"
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/temp_visual/bubblegum_hands/leftpaw
+	icon_state = "leftpawgrab"
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/temp_visual/bubblegum_hands/rightsmack
+	icon_state = "rightsmack"
+
+/obj/effect/temp_visual/bubblegum_hands/leftsmack
+	icon_state = "leftsmack"
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
 	name = "bubblegum's hallucination"
