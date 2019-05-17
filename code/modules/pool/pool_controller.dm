@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 	var/list/mobs_in_pool = list()//List contains all the mobs currently in the pool.
 	var/temperature = NORMAL //1-5 Frigid Cool Normal Warm Scalding
 	var/srange = 6 //The range of the search for pool turfs, change this for bigger or smaller pools.
-	var/linkedmist = list() //Used to keep track of created mist
+	var/list/linkedmist = list() //Used to keep track of created mist
 	var/misted = FALSE //Used to check for mist.
 	var/cur_reagent = "water"
 	var/drainable = FALSE
@@ -80,17 +80,24 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 		if(W.reagents.total_volume >= 100) //check if there's enough reagent
 			for(var/datum/reagent/R in W.reagents.reagent_list)
 				if(R.id in GLOB.blacklisted_pool_reagents)
-					to_chat(user, "\The [src] cannot accept [R.name]")
+					to_chat(user, "\The [src] cannot accept [R.name].")
+					reagents.clear_reagents()
 					return
 				if(R.reagent_state == SOLID)
 					to_chat(user, "The pool cannot accept reagents in solid form!.")
+					reagents.clear_reagents()
 					return
-				else
-					user.visible_message("<span class='notice'>\The [src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of \the [W] are quickly suctioned out by the machine!</span")
-					updateUsrDialog()
-					log_game("[key_name(user)] has changed the [src] chems to [R.name]")
-					message_admins("[key_name_admin(user)] has changed the [src] chems to [R.name].")
-					interact_delay = world.time + 15
+			reagents.clear_reagents()
+			W.reagents.copy_to(reagents, 100)
+			W.reagents.clear_reagents()
+			user.visible_message("<span class='notice'>\The [src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of \the [W] are quickly suctioned out by the machine!</span")
+			updateUsrDialog()
+			var/reagent_names = ""
+			for(var/datum/reagent/R in reagents.reagent_list)
+				reagent_names += "[R.name], "
+			log_game("[key_name(user)] has changed the [src] chems to [reagent_names]")
+			message_admins("[key_name_admin(user)] has changed the [src] chems to [reagent_names].")
+			interact_delay = world.time + 15
 		else
 			to_chat(user, "<span class='notice'>\The [src] beeps unpleasantly as it rejects the beaker. It must not have enough in it.</span>")
 			return
