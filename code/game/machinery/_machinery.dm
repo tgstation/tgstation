@@ -148,13 +148,8 @@ Class Procs:
 		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
 	if(length(component_parts))
-		if (loc)
-			for(var/atom/movable/AM in component_parts)
-				if (!QDELETED(AM))
-					AM.forceMove(loc)
-		else
-			for(var/atom/A in component_parts)
-				qdel(A)
+		for(var/atom/A in component_parts)
+			qdel(A)
 		component_parts.Cut()
 	return ..()
 
