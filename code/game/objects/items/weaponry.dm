@@ -644,7 +644,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return FALSE
 	return TRUE
 
-/obj/item/extendohand/
+/obj/item/extendohand
 	name = "extendo-hand"
 	desc = "Futuristic tech has allowed these classic spring-boxing toys to essentially act as a fully functional hand-operated hand prosthetic."
 	icon = 'icons/obj/items_and_weapons.dmi'
