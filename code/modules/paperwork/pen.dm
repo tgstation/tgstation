@@ -148,10 +148,10 @@
 			to_chat(user, "You have successfully changed \the [O.name]'s description.")
 
 /*
- * Sleepypens
+ * Autoinjector
  */
 
-/obj/item/pen/sleepy/attack(mob/living/M, mob/user)
+/obj/item/pen/autoinjector/attack(mob/living/M, mob/user)
 	if(!istype(M))
 		return
 
@@ -162,12 +162,9 @@
 				reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 
 
-/obj/item/pen/sleepy/Initialize()
+/obj/item/pen/autoinjector/Initialize()
 	. = ..()
 	create_reagents(45, OPENCONTAINER)
-	reagents.add_reagent("chloralhydratedelayed", 20)
-	reagents.add_reagent("mutetoxin", 15)
-	reagents.add_reagent("tirizene", 10)
 
 /*
  * (Alan) Edaggers

@@ -20,7 +20,7 @@
 /datum/antagonist/overthrow/New()
 	..()
 	if(!possible_useful_items)
-		possible_useful_items = list(/obj/item/gun/ballistic/automatic/pistol, /obj/item/storage/box/syndie_kit/throwing_weapons, /obj/item/pen/edagger, /obj/item/pen/sleepy, \
+		possible_useful_items = list(/obj/item/gun/ballistic/automatic/pistol, /obj/item/storage/box/syndie_kit/throwing_weapons, /obj/item/pen/edagger, \
 									/obj/item/soap/syndie, /obj/item/card/id/syndicate, /obj/item/storage/box/syndie_kit/chameleon)
 
 // Sets objectives, equips all antags with the storage implant.
