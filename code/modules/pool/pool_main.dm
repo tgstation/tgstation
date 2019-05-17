@@ -198,6 +198,7 @@
 	if(!istype(NL, /turf/open/pool) && isliving(A))
 		var/mob/living/M = A
 		M.swimming = FALSE
+		controller.mobs_in_pool.Remove(M)
 
 /turf/open/pool/Entered(atom/A, turf/OL)
 	..()
@@ -206,8 +207,9 @@
 		if(!M.mob_has_gravity())
 			return
 		if(!M.swimming)
+			M.swimming = TRUE
+			controller.mobs_in_pool.Add(M)
 			if(locate(/obj/structure/pool/ladder) in M.loc)
-				M.swimming = TRUE
 				return
 			if(iscarbon(M))
 				var/mob/living/carbon/H = M
@@ -218,7 +220,6 @@
 											"<span class='userdanger'>You fall in the water!</span>")
 						playsound(src, 'sound/effects/splash.ogg', 60, TRUE, 1)
 						H.Knockdown(20)
-						H.swimming = TRUE
 						return
 					else
 						H.dropItemToGround(H.get_active_held_item())
@@ -228,14 +229,12 @@
 											"<span class='userdanger'>You fall in and swallow some water!</span>")
 						playsound(src, 'sound/effects/splash.ogg', 60, TRUE, 1)
 						H.Knockdown(60)
-						H.swimming = TRUE
 				else if(!istype(H.head, /obj/item/clothing/head/helmet))
 					if(prob(75))
 						H.visible_message("<span class='danger'>[H] falls in the drained pool!</span>",
 													"<span class='userdanger'>You fall in the drained pool!</span>")
 						H.adjustBruteLoss(7)
 						H.Knockdown(80)
-						H.swimming = TRUE
 						playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 					else
 						H.visible_message("<span class='danger'>[H] falls in the drained pool, and cracks his skull!</span>",
@@ -243,14 +242,12 @@
 						H.apply_damage(15, BRUTE, "head")
 						H.Knockdown(200) // This should hurt. And it does.
 						H.adjustBrainLoss(30) //herp
-						H.swimming = TRUE
 						playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 						playsound(src, 'sound/misc/crack.ogg', 100, TRUE)
 				else
 					H.visible_message("<span class='danger'>[H] falls in the drained pool, but had an helmet!</span>",
 										"<span class='userdanger'>You fall in the drained pool, but you had an helmet!</span>")
 					H.Knockdown(40)
-					H.swimming = TRUE
 					playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 		else if(filled)
 			wash_mob(M)
@@ -323,11 +320,8 @@
 			return
 		else
 			for(var/obj/machinery/poolcontroller/pc in range(4,src)) //Clunky as fuck I know.
-				if(pc.timer > 44) //if it's draining/filling, don't allow.
-					to_chat(user,"<span class='notice'>This is not a good idea.</span>")
-					return
 				if(pc.drained)
-					to_chat(user, "<span class='notice'>That would be suicide</span>")
+					to_chat(user, "<span class='notice'>That would be suicide</span>") //TODO: make this a suicide action.
 					return
 			if(Adjacent(jumper))
 				jumper.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \

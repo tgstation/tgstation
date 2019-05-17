@@ -29,7 +29,7 @@
 				step_towards(absorbo, src)
 				var/dist = get_dist(src, absorbo)
 				if(dist == 0)
-					absorb.forceMove(poolcontrol.linked_filter)
+					absorbo.forceMove(poolcontrol.linked_filter)
 	if(active)
 		if(status) //if filling up, get back to normal position
 			if(timer > 0)
@@ -133,7 +133,7 @@
 		obj_flags |= EMAGGED
 		do_sparks(5, TRUE, src)
 		icon_state = "filter_b"
-		addtimer(CALLBACK(src, ./spawn_shark), 50)
+		addtimer(CALLBACK(src, /obj/machinery/poolfilter/proc/spawn_shark), 50)
 		log_game("[key_name(user)] emagged the pool filter and spawned a shark")
 		message_admins("[key_name_admin(user)] emagged the pool filter and spawned a shark")
 

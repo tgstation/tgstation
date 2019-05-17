@@ -3,9 +3,11 @@
 #define NORMAL 3
 #define WARM 4
 #define SCALDING 5
+#define REAGENT_TICK_INTERVAL 5
 
 //Originally stolen from paradise. Credits to tigercat2000.
 //Modified a lot by Kokojo and Tortellini Tony for hippiestation.
+//Heavily refactored by tgstation
 /obj/machinery/poolcontroller
 	name = "\improper Pool Controller"
 	desc = "An advanced substance generation and fluid tank management system that can refill the contents of a pool to a completely different substance in minutes."
@@ -20,15 +22,15 @@
 	var/temperature = NORMAL //1-5 Frigid Cool Normal Warm Scalding
 	var/srange = 6 //The range of the search for pool turfs, change this for bigger or smaller pools.
 	var/linkedmist = list() //Used to keep track of created mist
-	var/misted = FALSE //Used to` check for mist.
+	var/misted = FALSE //Used to check for mist.
 	var/cur_reagent = "water"
 	var/drainable = FALSE
 	var/drained = FALSE
-	var/bloody = FALSE
-	var/obj/machinery/drain/linkeddrain = null
+	var/bloody = 0
+	var/obj/machinery/drain/linked_drain = null
 	var/obj/machinery/drain/linked_filter = null
-	var/timer = 0 //we need a cooldown on that shit.
-	var/reagenttimer = 0 //We need 2.
+	var/interact_delay = 0 //cooldown on messing with settings
+	var/reagent_delay = 0 //cooldown on reagent ticking
 	var/shocked = FALSE//Shocks morons, like an airlock.
 	var/tempunlocked = FALSE
 	var/old_rcolor
@@ -37,20 +39,18 @@
 /obj/machinery/poolcontroller/Initialize()
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
+	create_reagents(100)
 	wires = new /datum/wires/poolcontroller(src)
 	for(var/turf/open/pool/W in range(srange,src))
 		LAZYADD(linkedturfs, W)
 		W.controller = src
 	for(var/obj/machinery/drain/pooldrain in range(srange,src))
-		linkeddrain = pooldrain
+		linked_drain = pooldrain
 	for(var/obj/machinery/poolfilter/F in range(srange, src))			
 		linked_filter = F
 
 /obj/machinery/poolcontroller/Destroy()
-	if(beaker)
-		beaker.forceMove(get_turf(src))
-		beaker = null
-	linkeddrain = null
+	linked_drain = null
 	linked_filter = null
 	linkedturfs.Cut()
 	return ..()
@@ -86,7 +86,7 @@
 					updateUsrDialog()
 					log_game("[key_name(user)] has changed the [src] chems to [R.name]")
 					message_admins("[key_name_admin(user)] has changed the [src] chems to [R.name].")
-					timer = 15
+					interact_delay = world.time + 15
 		else
 			to_chat(user, "<span class='notice'>\The [src] beeps unpleasantly as it rejects the beaker. It must not have enough in it.</span>")
 			return
@@ -122,35 +122,27 @@
 		return FALSE
 
 /obj/machinery/poolcontroller/proc/poolreagent()
-	for(var/turf/open/pool/W in linkedturfs)
-		for(var/mob/living/carbon/human/swimee in W)
-			if(beaker && cur_reagent && W.reagents)
-				for(var/Q in W.reagents.reagent_list)
-					var/datum/reagent/R = Q
+	if(reagents.reagent_list.len > 0)
+		for(var/turf/open/pool/W in linkedturfs)
+			for(var/mob/living/carbon/human/swimee in W)
+				for(var/datum/reagent/R in reagents.reagent_list)
 					if(R.reagent_state == SOLID)
 						R.reagent_state = LIQUID
-				W.reagents.reaction(swimee, VAPOR, 0.03) //3 percent
-				for(var/Q in W.reagents.reagent_list)
-					var/datum/reagent/R = Q
 					swimee.reagents.add_reagent(R.id, 0.5) //osmosis
-		for(var/obj/objects in W)
-			if(beaker && cur_reagent && W.reagents)
+				reagents.reaction(swimee, VAPOR, 0.03) //3 percent
+			for(var/obj/objects in W)
 				W.reagents.reaction(objects, VAPOR, 1)
-			reagenttimer = 4
+	reagent_delay = world.time + REAGENT_TICK_INTERVAL
 	changecolor()
 
 
 /obj/machinery/poolcontroller/process()
-	if(timer > 0)
-		timer--
-		updateUsrDialog()
-	if(reagenttimer > 0)
-		reagenttimer--
+	updateUsrDialog()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!drained)
 		updatePool()
-		if(!reagenttimer)
+		if(reagent_delay <= world.time)
 			poolreagent()
 
 /obj/machinery/poolcontroller/proc/updatePool()
@@ -194,8 +186,8 @@
 	if(drained)
 		return
 	var/rcolor
-	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
-		rcolor = mix_color_from_reagents(beaker.reagents.reagent_list)
+	if(reagents.reagent_list.len)
+		rcolor = mix_color_from_reagents(reagents.reagent_list)
 	if(rcolor == old_rcolor)
 		return // small performance upgrade hopefully?
 	old_rcolor = rcolor
@@ -231,7 +223,7 @@
 	misted = FALSE //no mist left, turn off the tracking var
 
 /obj/machinery/poolcontroller/proc/handle_temp()
-	timer = 10
+	interact_delay = world.time + 10
 	mistoff()
 	icon_state = "poolc_[temperature]"
 	if(temperature == SCALDING)
@@ -239,19 +231,19 @@
 	update_icon()
 
 /obj/machinery/poolcontroller/proc/CanUpTemp(mob/user)
-	if(!timer && ((temperature == WARM && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature < WARM)))
+	if(temperature == WARM && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature < WARM)
 		return TRUE
 	return FALSE
 
 /obj/machinery/poolcontroller/proc/CanDownTemp(mob/user)
-	if(!timer && ((temperature == COOL && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature > COOL)))
+	if(temperature == COOL && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature > COOL)
 		return TRUE
 	return FALSE
 
 /obj/machinery/poolcontroller/Topic(href, href_list)
 	if(..())
 		return
-	if(timer > 0)
+	if(interact_delay > world.time)
 		return
 	if(href_list["IncreaseTemp"])
 		if(CanUpTemp(usr))
@@ -261,22 +253,17 @@
 		if(CanDownTemp(usr))
 			temperature--
 			handle_temp()
-	if(href_list["beaker"])
-		var/obj/item/reagent_containers/glass/B = beaker
-		B.forceMove(loc)
-		beaker = null
-		changecolor()
 	if(href_list["Activate Drain"])
-		if((drainable || issilicon(usr) || IsAdminGhost(usr)) && !timer && !linkeddrain.active)
+		if((drainable || issilicon(usr) || IsAdminGhost(usr)) && !linked_drain.active)
 			mistoff()
-			timer = 60
-			linkeddrain.active = TRUE
-			linkeddrain.timer = 15
-			if(!linkeddrain.status)
-				new /obj/effect/whirlpool(linkeddrain.loc)
+			interact_delay = world.time + 60
+			linked_drain.active = TRUE
+			linked_drain.timer = 15
+			if(!linked_drain.status)
+				new /obj/effect/whirlpool(linked_drain.loc)
 				temperature = NORMAL
 			else
-				new /obj/effect/effect/waterspout(linkeddrain.loc)
+				new /obj/effect/effect/waterspout(linked_drain.loc)
 				temperature = NORMAL
 			handle_temp()
 			bloody = FALSE
@@ -309,8 +296,8 @@
 		return
 	var/datum/browser/popup = new(user, "Pool Controller", name, 300, 450)
 	var/dat = ""
-	if(timer)
-		dat += "<span class='notice'>[timer] seconds left until [src] can operate again.</span><BR>"
+	if(interact_delay > world.time)
+		dat += "<span class='notice'>[(interact_delay - world.time)] seconds left until [src] can operate again.</span><BR>"
 	dat += text({"
 		<h3>Temperature</h3>
 		<div class='statusDisplay'>
@@ -322,22 +309,12 @@
 		<div class='statusDisplay'>
 		<B>Drain status:</B> [(issilicon(user) || IsAdminGhost(user) || drainable) ? "<span class='bad'>Enabled</span>" : "<span class='good'>Disabled</span>"]
 		<br><b>Pool status:</b> "})
-	if(timer < 45)
-		if(!drained)
-			dat += "<span class='good'>Full</span><BR>"
-		else
-			dat += "<span class='bad'>Drained</span><BR>"
+	if(!drained)
+		dat += "<span class='good'>Full</span><BR>"
 	else
-		dat += "<span class='bad'>[drained ? "Filling" : "Draining"]<BR></span>"
-	if((issilicon(user) || IsAdminGhost(user) || drainable) && !timer && !linkeddrain.active)
+		dat += "<span class='bad'>Drained</span><BR>"
+	if((issilicon(user) || IsAdminGhost(user) || drainable) && !linked_drain.active)
 		dat += "<a href='?src=\ref[src];Activate Drain=1'>[drained ? "Fill" : "Drain"] Pool</a><br>"
-	dat += text({"</div>
-		<h3>Chemistry</h3>
-		<div class='statusDisplay'>
-		<b>Duplicator reagent:</b> [cur_reagent]
-		<br>[beaker ? "<a href='?src=\ref[src];beaker=1'>Remove Beaker</a>" : "<span class='linkOff'>Remove Beaker</span>"]
-		</div>
-		"})
 	popup.set_content(dat)
 	popup.open()
 
