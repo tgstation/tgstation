@@ -93,7 +93,7 @@
 	mob_trait = TRAIT_MUSICIAN
 	gain_text = "<span class='notice'>You know everything about musical instruments.</span>"
 	lose_text = "<span class='danger'>You forget how musical instruments work.</span>"
-	medical_record_text = "Patient brain scans show a highly-developed auditory pathway"
+	medical_record_text = "Patient brain scans show a highly-developed auditory pathway."
 
 /datum/quirk/musician/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
