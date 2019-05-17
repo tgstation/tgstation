@@ -53,6 +53,13 @@
 	memorize_code()
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
+		// grant extra TC for the people who start in the nukie base ie. not the lone op
+		var/extra_tc = CEILING(GLOB.joined_player_list.len/5, 5)
+		var/datum/component/uplink/U = owner.find_syndicate_uplink()
+		if (U)
+			U.telecrystals += extra_tc
+
+
 
 /datum/antagonist/nukeop/get_team()
 	return nuke_team
