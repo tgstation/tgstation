@@ -1260,34 +1260,37 @@
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
 
-/datum/supply_pack/medical/supplies //Wip
+/datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
-	desc = "Contains seven beakers, syringes, and bodybags. Six morphine bottles, four insulin pills. Two charcoal bottles, epinephrine bottles, antitoxin bottles, and large beakers. Finally, a single roll of medical gauze. German doctor not included."
+	desc = "Contains several medical supplies. German doctor not included."
 	cost = 2000
 	contains = list(/obj/item/reagent_containers/glass/bottle/charcoal,
-					/obj/item/reagent_containers/glass/bottle/charcoal,
-					/obj/item/reagent_containers/glass/bottle/epinephrine,
 					/obj/item/reagent_containers/glass/bottle/epinephrine,
 					/obj/item/reagent_containers/glass/bottle/morphine,
-					/obj/item/reagent_containers/glass/bottle/morphine,
-					/obj/item/reagent_containers/glass/bottle/morphine,
-					/obj/item/reagent_containers/glass/bottle/morphine,
-					/obj/item/reagent_containers/glass/bottle/morphine,
-					/obj/item/reagent_containers/glass/bottle/morphine,
-					/obj/item/reagent_containers/glass/bottle/toxin,
 					/obj/item/reagent_containers/glass/bottle/toxin,
 					/obj/item/reagent_containers/glass/beaker/large,
-					/obj/item/reagent_containers/glass/beaker/large,
-					/obj/item/reagent_containers/pill/insulin,
-					/obj/item/reagent_containers/pill/insulin,
-					/obj/item/reagent_containers/pill/insulin,
 					/obj/item/reagent_containers/pill/insulin,
 					/obj/item/stack/medical/gauze,
 					/obj/item/storage/box/beakers,
 					/obj/item/storage/box/medsprays,
 					/obj/item/storage/box/syringes,
-					/obj/item/storage/box/bodybags)
+					/obj/item/storage/box/bodybags,
+					/obj/item/storage/firstaid/regular,
+					/obj/item/storage/firstaid/o2,
+					/obj/item/storage/firstaid/toxin,
+					/obj/item/storage/firstaid/brute,
+					/obj/item/storage/firstaid/fire,
+					/obj/item/defibrillator/loaded,
+					/obj/item/reagent_containers/blood/OMinus,
+					/obj/item/storage/pill_bottle/mining,
+					/obj/item/reagent_containers/pill/neurine,
+					/obj/item/vending_refill/medical)
 	crate_name = "medical supplies crate"
+
+/datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 10)
+		var/item = pick(contains)
+		new item(C)
 
 /datum/supply_pack/medical/firstaidoxygen_single
 	name = "Oxygen Deprivation Kit Single-Pack"
@@ -1310,7 +1313,7 @@
 	desc = "Contains one first aid kit focused on healing damage dealt by heavy toxins."
 	cost = 330
 	small_item = TRUE
-	contains = list(/obj/item/storage/firstaid/toxin)
+		contains = list(/obj/item/storage/firstaid/toxin)
 
 /datum/supply_pack/medical/salglucanister
 	name = "Heavy-Duty Saline Canister"
