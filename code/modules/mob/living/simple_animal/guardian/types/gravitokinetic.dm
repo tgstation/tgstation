@@ -18,7 +18,7 @@
 		to_chat(target, "<span class='userdanger'>Everything feels really heavy!</span>")
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AltClickOn(atom/A)
-	if(isopenturf(A) && is_deployed())
+	if(isopenturf(A) && is_deployed() && stat != DEAD && in_range(src, A) && !incapacitated())
 		var/turf/T = A
 		if(isspaceturf(T))
 			to_chat(src, "<span class='warning'>You cannot add gravity to space!</span>")
