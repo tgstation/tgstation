@@ -1,17 +1,17 @@
 /turf/open/pool
 	icon = 'icons/turf/pool.dmi'
-	var/filled = TRUE
 	name = "poolwater"
 	desc = "You're safer here than in the deep."
 	icon_state = "pool_tile"
 	heat_capacity = INFINITY
+	var/filled = TRUE
 	var/next_splash = 1
 	var/obj/effect/overlay/water/watereffect
 	var/obj/effect/overlay/water/top/watertop
+	var/obj/machinery/poolcontroller/controller
 
 
 /turf/open/pool/Initialize()
-	create_reagents(100)
 	watereffect = new /obj/effect/overlay/water(src)
 	watertop = new /obj/effect/overlay/water/top(src)
 	. = ..()
@@ -19,6 +19,7 @@
 /turf/open/pool/Destroy()
 	QDEL_NULL(watereffect)
 	QDEL_NULL(watertop)
+	controller = null
 	return ..()
 
 /turf/open/pool/proc/update_icon()

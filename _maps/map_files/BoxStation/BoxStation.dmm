@@ -55693,6 +55693,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"jGc" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "jHt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -57269,6 +57275,9 @@
 /area/engine/engineering)
 "uhj" = (
 /obj/structure/closet/boxinggloves,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "uhH" = (
@@ -57785,6 +57794,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
+"xsr" = (
+/obj/machinery/camera{
+	c_tag = "Pool"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "xEu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -92677,7 +92692,7 @@ ahn
 apx
 ahn
 arj
-asb
+jGc
 hSX
 aut
 aut
@@ -93191,7 +93206,7 @@ aoL
 apy
 aqq
 arj
-asb
+xsr
 hSX
 aut
 aut

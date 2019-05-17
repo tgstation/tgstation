@@ -16,16 +16,17 @@
 	use_power = TRUE
 	idle_power_usage = 75
 	var/list/linkedturfs //List contains all of the linked pool turfs to this controller, assignment happens on initialize
+	var/list/mobs_in_pool = list()//List contains all the mobs currently in the pool.
 	var/temperature = NORMAL //1-5 Frigid Cool Normal Warm Scalding
 	var/srange = 6 //The range of the search for pool turfs, change this for bigger or smaller pools.
 	var/linkedmist = list() //Used to keep track of created mist
-	var/misted = FALSE //Used to check for mist.
-	var/obj/item/reagent_containers/beaker = null
+	var/misted = FALSE //Used to` check for mist.
 	var/cur_reagent = "water"
 	var/drainable = FALSE
 	var/drained = FALSE
 	var/bloody = FALSE
 	var/obj/machinery/drain/linkeddrain = null
+	var/obj/machinery/drain/linked_filter = null
 	var/timer = 0 //we need a cooldown on that shit.
 	var/reagenttimer = 0 //We need 2.
 	var/shocked = FALSE//Shocks morons, like an airlock.
@@ -37,16 +38,20 @@
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	wires = new /datum/wires/poolcontroller(src)
-	for(var/turf/open/pool/W in range(srange,src)) //Search for /turf/open/beach/water in the range of var/srange
+	for(var/turf/open/pool/W in range(srange,src))
 		LAZYADD(linkedturfs, W)
+		W.controller = src
 	for(var/obj/machinery/drain/pooldrain in range(srange,src))
 		linkeddrain = pooldrain
+	for(var/obj/machinery/poolfilter/F in range(srange, src))			
+		linked_filter = F
 
 /obj/machinery/poolcontroller/Destroy()
 	if(beaker)
 		beaker.forceMove(get_turf(src))
 		beaker = null
 	linkeddrain = null
+	linked_filter = null
 	linkedturfs.Cut()
 	return ..()
 
@@ -57,9 +62,8 @@
 		obj_flags |= EMAGGED
 		tempunlocked = TRUE
 		drainable = TRUE
-		if(GLOB.adminlog)
-			log_game("[key_name(user)] emagged [src]")
-			message_admins("[key_name_admin(user)] emagged [src]")
+		log_game("[key_name(user)] emagged [src]")
+		message_admins("[key_name_admin(user)] emagged [src]")
 	else
 		to_chat(user, "<span class='warning'>The interface on [src] is already too damaged to short it again.</span>")
 		return
@@ -70,34 +74,21 @@
 	if(stat & (BROKEN))
 		return
 
-	if(istype(W,/obj/item/reagent_containers/glass/beaker))
-		if(beaker)
-			to_chat(user, "A beaker is already loaded into the machine.")
-			return
-		if(W.reagents.total_volume >= 100 && W.reagents.reagent_list.len ==1) //check if full and allow one reageant only.
+	if(istype(W,/obj/item/reagent_containers))
+		if(W.reagents.total_volume >= 100) //check if there's enough reagent
 			for(var/X in W.reagents.reagent_list)
 				var/datum/reagent/R = X
 				if(R.reagent_state == SOLID)
 					to_chat(user, "The pool cannot accept reagents in solid form!.")
 					return
 				else
-					beaker =  W
-					user.dropItemToGround(W)
-					W.forceMove(src)
-					to_chat(user, "You add the beaker to the machine!")
+					user.visible_message("<span class='notice'>\The [src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of \the [W] are quickly suctioned out by the machine!</span")
 					updateUsrDialog()
-					cur_reagent = "[R.name]"
-					for(var/I in linkedturfs)
-						var/turf/open/pool/P = I
-						if(P.reagents)
-							P.reagents.clear_reagents()
-							P.reagents.add_reagent(R.id, 100)
-					if(GLOB.adminlog)
-						log_game("[key_name(user)] has changed the [src] chems to [R.name]")
-						message_admins("[key_name_admin(user)] has changed the [src] chems to [R.name].")
+					log_game("[key_name(user)] has changed the [src] chems to [R.name]")
+					message_admins("[key_name_admin(user)] has changed the [src] chems to [R.name].")
 					timer = 15
 		else
-			to_chat(user, "<span class='notice'>This machine only accepts full large beakers of one reagent.</span>")
+			to_chat(user, "<span class='notice'>\The [src] beeps unpleasantly as it rejects the beaker. It must not have enough in it.</span>")
 			return
 	else if(panel_open && is_wire_tool(W))
 		wires.interact(user)
@@ -131,8 +122,7 @@
 		return FALSE
 
 /obj/machinery/poolcontroller/proc/poolreagent()
-	for(var/X in linkedturfs)
-		var/turf/open/pool/W = X
+	for(var/turf/open/pool/W in linkedturfs)
 		for(var/mob/living/carbon/human/swimee in W)
 			if(beaker && cur_reagent && W.reagents)
 				for(var/Q in W.reagents.reagent_list)
@@ -151,7 +141,6 @@
 
 
 /obj/machinery/poolcontroller/process()
-	updatePool() //Call the mob affecting proc)
 	if(timer > 0)
 		timer--
 		updateUsrDialog()
@@ -159,45 +148,46 @@
 		reagenttimer--
 	if(stat & (NOPOWER|BROKEN))
 		return
-	else if(!reagenttimer && !drained)
-		poolreagent()
+	if (!drained)
+		updatePool()
+		if(!reagenttimer)
+			poolreagent()
 
 /obj/machinery/poolcontroller/proc/updatePool()
 	if(!drained)
-		for(var/X in linkedturfs) //Check for pool-turfs linked to the controller.
-			var/turf/open/pool/W = X
-			for(var/mob/living/M in W) //Check for mobs in the linked pool-turfs.
-				switch(temperature) //Apply different effects based on what the temperature is set to.
-					if(SCALDING) //Scalding
-						M.adjust_bodytemperature(50,0,500)
-					if(WARM) //Warm
-						M.adjust_bodytemperature(20,0,360) //Heats up mobs till the termometer shows up
-					if(NORMAL) //Normal temp does nothing, because it's just room temperature water.
-					if(COOL)
-						M.adjust_bodytemperature(-20,250) //Cools mobs till the termometer shows up
-					if(FRIGID) //Freezing
-						M.adjust_bodytemperature(-60) //cool mob at -35k per cycle, less would not affect the mob enough.
-						if(M.bodytemperature <= 50 && !M.stat)
-							M.apply_status_effect(/datum/status_effect/freon)
+		for(var/mob/living/M in mobs_in_pool)
+			switch(temperature) //Apply different effects based on what the temperature is set to.
+				if(SCALDING) //Scalding
+					M.adjust_bodytemperature(50,0,500)
+				if(WARM) //Warm
+					M.adjust_bodytemperature(20,0,360) //Heats up mobs till the termometer shows up
+				if(NORMAL) //Normal temp does nothing, because it's just room temperature water.
+				if(COOL)
+					M.adjust_bodytemperature(-20,250) //Cools mobs till the termometer shows up
+				if(FRIGID) //Freezing
+					M.adjust_bodytemperature(-60) //cool mob at -35k per cycle, less would not affect the mob enough.
+					if(M.bodytemperature <= 50 && !M.stat)
+						M.apply_status_effect(/datum/status_effect/freon)
+			if(ishuman(M))
 				var/mob/living/carbon/human/drownee = M
-				if(drownee.stat == DEAD)
-					continue
-				if(drownee && drownee.lying && !drownee.internal)
+				if(!drownee || drownee.stat == DEAD)
+					return
+				if(drownee.lying && !drownee.internal)
 					if(drownee.stat != CONSCIOUS)
 						drownee.adjustOxyLoss(9)
-						to_chat(drownee, "<span class='danger'>You're quickly drowning!</span>")
 					else
-						if(!drownee.internal)
-							drownee.adjustOxyLoss(4)
-							if(prob(35))
-								to_chat(drownee, "<span class='danger'>You're lacking air!</span>")
+						drownee.adjustOxyLoss(4)
+						if(prob(35))
+							to_chat(drownee, "<span class='danger'>You're drowning!</span>")
 
+/* not sure what to do about this part
 			for(var/obj/effect/decal/cleanable/decal in W)
 				CHECK_TICK
 				animate(decal, alpha = 10, time = 20)
 				QDEL_IN(decal, 25)
 				if(istype(decal,/obj/effect/decal/cleanable/blood) || istype(decal, /obj/effect/decal/cleanable/trail_holder))
 					bloody = TRUE
+					*/
 	changecolor()
 
 /obj/machinery/poolcontroller/proc/changecolor()

@@ -27,11 +27,9 @@
 		for(var/obj/item/absorbo in orange(1,src))
 			if(absorbo.w_class == WEIGHT_CLASS_TINY)
 				step_towards(absorbo, src)
-		spawn(7) //Gives them just the time to pick their items up.
-			for(var/obj/item/absorb in range(0,src))
-				if(absorb.w_class == WEIGHT_CLASS_TINY)
-					for(var/obj/machinery/poolfilter/filter in range(srange,src))
-						absorb.forceMove(filter)
+				var/dist = get_dist(src, absorbo)
+				if(dist == 0)
+					absorb.forceMove(poolcontrol.linked_filter)
 	if(active)
 		if(status) //if filling up, get back to normal position
 			if(timer > 0)
@@ -135,18 +133,18 @@
 		obj_flags |= EMAGGED
 		do_sparks(5, TRUE, src)
 		icon_state = "filter_b"
-		spawn(50)
-			if(prob(50))
-				new /mob/living/simple_animal/hostile/shark(loc)
-			else
-				if(prob(50))
-					new /mob/living/simple_animal/hostile/shark/kawaii(loc)
-				else
-					new /mob/living/simple_animal/hostile/shark/laser(loc)
-		if(GLOB.adminlog)
-			log_game("[key_name(user)] emagged the pool filter and probably spawned sharks")
-			message_admins("[key_name_admin(user)] emagged the pool filter and probably spawned sharks")
+		addtimer(CALLBACK(src, ./spawn_shark), 50)
+		log_game("[key_name(user)] emagged the pool filter and spawned a shark")
+		message_admins("[key_name_admin(user)] emagged the pool filter and spawned a shark")
 
+/obj/machinery/poolfilter/proc/spawn_shark()
+	if(prob(50))
+		new /mob/living/simple_animal/hostile/shark(loc)
+	else
+		if(prob(50))
+			new /mob/living/simple_animal/hostile/shark/kawaii(loc)
+		else
+			new /mob/living/simple_animal/hostile/shark/laser(loc)
 
 /obj/machinery/poolfilter/attack_hand(mob/user)
 	to_chat(user, "You search the filter.")
