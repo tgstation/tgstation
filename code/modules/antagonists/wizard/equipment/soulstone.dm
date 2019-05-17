@@ -29,7 +29,7 @@
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
-	var/purified = TRUE
+	purified = TRUE
 	
 
 /obj/item/soulstone/anybody/chaplain
