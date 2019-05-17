@@ -531,16 +531,34 @@
 /datum/reagent/medicine/perfluorodecalin
 	name = "Perfluorodecalin"
 	id = "perfluorodecalin"
-	description = "Extremely rapidly restores oxygen deprivation, but inhibits speech. May also heal small amounts of bruising and burns."
+	description = "An emergency medication used to rapidly treat oxygen deprivation. The mechanism becomes more potent as exposure is increased. Overdose causes the mechanism to run regardless if the user has oxygen deprivation."
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
-	M.adjustOxyLoss(-12*REM, 0)
-	M.adjustToxLoss(0.3*REM, 0)
+	var/oxycalc = 2.5*REM*current_cycle
+	oxycalc = min(oxycalc, M.oxyloss)
+	if(oxycalc)
+		M.adjustOxyLoss(-oxycalc, 0)
+		M.adjustToxLoss(oxycalc/2.5, 0) //1*REM*current_cycle
 	..()
 	return TRUE
+
+/datum/reagent/medicine/perfluorodecalin/overdose_process(mob/living/M)
+	. = TRUE
+	var/oxycalc = 2.5*REM*current_cycle
+	M.adjustOxyLoss(-oxycalc, 0)
+	M.adjustToxLoss(oxycalc/2.5, 0)
+	//we then cancel out any healing done by on_mob_life since we want to simulate the same mechanism and NOT doubledip.
+	oxycalc = min(oxycalc,0)
+	if(oxycalc)
+		M.adjustOxyLoss(oxycalc, 0)
+		M.adjustToxLoss(-oxycalc/2.5, 0)
+
+	..()
+
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
