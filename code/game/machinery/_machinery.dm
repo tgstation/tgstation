@@ -147,6 +147,14 @@ Class Procs:
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
+	if(length(component_parts))
+		if (loc)
+			for(var/atom/movable/AM in component_parts)
+				AM.forceMove(loc)
+		else
+			for(var/atom/A in component_parts)
+				qdel(A)
+		component_parts.Cut()
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
