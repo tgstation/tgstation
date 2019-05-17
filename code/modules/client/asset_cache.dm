@@ -682,8 +682,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		icon_file = initial(item.icon)
 		icon_state = initial(item.icon_state)
 
-		if(icon_state in icon_states(icon_file))
+		else if(icon_state in icon_states(icon_file))
 			I = icon(icon_file, icon_state, SOUTH)
+			var/c = initial(item.color)
+			if (!isnull(c) && c != "#FFFFFF")
+				I.Blend(initial(c), ICON_MULTIPLY)
 		else
 			item = new item()
 			I = icon(item.icon, item.icon_state, SOUTH)
