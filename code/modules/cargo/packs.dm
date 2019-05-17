@@ -1313,7 +1313,7 @@
 	desc = "Contains one first aid kit focused on healing damage dealt by heavy toxins."
 	cost = 330
 	small_item = TRUE
-		contains = list(/obj/item/storage/firstaid/toxin)
+	contains = list(/obj/item/storage/firstaid/toxin)
 
 /datum/supply_pack/medical/salglucanister
 	name = "Heavy-Duty Saline Canister"
