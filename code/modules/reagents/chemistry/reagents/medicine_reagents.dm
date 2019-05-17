@@ -543,6 +543,8 @@
 	if(oxycalc)
 		M.adjustOxyLoss(-oxycalc, 0)
 		M.adjustToxLoss(oxycalc/2.5, 0) //1*REM*current_cycle
+	if(prob(current_cycle) && M.losebreath)
+		M.losebreath--
 	..()
 	return TRUE
 
@@ -551,7 +553,7 @@
 	var/oxycalc = 2.5*REM*current_cycle
 	M.adjustOxyLoss(-oxycalc, 0)
 	M.adjustToxLoss(oxycalc/2.5, 0)
-	//we then cancel out any healing done by on_mob_life since we want to simulate the same mechanism and NOT doubledip.
+	//we then cancel out any healing done by on_mob_life since we want to simulate the same mechanism and NOT doubledip. losebreath is done regardless so *shrug*
 	oxycalc = min(oxycalc,0)
 	if(oxycalc)
 		M.adjustOxyLoss(oxycalc, 0)
