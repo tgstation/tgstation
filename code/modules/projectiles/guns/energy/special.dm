@@ -159,6 +159,16 @@
 	else
 		..()
 
+/obj/item/gun/energy/plasmacutter/emp_act(severity)
+	if(!cell.charge)
+		return
+	cell.use(cell.charge/3)
+	if(isliving(loc))
+		var/mob/living/L = loc
+		L.visible_message("<span class='danger'>Searing plasma is spewed out of [L]'s [src]!</span>", "<span class='userdanger'>Your [src] malfunctions and spews incinerating plasma onto you!</span>")
+		L.adjust_fire_stacks(4)
+		L.IgniteMob()
+
 // Tool procs, in case plasma cutter is used as welder
 // Can we start welding?
 /obj/item/gun/energy/plasmacutter/tool_start_check(mob/living/user, amount)
