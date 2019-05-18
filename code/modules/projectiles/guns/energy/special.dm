@@ -159,6 +159,10 @@
 	else
 		..()
 
+//unaffected by emp
+/obj/item/gun/energy/plasmacutter/emp_act(severity)
+	return
+
 // Tool procs, in case plasma cutter is used as welder
 // Can we start welding?
 /obj/item/gun/energy/plasmacutter/tool_start_check(mob/living/user, amount)
