@@ -206,10 +206,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		if(do_after(user, 40, target = SS))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			SS.usability = TRUE
+			SS.purified = TRUE
 			for(var/mob/living/simple_animal/shade/EX in SS)
 				SSticker.mode.remove_cultist(EX.mind, 1, 0)
-				qdel(SS)
-				new /obj/item/soulstone/anybody/purified
+				EX.icon_state = "ghost1"
+				EX.name = "Purified [EX.name]"
 			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
 
 /obj/item/storage/book/bible/booze
