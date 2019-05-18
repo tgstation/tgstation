@@ -180,6 +180,8 @@
 	icon_state = "behemoth_angelic"
 	icon_living = "behemoth_angelic"
 	loot = list(/obj/item/ectoplasm/angelic)
+
+/mob/living/simple_animal/hostile/construct/armored/noncult
 	
 ////////////////////////Wraith/////////////////////////////////////////////
 /mob/living/simple_animal/hostile/construct/wraith
@@ -231,6 +233,8 @@
 	icon_state = "floating_angelic"
 	icon_living = "floating_angelic"
 	loot = list(/obj/item/ectoplasm/angelic)
+	
+/mob/living/simple_animal/hostile/construct/wraith/noncult
 
 /////////////////////////////Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder
@@ -318,6 +322,12 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
 
+/mob/living/simple_animal/hostile/construct/builder/noncult
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
 
 /////////////////////////////Harvester/////////////////////////
 /mob/living/simple_animal/hostile/construct/harvester
