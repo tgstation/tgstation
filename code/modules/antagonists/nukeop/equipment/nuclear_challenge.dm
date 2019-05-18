@@ -74,7 +74,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 			continue
 		uplinks += uplink
 
-	var/tc_to_distribute = CHALLENGE_TELECRYSTALS * ((CHALLENGE_MAX_PAYOUT - min(CHALLENGE_MAX_PAYOUT, GLOB.player_list.len)) / (CHALLENGE_MAX_PAYOUT - CHALLENGE_MIN_PLAYERS))
+	var/tc_to_distribute = CHALLENGE_TELECRYSTALS * (1 - ((CHALLENGE_MAX_PAYOUT - min(CHALLENGE_MAX_PAYOUT, GLOB.player_list.len)) / (CHALLENGE_MAX_PAYOUT - CHALLENGE_MIN_PLAYERS)))
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
 	for (var/datum/component/uplink/uplink in uplinks)
