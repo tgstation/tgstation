@@ -241,6 +241,7 @@
 	var/obj/machinery/nuclearbomb/tracked_nuke
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
+	var/list/team_discounts
 
 /datum/team/nuclear/New()
 	..()
