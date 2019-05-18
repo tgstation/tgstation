@@ -25,6 +25,7 @@
 	plantname = "Steel Caps"
 	product = /obj/item/grown/log/steel
 	mutatelist = list()
+	reagents_add = list("iron" = 0.2, "charcoal" = 0.1)
 	rarity = 20
 
 
