@@ -255,4 +255,4 @@
 		if(button.required_software)
 			button.color = owner.software.Find(button.required_software) ? null : "#808080"
 
-	#undef PAI_MISSING_SOFTWARE_MESSAGE
+#undef PAI_MISSING_SOFTWARE_MESSAGE
