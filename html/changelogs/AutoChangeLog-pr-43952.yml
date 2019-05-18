@@ -1,0 +1,5 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - balance: "AI power backup is now separate from the health, and is tied to their core. Carding an AI on battery backup will leave the core at partial charge. AIs no longer slowly lose integrity while on backups (but will instantly die as before once the backup runs out). As such, whacking an AI with a wrench will no longer magically lower their backup battery capacity."
+  - balance: "AIs on backup battery can now unbolt at the cost of a quarter of their battery's max charge. This cannot be done while at under 25% power."
