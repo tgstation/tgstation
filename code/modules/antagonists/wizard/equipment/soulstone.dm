@@ -121,7 +121,7 @@
 		to_chat(user, "<span class='cult'>A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>")
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
-	if(!istype(O, /obj/item/soulstone/anybody/purified))
+	if(!istype(O, /obj/item/soulstone/anybody))
 		var/obj/item/soulstone/SS = O
 		if(!iscultist(user) && !iswizard(user) && !SS.usability)
 			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>")
