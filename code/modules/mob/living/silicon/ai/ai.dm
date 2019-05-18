@@ -29,6 +29,7 @@
 	sec_hud = DATA_HUD_SECURITY_BASIC
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
+	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
@@ -233,6 +234,8 @@
 	if(statpanel("Status"))
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
+			if(isturf(loc)) //only show if we're "in" a core
+				stat(null, text("Backup Power: [battery/2]%"))
 			stat(null, text("Connected cyborgs: [connected_robots.len]"))
 			for(var/mob/living/silicon/robot/R in connected_robots)
 				var/robot_status = "Nominal"
@@ -338,8 +341,14 @@
 	set name = "Toggle Floor Bolts"
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
-	if(incapacitated())
+	if(stat == DEAD)
 		return
+	if(incapacitated())
+		if(battery < 50)
+			to_chat(src, "<span class='warning'>Insufficient backup power!</span>")
+			return
+		battery = battery - 50
+		to_chat(src, "<span class='notice'>You route power from your backup battery to move the bolts.</span>")
 	var/is_anchored = FALSE
 	if(move_resist == MOVE_FORCE_VERY_STRONG)
 		move_resist = MOVE_FORCE_NORMAL
@@ -813,7 +822,8 @@
 			to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>"    )
 			return
 		ShutOffDoomsdayDevice()
-		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
+		var/obj/structure/AIcore/new_core = new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
+		new_core.circuit.battery = battery
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
 		radio_enabled = FALSE 	//No talking on the built-in radio for you either!
