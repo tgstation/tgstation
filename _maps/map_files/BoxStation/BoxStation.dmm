@@ -8940,7 +8940,7 @@
 /turf/closed/wall,
 /area/lawoffice)
 "aur" = (
-/obj/machinery/poolfilter{
+/obj/machinery/pool/filter{
 	pixel_y = 18
 	},
 /turf/open/pool,
@@ -9389,7 +9389,7 @@
 /turf/open/pool,
 /area/crew_quarters/fitness)
 "avA" = (
-/obj/machinery/drain,
+/obj/machinery/pool/drain,
 /turf/open/pool,
 /area/crew_quarters/fitness)
 "avB" = (
@@ -56290,7 +56290,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/poolcontroller,
+/obj/machinery/pool/controller,
 /turf/open/floor/plasteel/yellowsiding,
 /area/crew_quarters/fitness)
 "noK" = (
