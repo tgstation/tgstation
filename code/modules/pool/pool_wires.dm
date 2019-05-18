@@ -3,7 +3,7 @@
 
 
 /datum/wires/poolcontroller
-	holder_type = /obj/machinery/poolcontroller
+	holder_type = /obj/machinery/pool/controller
 	proper_name = "Pool"
 
 /datum/wires/poolcontroller/New(atom/holder)
@@ -14,12 +14,12 @@
 	..()
 
 /datum/wires/poolcontroller/interactable(mob/user)
-	var/obj/machinery/poolcontroller/P = holder
+	var/obj/machinery/pool/controller/P = holder
 	if(P.panel_open)
 		return TRUE
 
 /datum/wires/poolcontroller/get_status()
-	var/obj/machinery/poolcontroller/P = holder
+	var/obj/machinery/pool/controller/P = holder
 	var/list/status = list()
 	status += "The blue light is [P.drainable ? "on" : "off"]."
 	status += "The red light is [P.tempunlocked ? "on" : "off"]."
@@ -27,7 +27,7 @@
 	return status
 
 /datum/wires/poolcontroller/on_pulse(wire)
-	var/obj/machinery/poolcontroller/P = holder
+	var/obj/machinery/pool/controller/P = holder
 	switch(wire)
 		if(POOL_WIRE_DRAIN)
 			P.drainable = FALSE
@@ -38,7 +38,7 @@
 			addtimer(CALLBACK(P, /obj/machinery/autolathe.proc/reset, wire), 60)
 
 /datum/wires/poolcontroller/on_cut(wire, mend)
-	var/obj/machinery/poolcontroller/P = holder
+	var/obj/machinery/pool/controller/P = holder
 	switch(wire)
 		if(POOL_WIRE_DRAIN)
 			if(mend)

@@ -1,19 +1,12 @@
-//TODO: move these to their own file
-#define FRIGID 1
-#define COOL 2
-#define NORMAL 3
-#define WARM 4
-#define SCALDING 5
-#define REAGENT_TICK_INTERVAL 5
-GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
-
 //Originally stolen from paradise. Credits to tigercat2000.
 //Modified a lot by Kokojo and Tortellini Tony for hippiestation.
 //Heavily refactored by tgstation
-/obj/machinery/poolcontroller
+/obj/machinery/pool
+	icon = 'icons/obj/machines/pool.dmi'
+
+/obj/machinery/pool/controller
 	name = "\improper Pool Controller"
 	desc = "An advanced substance generation and fluid tank management system that can refill the contents of a pool to a completely different substance in minutes."
-	icon = 'icons/turf/pool.dmi'
 	icon_state = "poolc_3"
 	anchored = TRUE
 	density = TRUE
@@ -21,7 +14,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 	idle_power_usage = 75
 	var/list/linkedturfs //List contains all of the linked pool turfs to this controller, assignment happens on initialize
 	var/list/mobs_in_pool = list()//List contains all the mobs currently in the pool.
-	var/temperature = NORMAL //1-5 Frigid Cool Normal Warm Scalding
+	var/temperature = POOL_NORMAL //1-5 Frigid Cool Normal Warm Scalding
 	var/srange = 6 //The range of the search for pool turfs, change this for bigger or smaller pools.
 	var/list/linkedmist = list() //Used to keep track of created mist
 	var/misted = FALSE //Used to check for mist.
@@ -29,8 +22,8 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 	var/drainable = FALSE
 	var/drained = FALSE
 	var/bloody = 0
-	var/obj/machinery/drain/linked_drain = null
-	var/obj/machinery/drain/linked_filter = null
+	var/obj/machinery/pool/drain/linked_drain = null
+	var/obj/machinery/pool/filter/linked_filter = null
 	var/interact_delay = 0 //cooldown on messing with settings
 	var/reagent_delay = 0 //cooldown on reagent ticking
 	var/shocked = FALSE//Shocks morons, like an airlock.
@@ -38,7 +31,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 	var/old_rcolor
 	resistance_flags = INDESTRUCTIBLE|UNACIDABLE
 
-/obj/machinery/poolcontroller/Initialize()
+/obj/machinery/pool/controller/Initialize()
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	create_reagents(100)
@@ -46,18 +39,18 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 	for(var/turf/open/pool/W in range(srange,src))
 		LAZYADD(linkedturfs, W)
 		W.controller = src
-	for(var/obj/machinery/drain/pooldrain in range(srange,src))
+	for(var/obj/machinery/pool/drain/pooldrain in range(srange,src))
 		linked_drain = pooldrain
-	for(var/obj/machinery/poolfilter/F in range(srange, src))			
+	for(var/obj/machinery/pool/filter/F in range(srange, src))			
 		linked_filter = F
 
-/obj/machinery/poolcontroller/Destroy()
+/obj/machinery/pool/controller/Destroy()
 	linked_drain = null
 	linked_filter = null
 	linkedturfs.Cut()
 	return ..()
 
-/obj/machinery/poolcontroller/emag_act(user as mob) //Emag_act, this is called when it is hit with a cryptographic sequencer.
+/obj/machinery/pool/controller/emag_act(user as mob) //Emag_act, this is called when it is hit with a cryptographic sequencer.
 	if(!(obj_flags & EMAGGED)) //If it is not already emagged, emag it.
 		to_chat(user, "<span class='warning'>You disable the [src]'s safety features.</span>")
 		do_sparks(5, TRUE, src)
@@ -70,7 +63,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 		to_chat(user, "<span class='warning'>The interface on [src] is already too damaged to short it again.</span>")
 		return
 
-/obj/machinery/poolcontroller/attackby(obj/item/W, mob/user)
+/obj/machinery/pool/controller/attackby(obj/item/W, mob/user)
 	if(shocked && !(stat & NOPOWER))
 		shock(user,50)
 	if(stat & (BROKEN))
@@ -106,7 +99,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 	else
 		return ..()
 
-/obj/machinery/poolcontroller/screwdriver_act(mob/living/user, obj/item/W)
+/obj/machinery/pool/controller/screwdriver_act(mob/living/user, obj/item/W)
 	. = ..()
 	if(.)
 		return TRUE
@@ -119,7 +112,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 	return TRUE
 
 //procs
-/obj/machinery/poolcontroller/proc/shock(mob/user, prb)
+/obj/machinery/pool/controller/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return FALSE
 	if(!prob(prb))
@@ -132,7 +125,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 	else
 		return FALSE
 
-/obj/machinery/poolcontroller/proc/poolreagent()
+/obj/machinery/pool/controller/proc/poolreagent()
 	if(reagents.reagent_list.len > 0)
 		for(var/turf/open/pool/W in linkedturfs)
 			for(var/mob/living/carbon/human/swimee in W)
@@ -142,12 +135,13 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 					swimee.reagents.add_reagent(R.id, 0.5) //osmosis
 				reagents.reaction(swimee, VAPOR, 0.03) //3 percent
 			for(var/obj/objects in W)
-				W.reagents.reaction(objects, VAPOR, 1)
-	reagent_delay = world.time + REAGENT_TICK_INTERVAL
+				if(W.reagents)
+					W.reagents.reaction(objects, VAPOR, 1)
+	reagent_delay = world.time + POOL_REAGENT_TICK_INTERVAL
 	changecolor()
 
 
-/obj/machinery/poolcontroller/process()
+/obj/machinery/pool/controller/process()
 	updateUsrDialog()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -156,18 +150,18 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 		if(reagent_delay <= world.time)
 			poolreagent()
 
-/obj/machinery/poolcontroller/proc/updatePool()
+/obj/machinery/pool/controller/proc/updatePool()
 	if(!drained)
 		for(var/mob/living/M in mobs_in_pool)
 			switch(temperature) //Apply different effects based on what the temperature is set to.
-				if(SCALDING) //Scalding
+				if(POOL_SCALDING) //Scalding
 					M.adjust_bodytemperature(50,0,500)
-				if(WARM) //Warm
+				if(POOL_WARM) //Warm
 					M.adjust_bodytemperature(20,0,360) //Heats up mobs till the termometer shows up
-				if(NORMAL) //Normal temp does nothing, because it's just room temperature water.
-				if(COOL)
+				if(POOL_NORMAL) //Normal temp does nothing, because it's just room temperature water.
+				if(POOL_COOL)
 					M.adjust_bodytemperature(-20,250) //Cools mobs till the termometer shows up
-				if(FRIGID) //Freezing
+				if(POOL_FRIGID) //Freezing
 					M.adjust_bodytemperature(-60) //cool mob at -35k per cycle, less would not affect the mob enough.
 					if(M.bodytemperature <= 50 && !M.stat)
 						M.apply_status_effect(/datum/status_effect/freon)
@@ -193,7 +187,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 					*/
 	changecolor()
 
-/obj/machinery/poolcontroller/proc/changecolor()
+/obj/machinery/pool/controller/proc/changecolor()
 	if(drained)
 		return
 	var/rcolor
@@ -218,7 +212,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 			color1.watereffect.color = null
 			color1.watertop.color = null
 
-/obj/machinery/poolcontroller/proc/miston() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
+/obj/machinery/pool/controller/proc/miston() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
 	for(var/X in linkedturfs)
 		var/turf/open/pool/W = X
 		if(W.filled)
@@ -228,30 +222,30 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 			linkedmist += M
 	misted = TRUE //var just to keep track of when the mist on proc has been called.
 
-/obj/machinery/poolcontroller/proc/mistoff() //Delete all /obj/effect/mist from all linked pool tiles.
+/obj/machinery/pool/controller/proc/mistoff() //Delete all /obj/effect/mist from all linked pool tiles.
 	for(var/M in linkedmist)
 		qdel(M)
 	misted = FALSE //no mist left, turn off the tracking var
 
-/obj/machinery/poolcontroller/proc/handle_temp()
+/obj/machinery/pool/controller/proc/handle_temp()
 	interact_delay = world.time + 10
 	mistoff()
 	icon_state = "poolc_[temperature]"
-	if(temperature == SCALDING)
+	if(temperature == POOL_SCALDING)
 		miston()
 	update_icon()
 
-/obj/machinery/poolcontroller/proc/CanUpTemp(mob/user)
-	if(temperature == WARM && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature < WARM)
+/obj/machinery/pool/controller/proc/CanUpTemp(mob/user)
+	if(temperature == POOL_WARM && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature < POOL_WARM)
 		return TRUE
 	return FALSE
 
-/obj/machinery/poolcontroller/proc/CanDownTemp(mob/user)
-	if(temperature == COOL && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature > COOL)
+/obj/machinery/pool/controller/proc/CanDownTemp(mob/user)
+	if(temperature == POOL_COOL && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature > POOL_COOL)
 		return TRUE
 	return FALSE
 
-/obj/machinery/poolcontroller/Topic(href, href_list)
+/obj/machinery/pool/controller/Topic(href, href_list)
 	if(..())
 		return
 	if(interact_delay > world.time)
@@ -272,30 +266,30 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 			linked_drain.timer = 15
 			if(!linked_drain.status)
 				new /obj/effect/whirlpool(linked_drain.loc)
-				temperature = NORMAL
+				temperature = POOL_NORMAL
 			else
-				new /obj/effect/effect/waterspout(linked_drain.loc)
-				temperature = NORMAL
+				new /obj/effect/waterspout(linked_drain.loc)
+				temperature = POOL_NORMAL
 			handle_temp()
 			bloody = FALSE
 	updateUsrDialog()
 
-/obj/machinery/poolcontroller/proc/temp2text()
+/obj/machinery/pool/controller/proc/temp2text()
 	switch(temperature)
-		if(FRIGID)
+		if(POOL_FRIGID)
 			return "<span class='bad'>Frigid</span>"
-		if(COOL)
+		if(POOL_COOL)
 			return "<span class='good'>Cool</span>"
-		if(NORMAL)
+		if(POOL_NORMAL)
 			return "<span class='good'>Normal</span>"
-		if(WARM)
+		if(POOL_WARM)
 			return "<span class='good'>Warm</span>"
-		if(SCALDING)
+		if(POOL_SCALDING)
 			return "<span class='bad'>Scalding</span>"
 		else
 			return "Outside of possible range."
 
-/obj/machinery/poolcontroller/ui_interact(mob/user)
+/obj/machinery/pool/controller/ui_interact(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -329,7 +323,7 @@ GLOBAL_LIST_INIT(blacklisted_pool_reagents, list("plasma"))
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/poolcontroller/proc/reset(wire)
+/obj/machinery/pool/controller/proc/reset(wire)
 	switch(wire)
 		if(WIRE_SHOCK)
 			if(!wires.is_cut(wire))

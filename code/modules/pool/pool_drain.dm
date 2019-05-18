@@ -1,6 +1,5 @@
-/obj/machinery/drain
+/obj/machinery/pool/drain
 	name = "drain"
-	icon = 'icons/turf/pool.dmi'
 	icon_state = "drain"
 	desc = "A suction system to remove the contents of the pool, and sometimes small objects. Do not insert fingers."
 	anchored = TRUE
@@ -9,21 +8,21 @@
 	var/srange = 6
 	var/timer = 0
 	var/cooldown
-	var/obj/machinery/poolcontroller/poolcontrol = null
+	var/obj/machinery/pool/controller/poolcontrol = null
 	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
-/obj/machinery/drain/Initialize()
+/obj/machinery/pool/drain/Initialize()
 	START_PROCESSING(SSprocessing, src)
-	for(var/obj/machinery/poolcontroller/control in range(srange,src))
+	for(var/obj/machinery/pool/controller/control in range(srange,src))
 		poolcontrol += control
 	. = ..()
 
-/obj/machinery/drain/Destroy()
+/obj/machinery/pool/drain/Destroy()
 	poolcontrol = null
 	return ..()
 
-/obj/machinery/drain/process()
-	if(!status) //don't drain an empty pool.
+/obj/machinery/pool/drain/process()
+	if(!status) //don't pool/drain an empty pool.
 		for(var/obj/item/absorbo in orange(1,src))
 			if(absorbo.w_class == WEIGHT_CLASS_TINY)
 				step_towards(absorbo, src)
@@ -44,7 +43,7 @@
 				for(var/turf/open/pool/undrained in range(5,src))
 					undrained.filled = TRUE
 					undrained.update_icon()
-				for(var/obj/effect/effect/waterspout/undrained3 in range(1,src))
+				for(var/obj/effect/waterspout/undrained3 in range(1,src))
 					qdel(undrained3)
 				poolcontrol.drained = FALSE
 				if(poolcontrol.bloody < 1000)
@@ -90,54 +89,30 @@
 					drained.update_icon()
 				for(var/obj/effect/whirlpool/drained3 in range(1,src))
 					qdel(drained3)
-				for(var/obj/machinery/poolcontroller/drained4 in range(5,src))
+				for(var/obj/machinery/pool/controller/drained4 in range(5,src))
 					drained4.drained = TRUE
 					drained4.mistoff()
 				status = TRUE
 				active = FALSE
 
-/obj/effect/whirlpool
-	name = "Whirlpool"
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "whirlpool"
-	layer = 5
-	anchored = TRUE
-	mouse_opacity = 0
-	pixel_x = -32
-	pixel_y = -32
-	alpha = 90
-
-/obj/effect/effect/waterspout
-	name = "Waterspout"
-	icon_state = "waterspout"
-	color = "#3399AA"
-	layer = 5
-	anchored = TRUE
-	mouse_opacity = 0
-	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -32
-	pixel_y = -32
-	alpha = 120
-
-/obj/machinery/poolfilter
+/obj/machinery/pool/filter
 	name = "Filter"
-	icon = 'icons/turf/pool.dmi'
 	icon_state = "filter"
 	desc = "The part of the pool where all the IDs, ATV keys, and pens, and other dangerous things get trapped."
 	anchored = TRUE
 	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
-/obj/machinery/poolfilter/emag_act(user as mob)
+/obj/machinery/pool/filter/emag_act(user as mob)
 	if(!(obj_flags & EMAGGED))
 		to_chat(user, "<span class='warning'>You disable the [src]'s shark filter! Run!</span>")
 		obj_flags |= EMAGGED
 		do_sparks(5, TRUE, src)
 		icon_state = "filter_b"
-		addtimer(CALLBACK(src, /obj/machinery/poolfilter/proc/spawn_shark), 50)
+		addtimer(CALLBACK(src, /obj/machinery/pool/filter/proc/spawn_shark), 50)
 		log_game("[key_name(user)] emagged the pool filter and spawned a shark")
 		message_admins("[key_name_admin(user)] emagged the pool filter and spawned a shark")
 
-/obj/machinery/poolfilter/proc/spawn_shark()
+/obj/machinery/pool/filter/proc/spawn_shark()
 	if(prob(50))
 		new /mob/living/simple_animal/hostile/shark(loc)
 	else
@@ -146,7 +121,7 @@
 		else
 			new /mob/living/simple_animal/hostile/shark/laser(loc)
 
-/obj/machinery/poolfilter/attack_hand(mob/user)
+/obj/machinery/pool/filter/attack_hand(mob/user)
 	to_chat(user, "You search the filter.")
 	for(var/obj/O in contents)
 		O.forceMove(loc)
