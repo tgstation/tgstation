@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Items using atom colors for coloring now show up properly colored in vending machines, rather than snow-white"
