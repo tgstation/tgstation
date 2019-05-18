@@ -97,7 +97,6 @@
 			icon_state = "purified_soulstone"
 		else
 			icon_state = "soulstone"
-			return
 		name = initial(name)
 		if(iswizard(user) || usability)
 			to_chat(A, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.</b>")
@@ -190,7 +189,6 @@
 					icon_state = "purified_soulstone2"
 				else
 					icon_state = "soulstone2"
-					return
 				name = "soulstone: Shade of [T.real_name]"
 				to_chat(T, "<span class='notice'>Your soul has been captured by the soulstone. Its arcane energies are reknitting your ethereal form.</span>")
 				if(user != T)
@@ -282,7 +280,6 @@
 		icon_state = "purified_soulstone2"
 	else
 		icon_state = "soulstone2"
-		return
 	if(U && (iswizard(U) || usability))
 		to_chat(S, "Your soul has been captured! You are now bound to [U.real_name]'s will. Help [U.p_them()] succeed in [U.p_their()] goals at all costs.")
 	else if(U && iscultist(U))
