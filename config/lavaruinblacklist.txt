@@ -36,5 +36,7 @@ _maps/RandomRuins/LavaRuins/lavaland_surface_tomb.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_fountain_hall.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_pizzaparty.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_cultaltar.dmm
-#_maps/RandomRuins/LavaRuins/lavaland_surface_hermit.dmm
+_maps/RandomRuins/LavaRuins/lavaland_surface_hermit.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_swarmer_crash.dmm
+_maps/RandomRuins/LavaRuins/lavaland_surface_dead_ratvar.dmm
+_maps/RandomRuins/LavaRuins/lavaland_surface_puzzle.dmm
