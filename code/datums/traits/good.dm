@@ -15,7 +15,7 @@
 	desc = "You just don't care as much as other people. That's nice to have in a place like this, I guess."
 	value = 1
 	mood_quirk = TRUE
-	medical_record_text = "Patient ranks high on the Apathy Evaluation Scale."
+	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
 
 /datum/quirk/apathetic/add()
 	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
@@ -206,7 +206,7 @@
 	gain_text = "<span class='notice'>You feel useless to society.</span>"
 	lose_text = "<span class='danger'>You no longer feel useless to society.</span>"
 	mood_quirk = TRUE
-	medical_record_text = "Patient continues to qualify for welfare and has made no efforts to improve hygeine."
+	medical_record_text = "Patient continues to qualify for welfare and has made no efforts to improve hygiene."
 
 /datum/quirk/neet/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
