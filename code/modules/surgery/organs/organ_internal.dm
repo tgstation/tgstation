@@ -60,6 +60,11 @@
 	if(status == ORGAN_ROBOTIC && broken_cyber_organ)
 		to_chat(user, "<span class='warning'>[src] seems to be broken!</span>")
 
+/obj/item/organ/proc/charge(amount)
+	return
+	
+/obj/item/organ/proc/on_electrocute(shock_damage, siemens_coeff = 1)
+	return
 
 /obj/item/organ/proc/prepare_eat()
 	var/obj/item/reagent_containers/food/snacks/organ/S = new
