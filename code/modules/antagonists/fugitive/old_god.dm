@@ -23,9 +23,9 @@
 	return ..()
 
 /mob/camera/yalp_elor/Destroy()
-	. = ..()
 	QDEL_NULL(transmit)
 	QDEL_NULL(transport)
+	. = ..()
 
 /mob/camera/yalp_elor/CanPass(atom/movable/mover, turf/target)
 	return TRUE
@@ -42,6 +42,7 @@
 /mob/camera/yalp_elor/Move(NewLoc, direct)
 	if(!NewLoc)
 		return
+	var/OldLoc = loc
 	var/turf/T = get_turf(NewLoc)
 	if(locate(/obj/effect/blessing, T))
 		if((world.time - lastWarning) >= 30)
@@ -54,7 +55,7 @@
 			to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a much, MUCH stronger deity, and can't be accessed!</span>")
 		return
 	forceMove(T)
-	Moved(loc, direct)
+	Moved(OldLoc, direct)
 
 /mob/camera/yalp_elor/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(client)
