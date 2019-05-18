@@ -239,6 +239,9 @@
 		adjustStaminaLoss(shock_damage)
 	else
 		take_overall_damage(0,shock_damage)
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_electrocute(shock_damage, siemens_coeff)
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
