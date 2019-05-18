@@ -205,15 +205,18 @@
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
-
+						if(iscultist(user) || iswizard(user))
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
+						else
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored/angelic, A, user, 0, T.loc)
 					if("Wraith")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
-
+						if(iscultist(user) || iswizard(user))
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
+						else
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/angelic, A, user, 0, T.loc)
 					if("Artificer")
 						if(iscultist(user) || iswizard(user))
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
-
 						else
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/angelic, A, user, 0, T.loc)
 				for(var/datum/mind/B in SSticker.mode.cult)
