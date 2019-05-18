@@ -157,10 +157,10 @@
 	name = "Boxstation Singulo"
 	station_map = "Box Station"
 	//always = 1
-	//force = "BoxStationSingulo.dmm"
+	//force = "alt_engi_singularity.dmm"
 
 /datum/stationmodule_group/box_singulo/New()
-	possibilities["BoxStationSingulo.dmm"] = list(97,53,2)
+	possibilities["alt_engi_singularity.dmm"] = list(97,52,2)
 
 /datum/stationmodule_group/box_singulo/post_load()
 	var/turf/T = locate(102,81,2)
