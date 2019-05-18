@@ -1,6 +1,7 @@
 #define CHALLENGE_TELECRYSTALS 280
 #define CHALLENGE_TIME_LIMIT 3000
-#define CHALLENGE_MIN_PLAYERS 50
+#define CHALLENGE_MIN_PLAYERS 30
+#define CHALLENGE_MAX_PAYOUT 50
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
@@ -23,7 +24,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		return
 
 	declaring_war = TRUE
-	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew? You have [DisplayTimeText(world.time-SSticker.round_start_time - CHALLENGE_TIME_LIMIT)] to decide", "Declare war?", "Yes", "No")
+	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew? You will get [round(CHALLENGE_TELECRYSTALS * ((CHALLENGE_MAX_PAYOUT - min(CHALLENGE_MAX_PAYOUT, GLOB.player_list.len)) / (CHALLENGE_MAX_PAYOUT - CHALLENGE_MIN_PLAYERS)),1)] extra telecystals. You have [DisplayTimeText(world.time-SSticker.round_start_time - CHALLENGE_TIME_LIMIT)] to decide", "Declare war?", "Yes", "No")
 	declaring_war = FALSE
 
 	if(!check_allowed(user))
@@ -73,8 +74,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 			continue
 		uplinks += uplink
 
-
-	var/tc_to_distribute = CHALLENGE_TELECRYSTALS
+	var/tc_to_distribute = CHALLENGE_TELECRYSTALS * ((CHALLENGE_MAX_PAYOUT - min(CHALLENGE_MAX_PAYOUT, GLOB.player_list.len)) / (CHALLENGE_MAX_PAYOUT - CHALLENGE_MIN_PLAYERS))
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
 	for (var/datum/component/uplink/uplink in uplinks)
@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	if(declaring_war)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
 		return FALSE
-	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
+	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS+1)
 		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
 		return FALSE
 	if(!user.onSyndieBase())
@@ -125,4 +125,5 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT
 #undef CHALLENGE_MIN_PLAYERS
+#undef CHALLENGE_MAX_PAYOUT
 #undef CHALLENGE_SHUTTLE_DELAY
