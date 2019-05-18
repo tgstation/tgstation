@@ -16,14 +16,12 @@
 # Cyberboss
 
 /code/__DATASTRUCTURES/globals.dm @Cyberboss
-/code/__DEFINES/components.dm @Cyberboss
 /code/__DEFINES/server_tools.config.dm @Cyberboss
 /code/__DEFINES/server_tools.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
 /code/controllers/subsystem/mapping.dm @Cyberboss
 /code/controllers/globals.dm @Cyberboss
 /code/datums/helper_datums/getrev.dm @Cyberboss
-/code/datums/components/ @Cyberboss
 /code/datums/map_config.dm @Cyberboss
 /code/datums/forced_movement.dm @Cyberboss
 /code/datums/holocall.dm @Cyberboss
@@ -67,4 +65,6 @@
 
 # Multiple Owners
 
+/code/__DEFINES/components.dm @Cyberboss @ninjanomnom
 /code/controllers/subsystem/air.dm @duncathan @MrStonedOne
+/code/datums/components/ @Cyberboss @ninjanomnom
