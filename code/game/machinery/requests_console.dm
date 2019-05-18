@@ -103,13 +103,13 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	if(departmentType)
 
-		if((departmentType & REQ_DEP_TYPE_ASSISTANCE) && !("[department]" in GLOB.req_console_assistance))
+		if((departmentType & REQ_DEP_TYPE_ASSISTANCE) && !(department in GLOB.req_console_assistance))
 			GLOB.req_console_assistance += department
 
-		if((departmentType & REQ_DEP_TYPE_SUPPLIES) && !("[department]" in GLOB.req_console_supplies))
+		if((departmentType & REQ_DEP_TYPE_SUPPLIES) && !(department in GLOB.req_console_supplies))
 			GLOB.req_console_supplies += department
 
-		if((departmentType & REQ_DEP_TYPE_INFORMATION) && !("[department]" in GLOB.req_console_information))
+		if((departmentType & REQ_DEP_TYPE_INFORMATION) && !(department in GLOB.req_console_information))
 			GLOB.req_console_information += department
 
 	GLOB.req_console_ckey_departments[ckey(department)] = department
