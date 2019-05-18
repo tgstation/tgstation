@@ -103,6 +103,7 @@
 	spark_system.attach(src)
 
 	wires = new /datum/wires/robot(src)
+	flags_2 |= NO_EMP_WIRES_2
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"

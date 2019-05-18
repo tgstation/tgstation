@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	name = "\improper PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
 	icon = 'icons/obj/pda.dmi'
+	var/overlay_icon_file = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -146,6 +147,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/device/pda/update_icon()
 	cut_overlays()
 	var/mutable_appearance/overlay = new()
+	overlay.icon = overlay_icon_file
 	overlay.pixel_x = overlays_x_offset
 	if(id)
 		overlay.icon_state = "id_overlay"
@@ -699,7 +701,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)")
 
 	update_icon()
-	add_overlay(icon_alert)
+	var/mutable_appearance/overlay = new()
+	overlay.icon = overlay_icon_file
+	overlay.icon_state = icon_alert
+	add_overlay(new /mutable_appearance(overlay))
+	//add_overlay(icon_alert)
 
 /obj/item/device/pda/proc/send_to_all(mob/living/U)
 	send_message(U,get_viewable_pdas())

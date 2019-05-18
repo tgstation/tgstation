@@ -2464,6 +2464,10 @@
 		if(pod && istype(pod))
 			pod.OpenDebugMenu(owner.mob)
 
+	else if(href_list["toggle_station_module"])
+		SSmapping.toggle_preloaded_station_module(href_list["toggle_station_module"])
+		return preload_station_module()
+
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
 		return

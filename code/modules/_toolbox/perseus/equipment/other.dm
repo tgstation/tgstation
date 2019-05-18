@@ -263,8 +263,6 @@ removed sections which read.
 	icon_state = "pda-perc"
 	toff = TRUE
 
-/obj/item/device/pda/perseus/update_icon()
-
 /obj/item/cartridge/perseus
 	name = "\improper Perseus Cartridge"
 	icon = 'icons/oldschool/perseus.dmi'

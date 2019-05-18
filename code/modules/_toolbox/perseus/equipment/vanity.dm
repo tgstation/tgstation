@@ -36,6 +36,16 @@
 	item_state = "pcigpacket"
 	can_hold = list("/obj/item/clothing/mask/cigarette", "/obj/item/lighter/zippo/perc")
 
+/obj/item/storage/fancy/cigarettes/perc/update_icon()
+	if(fancy_open || !contents.len)
+		cut_overlays()
+		icon_state = initial(icon_state)
+		var/mutable_appearance/open_overlay = mutable_appearance(overlay_icon_file)
+		open_overlay.icon_state = "[icon_state]_open"
+		add_overlay(open_overlay)
+		return
+	return ..()
+
 /*
 * Victory Cigar
 */

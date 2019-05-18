@@ -5,15 +5,26 @@
 	var/station_map //Checks if the necessary map is loaded. Leave empty to always spawn regardless of map.
 	var/list/possibilities = list()
 
+/datum/stationmodule_group/proc/post_load()
+	return
+
 /datum/controller/subsystem/mapping/proc/randomize_station()
 	log_world("Randomizing station...")
 	to_chat(world, "<span class='boldannounce'>Randomizing station...</span>")
+	var/station_module_save_path = "data/other_saves/preloaded_station_modules.sav"
+	var/savefile/S = new(station_module_save_path)
+	var/list/preloaded_modules
+	if(S)
+		S["preloaded_modules"] >> preloaded_modules
+	if(!istype(preloaded_modules,/list))
+		preloaded_modules = list()
 	for (var/type in subtypesof(/datum/stationmodule_group))
 		var/datum/stationmodule_group/inited = new type()
 		if(inited.station_map && inited.station_map != SSmapping.config.map_name)
 			continue
 		var/list/picklist = inited.possibilities.Copy()
-		if(!inited.always)
+
+		if((!inited.always) && (!(inited.type in preloaded_modules)))
 			picklist.Add("none")
 
 		var/pick = pick(picklist)
@@ -30,6 +41,7 @@
 				log_world("Improperly set up stationgroup (no module template): [pick]")
 			else
 				temp.load(locate(picklist[pick][1], picklist[pick][2], picklist[pick][3]), centered=FALSE, placeOnTop=TRUE, overWrite=TRUE)
+				inited.post_load()
 
 	log_world("Finished randomizing station")
 	to_chat(world, "<span class='boldannounce'>Finished randomizing station</span>")
@@ -149,3 +161,74 @@
 
 /datum/stationmodule_group/box_singulo/New()
 	possibilities["BoxStationSingulo.dmm"] = list(97,53,2)
+
+/datum/stationmodule_group/box_singulo/post_load()
+	var/turf/T = locate(102,81,2)
+	if(T)
+		new /obj/machinery/the_singularitygen(T)
+	return ..()
+
+/datum/admins/proc/preload_station_module()
+	set name = "Preload Station Module"
+	set category = "Server"
+	var/station_module_save_path = "data/other_saves/preloaded_station_modules.sav"
+	var/savefile/S = new(station_module_save_path)
+	var/list/preloaded_modules
+	if(S)
+		S["preloaded_modules"] >> preloaded_modules
+		var/dat = "<B>Preload Station Modules</B><br>"
+		for(var/t in subtypesof(/datum/stationmodule_group))
+			var/datum/stationmodule_group/module = new t()
+			if(!module.possibilities.len)
+				continue
+			dat += "<B>Module name:</B> [module.name]<br>"
+			for(var/text in module.possibilities)
+				dat += "<b>Map file:</b> [text]<br>"
+				dat += "<b>location:</b> "
+				var/list/the_coords = module.possibilities[text]
+				if(istype(the_coords,/list) && the_coords.len)
+					var/listnum = 1
+					for(var/coord in the_coords)
+						dat += "[coord]"
+						if(listnum < the_coords.len)
+							dat += ", "
+						listnum++
+				else
+					dat += "No Location"
+				dat += "<br>"
+			dat += "<b>Status:</b> "
+			if(module.type in preloaded_modules)
+				dat += "<font color='red'>FORCED</font>"
+			else
+				dat += "<font color='blue'>Random</font>"
+			dat += " <a href='?src=\ref[usr.client.holder];[HrefToken()];toggle_station_module=[module.type]'>Toggle</a><br><br>"
+
+		usr << browse(dat,"size=500x500,window=toggle_station_modules")
+
+/datum/controller/subsystem/mapping/proc/toggle_preloaded_station_module(pathstring)
+	pathstring = text2path(pathstring)
+	if(!ispath(pathstring))
+		return 0
+	var/station_module_save_path = "data/other_saves/preloaded_station_modules.sav"
+	var/savefile/S = new(station_module_save_path)
+	var/list/preloaded_modules
+	if(S)
+		S["preloaded_modules"] >> preloaded_modules
+		if(!istype(preloaded_modules,/list))
+			preloaded_modules = list()
+		if(istype(preloaded_modules,/list))
+			var/toggledon = 0
+			if(pathstring in preloaded_modules)
+				preloaded_modules -= pathstring
+			else
+				toggledon = 1
+				preloaded_modules += pathstring
+			S["preloaded_modules"] << preloaded_modules
+			message_admins("[usr.key] toggled [toggledon ? "on" : "off"] the forcing of station module [pathstring] to be loaded at round start.")
+			log_game("[usr.key] toggled [toggledon ? "on" : "off"] the forcing of station module [pathstring] to be loaded at round start.")
+			return 1
+	return 0
+
+
+
+

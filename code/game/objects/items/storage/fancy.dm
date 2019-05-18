@@ -118,6 +118,7 @@
 	name = "\improper Space Cigarettes packet"
 	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
+	var/overlay_icon_file = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
 	item_state = "cigpacket"
 	w_class = WEIGHT_CLASS_TINY
@@ -151,10 +152,12 @@
 			icon_state = "[initial(icon_state)]_empty"
 		else
 			icon_state = initial(icon_state)
-			add_overlay("[icon_state]_open")
+			var/mutable_appearance/open_overlay = mutable_appearance(overlay_icon_file)
+			open_overlay.icon_state = "[icon_state]_open"
+			add_overlay(open_overlay)
 			var/i = contents.len
 			for(var/C in contents)
-				var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
+				var/mutable_appearance/inserted_overlay = mutable_appearance(overlay_icon_file)
 				inserted_overlay.pixel_x = 1 * (i - 1)
 				if(istype(C, /obj/item/lighter/greyscale))
 					inserted_overlay.icon_state = "lighter_in"
