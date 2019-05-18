@@ -207,11 +207,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			SS.usability = TRUE
 			SS.purified = TRUE
+			update_icon(SS)
 			for(var/mob/living/simple_animal/shade/EX in SS)
-				update_icon()
 				EX.icon_state = "ghost1"
-				EX.name = "Purified [EX.name]"
-				
+				EX.name = "Purified [EX.name]"				
 			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
 
 /obj/item/storage/book/bible/booze
