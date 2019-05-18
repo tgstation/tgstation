@@ -210,11 +210,6 @@
 	desc = "A small bottle of diphenhydramine."
 	list_reagents = list("diphenhydramine" = 30)
 
-/obj/item/reagent_containers/glass/bottle/antihol
-	name = "antihol bottle"
-	desc = "A small bottle of antihol."
-	list_reagents = list("antihol" = 30)
-
 /obj/item/reagent_containers/glass/bottle/potass_iodide
 	name = "anti-radiation bottle"
 	desc = "A small bottle of potassium iodide."

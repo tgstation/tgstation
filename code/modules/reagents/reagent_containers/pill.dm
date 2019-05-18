@@ -178,25 +178,11 @@
 	icon_state = "pill22"
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/potass_iodide
-	name = "potassium iodide pill"
-	desc = "Used to expunge radiation."
-	list_reagents = list("potass_iodide" = 10)
-	icon_state = "pill9"
-	rename_with_volume = TRUE
-
 /obj/item/reagent_containers/pill/neurine
 	name = "neurine pill"
 	desc = "Used to treat non-severe mental traumas."
 	list_reagents = list("neurine" = 10)
 	icon_state = "pill22"
-	rename_with_volume = TRUE
-
-/obj/item/reagent_containers/pill/corazone
-	name = "corazone pill"
-	desc = "Used to stabilize patients suffering a heart attack or liver failure."
-	list_reagents = list("corazone" = 15)
-	icon_state = "pill9"
 	rename_with_volume = TRUE
 
 ///////////////////////////////////////// this pill is used only in a legion mob drop
