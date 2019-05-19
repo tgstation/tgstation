@@ -358,23 +358,22 @@ SUBSYSTEM_DEF(job)
 	return validate_required_jobs(required_jobs)
 
 /datum/controller/subsystem/job/proc/validate_required_jobs(list/required_jobs)
-	if(required_jobs.len)
-		for(var/required_group in required_jobs)
-			var/group_ok = TRUE
-			for(var/rank in required_group)
-				var/datum/job/J = GetJob(rank)
-				if(!J)
-					SSticker.mode.setup_error = "Invalid job [rank] in gamemode required jobs."
-					return FALSE
-				if(J.current_positions < required_group[rank])
-					group_ok = FALSE
-					break
-			if(group_ok)
-				return TRUE
-		SSticker.mode.setup_error = "Required jobs not present."
-		return FALSE
-	else
+	if(!required_jobs.len)
 		return TRUE
+	for(var/required_group in required_jobs)
+		var/group_ok = TRUE
+		for(var/rank in required_group)
+			var/datum/job/J = GetJob(rank)
+			if(!J)
+				SSticker.mode.setup_error = "Invalid job [rank] in gamemode required jobs."
+				return FALSE
+			if(J.current_positions < required_group[rank])
+				group_ok = FALSE
+				break
+		if(group_ok)
+			return TRUE
+	SSticker.mode.setup_error = "Required jobs not present."
+	return FALSE
 
 //We couldn't find a job from prefs for this guy.
 /datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)
