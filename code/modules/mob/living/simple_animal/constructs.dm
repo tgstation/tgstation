@@ -316,9 +316,7 @@
 	icon_state = "artificer_angelic"
 	icon_living = "artificer_angelic"
 	loot = list(/obj/item/ectoplasm/angelic)
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
 
