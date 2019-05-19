@@ -23,7 +23,6 @@
 /datum/map_template/shuttle/New()
 	shuttle_id = "[port_id]_[suffix]"
 	mappath = "[prefix][shuttle_id].dmm"
-	to_chat(world, "[mappath]")
 	. = ..()
 
 /datum/map_template/shuttle/preload_size(path, cache)
