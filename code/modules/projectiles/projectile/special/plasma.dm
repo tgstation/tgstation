@@ -28,7 +28,7 @@
 	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
-	damage = 10
+	damage = 25
 	range = 9
     var/pressure_decrease_active = FALSE
     var/pressure_decrease = 0.2
