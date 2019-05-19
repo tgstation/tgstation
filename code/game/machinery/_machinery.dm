@@ -352,6 +352,7 @@ Class Procs:
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
+			component_parts.Cut()
 	qdel(src)
 
 /obj/machinery/proc/spawn_frame(disassembled)
