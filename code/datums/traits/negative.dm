@@ -235,6 +235,8 @@
 	desc = "You were born without, or later lost, the ability to speak."
 	value = -1
 	mob_trait = TRAIT_MUTE
+	gain_text = "<span class='notice'>Something in your throat feels off...</span>"
+	lose_text = "<span class='danger'>Something in your throat feels different, you're able to speak!</span>"
 	medical_record_text = "Patient is mute."
 
 /datum/quirk/nearsighted //t. errorage
