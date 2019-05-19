@@ -230,6 +230,13 @@
 	gain_text = "<span class='notice'>Just the thought of drinking alcohol makes your head spin.</span>"
 	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
 
+/datum/quirk/muteness
+	name = "Mute"
+	desc = "You were born without, or later lost, the ability to speak."
+	value = -1
+	mob_trait = TRAIT_MUTE
+	medical_record_text = "Patient is mute."
+
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
