@@ -79,10 +79,10 @@
 	
 /obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0)
 	..()
-	owner.add_trait(TRAIT_CHARGER, ORGAN_TRAIT)
+	ADD_TRAIT(owner, TRAIT_CHARGER, ORGAN_TRAIT)
 
 /obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/M, special = 0)
-	owner.remove_trait(TRAIT_CHARGER, ORGAN_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_CHARGER, ORGAN_TRAIT)
 	..()
 	
 /obj/item/organ/stomach/ethereal/charge(amount)
