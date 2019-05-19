@@ -57153,6 +57153,9 @@
 /obj/item/hand_labeler,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"rIP" = (
+/turf/open/pool,
+/area/space)
 "rKc" = (
 /obj/machinery/door/window/eastright{
 	base_state = "left";
@@ -57626,7 +57629,7 @@
 /area/engine/engineering)
 "uiV" = (
 /obj/machinery/pool/filter{
-	step_y = 16
+	pixel_y = 16
 	},
 /turf/open/pool,
 /area/crew_quarters/fitness/pool)
@@ -94695,7 +94698,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+rIP
 aaa
 aaa
 aaa
