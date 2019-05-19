@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Cryotubes no longer display a double of a person that was once in but teleported out by having ingested bluespace or other such nonsense"
