@@ -14,7 +14,7 @@
 /datum/round_event/ghost_role/fugitives/spawn_role()
 	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
 	for(var/turf/X in GLOB.xeno_spawn)
-		if(istype(get_area(X), /area/maintenance))
+		if(istype(X, /area/maintenance))
 			possible_spawns += X
 	if(!possible_spawns.len)
 		message_admins("No valid spawn locations found, aborting...")
@@ -54,7 +54,7 @@
 //after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
-	addtimer(CALLBACK(src, .proc/spawn_hunters), 10 MINUTES)
+	addtimer(CALLBACK(src, .proc/spawn_hunters), 10 )//MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
@@ -103,12 +103,11 @@
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
 	var/backstory = pick("space cop", "russian")
-	var/static/list/hunter_ship_types = list(
-		"space cop"		= /datum/map_template/shuttle/hunter/space_cop,
-		"russian"		= /datum/map_template/shuttle/hunter/russian)
-
-	var/datum/map_template/ship = hunter_ship_types[backstory]
-	ship = new
+	var/datum/map_template/shuttle/ship
+	if(backstory == "space cop")
+		ship = new /datum/map_template/shuttle/hunter/space_cop
+	else
+		ship = new /datum/map_template/shuttle/hunter/russian
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value

@@ -26,3 +26,15 @@
 
 /obj/machinery/computer/shuttle/pirate/hunter
 	name = "shuttle console"
+	shuttleId = "huntership"
+	possible_destinations = "huntership_away;huntership_home;huntership_custom"
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter
+	name = "shuttle navigation computer"
+	desc = "Used to designate a precise transit location to travel to."
+	shuttleId = "huntership"
+	lock_override = CAMERA_LOCK_STATION
+	shuttlePortId = "huntership_custom"
+	x_offset = 0
+	y_offset = 0
+	see_hidden = FALSE

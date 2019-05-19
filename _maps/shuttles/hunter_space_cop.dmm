@@ -1,5 +1,17 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ab" = (
+/obj/machinery/computer/shuttle/pirate/hunter{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ac" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor/shutters{
 	id = "Interpolship"
@@ -8,30 +20,20 @@
 	dir = 4;
 	dwidth = 11;
 	height = 16;
-	id = "pirateship_home";
+	id = "huntership_home";
 	name = "Deep Space";
 	width = 17
 	},
-/obj/docking_port/mobile/pirate{
-	callTime = 100;
-	dheight = 0;
+/obj/docking_port/mobile{
 	dir = 4;
-	dwidth = 11;
-	height = 16;
-	id = "pirateship";
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Hunter Ship";
-	port_direction = 2;
-	preferred_direction = 1;
-	width = 17
+	id = "huntership";
+	name = "hunter shuttle";
+	rechargeTime = 1800
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
-"ab" = (
-/obj/machinery/computer/shuttle/pirate/hunter{
-	dir = 8
-	},
+"ad" = (
+/obj/structure/table,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "bY" = (
@@ -99,7 +101,7 @@
 Pq
 ku
 te
-aa
+ac
 te
 ku
 Pq
@@ -180,7 +182,7 @@ Pq
 hB
 ku
 RO
-RO
+RA
 RO
 ku
 hB
@@ -188,9 +190,9 @@ hB
 (11,1,1) = {"
 Pq
 An
-RA
+aa
+ad
 ab
-RO
 An
 Pq
 "}
