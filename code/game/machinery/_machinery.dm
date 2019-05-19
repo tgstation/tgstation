@@ -262,10 +262,7 @@ Class Procs:
 /obj/machinery/attack_robot(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !IsAdminGhost(user))
 		return FALSE
-	. = _try_interact(user)
-	if(!.)
-		return attack_hand(user)
-	//return _try_interact(user)
+	return _try_interact(user)
 
 /obj/machinery/attack_ai(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !IsAdminGhost(user))
@@ -273,10 +270,7 @@ Class Procs:
 	if(iscyborg(user))// For some reason attack_robot doesn't work
 		return attack_robot(user)
 	else
-		. = _try_interact(user)
-		if(!.)
-			return attack_hand(user)
-		//return _try_interact(user)
+		return _try_interact(user)
 
 /obj/machinery/_try_interact(mob/user)
 	if((interaction_flags_machine & INTERACT_MACHINE_WIRES_IF_OPEN) && panel_open && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))

@@ -445,6 +445,12 @@
 	else
 		return ..()
 
+/obj/machinery/power/port_gen/MouseDrop_T(atom/dropping, mob/user)
+	if(istype(dropping, /obj/item/stack/sheet) && isturf(dropping.loc) && user.Adjacent(src) && dropping.Adjacent(user))
+		src.attackby(dropping, user)
+	else
+		return ..()
+
 //making certain things again useable by silicons. -falaskian
 /obj/machinery/power/rad_collector/attack_robot(mob/user)
 	return attack_hand(user)
@@ -465,6 +471,9 @@
 	return attack_hand(user)
 
 /obj/machinery/disposal/bin/attack_robot(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/field/generator/attack_robot(mob/user)
 	return attack_hand(user)
 
 //Degenerals large airlocks
