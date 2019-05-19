@@ -30,7 +30,18 @@
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
 	range = 9
+    var/pressure_decrease_active = FALSE
+    var/pressure_decrease = 0.2
 	mine_range = 3
+
+
+/obj/item/projectile/plasma/adv/mech/Initialize()
+	. = ..()
+	if(!lavaland_equipment_pressure_check(get_turf(src)))
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
+
 
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
@@ -38,3 +49,4 @@
 	damage = 24
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
