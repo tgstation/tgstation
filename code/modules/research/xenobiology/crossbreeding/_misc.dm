@@ -30,27 +30,27 @@ Slimecrossing Items
 	burn_dam = part.burn_dam
 	stamina_dam = part.stamina_dam
 
-/proc/apply_saved_bodyparts(mob/living/carbon/M, list/datum/saved_bodypart/parts)
+/mob/living/carbon/proc/apply_saved_bodyparts(list/datum/saved_bodypart/parts)
 	var/list/dont_chop = list()
 	for(var/zone in parts)
 		var/datum/saved_bodypart/saved_part = parts[zone]
-		var/obj/item/bodypart/already = M.get_bodypart(zone)
+		var/obj/item/bodypart/already = get_bodypart(zone)
 		if(QDELETED(saved_part.old_part))
 			saved_part.old_part = new saved_part.bodypart_type
 		if(!already || already != saved_part.old_part)
-			saved_part.old_part.replace_limb(M, TRUE)
+			saved_part.old_part.replace_limb(src, TRUE)
 		saved_part.old_part.heal_damage(INFINITY, INFINITY, INFINITY, null, FALSE)
 		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam)
 		dont_chop[zone] = TRUE
-	for(var/_part in M.bodyparts)
+	for(var/_part in bodyparts)
 		var/obj/item/bodypart/part = _part
 		if(dont_chop[part.body_zone])
 			continue
 		part.drop_limb(TRUE)
 
-/proc/save_bodyparts(mob/living/carbon/M)
+/mob/living/carbon/proc/save_bodyparts()
 	var/list/datum/saved_bodypart/ret = list()
-	for(var/_part in M.bodyparts)
+	for(var/_part in bodyparts)
 		var/obj/item/bodypart/part = _part
 		var/datum/saved_bodypart/saved_part = new(part)
 		
@@ -87,7 +87,7 @@ Slimecrossing Items
 		brain_loss = L.getBrainLoss()
 	if(iscarbon(parent))
 		var/mob/living/carbon/C = parent
-		saved_bodyparts = save_bodyparts(C)
+		saved_bodyparts = C.save_bodyparts()
 	else if(isanimal(parent))
 		var/mob/living/simple_animal/M = parent
 		brute_loss = M.bruteloss
@@ -108,7 +108,8 @@ Slimecrossing Items
 
 	if(iscarbon(parent))
 		if(saved_bodyparts)
-			apply_saved_bodyparts(parent, saved_bodyparts)
+			var/mob/living/carbon/C = parent
+			C.apply_saved_bodyparts(saved_bodyparts)
 	else if(isanimal(parent))
 		var/mob/living/simple_animal/M = parent
 		M.bruteloss = brute_loss
