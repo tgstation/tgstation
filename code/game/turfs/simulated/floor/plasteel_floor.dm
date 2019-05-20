@@ -4,6 +4,15 @@
 	broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	burnt_states = list("floorscorched1", "floorscorched2")
 
+
+/turf/open/floor/plasteel/get_examine_text(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It looks like it could be <b>pried</b> out.</span>")
+///turf/open/floor/plasteel/examine(mob/user)
+//	..()
+//	to_chat(user, "<span class='notice'>It looks like it could be <b>pried</b> out.</span>")
+
+
 /turf/open/floor/plasteel/update_icon()
 	if(!..())
 		return 0

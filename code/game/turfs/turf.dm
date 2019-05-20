@@ -556,3 +556,11 @@
 	. = ..()
 	if(. != BULLET_ACT_FORCE_PIERCE)
 		. =  BULLET_ACT_TURF
+
+//So the examine-messages stack
+/turf/proc/get_examine_text()
+	. = list()
+
+/turf/examine(user)
+	var/list/examine_parts = get_examine_text()
+	to_chat(user,examine_parts.Join("<br>"))
