@@ -369,29 +369,6 @@
 			log_admin("[M.ckey] just got booted back to lobby with no jobs, but antags enabled.")
 			message_admins("[M.ckey] just got booted back to lobby with no jobs enabled, but antag rolling enabled. Likely antag rolling abuse.")
 		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
-	// If they're antag rolling, make sure they have a bit more strict of things going on.
-	// These don't necessarily mean they're trying to cheat the system, but it's an indicator they might be
-	// So just notify the admins and let them deal with it.
-	if(has_antags)
-		var/only_low_jobs = TRUE
-		var/has_high_job = FALSE
-		for(var/job in M.client.prefs.job_preferences)
-			var/level = M.client.prefs.job_preferences[job]
-			if(level == JP_HIGH)
-				has_high_job = TRUE
-				only_low_jobs = FALSE
-				break
-			if(level > JP_LOW)
-				only_low_jobs = FALSE
-		if(!has_high_job) //Having a high job means they meet none of the potential suspicious setups
-			var/list/suspicious_conds = list()
-			if(M.client.prefs.job_preferences.len == 1) //If they only have one job enabled and it's not set to high, this is unusual
-				suspicious_conds += "one job enabled but it isn't high"
-			if(only_low_jobs) //As well as if they only have jobs set to low
-				suspicious_conds += "only has jobs set to low"
-			if(suspicious_conds.len > 0)
-				log_admin("[M.ckey] has suspicious job preferences; back to lobby if job unavailible, has antags enabled, and jobs fit these conditions: [suspicious_conds.Join(", ")]")
-				message_admins("[M.ckey] has suspicious job preferences; back to lobby if job unavailible, has antags enabled, and jobs fit these conditions: [suspicious_conds.Join(", ")]")
 	return TRUE
 
 /datum/game_mode/proc/get_players_for_role(role)
