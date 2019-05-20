@@ -383,7 +383,7 @@
 				break
 			if(level > JP_LOW)
 				only_low_jobs = FALSE
-		if(!has_high_job)
+		if(!has_high_job) //Having a high job means they meet none of the potential suspicious setups
 			var/list/suspicious_conds = list()
 			if(M.client.prefs.job_preferences.len == 1) //If they only have one job enabled and it's not set to high, this is unusual
 				suspicious_conds += "one job enabled but it isn't high"
