@@ -69,6 +69,8 @@
 	icon_dead = "watcher_dead"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
+	maxHealth = 115
+	health = 115
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "impales"
