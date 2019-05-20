@@ -101,6 +101,8 @@
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mouse_opacity = MOUSE_OPACITY_ICON
 	obj_damage = 60
+	maxHealth = 45
+	health = 45
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "lashes out at"
@@ -129,8 +131,8 @@
 	icon_living = "dwarf_legion"
 	icon_aggro = "dwarf_legion"
 	icon_dead = "dwarf_legion"
-	maxHealth = 60
-	health = 60
+	maxHealth = 30
+	health = 30
 	speed = 2 //faster!
 	crusher_drop_mod = 20
 	dwarf_mob = TRUE
