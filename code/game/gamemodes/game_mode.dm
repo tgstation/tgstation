@@ -351,6 +351,49 @@
 	WARNING("Something has gone terribly wrong. /datum/game_mode/proc/antag_pick failed to select a candidate. Falling back to pick()")
 	return pick(candidates)
 
+// Used to make sure that a player has a valid job preference setup before trying to put them to any role.
+// A "valid job preference setup" in this situation means at least having one job set to low, or not having "return to lobby" enabled
+// Prevents "antag rolling" by setting antag prefs on, all jobs to never, and "return to lobby if preferences not availible"
+// Doing so would previously allow you to roll for antag, then send you back to lobby if you didn't get an antag role
+// This also does some admin notification and logging as well
+/datum/game_mode/proc/has_valid_preferences(var/mob/M)
+	if(M.client.prefs.joblessrole != RETURNTOLOBBY)
+		return TRUE
+	// If they have antags enabled, they're potentially doing this on purpose instead of by accident. Notify admins if so.
+	var/has_antags = FALSE
+	if(M.client.prefs.be_special.len > 0)
+		has_antags = TRUE
+	if(M.client.prefs.job_preferences.len == 0)
+		to_chat(M, "<span class='danger'>You have no jobs enabled, along with return to lobby if job is unavailible. This makes you inelligible for any round start role, please update your job preferences.</span>")
+		if(has_antags)
+			log_admin("[M.ckey] just got booted back to lobby with no jobs, but antags enabled.")
+			message_admins("[M.ckey] just got booted back to lobby with no jobs enabled, but antag rolling enabled. Likely antag rolling abuse.")
+		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
+	// If they're antag rolling, make sure they have a bit more strict of things going on.
+	// These don't necessarily mean they're trying to cheat the system, but it's an indicator they might be
+	// So just notify the admins and let them deal with it.
+	if(has_antags)
+		var/only_low_jobs = TRUE
+		var/has_high_job = FALSE
+		for(var/job in M.client.prefs.job_preferences)
+			var/level = M.client.prefs.job_preferences[job]
+			if(level == JP_HIGH)
+				has_high_job = TRUE
+				only_low_jobs = FALSE
+				break
+			if(level > JP_LOW)
+				only_low_jobs = FALSE
+		if(!has_high_job)
+			var/list/suspicious_conds = list()
+			if(M.client.prefs.job_preferences.len == 1) //If they only have one job enabled and it's not set to high, this is unusual
+				suspicious_conds += "one job enabled but it isn't high"
+			if(only_low_jobs) //As well as if they only have jobs set to low
+				suspicious_conds += "only has jobs set to low"
+			if(suspicious_conds.len > 0)
+				log_admin("[M.ckey] has suspicious job preferences; back to lobby if job unavailible, has antags enabled, and jobs fit these conditions: [suspicious_conds.Join(", ")]")
+				message_admins("[M.ckey] has suspicious job preferences; back to lobby if job unavailible, has antags enabled, and jobs fit these conditions: [suspicious_conds.Join(", ")]")
+	return TRUE
+
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
 	var/list/candidates = list()
@@ -359,7 +402,7 @@
 
 	// Ultimate randomizing code right here
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY && has_valid_preferences(player))
 			players += player
 
 	// Shuffling, the players list is now ping-independent!!!
