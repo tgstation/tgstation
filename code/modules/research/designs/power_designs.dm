@@ -11,7 +11,7 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/empty
 	category = list("Misc","Power Designs","Machinery","initial")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
@@ -22,7 +22,7 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/high/empty
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
@@ -33,7 +33,7 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/super/empty
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
