@@ -92,9 +92,6 @@
 			return FALSE
 	return ..()
 
-/turf/open/pool/ex_act(severity, target)
-	return
-	
 /turf/open/pool/proc/wash_obj(obj/O)
 	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -222,13 +219,12 @@
 						H.Knockdown(20)
 						return
 					else
-						H.dropItemToGround(H.get_active_held_item())
+						H.Knockdown(60)
 						H.adjustOxyLoss(5)
 						H.emote("cough")
 						H.visible_message("<span class='danger'>[H] falls in and takes a drink!</span>",
 											"<span class='userdanger'>You fall in and swallow some water!</span>")
 						playsound(src, 'sound/effects/splash.ogg', 60, TRUE, 1)
-						H.Knockdown(60)
 				else if(!istype(H.head, /obj/item/clothing/head/helmet))
 					if(prob(75))
 						H.visible_message("<span class='danger'>[H] falls in the drained pool!</span>",
@@ -252,7 +248,7 @@
 		else if(filled)
 			wash_mob(M)
 			M.adjustStaminaLoss(1)
-			playsound(src, "water_wade", 20, 1)
+			playsound(src, "water_wade", 20, TRUE)
 			return
 
 /turf/open/pool/attack_hand(mob/living/user)

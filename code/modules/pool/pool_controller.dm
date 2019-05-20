@@ -3,12 +3,12 @@
 //Heavily refactored by tgstation
 /obj/machinery/pool
 	icon = 'icons/obj/machines/pool.dmi'
+	anchored = TRUE
 
 /obj/machinery/pool/controller
 	name = "\improper Pool Controller"
 	desc = "An advanced substance generation and fluid tank management system that can refill the contents of a pool to a completely different substance in minutes."
 	icon_state = "poolc_3"
-	anchored = TRUE
 	density = TRUE
 	use_power = TRUE
 	idle_power_usage = 75
@@ -29,25 +29,31 @@
 	var/shocked = FALSE//Shocks morons, like an airlock.
 	var/tempunlocked = FALSE
 	var/old_rcolor
-	resistance_flags = INDESTRUCTIBLE|UNACIDABLE
 
 /obj/machinery/pool/controller/Initialize()
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	create_reagents(100)
 	wires = new /datum/wires/poolcontroller(src)
+	scan_things()
+
+/obj/machinery/pool/controller/proc/scan_things()
 	for(var/turf/open/pool/W in range(srange,src))
 		LAZYADD(linkedturfs, W)
 		W.controller = src
 	for(var/obj/machinery/pool/drain/pooldrain in range(srange,src))
 		linked_drain = pooldrain
+		linked_drain.pool_controller = src
 	for(var/obj/machinery/pool/filter/F in range(srange, src))			
 		linked_filter = F
+		linked_filter.pool_controller = src
 
 /obj/machinery/pool/controller/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
 	linked_drain = null
 	linked_filter = null
 	linkedturfs.Cut()
+	mobs_in_pool.Cut()
 	return ..()
 
 /obj/machinery/pool/controller/emag_act(user as mob) //Emag_act, this is called when it is hit with a cryptographic sequencer.

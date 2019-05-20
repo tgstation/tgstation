@@ -8,16 +8,14 @@
 	var/srange = 6
 	var/timer = 0
 	var/cooldown
-	var/obj/machinery/pool/controller/poolcontrol = null
-	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
+	var/obj/machinery/pool/controller/pool_control = null
 
 /obj/machinery/pool/drain/Initialize()
 	START_PROCESSING(SSprocessing, src)
-	for(var/obj/machinery/pool/controller/control in range(srange,src))
-		poolcontrol += control
 	. = ..()
 
 /obj/machinery/pool/drain/Destroy()
+	poolcontrol.linked_drain = null
 	poolcontrol = null
 	return ..()
 
@@ -99,8 +97,12 @@
 	name = "Filter"
 	icon_state = "filter"
 	desc = "The part of the pool where all the IDs, ATV keys, and pens, and other dangerous things get trapped."
-	anchored = TRUE
-	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
+	var/obj/machinery/pool/controller/pool_controller = null
+
+/obj/machinery/pool/filter/Destroy()
+	pool_controller.linked_filter = null
+	pool_controller = null
+	return ..()
 
 /obj/machinery/pool/filter/emag_act(user as mob)
 	if(!(obj_flags & EMAGGED))
