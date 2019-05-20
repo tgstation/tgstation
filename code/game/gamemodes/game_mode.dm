@@ -364,7 +364,7 @@
 	if(M.client.prefs.be_special.len > 0)
 		has_antags = TRUE
 	if(M.client.prefs.job_preferences.len == 0)
-		to_chat(M, "<span class='danger'>You have no jobs enabled, along with return to lobby if job is unavailible. This makes you inelligible for any round start role, please update your job preferences.</span>")
+		to_chat(M, "<span class='danger'>You have no jobs enabled, along with return to lobby if job is unavailable. This makes you ineligible for any round start role, please update your job preferences.</span>")
 		if(has_antags)
 			log_admin("[M.ckey] just got booted back to lobby with no jobs, but antags enabled.")
 			message_admins("[M.ckey] just got booted back to lobby with no jobs enabled, but antag rolling enabled. Likely antag rolling abuse.")
