@@ -32,9 +32,9 @@
 /obj/item/pda/ai/pai
 	ttone = "assist"
 
-/obj/item/pda/ai/pai/Initialize()
+/obj/item/pda/ai/Initialize()
 	. = ..()
-	AddComponent(/datum/component/pda_protection)
+	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/medical
 	name = "medical PDA"
@@ -124,7 +124,7 @@
 
 /obj/item/pda/captain/Initialize()
 	. = ..()
-	AddComponent(/datum/component/pda_protection)
+	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/cargo
 	name = "cargo technician PDA"

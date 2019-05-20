@@ -1009,6 +1009,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 			continue
 		. += P
 
+/obj/item/pda/proc/pda_no_detonate()
+	return COMPONENT_PDA_NO_DETONATE
+
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL
 #undef PDA_SCANNER_FORENSICS
