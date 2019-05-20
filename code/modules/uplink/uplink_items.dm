@@ -1680,7 +1680,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 //datum/uplink_item/role_restricted/pressure_mod
 //	name = "Kinetic Accelerator Pressure Mod"
 //	desc = "A modification kit which allows Kinetic Accelerators to do greatly increased damage while indoors. \
-			Occupies 35% mod capacity."
+//			Occupies 35% mod capacity."
 //	item = /obj/item/borg/upgrade/modkit/indoors
 //	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 //	limited_stock = 2 //you can't use more than two!
