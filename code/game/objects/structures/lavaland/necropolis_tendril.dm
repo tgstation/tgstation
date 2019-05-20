@@ -8,7 +8,7 @@
 
 	faction = list("mining")
 	max_mobs = 3
-	max_integrity = 250
+	max_integrity = 135
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril)
 
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	var/last_tendril = TRUE
 	if(GLOB.tendrils.len>1)
 		last_tendril = FALSE
-	
+
 	if(last_tendril && !(flags_1 & ADMIN_SPAWNED_1))
 		if(SSmedals.hub_enabled)
 			for(var/mob/living/L in view(7,src))
