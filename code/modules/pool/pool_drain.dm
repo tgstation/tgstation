@@ -46,7 +46,7 @@
 				pool_controller.drained = FALSE
 				if(pool_controller.bloody < 1000)
 					pool_controller.bloody /= 2
-				if(pool_control.bloody > 1000)
+				if(pool_controller.bloody > 1000)
 					pool_controller.bloody /= 4
 				pool_controller.changecolor()
 				status = FALSE
