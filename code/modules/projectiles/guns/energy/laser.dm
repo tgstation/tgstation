@@ -8,6 +8,52 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
+	var/obj/item/lense/stored = null
+	var/list/stored_type = list()
+
+/obj/item/lense
+	name = "lense"
+	icon_state = "energy"
+	desc = "A basic energy-based gun."
+	icon = 'icons/obj/guns/energy.dmi'
+	var/list/stored_ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter)
+
+/obj/item/lense/Initialize()
+	. = ..()
+/*	for (var/i = 1, i <= stored_ammo_type.len, i++)
+		log_admin_private("[i]")
+		var/shottype = stored_ammo_type[i]
+		var/shot = new shottype(src)
+		stored_ammo_type[i] = shot
+*/
+/obj/item/gun/energy/laser/attackby(obj/item/I, mob/user, params)
+	..()
+	if(istype(I, /obj/item/lense))
+		if(!stored)
+			equiplense(I,user)
+			return
+	if(istype(I, /obj/item/crowbar))
+		if(stored)
+			unequiplense(stored, user)
+			return
+
+/obj/item/gun/energy/laser/proc/equiplense(obj/item/lense/L, mob/user)
+	var/shoot =  L.stored_ammo_type[stored_ammo_type.len]
+	ammo_type  +=new shoot (src)
+	stored += L
+	L.forceMove(src)
+//	update_ammo_types()
+	return TRUE
+
+/obj/item/gun/energy/laser/proc/unequiplense(obj/item/lense/L, mob/user)
+//	ammo_type = stored_type
+	ammo_type -= ammo_type[ammo_type.len]
+	stored = list()
+	var/turf/T = src.loc
+	L.forceMove(T)
+//	update_ammo_types()
+//	select_fire(user)
+	return TRUE
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
