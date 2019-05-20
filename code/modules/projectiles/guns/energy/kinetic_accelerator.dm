@@ -1,6 +1,6 @@
 /obj/item/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
-	desc = "A self recharging, ranged mining tool that does increased damage in low pressure."
+	desc = "A self recharging, ranged mining tool."
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
@@ -167,14 +167,13 @@
 /obj/item/projectile/kinetic
 	name = "kinetic force"
 	icon_state = null
-	damage = 40
+	damage = 15
 	damage_type = BRUTE
-	flag = "bomb"
 	range = 3
 	log_override = TRUE
 
-	var/pressure_decrease_active = FALSE
-	var/pressure_decrease = 0.25
+	//var/pressure_decrease_active = FALSE
+	//var/pressure_decrease = 0.25
 	var/obj/item/gun/energy/kinetic_accelerator/kinetic_gun
 
 /obj/item/projectile/kinetic/Destroy()
@@ -188,10 +187,10 @@
 			var/list/mods = kinetic_gun.get_modkits()
 			for(var/obj/item/borg/upgrade/modkit/M in mods)
 				M.projectile_prehit(src, target, kinetic_gun)
-		if(!lavaland_equipment_pressure_check(get_turf(target)))
-			name = "weakened [name]"
-			damage = damage * pressure_decrease
-			pressure_decrease_active = TRUE
+		//if(!lavaland_equipment_pressure_check(get_turf(target)))
+			//name = "weakened [name]"
+			//damage = damage * pressure_decrease
+			//pressure_decrease_active = TRUE
 
 /obj/item/projectile/kinetic/on_range()
 	strike_thing()
@@ -317,7 +316,7 @@
 /obj/item/borg/upgrade/modkit/damage
 	name = "damage increase"
 	desc = "Increases the damage of kinetic accelerator when installed."
-	modifier = 10
+	modifier = 4
 
 /obj/item/borg/upgrade/modkit/damage/modify_projectile(obj/item/projectile/kinetic/K)
 	K.damage += modifier
@@ -493,8 +492,8 @@
 		var/mob/living/L = target
 		if(bounties_reaped[L.type])
 			var/kill_modifier = 1
-			if(K.pressure_decrease_active)
-				kill_modifier *= K.pressure_decrease
+			//if(K.pressure_decrease_active)
+				//kill_modifier *= K.pressure_decrease
 			var/armor = L.run_armor_check(K.def_zone, K.flag, "", "", K.armour_penetration)
 			L.apply_damage(bounties_reaped[L.type]*kill_modifier, K.damage_type, K.def_zone, armor)
 
@@ -508,16 +507,16 @@
 		bounties_reaped[L.type] = min(bounties_reaped[L.type] + (modifier * bonus_mod), maximum_bounty)
 
 //Indoors
-/obj/item/borg/upgrade/modkit/indoors
-	name = "decrease pressure penalty"
-	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in high pressure environments."
-	modifier = 2
-	denied_type = /obj/item/borg/upgrade/modkit/indoors
-	maximum_of_type = 2
-	cost = 35
+//obj/item/borg/upgrade/modkit/indoors
+//	name = "decrease pressure penalty"
+//	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in high pressure environments."
+//	modifier = 2
+//	denied_type = /obj/item/borg/upgrade/modkit/indoors
+//	maximum_of_type = 2
+//	cost = 35
 
-/obj/item/borg/upgrade/modkit/indoors/modify_projectile(obj/item/projectile/kinetic/K)
-	K.pressure_decrease *= modifier
+//obj/item/borg/upgrade/modkit/indoors/modify_projectile(obj/item/projectile/kinetic/K)
+//	K.pressure_decrease *= modifier
 
 
 //Trigger Guard
