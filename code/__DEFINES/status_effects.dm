@@ -126,5 +126,3 @@
 // Stasis helpers
 
 #define IS_IN_STASIS(mob) (mob.has_status_effect(STATUS_EFFECT_STASIS))
-
-#define SET_STASIS(mob, apply) (apply ? mob.apply_status_effect(STATUS_EFFECT_STASIS, null, TRUE) : mob.remove_status_effect(STATUS_EFFECT_STASIS))
