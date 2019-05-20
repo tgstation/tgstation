@@ -8,15 +8,15 @@
 	var/srange = 6
 	var/timer = 0
 	var/cooldown
-	var/obj/machinery/pool/controller/pool_control = null
+	var/obj/machinery/pool/controller/pool_controller = null
 
 /obj/machinery/pool/drain/Initialize()
 	START_PROCESSING(SSprocessing, src)
 	. = ..()
 
 /obj/machinery/pool/drain/Destroy()
-	poolcontrol.linked_drain = null
-	poolcontrol = null
+	pool_controller.linked_drain = null
+	pool_controller = null
 	return ..()
 
 /obj/machinery/pool/drain/process()
@@ -26,7 +26,7 @@
 				step_towards(absorbo, src)
 				var/dist = get_dist(src, absorbo)
 				if(dist == 0)
-					absorbo.forceMove(poolcontrol.linked_filter)
+					absorbo.forceMove(pool_controller.linked_filter)
 	if(active)
 		if(status) //if filling up, get back to normal position
 			if(timer > 0)
@@ -43,12 +43,12 @@
 					undrained.update_icon()
 				for(var/obj/effect/waterspout/undrained3 in range(1,src))
 					qdel(undrained3)
-				poolcontrol.drained = FALSE
-				if(poolcontrol.bloody < 1000)
-					poolcontrol.bloody /= 2
-				if(poolcontrol.bloody > 1000)
-					poolcontrol.bloody /= 4
-				poolcontrol.changecolor()
+				pool_controller.drained = FALSE
+				if(pool_controller.bloody < 1000)
+					pool_controller.bloody /= 2
+				if(pool_control.bloody > 1000)
+					pool_controller.bloody /= 4
+				pool_controller.changecolor()
 				status = FALSE
 				active = FALSE
 			return
