@@ -1053,7 +1053,7 @@
 
 /obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/colossus))
-		return BULLET_ACT_BLOCK
+		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
 /obj/structure/closet/crate/necropolis/colossus/PopulateContents()
