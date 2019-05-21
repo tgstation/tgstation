@@ -750,22 +750,23 @@
 			if(distant_source)
 				break
 
-	for(var/mob/M in SSmobs.clients_by_zlevel[z])
-		var/dist_far = get_dist(M, distant_source)
-		if(dist_far <= long_range && dist_far > range)
-			M.playsound_local(distant_source, "sound/effects/[selected_sound]_distance.ogg", 100, falloff = 20)
-		else if(dist_far <= range)
-			var/source
-			if(engine_list.len == 0)
-				source = distant_source
-			else
-				var/closest_dist = 10000
-				for(var/obj/O in engine_list)
-					var/dist_near = get_dist(M, O)
-					if(dist_near < closest_dist)
-						source = O
-						closest_dist = dist_near
-			M.playsound_local(source, "sound/effects/[selected_sound].ogg", 100, falloff = range / 2)
+	if(distant_source)
+		for(var/mob/M in SSmobs.clients_by_zlevel[z])
+			var/dist_far = get_dist(M, distant_source)
+			if(dist_far <= long_range && dist_far > range)
+				M.playsound_local(distant_source, "sound/effects/[selected_sound]_distance.ogg", 100, falloff = 20)
+			else if(dist_far <= range)
+				var/source
+				if(engine_list.len == 0)
+					source = distant_source
+				else
+					var/closest_dist = 10000
+					for(var/obj/O in engine_list)
+						var/dist_near = get_dist(M, O)
+						if(dist_near < closest_dist)
+							source = O
+							closest_dist = dist_near
+				M.playsound_local(source, "sound/effects/[selected_sound].ogg", 100, falloff = range / 2)
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time
