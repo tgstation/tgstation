@@ -662,6 +662,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
 	return
 
+/obj/machinery/power/supermatter_crystal/prevent_content_explosion()
+	return TRUE
+
 /obj/machinery/power/supermatter_crystal/engine
 	is_main_engine = TRUE
 
