@@ -1,0 +1,4 @@
+author: "vuonojenmustaturska"
+delete-after: True
+changes: 
+  - rscadd: "Nuclear Operative reinforcements now get uplinks with 0 TC and a real name."

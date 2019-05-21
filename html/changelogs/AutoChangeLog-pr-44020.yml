@@ -1,0 +1,4 @@
+author: "kriskog"
+delete-after: True
+changes: 
+  - bugfix: "Added a bunch of previously missing adjacency checks to ui window actions and alt clicks."

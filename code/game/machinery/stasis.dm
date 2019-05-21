@@ -34,7 +34,7 @@
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/AltClick(mob/user)
-	if(world.time >= stasis_can_toggle && user.canUseTopic(src))
+	if(world.time >= stasis_can_toggle && user.canUseTopic(src, !issilicon(user)))
 		stasis_enabled = !stasis_enabled
 		stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
 		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
@@ -138,4 +138,10 @@
 
 /obj/machinery/stasis/nap_violation(mob/violator)
 	unbuckle_mob(violator, TRUE)
+
+/obj/machinery/stasis/attack_robot(mob/user)
+	if(Adjacent(user) && occupant)
+		unbuckle_mob(occupant)
+	else
+		..()
 #undef STASIS_TOGGLE_COOLDOWN
