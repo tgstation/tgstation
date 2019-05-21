@@ -60,7 +60,7 @@
 		return ""
 
 	// Default String
-	var/returnString = "\[<span class='warning'><EM>[bloodsuckerdatum.ReturnFullName(src,1)]</EM></span>\]"
+	var/returnString = "\[<span class='warning'><EM>[bloodsuckerdatum.ReturnFullName(1)]</EM></span>\]"
 	var/returnIcon = "[icon2html('icons/Fulpicons/fulpicons_small.dmi', world, "bloodsucker")]"
 
 	// In Disguise (Veil)?

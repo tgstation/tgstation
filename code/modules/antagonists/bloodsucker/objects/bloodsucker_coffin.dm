@@ -34,7 +34,7 @@
 	coffin = claimed
 	lair = get_area(claimed)
 	// DONE
-	to_chat(owner, "<span class='userdanger'>You have claimed the [claimed] as your place of immortal rest! Your lair is now the [lair].</span>")
+	to_chat(owner, "<span class='userdanger'>You have claimed the [claimed] as your place of immortal rest! Your lair is now [lair].</span>")
 	to_chat(owner, "<span class='danger'>You have learned new construction recipes to improve your lair.</span>")
 	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Find new lair recipes in the Structures tab of the <i>Crafting Menu</i> at the bottom of the screen, including the <i>Persuasion Rack</i> for converting crew into Vassals.</span><br><br>")
 

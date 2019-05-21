@@ -47,7 +47,7 @@
 		var/datum/mind/bloodsucker = pick(antag_candidates)
 		bloodsuckers += bloodsucker
 		bloodsucker.restricted_roles = restricted_jobs
-		log_game("[bloodsucker.key] (ckey) has been selected as a [traitor_name].")
+		log_game("[bloodsucker.key] (ckey) has been selected as a Bloodsucker.")
 		antag_candidates.Remove(bloodsucker) // Apparently you can also write antag_candidates -= bloodsucker
 
 	// Assign Hunters (as many as vamps, plus one)
@@ -56,7 +56,7 @@
 			break
 		var/datum/mind/hunter = pick(antag_candidates)
 		vamphunters += hunter
-		vamphunters.restricted_roles = restricted_jobs
+		hunter.restricted_roles = restricted_jobs
 		log_game("[hunter.key] (ckey) has been selected as a Hunter.")
 		antag_candidates.Remove(hunter)
 
@@ -221,8 +221,12 @@
 		return FALSE
 	// Make Vassal
 	var/datum/antagonist/vassal/V = new ANTAG_DATUM_VASSAL(target.mind)
-	V.master = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/datum/antagonist/bloodsucker/B = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	V.master = B
 	target.mind.add_antag_datum(V, V.master.get_team())
+	// Update Bloodsucker Title (we're a daddy now)
+	B.SelectTitle(am_fledgling = FALSE) // Only works if you have no title yet.
+
 	// Log
 	message_admins("[target] has become a Vassal, and is enslaved to [creator].")
 	log_admin("[target] has become a Vassal, and is enslaved to [creator].")

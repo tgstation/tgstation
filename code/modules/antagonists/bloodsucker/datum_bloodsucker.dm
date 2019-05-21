@@ -58,9 +58,9 @@
 	SSticker.mode.check_start_sunlight()
 
 	// Name & Title
-	SelectFirstName(owner.current.gender)
-	SelectTitle(owner.current.gender, creator ? 1 : 0) 		// If I have a creator, then set as Fledgling.
-	SelectReputation(owner.current.gender, creator ? 1 : 0)
+	SelectFirstName()
+	SelectTitle(am_fledgling=TRUE) // creator ? 1 : 0) 		// If I have a creator, then set as Fledgling.
+	SelectReputation(am_fledgling=TRUE) // creator ? 1 : 0)
 
 	// Give Powers & Stats
 	AssignStarterPowersAndStats()
@@ -124,9 +124,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/datum/antagonist/bloodsucker/proc/SelectFirstName(gender=MALE)
+/datum/antagonist/bloodsucker/proc/SelectFirstName()
 	// Names (EVERYONE gets one))
-	if (gender == MALE)
+	if (owner.current.gender == MALE)
 		vampname = pick("Desmond","Rudolph","Dracul","Vlad","Pyotr","Gregor","Cristian","Christoff","Marcu","Andrei","Constantin","Gheorghe","Grigore","Ilie","Iacob","Luca","Mihail","Pavel","Vasile","Octavian","Sorin", \
 						"Sveyn","Aurel","Alexe","Iustin","Theodor","Dimitrie","Octav","Damien","Magnus","Caine","Abel", // Romanian/Ancient
 						"Lucius","Gaius","Otho","Balbinus","Arcadius","Romanos","Alexios","Vitellius",  // Latin
@@ -140,42 +140,54 @@
 						"Alcestis","Damaris","Elisavet","Khthonia","Teodora",  // Greek
 						"Nefret") // Egyptian
 
-/datum/antagonist/bloodsucker/proc/SelectTitle(gender=MALE, am_fledgling = 0)
+/datum/antagonist/bloodsucker/proc/SelectTitle(am_fledgling = 0, forced=FALSE)
+	// Already have Title
+	if (!forced && vamptitle != null)
+		return
 	// Titles [Master]
 	if (!am_fledgling)
-		if (gender == MALE)
+		if (owner.current.gender == MALE)
 			vamptitle = pick ("Count","Baron","Viscount","Prince","Duke","Tzar","Dreadlord","Lord","Master")
 		else
 			vamptitle = pick ("Countess","Baroness","Viscountess","Princess","Duchess","Tzarina","Dreadlady","Lady","Mistress")
+
+		to_chat(owner, "<span class='announce'>You have earned a title! You are now known as <i>[ReturnFullName(TRUE)]</i>!</span>")
 	// Titles [Fledgling]
 	else
 		vamptitle = null
 
-/datum/antagonist/bloodsucker/proc/SelectReputation(gender=MALE, am_fledgling = 0)
+/datum/antagonist/bloodsucker/proc/SelectReputation(am_fledgling = 0, forced=FALSE)
+	// Already have Reputation
+	if (!forced && vampreputation != null)
+		return
 	// Reputations [Master]
 	if (!am_fledgling)
 		vampreputation = pick("Butcher","Blood Fiend","Crimson","Red","Black","Terror","Nightman","Feared","Ravenous","Fiend","Malevolent","Wicked","Ancient","Plaguebringer","Sinister","Forgotten","Wretched","Baleful", \
 							"Inqisitor","Harvester","Reviled","Robust","Betrayer","Destructor","Damned","Accursed","Terrible","Vicious","Profane","Vile","Depraved","Foul","Slayer","Manslayer","Sovereign","Slaughterer", \
-							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder","Horrible","Immortal","Undying","Overlord","Corrupt")
-		if (gender == MALE)
+							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder","Horrible","Immortal","Undying","Overlord","Corrupt","Hellspawn","Tyrant","Sanguineous")
+		if (owner.current.gender == MALE)
 			if (prob(10)) // Gender override
 				vampreputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
 		else
 			if (prob(10)) // Gender override
 				vampreputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
+
+		to_chat(owner, "<span class='announce'>You have earned a reputation! You are now known as <i>[ReturnFullName(TRUE)]</i>!</span>")
+
 	// Reputations [Fledgling]
 	else
-		vampreputation = pick ("Crude","Callow","Unlearned","Neophyte","Novice","Unseasoned","Fledgling","Young","Neonate","Scrapling","Untested","Unproven","Newly Reisen","Born","Scavenger","Unknowing","Unspoiled")//,"Fresh")
+		vampreputation = pick ("Crude","Callow","Unlearned","Neophyte","Novice","Unseasoned","Fledgling","Young","Neonate","Scrapling","Untested","Unproven","Unknown","Newly Reisen","Born","Scavenger","Unknowing",\
+							   "Unspoiled")//,"Fresh")
 
 
 /datum/antagonist/bloodsucker/proc/AmFledgling()
 	return !vamptitle
 
-/datum/antagonist/bloodsucker/proc/ReturnFullName(mob/living/carbon/owner, var/include_rep=0)
+/datum/antagonist/bloodsucker/proc/ReturnFullName(var/include_rep=0)
 
 	var/fullname
 	// Name First
-	fullname = (vampname ? vampname : owner.name)
+	fullname = (vampname ? vampname : owner.current.name)
 	// Title
 	if (vamptitle)
 		fullname = vamptitle + " " + fullname
@@ -321,7 +333,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 		if (!istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			to_chat(owner.current, "<span class='warning'>Return to your coffin to advance your Rank.</span>")
 			return
-		if (!choice || !options[choice])
+		if (!choice || !options[choice] || (locate(options[choice]) in powers)) // ADDED: Check to see if you already have this power, due to window stacking.
 			to_chat(owner.current, "<span class='notice'>You prevent your blood from thickening just yet, but you may try again later.</span>")
 			return
 		var/datum/action/bloodsucker/P = options[choice]
@@ -352,6 +364,11 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 
 	vamplevel ++
 	vamplevel_unspent --
+
+	// Assign True Reputation
+	if (vamplevel == 4)
+		SelectReputation(am_fledgling=FALSE, forced=TRUE)
+
 	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, resistence, health, feed rate, regen rate, and maximum blood have all increased!</span>")
 	to_chat(owner.current, "<span class='warning'>However, your weakness to fire and sunlight have also increased!</span>")
 

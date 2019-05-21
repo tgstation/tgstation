@@ -246,7 +246,7 @@
 	var/list/mob/living/carbon/vamps = list()
 	// Track Bloodsuckers in Game Mode
 	for(var/datum/mind/M in SSticker.mode.bloodsuckers)
-		if (!M.current || M.current == owner)
+		if (!M.current || M.current == owner || !isturf(M.current) || !isturf(new_owner))
 			continue
 		var/datum/antagonist/bloodsucker/antag_datum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if(!istype(antag_datum))

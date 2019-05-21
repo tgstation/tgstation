@@ -30,6 +30,7 @@
 	var/warn_constant_cost = FALSE		// Some powers charge you for staying on. Masquerade, Cloak, Veil, etc.
 	var/can_use_in_torpor = FALSE		// Most powers don't function if you're in torpor.
 	var/must_be_capacitated = FALSE		// Some powers require you to be standing and ready.
+	var/can_be_immobilized = FALSE		// Brawn can be used when incapacitated/laying if it's because you're being immobilized. NOTE: If must_be_capacitated is FALSE, this is irrelevant.
 	//var/not_bloodsucker = FALSE		// This goes to Vassals or Hunters, but NOT bloodsuckers.
 
 /datum/action/bloodsucker/New()
@@ -97,7 +98,7 @@
 	// Incap?
 	if (must_be_capacitated)
 		var/mob/living/L = owner
-		if (L.incapacitated(ignore_restraints=TRUE,ignore_grab=TRUE,check_immobilized=TRUE) || L.lying)
+		if (L.incapacitated(ignore_restraints=TRUE,ignore_grab=TRUE,check_immobilized=!can_be_immobilized) || L.lying && !can_be_immobilized)
 			if (display_error)
 				to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
 			return FALSE

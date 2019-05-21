@@ -10,6 +10,7 @@
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
 	must_be_capacitated = TRUE
+	can_be_immobilized = TRUE
 	bloodsucker_can_buy = TRUE
 	// Level Up
 	var/upgrade_canLocker = FALSE
@@ -18,15 +19,22 @@
 /datum/action/bloodsucker/targeted/brawn/CheckCanUse(display_error)
 	if(!..(display_error))// DEFAULT CHECKS
 		return FALSE
+	. = TRUE
 	// Break Out of Restraints! (And then cancel)
 	if (CheckBreakRestraints())
-		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!DEACTIVATE!
-		return FALSE
+		//PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!DEACTIVATE!
+		. = FALSE //return FALSE
 	// Throw Off Attacker! (And then cancel)
 	if (CheckEscapePuller())
+		//PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!DEACTIVATE!
+		. = FALSE //return FALSE
+	// Did we successfuly use power to BREAK CUFFS and/or ESCAPE PULLER?
+	// Then PAY COST!
+	if (. == FALSE)
 		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!DEACTIVATE!
-		return FALSE
-	return TRUE
+
+	// NOTE: We use . = FALSE so that we can break cuffs AND throw off our attacker in one use!
+	//return TRUE
 
 
 /datum/action/bloodsucker/targeted/brawn/CheckValidTarget(atom/A)
@@ -65,7 +73,7 @@
 		var/mob/living/carbon/user_C = user
 		var/hitStrength = user_C.dna.species.punchdamagehigh * 1.25 + 2
 
-		// Knockback!
+		// Knockdown!
 		var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		var/powerlevel = 1 + bloodsuckerdatum.vamplevel
 		if (rand(10 + powerlevel) >= 5)
@@ -82,12 +90,12 @@
 		user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(target.zone_selected))
 		target.apply_damage(hitStrength, BRUTE, affecting)
+
 		// Knockback
 		var/send_dir = get_dir(owner, target)
-		//new /datum/forced_movement(target, get_ranged_target_turf(target, send_dir, (hitStrength / 4)), 1, FALSE)
 		var/turf/T = get_ranged_target_turf(target, send_dir, (hitStrength / 4))
-		owner.newtonian_move(send_dir)
-		target.throw_at(T, (hitStrength / 4), 1, owner)
+		owner.newtonian_move(send_dir) // Bounce back in 0 G
+		target.throw_at(T, (hitStrength / 4), TRUE, owner)  //new /datum/forced_movement(target, get_ranged_target_turf(target, send_dir, (hitStrength / 4)), 1, FALSE)
 
 	// Target Type: Door
 	else if (upgrade_canDoor && istype(target, /obj/machinery/door))
@@ -146,15 +154,26 @@
 	return FALSE
 
 /datum/action/bloodsucker/targeted/brawn/proc/CheckEscapePuller()
-	if (!owner.pulledby || owner.pulledby.grab_state <= GRAB_PASSIVE)
+	if (!owner.pulledby)// || owner.pulledby.grab_state <= GRAB_PASSIVE)
 		return FALSE
-	playsound(get_turf(owner.pulledby), 'sound/effects/woodhit.ogg', 75, 1, -1)
-	if (iscarbon(owner.pulledby))
-		var/mob/living/carbon/C = owner.pulledby
-		C.Knockdown(60)
-	var/send_dir = get_dir(owner, owner.pulledby)
-	new /datum/forced_movement(owner.pulledby, get_ranged_target_turf(owner.pulledby, send_dir, 2), 1, FALSE)
-	owner.visible_message("<span class='warning'>[owner] tears free of [owner.pulledby]'s grasp!</span>", \
-			 			"<span class='warning'>You shrug off [owner.pulledby]'s grasp!</span>")
-	owner.pulledby = null
+
+	var/mob/M = owner.pulledby
+	var/pull_power = M.grab_state
+	playsound(get_turf(M), 'sound/effects/woodhit.ogg', 75, 1, -1)
+
+	// Knock Down (if Living)
+	if (isliving(M))
+		var/mob/living/L = M
+		L.Knockdown(pull_power * 10 + 20)
+
+	// Knock Back (before Knockdown, which probably cancels pull)
+	var/send_dir = get_dir(owner, M)
+	var/turf/T = get_ranged_target_turf(M, send_dir, pull_power)
+	owner.newtonian_move(send_dir) // Bounce back in 0 G
+	M.throw_at(T, pull_power, TRUE, owner, FALSE) // Throw distance based on grab state! Harder grabs punished more aggressively.
+
+
+	owner.visible_message("<span class='warning'>[owner] tears free of [M]'s grasp!</span>", \
+			 			"<span class='warning'>You shrug off [M]'s grasp!</span>")
+	owner.pulledby = null // It's already done, but JUST IN CASE.
 	return TRUE
