@@ -53,20 +53,26 @@
 
 /datum/fantasy_affix/bane/apply(datum/component/fantasy/comp, newName)
 	. = ..()
-	// First a list of types and their subtypes which are allowed
-	// Next a list of particular types removed, abstract in betweem types for example
-	// Finally a list of types and their subtypes to remove
 	// This is set up to be easy to add to these lists as I expect it will need modifications
-	var/static/list/possible_mobtypes = typecacheof(list(
-		/mob/living/simple_animal,
-		/mob/living/carbon,
-		)) - (list(
-		/mob/living/simple_animal/hostile,
-		) + typecacheof(list(
-		/mob/living/carbon/human/species,
-		)))
+	var/static/list/possible_mobtypes
+	if(!possible_mobtypes)
+		// The base list of allowed mob/species types
+		possible_mobtypes = typecacheof(list(
+			/mob/living/simple_animal,
+			/mob/living/carbon,
+			/datum/species,
+			))
+		// Some particular types to disallow if they're too broad/abstract
+		possible_mobtypes -= list(
+			/mob/living/simple_animal/hostile,
+			)
+		// Some types to remove them and their subtypes
+		possible_mobtypes -= typecacheof(list(
+			/mob/living/carbon/human/species,
+			))
 
 	var/mob/picked_mobtype = pick(possible_mobtypes)
+	// This works even with the species picks since we're only accessing the name
 
 	var/obj/item/master = comp.parent
 	comp.appliedComponents += master.AddComponent(/datum/component/bane, picked_mobtype)

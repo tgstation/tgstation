@@ -19,4 +19,4 @@
 	var/obj/item/master = parent
 	var/atom/movable/throwee = target
 	var/atom/throw_target = get_edge_target_turf(throwee, get_dir(master, throwee))
-	throwee.throw_at(throw_target, throw_distance, 1, user)
+	throwee.safe_throw_at(throw_target, throw_distance, 1, user)
