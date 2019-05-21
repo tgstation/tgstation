@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	med_hud_set_health()
 	med_hud_set_status()
 	if(!QDELETED(summoner))
-		if(summoner.stat == DEAD)
+		if(summoner.stat == DEAD || HAS_TRAIT(summoner, TRAIT_NODEATH) && summoner.health <= HEALTH_THRESHOLD_DEAD)
 			forceMove(summoner.loc)
 			to_chat(src, "<span class='danger'>Your summoner has died!</span>")
 			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
