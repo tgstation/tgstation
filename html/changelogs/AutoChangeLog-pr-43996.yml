@@ -1,0 +1,5 @@
+author: "Incoming5643"
+delete-after: True
+changes: 
+  - rscadd: "After a very long period of being broken, the training bomb in security finally works properly again."
+  - tweak: "Syndicate bomb cores have become a little more robust in their operation. Defused but still cored bombs are no longer inert and can be set again. Would be heroes are advised to cut out and dispose of bomb cores, and dismantle unneeded bomb shells to be absolutely sure."
