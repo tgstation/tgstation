@@ -1,4 +1,3 @@
-
 // see _DEFINES/is_helpers.dm for mob type checks
 
 /mob/proc/lowest_buckled_mob()
@@ -54,17 +53,14 @@
 	var/te = n
 	var/t = ""
 	n = length(n)
-	if (n > 100)	// Fulpstation: Fix
-		n = 100
-		message_admins("<span class='warning'>WARNING!!</span> Someone may be trying to crash the server. <b>Check users for paper+pen in hands, inventory, or nearby</b>.")
-	var/p = null
-	p = 1
-	while(p <= n)
+
+	for(var/p = 1 to min(n,MAX_BROADCAST_LEN))
 		if ((copytext(te, p, p + 1) == " " || prob(pr)))
 			t = text("[][]", t, copytext(te, p, p + 1))
 		else
 			t = text("[]*", t)
-		p++
+	if(n > MAX_BROADCAST_LEN)
+		t += "..." //signals missing text
 	return sanitize(t)
 
 /proc/slur(n)

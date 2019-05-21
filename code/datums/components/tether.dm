@@ -22,7 +22,7 @@
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 	var/atom/blocker
-	:out
+	out:
 		for(var/turf/T in getline(tether_target,newloc))
 			if (T.density)
 				blocker = T

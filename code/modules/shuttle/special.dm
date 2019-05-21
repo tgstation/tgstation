@@ -76,7 +76,7 @@
 			break
 
 	if(!our_statue)
-		name = "inert [name]"
+		name = "inert [initial(name)]"
 		return
 	else
 		name = initial(name)

@@ -1,4 +1,0 @@
-author: "Garen7"
-delete-after: True
-changes: 
-  - bugfix: "fixes lings being able to infinitely use their strained muscles"

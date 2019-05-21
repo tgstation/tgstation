@@ -1,0 +1,5 @@
+author: "vuonojenmustaturska"
+delete-after: True
+changes: 
+  - rscdel: "Removed the ability of fat people to vore monkeys, and the ability of aliens to vore humans."
+  - code_imp: "Removed stubbed out would-be functionality related to stomach contents"
