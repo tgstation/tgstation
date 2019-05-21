@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - balance: "nukeop uplinks now have 5 unlimited discounts and 10 limited discounts shared between the team, rather than 3 individual discounts like traitor uplinks"
