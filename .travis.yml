@@ -43,7 +43,7 @@ matrix:
             - gcc-multilib
             - g++-7
             - g++-7-multilib
-            - libmariadbclient-dev:i386
+            - libmariadb-client-lgpl-dev:i386
       cache:
         directories:
           - $HOME/.cargo
@@ -67,4 +67,3 @@ script:
   - tools/travis/build_tools.sh || travis_terminate 1
   - tools/travis/build_dependencies.sh || travis_terminate 1
   - tools/travis/build_byond.sh
-
