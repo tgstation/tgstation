@@ -99,7 +99,7 @@
 
 /obj/item/transfer_valve/Topic(href, href_list)
 	..()
-	if(!usr.canUseTopic(src))
+	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(tank_one && href_list["tankone"])
 		split_gases()
