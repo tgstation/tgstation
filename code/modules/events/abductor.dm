@@ -4,7 +4,7 @@
 	weight = 10
 	max_occurrences = 1
 	min_players = 20
-	gamemode_blacklist = list("nuclear","wizard","revolution")
+	gamemode_blacklist = list("disaster","nuclear","wizard","revolution")
 
 /datum/round_event/ghost_role/abductor
 	minimum_required = 2

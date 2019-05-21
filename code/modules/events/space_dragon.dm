@@ -5,6 +5,7 @@
 	weight = 8
 	earliest_start = 70 MINUTES
 	min_players = 20
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1

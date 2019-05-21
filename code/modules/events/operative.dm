@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/ghost_role/operative
 	weight = 0 //Admin only
 	max_occurrences = 1
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/ghost_role/operative
 	minimum_required = 1

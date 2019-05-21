@@ -4,6 +4,7 @@
 	weight = 2
 	min_players = 15
 	earliest_start = 30 MINUTES
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
@@ -15,6 +16,7 @@
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
 	weight = 0
 	max_occurrences = 0
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/portal_storm/portal_storm_narsie
 	boss_types = list(/mob/living/simple_animal/hostile/construct/builder = 6)

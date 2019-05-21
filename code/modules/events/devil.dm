@@ -2,6 +2,7 @@
 	name = "Create Devil"
 	typepath = /datum/round_event/ghost_role/devil
 	max_occurrences = 0
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/ghost_role/devil
 	var/success_spawn = 0

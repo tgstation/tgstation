@@ -4,6 +4,7 @@
 	weight = 5
 	max_occurrences = 1
 	min_players = 15
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/spider_infestation
 	announceWhen	= 400

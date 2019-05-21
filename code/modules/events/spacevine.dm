@@ -4,6 +4,7 @@
 	weight = 15
 	max_occurrences = 3
 	min_players = 10
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/spacevine
 	fakeable = FALSE

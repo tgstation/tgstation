@@ -4,6 +4,7 @@
 	weight			= 20
 	max_occurrences = 5
 	var/forced_type //Admin abuse
+	gamemode_blacklist = list("disaster")
 
 
 /datum/round_event_control/falsealarm/admin_setup()

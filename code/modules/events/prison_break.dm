@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/grey_tide
 	max_occurrences = 2
 	min_players = 5
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/grey_tide
 	announceWhen = 50

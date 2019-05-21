@@ -2,6 +2,7 @@
 	name = "Spontaneous Brain Trauma"
 	typepath = /datum/round_event/brain_trauma
 	weight = 25
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/brain_trauma
 	fakeable = FALSE

@@ -2,6 +2,7 @@
 	name = "Radiation Storm"
 	typepath = /datum/round_event/radiation_storm
 	max_occurrences = 1
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/radiation_storm
 

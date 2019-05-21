@@ -13,6 +13,7 @@
 	typepath = /datum/round_event/shuttle_loan
 	max_occurrences = 1
 	earliest_start = 7 MINUTES
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/shuttle_loan
 	announceWhen = 1

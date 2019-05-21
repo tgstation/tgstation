@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/grid_check
 	weight = 10
 	max_occurrences = 3
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/grid_check
 	announceWhen	= 1

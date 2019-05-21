@@ -4,6 +4,7 @@
 	weight = 10
 	max_occurrences = 2
 	min_players = 1
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/mass_hallucination
 	fakeable = FALSE

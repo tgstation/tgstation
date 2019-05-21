@@ -4,6 +4,7 @@
 	max_occurrences = 1
 	min_players = 10
 	weight = 5
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/disease_outbreak
 	announceWhen	= 15
