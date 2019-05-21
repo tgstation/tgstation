@@ -237,40 +237,45 @@
 			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
 				msg += "[t_He] [t_is][stun_absorption[i]["examine_message"]]\n"
 
-	if(drunkenness && !skipface && !appears_dead) //Drunkenness
-		switch(drunkenness)
-			if(11 to 21)
-				msg += "[t_He] [t_is] slightly flushed.\n"
-			if(21.01 to 41) //.01s are used in case drunkenness ends up to be a small decimal
-				msg += "[t_He] [t_is] flushed.\n"
-			if(41.01 to 51)
-				msg += "[t_He] [t_is] quite flushed and [t_his] breath smells of alcohol.\n"
-			if(51.01 to 61)
-				msg += "[t_He] [t_is] very flushed and [t_his] movements jerky, with breath reeking of alcohol.\n"
-			if(61.01 to 91)
-				msg += "[t_He] look[p_s()] like a drunken mess.\n"
-			if(91.01 to INFINITY)
-				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
-
-	if(HAS_TRAIT(user, TRAIT_EMPATH) && !appears_dead && (src != user))
-		if (a_intent != INTENT_HELP)
-			msg += "[t_He] seem[p_s()] to be on guard.\n"
-		if (getOxyLoss() >= 10)
-			msg += "[t_He] seem[p_s()] winded.\n"
-		if (getToxLoss() >= 10)
-			msg += "[t_He] seem[p_s()] sickly.\n"
-		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-		if(mood.sanity <= SANITY_DISTURBED)
-			msg += "[t_He] seem[p_s()] distressed.\n"
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
-		if (HAS_TRAIT(src, TRAIT_BLIND))
-			msg += "[t_He] appear[p_s()] to be staring off into space.\n"
-		if (HAS_TRAIT(src, TRAIT_DEAF))
-			msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
-
-	msg += "</span>"
-
 	if(!appears_dead)
+		if(drunkenness && !skipface) //Drunkenness
+			switch(drunkenness)
+				if(11 to 21)
+					msg += "[t_He] [t_is] slightly flushed.\n"
+				if(21.01 to 41) //.01s are used in case drunkenness ends up to be a small decimal
+					msg += "[t_He] [t_is] flushed.\n"
+				if(41.01 to 51)
+					msg += "[t_He] [t_is] quite flushed and [t_his] breath smells of alcohol.\n"
+				if(51.01 to 61)
+					msg += "[t_He] [t_is] very flushed and [t_his] movements jerky, with breath reeking of alcohol.\n"
+				if(61.01 to 91)
+					msg += "[t_He] look[p_s()] like a drunken mess.\n"
+				if(91.01 to INFINITY)
+					msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
+
+		if(src != user)
+			if(HAS_TRAIT(user, TRAIT_EMPATH))
+				if (a_intent != INTENT_HELP)
+					msg += "[t_He] seem[p_s()] to be on guard.\n"
+				if (getOxyLoss() >= 10)
+					msg += "[t_He] seem[p_s()] winded.\n"
+				if (getToxLoss() >= 10)
+					msg += "[t_He] seem[p_s()] sickly.\n"
+				GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+				if(mood.sanity <= SANITY_DISTURBED)
+					msg += "[t_He] seem[p_s()] distressed.\n"
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
+				if (HAS_TRAIT(src, TRAIT_BLIND))
+					msg += "[t_He] appear[p_s()] to be staring off into space.\n"
+				if (HAS_TRAIT(src, TRAIT_DEAF))
+					msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
+
+			msg += "</span>"
+
+			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && src.mind.isholy)
+				msg += "[t_He] [t_has] a holy aura about [t_him].\n"
+				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "religious_comfort", /datum/mood_event/religiously_comforted)
+
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 		else

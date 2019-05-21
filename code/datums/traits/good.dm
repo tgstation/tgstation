@@ -149,17 +149,6 @@
 	H.equip_to_slot_or_del(new /obj/item/storage/fancy/candle_box(H), SLOT_IN_BACKPACK)
 	H.equip_to_slot_or_del(new /obj/item/storage/box/matches(H), SLOT_IN_BACKPACK)
 
-/datum/quirk/spiritual/on_process()
-	var/comforted = FALSE
-	for(var/mob/living/L in oview(5, quirk_holder))
-		if(L.mind && L.mind.isholy && L.stat == CONSCIOUS)
-			comforted = TRUE
-			break
-	if(comforted)
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "religious_comfort", /datum/mood_event/religiously_comforted)
-	else
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "religious_comfort")
-
 /datum/quirk/tagger
 	name = "Tagger"
 	desc = "You're an experienced artist. While drawing graffiti, you can get twice as many uses out of drawing supplies."
