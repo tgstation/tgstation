@@ -184,7 +184,7 @@
 	. = BRUTELOSS
 	if(on)
 		user.visible_message("<span class='suicide'>[user] forcefully rams the pen into their mouth!</span>")
-		else
+	else
 		user.visible_message("<span class='suicide'>[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		attack_self(user)
 
