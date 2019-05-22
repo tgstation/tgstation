@@ -30,6 +30,7 @@
 	user.reagents.add_reagent("pen_acid", 20)
 	user.reagents.add_reagent("antihol", 10)
 	user.reagents.add_reagent("mannitol", 25)
+	user.reagents.add_reagent("neurine", 6)
 
 	if(isliving(user))
 		var/mob/living/L = user
