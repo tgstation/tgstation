@@ -245,8 +245,10 @@ Burning extracts:
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
 /obj/item/slimecross/burning/oil/proc/boom()
-	playsound(get_turf(src), 'sound/effects/explosion2.ogg', 200, 1)
-	for(var/mob/living/M in range(3,get_turf(src)))
+	var/turf/T = get_turf(src)
+	playsound(T, 'sound/effects/explosion2.ogg', 200, 1)
+	for(var/mob/living/M in range(3, T))
+		new /obj/effect/temp_visual/explosion(get_turf(M))
 		M.ex_act(EXPLODE_HEAVY)
 	qdel(src)
 
