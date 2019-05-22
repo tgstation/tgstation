@@ -601,3 +601,9 @@
 	id = "pax"
 	results = list("pax" = 3)
 	required_reagents  = list("mindbreaker" = 1, "synaptizine" = 1, "water" = 1)
+
+/datum/chemical_reaction/itching_powder
+	name = "Itching Powder"
+	id = "itching_powder"
+	results = list("itching_powder" = 3)
+	required_reagents = list("welding_fuel" = 1, "ammonia" = 1, "charcoal" = 1)
