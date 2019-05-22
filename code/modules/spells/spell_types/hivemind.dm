@@ -516,7 +516,7 @@
 		if(target.is_real_hivehost())
 			continue
 		if(prob(20))
-			var/text = pick(";HELP!","I'm losing control of the situation!!","Get me outta here!")
+			var/text = pick(":h Help!",":h Run!",":h They're here!",":h Get out!",":h Hide!",":h Kill them!")
 			target.say(text, forced = "panic")
 		var/effect = rand(1,4)
 		switch(effect)
