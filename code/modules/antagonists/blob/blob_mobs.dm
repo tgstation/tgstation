@@ -271,7 +271,7 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()
 	if(. && isliving(target) && overmind)
-		overmind.blobstrain.blobbernaut_attack(target)
+		overmind.blobstrain.blobbernaut_attack(target, src)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()

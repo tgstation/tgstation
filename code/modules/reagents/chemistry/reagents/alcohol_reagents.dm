@@ -1764,14 +1764,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/L)
 	..()
 	if(L.IsSleeping())
-		if(L.bruteloss && L.fireloss) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
+		if(L.getBruteLoss() && L.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
 			if(prob(50))
 				L.adjustBruteLoss(-0.25)
 			else
 				L.adjustFireLoss(-0.25)
-		else if(L.bruteloss && !L.fireloss) //If you have only one, it still heals but not as well.
+		else if(L.getBruteLoss()) //If you have only one, it still heals but not as well.
 			L.adjustBruteLoss(-0.2)
-		else if(!L.bruteloss && L.fireloss)
+		else if(L.getFireLoss())
 			L.adjustFireLoss(-0.2)
 
 /datum/reagent/consumable/ethanol/kamikaze
