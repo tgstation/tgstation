@@ -10,7 +10,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 2
 	var/stage = EMPTY
-	var/list/obj/item/reagent_containers/glass/beakers = list()
+	var/list/obj/item/reagent_containers/beakers = list()
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
 	var/list/banned_containers = list(/obj/item/reagent_containers/glass/beaker/bluespace) //Containers to exclude from specific grenade subtypes
 	var/affected_area = 3
@@ -31,10 +31,14 @@
 	..()
 	if(user.can_see_reagents())
 		if(beakers.len)
-			to_chat(user, "<span class='notice'>You scan the grenade and detect the following reagents:</span>")
-			for(var/obj/item/reagent_containers/glass/G in beakers)
-				for(var/datum/reagent/R in G.reagents.reagent_list)
-					to_chat(user, "<span class='notice'>[R.volume] units of [R.name] in the [G.name].</span>")
+			to_chat(user, "<span class='notice'>You scan the grenade and detect the following objects:</span>")
+			for(var/obj/item/reagent_containers/G in beakers)
+				to_chat(user, "<span class='notice'>A [G.name]. It contains:.</span>")
+				if(G.reagents.reagent_list.len)			
+					for(var/datum/reagent/R in G.reagents.reagent_list)
+						to_chat(user, "<span class='notice'>[R.volume] units of [R.name].</span>")
+				else
+					to_chat(user, "<span class='notice'>Nothing.</span>")
 			if(beakers.len == 1)
 				to_chat(user, "<span class='notice'>You detect no second beaker in the grenade.</span>")
 		else
@@ -43,7 +47,7 @@
 		if(beakers.len == 2 && beakers[1].name == beakers[2].name)
 			to_chat(user, "<span class='notice'>You see two [beakers[1].name]s inside the grenade.</span>")
 		else
-			for(var/obj/item/reagent_containers/glass/G in beakers)
+			for(var/obj/item/reagent_containers/G in beakers)
 				to_chat(user, "<span class='notice'>You see a [G.name] inside the grenade.</span>")
 
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
@@ -182,7 +186,7 @@
 		return
 
 	var/list/datum/reagents/reactants = list()
-	for(var/obj/item/reagent_containers/glass/G in beakers)
+	for(var/obj/item/reagent_containers/G in beakers)
 		reactants += G.reagents
 
 	var/turf/detonation_turf = get_turf(src)
@@ -318,7 +322,12 @@
 		addtimer(CALLBACK(src, .proc/prime), det_time)
 	log_game("A grenade detonated at [AREACOORD(DT)]")
 
-
+/obj/item/grenade/chem_grenade/botany //Intended for making plants explode. Kinda sorta replaces seperated chemicals.
+	name = "botanical grenade"
+	desc = "A custom made grenade that can also use plants matter due to its integrated grinder."
+	casedesc = "This casing accepts both plants and beakers."
+	icon_state = "botg"
+	allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/food/snacks/grown)
 
 
 
