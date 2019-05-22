@@ -141,7 +141,7 @@
 /obj/item/disk/surgery/debug/Initialize()
 	. = ..()
 	surgeries = list()
-	var/list/req_tech_surgeries = sybtypesof(/datum/surgery)
+	var/list/req_tech_surgeries = subtypesof(/datum/surgery)
 		for(var/i in req_tech_surgeries)
 			var/datum/surgery/beep = i
 			if(beep.requires_tech)
