@@ -22,12 +22,6 @@
 					healing_step_type, //hehe cheeky
 					/datum/surgery_step/close)
 
-
-/datum/surgery/healing/can_start(mob/user, mob/living/carbon/target)
-	if(type == /datum/surgery/healing) //forgive me father for I have sinned
-		return FALSE
-	return ..()
-
 /datum/surgery_step/heal
 	name = "repair body"
 	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
