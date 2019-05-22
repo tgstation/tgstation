@@ -1869,6 +1869,9 @@
 	if(prob(30) && M.mobility_flags & MOBILITY_USE)
 		to_chat(M, "You scratch yourself.")
 		M.take_bodypart_damage(0.2 * REM)
+		. = 1
+	else
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "itch", /datum/mood_event/itching)	
 	if(prob(3))
 		M.reagents.add_reagent("histamine",rand(1,3))
 		M.reagents.remove_reagent("itching_powder",1.2)
