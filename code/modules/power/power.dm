@@ -156,39 +156,29 @@
 //returns all the cables WITHOUT a powernet in neighbors turfs,
 //pointing towards the turf the machine is located at
 /obj/machinery/power/proc/get_connections()
-
 	. = list()
-
-	var/cdir
 	var/turf/T
 
 	for(var/card in GLOB.cardinals)
 		T = get_step(loc,card)
-		cdir = get_dir(T,loc)
 
 		for(var/obj/structure/cable/C in T)
 			if(C.powernet)
 				continue
-			if(C.d1 == cdir || C.d2 == cdir)
-				. += C
+			. += C
 	return .
 
 //returns all the cables in neighbors turfs,
 //pointing towards the turf the machine is located at
 /obj/machinery/power/proc/get_marked_connections()
-
 	. = list()
-
-	var/cdir
 	var/turf/T
 
 	for(var/card in GLOB.cardinals)
 		T = get_step(loc,card)
-		cdir = get_dir(T,loc)
 
 		for(var/obj/structure/cable/C in T)
-			if(C.d1 == cdir || C.d2 == cdir)
-				. += C
+			. += C
 	return .
 
 //returns all the NODES (O-X) cables WITHOUT a powernet in the turf the machine is located at
@@ -197,8 +187,7 @@
 	for(var/obj/structure/cable/C in loc)
 		if(C.powernet)
 			continue
-		if(C.d1 == 0) // the cable is a node cable
-			. += C
+		. += C
 	return .
 
 ///////////////////////////////////////////
@@ -209,7 +198,8 @@
 // returns a list of all power-related objects (nodes, cable, junctions) in turf,
 // excluding source, that match the direction d
 // if unmarked==1, only return those with no powernet
-/proc/power_list(turf/T, source, d, unmarked=0, cable_only = 0)
+// search_dir is the direction that this is being searched from. null is a valid option.
+/proc/power_list(turf/T, source, unmarked = FALSE, cable_only = FALSE, search_dir = null)
 	. = list()
 
 	for(var/AM in T)
@@ -222,38 +212,39 @@
 				continue		// exclude APCs which have powernet=0
 
 			if(!unmarked || !P.powernet)		//if unmarked=1 we only return things with no powernet
-				if(d == 0)
-					. += P
+				.[P] = null
 
 		else if(istype(AM, /obj/structure/cable))
 			var/obj/structure/cable/C = AM
-
 			if(!unmarked || !C.powernet)
-				if(C.d1 == d || C.d2 == d)
-					. += C
+				.[C] = turn(search_dir, 180) //invert the searching direction to get the direction connections should be ignored when searching
 	return .
 
 
 
 
 //remove the old powernet and replace it with a new one throughout the network.
-/proc/propagate_network(obj/O, datum/powernet/PN)
+/proc/propagate_network(obj/O, datum/powernet/PN, use_old_if_found = FALSE)
 	var/list/worklist = list()
 	var/list/found_machines = list()
 	var/index = 1
 	var/obj/P = null
+	var/old_found = FALSE
 
-	worklist+=O //start propagating from the passed object
+	worklist |= O //start propagating from the passed object
 
-	while(index<=worklist.len) //until we've exhausted all power objects
+	while(index <= worklist.len) //until we've exhausted all power objects
 		P = worklist[index] //get the next power object found
 		index++
 
 		if( istype(P, /obj/structure/cable))
 			var/obj/structure/cable/C = P
 			if(C.powernet != PN) //add it to the powernet, if it isn't already there
+				if(use_old_if_found && !old_found)
+					old_found = TRUE
+					PN = C.powernet
 				PN.add_cable(C)
-			worklist |= C.get_connections() //get adjacents power objects, with or without a powernet
+			worklist |= C.get_connections(FALSE, worklist[P]) //get adjacents power objects, with or without a powernet
 
 		else if(P.anchored && istype(P, /obj/machinery/power))
 			var/obj/machinery/power/M = P
@@ -370,15 +361,13 @@
 // Misc.
 ///////////////////////////////////////////////
 
-
-// return a knot cable (O-X) if one is present in the turf
-// null if there's none
+// return a cable if there's one on the turf, null if there isn't one
 /turf/proc/get_cable_node()
 	if(!can_have_cabling())
 		return null
 	for(var/obj/structure/cable/C in src)
-		if(C.d1 == 0)
-			return C
+		C.update_icon()
+		return C
 	return null
 
 /area/proc/get_apc()

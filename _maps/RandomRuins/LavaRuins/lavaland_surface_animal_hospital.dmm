@@ -354,7 +354,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "aX" = (
-/obj/item/stack/cable_coil/random,
+/obj/item/stack/cable_coil,
 /obj/item/stack/sheet/mineral/titanium{
 	amount = 30
 	},
