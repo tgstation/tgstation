@@ -245,12 +245,9 @@ Burning extracts:
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
 /obj/item/slimecross/burning/oil/proc/boom()
-	user.visible_message("<span class='danger'>[src] creates a powerful shockwave!</span>")
 	playsound(get_turf(src), 'sound/effects/explosion2.ogg', 200, 1)
-	for(var/mob/living/M in range(4,get_turf(user)))
-		if(M != user)
+	for(var/mob/living/M in range(3,get_turf(src)))
 			M.ex_act(EXPLODE_LIGHT)
-	..()
 	qdel(src)
 
 /obj/item/slimecross/burning/black
