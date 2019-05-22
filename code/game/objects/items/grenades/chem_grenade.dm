@@ -328,6 +328,7 @@
 	casedesc = "This casing accepts both plants and beakers."
 	icon_state = "botg"
 	allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/food/snacks/grown)
+	var/list/banned_containers = list(/obj/item/reagent_containers/glass/beaker/bluespace, /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate)
 
 
 
