@@ -42,6 +42,7 @@ if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then
         rm -rf "$HOME/MariaDB"
         mkdir -p "$HOME/MariaDB"
         cp /usr/lib/i386-linux-gnu/libmariadb.so.2 $HOME/MariaDB/
+        cp /tmp/extract/usr/include $HOME/MariaDB/
     fi
 
     cd artifacts
