@@ -10,7 +10,8 @@
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
 	var/just_a_cook = FALSE
-
+	var/old_grab_state = null
+	
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
 	just_a_cook = TRUE
@@ -128,8 +129,9 @@
 		add_to_streak("G",D)
 		if(check_streak(A,D)) //doing combos is prioritized over upgrading grabs
 			return TRUE
+		old_grab_state = A.grab_state 
 		D.grabbedby(A, 1)
-		if(A.grab_state == GRAB_PASSIVE)
+		if(old_grab_state == GRAB_PASSIVE)
 			D.drop_all_held_items()
 			A.grab_state = GRAB_AGGRESSIVE //Instant agressive grab if on grab intent
 			log_combat(A, D, "grabbed", addition="aggressively")
