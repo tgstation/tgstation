@@ -41,9 +41,10 @@ if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then
         echo "Setting up MariaDB."
         rm -rf "$HOME/MariaDB"
         mkdir -p "$HOME/MariaDB"
+		mkdir -p "$HOME/MariaDB/include"
         cp /usr/lib/i386-linux-gnu/libmariadb.so.2 $HOME/MariaDB/
 		ln -s $HOME/MariaDB/libmariadb.so.2 $HOME/MariaDB/libmariadb.so
-        cp -r /usr/include/mariadb $HOME/MariaDB/
+        cp -r /usr/include/mariadb $HOME/MariaDB/include/
     fi
 
     cd artifacts
