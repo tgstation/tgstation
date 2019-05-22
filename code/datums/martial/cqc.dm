@@ -120,6 +120,8 @@
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(!can_use(A))
+		return FALSE
 	if(A==D)
 		return FALSE //prevents grabbing yourself
 	if(A.a_intent == INTENT_GRAB)
@@ -133,10 +135,7 @@
 			log_combat(A, D, "grabbed", addition="aggressively")
 			D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 								"<span class='userdanger'>[A] violently grabs you!</span>")
-	else
-		D.grabbedby(A, 1)
-	return TRUE
-
+		return TRUE
 /datum/martial_art/cqc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!can_use(A))
 		return FALSE
