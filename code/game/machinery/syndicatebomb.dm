@@ -22,6 +22,7 @@
 
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
+	var/defused = FALSE		//has the bomb just been stopped?
 	var/obj/item/bombcore/payload = /obj/item/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE	//delay wire pulsed?
@@ -46,11 +47,12 @@
 		..()
 
 /obj/machinery/syndicatebomb/process()
-	if(!active)
+	if(!active && defused)
 		STOP_PROCESSING(SSfastprocess, src)
 		detonation_timer = null
 		next_beep = null
 		countdown.stop()
+		defused = FALSE
 		if(payload in src)
 			payload.defuse()
 		return
@@ -278,8 +280,7 @@
 	qdel(src)
 
 /obj/item/bombcore/proc/defuse()
-//Note: 	Because of how var/defused is used you shouldn't override this UNLESS you intend to set the var to 0 or
-//			otherwise remove the core/reset the wires before the end of defuse(). It will repeatedly be called otherwise.
+//Note: 	the machine's defusal is mostly done from the wires code, this is here if you want the core itself to do anything.
 
 ///Bomb Core Subtypes///
 

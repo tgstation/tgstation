@@ -81,6 +81,7 @@
 				B.active = FALSE
 				B.delayedlittle = FALSE
 				B.delayedbig = FALSE
+				B.defused = TRUE
 				B.update_icon()
 
 /datum/wires/syndicatebomb/proc/tell_admins(obj/machinery/syndicatebomb/B)
