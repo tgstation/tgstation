@@ -400,10 +400,13 @@
 			if(3)
 				M.emote("sneeze")
 			if(4)
-				if(prob(75) && M.mobility_flags & MOBILITY_USE)
-					to_chat(M, "You scratch yourself violently.")
-					M.take_bodypart_damage(2 * REM)
-					. = 1
+				if(prob(75))
+					if(M.mobility_flags & MOBILITY_USE)
+						to_chat(M, "You scratch yourself violently.")
+						M.take_bodypart_damage(2 * REM)
+						. = 1
+					else
+						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "itch", /datum/mood_event/itching)
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
