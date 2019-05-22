@@ -140,7 +140,7 @@
 		/datum/reagent/napalm,\
 		/datum/reagent/firefighting_foam,\
 		/datum/reagent/consumable/mayonnaise,\
-		/datum/reagent/toxin/itching_powder,\
+		/datum/reagent/itching_powder,\
 		/datum/reagent/toxin/cyanide,\
 		/datum/reagent/toxin/heparin,\
 		/datum/reagent/medicine/pen_acid,\
