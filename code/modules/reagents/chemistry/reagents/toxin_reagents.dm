@@ -400,9 +400,9 @@
 			if(3)
 				M.emote("sneeze")
 			if(4)
-				if(prob(75))
-					to_chat(M, "You scratch at an itch.")
-					M.adjustBruteLoss(2*REM, 0)
+				if(prob(75) && M.mobility_flags & MOBILITY_USE)
+					to_chat(M, "You scratch yourself violently.")
+					M.take_bodypart_damage(2 * REM)
 					. = 1
 	..()
 
@@ -494,39 +494,6 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 	taste_description = "bad cooking"
-
-/datum/reagent/toxin/itching_powder
-	name = "Itching Powder"
-	id = "itching_powder"
-	description = "A powder that induces itching upon contact with the skin. Causes the victim to scratch at their itches and has a very low chance to decay into Histamine."
-	silent_toxin = TRUE
-	reagent_state = LIQUID
-	color = "#C8C8C8"
-	metabolization_rate = 0.4 * REAGENTS_METABOLISM
-	toxpwr = 0
-
-/datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent("itching_powder", reac_volume)
-
-/datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
-	if(prob(15))
-		to_chat(M, "You scratch at your head.")
-		M.adjustBruteLoss(0.2*REM, 0)
-		. = 1
-	if(prob(15))
-		to_chat(M, "You scratch at your leg.")
-		M.adjustBruteLoss(0.2*REM, 0)
-		. = 1
-	if(prob(15))
-		to_chat(M, "You scratch at your arm.")
-		M.adjustBruteLoss(0.2*REM, 0)
-		. = 1
-	if(prob(3))
-		M.reagents.add_reagent("histamine",rand(1,3))
-		M.reagents.remove_reagent("itching_powder",1.2)
-		return
-	..()
 
 /datum/reagent/toxin/initropidril
 	name = "Initropidril"
