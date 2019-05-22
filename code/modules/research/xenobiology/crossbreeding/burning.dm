@@ -27,8 +27,14 @@ Burning extracts:
 	qdel(src)
 	return
 
+/obj/item/slimecross/burning/examine(mob/user)
+    ..()
+    if(effect_desc)
+        to_chat(user, "<span class='notice'>[effect_desc]</span>")
+
 /obj/item/slimecross/burning/grey
 	colour = "grey"
+	effect_desc = "It creates a hungry and speedy slime that will love you forever."
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
 	var/mob/living/simple_animal/slime/S = new(get_turf(user),"grey")
@@ -40,6 +46,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/orange
 	colour = "orange"
+	effect_desc = "Expels pepperspray in a radius when activated, it can also effect you!"
 
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] boils over with a caustic gas!</span>")
@@ -53,6 +60,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/purple
 	colour = "purple"
+	effect_desc = "A clump of invigorating gel is created after use, it has healing properties and makes you feel good."
 
 /obj/item/slimecross/burning/purple/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] fills with a bubbling liquid!</span>")
@@ -61,6 +69,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/blue
 	colour = "blue"
+	effect_desc = "Freezes the floor around you and chills nearby people."
 
 /obj/item/slimecross/burning/blue/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] flash-freezes the area!</span>")
@@ -74,6 +83,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/metal
 	colour = "metal"
+	effect_desc = "Instantly destroys walls around you."
 
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
@@ -84,6 +94,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/yellow
 	colour = "yellow"
+	effect_desc = "Electrocutes people near you."
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] explodes into an electrical field!</span>")
@@ -100,6 +111,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/darkpurple
 	colour = "dark purple"
+	effect_desc = "Creates a cloud of plasma."
 
 /obj/item/slimecross/burning/darkpurple/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] sublimates into a cloud of plasma!</span>")
@@ -109,6 +121,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/darkblue
 	colour = "dark blue"
+	effect_desc = "Expels a burst of chilling smoke while also filling you with cryoxadone."
 
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] releases a burst of chilling smoke!</span>")
@@ -122,6 +135,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/silver
 	colour = "silver"
+	effect_desc = "Creates a few pieces of slime jelly laced food."
 
 /obj/item/slimecross/burning/silver/do_effect(mob/user)
 	var/amount = rand(3,6)
@@ -139,6 +153,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/bluespace
 	colour = "bluespace"
+	effect_desc = "Teleports anyone directly next to you."
 
 /obj/item/slimecross/burning/bluespace/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] sparks, and lets off a shockwave of bluespace energy!</span>")
@@ -151,6 +166,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/sepia
 	colour = "sepia"
+	effect_desc = "Turns into a special camera that rewinds time when used."
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
@@ -159,6 +175,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/cerulean
 	colour = "cerulean"
+	effect_desc = "Produces a extract cloning potion, which copies an extract, as well as its extra uses."
 
 /obj/item/slimecross/burning/cerulean/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] produces a potion!</span>")
@@ -167,6 +184,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/pyrite
 	colour = "pyrite"
+	effect_desc = "Shatters all lights in the current room."
 
 /obj/item/slimecross/burning/pyrite/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] releases a colorful wave of energy, which shatters the lights!</span>")
@@ -180,6 +198,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/red
 	colour = "red"
+	effect_desc = "Like a normal red extract, except slimes will attack their friends as well."
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] pulses a hazy red aura for a moment, which wraps around [user]!</span>")
@@ -196,6 +215,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/green
 	colour = "green"
+	effect_desc = "The user gets a dull arm blade in the hand it is used in."
 
 /obj/item/slimecross/burning/green/do_effect(mob/user)
 	var/which_hand = "l_hand"
@@ -218,6 +238,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/pink
 	colour = "pink"
+	effect_desc = "Creates a beaker of synthpax."
 
 /obj/item/slimecross/burning/pink/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shrinks into a small, gel-filled pellet!</span>")
@@ -226,6 +247,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/gold
 	colour = "gold"
+	effect_desc = "Creates a gank squad of monsters that are friendly to the user."
 
 /obj/item/slimecross/burning/gold/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] shudders violently, and summons an army for [user]!</span>")
@@ -239,6 +261,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/oil
 	colour = "oil"
+	effect_desc = "Creates a explosion."
 
 /obj/item/slimecross/burning/oil/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] begins to shake with rapidly increasing force!</span>")
@@ -250,6 +273,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/black
 	colour = "black"
+	effect_desc = "Transforms the user into a slime, they can transform back at will and do not lose any items."
 
 /obj/item/slimecross/burning/black/do_effect(mob/user)
 	var/mob/living/L = user
@@ -264,6 +288,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/lightpink
 	colour = "light pink"
+	effect_desc = "Paxes everyone in sight."
 
 /obj/item/slimecross/burning/lightpink/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] lets off a hypnotizing pink glow!</span>")
@@ -273,6 +298,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/adamantine
 	colour = "adamantine"
+	effect_desc = "Creates a mighty adamantine shield."
 
 /obj/item/slimecross/burning/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] crystallizes into a large shield!</span>")
@@ -281,6 +307,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/rainbow
 	colour = "rainbow"
+	effect_desc = "Creates the Rainbow Knife, a kitchen knife that deals random types of damage."
 
 /obj/item/slimecross/burning/rainbow/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] flattens into a glowing rainbow blade.</span>")

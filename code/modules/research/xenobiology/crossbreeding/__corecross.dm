@@ -2,7 +2,7 @@
 //////////     SLIME CROSSBREEDS    //////////
 //////////////////////////////////////////////
 // A system of combining two extract types. //
-// Performed by feeding a slime 20 of an    //
+// Performed by feeding a slime 10 of an    //
 // extract color.                           //
 //////////////////////////////////////////////
 /*==========================================*\
@@ -31,6 +31,7 @@ To add a crossbreed:
 	icon_state = "base"
 	var/colour = "null"
 	var/effect = "null"
+	var/effect_desc = "null"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
