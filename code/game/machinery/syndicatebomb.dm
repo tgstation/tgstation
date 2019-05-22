@@ -11,6 +11,7 @@
 	density = FALSE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	speed_process = TRUE
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 
@@ -22,7 +23,6 @@
 
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
-	var/defused = FALSE		//has the bomb just been stopped?
 	var/obj/item/bombcore/payload = /obj/item/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE	//delay wire pulsed?
@@ -47,12 +47,11 @@
 		..()
 
 /obj/machinery/syndicatebomb/process()
-	if(!active && defused)
+	if(!active)
 		STOP_PROCESSING(SSfastprocess, src)
 		detonation_timer = null
 		next_beep = null
 		countdown.stop()
-		defused = FALSE
 		if(payload in src)
 			payload.defuse()
 		return
@@ -88,6 +87,7 @@
 		payload = new payload(src)
 	update_icon()
 	countdown = new(src)
+	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/syndicatebomb/Destroy()
 	QDEL_NULL(wires)
@@ -301,6 +301,7 @@
 		holder.explode_now = FALSE
 		holder.update_icon()
 		holder.updateDialog()
+		STOP_PROCESSING(SSfastprocess, holder)
 
 /obj/item/bombcore/training/detonate()
 	var/obj/machinery/syndicatebomb/holder = loc
