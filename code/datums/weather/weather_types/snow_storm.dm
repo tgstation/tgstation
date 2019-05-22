@@ -32,3 +32,14 @@
 	barometer_predictable = FALSE
 	area_type = /area
 	protected_areas = list(/area/shuttle)
+	weather_message = "<span class='userdanger'><i>Harsh winds pick up as dense snow begins to fall around you!</i></span>"
+	end_message = "<span class='boldannounce'>The snowfall dies down.</span>"
+
+
+/datum/weather/snow_storm/freeze/telegraph()
+	..()
+	priority_announce("Incoming frozen vapors", "Anomaly Alert")
+
+/datum/weather/acid_rain/cloud/end()
+	..()
+	priority_announce("The frozen vapors have passed", "Anomaly Alert")

@@ -45,8 +45,7 @@
 		L.rad_act(20)
 
 /datum/weather/rad_storm/end()
-	if(..())
-		return
+	..()
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
 	status_alarm(FALSE)
 
@@ -67,3 +66,13 @@
 
 /datum/weather/rad_storm/cloud
 	protected_areas = list(/area/shuttle)
+
+/datum/weather/rad_storm/cloud/telegraph()
+	..()
+	status_alarm(TRUE)
+	priority_announce("Incoming radiation cloud", "Anomaly Alert")
+
+/datum/weather/rad_storm/cloud/end()
+	..()
+	priority_announce("The radiation cloud has passed.", "Anomaly Alert")
+	status_alarm(FALSE)

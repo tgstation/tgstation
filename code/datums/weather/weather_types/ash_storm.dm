@@ -117,3 +117,14 @@ datum/weather/ash_storm/cloud
 	barometer_predictable = FALSE
 	area_type = /area
 	protected_areas = list(/area/shuttle)
+	telegraph_message = "<span class='boldwarning'>Embers begin to swirl around you.</span>"
+	weather_message = "<span class='userdanger'><i>Smoldering clouds of scorching ash billow down around you!</i></span>"
+	end_message = "<span class='boldannounce'>The last of the ash falls and settles.</span>"
+
+/datum/weather/ash_storm/cloud/telegraph()
+	..()
+	priority_announce("Incoming pyroclastic cloud", "Anomaly Alert")
+
+/datum/weather/ash_storm/cloud/end()
+	..()
+	priority_announce("The pyroclastic cloud has passed", "Anomaly Alert")

@@ -26,9 +26,7 @@
 
 
 /datum/weather/acid_rain/weather_act(mob/living/L)
-//	var/resist = L.getarmor(null, "acid")
-//	if(prob(max(0,100-resist)))
-	L.acid_act(20,20)
+	L.acid_act(100,1)
 
 /datum/weather/acid_rain/cloud
 	target_trait = ZTRAIT_STATION
@@ -36,3 +34,15 @@
 	barometer_predictable = FALSE
 	area_type = /area
 	protected_areas = list(/area/shuttle)
+	telegraph_message = "<span class='boldwarning'>Droplets of acid begin to drip and sizzle around you.</span>"
+	weather_message = "<span class='userdanger'><i>Acidic rain pours down around you!</i></span>"
+	end_message = "<span class='boldannounce'>The downpour gradually slows and stops.</span>"
+
+
+/datum/weather/acid_rain/cloud/telegraph()
+	..()
+	priority_announce("Incoming acid cloud", "Anomaly Alert")
+
+/datum/weather/acid_rain/cloud/end()
+	..()
+	priority_announce("The acid cloud has passed", "Anomaly Alert")

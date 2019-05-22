@@ -42,3 +42,11 @@
 /datum/weather/floor_is_lava/molten
 	target_trait = ZTRAIT_STATION
 	protected_areas = list(/area/shuttle)
+
+/datum/weather/floor_is_lava/molten/telegraph()
+	..()
+	priority_announce("Incoming molten heat", "Anomaly Alert")
+
+/datum/weather/floor_is_lava/molten/end()
+	..()
+	priority_announce("The molten heat has passed", "Anomaly Alert")
