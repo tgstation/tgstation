@@ -1852,3 +1852,26 @@
 /datum/reagent/tranquility/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)
+
+/datum/reagent/itching_powder
+	name = "Itching Powder"
+	id = "itching_powder"
+	description = "A powder that induces itching upon contact with the skin. Causes the victim to scratch at their itches and has a very low chance to decay into Histamine."
+	reagent_state = LIQUID
+	color = "#C8C8C8"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		M.reagents.add_reagent("itching_powder", reac_volume)
+
+/datum/reagent/itching_powder/on_mob_life(mob/living/carbon/M)
+	if(prob(30) && M.mobility_flags & MOBILITY_USE)
+		to_chat(M, "You scratch yourself.")
+		M.take_bodypart_damage(0.2 * REM)
+	if(prob(3))
+		M.reagents.add_reagent("histamine",rand(1,3))
+		M.reagents.remove_reagent("itching_powder",1.2)
+		return
+	..()
+	
