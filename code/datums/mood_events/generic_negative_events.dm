@@ -177,6 +177,11 @@
 
 /datum/mood_event/sad_empath/add_effects(mob/sadtarget)
 	description = "<span class='warning'>[sadtarget.name] seems upset...</span>\n"
+	
+/datum/mood_event/itching
+	description = "<span class='boldwarning'>I really want to scratch that itch but can't!</span>\n"
+	mood_change = -4
+	timeout = 30 SECONDS
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse
