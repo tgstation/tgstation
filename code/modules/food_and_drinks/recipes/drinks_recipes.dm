@@ -533,11 +533,18 @@
 	required_reagents = list("hooch" = 1, "absinthe" = 1, "manlydorf" = 1, "syndicatebomb" = 1)
 	mix_message = "<span class='warning'>The mixture turns to a sickening froth.</span>"
 
+/datum/chemical_reaction/lemonade
+	name = "Lemonade"
+	id = "lemonade"
+	results = list("lemonade" = 10)
+	required_reagents = list("lemonjuice" = 1, "water" = 1, "sugar" = 1)
+	mix_message = "You're suddenly reminded of home."
+
 /datum/chemical_reaction/arnold_palmer
 	name = "Arnold Palmer"
 	id = "arnold_palmer"
 	results = list("arnold_palmer" = 2)
-	required_reagents = list("tea" = 1, "lemonjuice" = 1)
+	required_reagents = list("tea" = 1, "lemonade" = 1)
 	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
 
 /datum/chemical_reaction/chocolate_milk
