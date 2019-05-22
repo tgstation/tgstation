@@ -109,21 +109,20 @@
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(A==D)
-		return 0 //prevents grabbing yourself
+		return FALSE //prevents grabbing yourself
 	if(A.a_intent == INTENT_GRAB)
 		add_to_streak("G",D)
 		if(check_streak(A,D)) //doing combos is prioritized over upgrading grabs
-			return 1
+			return TRUE
+		old_grab_state = A.grab_state 
 		D.grabbedby(A, 1)
-		if(A.grab_state == GRAB_PASSIVE)
+		if(old_grab_state == GRAB_PASSIVE)
 			D.drop_all_held_items()
 			A.grab_state = GRAB_AGGRESSIVE //Instant agressive grab if on grab intent
 			log_combat(A, D, "grabbed", addition="aggressively")
 			D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 								"<span class='userdanger'>[A] violently grabs you!</span>")
-	else
-		D.grabbedby(A, 1)
-	return 1
+		return TRUE
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
