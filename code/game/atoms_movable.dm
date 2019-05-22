@@ -208,52 +208,6 @@
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
 // All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direct=0)
-	. = FALSE
-	if(!newloc || newloc == loc)
-		return
-
-	if(!direct)
-		direct = get_dir(src, newloc)
-	setDir(direct)
-
-	if(!loc.Exit(src, newloc))
-		return
-
-	if(!newloc.Enter(src, src.loc))
-		return
-
-	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
-		return
-
-	// Past this is the point of no return
-	var/atom/oldloc = loc
-	var/area/oldarea = get_area(oldloc)
-	var/area/newarea = get_area(newloc)
-	loc = newloc
-	. = TRUE
-	oldloc.Exited(src, newloc)
-	if(oldarea != newarea)
-		oldarea.Exited(src, newloc)
-
-	for(var/i in oldloc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		thing.Uncrossed(src)
-
-	newloc.Entered(src, oldloc)
-	if(oldarea != newarea)
-		newarea.Entered(src, oldloc)
-
-	for(var/i in loc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		thing.Crossed(src)
-//
-////////////////////////////////////////
-
 /atom/movable/Move(atom/newloc, direct)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
@@ -265,7 +219,48 @@
 
 	if(loc != newloc)
 		if (!(direct & (direct - 1))) //Cardinal move
-			. = ..()
+			. = FALSE
+			if(!newloc || newloc == loc)
+				return
+
+			if(!direct)
+				direct = get_dir(src, newloc)
+				setDir(direct)
+
+			if(!loc.Exit(src, newloc))
+				return
+
+			if(!newloc.Enter(src, src.loc))
+				return
+
+			if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+				return
+
+			// Past this is the point of no return
+			oldloc = loc
+			var/area/oldarea = get_area(oldloc)
+			var/area/newarea = get_area(newloc)
+			loc = newloc
+			. = TRUE
+			oldloc.Exited(src, newloc)
+			if(oldarea != newarea)
+				oldarea.Exited(src, newloc)
+
+			for(var/i in oldloc)
+				if(i == src) // Multi tile objects
+					continue
+				var/atom/movable/thing = i
+				thing.Uncrossed(src)
+
+			newloc.Entered(src, oldloc)
+			if(oldarea != newarea)
+				newarea.Entered(src, oldloc)
+
+			for(var/i in loc)
+				if(i == src) // Multi tile objects
+					continue
+				var/atom/movable/thing = i
+				thing.Crossed(src)
 		else //Diagonal move, split it into cardinal moves
 			moving_diagonally = FIRST_DIAG_STEP
 			var/first_step_dir
