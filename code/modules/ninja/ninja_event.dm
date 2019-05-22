@@ -15,6 +15,7 @@ Contents:
 	max_occurrences = 1
 	earliest_start = 40 MINUTES
 	min_players = 15
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/ghost_role/ninja
 	var/success_spawn = 0

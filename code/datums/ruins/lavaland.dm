@@ -42,7 +42,6 @@
 	However, all the inhabitants seem to do is grow drugs and guns."
 	suffix = "lavaland_surface_seed_vault.dmm"
 	cost = 10
-	always_place = TRUE
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/ash_walker
@@ -70,7 +69,6 @@
 	Seem very intent on research and individual liberty, and also geology based naming?"
 	cost = 20
 	suffix = "lavaland_surface_golem_ship.dmm"
-	always_place = TRUE
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/animal_hospital

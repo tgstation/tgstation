@@ -5,7 +5,7 @@
 	weight = 7
 	max_occurrences = 1
 	min_players = 5
-
+	gamemode_blacklist = list("disaster")
 
 /datum/round_event/ghost_role/sentient_disease
 	role_name = "sentient disease"
