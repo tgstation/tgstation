@@ -324,7 +324,7 @@
 
 /obj/item/grenade/chem_grenade/botany //Intended for making plants explode. Kinda sorta replaces seperated chemicals.
 	name = "botanical grenade"
-	desc = "A custom made grenade that can also use plants matter due to its integrated grinder."
+	desc = "A custom made grenade that can also use plant matter due to its integrated grinder."
 	casedesc = "This casing accepts both plants and beakers."
 	icon_state = "botg"
 	allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/food/snacks/grown)
