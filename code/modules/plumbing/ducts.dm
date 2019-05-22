@@ -1,3 +1,11 @@
+/*
+Make adjacency one proc and check conditions in one spot
+
+
+
+
+*/
+
 /obj/machinery/duct
 	name = "fluid duct"
 	icon = 'icons/obj/fluid_ducts.dmi'
@@ -100,10 +108,27 @@
 				create_duct()
 				duct.add_plumber(P, opposite_dir)
 
+/obj/machinery/duct/proc/disconnect_duct()
+	active = FALSE
+	duct.destroy_network()
+	for(var/A in get_adjacent_ducts())
+		var/obj/machinery/duct/D = A
+		D.attempt_connect()
 
 /obj/machinery/duct/proc/create_duct()
 	duct = new()
 	duct.add_duct(src)
+
+/obj/machinery/duct/proc/get_adjacent_ducts()
+	var/list/adjacents = list()
+	for(var/A in GLOB.cardinals)
+		if(A & connects)
+			for(var/obj/machinery/duct/D in get_step(src, A))
+				if((angle2dir(dir2angle(A) + 180) & D.connects) && D.active)
+					adjacents += D
+	return adjacents
+
+
 
 /datum/ductnet
 	var/list/suppliers = list()
@@ -131,15 +156,22 @@
 	ducts.Add(D.ducts)
 	suppliers.Add(D.suppliers)
 	demanders.Add(D.demanders)
-	for(var/datum/component/plumbing/P in D.suppliers + D.demanders)
+	for(var/A in D.suppliers + D.demanders)
+		var/datum/component/plumbing/P = A
 		for(var/s in P.ducts)
-			P.ducts[s] = src  //tell the plumbing devices from our enemy duct that their connections belong to us now
+			P.ducts[s] = src  //all your ducts are belong to us
 	for(var/A in D.ducts)
 		var/obj/machinery/duct/M = A
 		M.duct = src //forget your old master
 	qdel(D)
 
-
+/datum/ductnet/proc/destroy_network()
+	for(var/A in suppliers + demanders)
+		qdel(A)
+	for(var/A in ducts)
+		var/obj/machinery/duct/D = A
+		D.duct = null
+	qdel(src)
 
 
 /datum/component/plumbing
