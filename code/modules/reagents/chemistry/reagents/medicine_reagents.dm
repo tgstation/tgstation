@@ -822,6 +822,9 @@
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
+		if(method in list(INJECT, INGEST)) //TODO: indicative feedback message that can't be confused with suicidees
+			M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
+			return
 		if(M.suiciding || M.hellbound) //they are never coming back
 			M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
 			return
