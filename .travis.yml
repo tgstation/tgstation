@@ -45,6 +45,7 @@ matrix:
             - g++-7
             - g++-7-multilib
             - libmariadb-client-lgpl-dev:i386
+            - libmariadbd-dev
       cache:
         directories:
           - $HOME/.cargo
