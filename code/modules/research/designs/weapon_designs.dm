@@ -186,6 +186,16 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/botany_grenade
+	name = "Botanical Grenade"
+	desc = "A grenade that allows the use of plant matter in addition to beakers."
+	id = "bot_Grenade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_TITANIUM = 500)
+	build_path = /obj/item/grenade/chem_grenade/botany
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/xray
 	name = "X-ray Laser Gun"
 	desc = "Not quite as menacing as it sounds"
