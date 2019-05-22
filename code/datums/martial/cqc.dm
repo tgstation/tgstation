@@ -19,7 +19,7 @@
 /datum/martial_art/cqc/proc/drop_restraining()
 	restraining = FALSE
 
-/datum/martial_art/cqc/can_use(mob/living/carbon/human/H)
+/datum/martial_art/cqc/can_use(mob/living/carbon/human/H) //this is used to make chef CQC only work is kitchen
 	var/area/A = get_area(H)
 	if(just_a_cook && !(istype(A, /area/crew_quarters/kitchen)))
 		return FALSE
