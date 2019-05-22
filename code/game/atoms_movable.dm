@@ -219,48 +219,36 @@
 
 	if(loc != newloc)
 		if (!(direct & (direct - 1))) //Cardinal move
-			. = FALSE
-			if(!newloc || newloc == loc)
-				return
-
-			if(!direct)
-				direct = get_dir(src, newloc)
-				setDir(direct)
-
-			if(!loc.Exit(src, newloc))
-				return
-
-			if(!newloc.Enter(src, src.loc))
-				return
-
-			if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
-				return
-
 			// Past this is the point of no return
-			oldloc = loc
-			var/area/oldarea = get_area(oldloc)
-			var/area/newarea = get_area(newloc)
-			loc = newloc
-			. = TRUE
-			oldloc.Exited(src, newloc)
-			if(oldarea != newarea)
-				oldarea.Exited(src, newloc)
+			if((newloc != loc) && loc.Exit(src, newloc) && newloc.Enter(src, src.loc) && !(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
+				if(!direct)
+					direct = get_dir(src, newloc)
+					setDir(direct)
 
-			for(var/i in oldloc)
-				if(i == src) // Multi tile objects
-					continue
-				var/atom/movable/thing = i
-				thing.Uncrossed(src)
+				oldloc = loc
+				var/area/oldarea = get_area(oldloc)
+				var/area/newarea = get_area(newloc)
+				loc = newloc
+				. = TRUE
+				oldloc.Exited(src, newloc)
+				if(oldarea != newarea)
+					oldarea.Exited(src, newloc)
 
-			newloc.Entered(src, oldloc)
-			if(oldarea != newarea)
-				newarea.Entered(src, oldloc)
+				for(var/i in oldloc)
+					if(i == src) // Multi tile objects
+						continue
+					var/atom/movable/thing = i
+					thing.Uncrossed(src)
 
-			for(var/i in loc)
-				if(i == src) // Multi tile objects
-					continue
-				var/atom/movable/thing = i
-				thing.Crossed(src)
+				newloc.Entered(src, oldloc)
+				if(oldarea != newarea)
+					newarea.Entered(src, oldloc)
+
+				for(var/i in loc)
+					if(i == src) // Multi tile objects
+						continue
+					var/atom/movable/thing = i
+					thing.Crossed(src)
 		else //Diagonal move, split it into cardinal moves
 			moving_diagonally = FIRST_DIAG_STEP
 			var/first_step_dir
