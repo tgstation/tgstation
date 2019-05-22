@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "removed /datum/mutation/human/proc/on_move in favor of having the chameleon mutation register for a signal"
