@@ -25,7 +25,8 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 	var/sacrifices = 0
 	var/toolbox_points = 0
 	var/prob_success = 2
-	var/chance_increase = 2 //how much prob_success increases each round.
+	var/chance_increase = 1 //how much prob_success increases each round.
+	var/max_chance = 15
 	var/list/upgrades = list()
 	var/list/sacrificed_ckeys = list()
 	var/all_access_toolbox = 0
@@ -33,6 +34,7 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 	var/freeze_beam = 0
 	var/freeze_beam_cooldown = 100
 	var/icon/true_icon = new('icons/oldschool/chaos_overlay.dmi', "chaos_a_overlay")
+	var/list/sacrificed_mobs = list()
 
 /obj/structure/statue/toolbox/New()
 	flags_1 |= NODECONSTRUCT_1
@@ -85,9 +87,13 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 				Holder.regenerate_icons()
 
 		Holder.gib(1, 0, 0)
-	for (var/client/C in GLOB.clients)
-		C << sound('sound/toolbox/toolbox_scream.ogg')
-	to_chat(world, "<span class='userdanger'>The [toolbox_pulled ? "chaos" : "pure"] maiden has been vanquished!</span>")
+	for(var/mob/M in GLOB.player_list)
+		if(istype(M,/mob/dead/new_player))
+			continue
+		to_chat(M, "<span class='userdanger'>The [toolbox_pulled ? "chaos" : "pure"] maiden has been vanquished!</span>")
+	playsound(src, 'sound/toolbox/toolbox_scream.ogg', 50, 0)
+	for(var/datum/mind/mind in sacrificed_mobs)
+		restore_sacrificed_mob(mind)
 	new /obj/effect/gibspawner/human(get_turf(src))
 	..()
 
@@ -132,10 +138,20 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 		obj_integrity = max_integrity
 		sacrifices++
 		toolbox_points++
-		to_chat(world, "<span class='userdanger'>[H] has been sacrificed to the chaos maiden!</span>")
-		H.gib(0, 0, 0)
-		for (var/client/C in GLOB.clients)
-			C << sound('sound/toolbox/toolbox_scream.ogg')
+		if(H.mind && H.ckey)
+			var/rememberckey = H.ckey
+			spawn(0)
+				for(var/mob/M in GLOB.player_list)
+					if(M.ckey && M.ckey == rememberckey)
+						alert(M,"You have been sacrificed to the Chaos Maiden. If the Maiden gets destroyed you will be returned!","Chaos Maiden Sacrifice","Ok")
+						break
+			save_sacrificed_mob(H)
+		H.gib(no_brain = 1)
+		for(var/mob/M in GLOB.player_list)
+			if(istype(M,/mob/dead/new_player))
+				continue
+			to_chat(M, "<span class='userdanger'>[H] has been sacrificed to the chaos maiden!</span>")
+		playsound(src, 'sound/toolbox/toolbox_scream.ogg', 50, 0)
 		return
 
 	if (GLOB.clients.len < 10)
@@ -148,11 +164,66 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 				if(!Holder.dropItemToGround(W))
 					qdel(W)
 					M.regenerate_icons()
-
-			to_chat(world, "<span class='userdanger'>[M] has been sacrificed to the chaos maiden!</span>")
+			if(M.mind && M.ckey)
+				save_sacrificed_mob(M)
+			for(var/mob/mob in GLOB.player_list)
+				if(istype(mob,/mob/dead/new_player))
+					continue
+				to_chat(mob, "<span class='userdanger'>[M] has been sacrificed to the chaos maiden!</span>")
 			toolbox_points += 0.5
-			M.gib(0, 0, 0)
+			M.gib(no_brain = 1)
 
+/obj/structure/statue/toolbox/proc/save_sacrificed_mob(mob/living/carbon/M)
+	if(!istype(M) || !M.mind)
+		return
+	var/list/saved_list = list()
+	saved_list["type"] = M.type
+	var/datum/dna/dna = new()
+	M.dna.copy_dna(dna)
+	saved_list["dna"] = M.dna
+	saved_list["real_name"] = M.real_name
+	var/turf/T = get_turf(M)
+	if(T)
+		saved_list["location"] = "x=[T.x];y=[T.y];z=[T.z]"
+		var/obj/effect/decal/remains/human/remains = new(T)
+		saved_list["remains"] = "\ref[remains]"
+	saved_list["ckey"] = M.ckey
+	sacrificed_mobs[M.mind] = saved_list
+
+/obj/structure/statue/toolbox/proc/restore_sacrificed_mob(datum/mind/mind)
+	if(!istype(mind) || !sacrificed_mobs[mind])
+		return
+	var/list/saved_list = sacrificed_mobs[mind]
+	if(!istype(saved_list,/list))
+		return
+	var/typepath = saved_list["type"]
+	var/new_real_name = saved_list["real_name"]
+	var/datum/dna/dna = saved_list["dna"]
+	var/list/coord_list = params2list(saved_list["location"])
+	var/theckey = saved_list["ckey"]
+	if(!ispath(typepath) || !istext(new_real_name) || !istext(theckey) || !istype(dna) || !(coord_list && coord_list.len))
+		return
+	var/turf/T = locate(text2num(coord_list["x"]),text2num(coord_list["y"]),text2num(coord_list["z"]))
+	if(!istype(T))
+		return
+	var/mob/living/carbon/C = new typepath(T)
+	var/obj/effect/decal/remains/human/remains = locate(saved_list["remains"])
+	if(istype(remains))
+		qdel(remains)
+	. = C
+	if(C.dna)
+		dna.copy_dna(C.dna)
+	C.real_name = new_real_name
+	mind.current = C
+	C.mind = mind
+	for(var/mob/dead/observer/O in GLOB.mob_list)
+		if(!O.ckey)
+			continue
+		if(O.ckey == theckey)
+			C.ckey = theckey
+			break
+	C.Unconscious(80, updating = TRUE, ignore_canunconscious = TRUE)
+	return
 
 /obj/structure/statue/toolbox/attack_hand(mob/living/user)
 	if (!user || !user.mind)
@@ -177,9 +248,11 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 		M.Translate(-64, -64)
 		I.transform = M
 		underlays += I
-		to_chat(world, "<span class='userdanger'>[user] is the CHAOS ASSISTANT.</span>")
-		for (var/client/C in GLOB.clients)
-			C << sound('sound/toolbox/toolbox_scream.ogg')
+		for(var/mob/mob in GLOB.player_list)
+			if(istype(mob,/mob/dead/new_player))
+				continue
+			to_chat(mob, "<span class='userdanger'>[user] is the CHAOS ASSISTANT.</span>")
+			mob << sound('sound/toolbox/toolbox_scream.ogg',0,0,0,50)
 		name = "statue of the chaos maiden"
 		desc = "An ancient marble statue. The subject is depicted with a floor-length braid and is missing a toolbox. Something is very eerie about this statue. You could swear its eyes follow your movements..."
 		make_True_Assistant(user)
@@ -398,14 +471,17 @@ GLOBAL_VAR_INIT(chaosassistantchancepath,"data/other_saves/chaos_assistant_chanc
 		if(S)
 			var/increase = 0
 			var/next_increase = 0
+			var/max_chance = 0
 			S["chance_increase"] >> increase
 			for(var/obj/structure/statue/toolbox/statue in world)
 				if(!next_increase)
 					next_increase = increase+statue.chance_increase
+				if(!max_chance)
+					max_chance = statue.max_chance
 				if(increase)
 					statue.prob_success = increase
 			if(next_increase)
-				S["chance_increase"] << min(next_increase,100)
+				S["chance_increase"] << min(next_increase,max_chance,100)
 
 /proc/reset_chaos_assistant_chance()
 	if(GLOB && GLOB.chaosassistantchancepath)
