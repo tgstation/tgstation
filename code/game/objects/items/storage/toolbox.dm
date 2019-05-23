@@ -14,24 +14,6 @@
 	materials = list(MAT_METAL = 500)
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
-	var/latches = "single_latch"
-	var/has_latches = TRUE
-
-/obj/item/storage/toolbox/Initialize()
-	. = ..()
-	if(has_latches)
-		if(prob(10))
-			latches = "double_latch"
-			if(prob(1))
-				latches = "triple_latch"
-	update_icon()
-
-/obj/item/storage/toolbox/update_icon()
-	..()
-	cut_overlays()
-	if(has_latches)
-		add_overlay(latches)
-
 
 /obj/item/storage/toolbox/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -58,7 +40,6 @@
 /obj/item/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
-	has_latches = FALSE
 
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
@@ -76,7 +57,6 @@
 /obj/item/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
-	has_latches = FALSE
 
 /obj/item/storage/toolbox/mechanical/old/heirloom
 	name = "toolbox" //this will be named "X family toolbox"
@@ -146,7 +126,6 @@
 	desc = "A huge brass box with several indentations in its surface."
 	icon_state = "brassbox"
 	item_state = null
-	has_latches = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("robusted", "crushed", "smashed")
