@@ -536,8 +536,8 @@
 /datum/chemical_reaction/lemonade
 	name = "Lemonade"
 	id = "lemonade"
-	results = list("lemonade" = 10)
-	required_reagents = list("lemonjuice" = 1, "water" = 1, "sugar" = 1)
+	results = list("lemonade" = 5)
+	required_reagents = list("lemonjuice" = 2, "water" = 2, "sugar" = 1, "ice" = 1)
 	mix_message = "You're suddenly reminded of home."
 
 /datum/chemical_reaction/arnold_palmer

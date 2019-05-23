@@ -313,7 +313,7 @@
 	id = "lemonade"
 	description = "Sweet, tangy lemonade. Good for the soul."
 	quality = DRINK_NICE
-	taste_description = "yummy lemonade"
+	taste_description = "sunshine and summertime"
 	glass_icon_state = "lemonpitcher"
 	glass_name = "pitcher of lemonade"
 	glass_desc = "This drink leaves you feeling nostalgic for some reason."
