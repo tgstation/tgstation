@@ -141,7 +141,7 @@
 		else
 			to_chat(usr, pockets.can_hold)
 			to_chat(usr, pockets.can_hold.len)
-			how_cool_are_your_threads += "[src] can store only <a href='?src=[REF(src)];show_valid_pocket_items=1'>specific</a> items.\n"
+			how_cool_are_your_threads += "[src] can store <a href='?src=[REF(src)];show_valid_pocket_items=1'>specific</a> items.\n"
 		if(pockets.quickdraw)
 			how_cool_are_your_threads += "You can quickly remove an item from [src] using Alt-Click.\n"
 		if(pockets.silent)
