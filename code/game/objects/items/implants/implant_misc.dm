@@ -143,19 +143,30 @@
 	name = "beacon implant"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "beacon"
+	var/podspawn = FALSE
 	var/droptype = /obj/machinery/power/singularity_beacon/syndicate
+	var/dropeffect = /obj/effect/particle_effect/sparks
 
 /obj/item/implant/beacondrop/activate()
 	. = ..()
 	uses--
-	to_chat(imp_in, "<span class='notice'>Locked In.</span>")
-	new droptype ( imp_in.loc )
-	playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+	if(!podspawn)
+		to_chat(imp_in, "<span class='notice'>Locked In.</span>")
+		new droptype ( imp_in.loc )
+		new dropeffect ( imp_in.loc )
+		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+	else
+		var/obj/new_item = new droptype
+		var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+		pod.explosionSize = list(0,0,0,0)
+		new_item.forceMove(pod)
+		new /obj/effect/DPtarget(get_turf(imp_in), pod)
 	if(!uses)
 		qdel(src)
 
 /obj/item/implant/beacondrop/dominator
 	droptype = /obj/machinery/revdominator
+	podspawn = TRUE
 	uses = 1
 
 /obj/item/implanter/radio

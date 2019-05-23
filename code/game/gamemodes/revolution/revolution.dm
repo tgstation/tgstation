@@ -30,7 +30,6 @@
 	var/datum/team/revolution/revolution
 	var/list/datum/mind/headrev_candidates = list()
 	var/end_when_heads_dead = TRUE
-	var/dominators_destroyed
 
 ///////////////////////////
 //Announces the game type//
@@ -159,7 +158,7 @@
 //Checks for rev victory//
 //////////////////////////
 /datum/game_mode/revolution/proc/check_rev_victory()
-	for(var/datum/objective/mutiny/objective in revolution.objectives)
+	for(var/datum/objective/objective in revolution.objectives)
 		if(!(objective.check_completion()))
 			return FALSE
 	return TRUE
@@ -324,8 +323,7 @@
 	sleep(100)
 	to_chat(world, "<B>Revolutionaries have taken over the station with a Dominator!</B>")
 	src.takeover_complete = TRUE
-//	SSticker.mode.finished = 1
-//	SSticker.force_ending = 1
+	SSticker.force_ending = 1
 
 /obj/machinery/revdominator/proc/seconds_remaining()
 	. = max(0, (round((countdown - world.time) / 10)))
