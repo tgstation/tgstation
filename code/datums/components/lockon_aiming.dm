@@ -47,14 +47,10 @@
 	if(icon_state)
 		lock_icon_state = icon_state
 	generate_lock_visuals()
-	var/mob/M = parent
-	LAZYOR(M.mousemove_intercept_objects, src)
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/component/lockon_aiming/Destroy()
-	var/mob/M = parent
 	clear_visuals()
-	LAZYREMOVE(M.mousemove_intercept_objects, src)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
