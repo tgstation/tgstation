@@ -112,6 +112,17 @@
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
 
+/obj/item/clothing/Topic(href, href_list)
+	..()
+	if(href_list["show_valid_pocket_items"])
+		to_chat(usr, "<span class='notice'>[src] can hold: </span>")
+
+		GET_COMPONENT(pockets, /datum/component/storage)
+
+		for(var/valid_obj in pockets.can_hold)
+			var/obj/item/valid_item = new valid_obj()
+			to_chat(usr, "\t <span class='notice'>\a [valid_item.name]</span>")
+
 /obj/item/clothing/examine(mob/user)
 	..()
 	clothing_resistance_flag_examine_message(user)
@@ -125,7 +136,12 @@
 		else
 			how_cool_are_your_threads += "[src]'s storage opens when dragged to yourself.\n"
 		how_cool_are_your_threads += "[src] can store [pockets.max_items] item\s.\n"
-		how_cool_are_your_threads += "[src] can store items that are [weightclass2text(pockets.max_w_class)] or smaller.\n"
+		if (!pockets.can_hold.len) // If pocket type can hold anything, vs only specific items
+			how_cool_are_your_threads += "[src] can store items that are [weightclass2text(pockets.max_w_class)] or smaller.\n"
+		else
+			to_chat(usr, pockets.can_hold)
+			to_chat(usr, pockets.can_hold.len)
+			how_cool_are_your_threads += "[src] can store only <a href='?src=[REF(src)];show_valid_pocket_items=1'>specific</a> items.\n"
 		if(pockets.quickdraw)
 			how_cool_are_your_threads += "You can quickly remove an item from [src] using Alt-Click.\n"
 		if(pockets.silent)
