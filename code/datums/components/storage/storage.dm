@@ -569,6 +569,7 @@
 			to_chat(M, "<span class='warning'>[host] is full, make some space!</span>")
 		return FALSE //Storage item is full
 	if(length(can_hold))
+		can_hold = typecacheof(can_hold)
 		if(!is_type_in_typecache(I, can_hold))
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
