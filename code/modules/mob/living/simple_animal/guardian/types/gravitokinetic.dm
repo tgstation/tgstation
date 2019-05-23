@@ -12,7 +12,7 @@
 	var/datum/callback/distance_check
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Initialize()
-	..()
+	. = ..()
 	distance_check = CALLBACK(src, .proc/__distance_check)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget()
@@ -32,7 +32,7 @@
 		do_attack_animation(T)
 		add_gravity(T, 4)
 		return
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Recall(forced)
 	. = ..()
@@ -41,7 +41,7 @@
 		remove_gravity(C)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(oldLoc, dir)
-	..()
+	. = ..()
 	for(var/datum/component/C in gravito_targets)
 		if(get_dist(src, C.parent) > gravity_power_range)
 			remove_gravity(C)
