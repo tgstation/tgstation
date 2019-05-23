@@ -321,7 +321,7 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_items = 2
-	STR.can_hold = typecacheof(list(/obj/item/gun/energy/dueling))
+	STR.can_hold = list(/obj/item/gun/energy/dueling)
 
 /obj/item/storage/lockbox/dueling/update_icon()
 	cut_overlays()

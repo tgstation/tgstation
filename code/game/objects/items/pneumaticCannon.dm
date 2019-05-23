@@ -326,9 +326,9 @@
 	STR.max_items = 20
 	STR.max_combined_w_class = 40
 	STR.display_numerical_stacking = TRUE
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/throwing_star/magspear
-		))
+		)
 
 /obj/item/storage/backpack/magspear_quiver/PopulateContents()
 	for(var/i in 1 to 20)
