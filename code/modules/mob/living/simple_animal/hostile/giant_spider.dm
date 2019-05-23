@@ -69,12 +69,6 @@
 		if(istype(ghost) && playable_spider)
 			humanize_spider(ghost)
 
-/mob/living/simple_animal/hostile/poison/giant_spider/Login()
-	..()
-	if(directive)
-		to_chat(src, "<span class='notice'>Your mother left you a directive! Follow it at all costs.</span>")
-		to_chat(src, "<span class='spider'><b><big>[directive]</big></b></span>")
-
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
 	. = ..()
 	if(.)
@@ -93,6 +87,8 @@
 	key = user.key
 	if(directive)
 		log_game("[key_name(src)] took control of [name] with the objective: '[directive]'.")
+		mind.store_memory("Your mother left you a directive: [directive]")
+		mind.show_memory(src, 0)
 	return 1
 
 //nursemaids - these create webs and eggs
