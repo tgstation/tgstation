@@ -572,24 +572,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.item_flags & ABSTRACT) || !istype(user))
 		return
-	if(istype(W, /obj/item/melee/roastingstick))
+	if (istype(W, /obj/item/melee/roastingstick))
 		return ..()
-	if(istype(W, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/cig = W
-		if(cig.lit || user.a_intent != INTENT_HELP)
-			user.visible_message("<span class='danger'>A hideous sound echoes as [W] flashes to ash on contact with \the [src], Yikes...</span>")
-			playsound(get_turf(src), 'sound/effects/supermatter.ogg', 150, 1)
-			Consume(W)
-			radiation_pulse(src, 150, 4)
-			return ..()
-		else
-			cig.light()
-			user.visible_message("<span class='danger'>As [user] lights \their [W] on \the [src], silence fills the room...</span>",\
-				"<span class='danger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes alight with an eerie energy as you nonchalantly lift your hand away from \the [src].</span>",\
-				"<span class='italics'>Everything suddenly goes silent.</span>")
-			playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
-			radiation_pulse(src, 50, 3)
-			return
 	if(istype(W, /obj/item/scalpel/supermatter))
 		var/obj/item/scalpel/supermatter/scalpel = W
 		to_chat(user, "<span class='notice'>You carefully begin to scrape \the [src] with \the [W]...</span>")
