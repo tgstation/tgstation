@@ -15,6 +15,7 @@
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 
+
 /obj/item/storage/toolbox/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
