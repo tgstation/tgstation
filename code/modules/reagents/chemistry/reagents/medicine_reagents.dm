@@ -824,11 +824,11 @@
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
-		if(method in list(INJECT, INGEST)) //intended to represent all the wrong things you just revived instead of the body.
-			M.visible_message("<span class='warning'>[M]'s body oozes reddish slime, but remains still.</span>")
-			return
 		if(M.suiciding || M.hellbound) //they are never coming back
 			M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
+			return
+		if(method in list(INJECT, INGEST)) //intended to represent all the wrong things you just revived instead of the body.
+			M.visible_message("<span class='warning'>[M]'s body oozes reddish slime, but remains still.</span>")
 			return
 		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100 || HAS_TRAIT(M, TRAIT_HUSK)) //body is too damaged to be revived
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
