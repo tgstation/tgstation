@@ -38,10 +38,11 @@ Regenerative extracts:
 /obj/item/slimecross/burning/examine(mob/user)
     ..()
     if(effect_desc)
-        to_chat(user, "<span class='notice'>Fully heals the user and [effect_desc]</span>")
+        to_chat(user, "<span class='notice'>[effect_desc]</span>")
 
 /obj/item/slimecross/regenerative/grey
 	colour = "grey" //Has no bonus effect.
+	effect_desc = "Fully heals the user."
 
 /obj/item/slimecross/regenerative/orange
 	colour = "orange"
@@ -54,6 +55,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/purple
 	colour = "purple"
+	effect_desc = "Fully heals the user and injects them with some regen jelly."
 
 /obj/item/slimecross/regenerative/purple/core_effect(mob/living/target, mob/user)
 	target.reagents.add_reagent("regen_jelly",10)
