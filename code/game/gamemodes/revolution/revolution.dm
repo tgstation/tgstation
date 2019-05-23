@@ -158,7 +158,7 @@
 //Checks for rev victory//
 //////////////////////////
 /datum/game_mode/revolution/proc/check_rev_victory()
-	for(var/datum/objective/objective in revolution.objectives)
+	for(var/datum/objective/mutiny/objective in revolution.objectives)
 		if(!(objective.check_completion()))
 			return FALSE
 	return TRUE
@@ -167,15 +167,11 @@
 //Checks for a head victory//
 /////////////////////////////
 /datum/game_mode/revolution/proc/check_heads_victory()
-	for(var/obj/machinery/revdominator/N in GLOB.poi_list)
-		if(N.active)
-			return FALSE
-		else
-			for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
-				var/turf/T = get_turf(rev_mind.current)
-				if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(T.z))
-					if(ishuman(rev_mind.current) || ismonkey(rev_mind.current))
-						return FALSE
+	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
+		var/turf/T = get_turf(rev_mind.current)
+		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(T.z))
+			if(ishuman(rev_mind.current) || ismonkey(rev_mind.current))
+				return FALSE
 	return TRUE
 
 
@@ -243,6 +239,32 @@
 	else if(finished == 2)
 		return "<div class='panel redborder'><span class='redtext big'>The heads of staff managed to stop the revolution!</span></div>"
 
+/datum/game_mode/revolution/check_rev_victory()
+	for(var/obj/machinery/revdominator/N in GLOB.poi_list)
+		if(N.takeover_complete)
+			return TRUE
+	return FALSE
+
+/datum/game_mode/revolution/domination/check_heads_victory()
+	for(var/obj/machinery/revdominator/N in GLOB.poi_list)
+		if(N.active)
+			return FALSE
+		else
+			return ..()
+
+/datum/game_mode/revolution/domination/check_win()
+	if(check_rev_victory())
+		finished = 1
+	else if(check_heads_victory())
+		finished = 2
+	return
+
+/datum/game_mode/revolution/domination/check_finished()
+	if(finished != 0)
+		return TRUE
+	else
+		return ..()
+
 ////////////
 ////////////
 
@@ -295,7 +317,7 @@
 				num_revs++
 			else
 				num_nonrevs++
-	clock_set = max((clock_set*(num_revs/num_nonrevs)),200)
+	clock_set = max((clock_set*(num_revs/num_nonrevs)),2400)
 	countdown = world.time + clock_set
 	set_security_level("delta")
 	for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
@@ -321,9 +343,9 @@
 /obj/machinery/revdominator/proc/takeover()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	to_chat(world, "<B>Revolutionaries have taken over the station with a Dominator!</B>")
-	src.takeover_complete = TRUE
-	SSticker.force_ending = 1
+	to_chat(world, "<B>The Dominator has taken control of all of the station's systems!</B>")
+	takeover_complete = TRUE
+//	SSticker.force_ending = 1
 
 /obj/machinery/revdominator/proc/seconds_remaining()
 	. = max(0, (round((countdown - world.time) / 10)))
@@ -332,7 +354,7 @@
 	if(active || takeover_complete)
 		to_chat(user, "<span class='notice'>The embedded timer reads: <b>[seconds_remaining()]</b>.</span>")
 		return
-	if(!active)
+	if(!active || takeover_complete)
 		if((user.mind.has_antag_datum(/datum/antagonist/rev) == FALSE) || alert(user, "Attempt to take control of all Nanotrasen systems?", "[src]", "Yes", "Cancel") == "Cancel")
 			to_chat(user, "<b>You warily regard the inactive [src].</b>")
 			return
@@ -356,7 +378,7 @@
 			playsound(loc, 'sound/items/nuke_toy_lowpower.ogg', 50, 1)
 			to_chat(user, "<b>You activate the [src].</b>")
 	else
-		to_chat(user, "<span class='notice'>Area does not have power, is blocked by a dense object, or is in space. Aborting.</span>")
+		to_chat(user, "<span class='notice'>Device does not have power, is blocked by a dense object, or is in space. Aborting.</span>")
 
 /obj/machinery/revdominator/attackby(obj/item/I, mob/user, params)
 	if((I.tool_behaviour == TOOL_WRENCH) && (src.can_be_unanchored == 1))

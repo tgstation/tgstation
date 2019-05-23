@@ -19,6 +19,9 @@
 	for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 		if(bomb.timing)
 			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
+	for(var/obj/machinery/revdominator/N in GLOB.poi_list)
+		if(N.active)
+			to_chat(user, "Extreme danger. Station takeover signal detected. Time remaining: [N.seconds_remaining()].")
 
 /obj/item/pinpointer/nuke/process()
 	..()
