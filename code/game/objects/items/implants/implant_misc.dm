@@ -139,6 +139,25 @@
 				<b>Implant Details:</b> Allows user to use an internal radio, useful if user expects equipment loss, or cannot equip conventional radios."}
 	return dat
 
+/obj/item/implant/beacondrop
+	name = "beacon implant"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "beacon"
+	var/droptype = /obj/machinery/power/singularity_beacon/syndicate
+
+/obj/item/implant/beacondrop/activate()
+	. = ..()
+	uses--
+	to_chat(imp_in, "<span class='notice'>Locked In.</span>")
+	new droptype ( imp_in.loc )
+	playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+	if(!uses)
+		qdel(src)
+
+/obj/item/implant/beacondrop/dominator
+	droptype = /obj/machinery/revdominator
+	uses = 1
+
 /obj/item/implanter/radio
 	name = "implanter (internal radio)"
 	imp_type = /obj/item/implant/radio
@@ -146,4 +165,3 @@
 /obj/item/implanter/radio/syndicate
 	name = "implanter (internal syndicate radio)"
 	imp_type = /obj/item/implant/radio/syndicate
-

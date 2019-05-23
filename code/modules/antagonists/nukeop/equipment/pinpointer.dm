@@ -11,6 +11,8 @@
 			msg += "\"01000001 01001001\"."
 		if(TRACK_INFILTRATOR)
 			msg += "\"vasvygengbefuvc\"."
+		if(TRACK_DOMINATOR)
+			msg += "\"<b>Viva!</b>\"."
 		else
 			msg = "Its tracking indicator is blank."
 	to_chat(user, msg)
@@ -47,6 +49,10 @@
 					target = A
 		if(TRACK_INFILTRATOR)
 			target = SSshuttle.getShuttle("syndicate")
+		if(TRACK_DOMINATOR)
+			var/obj/machinery/revdominator/N = locate() in GLOB.poi_list
+			if(N.active)
+				target = N
 	..()
 
 /obj/item/pinpointer/nuke/proc/switch_mode_to(new_mode)
