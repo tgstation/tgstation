@@ -32,8 +32,7 @@
 	return ..()
 
 /datum/antagonist/brother/antag_panel_data()
-	var/brother_text = get_brother_names()
-	return "Conspirators: [brother_text]"
+	return "Conspirators : [get_brother_names()]]"
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner
