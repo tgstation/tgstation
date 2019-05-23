@@ -1,6 +1,6 @@
 /*
 Make adjacency one proc and check conditions in one spot
-
+Sort out active, anchor and possible layers
 
 
 
@@ -63,8 +63,15 @@ Make adjacency one proc and check conditions in one spot
 
 
 
-/obj/machinery/duct/Initialize()
+/obj/machinery/duct/Initialize(mapload, no_anchor, spin)
 	. = ..()
+	start with updating dirs and shit
+	if(no_anchor)
+		active = FALSE
+		anchor = FALSE
+	else if(!can_anchor())
+		CRASH("Overlapping ducts detected")
+		qdel(src)
 	if(active)
 		attempt_connect()
 
@@ -98,15 +105,11 @@ Make adjacency one proc and check conditions in one spot
 		return
 	var/comp_directions = P.supply_connects + P.demand_connects //they should never, ever have supply and demand connects overlap or catastrophic failure
 	if(opposite_dir & comp_directions)
-		for(var/i in P.ducts)
-			if(P.ducts.Find(opposite_dir))
-				CRASH("DUCTS: Attempted to double connect in the same direction with [P.parent]")
-				break
-			if(duct)
-				duct.add_plumber(P, opposite_dir)
-			else
-				create_duct()
-				duct.add_plumber(P, opposite_dir)
+		if(duct)
+			duct.add_plumber(P, opposite_dir)
+		else
+			create_duct()
+			duct.add_plumber(P, opposite_dir)
 
 /obj/machinery/duct/proc/disconnect_duct()
 	active = FALSE
@@ -128,50 +131,38 @@ Make adjacency one proc and check conditions in one spot
 					adjacents += D
 	return adjacents
 
+/obj/machinery/duct/wrench_act(mob/living/user, obj/item/wrench/W)
+	add_fingerprint(user)
+	W.play_tool_sound(src)
+	if(anchored)
+		anchored = FALSE
+		active = FALSE
+		user.visible_message( \
+		"[user] unfastens \the [src].", \
+		"<span class='notice'>You unfasten \the [src].</span>", \
+		"<span class='italics'>You hear ratcheting.</span>")
+	else if(can_anchor())
+		anchored = TRUE
+		active = TRUE
+		user.visible_message( \
+		"[user] fastens \the [src].", \
+		"<span class='notice'>You fasten \the [src].</span>", \
+		"<span class='italics'>You hear ratcheting.</span>")
+
+/obj/machinery/duct/proc/can_anchor(turf/T)
+	if(!T)
+		T = get_turf(src)
+	for(var/obj/machinery/duct/D in T)
+		if(!anchored)
+			continue
+		for(var/A in GLOB.cardinals)
+			if(A & connects && A & D.connects)
+				return FALSE
+	return TRUE
 
 
-/datum/ductnet
-	var/list/suppliers = list()
-	var/list/demanders = list()
-	var/list/obj/machinery/duct/ducts = list()
 
-	var/capacity
 
-/datum/ductnet/proc/add_duct(obj/machinery/duct/D)
-	if(!D || D in ducts)
-		return
-	ducts += D
-	D.duct = src
-
-/datum/ductnet/proc/add_plumber(datum/component/plumbing/P, dir)
-	if(!P.can_add(src, dir))
-		return
-	P.ducts[num2text(dir)] = src
-	if(dir in P.supply_connects)
-		suppliers += P
-	else if(dir in P.demand_connects)
-		demanders += P
-
-/datum/ductnet/proc/assimilate(datum/ductnet/D)
-	ducts.Add(D.ducts)
-	suppliers.Add(D.suppliers)
-	demanders.Add(D.demanders)
-	for(var/A in D.suppliers + D.demanders)
-		var/datum/component/plumbing/P = A
-		for(var/s in P.ducts)
-			P.ducts[s] = src  //all your ducts are belong to us
-	for(var/A in D.ducts)
-		var/obj/machinery/duct/M = A
-		M.duct = src //forget your old master
-	qdel(D)
-
-/datum/ductnet/proc/destroy_network()
-	for(var/A in suppliers + demanders)
-		qdel(A)
-	for(var/A in ducts)
-		var/obj/machinery/duct/D = A
-		D.duct = null
-	qdel(src)
 
 
 /datum/component/plumbing
@@ -180,6 +171,27 @@ Make adjacency one proc and check conditions in one spot
 
 	var/supply_connects //directions in wich we act as a supplier
 	var/demand_connects //direction in wich we act as a demander
+
+/datum/component/plumbing/Initialize()
+	if(parent && !ismovableatom(parent))
+		return COMPONENT_INCOMPATIBLE
+	var/atom/movable/AM = parent
+	if(!AM.reagents)
+		return COMPONENT_INCOMPATIBLE
+	reagents = AM.reagents
+
+	if(demand_connects)
+		START_PROCESSING(SSfluids, src)
+
+
+/datum/component/plumbing/process()
+	if(!demand_connects || !reagents)
+		STOP_PROCESSING(SSfluids, src)
+		return
+	if(reagents.total_volume < reagents.maximum_volume)
+		for(var/D in GLOB.cardinals)
+			if(D & demand_connects)
+				send_request(D)
 
 /datum/component/plumbing/proc/can_add(datum/ductnet/D, dir)
 	if(!dir || !D)
@@ -191,7 +203,10 @@ Make adjacency one proc and check conditions in one spot
 
 	return TRUE
 
-/datum/component/plumbing/proc/send_request(amount=10, reagent, dir)
+/datum/component/plumbing/proc/send_request(dir) //this should usually be overwritten when dealing with custom pipes
+	process_request(amount = 10, reagent = null, dir = dir)
+
+/datum/component/plumbing/proc/process_request(amount, reagent, dir)
 	var/list/valid_suppliers = list()
 	var/datum/ductnet/net
 	if(!ducts.Find(num2text(dir)))
@@ -225,3 +240,8 @@ Make adjacency one proc and check conditions in one spot
 	else
 		reagents.trans_to(target.reagents, amount)
 
+/datum/component/plumbing/simple_demand
+	demand_connects = NORTH
+
+/datum/component/plumbing/simple_supply
+	supply_connects = NORTH

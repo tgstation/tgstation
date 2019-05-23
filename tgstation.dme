@@ -2293,6 +2293,7 @@
 #include "code\modules\photography\photos\album.dm"
 #include "code\modules\photography\photos\frame.dm"
 #include "code\modules\photography\photos\photo.dm"
+#include "code\modules\plumbing\ductnet.dm"
 #include "code\modules\plumbing\ducts.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"

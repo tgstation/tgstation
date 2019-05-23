@@ -6,6 +6,7 @@ RPD
 #define ATMOS_CATEGORY 0
 #define DISPOSALS_CATEGORY 1
 #define TRANSIT_CATEGORY 2
+#define PLUMBING_CATEGORY 4
 
 #define BUILD_MODE 1
 #define WRENCH_MODE 2
@@ -69,6 +70,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		new /datum/pipe_info/transit("Through Tube Station",		/obj/structure/c_transit_tube/station, PIPE_STRAIGHT),
 		new /datum/pipe_info/transit("Terminus Tube Station",		/obj/structure/c_transit_tube/station/reverse, PIPE_UNARY),
 		new /datum/pipe_info/transit("Transit Tube Pod",			/obj/structure/c_transit_tube_pod, PIPE_ONEDIR),
+	)
+))
+
+GLOBAL_LIST_INIT(fluid_duct_recipes, list(
+	"Fluid Ducts" = list(
+		new /datum/pipe_info/plumbing("Straight Duct",				/obj/machinery/duct, PIPE_STRAIGHT),
+		new /datum/pipe_info/plumbing("Bent Duct",	/obj/machinery/duct/north_east, PIPE_UNARY),
+		new /datum/pipe_info/plumbing("Joined Duct",					/obj/machinery/duct/north_east_west, PIPE_UNARY),
+		new /datum/pipe_info/plumbing("4-Way Duct",				/obj/machinery/duct/north_south_east_west, PIPE_STRAIGHT),
 	)
 ))
 
@@ -172,6 +182,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(dt == PIPE_UNARY_FLIPPABLE)
 		icon_state = "[icon_state]_preview"
 
+/datum/pipe_info/duct/New(label, obj/path, dt=PIPE_UNARY)
+	name = label
+	id = path
+	icon_state = initial(path.icon_state)
+
+	dirtype = dt
+
 /obj/item/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
@@ -194,6 +211,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/atmos_build_speed = 5 //deciseconds (500ms)
 	var/disposal_build_speed = 5
 	var/transit_build_speed = 5
+	var/plumbing_build_speed = 5
 	var/destroy_speed = 5
 	var/paint_speed = 5
 	var/category = ATMOS_CATEGORY
@@ -452,6 +470,17 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						if(mode&WRENCH_MODE)
 							tube.wrench_act(user, src)
 					return
+			if(PLUMBING_CATEGORY) //Making pancakes
+				if(!can_make_pipe)
+					return ..()
+				A = get_turf(A)
+				if(isclosedturf(A))
+					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
+					return
+				to_chat(user, "<span class='notice'>You start building a fluid duct...</span>")
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				if(do_after(user, plumbing_build_speed, target = A))
+					var/obj/machinery/duct/D = new queued_p_type (A, TRUE, queued_p_dir)
 
 			else
 				return ..()
@@ -462,6 +491,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY
 #undef TRANSIT_CATEGORY
+#undef PLUMBING_CATEGORY
 
 #undef BUILD_MODE
 #undef DESTROY_MODE
