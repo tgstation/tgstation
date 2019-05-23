@@ -6,6 +6,7 @@ Prismatic extracts:
 	name = "prismatic extract"
 	desc = "It's constantly wet with a semi-transparent, colored goo."
 	effect = "prismatic"
+	effect_desc = "When used it paints whatever it hits."
 	icon_state = "prismatic"
 	var/paintcolor = "#FFFFFF"
 
@@ -16,6 +17,11 @@ Prismatic extracts:
 		return
 	target.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
 	playsound(target, 'sound/effects/slosh.ogg', 20, 1)
+
+/obj/item/slimecross/burning/examine(mob/user)
+    ..()
+    if(effect_desc)
+        to_chat(user, "<span class='notice'>[effect_desc]</span>")
 
 /obj/item/slimecross/prismatic/grey/
 	colour = "grey"

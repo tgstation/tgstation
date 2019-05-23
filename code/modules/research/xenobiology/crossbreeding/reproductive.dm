@@ -8,6 +8,7 @@ Reproductive extracts:
 	desc = "It pulses with a strange hunger."
 	icon_state = "reproductive"
 	effect = "reproductive"
+	effect_desc = "When fed monkey cubes it produces more extracts, bio bag compatible as well."
 	var/extract_type = /obj/item/slime_extract/
 	var/cubes_eaten = 0
 	var/last_produce = 0
@@ -42,6 +43,11 @@ Reproductive extracts:
 		cubes_eaten++
 		to_chat(user, "<span class='notice'>You feed [monkeycube] to [src], and it pulses gently.</span>")
 		playsound(src, 'sound/items/eatfood.ogg', 20, 1)
+
+/obj/item/slimecross/burning/examine(mob/user)
+    ..()
+    if(effect_desc)
+        to_chat(user, "<span class='notice'>[effect_desc]</span>")
 
 /obj/item/slimecross/reproductive/grey
 	extract_type = /obj/item/slime_extract/grey

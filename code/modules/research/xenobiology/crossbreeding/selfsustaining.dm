@@ -5,6 +5,7 @@ Self-sustaining extracts:
 /obj/item/slimecross/selfsustaining
 	name = "self-sustaining extract"
 	effect = "self-sustaining"
+	effect_desc = "Creates one to four extracts that, when used, lets you choose what reaction you want."
 	icon_state = "selfsustaining"
 	var/extract_type = /obj/item/slime_extract
 
@@ -51,6 +52,11 @@ Self-sustaining extracts:
 	extract.reagents.add_reagent(reagentselect,amount)
 	if(secondary)
 		extract.reagents.add_reagent(secondary,amount)
+
+/obj/item/slimecross/burning/examine(mob/user)
+    ..()
+    if(effect_desc)
+        to_chat(user, "<span class='notice'>[effect_desc]</span>")
 
 //Different types.
 

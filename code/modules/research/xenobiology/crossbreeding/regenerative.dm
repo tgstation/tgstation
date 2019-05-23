@@ -34,6 +34,11 @@ Regenerative extracts:
 	core_effect(H, user)
 	playsound(target, 'sound/effects/splat.ogg', 40, 1)
 	qdel(src)
+	
+/obj/item/slimecross/burning/examine(mob/user)
+    ..()
+    if(effect_desc)
+        to_chat(user, "<span class='notice'>Fully heals the user and [effect_desc]</span>")
 
 /obj/item/slimecross/regenerative/grey
 	colour = "grey" //Has no bonus effect.
