@@ -230,6 +230,7 @@
 	description = "If used in surface-based applications, immediately heals burns. If eaten or injected, deals minor toxin damage instead."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	metabolization_rate = INFINITY
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -274,6 +275,7 @@
 	description = "If used in surface-based applications, immediately heals bruising. If eaten or injected, deals minor toxin damage instead."
 	reagent_state = LIQUID
 	color = "#FF9696"
+	metabolization_rate = INFINITY
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
