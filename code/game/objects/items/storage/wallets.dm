@@ -14,7 +14,7 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 4
 	STR.cant_hold = list(/obj/item/screwdriver/power) //Must be specifically called out since normal screwdrivers can fit but not the wrench form of the drill
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
 		/obj/item/card,
@@ -36,7 +36,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/screwdriver,
-		/obj/item/stamp))
+		/obj/item/stamp)
 
 /obj/item/storage/wallet/Exited(atom/movable/AM)
 	. = ..()

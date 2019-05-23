@@ -43,7 +43,7 @@
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	var/static/list/can_hold = typecacheof(list(
+	var/static/list/can_hold = list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
 		/obj/item/weldingtool,
@@ -63,7 +63,7 @@
 		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler,
 		/obj/item/lightreplacer
-		))
+		)
 	STR.can_hold = can_hold
 
 /obj/item/storage/belt/utility/chief
@@ -129,7 +129,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
@@ -176,7 +176,7 @@
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical
-		))
+		)
 
 /obj/item/storage/belt/security
 	name = "security belt"
@@ -190,7 +190,7 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 5
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/melee/baton,
 		/obj/item/melee/classic_baton,
 		/obj/item/grenade,
@@ -208,7 +208,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/restraints/legcuffs/bola,
 		/obj/item/holosign_creator/security
-		))
+		)
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -244,7 +244,7 @@
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.max_combined_w_class = 20
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
 		/obj/item/weldingtool,
@@ -281,7 +281,7 @@
 		/obj/item/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
 		/obj/item/stack/marker_beacon
-		))
+		)
 
 
 /obj/item/storage/belt/mining/vendor
@@ -312,9 +312,9 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/soulstone
-		))
+		)
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
@@ -364,10 +364,10 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/reagent_containers/food/snacks,
 		/obj/item/reagent_containers/food/drinks
-		))
+		)
 
 	var/amount = 5
 	var/rig_snacks
@@ -444,14 +444,14 @@
 	STR.display_numerical_stacking = TRUE
 	STR.max_combined_w_class = 60
 	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/grenade,
 		/obj/item/screwdriver,
 		/obj/item/lighter,
 		/obj/item/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
 		/obj/item/grenade/plastic/c4,
-		))
+		)
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	var/static/items_inside = list(
@@ -479,9 +479,9 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/gun/magic/wand
-		))
+		)
 
 /obj/item/storage/belt/wands/full/PopulateContents()
 	new /obj/item/gun/magic/wand/death(src)
@@ -506,7 +506,7 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_BULKY // Set to this so the  light replacer can fit.
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/grenade/chem_grenade,
 		/obj/item/lightreplacer,
 		/obj/item/flashlight,
@@ -518,7 +518,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
 		/obj/item/assembly/mousetrap
-		))
+		)
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
 	new /obj/item/lightreplacer(src)
@@ -538,9 +538,9 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 18
 	STR.display_numerical_stacking = TRUE
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/ammo_casing/shotgun
-		))
+		)
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
@@ -554,12 +554,12 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 3
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
 		/obj/item/gun/energy/e_gun/mini
-		))
+		)
 
 /obj/item/storage/belt/holster/full/PopulateContents()
 	var/static/items_inside = list(
@@ -654,9 +654,9 @@
 	STR.max_items = 1
 	STR.rustle_sound = FALSE
 	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
+	STR.can_hold = list(
 		/obj/item/melee/sabre
-		))
+		)
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	..()
