@@ -28,9 +28,11 @@
 	if (QDELETED(src))
 		return 0
 
-	if(!IsInStasis())
+	if(!IS_IN_STASIS(src))
 		if(.) //not dead
-			handle_active_genes()
+
+			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
+				HM.on_life()
 
 		if(stat != DEAD)
 			//heart attack stuff
@@ -309,10 +311,6 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-
-/mob/living/carbon/human/proc/handle_active_genes()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_life()
 
 /mob/living/carbon/human/proc/handle_heart()
 	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)

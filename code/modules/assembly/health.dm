@@ -90,7 +90,7 @@
 
 	var/mob/user = usr
 
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		usr << browse(null, "window=hscan")
 		onclose(usr, "hscan")
 		return
