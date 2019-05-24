@@ -232,8 +232,10 @@
 	color = "#C8A5DC"
 	metabolization_rate = INFINITY
 
-/datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = TRUE)
 	if(iscarbon(M) && M.stat != DEAD)
+		if(method == VAPOR) //foam applies the reagent considerably more often
+			show_message = FALSE
 		if(method in list(INGEST, INJECT))
 			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
@@ -242,7 +244,8 @@
 			M.adjustFireLoss(-reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns healing! It stings like hell!</span>")
-			M.emote("scream")
+			if(prob(40)) //EVERYBODY SCREAM
+				M.emote("scream")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
@@ -277,8 +280,10 @@
 	color = "#FF9696"
 	metabolization_rate = INFINITY
 
-/datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = TRUE)
 	if(iscarbon(M) && M.stat != DEAD)
+		if(method == VAPOR)
+			show_message = FALSE
 		if(method in list(INGEST, INJECT))
 			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
@@ -287,7 +292,8 @@
 			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
-			M.emote("scream")
+			if(prob(40)) //AAAHHHHHHHHHHH
+				M.emote("scream")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
@@ -379,10 +385,10 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = TRUE)
 	if(iscarbon(M))
 		if (M.stat == DEAD)
-			show_message = 0
+			show_message = FALSE
 		if(method in list(PATCH, TOUCH))
 			M.adjustBruteLoss(-1.25 * reac_volume)
 			M.adjustFireLoss(-1.25 * reac_volume)
