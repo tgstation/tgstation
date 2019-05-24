@@ -115,13 +115,7 @@
 /obj/item/clothing/Topic(href, href_list)
 	..()
 	if(href_list["show_valid_pocket_items"])
-		to_chat(usr, "<span class='notice'>[src] can hold: </span>")
-
-		GET_COMPONENT(pockets, /datum/component/storage)
-
-		for(var/valid_obj in pockets.can_hold)
-			var/obj/item/valid_item = new valid_obj()
-			to_chat(usr, "\t <span class='notice'>\a [valid_item.name]</span>")
+		SEND_SIGNAL(src, COMSIG_SHOW_ALLOWED, usr)
 
 /obj/item/clothing/examine(mob/user)
 	..()

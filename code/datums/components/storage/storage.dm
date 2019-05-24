@@ -14,9 +14,12 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/datum/component/storage/concrete/master		//If not null, all actions act on master and this is just an access point.
 
-	var/list/can_hold								//if this is set, only things in this typecache will fit, if within the size limit.
-	var/list/cant_hold								//if this is set, anything in this typecache will not be able to fit.
+	var/list/can_hold								//if this is set, only items, and their children, will fit
+	var/list/cant_hold								//if this is set, items, and their children, won't fit
 	var/list/exception_hold                         //if set, these items will be the exception to the max size of object that can fit.
+
+	var/list/can_hold_full							//will be populated by the typecache of all items added to can_hold
+	var/list/cant_hold_full							//will be populated by the typecache of all items added to cant_hold
 
 	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
 
@@ -81,6 +84,8 @@
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_HIDE_FROM, .proc/signal_hide_attempt)
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_HIDE_ALL, .proc/close_all)
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_RETURN_INVENTORY, .proc/signal_return_inv)
+
+	RegisterSignal(parent, COMSIG_SHOW_ALLOWED, .proc/signal_show_allowed)
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
 
@@ -502,6 +507,13 @@
 	interface |= return_inv(recursive)
 	return TRUE
 
+/datum/component/storage/proc/signal_show_allowed(datum/source, usr)
+	to_chat(usr, "<span class='notice'>[source] can hold: </span>")
+
+	for(var/valid_obj in src.can_hold)
+		var/obj/item/valid_item = new valid_obj()
+		to_chat(usr, "\t <span class='notice'>\a [valid_item.name]</span>")
+
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
 	set waitfor = FALSE
 	. = COMPONENT_NO_MOUSEDROP
@@ -551,8 +563,8 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
-	can_hold = typecacheof(can_hold)
-	cant_hold = typecacheof(cant_hold)
+	can_hold_full = typecacheof(can_hold)
+	cant_hold_full = typecacheof(cant_hold)
 	if(!istype(I) || (I.item_flags & ABSTRACT))
 		return FALSE //Not an item
 	if(I == parent)
@@ -571,11 +583,11 @@
 			to_chat(M, "<span class='warning'>[host] is full, make some space!</span>")
 		return FALSE //Storage item is full
 	if(length(can_hold))
-		if(!is_type_in_typecache(I, can_hold))
+		if(!is_type_in_typecache(I, can_hold_full))
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
-	if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
+	if(is_type_in_typecache(I, cant_hold_full)) //Check for specific items which this container can't hold.
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
