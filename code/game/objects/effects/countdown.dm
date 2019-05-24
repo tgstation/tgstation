@@ -143,6 +143,16 @@
 	else if(DD.timing)
 		return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[DD.seconds_remaining()]</div>"
 
+/obj/effect/countdown/revdominator
+	name = "dominator countdown"
+
+/obj/effect/countdown/revdominator/get_value()
+	var/obj/machinery/revdominator/DM = attached_to
+	if(!istype(DM))
+		return
+	else if(DM.active)
+		return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[DM.seconds_remaining()]</div>"
+
 /obj/effect/countdown/anomaly
 	name = "anomaly countdown"
 

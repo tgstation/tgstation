@@ -66,7 +66,12 @@
 	return rev_team
 
 /datum/antagonist/rev/proc/create_objectives()
-	objectives |= rev_team.objectives
+	if(SSticker.mode.name == "domination")
+		var/datum/objective/dominator/new_target = new()
+		objectives += new_target
+		owner.announce_objectives()
+	else
+		objectives |= rev_team.objectives
 
 /datum/antagonist/rev/proc/remove_objectives()
 	objectives -= rev_team.objectives
@@ -148,6 +153,7 @@
 /datum/antagonist/rev/head
 	name = "Head Revolutionary"
 	hud_type = "rev_head"
+	var/give_dom = FALSE
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
@@ -250,23 +256,33 @@
 		S.Insert(H, special = FALSE, drop_if_replaced = FALSE)
 		to_chat(H, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
+	if(give_dom)
+		var/obj/item/implant/beacondrop/dominator/D = new(H)
+		D.implant(H,H, silent = TRUE, force = TRUE)
+		to_chat(H, "You have been implanted with a beacon that will send a Dominator to your position, enabling station takeover. Be careful: <b>you only get one shot</b>.")
+
 /datum/team/revolution
 	name = "Revolution"
 	var/max_headrevs = 3
 
 /datum/team/revolution/proc/update_objectives(initial = FALSE)
-	var/untracked_heads = SSjob.get_all_heads()
-	for(var/datum/objective/mutiny/O in objectives)
-		untracked_heads -= O.target
-	for(var/datum/mind/M in untracked_heads)
-		var/datum/objective/mutiny/new_target = new()
-		new_target.team = src
-		new_target.target = M
-		new_target.update_explanation_text()
+	if(SSticker.mode.name == "domination")
+		var/datum/objective/dominator/new_target = new()
 		objectives += new_target
-	for(var/datum/mind/M in members)
-		var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
-		R.objectives |= objectives
+	else
+		var/untracked_heads = SSjob.get_all_heads()
+		for(var/datum/objective/mutiny/O in objectives)
+			untracked_heads -= O.target
+		for(var/datum/mind/M in untracked_heads)
+			var/datum/objective/mutiny/new_target = new()
+			new_target.team = src
+			new_target.target = M
+			new_target.update_explanation_text()
+			objectives += new_target
+		for(var/datum/mind/M in members)
+			var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
+			R.objectives |= objectives
+
 
 	addtimer(CALLBACK(src,.proc/update_objectives),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 

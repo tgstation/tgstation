@@ -11,12 +11,17 @@
 			msg += "\"01000001 01001001\"."
 		if(TRACK_INFILTRATOR)
 			msg += "\"vasvygengbefuvc\"."
+		if(TRACK_DOMINATOR)
+			msg += "\"<b>Viva!</b>\"."
 		else
 			msg = "Its tracking indicator is blank."
 	to_chat(user, msg)
 	for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 		if(bomb.timing)
 			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
+	for(var/obj/machinery/revdominator/N in GLOB.poi_list)
+		if(N.active)
+			to_chat(user, "Extreme danger. Station takeover signal detected. Time remaining: [N.seconds_remaining()].")
 
 /obj/item/pinpointer/nuke/process()
 	..()
@@ -47,6 +52,10 @@
 					target = A
 		if(TRACK_INFILTRATOR)
 			target = SSshuttle.getShuttle("syndicate")
+		if(TRACK_DOMINATOR)
+			var/obj/machinery/revdominator/N = locate() in GLOB.poi_list
+			if(N.active)
+				target = N
 	..()
 
 /obj/item/pinpointer/nuke/proc/switch_mode_to(new_mode)
@@ -87,4 +96,4 @@
 	var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
 	if(closest_operative)
 		target = closest_operative
-	..()
+..()
