@@ -82,8 +82,14 @@ Consuming extracts:
 		return
 	..()
 
+/obj/item/slimecross/consuming/examine(mob/user)
+    ..()
+    if(effect_desc)
+        to_chat(user, "<span class='notice'>Creates a slime cookie that [effect_desc]</span>")
+
 /obj/item/slimecross/consuming/grey
 	colour = "grey"
+	effect_desc = "is pretty tasty"
 	cookietype = /obj/item/slime_cookie/grey
 
 /obj/item/slime_cookie/grey
@@ -95,6 +101,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/orange
 	colour = "orange"
+	effect_desc = "heats the target up and grants cold immunity for a short time."
 	cookietype = /obj/item/slime_cookie/orange
 
 /obj/item/slime_cookie/orange
@@ -108,6 +115,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/purple
 	colour = "purple"
+	effect_desc = "heals the target for every type of damage."
 	cookietype = /obj/item/slime_cookie/purple
 
 /obj/item/slime_cookie/purple
@@ -126,6 +134,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/blue
 	colour = "blue"
+	effect_desc = "wets the floor around you and makes you immune to water based slipping for a short time."
 	cookietype = /obj/item/slime_cookie/blue
 
 /obj/item/slime_cookie/blue
@@ -139,6 +148,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/metal
 	colour = "metal"
+	effect_desc = "increases the target's resistance to brute damage."
 	cookietype = /obj/item/slime_cookie/metal
 
 /obj/item/slime_cookie/metal
@@ -152,6 +162,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/yellow
 	colour = "yellow"
+	effect_desc = "makes the target immune to electricity for a short time."
 	cookietype = /obj/item/slime_cookie/yellow
 
 /obj/item/slime_cookie/yellow
@@ -165,6 +176,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/darkpurple
 	colour = "dark purple"
+	effect_desc = "reverses how the target's body treats toxins."
 	cookietype = /obj/item/slime_cookie/darkpurple
 
 /obj/item/slime_cookie/darkpurple
@@ -178,6 +190,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/darkblue
 	colour = "dark blue"
+	effect_desc = "chills the target and extinguishes them."
 	cookietype = /obj/item/slime_cookie/darkblue
 
 /obj/item/slime_cookie/darkblue
@@ -192,6 +205,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/silver
 	colour = "silver"
+	effect_desc = "never gets the target fat."
 	cookietype = /obj/item/slime_cookie/silver
 
 /obj/item/slime_cookie/silver
@@ -206,6 +220,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/bluespace
 	colour = "bluespace"
+	effect_desc = "teleports the target to a random place in the area."
 	cookietype = /obj/item/slime_cookie/bluespace
 
 /obj/item/slime_cookie/bluespace
@@ -241,6 +256,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/sepia
 	colour = "sepia"
+	effect_desc = "makes the target do things slightly faster."
 	cookietype = /obj/item/slime_cookie/sepia
 
 /obj/item/slime_cookie/sepia
@@ -254,6 +270,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/cerulean
 	colour = "cerulean"
+	effect_desc = "has a chance to make another once you eat it."
 	cookietype = /obj/item/slime_cookie/cerulean
 	cookies = 3 //You're gonna get more.
 
@@ -271,6 +288,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/pyrite
 	colour = "pyrite"
+	effect_desc = "randomly colors the target."
 	cookietype = /obj/item/slime_cookie/pyrite
 
 /obj/item/slime_cookie/pyrite
@@ -312,6 +330,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/red
 	colour = "red"
+	effect_desc = "creates a spatter of blood on the floor, while also restoring some of the target's blood."
 	cookietype = /obj/item/slime_cookie/red
 
 /obj/item/slime_cookie/red
@@ -329,6 +348,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/green
 	colour = "green"
+	effect_desc = "is absolutely disgusting, makes the target vomit, however all reagent in their body are also removed."
 	cookietype = /obj/item/slime_cookie/green
 
 /obj/item/slime_cookie/green
@@ -345,6 +365,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/pink
 	colour = "pink"
+	effect_desc = "makes the target want to spread the love."
 	cookietype = /obj/item/slime_cookie/pink
 
 /obj/item/slime_cookie/pink
@@ -358,6 +379,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/gold
 	colour = "gold"
+	effect_desc = "has a gold coin inside."
 	cookietype = /obj/item/slime_cookie/gold
 
 /obj/item/slime_cookie/gold
@@ -376,6 +398,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/oil
 	colour = "oil"
+	effect_desc = "slows anyone next to the user."
 	cookietype = /obj/item/slime_cookie/oil
 
 /obj/item/slime_cookie/oil
@@ -389,6 +412,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/black
 	colour = "black"
+	effect_desc = "makes the target look like a spooky skeleton for a little bit."
 	cookietype = /obj/item/slime_cookie/black
 
 /obj/item/slime_cookie/black
@@ -402,6 +426,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/lightpink
 	colour = "light pink"
+	effect_desc = "makes the target, and anyone next to the target, pacifistic for a small amount of time."
 	cookietype = /obj/item/slime_cookie/lightpink
 
 /obj/item/slime_cookie/lightpink
@@ -415,6 +440,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/adamantine
 	colour = "adamantine"
+	effect_desc = "increases the target's resistance to burn damage."
 	cookietype = /obj/item/slime_cookie/adamantine
 
 /obj/item/slime_cookie/adamantine
@@ -428,6 +454,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/rainbow
 	colour = "rainbow"
+	effect_desc = "has the effect of a random cookie."
 
 /obj/item/slimecross/consuming/rainbow/spawncookie()
 	var/cookie_type = pick(subtypesof(/obj/item/slime_cookie))

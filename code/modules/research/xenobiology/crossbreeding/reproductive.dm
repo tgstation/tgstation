@@ -44,7 +44,7 @@ Reproductive extracts:
 		to_chat(user, "<span class='notice'>You feed [monkeycube] to [src], and it pulses gently.</span>")
 		playsound(src, 'sound/items/eatfood.ogg', 20, 1)
 
-/obj/item/slimecross/burning/examine(mob/user)
+/obj/item/slimecross/reproductive/examine(mob/user)
     ..()
     if(effect_desc)
         to_chat(user, "<span class='notice'>[effect_desc]</span>")

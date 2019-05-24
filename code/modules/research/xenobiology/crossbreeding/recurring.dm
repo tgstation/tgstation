@@ -7,7 +7,6 @@ Recurring extracts:
 	name = "recurring extract"
 	desc = "A tiny, glowing core, wrapped in several layers of goo."
 	effect = "recurring"
-	effect_desc = "Every couple of seconds this special extract gains new uses."
 	icon_state = "recurring"
 	var/extract_type
 	var/obj/item/slime_extract/extract
@@ -42,11 +41,6 @@ Recurring extracts:
 /obj/item/slimecross/recurring/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSobj,src)
-
-/obj/item/slimecross/recurring/examine(mob/user)
-    ..()
-    if(effect_desc)
-        to_chat(user, "<span class='notice'>[effect_desc]</span>")
 
 /obj/item/slimecross/recurring/grey
 	extract_type = /obj/item/slime_extract/grey
