@@ -213,6 +213,7 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 	. = C
 	if(C.dna)
 		dna.copy_dna(C.dna)
+	C.updateappearance()
 	C.real_name = new_real_name
 	mind.current = C
 	C.mind = mind

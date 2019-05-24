@@ -25,7 +25,7 @@
 
 	// The baseturf cache is a typecache of what counts as a baseturf to be left behind
 	var/list/baseturf_cache
-	
+
 	if(old_dock) //Dock overwrites
 		underlying_turf_type = old_dock.turf_type
 		underlying_baseturf_type = old_dock.baseturf_type
@@ -106,6 +106,8 @@
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
 
+	bolt_and_unbolt_exits(1)
+
 	return DOCKING_SUCCESS
 
 /obj/docking_port/mobile/proc/preflight_check(
@@ -116,7 +118,7 @@
 	underlying_turf_type,
 	baseturf_cache,
 	)
-	
+
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
 		var/turf/oldT = old_turfs[i]
@@ -186,7 +188,7 @@
 	underlying_turf_type,
 	underlying_baseturf_type,
 	)
-	
+
 	underlying_old_area.afterShuttleMove()
 
 	// Parallax handling

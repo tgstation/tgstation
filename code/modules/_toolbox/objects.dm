@@ -494,3 +494,32 @@
 	glass_type = /obj/machinery/door/airlock/glass_large/security
 	airlock_type = /obj/machinery/door/airlock/glass_large/security
 	bound_width = 64 // 2x1
+
+//make shuttles bolt the door on launch
+/obj/docking_port/mobile/proc/bolt_and_unbolt_exits(unbolt = 0)
+	var/area/A = get_area(src)
+	var/list/airlocks = list()
+	for(var/area/related in A.related)
+		for(var/obj/machinery/door/airlock/airlock in related)
+			if(airlock in airlocks)
+				continue
+			airlocks += airlock
+			var/has_space = 0
+			for(var/turf/T in orange(1,airlock))
+				if(T.x != airlock.x && T.y != airlock.y)
+					continue
+				if(T.density)
+					continue
+				if(istype(T,/turf/open/space))
+					has_space = 1
+					break
+				var/area/TA = get_area(T)
+				if(TA.type != related.type)
+					has_space = 1
+					break
+			if(has_space)
+				if(!unbolt)
+					airlock.bolt()
+				else
+					airlock.unbolt()
+

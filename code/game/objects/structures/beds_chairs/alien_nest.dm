@@ -60,6 +60,15 @@
 	if(has_buckled_mobs())
 		unbuckle_all_mobs()
 
+	var/timer = 0
+	if(istype(M,/mob/living/silicon/robot))
+		timer = 30
+
+	if(timer > 0)
+		M.visible_message("[user.name] begins to secrete a thick vile goo on to [M.name]!")
+		if(!do_after(user, timer, 0, M))
+			return
+
 	if(buckle_mob(M))
 		M.visible_message(\
 			"[user.name] secretes a thick vile goo, securing [M.name] into [src]!",\

@@ -164,6 +164,8 @@
 "dh" = (/obj/effect/turf_decal/stripes/line{dir = 6},/turf/open/floor/plating/airless,/area/space/nearstation)
 "di" = (/obj/item/weldingtool,/turf/open/space/basic,/area/space/nearstation)
 "dj" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plating/airless,/area/engine/engineering)
+"dk" = (/obj/effect/turf_decal/bot,/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plating/airless,/area/engine/engineering)
+"dl" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/power/tesla_coil{anchored = 1},/obj/structure/cable/yellow{icon_state = "0-4"},/turf/open/floor/plating/airless,/area/engine/engineering)
 "dm" = (/obj/structure/cable{icon_state = "1-2"},/obj/machinery/light{dir = 8},/obj/structure/sign/warning/radiation/rad_area{pixel_x = -32},/turf/open/floor/plating/airless,/area/engine/engineering)
 "dp" = (/obj/structure/cable{icon_state = "1-2"},/obj/machinery/light{dir = 4},/obj/structure/sign/warning/radiation/rad_area{pixel_x = 32},/turf/open/floor/plating/airless,/area/engine/engineering)
 "dt" = (/obj/structure/lattice,/turf/open/space,/area/space/nearstation)
@@ -198,9 +200,9 @@ cocococococoaTczcscscAcBcCcCcCcCcDcCcCcCcCcEcFcscsczaTaTcGcH
 cncocncocncoaTcIcJcKcLcMbJbUbUbJbUbUbUbUbJcPcLcKcQcRaTaTcScT
 cncocncocncoaTczcscKcUcrbUctcncncncocncnbUcvdacKcsczaTdbdbdb
 cocococococoaTcwcxcKcUdcbUcncNcncncocncnbUdgdacKcpcqaTcncoaa
-cncocncocncoaTaTczcOcUcrbUcococVcWcXcncnbJcvdacOczaTaTcncoaa
+cncocncocncoaTaTczcOcUcrbUcococVcWcXcncnbJdkcLcOczaTaTcncoaa
 cncocncocncoaTaTdmcscUdcbUcncncYcZddcncnbUdgdacsdpaTaTcococo
-cocococococoaTaTczcOcLcMbJcncndedfdhcocobUcPcLcOczaTaTcncoaa
+cocococococoaTaTczcOcLcMbJcncndedfdhcocobUdldacOczaTaTcncoaa
 cncocncocncoaTcpcqcKcUdcbUcncncocncncncnbUdgdacKcwcxaTcocoaa
 cndtcndtcndtaTczcscKducrbUcncncocncncndibUcvdwcKcsczaTcncoaa
 cndtcndtcndtaTcwcJcKcscMbJbUbUbUbUbJbUbUbJcPcscKcQcqaTcncocn

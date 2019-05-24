@@ -51,6 +51,7 @@
 			H.regenerate_icons()
 	if(visualsOnly)
 		return
+	box.handle_item_insertion(new /obj/item/stimpack/perseus(), 1, H)
 	H.equip_to_slot_or_del(box, slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/book/manual/sop(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/gun/energy/ep90(H), slot_s_store)
