@@ -186,7 +186,7 @@
 				blood_data["changeling"] = ling
 		else if(last_mind)
 			blood_data["mind"] = last_mind
-			ling = mind.has_antag_datum(/datum/antagonist/changeling)
+			ling = last_mind.has_antag_datum(/datum/antagonist/changeling)
 			if(istype(ling) && !ling.was_absorbed && ling.chem_recharge_slowdown < 1)
 				blood_data["changeling"] = ling
 		if(ckey)
