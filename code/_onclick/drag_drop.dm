@@ -102,9 +102,6 @@
 /obj/screen/click_catcher/IsAutoclickable()
 	. = 1
 
-/datum/proc/onMouseMove(object, location, control, params)
-	return
-
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	var/list/L = params2list(params)
 	if (L["middle"])
