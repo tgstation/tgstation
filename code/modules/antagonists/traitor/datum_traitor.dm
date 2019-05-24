@@ -242,14 +242,18 @@
 		return
 	var/mob/traitor_mob=owner.current
 
-	to_chat(traitor_mob, "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>")
-	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='danger'>[GLOB.syndicate_code_phrase]</span>")
-	to_chat(traitor_mob, "<B>Code Response</B>: <span class='danger'>[GLOB.syndicate_code_response]</span>")
+	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
+	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	antag_memory += "<b>Code Phrase</b>: [GLOB.syndicate_code_phrase]<br>"
-	antag_memory += "<b>Code Response</b>: [GLOB.syndicate_code_response]<br>"
+	to_chat(traitor_mob, "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:</B></U>")
+	to_chat(traitor_mob, "<B>Code Phrase</B>: <font color=blue>[phrases]</font>")
+	to_chat(traitor_mob, "<B>Code Response</B>: <font color=red>[responses]</font>")
 
-	to_chat(traitor_mob, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+	antag_memory += "<b>Code Phrase</b>: <font color=blue>[phrases]</font><br>"
+	antag_memory += "<b>Code Response</b>: <font color=red>[responses]</font><br>"
+
+	to_chat(traitor_mob, "Use the codewords during regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+	to_chat(traitor_mob, "<font size=3 color=red>You memorize the codewords, allowing you to recognise them when heard.</font>")
 
 /datum/antagonist/traitor/proc/add_law_zero()
 	var/mob/living/silicon/ai/killer = owner.current
