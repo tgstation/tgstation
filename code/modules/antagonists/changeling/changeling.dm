@@ -576,3 +576,9 @@
 
 /datum/antagonist/changeling/xenobio/antag_listing_name()
 	return ..() + "(Xenobio)"
+
+/datum/proc/changelingTest(datum/reagents/holder ,datum/reagent/blood/B, temperature)
+	if(holder && istype(B) && B.data && temperature > 350 && B.data["changeling"])
+		playsound(holder.my_atom, 'sound/magic/demon_consume.ogg', 50, 1)
+		holder.my_atom.visible_message("<span class='warning'>Grotesce tenticles sprout from the blood, trying to flee their impending doom.</span>")
+		holder.remove_reagent(B.id, B.volume, TRUE)
