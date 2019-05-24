@@ -101,6 +101,7 @@
 #define BLIND_LAYER 20.3
 #define CRIT_LAYER 20.4
 #define CURSE_LAYER 20.5
+#define INFECTION_LAYER 20.6
 
 #define HUD_PLANE 21
 #define HUD_LAYER 21

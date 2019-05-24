@@ -136,10 +136,7 @@
 	for(var/obj/structure/infection/normal/I in range(1, src) + (range(3, src) - range(2, src)))
 		if((I.x == x || I.y == y) && get_dist(I, src) > 2)
 			continue
-		var/turf/T = get_turf(I)
-		I.change_to(/obj/structure/infection/shield/reflective/strong, overmind)
-		var/obj/structure/infection/shield/reflective/strong/S = locate(/obj/structure/infection/shield/reflective/strong) in T.contents
-		S.point_return = 0
+		INVOKE_ASYNC(I, .proc/change_to, /obj/structure/infection/shield/reflective/strong/core, overmind)
 	var/list/turrets = list()
 	turrets += locate(x-2,y+2,z)
 	turrets += locate(x+2,y+2,z)
@@ -148,11 +145,7 @@
 	for(var/turf/T in turrets)
 		var/obj/structure/infection/normal/I = locate(/obj/structure/infection/normal) in T.contents
 		if(I && prob(15))
-			var/obj/structure/infection/turret/core/S = I.change_to(/obj/structure/infection/turret/core, overmind)
-			for(var/datum/component/infection/upgrade/U in S.get_upgrades())
-				var/times = U.times
-				for(var/i = 1 to times)
-					U.do_upgrade(S)
+			INVOKE_ASYNC(I, .proc/change_to, /obj/structure/infection/turret/core, overmind)
 	INVOKE_ASYNC(src, .proc/pulseNodes)
 	shootSmoke()
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)

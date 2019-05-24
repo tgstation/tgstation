@@ -1,11 +1,12 @@
 /obj/structure/infection/turret
 	name = "infection turret"
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "blob"
+	icon_state = "infection_turret_icon" // needed so when building you can see the type
 	desc = "A solid wall with a radiating material on the inside."
 	max_integrity = 150
 	point_return = 10
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	build_time = 100
 	var/frequency = 1 // amount of times the turret will fire per process tick (1 second)
 	var/scan_range = 7 // range to search for targets
 	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
@@ -136,7 +137,6 @@
 	name = "strong spore"
 	icon_state = "tracking_bullet"
 	damage = 20
-	homing_turn_speed = 15
 
 /obj/item/projectile/bullet/infection/infernal
 	name = "burning spore"
@@ -167,12 +167,15 @@
 /obj/structure/infection/turret/core
 	name = "core turret"
 	desc = "A turret for the core of the infection. It holds destructive capabilities that many might find unbeatable."
-	point_return = 0
+	point_return = -1
 	projectile_type = /obj/item/projectile/bullet/infection/core
 	upgrade_types = list(/datum/component/infection/upgrade/structure/turret/fire_rate,
-						 /datum/component/infection/upgrade/structure/turret/home_target,
 						 /datum/component/infection/upgrade/structure/turret/spore_bullets)
 	scan_range = 5
+
+/obj/structure/infection/turret/core/Initialize()
+	. = ..()
+	max_upgrade()
 
 /obj/structure/infection/turret/resistant
 	name = "resistant turret"

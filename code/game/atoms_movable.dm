@@ -3,6 +3,7 @@
 	var/last_move = null
 	var/last_move_time = 0
 	var/anchored = FALSE
+	var/spacemove_backup = 0 // if this is something mobs can use to push off of and move through space (fringe case of moving off of non dense objects you can pass through)
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
 	var/pull_force = PULL_FORCE_DEFAULT

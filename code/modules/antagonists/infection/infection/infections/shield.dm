@@ -8,6 +8,7 @@
 	explosion_block = 3
 	point_return = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	build_time = 100
 	var/damaged_icon = "blob_shield_damaged"
 	var/damaged_desc = "A wall of twitching tendrils."
 	var/damaged_name = "weakened strong infection"
@@ -61,3 +62,7 @@
 	damaged_name = "weakened strong reflective infection"
 	icon_state = "blob_idle_glow"
 	brute_resist = 0.25
+
+/obj/structure/infection/shield/reflective/strong/core
+	name = "core reflective infection"
+	point_return = 0

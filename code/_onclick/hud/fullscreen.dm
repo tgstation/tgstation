@@ -125,6 +125,11 @@
 	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 
+/obj/screen/fullscreen/infection_covered
+	icon_state = "infection"
+	layer = INFECTION_LAYER
+	plane = FULLSCREEN_PLANE
+
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
 

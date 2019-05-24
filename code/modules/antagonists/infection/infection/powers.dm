@@ -108,8 +108,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	if(!istype(I, /obj/structure/infection/normal))
 		to_chat(src, "<span class='warning'>Unable to use this infection, find a normal one.</span>")
 		return
-	if(locate(/obj/structure/infection/core) in orange(10, T))
-		to_chat(src, "<span class='warning'>You cannot place structures so close to the core!</span>")
+	if(I.building)
+		to_chat(src, "<span class='warning'>This infection is currently being built on already!</span>")
+		return
 	if(needsNode && nodes_required)
 		if(!(locate(/obj/structure/infection/node) in orange(3, T)) && !(locate(/obj/structure/infection/core) in orange(4, T)))
 			to_chat(src, "<span class='warning'>You need to place this infection closer to a node or core!</span>")

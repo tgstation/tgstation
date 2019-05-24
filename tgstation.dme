@@ -363,6 +363,7 @@
 #include "code\datums\components\mirage_border.dm"
 #include "code\datums\components\mood.dm"
 #include "code\datums\components\nanites.dm"
+#include "code\datums\components\nobeaconcrossing.dm"
 #include "code\datums\components\ntnet_interface.dm"
 #include "code\datums\components\orbiter.dm"
 #include "code\datums\components\paintable.dm"

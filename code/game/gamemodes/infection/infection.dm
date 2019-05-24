@@ -55,10 +55,8 @@
 
 /datum/game_mode/infection/check_finished()
 	var/mob/camera/commander/C = GLOB.infection_commander
-	// end if beacons are gone (infection win) or core is destroyed (station win)
-	if(GLOB.infection_beacons.len && C)
-		return FALSE
-	if(C && !C.placed)
+	// end if commander is dead, or if beacons are destroyed (handled in antagonist win check)
+	if(C)
 		return FALSE
 	return TRUE
 

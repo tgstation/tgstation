@@ -18,3 +18,6 @@
 
 /datum/component/forced_gravity/proc/turf_gravity_check(datum/source, atom/checker, list/gravs)
 	return gravity_check(null, parent, gravs)
+
+/datum/component/forced_gravity/space
+	ignore_space = TRUE

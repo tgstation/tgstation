@@ -1,4 +1,4 @@
-#define DOOM_CLOCK_EVENT_DELAY 600 // 10 minutes per event
+#define DOOM_CLOCK_EVENT_DELAY 6000 // 10 minutes per event
 
 /datum/antagonist/infection
 	name = "Infection"

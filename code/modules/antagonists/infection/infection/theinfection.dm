@@ -4,6 +4,7 @@
 	light_range = 4
 	desc = "A thick wall of writhing tendrils."
 	density = FALSE
+	spacemove_backup = TRUE
 	opacity = 0
 	anchored = TRUE
 	layer = TABLE_LAYER
@@ -20,6 +21,8 @@
 	var/mob/camera/commander/overmind
 	var/list/angles = list() // possible angles for the node to expand on
 	var/timecreated
+	var/build_time = 0 // time it takes to build this type when created (in deciseconds)
+	var/building = FALSE // if the infection is being used to create another currently
 	var/list/upgrade_types = list() // the types of upgrades
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
@@ -78,6 +81,12 @@
 
 /obj/structure/infection/proc/get_upgrades()
 	return GetComponents(/datum/component/infection/upgrade)
+
+/obj/structure/infection/proc/max_upgrade()
+	for(var/datum/component/infection/upgrade/U in get_upgrades())
+		var/times = U.times
+		for(var/i = 1 to times)
+			U.do_upgrade()
 
 /obj/structure/infection/proc/show_description()
 	to_chat(overmind, "<span class='cultlarge'>Upgrades List</span>")
@@ -246,7 +255,7 @@
 	return
 
 /obj/structure/infection/ex_act(severity)
-	take_damage(rand(30/severity, 60/severity) * 4, BRUTE, "bomb", 0)
+	take_damage(30/severity * 4, BRUTE, "bomb", 0)
 
 /obj/structure/infection/tesla_act(power)
 	..()
@@ -302,7 +311,18 @@
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for infection")
 		return
+	if(building)
+		return // no
 	var/obj/structure/infection/I = new type(src.loc, controller)
+	var/structure_build_time = I.build_time
+	icon_state = I.icon_state
+	alpha = 100 // faded out while building new type
+	animate(src, alpha = 200, time = structure_build_time)
+	name = "building [I.name]"
+	building = TRUE
+	qdel(I)
+	sleep(structure_build_time)
+	I = new type(src.loc, controller)
 	I.creation_action()
 	I.update_icon()
 	I.setDir(dir)
@@ -318,6 +338,7 @@
 	max_integrity = 25
 	health_regen = 1
 	brute_resist = 0.25
+	var/overlay_fade_time = 40 // time in deciseconds for overlay on entering and exiting to fade in and fade out
 
 /obj/structure/infection/normal/show_infection_menu(var/mob/camera/commander/C)
 	return
@@ -334,18 +355,19 @@
 	if(ismob(mover))
 		var/mob/M = mover
 		M.add_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update=TRUE, priority=100, multiplicative_slowdown=3)
-		var/obj/screen/fullscreen/added_overlay = M.overlay_fullscreen("infectionvision", /obj/screen/fullscreen/curse, 1)
-		added_overlay.alpha = 0
-		animate(added_overlay, alpha = 255, time = 10)
+		M.overlay_fullscreen("infectionvision", /obj/screen/fullscreen/infection_covered, 1)
 
 /obj/structure/infection/normal/Uncrossed(atom/movable/mover)
-	if(ismob(mover) && !locate(/obj/structure/infection/normal) in get_turf(mover))
-		var/mob/M = mover
-		M.remove_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update = TRUE)
-		M.clear_fullscreen("infectionvision")
+	if(!locate(/obj/structure/infection/normal) in get_turf(mover))
+		if(ismob(mover))
+			var/mob/M = mover
+			M.remove_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update = TRUE)
+			M.clear_fullscreen("infectionvision", overlay_fade_time)
 
 /obj/structure/infection/normal/update_icon()
 	..()
+	if(building)
+		return
 	if(obj_integrity <= 15)
 		icon_state = "blob_damaged"
 		name = "fragile infection"

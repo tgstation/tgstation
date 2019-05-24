@@ -236,7 +236,7 @@
 				var/mob/M = AM
 				if(M.buckled)
 					continue
-			if(!AM.CanPass(src) || AM.density)
+			if(!AM.CanPass(src) || AM.density || AM.spacemove_backup)
 				if(AM.anchored)
 					return AM
 				if(pulling == AM)
