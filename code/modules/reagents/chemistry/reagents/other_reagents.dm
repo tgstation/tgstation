@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null,"changeling"=null)
 	name = "Blood"
 	id = "blood"
 	color = "#C80000" // rgb: 200, 0, 0
@@ -31,6 +31,11 @@
 				C.reagents.add_reagent("toxin", reac_volume * 0.5)
 			else
 				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		if((method == INJECT || method == INGEST || method == PATCH || method == VAPOR) && data && data["changeling"] && C.mind)
+			if(C.mind.has_antag_datum(/datum/antagonist/changeling) == data["changeling"])
+				to_chat(C, "<span class='notice'>This substance is part of us.</span>")
+			else
+				to_chat(C, "<span class='warning'>This substance comes from another changeling!</span>")
 
 
 /datum/reagent/blood/on_new(list/data)
@@ -61,6 +66,11 @@
 					if(!istype(D, /datum/disease/advance))
 						preserve += D
 				data["viruses"] = preserve
+		if(mix_data["changeling"])
+			if(data["changeling"] && data["changeling"] != mix_data["changeling"])
+				data["changeling"] = TRUE
+			else
+				data["changeling"] = mix_data["changeling"]
 	return 1
 
 /datum/reagent/blood/proc/get_diseases()
