@@ -344,10 +344,9 @@
 	if(on)
 		var/BR = brightness
 		var/PO = bulb_power
+		var/CO = bulb_colour
 		if(color)
 			CO = color
-		else
-			CO = bulb_colour
 		var/area/A = get_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
