@@ -147,14 +147,14 @@
 	name = "bicaridine pill"
 	desc = "Used to slowly heal bruises."
 	icon_state = "pill9"
-	list_reagents = list("bicaridine" = 24)
+	list_reagents = list("bicaridine" = 12)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/kelotane
 	name = "kelotane pill"
 	desc = "Used to slowly heal burns"
 	icon_state = "pill11"
-	list_reagents = list("kelotane" = 24)
+	list_reagents = list("kelotane" = 12)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/salicyclic
