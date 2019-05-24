@@ -45,10 +45,7 @@ Stabilized extracts:
 		S.linked_extract = src
 		STOP_PROCESSING(SSobj,src)
 
-/obj/item/slimecross/stabilized/examine(mob/user)
-    ..()
-    if(effect_desc)
-        to_chat(user, "<span class='notice'>[effect_desc]</span>")
+
 
 //Colors and subtypes:
 /obj/item/slimecross/stabilized/grey

@@ -27,11 +27,6 @@ Burning extracts:
 	qdel(src)
 	return
 
-/obj/item/slimecross/burning/examine(mob/user)
-    ..()
-    if(effect_desc)
-        to_chat(user, "<span class='notice'>[effect_desc]</span>")
-
 /obj/item/slimecross/burning/grey
 	colour = "grey"
 	effect_desc = "It creates a hungry and speedy slime that will love you forever."

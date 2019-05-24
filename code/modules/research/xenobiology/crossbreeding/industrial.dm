@@ -51,11 +51,6 @@ Industrial extracts:
 	else
 		icon_state = "industrial_still"
 
-/obj/item/slimecross/industrial/examine(mob/user)
-    ..()
-    if(effect_desc)
-        to_chat(user, "<span class='notice'>[effect_desc]</span>")
-
 /obj/item/slimecross/industrial/grey
 	colour = "grey"
 	effect_desc = "Produces monkey cubes."

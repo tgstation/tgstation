@@ -38,6 +38,11 @@ To add a crossbreed:
 	throw_speed = 3
 	throw_range = 6
 
+/obj/item/slimecross/examine(mob/user)
+    ..()
+    if(effect_desc)
+        to_chat(user, "<span class='notice'>[effect_desc]</span>")
+
 /obj/item/slimecross/Initialize()
 	. = ..()
 	name =  effect + " " + colour + " extract"

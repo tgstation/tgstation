@@ -28,11 +28,6 @@ Charged extracts:
 	qdel(src)
 	return
 
-/obj/item/slimecross/charged/examine(mob/user)
-    ..()
-    if(effect_desc)
-        to_chat(user, "<span class='notice'>[effect_desc]</span>")
-
 /obj/item/slimecross/charged/grey
 	colour = "grey"
 	effect_desc = "Produces a slime reviver potion, revives dead slimes."

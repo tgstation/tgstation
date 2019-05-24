@@ -14,7 +14,6 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/proc/core_effect_before(mob/living/carbon/human/target, mob/user)
 	return
 
-
 /obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
 	. = ..()
 	if(!prox || !isliving(target))
@@ -34,11 +33,6 @@ Regenerative extracts:
 	core_effect(H, user)
 	playsound(target, 'sound/effects/splat.ogg', 40, 1)
 	qdel(src)
-	
-/obj/item/slimecross/regenerative/examine(mob/user)
-    ..()
-    if(effect_desc)
-        to_chat(user, "<span class='notice'>Fully heals the target and [effect_desc]</span>")
 
 /obj/item/slimecross/regenerative/grey
 	colour = "grey" //Has no bonus effect.
@@ -55,14 +49,14 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/purple
 	colour = "purple"
-	effect_desc = "injects them with some regen jelly."
+	effect_desc = "Fully heals the target and injects them with some regen jelly."
 
 /obj/item/slimecross/regenerative/purple/core_effect(mob/living/target, mob/user)
 	target.reagents.add_reagent("regen_jelly",10)
 
 /obj/item/slimecross/regenerative/blue
 	colour = "blue"
-	effect_desc = "makes the floor wet."
+	effect_desc = "Fully heals the target and makes the floor wet."
 
 /obj/item/slimecross/regenerative/blue/core_effect(mob/living/target, mob/user)
 	if(isturf(target.loc))
@@ -72,7 +66,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/metal
 	colour = "metal"
-	effect_desc = "encases the target in a locker."
+	effect_desc = "Fully heals the target and encases the target in a locker."
 
 /obj/item/slimecross/regenerative/metal/core_effect(mob/living/target, mob/user)
 	target.visible_message("<span class='warning'>The milky goo hardens and reshapes itself, encasing [target]!</span>")
@@ -83,7 +77,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/yellow
 	colour = "yellow"
-	effect_desc = "fully recharges a single item on the target."
+	effect_desc = "Fully heals the target and fully recharges a single item on the target."
 
 /obj/item/slimecross/regenerative/yellow/core_effect(mob/living/target, mob/user)
 	var/list/batteries = list()
@@ -97,7 +91,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/darkpurple
 	colour = "dark purple"
-	effect_desc = "gives them purple clothing if they are naked."
+	effect_desc = "Fully heals the target and gives them purple clothing if they are naked."
 
 /obj/item/slimecross/regenerative/darkpurple/core_effect(mob/living/target, mob/user)
 	var/equipped = 0
@@ -110,7 +104,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/darkblue
 	colour = "dark blue"
-	effect_desc = "fireproofs the targets clothes."
+	effect_desc = "Fully heals the target and fireproofs the targets clothes."
 
 /obj/item/slimecross/regenerative/darkblue/core_effect(mob/living/target, mob/user)
 	if(!ishuman(target))
@@ -138,7 +132,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/silver
 	colour = "silver"
-	effect_desc = "makes the target's belly feel round and full."
+	effect_desc = "Fully heals the target and makes the target's belly feel round and full."
 
 /obj/item/slimecross/regenerative/silver/core_effect(mob/living/target, mob/user)
 	target.set_nutrition(NUTRITION_LEVEL_FULL - 1)
@@ -146,7 +140,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/bluespace
 	colour = "bluespace"
-	effect_desc = "teleports the target to where it was created."
+	effect_desc = "Fully heals the target and teleports the target to where it was created."
 	var/turf/open/T
 
 /obj/item/slimecross/regenerative/bluespace/core_effect(mob/living/target, mob/user)
@@ -161,14 +155,14 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/sepia
 	colour = "sepia"
-	effect_desc = "stops time."
+	effect_desc = "Fully heals the target and stops time."
 
 /obj/item/slimecross/regenerative/sepia/core_effect(mob/living/target, mob/user)
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user,target))
 
 /obj/item/slimecross/regenerative/cerulean
 	colour = "cerulean"
-	effect_desc = "makes a second regenerative core with no special effects."
+	effect_desc = "Fully heals the target and makes a second regenerative core with no special effects."
 
 /obj/item/slimecross/regenerative/cerulean/core_effect(mob/living/target, mob/user)
 	src.forceMove(user.loc)
@@ -180,7 +174,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/pyrite
 	colour = "pyrite"
-	effect_desc = "randomly colors the target."
+	effect_desc = "Fully heals the target and randomly colors the target."
 
 /obj/item/slimecross/regenerative/pyrite/core_effect(mob/living/target, mob/user)
 	target.visible_message("<span class='warning'>The milky goo coating [target] leaves [target.p_them()] a different color!</span>")
@@ -188,7 +182,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/red
 	colour = "red"
-	effect_desc = "injects the target with some ephedrine."
+	effect_desc = "Fully heals the target and injects the target with some ephedrine."
 
 /obj/item/slimecross/regenerative/red/core_effect(mob/living/target, mob/user)
 	to_chat(target, "<span class='notice'>You feel... <i>faster.</i></span>")
@@ -196,7 +190,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/green
 	colour = "green"
-	effect_desc = "changes the spieces or color of a slime or jellyperson."
+	effect_desc = "Fully heals the target and changes the spieces or color of a slime or jellyperson."
 
 /obj/item/slimecross/regenerative/green/core_effect(mob/living/target, mob/user)
 	if(isslime(target))
@@ -209,7 +203,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/pink
 	colour = "pink"
-	effect_desc = "injects the target with some krokodil."
+	effect_desc = "Fully heals the target and injects the target with some krokodil."
 
 /obj/item/slimecross/regenerative/pink/core_effect(mob/living/target, mob/user)
 	to_chat(target, "<span class='notice'>You feel more calm.</span>")
@@ -217,7 +211,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/gold
 	colour = "gold"
-	effect_desc = "produces a random coin."
+	effect_desc = "Fully heals the target and produces a random coin."
 
 /obj/item/slimecross/regenerative/gold/core_effect(mob/living/target, mob/user)
 	var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
@@ -227,7 +221,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/oil
 	colour = "oil"
-	effect_desc = "flashes everyone in sight."
+	effect_desc = "Fully heals the target and flashes everyone in sight."
 
 /obj/item/slimecross/regenerative/oil/core_effect(mob/living/target, mob/user)
 	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
@@ -236,7 +230,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/black
 	colour = "black"
-	effect_desc = "creates a duplicate of the target, that drops dead soon after."
+	effect_desc = "Fully heals the target and creates a duplicate of the target, that drops dead soon after."
 
 /obj/item/slimecross/regenerative/black/core_effect_before(mob/living/target, mob/user)
 	var/dummytype = target.type
@@ -255,7 +249,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/lightpink
 	colour = "light pink"
-	effect_desc = "also heals the user."
+	effect_desc = "Fully heals the target and also heals the user."
 
 /obj/item/slimecross/regenerative/lightpink/core_effect(mob/living/target, mob/user)
 	if(!isliving(user))
@@ -268,14 +262,14 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/adamantine
 	colour = "adamantine"
-	effect_desc = "boosts the target's armor."
+	effect_desc = "Fully heals the target and boosts the target's armor."
 
 /obj/item/slimecross/regenerative/adamantine/core_effect(mob/living/target, mob/user) //WIP - Find out why this doesn't work.
 	target.apply_status_effect(STATUS_EFFECT_SLIMESKIN)
 
 /obj/item/slimecross/regenerative/rainbow
 	colour = "rainbow"
-	effect_desc = "temporarily makes the user immortal, yet pacifistic."
+	effect_desc = "Fully heals the target and temporarily makes the user immortal, yet pacifistic."
 
 /obj/item/slimecross/regenerative/rainbow/core_effect(mob/living/target, mob/user)
 	target.apply_status_effect(STATUS_EFFECT_RAINBOWPROTECTION)

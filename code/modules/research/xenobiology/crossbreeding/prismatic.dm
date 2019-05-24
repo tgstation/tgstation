@@ -18,11 +18,6 @@ Prismatic extracts:
 	target.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
 	playsound(target, 'sound/effects/slosh.ogg', 20, 1)
 
-/obj/item/slimecross/prismatic/examine(mob/user)
-    ..()
-    if(effect_desc)
-        to_chat(user, "<span class='notice'>[effect_desc]</span>")
-
 /obj/item/slimecross/prismatic/grey/
 	colour = "grey"
 	desc = "It's constantly wet with a pungent-smelling, clear chemical."

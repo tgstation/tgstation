@@ -27,11 +27,6 @@ Chilling extracts:
 	qdel(src)
 	return
 
-/obj/item/slimecross/chilling/examine(mob/user)
-    ..()
-    if(effect_desc)
-        to_chat(user, "<span class='notice'>[effect_desc]</span>")
-
 /obj/item/slimecross/chilling/grey
 	colour = "grey"
 	effect_desc = "Creates some slime barrier cubes, when used they make a slimy barricade."
