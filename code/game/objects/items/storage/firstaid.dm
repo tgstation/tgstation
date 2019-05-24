@@ -233,6 +233,22 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/charcoal(src)
 
+/obj/item/storage/pill_bottle/bicaridine
+	name = "bottle of bicaridine pills"
+	desc = "Contains pills used to counter blunt trauma."
+
+/obj/item/storage/pill_bottle/bicaridine/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/bicaridine(src)
+
+/obj/item/storage/pill_bottle/kelotane
+	name = "bottle of kelotane pills"
+	desc = "Contains pills used to counter burns."
+
+/obj/item/storage/pill_bottle/kelotane/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/kelotane(src)
+
 /obj/item/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"
 	desc = "Contains pills used to stabilize patients."
