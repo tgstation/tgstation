@@ -47940,13 +47940,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"clO" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
 "clQ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -55466,20 +55459,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"dQC" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/space,
-/area/solar/port/fore)
 "dUO" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -55939,20 +55918,6 @@
 "hZk" = (
 /turf/open/floor/plasteel,
 /area/science/nanite)
-"iaI" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/space,
-/area/solar/port/aft)
 "ibG" = (
 /obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/bot,
@@ -56503,20 +56468,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
-"lNg" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/space/basic,
-/area/solar/port/aft)
 "lNB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -56565,20 +56516,6 @@
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"mll" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/space/basic,
-/area/solar/starboard/fore)
 "mvb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white/corner{
@@ -56634,20 +56571,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/explab)
-"mKx" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/space/basic,
-/area/solar/starboard/aft)
 "mMA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -57130,20 +57053,6 @@
 	dir = 4
 	},
 /area/science/explab)
-"qtY" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/space,
-/area/solar/starboard/aft)
 "quT" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -57561,20 +57470,6 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
-"tVp" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/space/basic,
-/area/solar/port/fore)
 "tXL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -58105,20 +58000,6 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"xKR" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/space,
-/area/solar/starboard/fore)
 "xXe" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "telelab";
@@ -73411,15 +73292,15 @@ aaa
 abY
 aaa
 acV
-tVp
+adu
 adZ
 aaf
 acV
-tVp
+adu
 adZ
 aaf
 acV
-tVp
+adu
 adZ
 aaa
 aaf
@@ -73506,7 +73387,7 @@ aaS
 aaa
 ccc
 ccX
-iaI
+ccX
 ccX
 ccX
 cgz
@@ -73514,7 +73395,7 @@ chL
 ciP
 cjH
 cjH
-lNg
+cjH
 cjH
 cnl
 aaa
@@ -74534,7 +74415,7 @@ aaS
 aaa
 ccc
 ccX
-iaI
+ccX
 ccX
 ccX
 cgz
@@ -74542,7 +74423,7 @@ chL
 ciP
 cjH
 cjH
-lNg
+cjH
 cjH
 cnl
 aaa
@@ -75467,15 +75348,15 @@ aaa
 aaS
 aaa
 acV
-dQC
+adz
 adZ
 aaf
 acV
-dQC
+adz
 adZ
 aaf
 acV
-dQC
+adz
 adZ
 aaa
 aaf
@@ -75562,7 +75443,7 @@ aaS
 aaa
 ccc
 ccX
-iaI
+ccX
 ccX
 ccX
 cgz
@@ -75570,7 +75451,7 @@ chL
 ciP
 cjH
 cjH
-lNg
+cjH
 cjH
 cnl
 aaa
@@ -93993,10 +93874,10 @@ aaa
 aaa
 aaf
 arj
-clO
+aua
 asZ
 aua
-clO
+aua
 awB
 axY
 azh
@@ -98340,15 +98221,15 @@ aaa
 aaS
 aaa
 ads
-mll
+adT
 aeG
 aaf
 ads
-mll
+adT
 aeG
 aaf
 ads
-mll
+adT
 aeG
 aaa
 aaf
@@ -100396,15 +100277,15 @@ aaa
 aaS
 aaa
 ads
-xKR
+adW
 aeG
 aaf
 ads
-xKR
+adW
 aeG
 aaf
 ads
-xKR
+adW
 aeG
 aaa
 aaf
@@ -107190,15 +107071,15 @@ aaa
 aaf
 aaa
 cMQ
-mKx
+crC
 cNa
 aaf
 cMQ
-mKx
+crC
 cNa
 aaf
 cMQ
-mKx
+crC
 cNa
 aaa
 aaS
@@ -109246,15 +109127,15 @@ aaa
 aaf
 aaa
 cMQ
-qtY
+crE
 cNa
 aaf
 cMQ
-qtY
+crE
 cNa
 aaf
 cMQ
-qtY
+crE
 cNa
 aaa
 aaS
