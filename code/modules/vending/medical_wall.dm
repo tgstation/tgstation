@@ -5,8 +5,8 @@
 	icon_deny = "wallmed-deny"
 	density = FALSE
 	products = list(/obj/item/reagent_containers/syringe = 3,
-		            /obj/item/reagent_containers/pill/patch/styptic = 5,
-					/obj/item/reagent_containers/pill/patch/silver_sulf = 5,
+					/obj/item/storage/pill_bottle/bicaridine = 1,
+					/obj/item/storage/pill_bottle/kelotane = 1,
 					/obj/item/reagent_containers/pill/charcoal = 2,
 					/obj/item/reagent_containers/medspray/styptic = 2,
 					/obj/item/reagent_containers/medspray/silver_sulf = 2,
