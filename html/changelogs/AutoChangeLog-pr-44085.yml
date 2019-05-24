@@ -1,0 +1,6 @@
+author: "OnlineGirlfriend"
+delete-after: True
+changes: 
+  - rscadd: "Lemonade"
+  - tweak: "Arnold Palmer recipe"
+  - imageadd: "lemonade sprite"
