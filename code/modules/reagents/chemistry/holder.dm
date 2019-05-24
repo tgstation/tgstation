@@ -347,6 +347,8 @@
 	if(flags & NO_REACT)
 		return //Yup, no reactions here. No siree.
 
+	changelingTest(src, has_reagent("blood"), chem_temp) //This is really ugly but it can't be a normal reaction so it's gotta be snowflake.
+
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
