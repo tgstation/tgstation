@@ -404,7 +404,7 @@
 					if(M.mobility_flags & MOBILITY_USE)
 						to_chat(M, "You scratch yourself violently.")
 						M.take_bodypart_damage(2 * REM)
-						. = 1
+						. = TRUE
 					else
 						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "itch", /datum/mood_event/itching)
 	..()
