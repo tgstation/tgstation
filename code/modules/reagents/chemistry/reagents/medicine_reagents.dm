@@ -231,6 +231,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 5 * REAGENTS_METABOLISM
+	overdose_threshold = 100
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -250,6 +251,9 @@
 	M.adjustFireLoss(-2*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/silver_sulfadiazine/overdose_start(mob/living/M)
+	metabolization_rate = 15 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
@@ -281,6 +285,7 @@
 	reagent_state = LIQUID
 	color = "#FF9696"
 	metabolization_rate = 5 * REAGENTS_METABOLISM
+	overdose_threshold = 60
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -301,6 +306,9 @@
 	M.adjustBruteLoss(-2*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
+	metabolization_rate = 15 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
