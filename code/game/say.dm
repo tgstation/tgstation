@@ -70,18 +70,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
-/atom/movable/proc/augment_heard(message, mob/mob_hearing)
-	if (mob_hearing.mind.special_role == ROLE_TRAITOR)
-		for (var/codeword in GLOB.syndicate_code_phrase)
-			var/regex/codeword_match = new("(" + codeword + ")", "ig")
-			message = codeword_match.Replace(message, "<font color=blue>$1</font>")
-
-		for (var/codeword in GLOB.syndicate_code_response)
-			var/regex/codeword_match = new("(" + codeword + ")", "ig")
-			message = codeword_match.Replace(message, "<font color=red>$1</font>")
-
-	return message
-
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
 
@@ -214,8 +202,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		job = "Machine"
 	else  // Unidentifiable mob
 		job = "Unknown"
-
-
 
 /atom/movable/virtualspeaker/GetJob()
 	return job

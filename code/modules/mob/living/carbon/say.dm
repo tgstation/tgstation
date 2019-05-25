@@ -46,4 +46,14 @@
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/trauma = T
 		message = trauma.on_hear(message, speaker, message_language, raw_message, radio_freq)
+
+	if (src.mind.has_antag_datum(/datum/antagonist/traitor))
+		for (var/codeword in GLOB.syndicate_code_phrase)
+			var/regex/codeword_match = new("(" + codeword + ")", "ig")
+			message = codeword_match.Replace(message, "<font color=blue>$1</font>")
+
+		for (var/codeword in GLOB.syndicate_code_response)
+			var/regex/codeword_match = new("(" + codeword + ")", "ig")
+			message = codeword_match.Replace(message, "<font color=red>$1</font>")
+			
 	return message
