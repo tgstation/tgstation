@@ -54,7 +54,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/orange
 	colour = "orange"
-	effect_desc = "Passively ties to increase or decrease the owner's body temperature to normal"
+	effect_desc = "Passively tries to increase or decrease the owner's body temperature to normal"
 
 /obj/item/slimecross/stabilized/purple
 	colour = "purple"
@@ -66,19 +66,19 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/metal
 	colour = "metal"
-	effect_desc = "Adds a sheet of material to a stack in the owners backpack, it is based on a timer."
+	effect_desc = "Every 30 seconds, adds a sheet of material to a random stack in the owner's backpack."
 
 /obj/item/slimecross/stabilized/yellow
 	colour = "yellow"
-	effect_desc = "Every couple of seconds it recharges a device on the owner by 10%."
+	effect_desc = "Every ten seconds or few seconds it recharges a device on the owner by 10%."
 
 /obj/item/slimecross/stabilized/darkpurple
 	colour = "dark purple"
-	effect_desc = "Gives the owner burning finger tips."
+	effect_desc = "Gives you burning fingertips, automatically cooking any microwavable food you hold."
 
 /obj/item/slimecross/stabilized/darkblue
 	colour = "dark blue"
-	effect_desc = "Slowly extinguishes the owner if they are on fire, also wets held items."
+	effect_desc = "Slowly extinguishes the owner if they are on fire, also wets items like monkey cubes, creating a monkey."
 
 /obj/item/slimecross/stabilized/silver
 	colour = "silver"
@@ -86,7 +86,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/bluespace
 	colour = "bluespace"
-	effect_desc = "On a two minute cooldown, when the owner has taken enough damage, they are teleported a place safe for humans."
+	effect_desc = "On a two minute cooldown, when the owner has taken enough damage, they are teleported to a safe place."
 
 /obj/item/slimecross/stabilized/sepia
 	colour = "sepia"
@@ -94,7 +94,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/cerulean
 	colour = "cerulean"
-	effect_desc = "Creates a duplicate of the owner, if the owner dies they will take contol of the duplicate, unless the death was by beheading or gibbing."
+	effect_desc = "Creates a duplicate of the owner. If the owner dies they will take control of the duplicate, unless the death was from beheading or gibbing."
 
 /obj/item/slimecross/stabilized/pyrite
 	colour = "pyrite"
@@ -106,11 +106,11 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/green
 	colour = "green"
-	effect_desc = "Changes the owner's name and appearence while holding this extract."
+	effect_desc = "Changes the owner's name and appearance while holding this extract."
 
 /obj/item/slimecross/stabilized/pink
 	colour = "pink"
-	effect_desc = "As long as no creatures are harmed in the owner's presense, they will not attack you, if the peace is broken, takes two minutes to restore."
+	effect_desc = "As long as no creatures are harmed in the owner's presense, they will not attack you. If the peace is broken it takes two minutes to restore."
 
 /obj/item/slimecross/stabilized/gold
 	colour = "gold"
@@ -177,7 +177,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/rainbow
 	colour = "rainbow"
-	effect_desc = "Accepts a regenerative extract, automatically uses it if the owner goes into a critical condition."
+	effect_desc = "Accepts a regenerative extract and automatically uses it if the owner enters a critical condition."
 	var/obj/item/slimecross/regenerative/regencore
 
 /obj/item/slimecross/stabilized/rainbow/attackby(obj/item/O, mob/user)

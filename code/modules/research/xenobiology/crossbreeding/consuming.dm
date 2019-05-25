@@ -110,7 +110,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/purple
 	colour = "purple"
-	effect_desc = "Creates a slime cookie that heals the target for every type of damage."
+	effect_desc = "Creates a slime cookie that heals the target from every type of damage."
 	cookietype = /obj/item/slime_cookie/purple
 
 /obj/item/slime_cookie/purple

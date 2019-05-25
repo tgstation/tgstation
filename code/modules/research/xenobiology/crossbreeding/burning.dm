@@ -170,7 +170,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/cerulean
 	colour = "cerulean"
-	effect_desc = "Produces a extract cloning potion, which copies an extract, as well as its extra uses."
+	effect_desc = "Produces an extract cloning potion, which copies an extract, as well as its extra uses."
 
 /obj/item/slimecross/burning/cerulean/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] produces a potion!</span>")
@@ -193,7 +193,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/red
 	colour = "red"
-	effect_desc = "Like a normal red extract, except slimes will attack their friends as well."
+	effect_desc = "Makes nearby slimes rabid, and they'll also attack their friends."
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] pulses a hazy red aura for a moment, which wraps around [user]!</span>")
@@ -256,7 +256,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/oil
 	colour = "oil"
-	effect_desc = "Creates a explosion."
+	effect_desc = "Creates an explosion after a few seconds."
 
 /obj/item/slimecross/burning/oil/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] begins to shake with rapidly increasing force!</span>")
@@ -268,7 +268,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/black
 	colour = "black"
-	effect_desc = "Transforms the user into a slime, they can transform back at will and do not lose any items."
+	effect_desc = "Transforms the user into a slime. They can transform back at will and do not lose any items."
 
 /obj/item/slimecross/burning/black/do_effect(mob/user)
 	var/mob/living/L = user

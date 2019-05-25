@@ -83,7 +83,7 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/yellow
 	colour = "yellow"
-	effect_desc = "Produces high capacity power cells, they is not fully charged on creation."
+	effect_desc = "Produces high capacity power cells, which are not fully charged on creation."
 	plasmarequired = 5
 	itempath = /obj/item/stock_parts/cell/high
 

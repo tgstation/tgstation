@@ -30,7 +30,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/grey
 	colour = "grey"
-	effect_desc = "Produces a slime reviver potion, revives dead slimes."
+	effect_desc = "Produces a slime reviver potion, which revives dead slimes."
 
 /obj/item/slimecross/charged/grey/do_effect(mob/user)
 	new /obj/item/slimepotion/slime_reviver(get_turf(user))
@@ -58,7 +58,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/blue
 	colour = "blue"
-	effect_desc = "Creates a potion that neuters the mutation chance for a slime, and every other generation after."
+	effect_desc = "Creates a potion that neuters the mutation chance of a slime, which passes on to new generations."
 
 /obj/item/slimecross/charged/blue/do_effect(mob/user)
 	new /obj/item/slimepotion/slime/chargedstabilizer(get_turf(user))
@@ -67,7 +67,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/metal
 	colour = "metal"
-	effect_desc = "Produces more metals than usual."
+	effect_desc = "Produces a bunch of metal and plasteel."
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
 	new /obj/item/stack/sheet/metal(get_turf(user), 25)
@@ -77,7 +77,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/yellow
 	colour = "yellow"
-	effect_desc = "Creates a hypercharged slime cell, it has twice the capacity and a better recharge rate."
+	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity and recharges constantly at a very fast rate."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
 	new /obj/item/stock_parts/cell/high/slime/hypercharged(get_turf(user))
@@ -86,7 +86,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/darkpurple
 	colour = "dark purple"
-	effect_desc = "Creates a lot of plasma."
+	effect_desc = "Creates several sheets of plasma."
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
 	new /obj/item/stack/sheet/mineral/plasma(get_turf(user), 10)
@@ -125,7 +125,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/sepia
 	colour = "sepia"
-	effect_desc = "Creates a camera obscura"
+	effect_desc = "Creates a camera obscura."
 
 /obj/item/slimecross/charged/sepia/do_effect(mob/user)
 	new /obj/item/camera/spooky(get_turf(user))
@@ -134,7 +134,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/cerulean
 	colour = "cerulean"
-	effect_desc = "Creates a extract enhancer, giving whatever its used on five more uses."
+	effect_desc = "Creates an extract enhancer, giving whatever it's used on five more uses."
 
 /obj/item/slimecross/charged/cerulean/do_effect(mob/user)
 	new /obj/item/slimepotion/enhancer/max(get_turf(user))
@@ -216,7 +216,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/oil
 	colour = "oil"
-	effect_desc = "Creates an explosion."
+	effect_desc = "Creates an explosion after a few seconds."
 
 /obj/item/slimecross/charged/oil/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] begins to shake with rapidly increasing force!</span>")
@@ -228,7 +228,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/black
 	colour = "black"
-	effect_desc = "Randomizes the users species."
+	effect_desc = "Randomizes the user's species."
 
 /obj/item/slimecross/charged/black/do_effect(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -249,7 +249,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/lightpink
 	colour = "light pink"
-	effect_desc = "Produces a pacification potion, works on monsters and humanoids."
+	effect_desc = "Produces a pacification potion, which works on monsters and humanoids."
 
 /obj/item/slimecross/charged/lightpink/do_effect(mob/user)
 	new /obj/item/slimepotion/peacepotion(get_turf(user))
@@ -258,7 +258,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/adamantine
 	colour = "adamantine"
-	effect_desc = "Creates a completed adamantine shell."
+	effect_desc = "Creates a completed golem shell."
 
 /obj/item/slimecross/charged/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] produces a fully formed golem shell!</span>")

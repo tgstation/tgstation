@@ -29,7 +29,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/grey
 	colour = "grey"
-	effect_desc = "Creates some slime barrier cubes, when used they make a slimy barricade."
+	effect_desc = "Creates some slime barrier cubes. When used they create slimy barricades."
 
 /obj/item/slimecross/chilling/grey/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] produces a few small, grey cubes</span>")
@@ -182,7 +182,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/sepia
 	colour = "sepia"
-	effect_desc = "Touching people with this extract adds them to a list, when it is activated it stops time for 30 seconds, everyone on the list except the user are immune."
+	effect_desc = "Touching someone with it adds/removes them from a list. Activating the extract stops time for 30 seconds, and everyone on the list is immune, except the user."
 	var/list/allies = list()
 
 /obj/item/slimecross/chilling/sepia/afterattack(atom/target, mob/user, proximity)
@@ -224,7 +224,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/red
 	colour = "red"
-	effect_desc = "Pacifies every slime on the screen."
+	effect_desc = "Pacifies every slime in your vacinity."
 
 /obj/item/slimecross/chilling/red/do_effect(mob/user)
 	var/slimesfound = FALSE
@@ -239,7 +239,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/green
 	colour = "green"
-	effect_desc = "Creates a bone gun in the hand it is used in, uses blood as ammo."
+	effect_desc = "Creates a bone gun in the hand it is used in, which uses blood as ammo."
 
 /obj/item/slimecross/chilling/green/do_effect(mob/user)
 	var/which_hand = "l_hand"
@@ -303,7 +303,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/lightpink
 	colour = "light pink"
-	effect_desc = "Creates the Heroin Bud, when equipped it will pacify the wearer, they will not be able to take it off without help."
+	effect_desc = "Creates a Heroine Bud, a special flower that pacifies whoever wears it on their head. They will not be able to take it off without help."
 
 /obj/item/slimecross/chilling/lightpink/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] blooms into a beautiful flower!</span>")
@@ -321,7 +321,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/rainbow
 	colour = "rainbow"
-	effect_desc = "Makes a unpassable wall in every door in the area."
+	effect_desc = "Makes an unpassable wall in every door in the area."
 
 /obj/item/slimecross/chilling/rainbow/do_effect(mob/user)
 	var/area/area = get_area(user)
