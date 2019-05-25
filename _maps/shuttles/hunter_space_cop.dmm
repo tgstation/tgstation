@@ -1,207 +1,27 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"ab" = (
-/obj/machinery/computer/shuttle/pirate/hunter{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"ac" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/poddoor/shutters{
-	id = "Interpolship"
-	},
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 11;
-	height = 16;
-	id = "huntership_home";
-	name = "Deep Space";
-	width = 17
-	},
-/obj/docking_port/mobile{
-	dir = 4;
-	id = "huntership";
-	name = "hunter shuttle";
-	rechargeTime = 1800
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"ad" = (
-/obj/structure/table,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"bY" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"hB" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/hunter)
-"hJ" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
-"hU" = (
-/obj/structure/closet/crate,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"ku" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/hunter)
-"lp" = (
-/obj/machinery/fugitive_capture,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"qH" = (
-/obj/machinery/button/door{
-	id = "Interpolship";
-	pixel_y = 26
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"rR" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"te" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/poddoor/shutters{
-	id = "Interpolship"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"An" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
-"Pq" = (
-/turf/template_noop,
-/area/template_noop)
-"RA" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"RO" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
+"aa" = (/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{dir = 8},/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"ab" = (/obj/machinery/computer/shuttle/pirate/hunter{dir = 8},/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"ac" = (/obj/structure/fans/tiny,/obj/machinery/door/poddoor/shutters{id = "Interpolship"},/obj/docking_port/stationary{dir = 4; dwidth = 11; height = 16; id = "huntership_home"; name = "Deep Space"; width = 17},/obj/docking_port/mobile{dir = 4; id = "huntership"; movement_force = list("KNOCKDOWN" = 0, "THROW" = 0); name = "hunter shuttle"; rechargeTime = 1800},/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"ad" = (/obj/structure/table,/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"bY" = (/obj/structure/chair/comfy/shuttle,/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"hB" = (/obj/structure/shuttle/engine/propulsion{dir = 8},/turf/closed/wall/mineral/titanium,/area/shuttle/hunter)
+"hJ" = (/obj/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plating,/area/shuttle/hunter)
+"hU" = (/obj/structure/closet/crate,/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"ku" = (/turf/closed/wall/mineral/titanium,/area/shuttle/hunter)
+"lp" = (/obj/machinery/fugitive_capture,/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"qH" = (/obj/machinery/button/door{id = "Interpolship"; pixel_y = 26},/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"rR" = (/obj/machinery/door/airlock/titanium,/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"te" = (/obj/structure/fans/tiny,/obj/machinery/door/poddoor/shutters{id = "Interpolship"},/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"An" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/hunter)
+"Pq" = (/turf/template_noop,/area/template_noop)
+"RA" = (/obj/structure/chair/comfy/shuttle{dir = 4},/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
+"RO" = (/turf/open/floor/mineral/titanium/blue,/area/shuttle/hunter)
 
 (1,1,1) = {"
-Pq
-ku
-te
-ac
-te
-ku
-Pq
-"}
-(2,1,1) = {"
-Pq
-ku
-qH
-RO
-RO
-ku
-Pq
-"}
-(3,1,1) = {"
-Pq
-ku
-bY
-RO
-RO
-ku
-Pq
-"}
-(4,1,1) = {"
-hB
-ku
-bY
-RO
-RO
-ku
-hB
-"}
-(5,1,1) = {"
-Pq
-hJ
-bY
-RO
-RO
-hJ
-Pq
-"}
-(6,1,1) = {"
-Pq
-ku
-RO
-RO
-RO
-ku
-Pq
-"}
-(7,1,1) = {"
-Pq
-ku
-RA
-RO
-hU
-ku
-Pq
-"}
-(8,1,1) = {"
-Pq
-ku
-lp
-RO
-hU
-ku
-Pq
-"}
-(9,1,1) = {"
-Pq
-ku
-ku
-rR
-ku
-ku
-Pq
-"}
-(10,1,1) = {"
-hB
-ku
-RO
-RA
-RO
-ku
-hB
-"}
-(11,1,1) = {"
-Pq
-An
-aa
-ad
-ab
-An
-Pq
-"}
-(12,1,1) = {"
-Pq
-ku
-An
-An
-An
-ku
-Pq
+PqPqPqhBPqPqPqPqPqhBPqPq
+kukukukuhJkukukukukuAnku
+teqHbYbYbYRORAlpkuROaaAn
+acROROROROROROROrRRAadAn
+teROROROROROhUhUkuROabAn
+kukukukuhJkukukukukuAnku
+PqPqPqhBPqPqPqPqPqhBPqPq
 "}
