@@ -323,13 +323,15 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if(!async)
 		start_time = REALTIMEOFDAY
 	Close()
-	query = connection.BeginQuery(sql)
-	if(!async)
-		timed_out = !query.WaitForCompletion()
-	else
-		in_progress = TRUE
-		UNTIL(query.IsComplete())
-		in_progress = FALSE
+	timed_out = run_query(async)
+	if(query.GetErrorCode() == 2006) //2006 is the return code for "MySQL server has gone away" time-out error, meaning the connection has been lost to the server (if it's still alive)
+		log_sql("Executing query encountered returned a lost database connection (2006).")
+		SSdbcore.Disconnect()
+		if(SSdbcore.Connect()) //connection was restablished, reattempt the query
+			log_sql("Connection restablished")
+			timed_out = run_query(async)
+		else
+			log_sql("Executing query failed to restablish database connection.")
 	skip_next_is_complete = TRUE
 	var/error = QDELETED(query) ? "Query object deleted!" : query.GetError()
 	last_error = error
@@ -342,6 +344,15 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		log_query_debug("Slow query timeout detected.")
 		log_query_debug("Query used: [sql]")
 		slow_query_check()
+
+/datum/DBQuery/proc/run_query(async)
+	query = connection.BeginQuery(sql)
+	if(!async)
+		. = !query.WaitForCompletion()
+	else
+		in_progress = TRUE
+		UNTIL(query.IsComplete())
+		in_progress = FALSE
 
 /datum/DBQuery/proc/slow_query_check()
 	message_admins("HEY! A database query timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
