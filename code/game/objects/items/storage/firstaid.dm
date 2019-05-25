@@ -169,10 +169,10 @@
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/reagent_containers/hypospray/combat(src)
-	new /obj/item/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/reagent_containers/pill/patch/styptic/dual(src)
+	new /obj/item/reagent_containers/pill/patch/styptic/dual(src)
+	new /obj/item/reagent_containers/pill/patch/silver_sulf/dual(src)
+	new /obj/item/reagent_containers/pill/patch/silver_sulf/dual(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
 //medibot assembly
