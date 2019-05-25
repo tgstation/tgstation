@@ -70,7 +70,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/yellow
 	colour = "yellow"
-	effect_desc = "Every ten seconds or few seconds it recharges a device on the owner by 10%."
+	effect_desc = "Every ten seconds it recharges a device on the owner by 10%."
 
 /obj/item/slimecross/stabilized/darkpurple
 	colour = "dark purple"
