@@ -29,7 +29,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/grey
 	colour = "grey"
-	effect_desc = "It creates a hungry and speedy slime that will love you forever."
+	effect_desc = "Creates a hungry and speedy slime that will love you forever."
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
 	var/mob/living/simple_animal/slime/S = new(get_turf(user),"grey")
@@ -55,7 +55,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/purple
 	colour = "purple"
-	effect_desc = "A clump of invigorating gel is created after use, it has healing properties and makes you feel good."
+	effect_desc = "Creates a clump of invigorating gel, it has healing properties and makes you feel good."
 
 /obj/item/slimecross/burning/purple/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] fills with a bubbling liquid!</span>")
