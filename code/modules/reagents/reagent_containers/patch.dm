@@ -8,7 +8,7 @@
 	volume = 40
 	apply_type = PATCH
 	apply_method = "apply"
-	self_delay = 30		// three seconds
+	self_delay = 3 SECONDS
 	dissolvable = FALSE
 
 /obj/item/reagent_containers/pill/patch/attack(mob/living/L, mob/user)
@@ -24,8 +24,8 @@
 
 /obj/item/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
-		return 0
-	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
+		return FALSE
+	return TRUE // Masks were stopping people from "eating" patches. Thanks, inheritance.
 
 /obj/item/reagent_containers/pill/patch/styptic
 	name = "brute patch"
