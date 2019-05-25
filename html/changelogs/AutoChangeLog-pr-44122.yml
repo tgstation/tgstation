@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - rscadd: "Colored lights now shine in different colours."
