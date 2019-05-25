@@ -33,11 +33,21 @@
 	list_reagents = list("styptic_powder" = 20)
 	icon_state = "bandaid_brute"
 
+/obj/item/reagent_containers/pill/patch/styptic/dual //found in dedicated brute/burn medkits, 4 each
+	name = "combo brute patch"
+	desc = "Helps with brute injuries. Contains both styptic powder for immediate relief and bicaridine for long-term healing."
+	list_reagents = list("styptic_powder" = 30, "bicaridine" = 12) //30 damage immediately then 12/0.4*2=60 over time, totaling 90
+
 /obj/item/reagent_containers/pill/patch/silver_sulf
 	name = "burn patch"
 	desc = "Helps with burn injuries."
 	list_reagents = list("silver_sulfadiazine" = 20)
 	icon_state = "bandaid_burn"
+
+/obj/item/reagent_containers/pill/patch/silver_sulf/dual
+	name = "combo burn patch"
+	desc = "Helps with burn injuries. Contains both silver sulfadiazine for immediate relief and kelotane for long-term healing."
+	list_reagents = list("silver_sulfadiazine" = 30, "kelotane" = 12)
 
 /obj/item/reagent_containers/pill/patch/synthflesh
 	name = "synthflesh patch"

@@ -68,9 +68,8 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
-		/obj/item/reagent_containers/pill/kelotane = 3,
-		/obj/item/reagent_containers/pill/oxandrolone = 1,
+		/obj/item/reagent_containers/pill/patch/silver_sulf/dual = 4,
+		/obj/item/reagent_containers/pill/oxandrolone = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
@@ -131,8 +130,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/styptic = 3,
-		/obj/item/reagent_containers/pill/bicaridine = 3,
+		/obj/item/reagent_containers/pill/patch/styptic/dual = 4,
 		/obj/item/reagent_containers/pill/salicyclic = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/healthanalyzer = 1)
