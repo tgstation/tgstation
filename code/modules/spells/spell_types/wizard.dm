@@ -22,6 +22,7 @@
 	trigger_range = 0
 	linger = TRUE
 	paralyze = 60
+	knockdown = 60
 	hitsound = 'sound/magic/mm_hit.ogg'
 
 	trail = TRUE
