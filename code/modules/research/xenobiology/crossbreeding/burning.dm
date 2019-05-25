@@ -41,7 +41,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/orange
 	colour = "orange"
-	effect_desc = "Expels pepperspray in a radius when activated, it can also effect you!"
+	effect_desc = "Expels pepperspray in a radius when activated."
 
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] boils over with a caustic gas!</span>")
