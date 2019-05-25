@@ -113,8 +113,7 @@
 	return 1
 
 /datum/martial_art/krav_maga/proc/unarm(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	var/obj/item/I = null
-	I = D.get_active_held_item()
+	var/obj/item/I = D.get_active_held_item()
 	if(I)
 		if(D.temporarilyRemoveItemFromInventory(I))
 			A.put_in_hands(I)
