@@ -223,6 +223,8 @@
 					N.set_safety()
 					N.set_active()
 
+GLOBAL_VAR_INIT(dominator_count, 0)
+
 /datum/game_mode/revolution/domination
 	name = "domination"
 	config_tag = "domination"
@@ -241,14 +243,20 @@
 
 /datum/game_mode/revolution/check_rev_victory()
 	for(var/obj/machinery/revdominator/N in GLOB.poi_list)
-		if(N.takeover_complete)
+		if(N.takeover_complete == 1)
 			return TRUE
 	return FALSE
 
 /datum/game_mode/revolution/domination/check_heads_victory()
+	var/dom_recount = 0
 	for(var/obj/machinery/revdominator/N in GLOB.poi_list)
-		if(N.active)
+		dom_recount++
+		if(N.active && !N.takeover_complete == 2)
 			return FALSE
+		if(N.takeover_complete == 2)
+			return TRUE
+		if(dom_recount < GLOB.dominator_count)
+			return TRUE
 		else
 			return ..()
 
@@ -269,7 +277,7 @@
 ////////////
 
 /obj/machinery/revdominator
-	name = "Dominator"
+	name = "dominator"
 	desc = "This sinister-looking pile of machinery can be used to wrest control of all station systems. Requires a powered area that is not in space or blocked by a dense object to activate. May explode if destroyed."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
@@ -278,17 +286,28 @@
 	can_be_unanchored = TRUE
 	max_integrity = 400
 	var/active = FALSE
+	var/broken = FALSE
+	var/last_chance = FALSE
 	var/beepsound = 'sound/items/timer.ogg'
 	var/next_beep
 	var/obj/effect/countdown/revdominator/clock
 	var/clock_set = 6000
 	var/countdown
-	var/takeover_complete = FALSE
+	var/takeover_complete = 0 // 0: Incomplete -- 1: Successful -- 2: All Dominators Destroyed
 
 /obj/machinery/revdominator/Initialize()
 	. = ..()
 	clock = new(src)
-	if (isopenturf(get_turf(src)) && !isspaceturf(get_turf(src)))
+	GLOB.dominator_count++
+	GLOB.poi_list += src
+	var/num_revheads = 0
+	for(var/mob/living/carbon/survivor in GLOB.alive_mob_list)
+		if(survivor.ckey)
+			if(survivor.mind.has_antag_datum(/datum/antagonist/rev/head) == TRUE)
+				num_revheads++
+	if(GLOB.dominator_count >= num_revheads)
+		last_chance = TRUE
+	if(isopenturf(get_turf(src)) && !isspaceturf(get_turf(src)))
 		anchored = 1
 	else
 		anchored = 0
@@ -306,7 +325,6 @@
 	START_PROCESSING(SSfastprocess, src)
 	active = TRUE
 	update_icon()
-	GLOB.poi_list += src
 	SSshuttle.registerHostileEnvironment(src)
 	SSmapping.add_nuke_threat(src)
 	var/num_revs = 0
@@ -323,44 +341,52 @@
 	for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 		P.switch_mode_to(TRACK_DOMINATOR)
 	var/turf/T = get_turf(src)
-	T.visible_message("<span class='warning'>[src]'s anchoring bolts lock into place with an intense click as it activates.</span>")
-	minor_announce("Hostile takeover signal detected. Signal origin pinpointed to: [get_area(src)].")
+	T.visible_message("<span class='warning'>The [src]'s anchoring bolts lock into place with an intense click as it activates.</span>")
+	minor_announce("Hostile takeover signal detected. Signal origin pinpointed to [get_area(src)].")
 	anchored = 1
 	can_be_unanchored = 0
 
 /obj/machinery/revdominator/proc/toggle_off(mob/user)
 	QDEL_NULL(clock)
+	broken = TRUE
 	if(active)
-		STOP_PROCESSING(SSfastprocess, src)
 		active = FALSE
 		GLOB.poi_list -= src
+		STOP_PROCESSING(SSfastprocess, src)
 		SSshuttle.clearHostileEnvironment(src)
 		SSmapping.remove_nuke_threat(src)
 		set_security_level("red")
+		minor_announce("Hostile activity within station systems has ceased.")
 		for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 			P.switch_mode_to(TRACK_NUKE_DISK)
+
 
 /obj/machinery/revdominator/proc/takeover()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	to_chat(world, "<B>The Dominator has taken control of all of the station's systems!</B>")
-	takeover_complete = TRUE
+	to_chat(world, "<B>A device has taken control of all of the station's systems!</B>")
+	resistance_flags += INDESTRUCTIBLE
+	takeover_complete = 1
+	SSticker.mode.check_win()
 //	SSticker.force_ending = 1
 
 /obj/machinery/revdominator/proc/seconds_remaining()
 	. = max(0, (round((countdown - world.time) / 10)))
 
 /obj/machinery/revdominator/interact(mob/user)
-	if(active || takeover_complete)
+	if(active || takeover_complete == 1)
 		to_chat(user, "<span class='notice'>The embedded timer reads: <b>[seconds_remaining()]</b>.</span>")
 		return
-	if(!active || takeover_complete)
-		if((user.mind.has_antag_datum(/datum/antagonist/rev) == FALSE) || alert(user, "Attempt to take control of all Nanotrasen systems?", "[src]", "Yes", "Cancel") == "Cancel")
-			to_chat(user, "<b>You warily regard the inactive [src].</b>")
-			return
+	if(!active)
+		if((user.mind.has_antag_datum(/datum/antagonist/rev) == FALSE) || alert(user, "Attempt to take control of all station systems?", "[src]", "Yes", "Cancel") == "Cancel")
+			if(user.canUseTopic(src, BE_CLOSE))
+				to_chat(user, "<b>You warily regard the inactive \[src].</b>")
+				return
+			else
+				return
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	if(z != 2)
+	if(!is_station_level(src.z))
 		to_chat(user, "<span class='notice'>Dominator is unable to establish connection to station systems. Relocate Dominator to station territory before continuing.</span>")
 		return
 	for(var/obj/machinery/revdominator/N in GLOB.poi_list)
@@ -390,8 +416,13 @@
 		return ..()
 
 /obj/machinery/revdominator/Destroy()
-	toggle_off()
 	explosion(src,0,0,2,2, flame_range = 2)
+	if(last_chance)
+		takeover_complete = 2
+		SSticker.mode.check_win()
+	if(takeover_complete == 1)
+		return
+	toggle_off()
 	return ..()
 
 /obj/machinery/revdominator/process()

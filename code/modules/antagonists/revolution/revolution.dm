@@ -102,6 +102,8 @@
 	give_flash = TRUE
 	give_hud = TRUE
 	remove_clumsy = TRUE
+	if(SSticker.mode.name == "domination")
+		give_dom = TRUE
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has head-rev'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has head-rev'ed [key_name(new_owner)].")
@@ -256,7 +258,7 @@
 		S.Insert(H, special = FALSE, drop_if_replaced = FALSE)
 		to_chat(H, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
-	if(give_dom)
+	if(give_dom || SSticker.mode.name == "domination")
 		var/obj/item/implant/beacondrop/dominator/D = new(H)
 		D.implant(H,H, silent = TRUE, force = TRUE)
 		to_chat(H, "You have been implanted with a beacon that will send a Dominator to your position, enabling station takeover. Be careful: <b>you only get one shot</b>.")
@@ -282,8 +284,6 @@
 		for(var/datum/mind/M in members)
 			var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 			R.objectives |= objectives
-
-
 	addtimer(CALLBACK(src,.proc/update_objectives),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
 /datum/team/revolution/proc/head_revolutionaries()
@@ -315,8 +315,8 @@
 				var/datum/mind/new_leader = pick(promotable)
 				var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
 				rev.promote()
-
-	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+	if(!SSticker.mode.name == "domination")
+		addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
 
 /datum/team/revolution/roundend_report()

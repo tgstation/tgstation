@@ -168,6 +168,16 @@
 	drop_type = /obj/machinery/revdominator
 	uses = 1
 
+/obj/item/implant/beacondrop/dominator/on_mob_death(mob/living/imp_in, gibbed)
+	. = ..()
+	if(uses)
+		GLOB.dominator_count++
+
+/obj/item/implant/beacondrop/dominator/Destroy()
+	. = ..()
+	if(uses)
+		GLOB.dominator_count++
+
 /obj/item/implanter/radio
 	name = "implanter (internal radio)"
 	imp_type = /obj/item/implant/radio
