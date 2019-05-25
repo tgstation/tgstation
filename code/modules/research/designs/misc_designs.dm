@@ -260,7 +260,7 @@
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
 
-/datum/design/advmop
+/datum/design/mop
 	name = "Mop"
 	desc = "It mops."
 	id = "mop"
