@@ -159,7 +159,7 @@
 
 /obj/item/reagent_containers/pill/salicyclic
 	name = "salicylic acid pill"
-	desc = "Used to dull pain."
+	desc = "Used to stimulate bruise healing."
 	icon_state = "pill9"
 	list_reagents = list("sal_acid" = 24)
 	rename_with_volume = TRUE
