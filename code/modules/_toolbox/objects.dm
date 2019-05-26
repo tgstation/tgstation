@@ -476,6 +476,12 @@
 /obj/machinery/field/generator/attack_robot(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/particle_accelerator/control_box/attack_robot(mob/user)
+	if(construction_state == 2)
+		attack_hand(user)
+	else
+		return ..()
+
 //Degenerals large airlocks
 
 /obj/machinery/door/airlock/glass_large/security
