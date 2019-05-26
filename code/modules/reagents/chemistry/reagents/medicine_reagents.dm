@@ -285,7 +285,7 @@
 	reagent_state = LIQUID
 	color = "#FF9696"
 	metabolization_rate = 5 * REAGENTS_METABOLISM
-	overdose_threshold = 60
+	overdose_threshold = 100
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
