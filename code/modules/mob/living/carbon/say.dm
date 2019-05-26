@@ -49,11 +49,11 @@
 
 	if (src.mind.has_antag_datum(/datum/antagonist/traitor))
 		for (var/codeword in GLOB.syndicate_code_phrase)
-			var/regex/codeword_match = new("(" + codeword + ")", "ig")
-			message = codeword_match.Replace(message, "<font color=blue>$1</font>")
+			var/regex/codeword_match = new("([codeword])", "ig")
+			message = codeword_match.Replace(message, "<span class='blue'>$1</span>")
 
 		for (var/codeword in GLOB.syndicate_code_response)
-			var/regex/codeword_match = new("(" + codeword + ")", "ig")
-			message = codeword_match.Replace(message, "<font color=red>$1</font>")
-			
+			var/regex/codeword_match = new("([codeword])", "ig")
+			message = codeword_match.Replace(message, "<span class='red'>$1</span>")
+
 	return message

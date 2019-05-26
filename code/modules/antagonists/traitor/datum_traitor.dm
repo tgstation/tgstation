@@ -246,14 +246,14 @@
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
 	to_chat(traitor_mob, "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:</B></U>")
-	to_chat(traitor_mob, "<B>Code Phrase</B>: <font color=blue>[phrases]</font>")
-	to_chat(traitor_mob, "<B>Code Response</B>: <font color=red>[responses]</font>")
+	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='blue'>[phrases]</span>")
+	to_chat(traitor_mob, "<B>Code Response</B>: <span class='red'>[responses]</span>")
 
-	antag_memory += "<b>Code Phrase</b>: <font color=blue>[phrases]</font><br>"
-	antag_memory += "<b>Code Response</b>: <font color=red>[responses]</font><br>"
+	antag_memory += "<b>Code Phrase</b>: <span class='blue'>[phrases]</span><br>"
+	antag_memory += "<b>Code Response</b>: <span class='red'>[responses]</span><br>"
 
 	to_chat(traitor_mob, "Use the codewords during regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-	to_chat(traitor_mob, "<font size=3 color=red>You memorize the codewords, allowing you to recognise them when heard.</font>")
+	to_chat(traitor_mob, "<span class='alertwarning'>You memorize the codewords, allowing you to recognise them when heard.</span>")
 
 /datum/antagonist/traitor/proc/add_law_zero()
 	var/mob/living/silicon/ai/killer = owner.current
