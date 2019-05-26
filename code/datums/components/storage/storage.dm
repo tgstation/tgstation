@@ -85,7 +85,7 @@
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_HIDE_ALL, .proc/close_all)
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_RETURN_INVENTORY, .proc/signal_return_inv)
 
-	RegisterSignal(parent, COMSIG_SHOW_ALLOWED, .proc/signal_show_allowed)
+	RegisterSignal(parent, COMSIG_TOPIC, .proc/topic_handle)
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
 
@@ -507,10 +507,14 @@
 	interface |= return_inv(recursive)
 	return TRUE
 
-/datum/component/storage/proc/signal_show_allowed(datum/source, usr)
+/datum/component/storage/proc/topic_handle(datum/source, href_list)
+	if(href_list["show_valid_pocket_items"])
+		handle_show_valid_items(source)
+
+/datum/component/storage/proc/handle_show_valid_items(datum/source)
 	to_chat(usr, "<span class='notice'>[source] can hold: </span>")
 
-	for(var/valid_obj in src.can_hold)
+	for(var/valid_obj in can_hold)
 		var/obj/item/valid_item = new valid_obj()
 		to_chat(usr, "\t <span class='notice'>\a [valid_item.name]</span>")
 

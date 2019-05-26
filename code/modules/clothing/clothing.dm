@@ -112,11 +112,6 @@
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
 
-/obj/item/clothing/Topic(href, href_list)
-	..()
-	if(href_list["show_valid_pocket_items"])
-		SEND_SIGNAL(src, COMSIG_SHOW_ALLOWED, usr)
-
 /obj/item/clothing/examine(mob/user)
 	..()
 	clothing_resistance_flag_examine_message(user)
