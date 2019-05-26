@@ -27,7 +27,6 @@
 
 /obj/structure/infection/factory/Life()
 	. = ..()
-	SEND_SIGNAL(src, COMSIG_INFECTION_LIFE_TICK)
 	if(spores.len >= max_spores)
 		return
 	if(spore_delay > world.time)

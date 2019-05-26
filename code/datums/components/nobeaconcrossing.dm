@@ -1,11 +1,8 @@
-/datum/component/no_beacon_crossing
-	var/atom/parentatom
-
 /datum/component/no_beacon_crossing/Initialize()
-	parentatom = parent
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_passed)
 
 /datum/component/no_beacon_crossing/proc/check_passed()
+	var/atom/parentatom = parent
 	if(isobj(parentatom.loc))
 		return
 	// if you somehow got past a beacon wall then time to die

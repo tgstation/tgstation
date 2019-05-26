@@ -112,6 +112,7 @@
 	. = ..()
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Life()
+	update_icons()
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
@@ -189,14 +190,15 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	obj_damage = 20
 	var/respawn_time = 30
-	var/current_respawn_time = 0
+	var/current_respawn_time = -1
 	var/upgrade_points = 0
-	var/times_refunded = 0 // times refunded
+	var/spent_upgrade_points = 0
+	var/max_upgrade_points = 1000
 	var/cycle_cooldown = 0 // cooldown before you can cycle nodes again
-	var/list/upgrade_types = list(/datum/component/infection/upgrade/spore/myconid_spore,
-								  /datum/component/infection/upgrade/spore/infector_spore,
-								  /datum/component/infection/upgrade/spore/hunter_spore,
-								  /datum/component/infection/upgrade/spore/destructive_spore)
+	var/list/upgrade_types = list(/datum/component/infection/upgrade/spore/type_change/myconid_spore,
+								  /datum/component/infection/upgrade/spore/type_change/infector_spore,
+								  /datum/component/infection/upgrade/spore/type_change/hunter_spore,
+								  /datum/component/infection/upgrade/spore/type_change/destructive_spore)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	. = ..()
@@ -210,6 +212,7 @@
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Life()
 	. = ..()
+	add_points(get_point_generation_rate())
 	var/list/infection_in_area = range(2, src)
 	var/healed = FALSE
 	if(locate(/obj/structure/infection/core) in infection_in_area)
@@ -222,6 +225,16 @@
 		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 		if(overmind)
 			H.color = overmind.color
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/set_points(var/value)
+	add_points(value - upgrade_points)
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/add_points(var/value)
+	upgrade_points = CLAMP(upgrade_points + value, 0, max_upgrade_points)
+	hud_used.infectionpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(upgrade_points)]</font></div>"
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/get_point_generation_rate()
+	return 2
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/find_anchor()
 	var/list/possible_anchors = GLOB.infection_nodes + GLOB.infection_core
@@ -259,6 +272,7 @@
 		return
 	var/datum/component/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
 	if(can_upgrade(Chosen.cost))
+		spent_upgrade_points += Chosen.cost
 		Chosen.do_upgrade()
 		to_chat(src, "<span class='warning'>Successfully upgraded [Chosen.name]!</span>")
 	return
@@ -318,41 +332,30 @@
 			death()
 			return
 		current_respawn_time--
-	if(overmind.infection_core)
-		to_chat(src, "<b>You have respawned!</b>")
-		playsound(src, 'sound/effects/genetics.ogg', 100)
-		adjustHealth(health * 0.8)
-		forceMove(get_turf(src))
+	to_chat(src, "<b>You have respawned!</b>")
+	playsound(src, 'sound/effects/genetics.ogg', 100)
+	adjustHealth(health * 0.8)
+	forceMove(get_turf(src))
+	current_respawn_time = -1
 	return
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/transfer_to_type(var/new_type)
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/new_spore = new new_type(loc, null, overmind)
 	new_spore.key = key
 	new_spore.upgrade_points = upgrade_points
-	new_spore.times_refunded = times_refunded
 	// check if we were respawning
-	if(istype(new_spore.loc, /obj/structure/infection))
+	if(current_respawn_time != -1)
 		// restart respawn for new spore
 		INVOKE_ASYNC(new_spore, .proc/respawn, current_respawn_time)
 	overmind.infection_mobs += new_spore
 	qdel(src)
-	new_spore.update_icons()
-	return new_spore
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/refund_upgrades()
-	if(!overmind)
-		to_chat(src, "<span class='warning'>We lack the power to revert ourselves without our commander!</span>")
-		return
-	if(overmind.all_upgrade_points == (upgrade_points + times_refunded))
-		to_chat(src, "<span class='warning'>We cannot revert our form any further!</span>")
-		return
-	var/new_points = overmind.all_upgrade_points - (times_refunded + 1)
-	if(new_points < 0)
-		to_chat(src, "<span class='warning'>Reverting currently would destroy us! We require more energy from the beacons!</span>")
+	if(spent_upgrade_points == 0)
+		to_chat(src, "<span class='warning'>We are unable to revert our form any further!</span>")
 		return
 	to_chat(src, "<span class='warning'>Successfully reverted to base evolution!</span>")
-	upgrade_points = new_points
-	times_refunded++
+	set_points(spent_upgrade_points)
 	// reset the spore to default
 	transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient)
 

@@ -10,6 +10,7 @@
 		/obj/docking_port,
 		/obj/structure/lattice,
 		/obj/structure/stone_tile,
+		/obj/structure/infection,
 		/obj/item/projectile,
 		/obj/effect/projectile,
 		/obj/effect/portal,
@@ -52,11 +53,6 @@
 	if (is_safe())
 		return FALSE
 	var/atom/parent = src.parent
-	if(locate(/obj/structure/infection) in parent.contents)
-		// no thanks that would be stupid to fall in over that or after destroying it
-		var/turf/T = get_turf(parent)
-		T.ChangeTurf(/turf/open/floor/holofloor/asteroid)
-		return FALSE
 
 	var/to_check = AM ? list(AM) : parent.contents
 	for (var/thing in to_check)

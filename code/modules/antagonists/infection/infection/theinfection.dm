@@ -12,7 +12,7 @@
 	var/point_return = 0 //How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-	var/health_regen = 2 //how much health this blob regens when pulsed
+	var/health_regen = 5 //how much health this blob regens when pulsed
 	var/next_pulse = 0
 	var/pulse_cooldown = 20
 	var/brute_resist = 0.5 //multiplies brute damage by this
@@ -170,6 +170,7 @@
 	Life()
 
 /obj/structure/infection/proc/Life()
+	SEND_SIGNAL(src, COMSIG_INFECTION_LIFE_TICK)
 	return
 
 /obj/structure/infection/proc/reset_angles()
@@ -209,6 +210,9 @@
 	ConsumeTile()
 	obj_integrity = min(max_integrity, obj_integrity+health_regen)
 	update_icon()
+	var/turf/T = get_turf(src)
+	if(istype(T, /turf/open/chasm))
+		T.ChangeTurf(/turf/open/space)
 	SEND_SIGNAL(src, COMSIG_INFECTION_PULSED)
 
 /obj/structure/infection/proc/ConsumeTile()
@@ -307,14 +311,15 @@
 /obj/structure/infection/obj_destruction(damage_flag)
 	..()
 
-/obj/structure/infection/proc/change_to(type, controller)
+/obj/structure/infection/proc/change_to(type, controller, var/structure_build_time)
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for infection")
 		return
 	if(building)
 		return // no
 	var/obj/structure/infection/I = new type(src.loc, controller)
-	var/structure_build_time = I.build_time
+	if(structure_build_time == null)
+		structure_build_time = I.build_time
 	icon_state = I.icon_state
 	alpha = 100 // faded out while building new type
 	animate(src, alpha = 200, time = structure_build_time)
@@ -336,7 +341,7 @@
 	light_range = 2
 	obj_integrity = 25
 	max_integrity = 25
-	health_regen = 1
+	health_regen = 3
 	brute_resist = 0.25
 	var/overlay_fade_time = 40 // time in deciseconds for overlay on entering and exiting to fade in and fade out
 

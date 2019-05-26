@@ -33,4 +33,3 @@
 	if(overmind)
 		overmind.add_points(produced)
 	resource_delay = world.time + set_delay
-	SEND_SIGNAL(src, COMSIG_INFECTION_LIFE_TICK)

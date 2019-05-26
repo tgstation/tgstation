@@ -10,9 +10,9 @@
 	var/frequency = 1 // amount of times the turret will fire per process tick (1 second)
 	var/scan_range = 7 // range to search for targets
 	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
-	upgrade_types = list(/datum/component/infection/upgrade/structure/turret/resistant_turret,
-						 /datum/component/infection/upgrade/structure/turret/infernal_turret,
-						 /datum/component/infection/upgrade/structure/turret/homing_turret)
+	upgrade_types = list(/datum/component/infection/upgrade/structure/turret/type_change/resistant_turret,
+						 /datum/component/infection/upgrade/structure/turret/type_change/infernal_turret,
+						 /datum/component/infection/upgrade/structure/turret/type_change/homing_turret)
 
 /obj/structure/infection/turret/Initialize()
 	START_PROCESSING(SSobj, src)
