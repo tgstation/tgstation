@@ -301,25 +301,6 @@
 			. = 1
 	..()
 
-/datum/reagent/toxin/chloralhydratedelayed //sedates half as quickly and does not cause toxloss. same name/desc so it doesn't give away sleepypens
-	name = "Chloral Hydrate"
-	id = "chloralhydratedelayed"
-	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
-	silent_toxin = TRUE
-	reagent_state = SOLID
-	color = "#000067" // rgb: 0, 0, 103
-	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-
-/datum/reagent/toxin/chloralhydratedelayed/on_mob_life(mob/living/carbon/M)
-	switch(current_cycle)
-		if(10 to 20)
-			M.confused += 1
-			M.drowsyness += 1
-		if(20 to INFINITY)
-			M.Sleeping(40, 0)
-	..()
-
 /datum/reagent/toxin/fakebeer	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
 	id = "fakebeer"
