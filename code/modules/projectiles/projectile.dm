@@ -134,6 +134,7 @@
 	return TRUE
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_ON_HIT, target, Angle, blocked)
 	var/turf/target_loca = get_turf(target)
 
 	var/hitx
@@ -354,6 +355,7 @@
 		pixel_move(1, FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
+	SEND_SIGNAL(firer, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	//If no angle needs to resolve it from xo/yo!
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
