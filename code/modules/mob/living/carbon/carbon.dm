@@ -534,8 +534,8 @@
 		if(total_health <= crit_threshold && !stat)
 			if(!IsParalyzed())
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			stam_full_regen = TRUE
 			Paralyze(100)
+			stam_paralysed = TRUE
 			update_health_hud()
 
 /mob/living/carbon/update_sight()

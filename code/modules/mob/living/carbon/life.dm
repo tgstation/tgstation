@@ -312,18 +312,17 @@
 	return
 
 /mob/living/carbon/proc/handle_bodyparts()
-	var/stam_regen_type = STAMINA_REGEN_NONE
+	var/stam_regen = FALSE
 	if(stam_regen_start_time <= world.time)
-		if(stam_full_regen)
-			stam_regen_type = STAMINA_REGEN_FULL
-			SetParalyzed(0)
-			stam_full_regen = FALSE
-		else
-			stam_regen_type = STAMINA_REGEN_ORDINARY
+		stam_regen = TRUE
+		if(stam_paralysed)
+			stam_paralysed = FALSE
+			SetParalyzed(0) //Really we should have sources for status effects
+			update_health_hud()
 	for(var/I in bodyparts)
 		var/obj/item/bodypart/BP = I
 		if(BP.needs_processing)
-			. |= BP.on_life(stam_regen_type)
+			. |= BP.on_life(stam_regen)
 
 /mob/living/carbon/proc/handle_organs()
 	for(var/V in internal_organs)

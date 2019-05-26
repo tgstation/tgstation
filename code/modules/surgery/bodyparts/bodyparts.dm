@@ -31,7 +31,6 @@
 	var/stamina_dam = 0
 	var/max_stamina_damage = 0
 	var/max_damage = 0
-	var/stam_heal_tick = 3		//per Life().
 
 	var/brute_reduction = 0 //Subtracted to brute damage taken
 	var/burn_reduction = 0	//Subtracted to burn damage taken
@@ -135,15 +134,9 @@
 
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(stam_regen)
-	if(stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
-		var/amount = 0
-		switch(stam_regen)
-			if(STAMINA_REGEN_ORDINARY)
-				amount = stam_heal_tick
-			if(STAMINA_REGEN_FULL)
-				amount = INFINITY
-		if(amount && heal_damage(0, 0, amount, null, FALSE))
-			. |= BODYPART_LIFE_UPDATE_HEALTH
+	if(stamina_dam > DAMAGE_PRECISION && stam_regen)					//DO NOT update health here, it'll be done in the carbon's life.
+		heal_damage(0, 0, INFINITY, null, FALSE)
+		. |= BODYPART_LIFE_UPDATE_HEALTH
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
@@ -510,7 +503,6 @@
 	held_index = 1
 	px_x = -6
 	px_y = 0
-	stam_heal_tick = 2
 
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
@@ -574,7 +566,6 @@
 	held_index = 2
 	px_x = 6
 	px_y = 0
-	stam_heal_tick = 2
 	max_stamina_damage = 50
 
 /obj/item/bodypart/r_arm/is_disabled()
@@ -636,7 +627,6 @@
 	body_damage_coeff = 0.75
 	px_x = -2
 	px_y = 12
-	stam_heal_tick = 2
 	max_stamina_damage = 50
 
 /obj/item/bodypart/l_leg/is_disabled()
@@ -696,7 +686,6 @@
 	px_x = 2
 	px_y = 12
 	max_stamina_damage = 50
-	stam_heal_tick = 2
 
 /obj/item/bodypart/r_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_LEG))
