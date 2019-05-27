@@ -607,7 +607,11 @@
 		R.on_new(data)
 
 	if(isliving(my_atom))
-		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
+		if (iscarbon(my_atom))
+			if (getorganslot(ORGAN_SLOT_LIVER)) // For carbons, conditional on the presence of a liver
+				R.on_mob_add(my_atom)
+		else
+			R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
