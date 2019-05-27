@@ -1,8 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - rscadd: "The deja vu effect (previously only used by rewind camera) now resets all your limbs and damage to the point it was added after 10 seconds (as well as the original position reset)"
-  - rscadd: "The deja vu effect cannot resurrect the dead, but will heal their corpse"
-  - rscadd: "New limbs fall off, old ones re-attach"
-  - rscadd: "Regenerative sepia cores add a deja vu effect before healing instead of a timestop"
-  - rscadd: "The rewind camera rewinds 2 times to distinguish it from the regenerative core"
