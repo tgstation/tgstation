@@ -4,7 +4,7 @@
 #define FOOTSTEP_CARPET "carpet"
 #define FOOTSTEP_SAND "sand"
 #define FOOTSTEP_GRASS "grass"
-#define FOOTSTEP_WATER /datum/reagent/water
+#define FOOTSTEP_WATER "water"
 #define FOOTSTEP_LAVA "lava"
 //barefoot sounds
 #define FOOTSTEP_WOOD_BAREFOOT "woodbarefoot"
