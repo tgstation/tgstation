@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_AMOUNT_PER_DECAL		20
 
 //Bloody shoe blood states
-#define BLOOD_STATE_HUMAN			/datum/reagent/blood
+#define BLOOD_STATE_HUMAN			"blood"
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
