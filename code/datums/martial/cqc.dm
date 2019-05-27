@@ -121,13 +121,9 @@
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!can_use(A))
-		return FALSE
-	if(A==D)
-		return FALSE //prevents grabbing yourself
-	if(A.a_intent == INTENT_GRAB)
+	if(A.a_intent == INTENT_GRAB && A!=D && can_use(A)) // A!=D prevents grabbing yourself
 		add_to_streak("G",D)
-		if(check_streak(A,D)) //doing combos is prioritized over upgrading grabs
+		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
 			return TRUE
 		old_grab_state = A.grab_state 
 		D.grabbedby(A, 1)
@@ -138,6 +134,9 @@
 			D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 								"<span class='userdanger'>[A] violently grabs you!</span>")
 		return TRUE
+	else
+		return FALSE
+
 /datum/martial_art/cqc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!can_use(A))
 		return FALSE
