@@ -41,7 +41,7 @@
 	for(var/x in 1 to decksize)
 		randomcards += pick_n_take(possiblecards)
 	for(var/x in 1 to randomcards.len)
-		var/cardtext = randomcards[i]
+		var/cardtext = randomcards[x]
 		var/datum/playingcard/P
 		P = new()
 		P.name = "[cardtext]"
