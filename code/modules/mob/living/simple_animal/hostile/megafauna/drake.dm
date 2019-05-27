@@ -161,7 +161,7 @@ Difficulty: Medium
 		DRAKE_SLEEP(10)
 		fire_cone()
 		DRAKE_SLEEP(10)
-    fire_cone()
+	fire_cone()
 	SetRecoveryTime(40)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/mass_fire(var/spiral_count = 12, var/range = 15, var/times = 3)
@@ -267,7 +267,7 @@ Difficulty: Medium
 	return (getline(src, T) - get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(var/list/turfs)
-  DRAKE_SLEEP(0)
+	DRAKE_SLEEP(0)
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
