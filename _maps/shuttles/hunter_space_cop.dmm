@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8;
@@ -39,10 +39,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
-"ad" = (
-/obj/structure/table,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
 "ae" = (
 /obj/machinery/button/door{
 	id = "Interpolship";
@@ -68,16 +64,6 @@
 "ah" = (
 /obj/effect/turf_decal/loading_area{
 	icon_state = "loadingarea";
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"ai" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/effect/mob_spawn/human/fugitive/spacepol{
-	icon_state = "sleeper";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -111,6 +97,14 @@
 /area/shuttle/hunter)
 "bY" = (
 /obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"gi" = (
+/obj/structure/table,
+/obj/effect/mob_spawn/human/fugitive/spacepol{
+	dir = 8;
+	icon_state = "sleeper"
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "hB" = (
@@ -149,6 +143,12 @@
 "Pq" = (
 /turf/template_noop,
 /area/template_noop)
+"Rz" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
 "RO" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
@@ -238,7 +238,7 @@ hB
 ku
 ku
 RO
-ai
+Rz
 RO
 ku
 ku
@@ -247,7 +247,7 @@ ku
 Pq
 An
 aa
-ad
+gi
 ab
 An
 Pq

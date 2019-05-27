@@ -1,9 +1,11 @@
 
-
 /datum/antagonist/fugitive
 	name = "Fugitive"
 	roundend_category = "Fugitive"
 	silent = TRUE //greet called by the event
+	show_in_antagpanel = FALSE
+	delete_on_mind_deletion = FALSE
+	prevent_roundtype_conversion = FALSE
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 	var/backstory = "error"
