@@ -142,6 +142,8 @@
 		ui.open()
 
 /obj/machinery/sleeper/AltClick(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
 	if(state_open)
 		close_machine()
 	else

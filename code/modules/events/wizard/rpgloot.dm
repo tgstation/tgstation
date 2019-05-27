@@ -8,11 +8,12 @@
 /datum/round_event/wizard/rpgloot/start()
 	var/upgrade_scroll_chance = 0
 	for(var/obj/item/I in world)
+		CHECK_TICK
+
 		if(!(I.flags_1 & INITIALIZED_1))
 			continue
 
-		if(!istype(I.rpg_loot))
-			I.rpg_loot = new(I)
+		I.AddComponent(/datum/component/fantasy)
 
 		if(istype(I, /obj/item/storage))
 			var/obj/item/storage/S = I
@@ -44,33 +45,7 @@
 	if(!proximity || !istype(target))
 		return
 
-	var/datum/rpg_loot/rpg_loot_datum = target.rpg_loot
-	var/turf/T = get_turf(target)
-
-	if(!istype(rpg_loot_datum))
-		var/original_name = "[target]"
-		target.rpg_loot = rpg_loot_datum = new /datum/rpg_loot(target)
-
-		var/span
-		var/effect_description
-		if(target.rpg_loot.quality >= 0)
-			span = "<span class='notice'>"
-			effect_description = "<span class='heavy_brass'>shimmering golden shield</span>"
-		else
-			span = "<span class='danger'>"
-			effect_description = "<span class='umbra_emphasis'>mottled black glow</span>"
-
-		T.visible_message("[span][original_name] is covered by a [effect_description] and then transforms into [target]!</span>")
-
-	else
-		var/quality = rpg_loot_datum.quality
-
-		if(can_backfire && quality > 9 && prob((quality - 9)*10))
-			T.visible_message("<span class='danger'>[target] <span class='inathneq_large'>violently glows blue</span> for a while, then evaporates.</span>")
-			target.burn()
-		else
-			T.visible_message("<span class='notice'>[target] <span class='inathneq_small'>glows blue</span> and seems vaguely \"better\"!</span>")
-			rpg_loot_datum.modify(upgrade_amount)
+	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
 
 	if(--uses <= 0)
 		qdel(src)
@@ -80,58 +55,3 @@
 	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". This scroll is made from the tongues of dead paper wizards, and can be used an unlimited number of times, with no drawbacks."
 	uses = INFINITY
 	can_backfire = FALSE
-
-/datum/rpg_loot
-	var/positive_prefix = "okay"
-	var/negative_prefix = "weak"
-	var/suffix = "something profound"
-	var/quality = 0
-
-	var/obj/item/attached
-	var/original_name
-
-/datum/rpg_loot/New(attached_item=null)
-	attached = attached_item
-
-	randomise()
-
-/datum/rpg_loot/Destroy()
-	attached = null
-
-/datum/rpg_loot/proc/randomise()
-	var/static/list/prefixespositive = list("greater", "major", "blessed", "superior", "empowered", "honed", "true", "glorious", "robust")
-	var/static/list/prefixesnegative = list("lesser", "minor", "blighted", "inferior", "enfeebled", "rusted", "unsteady", "tragic", "gimped")
-	var/static/list/suffixes = list("orc slaying", "elf slaying", "corgi slaying", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "the forest", "the hills", "the plains", "the sea", "the sun", "the moon", "the void", "the world", "the fool", "many secrets", "many tales", "many colors", "rending", "sundering", "the night", "the day")
-
-	var/new_quality = pick(1;15, 2;14, 2;13, 2;12, 3;11, 3;10, 3;9, 4;8, 4;7, 4;6, 5;5, 5;4, 5;3, 6;2, 6;1, 6;0)
-
-	suffix = pick(suffixes)
-	positive_prefix = pick(prefixespositive)
-	negative_prefix = pick(prefixesnegative)
-
-	if(prob(50))
-		new_quality = -new_quality
-
-	modify(new_quality)
-
-/datum/rpg_loot/proc/rename()
-	var/obj/item/I = attached
-	if(!original_name)
-		original_name = I.name
-	if(quality < 0)
-		I.name = "[negative_prefix] [original_name] of [suffix] [quality]"
-	else if(quality == 0)
-		I.name = "[original_name] of [suffix]"
-	else if(quality > 0)
-		I.name = "[positive_prefix] [original_name] of [suffix] +[quality]"
-
-/datum/rpg_loot/proc/modify(quality_mod)
-	var/obj/item/I = attached
-	quality += quality_mod
-
-	I.force = max(0,I.force + quality_mod)
-	I.throwforce = max(0,I.throwforce + quality_mod)
-
-	I.armor = I.armor.modifyAllRatings(quality)
-
-	rename()

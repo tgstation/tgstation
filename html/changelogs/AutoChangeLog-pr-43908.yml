@@ -1,4 +1,0 @@
-author: "RaveRadbury"
-delete-after: True
-changes: 
-  - refactor: "mood_event timeouts are now in MINUTES and SECONDS"

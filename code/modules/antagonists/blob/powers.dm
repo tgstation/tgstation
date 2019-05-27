@@ -269,7 +269,7 @@
 				continue
 			if(L.stat != DEAD)
 				attacksuccess = TRUE
-			blobstrain.attack_living(L)
+			blobstrain.attack_living(L, possibleblobs)
 		var/obj/structure/blob/B = locate() in T
 		if(B)
 			if(attacksuccess) //if we successfully attacked a turf with a blob on it, only give an attack refund

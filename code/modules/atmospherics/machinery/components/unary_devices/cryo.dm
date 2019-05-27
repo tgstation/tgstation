@@ -48,6 +48,12 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
+	var/oldoccupant = occupant
+	. = ..() // Parent proc takes care of removing occupant if necessary
+	if (AM == oldoccupant)
+		update_icon()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
 
