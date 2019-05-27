@@ -114,6 +114,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	poison_per_bite = 3
+	gold_core_spawnable = NO_SPAWN
 	var/atom/movable/cocoon_target
 	var/fed = 0
 	var/obj/effect/proc_holder/wrap/wrap
@@ -203,7 +204,7 @@
 	maxHealth = 40
 	health = 40
 	var/datum/action/innate/spider/comm/letmetalkpls
-	gold_core_spawnable = NO_SPAWN
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch/Initialize()
 	. = ..()
