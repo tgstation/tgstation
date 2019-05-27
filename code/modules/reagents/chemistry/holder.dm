@@ -608,7 +608,8 @@
 
 	if(isliving(my_atom))
 		if (iscarbon(my_atom))
-			if (getorganslot(ORGAN_SLOT_LIVER)) // For carbons, conditional on the presence of a liver
+			var/mob/living/carbon/C = my_atom
+			if (C.getorganslot(ORGAN_SLOT_LIVER)) // For carbons, conditional on the presence of a liver
 				R.on_mob_add(my_atom)
 		else
 			R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
