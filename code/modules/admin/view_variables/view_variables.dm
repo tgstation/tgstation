@@ -69,7 +69,7 @@
 			for(var/i in 1 to length(dropdown_old))
 				var/name = dropdown_old[i]
 				var/link = dropdown_old[name]
-				dropdownoptions[i] += "<option value[link? "='[link]'":""]>[name]</option>"
+				dropdownoptions += "<option value[link? "='[link]'":""]>[name]</option>"
 		//END
 
 	var/list/names = list()
