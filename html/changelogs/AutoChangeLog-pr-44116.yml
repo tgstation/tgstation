@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "fixes message spam from riding a vehicle without enough legs/arms"
