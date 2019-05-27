@@ -2,6 +2,7 @@
 	name = "frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
+	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	max_integrity = 250
 	var/obj/item/circuitboard/machine/circuit = null
