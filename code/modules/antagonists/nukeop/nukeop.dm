@@ -82,9 +82,16 @@
 
 /datum/antagonist/nukeop/proc/give_alias()
 	if(nuke_team && nuke_team.syndicate_name)
-		var/number = 1
-		number = nuke_team.members.Find(owner)
-		owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
+		var/mob/living/carbon/human/H = owner.current
+		if(istype(H)) // Reinforcements get a real name
+			var/chosen_name = H.dna.species.random_name(H.gender,0,nuke_team.syndicate_name)
+			H.fully_replace_character_name(H.real_name,chosen_name)
+		else
+			var/number = 1
+			number = nuke_team.members.Find(owner)
+			owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
+
+
 
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
@@ -241,6 +248,7 @@
 	var/obj/machinery/nuclearbomb/tracked_nuke
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
+	var/list/team_discounts
 
 /datum/team/nuclear/New()
 	..()

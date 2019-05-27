@@ -1,3 +1,4 @@
+#define COLOSSUS_SLEEP(X) sleep(X); if(QDELETED(src)) return;
 /*
 
 COLOSSUS
@@ -111,7 +112,6 @@ Difficulty: Very Hard
 
 	if(prob(20+anger_modifier)) //Major attack
 		select_spiral_attack()
-
 	else if(prob(20))
 		random_shots()
 	else
@@ -130,11 +130,11 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	ranged_cooldown = world.time + 40
 	dir_shots(GLOB.diagonals)
-	sleep(10)
+	COLOSSUS_SLEEP(10)
 	dir_shots(GLOB.cardinals)
-	sleep(10)
+	COLOSSUS_SLEEP(10)
 	dir_shots(GLOB.diagonals)
-	sleep(10)
+	COLOSSUS_SLEEP(10)
 	dir_shots(GLOB.cardinals)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/select_spiral_attack()
@@ -147,7 +147,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
-	sleep(10)
+	COLOSSUS_SLEEP(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot, FALSE)
 	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
 
@@ -165,7 +165,7 @@ Difficulty: Very Hard
 			counter = 16
 		shoot_projectile(start_turf, counter * 22.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
-		sleep(1)
+		COLOSSUS_SLEEP(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
 	if(!isnum(set_angle) && (!marker || marker == loc))

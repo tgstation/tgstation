@@ -428,23 +428,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 					continue
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
-			//at this point, all minimum requirements for the reaction are satisfied.
 
-			/*	currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
-				PLEASE DO NOT REMOVE THIS CODE. the commenting is here only for a performance increase.
-				enabling these checks should be as easy as possible and the fact that they are disabled should be as clear as possible
-
-			var/list/max_reqs = reaction.max_requirements
-			if((max_reqs["TEMP"] && temp > max_reqs["TEMP"]) \
-			|| (max_reqs["ENER"] && ener > max_reqs["ENER"]))
-				continue
-			for(var/id in max_reqs)
-				if(id == "TEMP" || id == "ENER")
-					continue
-				if(cached_gases[id] && cached_gases[id][MOLES] > max_reqs[id])
-					continue reaction_loop
 			//at this point, all requirements for the reaction are satisfied. we can now react()
-			*/
+			
 			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break

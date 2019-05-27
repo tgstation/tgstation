@@ -35,7 +35,7 @@
 	if(!loc)
 		return
 
-	if(!IsInStasis())
+	if(!IS_IN_STASIS(src))
 
 		if(stat != DEAD)
 			//Mutations and radiation
@@ -58,9 +58,6 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
 			handle_environment(environment)
-
-		//stuff in the stomach
-		handle_stomach()
 
 		handle_gravity()
 
@@ -116,9 +113,6 @@
 		return TRUE
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
-
-/mob/living/proc/handle_stomach()
-	return
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
