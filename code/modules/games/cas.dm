@@ -38,9 +38,9 @@
 	if(possiblecards.len < decksize) // sanity check
 		decksize = (possiblecards.len - 1)
 	var/list/randomcards = list()
-	for (var/x=1 to decksize)
+	for(var/x in 1 to decksize)
 		randomcards += pick_n_take(possiblecards)
-	for(var/i=1 to randomcards.len)
+	for(var/x in 1 to randomcards.len)
 		var/cardtext = randomcards[i]
 		var/datum/playingcard/P
 		P = new()
@@ -49,7 +49,7 @@
 		cards += P
 	if(!blanks)
 		return
-	for(var/x=1 to blanks)
+	for(var/x in 1 to blanks)
 		var/datum/playingcard/P
 		P = new()
 		P.name = "Blank Card"
