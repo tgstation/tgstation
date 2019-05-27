@@ -114,8 +114,8 @@
 	log_combat(user, pushed_mob, "places", null, "onto [src]")
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
-	if(user.has_trait(TRAIT_PACIFISM))
-		to_chat(user, "<span class='danger>Throwing [pushed_mob] onto the table might hurt them!</span>'")
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='danger'>Throwing [pushed_mob] onto the table might hurt them!</span>")
 		return
 	var/added_passtable = FALSE
 	if(!pushed_mob.pass_flags & PASSTABLE)

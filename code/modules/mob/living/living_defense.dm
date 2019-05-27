@@ -174,7 +174,7 @@
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
 				var/add_log = ""
-				if(user.has_trait(TRAIT_PACIFISM))
+				if(HAS_TRAIT(user, TRAIT_PACIFISM))
 					visible_message("<span class='danger'>[user] has firmly gripped [src]!</span>",
 						"<span class='danger'>[user] has firmly gripped you!</span>")
 					add_log = " (pacifist)"
