@@ -1334,6 +1334,7 @@
 #include "code\modules\antagonists\slaughter\slaughter_antag.dm"
 #include "code\modules\antagonists\slaughter\slaughterevent.dm"
 #include "code\modules\antagonists\space_dragon\space_dragon.dm"
+#include "code\modules\antagonists\spider\spider.dm"
 #include "code\modules\antagonists\survivalist\survivalist.dm"
 #include "code\modules\antagonists\swarmer\swarmer.dm"
 #include "code\modules\antagonists\swarmer\swarmer_event.dm"

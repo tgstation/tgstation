@@ -51,6 +51,7 @@
 	var/playable_spider = FALSE
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/progenitor
 
 	do_footstep = TRUE
 
@@ -69,12 +70,6 @@
 		if(istype(ghost) && playable_spider)
 			humanize_spider(ghost)
 
-/mob/living/simple_animal/hostile/poison/giant_spider/Login()
-	..()
-	if(directive)
-		to_chat(src, "<span class='notice'>Your mother left you a directive! Follow it at all costs.</span>")
-		to_chat(src, "<span class='spider'><b>[directive]</b></span>")
-
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
 	. = ..()
 	if(.)
@@ -91,6 +86,17 @@
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
 		return 1
 	key = user.key
+	var/datum/mind/M = mind
+	if(M && progenitor)
+		if((!istype(progenitor, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch) && istype(src, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)) || istype(src, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch)) //if we're both a nurse and our parent is a nurse, don't pass on "genes"
+			progenitor.descendants -= src
+			progenitor = null
+		else
+			var/datum/antagonist/spider/A = new
+			var/datum/objective/spider/objective = new(directive)
+			A.objectives += objective
+			M.add_antag_datum(A)
+			M.announce_objectives()
 	return 1
 
 //nursemaids - these create webs and eggs
@@ -112,6 +118,7 @@
 	var/datum/action/innate/spider/lay_eggs/lay_eggs
 	var/datum/action/innate/spider/set_directive/set_directive
 	var/static/list/consumed_mobs = list() //the tags of mobs that have been consumed by nurse spiders to lay eggs
+	var/list/descendants = list()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/Initialize()
 	. = ..()
@@ -184,24 +191,24 @@
 		speed = 7
 	. = ..()
 
-//midwives are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife
-	name = "midwife"
+//matriarchs are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch
+	name = "matriarch"
 	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes."
-	icon_state = "midwife"
-	icon_living = "midwife"
-	icon_dead = "midwife_dead"
+	icon_state = "matriarch"
+	icon_living = "matriarch"
+	icon_dead = "matriarch_dead"
 	maxHealth = 40
 	health = 40
 	var/datum/action/innate/spider/comm/letmetalkpls
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Initialize()
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch/Initialize()
 	. = ..()
 	letmetalkpls = new
 	letmetalkpls.Grant(src)
 
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Destroy()
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch/Destroy()
 	QDEL_NULL(letmetalkpls)
 	return ..()
 
@@ -466,11 +473,14 @@
 					var/obj/structure/spider/eggcluster/C = new /obj/structure/spider/eggcluster(get_turf(S))
 					if(S.ckey)
 						C.player_spiders = TRUE
-					C.directive = S.directive
 					C.poison_type = S.poison_type
 					C.poison_per_bite = S.poison_per_bite
 					C.faction = S.faction.Copy()
 					S.fed--
+					if(S.progenitor && istype(S.progenitor, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch))
+						C.progenitor = S.progenitor
+					else
+						C.progenitor = S
 					UpdateButtonIcon(TRUE)
 		S.busy = SPIDER_IDLE
 		S.stop_automated_movement = FALSE
@@ -485,11 +495,29 @@
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
+	if(S.progenitor && istype(S.progenitor, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch) && !S.progenitor.stat)
+		to_chat(S, "<span class='spider'><b>Your progenitor, [S.progenitor]'s influence is yet too strong for you to issue your own commands!</b></span>")
+		return
 	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
+	if(S.directive)
+		for(var/D in S.descendants)
+			var/mob/living/simple_animal/hostile/poison/giant_spider/G = D
+			var/datum/mind/M = G.mind
+			G.directive = S.directive
+			if(M)
+				var/datum/antagonist/spider/A = M.has_antag_datum(/datum/antagonist/spider)
+				A.objectives.Cut()
+				var/datum/objective/spider/objective = new(S.directive)
+				A.objectives += objective
+		to_chat(S, "<span class='spider'><b>You signal to all of your descendants a command: [S.directive]</b></span>")
+		message_admins("[ADMIN_LOOKUPFLW(owner)] sent directive: '[S.directive]'.")
+		log_game("[key_name(owner)] sent directive: '[S.directive]'.")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()
 	GLOB.spidermobs[src] = TRUE
+	if(progenitor)
+		to_chat(src, "<span class='spider'><b>Your progenitor is [progenitor].</b></span>")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
 	GLOB.spidermobs -= src
@@ -501,7 +529,7 @@
 	button_icon_state = "command"
 
 /datum/action/innate/spider/comm/IsAvailable()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife))
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch))
 		return FALSE
 	return TRUE
 

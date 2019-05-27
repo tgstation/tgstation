@@ -264,7 +264,7 @@
 	to_chat(owner, "<span class='warning'>You feel something crawling in your skin.</span>")
 	owner.faction |= "spiders"
 	var/obj/structure/spider/spiderling/S = new(owner.drop_location())
-	S.directive = "Protect your nest inside [owner.real_name]."
+	S.progenitor.directive = "Protect your nest inside [owner.real_name]."
 
 /obj/item/organ/heart/gland/egg
 	true_name = "roe/enzymatic synthesizer"

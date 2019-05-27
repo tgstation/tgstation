@@ -54,10 +54,10 @@
 	icon_state = "eggs"
 	var/amount_grown = 0
 	var/player_spiders = 0
-	var/directive = "" //Message from the mother
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/progenitor
 
 /obj/structure/spider/eggcluster/Initialize()
 	pixel_x = rand(3,-3)
@@ -72,7 +72,8 @@
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
 			S.faction = faction.Copy()
-			S.directive = directive
+			if(progenitor)
+				S.progenitor = progenitor
 			if(player_spiders)
 				S.player_spiders = 1
 		qdel(src)
@@ -89,8 +90,9 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	var/player_spiders = 0
-	var/directive = "" //Message from the mother
 	var/list/faction = list("spiders")
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/progenitor
+
 
 /obj/structure/spider/spiderling/Destroy()
 	new/obj/item/reagent_containers/food/snacks/spiderling(get_turf(src))
@@ -109,8 +111,8 @@
 /obj/structure/spider/spiderling/nurse
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
 
-/obj/structure/spider/spiderling/midwife
-	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife
+/obj/structure/spider/spiderling/matriarch
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch
 
 /obj/structure/spider/spiderling/viper
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
@@ -187,12 +189,14 @@
 		if(amount_grown >= 100)
 			if(!grow_as)
 				if(prob(3))
-					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider/tarantula, /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife)
+					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider/tarantula, /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch)
 				else
 					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			S.faction = faction.Copy()
-			S.directive = directive
+			S.directive = progenitor.directive
+			S.progenitor = progenitor
+			progenitor.descendants += S
 			if(player_spiders)
 				S.playable_spider = TRUE
 				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=[REF(S)];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK, ignore_key = POLL_IGNORE_SPIDER)
