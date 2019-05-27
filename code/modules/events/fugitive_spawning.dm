@@ -14,7 +14,7 @@
 /datum/round_event/ghost_role/fugitives/spawn_role()
 	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
 	for(var/turf/X in GLOB.xeno_spawn)
-		if(istype(X, /area/maintenance))
+		if(istype(X.loc, /area/maintenance))
 			possible_spawns += X
 	if(!possible_spawns.len)
 		message_admins("No valid spawn locations found, aborting...")
@@ -117,10 +117,3 @@
 	if(!ship.load(T))
 		CRASH("Loading hunter ship failed!")
 	priority_announce("Unidentified armed ship detected near the station.")
-	for(var/turf/A in ship.get_affected_turfs(T))
-		for(var/obj/structure/chair/chair in A) //every chair gets a spawner on it.
-			switch(backstory)
-				if("space cop")
-					new /obj/effect/mob_spawn/human/fugitive/spacepol(get_turf(chair))
-				if("russian")
-					new /obj/effect/mob_spawn/human/fugitive/russian(get_turf(chair))

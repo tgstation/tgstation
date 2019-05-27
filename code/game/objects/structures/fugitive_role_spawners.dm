@@ -8,6 +8,7 @@
 	random = TRUE
 	show_flavour = FALSE
 	density = TRUE
+	var/back_story = "error"
 
 /obj/effect/mob_spawn/human/fugitive/Initialize(mapload)
 	. = ..()
@@ -15,8 +16,8 @@
 
 /obj/effect/mob_spawn/human/fugitive/special(mob/living/new_spawn)
 	var/datum/antagonist/fugitive_hunter/fughunter = new_spawn.mind.add_antag_datum(/datum/antagonist/fugitive_hunter)
-	fughunter.backstory = flavour_text
-	fughunter.greet(flavour_text)
+	fughunter.backstory = back_story
+	fughunter.greet()
 	message_admins("[ADMIN_LOOKUPFLW(new_spawn)] has been made into a Fugitive Hunter by an event.")
 	log_game("[key_name(new_spawn)] was spawned as a Fugitive Hunter by an event.")
 
@@ -24,14 +25,16 @@
 	name = "police pod"
 	desc = "A small sleeper typically used to put people to sleep for briefing on the mission."
 	mob_name = "a spacepol officer"
-	flavour_text = "space cop"
+	flavour_text = "Justice has arrived. I am a member of the Spacepol!"
+	back_story = "space cop"
 	outfit = /datum/outfit/spacepol
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
 /obj/effect/mob_spawn/human/fugitive/russian
 	name = "russian pod"
-	flavour_text = "russian"
+	flavour_text = "Ay blyat. I am a space-russian smuggler! We were mid-flight when our cargo was beamed off our ship!"
+	back_story = "russian"
 	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
 	mob_name = "russian"
 	outfit = /datum/outfit/russiancorpse

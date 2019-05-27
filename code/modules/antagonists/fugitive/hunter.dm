@@ -2,7 +2,7 @@
 /datum/antagonist/fugitive_hunter
 	name = "Fugitive Hunter"
 	roundend_category = "Fugitive"
-	silent = TRUE //greet called by the event as well
+	silent = TRUE //greet called by the spawn
 	var/datum/team/fugitive_hunters/hunter_team
 	var/backstory = "error"
 
@@ -24,7 +24,7 @@
 	capture.explanation_text = "Capture the fugitives in the station and put them into the bluespace capture machine on your ship."
 	objectives += capture
 
-/datum/antagonist/fugitive_hunter/greet(backstory)
+/datum/antagonist/fugitive_hunter/greet()
 	switch(backstory)
 		if("space cop")
 			to_chat(owner, "<span class='boldannounce'>Justice has arrived. I am a member of the Spacepol!</span>")
