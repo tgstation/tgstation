@@ -567,15 +567,15 @@
 		adjustNutri(round(S.get_reagent_amount("sodawater") * 0.1))
 
 	// Man, you guys are retards
-	if(S.has_reagent("sacid", 1))
-		adjustHealth(-round(S.get_reagent_amount("sacid") * 1))
-		adjustToxic(round(S.get_reagent_amount("sacid") * 1.5))
+	if(S.has_reagent(/datum/reagent/toxin/acid, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/toxin/acid) * 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/acid) * 1.5))
 		adjustWeeds(-rand(1,2))
 
 	// SERIOUSLY
-	if(S.has_reagent("facid", 1))
-		adjustHealth(-round(S.get_reagent_amount("facid") * 2))
-		adjustToxic(round(S.get_reagent_amount("facid") * 3))
+	if(S.has_reagent(/datum/reagent/toxin/acid/fluacid, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/toxin/acid/fluacid) * 2))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/acid/fluacid) * 3))
 		adjustWeeds(-rand(1,4))
 
 	// Plant-B-Gone is just as bad

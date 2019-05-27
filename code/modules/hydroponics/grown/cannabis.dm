@@ -17,7 +17,7 @@
 						/obj/item/seeds/cannabis/death,
 						/obj/item/seeds/cannabis/white,
 						/obj/item/seeds/cannabis/ultimate)
-	reagents_add = list("space_drugs" = 0.15, "lipolicide" = 0.35) // gives u the munchies
+	reagents_add = list("space_drugs" = 0.15, /datum/reagent/toxin/lipolicide = 0.35) // gives u the munchies
 
 
 /obj/item/seeds/cannabis/rainbow
@@ -28,7 +28,7 @@
 	plantname = "Rainbow Weed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.15, "lipolicide" = 0.35)
+	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.15, /datum/reagent/toxin/lipolicide = 0.35)
 	rarity = 40
 
 /obj/item/seeds/cannabis/death
@@ -39,7 +39,7 @@
 	plantname = "Deathweed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/death
 	mutatelist = list()
-	reagents_add = list("cyanide" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
+	reagents_add = list(/datum/reagent/toxin/cyanide = 0.35, "space_drugs" = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
 
 /obj/item/seeds/cannabis/white
@@ -50,7 +50,7 @@
 	plantname = "Lifeweed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/white
 	mutatelist = list()
-	reagents_add = list("omnizine" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
+	reagents_add = list("omnizine" = 0.35, "space_drugs" = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
 
 
@@ -72,11 +72,11 @@
 						"capsaicin" = 0.15,
 						"barbers_aid" = 0.15,
 						"bath_salts" = 0.15,
-						"itching_powder" = 0.15,
+						/datum/reagent/toxin/itching_powder = 0.15,
 						"crank" = 0.15,
 						"krokodil" = 0.15,
 						/datum/reagent/toxin/histamine = 0.15,
-						"lipolicide" = 0.15)
+						/datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 69
 
 

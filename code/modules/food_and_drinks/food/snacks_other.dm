@@ -133,7 +133,7 @@
 	name = "burned mess"
 	desc = "Someone should be demoted from cook for this."
 	icon_state = "badrecipe"
-	list_reagents = list("bad_food" = 30)
+	list_reagents = list(/datum/reagent/toxin/bad_food = 30)
 	filling_color = "#8B4513"
 	foodtype = GROSS
 

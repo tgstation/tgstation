@@ -224,7 +224,7 @@
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
 	else if(bleed_rate)
-		if(reagents.has_reagent("heparin"))
+		if(reagents.has_reagent(/datum/reagent/toxin/heparin))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
 		else
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"

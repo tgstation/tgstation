@@ -401,7 +401,7 @@
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
-		holder.remove_reagent("formaldehyde", 1.2)
+		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
 	else
 		return ..()
 
@@ -419,7 +419,7 @@
 	. = 1
 	if(prob(15))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
-		M.reagents.remove_reagent("venom", 1.1)
+		M.reagents.remove_reagent(/datum/reagent/toxin/venom, 1.1)
 	else
 		..()
 
@@ -477,7 +477,7 @@
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent("itching_powder", reac_volume)
+		M.reagents.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
@@ -494,7 +494,7 @@
 		. = 1
 	if(prob(3))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
-		M.reagents.remove_reagent("itching_powder",1.2)
+		M.reagents.remove_reagent(/datum/reagent/toxin/itching_powder,1.2)
 		return
 	..()
 
@@ -849,7 +849,7 @@
 	overdose_threshold = 50
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
-	M.say("oof ouch my bones", forced = "bonehurtingjuice")
+	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(15, 0)
@@ -859,10 +859,10 @@
 		switch(rand(1, 3))
 			if(1)
 				var/list/possible_says = list("oof.", "ouch!", "my bones.", "oof ouch.", "oof ouch my bones.")
-				M.say(pick(possible_says), forced = "bonehurtingjuice")
+				M.say(pick(possible_says), forced = /datum/reagent/toxin/bonehurtingjuice)
 			if(2)
 				var/list/possible_mes = list("oofs softly.", "looks like their bones hurt.", "grimaces, as though their bones hurt.")
-				M.say("*custom " + pick(possible_mes), forced = "bonehurtingjuice")
+				M.say("*custom " + pick(possible_mes), forced = /datum/reagent/toxin/bonehurtingjuice)
 			if(3)
 				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
 	return ..()
@@ -885,15 +885,15 @@
 				bp.receive_damage(0, 0, 200)
 				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
 				M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
-				M.say("OOF!!", forced = "bonehurtingjuice")
+				M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
 			else //SUCH A LUST FOR REVENGE!!!
 				to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
-				M.say("Why are we still here, just to suffer?", forced = "bonehurtingjuice")
+				M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
 		else //you just want to socialize
 			if(bp)
 				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
 				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
-				M.say("OOF!!", forced="bonehurtingjuice")
+				M.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
 				bp.receive_damage(200, 0, 0) //But I don't think we should
 			else
 				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")

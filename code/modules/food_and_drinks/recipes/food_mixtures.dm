@@ -67,13 +67,13 @@
 	name = "Soy Sauce"
 	id = "soysauce"
 	results = list("soysauce" = 5)
-	required_reagents = list("soymilk" = 4, "sacid" = 1)
+	required_reagents = list("soymilk" = 4, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/corn_syrup
 	name = "corn_syrup"
 	id = "corn_syrup"
 	results = list("corn_syrup" = 5)
-	required_reagents = list("corn_starch" = 1, "sacid" = 1)
+	required_reagents = list("corn_starch" = 1, /datum/reagent/toxin/acid = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/cheesewheel

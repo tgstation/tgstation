@@ -36,7 +36,7 @@
 	var/static/list/advance_cures = 	list(
 									/datum/reagent/consumable/sodiumchloride, "sugar", "orangejuice",
 									"spaceacillin", "salglu_solution", "ethanol",
-									"leporazine", "synaptizine", "lipolicide",
+									"leporazine", "synaptizine", /datum/reagent/toxin/lipolicide,
 									"silver", "gold"
 								)
 

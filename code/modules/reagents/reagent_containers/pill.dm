@@ -87,7 +87,7 @@
 	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
-	list_reagents = list("cyanide" = 50)
+	list_reagents = list(/datum/reagent/toxin/cyanide = 50)
 
 /obj/item/reagent_containers/pill/adminordrazine
 	name = "adminordrazine pill"

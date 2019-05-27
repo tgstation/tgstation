@@ -27,7 +27,7 @@
 	name = "Nitroglycerin"
 	id = "nitroglycerin"
 	results = list("nitroglycerin" = 2)
-	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
+	required_reagents = list("glycerol" = 1, /datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/toxin/acid = 1)
 	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
@@ -344,7 +344,7 @@
 	name = "phlogiston"
 	id = "phlogiston"
 	results = list("phlogiston" = 3)
-	required_reagents = list("phosphorus" = 1, "sacid" = 1, "stable_plasma" = 1)
+	required_reagents = list("phosphorus" = 1, /datum/reagent/toxin/acid = 1, "stable_plasma" = 1)
 
 /datum/chemical_reaction/phlogiston/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent("stabilizing_agent"))

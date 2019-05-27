@@ -351,7 +351,7 @@
 	name = "Acid Spit"
 	id = "acidspit"
 	results = list("acidspit" = 6)
-	required_reagents = list("sacid" = 1, "wine" = 5)
+	required_reagents = list(/datum/reagent/toxin/acid = 1, "wine" = 5)
 
 /datum/chemical_reaction/amasec
 	name = "Amasec"

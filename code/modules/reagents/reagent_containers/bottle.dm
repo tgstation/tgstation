@@ -53,12 +53,12 @@
 /obj/item/reagent_containers/glass/bottle/cyanide
 	name = "cyanide bottle"
 	desc = "A small bottle of cyanide. Bitter almonds?"
-	list_reagents = list("cyanide" = 30)
+	list_reagents = list(/datum/reagent/toxin/cyanide = 30)
 
 /obj/item/reagent_containers/glass/bottle/spewium
 	name = "spewium bottle"
 	desc = "A small bottle of spewium."
-	list_reagents = list("spewium" = 30)
+	list_reagents = list(/datum/reagent/toxin/spewium = 30)
 
 /obj/item/reagent_containers/glass/bottle/morphine
 	name = "morphine bottle"
@@ -100,7 +100,7 @@
 /obj/item/reagent_containers/glass/bottle/formaldehyde
 	name = "formaldehyde bottle"
 	desc = "A small bottle of formaldehyde."
-	list_reagents = list("formaldehyde" = 30)
+	list_reagents = list(/datum/reagent/toxin/formaldehyde = 30)
 
 /obj/item/reagent_containers/glass/bottle/ammonia
 	name = "ammonia bottle"
@@ -115,7 +115,7 @@
 /obj/item/reagent_containers/glass/bottle/facid
 	name = "Fluorosulfuric Acid Bottle"
 	desc = "A small bottle. Contains a small amount of fluorosulfuric acid."
-	list_reagents = list("facid" = 30)
+	list_reagents = list(/datum/reagent/toxin/acid/fluacid = 30)
 
 /obj/item/reagent_containers/glass/bottle/adminordrazine
 	name = "Adminordrazine Bottle"
@@ -142,7 +142,7 @@
 
 /obj/item/reagent_containers/glass/bottle/traitor/Initialize()
 	. = ..()
-	extra_reagent = pick(/datum/reagent/toxin/polonium, /datum/reagent/toxin/histamine, "formaldehyde", "venom", "fentanyl", "cyanide")
+	extra_reagent = pick(/datum/reagent/toxin/polonium, /datum/reagent/toxin/histamine, /datum/reagent/toxin/formaldehyde, /datum/reagent/toxin/venom, /datum/reagent/toxin/fentanyl, /datum/reagent/toxin/cyanide)
 	reagents.add_reagent("[extra_reagent]", 3)
 
 /obj/item/reagent_containers/glass/bottle/polonium
@@ -158,47 +158,47 @@
 /obj/item/reagent_containers/glass/bottle/venom
 	name = "venom bottle"
 	desc = "A small bottle. Contains Venom."
-	list_reagents = list("venom" = 30)
+	list_reagents = list(/datum/reagent/toxin/venom = 30)
 
 /obj/item/reagent_containers/glass/bottle/fentanyl
 	name = "fentanyl bottle"
 	desc = "A small bottle. Contains Fentanyl."
-	list_reagents = list("fentanyl" = 30)
+	list_reagents = list(/datum/reagent/toxin/fentanyl = 30)
 
 /obj/item/reagent_containers/glass/bottle/formaldehyde
 	name = "formaldehyde bottle"
 	desc = "A small bottle. Contains Formaldehyde."
-	list_reagents = list("formaldehyde" = 30)
+	list_reagents = list(/datum/reagent/toxin/formaldehyde = 30)
 
 /obj/item/reagent_containers/glass/bottle/initropidril
 	name = "initropidril bottle"
 	desc = "A small bottle. Contains initropidril."
-	list_reagents = list("initropidril" = 30)
+	list_reagents = list(/datum/reagent/toxin/initropidril = 30)
 
 /obj/item/reagent_containers/glass/bottle/pancuronium
 	name = "pancuronium bottle"
 	desc = "A small bottle. Contains pancuronium."
-	list_reagents = list("pancuronium" = 30)
+	list_reagents = list(/datum/reagent/toxin/pancuronium = 30)
 
 /obj/item/reagent_containers/glass/bottle/sodium_thiopental
 	name = "sodium thiopental bottle"
 	desc = "A small bottle. Contains sodium thiopental."
-	list_reagents = list("sodium_thiopental" = 30)
+	list_reagents = list(/datum/reagent/toxin/sodium_thiopental = 30)
 
 /obj/item/reagent_containers/glass/bottle/coniine
 	name = "coniine bottle"
 	desc = "A small bottle. Contains coniine."
-	list_reagents = list("coniine" = 30)
+	list_reagents = list(/datum/reagent/toxin/coniine = 30)
 
 /obj/item/reagent_containers/glass/bottle/curare
 	name = "curare bottle"
 	desc = "A small bottle. Contains curare."
-	list_reagents = list("curare" = 30)
+	list_reagents = list(/datum/reagent/toxin/curare = 30)
 
 /obj/item/reagent_containers/glass/bottle/amanitin
 	name = "amanitin bottle"
 	desc = "A small bottle. Contains amanitin."
-	list_reagents = list("amanitin" = 30)
+	list_reagents = list(/datum/reagent/toxin/amanitin = 30)
 
 /obj/item/reagent_containers/glass/bottle/histamine
 	name = "histamine bottle"
@@ -392,7 +392,7 @@
 
 /obj/item/reagent_containers/glass/bottle/sacid
 	name = "sulphuric acid bottle"
-	list_reagents = list("sacid" = 30)
+	list_reagents = list(/datum/reagent/toxin/acid = 30)
 
 /obj/item/reagent_containers/glass/bottle/welding_fuel
 	name = "welding fuel bottle"

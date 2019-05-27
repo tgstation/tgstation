@@ -41,7 +41,7 @@
 		"water",
 		"ethanol",
 		"sugar",
-		"sacid",
+		/datum/reagent/toxin/acid,
 		"welding_fuel",
 		"silver",
 		"iodine",

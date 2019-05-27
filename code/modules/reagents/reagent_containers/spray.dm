@@ -305,7 +305,7 @@
 		..(the_targets[i], user)
 
 /obj/item/reagent_containers/spray/chemsprayer/bioterror
-	list_reagents = list("sodium_thiopental" = 100, "coniine" = 100, "venom" = 100, "condensedcapsaicin" = 100, "initropidril" = 100, /datum/reagent/toxin/polonium = 100)
+	list_reagents = list(/datum/reagent/toxin/sodium_thiopental = 100, /datum/reagent/toxin/coniine = 100, /datum/reagent/toxin/venom = 100, "condensedcapsaicin" = 100, /datum/reagent/toxin/initropidril = 100, /datum/reagent/toxin/polonium = 100)
 
 
 /obj/item/reagent_containers/spray/chemsprayer/janitor

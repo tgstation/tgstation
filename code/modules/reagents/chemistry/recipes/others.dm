@@ -39,7 +39,7 @@
 	name = "Glycerol"
 	id = "glycerol"
 	results = list("glycerol" = 1)
-	required_reagents = list("cornoil" = 3, "sacid" = 1)
+	required_reagents = list("cornoil" = 3, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/sodiumchloride
 	name = "Sodium Chloride"
@@ -325,7 +325,7 @@
 /datum/chemical_reaction/mix_virus/neuter_virus
 	name = "Neuter Virus"
 	id = "neutervirus"
-	required_reagents = list("formaldehyde" = 1)
+	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1)
 	required_catalysts = list("blood" = 1)
 
 /datum/chemical_reaction/mix_virus/neuter_virus/on_reaction(datum/reagents/holder, created_volume)
@@ -345,7 +345,7 @@
 	name = "Foam surfactant"
 	id = "foam surfactant"
 	results = list("fluorosurfactant" = 5)
-	required_reagents = list("fluorine" = 2, "carbon" = 2, "sacid" = 1)
+	required_reagents = list("fluorine" = 2, "carbon" = 2, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/foam
 	name = "Foam"
@@ -367,7 +367,7 @@
 /datum/chemical_reaction/metalfoam
 	name = "Metal Foam"
 	id = "metalfoam"
-	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "facid" = 1)
+	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
@@ -384,7 +384,7 @@
 /datum/chemical_reaction/smart_foam
 	name = "Smart Metal Foam"
 	id = "smart_metal_foam"
-	required_reagents = list("aluminium" = 3, "smart_foaming_agent" = 1, "facid" = 1)
+	required_reagents = list("aluminium" = 3, "smart_foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = TRUE
 
 /datum/chemical_reaction/smart_foam/on_reaction(datum/reagents/holder, created_volume)
@@ -398,7 +398,7 @@
 /datum/chemical_reaction/ironfoam
 	name = "Iron Foam"
 	id = "ironlfoam"
-	required_reagents = list("iron" = 3, "foaming_agent" = 1, "facid" = 1)
+	required_reagents = list("iron" = 3, "foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
@@ -588,7 +588,7 @@
 /datum/chemical_reaction/plastic_polymers
 	name = "plastic polymers"
 	id = "plastic_polymers"
-	required_reagents = list("oil" = 5, "sacid" = 2, "ash" = 3)
+	required_reagents = list("oil" = 5, /datum/reagent/toxin/acid = 2, "ash" = 3)
 	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
 
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)

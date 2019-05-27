@@ -142,7 +142,7 @@ Borg Hypospray
 
 /obj/item/reagent_containers/borghypo/hacked
 	icon_state = "borghypo_s"
-	reagent_ids = list ("facid", /datum/reagent/toxin/mutetoxin, "cyanide", "sodium_thiopental", "heparin", /datum/reagent/toxin/lexorin)
+	reagent_ids = list (/datum/reagent/toxin/acid/fluacid, /datum/reagent/toxin/mutetoxin, /datum/reagent/toxin/cyanide, /datum/reagent/toxin/sodium_thiopental, /datum/reagent/toxin/heparin, /datum/reagent/toxin/lexorin)
 	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/clown
@@ -247,7 +247,7 @@ Borg Shaker
 /obj/item/reagent_containers/borghypo/peace/hacked
 	desc = "Everything's peaceful in death!"
 	icon_state = "borghypo_s"
-	reagent_ids = list("dizzysolution","tiresolution","synthpax",/datum/reagent/toxin/staminatoxin,"sulfonal","sodium_thiopental","cyanide","fentanyl")
+	reagent_ids = list("dizzysolution","tiresolution","synthpax",/datum/reagent/toxin/staminatoxin,/datum/reagent/toxin/sulfonal,/datum/reagent/toxin/sodium_thiopental,/datum/reagent/toxin/cyanide,/datum/reagent/toxin/fentanyl)
 	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/epi

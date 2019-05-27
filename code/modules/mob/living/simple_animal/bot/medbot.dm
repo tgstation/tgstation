@@ -70,13 +70,13 @@
 	skin = "bezerk"
 	heal_threshold = 0
 	declare_crit = 0
-	treatment_oxy = "pancuronium"
+	treatment_oxy = /datum/reagent/toxin/pancuronium
 	treatment_brute_avoid = null
-	treatment_brute = "pancuronium"
+	treatment_brute = /datum/reagent/toxin/pancuronium
 	treatment_fire_avoid = null
-	treatment_fire = "sodium_thiopental"
+	treatment_fire = /datum/reagent/toxin/sodium_thiopental
 	treatment_tox_avoid = null
-	treatment_tox = "sodium_thiopental"
+	treatment_tox = /datum/reagent/toxin/sodium_thiopental
 
 /mob/living/simple_animal/bot/medbot/update_icon()
 	cut_overlays()

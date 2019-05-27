@@ -338,7 +338,7 @@
 
 	B1.reagents.add_reagent("aluminium", 30)
 	B2.reagents.add_reagent("foaming_agent", 10)
-	B2.reagents.add_reagent("facid", 10)
+	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
 
 	beakers += B1
 	beakers += B2
@@ -356,7 +356,7 @@
 
 	B1.reagents.add_reagent("aluminium", 75)
 	B2.reagents.add_reagent("smart_foaming_agent", 25)
-	B2.reagents.add_reagent("facid", 25)
+	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
 
 	beakers += B1
 	beakers += B2
@@ -374,7 +374,7 @@
 
 	B1.reagents.add_reagent("phosphorus", 25)
 	B2.reagents.add_reagent("stable_plasma", 25)
-	B2.reagents.add_reagent("sacid", 25)
+	B2.reagents.add_reagent(/datum/reagent/toxin/acid, 25)
 
 	beakers += B1
 	beakers += B2
@@ -465,11 +465,11 @@
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("facid", 290)
+	B1.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 290)
 	B1.reagents.add_reagent("potassium", 10)
 	B2.reagents.add_reagent("phosphorus", 10)
 	B2.reagents.add_reagent("sugar", 10)
-	B2.reagents.add_reagent("facid", 280)
+	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 280)
 
 	beakers += B1
 	beakers += B2
@@ -559,7 +559,7 @@
 	B1.reagents.add_reagent("water", 50)
 	B1.reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 50)
 	B1.reagents.add_reagent(/datum/reagent/toxin/spore, 75)
-	B1.reagents.add_reagent("itching_powder", 50)
+	B1.reagents.add_reagent(/datum/reagent/toxin/itching_powder, 50)
 	B2.reagents.add_reagent("fluorosurfactant", 150)
 	B2.reagents.add_reagent(/datum/reagent/toxin/mutagen, 150)
 	beakers += B1

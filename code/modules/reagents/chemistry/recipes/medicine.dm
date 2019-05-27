@@ -72,7 +72,7 @@
 	name = "Styptic Powder"
 	id = "styptic_powder"
 	results = list("styptic_powder" = 4)
-	required_reagents = list("aluminium" = 1, "hydrogen" = 1, "oxygen" = 1, "sacid" = 1)
+	required_reagents = list("aluminium" = 1, "hydrogen" = 1, "oxygen" = 1, /datum/reagent/toxin/acid = 1)
 	mix_message = "The solution yields an astringent powder."
 
 /datum/chemical_reaction/calomel
@@ -92,13 +92,13 @@
 	name = "Pentetic Acid"
 	id = "pen_acid"
 	results = list("pen_acid" = 6)
-	required_reagents = list("welding_fuel" = 1, "chlorine" = 1, "ammonia" = 1, "formaldehyde" = 1, "sodium" = 1, "cyanide" = 1)
+	required_reagents = list("welding_fuel" = 1, "chlorine" = 1, "ammonia" = 1, /datum/reagent/toxin/formaldehyde = 1, "sodium" = 1, /datum/reagent/toxin/cyanide = 1)
 
 /datum/chemical_reaction/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
 	results = list("sal_acid" = 5)
-	required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, "sacid" = 1)
+	required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/oxandrolone
 	name = "Oxandrolone"
@@ -145,7 +145,7 @@
 	name = "Atropine"
 	id = "atropine"
 	results = list("atropine" = 5)
-	required_reagents = list("ethanol" = 1, "acetone" = 1, "diethylamine" = 1, "phenol" = 1, "sacid" = 1)
+	required_reagents = list("ethanol" = 1, "acetone" = 1, "diethylamine" = 1, "phenol" = 1, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/epinephrine
 	name = "Epinephrine"
@@ -256,7 +256,7 @@
 	name = "Modafinil"
 	id = "modafinil"
 	results = list("modafinil" = 5)
-	required_reagents = list("diethylamine" = 1, "ammonia" = 1, "phenol" = 1, "acetone" = 1, "sacid" = 1)
+	required_reagents = list("diethylamine" = 1, "ammonia" = 1, "phenol" = 1, "acetone" = 1, /datum/reagent/toxin/acid = 1)
 	required_catalysts = list("bromine" = 1) // as close to the real world synthesis as possible
 
 /datum/chemical_reaction/psicodine

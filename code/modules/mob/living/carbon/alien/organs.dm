@@ -26,7 +26,7 @@
 
 /obj/item/organ/alien/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("sacid", 10)
+	S.reagents.add_reagent(/datum/reagent/toxin/acid, 10)
 	return S
 
 

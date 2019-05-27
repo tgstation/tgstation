@@ -217,7 +217,7 @@
 	list_reagents = list("cryoxadone" = 30)
 
 /obj/item/reagent_containers/glass/beaker/sulphuric
-	list_reagents = list("sacid" = 50)
+	list_reagents = list(/datum/reagent/toxin/acid = 50)
 
 /obj/item/reagent_containers/glass/beaker/slime
 	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
