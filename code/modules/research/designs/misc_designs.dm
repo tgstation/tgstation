@@ -260,6 +260,16 @@
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
 
+/datum/design/mop
+	name = "Mop"
+	desc = "It mops."
+	id = "mop"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/mop
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/advmop
 	name = "Advanced Mop"
 	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
