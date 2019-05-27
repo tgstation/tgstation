@@ -27,8 +27,8 @@
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
 			if(reagents)
 				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.id + " ("
-					R += num2text(A.volume) + "),"
+					R += "[A] ([num2text(A.volume)]),"
+
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
 				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
@@ -220,7 +220,7 @@
 	list_reagents = list("sacid" = 50)
 
 /obj/item/reagent_containers/glass/beaker/slime
-	list_reagents = list("slimejelly" = 50)
+	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/styptic
 	name = "styptic reserve tank"
@@ -239,7 +239,7 @@
 	list_reagents = list("epinephrine" = 50)
 
 /obj/item/reagent_containers/glass/beaker/synthflesh
-	list_reagents = list("synthflesh" = 50)
+	list_reagents = list(/datum/reagent/medicine/synthflesh = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"

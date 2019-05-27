@@ -34,7 +34,7 @@
 	if(istype(R))
 		name = "honeycomb ([R.name])"
 		honey_color = R.color
-		reagents.add_reagent(R.id,5)
+		reagents.add_reagent(R.type,5)
 	else
 		honey_color = ""
 	update_icon()

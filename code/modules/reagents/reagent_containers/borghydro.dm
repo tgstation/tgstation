@@ -142,7 +142,7 @@ Borg Hypospray
 
 /obj/item/reagent_containers/borghypo/hacked
 	icon_state = "borghypo_s"
-	reagent_ids = list ("facid", "mutetoxin", "cyanide", "sodium_thiopental", "heparin", "lexorin")
+	reagent_ids = list ("facid", /datum/reagent/toxin/mutetoxin, "cyanide", "sodium_thiopental", "heparin", /datum/reagent/toxin/lexorin)
 	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/clown
@@ -236,7 +236,7 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list("fakebeer", "fernet")
+	reagent_ids = list(/datum/reagent/toxin/fakebeer, "fernet")
 
 /obj/item/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
@@ -247,7 +247,7 @@ Borg Shaker
 /obj/item/reagent_containers/borghypo/peace/hacked
 	desc = "Everything's peaceful in death!"
 	icon_state = "borghypo_s"
-	reagent_ids = list("dizzysolution","tiresolution","synthpax","tirizene","sulfonal","sodium_thiopental","cyanide","fentanyl")
+	reagent_ids = list("dizzysolution","tiresolution","synthpax",/datum/reagent/toxin/staminatoxin,"sulfonal","sodium_thiopental","cyanide","fentanyl")
 	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/epi

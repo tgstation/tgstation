@@ -164,7 +164,7 @@
 	icon_state = "mint"
 	bitesize = 1
 	trash = /obj/item/trash/plate
-	list_reagents = list("minttoxin" = 2)
+	list_reagents = list(/datum/reagent/toxin/minttoxin = 2)
 	filling_color = "#800000"
 	foodtype = TOXIC | SUGAR
 
@@ -192,7 +192,7 @@
 	name = "spider eggs"
 	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
 	icon_state = "spidereggs"
-	list_reagents = list("nutriment" = 2, "toxin" = 2)
+	list_reagents = list("nutriment" = 2, /datum/reagent/toxin = 2)
 	filling_color = "#008000"
 	tastes = list("cobwebs" = 1)
 	foodtype = MEAT | TOXIC
@@ -201,7 +201,7 @@
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
 	icon_state = "spiderling"
-	list_reagents = list("nutriment" = 1, "toxin" = 4)
+	list_reagents = list("nutriment" = 1, /datum/reagent/toxin = 4)
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "guts" = 2)
 	foodtype = MEAT | TOXIC
@@ -210,7 +210,7 @@
 	name = "spider lollipop"
 	desc = "Still gross, but at least it has a mountain of sugar on it."
 	icon_state = "spiderlollipop"
-	list_reagents = list("nutriment" = 1, "toxin" = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2) //lollipop, but vitamins = toxins
+	list_reagents = list("nutriment" = 1, /datum/reagent/toxin = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2) //lollipop, but vitamins = toxins
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "sugar" = 2)
 	foodtype = JUNKFOOD | SUGAR
@@ -537,8 +537,8 @@
 	name = "Bran Requests Cereal"
 	desc = "A dry cereal that satiates your requests for bran. Tastes uniquely like raisins and salt."
 	icon_state = "bran_requests"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2, "sodiumchloride" = 5)
-	bonus_reagents = list("sodiumchloride" = 10)
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, /datum/reagent/consumable/sodiumchloride = 5)
+	bonus_reagents = list(/datum/reagent/consumable/sodiumchloride = 10)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
 	foodtype = GRAIN | FRUIT
 

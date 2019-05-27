@@ -231,8 +231,8 @@
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/jelly/slime
-	bonus_reagents = list("slimejelly" = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "slimejelly" = 5, "vitamin" = 1)
+	bonus_reagents = list(/datum/reagent/toxin/slimejelly = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 6, /datum/reagent/toxin/slimejelly = 5, "vitamin" = 1)
 	foodtype = GRAIN | TOXIC
 
 /obj/item/reagent_containers/food/snacks/burger/jelly/cherry

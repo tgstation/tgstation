@@ -24,7 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	list_reagents = list("weedkiller" = 100)
+	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 100)
 
 /obj/item/reagent_containers/spray/weedspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -35,11 +35,11 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest spray"
 	icon_state = "pestspray"
-	item_state = "plantbgone"
+	item_state = /datum/reagent/toxin/plantbgone
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	list_reagents = list("pestkiller" = 100)
+	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
 
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -183,9 +183,9 @@
 /obj/item/reagent_containers/glass/bottle/killer/weedkiller
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
-	list_reagents = list("weedkiller" = 50)
+	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 50)
 
 /obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
-	list_reagents = list("pestkiller" = 50)
+	list_reagents = list(/datum/reagent/toxin/pestkiller = 50)

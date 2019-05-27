@@ -47,7 +47,7 @@
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/angel)
-	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.35, "nutriment" = 0, "growthserum" = 0.1)
+	reagents_add = list("mushroomhallucinogen" = 0.04, /datum/reagent/toxin/amatoxin = 0.35, "nutriment" = 0, "growthserum" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = /obj/item/seeds/amanita
@@ -73,7 +73,7 @@
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.1, "nutriment" = 0, "amanitin" = 0.2)
+	reagents_add = list("mushroomhallucinogen" = 0.04, /datum/reagent/toxin/amatoxin = 0.1, "nutriment" = 0, "amanitin" = 0.2)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/angel

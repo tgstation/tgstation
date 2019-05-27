@@ -148,7 +148,7 @@
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
-	list_reagents = list("sugar" = 3, "ethanol" = 2, "stabilizing_agent" = 3, "minttoxin" = 2)
+	list_reagents = list("sugar" = 3, "ethanol" = 2, "stabilizing_agent" = 3, /datum/reagent/toxin/minttoxin = 2)
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
@@ -174,7 +174,7 @@
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
 	name = "mushroom cap"
 	desc = "The cap of a large mushroom."
-	list_reagents = list("mindbreaker" = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
+	list_reagents = list(/datum/reagent/toxin/mindbreaker = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
 	icon_state = "mushroom_cap"
 	seed = /obj/item/seeds/lavaland/inocybe
 	wine_power = 70

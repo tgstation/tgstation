@@ -168,7 +168,7 @@
 	data["chems"] = list()
 	for(var/chem in available_chems)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
+		data["chems"] += list(list("name" = R.name, "id" = ckey(R.name), "allowed" = chem_allowed(chem)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant

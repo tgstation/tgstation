@@ -445,7 +445,7 @@
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
-	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
+	if(S.has_reagent(/datum/reagent/toxin/mutagen, 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
 		switch(rand(100))
 			if(91 to 100)
 				adjustHealth(-10)
@@ -466,9 +466,9 @@
 				to_chat(user, "<span class='notice'>Nothing happens...</span>")
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
-	else if(S.has_reagent("mutagen", 2) || S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 2) || S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
 		hardmutate()
-	else if(S.has_reagent("mutagen", 1) || S.has_reagent("radium", 2) || S.has_reagent("uranium", 2))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 1) || S.has_reagent("radium", 2) || S.has_reagent("uranium", 2))
 		mutate()
 
 	// After handling the mutating, we now handle the damage from adding crude radioactives...
@@ -508,8 +508,8 @@
 		adjustToxic(-round(S.get_reagent_amount("charcoal") * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
-	if(S.has_reagent("toxin", 1))
-		adjustToxic(round(S.get_reagent_amount("toxin") * 2))
+	if(S.has_reagent(/datum/reagent/toxin, 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin) * 2))
 
 	// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
 	if(S.has_reagent("milk", 1))
@@ -555,9 +555,9 @@
 		adjustWater(round(S.get_reagent_amount("water") * 1))
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits~
-	if(S.has_reagent("holywater", 1))
-		adjustWater(round(S.get_reagent_amount("holywater") * 1))
-		adjustHealth(round(S.get_reagent_amount("holywater") * 0.1))
+	if(S.has_reagent(/datum/reagent/water/holywater, 1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 0.1))
 
 	// A variety of nutrients are dissolved in club soda, without sugar.
 	// These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
@@ -579,9 +579,9 @@
 		adjustWeeds(-rand(1,4))
 
 	// Plant-B-Gone is just as bad
-	if(S.has_reagent("plantbgone", 1))
-		adjustHealth(-round(S.get_reagent_amount("plantbgone") * 5))
-		adjustToxic(round(S.get_reagent_amount("plantbgone") * 6))
+	if(S.has_reagent(/datum/reagent/toxin/plantbgone, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/toxin/plantbgone) * 5))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/plantbgone) * 6))
 		adjustWeeds(-rand(4,8))
 
 	// why, just why
@@ -592,14 +592,14 @@
 			adjustWeeds(-rand(5,9))
 
 	//Weed Spray
-	if(S.has_reagent("weedkiller", 1))
-		adjustToxic(round(S.get_reagent_amount("weedkiller") * 0.5))
+	if(S.has_reagent(/datum/reagent/toxin/plantbgone/weedkiller, 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/plantbgone/weedkiller) * 0.5))
 		//old toxicity was 4, each spray is default 10 (minimal of 5) so 5 and 2.5 are the new ammounts
 		adjustWeeds(-rand(1,2))
 
 	//Pest Spray
-	if(S.has_reagent("pestkiller", 1))
-		adjustToxic(round(S.get_reagent_amount("pestkiller") * 0.5))
+	if(S.has_reagent(/datum/reagent/toxin/pestkiller, 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/pestkiller) * 0.5))
 		adjustPests(-rand(1,2))
 
 	// Healing

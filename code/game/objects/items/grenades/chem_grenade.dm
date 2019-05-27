@@ -390,7 +390,7 @@
 	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("plantbgone", 25)
+	B1.reagents.add_reagent(/datum/reagent/toxin/plantbgone, 25)
 	B1.reagents.add_reagent("potassium", 25)
 	B2.reagents.add_reagent("phosphorus", 25)
 	B2.reagents.add_reagent("sugar", 25)
@@ -557,11 +557,11 @@
 
 	B1.reagents.add_reagent("cryptobiolin", 75)
 	B1.reagents.add_reagent("water", 50)
-	B1.reagents.add_reagent("mutetoxin", 50)
-	B1.reagents.add_reagent("spore", 75)
+	B1.reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 50)
+	B1.reagents.add_reagent(/datum/reagent/toxin/spore, 75)
 	B1.reagents.add_reagent("itching_powder", 50)
 	B2.reagents.add_reagent("fluorosurfactant", 150)
-	B2.reagents.add_reagent("mutagen", 150)
+	B2.reagents.add_reagent(/datum/reagent/toxin/mutagen, 150)
 	beakers += B1
 	beakers += B2
 
@@ -596,7 +596,7 @@
 	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
 
 	B1.reagents.add_reagent("potassium", 100)
-	B2.reagents.add_reagent("holywater", 100)
+	B2.reagents.add_reagent(/datum/reagent/water/holywater, 100)
 
 	beakers += B1
 	beakers += B2

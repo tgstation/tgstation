@@ -53,7 +53,7 @@
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	name = "Holy Explosion"
 	id = "holyboom"
-	required_reagents = list("holywater" = 1, "potassium" = 1)
+	required_reagents = list(/datum/reagent/water/holywater = 1, "potassium" = 1)
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
 	if(created_volume >= 150)
@@ -129,9 +129,8 @@
 	else
 		playsound(location,'sound/creatures/bee.ogg', 100, TRUE)
 		var/list/beeagents = list()
-		for(var/X in holder.reagent_list)
-			var/datum/reagent/R = X
-			if(required_reagents[R.id])
+		for(var/R in holder.reagent_list)
+			if(required_reagents[R])
 				continue
 			beeagents += R
 		var/bee_amount = round(created_volume * 0.2)
@@ -414,7 +413,7 @@
 	name = "Energized Jelly"
 	id = "energized_jelly"
 	results = list("energized_jelly" = 2)
-	required_reagents = list("slimejelly" = 1, "teslium" = 1)
+	required_reagents = list(/datum/reagent/toxin/slimejelly = 1, "teslium" = 1)
 	mix_message = "<span class='danger'>The slime jelly starts glowing intermittently.</span>"
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning

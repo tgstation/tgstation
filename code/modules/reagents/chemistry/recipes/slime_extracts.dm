@@ -643,7 +643,7 @@
 /datum/chemical_reaction/slime/slimebomb
 	name = "Clusterblorble"
 	id = "slimebomb"
-	required_reagents = list("slimejelly" = 1)
+	required_reagents = list(/datum/reagent/toxin/slimejelly = 1)
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow
 
@@ -670,7 +670,7 @@
 /datum/chemical_reaction/slime/flight_potion
 	name = "Flight Potion"
 	id = "flightpotion"
-	required_reagents = list("holywater" = 5, "uranium" = 5)
+	required_reagents = list(/datum/reagent/water/holywater = 5, "uranium" = 5)
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow
 

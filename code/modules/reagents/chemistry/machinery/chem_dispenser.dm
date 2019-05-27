@@ -60,9 +60,9 @@
 	var/list/emagged_reagents = list(
 		"space_drugs",
 		"morphine",
-		"carpotoxin",
+		/datum/reagent/toxin/carpotoxin,
 		"mine_salve",
-		"toxin"
+		/datum/reagent/toxin
 	)
 
 	var/list/saved_recipes = list()
@@ -187,7 +187,7 @@
 			var/chemname = temp.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals.Add(list(list("title" = chemname, "id" = temp.id)))
+			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name))))
 	for(var/recipe in saved_recipes)
 		recipes.Add(list(recipe))
 	data["chemicals"] = chemicals
@@ -464,8 +464,8 @@
 	emagged_reagents = list(
 		"thirteenloko",
 		"whiskeycola",
-		"mindbreaker",
-		"tirizene"
+		/datum/reagent/toxin/mindbreaker,
+		/datum/reagent/toxin/staminatoxin
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -516,7 +516,7 @@
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
-		"minttoxin",
+		/datum/reagent/toxin/minttoxin,
 		"atomicbomb",
 		"fernet"
 	)
@@ -542,7 +542,7 @@
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
-	dispensable_reagents = list("mutagen")
+	dispensable_reagents = list(/datum/reagent/toxin/mutagen)
 	upgrade_reagents = null
 	emagged_reagents = list("plasma")
 
@@ -553,15 +553,15 @@
 	flags_1 = NODECONSTRUCT_1
 
 	dispensable_reagents = list(
-		"mutagen",
+		/datum/reagent/toxin/mutagen,
 		"saltpetre",
 		"eznutriment",
 		"left4zednutriment",
 		"robustharvestnutriment",
 		"water",
-		"plantbgone",
-		"weedkiller",
-		"pestkiller",
+		/datum/reagent/toxin/plantbgone,
+		/datum/reagent/toxin/plantbgone/weedkiller,
+		/datum/reagent/toxin/pestkiller,
 		"cryoxadone",
 		"ammonia",
 		"ash",

@@ -42,7 +42,7 @@
 
 /obj/item/slime_extract/on_grind()
 	if(Uses)
-		grind_results["slimejelly"] = 20
+		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
 //Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
@@ -586,7 +586,7 @@
 	name = "rainbow slime extract"
 	icon_state = "rainbow slime extract"
 	effectmod = "hyperchromatic"
-	activate_reagents = list("blood","plasma","lesser plasma","slimejelly","holy water and uranium") //Curse this snowflake reagent list.
+	activate_reagents = list("blood","plasma","lesser plasma",/datum/reagent/toxin/slimejelly,"holy water and uranium") //Curse this snowflake reagent list.
 
 /obj/item/slime_extract/rainbow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)

@@ -21,10 +21,10 @@
 	exotic_blood = "lube"
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "sodiumchloride")
+	if(istype(chem,/datum/reagent/consumable/sodiumchloride))
 		H.adjustFireLoss(2)
 		playsound(H, 'sound/weapons/sear.ogg', 30, 1)
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1
 
 /datum/species/snail/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)

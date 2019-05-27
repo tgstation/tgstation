@@ -98,7 +98,7 @@
 			amount = 4
 		if(chem == "holy water and uranium")
 			chem = "uranium"
-			reagents.add_reagent("holywater")
+			reagents.add_reagent(/datum/reagent/water/holywater)
 		reagents.add_reagent(chem,amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)

@@ -75,7 +75,7 @@
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/spidermeat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
-	list_reagents = list("nutriment" = 30, "toxin" = 15, "vitamin" = 5)
+	list_reagents = list("nutriment" = 30, /datum/reagent/toxin = 15, "vitamin" = 5)
 	tastes = list("bread" = 10, "cobwebs" = 5)
 	foodtype = GRAIN | MEAT | TOXIC
 
@@ -84,7 +84,7 @@
 	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
 	icon_state = "xenobreadslice"
 	filling_color = "#7CFC00"
-	list_reagents = list("nutriment" = 6, "toxin" = 3, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, /datum/reagent/toxin = 3, "vitamin" = 1)
 	foodtype = GRAIN | MEAT | TOXIC
 
 /obj/item/reagent_containers/food/snacks/store/bread/banana
@@ -148,7 +148,7 @@
 	icon_state = "mimanabread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/mimana
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 20, "mutetoxin" = 5, "nothing" = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 20, /datum/reagent/toxin/mutetoxin = 5, "nothing" = 5, "vitamin" = 5)
 	tastes = list("bread" = 10, "silence" = 10)
 	foodtype = GRAIN | FRUIT
 
@@ -157,7 +157,7 @@
 	desc = "A slice of silence!"
 	icon_state = "mimanabreadslice"
 	filling_color = "#C0C0C0"
-	list_reagents = list("nutriment" = 2, "mutetoxin" = 1, "nothing" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 2, /datum/reagent/toxin/mutetoxin = 1, "nothing" = 1, "vitamin" = 1)
 	foodtype = GRAIN | FRUIT
 
 /obj/item/reagent_containers/food/snacks/breadslice/custom

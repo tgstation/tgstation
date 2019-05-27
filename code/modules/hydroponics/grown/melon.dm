@@ -45,7 +45,7 @@
 	plantname = "Holy Melon Vines"
 	product = /obj/item/reagent_containers/food/snacks/grown/holymelon
 	mutatelist = list()
-	reagents_add = list("holywater" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/water/holywater = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon

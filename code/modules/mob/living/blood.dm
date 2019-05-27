@@ -147,7 +147,7 @@
 							continue
 						C.ForceContractDisease(D)
 				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-					C.reagents.add_reagent("toxin", amount * 0.5)
+					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return 1
 
 			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
@@ -176,7 +176,7 @@
 			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
-			temp_chem[R.id] = R.volume
+			temp_chem[R.type] = R.volume
 		blood_data["trace_chem"] = list2params(temp_chem)
 		if(mind)
 			blood_data["mind"] = mind

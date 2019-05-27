@@ -274,4 +274,4 @@
 	speed = 20
 	attacktext = "bounces off of"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
-	attack_reagent = "mindbreaker"
+	attack_reagent = /datum/reagent/toxin/mindbreaker

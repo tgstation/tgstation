@@ -84,7 +84,7 @@
 	name = "medical spray (synthflesh)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, an apex brute and burn healing agent."
 	icon_state = "synthspray"
-	list_reagents = list("synthflesh" = 60)
+	list_reagents = list(/datum/reagent/medicine/synthflesh = 60)
 	custom_price = 80
 
 /obj/item/reagent_containers/medspray/sterilizine

@@ -85,13 +85,13 @@
 	if(S.has_reagent("blood", 15))
 		adjust_production(rand(15, -5))
 
-	if(S.has_reagent("amatoxin", 5))
+	if(S.has_reagent(/datum/reagent/toxin/amatoxin, 5))
 		adjust_production(rand(5, -15))
 
 	if(S.has_reagent("plasma", 5))
 		adjust_potency(rand(5, -15))
 
-	if(S.has_reagent("holywater", 10))
+	if(S.has_reagent(/datum/reagent/water/holywater, 10))
 		adjust_potency(rand(15, -5))
 
 

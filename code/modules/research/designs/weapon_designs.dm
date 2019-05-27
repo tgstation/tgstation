@@ -110,7 +110,7 @@
 	id = "decloner"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000)
-	reagents_list = list("mutagen" = 40)
+	reagents_list = list(/datum/reagent/toxin/mutagen = 40)
 	build_path = /obj/item/gun/energy/decloner
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

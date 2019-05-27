@@ -34,7 +34,7 @@
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
-									"sodiumchloride", "sugar", "orangejuice",
+									/datum/reagent/consumable/sodiumchloride, "sugar", "orangejuice",
 									"spaceacillin", "salglu_solution", "ethanol",
 									"leporazine", "synaptizine", "lipolicide",
 									"silver", "gold"

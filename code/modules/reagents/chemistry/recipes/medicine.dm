@@ -10,7 +10,7 @@
 	name = "Rezadone"
 	id = "rezadone"
 	results = list("rezadone" = 3)
-	required_reagents = list("carpotoxin" = 1, "cryptobiolin" = 1, "copper" = 1)
+	required_reagents = list(/datum/reagent/toxin/carpotoxin = 1, "cryptobiolin" = 1, "copper" = 1)
 
 /datum/chemical_reaction/spaceacillin
 	name = "Spaceacillin"
@@ -34,7 +34,7 @@
 	name = "Charcoal"
 	id = "charcoal"
 	results = list("charcoal" = 2)
-	required_reagents = list("ash" = 1, "sodiumchloride" = 1)
+	required_reagents = list("ash" = 1, /datum/reagent/consumable/sodiumchloride = 1)
 	mix_message = "The mixture yields a fine black powder."
 	required_temp = 380
 
@@ -48,7 +48,7 @@
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
 	results = list("salglu_solution" = 3)
-	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
+	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, "water" = 1, "sugar" = 1)
 
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
@@ -64,8 +64,8 @@
 
 /datum/chemical_reaction/synthflesh
 	name = "Synthflesh"
-	id = "synthflesh"
-	results = list("synthflesh" = 3)
+	id = /datum/reagent/medicine/synthflesh
+	results = list(/datum/reagent/medicine/synthflesh = 3)
 	required_reagents = list("blood" = 1, "carbon" = 1, "styptic_powder" = 1)
 
 /datum/chemical_reaction/styptic_powder
@@ -157,7 +157,7 @@
 	name = "Strange Reagent"
 	id = "strange_reagent"
 	results = list("strange_reagent" = 3)
-	required_reagents = list("omnizine" = 1, "holywater" = 1, "mutagen" = 1)
+	required_reagents = list("omnizine" = 1, /datum/reagent/water/holywater = 1, /datum/reagent/toxin/mutagen = 1)
 
 /datum/chemical_reaction/mannitol
 	name = "Mannitol"
@@ -165,7 +165,7 @@
 	results = list("mannitol" = 3)
 	required_reagents = list("sugar" = 1, "hydrogen" = 1, "water" = 1)
 	mix_message = "The solution slightly bubbles, becoming thicker."
-	
+
 /datum/chemical_reaction/neurine
 	name = "Neurine"
 	id = "neurine"
@@ -176,7 +176,7 @@
 	name = "Mutadone"
 	id = "mutadone"
 	results = list("mutadone" = 3)
-	required_reagents = list("mutagen" = 1, "acetone" = 1, "bromine" = 1)
+	required_reagents = list(/datum/reagent/toxin/mutagen = 1, "acetone" = 1, "bromine" = 1)
 
 /datum/chemical_reaction/antihol
 	name = "antihol"
@@ -188,13 +188,13 @@
 	name = "Cryoxadone"
 	id = "cryoxadone"
 	results = list("cryoxadone" = 3)
-	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
+	required_reagents = list("stable_plasma" = 1, "acetone" = 1, /datum/reagent/toxin/mutagen = 1)
 
 /datum/chemical_reaction/pyroxadone
 	name = "Pyroxadone"
 	id = "pyroxadone"
 	results = list("pyroxadone" = 2)
-	required_reagents = list("cryoxadone" = 1, "slimejelly" = 1)
+	required_reagents = list("cryoxadone" = 1, /datum/reagent/toxin/slimejelly = 1)
 
 /datum/chemical_reaction/clonexadone
 	name = "Clonexadone"
@@ -237,7 +237,7 @@
 	name = "Regenerative Jelly"
 	id = "regen_jelly"
 	results = list("regen_jelly" = 2)
-	required_reagents = list("tricordrazine" = 1, "slimejelly" = 1)
+	required_reagents = list("tricordrazine" = 1, /datum/reagent/toxin/slimejelly = 1)
 
 /datum/chemical_reaction/corazone
 	name = "Corazone"

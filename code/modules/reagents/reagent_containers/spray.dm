@@ -305,7 +305,7 @@
 		..(the_targets[i], user)
 
 /obj/item/reagent_containers/spray/chemsprayer/bioterror
-	list_reagents = list("sodium_thiopental" = 100, "coniine" = 100, "venom" = 100, "condensedcapsaicin" = 100, "initropidril" = 100, "polonium" = 100)
+	list_reagents = list("sodium_thiopental" = 100, "coniine" = 100, "venom" = 100, "condensedcapsaicin" = 100, "initropidril" = 100, /datum/reagent/toxin/polonium = 100)
 
 
 /obj/item/reagent_containers/spray/chemsprayer/janitor
@@ -344,8 +344,8 @@
 	desc = "Kills those pesky weeds!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbgone"
-	item_state = "plantbgone"
+	item_state = /datum/reagent/toxin/plantbgone
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	list_reagents = list("plantbgone" = 100)
+	list_reagents = list(/datum/reagent/toxin/plantbgone = 100)

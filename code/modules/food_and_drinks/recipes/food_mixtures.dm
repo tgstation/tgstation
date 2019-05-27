@@ -55,13 +55,13 @@
 	name = "Coffee"
 	id = "coffee"
 	results = list("coffee" = 5)
-	required_reagents = list("coffeepowder" = 1, "water" = 5)
+	required_reagents = list(/datum/reagent/toxin/coffeepowder = 1, "water" = 5)
 
 /datum/chemical_reaction/tea
 	name = "Tea"
 	id = "tea"
 	results = list("tea" = 5)
-	required_reagents = list("teapowder" = 1, "water" = 5)
+	required_reagents = list(/datum/reagent/toxin/teapowder = 1, "water" = 5)
 
 /datum/chemical_reaction/soysauce
 	name = "Soy Sauce"
@@ -113,7 +113,7 @@
 /datum/chemical_reaction/imitationcarpmeat
 	name = "Imitation Carpmeat"
 	id = "imitationcarpmeat"
-	required_reagents = list("carpotoxin" = 5)
+	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5)
 	required_container = /obj/item/reagent_containers/food/snacks/tofu
 	mix_message = "The mixture becomes similar to carp meat."
 

@@ -191,7 +191,7 @@
 	name = "flask of holy water"
 	desc = "A flask of the chaplain's holy water."
 	icon_state = "holyflask"
-	list_reagents = list("holywater" = 100)
+	list_reagents = list(/datum/reagent/water/holywater = 100)
 	foodtype = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/holywater/hell

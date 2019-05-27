@@ -42,8 +42,8 @@
 	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."
 	icon_state = "slimesoup"
-	bonus_reagents = list("nutriment" = 1, "slimejelly" = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 5, "slimejelly" = 5, "water" = 5, "vitamin" = 4)
+	bonus_reagents = list("nutriment" = 1, /datum/reagent/toxin/slimejelly = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 5, /datum/reagent/toxin/slimejelly = 5, "water" = 5, "vitamin" = 4)
 	tastes = list("slime" = 1)
 	foodtype = TOXIC | SUGAR
 
@@ -101,7 +101,7 @@
 
 /obj/item/reagent_containers/food/snacks/soup/mystery/Initialize()
 	. = ..()
-	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
+	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", /datum/reagent/toxin/slimejelly, /datum/reagent/toxin, "banana", "carbon", "oculine")
 	bonus_reagents = list("[extra_reagent]" = 5, "nutriment" = 6)
 	reagents.add_reagent("[extra_reagent]", 5)
 
@@ -195,7 +195,7 @@
 	icon_state = "amanitajelly"
 	bitesize = 3
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "mushroomhallucinogen" = 3, "amatoxin" = 6)
+	list_reagents = list("nutriment" = 6, "mushroomhallucinogen" = 3, /datum/reagent/toxin/amatoxin = 6)
 	tastes = list("jelly" = 1, "mushroom" = 1)
 	foodtype = VEGETABLES | TOXIC
 

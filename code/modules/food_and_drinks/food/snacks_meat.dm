@@ -19,7 +19,7 @@
 	name = "carp fillet"
 	desc = "A fillet of spess carp meat."
 	icon_state = "fishfillet"
-	list_reagents = list("nutriment" = 3, "carpotoxin" = 2, "vitamin" = 2)
+	list_reagents = list("nutriment" = 3, /datum/reagent/toxin/carpotoxin = 2, "vitamin" = 2)
 	bitesize = 6
 	filling_color = "#FA8072"
 	tastes = list("fish" = 1)
@@ -75,7 +75,7 @@
 	name = "spider leg"
 	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
 	icon_state = "spiderleg"
-	list_reagents = list("nutriment" = 2, "toxin" = 2)
+	list_reagents = list("nutriment" = 2, /datum/reagent/toxin = 2)
 	cooked_type = /obj/item/reagent_containers/food/snacks/boiledspiderleg
 	filling_color = "#000000"
 	tastes = list("cobwebs" = 1)

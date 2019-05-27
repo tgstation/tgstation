@@ -744,7 +744,7 @@
 
 	pre_noise = FALSE
 	post_noise = FALSE
-	reagent_contents = list("nothing" = 1, "mutetoxin" = 1)
+	reagent_contents = list("nothing" = 1, /datum/reagent/toxin/mutetoxin = 1)
 
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER

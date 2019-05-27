@@ -369,7 +369,7 @@
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
 	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(R.id))
+			if(!C.reagents.has_reagent(R.type))
 				return TRUE
 
 	//They're injured enough for it!
@@ -469,7 +469,7 @@
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 			for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-				if(!C.reagents.has_reagent(R.id) && !check_overdose(patient, R.id, injection_amount))
+				if(!C.reagents.has_reagent(R.type) && !check_overdose(patient, R.type, injection_amount))
 					reagent_id = "internal_beaker"
 					break
 

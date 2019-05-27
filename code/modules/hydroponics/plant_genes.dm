@@ -108,7 +108,7 @@
 	name = "UNKNOWN"
 
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reag_id]
-	if(R && R.id == reagent_id)
+	if(R && R.type == reagent_id)
 		name = R.name
 
 /datum/plant_gene/reagent/New(reag_id = null, reag_rate = 0)
@@ -179,7 +179,7 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
-	
+
 /datum/plant_gene/trait/squash/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	// Squash the plant on slip.
 	G.squash(C)
@@ -360,7 +360,7 @@
 
 /datum/plant_gene/trait/stinging/on_slip(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	on_throw_impact(G, target)
-	
+
 /datum/plant_gene/trait/stinging/on_throw_impact(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target) && G.reagents && G.reagents.total_volume)
 		var/mob/living/L = target

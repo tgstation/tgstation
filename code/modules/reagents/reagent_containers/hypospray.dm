@@ -173,7 +173,7 @@
 	name = "holy water autoinjector"
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water mixture."
 	volume = 250
-	list_reagents = list("holywater" = 150, "tiresolution" = 50, "dizzysolution" = 50)
+	list_reagents = list(/datum/reagent/water/holywater = 150, "tiresolution" = 50, "dizzysolution" = 50)
 	amount_per_transfer_from_this = 50
 
 /obj/item/reagent_containers/hypospray/medipen/atropine

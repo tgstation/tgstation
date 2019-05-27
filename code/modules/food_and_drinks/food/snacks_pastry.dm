@@ -53,7 +53,7 @@
 
 /obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
 	. = ..()
-	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
+	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", /datum/reagent/toxin/slimejelly, "banana", "berryjuice", "omnizine")
 	reagents.add_reagent("[extra_reagent]", 3)
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
@@ -75,7 +75,7 @@
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
-	extra_reagent = "slimejelly"
+	extra_reagent = /datum/reagent/toxin/slimejelly
 	foodtype = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly

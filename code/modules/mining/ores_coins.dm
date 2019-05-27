@@ -430,7 +430,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
 	value = 0
-	grind_results = list("sodiumchloride" = 4)
+	grind_results = list(/datum/reagent/consumable/sodiumchloride = 4)
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))

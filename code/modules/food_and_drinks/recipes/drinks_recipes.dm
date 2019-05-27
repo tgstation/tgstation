@@ -755,7 +755,7 @@
 	name = "Trappist"
 	id = "trappist"
 	results = list("trappist" = 5)
-	required_reagents = list("ale" = 2, "holywater" = 2, "sugar" = 1)
+	required_reagents = list("ale" = 2, /datum/reagent/water/holywater = 2, "sugar" = 1)
 
 /datum/chemical_reaction/cream_soda
 	name = "Cream Soda"

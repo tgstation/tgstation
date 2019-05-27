@@ -70,7 +70,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/mime
 	growthstages = 4
 	mutatelist = list()
-	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
+	reagents_add = list("nothing" = 0.1, /datum/reagent/toxin/mutetoxin = 0.1, "nutriment" = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/banana/mime

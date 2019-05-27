@@ -80,7 +80,7 @@
 	name = "toxins pill"
 	desc = "Highly toxic."
 	icon_state = "pill5"
-	list_reagents = list("toxin" = 50)
+	list_reagents = list(/datum/reagent/toxin = 50)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/cyanide
@@ -211,7 +211,7 @@
 /obj/item/reagent_containers/pill/lsd
 	name = "sunshine pill"
 	desc = "Engraved on this split-coloured pill is a half-sun, half-moon."
-	list_reagents = list("mushroomhallucinogen" = 15, "mindbreaker" = 15)
+	list_reagents = list("mushroomhallucinogen" = 15, /datum/reagent/toxin/mindbreaker = 15)
 	icon_state = "pill14"
 
 

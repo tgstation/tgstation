@@ -61,7 +61,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
 	desc = "Because jello wasn't offensive enough to vegans."
-	list_reagents = list("nutriment" = 3, "slimejelly" = 3)
+	list_reagents = list("nutriment" = 3, /datum/reagent/toxin/slimejelly = 3)
 	filling_color = "#00FFFF"
 	tastes = list("slime" = 1, "jelly" = 1)
 	foodtype = MEAT | RAW | TOXIC
@@ -212,7 +212,7 @@
 	name = "spider meat"
 	desc = "A slab of spider meat."
 	icon_state = "spidermeat"
-	list_reagents = list("nutriment" = 3, "toxin" = 3, "vitamin" = 1)
+	list_reagents = list("nutriment" = 3, /datum/reagent/toxin = 3, "vitamin" = 1)
 	filling_color = "#7CFC00"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/spider
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/spider
@@ -223,7 +223,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath
 	name = "goliath meat"
 	desc = "A slab of goliath meat. It's not very edible now, but it cooks great in lava."
-	list_reagents = list("nutriment" = 3, "toxin" = 5, "cooking_oil" = 3)
+	list_reagents = list("nutriment" = 3, /datum/reagent/toxin = 5, "cooking_oil" = 3)
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
 	foodtype = RAW | MEAT | TOXIC

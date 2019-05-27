@@ -21,7 +21,6 @@
 
 /datum/reagent/blob/reactive_spines
 	name = "Reactive Spines"
-	id = "reactive_spines"
 	taste_description = "rock"
 	color = "#9ACD32"
 

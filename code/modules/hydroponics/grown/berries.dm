@@ -39,7 +39,7 @@
 	plantname = "Poison-Berry Bush"
 	product = /obj/item/reagent_containers/food/snacks/grown/berries/poison
 	mutatelist = list(/obj/item/seeds/berry/death)
-	reagents_add = list("cyanide" = 0.15, "tirizene" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("cyanide" = 0.15, /datum/reagent/toxin/staminatoxin = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 10 // Mildly poisonous berries are common in reality
 
 /obj/item/reagent_containers/food/snacks/grown/berries/poison
@@ -65,7 +65,7 @@
 	lifespan = 30
 	potency = 50
 	mutatelist = list()
-	reagents_add = list("coniine" = 0.08, "tirizene" = 0.1, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("coniine" = 0.08, /datum/reagent/toxin/staminatoxin = 0.1, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/berries/death

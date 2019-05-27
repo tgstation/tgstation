@@ -118,7 +118,7 @@
 
 /datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
-		M.reagents.remove_reagent(R.id, actual_power)
+		M.reagents.remove_reagent(R.type, actual_power)
 		if(food_conversion)
 			M.adjust_nutrition(0.3)
 		if(prob(2))
@@ -311,8 +311,8 @@
 	if(M.fire_stacks < 0)
 		M.fire_stacks = min(M.fire_stacks + 1 * absorption_coeff, 0)
 		. += power
-	if(M.reagents.has_reagent("holywater"))
-		M.reagents.remove_reagent("holywater", 0.5 * absorption_coeff)
+	if(M.reagents.has_reagent(/datum/reagent/water/holywater))
+		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
 		. += power * 0.75
 	else if(M.reagents.has_reagent("water"))
 		M.reagents.remove_reagent("water", 0.5 * absorption_coeff)

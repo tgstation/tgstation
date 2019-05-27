@@ -43,8 +43,8 @@
 
 /datum/chemical_reaction/sodiumchloride
 	name = "Sodium Chloride"
-	id = "sodiumchloride"
-	results = list("sodiumchloride" = 3)
+	id = /datum/reagent/consumable/sodiumchloride
+	results = list(/datum/reagent/consumable/sodiumchloride = 3)
 	required_reagents = list("water" = 1, "sodium" = 1, "chlorine" = 1)
 
 /datum/chemical_reaction/plasmasolidification
@@ -130,7 +130,7 @@
 	name = "Mulligan"
 	id = "mulligan"
 	results = list("mulligan" = 1)
-	required_reagents = list("slime_toxin" = 1, "mutagen" = 1)
+	required_reagents = list("slime_toxin" = 1, /datum/reagent/toxin/mutagen = 1)
 
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
@@ -145,7 +145,7 @@
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
 	results = list("mutagenvirusfood" = 1)
-	required_reagents = list("mutagen" = 1, "virusfood" = 1)
+	required_reagents = list(/datum/reagent/toxin/mutagen = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_synaptizine
 	name = "virus rations"
@@ -223,7 +223,7 @@
 
 	name = "Mix Virus 2"
 	id = "mixvirus2"
-	required_reagents = list("mutagen" = 1)
+	required_reagents = list(/datum/reagent/toxin/mutagen = 1)
 	level_min = 2
 	level_max = 4
 
@@ -446,21 +446,21 @@
 
 /datum/chemical_reaction/plantbgone
 	name = "Plant-B-Gone"
-	id = "plantbgone"
-	results = list("plantbgone" = 5)
-	required_reagents = list("toxin" = 1, "water" = 4)
+	id = /datum/reagent/toxin/plantbgone
+	results = list(/datum/reagent/toxin/plantbgone = 5)
+	required_reagents = list(/datum/reagent/toxin = 1, "water" = 4)
 
 /datum/chemical_reaction/weedkiller
 	name = "Weed Killer"
-	id = "weedkiller"
-	results = list("weedkiller" = 5)
-	required_reagents = list("toxin" = 1, "ammonia" = 4)
+	id = /datum/reagent/toxin/plantbgone/weedkiller
+	results = list(/datum/reagent/toxin/plantbgone/weedkiller = 5)
+	required_reagents = list(/datum/reagent/toxin = 1, "ammonia" = 4)
 
 /datum/chemical_reaction/pestkiller
 	name = "Pest Killer"
-	id = "pestkiller"
-	results = list("pestkiller" = 5)
-	required_reagents = list("toxin" = 1, "ethanol" = 4)
+	id = /datum/reagent/toxin/pestkiller
+	results = list(/datum/reagent/toxin/pestkiller = 5)
+	required_reagents = list(/datum/reagent/toxin = 1, "ethanol" = 4)
 
 /datum/chemical_reaction/drying_agent
 	name = "Drying agent"
@@ -510,7 +510,7 @@
 /datum/chemical_reaction/life
 	name = "Life"
 	id = "life"
-	required_reagents = list("strange_reagent" = 1, "synthflesh" = 1, "blood" = 1)
+	required_reagents = list("strange_reagent" = 1, /datum/reagent/medicine/synthflesh = 1, "blood" = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
@@ -519,7 +519,7 @@
 /datum/chemical_reaction/life_friendly
 	name = "Life (Friendly)"
 	id = "life_friendly"
-	required_reagents = list("strange_reagent" = 1, "synthflesh" = 1, "sugar" = 1)
+	required_reagents = list("strange_reagent" = 1, /datum/reagent/medicine/synthflesh = 1, "sugar" = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/life_friendly/on_reaction(datum/reagents/holder, created_volume)
@@ -553,7 +553,7 @@
 	name = "concentrated_barbers_aid"
 	id = "concentrated_barbers_aid"
 	results = list("concentrated_barbers_aid" = 2)
-	required_reagents = list("barbers_aid" = 1, "mutagen" = 1)
+	required_reagents = list("barbers_aid" = 1, /datum/reagent/toxin/mutagen = 1)
 
 /datum/chemical_reaction/saltpetre
 	name = "saltpetre"
@@ -577,7 +577,7 @@
 	name = "royal bee jelly"
 	id = "royal_bee_jelly"
 	results = list("royal_bee_jelly" = 5)
-	required_reagents = list("mutagen" = 10, "honey" = 40)
+	required_reagents = list(/datum/reagent/toxin/mutagen = 10, "honey" = 40)
 
 /datum/chemical_reaction/laughter
 	name = "laughter"
@@ -600,4 +600,4 @@
 	name = "pax"
 	id = "pax"
 	results = list("pax" = 3)
-	required_reagents  = list("mindbreaker" = 1, "synaptizine" = 1, "water" = 1)
+	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, "synaptizine" = 1, "water" = 1)

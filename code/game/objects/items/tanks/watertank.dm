@@ -437,7 +437,7 @@
 
 /obj/item/watertank/op/Initialize()
 	. = ..()
-	reagents.add_reagent("mutagen",350)
+	reagents.add_reagent(/datum/reagent/toxin/mutagen,350)
 	reagents.add_reagent("napalm",125)
 	reagents.add_reagent("welding_fuel",125)
 	reagents.add_reagent("clf3",300)

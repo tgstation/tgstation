@@ -104,7 +104,7 @@
 	icon_state = "amanita_pie"
 	bitesize = 4
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
-	list_reagents = list("nutriment" = 6, "amatoxin" = 3, "mushroomhallucinogen" = 1, "vitamin" = 4)
+	list_reagents = list("nutriment" = 6, /datum/reagent/toxin/amatoxin = 3, "mushroomhallucinogen" = 1, "vitamin" = 4)
 	tastes = list("pie" = 1, "mushroom" = 1)
 	foodtype = GRAIN | VEGETABLES | TOXIC | GROSS
 

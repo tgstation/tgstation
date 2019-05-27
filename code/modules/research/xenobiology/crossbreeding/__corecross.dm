@@ -168,7 +168,7 @@ To add a crossbreed:
 	name = "slime jelly bubble"
 	desc = "A sphere of slime jelly. It seems to stick to your skin, but avoids other surfaces."
 	color = "#00FF00"
-	list_reagents = list("slimejelly" = 50)
+	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
 /obj/item/slimecrossbeaker/autoinjector/peaceandlove
 	name = "peaceful distillation"

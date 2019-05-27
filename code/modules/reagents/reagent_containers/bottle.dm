@@ -48,7 +48,7 @@
 /obj/item/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
 	desc = "A small bottle of toxins. Do not drink, it is poisonous."
-	list_reagents = list("toxin" = 30)
+	list_reagents = list(/datum/reagent/toxin = 30)
 
 /obj/item/reagent_containers/glass/bottle/cyanide
 	name = "cyanide bottle"
@@ -70,7 +70,7 @@
 	name = "chloral hydrate bottle"
 	desc = "A small bottle of Choral Hydrate. Mickey's Favorite!"
 	icon_state = "bottle20"
-	list_reagents = list("chloralhydrate" = 15)
+	list_reagents = list(/datum/reagent/toxin/chloralhydrate = 15)
 
 /obj/item/reagent_containers/glass/bottle/mannitol
 	name = "mannitol bottle"
@@ -85,7 +85,7 @@
 /obj/item/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"
 	desc = "A small bottle of unstable mutagen. Randomly changes the DNA structure of whoever comes in contact."
-	list_reagents = list("mutagen" = 30)
+	list_reagents = list(/datum/reagent/toxin/mutagen = 30)
 
 /obj/item/reagent_containers/glass/bottle/plasma
 	name = "liquid plasma bottle"
@@ -142,13 +142,13 @@
 
 /obj/item/reagent_containers/glass/bottle/traitor/Initialize()
 	. = ..()
-	extra_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "fentanyl", "cyanide")
+	extra_reagent = pick(/datum/reagent/toxin/polonium, /datum/reagent/toxin/histamine, "formaldehyde", "venom", "fentanyl", "cyanide")
 	reagents.add_reagent("[extra_reagent]", 3)
 
 /obj/item/reagent_containers/glass/bottle/polonium
 	name = "polonium bottle"
 	desc = "A small bottle. Contains Polonium."
-	list_reagents = list("polonium" = 30)
+	list_reagents = list(/datum/reagent/toxin/polonium = 30)
 
 /obj/item/reagent_containers/glass/bottle/magillitis
 	name = "magillitis bottle"
@@ -203,7 +203,7 @@
 /obj/item/reagent_containers/glass/bottle/histamine
 	name = "histamine bottle"
 	desc = "A small bottle. Contains Histamine."
-	list_reagents = list("histamine" = 30)
+	list_reagents = list(/datum/reagent/toxin/histamine = 30)
 
 /obj/item/reagent_containers/glass/bottle/diphenhydramine
 	name = "antihistamine bottle"

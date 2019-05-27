@@ -194,7 +194,7 @@
 /obj/item/reagent_containers/syringe/bioterror
 	name = "bioterror syringe"
 	desc = "Contains several paralyzing reagents."
-	list_reagents = list("neurotoxin" = 5, "mutetoxin" = 5, "sodium_thiopental" = 5)
+	list_reagents = list("neurotoxin" = 5, /datum/reagent/toxin/mutetoxin = 5, "sodium_thiopental" = 5)
 
 /obj/item/reagent_containers/syringe/stimulants
 	name = "Stimpack"
@@ -220,7 +220,7 @@
 	volume = 50
 
 /obj/item/reagent_containers/syringe/lethal/choral
-	list_reagents = list("chloralhydrate" = 50)
+	list_reagents = list(/datum/reagent/toxin/chloralhydrate = 50)
 
 /obj/item/reagent_containers/syringe/lethal/execution
 	list_reagents = list("plasma" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10)

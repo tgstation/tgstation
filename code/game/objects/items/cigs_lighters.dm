@@ -309,7 +309,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
-	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, "plantbgone" = 1, "toxin" = 1.5)
+	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, /datum/reagent/toxin/plantbgone = 1, /datum/reagent/toxin = 1.5)
 
 /obj/item/clothing/mask/cigarette/xeno
 	desc = "A Xeno Filtered brand cigarette."
@@ -346,7 +346,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list("space_drugs" = 15, "lipolicide" = 35)
 
 /obj/item/clothing/mask/cigarette/rollie/mindbreaker
-	list_reagents = list("mindbreaker" = 35, "lipolicide" = 15)
+	list_reagents = list(/datum/reagent/toxin/mindbreaker = 35, "lipolicide" = 15)
 
 /obj/item/cigbutt/roach
 	name = "roach"
