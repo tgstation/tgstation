@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - rscadd: "Mops can now be printed at the autolathe and protolathe."
