@@ -197,14 +197,14 @@
 /obj/item/reagent_containers/pill/zoom
 	name = "yellow pill"
 	desc = "A poorly made canary-yellow pill; it is slightly crumbly."
-	list_reagents = list("synaptizine" = 10, "nicotine" = 10, "methamphetamine" = 1)
+	list_reagents = list("synaptizine" = 10, /datum/reagent/drug/nicotine = 10, /datum/reagent/drug/methamphetamine = 1)
 	icon_state = "pill7"
 
 
 /obj/item/reagent_containers/pill/happy
 	name = "happy pill"
 	desc = "They have little happy faces on them, and they smell like marker pens."
-	list_reagents = list("sugar" = 10, "space_drugs" = 10)
+	list_reagents = list("sugar" = 10, /datum/reagent/drug/space_drugs = 10)
 	icon_state = "pill_happy"
 
 
@@ -218,14 +218,14 @@
 /obj/item/reagent_containers/pill/aranesp
 	name = "smooth pill"
 	desc = "This blue pill is feels slightly moist."
-	list_reagents = list("aranesp" = 10)
+	list_reagents = list(/datum/reagent/drug/aranesp = 10)
 	icon_state = "pill3"
 
 /obj/item/reagent_containers/pill/happiness
 	name = "happiness pill"
 	desc = "It has a creepy smiling face on it."
 	icon_state = "pill_happy"
-	list_reagents = list("happiness" = 10)
+	list_reagents = list(/datum/reagent/drug/happiness = 10)
 
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"

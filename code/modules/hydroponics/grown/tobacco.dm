@@ -13,7 +13,7 @@
 	growthstages = 3
 	icon_dead = "tobacco-dead"
 	mutatelist = list(/obj/item/seeds/tobacco/space)
-	reagents_add = list("nicotine" = 0.03, "nutriment" = 0.03)
+	reagents_add = list(/datum/reagent/drug/nicotine = 0.03, "nutriment" = 0.03)
 
 /obj/item/reagent_containers/food/snacks/grown/tobacco
 	seed = /obj/item/seeds/tobacco
@@ -32,7 +32,7 @@
 	plantname = "Space Tobacco Plant"
 	product = /obj/item/reagent_containers/food/snacks/grown/tobacco/space
 	mutatelist = list()
-	reagents_add = list("salbutamol" = 0.05, "nicotine" = 0.08, "nutriment" = 0.03)
+	reagents_add = list("salbutamol" = 0.05, /datum/reagent/drug/nicotine = 0.08, "nutriment" = 0.03)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/tobacco/space

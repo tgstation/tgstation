@@ -53,7 +53,7 @@
 
 /obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
 	. = ..()
-	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", /datum/reagent/toxin/slimejelly, "banana", "berryjuice", "omnizine")
+	extra_reagent = pick("nutriment", "capsaicin", "frostoil", /datum/reagent/drug/krokodil, "plasma", "cocoa", /datum/reagent/toxin/slimejelly, "banana", "berryjuice", "omnizine")
 	reagents.add_reagent("[extra_reagent]", 3)
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
@@ -212,7 +212,7 @@
 	name = "\improper Dank-pocket"
 	desc = "The food of choice for the seasoned botanist."
 	icon_state = "dankpocket"
-	list_reagents = list(/datum/reagent/toxin/lipolicide = 3, "space_drugs" = 3, "nutriment" = 4)
+	list_reagents = list(/datum/reagent/toxin/lipolicide = 3, /datum/reagent/drug/space_drugs = 3, "nutriment" = 4)
 	filling_color = "#00FF00"
 	tastes = list("meat" = 2, "dough" = 2)
 	foodtype = GRAIN | VEGETABLES

@@ -8,7 +8,7 @@
 	flags_1 = NODECONSTRUCT_1
 	use_power = NO_POWER_USE
 	var/static/list/shortcuts = list(
-		"meth" = "methamphetamine",
+		"meth" = /datum/reagent/drug/methamphetamine,
 		"tricord" = "tricordrazine"
 	)
 

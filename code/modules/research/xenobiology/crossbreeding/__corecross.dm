@@ -174,7 +174,7 @@ To add a crossbreed:
 	name = "peaceful distillation"
 	desc = "A light pink gooey sphere. Simply touching it makes you a little dizzy."
 	color = "#DDAAAA"
-	list_reagents = list(/datum/reagent/pax/peaceborg = 10, "space_drugs" = 15) //Peace, dudes
+	list_reagents = list(/datum/reagent/pax/peaceborg = 10, /datum/reagent/drug/space_drugs = 15) //Peace, dudes
 
 /obj/item/slimecrossbeaker/autoinjector/peaceandlove/Initialize()
 	. = ..()
@@ -184,4 +184,4 @@ To add a crossbreed:
 	name = "invigorating gel"
 	desc = "A bubbling purple mixture, designed to heal and boost movement."
 	color = "#FF00FF"
-	list_reagents = list("regen_jelly" = 30, "methamphetamine" = 9)
+	list_reagents = list("regen_jelly" = 30, /datum/reagent/drug/methamphetamine = 9)

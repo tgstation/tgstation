@@ -58,7 +58,7 @@
 		/datum/reagent/diethylamine
 	)
 	var/list/emagged_reagents = list(
-		"space_drugs",
+		/datum/reagent/drug/space_drugs,
 		"morphine",
 		/datum/reagent/toxin/carpotoxin,
 		"mine_salve",

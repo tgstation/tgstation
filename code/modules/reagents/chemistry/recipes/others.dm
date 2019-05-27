@@ -480,7 +480,7 @@
 	name = /datum/reagent/carpet
 	id = /datum/reagent/carpet
 	results = list(/datum/reagent/carpet = 2)
-	required_reagents = list("space_drugs" = 1, /datum/reagent/blood = 1)
+	required_reagents = list(/datum/reagent/drug/space_drugs = 1, /datum/reagent/blood = 1)
 
 /datum/chemical_reaction/oil
 	name = "Oil"
@@ -505,7 +505,7 @@
 	name = /datum/reagent/colorful_reagent
 	id = /datum/reagent/colorful_reagent
 	results = list(/datum/reagent/colorful_reagent = 5)
-	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/drug/space_drugs = 1, "cryoxadone" = 1, "triple_citrus" = 1)
 
 /datum/chemical_reaction/life
 	name = "Life"
@@ -541,13 +541,13 @@
 	name = /datum/reagent/hair_dye
 	id = /datum/reagent/hair_dye
 	results = list(/datum/reagent/hair_dye = 5)
-	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/uranium/radium = 1, "space_drugs" = 1)
+	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/drug/space_drugs = 1)
 
 /datum/chemical_reaction/barbers_aid
 	name = /datum/reagent/barbers_aid
 	id = /datum/reagent/barbers_aid
 	results = list(/datum/reagent/barbers_aid = 5)
-	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/uranium/radium = 1, "space_drugs" = 1)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/drug/space_drugs = 1)
 
 /datum/chemical_reaction/concentrated_barbers_aid
 	name = /datum/reagent/concentrated_barbers_aid

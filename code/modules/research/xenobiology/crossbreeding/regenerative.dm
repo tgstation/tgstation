@@ -194,7 +194,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/pink/core_effect(mob/living/target, mob/user)
 	to_chat(target, "<span class='notice'>You feel more calm.</span>")
-	target.reagents.add_reagent("krokodil",4)
+	target.reagents.add_reagent(/datum/reagent/drug/krokodil,4)
 
 /obj/item/slimecross/regenerative/gold
 	colour = "gold"

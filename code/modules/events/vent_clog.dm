@@ -14,7 +14,7 @@
 	var/randomProbability = 1
 	var/reagentsAmount = 100
 	var/list/saferChems = list(/datum/reagent/water,/datum/reagent/carbon,"flour",/datum/reagent/space_cleaner,"nutriment","condensedcapsaicin","mushroomhallucinogen",/datum/reagent/lube,/datum/reagent/glitter/pink,/datum/reagent/cryptobiolin,
-						 /datum/reagent/toxin/plantbgone,/datum/reagent/blood,"charcoal","space_drugs","morphine",/datum/reagent/water/holywater,"ethanol","hot_coco",/datum/reagent/toxin/acid,/datum/reagent/toxin/mindbreaker,/datum/reagent/toxin/rotatium,/datum/reagent/bluespace,
+						 /datum/reagent/toxin/plantbgone,/datum/reagent/blood,"charcoal",/datum/reagent/drug/space_drugs,"morphine",/datum/reagent/water/holywater,"ethanol","hot_coco",/datum/reagent/toxin/acid,/datum/reagent/toxin/mindbreaker,/datum/reagent/toxin/rotatium,/datum/reagent/bluespace,
 						 /datum/reagent/pax,"laughter",/datum/reagent/concentrated_barbers_aid,/datum/reagent/colorful_reagent,/datum/reagent/peaceborg/confuse,/datum/reagent/peaceborg/tire,/datum/reagent/consumable/sodiumchloride,"beer",/datum/reagent/hair_dye,"sugar",/datum/reagent/glitter/white,/datum/reagent/growthserum)
 	//needs to be chemid unit checked at some point
 

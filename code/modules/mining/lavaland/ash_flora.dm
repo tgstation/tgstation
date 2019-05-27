@@ -166,7 +166,7 @@
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf
 	name = "mushroom leaf"
 	desc = "A leaf, from a mushroom."
-	list_reagents = list("nutriment" = 3, "vitfro" = 2, "nicotine" = 2)
+	list_reagents = list("nutriment" = 3, "vitfro" = 2, /datum/reagent/drug/nicotine = 2)
 	icon_state = "mushroom_leaf"
 	seed = /obj/item/seeds/lavaland/porcini
 	wine_power = 40
@@ -182,7 +182,7 @@
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
 	name = "mushroom stem"
 	desc = "A long mushroom stem. It's slightly glowing."
-	list_reagents = list("tinlux" = 2, "vitamin" = 1, "space_drugs" = 1)
+	list_reagents = list("tinlux" = 2, "vitamin" = 1, /datum/reagent/drug/space_drugs = 1)
 	icon_state = "mushroom_stem"
 	seed = /obj/item/seeds/lavaland/ember
 	wine_power = 60
