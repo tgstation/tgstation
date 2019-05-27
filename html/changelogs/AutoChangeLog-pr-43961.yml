@@ -1,0 +1,5 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - rscadd: "You can now build a new PDA messaging server if you lose it."
+  - tweak: "Requests console messages no longer work if the messaging server is offline. Emergency alerts will still function in that case as long as the rest of telecomms is online."
