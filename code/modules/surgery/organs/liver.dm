@@ -57,6 +57,25 @@
 #undef HAS_NO_TOXIN
 #undef HAS_PAINFUL_TOXIN
 
+/obj/item/organ/liver/Remove(mob/living/carbon/M, special = FALSE)
+	var/mob/living/carbon/C = owner
+	if (istype(C) && C.reagents)
+		for(var/I in C.reagents.reagent_list)
+			var/datum/reagent/R = I
+			if(QDELETED(R.holder))
+				continue
+			R.on_mob_delete(C)
+	return ..()
+
+/obj/item/organ/liver/Insert(mob/living/carbon/C, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if (istype(C) && C.reagents)
+		for(var/I in C.reagents.reagent_list)
+			var/datum/reagent/R = I
+			if(QDELETED(R.holder))
+				continue
+			R.on_mob_add(C)
+
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("iron", 5)
