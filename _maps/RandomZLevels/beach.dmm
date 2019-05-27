@@ -403,7 +403,7 @@
 /turf/closed/indestructible{
 	desc = "Very dense water, very difficult to pass.";
 	icon = 'icons/misc/beach.dmi';
-	icon_state = /datum/reagent/water;
+	icon_state = "water";
 	name = "dense water";
 	opacity = 0
 	},
