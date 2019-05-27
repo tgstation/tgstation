@@ -853,7 +853,7 @@
 		if(do_after(src, 50, TRUE, C))
 			if(can_be_firemanned(C))//Second check to make sure they're still valid to be carried
 				if(!incapacitated(FALSE, TRUE))
-					buckle_mob(C, TRUE, TRUE, TRUE, 1, 0)
+					buckle_mob(C, TRUE, TRUE, 90, 1, 0)
 					return
 		visible_message("<span class='warning'>[src] fails to fireman carry [C]!")
 	else
