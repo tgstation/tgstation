@@ -35,7 +35,7 @@
 	do_footstep = TRUE
 	var/banana_time = 0 // If there's no time set it won't spawn.
 	var/banana_type = /obj/item/grown/bananapeel
-	var/attack_reagent 
+	var/attack_reagent
 
 /mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
@@ -65,8 +65,8 @@
 /mob/living/simple_animal/hostile/retaliate/clown/lube
 	name = "Living Lube"
 	desc = "A puddle of lube brought to life by the honkmother."
-	icon_state = /datum/reagent/lube
-	icon_living = /datum/reagent/lube
+	icon_state = "lube"
+	icon_living = "lube"
 	turns_per_move = 1
 	response_help = "dips a finger into"
 	response_disarm = "gently scoops and pours aside"

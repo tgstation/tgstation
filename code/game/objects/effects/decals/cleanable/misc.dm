@@ -181,7 +181,7 @@
 
 /obj/effect/decal/cleanable/glitter/white
 	name = "white glitter"
-	icon_state = /datum/reagent/nitrous_oxide
+	icon_state = "no2"
 
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"

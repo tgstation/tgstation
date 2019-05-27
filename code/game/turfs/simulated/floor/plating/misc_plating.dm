@@ -139,9 +139,9 @@
 
 /turf/open/floor/plating/beach/water
 	gender = PLURAL
-	name = /datum/reagent/water
+	name = "water"
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
-	icon_state = /datum/reagent/water
+	icon_state = "water"
 	baseturfs = /turf/open/floor/plating/beach/water
 
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner

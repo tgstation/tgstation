@@ -1,5 +1,5 @@
 /obj/effect/decal/cleanable/blood
-	name = /datum/reagent/blood
+	name = "blood"
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
@@ -36,7 +36,7 @@
 	random_icon_states = null
 
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
-	name = /datum/reagent/blood
+	name = "blood"
 	icon = 'icons/effects/blood.dmi'
 	desc = "Your instincts say you shouldn't be following these."
 	var/list/existing_dirs = list()

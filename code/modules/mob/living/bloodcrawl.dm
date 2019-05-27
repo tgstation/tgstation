@@ -1,5 +1,5 @@
 /obj/effect/dummy/phased_mob/slaughter //Can't use the wizard one, blocked by jaunt/slow
-	name = /datum/reagent/water
+	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/canmove = 1

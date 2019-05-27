@@ -49,8 +49,8 @@
 	icon_state = "sandwater_b"
 
 /turf/open/floor/holofloor/beach/water
-	name = /datum/reagent/water
-	icon_state = /datum/reagent/water
+	name = "water"
+	icon_state = "water"
 	bullet_sizzle = TRUE
 
 /turf/open/floor/holofloor/asteroid

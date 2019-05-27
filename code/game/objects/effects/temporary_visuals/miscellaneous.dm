@@ -97,7 +97,7 @@
 	icon_state = "phaseout"
 
 /obj/effect/temp_visual/dir_setting/wraith
-	name = /datum/reagent/blood
+	name = "blood"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "phase_shift2"
 	duration = 12
@@ -145,7 +145,7 @@
 	icon_state = "[icon_state][handedness]"
 
 /obj/effect/temp_visual/wizard
-	name = /datum/reagent/water
+	name = "water"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "reappear"
 	duration = 5

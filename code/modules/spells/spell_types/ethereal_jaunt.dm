@@ -63,7 +63,7 @@
 	steam.start()
 
 /obj/effect/dummy/phased_mob/spell_jaunt
-	name = /datum/reagent/water
+	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/reappearing = FALSE

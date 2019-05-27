@@ -47,7 +47,7 @@
 
 /obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
-	icon_state = /datum/reagent/bluespace
+	icon_state = "bluespace"
 	damage = 0
 	damage_type = OXY
 	nodamage = TRUE
@@ -75,7 +75,7 @@
 
 /obj/item/projectile/magic/safety
 	name = "bolt of safety"
-	icon_state = /datum/reagent/bluespace
+	icon_state = "bluespace"
 	damage = 0
 	damage_type = OXY
 	nodamage = TRUE
