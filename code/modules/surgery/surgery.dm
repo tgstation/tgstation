@@ -3,18 +3,18 @@
 	var/desc = "surgery description"
 	var/status = 1
 	var/list/steps = list()									//Steps in a surgery
-	var/step_in_progress = 0								//Actively performing a Surgery
-	var/can_cancel = 1										//Can cancel this surgery after step 1 with cautery
+	var/step_in_progress = FALSE								//Actively performing a Surgery
+	var/can_cancel = TRUE										//Can cancel this surgery after step 1 with cautery
 	var/list/target_mobtypes = list(/mob/living/carbon/human)		//Acceptable Species
 	var/location = BODY_ZONE_CHEST							//Surgery location
 	var/requires_bodypart_type = BODYPART_ORGANIC			//Prevents you from performing an operation on incorrect limbs. 0 for any limb type
 	var/list/possible_locs = list() 						//Multiple locations
-	var/ignore_clothes = 0									//This surgery ignores clothes
+	var/ignore_clothes = FALSE									//This surgery ignores clothes
 	var/mob/living/carbon/target							//Operation target mob
 	var/obj/item/bodypart/operated_bodypart					//Operable body part
 	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
 	var/success_multiplier = 0								//Step success propability multiplier
-	var/requires_real_bodypart = 0							//Some surgeries don't work on limbs that don't really exist
+	var/requires_real_bodypart = FALSE							//Some surgeries don't work on limbs that don't really exist
 	var/lying_required = TRUE								//Does the vicitm needs to be lying down.
 	var/self_operable = FALSE								//Can the surgery be performed on yourself.
 
@@ -39,11 +39,11 @@
 /datum/surgery/proc/can_start(mob/user, mob/living/carbon/target)
 	// if 0 surgery wont show up in list
 	// put special restrictions here
-	return 1
+	return TRUE
 
 /datum/surgery/proc/next_step(mob/user, intent)
 	if(step_in_progress)
-		return 1
+		return TRUE
 
 	var/try_to_fail = FALSE
 	if(intent == INTENT_DISARM)
@@ -52,8 +52,10 @@
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
 		if(S.try_op(user, target, user.zone_selected, user.get_active_held_item(), src, try_to_fail))
-			return 1
-	return 0
+			return TRUE
+		if(iscyborg(user) && user.a_intent != INTENT_HARM) //to save asimov borgs a LOT of heartache
+			return TRUE
+	return FALSE
 
 /datum/surgery/proc/get_surgery_step()
 	var/step_type = steps[status]
@@ -90,7 +92,7 @@
 	if(!..())
 		return FALSE
 	// True surgeons (like abductor scientists) need no instructions
-	if(user.has_trait(TRAIT_SURGEON))
+	if(HAS_TRAIT(user, TRAIT_SURGEON))
 		return TRUE
 
 	if(iscyborg(user))

@@ -65,11 +65,11 @@
 
 /datum/nanite_program/pacifying/enable_passive_effect()
 	. = ..()
-	host_mob.add_trait(TRAIT_PACIFISM, "nanites")
+	ADD_TRAIT(host_mob, TRAIT_PACIFISM, "nanites")
 
 /datum/nanite_program/pacifying/disable_passive_effect()
 	. = ..()
-	host_mob.remove_trait(TRAIT_PACIFISM, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_PACIFISM, "nanites")
 
 /datum/nanite_program/blinding
 	name = "Blindness"
@@ -93,11 +93,11 @@
 
 /datum/nanite_program/mute/enable_passive_effect()
 	. = ..()
-	host_mob.add_trait(TRAIT_MUTE, "nanites")
+	ADD_TRAIT(host_mob, TRAIT_MUTE, "nanites")
 
 /datum/nanite_program/mute/disable_passive_effect()
 	. = ..()
-	host_mob.remove_trait(TRAIT_MUTE, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_MUTE, "nanites")
 
 /datum/nanite_program/fake_death
 	name = "Death Simulation"

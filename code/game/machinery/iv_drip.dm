@@ -8,14 +8,14 @@
 	icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	var/mob/living/carbon/attached = null
+	var/mob/living/carbon/attached
 	var/mode = IV_INJECTING
-	var/obj/item/reagent_containers/beaker = null
+	var/obj/item/reagent_containers/beaker
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
 									/obj/item/reagent_containers/glass))
 
-/obj/machinery/iv_drip/Initialize()
+/obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -151,7 +151,7 @@
 			// If the human is losing too much blood, beep.
 			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
 				visible_message("[src] beeps loudly.")
-				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, 1)
 			attached.transfer_blood_to(beaker, amount)
 			update_icon()
 
@@ -182,7 +182,6 @@
 
 	if(usr.incapacitated())
 		return
-
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
@@ -199,7 +198,6 @@
 
 	if(usr.incapacitated())
 		return
-
 	mode = !mode
 	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 	update_icon()
@@ -209,7 +207,7 @@
 	if(get_dist(user, src) > 2)
 		return
 
-	to_chat(user, "The IV drip is [mode ? "injecting" : "taking blood"].")
+	to_chat(user, "[src] is [mode ? "injecting" : "taking blood"].")
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
@@ -221,5 +219,23 @@
 
 	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
 
+
+/obj/machinery/iv_drip/saline
+	name = "saline drip"
+	desc = "An all-you-can-drip saline canister designed to supply a hospital without running out, with a scary looking pump rigged to inject saline into containers, but filling people directly might be a bad idea."
+	icon_state = "saline"
+	density = TRUE
+
+/obj/machinery/iv_drip/saline/Initialize(mapload)
+    . = ..()
+    beaker = new /obj/item/reagent_containers/glass/saline(src)
+
+/obj/machinery/iv_drip/saline/update_icon()
+    return
+
+/obj/machinery/iv_drip/saline/eject_beaker()
+    return
+/obj/machinery/iv_drip/saline/toggle_mode()
+	return
 #undef IV_TAKING
 #undef IV_INJECTING

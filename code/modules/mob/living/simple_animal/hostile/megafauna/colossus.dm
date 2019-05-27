@@ -1,3 +1,4 @@
+#define COLOSSUS_SLEEP(X) sleep(X); if(QDELETED(src)) return;
 /*
 
 COLOSSUS
@@ -73,7 +74,7 @@ Difficulty: Very Hard
 		telegraph()
 
 		if(health < maxHealth/3)
-			double_spiral()
+			INVOKE_ASYNC(src, .proc/double_spiral)
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
 			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
@@ -123,17 +124,17 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	dir_shots(GLOB.diagonals)
-	sleep(10)
+	COLOSSUS_SLEEP(10)
 	dir_shots(GLOB.cardinals)
-	sleep(10)
+	COLOSSUS_SLEEP(10)
 	dir_shots(GLOB.diagonals)
-	sleep(10)
+	COLOSSUS_SLEEP(10)
 	dir_shots(GLOB.cardinals)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
-	sleep(10)
+	COLOSSUS_SLEEP(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot)
 	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
 
@@ -151,7 +152,7 @@ Difficulty: Very Hard
 			counter = 16
 		shoot_projectile(start_turf, counter * 22.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
-		sleep(1)
+		COLOSSUS_SLEEP(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
 	if(!isnum(set_angle) && (!marker || marker == loc))
@@ -553,7 +554,7 @@ Difficulty: Very Hard
 					H.regenerate_limbs()
 					H.regenerate_organs()
 					H.revive(1,0)
-					H.add_trait(TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
+					ADD_TRAIT(H, TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
@@ -716,7 +717,7 @@ Difficulty: Very Hard
 	if(isliving(A) && holder_animal)
 		var/mob/living/L = A
 		L.notransform = 1
-		L.add_trait(TRAIT_MUTE, STASIS_MUTE)
+		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags |= GODMODE
 		L.mind.transfer_to(holder_animal)
 		var/obj/effect/proc_holder/spell/targeted/exit_possession/P = new /obj/effect/proc_holder/spell/targeted/exit_possession
@@ -726,7 +727,7 @@ Difficulty: Very Hard
 /obj/structure/closet/stasis/dump_contents(var/kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
-		L.remove_trait(TRAIT_MUTE, STASIS_MUTE)
+		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
 		if(holder_animal)

@@ -89,7 +89,7 @@
 
 	holder = item
 
-	holder.add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(holder, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.materials = null
@@ -132,7 +132,7 @@
 		else
 			var/list/choice_list = list()
 			for(var/obj/item/I in items_list)
-				choice_list[I] = getFlatIcon(I)
+				choice_list[I] = image(I)
 			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
 			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && (choice in contents))
 				// This monster sanity check is a nice example of how bad input is.

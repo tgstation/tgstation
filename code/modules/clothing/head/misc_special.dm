@@ -47,7 +47,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
-	heat = 1000
+	heat = 999
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
@@ -64,7 +64,7 @@
 	force = 15
 	throwforce = 15
 	damtype = BURN
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/weapons/sear.ogg'
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
@@ -277,6 +277,15 @@
 
 		user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 		to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
+
+/obj/item/clothing/head/foilhat/MouseDrop(atom/over_object)
+	//God Im sorry
+	if(usr)
+		var/mob/living/carbon/C = usr
+		if(src == C.head)
+			to_chat(C, "<span class='userdanger'>Why would you want to take this off? Do you want them to get into your mind?!</span>")
+			return
+	..()
 
 /obj/item/clothing/head/foilhat/dropped(mob/user)
 	..()

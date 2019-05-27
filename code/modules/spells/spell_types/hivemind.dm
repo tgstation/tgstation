@@ -57,14 +57,14 @@
 	var/success = FALSE
 
 	if(target.mind && target.client && target.stat != DEAD)
-		if(!target.has_trait(TRAIT_MINDSHIELD) || ignore_mindshield)
-			if(target.has_trait(TRAIT_MINDSHIELD) && ignore_mindshield)
+		if(!HAS_TRAIT(target, TRAIT_MINDSHIELD) || ignore_mindshield)
+			if(HAS_TRAIT(target, TRAIT_MINDSHIELD) && ignore_mindshield)
 				to_chat(user, "<span class='notice'>We bruteforce our way past the mental barriers of [target.name] and begin linking our minds!</span>")
 			else
 				to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
 			if(do_after(user,5*(1.5**get_dist(user, target)),0,user) && target in view(range))
 				if(do_after(user,5*(1.5**get_dist(user, target)),0,user) && target in view(range))
-					if((!target.has_trait(TRAIT_MINDSHIELD) || ignore_mindshield) && target in view(range))
+					if((!HAS_TRAIT(target, TRAIT_MINDSHIELD) || ignore_mindshield) && target in view(range))
 						to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
 						success = TRUE
 						hive.add_to_hive(target)
@@ -582,12 +582,16 @@
 /obj/effect/proc_holder/spell/target_hive/hive_attack
 	name = "Medullary Failure"
 	desc = "We overload the target's medulla, inducing an immediate heart attack."
-
+	range = 7
 	charge_max = 3000
 	action_icon_state = "attack"
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/target = targets[1]
+	if(!user.is_real_hivehost())
+		to_chat(user, "<span class='notice'>Our vessel is too weak to handle this power, we must cease our mind control beforehand.</span>")
+		revert_cast()
+		return
 	if(!target.undergoing_cardiac_arrest() && target.can_heartattack())
 		target.set_heartattack(TRUE)
 		to_chat(target, "<span class='userdanger'>You feel a sharp pain, and foreign presence in your mind!!</span>")

@@ -16,39 +16,114 @@ Slimecrossing Items
 	default_picture_name = "A nostalgic picture"
 	var/used = FALSE
 
+/datum/saved_bodypart
+	var/obj/item/bodypart/old_part
+	var/bodypart_type
+	var/brute_dam
+	var/burn_dam
+	var/stamina_dam
+
+/datum/saved_bodypart/New(obj/item/bodypart/part)
+	old_part = part
+	bodypart_type = part.type
+	brute_dam = part.brute_dam
+	burn_dam = part.burn_dam
+	stamina_dam = part.stamina_dam
+
+/mob/living/carbon/proc/apply_saved_bodyparts(list/datum/saved_bodypart/parts)
+	var/list/dont_chop = list()
+	for(var/zone in parts)
+		var/datum/saved_bodypart/saved_part = parts[zone]
+		var/obj/item/bodypart/already = get_bodypart(zone)
+		if(QDELETED(saved_part.old_part))
+			saved_part.old_part = new saved_part.bodypart_type
+		if(!already || already != saved_part.old_part)
+			saved_part.old_part.replace_limb(src, TRUE)
+		saved_part.old_part.heal_damage(INFINITY, INFINITY, INFINITY, null, FALSE)
+		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam)
+		dont_chop[zone] = TRUE
+	for(var/_part in bodyparts)
+		var/obj/item/bodypart/part = _part
+		if(dont_chop[part.body_zone])
+			continue
+		part.drop_limb(TRUE)
+
+/mob/living/carbon/proc/save_bodyparts()
+	var/list/datum/saved_bodypart/ret = list()
+	for(var/_part in bodyparts)
+		var/obj/item/bodypart/part = _part
+		var/datum/saved_bodypart/saved_part = new(part)
+		
+		ret[part.body_zone] = saved_part
+	return ret
+
+	
+
 /datum/component/dejavu
-	var/health	//health for simple animals, and integrity for objects
+	var/integrity	//for objects
+	var/brute_loss //for simple animals
+	var/list/datum/saved_bodypart/saved_bodyparts //maps bodypart slots to health
+	var/clone_loss = 0
+	var/tox_loss = 0
+	var/oxy_loss = 0
+	var/brain_loss = 0
 	var/x
 	var/y
 	var/z
-	var/rewinds_remaining = 1
+	var/rewinds_remaining
 
-/datum/component/dejavu/Initialize()
+/datum/component/dejavu/Initialize(rewinds = 1)
+	rewinds_remaining = rewinds
 	var/turf/T = get_turf(parent)
 	if(T)
 		x = T.x
 		y = T.y
 		z = T.z
-	if(istype(parent, /mob/living/simple_animal))
+	if(isliving(parent))
+		var/mob/living/L = parent
+		clone_loss = L.getCloneLoss()
+		tox_loss = L.getToxLoss()
+		oxy_loss = L.getOxyLoss()
+		brain_loss = L.getBrainLoss()
+	if(iscarbon(parent))
+		var/mob/living/carbon/C = parent
+		saved_bodyparts = C.save_bodyparts()
+	else if(isanimal(parent))
 		var/mob/living/simple_animal/M = parent
-		health = M.health
-	else if(istype(parent, /obj))
+		brute_loss = M.bruteloss
+	else if(isobj(parent))
 		var/obj/O = parent
-		health = O.obj_integrity
+		integrity = O.obj_integrity
 	addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
 
 /datum/component/dejavu/proc/rewind()
 	to_chat(parent, "<span class=notice>You remember a time not so long ago...</span>")
+
+	if(isliving(parent))
+		var/mob/living/L = parent
+		L.setCloneLoss(clone_loss)
+		L.setToxLoss(tox_loss)
+		L.setOxyLoss(oxy_loss)
+		L.setBrainLoss(brain_loss)
+
+	if(iscarbon(parent))
+		if(saved_bodyparts)
+			var/mob/living/carbon/C = parent
+			C.apply_saved_bodyparts(saved_bodyparts)
+	else if(isanimal(parent))
+		var/mob/living/simple_animal/M = parent
+		M.bruteloss = brute_loss
+		M.updatehealth()
+	else if(isobj(parent))
+		var/obj/O = parent
+		O.obj_integrity = integrity
+
+	//comes after healing so new limbs comically drop to the floor
 	if(!isnull(x) && istype(parent, /atom/movable))
 		var/atom/movable/AM = parent
 		var/turf/T = locate(x,y,z)
 		AM.forceMove(T)
-	if(istype(parent, /mob/living/simple_animal))
-		var/mob/living/simple_animal/M = parent
-		M.adjustHealth(health)
-	else if(istype(parent, /obj))
-		var/obj/O = parent
-		O.obj_integrity = health
+
 	rewinds_remaining --
 	if(rewinds_remaining)
 		addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
@@ -69,7 +144,7 @@ Slimecrossing Items
 		to_chat(target, "<span class=notice>You'll remember this moment forever!</span>")
 			
 		used = TRUE
-		target.AddComponent(/datum/component/dejavu)
+		target.AddComponent(/datum/component/dejavu, 2)
 	.=..()
 		
 		
@@ -158,7 +233,7 @@ Slimecrossing Items
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.mind && !H.has_trait(TRAIT_AGEUSIA))
+			if(H.mind && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>That didn't taste very good...</span>") //No disgust, though. It's just not good tasting.
 				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 				if(mood)

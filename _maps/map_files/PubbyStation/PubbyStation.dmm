@@ -2,12 +2,37 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
+"aac" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/structure/closet/radiation,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/disposal/incinerator)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
+"aae" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/structure/closet/secure_closet/atmospherics,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/disposal/incinerator)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -33197,9 +33222,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "bzP" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -33220,6 +33242,7 @@
 	network = list("ss13","medbay");
 	dir = 4
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzQ" = (
@@ -34445,9 +34468,6 @@
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bCj" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -34458,6 +34478,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bCl" = (
@@ -46146,17 +46167,6 @@
 "cby" = (
 /turf/open/floor/engine/air,
 /area/engine/atmos)
-"cbz" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/structure/closet/radiation,
-/turf/open/floor/plasteel/dark,
-/area/maintenance/disposal/incinerator)
 "cbA" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -46560,17 +46570,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cdg" = (
-/obj/structure/table/glass,
-/obj/item/storage/toolbox/emergency,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/maintenance/disposal/incinerator)
 "cdk" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -47602,8 +47601,8 @@
 /area/hydroponics/garden/monastery)
 "cgL" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/holidaypriest,
-/obj/item/clothing/suit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell1";
@@ -47972,8 +47971,8 @@
 /area/space/nearstation)
 "cio" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/holidaypriest,
-/obj/item/clothing/suit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell2";
@@ -50624,8 +50623,8 @@
 /obj/structure/closet,
 /obj/item/storage/backpack/cultpack,
 /obj/item/clothing/head/nun_hood,
-/obj/item/clothing/suit/nun,
-/obj/item/clothing/suit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -53178,7 +53177,6 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "dbi" = (
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "dci" = (
@@ -54288,7 +54286,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "fIN" = (
@@ -89183,7 +89180,7 @@ bil
 biY
 bjT
 ble
-bmq
+aab
 bmq
 boC
 bpI
@@ -100532,8 +100529,8 @@ bZO
 caI
 cbA
 ccp
-cdg
-cbz
+aac
+aae
 hMa
 aaa
 aby

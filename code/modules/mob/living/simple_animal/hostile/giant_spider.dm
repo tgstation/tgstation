@@ -86,6 +86,7 @@
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
 		return 1
 	key = user.key
+<<<<<<< HEAD
 	var/datum/mind/M = mind
 	if(M && progenitor)
 		if((!istype(progenitor, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch) && istype(src, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)) || istype(src, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch)) //if we're both a nurse and our parent is a nurse, don't pass on "genes"
@@ -97,6 +98,10 @@
 			A.objectives += objective
 			M.add_antag_datum(A)
 			M.announce_objectives()
+=======
+	if(directive)
+		log_game("[key_name(src)] took control of [name] with the objective: '[directive]'.")
+>>>>>>> 5cc4edc079a63977ffb4ffc5180fea2d706038ff
 	return 1
 
 //nursemaids - these create webs and eggs
@@ -490,11 +495,21 @@
 	desc = "Set a directive for your children to follow."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "directive"
+	
+/datum/action/innate/spider/set_directive/IsAvailable()
+	if(..())
+		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))
+			return FALSE
+		var/mob/living/simple_animal/hostile/poison/giant_spider/S = owner
+		if(S.playable_spider)
+			return FALSE
+		return TRUE
 
 /datum/action/innate/spider/set_directive/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
+<<<<<<< HEAD
 	if(S.progenitor && istype(S.progenitor, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/matriarch) && !S.progenitor.stat)
 		to_chat(S, "<span class='spider'><b>Your progenitor, [S.progenitor]'s influence is yet too strong for you to issue your own commands!</b></span>")
 		return
@@ -512,6 +527,12 @@
 		to_chat(S, "<span class='spider'><b>You signal to all of your descendants a command: [S.directive]</b></span>")
 		message_admins("[ADMIN_LOOKUPFLW(owner)] sent directive: '[S.directive]'.")
 		log_game("[key_name(owner)] sent directive: '[S.directive]'.")
+=======
+	if(!S.playable_spider)
+		S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
+		message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[S.directive]'.")
+		log_game("[key_name(owner)] set its directive to: '[S.directive]'.")
+>>>>>>> 5cc4edc079a63977ffb4ffc5180fea2d706038ff
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()

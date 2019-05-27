@@ -108,15 +108,17 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Topic(href,href_list)
 	..()
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
-	if(afilter.get("eject"))
+	if(href_list["eject"])
 		go_out()
-	if(afilter.get("view_stats"))
+	if(href_list["view_stats"])
 		chassis.occupant << browse(get_patient_stats(),"window=msleeper")
 		onclose(chassis.occupant, "msleeper")
 		return
-	if(afilter.get("inject"))
-		inject_reagent(afilter.getType("inject", /datum/reagent),afilter.getObj("source"))
+	if(href_list["inject"])
+		var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate() in chassis
+		var/datum/reagent/R = locate(href_list["inject"]) in SG.reagents.reagent_list
+		if (istype(R))
+			inject_reagent(R, SG)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_stats()
@@ -183,7 +185,7 @@
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 		for(var/datum/reagent/R in SG.reagents.reagent_list)
 			if(R.volume > 0)
-				output += "<a href=\"?src=[REF(src)];inject=[REF(R)];source=[REF(SG)]\">Inject [R.name]</a><br />"
+				output += "<a href=\"?src=[REF(src)];inject=[REF(R)]\">Inject [R.name]</a><br />"
 	return output
 
 
@@ -352,19 +354,18 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Topic(href,href_list)
 	..()
-	var/datum/topic_input/afilter = new (href,href_list)
-	if(afilter.get("toggle_mode"))
+	if (href_list["toggle_mode"])
 		mode = !mode
 		update_equip_info()
 		return
-	if(afilter.get("select_reagents"))
+	if (href_list["select_reagents"])
 		processed_reagents.len = 0
 		var/m = 0
 		var/message
 		for(var/i=1 to known_reagents.len)
 			if(m>=synth_speed)
 				break
-			var/reagent = afilter.get("reagent_[i]")
+			var/reagent = href_list["reagent_[i]"]
 			if(reagent && (reagent in known_reagents))
 				message = "[m ? ", " : null][known_reagents[reagent]]"
 				processed_reagents += reagent
@@ -376,14 +377,14 @@
 			occupant_message("Reagent processing started.")
 			log_message("Reagent processing started.", LOG_MECHA)
 		return
-	if(afilter.get("show_reagents"))
+	if (href_list["show_reagents"])
 		chassis.occupant << browse(get_reagents_page(),"window=msyringegun")
-	if(afilter.get("purge_reagent"))
-		var/reagent = afilter.get("purge_reagent")
+	if (href_list["purge_reagent"])
+		var/reagent = href_list["purge_reagent"]
 		if(reagent)
 			reagents.del_reagent(reagent)
 		return
-	if(afilter.get("purge_all"))
+	if (href_list["purge_all"])
 		reagents.clear_reagents()
 		return
 	return

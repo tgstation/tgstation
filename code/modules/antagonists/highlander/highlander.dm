@@ -7,11 +7,11 @@
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-	L.add_trait(TRAIT_NOGUNS, "highlander")
+	ADD_TRAIT(L, TRAIT_NOGUNS, "highlander")
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-	L.remove_trait(TRAIT_NOGUNS, "highlander")
+	REMOVE_TRAIT(L, TRAIT_NOGUNS, "highlander")
 
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
@@ -58,7 +58,7 @@
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = H.real_name
-	W.add_trait(TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
 	W.update_label(H.real_name)
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
