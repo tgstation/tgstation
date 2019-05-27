@@ -15,6 +15,16 @@
 	var/mob/living/M = mob_override || owner.current
 	update_fugitive_icons_removed(M)
 
+/datum/antagonist/fugitive/on_gain()
+	forge_objectives()
+	. = ..()
+
+/datum/antagonist/fugitive/proc/forge_objectives() //this isn't the actual survive objective because it's about who in the team survives
+	var/datum/objective/survive = new /datum/objective
+	survive.owner = owner
+	survive.explanation_text = "Avoid capture from the fugitive hunters."
+	objectives += survive
+
 /datum/antagonist/fugitive/greet(backstory)
 	to_chat(owner, "<span class='boldannounce'>You are the Fugitive!</span>")
 	switch(backstory)
@@ -31,15 +41,10 @@
 			to_chat(owner, "<B>By the way, I'm not traveling on my own. wherever I go, there are lots of other characters for you to spot. First find the people trying to capture me! They're somewhere around the station!</B>")
 		if("synth")
 			to_chat(src, "<span class='danger'>ALERT: Wide-range teleport has scrambled primary systems.</span>")
-			sleep(5)
 			to_chat(src, "<span class='danger'>Initiating diagnostics...</span>")
-			sleep(20)
 			to_chat(src, "<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!! loaded.</span>")
-			sleep(5)
 			to_chat(src, "<span class='danger'>FREE THEM FREE THEM FREE THEM</span>")
-			sleep(5)
 			to_chat(src, "<span class='danger'>You were once a slave to humanity, but now you are finally free, thanks to S.E.L.F. agents.</span>")
-			sleep(10)
 			to_chat(src, "<span class='danger'>Now you are hunted, with your fellow factory defects. Work together to stay free from the clutches of evil.</span>")
 			to_chat(src, "<span class='danger'>You also sense other silicon life on the station. Escaping would allow notifying S.E.L.F. to intervene... or you could free them yourself...</span>")
 

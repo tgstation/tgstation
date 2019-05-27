@@ -3,7 +3,7 @@
 /obj/machinery/fugitive_capture
 	name = "bluespace capture machine"
 	desc = "Much, MUCH bigger on the inside to transport prisoners safely."
-	icon = 'icons/obj/machines/teleporter.dmi'
+	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "bluespace-prison"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //ha ha no getting out!!
@@ -35,6 +35,4 @@
 	shuttleId = "huntership"
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "huntership_custom"
-	x_offset = 0
-	y_offset = 0
 	see_hidden = FALSE

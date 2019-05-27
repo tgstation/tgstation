@@ -14,6 +14,16 @@
 	var/mob/living/M = mob_override || owner.current
 	update_fugitive_icons_removed(M)
 
+/datum/antagonist/fugitive_hunter/on_gain()
+	forge_objectives()
+	. = ..()
+
+/datum/antagonist/fugitive_hunter/proc/forge_objectives() //this isn't an actual objective because it's about round end rosters
+	var/datum/objective/capture = new /datum/objective
+	capture.owner = owner
+	capture.explanation_text = "Capture the fugitives in the station and put them into the bluespace capture machine on your ship."
+	objectives += capture
+
 /datum/antagonist/fugitive_hunter/greet(backstory)
 	switch(backstory)
 		if("space cop")
