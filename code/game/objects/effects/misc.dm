@@ -31,7 +31,7 @@
 	var/list/container = list(  )
 
 /obj/effect/overlay/thermite
-	name = /datum/reagent/thermite
+	name = "thermite"
 	desc = "Looks hot."
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "2" //what?
@@ -41,7 +41,7 @@
 	layer = FLY_LAYER
 
 /obj/effect/supplypod_selector
-	icon_state = "supplypod_selector" 
+	icon_state = "supplypod_selector"
 	layer = FLY_LAYER
 
 //Makes a tile fully lit no matter what
