@@ -1,0 +1,4 @@
+author: "Irafas"
+delete-after: True
+changes: 
+  - bugfix: "Connected the incinerator/janitor's/botany backroom/service rooms to the scrubber network"
