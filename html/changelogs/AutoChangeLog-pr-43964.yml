@@ -1,5 +1,0 @@
-author: "ExcessiveUseOfVending"
-delete-after: True
-changes: 
-  - tweak: "Wardrobe Vendors will now accept clothing types they sell. Now you can clean up after getting that cool alternate uniform!"
-  - code_imp: "see PR #43964 on how to easily setup a vending machine to accept items!"

@@ -1,4 +1,0 @@
-author: "Fire Chance"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the drink sprites overlapping when you are mixing beer with other drinks."

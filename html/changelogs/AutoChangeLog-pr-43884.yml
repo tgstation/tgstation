@@ -1,5 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Shuttle sounds should no longer ass blast your ears as they no longer play PER DOOR and instead from the nearest engine, or door if none are available."
-  - soundadd: "Distant shuttle sounds."

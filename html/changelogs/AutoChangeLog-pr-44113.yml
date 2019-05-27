@@ -1,5 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "timestop is properly defeated by antimagic."
-  - bugfix: "timestop only checks antimagic once"
