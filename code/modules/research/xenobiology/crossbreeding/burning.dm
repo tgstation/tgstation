@@ -268,7 +268,7 @@ Burning extracts:
 /obj/item/slimecross/burning/lightpink/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] lets off a hypnotizing pink glow!</span>")
 	for(var/mob/living/carbon/C in view(7, get_turf(user)))
-		C.reagents.add_reagent("pax",5)
+		C.reagents.add_reagent(/datum/reagent/pax,5)
 	..()
 
 /obj/item/slimecross/burning/adamantine

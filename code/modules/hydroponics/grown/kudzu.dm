@@ -74,7 +74,7 @@
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
 
-	if(S.has_reagent("phenol", 5))
+	if(S.has_reagent(/datum/reagent/phenol, 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == MINOR_NEGATIVE)
 				temp_mut_list += SM

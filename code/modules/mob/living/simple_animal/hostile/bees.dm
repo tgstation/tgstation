@@ -256,9 +256,9 @@
 /obj/item/queen_bee/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/syringe))
 		var/obj/item/reagent_containers/syringe/S = I
-		if(S.reagents.has_reagent("royal_bee_jelly")) //checked twice, because I really don't want royal bee jelly to be duped
-			if(S.reagents.has_reagent("royal_bee_jelly",5))
-				S.reagents.remove_reagent("royal_bee_jelly", 5)
+		if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly)) //checked twice, because I really don't want royal bee jelly to be duped
+			if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly,5))
+				S.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
 				var/obj/item/queen_bee/qb = new(user.drop_location())
 				qb.queen = new(qb)
 				if(queen && queen.beegent)

@@ -13,7 +13,7 @@
 
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
-	reagents.add_reagent("ash", 30)
+	reagents.add_reagent(/datum/reagent/ash, 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
@@ -27,7 +27,7 @@
 
 /obj/effect/decal/cleanable/ash/large/Initialize()
 	. = ..()
-	reagents.add_reagent("ash", 30) //double the amount of ash.
+	reagents.add_reagent(/datum/reagent/ash, 30) //double the amount of ash.
 
 /obj/effect/decal/cleanable/glass
 	name = "tiny shards"
@@ -84,7 +84,7 @@
 
 /obj/effect/decal/cleanable/greenglow/filled/Initialize()
 	. = ..()
-	reagents.add_reagent(pick("uranium", /datum/reagent/radium), 5)
+	reagents.add_reagent(pick("uranium", /datum/reagent/uranium/radium), 5)
 
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"

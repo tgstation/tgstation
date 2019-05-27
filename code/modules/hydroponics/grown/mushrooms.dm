@@ -47,7 +47,7 @@
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/angel)
-	reagents_add = list("mushroomhallucinogen" = 0.04, /datum/reagent/toxin/amatoxin = 0.35, "nutriment" = 0, "growthserum" = 0.1)
+	reagents_add = list("mushroomhallucinogen" = 0.04, /datum/reagent/toxin/amatoxin = 0.35, "nutriment" = 0, /datum/reagent/growthserum = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = /obj/item/seeds/amanita
@@ -219,7 +219,7 @@
 	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap, /obj/item/seeds/glowshroom/shadowshroom)
-	reagents_add = list(/datum/reagent/radium = 0.1, /datum/reagent/phosphorus = 0.1, "nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/uranium/radium = 0.1, /datum/reagent/phosphorus = 0.1, "nutriment" = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	seed = /obj/item/seeds/glowshroom
@@ -289,7 +289,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom
 	genes = list(/datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/radium = 0.2, "nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/uranium/radium = 0.2, "nutriment" = 0.04)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom

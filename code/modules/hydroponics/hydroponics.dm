@@ -445,7 +445,7 @@
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
-	if(S.has_reagent(/datum/reagent/toxin/mutagen, 5) || S.has_reagent(/datum/reagent/radium, 10) || S.has_reagent("uranium", 10))
+	if(S.has_reagent(/datum/reagent/toxin/mutagen, 5) || S.has_reagent(/datum/reagent/uranium/radium, 10) || S.has_reagent("uranium", 10))
 		switch(rand(100))
 			if(91 to 100)
 				adjustHealth(-10)
@@ -466,34 +466,34 @@
 				to_chat(user, "<span class='notice'>Nothing happens...</span>")
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
-	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 2) || S.has_reagent(/datum/reagent/radium, 5) || S.has_reagent("uranium", 5))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 2) || S.has_reagent(/datum/reagent/uranium/radium, 5) || S.has_reagent("uranium", 5))
 		hardmutate()
-	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 1) || S.has_reagent(/datum/reagent/radium, 2) || S.has_reagent("uranium", 2))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 1) || S.has_reagent(/datum/reagent/uranium/radium, 2) || S.has_reagent("uranium", 2))
 		mutate()
 
 	// After handling the mutating, we now handle the damage from adding crude radioactives...
 	if(S.has_reagent("uranium", 1))
 		adjustHealth(-round(S.get_reagent_amount("uranium") * 1))
 		adjustToxic(round(S.get_reagent_amount("uranium") * 2))
-	if(S.has_reagent(/datum/reagent/radium, 1))
-		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/radium) * 1))
-		adjustToxic(round(S.get_reagent_amount(/datum/reagent/radium) * 3)) // Radium is harsher (OOC: also easier to produce)
+	if(S.has_reagent(/datum/reagent/uranium/radium, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/uranium/radium) * 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/uranium/radium) * 3)) // Radium is harsher (OOC: also easier to produce)
 
 	// Nutriments
-	if(S.has_reagent("eznutriment", 1))
+	if(S.has_reagent(/datum/reagent/plantnutriment/eznutriment, 1))
 		yieldmod = 1
 		mutmod = 1
-		adjustNutri(round(S.get_reagent_amount("eznutriment") * 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/eznutriment) * 1))
 
-	if(S.has_reagent("left4zednutriment", 1))
+	if(S.has_reagent(/datum/reagent/plantnutriment/left4zednutriment, 1))
 		yieldmod = 0
 		mutmod = 2
-		adjustNutri(round(S.get_reagent_amount("left4zednutriment") * 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/left4zednutriment) * 1))
 
-	if(S.has_reagent("robustharvestnutriment", 1))
+	if(S.has_reagent(/datum/reagent/plantnutriment/robustharvestnutriment, 1))
 		yieldmod = 1.3
 		mutmod = 0
-		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) *1 ))
 
 	// Ambrosia Gaia produces earthsblood.
 	if(S.has_reagent("earthsblood"))
@@ -615,8 +615,8 @@
 			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.01))
 
 	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
-	if(S.has_reagent("saltpetre", 1))
-		var/salt = S.get_reagent_amount("saltpetre")
+	if(S.has_reagent(/datum/reagent/saltpetre, 1))
+		var/salt = S.get_reagent_amount(/datum/reagent/saltpetre)
 		adjustHealth(round(salt * 0.25))
 		if (myseed)
 			myseed.adjust_production(-round(salt/100)-prob(salt%100))

@@ -83,7 +83,7 @@
 	name = "Black Powder"
 	id = /datum/reagent/blackpowder
 	results = list(/datum/reagent/blackpowder = 3)
-	required_reagents = list("saltpetre" = 1, "charcoal" = 1, /datum/reagent/sulfur = 1)
+	required_reagents = list(/datum/reagent/saltpetre = 1, "charcoal" = 1, /datum/reagent/sulfur = 1)
 
 /datum/chemical_reaction/reagent_explosion/blackpowder_explosion
 	name = "Black Powder Kaboom"
@@ -120,7 +120,7 @@
 /datum/chemical_reaction/beesplosion
 	name = "Bee Explosion"
 	id = "beesplosion"
-	required_reagents = list("honey" = 1, "strange_reagent" = 1, /datum/reagent/radium = 1)
+	required_reagents = list("honey" = 1, "strange_reagent" = 1, /datum/reagent/uranium/radium = 1)
 
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = holder.my_atom.drop_location()
@@ -177,7 +177,7 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
 	id = "methboom2"
-	required_reagents = list(/datum/reagent/diethylamine = 1, "iodine" = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1) //diethylamine is often left over from mixing the ephedrine.
+	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/iodine = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1) //diethylamine is often left over from mixing the ephedrine.
 	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
 
 /datum/chemical_reaction/sorium
@@ -209,7 +209,7 @@
 	name = "Liquid Dark Matter"
 	id = /datum/reagent/liquid_dark_matter
 	results = list(/datum/reagent/liquid_dark_matter = 3)
-	required_reagents = list("stable_plasma" = 1, /datum/reagent/radium = 1, /datum/reagent/carbon = 1)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/carbon = 1)
 
 /datum/chemical_reaction/liquid_dark_matter/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -344,7 +344,7 @@
 	name = /datum/reagent/phlogiston
 	id = /datum/reagent/phlogiston
 	results = list(/datum/reagent/phlogiston = 3)
-	required_reagents = list(/datum/reagent/phosphorus = 1, /datum/reagent/toxin/acid = 1, "stable_plasma" = 1)
+	required_reagents = list(/datum/reagent/phosphorus = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/stable_plasma = 1)
 
 /datum/chemical_reaction/phlogiston/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -359,13 +359,13 @@
 	name = "Napalm"
 	id = /datum/reagent/napalm
 	results = list(/datum/reagent/napalm = 3)
-	required_reagents = list("oil" = 1, /datum/reagent/fuel = 1, "ethanol" = 1 )
+	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/fuel = 1, "ethanol" = 1 )
 
 /datum/chemical_reaction/cryostylane
 	name = /datum/reagent/cryostylane
 	id = /datum/reagent/cryostylane
 	results = list(/datum/reagent/cryostylane = 3)
-	required_reagents = list(/datum/reagent/water = 1, "stable_plasma" = 1, /datum/reagent/nitrogen = 1)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 1)
 
 /datum/chemical_reaction/cryostylane/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // cools the fuck down
@@ -395,7 +395,7 @@
 	name = /datum/reagent/pyrosium
 	id = /datum/reagent/pyrosium
 	results = list(/datum/reagent/pyrosium = 3)
-	required_reagents = list("stable_plasma" = 1, /datum/reagent/radium = 1, /datum/reagent/phosphorus = 1)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/phosphorus = 1)
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // also cools the fuck down
@@ -405,7 +405,7 @@
 	name = "Teslium"
 	id = /datum/reagent/teslium
 	results = list(/datum/reagent/teslium = 3)
-	required_reagents = list("stable_plasma" = 1, /datum/reagent/silver = 1, /datum/reagent/blackpowder = 1)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/silver = 1, /datum/reagent/blackpowder = 1)
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 

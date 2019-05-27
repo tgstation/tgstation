@@ -271,15 +271,15 @@
 			H.adjustFireLoss(nitryl_pp/4)
 		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
 		if (gas_breathed > gas_stimulation_min)
-			H.reagents.add_reagent("no2",1)
+			H.reagents.add_reagent(/datum/reagent/nitryl,1)
 
 		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
 
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > gas_stimulation_min)
-			var/existing = H.reagents.get_reagent_amount("stimulum")
-			H.reagents.add_reagent("stimulum",max(0, 1 - existing))
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/stimulum)
+			H.reagents.add_reagent(/datum/reagent/stimulum,max(0, 1 - existing))
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 
 	// Miasma

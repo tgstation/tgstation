@@ -429,7 +429,7 @@
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	item_state = "glowstick"
-	grind_results = list("phenol" = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
+	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	var/fuel = 0
 
 /obj/item/flashlight/glowstick/Initialize()

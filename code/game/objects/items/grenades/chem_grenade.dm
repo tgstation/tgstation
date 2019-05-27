@@ -373,7 +373,7 @@
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
 	B1.reagents.add_reagent(/datum/reagent/phosphorus, 25)
-	B2.reagents.add_reagent("stable_plasma", 25)
+	B2.reagents.add_reagent(/datum/reagent/stable_plasma, 25)
 	B2.reagents.add_reagent(/datum/reagent/toxin/acid, 25)
 
 	beakers += B1
@@ -485,7 +485,7 @@
 	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("colorful_reagent", 25)
+	B1.reagents.add_reagent(/datum/reagent/colorful_reagent, 25)
 	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
 	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
 	B2.reagents.add_reagent("sugar", 25)
@@ -497,7 +497,7 @@
 	name = "generic glitter grenade"
 	desc = "You shouldn't see this description."
 	stage = READY
-	var/glitter_type = "glitter"
+	var/glitter_type = /datum/reagent/glitter
 
 /obj/item/grenade/chem_grenade/glitter/Initialize()
 	. = ..()
@@ -515,17 +515,17 @@
 /obj/item/grenade/chem_grenade/glitter/pink
 	name = "pink glitter bomb"
 	desc = "For that HOT glittery look."
-	glitter_type = "pink_glitter"
+	glitter_type = /datum/reagent/glitter/pink
 
 /obj/item/grenade/chem_grenade/glitter/blue
 	name = "blue glitter bomb"
 	desc = "For that COOL glittery look."
-	glitter_type = "blue_glitter"
+	glitter_type = /datum/reagent/glitter/blue
 
 /obj/item/grenade/chem_grenade/glitter/white
 	name = "white glitter bomb"
 	desc = "For that somnolent glittery look."
-	glitter_type = "white_glitter"
+	glitter_type = /datum/reagent/glitter/white
 
 /obj/item/grenade/chem_grenade/clf3
 	name = "clf3 grenade"

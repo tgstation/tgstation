@@ -34,7 +34,7 @@
 	name = "Charcoal"
 	id = "charcoal"
 	results = list("charcoal" = 2)
-	required_reagents = list("ash" = 1, /datum/reagent/consumable/sodiumchloride = 1)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/sodiumchloride = 1)
 	mix_message = "The mixture yields a fine black powder."
 	required_temp = 380
 
@@ -54,7 +54,7 @@
 	name = "Miner's Salve"
 	id = "mine_salve"
 	results = list("mine_salve" = 3)
-	required_reagents = list("oil" = 1, /datum/reagent/water = 1, /datum/reagent/iron = 1)
+	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/water = 1, /datum/reagent/iron = 1)
 
 /datum/chemical_reaction/mine_salve2
 	name = "Miner's Salve"
@@ -86,7 +86,7 @@
 	name = "Potassium Iodide"
 	id = "potass_iodide"
 	results = list("potass_iodide" = 2)
-	required_reagents = list(/datum/reagent/potassium = 1, "iodine" = 1)
+	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/iodine = 1)
 
 /datum/chemical_reaction/pen_acid
 	name = "Pentetic Acid"
@@ -98,25 +98,25 @@
 	name = "Salicyclic Acid"
 	id = "sal_acid"
 	results = list("sal_acid" = 5)
-	required_reagents = list(/datum/reagent/sodium = 1, "phenol" = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/phenol = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/oxandrolone
 	name = "Oxandrolone"
 	id = "oxandrolone"
 	results = list("oxandrolone" = 6)
-	required_reagents = list(/datum/reagent/carbon = 3, "phenol" = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
+	required_reagents = list(/datum/reagent/carbon = 3, /datum/reagent/phenol = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/salbutamol
 	name = "Salbutamol"
 	id = "salbutamol"
 	results = list("salbutamol" = 5)
-	required_reagents = list("sal_acid" = 1, /datum/reagent/lithium = 1, /datum/reagent/aluminium = 1, "bromine" = 1, /datum/reagent/ammonia = 1)
+	required_reagents = list("sal_acid" = 1, /datum/reagent/lithium = 1, /datum/reagent/aluminium = 1, /datum/reagent/bromine = 1, /datum/reagent/ammonia = 1)
 
 /datum/chemical_reaction/perfluorodecalin
 	name = "Perfluorodecalin"
 	id = "perfluorodecalin"
 	results = list("perfluorodecalin" = 3)
-	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, "oil" = 1)
+	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/oil = 1)
 	required_temp = 370
 	mix_message = "The mixture rapidly turns into a dense pink liquid."
 
@@ -124,14 +124,14 @@
 	name = "Ephedrine"
 	id = "ephedrine"
 	results = list("ephedrine" = 4)
-	required_reagents = list("sugar" = 1, "oil" = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)
+	required_reagents = list("sugar" = 1, /datum/reagent/oil = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)
 	mix_message = "The solution fizzes and gives off toxic fumes."
 
 /datum/chemical_reaction/diphenhydramine
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
 	results = list("diphenhydramine" = 4)
-	required_reagents = list("oil" = 1, /datum/reagent/carbon = 1, "bromine" = 1, /datum/reagent/diethylamine = 1, "ethanol" = 1)
+	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/carbon = 1, /datum/reagent/bromine = 1, /datum/reagent/diethylamine = 1, "ethanol" = 1)
 	mix_message = "The mixture dries into a pale blue powder."
 
 /datum/chemical_reaction/oculine
@@ -145,13 +145,13 @@
 	name = "Atropine"
 	id = "atropine"
 	results = list("atropine" = 5)
-	required_reagents = list("ethanol" = 1, "acetone" = 1, /datum/reagent/diethylamine = 1, "phenol" = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list("ethanol" = 1, /datum/reagent/acetone = 1, /datum/reagent/diethylamine = 1, /datum/reagent/phenol = 1, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
 	results = list("epinephrine" = 6)
-	required_reagents = list("phenol" = 1, "acetone" = 1, /datum/reagent/diethylamine = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1, /datum/reagent/hydrogen = 1)
+	required_reagents = list(/datum/reagent/phenol = 1, /datum/reagent/acetone = 1, /datum/reagent/diethylamine = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/strange_reagent
 	name = "Strange Reagent"
@@ -170,13 +170,13 @@
 	name = "Neurine"
 	id = "neurine"
 	results = list("neurine" = 3)
-	required_reagents = list("mannitol" = 1, "acetone" = 1, /datum/reagent/oxygen = 1)
+	required_reagents = list("mannitol" = 1, /datum/reagent/acetone = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/mutadone
 	name = "Mutadone"
 	id = "mutadone"
 	results = list("mutadone" = 3)
-	required_reagents = list(/datum/reagent/toxin/mutagen = 1, "acetone" = 1, "bromine" = 1)
+	required_reagents = list(/datum/reagent/toxin/mutagen = 1, /datum/reagent/acetone = 1, /datum/reagent/bromine = 1)
 
 /datum/chemical_reaction/antihol
 	name = "antihol"
@@ -188,7 +188,7 @@
 	name = "Cryoxadone"
 	id = "cryoxadone"
 	results = list("cryoxadone" = 3)
-	required_reagents = list("stable_plasma" = 1, "acetone" = 1, /datum/reagent/toxin/mutagen = 1)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/acetone = 1, /datum/reagent/toxin/mutagen = 1)
 
 /datum/chemical_reaction/pyroxadone
 	name = "Pyroxadone"
@@ -207,7 +207,7 @@
 	name = "Haloperidol"
 	id = "haloperidol"
 	results = list("haloperidol" = 5)
-	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, "potass_iodide" = 1, "oil" = 1)
+	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, "potass_iodide" = 1, /datum/reagent/oil = 1)
 
 /datum/chemical_reaction/bicaridine
 	name = "Bicaridine"
@@ -243,7 +243,7 @@
 	name = "Corazone"
 	id = "corazone"
 	results = list("corazone" = 3)
-	required_reagents = list("phenol" = 2, /datum/reagent/lithium = 1)
+	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/lithium = 1)
 
 /datum/chemical_reaction/morphine
 	name = "Morphine"
@@ -256,8 +256,8 @@
 	name = "Modafinil"
 	id = "modafinil"
 	results = list("modafinil" = 5)
-	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/ammonia = 1, "phenol" = 1, "acetone" = 1, /datum/reagent/toxin/acid = 1)
-	required_catalysts = list("bromine" = 1) // as close to the real world synthesis as possible
+	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/ammonia = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone = 1, /datum/reagent/toxin/acid = 1)
+	required_catalysts = list(/datum/reagent/bromine = 1) // as close to the real world synthesis as possible
 
 /datum/chemical_reaction/psicodine
 	name = "Psicodine"

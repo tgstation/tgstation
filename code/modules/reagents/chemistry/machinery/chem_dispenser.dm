@@ -37,23 +37,23 @@
 		/datum/reagent/iron,
 		/datum/reagent/copper,
 		/datum/reagent/mercury,
-		/datum/reagent/radium,
+		/datum/reagent/uranium/radium,
 		/datum/reagent/water,
 		"ethanol",
 		"sugar",
 		/datum/reagent/toxin/acid,
 		/datum/reagent/fuel,
 		/datum/reagent/silver,
-		"iodine",
-		"bromine",
-		"stable_plasma"
+		/datum/reagent/iodine,
+		/datum/reagent/bromine,
+		/datum/reagent/stable_plasma
 	)
 	//these become available once the manipulator has been upgraded to tier 4 (femto)
 	var/list/upgrade_reagents = list(
 		"oil",
-		"ash",
-		"acetone",
-		"saltpetre",
+		/datum/reagent/ash,
+		/datum/reagent/acetone,
+		/datum/reagent/saltpetre,
 		/datum/reagent/ammonia,
 		/datum/reagent/diethylamine
 	)
@@ -554,17 +554,17 @@
 
 	dispensable_reagents = list(
 		/datum/reagent/toxin/mutagen,
-		"saltpetre",
-		"eznutriment",
-		"left4zednutriment",
-		"robustharvestnutriment",
+		/datum/reagent/saltpetre,
+		/datum/reagent/plantnutriment/eznutriment,
+		/datum/reagent/plantnutriment/left4zednutriment,
+		/datum/reagent/plantnutriment/robustharvestnutriment,
 		/datum/reagent/water,
 		/datum/reagent/toxin/plantbgone,
 		/datum/reagent/toxin/plantbgone/weedkiller,
 		/datum/reagent/toxin/pestkiller,
 		"cryoxadone",
 		/datum/reagent/ammonia,
-		"ash",
+		/datum/reagent/ash,
 		/datum/reagent/diethylamine)
 	upgrade_reagents = null
 

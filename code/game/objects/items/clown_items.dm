@@ -23,7 +23,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	grind_results = list("lye" = 10)
+	grind_results = list(/datum/reagent/lye = 10)
 	var/cleanspeed = 35 //slower than mop
 	force_string = "robust... against germs"
 	var/uses = 100
@@ -53,7 +53,7 @@
 
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
-	grind_results = list("plasma" = 10, "lye" = 10)
+	grind_results = list("plasma" = 10, /datum/reagent/lye = 10)
 	icon_state = "soapnt"
 	cleanspeed = 28 //janitor gets this
 	uses = 300

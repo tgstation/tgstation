@@ -70,7 +70,7 @@
 						"haloperidol" = 0.15,
 						"methamphetamine" = 0.15,
 						"capsaicin" = 0.15,
-						"barbers_aid" = 0.15,
+						/datum/reagent/barbers_aid = 0.15,
 						"bath_salts" = 0.15,
 						/datum/reagent/toxin/itching_powder = 0.15,
 						"crank" = 0.15,

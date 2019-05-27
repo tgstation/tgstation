@@ -153,7 +153,7 @@
 /obj/item/reagent_containers/glass/bottle/magillitis
 	name = "magillitis bottle"
 	desc = "A small bottle. Contains a serum known only as 'magillitis'."
-	list_reagents = list("magillitis" = 5)
+	list_reagents = list(/datum/reagent/magillitis = 5)
 
 /obj/item/reagent_containers/glass/bottle/venom
 	name = "venom bottle"
@@ -229,7 +229,7 @@
 /obj/item/reagent_containers/glass/bottle/romerol
 	name = "romerol bottle"
 	desc = "A small bottle of Romerol. The REAL zombie powder."
-	list_reagents = list("romerol" = 30)
+	list_reagents = list(/datum/reagent/romerol = 30)
 
 /obj/item/reagent_containers/glass/bottle/random_virus
 	name = "Experimental disease culture bottle"
@@ -376,7 +376,7 @@
 
 /obj/item/reagent_containers/glass/bottle/radium
 	name = "radium bottle"
-	list_reagents = list(/datum/reagent/radium = 30)
+	list_reagents = list(/datum/reagent/uranium/radium = 30)
 
 /obj/item/reagent_containers/glass/bottle/water
 	name = "water bottle"
@@ -404,8 +404,8 @@
 
 /obj/item/reagent_containers/glass/bottle/iodine
 	name = "iodine bottle"
-	list_reagents = list("iodine" = 30)
+	list_reagents = list(/datum/reagent/iodine = 30)
 
 /obj/item/reagent_containers/glass/bottle/bromine
 	name = "bromine bottle"
-	list_reagents = list("bromine" = 30)
+	list_reagents = list(/datum/reagent/bromine = 30)

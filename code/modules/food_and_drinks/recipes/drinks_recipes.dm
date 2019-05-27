@@ -178,7 +178,7 @@
 	name = "Green Beer"
 	id = "greenbeer"
 	results = list("greenbeer" = 10)
-	required_reagents = list("greencrayonpowder" = 1, "beer" = 10)
+	required_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green = 1, "beer" = 10)
 
 /datum/chemical_reaction/hooch
 	name = "Hooch"
@@ -269,7 +269,7 @@
 	name = "Singulo"
 	id = "singulo"
 	results = list("singulo" = 10)
-	required_reagents = list("vodka" = 5, /datum/reagent/radium = 1, "wine" = 5)
+	required_reagents = list("vodka" = 5, /datum/reagent/uranium/radium = 1, "wine" = 5)
 
 /datum/chemical_reaction/alliescocktail
 	name = "Allies Cocktail"
@@ -780,4 +780,4 @@
 	name = "Red Queen"
 	id = "red_queen"
 	results = list("red_queen" = 10)
-	required_reagents = list("tea" = 6, /datum/reagent/mercury = 2, "blackpepper" = 1, "growthserum" = 1)
+	required_reagents = list("tea" = 6, /datum/reagent/mercury = 2, "blackpepper" = 1, /datum/reagent/growthserum = 1)

@@ -354,14 +354,14 @@
 			user.visible_message("<span class='warning'>[user]'s skin starts flashing hypnotically...</span>", "<span class='notice'>Your skin starts forming odd patterns, pacifying creatures around you.</span>")
 			for(var/mob/living/carbon/C in viewers(user, null))
 				if(C != user)
-					C.reagents.add_reagent("pax",2)
+					C.reagents.add_reagent(/datum/reagent/pax,2)
 			return 600
 
 /obj/item/slime_extract/green
 	name = "green slime extract"
 	icon_state = "green slime extract"
 	effectmod = "mutative"
-	activate_reagents = list(/datum/reagent/blood,"plasma",/datum/reagent/radium)
+	activate_reagents = list(/datum/reagent/blood,"plasma",/datum/reagent/uranium/radium)
 
 /obj/item/slime_extract/green/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)

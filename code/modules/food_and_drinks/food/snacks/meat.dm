@@ -272,8 +272,8 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/gondola
 	name = "gondola meat"
 	desc = "According to legends of old, consuming raw gondola flesh grants one inner peace."
-	list_reagents = list("nutriment" = 3, "tranquility" = 5, "cooking_oil" = 3)
-	tastes = list("meat" = 4, "tranquility" = 1)
+	list_reagents = list("nutriment" = 3, /datum/reagent/tranquility = 5, "cooking_oil" = 3)
+	tastes = list("meat" = 4, /datum/reagent/tranquility = 1)
 	filling_color = "#9A6750"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/gondola
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/gondola
@@ -337,7 +337,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/steak/gondola
 	name = "gondola steak"
-	tastes = list("meat" = 1, "tranquility" = 1)
+	tastes = list("meat" = 1, /datum/reagent/tranquility = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/penguin
 	name = "penguin steak"
@@ -403,7 +403,7 @@
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet/gondola
 	name = "raw gondola cutlet"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/gondola
-	tastes = list("meat" = 1, "tranquility" = 1)
+	tastes = list("meat" = 1, /datum/reagent/tranquility = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet/penguin
 	name = "raw penguin cutlet"
@@ -448,7 +448,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet/gondola
 	name = "gondola cutlet"
-	tastes = list("meat" = 1, "tranquility" = 1)
+	tastes = list("meat" = 1, /datum/reagent/tranquility = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet/penguin
 	name = "penguin cutlet"

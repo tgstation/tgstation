@@ -25,14 +25,14 @@
 	name = "methamphetamine"
 	id = "methamphetamine"
 	results = list("methamphetamine" = 4)
-	required_reagents = list("ephedrine" = 1, "iodine" = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1)
+	required_reagents = list("ephedrine" = 1, /datum/reagent/iodine = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/bath_salts
 	name = "bath_salts"
 	id = "bath_salts"
 	results = list("bath_salts" = 7)
-	required_reagents = list(/datum/reagent/toxin/bad_food = 1, "saltpetre" = 1, "nutriment" = 1, /datum/reagent/space_cleaner = 1, "enzyme" = 1, "tea" = 1, /datum/reagent/mercury = 1)
+	required_reagents = list(/datum/reagent/toxin/bad_food = 1, /datum/reagent/saltpetre = 1, "nutriment" = 1, /datum/reagent/space_cleaner = 1, "enzyme" = 1, "tea" = 1, /datum/reagent/mercury = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/aranesp
