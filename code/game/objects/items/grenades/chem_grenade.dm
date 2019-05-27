@@ -538,9 +538,9 @@
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
 	B1.reagents.add_reagent("fluorosurfactant", 250)
-	B1.reagents.add_reagent("clf3", 50)
+	B1.reagents.add_reagent(/datum/reagent/clf3, 50)
 	B2.reagents.add_reagent("water", 250)
-	B2.reagents.add_reagent("clf3", 50)
+	B2.reagents.add_reagent(/datum/reagent/clf3, 50)
 
 	beakers += B1
 	beakers += B2

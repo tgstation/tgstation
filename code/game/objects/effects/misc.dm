@@ -31,7 +31,7 @@
 	var/list/container = list(  )
 
 /obj/effect/overlay/thermite
-	name = "thermite"
+	name = /datum/reagent/thermite
 	desc = "Looks hot."
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "2" //what?

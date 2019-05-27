@@ -264,7 +264,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list()
-	reagents_add = list("teslium" = 0.1, "nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/teslium = 0.1, "nutriment" = 0.04)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap

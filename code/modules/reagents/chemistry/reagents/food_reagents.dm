@@ -197,8 +197,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			heating = 5 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent("cryostylane"))
-				holder.remove_reagent("cryostylane", 5)
+			if(holder.has_reagent(/datum/reagent/cryostylane))
+				holder.remove_reagent(/datum/reagent/cryostylane, 5)
 			if(isslime(M))
 				heating = rand(5,20)
 		if(15 to 25)

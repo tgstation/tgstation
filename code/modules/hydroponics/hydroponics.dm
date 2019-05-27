@@ -585,10 +585,10 @@
 		adjustWeeds(-rand(4,8))
 
 	// why, just why
-	if(S.has_reagent("napalm", 1))
+	if(S.has_reagent(/datum/reagent/napalm, 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
-			adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
-			adjustToxic(round(S.get_reagent_amount("napalm") * 7))
+			adjustHealth(-round(S.get_reagent_amount(/datum/reagent/napalm) * 6))
+			adjustToxic(round(S.get_reagent_amount(/datum/reagent/napalm) * 7))
 			adjustWeeds(-rand(5,9))
 
 	//Weed Spray

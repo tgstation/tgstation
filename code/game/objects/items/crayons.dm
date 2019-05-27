@@ -713,7 +713,7 @@
 
 	volume_multiplier = 25
 	charges = 100
-	reagent_contents = list("clf3" = 1)
+	reagent_contents = list(/datum/reagent/clf3 = 1)
 	actually_paints = FALSE
 	paint_color = "#000000"
 

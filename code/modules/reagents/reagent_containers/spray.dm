@@ -241,9 +241,9 @@
 /obj/item/reagent_containers/spray/waterflower/cyborg/hacked
 	name = "nova flower"
 	desc = "This doesn't look safe at all..."
-	list_reagents = list("clf3" = 3)
+	list_reagents = list(/datum/reagent/clf3 = 3)
 	volume = 3
-	generate_type = "clf3"
+	generate_type = /datum/reagent/clf3
 	generate_amount = 1
 	generate_delay = 40		//deciseconds
 
