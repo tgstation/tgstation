@@ -1,0 +1,6 @@
+author: "Garen7"
+delete-after: True
+changes: 
+  - tweak: "Lesser form lings can now toggle augmented vision"
+  - bugfix: "You can no longer turn back into human form as a lesser form ling while ventcrawling"
+  - bugfix: "Stuns and Reagents are now passed when transforming into a monkey or human"
