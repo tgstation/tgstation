@@ -6,6 +6,7 @@
 	silent = TRUE //greet called by the event
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
+	var/backstory = "error"
 
 /datum/antagonist/fugitive/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
@@ -25,8 +26,9 @@
 	survive.explanation_text = "Avoid capture from the fugitive hunters."
 	objectives += survive
 
-/datum/antagonist/fugitive/greet(backstory)
+/datum/antagonist/fugitive/greet(back_story)
 	to_chat(owner, "<span class='boldannounce'>You are the Fugitive!</span>")
+	backstory = back_story
 	switch(backstory)
 		if("prisoner")
 			to_chat(owner, "<B>I can't believe we managed to break out of a Nanotrasen superjail! Sadly though, our work is not done. The emergency teleport at the station logs everyone who uses it, and where they went.</B>")
@@ -69,15 +71,21 @@
 	return fugitive_team
 
 /datum/team/fugitive/roundend_report() //shows the number of fugitives, but not if they won in case there is no security
-	if(!members.len)
+	var/list/fugitives = list()
+	for(var/datum/antagonist/fugitive/fugitive_antag in GLOB.antagonists)
+		if(!fugitive_antag.owner)
+			continue
+		fugitives += fugitive_antag
+	if(!fugitives.len)
 		return
 
 	var/list/result = list()
 
-	result += "<div class='panel redborder'><B>[members.len]</B> fugitives took refuge on [station_name()]!"
+	result += "<div class='panel redborder'><B>[fugitives.len]</B> [fugitives.len == 1 ? "fugitive" : "fugitives"] took refuge on [station_name()]!"
 
-	for(var/datum/mind/M in members)
-		result += "<b>[printplayer(M)]</b>"
+	for(var/datum/antagonist/fugitive/antag in fugitives)
+		if(antag.owner)
+			result += "<b>[printplayer(antag.owner)]</b>"
 
 	return result.Join("<br>")
 
