@@ -293,10 +293,25 @@ Difficulty: Hard
 		return TRUE
 	return FALSE
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/be_aggressive()
+	if(isliving(target))
+		var/mob/living/livingtarget = target
+		return (is_enraged() || livingtarget.stat != CONSCIOUS)
+	return is_enraged()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_retreat_distance()
+	return (be_aggressive() ? null : initial(retreat_distance))
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_minimum_distance()
+	return (be_aggressive() ? 1 : initial(minimum_distance))
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/update_approach()
+	retreat_distance = get_retreat_distance()
+	minimum_distance = get_minimum_distance()
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage(var/boost_time = 30)
 	enrage_till = world.time + boost_time
-	retreat_distance = null
-	minimum_distance = 1
+	update_approach()
 	change_move_delay(3.75)
 	var/newcolor = rgb(149, 10, 10)
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
@@ -304,8 +319,7 @@ Difficulty: Hard
 	addtimer(cb, boost_time)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(var/newcolor = rgb(149, 10, 10))
-	retreat_distance = initial(retreat_distance)
-	minimum_distance = initial(minimum_distance)
+	update_approach()
 	change_move_delay()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
 
@@ -430,6 +444,7 @@ Difficulty: Hard
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
+	update_approach()
 	if(revving_charge)
 		return FALSE
 	if(charging)

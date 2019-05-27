@@ -35,7 +35,6 @@ Difficulty: Medium
 	desc = "Guardians of the necropolis."
 	health = 2500
 	maxHealth = 2500
-	spacewalk = TRUE
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
