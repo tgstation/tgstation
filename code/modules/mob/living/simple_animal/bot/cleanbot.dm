@@ -299,7 +299,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 		return 1
 	if(href_list["operation"])
 		switch(href_list["operation"])
-			if("blood")
+			if(/datum/reagent/blood)
 				blood = !blood
 			if("pests")
 				pests = !pests

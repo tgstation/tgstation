@@ -3,7 +3,7 @@
 	name = "Blood"
 	color = "#C80000" // rgb: 200, 0, 0
 	metabolization_rate = 5 //fast rate so it disappears fast.
-	taste_description = "iron"
+	taste_description = /datum/reagent/iron
 	taste_mult = 1.3
 	glass_icon_state = "glass_red"
 	glass_name = "glass of tomato juice"
@@ -25,7 +25,7 @@
 
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		if(C.get_blood_id() == "blood" && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+		if(C.get_blood_id() == /datum/reagent/blood && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
@@ -110,7 +110,7 @@
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
-	taste_description = "water"
+	taste_description = /datum/reagent/water
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of water"
@@ -402,7 +402,7 @@
 			else
 				M.visible_message("<b>[M]</b> flexes [M.p_their()] arms.")
 	if(prob(10))
-		M.say(pick("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don’t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."), forced = "spraytan")
+		M.say(pick("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don’t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."), forced = /datum/reagent/spraytan)
 	..()
 	return
 
@@ -733,7 +733,7 @@
 	description = "A pale yellow gas that's well known as an oxidizer. While it forms many harmless molecules in its elemental form it is far from harmless."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
-	taste_description = "chlorine"
+	taste_description = /datum/reagent/chlorine
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M)
 	M.take_bodypart_damage(1*REM, 0, 0, 0)
@@ -804,7 +804,7 @@
 	name = "Iron"
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
-	taste_description = "iron"
+	taste_description = /datum/reagent/iron
 
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -1104,7 +1104,7 @@
 	name = "Diethylamine"
 	description = "A secondary amine, mildly corrosive."
 	color = "#604030" // rgb: 96, 64, 48
-	taste_description = "iron"
+	taste_description = /datum/reagent/iron
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
@@ -1646,7 +1646,7 @@
 	name = "Pax"
 	description = "A colorless liquid that suppresses violence on the subjects."
 	color = "#AAAAAA55"
-	taste_description = "water"
+	taste_description = /datum/reagent/water
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/pax/on_mob_add(mob/living/L)

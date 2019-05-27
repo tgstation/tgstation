@@ -149,7 +149,7 @@
 
 /obj/item/watertank/janitor/Initialize()
 	. = ..()
-	reagents.add_reagent("cleaner", 500)
+	reagents.add_reagent(/datum/reagent/space_cleaner, 500)
 
 /obj/item/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
@@ -185,7 +185,7 @@
 
 /obj/item/watertank/atmos/Initialize()
 	. = ..()
-	reagents.add_reagent("water", 200)
+	reagents.add_reagent(/datum/reagent/water, 200)
 
 /obj/item/watertank/atmos/make_noz()
 	return new /obj/item/extinguisher/mini/nozzle(src)
@@ -439,9 +439,9 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/toxin/mutagen,350)
 	reagents.add_reagent(/datum/reagent/napalm,125)
-	reagents.add_reagent("welding_fuel",125)
+	reagents.add_reagent(/datum/reagent/fuel,125)
 	reagents.add_reagent(/datum/reagent/clf3,300)
-	reagents.add_reagent("cryptobiolin",350)
+	reagents.add_reagent(/datum/reagent/cryptobiolin,350)
 	reagents.add_reagent("plasma",250)
 	reagents.add_reagent("condensedcapsaicin",500)
 

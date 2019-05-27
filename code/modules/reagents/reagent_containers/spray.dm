@@ -2,8 +2,8 @@
 	name = "spray bottle"
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
-	icon_state = "cleaner"
-	item_state = "cleaner"
+	icon_state = /datum/reagent/space_cleaner
+	item_state = /datum/reagent/space_cleaner
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -161,7 +161,7 @@
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	volume = 100
-	list_reagents = list("cleaner" = 100)
+	list_reagents = list(/datum/reagent/space_cleaner = 100)
 	amount_per_transfer_from_this = 2
 	stream_amount = 5
 
@@ -184,7 +184,7 @@
 	name = "spray tan"
 	volume = 50
 	desc = "Gyaro brand spray tan. Do not spray near eyes or other orifices."
-	list_reagents = list("spraytan" = 50)
+	list_reagents = list(/datum/reagent/spraytan = 50)
 
 
 //pepperspray
@@ -223,7 +223,7 @@
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
 	volume = 10
-	list_reagents = list("water" = 10)
+	list_reagents = list(/datum/reagent/water = 10)
 
 /obj/item/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
 	return
@@ -231,9 +231,9 @@
 /obj/item/reagent_containers/spray/waterflower/cyborg
 	reagent_flags = NONE
 	volume = 100
-	list_reagents = list("water" = 100)
+	list_reagents = list(/datum/reagent/water = 100)
 	var/generate_amount = 5
-	var/generate_type = "water"
+	var/generate_type = /datum/reagent/water
 	var/last_generate = 0
 	var/generate_delay = 10	//deciseconds
 	can_fill_from_container = FALSE
@@ -316,11 +316,11 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	reagent_flags = NONE
-	list_reagents = list("cleaner" = 1000)
+	list_reagents = list(/datum/reagent/space_cleaner = 1000)
 	volume = 1000
 	amount_per_transfer_from_this = 5
 	var/generate_amount = 50
-	var/generate_type = "cleaner"
+	var/generate_type = /datum/reagent/space_cleaner
 	var/last_generate = 0
 	var/generate_delay = 10	//deciseconds
 

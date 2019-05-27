@@ -8,7 +8,7 @@
 	spray_range = 1
 	stream_range = 1
 	volume = 30
-	list_reagents = list("lube" = 30)
+	list_reagents = list(/datum/reagent/lube = 30)
 
 //COMBAT CLOWN SHOES
 //Clown shoes with combat stats and noslip. Of course they still squeak.

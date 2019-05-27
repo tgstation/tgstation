@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(economy)
 							// tier 3
 							"cerulean" = 750,
 							"sepia" = 750,
-							"bluespace" = 750,
+							/datum/reagent/bluespace = 750,
 							"pyrite" = 750,
 							"light pink" = 750,
 							"oil" = 750,

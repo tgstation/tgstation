@@ -13,8 +13,8 @@
 	var/list/vents  = list()
 	var/randomProbability = 1
 	var/reagentsAmount = 100
-	var/list/saferChems = list("water","carbon","flour","cleaner","nutriment","condensedcapsaicin","mushroomhallucinogen","lube","pink_glitter","cryptobiolin",
-						 /datum/reagent/toxin/plantbgone,"blood","charcoal","space_drugs","morphine",/datum/reagent/water/holywater,"ethanol","hot_coco",/datum/reagent/toxin/acid,/datum/reagent/toxin/mindbreaker,/datum/reagent/toxin/rotatium,"bluespace",
+	var/list/saferChems = list(/datum/reagent/water,/datum/reagent/carbon,"flour",/datum/reagent/space_cleaner,"nutriment","condensedcapsaicin","mushroomhallucinogen",/datum/reagent/lube,"pink_glitter",/datum/reagent/cryptobiolin,
+						 /datum/reagent/toxin/plantbgone,/datum/reagent/blood,"charcoal","space_drugs","morphine",/datum/reagent/water/holywater,"ethanol","hot_coco",/datum/reagent/toxin/acid,/datum/reagent/toxin/mindbreaker,/datum/reagent/toxin/rotatium,/datum/reagent/bluespace,
 						 "pax","laughter","concentrated_barbers_aid","colorful_reagent","dizzysolution","tiresolution",/datum/reagent/consumable/sodiumchloride,"beer","hair_dye","sugar","white_glitter","growthserum")
 	//needs to be chemid unit checked at some point
 

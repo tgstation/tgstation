@@ -18,7 +18,7 @@
 
 	mutanteyes = /obj/item/organ/eyes/snail
 	mutanttongue = /obj/item/organ/tongue/snail
-	exotic_blood = "lube"
+	exotic_blood = /datum/reagent/lube
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem,/datum/reagent/consumable/sodiumchloride))

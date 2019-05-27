@@ -549,4 +549,4 @@
 	name = "canned air"
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
-	list_reagents = list("nitrogen" = 24, "oxygen" = 6)
+	list_reagents = list(/datum/reagent/nitrogen = 24, /datum/reagent/oxygen = 6)

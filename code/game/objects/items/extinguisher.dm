@@ -17,7 +17,7 @@
 	resistance_flags = FIRE_PROOF
 	var/max_water = 50
 	var/last_use = 1
-	var/chem = "water"
+	var/chem = /datum/reagent/water
 	var/safety = TRUE
 	var/refilling = FALSE
 	var/tanktype = /obj/structure/reagent_dispensers/watertank

@@ -164,7 +164,7 @@
 		var/amount = 1 + round(potency * reagents_add[rid], 1)
 
 		var/list/data = null
-		if(rid == "blood") // Hack to make blood in plants always O-
+		if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
 			data = list("blood_type" = "O-")
 		if(rid == "nutriment" || rid == "vitamin")
 			// apple tastes of apple.

@@ -210,7 +210,7 @@
 	name = "spider lollipop"
 	desc = "Still gross, but at least it has a mountain of sugar on it."
 	icon_state = "spiderlollipop"
-	list_reagents = list("nutriment" = 1, /datum/reagent/toxin = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2) //lollipop, but vitamins = toxins
+	list_reagents = list("nutriment" = 1, /datum/reagent/toxin = 1, /datum/reagent/iron = 10, "sugar" = 5, "omnizine" = 2) //lollipop, but vitamins = toxins
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "sugar" = 2)
 	foodtype = JUNKFOOD | SUGAR
@@ -434,7 +434,7 @@
 	name = "Powercrepe"
 	desc = "With great power, comes great crepes.  It looks like a pancake filled with jelly but packs quite a punch."
 	icon_state = "powercrepe"
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 3, "iron" = 10)
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 3, /datum/reagent/iron = 10)
 	list_reagents = list("nutriment" = 10, "vitamin" = 5, "cherryjelly" = 5)
 	force = 20
 	throwforce = 10
@@ -450,7 +450,7 @@
 	desc = "A delicious lollipop. Makes for a great Valentine's present."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "lollipop_stick"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2)	//Honk
+	list_reagents = list("nutriment" = 1, "vitamin" = 1, /datum/reagent/iron = 10, "sugar" = 5, "omnizine" = 2)	//Honk
 	var/mutable_appearance/head
 	var/headcolor = rgb(0, 0, 0)
 	tastes = list("candy" = 1)

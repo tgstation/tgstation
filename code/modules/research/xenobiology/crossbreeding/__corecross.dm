@@ -114,7 +114,7 @@ To add a crossbreed:
 	name = "blood extract"
 	desc = "A sphere of liquid blood, somehow managing to stay together."
 	color = "#FF0000"
-	list_reagents = list("blood" = 50)
+	list_reagents = list(/datum/reagent/blood = 50)
 
 /obj/item/slimecrossbeaker/pax //5u synthpax.
 	name = "peace-inducing extract"

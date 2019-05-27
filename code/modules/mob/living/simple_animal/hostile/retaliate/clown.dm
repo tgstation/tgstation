@@ -65,8 +65,8 @@
 /mob/living/simple_animal/hostile/retaliate/clown/lube
 	name = "Living Lube"
 	desc = "A puddle of lube brought to life by the honkmother."
-	icon_state = "lube"
-	icon_living = "lube"
+	icon_state = /datum/reagent/lube
+	icon_living = /datum/reagent/lube
 	turns_per_move = 1
 	response_help = "dips a finger into"
 	response_disarm = "gently scoops and pours aside"

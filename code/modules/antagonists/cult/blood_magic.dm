@@ -747,7 +747,7 @@
 	var/turf/T = get_turf(target)
 	if(T)
 		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
-			if(B.blood_state == "blood")
+			if(B.blood_state == /datum/reagent/blood)
 				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
 					temp += 30
 				else
@@ -757,9 +757,9 @@
 		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
 			qdel(TH)
 		var/obj/item/clothing/shoes/shoecheck = user.shoes
-		if(shoecheck && shoecheck.bloody_shoes["blood"])
-			temp += shoecheck.bloody_shoes["blood"]/20
-			shoecheck.bloody_shoes["blood"] = 0
+		if(shoecheck && shoecheck.bloody_shoes[/datum/reagent/blood])
+			temp += shoecheck.bloody_shoes[/datum/reagent/blood]/20
+			shoecheck.bloody_shoes[/datum/reagent/blood] = 0
 		if(temp)
 			user.Beam(T,icon_state="drainbeam",time=15)
 			new /obj/effect/temp_visual/cult/sparks(get_turf(user))

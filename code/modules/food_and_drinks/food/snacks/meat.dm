@@ -69,7 +69,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 	icon_state = "golemmeat"
 	desc = "Edible rocks, welcome to the future."
-	list_reagents = list("nutriment" = 3, "iron" = 3)
+	list_reagents = list("nutriment" = 3, /datum/reagent/iron = 3)
 	filling_color = "#A9A9A9"
 	tastes = list("rock" = 1)
 	foodtype = MEAT | RAW | GROSS
@@ -236,7 +236,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
-	list_reagents = list("nutriment" = 3, "vitamin" = 2, "blood" = 5, "cooking_oil" = 1)
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, /datum/reagent/blood = 5, "cooking_oil" = 1)
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4

@@ -368,15 +368,15 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_diamond_heads"
 	value = 100
 	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("carbon" = 4)
+	grind_results = list(/datum/reagent/carbon = 4)
 
 /obj/item/coin/iron
 	name = "iron coin"
-	cmineral = "iron"
+	cmineral = /datum/reagent/iron
 	icon_state = "coin_iron_heads"
 	value = 1
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("iron" = 4)
+	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/plasma
 	name = "plasma coin"
@@ -415,13 +415,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	value = 300
 
 /obj/item/coin/twoheaded
-	cmineral = "iron"
+	cmineral = /datum/reagent/iron
 	icon_state = "coin_iron_heads"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
 	value = 1
-	grind_results = list("iron" = 4)
+	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/antagtoken
 	name = "antag token"

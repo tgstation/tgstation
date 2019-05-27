@@ -16,7 +16,7 @@
 	icon_dead = "grass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grass/carpet)
-	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05)
+	reagents_add = list("nutriment" = 0.02, /datum/reagent/hydrogen = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/grass
 	seed = /obj/item/seeds/grass

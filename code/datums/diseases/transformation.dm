@@ -156,7 +156,7 @@
 
 	name = "Robotic Transformation"
 	cure_text = "An injection of copper."
-	cures = list("copper")
+	cures = list(/datum/reagent/copper)
 	cure_chance = 5
 	agent = "R2D2 Nanomachines"
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
@@ -189,7 +189,7 @@
 
 	name = "Xenomorph Transformation"
 	cure_text = "Spaceacillin & Glycerol"
-	cures = list("spaceacillin", "glycerol")
+	cures = list("spaceacillin", /datum/reagent/glycerol)
 	cure_chance = 5
 	agent = "Rip-LEY Alien Microbes"
 	desc = "This disease changes the victim into a xenomorph."

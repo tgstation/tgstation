@@ -1,7 +1,7 @@
 //WATER EFFECTS
 
 /obj/effect/particle_effect/water
-	name = "water"
+	name = /datum/reagent/water
 	icon_state = "extinguish"
 	var/life = 15
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

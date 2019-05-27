@@ -12,7 +12,7 @@
 	var/on = FALSE
 	var/current_temperature = SHOWER_NORMAL
 	var/datum/looping_sound/showering/soundloop
-	var/reagent_id = "water"
+	var/reagent_id = /datum/reagent/water
 	var/reaction_volume = 200
 
 /obj/machinery/shower/Initialize()
@@ -69,7 +69,7 @@
 	cut_overlays()
 
 	if(on)
-		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER))
+		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', /datum/reagent/water, ABOVE_MOB_LAYER))
 
 /obj/machinery/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds

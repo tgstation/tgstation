@@ -154,7 +154,7 @@
 	name = "Beepksy Smash"
 	id = "beepksysmash"
 	results = list("beepskysmash" = 5)
-	required_reagents = list("limejuice" = 2, "quadruple_sec" = 2, "iron" = 1)
+	required_reagents = list("limejuice" = 2, "quadruple_sec" = 2, /datum/reagent/iron = 1)
 
 /datum/chemical_reaction/doctor_delight
 	name = "The Doctor's Delight"
@@ -184,7 +184,7 @@
 	name = "Hooch"
 	id = "hooch"
 	results = list("hooch" = 3)
-	required_reagents = list ("ethanol" = 2, "welding_fuel" = 1)
+	required_reagents = list ("ethanol" = 2, /datum/reagent/fuel = 1)
 	required_catalysts = list("enzyme" = 1)
 
 /datum/chemical_reaction/irish_coffee
@@ -269,7 +269,7 @@
 	name = "Singulo"
 	id = "singulo"
 	results = list("singulo" = 10)
-	required_reagents = list("vodka" = 5, "radium" = 1, "wine" = 5)
+	required_reagents = list("vodka" = 5, /datum/reagent/radium = 1, "wine" = 5)
 
 /datum/chemical_reaction/alliescocktail
 	name = "Allies Cocktail"
@@ -281,7 +281,7 @@
 	name = "Demons Blood"
 	id = "demonsblood"
 	results = list("demonsblood" = 4)
-	required_reagents = list("rum" = 1, "spacemountainwind" = 1, "blood" = 1, "dr_gibb" = 1)
+	required_reagents = list("rum" = 1, "spacemountainwind" = 1, /datum/reagent/blood = 1, "dr_gibb" = 1)
 
 /datum/chemical_reaction/booger
 	name = "Booger"
@@ -314,7 +314,7 @@
 	name = "Red Mead"
 	id = "red_mead"
 	results = list("red_mead" = 2)
-	required_reagents = list("blood" = 1, "mead" = 1)
+	required_reagents = list(/datum/reagent/blood = 1, "mead" = 1)
 
 /datum/chemical_reaction/mead
 	name = "Mead"
@@ -333,7 +333,7 @@
 	name = "Grog"
 	id = "grog"
 	results = list("grog" = 2)
-	required_reagents = list("rum" = 1, "water" = 1)
+	required_reagents = list("rum" = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/soy_latte
 	name = "Soy Latte"
@@ -357,7 +357,7 @@
 	name = "Amasec"
 	id = "amasec"
 	results = list("amasec" = 10)
-	required_reagents = list("iron" = 1, "wine" = 5, "vodka" = 5)
+	required_reagents = list(/datum/reagent/iron = 1, "wine" = 5, "vodka" = 5)
 
 /datum/chemical_reaction/changelingsting
 	name = "Changeling Sting"
@@ -411,7 +411,7 @@
 	name = "Devils Kiss"
 	id = "devilskiss"
 	results = list("devilskiss" = 3)
-	required_reagents = list("blood" = 1, "kahlua" = 1, "rum" = 1)
+	required_reagents = list(/datum/reagent/blood = 1, "kahlua" = 1, "rum" = 1)
 
 /datum/chemical_reaction/hippiesdelight
 	name = "Hippies Delight"
@@ -515,7 +515,7 @@
 	name = "Fetching Fizz"
 	id = "fetching_fizz"
 	results = list("fetching_fizz" = 3)
-	required_reagents = list("nuka_cola" = 1, "iron" = 1) //Manufacturable from only the mining station
+	required_reagents = list("nuka_cola" = 1, /datum/reagent/iron = 1) //Manufacturable from only the mining station
 	mix_message = "The mixture slightly vibrates before settling."
 
 /datum/chemical_reaction/hearty_punch
@@ -537,7 +537,7 @@
 	name = "Lemonade"
 	id = "lemonade"
 	results = list("lemonade" = 5)
-	required_reagents = list("lemonjuice" = 2, "water" = 2, "sugar" = 1, "ice" = 1)
+	required_reagents = list("lemonjuice" = 2, /datum/reagent/water = 2, "sugar" = 1, "ice" = 1)
 	mix_message = "You're suddenly reminded of home."
 
 /datum/chemical_reaction/arnold_palmer
@@ -564,7 +564,7 @@
 	name = "Nar'sour"
 	id = "narsour"
 	results = list("narsour" = 1)
-	required_reagents = list("blood" = 1, "lemonjuice" = 1, "demonsblood" = 1)
+	required_reagents = list(/datum/reagent/blood = 1, "lemonjuice" = 1, "demonsblood" = 1)
 	mix_message = "The mixture develops a sinister glow."
 	mix_sound = 'sound/effects/singlebeat.ogg'
 
@@ -608,7 +608,7 @@
 	name = "Squirt Cider"
 	id = "squirt_cider"
 	results = list("squirt_cider" = 1)
-	required_reagents = list("water" = 1, "tomatojuice" = 1, "nutriment" = 1)
+	required_reagents = list(/datum/reagent/water = 1, "tomatojuice" = 1, "nutriment" = 1)
 	mix_message = "The mix swirls and turns a bright red that reminds you of an apple's skin."
 
 /datum/chemical_reaction/fringe_weaver
@@ -767,7 +767,7 @@
 	name = "Blazaam"
 	id = "blazaam"
 	results = list("blazaam" = 3)
-	required_reagents = list("gin" = 2, "peachjuice" = 1, "bluespace" = 1)
+	required_reagents = list("gin" = 2, "peachjuice" = 1, /datum/reagent/bluespace = 1)
 
 /datum/chemical_reaction/planet_cracker
 	name = "Planet Cracker"
@@ -780,4 +780,4 @@
 	name = "Red Queen"
 	id = "red_queen"
 	results = list("red_queen" = 10)
-	required_reagents = list("tea" = 6, "mercury" = 2, "blackpepper" = 1, "growthserum" = 1)
+	required_reagents = list("tea" = 6, /datum/reagent/mercury = 2, "blackpepper" = 1, "growthserum" = 1)

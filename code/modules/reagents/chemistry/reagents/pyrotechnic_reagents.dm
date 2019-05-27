@@ -172,8 +172,8 @@
 
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M) //TODO: code freezing into an ice cube
-	if(M.reagents.has_reagent("oxygen"))
-		M.reagents.remove_reagent("oxygen", 0.5)
+	if(M.reagents.has_reagent(/datum/reagent/oxygen))
+		M.reagents.remove_reagent(/datum/reagent/oxygen, 0.5)
 		M.adjust_bodytemperature(-15)
 	..()
 
@@ -190,8 +190,8 @@
 	taste_description = "bitterness"
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M)
-	if(M.reagents.has_reagent("oxygen"))
-		M.reagents.remove_reagent("oxygen", 0.5)
+	if(M.reagents.has_reagent(/datum/reagent/oxygen))
+		M.reagents.remove_reagent(/datum/reagent/oxygen, 0.5)
 		M.adjust_bodytemperature(15)
 	..()
 

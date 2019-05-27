@@ -73,7 +73,7 @@
 
 	var/static/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
-	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
+	"gold", "green", "adamantine", "oil", "light pink", /datum/reagent/bluespace,
 	"cerulean", "sepia", "black", "pyrite")
 
 	///////////CORE-CROSSING CODE

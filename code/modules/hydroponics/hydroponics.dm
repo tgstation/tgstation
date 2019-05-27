@@ -445,7 +445,7 @@
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
-	if(S.has_reagent(/datum/reagent/toxin/mutagen, 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
+	if(S.has_reagent(/datum/reagent/toxin/mutagen, 5) || S.has_reagent(/datum/reagent/radium, 10) || S.has_reagent("uranium", 10))
 		switch(rand(100))
 			if(91 to 100)
 				adjustHealth(-10)
@@ -466,18 +466,18 @@
 				to_chat(user, "<span class='notice'>Nothing happens...</span>")
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
-	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 2) || S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 2) || S.has_reagent(/datum/reagent/radium, 5) || S.has_reagent("uranium", 5))
 		hardmutate()
-	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 1) || S.has_reagent("radium", 2) || S.has_reagent("uranium", 2))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 1) || S.has_reagent(/datum/reagent/radium, 2) || S.has_reagent("uranium", 2))
 		mutate()
 
 	// After handling the mutating, we now handle the damage from adding crude radioactives...
 	if(S.has_reagent("uranium", 1))
 		adjustHealth(-round(S.get_reagent_amount("uranium") * 1))
 		adjustToxic(round(S.get_reagent_amount("uranium") * 2))
-	if(S.has_reagent("radium", 1))
-		adjustHealth(-round(S.get_reagent_amount("radium") * 1))
-		adjustToxic(round(S.get_reagent_amount("radium") * 3)) // Radium is harsher (OOC: also easier to produce)
+	if(S.has_reagent(/datum/reagent/radium, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/radium) * 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/radium) * 3)) // Radium is harsher (OOC: also easier to produce)
 
 	// Nutriments
 	if(S.has_reagent("eznutriment", 1))
@@ -523,25 +523,25 @@
 		adjustWater(round(S.get_reagent_amount("beer") * 0.7))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
-	if(S.has_reagent("fluorine", 1))
-		adjustHealth(-round(S.get_reagent_amount("fluorine") * 2))
-		adjustToxic(round(S.get_reagent_amount("fluorine") * 2.5))
-		adjustWater(-round(S.get_reagent_amount("fluorine") * 0.5))
+	if(S.has_reagent(/datum/reagent/fluorine, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/fluorine) * 2))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/fluorine) * 2.5))
+		adjustWater(-round(S.get_reagent_amount(/datum/reagent/fluorine) * 0.5))
 		adjustWeeds(-rand(1,4))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
-	if(S.has_reagent("chlorine", 1))
-		adjustHealth(-round(S.get_reagent_amount("chlorine") * 1))
-		adjustToxic(round(S.get_reagent_amount("chlorine") * 1.5))
-		adjustWater(-round(S.get_reagent_amount("chlorine") * 0.5))
+	if(S.has_reagent(/datum/reagent/chlorine, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/chlorine) * 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/chlorine) * 1.5))
+		adjustWater(-round(S.get_reagent_amount(/datum/reagent/chlorine) * 0.5))
 		adjustWeeds(-rand(1,3))
 
 	// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
 	// Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
-	if(S.has_reagent("phosphorus", 1))
-		adjustHealth(-round(S.get_reagent_amount("phosphorus") * 0.75))
-		adjustNutri(round(S.get_reagent_amount("phosphorus") * 0.1))
-		adjustWater(-round(S.get_reagent_amount("phosphorus") * 0.5))
+	if(S.has_reagent(/datum/reagent/phosphorus, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/phosphorus) * 0.75))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/phosphorus) * 0.1))
+		adjustWater(-round(S.get_reagent_amount(/datum/reagent/phosphorus) * 0.5))
 		adjustWeeds(-rand(1,2))
 
 	// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
@@ -551,8 +551,8 @@
 		adjustNutri(round(S.get_reagent_amount("sugar") * 0.1))
 
 	// It is water!
-	if(S.has_reagent("water", 1))
-		adjustWater(round(S.get_reagent_amount("water") * 1))
+	if(S.has_reagent(/datum/reagent/water, 1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/water) * 1))
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits~
 	if(S.has_reagent(/datum/reagent/water/holywater, 1))
@@ -646,8 +646,8 @@
 		adjustHealth(-round(S.get_reagent_amount("virusfood") * 0.5))
 
 	// FEED ME
-	if(S.has_reagent("blood", 1))
-		adjustNutri(round(S.get_reagent_amount("blood") * 1))
+	if(S.has_reagent(/datum/reagent/blood, 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/blood) * 1))
 		adjustPests(rand(2,4))
 
 	// FEED ME SEYMOUR

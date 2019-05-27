@@ -314,8 +314,8 @@
 	if(M.reagents.has_reagent(/datum/reagent/water/holywater))
 		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
 		. += power * 0.75
-	else if(M.reagents.has_reagent("water"))
-		M.reagents.remove_reagent("water", 0.5 * absorption_coeff)
+	else if(M.reagents.has_reagent(/datum/reagent/water))
+		M.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
 		. += power * 0.5
 
 /datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)

@@ -1,6 +1,6 @@
 /turf/open/water
 	gender = PLURAL
-	name = "water"
+	name = /datum/reagent/water
 	desc = "Shallow water."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "riverwater_motion"

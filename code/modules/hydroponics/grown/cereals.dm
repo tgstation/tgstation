@@ -92,7 +92,7 @@
 	bitesize_mod = 2
 	seed = /obj/item/seeds/wheat/meat
 	foodtype = MEAT | GRAIN
-	grind_results = list("flour" = 0, "blood" = 0)
+	grind_results = list("flour" = 0, /datum/reagent/blood = 0)
 	tastes = list("meatwheat" = 1)
 	can_distill = FALSE
 

@@ -58,7 +58,7 @@
 /obj/item/seeds/kudzu/on_chem_reaction(datum/reagents/S)
 	var/list/temp_mut_list = list()
 
-	if(S.has_reagent("sterilizine", 5))
+	if(S.has_reagent(/datum/reagent/space_cleaner/sterilizine, 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == NEGATIVE)
 				temp_mut_list += SM
@@ -66,7 +66,7 @@
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
 
-	if(S.has_reagent("welding_fuel", 5))
+	if(S.has_reagent(/datum/reagent/fuel, 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == POSITIVE)
 				temp_mut_list += SM
@@ -82,7 +82,7 @@
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
 
-	if(S.has_reagent("blood", 15))
+	if(S.has_reagent(/datum/reagent/blood, 15))
 		adjust_production(rand(15, -5))
 
 	if(S.has_reagent(/datum/reagent/toxin/amatoxin, 5))

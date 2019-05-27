@@ -29,7 +29,7 @@
 
 /obj/item/projectile/bullet/dart/metalfoam/Initialize()
 	. = ..()
-	reagents.add_reagent("aluminium", 15)
+	reagents.add_reagent(/datum/reagent/aluminium, 15)
 	reagents.add_reagent("foaming_agent", 5)
 	reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 5)
 

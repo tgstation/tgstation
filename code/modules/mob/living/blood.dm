@@ -139,7 +139,7 @@
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
-			if(blood_id == "blood") //normal blood
+			if(blood_id == /datum/reagent/blood) //normal blood
 				if(blood_data["viruses"])
 					for(var/thing in blood_data["viruses"])
 						var/datum/disease/D = thing
@@ -161,7 +161,7 @@
 	return
 
 /mob/living/carbon/get_blood_data(blood_id)
-	if(blood_id == "blood") //actual blood reagent
+	if(blood_id == /datum/reagent/blood) //actual blood reagent
 		var/blood_data = list()
 		//set the blood data
 		blood_data["donor"] = src
@@ -206,11 +206,11 @@
 
 /mob/living/simple_animal/get_blood_id()
 	if(blood_volume)
-		return "blood"
+		return /datum/reagent/blood
 
 /mob/living/carbon/monkey/get_blood_id()
 	if(!(HAS_TRAIT(src, TRAIT_HUSK)))
-		return "blood"
+		return /datum/reagent/blood
 
 /mob/living/carbon/human/get_blood_id()
 	if(HAS_TRAIT(src, TRAIT_HUSK))
@@ -219,7 +219,7 @@
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits))
 		return
-	return "blood"
+	return /datum/reagent/blood
 
 // This is has more potential uses, and is probably faster than the old proc.
 /proc/get_safe_blood(bloodtype)
@@ -246,7 +246,7 @@
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
-	if(get_blood_id() != "blood")
+	if(get_blood_id() != /datum/reagent/blood)
 		return
 	if(!T)
 		T = get_turf(src)

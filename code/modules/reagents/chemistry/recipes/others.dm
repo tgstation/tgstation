@@ -1,56 +1,56 @@
 
 /datum/chemical_reaction/sterilizine
 	name = "Sterilizine"
-	id = "sterilizine"
-	results = list("sterilizine" = 3)
-	required_reagents = list("ethanol" = 1, "charcoal" = 1, "chlorine" = 1)
+	id = /datum/reagent/space_cleaner/sterilizine
+	results = list(/datum/reagent/space_cleaner/sterilizine = 3)
+	required_reagents = list("ethanol" = 1, "charcoal" = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/lube
 	name = "Space Lube"
-	id = "lube"
-	results = list("lube" = 4)
-	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
+	id = /datum/reagent/lube
+	results = list(/datum/reagent/lube = 4)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/spraytan
 	name = "Spray Tan"
-	id = "spraytan"
-	results = list("spraytan" = 2)
+	id = /datum/reagent/spraytan
+	results = list(/datum/reagent/spraytan = 2)
 	required_reagents = list("orangejuice" = 1, "oil" = 1)
 
 /datum/chemical_reaction/spraytan2
 	name = "Spray Tan"
-	id = "spraytan"
-	results = list("spraytan" = 2)
+	id = /datum/reagent/spraytan
+	results = list(/datum/reagent/spraytan = 2)
 	required_reagents = list("orangejuice" = 1, "cornoil" = 1)
 
 /datum/chemical_reaction/impedrezene
 	name = "Impedrezene"
 	id = "impedrezene"
 	results = list("impedrezene" = 2)
-	required_reagents = list("mercury" = 1, "oxygen" = 1, "sugar" = 1)
+	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/oxygen = 1, "sugar" = 1)
 
 /datum/chemical_reaction/cryptobiolin
 	name = "Cryptobiolin"
-	id = "cryptobiolin"
-	results = list("cryptobiolin" = 3)
-	required_reagents = list("potassium" = 1, "oxygen" = 1, "sugar" = 1)
+	id = /datum/reagent/cryptobiolin
+	results = list(/datum/reagent/cryptobiolin = 3)
+	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/oxygen = 1, "sugar" = 1)
 
 /datum/chemical_reaction/glycerol
 	name = "Glycerol"
-	id = "glycerol"
-	results = list("glycerol" = 1)
+	id = /datum/reagent/glycerol
+	results = list(/datum/reagent/glycerol = 1)
 	required_reagents = list("cornoil" = 3, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/sodiumchloride
 	name = "Sodium Chloride"
 	id = /datum/reagent/consumable/sodiumchloride
 	results = list(/datum/reagent/consumable/sodiumchloride = 3)
-	required_reagents = list("water" = 1, "sodium" = 1, "chlorine" = 1)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/plasmasolidification
 	name = "Solid Plasma"
 	id = "solidplasma"
-	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
+	required_reagents = list(/datum/reagent/iron = 5, "frostoil" = 5, "plasma" = 20)
 	mob_react = FALSE
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
@@ -61,7 +61,7 @@
 /datum/chemical_reaction/goldsolidification
 	name = "Solid Gold"
 	id = "solidgold"
-	required_reagents = list("frostoil" = 5, "gold" = 20, "iron" = 1)
+	required_reagents = list("frostoil" = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
@@ -90,7 +90,7 @@
 /datum/chemical_reaction/candlefication
 	name = "Candlefication"
 	id = "candlefication"
-	required_reagents = list("liquidgibs" = 5, "oxygen"  = 5) //
+	required_reagents = list("liquidgibs" = 5, /datum/reagent/oxygen  = 5) //
 	required_temp = 374
 	mob_react = FALSE
 
@@ -102,7 +102,7 @@
 /datum/chemical_reaction/meatification
 	name = "Meatification"
 	id = "meatification"
-	required_reagents = list("liquidgibs" = 10, "nutriment" = 10, "carbon" = 10)
+	required_reagents = list("liquidgibs" = 10, "nutriment" = 10, /datum/reagent/carbon = 10)
 	mob_react = FALSE
 
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
@@ -115,22 +115,22 @@
 	name = "Direct Carbon Oxidation"
 	id = "burningcarbon"
 	results = list("co2" = 3)
-	required_reagents = list("carbon" = 1, "oxygen" = 2)
+	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/oxygen = 2)
 	required_temp = 777 // pure carbon isn't especially reactive.
 
 /datum/chemical_reaction/nitrous_oxide
 	name = "Nitrous Oxide"
 	id = "nitrous_oxide"
 	results = list("nitrous_oxide" = 5)
-	required_reagents = list("ammonia" = 2, "nitrogen" = 1, "oxygen" = 2)
+	required_reagents = list("ammonia" = 2, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 2)
 	required_temp = 525
 
 //Technically a mutation toxin
 /datum/chemical_reaction/mulligan
 	name = "Mulligan"
-	id = "mulligan"
-	results = list("mulligan" = 1)
-	required_reagents = list("slime_toxin" = 1, /datum/reagent/toxin/mutagen = 1)
+	id = /datum/reagent/mulligan
+	results = list(/datum/reagent/mulligan = 1)
+	required_reagents = list(/datum/reagent/slime_toxin = 1, /datum/reagent/toxin/mutagen = 1)
 
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
@@ -139,7 +139,7 @@
 	name = "Virus Food"
 	id = "virusfood"
 	results = list("virusfood" = 15)
-	required_reagents = list("water" = 5, "milk" = 5)
+	required_reagents = list(/datum/reagent/water = 5, "milk" = 5)
 
 /datum/chemical_reaction/virus_food_mutagen
 	name = "mutagenic agar"
@@ -181,32 +181,32 @@
 	name = "Decaying uranium gel"
 	id = "uraniumvirusfood"
 	results = list("uraniumvirusfood" = 1)
-	required_reagents = list("uranium" = 1, "virusfood" = 1)
+	required_reagents = list(/datum/reagent/uranium = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_uranium_plasma
 	name = "Unstable uranium gel"
 	id = "uraniumvirusfood_plasma"
 	results = list("uraniumplasmavirusfood_unstable" = 1)
-	required_reagents = list("uranium" = 5, "plasmavirusfood" = 1)
+	required_reagents = list(/datum/reagent/uranium = 5, "plasmavirusfood" = 1)
 
 /datum/chemical_reaction/virus_food_uranium_plasma_gold
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_gold"
 	results = list("uraniumplasmavirusfood_stable" = 1)
-	required_reagents = list("uranium" = 10, "gold" = 10, "plasma" = 1)
+	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/gold = 10, "plasma" = 1)
 
 /datum/chemical_reaction/virus_food_uranium_plasma_silver
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_silver"
 	results = list("uraniumplasmavirusfood_stable" = 1)
-	required_reagents = list("uranium" = 10, "silver" = 10, "plasma" = 1)
+	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/silver = 10, "plasma" = 1)
 
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
 	id = "mixvirus"
-	results = list("blood" = 1)
+	results = list(/datum/reagent/blood = 1)
 	required_reagents = list("virusfood" = 1)
-	required_catalysts = list("blood" = 1)
+	required_catalysts = list(/datum/reagent/blood = 1)
 	var/level_min = 1
 	var/level_max = 2
 
@@ -239,7 +239,7 @@
 
 	name = "Mix Virus 4"
 	id = "mixvirus4"
-	required_reagents = list("uranium" = 1)
+	required_reagents = list(/datum/reagent/uranium = 1)
 	level_min = 5
 	level_max = 6
 
@@ -312,7 +312,7 @@
 	name = "Devolve Virus"
 	id = "remvirus"
 	required_reagents = list("synaptizine" = 1)
-	required_catalysts = list("blood" = 1)
+	required_catalysts = list(/datum/reagent/blood = 1)
 
 /datum/chemical_reaction/mix_virus/rem_virus/on_reaction(datum/reagents/holder, created_volume)
 
@@ -326,7 +326,7 @@
 	name = "Neuter Virus"
 	id = "neutervirus"
 	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1)
-	required_catalysts = list("blood" = 1)
+	required_catalysts = list(/datum/reagent/blood = 1)
 
 /datum/chemical_reaction/mix_virus/neuter_virus/on_reaction(datum/reagents/holder, created_volume)
 
@@ -345,12 +345,12 @@
 	name = "Foam surfactant"
 	id = "foam surfactant"
 	results = list("fluorosurfactant" = 5)
-	required_reagents = list("fluorine" = 2, "carbon" = 2, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/fluorine = 2, /datum/reagent/carbon = 2, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/foam
 	name = "Foam"
 	id = "foam"
-	required_reagents = list("fluorosurfactant" = 1, "water" = 1)
+	required_reagents = list("fluorosurfactant" = 1, /datum/reagent/water = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
@@ -367,7 +367,7 @@
 /datum/chemical_reaction/metalfoam
 	name = "Metal Foam"
 	id = "metalfoam"
-	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
+	required_reagents = list(/datum/reagent/aluminium = 3, "foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
@@ -384,7 +384,7 @@
 /datum/chemical_reaction/smart_foam
 	name = "Smart Metal Foam"
 	id = "smart_metal_foam"
-	required_reagents = list("aluminium" = 3, "smart_foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
+	required_reagents = list(/datum/reagent/aluminium = 3, "smart_foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = TRUE
 
 /datum/chemical_reaction/smart_foam/on_reaction(datum/reagents/holder, created_volume)
@@ -398,7 +398,7 @@
 /datum/chemical_reaction/ironfoam
 	name = "Iron Foam"
 	id = "ironlfoam"
-	required_reagents = list("iron" = 3, "foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
+	required_reagents = list(/datum/reagent/iron = 3, "foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
@@ -414,13 +414,13 @@
 	name = "Foaming Agent"
 	id = "foaming_agent"
 	results = list("foaming_agent" = 1)
-	required_reagents = list("lithium" = 1, "hydrogen" = 1)
+	required_reagents = list(/datum/reagent/lithium = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/smart_foaming_agent
 	name = "Smart foaming Agent"
 	id = "smart_foaming_agent"
 	results = list("smart_foaming_agent" = 3)
-	required_reagents = list("foaming_agent" = 3, "acetone" = 1, "iron" = 1)
+	required_reagents = list("foaming_agent" = 3, "acetone" = 1, /datum/reagent/iron = 1)
 	mix_message = "The solution mixes into a frothy metal foam and conforms to the walls of its container."
 
 
@@ -430,7 +430,7 @@
 	name = "Ammonia"
 	id = "ammonia"
 	results = list("ammonia" = 3)
-	required_reagents = list("hydrogen" = 3, "nitrogen" = 1)
+	required_reagents = list(/datum/reagent/hydrogen = 3, /datum/reagent/nitrogen = 1)
 
 /datum/chemical_reaction/diethylamine
 	name = "Diethylamine"
@@ -440,15 +440,15 @@
 
 /datum/chemical_reaction/space_cleaner
 	name = "Space cleaner"
-	id = "cleaner"
-	results = list("cleaner" = 2)
-	required_reagents = list("ammonia" = 1, "water" = 1)
+	id = /datum/reagent/space_cleaner
+	results = list(/datum/reagent/space_cleaner = 2)
+	required_reagents = list("ammonia" = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/plantbgone
 	name = "Plant-B-Gone"
 	id = /datum/reagent/toxin/plantbgone
 	results = list(/datum/reagent/toxin/plantbgone = 5)
-	required_reagents = list(/datum/reagent/toxin = 1, "water" = 4)
+	required_reagents = list(/datum/reagent/toxin = 1, /datum/reagent/water = 4)
 
 /datum/chemical_reaction/weedkiller
 	name = "Weed Killer"
@@ -466,7 +466,7 @@
 	name = "Drying agent"
 	id = "drying_agent"
 	results = list("drying_agent" = 3)
-	required_reagents = list("stable_plasma" = 2, "ethanol" = 1, "sodium" = 1)
+	required_reagents = list("stable_plasma" = 2, "ethanol" = 1, /datum/reagent/sodium = 1)
 
 //////////////////////////////////// Other goon stuff ///////////////////////////////////////////
 
@@ -474,25 +474,25 @@
 	name = "acetone"
 	id = "acetone"
 	results = list("acetone" = 3)
-	required_reagents = list("oil" = 1, "welding_fuel" = 1, "oxygen" = 1)
+	required_reagents = list("oil" = 1, /datum/reagent/fuel = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/carpet
 	name = "carpet"
 	id = "carpet"
 	results = list("carpet" = 2)
-	required_reagents = list("space_drugs" = 1, "blood" = 1)
+	required_reagents = list("space_drugs" = 1, /datum/reagent/blood = 1)
 
 /datum/chemical_reaction/oil
 	name = "Oil"
 	id = "oil"
 	results = list("oil" = 3)
-	required_reagents = list("welding_fuel" = 1, "carbon" = 1, "hydrogen" = 1)
+	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/phenol
 	name = "phenol"
 	id = "phenol"
 	results = list("phenol" = 3)
-	required_reagents = list("water" = 1, "chlorine" = 1, "oil" = 1)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/chlorine = 1, "oil" = 1)
 
 /datum/chemical_reaction/ash
 	name = "Ash"
@@ -505,12 +505,12 @@
 	name = "colorful_reagent"
 	id = "colorful_reagent"
 	results = list("colorful_reagent" = 5)
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
+	required_reagents = list("stable_plasma" = 1, /datum/reagent/radium = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
 
 /datum/chemical_reaction/life
 	name = "Life"
 	id = "life"
-	required_reagents = list("strange_reagent" = 1, /datum/reagent/medicine/synthflesh = 1, "blood" = 1)
+	required_reagents = list("strange_reagent" = 1, /datum/reagent/medicine/synthflesh = 1, /datum/reagent/blood = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
@@ -528,7 +528,7 @@
 /datum/chemical_reaction/corgium
 	name = "corgium"
 	id = "corgium"
-	required_reagents = list("nutriment" = 1, "colorful_reagent" = 1, "strange_reagent" = 1, "blood" = 1)
+	required_reagents = list("nutriment" = 1, "colorful_reagent" = 1, "strange_reagent" = 1, /datum/reagent/blood = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, created_volume)
@@ -541,13 +541,13 @@
 	name = "hair_dye"
 	id = "hair_dye"
 	results = list("hair_dye" = 5)
-	required_reagents = list("colorful_reagent" = 1, "radium" = 1, "space_drugs" = 1)
+	required_reagents = list("colorful_reagent" = 1, /datum/reagent/radium = 1, "space_drugs" = 1)
 
 /datum/chemical_reaction/barbers_aid
 	name = "barbers_aid"
 	id = "barbers_aid"
 	results = list("barbers_aid" = 5)
-	required_reagents = list("carpet" = 1, "radium" = 1, "space_drugs" = 1)
+	required_reagents = list("carpet" = 1, /datum/reagent/radium = 1, "space_drugs" = 1)
 
 /datum/chemical_reaction/concentrated_barbers_aid
 	name = "concentrated_barbers_aid"
@@ -559,19 +559,19 @@
 	name = "saltpetre"
 	id = "saltpetre"
 	results = list("saltpetre" = 3)
-	required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
+	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 3)
 
 /datum/chemical_reaction/lye
 	name = "lye"
 	id = "lye"
 	results = list("lye" = 3)
-	required_reagents = list("sodium" = 1, "hydrogen" = 1, "oxygen" = 1)
+	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/lye2
 	name = "lye"
 	id = "lye"
 	results = list("lye" = 2)
-	required_reagents = list("ash" = 1, "water" = 1, "carbon" = 1)
+	required_reagents = list("ash" = 1, /datum/reagent/water = 1, /datum/reagent/carbon = 1)
 
 /datum/chemical_reaction/royal_bee_jelly
 	name = "royal bee jelly"
@@ -600,4 +600,4 @@
 	name = "pax"
 	id = "pax"
 	results = list("pax" = 3)
-	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, "synaptizine" = 1, "water" = 1)
+	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, "synaptizine" = 1, /datum/reagent/water = 1)

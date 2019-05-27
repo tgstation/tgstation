@@ -16,8 +16,8 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "toastedsandwich"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list("nutriment" = 1, "carbon" = 2)
-	list_reagents = list("nutriment" = 6, "carbon" = 2)
+	bonus_reagents = list("nutriment" = 1, /datum/reagent/carbon = 2)
+	list_reagents = list("nutriment" = 6, /datum/reagent/carbon = 2)
 	tastes = list("toast" = 1)
 	foodtype = GRAIN
 

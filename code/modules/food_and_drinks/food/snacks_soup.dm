@@ -4,7 +4,7 @@
 	trash = /obj/item/reagent_containers/glass/bowl
 	bitesize = 5
 	volume = 80
-	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
+	list_reagents = list("nutriment" = 8, /datum/reagent/water = 5, "vitamin" = 4)
 	tastes = list("tasteless soup" = 1)
 	foodtype = VEGETABLES
 
@@ -16,7 +16,7 @@
 	name = "wish soup"
 	desc = "I wish this was soup."
 	icon_state = "wishsoup"
-	list_reagents = list("water" = 10)
+	list_reagents = list(/datum/reagent/water = 10)
 	tastes = list("wishes" = 1)
 
 /obj/item/reagent_containers/food/snacks/soup/wish/Initialize()
@@ -43,7 +43,7 @@
 	desc = "If no water is available, you may substitute tears."
 	icon_state = "slimesoup"
 	bonus_reagents = list("nutriment" = 1, /datum/reagent/toxin/slimejelly = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 5, /datum/reagent/toxin/slimejelly = 5, "water" = 5, "vitamin" = 4)
+	list_reagents = list("nutriment" = 5, /datum/reagent/toxin/slimejelly = 5, /datum/reagent/water = 5, "vitamin" = 4)
 	tastes = list("slime" = 1)
 	foodtype = TOXIC | SUGAR
 
@@ -52,8 +52,8 @@
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
-	list_reagents = list("nutriment" = 2, "blood" = 10, "water" = 5, "vitamin" = 4)
-	tastes = list("iron" = 1)
+	list_reagents = list("nutriment" = 2, /datum/reagent/blood = 10, /datum/reagent/water = 5, "vitamin" = 4)
+	tastes = list(/datum/reagent/iron = 1)
 	foodtype = GROSS
 
 /obj/item/reagent_containers/food/snacks/soup/wingfangchu
@@ -71,7 +71,7 @@
 	desc = "Not very funny."
 	icon_state = "clownstears"
 	bonus_reagents = list("nutriment" = 1, "banana" = 5, "vitamin" = 8, "clownstears" = 10)
-	list_reagents = list("nutriment" = 4, "banana" = 5, "water" = 5, "vitamin" = 8, "clownstears" = 10)
+	list_reagents = list("nutriment" = 4, "banana" = 5, /datum/reagent/water = 5, "vitamin" = 8, "clownstears" = 10)
 	tastes = list("a bad joke" = 1)
 	foodtype = FRUIT | SUGAR
 
@@ -101,7 +101,7 @@
 
 /obj/item/reagent_containers/food/snacks/soup/mystery/Initialize()
 	. = ..()
-	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", /datum/reagent/toxin/slimejelly, /datum/reagent/toxin, "banana", "carbon", "oculine")
+	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", /datum/reagent/blood, /datum/reagent/toxin/slimejelly, /datum/reagent/toxin, "banana", /datum/reagent/carbon, "oculine")
 	bonus_reagents = list("[extra_reagent]" = 5, "nutriment" = 6)
 	reagents.add_reagent("[extra_reagent]", 5)
 

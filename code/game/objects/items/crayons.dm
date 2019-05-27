@@ -562,7 +562,7 @@
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
 
-	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
+	reagent_contents = list(/datum/reagent/fuel = 1, "ethanol" = 1)
 
 	pre_noise = TRUE
 	post_noise = FALSE
@@ -725,7 +725,7 @@
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
 
-	reagent_contents = list("lube" = 1, "banana" = 1)
+	reagent_contents = list(/datum/reagent/lube = 1, "banana" = 1)
 	volume_multiplier = 5
 
 /obj/item/toy/crayon/spraycan/lubecan/isValidSurface(surface)

@@ -64,8 +64,8 @@
 	mutatelist = list()
 	reagents_add = list("space_drugs" = 0.3,
 						/datum/reagent/toxin/mindbreaker = 0.3,
-						"mercury" = 0.15,
-						"lithium" = 0.15,
+						/datum/reagent/mercury = 0.15,
+						/datum/reagent/lithium = 0.15,
 						"atropine" = 0.15,
 						"haloperidol" = 0.15,
 						"methamphetamine" = 0.15,

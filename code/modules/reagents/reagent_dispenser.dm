@@ -2,13 +2,13 @@
 	name = "Dispenser"
 	desc = "..."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "water"
+	icon_state = /datum/reagent/water
 	density = TRUE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
-	var/reagent_id = "water" //The ID of the reagent that the dispenser uses
+	var/reagent_id = /datum/reagent/water //The ID of the reagent that the dispenser uses
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -42,7 +42,7 @@
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
 	desc = "A water tank."
-	icon_state = "water"
+	icon_state = /datum/reagent/water
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
@@ -61,7 +61,7 @@
 	name = "fuel tank"
 	desc = "A tank full of industrial welding fuel. Do not consume."
 	icon_state = "fuel"
-	reagent_id = "welding_fuel"
+	reagent_id = /datum/reagent/fuel
 
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
@@ -89,12 +89,12 @@
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(!reagents.has_reagent("welding_fuel"))
+		if(!reagents.has_reagent(/datum/reagent/fuel))
 			to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 			return
 		var/obj/item/weldingtool/W = I
 		if(!W.welding)
-			if(W.reagents.has_reagent("welding_fuel", W.max_fuel))
+			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, "<span class='warning'>Your [W.name] is already full!</span>")
 				return
 			reagents.trans_to(W, W.max_fuel, transfered_by = user)

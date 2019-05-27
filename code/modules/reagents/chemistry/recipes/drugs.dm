@@ -2,13 +2,13 @@
 	name = "Space Drugs"
 	id = "space_drugs"
 	results = list("space_drugs" = 3)
-	required_reagents = list("mercury" = 1, "sugar" = 1, "lithium" = 1)
+	required_reagents = list(/datum/reagent/mercury = 1, "sugar" = 1, /datum/reagent/lithium = 1)
 
 /datum/chemical_reaction/crank
 	name = "Crank"
 	id = "crank"
 	results = list("crank" = 5)
-	required_reagents = list("diphenhydramine" = 1, "ammonia" = 1, "lithium" = 1, /datum/reagent/toxin/acid = 1, "welding_fuel" = 1)
+	required_reagents = list("diphenhydramine" = 1, "ammonia" = 1, /datum/reagent/lithium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/fuel = 1)
 	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
 	required_temp = 390
 
@@ -17,7 +17,7 @@
 	name = "Krokodil"
 	id = "krokodil"
 	results = list("krokodil" = 6)
-	required_reagents = list("diphenhydramine" = 1, "morphine" = 1, "cleaner" = 1, "potassium" = 1, "phosphorus" = 1, "welding_fuel" = 1)
+	required_reagents = list("diphenhydramine" = 1, "morphine" = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/potassium = 1, /datum/reagent/phosphorus = 1, /datum/reagent/fuel = 1)
 	mix_message = "The mixture dries into a pale blue powder."
 	required_temp = 380
 
@@ -25,14 +25,14 @@
 	name = "methamphetamine"
 	id = "methamphetamine"
 	results = list("methamphetamine" = 4)
-	required_reagents = list("ephedrine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1)
+	required_reagents = list("ephedrine" = 1, "iodine" = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/bath_salts
 	name = "bath_salts"
 	id = "bath_salts"
 	results = list("bath_salts" = 7)
-	required_reagents = list(/datum/reagent/toxin/bad_food = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
+	required_reagents = list(/datum/reagent/toxin/bad_food = 1, "saltpetre" = 1, "nutriment" = 1, /datum/reagent/space_cleaner = 1, "enzyme" = 1, "tea" = 1, /datum/reagent/mercury = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/aranesp

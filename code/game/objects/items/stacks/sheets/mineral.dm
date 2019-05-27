@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	sheettype = "diamond"
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	novariants = TRUE
-	grind_results = list("carbon" = 20)
+	grind_results = list(/datum/reagent/carbon = 20)
 	point_value = 25
 	merge_type = /obj/item/stack/sheet/mineral/diamond
 
