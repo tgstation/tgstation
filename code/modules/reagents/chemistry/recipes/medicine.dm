@@ -42,7 +42,7 @@
 	name = "Silver Sulfadiazine"
 	id = "silver_sulfadiazine"
 	results = list("silver_sulfadiazine" = 5)
-	required_reagents = list("ammonia" = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
+	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/salglu_solution
 	name = "Saline-Glucose Solution"
@@ -92,7 +92,7 @@
 	name = "Pentetic Acid"
 	id = "pen_acid"
 	results = list("pen_acid" = 6)
-	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/chlorine = 1, "ammonia" = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/sodium = 1, /datum/reagent/toxin/cyanide = 1)
+	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/chlorine = 1, /datum/reagent/ammonia = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/sodium = 1, /datum/reagent/toxin/cyanide = 1)
 
 /datum/chemical_reaction/sal_acid
 	name = "Salicyclic Acid"
@@ -110,7 +110,7 @@
 	name = "Salbutamol"
 	id = "salbutamol"
 	results = list("salbutamol" = 5)
-	required_reagents = list("sal_acid" = 1, /datum/reagent/lithium = 1, /datum/reagent/aluminium = 1, "bromine" = 1, "ammonia" = 1)
+	required_reagents = list("sal_acid" = 1, /datum/reagent/lithium = 1, /datum/reagent/aluminium = 1, "bromine" = 1, /datum/reagent/ammonia = 1)
 
 /datum/chemical_reaction/perfluorodecalin
 	name = "Perfluorodecalin"
@@ -124,14 +124,14 @@
 	name = "Ephedrine"
 	id = "ephedrine"
 	results = list("ephedrine" = 4)
-	required_reagents = list("sugar" = 1, "oil" = 1, /datum/reagent/hydrogen = 1, "diethylamine" = 1)
+	required_reagents = list("sugar" = 1, "oil" = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)
 	mix_message = "The solution fizzes and gives off toxic fumes."
 
 /datum/chemical_reaction/diphenhydramine
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
 	results = list("diphenhydramine" = 4)
-	required_reagents = list("oil" = 1, /datum/reagent/carbon = 1, "bromine" = 1, "diethylamine" = 1, "ethanol" = 1)
+	required_reagents = list("oil" = 1, /datum/reagent/carbon = 1, "bromine" = 1, /datum/reagent/diethylamine = 1, "ethanol" = 1)
 	mix_message = "The mixture dries into a pale blue powder."
 
 /datum/chemical_reaction/oculine
@@ -145,13 +145,13 @@
 	name = "Atropine"
 	id = "atropine"
 	results = list("atropine" = 5)
-	required_reagents = list("ethanol" = 1, "acetone" = 1, "diethylamine" = 1, "phenol" = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list("ethanol" = 1, "acetone" = 1, /datum/reagent/diethylamine = 1, "phenol" = 1, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
 	results = list("epinephrine" = 6)
-	required_reagents = list("phenol" = 1, "acetone" = 1, "diethylamine" = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1, /datum/reagent/hydrogen = 1)
+	required_reagents = list("phenol" = 1, "acetone" = 1, /datum/reagent/diethylamine = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/strange_reagent
 	name = "Strange Reagent"
@@ -256,11 +256,11 @@
 	name = "Modafinil"
 	id = "modafinil"
 	results = list("modafinil" = 5)
-	required_reagents = list("diethylamine" = 1, "ammonia" = 1, "phenol" = 1, "acetone" = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/ammonia = 1, "phenol" = 1, "acetone" = 1, /datum/reagent/toxin/acid = 1)
 	required_catalysts = list("bromine" = 1) // as close to the real world synthesis as possible
 
 /datum/chemical_reaction/psicodine
 	name = "Psicodine"
 	id = "psicodine"
 	results = list("psicodine" = 5)
-	required_reagents = list( "mannitol" = 2, /datum/reagent/water = 2, "impedrezene" = 1)
+	required_reagents = list( "mannitol" = 2, /datum/reagent/water = 2, /datum/reagent/impedrezene = 1)

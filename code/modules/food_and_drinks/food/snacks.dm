@@ -21,7 +21,7 @@ Here is an example of the new formatting for anyone who wants to add more food i
 	icon_state = "xburger"												//Refers to an icon in food.dmi
 /obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
 	. = ..()														//Same here.
-	reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
+	reagents.add_reagent(/datum/reagent/xenomicrobes, 10)						//This is what is in the food item. you may copy/paste
 	reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
 	bitesize = 3													//This is the amount each bite consumes.
 ```

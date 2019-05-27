@@ -177,7 +177,7 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
 	id = "methboom2"
-	required_reagents = list("diethylamine" = 1, "iodine" = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1) //diethylamine is often left over from mixing the ephedrine.
+	required_reagents = list(/datum/reagent/diethylamine = 1, "iodine" = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1) //diethylamine is often left over from mixing the ephedrine.
 	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
 
 /datum/chemical_reaction/sorium
@@ -452,7 +452,7 @@
 /datum/chemical_reaction/reagent_explosion/nitrous_oxide
 	name = "N2O explosion"
 	id = "n2o_explosion"
-	required_reagents = list("nitrous_oxide" = 1)
+	required_reagents = list(/datum/reagent/nitrous_oxide = 1)
 	strengthdiv = 7
 	required_temp = 575
 	modifier = 1
@@ -461,6 +461,6 @@
 	name = "Firefighting Foam"
 	id = /datum/reagent/firefighting_foam
 	results = list(/datum/reagent/firefighting_foam = 3)
-	required_reagents = list(/datum/reagent/stabilizing_agent = 1,"fluorosurfactant" = 1,/datum/reagent/carbon = 1)
+	required_reagents = list(/datum/reagent/stabilizing_agent = 1,/datum/reagent/fluorosurfactant = 1,/datum/reagent/carbon = 1)
 	required_temp = 200
 	is_cold_recipe = 1

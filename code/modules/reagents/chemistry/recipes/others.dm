@@ -25,8 +25,8 @@
 
 /datum/chemical_reaction/impedrezene
 	name = "Impedrezene"
-	id = "impedrezene"
-	results = list("impedrezene" = 2)
+	id = /datum/reagent/impedrezene
+	results = list(/datum/reagent/impedrezene = 2)
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/oxygen = 1, "sugar" = 1)
 
 /datum/chemical_reaction/cryptobiolin
@@ -114,15 +114,15 @@
 /datum/chemical_reaction/carbondioxide
 	name = "Direct Carbon Oxidation"
 	id = "burningcarbon"
-	results = list("co2" = 3)
+	results = list(/datum/reagent/carbondioxide = 3)
 	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/oxygen = 2)
 	required_temp = 777 // pure carbon isn't especially reactive.
 
 /datum/chemical_reaction/nitrous_oxide
 	name = "Nitrous Oxide"
-	id = "nitrous_oxide"
-	results = list("nitrous_oxide" = 5)
-	required_reagents = list("ammonia" = 2, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 2)
+	id = /datum/reagent/nitrous_oxide
+	results = list(/datum/reagent/nitrous_oxide = 5)
+	required_reagents = list(/datum/reagent/ammonia = 2, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 2)
 	required_temp = 525
 
 //Technically a mutation toxin
@@ -344,13 +344,13 @@
 /datum/chemical_reaction/surfactant
 	name = "Foam surfactant"
 	id = "foam surfactant"
-	results = list("fluorosurfactant" = 5)
+	results = list(/datum/reagent/fluorosurfactant = 5)
 	required_reagents = list(/datum/reagent/fluorine = 2, /datum/reagent/carbon = 2, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/foam
 	name = "Foam"
 	id = "foam"
-	required_reagents = list("fluorosurfactant" = 1, /datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
@@ -367,7 +367,7 @@
 /datum/chemical_reaction/metalfoam
 	name = "Metal Foam"
 	id = "metalfoam"
-	required_reagents = list(/datum/reagent/aluminium = 3, "foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
+	required_reagents = list(/datum/reagent/aluminium = 3, /datum/reagent/foaming_agent = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
@@ -384,7 +384,7 @@
 /datum/chemical_reaction/smart_foam
 	name = "Smart Metal Foam"
 	id = "smart_metal_foam"
-	required_reagents = list(/datum/reagent/aluminium = 3, "smart_foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
+	required_reagents = list(/datum/reagent/aluminium = 3, /datum/reagent/smart_foaming_agent = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = TRUE
 
 /datum/chemical_reaction/smart_foam/on_reaction(datum/reagents/holder, created_volume)
@@ -398,7 +398,7 @@
 /datum/chemical_reaction/ironfoam
 	name = "Iron Foam"
 	id = "ironlfoam"
-	required_reagents = list(/datum/reagent/iron = 3, "foaming_agent" = 1, /datum/reagent/toxin/acid/fluacid = 1)
+	required_reagents = list(/datum/reagent/iron = 3, /datum/reagent/foaming_agent = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
@@ -412,15 +412,15 @@
 
 /datum/chemical_reaction/foaming_agent
 	name = "Foaming Agent"
-	id = "foaming_agent"
-	results = list("foaming_agent" = 1)
+	id = /datum/reagent/foaming_agent
+	results = list(/datum/reagent/foaming_agent = 1)
 	required_reagents = list(/datum/reagent/lithium = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/smart_foaming_agent
 	name = "Smart foaming Agent"
-	id = "smart_foaming_agent"
-	results = list("smart_foaming_agent" = 3)
-	required_reagents = list("foaming_agent" = 3, "acetone" = 1, /datum/reagent/iron = 1)
+	id = /datum/reagent/smart_foaming_agent
+	results = list(/datum/reagent/smart_foaming_agent = 3)
+	required_reagents = list(/datum/reagent/foaming_agent = 3, "acetone" = 1, /datum/reagent/iron = 1)
 	mix_message = "The solution mixes into a frothy metal foam and conforms to the walls of its container."
 
 
@@ -428,21 +428,21 @@
 
 /datum/chemical_reaction/ammonia
 	name = "Ammonia"
-	id = "ammonia"
-	results = list("ammonia" = 3)
+	id = /datum/reagent/ammonia
+	results = list(/datum/reagent/ammonia = 3)
 	required_reagents = list(/datum/reagent/hydrogen = 3, /datum/reagent/nitrogen = 1)
 
 /datum/chemical_reaction/diethylamine
 	name = "Diethylamine"
-	id = "diethylamine"
-	results = list("diethylamine" = 2)
-	required_reagents = list ("ammonia" = 1, "ethanol" = 1)
+	id = /datum/reagent/diethylamine
+	results = list(/datum/reagent/diethylamine = 2)
+	required_reagents = list (/datum/reagent/ammonia = 1, "ethanol" = 1)
 
 /datum/chemical_reaction/space_cleaner
 	name = "Space cleaner"
 	id = /datum/reagent/space_cleaner
 	results = list(/datum/reagent/space_cleaner = 2)
-	required_reagents = list("ammonia" = 1, /datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/plantbgone
 	name = "Plant-B-Gone"
@@ -454,7 +454,7 @@
 	name = "Weed Killer"
 	id = /datum/reagent/toxin/plantbgone/weedkiller
 	results = list(/datum/reagent/toxin/plantbgone/weedkiller = 5)
-	required_reagents = list(/datum/reagent/toxin = 1, "ammonia" = 4)
+	required_reagents = list(/datum/reagent/toxin = 1, /datum/reagent/ammonia = 4)
 
 /datum/chemical_reaction/pestkiller
 	name = "Pest Killer"

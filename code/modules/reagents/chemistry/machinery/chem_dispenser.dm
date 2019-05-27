@@ -54,8 +54,8 @@
 		"ash",
 		"acetone",
 		"saltpetre",
-		"ammonia",
-		"diethylamine"
+		/datum/reagent/ammonia,
+		/datum/reagent/diethylamine
 	)
 	var/list/emagged_reagents = list(
 		"space_drugs",
@@ -563,9 +563,9 @@
 		/datum/reagent/toxin/plantbgone/weedkiller,
 		/datum/reagent/toxin/pestkiller,
 		"cryoxadone",
-		"ammonia",
+		/datum/reagent/ammonia,
 		"ash",
-		"diethylamine")
+		/datum/reagent/diethylamine)
 	upgrade_reagents = null
 
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()

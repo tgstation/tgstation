@@ -200,7 +200,7 @@
 /datum/chemical_reaction/slime/slimefoam
 	name = "Slime Foam"
 	id = "m_foam"
-	results = list("fluorosurfactant" = 20, /datum/reagent/water = 20)
+	results = list(/datum/reagent/fluorosurfactant = 20, /datum/reagent/water = 20)
 	required_reagents = list(/datum/reagent/water = 5)
 	required_container = /obj/item/slime_extract/blue
 	required_other = TRUE

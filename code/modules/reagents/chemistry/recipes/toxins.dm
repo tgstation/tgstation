@@ -17,14 +17,14 @@
 	name = "Cyanide"
 	id = /datum/reagent/toxin/cyanide
 	results = list(/datum/reagent/toxin/cyanide = 3)
-	required_reagents = list("oil" = 1, "ammonia" = 1, /datum/reagent/oxygen = 1)
+	required_reagents = list("oil" = 1, /datum/reagent/ammonia = 1, /datum/reagent/oxygen = 1)
 	required_temp = 380
 
 /datum/chemical_reaction/itching_powder
 	name = "Itching Powder"
 	id = /datum/reagent/toxin/itching_powder
 	results = list(/datum/reagent/toxin/itching_powder = 3)
-	required_reagents = list(/datum/reagent/fuel = 1, "ammonia" = 1, "charcoal" = 1)
+	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/ammonia = 1, "charcoal" = 1)
 
 /datum/chemical_reaction/facid
 	name = "Fluorosulfuric acid"
@@ -37,13 +37,13 @@
 	name = /datum/reagent/toxin/sulfonal
 	id = /datum/reagent/toxin/sulfonal
 	results = list(/datum/reagent/toxin/sulfonal = 3)
-	required_reagents = list("acetone" = 1, "diethylamine" = 1, /datum/reagent/sulfur = 1)
+	required_reagents = list("acetone" = 1, /datum/reagent/diethylamine = 1, /datum/reagent/sulfur = 1)
 
 /datum/chemical_reaction/lipolicide
 	name = /datum/reagent/toxin/lipolicide
 	id = /datum/reagent/toxin/lipolicide
 	results = list(/datum/reagent/toxin/lipolicide = 3)
-	required_reagents = list(/datum/reagent/mercury = 1, "diethylamine" = 1, "ephedrine" = 1)
+	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/diethylamine = 1, "ephedrine" = 1)
 
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"
@@ -112,7 +112,7 @@
 	name = "Anacea"
 	id = /datum/reagent/toxin/anacea
 	results = list(/datum/reagent/toxin/anacea = 3)
-	required_reagents = list("haloperidol" = 1, "impedrezene" = 1, /datum/reagent/radium = 1)
+	required_reagents = list("haloperidol" = 1, /datum/reagent/impedrezene = 1, /datum/reagent/radium = 1)
 
 /datum/chemical_reaction/mimesbane
 	name = "Mime's Bane"

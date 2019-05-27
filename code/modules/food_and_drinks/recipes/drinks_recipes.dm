@@ -731,7 +731,7 @@
 	name = "Turbo"
 	id = "turbo"
 	results = list("turbo" = 5)
-	required_reagents = list("moonshine" = 2, "nitrous_oxide" = 1, "sugar_rush" = 1, "pwr_game" = 1)
+	required_reagents = list("moonshine" = 2, /datum/reagent/nitrous_oxide = 1, "sugar_rush" = 1, "pwr_game" = 1)
 
 /datum/chemical_reaction/old_timer
 	name = "Old Timer"

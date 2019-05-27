@@ -8,7 +8,7 @@
 	name = "Crank"
 	id = "crank"
 	results = list("crank" = 5)
-	required_reagents = list("diphenhydramine" = 1, "ammonia" = 1, /datum/reagent/lithium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/fuel = 1)
+	required_reagents = list("diphenhydramine" = 1, /datum/reagent/ammonia = 1, /datum/reagent/lithium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/fuel = 1)
 	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
 	required_temp = 390
 
@@ -45,5 +45,5 @@
 	name = "Happiness"
 	id = "happiness"
 	results = list("happiness" = 4)
-	required_reagents = list("nitrous_oxide" = 2, "epinephrine" = 1, "ethanol" = 1)
+	required_reagents = list(/datum/reagent/nitrous_oxide = 2, "epinephrine" = 1, "ethanol" = 1)
 	required_catalysts = list("plasma" = 5)

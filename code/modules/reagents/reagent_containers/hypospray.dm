@@ -184,5 +184,5 @@
 /obj/item/reagent_containers/hypospray/medipen/snail
 	name = "snail shot"
 	desc = "All-purpose snail medicine! Do not use on non-snails!"
-	list_reagents = list("snailserum" = 10)
+	list_reagents = list(/datum/reagent/snail = 10)
 	icon_state = "snail"

@@ -608,11 +608,11 @@
 		adjustToxic(-round(S.get_reagent_amount("cryoxadone") * 3))
 
 	// Ammonia is bad ass.
-	if(S.has_reagent("ammonia", 1))
-		adjustHealth(round(S.get_reagent_amount("ammonia") * 0.5))
-		adjustNutri(round(S.get_reagent_amount("ammonia") * 1))
+	if(S.has_reagent(/datum/reagent/ammonia, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.5))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/ammonia) * 1))
 		if(myseed)
-			myseed.adjust_yield(round(S.get_reagent_amount("ammonia") * 0.01))
+			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.01))
 
 	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
 	if(S.has_reagent("saltpetre", 1))
@@ -628,11 +628,11 @@
 		adjustWeeds(-1)
 
 	// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
-	if(S.has_reagent("diethylamine", 1))
-		adjustHealth(round(S.get_reagent_amount("diethylamine") * 1))
-		adjustNutri(round(S.get_reagent_amount("diethylamine") * 2))
+	if(S.has_reagent(/datum/reagent/diethylamine, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 2))
 		if(myseed)
-			myseed.adjust_yield(round(S.get_reagent_amount("diethylamine") * 0.02))
+			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 0.02))
 		adjustPests(-rand(1,2))
 
 	// Compost, effectively
