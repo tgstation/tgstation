@@ -266,8 +266,8 @@
 		H.apply_status_effect(/datum/status_effect/laserweak)
 
 /obj/screen/alert/status_effect/laserweak
-	name = "Adamantine Slimeskin"
-	desc = "You are covered in a thick, non-neutonian gel."
+	name = "high laser absortion"
+	desc = "You are covered in an high laser absorbing gel"
 	icon_state = "slime_stoneskin"
 
 /datum/status_effect/laserweak
@@ -279,7 +279,7 @@
 
 /datum/status_effect/laserweak/on_apply()
 	originalcolor = owner.color
-	owner.color = "#3070CC"
+	owner.color = "#FF0000"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		var/datum/species/S = H.dna.species
@@ -287,8 +287,6 @@
 		S.stunmod += 0.2
 		light_holder = new(H)
 		light_holder.set_light(7, 2.7, "#FFCC00")
-	owner.visible_message("<span class='warning'>[owner] is suddenly covered in a strange, blue-ish gel!</span>",
-		"<span class='notice'>You are covered in a thick, rubbery gel.</span>")
 	return ..()
 
 /datum/status_effect/laserweak/on_remove()
@@ -299,9 +297,6 @@
 		S.burnmod -= 0.4
 		S.stunmod -= 0.2
 		QDEL_NULL(light_holder)
-	owner.visible_message("<span class='warning'>[owner]'s gel coating liquefies and dissolves away.</span>",
-"<span class='notice'>Your gel second-skin dissolves!</span>")
-
 
 /obj/item/projectile/beam/blinding
 	name = "\improper blinding beam"
@@ -318,7 +313,7 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.eye_blind += 51
+		H.blind_eyes(5)
 
 /obj/item/projectile/beam/incendiary
 	name = "\improper incendiary beam"
@@ -369,13 +364,11 @@
 			return TRUE
 	var/distance = get_dist(T, starting)
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5))
-
 	if(isturf(A) && hitsound_wall)
 		var/volume = CLAMP(vol_by_damage() + 20, 0, 100)
 		if(suppressed)
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
-
 	return process_hit(T, select_target(T, A))
 
 /obj/item/projectile/beam/invisible
@@ -401,26 +394,21 @@
 	impact_type = /obj/effect/projectile/impact/xray
 
 /obj/item/projectile/beam/syphon/on_hit(atom/target)
-	var/power = 0
 	if(istype(target, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/C = target
 		C.charge -= min(1000, C.charge)
 	//	if(prob(5))
 	//		cell.rigged = TRUE
-		power = 200
 	if(istype(target, /obj/machinery/power/smes))
 		var/obj/machinery/power/smes/S = target
 		S.charge -= min(8000, S.charge)
-		power = 300
 	if(istype(target, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/APC = target
 		var/obj/item/stock_parts/cell/C = APC.cell
 		C.charge -=  min(500, C.charge)
-		power = 200
-	message_admins("<span class='notice'>[power] e [firer]</span>")
 	if(ishuman(firer))
 		var/mob/living/carbon/human/FH = firer
-		SEND_SIGNAL(src, "syphon", power, FH)
+		SEND_SIGNAL(src,"syphon", FH)
 
 /obj/effect/projectile/tracer/solar
 	name = "syphon"

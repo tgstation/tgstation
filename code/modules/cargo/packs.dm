@@ -279,6 +279,28 @@
 					/obj/item/clothing/suit/armor/vest)
 	crate_name = "armor crate"
 
+/datum/supply_pack/security/assorted_lens
+	name = "Assorted external lens Crate"
+	desc = "Contains five experimental lens that can be applied to standard laser guns. Requires Security access to open."
+	cost = 8000
+	contains = list(/obj/item/external_lens/BTC,
+					/obj/item/external_lens/RIC,
+					/obj/item/external_lens/TRA,
+					/obj/item/external_lens/SHK,
+					/obj/item/external_lens/BLN,
+					/obj/item/external_lens/STH,
+					/obj/item/external_lens/INC,
+					/obj/item/external_lens/HEA,
+					/obj/item/external_lens/ECO,
+					/obj/item/external_lens/SYP)
+	crate_name = "external lens crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/security/assorted_lens/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 6)
+		var/item = pick(contains)
+		new item(C)
+
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
 	desc = "Three stamina-draining disabler weapons. Requires Security access to open."
