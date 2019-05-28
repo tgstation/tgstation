@@ -546,6 +546,7 @@
 						P.info += "<B>Medical Record Lost!</B><BR>"
 						P.name = text("MR-[] '[]'", GLOB.data_core.medicalPrintCount, "Record Lost")
 					P.info += "</TT>"
+					P.update_icon()
 					src.printing = null
 
 	src.add_fingerprint(usr)
