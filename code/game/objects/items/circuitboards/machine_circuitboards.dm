@@ -185,6 +185,14 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stock_parts/subspace/filter = 1)
 
+/obj/item/circuitboard/machine/telecomms/message_server
+	name = "Messaging Server (Machine Board)"
+	build_path = /obj/machinery/telecomms/message_server
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stock_parts/subspace/filter = 3)
+
 /obj/item/circuitboard/machine/teleporter_hub
 	name = "Teleporter Hub (Machine Board)"
 	build_path = /obj/machinery/teleport/hub

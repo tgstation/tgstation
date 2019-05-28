@@ -47,7 +47,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
-	heat = 1000
+	heat = 999
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
@@ -64,7 +64,7 @@
 	force = 15
 	throwforce = 15
 	damtype = BURN
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/weapons/sear.ogg'
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()

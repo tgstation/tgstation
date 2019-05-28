@@ -64,6 +64,7 @@
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
 	list_reagents = list("nutriment" = 1)
 	tastes = list("dust" = 1, "lint" = 1)
+	foodtype = CLOTH
 
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent != INTENT_HARM && ismoth(M))

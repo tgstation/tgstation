@@ -169,12 +169,6 @@
 
 	return ..()
 
-/mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (HAS_TRAIT(src, TRAIT_FAT)) && ismonkey(pulling))
-		devour_mob(pulling)
-	else
-		..()
-
 /mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)
@@ -238,7 +232,7 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			if (src.IsKnockdown() && !src.IsParalyzed()) 
+			if (src.IsKnockdown() && !src.IsParalyzed())
 				Paralyze(40)
 				log_combat(M, src, "pinned")
 				visible_message("<span class='danger'>[M] has pinned down [src]!</span>", \

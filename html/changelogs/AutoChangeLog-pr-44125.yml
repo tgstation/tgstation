@@ -1,0 +1,5 @@
+author: "Ty-the-Smonk"
+delete-after: True
+changes: 
+  - rscadd: "Descriptions for every crossbreed's effect (minus recurring because its self explanatory)."
+  - bugfix: "Changes a single comment in _corecross to reflect how many extracts are needed to crossbreed."
