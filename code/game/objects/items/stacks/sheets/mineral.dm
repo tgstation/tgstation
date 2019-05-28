@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	singular_name = "gold bar"
 	sheettype = "gold"
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
-	grind_results = list("gold" = 20)
+	grind_results = list(/datum/reagent/gold = 20)
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/gold
 
@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	singular_name = "silver bar"
 	sheettype = "silver"
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
-	grind_results = list("silver" = 20)
+	grind_results = list(/datum/reagent/silver = 20)
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/silver
 

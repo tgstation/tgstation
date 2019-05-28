@@ -347,7 +347,7 @@
 			pocell.name = "[G.name] battery"
 			pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."
 
-			if(G.reagents.has_reagent("plasma", 2))
+			if(G.reagents.has_reagent(/datum/reagent/plasma, 2))
 				pocell.rigged = TRUE
 
 			qdel(G)

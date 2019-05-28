@@ -45,7 +45,7 @@
 
 /obj/item/organ/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("plasma", storedPlasma/10)
+	S.reagents.add_reagent(/datum/reagent/plasma, storedPlasma/10)
 	return S
 
 /obj/item/organ/alien/plasmavessel/large

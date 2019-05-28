@@ -442,7 +442,7 @@
 	reagents.add_reagent(/datum/reagent/fuel,125)
 	reagents.add_reagent(/datum/reagent/clf3,300)
 	reagents.add_reagent(/datum/reagent/cryptobiolin,350)
-	reagents.add_reagent("plasma",250)
+	reagents.add_reagent(/datum/reagent/plasma,250)
 	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin,500)
 
 /obj/item/reagent_containers/spray/mister/op

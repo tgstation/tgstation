@@ -5,13 +5,13 @@
 	name = "Goldschlager"
 	id = /datum/reagent/consumable/ethanol/goldschlager
 	results = list(/datum/reagent/consumable/ethanol/goldschlager = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 10, "gold" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 10, /datum/reagent/gold = 1)
 
 /datum/chemical_reaction/patron
 	name = "Patron"
 	id = /datum/reagent/consumable/ethanol/patron
 	results = list(/datum/reagent/consumable/ethanol/patron = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 10, "silver" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 10, /datum/reagent/silver = 1)
 
 /datum/chemical_reaction/bilk
 	name = "Bilk"
@@ -146,9 +146,9 @@
 
 /datum/chemical_reaction/toxins_special
 	name = "Toxins Special"
-	id = "toxinsspecial"
-	results = list("toxinsspecial" = 5)
-	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/vermouth = 1, "plasma" = 2)
+	id = /datum/chemical_reaction/toxins_special
+	results = list(/datum/chemical_reaction/toxins_special = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/vermouth = 1, /datum/reagent/plasma = 2)
 
 /datum/chemical_reaction/beepsky_smash
 	name = "Beepksy Smash"
@@ -773,7 +773,7 @@
 	name = "Planet Cracker"
 	id = /datum/reagent/consumable/ethanol/planet_cracker
 	results = list(/datum/reagent/consumable/ethanol/planet_cracker = 4)
-	required_reagents = list(/datum/reagent/consumable/ethanol/champagne = 2, /datum/reagent/consumable/ethanol/lizardwine = 2, /datum/reagent/consumable/eggyolk = 1, "gold" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/champagne = 2, /datum/reagent/consumable/ethanol/lizardwine = 2, /datum/reagent/consumable/eggyolk = 1, /datum/reagent/gold = 1)
 	mix_message = "The liquid's color starts shifting as the nanogold is alternately corroded and redeposited."
 
 /datum/chemical_reaction/red_queen

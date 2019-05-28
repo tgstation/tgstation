@@ -50,7 +50,7 @@
 /datum/chemical_reaction/plasmasolidification
 	name = "Solid Plasma"
 	id = "solidplasma"
-	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, "plasma" = 20)
+	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/plasma = 20)
 	mob_react = FALSE
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
@@ -157,7 +157,7 @@
 	name = "virus plasma"
 	id = /datum/reagent/toxin/plasma/plasmavirusfood
 	results = list(/datum/reagent/toxin/plasma/plasmavirusfood = 1)
-	required_reagents = list("plasma" = 1, /datum/reagent/consumable/virus_food = 1)
+	required_reagents = list(/datum/reagent/plasma = 1, /datum/reagent/consumable/virus_food = 1)
 
 /datum/chemical_reaction/virus_food_plasma_synaptizine
 	name = "weakened virus plasma"
@@ -193,13 +193,13 @@
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_gold"
 	results = list(/datum/reagent/uranium/uraniumvirusfood/unstable = 1)
-	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/gold = 10, "plasma" = 1)
+	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/gold = 10, /datum/reagent/plasma = 1)
 
 /datum/chemical_reaction/virus_food_uranium_plasma_silver
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_silver"
 	results = list(/datum/reagent/uranium/uraniumvirusfood/unstable = 1)
-	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/silver = 10, "plasma" = 1)
+	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/silver = 10, /datum/reagent/plasma = 1)
 
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
@@ -231,7 +231,7 @@
 
 	name = "Mix Virus 3"
 	id = "mixvirus3"
-	required_reagents = list("plasma" = 1)
+	required_reagents = list(/datum/reagent/plasma = 1)
 	level_min = 4
 	level_max = 6
 

@@ -53,7 +53,7 @@
 
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
-	grind_results = list("plasma" = 10, /datum/reagent/lye = 10)
+	grind_results = list(/datum/reagent/plasma = 10, /datum/reagent/lye = 10)
 	icon_state = "soapnt"
 	cleanspeed = 28 //janitor gets this
 	uses = 300

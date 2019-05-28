@@ -37,7 +37,7 @@
 									/datum/reagent/consumable/sodiumchloride, /datum/reagent/consumable/sugar, /datum/reagent/consumable/orangejuice,
 									/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/consumable/ethanol,
 									/datum/reagent/medicine/leporazine, /datum/reagent/medicine/synaptizine, /datum/reagent/toxin/lipolicide,
-									"silver", "gold"
+									/datum/reagent/silver, /datum/reagent/gold
 								)
 
 /*

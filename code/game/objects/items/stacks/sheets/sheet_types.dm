@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
-	grind_results = list(/datum/reagent/iron = 20, "plasma" = 20)
+	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/plasma = 20)
 	point_value = 23
 
 /obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)

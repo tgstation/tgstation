@@ -55,7 +55,7 @@
 	name = "Lexorin"
 	id = /datum/reagent/toxin/lexorin
 	results = list(/datum/reagent/toxin/lexorin = 3)
-	required_reagents = list("plasma" = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
+	required_reagents = list(/datum/reagent/plasma = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
@@ -105,7 +105,7 @@
 	name = "Skewium"
 	id = "Skewium"
 	results = list(/datum/reagent/toxin/skewium = 5)
-	required_reagents = list(/datum/reagent/toxin/rotatium = 2, "plasma" = 2, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/toxin/rotatium = 2, /datum/reagent/plasma = 2, /datum/reagent/toxin/acid = 1)
 	mix_message = "<span class='danger'>Wow! it turns out if you mix rotatium with some plasma and sulphuric acid, it gets even worse!</span>"
 
 /datum/chemical_reaction/anacea
