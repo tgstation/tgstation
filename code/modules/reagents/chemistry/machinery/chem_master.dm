@@ -203,26 +203,26 @@
 
 		if("transferToBuffer")
 			if(beaker)
-				var/id = params["id"]
+				var/reagent = GLOB.name2reagent[params["id"]]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
-					beaker.reagents.trans_id_to(src, id, amount)
+					beaker.reagents.trans_id_to(src, reagent, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
-						beaker.reagents.trans_id_to(src, id, useramount)
+						beaker.reagents.trans_id_to(src, reagent, useramount)
 						. = TRUE
 
 		if("transferFromBuffer")
-			var/id = params["id"]
+			var/reagent = GLOB.name2reagent[params["id"]]
 			var/amount = text2num(params["amount"])
 			if (amount > 0)
 				if(mode)
-					reagents.trans_id_to(beaker, id, amount)
+					reagents.trans_id_to(beaker, reagent, amount)
 					. = TRUE
 				else
-					reagents.remove_reagent(id, amount)
+					reagents.remove_reagent(reagent, amount)
 					. = TRUE
 
 		if("toggleMode")
@@ -343,7 +343,7 @@
 			. = TRUE
 
 		if("analyze")
-			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)
