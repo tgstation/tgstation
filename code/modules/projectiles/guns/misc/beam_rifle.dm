@@ -267,11 +267,9 @@
 	stop_aiming(current_user)
 	QDEL_NULL(mobhook)
 	if(istype(current_user))
-		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
 		current_user = null
 	if(istype(user))
 		current_user = user
-		LAZYOR(current_user.mousemove_intercept_objects, src)
 		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/on_mob_move)))
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
