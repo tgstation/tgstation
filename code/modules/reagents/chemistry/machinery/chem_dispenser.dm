@@ -209,7 +209,7 @@
 		if("dispense")
 			if(!is_operational() || QDELETED(cell))
 				return
-			var/reagent = params["reagent"]
+			var/reagent = GLOB.name2reagent[params["reagent"]]
 			if(beaker && dispensable_reagents.Find(reagent))
 				var/datum/reagents/R = beaker.reagents
 				var/free = R.maximum_volume - R.total_volume
