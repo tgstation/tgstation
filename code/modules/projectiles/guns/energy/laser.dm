@@ -9,93 +9,6 @@
 	ammo_x_offset = 1
 	shaded_charge = 1
 	var/obj/item/external_lens/stored = null
-	var/list/stored_type = list()
-	var/syphon = FALSE
-	modifystate = TRUE
-	var/component = /datum/component/Scharge
-
-/datum/component/Scharge/Initialize()
-	..()
-	RegisterSignal(parent, "syphon", .proc/charge)
-
-/datum/component/Scharge/proc/charge(power, var/mob/living/carbon/human/FH )
-	message_admins("<span class='notice'>[power] [FH]</span>")
-	var/obj/item/gun/energy/laser/L = parent
-	if(ismob(L.loc))
-		var/mob/living/carbon/human/H = L.loc
-		if(FH == H)
-			L.cell.give(power)
-
-/*/obj/item/gun/energy/laser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(!chambered && can_shoot())
-		process_chamber(target)
-	return ..()
-
-/obj/item/gun/energy/laser/process_chamber(atom/target)
-	. = ..()
-	var/obj/item/ammo_casing/energy/shot
-	if(syphon && istype(shot, /obj/item/ammo_casing/energy/laser/syphon))
-		if(istype(target, /obj/item/stock_parts/cell))
-			var/obj/item/stock_parts/cell/C = target
-			C.charge -= min(1000, C.charge)
-			if(prob(5))
-				cell.rigged = TRUE
-			if(C.charge)
-				cell.give(200)
-		if(istype(target, /obj/machinery/power/smes))
-			var/obj/machinery/power/smes/S = target
-			S.charge -= min(8000, S.charge)
-			if(S.charge)
-				cell.give(300)
-		if(istype(target, /obj/machinery/power/apc))
-			var/obj/machinery/power/apc/APC = target
-			var/obj/item/stock_parts/cell/C = APC.cell
-			C.charge -=  min(500, C.charge)
-			if(C.charge)
-				cell.give(200)
-	if(chambered && !chambered.BB)
-		shot = chambered
-		cell.use(shot.e_cost)
-	chambered = null
-	recharge_newshot()
-
-*/
-/obj/item/external_lens
-	name = "external lens"
-	icon_state = "energy"
-	desc = "A basic energy-based gun."
-	icon = 'icons/obj/guns/energy.dmi'
-	var/stored_ammo_type = /obj/item/ammo_casing/energy/laser/scatter
-	var/special = FALSE
-
-/obj/item/external_lens/BBB
-	name = "lens bbb"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/bitcoin
-/obj/item/external_lens/RRR
-	name = "lens rrr"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/rico
-/obj/item/external_lens/TTT
-	name = "lens ttt"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/tracer
-/obj/item/external_lens/SSS
-	name = "lens sss"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/shock
-/obj/item/external_lens/BLL
-	name = "lens BLL"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/blinding
-/obj/item/external_lens/III
-	name = "lens III"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/invisible
-/obj/item/external_lens/INC
-	name = "lens INC"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/incendiary
-/obj/item/external_lens/SYP
-	name = "lens SYP"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/syphon
-	special = TRUE
-/obj/item/external_lens/HEA
-	name = "lens heavy"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/heavy
 
 /obj/item/gun/energy/laser/attackby(obj/item/I, mob/user, params)
 	..()
@@ -105,7 +18,6 @@
 			return
 	if(istype(I, /obj/item/crowbar))
 		if(stored)
-			to_chat(user, "<span class='notice'>starting up!</span>")
 			unequiplens(user)
 			return
 
@@ -114,8 +26,6 @@
 	ammo_type  += new shoot (src)
 	stored += L
 	L.forceMove(src)
-	if(L.special)
-		syphon = TRUE
 	return TRUE
 
 /obj/item/gun/energy/laser/proc/unequiplens(mob/user)
@@ -123,8 +33,6 @@
 	var/turf/T = user.loc
 	stored.forceMove(T)
 	stored = null
-	if(syphon)
-		syphon = FALSE
 	return TRUE
 
 /obj/item/gun/energy/laser/practice
@@ -256,3 +164,69 @@
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
+
+/obj/item/external_lens
+	name = "external lens: scatter ray"
+	icon_state = "external_scatter"
+	desc = "external lens."
+	icon = 'icons/obj/guns/energy.dmi'
+	var/stored_ammo_type = /obj/item/ammo_casing/energy/laser/scatter
+
+/obj/item/external_lens/BTC
+	name = "external lens: ticket dispenser"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/bitcoin
+	icon_state = "external_bitcoin"
+
+/obj/item/external_lens/RIC
+	name = "external lens: bouncing ray"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/rico
+
+/obj/item/external_lens/TRA
+	name = "external lens: tracer ray"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/tracer
+
+/obj/item/external_lens/SHK
+	name = "external lens: shocking ray"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/shock
+
+/obj/item/external_lens/BLN
+	name = "external lens: blinding ray"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/blinding
+
+/obj/item/external_lens/STH
+	name = "external lens: stealth ray"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/invisible
+	icon_state = "external_stealth"
+
+/obj/item/external_lens/INC
+	name = "external lens: incendiary ray"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/incendiary
+
+/obj/item/external_lens/HEA
+	name = "external lens: heavy plasma bolt"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/heavy
+	icon_state = "external_heavy"
+
+/obj/item/external_lens/ECO
+	name = "external lens: low power consuption ray"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/lowenergy
+
+/obj/item/external_lens/SYP
+	name = "external lens: cell syphoning"
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/syphon
+
+/obj/item/external_lens/SYP/Initialize()
+	. = ..()
+	AddComponent(/datum/component/Scharge)
+
+/datum/component/Scharge/Initialize()
+	. = ..()
+	RegisterSignal(parent,"syphon", .proc/charge)
+
+/datum/component/Scharge/proc/charge(mob/FH) //doenst work
+	var/obj/item/external_lens/LL = parent
+	var/obj/item/gun/energy/laser/L = LL.loc
+	if(ismob(L.loc))
+		var/mob/living/carbon/human/H = L.loc
+		if(FH == H)
+			L.cell.give(200)
