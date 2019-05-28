@@ -97,7 +97,7 @@
 
 
 /datum/antagonist/bloodsucker/greet()
-	var/fullname = ReturnFullName(owner.current, 1)
+	var/fullname = ReturnFullName(TRUE)
 	to_chat(owner, "<span class='userdanger'>You are [fullname], a bloodsucking vampire!</span><br>")
 	owner.announce_objectives()
 	to_chat(owner, "<span class='boldannounce'>* You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you will find yourself at \
@@ -109,7 +109,7 @@
 	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Fear the daylight! Solar flares will bombard the station periodically, and only your coffin can guarantee your safety.</span><br>")
 
 	owner.current.playsound_local(null, 'sound/Fulpsounds/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
-	antag_memory += "Although you were born a mortal, in un-death you earned the name <b>[ReturnFullName(owner.current, 1)]</b>.<br>"
+	antag_memory += "Although you were born a mortal, in un-death you earned the name <b>[fullname]</b>.<br>"
 
 
 /datum/antagonist/bloodsucker/farewell()
@@ -457,6 +457,36 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 
 /datum/antagonist/bloodsucker/get_team()
 	return clan
+
+
+
+//Individual roundend report
+/datum/antagonist/bloodsucker/roundend_report()
+	// Get the default Objectives
+	var/list/report = list()
+
+	// Vamp Name
+	report += "<br><span class='header'><b>\[[ReturnFullName(TRUE)]\]</b></span>"
+
+	// Default Report
+	report += ..()
+
+	// Now list their vassals
+	if (vassals.len > 0)
+		report += "<span class='header'>Their Vassals were...</span>"
+		for (var/datum/antagonist/vassal/V in vassals)
+			if (V.owner)
+				var/jobname = V.owner.assigned_role ? "the [V.owner.assigned_role]" : ""
+				report += "<b>[V.owner.name]</b> [jobname]"
+
+	return report.Join("<br>")
+
+//Displayed at the start of roundend_category section, default to roundend_category header
+/datum/antagonist/bloodsucker/roundend_report_header()
+	return 	"<span class='header'>Lurking in the darkness, the Bloodsuckers were:</span><br>"
+
+
+
 
 
 //  		2019 Breakdown of Bloodsuckers:

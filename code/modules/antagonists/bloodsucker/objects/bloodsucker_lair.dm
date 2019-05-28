@@ -41,8 +41,10 @@
 
 		// Coffin Moved SOMEHOW?
 		if (lair != get_area(coffin))
-			lair = get_area(coffin)
-			break
+			if (coffin)
+				coffin.UnclaimCoffin()
+			//lair = get_area(coffin)
+			break // DONE
 
 		var/list/turf/area_turfs = get_area_turfs(lair)
 
@@ -88,7 +90,7 @@
 			if (mobCount < mobMax)
 				// Seek Out Location
 				while (area_turfs.len > 0)
-					var/turf/T = pick(area_turfs)
+					var/turf/T = pick(area_turfs) // We use while&pick instead of a for/loop so it's random, rather than from the top of the list.
 					if (T && !T.density)
 						var/mob/living/simple_animal/SA = /mob/living/simple_animal/mouse // pick(/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/retaliate/bat) //prob(300) /mob/living/simple_animal/mouse,
 						new SA (T)
@@ -96,7 +98,8 @@
 					area_turfs -= T
 
 		// NOTE: area_turfs is now cleared out!
-
+	if (coffin)
+		coffin.UnclaimCoffin()
 
 	// Done (somehow)
 	lair = null

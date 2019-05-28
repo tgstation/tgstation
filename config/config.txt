@@ -18,6 +18,7 @@ SERVERNAME Fulpstation
 
 ## Server Caption: Shows next to the server name in the BYOND hub.
 SERVERCAPTION The Problems of the Future, Today!
+#SERVERCAPTION The Crew that Flies Together, Dies Together!
 #SERVERCAPTION 100% Crash-Free since 2019!
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.

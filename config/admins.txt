@@ -39,15 +39,18 @@ Kasabaru = Admin
 RaveMaster93 = Admin
 
 #MODERATORS
-Coolsurf6 = Admin Jr.
+Coolsurf6 = Admin
 tamaguen = Admin Jr.
 Hydraliks = Moderator
 Dr. Fake Name = Admin Candidate
 DrTarry = Moderator
-Eli m = Moderator
 HorusTheHelpful = Moderator
 M.Green = Moderator
 Bobalobdob = Moderator
+The P.I.S.S. = Moderator
+Badguy1009 = Moderator
+Shmiff = Moderator
+
 
 #TRIAL ADMINS
 BLANK = Admin Jr.

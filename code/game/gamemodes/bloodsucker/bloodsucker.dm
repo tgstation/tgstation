@@ -38,13 +38,15 @@
 		restricted_jobs += "Assistant"
 
 	// Set number of Vamps
-	recommended_enemies = max(1, round(num_players()/8));
+	recommended_enemies = CLAMP(round(num_players()/10), 1, 6);
 
 	// Select Antags
 	for(var/i = 0, i < recommended_enemies, i++)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/bloodsucker = pick(antag_candidates)
+		// Can we even BE a bloodsucker?
+		//if (can_make_bloodsucker(bloodsucker, display_warning=FALSE))
 		bloodsuckers += bloodsucker
 		bloodsucker.restricted_roles = restricted_jobs
 		log_game("[bloodsucker.key] (ckey) has been selected as a Bloodsucker.")
@@ -74,7 +76,14 @@
 	for(var/datum/mind/bloodsucker in bloodsuckers)
 		// spawn() --> Run block of code but game continues on past it.
 		// sleep() --> Run block of code and freeze code there (including whoever called us) until it's resolved.
-		make_bloodsucker(bloodsucker)
+
+		//Clean Bloodsucker Species (racist?)
+		//clean_invalid_species(bloodsucker)
+		// 			TO-DO !!!
+
+		// Add Bloodsucker Antag Datum (or remove from list on Fail)
+		if (!make_bloodsucker(bloodsucker))
+			bloodsuckers -= bloodsucker
 	// Hunters
 	for(var/datum/mind/hunter in vamphunters)
 		hunter.add_antag_datum(ANTAG_DATUM_VASSAL)
@@ -124,6 +133,12 @@
 		if(display_warning && creator)
 			to_chat(creator, "<span class='danger'>[bloodsucker] isn't evolved enough to be raised as a Bloodsucker!</span>")
 		return FALSE
+	// Species Must have a HEART (Sorry Plasmabois)
+	var/mob/living/carbon/human/H = bloodsucker.current
+	if(NOBLOOD in H.dna.species.species_traits)
+		if(display_warning && creator)
+			to_chat(creator, "<span class='danger'>[bloodsucker]'s DNA isn't compatible!</span>")
+		return FALSE
 	// Already a Non-Human Antag
 	if(bloodsucker.has_antag_datum(/datum/antagonist/abductor) || bloodsucker.has_antag_datum(/datum/antagonist/devil) || bloodsucker.has_antag_datum(/datum/antagonist/changeling))
 		return FALSE
@@ -169,6 +184,29 @@
 	bloodsucker.remove_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 
 
+/datum/game_mode/proc/clean_invalid_species(datum/mind/bloodsucker)
+	// Only checking for Humans here
+	if (!ishuman(bloodsucker.current) || !bloodsucker.current.client)
+		return
+	var/am_valid = TRUE
+	var/mob/living/carbon/human/H = bloodsucker.current
+
+	// Check if PLASMAMAN?
+	if(NOBLOOD in H.dna.species.species_traits)
+		am_valid = FALSE
+
+	// PROBLEM:
+	//
+	// Setting species leaves clothes on. If you were a plasmaman, we need to reassign your entire outfit. Otherwise
+	// everyone will wonder why you're a human with Plasma clothes (jk they'll know you're antag)
+
+	// Convert to HUMAN (along with ID and PDA)
+	if (!am_valid)
+		H.set_species(/datum/species/human)
+		H.real_name = H.client.prefs.custom_names["human"]
+		if (H.wear_id)
+			H.wear_id.GetID().registered_name = H.real_name
+			H.wear_id.GetID().update_label()
 
 
 /datum/game_mode/proc/can_make_vassal(mob/living/target, datum/mind/creator, display_warning=TRUE)

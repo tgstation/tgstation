@@ -151,6 +151,7 @@
 	var/datum/effect_system/steam_spread/puff = new /datum/effect_system/steam_spread/()
 	puff.effect_type = /obj/effect/particle_effect/smoke/vampsmoke
 	puff.set_up(3, 0, get_turf(owner))
+	puff.attach(owner) // OPTIONAL
 	puff.start()
 	owner.spin(8, 1) // Spin around like a loon.
 

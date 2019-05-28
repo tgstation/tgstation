@@ -1,15 +1,5 @@
 
 
-
-
-
-/*/obj/effect/proc_holder/spell/feed
-	desc = "Drink the heartsblood of the living."
-	school = "vampiric"
-	charge_max = 0 // NOTE: Bloodsucker Powers do not use charges. Blood is the currency used.
-	clothes_req = 0
-	still_recharging_msg = "That gift is not ready yet."*/
-
 /datum/action/bloodsucker/feed
 	name = "Feed"
 	desc = "Draw the heartsblood of the living.<br><b>Passive:</b> Feed silently and unnoticed by your victim.<br><b>Aggressive: </b>Subdue your target quickly."

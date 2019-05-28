@@ -30,6 +30,7 @@
 				return
 		//sleep(TIME_BLOODSUCKER_NIGHT - TIME_BLOODSUCKER_DAY_WARN)
 		warn_daylight(1,"<span class = 'danger'>Solar Flares will bombard the station with dangerous UV in [TIME_BLOODSUCKER_DAY_WARN / 60] minutes. <b>Prepare to seek cover in a coffin or closet.</b></span>")  // time2text <-- use Help On
+		give_home_power() // Give VANISHING ACT power to all vamps with a lair!
 
 		// Part 2: Night Ending
 		while (time_til_cycle > TIME_BLOODSUCKER_DAY_FINAL_WARN)
@@ -79,6 +80,7 @@
 		warn_daylight(5,"<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>",\
 				  	  "<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>")
 		amDay = FALSE
+		remove_home_power()  // Remove VANISHING ACT power from all vamps who have it!
 		message_admins("BLOODSUCKER NOTICE: Daylight Ended. Resetting to Night (Lasts for [TIME_BLOODSUCKER_NIGHT / 60] minutes.)")
 
 
@@ -137,7 +139,7 @@
 				SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/coffinsleep)
 				continue
 			else
-				to_chat(M, "<span class='warning'>Your skin sizzles. The [M.current] doesn't protect well against UV bombardment.</span>")
+				to_chat(M, "<span class='warning'>Your skin sizzles. The [M.current.loc] doesn't protect well against UV bombardment.</span>")
 				M.current.fireloss += bloodsuckerdatum.vamplevel  //  Do DIRECT damage. Being spaced was causing this to not occur. setFireLoss(bloodsuckerdatum.vamplevel)
 				M.current.updatehealth()
 				SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/daylight_1)
@@ -161,3 +163,27 @@
 		var/datum/antagonist/bloodsucker/bloodsuckerdatum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if (istype(bloodsuckerdatum))
 			bloodsuckerdatum.RankUp()	// Rank up! Must still be in a coffin to level!
+
+
+/obj/effect/sunlight/proc/give_home_power()
+	// It's late...! Give the "Vanishing Act" gohome power to bloodsuckers.
+	for (var/datum/mind/M in SSticker.mode.bloodsuckers)
+		if (!istype(M) || !istype(M.current))
+			continue
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if (istype(bloodsuckerdatum) && bloodsuckerdatum.lair && !(locate(/datum/action/bloodsucker/gohome) in bloodsuckerdatum.powers))
+			bloodsuckerdatum.BuyPower(new /datum/action/bloodsucker/gohome)
+
+/obj/effect/sunlight/proc/remove_home_power()
+	// It's night...! Sort thru all Vamps, remove the "Vanishing Act" gohome power
+	for (var/datum/mind/M in SSticker.mode.bloodsuckers)
+		if (!istype(M) || !istype(M.current))
+			continue
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if (istype(bloodsuckerdatum))
+			for(var/datum/action/bloodsucker/P in bloodsuckerdatum.powers)
+				if (istype(P, /datum/action/bloodsucker/gohome))
+					bloodsuckerdatum.powers -= P
+					P.Remove(M.current)
+
+

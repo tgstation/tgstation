@@ -292,7 +292,7 @@
 
 //						EXPLANATION
 /datum/objective/bloodsucker/vamphunter/update_explanation_text()
-	explanation_text = "Destroy all Bloodstuckers on [station_name()]."
+	explanation_text = "Destroy all Bloodsuckers on [station_name()]."
 
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/vamphunter/check_completion()

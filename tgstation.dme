@@ -1243,6 +1243,7 @@
 #include "code\modules\antagonists\bloodsucker\powers\bs_cloak.dm"
 #include "code\modules\antagonists\bloodsucker\powers\bs_feed.dm"
 #include "code\modules\antagonists\bloodsucker\powers\bs_fortitude.dm"
+#include "code\modules\antagonists\bloodsucker\powers\bs_gohome.dm"
 #include "code\modules\antagonists\bloodsucker\powers\bs_haste.dm"
 #include "code\modules\antagonists\bloodsucker\powers\bs_lunge.dm"
 #include "code\modules\antagonists\bloodsucker\powers\bs_masquerade.dm"
