@@ -27,10 +27,11 @@
 
 /datum/component/storage/concrete/pockets/small/fedora/Initialize()
 	. = ..()
-	exception_hold = typecacheof(list(
+	var/static/list/exception_cache = typecacheof(list(
 		/obj/item/katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana,
-		/obj/item/gun/ballistic/automatic/tommygun
+		/obj/item/energy_katana, /obj/item/gun/ballistic/automatic/tommygun
 		))
+	exception_hold = exception_cache
 
 /datum/component/storage/concrete/pockets/small/fedora/detective
 	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
