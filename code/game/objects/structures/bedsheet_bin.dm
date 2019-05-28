@@ -257,7 +257,7 @@ LINEN BINS
 	var/type = pickweight(list("Colors" = 80, "Special" = 20))
 	switch(type)
 		if("Colors")
-			type = pick(list(/obj/item/bedsheet, 
+			type = pick(list(/obj/item/bedsheet,
 				/obj/item/bedsheet/blue,
 				/obj/item/bedsheet/green,
 				/obj/item/bedsheet/grey,
@@ -322,6 +322,17 @@ LINEN BINS
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		update_icon()
+	else if(istype(I, /obj/item/wrench) && I.use_tool(src, user, 5, volume=50))
+		anchored = !anchored
+		to_chat(user, "<span clas='notice'>You [anchored ? "" : "un"]wrench the [src].</span>")
+	else if(istype(I, /obj/item/screwdriver))
+		if(amount)
+			to_chat(user, "<span clas='warn'>The [src] must be empty first!</span>")
+			return
+		if(I.use_tool(src, user, 5, volume=50))
+			to_chat(user, "<span clas='notice'>You disassemble the [src].</span>")
+			new /obj/item/stack/rods(loc, 2)
+			qdel(src)
 	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
