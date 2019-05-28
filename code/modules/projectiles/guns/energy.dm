@@ -20,6 +20,7 @@
 	var/charge_delay = 4
 	var/use_cyborg_cell = FALSE //whether the gun's cell drains the cyborg user's cell to recharge
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
+	var/special_ammo = FALSE //used for external lens
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
@@ -165,6 +166,9 @@
 	if(itemState)
 		itemState += "[ratio]"
 		item_state = itemState
+	if(special_ammo)
+		add_overlay("[icon_state]_empty")
+
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
