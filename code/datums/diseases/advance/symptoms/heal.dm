@@ -374,7 +374,7 @@
 		gases = environment.gases
 		if(gases["plasma"] && gases["plasma"][MOLES] > gases["plasma"][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
 			. += power * 0.5
-	if(M.reagents.has_reagent(/datum/reagent/plasma))
+	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		. +=  power * 0.75
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)

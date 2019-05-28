@@ -4,7 +4,7 @@
 	id = /datum/reagent/medicine/leporazine
 	results = list(/datum/reagent/medicine/leporazine = 2)
 	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/copper = 1)
-	required_catalysts = list(/datum/reagent/plasma = 5)
+	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
 
 /datum/chemical_reaction/rezadone
 	name = "Rezadone"
@@ -60,7 +60,7 @@
 	name = "Miner's Salve"
 	id = /datum/reagent/medicine/mine_salve
 	results = list(/datum/reagent/medicine/mine_salve = 15)
-	required_reagents = list(/datum/reagent/plasma = 5, /datum/reagent/iron = 5, /datum/reagent/consumable/sugar = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
+	required_reagents = list(/datum/reagent/toxin/plasma = 5, /datum/reagent/iron = 5, /datum/reagent/consumable/sugar = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
 
 /datum/chemical_reaction/synthflesh
 	name = "Synthflesh"
@@ -201,7 +201,7 @@
 	id = /datum/reagent/medicine/clonexadone
 	results = list(/datum/reagent/medicine/clonexadone = 2)
 	required_reagents = list(/datum/reagent/medicine/cryoxadone = 1, /datum/reagent/sodium = 1)
-	required_catalysts = list(/datum/reagent/plasma = 5)
+	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
 
 /datum/chemical_reaction/haloperidol
 	name = "Haloperidol"

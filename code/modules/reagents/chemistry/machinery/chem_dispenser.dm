@@ -544,7 +544,7 @@
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list(/datum/reagent/toxin/mutagen)
 	upgrade_reagents = null
-	emagged_reagents = list(/datum/reagent/plasma)
+	emagged_reagents = list(/datum/reagent/toxin/plasma)
 
 
 /obj/machinery/chem_dispenser/mutagensaltpeter

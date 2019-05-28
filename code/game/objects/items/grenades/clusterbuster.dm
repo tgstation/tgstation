@@ -94,7 +94,7 @@
 		var/chem = pick(slime_chems)
 		var/amount = 5
 		if(chem == "lesser plasma") //In the rare case we get another rainbow.
-			chem = /datum/reagent/plasma
+			chem = /datum/reagent/toxin/plasma
 			amount = 4
 		if(chem == "holy water and uranium")
 			chem = /datum/reagent/uranium

@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
-	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/plasma = 10)
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmarglass
-	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/plasma = 10, /datum/reagent/iron = 10)
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 	point_value = 23
 
 /obj/item/stack/sheet/plasmarglass/Initialize(mapload, new_amount, merge = TRUE)

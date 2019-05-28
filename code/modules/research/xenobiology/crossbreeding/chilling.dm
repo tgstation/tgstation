@@ -14,10 +14,10 @@ Chilling extracts:
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/chilling/attack_self(mob/user)
-	if(!reagents.has_reagent(/datum/reagent/plasma,10))
+	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
 		to_chat(user, "<span class='warning'>This extract needs to be full of plasma to activate!</span>")
 		return
-	reagents.remove_reagent(/datum/reagent/plasma,10)
+	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
 	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
 	playsound(src, 'sound/effects/glassbr1.ogg', 50, 1)

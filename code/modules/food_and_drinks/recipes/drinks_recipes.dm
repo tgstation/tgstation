@@ -148,7 +148,7 @@
 	name = "Toxins Special"
 	id = /datum/chemical_reaction/toxins_special
 	results = list(/datum/chemical_reaction/toxins_special = 5)
-	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/vermouth = 1, /datum/reagent/plasma = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/vermouth = 1, /datum/reagent/toxin/plasma = 2)
 
 /datum/chemical_reaction/beepsky_smash
 	name = "Beepksy Smash"

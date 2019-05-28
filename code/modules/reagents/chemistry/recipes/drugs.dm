@@ -46,4 +46,4 @@
 	id = /datum/reagent/drug/happiness
 	results = list(/datum/reagent/drug/happiness = 4)
 	required_reagents = list(/datum/reagent/nitrous_oxide = 2, /datum/reagent/medicine/epinephrine = 1, /datum/reagent/consumable/ethanol = 1)
-	required_catalysts = list(/datum/reagent/plasma = 5)
+	required_catalysts = list(/datum/reagent/toxin/plasma = 5)

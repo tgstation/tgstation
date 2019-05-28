@@ -174,9 +174,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = 'sound/items/welder.ogg'
 	damtype = "fire"
 	force = 4
-	if(reagents.get_reagent_amount(/datum/reagent/plasma)) // the plasma explodes when exposed to fire
+	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/plasma) / 2.5, 1), get_turf(src), 0, 0)
+		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 		e.start()
 		qdel(src)
 		return
@@ -846,9 +846,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					C.fire_stacks = 2
 					C.IgniteMob()
 
-				if(reagents.get_reagent_amount(/datum/reagent/plasma)) // the plasma explodes when exposed to fire
+				if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 					var/datum/effect_system/reagents_explosion/e = new()
-					e.set_up(round(reagents.get_reagent_amount(/datum/reagent/plasma) / 2.5, 1), get_turf(src), 0, 0)
+					e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 					e.start()
 					qdel(src)
 				return

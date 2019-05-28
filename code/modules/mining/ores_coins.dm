@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_plasma_heads"
 	value = 40
 	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/plasma = 4)
+	grind_results = list(/datum/reagent/toxin/plasma = 4)
 
 /obj/item/coin/uranium
 	name = "uranium coin"
