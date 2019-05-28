@@ -97,9 +97,6 @@
 /datum/mutation/human/proc/on_ranged_attack(atom/target)
 	return
 
-/datum/mutation/human/proc/on_move(new_loc)
-	return
-
 /datum/mutation/human/proc/on_life()
 	return
 

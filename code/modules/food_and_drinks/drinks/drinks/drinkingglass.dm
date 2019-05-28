@@ -24,6 +24,7 @@
 			icon_state = R.glass_icon_state
 		else
 			var/mutable_appearance/reagent_overlay = mutable_appearance(icon, "glassoverlay")
+			icon_state = "glass_empty"
 			reagent_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 			add_overlay(reagent_overlay)
 	else

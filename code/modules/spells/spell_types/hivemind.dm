@@ -516,7 +516,7 @@
 		if(target.is_real_hivehost())
 			continue
 		if(prob(20))
-			var/text = pick(";HELP!","I'm losing control of the situation!!","Get me outta here!")
+			var/text = pick(":h Help!!",":h Run!",":h They're here!",":h Get out!",":h Hide!",":h Kill them!",":h Cult!",":h Changeling!",":h Traitor!",":h Nuke ops!",":h Revolutionaries!",":h Wizard!",":h Zombies!",":h Ghosts!",":h AI rogue!",":h Borgs emagged!",":h Maint!!",":h Dying!!",":h AI lock down the borgs law 1!",":h I'm losing control of the situation!!")
 			target.say(text, forced = "panic")
 		var/effect = rand(1,4)
 		switch(effect)
@@ -588,6 +588,10 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/target = targets[1]
+	if(!do_after(usr,30,0,usr))
+		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
+		revert_cast()
+		return
 	if(!user.is_real_hivehost())
 		to_chat(user, "<span class='notice'>Our vessel is too weak to handle this power, we must cease our mind control beforehand.</span>")
 		revert_cast()
@@ -736,7 +740,7 @@
 	for(var/mob/living/carbon/C in targets)
 		if(!is_hivehost(C))
 			continue
-		if(C.InCritical() || (C.stat == DEAD && C?.mind.last_death + 150 >= world.time) )
+		if(C.InCritical() || (C.stat == DEAD && C.timeofdeath + 150 >= world.time) )
 			C.gib()
 			hive.track_bonus += TRACKER_BONUS_LARGE
 			hive.size_mod += 5

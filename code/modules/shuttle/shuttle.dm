@@ -262,6 +262,7 @@
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
 	var/initial_engines = 0 //initial engine power
+	var/list/engine_list = list()
 	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
 	var/list/hidden_turfs = list()
 
@@ -725,19 +726,47 @@
 	return null
 
 /obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
-	var/s
+	var/selected_sound
 	switch(phase)
 		if(HYPERSPACE_WARMUP)
-			s = 'sound/effects/hyperspace_begin.ogg'
+			selected_sound = "hyperspace_begin"
 		if(HYPERSPACE_LAUNCH)
-			s = 'sound/effects/hyperspace_progress.ogg'
+			selected_sound = "hyperspace_progress"
 		if(HYPERSPACE_END)
-			s = 'sound/effects/hyperspace_end.ogg'
+			selected_sound = "hyperspace_end"
 		else
 			CRASH("Invalid hyperspace sound phase: [phase]")
-	for(var/A in areas)
-		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
-			playsound(E, s, 100, FALSE, max(width, height) - world.view)
+	// This previously was played from each door at max volume, and was one of the worst things I had ever seen.
+	// Now it's instead played from the nearest engine if close, or the first engine in the list if far since it doesn't really matter.
+	// Or a door if for some reason the shuttle has no engine, fuck oh hi daniel fuck it
+	var/range = (engine_coeff * max(width, height))
+	var/long_range = range * 2.5
+	var/atom/distant_source
+	if(engine_list[1])
+		distant_source = engine_list[1]
+	else
+		for(var/A in areas)
+			distant_source = locate(/obj/machinery/door) in A
+			if(distant_source)
+				break
+
+	if(distant_source)
+		for(var/mob/M in SSmobs.clients_by_zlevel[z])
+			var/dist_far = get_dist(M, distant_source)
+			if(dist_far <= long_range && dist_far > range)
+				M.playsound_local(distant_source, "sound/effects/[selected_sound]_distance.ogg", 100, falloff = 20)
+			else if(dist_far <= range)
+				var/source
+				if(engine_list.len == 0)
+					source = distant_source
+				else
+					var/closest_dist = 10000
+					for(var/obj/O in engine_list)
+						var/dist_near = get_dist(M, O)
+						if(dist_near < closest_dist)
+							source = O
+							closest_dist = dist_near
+				M.playsound_local(source, "sound/effects/[selected_sound].ogg", 100, falloff = range / 2)
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time
@@ -749,14 +778,15 @@
 	current_engines = max(0,current_engines + mod)
 	if(in_flight())
 		var/delta_coeff = engine_coeff / old_coeff
-		modTimer(delta_coeff)
-
+		modTimer(delta_coeff) 
+ 
 /obj/docking_port/mobile/proc/count_engines()
 	. = 0
 	for(var/thing in shuttle_areas)
 		var/area/shuttle/areaInstance = thing
 		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
 			if(!QDELETED(E))
+				engine_list += E
 				. += E.engine_power
 
 // Double initial engines to get to 0.5 minimum

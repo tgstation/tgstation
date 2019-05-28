@@ -7,6 +7,7 @@
 	mood_quirk = TRUE
 	gain_text = "<span class='danger'>Your back REALLY hurts!</span>"
 	lose_text = "<span class='notice'>Your back feels better.</span>"
+	medical_record_text = "Patient scans indicate severe and chronic back pain."
 
 /datum/quirk/badback/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -37,7 +38,7 @@
 	value = -4
 	gain_text = "<span class='danger'>You can't see anything.</span>"
 	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
-	medical_record_text = "Subject has permanent blindness."
+	medical_record_text = "Patient has permanent blindness."
 
 /datum/quirk/blindness/add()
 	quirk_holder.become_blind(ROUNDSTART_TRAIT)
@@ -67,7 +68,7 @@
 	mob_trait = TRAIT_DEAF
 	gain_text = "<span class='danger'>You can't hear anything.</span>"
 	lose_text = "<span class='notice'>You're able to hear again!</span>"
-	medical_record_text = "Subject's cochlear nerve is incurably damaged."
+	medical_record_text = "Patient's cochlear nerve is incurably damaged."
 
 /datum/quirk/depression
 	name = "Depression"
@@ -76,7 +77,7 @@
 	value = -1
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
-	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
+	medical_record_text = "Patient has a severe mood disorder, causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
 
 /datum/quirk/depression/on_process()
@@ -90,6 +91,7 @@
 	mood_quirk = TRUE
 	var/obj/item/heirloom
 	var/where
+	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -214,6 +216,7 @@
 	value = -1
 	gain_text = "<span class='danger'>You seem to make a big deal out of everything.</span>"
 	lose_text = "<span class='notice'>You don't seem to make a big deal out of everything anymore.</span>"
+	medical_record_text = "Patient demonstrates a high level of emotional volatility."
 
 /datum/quirk/hypersensitive/add()
 	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
@@ -233,6 +236,7 @@
 	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = "<span class='notice'>Just the thought of drinking alcohol makes your head spin.</span>"
 	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
+	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
 
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
@@ -256,6 +260,7 @@
 	name = "Nyctophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	value = -1
+	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 
 /datum/quirk/nyctophobia/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -333,6 +338,7 @@
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
 	value = -1
 	var/slot_string = "limb"
+	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
 
 /datum/quirk/prosthetic_limb/on_spawn()
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)

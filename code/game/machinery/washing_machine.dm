@@ -19,7 +19,7 @@
 	to_chat(user, "<span class='notice'>Alt-click it to start a wash cycle.</span>")
 
 /obj/machinery/washing_machine/AltClick(mob/user)
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 
 	if(busy)

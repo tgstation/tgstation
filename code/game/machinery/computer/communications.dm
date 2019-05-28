@@ -52,7 +52,7 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if(!usr.canUseTopic(src))
+	if(!usr.canUseTopic(src, !issilicon(usr)))
 		return
 	if(!is_station_level(z) && !is_reserved_level(z)) //Can only use in transit and on SS13
 		to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
@@ -708,7 +708,7 @@
 		to_chat(user, "Intercomms recharging. Please stand by.")
 		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
-	if(!input || !user.canUseTopic(src))
+	if(!input || !user.canUseTopic(src, !issilicon(usr)))
 		return
 	SScommunications.make_announcement(user, is_silicon, input)
 	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> made a priority announcement from <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", user)
