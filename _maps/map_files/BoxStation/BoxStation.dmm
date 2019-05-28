@@ -24591,6 +24591,10 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/locker)
 "bgt" = (
@@ -39113,7 +39117,7 @@
 	},
 /obj/machinery/requests_console{
 	department = "Atmospherics";
-	departmentType = 4;
+	departmentType = 3;
 	name = "Atmos RC";
 	pixel_x = 30
 	},
@@ -43630,7 +43634,7 @@
 "caE" = (
 /obj/machinery/requests_console{
 	department = "Atmospherics";
-	departmentType = 4;
+	departmentType = 3;
 	name = "Atmos RC";
 	pixel_x = 30
 	},
@@ -44335,7 +44339,7 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "ccg" = (
-/obj/machinery/telecomms/message_server,
+/obj/machinery/telecomms/message_server/preset,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "cch" = (
@@ -45200,31 +45204,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-"ces" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"cet" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cev" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -45446,15 +45425,14 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "cfd" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/structure/closet/radiation,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cfe" = (
@@ -45599,6 +45577,10 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cfD" = (
@@ -45691,6 +45673,7 @@
 	req_access_txt = "10"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cfN" = (
@@ -46981,7 +46964,7 @@
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
-	departmentType = 3;
+	departmentType = 4;
 	name = "Chief Engineer RC";
 	pixel_x = -32
 	},
@@ -47590,14 +47573,15 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ckT" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/yellow{
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room";
+	req_access_txt = "10"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckU" = (
@@ -47938,15 +47922,11 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"clO" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/engine/engineering)
 "clQ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -52109,17 +52089,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"cyM" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Room";
-	req_access_txt = "10"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cyT" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -55196,7 +55165,7 @@
 /obj/machinery/requests_console{
 	announcementConsole = 0;
 	department = "Engineering";
-	departmentType = 4;
+	departmentType = 3;
 	name = "Engineering RC";
 	pixel_y = 30
 	},
@@ -55466,20 +55435,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"dQC" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/space,
-/area/solar/port/fore)
 "dUO" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -55634,6 +55589,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"foE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "fsD" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -55939,20 +55904,6 @@
 "hZk" = (
 /turf/open/floor/plasteel,
 /area/science/nanite)
-"iaI" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/space,
-/area/solar/port/aft)
 "ibG" = (
 /obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/bot,
@@ -56079,6 +56030,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"jvP" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "jxy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -56503,20 +56460,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
-"lNg" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/space/basic,
-/area/solar/port/aft)
 "lNB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -56565,20 +56508,6 @@
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"mll" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/space/basic,
-/area/solar/starboard/fore)
 "mvb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white/corner{
@@ -56634,20 +56563,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/explab)
-"mKx" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/space/basic,
-/area/solar/starboard/aft)
 "mMA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -57130,20 +57045,6 @@
 	dir = 4
 	},
 /area/science/explab)
-"qtY" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/space,
-/area/solar/starboard/aft)
 "quT" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -57401,6 +57302,13 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
+"sWA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "sXy" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -57561,20 +57469,6 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
-"tVp" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/space/basic,
-/area/solar/port/fore)
 "tXL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -58105,20 +57999,6 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"xKR" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/space,
-/area/solar/starboard/fore)
 "xXe" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "telelab";
@@ -73411,15 +73291,15 @@ aaa
 abY
 aaa
 acV
-tVp
+adu
 adZ
 aaf
 acV
-tVp
+adu
 adZ
 aaf
 acV
-tVp
+adu
 adZ
 aaa
 aaf
@@ -73506,7 +73386,7 @@ aaS
 aaa
 ccc
 ccX
-iaI
+ccX
 ccX
 ccX
 cgz
@@ -73514,7 +73394,7 @@ chL
 ciP
 cjH
 cjH
-lNg
+cjH
 cjH
 cnl
 aaa
@@ -74534,7 +74414,7 @@ aaS
 aaa
 ccc
 ccX
-iaI
+ccX
 ccX
 ccX
 cgz
@@ -74542,7 +74422,7 @@ chL
 ciP
 cjH
 cjH
-lNg
+cjH
 cjH
 cnl
 aaa
@@ -75467,15 +75347,15 @@ aaa
 aaS
 aaa
 acV
-dQC
+adz
 adZ
 aaf
 acV
-dQC
+adz
 adZ
 aaf
 acV
-dQC
+adz
 adZ
 aaa
 aaf
@@ -75562,7 +75442,7 @@ aaS
 aaa
 ccc
 ccX
-iaI
+ccX
 ccX
 ccX
 cgz
@@ -75570,7 +75450,7 @@ chL
 ciP
 cjH
 cjH
-lNg
+cjH
 cjH
 cnl
 aaa
@@ -89188,9 +89068,9 @@ bZE
 cbs
 cCT
 cdn
+sWA
 cej
 cep
-ces
 clN
 ccm
 ckF
@@ -89445,10 +89325,10 @@ cfh
 cfM
 cco
 cdp
-cel
-cyM
-ckT
 cgU
+cel
+ckT
+foE
 cco
 cgU
 cgU
@@ -89702,9 +89582,9 @@ cap
 ctR
 ccn
 cdo
+jvP
 cek
 ccw
-cet
 cfd
 cfB
 cfI
@@ -93993,10 +93873,10 @@ aaa
 aaa
 aaf
 arj
-clO
+aua
 asZ
 aua
-clO
+aua
 awB
 axY
 azh
@@ -98340,15 +98220,15 @@ aaa
 aaS
 aaa
 ads
-mll
+adT
 aeG
 aaf
 ads
-mll
+adT
 aeG
 aaf
 ads
-mll
+adT
 aeG
 aaa
 aaf
@@ -100396,15 +100276,15 @@ aaa
 aaS
 aaa
 ads
-xKR
+adW
 aeG
 aaf
 ads
-xKR
+adW
 aeG
 aaf
 ads
-xKR
+adW
 aeG
 aaa
 aaf
@@ -107190,15 +107070,15 @@ aaa
 aaf
 aaa
 cMQ
-mKx
+crC
 cNa
 aaf
 cMQ
-mKx
+crC
 cNa
 aaf
 cMQ
-mKx
+crC
 cNa
 aaa
 aaS
@@ -109246,15 +109126,15 @@ aaa
 aaf
 aaa
 cMQ
-qtY
+crE
 cNa
 aaf
 cMQ
-qtY
+crE
 cNa
 aaf
 cMQ
-qtY
+crE
 cNa
 aaa
 aaS

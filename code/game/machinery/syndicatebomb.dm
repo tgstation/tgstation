@@ -11,6 +11,7 @@
 	density = FALSE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	speed_process = TRUE
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 
@@ -86,6 +87,7 @@
 		payload = new payload(src)
 	update_icon()
 	countdown = new(src)
+	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/syndicatebomb/Destroy()
 	QDEL_NULL(wires)
@@ -278,8 +280,7 @@
 	qdel(src)
 
 /obj/item/bombcore/proc/defuse()
-//Note: 	Because of how var/defused is used you shouldn't override this UNLESS you intend to set the var to 0 or
-//			otherwise remove the core/reset the wires before the end of defuse(). It will repeatedly be called otherwise.
+//Note: 	the machine's defusal is mostly done from the wires code, this is here if you want the core itself to do anything.
 
 ///Bomb Core Subtypes///
 
@@ -300,6 +301,7 @@
 		holder.explode_now = FALSE
 		holder.update_icon()
 		holder.updateDialog()
+		STOP_PROCESSING(SSfastprocess, holder)
 
 /obj/item/bombcore/training/detonate()
 	var/obj/machinery/syndicatebomb/holder = loc

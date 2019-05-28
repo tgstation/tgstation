@@ -417,6 +417,7 @@ What a mess.*/
 						P.info += "<B>Security Record Lost!</B><BR>"
 						P.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, "Record Lost")
 					P.info += "</TT>"
+					P.update_icon()
 					printing = null
 			if("Print Poster")
 				if(!( printing ))
