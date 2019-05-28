@@ -48,6 +48,7 @@
 	P.info += "<HR><B>Notes:</B><BR>"
 	P.info_links = P.info
 	P.updateinfolinks()
+	P.update_icon()
 
 	if(ismob(loc))
 		var/mob/M = loc
