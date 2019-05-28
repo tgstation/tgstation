@@ -39,8 +39,8 @@
 
 /datum/chemical_reaction/moonshine
 	name = "Moonshine"
-	id = "moonshine"
-	results = list("moonshine" = 10)
+	id = /datum/reagent/consumable/ethanol/moonshine
+	results = list(/datum/reagent/consumable/ethanol/moonshine = 10)
 	required_reagents = list("nutriment" = 5, "sugar" = 5)
 	required_catalysts = list("enzyme" = 5)
 
@@ -80,50 +80,50 @@
 
 /datum/chemical_reaction/rum_coke
 	name = "Rum and Coke"
-	id = "rumcoke"
-	results = list("rumcoke" = 3)
+	id = /datum/reagent/consumable/ethanol/rum_coke
+	results = list(/datum/reagent/consumable/ethanol/rum_coke = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, "cola" = 1)
 
 /datum/chemical_reaction/cuba_libre
 	name = "Cuba Libre"
-	id = "cubalibre"
-	results = list("cubalibre" = 4)
-	required_reagents = list("rumcoke" = 3, "limejuice" = 1)
+	id = /datum/reagent/consumable/ethanol/cuba_libre
+	results = list(/datum/reagent/consumable/ethanol/cuba_libre = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum_coke = 3, "limejuice" = 1)
 
 /datum/chemical_reaction/martini
 	name = "Classic Martini"
-	id = "martini"
-	results = list("martini" = 3)
+	id = /datum/reagent/consumable/ethanol/martini
+	results = list(/datum/reagent/consumable/ethanol/martini = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/ethanol/vermouth = 1)
 
 /datum/chemical_reaction/vodkamartini
 	name = "Vodka Martini"
-	id = "vodkamartini"
-	results = list("vodkamartini" = 3)
+	id = /datum/reagent/consumable/ethanol/vodkamartini
+	results = list(/datum/reagent/consumable/ethanol/vodkamartini = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/ethanol/vermouth = 1)
 
 /datum/chemical_reaction/white_russian
 	name = "White Russian"
-	id = "whiterussian"
-	results = list("whiterussian" = 5)
-	required_reagents = list("blackrussian" = 3, "cream" = 2)
+	id = /datum/reagent/consumable/ethanol/white_russian
+	results = list(/datum/reagent/consumable/ethanol/white_russian = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/blackrussian = 3, "cream" = 2)
 
 /datum/chemical_reaction/whiskey_cola
 	name = "Whiskey Cola"
-	id = "whiskeycola"
-	results = list("whiskeycola" = 3)
+	id = /datum/reagent/consumable/ethanol/whiskey_cola
+	results = list(/datum/reagent/consumable/ethanol/whiskey_cola = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, "cola" = 1)
 
 /datum/chemical_reaction/screwdriver
 	name = "Screwdriver"
-	id = "screwdrivercocktail"
-	results = list("screwdrivercocktail" = 3)
+	id = /datum/reagent/consumable/ethanol/screwdrivercocktail
+	results = list(/datum/reagent/consumable/ethanol/screwdrivercocktail = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, "orangejuice" = 1)
 
 /datum/chemical_reaction/bloody_mary
 	name = "Bloody Mary"
-	id = "bloodymary"
-	results = list("bloodymary" = 4)
+	id = /datum/reagent/consumable/ethanol/bloody_mary
+	results = list(/datum/reagent/consumable/ethanol/bloody_mary = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 1, "tomatojuice" = 2, "limejuice" = 1)
 
 /datum/chemical_reaction/gargle_blaster
@@ -134,14 +134,14 @@
 
 /datum/chemical_reaction/brave_bull
 	name = "Brave Bull"
-	id = "bravebull"
-	results = list("bravebull" = 3)
+	id = /datum/reagent/consumable/ethanol/brave_bull
+	results = list(/datum/reagent/consumable/ethanol/brave_bull = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 2, /datum/reagent/consumable/ethanol/kahlua = 1)
 
 /datum/chemical_reaction/tequila_sunrise
 	name = "Tequila Sunrise"
-	id = "tequilasunrise"
-	results = list("tequilasunrise" = 5)
+	id = /datum/reagent/consumable/ethanol/tequila_sunrise
+	results = list(/datum/reagent/consumable/ethanol/tequila_sunrise = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 2, "orangejuice" = 2, "grenadine" = 1)
 
 /datum/chemical_reaction/toxins_special
@@ -153,7 +153,7 @@
 /datum/chemical_reaction/beepsky_smash
 	name = "Beepksy Smash"
 	id = "beepksysmash"
-	results = list("beepskysmash" = 5)
+	results = list(/datum/reagent/consumable/ethanol/beepsky_smash = 5)
 	required_reagents = list("limejuice" = 2, "quadruple_sec" = 2, /datum/reagent/iron = 1)
 
 /datum/chemical_reaction/doctor_delight
@@ -164,14 +164,14 @@
 
 /datum/chemical_reaction/irish_cream
 	name = "Irish Cream"
-	id = "irishcream"
-	results = list("irishcream" = 3)
+	id = /datum/reagent/consumable/ethanol/irish_cream
+	results = list(/datum/reagent/consumable/ethanol/irish_cream = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, "cream" = 1)
 
 /datum/chemical_reaction/manly_dorf
 	name = "The Manly Dorf"
-	id = "manlydorf"
-	results = list("manlydorf" = 3)
+	id = /datum/reagent/consumable/ethanol/manly_dorf
+	results = list(/datum/reagent/consumable/ethanol/manly_dorf = 3)
 	required_reagents = list (/datum/reagent/consumable/ethanol/beer = 1, /datum/reagent/consumable/ethanol/ale = 2)
 
 /datum/chemical_reaction/greenbeer
@@ -189,39 +189,39 @@
 
 /datum/chemical_reaction/irish_coffee
 	name = "Irish Coffee"
-	id = "irishcoffee"
-	results = list("irishcoffee" = 2)
-	required_reagents = list("irishcream" = 1, "coffee" = 1)
+	id = /datum/reagent/consumable/ethanol/irishcoffee
+	results = list(/datum/reagent/consumable/ethanol/irishcoffee = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 1, "coffee" = 1)
 
 /datum/chemical_reaction/b52
 	name = "B-52"
-	id = "b52"
-	results = list("b52" = 3)
-	required_reagents = list("irishcream" = 1, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/cognac = 1)
+	id = /datum/reagent/consumable/ethanol/b52
+	results = list(/datum/reagent/consumable/ethanol/b52 = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/cognac = 1)
 
 /datum/chemical_reaction/atomicbomb
 	name = "Atomic Bomb"
 	id = "atomicbomb"
 	results = list("atomicbomb" = 10)
-	required_reagents = list("b52" = 10, "uranium" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/b52 = 10, "uranium" = 1)
 
 /datum/chemical_reaction/margarita
 	name = "Margarita"
-	id = "margarita"
-	results = list("margarita" = 3)
+	id = /datum/reagent/consumable/ethanol/margarita
+	results = list(/datum/reagent/consumable/ethanol/margarita = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 2, "limejuice" = 1)
 
 /datum/chemical_reaction/longislandicedtea
 	name = "Long Island Iced Tea"
-	id = "longislandicedtea"
-	results = list("longislandicedtea" = 4)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/ethanol/gin = 1, /datum/reagent/consumable/ethanol/tequila = 1, "cubalibre" = 1)
+	id = /datum/reagent/consumable/ethanol/longislandicedtea
+	results = list(/datum/reagent/consumable/ethanol/longislandicedtea = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/ethanol/gin = 1, /datum/reagent/consumable/ethanol/tequila = 1, /datum/reagent/consumable/ethanol/cuba_libre = 1)
 
 /datum/chemical_reaction/threemileisland
 	name = "Three Mile Island Iced Tea"
 	id = /datum/reagent/consumable/ethanol/threemileisland
 	results = list(/datum/reagent/consumable/ethanol/threemileisland = 10)
-	required_reagents = list("longislandicedtea" = 10, "uranium" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/longislandicedtea = 10, "uranium" = 1)
 
 /datum/chemical_reaction/whiskeysoda
 	name = "Whiskey Soda"
@@ -231,21 +231,21 @@
 
 /datum/chemical_reaction/black_russian
 	name = "Black Russian"
-	id = "blackrussian"
-	results = list("blackrussian" = 5)
+	id = /datum/reagent/consumable/ethanol/blackrussian
+	results = list(/datum/reagent/consumable/ethanol/blackrussian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 3, /datum/reagent/consumable/ethanol/kahlua = 2)
 
 /datum/chemical_reaction/manhattan
 	name = "Manhattan"
-	id = "manhattan"
-	results = list("manhattan" = 3)
+	id = /datum/reagent/consumable/ethanol/manhattan
+	results = list(/datum/reagent/consumable/ethanol/manhattan = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, /datum/reagent/consumable/ethanol/vermouth = 1)
 
 /datum/chemical_reaction/manhattan_proj
 	name = "Manhattan Project"
-	id = "manhattan_proj"
-	results = list("manhattan_proj" = 10)
-	required_reagents = list("manhattan" = 10, "uranium" = 1)
+	id = /datum/reagent/consumable/ethanol/manhattan_proj
+	results = list(/datum/reagent/consumable/ethanol/manhattan_proj = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/manhattan = 10, "uranium" = 1)
 
 /datum/chemical_reaction/vodka_tonic
 	name = "Vodka and Tonic"
@@ -275,7 +275,7 @@
 	name = "Allies Cocktail"
 	id = "alliescocktail"
 	results = list("alliescocktail" = 2)
-	required_reagents = list("martini" = 1, /datum/reagent/consumable/ethanol/vodka = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/martini = 1, /datum/reagent/consumable/ethanol/vodka = 1)
 
 /datum/chemical_reaction/demonsblood
 	name = "Demons Blood"
@@ -285,8 +285,8 @@
 
 /datum/chemical_reaction/booger
 	name = "Booger"
-	id = "booger"
-	results = list("booger" = 4)
+	id = /datum/reagent/consumable/ethanol/booger
+	results = list(/datum/reagent/consumable/ethanol/booger = 4)
 	required_reagents = list("cream" = 1, "banana" = 1, /datum/reagent/consumable/ethanol/rum = 1, "watermelonjuice" = 1)
 
 /datum/chemical_reaction/antifreeze
@@ -363,13 +363,13 @@
 	name = "Changeling Sting"
 	id = "changelingsting"
 	results = list("changelingsting" = 5)
-	required_reagents = list("screwdrivercocktail" = 1, "lemon_lime" = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/screwdrivercocktail = 1, "lemon_lime" = 2)
 
 /datum/chemical_reaction/aloe
 	name = "Aloe"
 	id = "aloe"
 	results = list("aloe" = 2)
-	required_reagents = list("irishcream" = 1, "watermelonjuice" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 1, "watermelonjuice" = 1)
 
 /datum/chemical_reaction/andalusia
 	name = "Andalusia"
@@ -393,13 +393,13 @@
 	name = "Irish Car Bomb"
 	id = "irishcarbomb"
 	results = list("irishcarbomb" = 2)
-	required_reagents = list(/datum/reagent/consumable/ethanol/ale = 1, "irishcream" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/ale = 1, /datum/reagent/consumable/ethanol/irish_cream = 1)
 
 /datum/chemical_reaction/syndicatebomb
 	name = "Syndicate Bomb"
 	id = "syndicatebomb"
 	results = list("syndicatebomb" = 2)
-	required_reagents = list(/datum/reagent/consumable/ethanol/beer = 1, "whiskeycola" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/beer = 1, /datum/reagent/consumable/ethanol/whiskey_cola = 1)
 
 /datum/chemical_reaction/erikasurprise
 	name = "Erika Surprise"
@@ -471,7 +471,7 @@
 	name = "Drunken Blumpkin"
 	id = "drunkenblumpkin"
 	results = list("drunkenblumpkin" = 4)
-	required_reagents = list("blumpkinjuice" = 1, "irishcream" = 2, "ice" = 1)
+	required_reagents = list("blumpkinjuice" = 1, /datum/reagent/consumable/ethanol/irish_cream = 2, "ice" = 1)
 
 /datum/chemical_reaction/pumpkin_latte
 	name = "Pumpkin space latte"
@@ -522,7 +522,7 @@
 	name = "Hearty Punch"
 	id = "hearty_punch"
 	results = list("hearty_punch" = 1)  //Very little, for balance reasons
-	required_reagents = list("bravebull" = 5, "syndicatebomb" = 5, /datum/reagent/consumable/ethanol/absinthe = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/brave_bull = 5, "syndicatebomb" = 5, /datum/reagent/consumable/ethanol/absinthe = 5)
 	mix_message = "The mixture darkens to a healthy crimson."
 	required_temp = 315 //Piping hot!
 
@@ -530,7 +530,7 @@
 	name = "Bacchus' Blessing"
 	id = "bacchus_blessing"
 	results = list("bacchus_blessing" = 4)
-	required_reagents = list(/datum/reagent/consumable/ethanol/hooch = 1, /datum/reagent/consumable/ethanol/absinthe = 1, "manlydorf" = 1, "syndicatebomb" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/hooch = 1, /datum/reagent/consumable/ethanol/absinthe = 1, /datum/reagent/consumable/ethanol/manly_dorf = 1, "syndicatebomb" = 1)
 	mix_message = "<span class='warning'>The mixture turns to a sickening froth.</span>"
 
 /datum/chemical_reaction/lemonade
@@ -688,7 +688,7 @@
 	name = "Fanciulli"
 	id = "fanciulli"
 	results = list("fanciulli" = 2)
-	required_reagents = list("manhattan" = 1, "fernet" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/manhattan = 1, "fernet" = 1)
 
 /datum/chemical_reaction/branca_menta
 	name = "Branca Menta"
@@ -731,7 +731,7 @@
 	name = "Turbo"
 	id = "turbo"
 	results = list("turbo" = 5)
-	required_reagents = list("moonshine" = 2, /datum/reagent/nitrous_oxide = 1, "sugar_rush" = 1, "pwr_game" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 2, /datum/reagent/nitrous_oxide = 1, "sugar_rush" = 1, "pwr_game" = 1)
 
 /datum/chemical_reaction/old_timer
 	name = "Old Timer"

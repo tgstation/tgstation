@@ -48,7 +48,7 @@
 	filling_color = "#FF0000"
 	foodtype = FRUIT | GROSS
 	grind_results = list("ketchup" = 0, /datum/reagent/blood = 0)
-	distill_reagent = "bloodymary"
+	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue

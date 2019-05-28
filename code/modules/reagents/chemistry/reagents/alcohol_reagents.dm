@@ -511,7 +511,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#8CFF8C" // rgb: 140, 255, 140
 	boozepwr = 45
 	taste_description = "sweet 'n creamy"
-	glass_icon_state = "booger"
+	glass_icon_state = /datum/reagent/consumable/ethanol/booger
 	glass_name = "Booger"
 	glass_desc = "Ewww..."
 
@@ -573,7 +573,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/M)
 	if(QDELETED(light_holder))
-		M.reagents.del_reagent("tequilasunrise") //If we lost our light object somehow, remove the reagent
+		M.reagents.del_reagent(/datum/reagent/consumable/ethanol/tequila_sunrise) //If we lost our light object somehow, remove the reagent
 	else if(light_holder.loc != M)
 		light_holder.forceMove(M)
 	return ..()
