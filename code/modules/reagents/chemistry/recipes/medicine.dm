@@ -165,7 +165,7 @@
 	results = list("mannitol" = 3)
 	required_reagents = list("sugar" = 1, "hydrogen" = 1, "water" = 1)
 	mix_message = "The solution slightly bubbles, becoming thicker."
-	
+
 /datum/chemical_reaction/neurine
 	name = "Neurine"
 	id = "neurine"
@@ -209,35 +209,35 @@
 	results = list("haloperidol" = 5)
 	required_reagents = list("chlorine" = 1, "fluorine" = 1, "aluminium" = 1, "potass_iodide" = 1, "oil" = 1)
 
-/datum/chemical_reaction/bicaridine
-	name = "Bicaridine"
-	id = "bicaridine"
-	results = list("bicaridine" = 3)
+/datum/chemical_reaction/ibuprofen
+	name = "ibuprofen"
+	id = "ibuprofen"
+	results = list("ibuprofen" = 3)
 	required_reagents = list("carbon" = 1, "oxygen" = 1, "sugar" = 1)
 
-/datum/chemical_reaction/kelotane
-	name = "Kelotane"
-	id = "kelotane"
-	results = list("kelotane" = 2)
+/datum/chemical_reaction/naproxen
+	name = "naproxen"
+	id = "naproxen"
+	results = list("naproxen" = 2)
 	required_reagents = list("carbon" = 1, "silicon" = 1)
 
-/datum/chemical_reaction/antitoxin
-	name = "Antitoxin"
-	id = "antitoxin"
-	results = list("antitoxin" = 3)
+/datum/chemical_reaction/acamprosate
+	name = "acamprosate"
+	id = "acamprosate"
+	results = list("acamprosate" = 3)
 	required_reagents = list("nitrogen" = 1, "silicon" = 1, "potassium" = 1)
 
-/datum/chemical_reaction/tricordrazine
-	name = "Tricordrazine"
-	id = "tricordrazine"
-	results = list("tricordrazine" = 3)
-	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
+/datum/chemical_reaction/tricurol
+	name = "tricurol"
+	id = "tricurol"
+	results = list("tricurol" = 3)
+	required_reagents = list("ibuprofen" = 1, "naproxen" = 1, "acamprosate" = 1)
 
 /datum/chemical_reaction/regen_jelly
 	name = "Regenerative Jelly"
 	id = "regen_jelly"
 	results = list("regen_jelly" = 2)
-	required_reagents = list("tricordrazine" = 1, "slimejelly" = 1)
+	required_reagents = list("tricurol" = 1, "slimejelly" = 1)
 
 /datum/chemical_reaction/corazone
 	name = "Corazone"

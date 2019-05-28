@@ -77,7 +77,7 @@
 /obj/item/storage/firstaid/toxin
 	name = "toxin treatment kit"
 	desc = "Used to treat toxic blood content and radiation poisoning."
-	icon_state = "antitoxin"
+	icon_state = "acamprosate"
 	item_state = "firstaid-toxin"
 
 /obj/item/storage/firstaid/toxin/suicide_act(mob/living/carbon/user)
@@ -86,7 +86,7 @@
 
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
 	. = ..()
-	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
+	icon_state = pick("acamprosate","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
 
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)

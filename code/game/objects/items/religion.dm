@@ -116,7 +116,7 @@
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
 	H.adjustToxLoss(-15)
 	H.setOxyLoss(0)
-	H.reagents.add_reagent("inaprovaline", 5)
+	H.reagents.add_reagent("salmeterol", 5)
 
 /obj/item/banner/science
 	name = "sciencia banner"
@@ -365,7 +365,7 @@
 	desc = "This one is rusted."
 	force = 30
 	armour_penetration = 15
-	
+
 /obj/item/claymore/weak/ceremonial
 	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
 	force = 15

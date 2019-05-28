@@ -966,104 +966,104 @@
 	M.reagents.remove_reagent("sugar", 3)
 	..()
 
-//Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
-/datum/reagent/medicine/bicaridine
-	name = "Bicaridine"
-	id = "bicaridine"
+//Totally Not Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
+/datum/reagent/medicine/ibuprofen
+	name = "Ibuprofen"
+	id = "ibuprofen"
 	description = "Restores bruising. Overdose causes it instead."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-/datum/reagent/medicine/bicaridine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/ibuprofen/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-2*REM, 0)
 	..()
 	. = 1
 
-/datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
+/datum/reagent/medicine/ibuprofen/overdose_process(mob/living/M)
 	M.adjustBruteLoss(4*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
-/datum/reagent/medicine/dexalin
-	name = "Dexalin"
-	id = "dexalin"
+/datum/reagent/medicine/terbutaline
+	name = "Terbutaline"
+	id = "terbutaline"
 	description = "Restores oxygen loss. Overdose causes it instead."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-/datum/reagent/medicine/dexalin/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/terbutaline/on_mob_life(mob/living/carbon/M)
 	M.adjustOxyLoss(-2*REM, 0)
 	..()
 	. = 1
 
-/datum/reagent/medicine/dexalin/overdose_process(mob/living/M)
+/datum/reagent/medicine/terbutaline/overdose_process(mob/living/M)
 	M.adjustOxyLoss(4*REM, 0)
 	..()
 	. = 1
 
-/datum/reagent/medicine/kelotane
-	name = "Kelotane"
-	id = "kelotane"
+/datum/reagent/medicine/naproxen
+	name = "Naproxen"
+	id = "naproxen"
 	description = "Restores fire damage. Overdose causes it instead."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-/datum/reagent/medicine/kelotane/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/naproxen/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-2*REM, 0)
 	..()
 	. = 1
 
-/datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
+/datum/reagent/medicine/naproxen/overdose_process(mob/living/M)
 	M.adjustFireLoss(4*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
-/datum/reagent/medicine/antitoxin
-	name = "Anti-Toxin"
-	id = "antitoxin"
+/datum/reagent/medicine/acamprosate
+	name = "Acamprosate"
+	id = "acamprosate"
 	description = "Heals toxin damage and removes toxins in the bloodstream. Overdose causes toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
 	taste_description = "a roll of gauze"
 
-/datum/reagent/medicine/antitoxin/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/acamprosate/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-2*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.id,1)
 	..()
 	. = 1
 
-/datum/reagent/medicine/antitoxin/overdose_process(mob/living/M)
+/datum/reagent/medicine/acamprosate/overdose_process(mob/living/M)
 	M.adjustToxLoss(4*REM, 0) // End result is 2 toxin loss taken, because it heals 2 and then removes 4.
 	..()
 	. = 1
 
-/datum/reagent/medicine/inaprovaline
-	name = "Inaprovaline"
-	id = "inaprovaline"
+/datum/reagent/medicine/salmeterol
+	name = "Salmeterol"
+	id = "salmeterol"
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/salmeterol/on_mob_life(mob/living/carbon/M)
 	if(M.losebreath >= 5)
 		M.losebreath -= 5
 	..()
 
-/datum/reagent/medicine/tricordrazine
-	name = "Tricordrazine"
-	id = "tricordrazine"
+/datum/reagent/medicine/tricurol
+	name = "Tricurol"
+	id = "tricurol"
 	description = "Has a high chance to heal all types of damage. Overdose instead causes it."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
 	taste_description = "grossness"
 
-/datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/tricurol/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
@@ -1072,7 +1072,7 @@
 		. = 1
 	..()
 
-/datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
+/datum/reagent/medicine/tricurol/overdose_process(mob/living/M)
 	M.adjustToxLoss(2*REM, 0)
 	M.adjustOxyLoss(2*REM, 0)
 	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)

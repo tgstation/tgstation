@@ -43,13 +43,13 @@
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute_avoid = "tricordrazine"
-	var/treatment_brute = "bicaridine"
+	var/treatment_brute_avoid = "tricurol"
+	var/treatment_brute = "ibuprofen"
 	var/treatment_oxy_avoid = null
-	var/treatment_oxy = "dexalin"
-	var/treatment_fire_avoid = "tricordrazine"
-	var/treatment_fire = "kelotane"
-	var/treatment_tox_avoid = "tricordrazine"
+	var/treatment_oxy = "terbutaline"
+	var/treatment_fire_avoid = "tricurol"
+	var/treatment_fire = "naproxen"
+	var/treatment_tox_avoid = "tricurol"
 	var/treatment_tox = "charcoal"
 	var/treatment_virus_avoid = null
 	var/treatment_virus = "spaceacillin"
@@ -60,9 +60,9 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_brute = "tricordrazine"
-	treatment_fire = "tricordrazine"
-	treatment_tox = "tricordrazine"
+	treatment_brute = "tricurol"
+	treatment_fire = "tricurol"
+	treatment_tox = "tricurol"
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"

@@ -424,8 +424,8 @@
 	name = "stuffed legion"
 	desc = "The former skull of a damned human, filled with goliath meat. It has a decorative lava pool made of ketchup and hotsauce."
 	icon_state = "stuffed_legion"
-	bonus_reagents = list("vitamin" = 3, "capsaicin" = 1, "tricordrazine" = 5)
-	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10)
+	bonus_reagents = list("vitamin" = 3, "capsaicin" = 1, "tricurol" = 5)
+	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricurol" = 10)
 	tastes = list("death" = 2, "rock" = 1, "meat" = 1, "hot peppers" = 1)
 	foodtype = MEAT
 
@@ -492,7 +492,7 @@
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "gumball"
-	list_reagents = list("sugar" = 5, "bicaridine" = 2, "kelotane" = 2)	//Kek
+	list_reagents = list("sugar" = 5, "ibuprofen" = 2, "naproxen" = 2)	//Kek
 	tastes = list("candy")
 	foodtype = JUNKFOOD
 

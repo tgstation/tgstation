@@ -487,7 +487,7 @@
 		else
 			owner.visible_message("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.")
 			var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
-			var/list/chems = list("bicaridine", "salbutamol", "kelotane", "antitoxin")
+			var/list/chems = list("ibuprofen", "salbutamol", "naproxen", "acamprosate")
 			healSnake.poison_type = pick(chems)
 			healSnake.name = "Asclepius's Snake"
 			healSnake.real_name = "Asclepius's Snake"

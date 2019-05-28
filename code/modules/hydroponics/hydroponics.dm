@@ -503,7 +503,7 @@
 		else if(!self_sustaining)
 			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
-	// Antitoxin binds shit pretty well. So the tox goes significantly down
+	// acamprosate binds shit pretty well. So the tox goes significantly down
 	if(S.has_reagent("charcoal", 1))
 		adjustToxic(-round(S.get_reagent_amount("charcoal") * 2))
 
