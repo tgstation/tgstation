@@ -8,8 +8,7 @@
 	flags_1 = NODECONSTRUCT_1
 	use_power = NO_POWER_USE
 	var/static/list/shortcuts = list(
-		"meth" = "methamphetamine",
-		"tricord" = "tricordrazine"
+		"meth" = "methamphetamine"
 	)
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \

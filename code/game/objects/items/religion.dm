@@ -116,7 +116,7 @@
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
 	H.adjustToxLoss(-15)
 	H.setOxyLoss(0)
-	H.reagents.add_reagent("inaprovaline", 5)
+	H.reagents.add_reagent("salbutamol", 5)
 
 /obj/item/banner/science
 	name = "sciencia banner"

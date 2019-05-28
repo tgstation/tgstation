@@ -17,12 +17,12 @@
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
-		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
+		list("epinephrine", "morphine", "salbutamol", "styptic_powder", "silver_sulfadiazine"),
 		list("oculine","inacusiate"),
-		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
+		list("charcoal", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
 	)
-	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
+	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: epinephrine -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	payment_department = ACCOUNT_MED
@@ -274,7 +274,7 @@
 	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
 	icon_state = "sleeper_clockwork"
 	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
-	possible_chems = list(list("epinephrine", "salbutamol", "bicaridine", "kelotane", "oculine", "inacusiate", "mannitol"))
+	possible_chems = list(list("epinephrine", "salbutamol", "styptic_powder", "silver_sulfadiazine", "oculine", "inacusiate", "mannitol"))
 
 /obj/machinery/sleeper/clockwork/process()
 	if(occupant && isliving(occupant))
