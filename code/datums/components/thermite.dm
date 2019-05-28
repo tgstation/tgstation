@@ -31,7 +31,7 @@
 	amount = _amount*10
 
 	var/turf/master = parent
-	overlay = mutable_appearance('icons/effects/effects.dmi', /datum/reagent/thermite)
+	overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
 	master.add_overlay(overlay)
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
