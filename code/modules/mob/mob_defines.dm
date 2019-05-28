@@ -104,3 +104,5 @@
 	var/datum/click_intercept
 
 	var/registered_z
+
+	var/updating_glide_size = TRUE
