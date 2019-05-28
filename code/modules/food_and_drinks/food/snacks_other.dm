@@ -403,7 +403,7 @@
 	desc = "Who knew vodka was a fruit?"
 	icon_state = "melonkeg"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 3)
-	list_reagents = list("nutriment" = 9, "vodka" = 15, "vitamin" = 4)
+	list_reagents = list("nutriment" = 9, /datum/reagent/consumable/ethanol/vodka = 15, "vitamin" = 4)
 	filling_color = "#FFD700"
 	volume = 80
 	bitesize = 5

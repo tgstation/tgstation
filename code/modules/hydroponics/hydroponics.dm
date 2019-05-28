@@ -517,10 +517,10 @@
 		adjustWater(round(S.get_reagent_amount("milk") * 0.9))
 
 	// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
-	if(S.has_reagent("beer", 1))
-		adjustHealth(-round(S.get_reagent_amount("beer") * 0.05))
-		adjustNutri(round(S.get_reagent_amount("beer") * 0.25))
-		adjustWater(round(S.get_reagent_amount("beer") * 0.7))
+	if(S.has_reagent(/datum/reagent/consumable/ethanol/beer, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/consumable/ethanol/beer) * 0.05))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/ethanol/beer) * 0.25))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/ethanol/beer) * 0.7))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 	if(S.has_reagent(/datum/reagent/fluorine, 1))

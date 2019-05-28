@@ -27,7 +27,7 @@
 	bitesize = 100
 	foodtype = VEGETABLES
 	juice_results = list("potato" = 0)
-	distill_reagent = "vodka"
+	distill_reagent = /datum/reagent/consumable/ethanol/vodka
 
 /obj/item/reagent_containers/food/snacks/grown/potato/wedges
 	name = "potato wedges"

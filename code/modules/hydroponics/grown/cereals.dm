@@ -24,7 +24,7 @@
 	foodtype = GRAIN
 	grind_results = list("flour" = 0)
 	tastes = list("wheat" = 1)
-	distill_reagent = "beer"
+	distill_reagent = /datum/reagent/consumable/ethanol/beer
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -47,7 +47,7 @@
 	foodtype = GRAIN
 	grind_results = list("flour" = 0)
 	tastes = list("oat" = 1)
-	distill_reagent = "ale"
+	distill_reagent = /datum/reagent/consumable/ethanol/ale
 
 // Rice
 /obj/item/seeds/wheat/rice

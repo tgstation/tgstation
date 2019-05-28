@@ -28,7 +28,7 @@
 	foodtype = FRUIT
 	juice_results = list("berryjuice" = 0)
 	tastes = list("berry" = 1)
-	distill_reagent = "gin"
+	distill_reagent = /datum/reagent/consumable/ethanol/gin
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -194,7 +194,7 @@
 	foodtype = FRUIT
 	juice_results = list("grapejuice" = 0)
 	tastes = list("grape" = 1)
-	distill_reagent = "wine"
+	distill_reagent = /datum/reagent/consumable/ethanol/wine
 
 // Green Grapes
 /obj/item/seeds/grape/green
@@ -214,4 +214,4 @@
 	icon_state = "greengrapes"
 	filling_color = "#7FFF00"
 	tastes = list("green grape" = 1)
-	distill_reagent = "cognac"
+	distill_reagent = /datum/reagent/consumable/ethanol/cognac

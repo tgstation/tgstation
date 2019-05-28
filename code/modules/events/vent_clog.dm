@@ -15,7 +15,7 @@
 	var/reagentsAmount = 100
 	var/list/saferChems = list(/datum/reagent/water,/datum/reagent/carbon,"flour",/datum/reagent/space_cleaner,"nutriment","condensedcapsaicin","mushroomhallucinogen",/datum/reagent/lube,/datum/reagent/glitter/pink,/datum/reagent/cryptobiolin,
 						 /datum/reagent/toxin/plantbgone,/datum/reagent/blood,"charcoal",/datum/reagent/drug/space_drugs,"morphine",/datum/reagent/water/holywater,"ethanol","hot_coco",/datum/reagent/toxin/acid,/datum/reagent/toxin/mindbreaker,/datum/reagent/toxin/rotatium,/datum/reagent/bluespace,
-						 /datum/reagent/pax,"laughter",/datum/reagent/concentrated_barbers_aid,/datum/reagent/colorful_reagent,/datum/reagent/peaceborg/confuse,/datum/reagent/peaceborg/tire,/datum/reagent/consumable/sodiumchloride,"beer",/datum/reagent/hair_dye,"sugar",/datum/reagent/glitter/white,/datum/reagent/growthserum)
+						 /datum/reagent/pax,"laughter",/datum/reagent/concentrated_barbers_aid,/datum/reagent/colorful_reagent,/datum/reagent/peaceborg/confuse,/datum/reagent/peaceborg/tire,/datum/reagent/consumable/sodiumchloride,/datum/reagent/consumable/ethanol/beer,/datum/reagent/hair_dye,"sugar",/datum/reagent/glitter/white,/datum/reagent/growthserum)
 	//needs to be chemid unit checked at some point
 
 /datum/round_event/vent_clog/announce()
@@ -95,7 +95,7 @@
 		if(vent && vent.loc)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
-			R.add_reagent("beer", reagentsAmount)
+			R.add_reagent(/datum/reagent/consumable/ethanol/beer, reagentsAmount)
 
 			var/datum/effect_system/foam_spread/foam = new
 			foam.set_up(200, get_turf(vent), R)

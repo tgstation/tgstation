@@ -81,7 +81,7 @@
 	filling_color = "#FFD700"
 	bitesize_mod = 2
 	foodtype = VEGETABLES | SUGAR
-	distill_reagent = "rum"
+	distill_reagent = /datum/reagent/consumable/ethanol/rum
 
 // Gatfruit
 /obj/item/seeds/gatfruit

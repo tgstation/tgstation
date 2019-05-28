@@ -72,7 +72,7 @@
 	bitesize_mod = 2
 	dry_grind = TRUE
 	grind_results = list(/datum/reagent/toxin/coffeepowder = 0)
-	distill_reagent = "kahlua"
+	distill_reagent = /datum/reagent/consumable/ethanol/kahlua
 
 // Coffee Robusta
 /obj/item/seeds/coffee/robusta
