@@ -1015,7 +1015,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/support/reinforcement/saboteur_borg
 	name = "Syndicate Saboteur Cyborg"
 	desc = "A streamlined engineering cyborg, equipped with covert modules. Also incapable of leaving the welder in the shuttle. \
-			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
+			Aside from regular Engineering equipment, it comes with an emag and a special destination tagger allowing it to traverse the station's disposal pipes like an innocent parcel. \
 			Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	refundable = TRUE
