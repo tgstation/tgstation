@@ -17,6 +17,7 @@
 
 /datum/component/storage/concrete/pockets/small
 	max_items = 1
+	max_w_class = WEIGHT_CLASS_SMALL
 	attack_hand_interact = FALSE
 
 /datum/component/storage/concrete/pockets/tiny
@@ -24,7 +25,15 @@
 	max_w_class = WEIGHT_CLASS_TINY
 	attack_hand_interact = FALSE
 
-/datum/component/storage/concrete/pockets/small/detective
+/datum/component/storage/concrete/pockets/small/fedora/Initialize()
+	. = ..()
+	var/static/list/exception_cache = typecacheof(list(
+		/obj/item/katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana,
+		/obj/item/energy_katana, /obj/item/gun/ballistic/automatic/tommygun
+		))
+	exception_hold = exception_cache
+
+/datum/component/storage/concrete/pockets/small/fedora/detective
 	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
 
 /datum/component/storage/concrete/pockets/shoes
