@@ -120,7 +120,7 @@
 	icon_state = "killertomato"
 	var/awakening = 0
 	filling_color = "#FF0000"
-	distill_reagent = "demonsblood"
+	distill_reagent = /datum/reagent/consumable/ethanol/demonsblood
 
 /obj/item/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)

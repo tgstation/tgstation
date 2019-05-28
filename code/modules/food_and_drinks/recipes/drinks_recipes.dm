@@ -225,8 +225,8 @@
 
 /datum/chemical_reaction/whiskeysoda
 	name = "Whiskey Soda"
-	id = "whiskeysoda"
-	results = list("whiskeysoda" = 3)
+	id = /datum/reagent/consumable/ethanol/whiskeysoda
+	results = list(/datum/reagent/consumable/ethanol/whiskeysoda = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, "sodawater" = 1)
 
 /datum/chemical_reaction/black_russian
@@ -249,26 +249,26 @@
 
 /datum/chemical_reaction/vodka_tonic
 	name = "Vodka and Tonic"
-	id = "vodkatonic"
-	results = list("vodkatonic" = 3)
+	id = /datum/reagent/consumable/ethanol/vodkatonic
+	results = list(/datum/reagent/consumable/ethanol/vodkatonic = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, "tonic" = 1)
 
 /datum/chemical_reaction/gin_fizz
 	name = "Gin Fizz"
-	id = "ginfizz"
-	results = list("ginfizz" = 4)
+	id = /datum/reagent/consumable/ethanol/ginfizz
+	results = list(/datum/reagent/consumable/ethanol/ginfizz = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, "sodawater" = 1, "limejuice" = 1)
 
 /datum/chemical_reaction/bahama_mama
 	name = "Bahama mama"
-	id = "bahama_mama"
-	results = list("bahama_mama" = 6)
+	id = /datum/reagent/consumable/ethanol/bahama_mama
+	results = list(/datum/reagent/consumable/ethanol/bahama_mama = 6)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, "orangejuice" = 2, "limejuice" = 1, "ice" = 1)
 
 /datum/chemical_reaction/singulo
 	name = "Singulo"
-	id = "singulo"
-	results = list("singulo" = 10)
+	id = /datum/reagent/consumable/ethanol/singulo
+	results = list(/datum/reagent/consumable/ethanol/singulo = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/uranium/radium = 1, /datum/reagent/consumable/ethanol/wine = 5)
 
 /datum/chemical_reaction/alliescocktail
@@ -279,8 +279,8 @@
 
 /datum/chemical_reaction/demonsblood
 	name = "Demons Blood"
-	id = "demonsblood"
-	results = list("demonsblood" = 4)
+	id = /datum/reagent/consumable/ethanol/demonsblood
+	results = list(/datum/reagent/consumable/ethanol/demonsblood = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 1, "spacemountainwind" = 1, /datum/reagent/blood = 1, "dr_gibb" = 1)
 
 /datum/chemical_reaction/booger
@@ -291,14 +291,14 @@
 
 /datum/chemical_reaction/antifreeze
 	name = "Anti-freeze"
-	id = "antifreeze"
-	results = list("antifreeze" = 4)
+	id = /datum/reagent/consumable/ethanol/antifreeze
+	results = list(/datum/reagent/consumable/ethanol/antifreeze = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, "cream" = 1, "ice" = 1)
 
 /datum/chemical_reaction/barefoot
 	name = "Barefoot"
-	id = "barefoot"
-	results = list("barefoot" = 3)
+	id = /datum/reagent/consumable/ethanol/barefoot
+	results = list(/datum/reagent/consumable/ethanol/barefoot = 3)
 	required_reagents = list("berryjuice" = 1, "cream" = 1, /datum/reagent/consumable/ethanol/vermouth = 1)
 
 
@@ -306,14 +306,14 @@
 
 /datum/chemical_reaction/sbiten
 	name = "Sbiten"
-	id = "sbiten"
-	results = list("sbiten" = 10)
+	id = /datum/reagent/consumable/ethanol/sbiten
+	results = list(/datum/reagent/consumable/ethanol/sbiten = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 10, "capsaicin" = 1)
 
 /datum/chemical_reaction/red_mead
 	name = "Red Mead"
-	id = "red_mead"
-	results = list("red_mead" = 2)
+	id = /datum/reagent/consumable/ethanol/red_mead
+	results = list(/datum/reagent/consumable/ethanol/red_mead = 2)
 	required_reagents = list(/datum/reagent/blood = 1, "mead" = 1)
 
 /datum/chemical_reaction/mead
@@ -325,14 +325,14 @@
 
 /datum/chemical_reaction/iced_beer
 	name = "Iced Beer"
-	id = "iced_beer"
-	results = list("iced_beer" = 6)
+	id = /datum/reagent/consumable/ethanol/iced_beer
+	results = list(/datum/reagent/consumable/ethanol/iced_beer = 6)
 	required_reagents = list(/datum/reagent/consumable/ethanol/beer = 5, "ice" = 1)
 
 /datum/chemical_reaction/grog
 	name = "Grog"
-	id = "grog"
-	results = list("grog" = 2)
+	id = /datum/reagent/consumable/ethanol/grog
+	results = list(/datum/reagent/consumable/ethanol/grog = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/soy_latte
@@ -367,14 +367,14 @@
 
 /datum/chemical_reaction/aloe
 	name = "Aloe"
-	id = "aloe"
-	results = list("aloe" = 2)
+	id = /datum/reagent/consumable/ethanol/aloe
+	results = list(/datum/reagent/consumable/ethanol/aloe = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 1, "watermelonjuice" = 1)
 
 /datum/chemical_reaction/andalusia
 	name = "Andalusia"
-	id = "andalusia"
-	results = list("andalusia" = 3)
+	id = /datum/reagent/consumable/ethanol/andalusia
+	results = list(/datum/reagent/consumable/ethanol/andalusia = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/ethanol/whiskey = 1, "lemonjuice" = 1)
 
 /datum/chemical_reaction/neurotoxin
@@ -385,8 +385,8 @@
 
 /datum/chemical_reaction/snowwhite
 	name = "Snow White"
-	id = "snowwhite"
-	results = list("snowwhite" = 2)
+	id = /datum/reagent/consumable/ethanol/snowwhite
+	results = list(/datum/reagent/consumable/ethanol/snowwhite = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/beer = 1, "lemon_lime" = 1)
 
 /datum/chemical_reaction/irishcarbomb
@@ -409,8 +409,8 @@
 
 /datum/chemical_reaction/devilskiss
 	name = "Devils Kiss"
-	id = "devilskiss"
-	results = list("devilskiss" = 3)
+	id = /datum/reagent/consumable/ethanol/devilskiss
+	results = list(/datum/reagent/consumable/ethanol/devilskiss = 3)
 	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/rum = 1)
 
 /datum/chemical_reaction/hippiesdelight
@@ -564,7 +564,7 @@
 	name = "Nar'sour"
 	id = "narsour"
 	results = list("narsour" = 1)
-	required_reagents = list(/datum/reagent/blood = 1, "lemonjuice" = 1, "demonsblood" = 1)
+	required_reagents = list(/datum/reagent/blood = 1, "lemonjuice" = 1, /datum/reagent/consumable/ethanol/demonsblood = 1)
 	mix_message = "The mixture develops a sinister glow."
 	mix_sound = 'sound/effects/singlebeat.ogg'
 
@@ -737,7 +737,7 @@
 	name = "Old Timer"
 	id = "old_timer"
 	results = list("old_timer" = 6)
-	required_reagents = list("whiskeysoda" = 3, "parsnipjuice" = 2, "alexander" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskeysoda = 3, "parsnipjuice" = 2, "alexander" = 1)
 
 /datum/chemical_reaction/rubberneck
 	name = "Rubberneck"
