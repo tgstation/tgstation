@@ -134,18 +134,22 @@
 	return pick(GLOB.skin_tones)
 
 GLOBAL_LIST_INIT(skin_tones, list(
-	"albino",
-	"caucasian1",
-	"caucasian2",
-	"caucasian3",
-	"latino",
-	"mediterranean",
-	"asian1",
-	"asian2",
-	"arab",
-	"indian",
-	"african1",
-	"african2"
+	"Albino",
+	"Porcelain",
+	"Ivory",
+	"Sand",
+	"Beige",
+	"Peach",
+	"Honey",
+	"Sienna",
+	"Olive",
+	"Mocha",
+	"Amber",
+	"Bronze",
+	"Caramel",
+	"Hazelnut",
+	"Espresso",
+	"Cacao"
 	))
 
 GLOBAL_LIST_EMPTY(species_list)
@@ -379,7 +383,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/spawned_mobs = new(amount)
 
 	for(var/j in 1 to amount)
-		var/atom/movable/X 
+		var/atom/movable/X
 
 		if (istype(spawn_type, /list))
 			var/mob_type = pick(spawn_type)

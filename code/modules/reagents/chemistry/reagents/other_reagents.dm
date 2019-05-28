@@ -335,28 +335,38 @@
 			var/mob/living/carbon/human/N = M
 			if(N.dna.species.id == "human")
 				switch(N.skin_tone)
-					if("african1")
-						N.skin_tone = "african2"
-					if("indian")
-						N.skin_tone = "african1"
-					if("arab")
-						N.skin_tone = "indian"
-					if("asian2")
-						N.skin_tone = "arab"
-					if("asian1")
-						N.skin_tone = "asian2"
-					if("mediterranean")
-						N.skin_tone = "african1"
-					if("latino")
-						N.skin_tone = "mediterranean"
-					if("caucasian3")
-						N.skin_tone = "mediterranean"
-					if("caucasian2")
-						N.skin_tone = pick("caucasian3", "latino")
-					if("caucasian1")
-						N.skin_tone = "caucasian2"
-					if ("albino")
-						N.skin_tone = "caucasian1"
+					if("Amber")
+						N.skin_tone = pick("Bronze", "Caramel")
+					if("Honey")
+						N.skin_tone = "Amber"
+					if("Beige")
+						N.skin_tone = "Honey"
+					if("Ivory")
+						N.skin_tone = "Beige"
+					if("Espresso")
+						N.skin_tone = "Cacao"
+					if("Hazelnut")
+						N.skin_tone = "Espresso"
+					if("Caramel")
+						N.skin_tone = "Espresso"
+					if("Bronze")
+						N.skin_tone = pick("Caramel", "Hazelnut")
+					if("Mocha")
+						N.skin_tone = "Bronze"
+					if("Olive")
+						N.skin_tone = "Mocha"
+					if("Sienna")
+						N.skin_tone = "Olive"
+					if("Peach")
+						N.skin_tone = "Sienna"
+					if("Sand")
+						N.skin_tone = "Peach"
+					if("Porcelain")
+						N.skin_tone = "Sand"
+					if("Albino")
+						N.skin_tone = "Porcelain"
+					if("Cacao")
+						N.skin_tone = "darkorange"
 
 			if(MUTCOLORS in N.dna.species.species_traits) //take current alien color and darken it slightly
 				var/newcolor = ""

@@ -239,32 +239,42 @@
 /proc/skintone2hex(skin_tone)
 	. = 0
 	switch(skin_tone)
-		if("caucasian1")
+		if("Porcelain")
 			. = "ffe0d1"
-		if("caucasian2")
-			. = "fcccb3"
-		if("caucasian3")
-			. = "e8b59b"
-		if("latino")
-			. = "d9ae96"
-		if("mediterranean")
-			. = "c79b8b"
-		if("asian1")
+		if("Ivory")
 			. = "ffdeb3"
-		if("asian2")
+		if("Sand")
+			. = "fcccb3"
+		if("Beige")
 			. = "e3ba84"
-		if("arab")
+		if("Peach")
+			. = "e8b59b"
+		if("Honey")
+			. = "da9c4a"
+		if("Sienna")
+			. = "d9ae96"
+		if("Olive")
+			. = "c79b8b"
+		if("Mocha")
 			. = "c4915e"
-		if("indian")
+		if("Amber")
 			. = "b87840"
-		if("african1")
+		if("Bronze")
+			. = "885f29"
+		if("Caramel")
 			. = "754523"
-		if("african2")
+		if("Hazelnut")
+			. = "563010"
+		if("Espresso")
 			. = "471c18"
-		if("albino")
+		if("Cacao")
+			. = "2b0c0c"
+		if("Albino")
 			. = "fff4e6"
 		if("orange")
 			. = "ffc905"
+		if("darkorange")
+			. = "bb9302"
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	var/body_plan_changed = FALSE
