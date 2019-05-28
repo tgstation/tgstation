@@ -53,7 +53,7 @@
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 //nice try
 	refined_type = null
-	grind_results = list(/datum/reagent/bluespace = 10, "silicon" = 20)
+	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/silicon = 20)
 
 //Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal

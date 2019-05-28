@@ -97,7 +97,7 @@
 			chem = "plasma"
 			amount = 4
 		if(chem == "holy water and uranium")
-			chem = "uranium"
+			chem = /datum/reagent/uranium
 			reagents.add_reagent(/datum/reagent/water/holywater)
 		reagents.add_reagent(chem,amount)
 

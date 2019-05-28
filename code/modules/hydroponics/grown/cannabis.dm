@@ -50,7 +50,7 @@
 	plantname = "Lifeweed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/white
 	mutatelist = list()
-	reagents_add = list("omnizine" = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
+	reagents_add = list(/datum/reagent/medicine/omnizine = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
 
 
@@ -66,10 +66,10 @@
 						/datum/reagent/toxin/mindbreaker = 0.3,
 						/datum/reagent/mercury = 0.15,
 						/datum/reagent/lithium = 0.15,
-						"atropine" = 0.15,
-						"haloperidol" = 0.15,
+						/datum/reagent/medicine/atropine = 0.15,
+						/datum/reagent/medicine/haloperidol = 0.15,
 						/datum/reagent/drug/methamphetamine = 0.15,
-						"capsaicin" = 0.15,
+						/datum/reagent/consumable/capsaicin = 0.15,
 						/datum/reagent/barbers_aid = 0.15,
 						/datum/reagent/drug/bath_salts = 0.15,
 						/datum/reagent/toxin/itching_powder = 0.15,

@@ -106,7 +106,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/bluespace
-	colour = "bluespace"
+	colour = /datum/reagent/bluespace
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
 	new /obj/item/stack/sheet/bluespace_crystal(get_turf(user), 10)

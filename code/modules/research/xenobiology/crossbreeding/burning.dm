@@ -44,7 +44,7 @@ Burning extracts:
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] boils over with a caustic gas!</span>")
 	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent("condensedcapsaicin", 100)
+	R.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
 
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	smoke.set_up(R, 7, get_turf(user))
@@ -113,8 +113,8 @@ Burning extracts:
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] releases a burst of chilling smoke!</span>")
 	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent("frostoil", 40)
-	user.reagents.add_reagent("cryoxadone",10)
+	R.add_reagent(/datum/reagent/consumable/frostoil, 40)
+	user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,10)
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	smoke.set_up(R, 7, get_turf(user))
 	smoke.start()

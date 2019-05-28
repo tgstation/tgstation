@@ -3,7 +3,7 @@
 	name = /datum/reagent/toxin/formaldehyde
 	id = "Formaldehyde"
 	results = list(/datum/reagent/toxin/formaldehyde = 3)
-	required_reagents = list("ethanol" = 1, /datum/reagent/oxygen = 1, /datum/reagent/silver = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1, /datum/reagent/silver = 1)
 	required_temp = 420
 
 /datum/chemical_reaction/fentanyl
@@ -24,7 +24,7 @@
 	name = "Itching Powder"
 	id = /datum/reagent/toxin/itching_powder
 	results = list(/datum/reagent/toxin/itching_powder = 3)
-	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/ammonia = 1, "charcoal" = 1)
+	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/ammonia = 1, /datum/reagent/medicine/charcoal = 1)
 
 /datum/chemical_reaction/facid
 	name = "Fluorosulfuric acid"
@@ -43,7 +43,7 @@
 	name = /datum/reagent/toxin/lipolicide
 	id = /datum/reagent/toxin/lipolicide
 	results = list(/datum/reagent/toxin/lipolicide = 3)
-	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/diethylamine = 1, "ephedrine" = 1)
+	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/diethylamine = 1, /datum/reagent/medicine/ephedrine = 1)
 
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"
@@ -61,7 +61,7 @@
 	name = "Chloral Hydrate"
 	id = /datum/reagent/toxin/chloralhydrate
 	results = list(/datum/reagent/toxin/chloralhydrate = 1)
-	required_reagents = list("ethanol" = 1, /datum/reagent/chlorine = 3, /datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/chlorine = 3, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
 	name = "Mute Toxin"
@@ -73,19 +73,19 @@
 	name = "Zombie Powder"
 	id = /datum/reagent/toxin/zombiepowder
 	results = list(/datum/reagent/toxin/zombiepowder = 2)
-	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, "morphine" = 5, /datum/reagent/copper = 5)
+	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, /datum/reagent/medicine/morphine = 5, /datum/reagent/copper = 5)
 
 /datum/chemical_reaction/ghoulpowder
 	name = "Ghoul Powder"
 	id = /datum/reagent/toxin/ghoulpowder
 	results = list(/datum/reagent/toxin/ghoulpowder = 2)
-	required_reagents = list(/datum/reagent/toxin/zombiepowder = 1, "epinephrine" = 1)
+	required_reagents = list(/datum/reagent/toxin/zombiepowder = 1, /datum/reagent/medicine/epinephrine = 1)
 
 /datum/chemical_reaction/mindbreaker
 	name = "Mindbreaker Toxin"
 	id = /datum/reagent/toxin/mindbreaker
 	results = list(/datum/reagent/toxin/mindbreaker = 5)
-	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/hydrogen = 1, "charcoal" = 1)
+	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/hydrogen = 1, /datum/reagent/medicine/charcoal = 1)
 
 /datum/chemical_reaction/heparin
 	name = "Heparin"
@@ -112,17 +112,17 @@
 	name = "Anacea"
 	id = /datum/reagent/toxin/anacea
 	results = list(/datum/reagent/toxin/anacea = 3)
-	required_reagents = list("haloperidol" = 1, /datum/reagent/impedrezene = 1, /datum/reagent/uranium/radium = 1)
+	required_reagents = list(/datum/reagent/medicine/haloperidol = 1, /datum/reagent/impedrezene = 1, /datum/reagent/uranium/radium = 1)
 
 /datum/chemical_reaction/mimesbane
 	name = "Mime's Bane"
 	id = /datum/reagent/toxin/mimesbane
 	results = list(/datum/reagent/toxin/mimesbane = 3)
-	required_reagents = list(/datum/reagent/uranium/radium = 1, /datum/reagent/toxin/mutetoxin = 1, "nothing" = 1)
+	required_reagents = list(/datum/reagent/uranium/radium = 1, /datum/reagent/toxin/mutetoxin = 1, /datum/reagent/consumable/nothing = 1)
 
 /datum/chemical_reaction/bonehurtingjuice
 	name = "Bone Hurting Juice"
 	id = /datum/reagent/toxin/bonehurtingjuice
 	results = list(/datum/reagent/toxin/bonehurtingjuice = 5)
-	required_reagents = list(/datum/reagent/toxin/mutagen = 1, /datum/reagent/toxin/itching_powder = 3, "milk" = 1)
+	required_reagents = list(/datum/reagent/toxin/mutagen = 1, /datum/reagent/toxin/itching_powder = 3, /datum/reagent/consumable/milk = 1)
 	mix_message = "<span class='danger'>The mixture suddenly becomes clear and looks a lot like water. You feel a strong urge to drink it.</span>"

@@ -172,7 +172,7 @@
 	name = "bottle of nothing"
 	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
-	list_reagents = list("nothing" = 100)
+	list_reagents = list(/datum/reagent/consumable/nothing = 100)
 	foodtype = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/patron
@@ -295,7 +295,7 @@
 	desc = "Apple juice for adults."
 	icon_state = "hcider"
 	volume = 50
-	list_reagents = list("hcider" = 50)
+	list_reagents = list(/datum/reagent/consumable/ethanol/hcider = 50)
 
 /obj/item/reagent_containers/food/drinks/bottle/grappa
 	name = "Phillipes well-aged Grappa"
@@ -307,7 +307,7 @@
 	name = "Ryo's traditional sake"
 	desc = "Sweet as can be, and burns like fire going down."
 	icon_state = "sakebottle"
-	list_reagents = list("sake" = 100)
+	list_reagents = list(/datum/reagent/consumable/ethanol/sake = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/sake/Initialize()
 	. = ..()
@@ -324,7 +324,7 @@
 	name = "Fernet Bronca"
 	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
 	icon_state = "fernetbottle"
-	list_reagents = list("fernet" = 100)
+	list_reagents = list(/datum/reagent/consumable/ethanol/fernet = 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
@@ -337,7 +337,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
-	list_reagents = list("orangejuice" = 100)
+	list_reagents = list(/datum/reagent/consumable/orangejuice = 100)
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/drinks/bottle/cream
@@ -349,7 +349,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
-	list_reagents = list("cream" = 100)
+	list_reagents = list(/datum/reagent/consumable/cream = 100)
 	foodtype = DAIRY
 
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
@@ -361,7 +361,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
-	list_reagents = list("tomatojuice" = 100)
+	list_reagents = list(/datum/reagent/consumable/tomatojuice = 100)
 	foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
@@ -373,7 +373,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
-	list_reagents = list("limejuice" = 100)
+	list_reagents = list(/datum/reagent/consumable/limejuice = 100)
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/drinks/bottle/menthol
@@ -385,7 +385,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
-	list_reagents = list("menthol" = 100)
+	list_reagents = list(/datum/reagent/consumable/menthol = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/grenadine
 	name = "Jester Grenadine"
@@ -393,7 +393,7 @@
 	custom_price = 10
 	icon_state = "grenadine"
 	isGlass = TRUE
-	list_reagents = list("grenadine" = 100)
+	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/drinks/bottle/applejack
@@ -402,7 +402,7 @@
 	custom_price = 10
 	icon_state = "applejack_bottle"
 	isGlass = TRUE
-	list_reagents = list("applejack" = 100)
+	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/drinks/bottle/champagne
@@ -411,13 +411,13 @@
 	custom_premium_price = 200
 	icon_state = "champagne_bottle"
 	isGlass = TRUE
-	list_reagents = list("champagne" = 100)
+	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/blazaam
 	name = "Ginbad's Blazaam"
 	desc = "You feel like you should give the bottle a good rub before opening."
 	icon_state = "blazaambottle"
-	list_reagents = list("blazaam" = 100)
+	list_reagents = list(/datum/reagent/consumable/ethanol/blazaam = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/trappist
 	name = "Mont de Requin Trappistes Bleu"
@@ -425,7 +425,7 @@
 	custom_premium_price = 50
 	icon_state = "trappistbottle"
 	volume = 50
-	list_reagents = list("trappist" = 50)
+	list_reagents = list(/datum/reagent/consumable/ethanol/trappist = 50)
 
 
 ////////////////////////// MOLOTOV ///////////////////////

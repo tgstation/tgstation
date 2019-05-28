@@ -84,7 +84,7 @@
 
 /obj/effect/decal/cleanable/greenglow/filled/Initialize()
 	. = ..()
-	reagents.add_reagent(pick("uranium", /datum/reagent/uranium/radium), 5)
+	reagents.add_reagent(pick(/datum/reagent/uranium, /datum/reagent/uranium/radium), 5)
 
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"

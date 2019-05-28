@@ -39,8 +39,8 @@
 		/datum/reagent/mercury,
 		/datum/reagent/uranium/radium,
 		/datum/reagent/water,
-		"ethanol",
-		"sugar",
+		/datum/reagent/consumable/ethanol,
+		/datum/reagent/consumable/sugar,
 		/datum/reagent/toxin/acid,
 		/datum/reagent/fuel,
 		/datum/reagent/silver,
@@ -59,9 +59,9 @@
 	)
 	var/list/emagged_reagents = list(
 		/datum/reagent/drug/space_drugs,
-		"morphine",
+		/datum/reagent/medicine/morphine,
 		/datum/reagent/toxin/carpotoxin,
-		"mine_salve",
+		/datum/reagent/medicine/mine_salve,
 		/datum/reagent/toxin
 	)
 
@@ -438,27 +438,27 @@
 	pass_flags = PASSTABLE
 	dispensable_reagents = list(
 		/datum/reagent/water,
-		"ice",
-		"coffee",
-		"cream",
-		"tea",
-		"icetea",
-		"cola",
-		"spacemountainwind",
-		"dr_gibb",
-		"space_up",
-		"tonic",
-		"sodawater",
-		"lemon_lime",
-		"pwr_game",
-		"shamblers",
-		"sugar",
-		"orangejuice",
-		"grenadine",
-		"limejuice",
-		"tomatojuice",
-		"lemonjuice",
-		"menthol"
+		/datum/reagent/consumable/ice,
+		/datum/reagent/consumable/coffee,
+		/datum/reagent/consumable/cream,
+		/datum/reagent/consumable/tea,
+		/datum/reagent/consumable/icetea,
+		/datum/reagent/consumable/space_cola,
+		/datum/reagent/consumable/spacemountainwind,
+		/datum/reagent/consumable/dr_gibb,
+		/datum/reagent/consumable/space_up,
+		/datum/reagent/consumable/tonic,
+		/datum/reagent/consumable/sodawater,
+		/datum/reagent/consumable/lemon_lime,
+		/datum/reagent/consumable/pwr_game,
+		/datum/reagent/consumable/shamblers,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/consumable/orangejuice,
+		/datum/reagent/consumable/grenadine,
+		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/tomatojuice,
+		/datum/reagent/consumable/lemonjuice,
+		/datum/reagent/consumable/menthol
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
@@ -505,20 +505,20 @@
 		/datum/reagent/consumable/ethanol/cognac,
 		/datum/reagent/consumable/ethanol/ale,
 		/datum/reagent/consumable/ethanol/absinthe,
-		"hcider",
-		"creme_de_menthe",
-		"creme_de_cacao",
-		"triple_sec",
-		"sake",
-		"applejack"
+		/datum/reagent/consumable/ethanol/hcider,
+		/datum/reagent/consumable/ethanol/creme_de_menthe,
+		/datum/reagent/consumable/ethanol/creme_de_cacao,
+		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/sake,
+		/datum/reagent/consumable/ethanol/applejack
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
-		"ethanol",
+		/datum/reagent/consumable/ethanol,
 		/datum/reagent/iron,
 		/datum/reagent/toxin/minttoxin,
-		"atomicbomb",
-		"fernet"
+		/datum/reagent/consumable/ethanol/atomicbomb,
+		/datum/reagent/consumable/ethanol/fernet
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
@@ -562,7 +562,7 @@
 		/datum/reagent/toxin/plantbgone,
 		/datum/reagent/toxin/plantbgone/weedkiller,
 		/datum/reagent/toxin/pestkiller,
-		"cryoxadone",
+		/datum/reagent/medicine/cryoxadone,
 		/datum/reagent/ammonia,
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine)

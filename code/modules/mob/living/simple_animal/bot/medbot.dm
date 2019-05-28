@@ -43,16 +43,16 @@
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute_avoid = "tricordrazine"
-	var/treatment_brute = "bicaridine"
+	var/treatment_brute_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_brute = /datum/reagent/medicine/bicaridine
 	var/treatment_oxy_avoid = null
-	var/treatment_oxy = "dexalin"
-	var/treatment_fire_avoid = "tricordrazine"
-	var/treatment_fire = "kelotane"
-	var/treatment_tox_avoid = "tricordrazine"
-	var/treatment_tox = "charcoal"
+	var/treatment_oxy = /datum/reagent/medicine/dexalin
+	var/treatment_fire_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_fire = /datum/reagent/medicine/kelotane
+	var/treatment_tox_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_tox = /datum/reagent/medicine/charcoal
 	var/treatment_virus_avoid = null
-	var/treatment_virus = "spaceacillin"
+	var/treatment_virus = /datum/reagent/medicine/spaceacillin
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 
@@ -60,9 +60,9 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_brute = "tricordrazine"
-	treatment_fire = "tricordrazine"
-	treatment_tox = "tricordrazine"
+	treatment_brute = /datum/reagent/medicine/tricordrazine
+	treatment_fire = /datum/reagent/medicine/tricordrazine
+	treatment_tox = /datum/reagent/medicine/tricordrazine
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"

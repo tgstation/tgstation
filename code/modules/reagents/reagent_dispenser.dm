@@ -117,7 +117,7 @@
 	icon_state = "pepper"
 	anchored = TRUE
 	density = FALSE
-	reagent_id = "condensedcapsaicin"
+	reagent_id = /datum/reagent/consumable/condensedcapsaicin
 
 /obj/structure/reagent_dispensers/peppertank/Initialize()
 	. = ..()
@@ -173,7 +173,7 @@
 	icon_state = "virus_food"
 	anchored = TRUE
 	density = FALSE
-	reagent_id = "virusfood"
+	reagent_id = /datum/reagent/consumable/virus_food
 
 
 /obj/structure/reagent_dispensers/cooking_oil
@@ -181,4 +181,4 @@
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
 	icon_state = "vat"
 	anchored = TRUE
-	reagent_id = "cooking_oil"
+	reagent_id = /datum/reagent/consumable/cooking_oil

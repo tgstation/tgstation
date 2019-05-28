@@ -115,7 +115,7 @@
 			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
 			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(O.drop_location(), O)
 			F.fry(volume)
-			F.reagents.add_reagent("cooking_oil", reac_volume)
+			F.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
 
 /datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
@@ -182,7 +182,7 @@
 	description = "Ketchup, catsup, whatever. It's tomato paste."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
-	taste_description = "ketchup"
+	taste_description = /datum/reagent/consumable/ketchup
 
 
 /datum/reagent/consumable/capsaicin
@@ -227,8 +227,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent("capsaicin"))
-				holder.remove_reagent("capsaicin", 5)
+			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
+				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
 			if(isslime(M))
 				cooling = -rand(5,20)
 		if(15 to 25)
@@ -390,7 +390,7 @@
 	name = "Garlic Juice"
 	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
 	color = "#FEFEFE"
-	taste_description = "garlic"
+	taste_description = /datum/reagent/consumable/garlic
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M)
@@ -487,7 +487,7 @@
 		var/obj/effect/decal/cleanable/food/flour/reagentdecal = new(T)
 		reagentdecal = locate() in T //Might have merged with flour already there.
 		if(reagentdecal)
-			reagentdecal.reagents.add_reagent("flour", reac_volume)
+			reagentdecal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -507,7 +507,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
-	taste_description = "rice"
+	taste_description = /datum/reagent/consumable/rice
 
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
@@ -515,7 +515,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#FFFACD"
-	taste_description = "vanilla"
+	taste_description = /datum/reagent/consumable/vanilla
 
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
@@ -538,7 +538,7 @@
 	taste_description = "sweet slime"
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M)
-	holder.add_reagent("sugar", 3)
+	holder.add_reagent(/datum/reagent/consumable/sugar, 3)
 	..()
 
 /datum/reagent/consumable/honey
@@ -550,7 +550,7 @@
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent("sugar",3)
+	M.reagents.add_reagent(/datum/reagent/consumable/sugar,3)
 	if(prob(55))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
@@ -570,7 +570,7 @@
 	name = "Mayonnaise"
 	description = "An white and oily mixture of mixed egg yolks."
 	color = "#DFDFDF"
-	taste_description = "mayonnaise"
+	taste_description = /datum/reagent/consumable/mayonnaise
 
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"

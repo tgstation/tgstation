@@ -43,7 +43,7 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine
 	name = "epinephrine bottle"
 	desc = "A small bottle. Contains epinephrine - used to stabilize patients."
-	list_reagents = list("epinephrine" = 30)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 30)
 
 /obj/item/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
@@ -64,7 +64,7 @@
 	name = "morphine bottle"
 	desc = "A small bottle of morphine."
 	icon = 'icons/obj/chemical.dmi'
-	list_reagents = list("morphine" = 30)
+	list_reagents = list(/datum/reagent/medicine/morphine = 30)
 
 /obj/item/reagent_containers/glass/bottle/chloralhydrate
 	name = "chloral hydrate bottle"
@@ -75,12 +75,12 @@
 /obj/item/reagent_containers/glass/bottle/mannitol
 	name = "mannitol bottle"
 	desc = "A small bottle of Mannitol. Useful for healing brain damage."
-	list_reagents = list("mannitol" = 30)
+	list_reagents = list(/datum/reagent/medicine/mannitol = 30)
 
 /obj/item/reagent_containers/glass/bottle/charcoal
 	name = "charcoal bottle"
 	desc = "A small bottle of charcoal, which removes toxins and other chemicals from the bloodstream."
-	list_reagents = list("charcoal" = 30)
+	list_reagents = list(/datum/reagent/medicine/charcoal = 30)
 
 /obj/item/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"
@@ -95,7 +95,7 @@
 /obj/item/reagent_containers/glass/bottle/synaptizine
 	name = "synaptizine bottle"
 	desc = "A small bottle of synaptizine."
-	list_reagents = list("synaptizine" = 30)
+	list_reagents = list(/datum/reagent/medicine/synaptizine = 30)
 
 /obj/item/reagent_containers/glass/bottle/formaldehyde
 	name = "formaldehyde bottle"
@@ -122,17 +122,17 @@
 	desc = "A small bottle. Contains the liquid essence of the gods."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "holyflask"
-	list_reagents = list("adminordrazine" = 30)
+	list_reagents = list(/datum/reagent/medicine/adminordrazine = 30)
 
 /obj/item/reagent_containers/glass/bottle/capsaicin
 	name = "Capsaicin Bottle"
 	desc = "A small bottle. Contains hot sauce."
-	list_reagents = list("capsaicin" = 30)
+	list_reagents = list(/datum/reagent/consumable/capsaicin = 30)
 
 /obj/item/reagent_containers/glass/bottle/frostoil
 	name = "Frost Oil Bottle"
 	desc = "A small bottle. Contains cold sauce."
-	list_reagents = list("frostoil" = 30)
+	list_reagents = list(/datum/reagent/consumable/frostoil = 30)
 
 /obj/item/reagent_containers/glass/bottle/traitor
 	name = "syndicate bottle"
@@ -208,23 +208,23 @@
 /obj/item/reagent_containers/glass/bottle/diphenhydramine
 	name = "antihistamine bottle"
 	desc = "A small bottle of diphenhydramine."
-	list_reagents = list("diphenhydramine" = 30)
+	list_reagents = list(/datum/reagent/medicine/diphenhydramine = 30)
 
 /obj/item/reagent_containers/glass/bottle/potass_iodide
 	name = "anti-radiation bottle"
 	desc = "A small bottle of potassium iodide."
-	list_reagents = list("potass_iodide" = 30)
+	list_reagents = list(/datum/reagent/medicine/potass_iodide = 30)
 
 /obj/item/reagent_containers/glass/bottle/salglu_solution
 	name = "saline-glucose solution bottle"
 	desc = "A small bottle of saline-glucose solution."
 	icon_state = "bottle1"
-	list_reagents = list("salglu_solution" = 30)
+	list_reagents = list(/datum/reagent/medicine/salglu_solution = 30)
 
 /obj/item/reagent_containers/glass/bottle/atropine
 	name = "atropine bottle"
 	desc = "A small bottle of atropine."
-	list_reagents = list("atropine" = 30)
+	list_reagents = list(/datum/reagent/medicine/atropine = 30)
 
 /obj/item/reagent_containers/glass/bottle/romerol
 	name = "romerol bottle"
@@ -306,7 +306,7 @@
 /obj/item/reagent_containers/glass/bottle/tuberculosiscure
 	name = "BVAK bottle"
 	desc = "A small bottle containing Bio Virus Antidote Kit."
-	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+	list_reagents = list(/datum/reagent/medicine/atropine = 5, /datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/spaceacillin = 10)
 
 //Oldstation.dmm chemical storage bottles
 
@@ -384,11 +384,11 @@
 
 /obj/item/reagent_containers/glass/bottle/ethanol
 	name = "ethanol bottle"
-	list_reagents = list("ethanol" = 30)
+	list_reagents = list(/datum/reagent/consumable/ethanol = 30)
 
 /obj/item/reagent_containers/glass/bottle/sugar
 	name = "sugar bottle"
-	list_reagents = list("sugar" = 30)
+	list_reagents = list(/datum/reagent/consumable/sugar = 30)
 
 /obj/item/reagent_containers/glass/bottle/sacid
 	name = "sulphuric acid bottle"

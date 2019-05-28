@@ -17,7 +17,7 @@
 	reac_volume = ..()
 	M.adjust_drugginess(reac_volume)
 	if(M.reagents)
-		M.reagents.add_reagent("regenerative_materia", 0.2*reac_volume)
+		M.reagents.add_reagent(/datum/reagent/blob/regenerative_materia, 0.2*reac_volume)
 		M.reagents.add_reagent(/datum/reagent/toxin/spore, 0.2*reac_volume)
 	M.apply_damage(0.7*reac_volume, TOX)
 

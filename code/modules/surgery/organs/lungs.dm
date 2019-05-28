@@ -52,7 +52,7 @@
 	var/heat_level_3_damage = HEAT_GAS_DAMAGE_LEVEL_3
 	var/heat_damage_type = BURN
 
-	var/crit_stabilizing_reagent = "epinephrine"
+	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
@@ -241,13 +241,13 @@
 		var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
 		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 10
-			H.reagents.add_reagent("bz_metabolites",5)
+			H.reagents.add_reagent(/datum/reagent/bz_metabolites,5)
 			if(prob(33))
 				H.adjustBrainLoss(3, 150)
 
 		else if(bz_pp > 0.01)
 			H.hallucination += 5
-			H.reagents.add_reagent("bz_metabolites",1)
+			H.reagents.add_reagent(/datum/reagent/bz_metabolites,1)
 
 
 	// Tritium
@@ -380,7 +380,7 @@
 
 /obj/item/organ/lungs/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("salbutamol", 5)
+	S.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 5)
 	return S
 
 /obj/item/organ/lungs/plasmaman

@@ -126,7 +126,7 @@ To add a crossbreed:
 	name = "healing extract"
 	desc = "A gelatinous extract of pure omnizine."
 	color = "#FF00FF"
-	list_reagents = list("omnizine" = 15)
+	list_reagents = list(/datum/reagent/medicine/omnizine = 15)
 
 /obj/item/slimecrossbeaker/autoinjector //As with the above, but automatically injects whomever it is used on with contents.
 	var/ignore_flags = FALSE
@@ -160,7 +160,7 @@ To add a crossbreed:
 	name = "mending solution"
 	desc = "A strange glob of sweet-smelling semifluid, which seems to stick to skin rather easily."
 	color = "#FF00FF"
-	list_reagents = list("regen_jelly" = 20)
+	list_reagents = list(/datum/reagent/medicine/regen_jelly = 20)
 
 /obj/item/slimecrossbeaker/autoinjector/slimejelly //Primarily for slimepeople, but you do you.
 	self_use_only = TRUE
@@ -184,4 +184,4 @@ To add a crossbreed:
 	name = "invigorating gel"
 	desc = "A bubbling purple mixture, designed to heal and boost movement."
 	color = "#FF00FF"
-	list_reagents = list("regen_jelly" = 30, /datum/reagent/drug/methamphetamine = 9)
+	list_reagents = list(/datum/reagent/medicine/regen_jelly = 30, /datum/reagent/drug/methamphetamine = 9)

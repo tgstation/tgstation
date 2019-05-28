@@ -393,7 +393,7 @@
 	B1.reagents.add_reagent(/datum/reagent/toxin/plantbgone, 25)
 	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
 	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
 
 	beakers += B1
 	beakers += B2
@@ -446,10 +446,10 @@
 	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
 
-	B1.reagents.add_reagent("condensedcapsaicin", 60)
+	B1.reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 60)
 	B1.reagents.add_reagent(/datum/reagent/potassium, 40)
 	B2.reagents.add_reagent(/datum/reagent/phosphorus, 40)
-	B2.reagents.add_reagent("sugar", 40)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 40)
 
 	beakers += B1
 	beakers += B2
@@ -468,7 +468,7 @@
 	B1.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 290)
 	B1.reagents.add_reagent(/datum/reagent/potassium, 10)
 	B2.reagents.add_reagent(/datum/reagent/phosphorus, 10)
-	B2.reagents.add_reagent("sugar", 10)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 10)
 	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 280)
 
 	beakers += B1
@@ -488,7 +488,7 @@
 	B1.reagents.add_reagent(/datum/reagent/colorful_reagent, 25)
 	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
 	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
 
 	beakers += B1
 	beakers += B2
@@ -507,7 +507,7 @@
 	B1.reagents.add_reagent(glitter_type, 25)
 	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
 	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
 
 	beakers += B1
 	beakers += B2
@@ -579,7 +579,7 @@
 	B1.reagents.add_reagent(/datum/reagent/phosphorus, 50)
 	B1.reagents.add_reagent(/datum/reagent/fungalspores, 200)
 	B2.reagents.add_reagent(/datum/reagent/blood, 250)
-	B2.reagents.add_reagent("sugar", 50)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 50)
 
 	beakers += B1
 	beakers += B2

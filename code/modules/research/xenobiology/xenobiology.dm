@@ -193,7 +193,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, "<span class='notice'>You activate [src], and it releases regenerative chemicals!</span>")
-			user.reagents.add_reagent("regen_jelly",10)
+			user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
 			return 600
 
 /obj/item/slime_extract/darkpurple
@@ -229,13 +229,13 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling hot!</span>")
-			user.reagents.add_reagent("capsaicin",10)
+			user.reagents.add_reagent(/datum/reagent/consumable/capsaicin,10)
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.reagents.add_reagent(/datum/reagent/phosphorus,5)//
 			user.reagents.add_reagent(/datum/reagent/potassium,5) // = smoke, along with any reagents inside mr. slime
-			user.reagents.add_reagent("sugar",5)     //
+			user.reagents.add_reagent(/datum/reagent/consumable/sugar,5)     //
 			to_chat(user, "<span class='warning'>You activate [src], and a cloud of smoke bursts out of your skin!</span>")
 			return 450
 
@@ -272,7 +272,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling fast!</span>")
-			user.reagents.add_reagent("ephedrine",5)
+			user.reagents.add_reagent(/datum/reagent/medicine/ephedrine,5)
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -293,8 +293,8 @@
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='notice'>You activate [src]. Your genome feels more stable!</span>")
 			user.adjustCloneLoss(-15)
-			user.reagents.add_reagent("mutadone", 10)
-			user.reagents.add_reagent("potass_iodide", 10)
+			user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10)
+			user.reagents.add_reagent(/datum/reagent/medicine/potass_iodide, 10)
 			return 250
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -318,8 +318,8 @@
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling colder!</span>")
 			user.ExtinguishMob()
 			user.adjust_fire_stacks(-20)
-			user.reagents.add_reagent("frostoil",4)
-			user.reagents.add_reagent("cryoxadone",5)
+			user.reagents.add_reagent(/datum/reagent/consumable/frostoil,4)
+			user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,5)
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -549,7 +549,7 @@
 /obj/item/slime_extract/cerulean/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			user.reagents.add_reagent("salbutamol",15)
+			user.reagents.add_reagent(/datum/reagent/medicine/salbutamol,15)
 			to_chat(user, "<span class='notice'>You feel like you don't need to breathe!</span>")
 			return 150
 

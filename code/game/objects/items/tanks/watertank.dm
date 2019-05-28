@@ -443,7 +443,7 @@
 	reagents.add_reagent(/datum/reagent/clf3,300)
 	reagents.add_reagent(/datum/reagent/cryptobiolin,350)
 	reagents.add_reagent("plasma",250)
-	reagents.add_reagent("condensedcapsaicin",500)
+	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin,500)
 
 /obj/item/reagent_containers/spray/mister/op
 	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."

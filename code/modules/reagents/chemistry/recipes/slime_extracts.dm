@@ -28,7 +28,7 @@
 /datum/chemical_reaction/slime/slimeinaprov
 	name = "Slime epinephrine"
 	id = "m_inaprov"
-	results = list("epinephrine" = 3)
+	results = list(/datum/reagent/medicine/epinephrine = 3)
 	required_reagents = list(/datum/reagent/water = 5)
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/grey
@@ -181,7 +181,7 @@
 /datum/chemical_reaction/slime/slimefrost
 	name = "Slime Frost Oil"
 	id = "m_frostoil"
-	results = list("frostoil" = 10)
+	results = list(/datum/reagent/consumable/frostoil = 10)
 	required_reagents = list("plasma" = 1)
 	required_container = /obj/item/slime_extract/blue
 	required_other = TRUE
@@ -244,7 +244,7 @@
 /datum/chemical_reaction/slime/slimecasp
 	name = "Slime Capsaicin Oil"
 	id = "m_capsaicinoil"
-	results = list("capsaicin" = 10)
+	results = list(/datum/reagent/consumable/capsaicin = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/orange
 	required_other = TRUE
@@ -276,7 +276,7 @@
 /datum/chemical_reaction/slime/slimesmoke
 	name = "Slime Smoke"
 	id = "m_smoke"
-	results = list(/datum/reagent/phosphorus = 10, /datum/reagent/potassium = 10, "sugar" = 10)
+	results = list(/datum/reagent/phosphorus = 10, /datum/reagent/potassium = 10, /datum/reagent/consumable/sugar = 10)
 	required_reagents = list(/datum/reagent/water = 5)
 	required_container = /obj/item/slime_extract/orange
 	required_other = TRUE
@@ -332,7 +332,7 @@
 /datum/chemical_reaction/slime/slimeregen
 	name = "Slime Regen"
 	id = "m_regen"
-	results = list("regen_jelly" = 5)
+	results = list(/datum/reagent/medicine/regen_jelly = 5)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/purple
 	required_other = TRUE
@@ -450,7 +450,7 @@
 /datum/chemical_reaction/slime/slimecornoil
 	name = "Slime Corn Oil"
 	id = "m_cornoil"
-	results = list("cornoil" = 10)
+	results = list(/datum/reagent/consumable/cornoil = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/oil
 	required_other = TRUE
@@ -669,7 +669,7 @@
 
 /datum/chemical_reaction/slime/flight_potion
 	name = "Flight Potion"
-	id = "flightpotion"
+	id = /datum/reagent/flightpotion
 	required_reagents = list(/datum/reagent/water/holywater = 5, /datum/reagent/uranium = 5)
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow

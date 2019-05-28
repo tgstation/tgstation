@@ -445,7 +445,7 @@
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
-	if(S.has_reagent(/datum/reagent/toxin/mutagen, 5) || S.has_reagent(/datum/reagent/uranium/radium, 10) || S.has_reagent("uranium", 10))
+	if(S.has_reagent(/datum/reagent/toxin/mutagen, 5) || S.has_reagent(/datum/reagent/uranium/radium, 10) || S.has_reagent(/datum/reagent/uranium, 10))
 		switch(rand(100))
 			if(91 to 100)
 				adjustHealth(-10)
@@ -466,15 +466,15 @@
 				to_chat(user, "<span class='notice'>Nothing happens...</span>")
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
-	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 2) || S.has_reagent(/datum/reagent/uranium/radium, 5) || S.has_reagent("uranium", 5))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 2) || S.has_reagent(/datum/reagent/uranium/radium, 5) || S.has_reagent(/datum/reagent/uranium, 5))
 		hardmutate()
-	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 1) || S.has_reagent(/datum/reagent/uranium/radium, 2) || S.has_reagent("uranium", 2))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 1) || S.has_reagent(/datum/reagent/uranium/radium, 2) || S.has_reagent(/datum/reagent/uranium, 2))
 		mutate()
 
 	// After handling the mutating, we now handle the damage from adding crude radioactives...
-	if(S.has_reagent("uranium", 1))
-		adjustHealth(-round(S.get_reagent_amount("uranium") * 1))
-		adjustToxic(round(S.get_reagent_amount("uranium") * 2))
+	if(S.has_reagent(/datum/reagent/uranium, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/uranium) * 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/uranium) * 2))
 	if(S.has_reagent(/datum/reagent/uranium/radium, 1))
 		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/uranium/radium) * 1))
 		adjustToxic(round(S.get_reagent_amount(/datum/reagent/uranium/radium) * 3)) // Radium is harsher (OOC: also easier to produce)
@@ -496,25 +496,25 @@
 		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) *1 ))
 
 	// Ambrosia Gaia produces earthsblood.
-	if(S.has_reagent("earthsblood"))
-		self_sufficiency_progress += S.get_reagent_amount("earthsblood")
+	if(S.has_reagent(/datum/reagent/medicine/earthsblood))
+		self_sufficiency_progress += S.get_reagent_amount(/datum/reagent/medicine/earthsblood)
 		if(self_sufficiency_progress >= self_sufficiency_req)
 			become_self_sufficient()
 		else if(!self_sustaining)
 			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
-	if(S.has_reagent("charcoal", 1))
-		adjustToxic(-round(S.get_reagent_amount("charcoal") * 2))
+	if(S.has_reagent(/datum/reagent/medicine/charcoal, 1))
+		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/charcoal) * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
 	if(S.has_reagent(/datum/reagent/toxin, 1))
 		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin) * 2))
 
 	// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
-	if(S.has_reagent("milk", 1))
-		adjustNutri(round(S.get_reagent_amount("milk") * 0.1))
-		adjustWater(round(S.get_reagent_amount("milk") * 0.9))
+	if(S.has_reagent(/datum/reagent/consumable/milk, 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/milk) * 0.1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/milk) * 0.9))
 
 	// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 	if(S.has_reagent(/datum/reagent/consumable/ethanol/beer, 1))
@@ -545,10 +545,10 @@
 		adjustWeeds(-rand(1,2))
 
 	// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
-	if(S.has_reagent("sugar", 1))
+	if(S.has_reagent(/datum/reagent/consumable/sugar, 1))
 		adjustWeeds(rand(1,2))
 		adjustPests(rand(1,2))
-		adjustNutri(round(S.get_reagent_amount("sugar") * 0.1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/sugar) * 0.1))
 
 	// It is water!
 	if(S.has_reagent(/datum/reagent/water, 1))
@@ -561,10 +561,10 @@
 
 	// A variety of nutrients are dissolved in club soda, without sugar.
 	// These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
-	if(S.has_reagent("sodawater", 1))
-		adjustWater(round(S.get_reagent_amount("sodawater") * 1))
-		adjustHealth(round(S.get_reagent_amount("sodawater") * 0.1))
-		adjustNutri(round(S.get_reagent_amount("sodawater") * 0.1))
+	if(S.has_reagent(/datum/reagent/consumable/sodawater, 1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/sodawater) * 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/consumable/sodawater) * 0.1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/sodawater) * 0.1))
 
 	// Man, you guys are retards
 	if(S.has_reagent(/datum/reagent/toxin/acid, 1))
@@ -603,9 +603,9 @@
 		adjustPests(-rand(1,2))
 
 	// Healing
-	if(S.has_reagent("cryoxadone", 1))
-		adjustHealth(round(S.get_reagent_amount("cryoxadone") * 3))
-		adjustToxic(-round(S.get_reagent_amount("cryoxadone") * 3))
+	if(S.has_reagent(/datum/reagent/medicine/cryoxadone, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/medicine/cryoxadone) * 3))
+		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/cryoxadone) * 3))
 
 	// Ammonia is bad ass.
 	if(S.has_reagent(/datum/reagent/ammonia, 1))
@@ -622,9 +622,9 @@
 			myseed.adjust_production(-round(salt/100)-prob(salt%100))
 			myseed.adjust_potency(round(salt*0.5))
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
-	if(S.has_reagent("ash", 1))
-		adjustHealth(round(S.get_reagent_amount("ash") * 0.25))
-		adjustNutri(round(S.get_reagent_amount("ash") * 0.5))
+	if(S.has_reagent(/datum/reagent/ash, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/ash) * 0.25))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/ash) * 0.5))
 		adjustWeeds(-1)
 
 	// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
@@ -636,14 +636,14 @@
 		adjustPests(-rand(1,2))
 
 	// Compost, effectively
-	if(S.has_reagent("nutriment", 1))
-		adjustHealth(round(S.get_reagent_amount("nutriment") * 0.5))
-		adjustNutri(round(S.get_reagent_amount("nutriment") * 1))
+	if(S.has_reagent(/datum/reagent/consumable/nutriment, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/consumable/nutriment) * 0.5))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/nutriment) * 1))
 
 	// Compost for EVERYTHING
-	if(S.has_reagent("virusfood", 1))
-		adjustNutri(round(S.get_reagent_amount("virusfood") * 0.5))
-		adjustHealth(-round(S.get_reagent_amount("virusfood") * 0.5))
+	if(S.has_reagent(/datum/reagent/consumable/virus_food, 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/virus_food) * 0.5))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/consumable/virus_food) * 0.5))
 
 	// FEED ME
 	if(S.has_reagent(/datum/reagent/blood, 1))
@@ -651,17 +651,17 @@
 		adjustPests(rand(2,4))
 
 	// FEED ME SEYMOUR
-	if(S.has_reagent("strange_reagent", 1))
+	if(S.has_reagent(/datum/reagent/medicine/strange_reagent, 1))
 		spawnplant()
 
 	// The best stuff there is. For testing/debugging.
-	if(S.has_reagent("adminordrazine", 1))
-		adjustWater(round(S.get_reagent_amount("adminordrazine") * 1))
-		adjustHealth(round(S.get_reagent_amount("adminordrazine") * 1))
-		adjustNutri(round(S.get_reagent_amount("adminordrazine") * 1))
+	if(S.has_reagent(/datum/reagent/medicine/adminordrazine, 1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/medicine/adminordrazine) * 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/medicine/adminordrazine) * 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/medicine/adminordrazine) * 1))
 		adjustPests(-rand(1,5))
 		adjustWeeds(-rand(1,5))
-	if(S.has_reagent("adminordrazine", 5))
+	if(S.has_reagent(/datum/reagent/medicine/adminordrazine, 5))
 		switch(rand(100))
 			if(66  to 100)
 				mutatespecie()

@@ -315,11 +315,11 @@
 	if(prob(3))
 		to_chat(M, "<span class = 'warning'>You feel salty.</span>")
 		holder.add_reagent(/datum/reagent/consumable/sodiumchloride, 1)
-		holder.remove_reagent("salglu_solution", 0.5)
+		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	else if(prob(3))
 		to_chat(M, "<span class = 'warning'>You feel sweet.</span>")
-		holder.add_reagent("sugar", 1)
-		holder.remove_reagent("salglu_solution", 0.5)
+		holder.add_reagent(/datum/reagent/consumable/sugar, 1)
+		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	if(prob(33))
 		M.adjustBruteLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 		M.adjustFireLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
@@ -387,7 +387,7 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	taste_description = "ash"
+	taste_description = /datum/reagent/ash
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -842,8 +842,8 @@
 	color = "#EEFF8F"
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
-	if(holder.has_reagent("neurotoxin"))
-		holder.remove_reagent("neurotoxin", 5)
+	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
+		holder.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5)
 	if(prob(15))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
@@ -924,7 +924,7 @@
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/M)
 	if(M.AdjustSleeping(-20, FALSE))
 		. = 1
-	M.reagents.remove_reagent("sugar", 3)
+	M.reagents.remove_reagent(/datum/reagent/consumable/sugar, 3)
 	..()
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
