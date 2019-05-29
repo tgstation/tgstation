@@ -36,7 +36,7 @@
 				input_reagent = shortcuts[input_reagent]
 			else
 				input_reagent = find_reagent(input_reagent)
-			if(!input_reagent || !GLOB.chemical_reagents_list[input_reagent])
+			if(!input_reagent || !GLOB.name2reagent[input_reagent])
 				say("OUT OF RANGE")
 				return
 			else

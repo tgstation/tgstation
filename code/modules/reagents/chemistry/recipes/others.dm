@@ -192,13 +192,13 @@
 /datum/chemical_reaction/virus_food_uranium_plasma_gold
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_gold"
-	results = list(/datum/reagent/uranium/uraniumvirusfood/unstable = 1)
+	results = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
 	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/gold = 10, /datum/reagent/toxin/plasma = 1)
 
 /datum/chemical_reaction/virus_food_uranium_plasma_silver
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_silver"
-	results = list(/datum/reagent/uranium/uraniumvirusfood/unstable = 1)
+	results = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
 	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/silver = 10, /datum/reagent/toxin/plasma = 1)
 
 /datum/chemical_reaction/mix_virus
@@ -303,7 +303,7 @@
 
 	name = "Mix Virus 12"
 	id = "mixvirus12"
-	required_reagents = list(/datum/reagent/uranium/uraniumvirusfood/unstable = 1)
+	required_reagents = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
 	level_min = 8
 	level_max = 8
 
