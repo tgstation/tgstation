@@ -269,8 +269,20 @@
 	build_path = /obj/machinery/computer/cargo/request
 
 /obj/item/circuitboard/computer/bounty
-	name = "Nanotrasen Bounty Console (Computer Board)"
+	name = "Bounty Console (Computer Board)"
 	build_path = /obj/machinery/computer/bounty
+	var/subverted = FALSE
+
+/obj/item/circuitboard/computer/bounty/multitool_act(mob/living/user)
+	if(obj_flags & EMAGGED)
+		subverted = !subverted
+		to_chat(user, "<span class='notice'>You give the board a full reset.</span>")
+
+/obj/item/circuitboard/computer/bounty/emag_act(mob/living/user)
+	if(!(obj_flags & EMAGGED))
+		subverted = TRUE
+		obj_flags |= EMAGGED
+		to_chat(user, "<span class='notice'>You expertly work with the sequencer on the board, connecting it up to the Syndicate bounty system. The incompatible technology will give limited access.</span>")
 
 /obj/item/circuitboard/computer/operating
 	name = "Operating Computer (Computer Board)"

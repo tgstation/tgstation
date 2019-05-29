@@ -1,16 +1,24 @@
 #define PRINTER_TIMEOUT 10
 
 /obj/machinery/computer/bounty
-	name = "Nanotrasen bounty console"
+	name = "Bounty console"
 	desc = "Used to check and claim bounties offered by Nanotrasen"
 	icon_screen = "bounty"
 	circuit = /obj/item/circuitboard/computer/bounty
 	light_color = "#E2853D"//orange
 	var/printer_ready = 0 //cooldown var
+	var/subverted = FALSE
 
 /obj/machinery/computer/bounty/Initialize()
 	. = ..()
 	printer_ready = world.time + PRINTER_TIMEOUT
+
+	var/obj/item/circuitboard/computer/bounty/board = circuit
+	subverted = board.subverted
+	if (board.obj_flags & EMAGGED)
+		obj_flags |= EMAGGED
+	else
+		obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/bounty/proc/print_paper()
 	new /obj/item/paper/bounty_printout(loc)
@@ -27,6 +35,20 @@
 		info += "<h3>[B.name]</h3>"
 		info += "<ul><li>Reward: [B.reward_string()]</li>"
 		info += "<li>Completed: [B.completion_string()]</li></ul>"
+
+/obj/machinery/computer/bounty/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
+	"<span class='notice'>You expertly work with the sequencer at the [src], connecting to the Syndicate bounty system. The computer's incompatible technology gives you limited access.</span>")
+
+	obj_flags |= EMAGGED
+	subverted = TRUE
+
+	// This also permamently sets this on the circuit board
+	var/obj/item/circuitboard/computer/bounty/board = circuit
+	board.subverted = TRUE
+	board.obj_flags |= EMAGGED
 
 /obj/machinery/computer/bounty/ui_interact(mob/user)
 	. = ..()
@@ -66,12 +88,42 @@
 		else
 			dat += text("<td>Unclaimed</td>")
 		dat += "</tr>"
+
+	if (subverted)
+		dat += syndicate_bounty_row()
+
+	// TODO: Put in syndicate row if emaged
 	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "bounties", "Nanotrasen Bounties", 700, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
+
+// Syndicate contract row with an emagged computer - randomised slightly
+/obj/machinery/computer/bounty/proc/syndicate_bounty_row()
+	var/background
+	var/dat = ""
+	var/name = "..&&~$£\"\""
+	var/desc = "Sy..icate£$ Bounty D-££~tabase"
+	var/reward = "2222#£"
+	var/complete = "((!"
+	switch(rand(1, 3))
+		if(1)
+			background = "'background-color:#4F7529;'"
+		if(2)
+			background = "'background-color:#294675;'"
+		if(3)
+			background = "'background-color:#990000;'"
+	dat += "<tr style=[background]>"
+	dat += text("<td>[]</td>", name)
+	dat += text("<td>[]</td>", desc)
+	dat += text("<td>[]</td>", reward)
+	dat += text("<td>[]</td>", complete)
+	dat += text("<td><a href='?src=[REF(src)];synd_bounty_connect=1'>..Co%nn$ect</a></td>")
+	dat += "</tr>"
+
+	return dat
 
 /obj/machinery/computer/bounty/Topic(href, href_list)
 	if(..())
@@ -92,4 +144,3 @@
 		playsound(src, "terminal_type", 25, 0)
 
 	updateUsrDialog()
-
