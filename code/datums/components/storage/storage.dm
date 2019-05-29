@@ -18,8 +18,8 @@
 	var/list/cant_hold								//if this is set, items, and their children, won't fit
 	var/list/exception_hold                         //if set, these items will be the exception to the max size of object that can fit.
 
-	var/list/can_hold_full							//will be populated by the typecache of all items added to can_hold
-	var/list/cant_hold_full							//will be populated by the typecache of all items added to cant_hold
+	var/static/list/can_hold_full							//will be populated by the typecache of all items added to can_hold
+	var/static/list/cant_hold_full							//will be populated by the typecache of all items added to cant_hold
 
 	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
 
@@ -507,16 +507,16 @@
 	interface |= return_inv(recursive)
 	return TRUE
 
-/datum/component/storage/proc/topic_handle(datum/source, href_list)
+/datum/component/storage/proc/topic_handle(datum/source, href_list, user)
 	if(href_list["show_valid_pocket_items"])
-		handle_show_valid_items(source)
+		handle_show_valid_items(source, user)
 
-/datum/component/storage/proc/handle_show_valid_items(datum/source)
-	to_chat(usr, "<span class='notice'>[source] can hold: </span>")
+/datum/component/storage/proc/handle_show_valid_items(datum/source, user)
+	to_chat(user, "<span class='notice'>[source] can hold: </span>")
 
 	for(var/valid_obj in can_hold)
 		var/obj/item/valid_item = new valid_obj()
-		to_chat(usr, "\t <span class='notice'>\a [valid_item.name]</span>")
+		to_chat(user, "\t <span class='notice'>\a [valid_item.name]</span>")
 
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
 	set waitfor = FALSE
@@ -569,6 +569,7 @@
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
 	can_hold_full = typecacheof(can_hold)
 	cant_hold_full = typecacheof(cant_hold)
+
 	if(!istype(I) || (I.item_flags & ABSTRACT))
 		return FALSE //Not an item
 	if(I == parent)
