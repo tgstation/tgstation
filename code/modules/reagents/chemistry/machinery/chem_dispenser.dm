@@ -1,3 +1,16 @@
+/proc/translate_legacy_chem_id(id)
+	switch (id)
+		if ("sacid")
+			return "sulphuricacid"
+		if ("facid")
+			return "fluorosulfuricacid"
+		if ("co2")
+			return "carbondioxide"
+		if ("mine_salve")
+			return "minerssalve"
+		else
+			return ckey(id)
+
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
@@ -241,7 +254,7 @@
 			var/res = macroresolution
 			for(var/key in chemicals_to_dispense) // i suppose you could edit the list locally before passing it
 				var/list/keysplit = splittext(key," ")
-				var/r_id = keysplit[1]
+				var/r_id = GLOB.name2reagent[translate_legacy_chem_id(keysplit[1])]
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
@@ -273,7 +286,9 @@
 				var/resmismatch = FALSE
 				for(var/reagents in first_process)
 					var/list/reagent = splittext(reagents, "=")
-					if(dispensable_reagents.Find(reagent[1]))
+					to_chat(world, "reagent is [json_encode(reagent)], id is [reagent[1]], ckey'd [ckey(reagent[1])], reagentpath [GLOB.name2reagent[ckey(reagent[1])]]")
+					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent[1])]
+					if(dispensable_reagents.Find(reagent_id))
 						if (!resmismatch && !check_macro_part(reagents, res))
 							resmismatch = TRUE
 						continue
