@@ -107,3 +107,19 @@
 		else
 			to_chat(user, "<span class='warning'>[src] cannot hold more syringes!</span>")
 	return FALSE
+
+/obj/item/gun/syringe/blowgun
+	name = "blowgun"
+	desc = "Fire syringes at a short distance."
+	icon_state = "blowgun"
+	item_state = "blowgun"
+	fire_sound = 'sound/items/syringeproj.ogg'
+
+/obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(user.getStaminaLoss() > 50)
+		to_chat(user, "<span class='danger'>You need to catch your breath first!</span>")
+		return
+	if(do_after(user, 35, target = src))
+		user.adjustStaminaLoss(40)
+		user.adjustOxyLoss(20)
+		..()
