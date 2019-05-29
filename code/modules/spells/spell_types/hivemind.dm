@@ -169,11 +169,10 @@
 		perform(,user)
 
 /obj/effect/proc_holder/spell/target_hive/hive_shock
-	name = "Neural Shock"
-	desc = "After a short charging time, we overload the mind of one of our vessels with psionic energy, rendering them unconscious for a short period of time. This power weakens over distance, but strengthens with hive size."
+	name = "Sensory Shock"
+	desc = "After a short charging time, we overload the mind of one of our vessels with psionic energy, temporarilly disrupting their sight, hearing, and speech."
 	action_icon_state = "shock"
-
-	charge_max = 600
+	charge_max = 900
 
 /obj/effect/proc_holder/spell/target_hive/hive_shock/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/human/target = targets[1]
@@ -183,22 +182,15 @@
 		return
 	to_chat(user, "<span class='notice'>We begin increasing the psionic bandwidth between ourself and the vessel!</span>")
 	if(do_after(user,30,0,user))
-		var/power = 120-get_dist(user, target)
-		if(!is_hivehost(target))
-			switch(hive.hive_size)
-				if(0 to 4)
-				if(5 to 9)
-					power *= 1.5
-				if(10 to 14)
-					power *= 2
-				if(15 to 19)
-					power *= 2.5
-				else
-					power *= 3
-		if(power > 50 && user.z == target.z)
+		if(user.z == target.z)
 			to_chat(user, "<span class='notice'>We have overloaded the vessel for a short time!</span>")
-			target.Jitter(round(power/10))
-			target.Unconscious(power)
+			target.blind_eyes(2)
+			target.blur_eyes(30)
+			target.minimumDeafTicks(15) //equivalent to 30s deafness
+			target.Jitter(7)
+			target.silent += 7
+			target.stuttering += 30
+			to_chat(target, "<span class='userdanger'>"You feel your mind start to burn!"</span>")
 		else
 			to_chat(user, "<span class='notice'>The vessel was too far away to be affected!</span>")
 	else
@@ -616,7 +608,7 @@
 	reach = 3
 	min_reach = -1
 	item_flags = ABSTRACT | DROPDEL
-	
+
 /obj/effect/proc_holder/spell/self/telekinetic_hand
 	name = "Telekinetic hand"
 	desc = "Makes a telekinetic hand to extend the reach of our unarmed combat. Drop to remove."
@@ -791,11 +783,11 @@
 		return
 
 	var/objective = stripped_input(user, "What objective do you want to give to your vessels?", "Objective")
-	
+
 	if(!objective || !hive)
 		revert_cast()
 		return
-	
+
 	hive.threat_level += 6
 	for(var/i = 0, i < 4, i++)
 		var/mob/living/carbon/C = pick_n_take(valid_targets)
