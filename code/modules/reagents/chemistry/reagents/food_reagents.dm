@@ -182,7 +182,7 @@
 	description = "Ketchup, catsup, whatever. It's tomato paste."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
-	taste_description = /datum/reagent/consumable/ketchup
+	taste_description = "ketchup"
 
 
 /datum/reagent/consumable/capsaicin
@@ -390,7 +390,7 @@
 	name = "Garlic Juice"
 	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
 	color = "#FEFEFE"
-	taste_description = /datum/reagent/consumable/garlic
+	taste_description = "garlic"
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M)
@@ -507,7 +507,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
-	taste_description = /datum/reagent/consumable/rice
+	taste_description = "rice"
 
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
@@ -515,7 +515,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#FFFACD"
-	taste_description = /datum/reagent/consumable/vanilla
+	taste_description = "vanilla"
 
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
@@ -570,7 +570,7 @@
 	name = "Mayonnaise"
 	description = "An white and oily mixture of mixed egg yolks."
 	color = "#DFDFDF"
-	taste_description = /datum/reagent/consumable/mayonnaise
+	taste_description = "mayonnaise"
 
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"

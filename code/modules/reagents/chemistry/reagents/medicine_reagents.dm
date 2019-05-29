@@ -387,7 +387,7 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	taste_description = /datum/reagent/ash
+	taste_description = "ash"
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-2*REM, 0)

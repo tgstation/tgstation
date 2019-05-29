@@ -360,7 +360,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_silver_heads"
 	value = 10
 	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("silver" = 4)
+	grind_results = list(/datum/reagent/silver = 4)
 
 /obj/item/coin/diamond
 	name = "diamond coin"
@@ -372,7 +372,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/iron
 	name = "iron coin"
-	cmineral = /datum/reagent/iron
+	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 1
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
@@ -400,7 +400,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_bananium_heads"
 	value = 200 //makes the clown cry
 	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("banana" = 4)
+	grind_results = list(/datum/reagent/consumable/banana = 4)
 
 /obj/item/coin/adamantine
 	name = "adamantine coin"
@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	value = 300
 
 /obj/item/coin/twoheaded
-	cmineral = /datum/reagent/iron
+	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")

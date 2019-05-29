@@ -53,7 +53,7 @@
 	icon_state = "tomatosoup"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/blood = 10, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list(/datum/reagent/iron = 1)
+	tastes = list("iron" = 1)
 	foodtype = GROSS
 
 /obj/item/reagent_containers/food/snacks/soup/wingfangchu

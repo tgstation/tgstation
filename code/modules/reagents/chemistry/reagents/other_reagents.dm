@@ -3,7 +3,7 @@
 	name = "Blood"
 	color = "#C80000" // rgb: 200, 0, 0
 	metabolization_rate = 5 //fast rate so it disappears fast.
-	taste_description = /datum/reagent/iron
+	taste_description = "iron"
 	taste_mult = 1.3
 	glass_icon_state = "glass_red"
 	glass_name = "glass of tomato juice"
@@ -110,7 +110,7 @@
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
-	taste_description = /datum/reagent/water
+	taste_description = "water"
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of water"
@@ -733,7 +733,7 @@
 	description = "A pale yellow gas that's well known as an oxidizer. While it forms many harmless molecules in its elemental form it is far from harmless."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
-	taste_description = /datum/reagent/chlorine
+	taste_description = "chlorine"
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M)
 	M.take_bodypart_damage(1*REM, 0, 0, 0)
@@ -804,7 +804,7 @@
 	name = "Iron"
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
-	taste_description = /datum/reagent/iron
+	taste_description = "iron"
 
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -1104,7 +1104,7 @@
 	name = "Diethylamine"
 	description = "A secondary amine, mildly corrosive."
 	color = "#604030" // rgb: 96, 64, 48
-	taste_description = /datum/reagent/iron
+	taste_description = "iron"
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
@@ -1343,7 +1343,7 @@
 	description = "For those that need a more creative way to roll out a red carpet."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	taste_description = /datum/reagent/carpet // Your tounge feels furry.
+	taste_description = "carpet" // Your tounge feels furry.
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
@@ -1370,7 +1370,7 @@
 	description = "Supposedly phoenixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	taste_description = /datum/reagent/ash
+	taste_description = "ash"
 
 /datum/reagent/acetone
 	name = "Acetone"
@@ -1646,7 +1646,7 @@
 	name = "Pax"
 	description = "A colorless liquid that suppresses violence on the subjects."
 	color = "#AAAAAA55"
-	taste_description = /datum/reagent/water
+	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/pax/on_mob_add(mob/living/L)
