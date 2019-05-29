@@ -90,7 +90,7 @@
 				change_det_time(newtime)
 				to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 				if (round(newtime * 10) != det_time)
-					to_chat(user, "<span class='warning'>The new value is out of bounds. The lowest possible time is 0 seconds and highest is 30 seconds.</span>")
+					to_chat(user, "<span class='warning'>The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible.</span>")
 			return
 		else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 			change_det_time()
@@ -100,13 +100,13 @@
 		
 /obj/item/grenade/proc/change_det_time(time) //Time uses real time.
 	if(time != null)
-		det_time = round(CLAMP(time * 10, 0, 300))
+		if(time < 3)
+			time = 3
+		det_time = round(CLAMP(time * 10, 0, 50))
 	else
 		var/previous_time = det_time
 		switch(det_time)
 			if (0)
-				det_time = 10
-			if (10)
 				det_time = 30
 			if (30)
 				det_time = 50
