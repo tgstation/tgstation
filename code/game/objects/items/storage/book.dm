@@ -17,11 +17,11 @@
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
-GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon"))
+GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon","Insulationism"))
 //If you get these two lists not matching in size, there will be runtimes and I will hurt you in ways you couldn't even begin to imagine
 // if your bible has no custom itemstate, use one of the existing ones
-GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon"))
-GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon"))
+GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon","insuls"))
+GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "insuls"))
 
 /mob/proc/bible_check() //The bible, if held, might protect against certain things
 	var/obj/item/storage/book/bible/B = locate() in src
@@ -78,7 +78,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			var/mob/living/carbon/human/H = usr
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
-
+		if(icon_state == "insuls")
+			var/mob/living/carbon/human/H =usr
+			var/obj/item/clothing/gloves/color/fyellow/insuls = new
+			insuls.name = "insuls"
+			insuls.desc = "A mere copy of the true insuls."
+			H.equip_to_slot(insuls, ITEM_SLOT_GLOVES)
 		SSreligion.bible_icon_state = icon_state
 		SSreligion.bible_item_state = item_state
 
