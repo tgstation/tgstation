@@ -117,6 +117,21 @@
 /datum/component/storage/PreTransfer()
 	update_actions()
 
+/datum/component/storage/set_holdable(can_hold, cant_hold)
+	can_hold_description = generate_hold_desc()
+
+	can_hold = typecacheof(can_hold)
+	cant_hold = typecacheof(cant_hold)
+
+/datum/component/storage/proc/generate_hold_desc()
+	var/desc = ""
+
+	for(var/valid_obj in can_hold)
+		var/obj/item/valid_item = new valid_obj()
+		desc += "\n\t <span class='notice'>\a [valid_item.name]</span>"
+
+	return desc
+
 /datum/component/storage/proc/update_actions()
 	QDEL_NULL(modeswitch_action)
 	if(!isitem(parent) || !allow_quick_gather)
@@ -510,10 +525,7 @@
 
 /datum/component/storage/proc/handle_show_valid_items(datum/source, user)
 	to_chat(user, "<span class='notice'>[source] can hold: </span>")
-
-	for(var/valid_obj in can_hold)
-		var/obj/item/valid_item = new valid_obj()
-		to_chat(user, "\t <span class='notice'>\a [valid_item.name]</span>")
+	to_chat(user, can_hold_description)
 
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
 	set waitfor = FALSE
@@ -564,9 +576,6 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
-	can_hold = typecacheof(can_hold)
-	cant_hold = typecacheof(cant_hold)
-
 	if(!istype(I) || (I.item_flags & ABSTRACT))
 		return FALSE //Not an item
 	if(I == parent)
