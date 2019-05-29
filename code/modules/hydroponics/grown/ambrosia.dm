@@ -25,7 +25,7 @@
 	icon_dead = "ambrosia-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/ambrosia/deus)
-	reagents_add = list("space_drugs" = 0.15, "styptic_powder" = 0.1, "silver_sulfadiazine" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05, "toxin" = 0.1)
+	reagents_add = list("space_drugs" = 0.15, "sal_acid" = 0.1, "oxandrolone" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05, "toxin" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris
 	seed = /obj/item/seeds/ambrosia

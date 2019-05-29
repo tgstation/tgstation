@@ -492,7 +492,7 @@
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "gumball"
-	list_reagents = list("sugar" = 5, "styptic_powder" = 2, "silver_sulfadiazine" = 2)	//Kek
+	list_reagents = list("sugar" = 5, "sal_acid" = 2, "oxandrolone" = 2)	//Kek
 	tastes = list("candy")
 	foodtype = JUNKFOOD
 

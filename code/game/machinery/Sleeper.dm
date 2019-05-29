@@ -17,7 +17,7 @@
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
-		list("epinephrine", "morphine", "salbutamol", "styptic_powder", "silver_sulfadiazine"),
+		list("epinephrine", "morphine", "salbutamol", "sal_acid", "oxandrolone"),
 		list("oculine","inacusiate"),
 		list("charcoal", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
@@ -274,7 +274,7 @@
 	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
 	icon_state = "sleeper_clockwork"
 	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
-	possible_chems = list(list("epinephrine", "salbutamol", "styptic_powder", "silver_sulfadiazine", "oculine", "inacusiate", "mannitol"))
+	possible_chems = list(list("epinephrine", "salbutamol", "sal_acid", "oxandrolone", "oculine", "inacusiate", "mannitol"))
 
 /obj/machinery/sleeper/clockwork/process()
 	if(occupant && isliving(occupant))

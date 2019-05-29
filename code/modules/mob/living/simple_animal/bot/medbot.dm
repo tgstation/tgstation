@@ -44,11 +44,11 @@
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute_avoid = "omnizine"
-	var/treatment_brute = "styptic_powder"
+	var/treatment_brute = "sal_acid"
 	var/treatment_oxy_avoid = null
 	var/treatment_oxy = "salbutamol"
 	var/treatment_fire_avoid = "omnizine"
-	var/treatment_fire = "silver_sulfadiazine"
+	var/treatment_fire = "oxandrolone"
 	var/treatment_tox_avoid = "omnizine"
 	var/treatment_tox = "charcoal"
 	var/treatment_virus_avoid = null
