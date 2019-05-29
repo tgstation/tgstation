@@ -18,9 +18,6 @@
 	var/list/cant_hold								//if this is set, items, and their children, won't fit
 	var/list/exception_hold                         //if set, these items will be the exception to the max size of object that can fit.
 
-	var/static/list/can_hold_full							//will be populated by the typecache of all items added to can_hold
-	var/static/list/cant_hold_full							//will be populated by the typecache of all items added to cant_hold
-
 	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
 
 	var/locked = FALSE								//when locked nothing can see inside or use it.
@@ -507,7 +504,7 @@
 	interface |= return_inv(recursive)
 	return TRUE
 
-/datum/component/storage/proc/topic_handle(datum/source, href_list, user)
+/datum/component/storage/proc/topic_handle(datum/source, user, href_list)
 	if(href_list["show_valid_pocket_items"])
 		handle_show_valid_items(source, user)
 
@@ -567,8 +564,8 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
-	can_hold_full = typecacheof(can_hold)
-	cant_hold_full = typecacheof(cant_hold)
+	can_hold = typecacheof(can_hold)
+	cant_hold = typecacheof(cant_hold)
 
 	if(!istype(I) || (I.item_flags & ABSTRACT))
 		return FALSE //Not an item
@@ -588,11 +585,11 @@
 			to_chat(M, "<span class='warning'>[host] is full, make some space!</span>")
 		return FALSE //Storage item is full
 	if(length(can_hold))
-		if(!is_type_in_typecache(I, can_hold_full))
+		if(!is_type_in_typecache(I, can_hold))
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
-	if(is_type_in_typecache(I, cant_hold_full)) //Check for specific items which this container can't hold.
+	if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
