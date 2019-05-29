@@ -49,7 +49,7 @@
 		forkload = null
 
 	else if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)
 	else
@@ -81,7 +81,7 @@
 
 /obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)
 	else
@@ -164,6 +164,10 @@
 	materials = list()
 	attack_verb = list("shanked", "shivved")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/obj/item/kitchen/knife/carrotshiv/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/kitchen/rollingpin
 	name = "rolling pin"

@@ -46,6 +46,12 @@
 	icon_state = "horribletie"
 	item_color = "horribletie"
 
+/obj/item/clothing/neck/tie/detective
+	name = "loose tie"
+	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."
+	icon_state = "detective"
+	item_color = "detective"
+
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
@@ -67,7 +73,7 @@
 			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
 			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 
-			if(!(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH))))
+			if(!(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH))))
 				if(heart && istype(heart))
 					heart_strength = "<span class='danger'>an unstable</span>"
 					if(heart.beating)

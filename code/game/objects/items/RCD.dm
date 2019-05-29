@@ -151,7 +151,7 @@ RLD
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
-	var/mode = 1
+	var/mode = RCD_FLOORWALL
 	var/ranged = FALSE
 	var/computer_dir = 1
 	var/airlock_type = /obj/machinery/door/airlock

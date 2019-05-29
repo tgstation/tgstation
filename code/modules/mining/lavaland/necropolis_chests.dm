@@ -1,5 +1,7 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
+#define HIEROPHANT_CLUB_CARDINAL_DAMAGE 30
+
 
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
@@ -190,7 +192,7 @@
 
 /obj/item/rod_of_asclepius/proc/activated()
 	item_flags = DROPDEL
-	add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -223,9 +225,9 @@
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
-		user.add_trait(TRAIT_NODEATH, "memento_mori")
-		user.add_trait(TRAIT_NOHARDCRIT, "memento_mori")
-		user.add_trait(TRAIT_NOCRITDAMAGE, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NODEATH, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NOHARDCRIT, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, "memento_mori")
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -518,7 +520,7 @@
 		. = ..()
 
 /obj/effect/immortality_talisman/void
-	vanish_description = "dragged into the void"
+	vanish_description = "is dragged into the void"
 
 //Shared Bag
 
@@ -690,7 +692,7 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
@@ -1049,6 +1051,11 @@
 /obj/structure/closet/crate/necropolis/colossus
 	name = "colossus chest"
 
+/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/item/projectile/P)
+	if(istype(P, /obj/item/projectile/colossus))
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
+
 /obj/structure/closet/crate/necropolis/colossus/PopulateContents()
 	var/list/choices = subtypesof(/obj/machinery/anomalous_crystal)
 	var/random_crystal = pick(choices)
@@ -1299,7 +1306,9 @@
 	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	new /obj/effect/temp_visual/hierophant/blast(T, user, friendly_fire_check)
+	var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, friendly_fire_check)
+	B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
+	B.monster_damage_boost = FALSE
 	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
@@ -1313,7 +1322,7 @@
 		if(!J)
 			return
 		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
-		B.damage = 30
+		B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
 		B.monster_damage_boost = FALSE
 		previousturf = J
 		J = get_step(previousturf, dir)

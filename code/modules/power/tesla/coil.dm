@@ -13,6 +13,7 @@
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 	var/zap_cooldown = 100
@@ -102,7 +103,7 @@
 	var/power = (powernet.avail/2)
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
-	tesla_zap(src, 10, power/(coeff/2))
+	tesla_zap(src, 10, power/(coeff/2), tesla_flags)
 	tesla_buckle_check(power/(coeff/2))
 
 // Tesla R&D researcher

@@ -55,6 +55,13 @@
 	D.after_add()
 	infectee.med_hud_set_status()
 
+	var/turf/source_turf = get_turf(infectee)
+	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+
+//Return a string for admin logging uses, should describe the disease in detail
+/datum/disease/proc/admin_details()
+	return "[src.name] : [src.type]"
+
 /datum/disease/proc/stage_act()
 	var/cure = has_cure()
 

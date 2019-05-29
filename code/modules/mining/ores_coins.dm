@@ -323,7 +323,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.visible_message("<span class='suicide'>[user] couldn't flip \the [src]!</span>")
 		return SHAME
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
-	return MANUAL_SUICIDE
+	return MANUAL_SUICIDE_NONLETHAL
 
 /obj/item/coin/proc/manual_suicide(mob/living/user)
 	var/index = sideslist.Find(coinflip)
@@ -331,6 +331,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
 		user.adjustOxyLoss(200)
 		user.death(0)
+		user.set_suicide(TRUE)
+		user.suicide_log()
 	else
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
 

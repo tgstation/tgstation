@@ -1,0 +1,4 @@
+author: "bgobandit"
+delete-after: True
+changes: 
+  - bugfix: "Cards Against Spess works again. Find decks at your local library."

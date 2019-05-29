@@ -4,6 +4,7 @@
 	icon_state = "repairbot"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	density = FALSE
+	hud_type = /datum/hud/pai
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
@@ -37,8 +38,6 @@
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
 
-	var/obj/item/pda/ai/pai/pda = null
-
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
 
@@ -53,10 +52,15 @@
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
-	var/obj/item/instrument/recorder/internal_instrument
+	var/obj/item/instrument/piano_synth/internal_instrument
+	var/obj/machinery/newscaster			//pAI Newscaster
+	var/obj/item/healthanalyzer/hostscan				//pAI healthanalyzer
 
+	var/encryptmod = FALSE
 	var/holoform = FALSE
 	var/canholo = TRUE
+	var/can_transmit = TRUE
+	var/can_receive = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
 	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
@@ -104,32 +108,24 @@
 		P.setPersonality(src)
 	forceMove(P)
 	card = P
+	job = "Personal AI"
 	signaler = new(src)
+	hostscan = new /obj/item/healthanalyzer(src)
 	if(!radio)
-		radio = new /obj/item/radio(src)
+		radio = new /obj/item/radio/headset/silicon/pai(src)
+	newscaster = new /obj/machinery/newscaster(src)
+	if(!aicamera)
+		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
+		aicamera.flash_enabled = TRUE
 
 	//PDA
-	pda = new(src)
-	spawn(5)
-		pda.ownjob = "pAI Messenger"
-		pda.owner = text("[]", src)
-		pda.name = pda.owner + " (" + pda.ownjob + ")"
+	aiPDA = new/obj/item/pda/ai(src)
+	aiPDA.owner = real_name
+	aiPDA.ownjob = "pAI Messenger"
+	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 	. = ..()
 
-	var/datum/action/innate/pai/software/SW = new
-	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
-	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
-	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
-	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
-
-	var/datum/action/language_menu/ALM = new
-	SW.Grant(src)
-	AS.Grant(src)
-	AC.Grant(src)
-	AR.Grant(src)
-	AL.Grant(src)
-	ALM.Grant(src)
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
@@ -289,3 +285,14 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+
+/obj/item/paicard/attackby(obj/item/W, mob/user, params)
+	..()
+	user.set_machine(src)
+	if(pai.encryptmod == TRUE)
+		if(W.tool_behaviour == TOOL_SCREWDRIVER)
+			pai.radio.attackby(W, user, params)
+		else if(istype(W, /obj/item/encryptionkey))
+			pai.radio.attackby(W, user, params)
+	else
+		to_chat(user, "Encryption Key ports not configured.")

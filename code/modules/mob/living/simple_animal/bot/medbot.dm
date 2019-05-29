@@ -343,7 +343,7 @@
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
-	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
+	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		return FALSE	//welp too late for them!
 
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
@@ -421,7 +421,7 @@
 		soft_reset()
 		return
 
-	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
+	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
@@ -490,15 +490,18 @@
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		var/failed = FALSE
-		if(do_mob(src, patient, 30))	//Is C == patient? This is so confusing
+		if(do_mob(src, patient, 30))
 			if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 						var/fraction = min(injection_amount/reagent_glass.reagents.total_volume, 1)
+						var/reagentlist = pretty_string_from_reagent_list(reagent_glass.reagents.reagent_list)
+						log_combat(src, patient, "injected", "beaker source", "[reagentlist]:[injection_amount]")
 						reagent_glass.reagents.reaction(patient, INJECT, fraction)
 						reagent_glass.reagents.trans_to(patient,injection_amount) //Inject from beaker instead.
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
+					log_combat(src, patient, "injected", "internal synthesizer", "[reagent_id]:[injection_amount]")
 				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
 					"<span class='userdanger'>[src] injects you with its syringe!</span>")
 			else

@@ -4,8 +4,8 @@
 	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
-	var/unfoldedbag_path = /obj/structure/closet/body_bag
 	w_class = WEIGHT_CLASS_SMALL
+	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
 /obj/item/bodybag/attack_self(mob/user)
 	deploy_bodybag(user, user.loc)
@@ -20,7 +20,8 @@
 	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
 	R.open(user)
 	R.add_fingerprint(user)
-	qdel(src)
+	R.foldedbag_instance = src
+	moveToNullspace()
 
 /obj/item/bodybag/suicide_act(mob/user)
 	if(isopenturf(user.loc))
@@ -73,7 +74,8 @@
 			to_chat(A, "<span class='notice'>You suddenly feel air around you! You're free!</span>")
 	R.open(user)
 	R.add_fingerprint(user)
-	qdel(src)
+	R.foldedbag_instance = src
+	moveToNullspace()
 
 /obj/item/bodybag/bluespace/container_resist(mob/living/user)
 	if(user.incapacitated())

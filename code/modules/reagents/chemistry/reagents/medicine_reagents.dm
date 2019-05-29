@@ -44,7 +44,7 @@
 	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
 	M.setBrainLoss(0)
-	M.remove_all_traits()
+	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.set_blurriness(0)
 	M.set_blindness(0)
 	M.SetKnockdown(0, FALSE)
@@ -61,6 +61,9 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
+	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+		M.blood_volume = BLOOD_VOLUME_NORMAL
+
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
@@ -140,7 +143,7 @@
 		M.adjustFireLoss(-power, 0)
 		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
-		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
+		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
@@ -156,7 +159,7 @@
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/carbon/M)
 	if(M.bodytemperature < T0C)
 		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
-		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
 	..()
@@ -186,7 +189,7 @@
 		M.adjustFireLoss(-1.5 * power, 0)
 		M.adjustToxLoss(-power, 0, TRUE)
 		M.adjustCloneLoss(-power, 0)
-		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	..()
 
@@ -202,7 +205,7 @@
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_bodypart_damage(1,1)
-	M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+	REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	..()
 	. = 1
 
@@ -563,7 +566,7 @@
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class ='notice'>Your hands spaz out and you drop what you were holding!</span>")
 			M.Jitter(10)
-	
+
 	M.AdjustAllImmobility(-20, FALSE)
 	M.adjustStaminaLoss(-1*REM, FALSE)
 	..()
@@ -578,7 +581,7 @@
 
 	if(prob(7))
 		to_chat(M, "<span class='notice'>[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
-	
+
 	if(prob(33))
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
@@ -590,7 +593,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(2*REM, 0)
 		M.losebreath += 2
@@ -602,7 +605,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(3*REM, 0)
 		M.losebreath += 3
@@ -614,7 +617,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(4*REM, 0)
 		M.losebreath += 4
@@ -626,7 +629,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(5*REM, 0)
 		M.losebreath += 5
@@ -730,14 +733,14 @@
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(M.has_trait(TRAIT_BLIND, EYE_DAMAGE))
+	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 			M.cure_blind(EYE_DAMAGE)
 			M.cure_nearsighted(EYE_DAMAGE)
 			M.blur_eyes(35)
 
-	else if(M.has_trait(TRAIT_NEARSIGHT, EYE_DAMAGE))
+	else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted(EYE_DAMAGE)
 		M.blur_eyes(10)
@@ -758,7 +761,7 @@
 	overdose_threshold = 35
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/M)
-	if(M.health < 0)
+	if(M.health <= M.crit_threshold)
 		M.adjustToxLoss(-2*REM, 0)
 		M.adjustBruteLoss(-2*REM, 0)
 		M.adjustFireLoss(-2*REM, 0)
@@ -786,13 +789,20 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
+/datum/reagent/medicine/epinephrine/on_mob_add(mob/living/carbon/M)
+	..()
+	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE, id)
+
+/datum/reagent/medicine/epinephrine/on_mob_delete(mob/living/carbon/M)
+	REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE, id)
+	..()
+
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
-	if(M.health < 0)
+	if(M.health <= M.crit_threshold)
 		M.adjustToxLoss(-0.5*REM, 0)
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
-	if(M.oxyloss > 35)
-		M.setOxyLoss(35, 0)
+		M.adjustOxyLoss(-0.5*REM, 0)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
 	if(M.losebreath < 0)
@@ -820,12 +830,12 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "magnets"
 
-/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
+/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
 		if(M.suiciding || M.hellbound) //they are never coming back
 			M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
 			return
-		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100 || M.has_trait(TRAIT_HUSK)) //body is too damaged to be revived
+		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100 || HAS_TRAIT(M, TRAIT_HUSK)) //body is too damaged to be revived
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			M.do_jitter_animation(10)
 			return
@@ -1092,6 +1102,7 @@
 	description = "Miniature medical robots that swiftly restore bodily damage."
 	reagent_state = SOLID
 	color = "#555555"
+	overdose_threshold = 30
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.
@@ -1100,6 +1111,13 @@
 	M.adjustToxLoss(-5*REM, 0)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/syndicate_nanites/overdose_process(mob/living/carbon/M) //wtb flavortext messages that hint that you're vomitting up robots
+	if(prob(25))
+		M.reagents.remove_reagent(src.id, metabolization_rate*15) // ~5 units at a rate of 0.4 but i wanted a nice number in code
+		M.vomit(20) // nanite safety protocols make your body expel them to prevent harmies
 	..()
 	. = 1
 
@@ -1221,10 +1239,10 @@
 
 /datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
 	..()
-	M.add_trait(TRAIT_STABLEHEART, id)
+	ADD_TRAIT(M, TRAIT_STABLEHEART, id)
 
 /datum/reagent/medicine/corazone/on_mob_delete(mob/living/M)
-	M.remove_trait(TRAIT_STABLEHEART, id)
+	REMOVE_TRAIT(M, TRAIT_STABLEHEART, id)
 	..()
 
 /datum/reagent/medicine/muscle_stimulant
@@ -1252,11 +1270,11 @@
 	var/overdose_progress = 0 // to track overdose progress
 
 /datum/reagent/medicine/modafinil/on_mob_add(mob/living/M)
-	M.add_trait(TRAIT_SLEEPIMMUNE, id)
+	ADD_TRAIT(M, TRAIT_SLEEPIMMUNE, id)
 	..()
 
 /datum/reagent/medicine/modafinil/on_mob_delete(mob/living/M)
-	M.remove_trait(TRAIT_SLEEPIMMUNE, id)
+	REMOVE_TRAIT(M, TRAIT_SLEEPIMMUNE, id)
 	..()
 
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/M)
@@ -1316,10 +1334,10 @@
 
 /datum/reagent/medicine/psicodine/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_FEARLESS, id)
+	ADD_TRAIT(L, TRAIT_FEARLESS, id)
 
 /datum/reagent/medicine/psicodine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_FEARLESS, id)
+	REMOVE_TRAIT(L, TRAIT_FEARLESS, id)
 	..()
 
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M)

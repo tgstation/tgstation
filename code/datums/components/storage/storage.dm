@@ -14,8 +14,9 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/datum/component/storage/concrete/master		//If not null, all actions act on master and this is just an access point.
 
-	var/list/can_hold								//if this is set, only things in this typecache will fit.
+	var/list/can_hold								//if this is set, only things in this typecache will fit, if within the size limit.
 	var/list/cant_hold								//if this is set, anything in this typecache will not be able to fit.
+	var/list/exception_hold                         //if set, these items will be the exception to the max size of object that can fit.
 
 	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
 
@@ -576,7 +577,7 @@
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
-	if(I.w_class > max_w_class)
+	if(I.w_class > max_w_class && !is_type_in_typecache(I, exception_hold))
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
 		return FALSE
@@ -594,7 +595,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
-	if(I.has_trait(TRAIT_NODROP)) //SHOULD be handled in unEquip, but better safe than sorry.
+	if(HAS_TRAIT(I, TRAIT_NODROP)) //SHOULD be handled in unEquip, but better safe than sorry.
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
 		return FALSE

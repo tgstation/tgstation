@@ -8,7 +8,7 @@
 	to_chat(owner, "<b>Fabulous secret powers were revealed to me the day I held aloft a wizard's staff of change and said 'By the power of Draco, I have the power!'</b>")
 	to_chat(owner, "<b>The wizard was turned into the short-lived Pastry Cat while I became Space Dragon, the most powerful beast in the universe.</b>")
 	to_chat(owner, "<b>Clicking a tile will shoot fire onto that tile.</b>")
-	to_chat(owner, "<b>Alt-clicking will let me do a tail swipe, knocking down entities in a tile radius around me.</b>")
+	to_chat(owner, "<b>Using Tail Sweep will let me get the better of those who come too close.</b>")
 	to_chat(owner, "<b>Attacking dead bodies will allow me to gib them to restore health.</b>")
 	to_chat(owner, "<b>From the wizard's writings, he had been studying this station and its hierarchy.  From this, I know who leads the station, and will kill them so the station underlings see me as their new leader.</b>")
 	owner.announce_objectives()

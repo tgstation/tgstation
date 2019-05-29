@@ -24,6 +24,7 @@
 			icon_state = R.glass_icon_state
 		else
 			var/mutable_appearance/reagent_overlay = mutable_appearance(icon, "glassoverlay")
+			icon_state = "glass_empty"
 			reagent_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 			add_overlay(reagent_overlay)
 	else
@@ -91,7 +92,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list("nuka_cola" = 50)
-	
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/reagent_containers/food/snacks/egg/E = I

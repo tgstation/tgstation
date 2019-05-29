@@ -233,7 +233,7 @@
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(M.has_trait(TRAIT_DEATHCOMA))
+	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
 	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
 		return power * 0.9
@@ -286,7 +286,7 @@
 
 /datum/symptom/heal/water
 	name = "Tissue Hydration"
-	desc = "The virus uses excess water inside and outside the body to repair damaged tissue cells. More effective against burns."
+	desc = "The virus uses excess water inside and outside the body to repair damaged tissue cells. More effective when using holy water and against burns."
 	stealth = 0
 	resistance = -1
 	stage_speed = 0
@@ -302,7 +302,7 @@
 		return
 	if(A.properties["stage_rate"] >= 7)
 		power = 2
-	if(A.properties["stealth"] >= 2)
+	if(A.properties["resistance"] >= 5)
 		absorption_coeff = 0.25
 
 /datum/symptom/heal/water/CanHeal(datum/disease/advance/A)

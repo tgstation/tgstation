@@ -1,0 +1,4 @@
+author: "bgobandit"
+delete-after: True
+changes: 
+  - tweak: "Nanotrasen has cracked the code of the Syndicate storage implant. Removing the implant will also drop any items contained within, doing minor damage to the person implanted."

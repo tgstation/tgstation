@@ -72,8 +72,9 @@
 	if(!(stat & (NOPOWER|BROKEN)))
 		to_chat(user, "<span class='notice'>The status display reads:</span>")
 		to_chat(user, "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>")
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
+		if(beaker)
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -165,7 +166,7 @@
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
-	if(operating || !user.canUseTopic(src))
+	if(operating || !user.canUseTopic(src, !issilicon(user)))
 		return
 
 	var/list/options = list()
@@ -196,7 +197,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src))
+	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
 		return
 
 	switch(choice)

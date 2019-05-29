@@ -40,7 +40,20 @@
 		. = initial(dt.flags) & TONGUELESS_SPEECH
 
 /mob/living/carbon/hear_intercept(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	var/datum/status_effect/bugged/B = has_status_effect(STATUS_EFFECT_BUGGED)
+	if(B)
+		B.listening_in.show_message(message)
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/trauma = T
 		message = trauma.on_hear(message, speaker, message_language, raw_message, radio_freq)
+
+	if (src.mind.has_antag_datum(/datum/antagonist/traitor))
+		for (var/codeword in GLOB.syndicate_code_phrase)
+			var/regex/codeword_match = new("([codeword])", "ig")
+			message = codeword_match.Replace(message, "<span class='blue'>$1</span>")
+
+		for (var/codeword in GLOB.syndicate_code_response)
+			var/regex/codeword_match = new("([codeword])", "ig")
+			message = codeword_match.Replace(message, "<span class='red'>$1</span>")
+
 	return message

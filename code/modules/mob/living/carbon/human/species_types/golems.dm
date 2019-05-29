@@ -73,10 +73,10 @@
 
 /datum/species/golem/adamantine/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.add_trait(TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
 
 /datum/species/golem/adamantine/on_species_loss(mob/living/carbon/C)
-	C.remove_trait(TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
 	..()
 
 //The suicide bombers of golemkind
@@ -147,7 +147,7 @@
 	meat = /obj/item/stack/ore/diamond
 	info_text = "As a <span class='danger'>Diamond Golem</span>, you are more resistant than the average golem."
 	prefix = "Diamond"
-	special_names = list("Back")
+	special_names = list("Back","Grill")
 
 //Faster but softer and less armoured
 /datum/species/golem/gold
@@ -174,13 +174,13 @@
 
 /datum/species/golem/silver/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 
 /datum/species/golem/silver/on_species_loss(mob/living/carbon/C)
-	C.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 	..()
 
-//Harder to stun, deals more damage, but it's even slower
+//Harder to stun, deals more damage, massively slowpokes, but gravproof and obstructive. Basically, The Wall.
 /datum/species/golem/plasteel
 	name = "Plasteel Golem"
 	id = "plasteel golem"
@@ -191,11 +191,22 @@
 	punchstunthreshold = 18 //still 40% stun chance
 	speedmod = 4 //pretty fucking slow
 	meat = /obj/item/stack/ore/iron
-	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching."
+	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching. You also magnetically attach to surfaces and so don't float without gravity and cannot have positions swapped with other beings."
 	attack_verb = "smash"
 	attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
 	prefix = "Plasteel"
 	special_names = null
+
+/datum/species/golem/plasteel/negates_gravity(mob/living/carbon/human/H)
+	return TRUE
+
+/datum/species/golem/plasteel/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	ADD_TRAIT(C, TRAIT_NOMOBSWAP, SPECIES_TRAIT) //THE WALL THE WALL THE WALL
+
+/datum/species/golem/plasteel/on_species_loss(mob/living/carbon/C)
+	REMOVE_TRAIT(C, TRAIT_NOMOBSWAP, SPECIES_TRAIT) //NOTHING ON ERF CAN MAKE IT FALL
+	..()
 
 //Immune to ash storms
 /datum/species/golem/titanium
@@ -319,7 +330,7 @@
 	var/last_event = 0
 	var/active = null
 	prefix = "Uranium"
-	special_names = list("Oxide", "Rod", "Meltdown")
+	special_names = list("Oxide", "Rod", "Meltdown", "235")
 
 /datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
 	if(!active)
@@ -359,7 +370,7 @@
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
 			return BULLET_ACT_BLOCK
-	return BULLET_ACT_HIT
+	return ..()
 
 //Reflects lasers and resistant to burn damage, but very vulnerable to brute damage. Shatters on death.
 /datum/species/golem/glass
@@ -392,11 +403,11 @@
 			if(P.starting)
 				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/turf/target = get_turf(P.starting)
 				// redirect the projectile
-				P.preparePixelProjectile(locate(CLAMP(target.x + new_x, 1, world.maxx), CLAMP(target.y + new_y, 1, world.maxy), H.z), H)
+				P.firer = H
+				P.preparePixelProjectile(locate(CLAMP(new_x, 1, world.maxx), CLAMP(new_y, 1, world.maxy), H.z), H)
 			return BULLET_ACT_FORCE_PIERCE
-	return BULLET_ACT_HIT
+	return ..()
 
 //Teleports when hit or when it wants to
 /datum/species/golem/bluespace
@@ -575,7 +586,7 @@
 	limbs_id = "cultgolem"
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder Goddess Nar'Sie."
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES) //no mutcolors
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH) //no mutcolors
 	prefix = "Runic"
 	special_names = null
 
@@ -629,7 +640,7 @@
 	say_mod = "clicks"
 	limbs_id = "clockgolem"
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>Clockwork Golem</span><span class='bold alloy'>, you are faster than other types of golems. On death, you will break down into scrap.</span>"
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH)
 	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
 	armor = 20 //Reinforced, but much less so to allow for fast movement
 	attack_verb = "smash"
@@ -696,10 +707,10 @@
 
 /datum/species/golem/cloth/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 
 /datum/species/golem/cloth/on_species_loss(mob/living/carbon/C)
-	C.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 	..()
 
 /datum/species/golem/cloth/check_roundstart_eligible()
@@ -794,7 +805,7 @@
 	name = "Plastic Golem"
 	id = "plastic golem"
 	prefix = "Plastic"
-	special_names = null
+	special_names = list("Sheet", "Bag", "Bottle")
 	fixed_mut_color = "fff"
 	info_text = "As a <span class='danger'>Plastic Golem</span>, you are capable of ventcrawling and passing through plastic flaps as long as you are naked."
 
@@ -820,10 +831,10 @@
 
 /datum/species/golem/bronze/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(world.time > last_gong_time + gong_cooldown))
-		return BULLET_ACT_HIT
+		return ..()
 	if(P.flag == "bullet" || P.flag == "bomb")
 		gong(H)
-		return BULLET_ACT_HIT
+		return ..()
 
 /datum/species/golem/bronze/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	..()
@@ -881,7 +892,7 @@
 	prefix = "Cardboard"
 	special_names = list("Box")
 	info_text = "As a <span class='danger'>Cardboard Golem</span>, you aren't very strong, but you are a bit quicker and can easily create more brethren by using cardboard on yourself."
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH)
 	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	limbs_id = "c_golem" //special sprites
 	attack_verb = "whips"
@@ -926,7 +937,7 @@
 /datum/species/golem/leather
 	name = "Leather Golem"
 	id = "leather golem"
-	special_names = list("Face", "Man")
+	special_names = list("Face", "Man", "Belt") //Ah dude 4 strength 4 stam leather belt AHHH
 	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER, TRAIT_STRONG_GRABBER)
 	prefix = "Leather"
 	fixed_mut_color = "624a2e"
@@ -940,7 +951,7 @@
 	prefix = "Durathread"
 	limbs_id = "d_golem"
 	special_names = list("Boll","Weave")
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH)
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
@@ -955,10 +966,10 @@
 	say_mod = "rattles"
 	prefix = "Bone"
 	limbs_id = "b_golem"
-	special_names = list("Head", "Broth", "Fracture")
+	special_names = list("Head", "Broth", "Fracture", "Rattler", "Appetit")
 	liked_food = GROSS | MEAT | RAW
 	toxic_food = null
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH)
 	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
 	mutanttongue = /obj/item/organ/tongue/bone
 	sexes = FALSE
@@ -1006,7 +1017,7 @@
 	else
 		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))
-		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L) || L.has_trait(TRAIT_RESISTCOLD))
+		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L) || HAS_TRAIT(L, TRAIT_RESISTCOLD))
 			return //Do not affect our brothers
 
 		to_chat(L, "<span class='cultlarge'>A spine-chilling sound chills you to the bone!</span>")
@@ -1019,12 +1030,13 @@
 	prefix = "Capitalist"
 	attack_verb = "monopoliz"
 	limbs_id = "ca_golem"
-	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr Moneybags", "Adam Smith")
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr. Moneybags", "Adam Smith")
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH)
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
 	changesource_flags = MIRROR_BADMIN
+	random_eligible = FALSE
 
 	var/last_cash = 0
 	var/cash_cooldown = 100
@@ -1060,14 +1072,15 @@
 	name = "Soviet Golem"
 	id = "soviet golem"
 	prefix = "Comrade"
-	attack_verb = "nationalis"
+	attack_verb = "nationaliz"
 	limbs_id = "s_golem"
 	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH)
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
 	changesource_flags = MIRROR_BADMIN
+	random_eligible = FALSE
 
 /datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

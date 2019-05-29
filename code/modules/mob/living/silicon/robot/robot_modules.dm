@@ -120,7 +120,7 @@
 	if(I.loc != src)
 		I.forceMove(src)
 	modules += I
-	I.add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	ADD_TRAIT(I, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += I
@@ -146,7 +146,7 @@
 		if(istype(I, /obj/item/assembly/flash))
 			var/obj/item/assembly/flash/F = I
 			F.times_used = 0
-			F.crit_fail = 0
+			F.burnt_out = FALSE
 			F.update_icon()
 		else if(istype(I, /obj/item/melee/baton))
 			var/obj/item/melee/baton/B = I
@@ -390,10 +390,13 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
+		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
 		/obj/item/mop/cyborg,
+		/obj/item/reagent_containers/glass/bucket,
+		/obj/item/paint/paint_remover,
 		/obj/item/lightreplacer/cyborg,
-		/obj/item/holosign_creator,
+		/obj/item/holosign_creator/janibarrier,
 		/obj/item/reagent_containers/spray/cyborg_drying)
 	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
 	ratvar_modules = list(
@@ -471,8 +474,8 @@
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
 		/obj/item/rsf,
-		/obj/item/instrument/violin,
 		/obj/item/instrument/guitar,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,

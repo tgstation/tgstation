@@ -81,20 +81,21 @@
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, /datum/outputs/clownstep, 50)
+	AddComponent(/datum/component/squeak/clownstep, 50)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES && enabled_waddle)
-		waddle = user.AddComponent(/datum/component/waddling)
-	if(user.mind && user.mind.assigned_role == "Clown")
-		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "noshoes")
+	if(slot == SLOT_SHOES)
+		if(enabled_waddle)
+			waddle = user.AddComponent(/datum/component/waddling)
+		if(user.mind && user.mind.assigned_role == "Clown")
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
 	QDEL_NULL(waddle)
 	if(user.mind && user.mind.assigned_role == "Clown")
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
 
 /obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
 	if(!isliving(user))
@@ -181,7 +182,7 @@
 
 /obj/item/clothing/shoes/cult/alt/ghost/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
@@ -224,13 +225,9 @@
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
 	var/recharging_time = 0 //time until next dash
-	var/jumping = FALSE //are we mid-jump?
 
 /obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
 	if(!isliving(user))
-		return
-
-	if(jumping)
 		return
 
 	if(recharging_time > world.time)
@@ -239,16 +236,12 @@
 
 	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
 
-	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .proc/hop_end)))
-		jumping = TRUE
+	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE))
 		playsound(src, 'sound/effects/stealthoff.ogg', 50, 1, 1)
 		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
+		recharging_time = world.time + recharging_rate
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
-
-/obj/item/clothing/shoes/bhop/proc/hop_end()
-	jumping = FALSE
-	recharging_time = world.time + recharging_rate
 
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
@@ -336,3 +329,10 @@
 		set_light(0)
 		lightCycle = 0
 		active = FALSE
+
+/obj/item/clothing/shoes/russian
+	name = "russian boots"
+	desc = "Comfy shoes."
+	icon_state = "rus_shoes"
+	item_state = "rus_shoes"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes

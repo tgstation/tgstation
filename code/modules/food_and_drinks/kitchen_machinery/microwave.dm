@@ -188,13 +188,13 @@
 	..()
 
 /obj/machinery/microwave/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE))
+	if(user.canUseTopic(src, !issilicon(usr)))
 		cook()
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
 
-	if(operating || panel_open || !anchored || !user.canUseTopic(src))
+	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
 		return
 	if(isAI(user) && (stat & NOPOWER))
 		return
@@ -209,7 +209,7 @@
 	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(operating || panel_open || !anchored || !user.canUseTopic(src))
+	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
 		return
 	if(isAI(user) && (stat & NOPOWER))
 		return

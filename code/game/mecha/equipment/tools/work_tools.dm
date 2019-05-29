@@ -34,6 +34,14 @@
 		return
 	if(isobj(target))
 		var/obj/O = target
+		if(istype(O, /obj/machinery/door/firedoor))
+			var/obj/machinery/door/firedoor/D = O
+			D.try_to_crowbar(src,chassis.occupant)
+			return
+		if(istype(O, /obj/machinery/door/airlock/))
+			var/obj/machinery/door/airlock/D = O
+			D.try_to_crowbar(src,chassis.occupant)
+			return
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
@@ -461,3 +469,53 @@
 	//NC.mergeConnectedNetworksOnTurf()
 	last_piece = NC
 	return 1
+
+//Dunno where else to put this so shrug
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade
+	name = "Ripley MK-II Conversion Kit"
+	desc = "A pressurized canopy attachment kit for an Autonomous Power Loader Unit \"Ripley\" MK-I mecha, to convert it to the slower, but space-worthy MK-II design. This kit cannot be removed, once applied."
+	icon_state = "ripleyupgrade"
+
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/mecha/working/ripley/M)
+	if(M.type != /obj/mecha/working/ripley)
+		to_chat(loc, "<span class='warning'>This conversion kit can only be applied to APLU MK-I models.</span>")
+		return FALSE
+	if(M.cargo.len)
+		to_chat(loc, "<span class='warning'>[M]'s cargo hold must be empty before this conversion kit can be applied.</span>")
+		return FALSE
+	if(!M.maint_access) //non-removable upgrade, so lets make sure the pilot or owner has their say.
+		to_chat(loc, "<span class='warning'>[M] must have maintenance protocols active in order to allow this conversion kit.</span>")
+		return FALSE
+	if(M.occupant) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
+		to_chat(loc, "<span class='warning'>[M] must be unoccupied before this conversion kit can be applied.</span>")
+		return FALSE
+	return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/mecha/M)
+	var/obj/mecha/working/ripley/mkii/N = new /obj/mecha/working/ripley/mkii(get_turf(M),1)
+	if(!N)
+		return
+	QDEL_NULL(N.cell)
+	if (M.cell)
+		N.cell = M.cell
+		M.cell.forceMove(N)
+		M.cell = null
+	N.step_energy_drain = M.step_energy_drain //For the scanning module
+	N.armor = N.armor.setRating(energy = M.armor["energy"]) //for the capacitor
+	for(var/obj/item/mecha_parts/E in M.contents)
+		if(istype(E, /obj/item/mecha_parts/concealed_weapon_bay)) //why is the bay not just a variable change who did this
+			E.forceMove(N)
+	for(var/obj/item/mecha_parts/mecha_equipment/E in M.equipment) //Move the equipment over...
+		E.detach()
+		E.attach(N)
+		M.equipment -= E
+	N.dna_lock = M.dna_lock
+	N.maint_access = M.maint_access
+	N.strafe = M.strafe
+	N.obj_integrity = M.obj_integrity //This is not a repair tool
+	if (M.name != "\improper APLU MK-I \"Ripley\"")
+		N.name = M.name
+	M.wreckage = 0
+	qdel(M)
+	playsound(get_turf(N),'sound/items/ratchet.ogg',50,1)
+	return

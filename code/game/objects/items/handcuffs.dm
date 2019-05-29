@@ -44,7 +44,7 @@
 	if(!istype(C))
 		return
 
-	if(iscarbon(user) && (user.has_trait(TRAIT_CLUMSY) && prob(50)))
+	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
@@ -247,6 +247,9 @@
 
 /obj/item/restraints/legcuffs/beartrap/Initialize()
 	. = ..()
+	update_icon()
+
+/obj/item/restraints/legcuffs/beartrap/update_icon()
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/user)
@@ -258,18 +261,32 @@
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
-		icon_state = "[initial(icon_state)][armed]"
+		update_icon()
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
+/obj/item/restraints/legcuffs/beartrap/proc/close_trap()
+	armed = FALSE
+	update_icon()
+	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+
 /obj/item/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
-	if(armed && isturf(src.loc))
+	if(armed && isturf(loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
-			var/snap = 0
+			var/snap = TRUE
+			if(istype(L.buckled, /obj/vehicle))
+				var/obj/vehicle/ridden_vehicle = L.buckled
+				if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
+					close_trap()
+					ridden_vehicle.visible_message("<span class='danger'>[ridden_vehicle] triggers \the [src].</span>")
+					return ..()
+
+			if(L.movement_type & (FLYING|FLOATING)) //don't close the trap if they're flying/floating over it.
+				snap = FALSE
+
 			var/def_zone = BODY_ZONE_CHEST
-			if(iscarbon(L))
+			if(snap && iscarbon(L))
 				var/mob/living/carbon/C = L
-				snap = 1
 				if(C.mobility_flags & MOBILITY_STAND)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
@@ -277,19 +294,15 @@
 						forceMove(C)
 						C.update_inv_legcuffed()
 						SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-			else if(isanimal(L))
+			else if(snap && isanimal(L))
 				var/mob/living/simple_animal/SA = L
-				if(SA.mob_size > MOB_SIZE_TINY)
-					snap = 1
-			if(L.movement_type & FLYING)
-				snap = 0
+				if(SA.mob_size <= MOB_SIZE_TINY) //don't close the trap if they're as small as a mouse.
+					snap = FALSE
 			if(snap)
-				armed = 0
-				icon_state = "[initial(icon_state)][armed]"
-				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				close_trap()
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
-				L.apply_damage(trap_damage,BRUTE, def_zone)
+				L.apply_damage(trap_damage, BRUTE, def_zone)
 	..()
 
 /obj/item/restraints/legcuffs/beartrap/energy

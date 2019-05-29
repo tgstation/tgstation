@@ -36,7 +36,7 @@
 
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
-		if(M.has_trait(TRAIT_VORACIOUS))
+		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
 			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
@@ -128,6 +128,12 @@
 	qdel(src)
 	target.Bumped(B)
 
+/obj/item/reagent_containers/food/drinks/bullet_act(obj/item/projectile/P)
+	. = ..()
+	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
+		var/atom/T = get_turf(src)
+		smash(T)
+		return
 
 
 
@@ -243,9 +249,9 @@
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"
-	desc = "Just add 5ml of water, self heats! A taste that reminds you of your school years."
+	desc = "Just add 5ml of water, self heats! A taste that reminds you of your school years. Now new with salty flavour!"
 	icon_state = "ramen"
-	list_reagents = list("dry_ramen" = 15)
+	list_reagents = list("dry_ramen" = 15, "sodiumchloride" = 3)
 	foodtype = GRAIN
 	isGlass = FALSE
 	custom_price = 38
@@ -419,7 +425,7 @@
 		sleep(50)
 		playsound(H,'sound/items/drink.ogg', 80, 1)
 		H.say(pick("Another day, another dollar.", "I wonder if I should hold?", "Diversifying is for young'ns.", "Yeap, times were good back then."))
-		return MANUAL_SUICIDE
+		return MANUAL_SUICIDE_NONLETHAL
 	sleep(20) //dramatic pause
 	return TOXLOSS
 
@@ -431,6 +437,16 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 	..()
+
+/obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/item/projectile/P)
+	. = ..()
+	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
+		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
+		crushed_can.icon_state = icon_state
+		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
+		crushed_can.throw_at(throw_target, rand(1,2), 7)
+		qdel(src)
+		return
 
 /obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
 	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh

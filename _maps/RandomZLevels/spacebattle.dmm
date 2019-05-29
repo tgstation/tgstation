@@ -570,7 +570,7 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "cH" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
 	},
@@ -2472,7 +2472,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jt" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/advtaser,
+/obj/item/gun/energy/disabler,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "ju" = (
@@ -2543,7 +2543,7 @@
 "jB" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced,
-/obj/item/gun/energy/e_gun/advtaser,
+/obj/item/gun/energy/disabler,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "jC" = (

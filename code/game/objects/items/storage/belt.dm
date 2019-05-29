@@ -61,7 +61,8 @@
 		/obj/item/holosign_creator/atmos,
 		/obj/item/holosign_creator/engineering,
 		/obj/item/forcefield_projector,
-		/obj/item/assembly/signaler
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer
 		))
 	STR.can_hold = can_hold
 
@@ -557,6 +558,7 @@
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
+		/obj/item/gun/energy/e_gun/mini
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()

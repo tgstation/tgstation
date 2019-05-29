@@ -79,6 +79,9 @@
 /turf/open/return_air()
 	return air
 
+/turf/open/return_analyzable_air()
+	return return_air()
+
 /turf/temperature_expose()
 	if(temperature > heat_capacity)
 		to_be_destroyed = TRUE
@@ -93,9 +96,30 @@
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
 
+
 /turf/open/proc/update_visuals()
-	var/list/new_overlay_types = tile_graphic()
+
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
+	var/list/new_overlay_types = list()
+	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
+
+	if(!air) // 2019-05-14: was not able to get this path to fire in testing. Consider removing/looking at callers -Naksu
+		if (atmos_overlay_types)
+			for(var/overlay in atmos_overlay_types)
+				vis_contents -= overlay
+			src.atmos_overlay_types = null
+		return
+
+	var/list/gases = air.gases
+
+	for(var/id in gases)
+		if (nonoverlaying_gases[id])
+			continue
+		var/gas = gases[id]
+		var/gas_meta = gas[GAS_META]
+		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
+		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
+			new_overlay_types += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -109,21 +133,6 @@
 
 	UNSETEMPTY(new_overlay_types)
 	src.atmos_overlay_types = new_overlay_types
-
-/turf/open/proc/tile_graphic()
-	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
-	if(!air)
-		return
-	. = new /list
-	var/list/gases = air.gases
-	for(var/id in gases)
-		if (nonoverlaying_gases[id])
-			continue
-		var/gas = gases[id]
-		var/gas_meta = gas[GAS_META]
-		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
 
 /proc/typecache_of_gases_with_no_overlays()
 	. = list()

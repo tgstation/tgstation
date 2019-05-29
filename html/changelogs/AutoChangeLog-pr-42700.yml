@@ -1,4 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - tweak: "There is now a max character config option for AI Freeform, Core Freeform, and Asimov upload boards."

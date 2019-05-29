@@ -165,7 +165,7 @@
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
 	create_reagents(45, OPENCONTAINER)
-	reagents.add_reagent("chloralhydratedelayed", 20)
+	reagents.add_reagent("chloralhydrate", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 
@@ -179,11 +179,20 @@
 /obj/item/pen/edagger/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg', TRUE)
+	
+/obj/item/pen/edagger/suicide_act(mob/user)
+	. = BRUTELOSS
+	if(on)
+		user.visible_message("<span class='suicide'>[user] forcefully rams the pen into their mouth!</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		attack_self(user)
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
 		on = FALSE
 		force = initial(force)
+		throw_speed = initial(throw_speed)
 		w_class = initial(w_class)
 		name = initial(name)
 		hitsound = initial(hitsound)
@@ -194,6 +203,7 @@
 	else
 		on = TRUE
 		force = 18
+		throw_speed = 4
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'

@@ -17,6 +17,7 @@
 
 /datum/component/storage/concrete/pockets/small
 	max_items = 1
+	max_w_class = WEIGHT_CLASS_SMALL
 	attack_hand_interact = FALSE
 
 /datum/component/storage/concrete/pockets/tiny
@@ -24,7 +25,15 @@
 	max_w_class = WEIGHT_CLASS_TINY
 	attack_hand_interact = FALSE
 
-/datum/component/storage/concrete/pockets/small/detective
+/datum/component/storage/concrete/pockets/small/fedora/Initialize()
+	. = ..()
+	var/static/list/exception_cache = typecacheof(list(
+		/obj/item/katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana,
+		/obj/item/energy_katana, /obj/item/gun/ballistic/automatic/tommygun
+		))
+	exception_hold = exception_cache
+
+/datum/component/storage/concrete/pockets/small/fedora/detective
 	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
 
 /datum/component/storage/concrete/pockets/shoes
@@ -71,3 +80,12 @@
 /datum/component/storage/concrete/pockets/pocketprotector/real_location()
 	// if the component is reparented to a jumpsuit, the items still go in the protector
 	return original_parent
+
+/datum/component/storage/concrete/pockets/small/helmet
+	max_items = 1
+	quickdraw = TRUE
+
+/datum/component/storage/concrete/pockets/small/helmet/Initialize()
+	. = ..()
+	can_hold = typecacheof(list(/obj/item/reagent_containers/glass/bottle,
+								/obj/item/ammo_box/a762))

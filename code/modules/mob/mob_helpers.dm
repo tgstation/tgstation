@@ -1,4 +1,3 @@
-
 // see _DEFINES/is_helpers.dm for mob type checks
 
 /mob/proc/lowest_buckled_mob()
@@ -29,27 +28,10 @@
 
 
 /proc/ran_zone(zone, probability = 80)
-
-	zone = check_zone(zone)
-
 	if(prob(probability))
-		return zone
-
-	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
-	switch(t)
-		if(1)
-			return BODY_ZONE_HEAD
-		if(2)
-			return BODY_ZONE_CHEST
-		if(3 to 6)
-			return BODY_ZONE_L_ARM
-		if(7 to 10)
-			return BODY_ZONE_R_ARM
-		if(11 to 14)
-			return BODY_ZONE_L_LEG
-		if(15 to 18)
-			return BODY_ZONE_R_LEG
-
+		zone = check_zone(zone)
+	else
+		zone = pickweight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
 	return zone
 
 /proc/above_neck(zone)
@@ -71,14 +53,14 @@
 	var/te = n
 	var/t = ""
 	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
+
+	for(var/p = 1 to min(n,MAX_BROADCAST_LEN))
 		if ((copytext(te, p, p + 1) == " " || prob(pr)))
 			t = text("[][]", t, copytext(te, p, p + 1))
 		else
 			t = text("[]*", t)
-		p++
+	if(n > MAX_BROADCAST_LEN)
+		t += "..." //signals missing text
 	return sanitize(t)
 
 /proc/slur(n)
@@ -413,7 +395,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
-			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
+			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 			return 1 //successful heal
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
@@ -514,13 +496,27 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/common_trait_examine()
 	. = ""
 
-	if(has_trait(TRAIT_DISSECTED))
+	if(HAS_TRAIT(src, TRAIT_DISSECTED))
 		. += "<span class='notice'>This body has been dissected and analyzed. It is no longer worth experimenting on.</span><br>"
 
-/mob/has_trait(trait, list/sources, check_mind=TRUE)
-	. = ..(trait, sources)
-	if(.)
-		return
-
-	if(check_mind && istype(mind))
-		return mind.has_trait(trait, sources)
+// Used to make sure that a player has a valid job preference setup, used to knock players out of eligibility for anything if their prefs don't make sense.
+// A "valid job preference setup" in this situation means at least having one job set to low, or not having "return to lobby" enabled
+// Prevents "antag rolling" by setting antag prefs on, all jobs to never, and "return to lobby if preferences not availible"
+// Doing so would previously allow you to roll for antag, then send you back to lobby if you didn't get an antag role
+// This also does some admin notification and logging as well
+/mob/proc/has_valid_preferences()
+	if(!client)
+		return FALSE //Not sure how this would get run without the mob having a client, but let's just be safe.
+	if(client.prefs.joblessrole != RETURNTOLOBBY)
+		return TRUE
+	// If they have antags enabled, they're potentially doing this on purpose instead of by accident. Notify admins if so.
+	var/has_antags = FALSE
+	if(client.prefs.be_special.len > 0)
+		has_antags = TRUE
+	if(client.prefs.job_preferences.len == 0)
+		to_chat(src, "<span class='danger'>You have no jobs enabled, along with return to lobby if job is unavailable. This makes you ineligible for any round start role, please update your job preferences.</span>")
+		if(has_antags)
+			log_admin("[src.ckey] just got booted back to lobby with no jobs, but antags enabled.")
+			message_admins("[src.ckey] just got booted back to lobby with no jobs enabled, but antag rolling enabled. Likely antag rolling abuse.")
+		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
+	return TRUE

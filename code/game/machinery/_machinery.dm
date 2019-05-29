@@ -147,6 +147,10 @@ Class Procs:
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
+	if(length(component_parts))
+		for(var/atom/A in component_parts)
+			qdel(A)
+		component_parts.Cut()
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
@@ -183,12 +187,15 @@ Class Procs:
 			L.update_mobility()
 	occupant = null
 
+/obj/machinery/proc/can_be_occupant(atom/movable/am)
+	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)
+
 /obj/machinery/proc/close_machine(atom/movable/target = null)
 	state_open = FALSE
 	density = TRUE
 	if(!target)
 		for(var/am in loc)
-			if (!(occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)))
+			if (!(can_be_occupant(am)))
 				continue
 			var/atom/movable/AM = am
 			if(AM.has_buckled_mobs())
@@ -249,19 +256,19 @@ Class Procs:
 				var/datum/bank_account/insurance = I.registered_account
 				if(!insurance)
 					say("[market_verb] NAP Violation: No bank account found.")
-					nap_violation()
+					nap_violation(occupant)
 					return FALSE
 				else
 					if(!insurance.adjust_money(-fair_market_price))
 						say("[market_verb] NAP Violation: Unable to pay.")
-						nap_violation()
+						nap_violation(occupant)
 						return FALSE
 					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 					if(D)
 						D.adjust_money(fair_market_price)
 			else
 				say("[market_verb] NAP Violation: No ID card found.")
-				nap_violation()
+				nap_violation(occupant)
 				return FALSE
 	return TRUE
 
@@ -345,6 +352,7 @@ Class Procs:
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
+			component_parts.Cut()
 	qdel(src)
 
 /obj/machinery/proc/spawn_frame(disassembled)

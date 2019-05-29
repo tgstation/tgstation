@@ -165,7 +165,7 @@
 	name = "raw khinkali"
 	desc = "One hundred khinkalis? Do I look like a pig?"
 	icon_state = "khinkali"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 1, "vitamin" = 1, "garlic" = 1)
 	cooked_type = /obj/item/reagent_containers/food/snacks/khinkali
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtype = MEAT
@@ -174,7 +174,7 @@
 	name = "khinkali"
 	desc = "One hundred khinkalis? Do I look like a pig?"
 	icon_state = "khinkali"
-	list_reagents = list("nutriment" = 4, "vitamin" = 2)
+	list_reagents = list("nutriment" = 5, "vitamin" = 2, "garlic" = 1)
 	bitesize = 3
 	filling_color = "#F0F0F0"
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)

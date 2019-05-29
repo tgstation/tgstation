@@ -175,7 +175,7 @@
 		limit--
 	while(!FoundDoor && limit)
 	if (!FoundDoor)
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] failed to find a valid airlock to cyclelink with!")
+		log_mapping("[src] at [AREACOORD(src)] failed to find a valid airlock to cyclelink with!")
 		return
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
@@ -750,7 +750,7 @@
 
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
-		if((H.has_trait(TRAIT_DUMB)) && Adjacent(user))
+		if((HAS_TRAIT(H, TRAIT_DUMB)) && Adjacent(user))
 			playsound(src, 'sound/effects/bang.ogg', 25, TRUE)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
@@ -1037,14 +1037,12 @@
 	else if(locked)
 		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
 	else if( !welded && !operating)
-		if(!beingcrowbarred) //being fireaxe'd
+		if(istype(I, /obj/item/twohanded/fireaxe)) //being fireaxe'd
 			var/obj/item/twohanded/fireaxe/F = I
-			if(F.wielded)
-				INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
-			else
+			if(!F.wielded)
 				to_chat(user, "<span class='warning'>You need to be wielding the fire axe to do that!</span>")
-		else
-			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
+				return
+		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 
 	if(istype(I, /obj/item/crowbar/power))
 		if(isElectrified())
@@ -1404,6 +1402,9 @@
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
+			if(security_level != AIRLOCK_SECURITY_NONE)
+				to_chat(user, "<span class='notice'>[src]'s reinforcement needs to be removed first.</span>")
+				return FALSE
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
 	return FALSE
 

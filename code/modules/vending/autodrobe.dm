@@ -31,6 +31,8 @@
 					/obj/item/clothing/head/that = 1,
 					/obj/item/clothing/under/kilt = 1,
 					/obj/item/clothing/head/beret = 1,
+					/obj/item/clothing/head/beret/vintage = 1,
+					/obj/item/clothing/head/beret/archaic = 1,
 					/obj/item/clothing/accessory/waistcoat = 1,
 					/obj/item/clothing/glasses/monocle =1,
 					/obj/item/clothing/head/bowler = 1,
@@ -59,7 +61,8 @@
 					/obj/item/clothing/head/ushanka = 1,
 					/obj/item/clothing/suit/imperium_monk = 1,
 					/obj/item/clothing/mask/gas/cyborg = 1,
-					/obj/item/clothing/suit/holidaypriest = 1,
+					/obj/item/clothing/suit/chaplainsuit/holidaypriest = 1,
+					/obj/item/clothing/suit/chaplainsuit/whiterobe = 1,
 					/obj/item/clothing/head/wizard/marisa/fake = 1,
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 1,
 					/obj/item/clothing/under/sundress = 1,
@@ -125,7 +128,12 @@
 		           /obj/item/clothing/under/roman = 1,
 		           /obj/item/clothing/shoes/roman = 1,
 		           /obj/item/shield/riot/roman/fake = 1,
+				   /obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
+				   /obj/item/clothing/head/clownmitre = 1,
 		           /obj/item/skub = 1,)
+
+/obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
 
 	refill_canister = /obj/item/vending_refill/autodrobe
 	default_price = 50

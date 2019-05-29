@@ -5,7 +5,7 @@
 	icon_state = "sandwich"
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	list_reagents = list("nutriment" = 7, "vitamin" = 1)
 	cooked_type = /obj/item/reagent_containers/food/snacks/toastedsandwich
 	tastes = list("meat" = 2, "cheese" = 1, "bread" = 2, "lettuce" = 1)
 	foodtype = GRAIN | VEGETABLES
@@ -28,7 +28,7 @@
 	icon_state = "toastedsandwich"
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-	list_reagents = list("nutriment" = 7, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	tastes = list("toast" = 1, "cheese" = 1)
 	foodtype = GRAIN | DAIRY
 

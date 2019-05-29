@@ -99,7 +99,7 @@
 
 /obj/item/organ/tongue/abductor/examine(mob/M)
 	. = ..()
-	if(M.has_trait(TRAIT_ABDUCTOR_TRAINING) || isobserver(M))
+	if(HAS_TRAIT(M, TRAIT_ABDUCTOR_TRAINING) || HAS_TRAIT(M.mind, TRAIT_ABDUCTOR_TRAINING) || isobserver(M))
 		if(!mothership)
 			to_chat(M, "<span class='notice'>It is not attuned to a specific mothership.</span>")
 		else
@@ -221,3 +221,15 @@
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT
+
+/obj/item/organ/tongue/snail
+	name = "snailtongue"
+
+/obj/item/organ/tongue/snail/TongueSpeech(message)
+	var/new_message
+	for(var/i in 1 to length(message))
+		if(findtext("ABCDEFGHIJKLMNOPWRSTUVWXYZabcdefghijklmnopqrstuvwxyz", message[i])) //Im open to suggestions
+			new_message += message[i] + message[i] + message[i] //aaalllsssooo ooopppeeennn tttooo sssuuuggggggeeessstttiiiooonsss
+		else
+			new_message += message[i]
+	return new_message
