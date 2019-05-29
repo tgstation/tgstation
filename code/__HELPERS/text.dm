@@ -793,3 +793,18 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			rearranged += cword
 	message = "[prefix][jointext(rearranged," ")]"
 	. = message
+
+
+/proc/readable_corrupted_text(text)
+	var/list/corruption_options = list("..", "£%", "~~\"", "!!", "*", "^", "$!", "-", "}")
+	var/corrupted_text = ""
+
+	for(var/i=1;i<=text.len;i++)
+		if (prob(10))
+			corrupted_text += pick(corruption_options)
+		corrupted_text += text[i]
+
+	if (prob(10))
+		corrupted_text += pick(corruption_options)
+
+	return corrupted_text
