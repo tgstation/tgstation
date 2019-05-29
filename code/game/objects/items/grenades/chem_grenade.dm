@@ -60,6 +60,8 @@
 			if (newtime != null && user.canUseTopic(src, BE_CLOSE))
 				change_det_time(newtime)
 				to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
+				if (round(newtime * 10) != det_time)
+					to_chat(user, "<span class='warning'>The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible.</span>")
 		return
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stage == WIRED)
