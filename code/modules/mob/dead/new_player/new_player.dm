@@ -412,7 +412,8 @@
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
+	var/dat = list()
+	dat += "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
 
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
@@ -435,19 +436,11 @@
 		dat += "<div class='notice red'>There are currently no open positions!</div>"
 
 	else
-
-	// if(length(SSjob.prioritized_jobs))
-	// 	dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
-	// 	for(var/datum/job/a in SSjob.prioritized_jobs)
-	// 		dat += " [a.title], "
-	// 	dat += "</div>"
-
 		dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 		var/list/categorizedJobs = list(
 			"Command" = list(jobs = list(), titles = GLOB.command_positions, color = "#aac1ee"),
 			"Engineering" = list(jobs = list(), titles = GLOB.engineering_positions, color = "#ffd699"),
-			"Supply" = list(jobs = list(), titles = GLOB.supply_positions, color = "#ead4ae"),
-			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = 1),
+			"Supply" = list(jobs = list(), titles = GLOB.supply_positions, color = "#ead4ae", colBreak = 1),
 			"Synthetic" = list(jobs = list(), titles = GLOB.nonhuman_positions, color = "#ccffcc"),
 			"Service" = list(jobs = list(), titles = GLOB.civilian_positions, color = "#cccccc"),
 			"Medical" = list(jobs = list(), titles = GLOB.medical_positions, color = "#99ffe6", colBreak = 1),
@@ -504,8 +497,9 @@
 	// Added the new browser window method
 	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, 580)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
-	popup.set_content(dat)
-	popup.open(FALSE) // 0 is passed to open so that it doesn't use the onclose() proc
+	var/dat_string = jointext(dat, "")
+	popup.set_content(dat_string)
+	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
 
 /mob/dead/new_player/proc/create_character(transfer_after)
 	spawning = 1
