@@ -190,7 +190,7 @@
 			target.Jitter(7)
 			target.silent += 7
 			target.stuttering += 30
-			to_chat(target, "<span class='userdanger'>"You feel your mind start to burn!"</span>")
+			to_chat(target, "<span class='userdanger'>You feel your mind start to burn!</span>")
 		else
 			to_chat(user, "<span class='notice'>The vessel was too far away to be affected!</span>")
 	else
