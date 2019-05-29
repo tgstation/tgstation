@@ -43,24 +43,26 @@
 
 /datum/component/storage/concrete/pockets/shoes/Initialize()
 	. = ..()
-	cant_hold = list(/obj/item/screwdriver/power) //Must be specifically called out since normal screwdrivers can fit but not the wrench form of the drill
-	can_hold = list(
+	set_holdable(list(
 		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
 		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
 		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
 		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
 		/obj/item/firing_pin
+		),
+		list(/obj/item/screwdriver/power)
 		)
 
 /datum/component/storage/concrete/pockets/shoes/clown/Initialize()
 	. = ..()
-	cant_hold = list(/obj/item/screwdriver/power) //Must be specifically called out since normal screwdrivers can fit but not the wrench form of the drill
-	can_hold = list(
+	set_holdable(list(
 		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
 		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
 		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
 		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
-		/obj/item/firing_pin, /obj/item/bikehorn)
+		/obj/item/firing_pin, /obj/item/bikehorn),
+		list(/obj/item/screwdriver/power)
+		)
 
 /datum/component/storage/concrete/pockets/pocketprotector
 	max_items = 3
@@ -70,12 +72,13 @@
 /datum/component/storage/concrete/pockets/pocketprotector/Initialize()
 	original_parent = parent
 	. = ..()
-	can_hold = list( //Same items as a PDA
+	set_holdable(list( //Same items as a PDA
 		/obj/item/pen,
 		/obj/item/toy/crayon,
 		/obj/item/lipstick,
 		/obj/item/flashlight/pen,
 		/obj/item/clothing/mask/cigarette)
+		)
 
 /datum/component/storage/concrete/pockets/pocketprotector/real_location()
 	// if the component is reparented to a jumpsuit, the items still go in the protector
@@ -87,5 +90,5 @@
 
 /datum/component/storage/concrete/pockets/small/helmet/Initialize()
 	. = ..()
-	can_hold = list(/obj/item/reagent_containers/glass/bottle,
-								/obj/item/ammo_box/a762)
+	set_holdable(list(/obj/item/reagent_containers/glass/bottle,
+								/obj/item/ammo_box/a762))

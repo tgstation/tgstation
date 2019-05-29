@@ -16,7 +16,9 @@
 
 	var/list/can_hold								//if this is set, only items, and their children, will fit
 	var/list/cant_hold								//if this is set, items, and their children, won't fit
-	var/list/exception_hold                         //if set, these items will be the exception to the max size of object that can fit.
+	var/list/exception_hold           //if set, these items will be the exception to the max size of object that can fit.
+
+	var/can_hold_description
 
 	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
 
@@ -117,16 +119,16 @@
 /datum/component/storage/PreTransfer()
 	update_actions()
 
-/datum/component/storage/set_holdable(can_hold, cant_hold)
-	can_hold_description = generate_hold_desc()
+/datum/component/storage/proc/set_holdable(can_hold_list, cant_hold_list)
+	can_hold_description = generate_hold_desc(can_hold_list)
 
-	can_hold = typecacheof(can_hold)
-	cant_hold = typecacheof(cant_hold)
+	can_hold = typecacheof(can_hold_list)
+	cant_hold = typecacheof(cant_hold_list)
 
-/datum/component/storage/proc/generate_hold_desc()
+/datum/component/storage/proc/generate_hold_desc(can_hold_list)
 	var/desc = ""
 
-	for(var/valid_obj in can_hold)
+	for(var/valid_obj in can_hold_list)
 		var/obj/item/valid_item = new valid_obj()
 		desc += "\n\t <span class='notice'>\a [valid_item.name]</span>"
 
@@ -524,8 +526,7 @@
 		handle_show_valid_items(source, user)
 
 /datum/component/storage/proc/handle_show_valid_items(datum/source, user)
-	to_chat(user, "<span class='notice'>[source] can hold: </span>")
-	to_chat(user, can_hold_description)
+	to_chat(user, "<span class='notice'>[source] can hold: [can_hold_description]</span>")
 
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
 	set waitfor = FALSE
