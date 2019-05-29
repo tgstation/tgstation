@@ -64671,7 +64671,7 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "cex" = (
-/obj/machinery/telecomms/message_server,
+/obj/machinery/telecomms/message_server/preset,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},

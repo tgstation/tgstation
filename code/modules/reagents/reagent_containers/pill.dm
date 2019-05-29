@@ -173,7 +173,7 @@
 
 /obj/item/reagent_containers/pill/penacid
 	name = "pentetic acid pill"
-	desc = "Used to expunge radioation and toxins."
+	desc = "Used to expunge radiation and toxins."
 	list_reagents = list("pen_acid" = 10)
 	icon_state = "pill22"
 	rename_with_volume = TRUE

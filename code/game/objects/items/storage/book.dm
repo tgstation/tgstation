@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
 
 /obj/item/storage/book/bible/Topic(href, href_list)
-	if(!usr.canUseTopic(src))
+	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])

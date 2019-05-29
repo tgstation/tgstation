@@ -194,6 +194,7 @@
 				O.forceMove(drop_location())
 			beakers = list()
 		stage_change(EMPTY)
+		active = FALSE
 		return
 
 	if(nadeassembly)

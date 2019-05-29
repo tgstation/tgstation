@@ -1,0 +1,5 @@
+author: "Barhandar"
+delete-after: True
+changes: 
+  - bugfix: "Box's solar panels are no longer missing catwalks from the middle of arrays."
+  - rscadd: "Box's engineering and laundromat now have showers."
