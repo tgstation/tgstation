@@ -605,42 +605,38 @@
 	if(hive)
 		hive.threat_level += 4
 
-/obj/effect/proc_holder/spell/target_hive/hive_warp
-	name = "Distortion Field"
-	desc = "We warp reality surrounding a vessel, causing hallucinations in everybody around them over a short period of time, eventually weakening those caught within the field. This power's effectiveness scales with hive size."
+/obj/item/extendohand/hivemind
+	name = "Telekinetic hand"
+	desc = "Extends the reach of your unarmed combat. Drop to remove."
+	icon = 'icons/mob/actions/actions_hive.dmi'
+	icon_state = "hand"
+	item_state = "hand"
+	lefthand_file = null
+	righthand_file = null
+	reach = 3
+	min_reach = -1
+	item_flags = ABSTRACT | DROPDEL
+	
+/obj/effect/proc_holder/spell/self/telekinetic_hand
+	name = "Telekinetic hand"
+	desc = "Makes a telekinetic hand to extend the reach of our unarmed combat. Drop to remove."
+	clothes_req = 0
+	invocation_type = "none"
+	antimagic_allowed = TRUE
+	charge_max = 200
+	panel = "Hivemind Abilities"
+	action_background_icon_state = "bg_hive"
+	action_icon = 'icons/mob/actions/actions_hive.dmi'
+	action_icon_state = "hand"
+	var/spell_item = /obj/item/extendohand/hivemind
 
-	charge_max = 900
-	action_icon_state = "warp"
-
-/obj/effect/proc_holder/spell/target_hive/hive_warp/cast(list/targets, mob/living/user = usr)
-	var/mob/living/carbon/target = targets[1]
-	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
-	if(!hive)
-		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
-		return
-	if(target.z != user.z)
-		to_chat(user, "<span class='notice'>We are too far away from [target.name] to affect them!</span>")
-		return
-	to_chat(user, "<span class='notice'>We successfully distort reality surrounding [target.name]!</span>")
-	var/pulse_cap = min(12, 8+(round(hive.hive_size/20)))
-	distort(user, target, pulse_cap)
-
-/obj/effect/proc_holder/spell/target_hive/hive_warp/proc/distort(user, target, pulse_cap, pulses = 0)
-	for(var/mob/living/carbon/human/victim in view(7,target))
-		if(user == victim || victim.is_real_hivehost())
-			continue
-		if(pulses < 4)
-			victim.apply_damage(10, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 25 over 10 seconds when taking stamina regen (3 per tick(2 seconds)) into account
-			victim.hallucination += 5
-		else if(pulses < 8)
-			victim.apply_damage(15, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 45 over 10 seconds when taking stamina regen into account
-			victim.hallucination += 10
-		else
-			victim.apply_damage(20, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 65 over 10 seconds when taking stamina regen into account
-			victim.hallucination += 15
-
-	if(pulses < pulse_cap && user && target)
-		addtimer(CALLBACK(src, "distort", user, target, pulse_cap, pulses+1), 25)
+/obj/effect/proc_holder/spell/self/telekinetic_hand/cast(mob/user = usr)
+	if(usr.get_active_held_item()==null)
+		var/obj/item/W = new spell_item
+		usr.put_in_hands(W)
+		to_chat(usr, "You make a telekinetic hand!")
+	else
+		to_chat(usr, "You cannot make a telekinetic hand while holding something!")
 
 /obj/effect/proc_holder/spell/targeted/hive_hack
 	name = "Network Invasion"
