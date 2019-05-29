@@ -216,7 +216,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	null, \
 	))
 
-
 obj/item/stack/sheet/mineral/wood
 	name = "wooden plank"
 	desc = "One can only guess that this is a bunch of wood."
