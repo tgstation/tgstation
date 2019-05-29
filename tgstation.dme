@@ -250,7 +250,6 @@
 #include "code\controllers\subsystem\ping.dm"
 #include "code\controllers\subsystem\radiation.dm"
 #include "code\controllers\subsystem\radio.dm"
-#include "code\controllers\subsystem\religion.dm"
 #include "code\controllers\subsystem\research.dm"
 #include "code\controllers\subsystem\server_maint.dm"
 #include "code\controllers\subsystem\shuttle.dm"
