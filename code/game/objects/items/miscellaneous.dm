@@ -95,6 +95,7 @@
 	new /obj/item/clothing/suit/space/nasavoid(src)
 	new /obj/item/clothing/head/helmet/space/nasavoid(src)
 	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/tank/jetpack/void(src)
 	new /obj/item/gps(src)
 
 /obj/item/storage/box/hero/scottish
