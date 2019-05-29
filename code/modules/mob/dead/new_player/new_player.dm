@@ -449,11 +449,9 @@
 		)
 		for(var/datum/job/job in SSjob.occupations)
 			if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
-				var/categorized = 0
 				for(var/jobcat in categorizedJobs)
 					var/list/jobs = categorizedJobs[jobcat]["jobs"]
 					if(job.title in categorizedJobs[jobcat]["titles"])
-						categorized = 1
 						if(jobcat == "Command")
 
 							if(job.title == "Captain") // Put captain at top of command jobs
