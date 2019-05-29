@@ -465,8 +465,6 @@
 								jobs.Insert(1, job)
 							else
 								jobs += job
-				if(!categorized)
-					categorizedJobs["Miscellaneous"]["jobs"] += job
 
 		dat += "<table><tr><td valign='top'>"
 		for(var/jobcat in categorizedJobs)
