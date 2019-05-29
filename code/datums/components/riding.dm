@@ -202,9 +202,9 @@
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
-	. = ..()
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
+	. = ..()
 
 /datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	. = ..()
