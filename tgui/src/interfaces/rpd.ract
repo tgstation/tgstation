@@ -36,6 +36,8 @@
 			action='category' params='{"category": 1}'>Disposals</ui-button>
 		<ui-button icon='{{data.category == 2 ? "check-square-o" : "square-o"}}' state='{{data.category == 2 ? "selected" : null}}'
 			action='category' params='{"category": 2}'>Transit Tubes</ui-button>
+		<ui-button icon='{{data.category == 3 ? "check-square-o" : "square-o"}}' state='{{data.category == 3 ? "selected" : null}}'
+			action='category' params='{"category": 3}'>Plumbing</ui-button>
 	</ui-section>
 	{{#if data.category == 0}}
 		<ui-section label='Piping Layer'>

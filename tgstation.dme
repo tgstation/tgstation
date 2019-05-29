@@ -2295,6 +2295,7 @@
 #include "code\modules\photography\photos\photo.dm"
 #include "code\modules\plumbing\ductnet.dm"
 #include "code\modules\plumbing\ducts.dm"
+#include "code\modules\plumbing\plumbers\tank.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cell.dm"

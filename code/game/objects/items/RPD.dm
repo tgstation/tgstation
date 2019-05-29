@@ -6,7 +6,7 @@ RPD
 #define ATMOS_CATEGORY 0
 #define DISPOSALS_CATEGORY 1
 #define TRANSIT_CATEGORY 2
-#define PLUMBING_CATEGORY 4
+#define PLUMBING_CATEGORY 3
 
 #define BUILD_MODE 1
 #define WRENCH_MODE 2
@@ -76,9 +76,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	"Fluid Ducts" = list(
 		new /datum/pipe_info/plumbing("Straight Duct",				/obj/machinery/duct, PIPE_STRAIGHT),
-		new /datum/pipe_info/plumbing("Bent Duct",	/obj/machinery/duct/north_east, PIPE_UNARY),
-		new /datum/pipe_info/plumbing("Joined Duct",					/obj/machinery/duct/north_east_west, PIPE_UNARY),
-		new /datum/pipe_info/plumbing("4-Way Duct",				/obj/machinery/duct/north_south_east_west, PIPE_STRAIGHT),
+		new /datum/pipe_info/plumbing("Bent Duct",	/obj/machinery/duct/bent, PIPE_UNARY),
+		new /datum/pipe_info/plumbing("Joined Duct",					/obj/machinery/duct/joined, PIPE_UNARY),
+		new /datum/pipe_info/plumbing("4-Way Duct",				/obj/machinery/duct/cross, PIPE_ONEDIR),
 	)
 ))
 
@@ -182,12 +182,12 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	if(dt == PIPE_UNARY_FLIPPABLE)
 		icon_state = "[icon_state]_preview"
 
-/datum/pipe_info/duct/New(label, obj/path, dt=PIPE_UNARY)
+/datum/pipe_info/plumbing/New(label, obj/path, dt=PIPE_UNARY)
 	name = label
 	id = path
 	icon_state = initial(path.icon_state)
-
 	dirtype = dt
+
 
 /obj/item/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
@@ -220,6 +220,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	var/static/datum/pipe_info/first_atmos
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
+	var/static/datum/pipe_info/first_plumbing
 	var/mode = BUILD_MODE | PAINT_MODE | DESTROY_MODE | WRENCH_MODE
 
 /obj/item/pipe_dispenser/Initialize()
@@ -233,6 +234,8 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 		first_disposal = GLOB.disposal_pipe_recipes[GLOB.disposal_pipe_recipes[1]][1]
 	if(!first_transit)
 		first_transit = GLOB.transit_tube_recipes[GLOB.transit_tube_recipes[1]][1]
+	if(!first_plumbing)
+		first_plumbing = GLOB.fluid_duct_recipes[GLOB.fluid_duct_recipes[1]][1]
 
 	recipe = first_atmos
 
@@ -283,6 +286,8 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 			recipes = GLOB.disposal_pipe_recipes
 		if(TRANSIT_CATEGORY)
 			recipes = GLOB.transit_tube_recipes
+		if(PLUMBING_CATEGORY)
+			recipes = GLOB.fluid_duct_recipes
 	for(var/c in recipes)
 		var/list/cat = recipes[c]
 		var/list/r = list()
@@ -311,6 +316,8 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 					recipe = first_atmos
 				if(TRANSIT_CATEGORY)
 					recipe = first_transit
+				if(PLUMBING_CATEGORY)
+					recipe = first_plumbing
 			p_dir = NORTH
 			playeffect = FALSE
 		if("piping_layer")
@@ -319,7 +326,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 		if("pipe_type")
 			var/static/list/recipes
 			if(!recipes)
-				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes
+				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes + GLOB.fluid_duct_recipes
 			recipe = recipes[params["category"]][text2num(params["pipe_type"])]
 			p_dir = NORTH
 		if("setdir")
@@ -481,6 +488,9 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, plumbing_build_speed, target = A))
 					var/obj/machinery/duct/D = new queued_p_type (A, TRUE, queued_p_dir)
+					D.add_fingerprint(usr)
+					if(mode & WRENCH_MODE)
+						D.wrench_act(user, src)
 
 			else
 				return ..()

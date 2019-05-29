@@ -8,8 +8,8 @@ Sort out active, anchor and possible layers
 
 /obj/machinery/duct
 	name = "fluid duct"
-	icon = 'icons/obj/fluid_ducts.dmi'
-	icon_state = "nduct_n_s"
+	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
+	icon_state = "nduct"
 
 	var/connects = NORTH | SOUTH
 	var/datum/ductnet/duct
@@ -17,63 +17,47 @@ Sort out active, anchor and possible layers
 
 	var/active = TRUE
 
-/obj/machinery/duct/east_west
-	icon_state = "nduct_e_w"
-	connects = EAST | WEST
-
-/obj/machinery/duct/north_east
-	icon_state = "nduct_n_e"
+/obj/machinery/duct/bent
+	icon_state = "nduct_bent"
 	connects = NORTH | EAST
 
-/obj/machinery/duct/north_west
-	icon_state = "nduct_n_w"
-	connects = NORTH | WEST
+/obj/machinery/duct/joined
+	icon_state = "nduct_joined"
+	connects = NORTH | WEST | SOUTH
 
-/obj/machinery/duct/south_east
-	icon_state = "nduct_s_e"
-	connects = SOUTH | EAST
-
-/obj/machinery/duct/south_west
-	icon_state = "nduct_s_w"
-	connects = SOUTH | WEST
-
-/obj/machinery/duct/north_east
-	icon_state = "nduct_n_e"
-	connects = NORTH | EAST
-
-/obj/machinery/duct/north_east_west
-	icon_state = "nduct_n_e_w"
-	connects = NORTH | EAST | WEST
-
-/obj/machinery/duct/north_south_west
-	icon_state = "nduct_n_s_w"
-	connects = NORTH | SOUTH | WEST
-
-/obj/machinery/duct/south_east_west
-	icon_state = "nduct_s_e_w"
-	connects = SOUTH | EAST | WEST
-
-/obj/machinery/duct/north_south_east
-	icon_state = "nduct_n_s_e"
-	connects = NORTH | SOUTH | EAST
-
-/obj/machinery/duct/north_south_east_west
-	icon_state = "nduct_n_s_e_w"
+/obj/machinery/duct/cross
+	icon_state = "nduct_crossed"
 	connects = NORTH | SOUTH | EAST | WEST
 
-
-
-/obj/machinery/duct/Initialize(mapload, no_anchor, spin)
+/obj/machinery/duct/Initialize(mapload, no_anchor, spin=SOUTH)
 	. = ..()
-	start with updating dirs and shit
+
+	setDir(spin)
 	if(no_anchor)
 		active = FALSE
-		anchor = FALSE
+		anchored = FALSE
 	else if(!can_anchor())
 		CRASH("Overlapping ducts detected")
 		qdel(src)
 	if(active)
 		attempt_connect()
+
+/obj/machinery/duct/ComponentInitialize()
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
+
+/obj/machinery/duct/setDir(newdir)
+	if(newdir == dir)
+		return
+	var/new_connects
+	var/angle = dir2angle(newdir) - dir2angle(dir) //SOUTH(270) - WEST(180) = 90 so we turn the other connects by 90 degrees in this case
+	if(newdir == SOUTH)
+		connects = initial(connects)
+	else
+		for(var/D in GLOB.cardinals)
+			if(D & connects)
+				new_connects += turn(D, -angle) //turning is counterclockwise for some reason
+	connects = new_connects
+	dir = newdir
 
 /obj/machinery/duct/proc/attempt_connect()
 	for(var/D in GLOB.cardinals)
@@ -82,7 +66,7 @@ Sort out active, anchor and possible layers
 				connect_network(A, D)
 
 /obj/machinery/duct/proc/connect_network(atom/A, direction)
-	var/opposite_dir = angle2dir(dir2angle(direction) + 180)
+	var/opposite_dir = turn(direction, 180)
 	if(istype(A, /obj/machinery/duct))
 		var/obj/machinery/duct/D = A
 		if(!D.active || ((duct == D.duct) && duct)) //check if we're not just comparing two null values
@@ -112,6 +96,8 @@ Sort out active, anchor and possible layers
 			duct.add_plumber(P, opposite_dir)
 
 /obj/machinery/duct/proc/disconnect_duct()
+	if(!duct)
+		return
 	active = FALSE
 	duct.destroy_network()
 	for(var/A in get_adjacent_ducts())
@@ -127,13 +113,13 @@ Sort out active, anchor and possible layers
 	for(var/A in GLOB.cardinals)
 		if(A & connects)
 			for(var/obj/machinery/duct/D in get_step(src, A))
-				if((angle2dir(dir2angle(A) + 180) & D.connects) && D.active)
+				if((turn(A, 180) & D.connects) && D.active)
 					adjacents += D
 	return adjacents
 
-/obj/machinery/duct/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/machinery/duct/wrench_act(mob/living/user, obj/item/I) //I can also be the RPD
 	add_fingerprint(user)
-	W.play_tool_sound(src)
+	I.play_tool_sound(src)
 	if(anchored)
 		anchored = FALSE
 		active = FALSE
@@ -141,6 +127,7 @@ Sort out active, anchor and possible layers
 		"[user] unfastens \the [src].", \
 		"<span class='notice'>You unfasten \the [src].</span>", \
 		"<span class='italics'>You hear ratcheting.</span>")
+		disconnect_duct()
 	else if(can_anchor())
 		anchored = TRUE
 		active = TRUE
@@ -148,6 +135,8 @@ Sort out active, anchor and possible layers
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
 		"<span class='italics'>You hear ratcheting.</span>")
+		attempt_connect()
+	return TRUE
 
 /obj/machinery/duct/proc/can_anchor(turf/T)
 	if(!T)
@@ -245,3 +234,7 @@ Sort out active, anchor and possible layers
 
 /datum/component/plumbing/simple_supply
 	supply_connects = NORTH
+
+/datum/component/plumbing/tank
+	demand_connects = WEST
+	supply_connects = EAST
