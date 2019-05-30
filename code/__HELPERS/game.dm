@@ -432,9 +432,9 @@
 		var/mob/M = m
 		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
 			continue
-		if(be_special_flag)
+		/*if(be_special_flag)
 			if(!(M.client.prefs) || !(be_special_flag in M.client.prefs.be_special))
-				continue
+				continue*/
 		if(gametypeCheck)
 			if(!gametypeCheck.age_check(M.client))
 				continue

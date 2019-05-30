@@ -1,0 +1,182 @@
+"aa" = (/turf/open/space/basic,/area/space)
+"ab" = (/turf/closed/mineral,/area/space)
+"ac" = (/obj/structure/lattice,/obj/structure/grille,/turf/open/space/basic,/area/space)
+"ad" = (/obj/structure/lattice,/turf/open/space/basic,/area/space)
+"ae" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/space)
+"af" = (/turf/closed/wall,/area/space)
+"ag" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/ruin/powered)
+"ah" = (/turf/closed/wall,/area/ruin/powered)
+"ai" = (/obj/structure/table/reinforced,/obj/machinery/chem_dispenser/drinks,/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"aj" = (/turf/open/floor/plasteel/hydrofloor,/area/space)
+"ak" = (/obj/structure/table/reinforced,/obj/machinery/chem_dispenser/drinks/beer,/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"al" = (/obj/machinery/vending/sustenance,/turf/open/floor/plasteel/hydrofloor,/area/space)
+"am" = (/obj/machinery/light/small{dir = 1},/obj/structure/disposalpipe/trunk,/obj/machinery/disposal/bin,/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"an" = (/obj/structure/closet/secure_closet/freezer/fridge,/obj/item/reagent_containers/food/snacks/sandwich,/obj/item/reagent_containers/food/snacks/sandwich,/obj/item/reagent_containers/food/snacks/sandwich,/obj/item/reagent_containers/food/snacks/sandwich,/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"ao" = (/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"ap" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"aq" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"ar" = (/obj/effect/mob_spawn/human/alive{assignedrole = "Space Barista"; flavour_text = "Congrats on passing the academy of Philosophy, with your high grades you already landed a job at a not so local space library's coffee bar located in the middle of nowhere, good luck."; name = "Space Barista Sleeper"; shoes = /obj/item/clothing/shoes/sneakers/brown; uniform = /obj/item/clothing/under/rank/bartender},/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"as" = (/obj/effect/mob_spawn/human/alive{assignedrole = "Space Librarian"; flavour_text = "You got one of the easiest, most rewarding and useful jobs in the galaxy, a space librarian of a space library for lost space explorers!"; name = "Space Librarian Sleeper"; shoes = /obj/item/clothing/shoes/sneakers/brown; uniform = /obj/item/clothing/under/rank/curator},/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"at" = (/obj/effect/mob_spawn/human/alive{assignedrole = "Space Librarian"; flavour_text = "You got one of the easiest, most rewarding and useful jobs in the galaxy, a space librarian of a space library for lost space explorers!"; name = "Space Librarian Sleeper"; shoes = /obj/item/clothing/shoes/sneakers/brown; uniform = /obj/item/clothing/under/rank/curator},/turf/open/floor/plasteel/hydrofloor,/area/space)
+"au" = (/obj/machinery/vending/boozeomat{req_access_txt = "200"},/turf/closed/wall,/area/ruin/powered)
+"av" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"aw" = (/obj/structure/table/reinforced,/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"ax" = (/obj/structure/table/reinforced,/obj/machinery/newscaster{pixel_x = 32},/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"ay" = (/obj/machinery/light,/obj/structure/dresser,/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"az" = (/obj/structure/mirror{pixel_y = -32},/turf/open/floor/plasteel/hydrofloor,/area/ruin/powered)
+"aA" = (/obj/item/twohanded/required/kirbyplants/photosynthetic,/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aB" = (/obj/structure/chair{icon_state = "chair"; dir = 4},/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aC" = (/obj/structure/table/glass,/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aD" = (/obj/structure/chair{icon_state = "chair"; dir = 8},/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aE" = (/obj/item/twohanded/required/kirbyplants{icon_state = "plant-21"},/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aF" = (/obj/structure/chair/stool/bar,/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aG" = (/obj/structure/chair/stool/bar,/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aH" = (/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/ruin/powered)
+"aI" = (/obj/structure/falsewall,/turf/open/floor/plating,/area/ruin/powered)
+"aJ" = (/obj/structure/chair,/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aK" = (/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aL" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aM" = (/turf/open/floor/plating,/area/ruin/powered)
+"aN" = (/obj/structure/bookcase/random/adult,/turf/open/floor/carpet/black,/area/ruin/powered)
+"aO" = (/obj/structure/sign/poster/contraband/lizard{pixel_x = 32},/turf/open/floor/carpet/black,/area/ruin/powered)
+"aP" = (/obj/machinery/vending/autodrobe,/turf/open/floor/wood,/area/ruin/powered)
+"aQ" = (/obj/machinery/newscaster{pixel_y = 32},/turf/open/floor/wood,/area/ruin/powered)
+"aR" = (/turf/open/floor/wood,/area/ruin/powered)
+"aS" = (/obj/structure/chair,/turf/open/floor/wood,/area/ruin/powered)
+"aT" = (/obj/machinery/light/small{dir = 4},/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{pixel_x = 32},/turf/open/floor/carpet/black,/area/ruin/powered)
+"aU" = (/obj/machinery/vending/games,/obj/machinery/light/small{dir = 8},/turf/open/floor/wood,/area/ruin/powered)
+"aV" = (/obj/structure/chair{icon_state = "chair"; dir = 4},/turf/open/floor/wood,/area/ruin/powered)
+"aW" = (/obj/structure/table/reinforced,/obj/item/coin/uranium,/obj/item/coin/antagtoken,/obj/item/coin/bananium,/turf/open/floor/wood,/area/ruin/powered)
+"aX" = (/obj/structure/table/reinforced,/turf/open/floor/wood,/area/ruin/powered)
+"aY" = (/obj/structure/chair{icon_state = "chair"; dir = 1},/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"aZ" = (/obj/structure/piano,/obj/machinery/light,/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"ba" = (/obj/structure/disposalpipe/trunk,/obj/machinery/disposal/bin,/turf/open/floor/plasteel/grimy,/area/ruin/powered)
+"bb" = (/obj/machinery/light/broken,/obj/item/storage/toolbox/syndicate,/obj/structure/rack,/obj/item/reagent_containers/spray/cleaner,/obj/item/storage/firstaid,/obj/item/storage/firstaid,/obj/item/storage/box/matches,/obj/item/vending_refill/games,/turf/open/floor/plating,/area/ruin/powered)
+"bc" = (/obj/structure/sign/poster/contraband/lusty_xenomorph{pixel_x = 32},/turf/open/floor/carpet/black,/area/ruin/powered)
+"bd" = (/obj/machinery/vending/snack/random,/turf/open/floor/wood,/area/ruin/powered)
+"be" = (/obj/structure/table/reinforced,/obj/item/paper_bin,/turf/open/floor/wood,/area/ruin/powered)
+"bf" = (/turf/open/floor/plasteel/asteroid,/area/space)
+"bg" = (/obj/structure/chair{icon_state = "chair"; dir = 8},/turf/open/floor/wood,/area/ruin/powered)
+"bh" = (/obj/machinery/door/airlock/glass,/turf/open/floor/plasteel/darkblue,/area/ruin/powered)
+"bi" = (/obj/machinery/door/airlock/glass,/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"bj" = (/turf/open/floor/plating/asteroid,/area/space)
+"bk" = (/obj/structure/disposalpipe/segment,/turf/closed/wall,/area/ruin/powered)
+"bl" = (/obj/structure/curtain,/turf/open/floor/carpet/black,/area/ruin/powered)
+"bm" = (/obj/structure/chair{dir = 1},/turf/open/floor/wood,/area/ruin/powered)
+"bn" = (/obj/machinery/power/smes/magical,/obj/structure/cable{icon_state = "0-2"},/turf/open/floor/plating,/area/ruin/powered)
+"bo" = (/obj/machinery/airalarm/unlocked{pixel_y = 32},/obj/structure/rack,/obj/item/storage/box/lights/mixed,/obj/item/device/flashlight,/obj/item/device/flashlight,/turf/open/floor/plating,/area/ruin/powered)
+"bp" = (/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 9},/area/space)
+"bq" = (/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 1},/area/space)
+"br" = (/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 5},/area/space)
+"bs" = (/obj/structure/extinguisher_cabinet{pixel_x = 32},/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/cardboard/fifty,/obj/item/stack/cable_coil/random,/obj/item/stack/cable_coil/random,/obj/machinery/power/apc/unlocked{pixel_y = 32},/obj/structure/rack,/obj/structure/cable{icon_state = "0-2"},/obj/item/storage/toolbox/syndicate,/turf/open/floor/plating,/area/ruin/powered)
+"bt" = (/obj/item/twohanded/required/kirbyplants/photosynthetic,/turf/open/floor/plasteel/darkblue/side{icon_state = "darkblue"; dir = 9},/area/ruin/powered)
+"bu" = (/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 8},/area/space)
+"bv" = (/turf/open/floor/plasteel/darkblue/side{icon_state = "darkblue"; dir = 1},/area/ruin/powered)
+"bw" = (/turf/open/floor/plasteel/darkblue/side{icon_state = "darkblue"; dir = 5},/area/ruin/powered)
+"bx" = (/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 10},/area/space)
+"by" = (/turf/open/floor/plasteel/darkbrown/side,/area/space)
+"bz" = (/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 6},/area/space)
+"bA" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating,/area/ruin/powered)
+"bB" = (/obj/item/twohanded/required/kirbyplants/photosynthetic,/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"bC" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"bD" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"bE" = (/obj/machinery/newscaster{pixel_y = 32},/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"bF" = (/obj/machinery/photocopier,/turf/open/floor/carpet/black,/area/ruin/powered)
+"bG" = (/obj/structure/bookcase/random/religion,/turf/open/floor/carpet/black,/area/ruin/powered)
+"bH" = (/turf/open/floor/carpet/black,/area/ruin/powered)
+"bI" = (/obj/machinery/door/airlock,/turf/open/floor/wood,/area/ruin/powered)
+"bJ" = (/obj/structure/disposalpipe/trunk,/obj/machinery/disposal/bin,/turf/open/floor/wood,/area/ruin/powered)
+"bK" = (/obj/structure/sign/poster/contraband/free_tonto{pixel_y = -32},/turf/open/floor/wood,/area/ruin/powered)
+"bL" = (/obj/structure/sign/poster/contraband/masked_men{pixel_y = -32},/turf/open/floor/wood,/area/ruin/powered)
+"bM" = (/obj/item/twohanded/required/kirbyplants/photosynthetic,/obj/item/coin/twoheaded,/turf/open/floor/wood,/area/ruin/powered)
+"bN" = (/obj/machinery/light/small{dir = 8},/obj/structure/cable{icon_state = "1-4"},/turf/open/floor/plating,/area/ruin/powered)
+"bO" = (/turf/open/floor/plasteel/darkblue/side{icon_state = "darkblue"; dir = 8},/area/ruin/powered)
+"bP" = (/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"bQ" = (/turf/open/floor/plasteel/darkblue/side{icon_state = "darkblue"; dir = 4},/area/ruin/powered)
+"bR" = (/obj/machinery/door/airlock/glass,/turf/open/floor/plasteel/darkblue/side{icon_state = "darkblue"; dir = 8},/area/ruin/powered)
+"bS" = (/obj/structure/disposalpipe/segment{icon_state = "pipe"; dir = 5},/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"bT" = (/obj/structure/disposalpipe/junction,/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"bU" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/carpet/black,/area/ruin/powered)
+"bV" = (/obj/machinery/door/airlock{name = "Bathroom"},/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"bW" = (/obj/structure/table/reinforced,/obj/item/papercutter,/turf/open/floor/plasteel/darkbrown/side,/area/ruin/powered)
+"bX" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/darkbrown/side,/area/ruin/powered)
+"bY" = (/obj/structure/table/reinforced,/obj/item/statuebust,/turf/open/floor/plasteel/darkbrown/corner{icon_state = "darkbrowncorners"; dir = 8},/area/ruin/powered)
+"bZ" = (/obj/structure/disposalpipe/segment{icon_state = "pipe"; dir = 1},/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"ca" = (/obj/structure/bookcase/random/fiction,/turf/open/floor/carpet/black,/area/ruin/powered)
+"cb" = (/obj/item/soap/nanotrasen,/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"cc" = (/obj/structure/disposalpipe/segment,/obj/structure/toilet{icon_state = "toilet00"; dir = 8},/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"cd" = (/turf/closed/mineral,/area/ruin/powered)
+"ce" = (/obj/structure/table/reinforced,/obj/machinery/computer/libraryconsole/bookmanagement,/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"cf" = (/obj/structure/chair/office/dark,/turf/open/floor/plasteel/darkbrown,/area/ruin/powered)
+"cg" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 8},/area/ruin/powered)
+"ch" = (/obj/structure/disposalpipe/segment{icon_state = "pipe"; dir = 4},/turf/open/floor/carpet/black,/area/ruin/powered)
+"ci" = (/obj/structure/extinguisher_cabinet{pixel_x = 32},/obj/structure/disposalpipe/segment{icon_state = "pipe"; dir = 4},/turf/open/floor/carpet/black,/area/ruin/powered)
+"cj" = (/obj/structure/disposalpipe/segment{icon_state = "pipe"; dir = 4},/turf/closed/wall,/area/ruin/powered)
+"ck" = (/obj/structure/disposalpipe/segment{icon_state = "pipe"; dir = 4},/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"cl" = (/obj/structure/disposalpipe/junction,/obj/structure/mirror{pixel_x = 32; pixel_y = 0},/obj/structure/sink{dir = 4; pixel_x = 11},/turf/open/floor/plasteel/dark,/area/ruin/powered)
+"cm" = (/obj/machinery/libraryscanner,/turf/open/floor/plasteel/darkbrown,/area/ruin/powered)
+"cn" = (/turf/open/floor/plasteel/darkbrown,/area/ruin/powered)
+"co" = (/obj/structure/table/reinforced,/obj/item/paper_bin,/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 8},/area/ruin/powered)
+"cp" = (/obj/structure/bookcase/random/nonfiction,/turf/open/floor/carpet/black,/area/ruin/powered)
+"cq" = (/obj/item/twohanded/required/kirbyplants/photosynthetic,/turf/open/floor/plasteel/darkblue/side{icon_state = "darkblue"; dir = 10},/area/ruin/powered)
+"cr" = (/turf/open/floor/plasteel/darkblue/side,/area/ruin/powered)
+"cs" = (/turf/open/floor/plasteel/darkblue/side{icon_state = "darkblue"; dir = 6},/area/ruin/powered)
+"ct" = (/obj/structure/disposalpipe/segment,/turf/closed/mineral,/area/space)
+"cu" = (/obj/structure/table/reinforced,/obj/item/device/flashlight/lamp,/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 8},/area/ruin/powered)
+"cv" = (/obj/structure/disposalpipe/segment{icon_state = "pipe"; dir = 5},/turf/closed/mineral,/area/space)
+"cw" = (/obj/structure/disposalpipe/segment{icon_state = "pipe"; dir = 10},/turf/closed/mineral,/area/space)
+"cx" = (/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/plating,/area/ruin/powered)
+"cy" = (/turf/open/floor/plasteel/darkbrown/side{icon_state = "darkbrown"; dir = 4},/area/space)
+"cz" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruin/powered)
+"cA" = (/obj/structure/grille,/turf/open/floor/plating,/area/space)
+"cB" = (/obj/structure/disposalpipe/trunk{icon_state = "pipe-t"; dir = 1},/obj/machinery/disposal/deliveryChute,/turf/open/floor/plating,/area/space)
+"cC" = (/obj/structure/lattice/catwalk,/turf/open/space/basic,/area/space)
+"cD" = (/obj/machinery/door/window,/turf/open/floor/plasteel/darkbrown,/area/ruin/powered)
+"cE" = (/obj/structure/bookcase/random/reference,/turf/open/floor/carpet/black,/area/ruin/powered)
+"cF" = (/obj/structure/closet/emcloset/anchored,/turf/open/floor/plating,/area/ruin/powered)
+"cG" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/external/glass,/turf/open/floor/plating,/area/ruin/powered)
+"cH" = (/obj/machinery/light{dir = 8},/obj/structure/chair/office/dark,/turf/open/floor/wood,/area/ruin/powered)
+"cI" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/wood,/area/ruin/powered)
+"cJ" = (/obj/structure/table/reinforced,/obj/machinery/computer/libraryconsole,/turf/open/floor/wood,/area/ruin/powered)
+"cK" = (/obj/structure/chair/comfy/black{icon_state = "comfychair"; dir = 4},/turf/open/floor/wood,/area/ruin/powered)
+"cL" = (/obj/structure/table/wood,/turf/open/floor/wood,/area/ruin/powered)
+"cM" = (/obj/structure/chair/comfy/black{icon_state = "comfychair"; dir = 8},/turf/open/floor/wood,/area/ruin/powered)
+"cN" = (/obj/machinery/bookbinder,/turf/open/floor/wood,/area/ruin/powered)
+"cO" = (/obj/structure/cable{icon_state = "1-8"},/turf/open/floor/plating,/area/ruin/powered)
+"cP" = (/obj/item/sord,/obj/structure/closet/coffin,/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,/obj/item/bedsheet/cosmos,/obj/effect/decal/remains/human,/obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter,/turf/open/floor/plasteel/dark,/area/space)
+"cQ" = (/obj/structure/table/wood,/obj/item/spellbook/oneuse/smoke/lesser,/turf/open/floor/wood,/area/ruin/powered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaacaaadaaadaaadaaaaacacacacacacacacacaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaacadagagagagahahaaadaaadaaadaaadaaacaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaacaaagaiakamanahahagagagagagaeaeadacaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacacacacacacadagaoaoapaoaqaoaoararaoasataeaaacaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacaaaaadaaadaaagaoaoapaoauaoaoaoaoaoaoajaeadacacacacacaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacaaagagagagagagavavawaxahaoayazaoaoaoalafaaadaaadaaacaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacadagaAaBaCaDaEaFaFaGaFahaHahahaIahahahahagagagagadacaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacaaagaJaKaKaKaKaKaKaLaKahaMahaNaOahaPaQaRaRaSaRagaaacaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacadagaCaKaKaKaKaKaKaLaKaHaMahaNaTahaUaRaVaWaXaRagadacaaaaaaaaaaaaaa
+aaaaaaaaaaabaaaaacaaahaYaKaKaEaZaFaKaLbaahbbahaNbcahbdaRaVbeaXbgagaaacaaaaaaaaaaaaaa
+aaaaaaaaaaaaabahahahahahahbhahahahahbibkahahahahblahaRaRaRbmbmaRagadacaaaaaaaaaaaaaa
+aaaaaaabaaababahbnbobsahbtbvbwbAbBbCbDbEbFbGbGbGbHbIaRbJbKaRbLbMahaaacaaabaaaaaaaaaa
+aaaaaaaaabababahbNcxcOaHbObPbQbRbPbPbSbTbHbHbHbHbUahbVbkahahaIahahafafaaaaaaaaaaaaaa
+aaaaaaababababahahahahahbObPbQbAbWbXbYbZbHcacacabHahcbccahabbfabababababaaaaabaaaaaa
+aaaaaaababababcdcdcdcdahbObPbQbAcecfcgbSchchchchcicjckclahabbjbjbjbjabababaaaaaaaaaa
+aaaaabaaabababababababahbObPbQbAcmcncobPbHcpcpcpbHahahbkahababababbjabababaaaaabaaaa
+aaaaaaaaaaababababababahcqcrcsahcncncubPbHbHbHbHbUahabctabbpbqbrabbjabababaaaaaaaaaa
+aaaaaaaaaaaaababbjababahahczahahahcDcgbPbHcEcEcEbHahabcvcwbucPcybfbjababababaaaaaaaa
+aaaaaaaaaaababbjbjbjbjahcFaMahbjahaRaRaRaRaRaRaRaRahababctbxbybzababababababaaaaaaaa
+aaaaaaaaaaaabjbjbjbjbjahahcGahbjahcHaRaRaRaRaRaRcIahababctababababababababaaaaabaaaa
+aaaaaaaaaaaabjbjbjabbjbjbjbjcAbjagcJcKcLcMcKcQcMcNagadaccBabababababababaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaabababbjbjbjcAbjagagagagagagagagagagaaacaaaaabababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaabbjbjaaacaaaaadaaadaaadaaadaaadaaacaaaaaaaaaaaaaaaaaaaaabaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaacCaaacacacacacacacacacacacacacacaaaaaaaaaaaaaaabaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaacCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
