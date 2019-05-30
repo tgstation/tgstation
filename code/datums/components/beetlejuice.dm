@@ -52,9 +52,10 @@
 			count -= speaker
 			apport(speaker)
 
-/datum/component/beetlejuice/UnregisterFromParent()
-	. = ..()
+/datum/component/beetlejuice/Destroy(force, silent)
 	UnregisterSignal(SSdcs,COMSIG_GLOB_LIVING_SAY_SPECIAL)
+	. = ..()
+	
 
 /datum/component/beetlejuice/proc/apport(atom/target)
 	var/atom/movable/AM = parent
