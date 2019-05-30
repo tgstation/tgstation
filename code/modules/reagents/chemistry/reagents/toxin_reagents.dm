@@ -403,10 +403,11 @@
 				if(prob(75))
 					if(M.mobility_flags & MOBILITY_USE)
 						to_chat(M, "You scratch yourself violently.")
-						M.take_bodypart_damage(2 * REM)
+						M.take_bodypart_damage(2 * REM, required_status = BODYPART_ORGANIC)
 						. = TRUE
 					else
-						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "itch", /datum/mood_event/itching)
+						if(!M.IsSleeping())
+							SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "itch", /datum/mood_event/itching)
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
