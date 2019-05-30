@@ -8,6 +8,9 @@
 	light_color = "#E2853D"//orange
 	var/printer_ready = 0 //cooldown var
 	var/subverted = FALSE
+	var/state = STATE_DEFAULT
+	var/const/STATE_DEFAULT = 1
+	var/const/STATE_SYNDICATE_CONTRACTS = 2
 
 /obj/machinery/computer/bounty/Initialize()
 	. = ..()
@@ -52,12 +55,20 @@
 
 /obj/machinery/computer/bounty/ui_interact(mob/user)
 	. = ..()
-
 	if(!GLOB.bounties_list.len)
 		setup_bounties()
 
-	var/dat = ""
+	switch(state)
+		if (STATE_DEFAULT)
+			default_screen_state(user)
+		if (STATE_SYNDICATE_CONTRACTS)
+			syndicate_contract_screen_state(user)
+
+// Default bounty state
+/obj/machinery/computer/bounty/proc/default_screen_state(mob/user)
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/dat = ""
+
 	dat += "<a href='?src=[REF(src)];refresh=1'>Refresh</a>"
 	dat += "<a href='?src=[REF(src)];refresh=1;choice=Print'>Print Paper</a>"
 	dat += "<p>Credits: <b>[D.account_balance]</b></p>"
@@ -99,11 +110,23 @@
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
+// Default bounty state
+/obj/machinery/computer/bounty/proc/syndicate_contract_screen_state(mob/user)
+	var/dat = ""
+
+	dat += "<h1>Welcome Agent...</h1>"
+	dat += "<h3><i>Connection lost...</i></h3>"
+
+	var/datum/browser/popup = new(user, "bounties", "Syndicate Bounties", 700, 600)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+
 // Syndicate contract row with an emagged computer - randomised slightly
 /obj/machinery/computer/bounty/proc/syndicate_bounty_row()
 	var/background
 	var/dat = ""
-	var/name = readable_corrupted_text("Outpost 63")
+	var/name = readable_corrupted_text("Relay 63")
 	var/desc = readable_corrupted_text("Syndicate Bounty Database")
 	var/reward = readable_corrupted_text("??")
 	var/complete = readable_corrupted_text("((!")
@@ -142,5 +165,11 @@
 
 	if(href_list["refresh"])
 		playsound(src, "terminal_type", 25, 0)
+
+	if(href_list["synd_bounty_connect"])
+		playsound(src, "terminal_type", 25, 0)
+
+		// TODO: check if traitor/give some sort of interesting login perhaps
+		state = STATE_SYNDICATE_CONTRACTS
 
 	updateUsrDialog()
