@@ -795,12 +795,13 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	. = message
 
 
-/proc/readable_corrupted_text(var/list/text)
+/proc/readable_corrupted_text(text)
 	var/list/corruption_options = list("..", "£%", "~~\"", "!!", "*", "^", "$!", "-", "}", "?")
 	var/corrupted_text = ""
 
-	for(var/letter_index = 1; letter_index <= text.len; letter_index++)
-		var/letter = copytext(text, letter_index, letter_index + 1)
+	for(var/letter_index = 1; letter_index <= length(text); letter_index++)
+		var/letter = text[letter_index]
+
 		if (prob(15))
 			corrupted_text += pick(corruption_options)
 		corrupted_text += letter
