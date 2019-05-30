@@ -10,11 +10,16 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=500, MAT_GLASS=1000, MAT_DIAMOND=500)
-	var/max_shield_integrity = 100
-	var/shield_integrity = 100
+	var/max_shield_integrity = 250
+	var/shield_integrity = 250
 	var/max_fields = 3
 	var/list/current_fields
 	var/field_distance_limit = 3
+
+/obj/item/forcefield_projector/emp_act(severity)
+	to_chat(user, "<span class='notice'>The EMP blast short circuits the [src]!</span>")
+	icon_state = "signmaker_forcefield_broken"
+	var/dont_project = TRUE
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -37,6 +42,9 @@
 		return
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, "<span class='notice'>[src] cannot sustain any more forcefields!</span>")
+		return
+	if(dont_project)
+		to_chat(user, "<span class='notice'>[src] circuitry is broken!</span>")
 		return
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
@@ -85,7 +93,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	armor = list("melee" = 0, "bullet" = 25, "laser" = 50, "energy" = 50, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = -100, "bullet" = 25, "laser" = 50, "energy" = 50, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	var/obj/item/forcefield_projector/generator
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)
