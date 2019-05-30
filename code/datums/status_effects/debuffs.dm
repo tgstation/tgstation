@@ -461,15 +461,15 @@
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
 
-/mob/living/proc/apply_necropolis_curse(set_curse)
-	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
+/mob/living/proc/apply_necropolis_curse(set_curse, curse_path=STATUS_EFFECT_NECROPOLIS_CURSE,additional_curse_time=3000)
+	var/datum/status_effect/necropolis_curse/C = has_status_effect(curse_path)
 	if(!set_curse)
 		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
 	if(QDELETED(C))
-		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
+		apply_status_effect(curse_path, set_curse)
 	else
 		C.apply_curse(set_curse)
-		C.duration += 3000 //additional curses add 5 minutes
+		C.duration += additional_curse_time //time added by additional curses
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
@@ -480,6 +480,10 @@
 	var/effect_last_activation = 0
 	var/effect_cooldown = 100
 	var/obj/effect/temp_visual/curse/wasting_effect = new
+	
+/datum/status_effect/necropolis_curse/hivemind
+	id = "hivemindcurse"
+	duration = 1200
 
 /datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
 	. = ..()
