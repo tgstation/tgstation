@@ -30,6 +30,7 @@ Borg Hypospray
 	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
+	var/list/reagent_names = list()
 
 
 /obj/item/reagent_containers/borghypo/Initialize()
@@ -56,7 +57,7 @@ Borg Hypospray
 	return 1
 
 // Use this to add more chemicals for the borghypo to produce.
-/obj/item/reagent_containers/borghypo/proc/add_reagent(reagent)
+/obj/item/reagent_containers/borghypo/proc/add_reagent(datum/reagent/reagent)
 	reagent_ids |= reagent
 	var/datum/reagents/RG = new(30)
 	RG.my_atom = src
@@ -66,9 +67,11 @@ Borg Hypospray
 	R.add_reagent(reagent, 30)
 
 	modes[reagent] = modes.len + 1
+	reagent_names[initial(reagent.name)] = reagent
 
-/obj/item/reagent_containers/borghypo/proc/del_reagent(reagent)
+/obj/item/reagent_containers/borghypo/proc/del_reagent(datum/reagent/reagent)
 	reagent_ids -= reagent
+	reagent_names -= initial(reagent.name)
 	var/datum/reagents/RG
 	var/datum/reagents/TRG
 	for(var/i in 1 to reagent_ids.len)
@@ -114,7 +117,7 @@ Borg Hypospray
 	log_combat(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
-	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
+	var/chosen_reagent = modes[reagent_names[input(user, "What reagent do you want to dispense?") as null|anything in reagent_names]]
 	if(!chosen_reagent)
 		return
 	mode = chosen_reagent
