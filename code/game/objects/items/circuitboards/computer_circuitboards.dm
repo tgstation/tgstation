@@ -275,7 +275,7 @@
 
 /obj/item/circuitboard/computer/bounty/multitool_act(mob/living/user)
 	if(obj_flags & EMAGGED)
-		subverted = !subverted
+		subverted = FALSE
 		to_chat(user, "<span class='notice'>You give the board a full reset.</span>")
 
 /obj/item/circuitboard/computer/bounty/emag_act(mob/living/user)

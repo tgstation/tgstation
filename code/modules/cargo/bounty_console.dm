@@ -40,7 +40,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
-	"<span class='notice'>You expertly work with the sequencer at the [src], connecting to the Syndicate bounty system. The computer's incompatible technology gives you limited access.</span>")
+	"<span class='notice'>You expertly work with the sequencer at the machine, connecting to the Syndicate bounty system. The computer's incompatible technology gives you limited access.</span>")
 
 	obj_flags |= EMAGGED
 	subverted = TRUE
@@ -63,6 +63,10 @@
 	dat += "<p>Credits: <b>[D.account_balance]</b></p>"
 	dat += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">"}
 	dat += "<tr><th>Name</th><th>Description</th><th>Reward</th><th>Completion</th><th>Status</th></tr>"
+
+	if (subverted)
+		dat += syndicate_bounty_row()
+
 	for(var/datum/bounty/B in GLOB.bounties_list)
 		var/background
 		if(B.can_claim())
@@ -88,11 +92,6 @@
 		else
 			dat += text("<td>Unclaimed</td>")
 		dat += "</tr>"
-
-	if (subverted)
-		dat += syndicate_bounty_row()
-
-	// TODO: Put in syndicate row if emaged
 	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "bounties", "Nanotrasen Bounties", 700, 600)
@@ -104,10 +103,11 @@
 /obj/machinery/computer/bounty/proc/syndicate_bounty_row()
 	var/background
 	var/dat = ""
-	var/name = "..&&~$£\"\""
-	var/desc = "Sy..icate£$ Bounty D-££~tabase"
-	var/reward = "2222#£"
-	var/complete = "((!"
+	var/name = readable_corrupted_text("Outpost 63")
+	var/desc = readable_corrupted_text("Syndicate Bounty Database")
+	var/reward = readable_corrupted_text("??")
+	var/complete = readable_corrupted_text("((!")
+	var/connect = readable_corrupted_text("Connect")
 	switch(rand(1, 3))
 		if(1)
 			background = "'background-color:#4F7529;'"
@@ -120,7 +120,7 @@
 	dat += text("<td>[]</td>", desc)
 	dat += text("<td>[]</td>", reward)
 	dat += text("<td>[]</td>", complete)
-	dat += text("<td><a href='?src=[REF(src)];synd_bounty_connect=1'>..Co%nn$ect</a></td>")
+	dat += text("<td><a href='?src=[REF(src)];synd_bounty_connect=1'>[connect]</a></td>")
 	dat += "</tr>"
 
 	return dat
