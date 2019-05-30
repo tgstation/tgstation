@@ -63,22 +63,25 @@
 			var/datum/fantasy_affix/affix = new T
 			affixListing[affix] = affix.weight
 
-	var/usedSlots = NONE
-	for(var/i in affixes)
-		var/datum/fantasy_affix/affix = i
-		usedSlots |= affix.placement
-	
+	if(length(affixes))
+		if(!force)
+			return
+		affixes = list()
+
 	var/alignment
 	if(quality >= 0)
 		alignment |= AFFIX_GOOD
 	if(quality <= 0)
 		alignment |= AFFIX_EVIL
 	
+	var/usedSlots = NONE
 	for(var/i in 1 to max(1, abs(quality))) // We want at least 1 affix applied
 		var/datum/fantasy_affix/affix = pickweight(affixListing)
 		if(affix.placement & usedSlots)
 			continue
 		if(!(affix.alignment & alignment))
+			continue
+		if(!affix.validate(src))
 			continue
 		affixes += affix
 		usedSlots |= affix.placement
