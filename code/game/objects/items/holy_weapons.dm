@@ -387,8 +387,8 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
 /obj/item/nullrod/Hypertool
+	icon = 'icons/obj/device.dmi'
 	icon_state = "hypertool"
-	icon = "icons/obj/device.dmi"
 	item_state = "multitool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
