@@ -286,7 +286,6 @@
 				var/resmismatch = FALSE
 				for(var/reagents in first_process)
 					var/list/reagent = splittext(reagents, "=")
-					to_chat(world, "reagent is [json_encode(reagent)], id is [reagent[1]], ckey'd [ckey(reagent[1])], reagentpath [GLOB.name2reagent[ckey(reagent[1])]]")
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent[1])]
 					if(dispensable_reagents.Find(reagent_id))
 						if (!resmismatch && !check_macro_part(reagents, res))
