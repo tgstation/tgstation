@@ -18,7 +18,7 @@
 	var/dont_project = FALSE
 
 /obj/item/forcefield_projector/emp_act(severity)
-	to_chat("<span class='notice'>The EMP blast short circuits the forcefield projector!</span>")
+	visible_message("<span class='warning'>The EMP blast short circuits the forcefield projector!</span>")
 	icon_state = "signmaker_forcefield_broken"
 	dont_project = TRUE
 
