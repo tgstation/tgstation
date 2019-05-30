@@ -516,7 +516,8 @@
 
 /mob/MouseDrop_T(atom/dropping, atom/user)
 	. = ..()
-	show_inv(user)
+	if(dropping != src)
+		show_inv(dropping)
 
 /mob/proc/is_muzzled()
 	return 0
