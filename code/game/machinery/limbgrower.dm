@@ -87,7 +87,7 @@
 			selected_category = href_list["category"]
 
 		if(href_list["disposeI"])  //Get rid of a reagent incase you add the wrong one by mistake
-			reagents.del_reagent(href_list["disposeI"])
+			reagents.del_reagent(text2path(href_list["disposeI"]))
 
 		if(href_list["make"])
 
