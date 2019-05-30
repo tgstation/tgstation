@@ -620,7 +620,6 @@
 	range = 7
 	charge_max = 3000
 	action_icon_state = "nightmare"
-	var/curse_time_bonus = 600 //duration to be added for multiple curses on a target
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/target = targets[1]
@@ -634,8 +633,7 @@
 		if(!do_after(user, 30, FALSE, user) || !(target in view(range)))
 			to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 			return
-	target.apply_necropolis_curse(CURSE_SPAWNING,STATUS_EFFECT_HIVEMIND_CURSE,curse_time_bonus)
-	target.apply_necropolis_curse(CURSE_GRASPING,STATUS_EFFECT_HIVEMIND_CURSE,curse_time_bonus)
+	target.apply_status_effect(STATUS_EFFECT_HIVEMIND_CURSE, CURSE_SPAWNING | CURSE_GRASPING)
 	to_chat(user, "<span class='notice'>We have brought forth the targets nightmares!</span>")
 	deadchat_broadcast("<span class='deadsay'><span class='name'>[target]</span> is suffering mysterious nightmares!</span>", target)
 
