@@ -308,7 +308,7 @@
 	var/list/carbon_members = hive.get_carbon_members()
 	if(!carbon_members.len)
 		return
-	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && !user.getBrainLoss())
+	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && !user.getBrainLoss() && !user.getStaminaLoss())
 		to_chat(user, "<span class='notice'>We cannot heal ourselves any more with this power!</span>")
 		revert_cast()
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
@@ -323,10 +323,10 @@
 		var/regen = target.anti_magic_check(FALSE, FALSE, TRUE) ? 2.5 : 5
 		target.adjustBrainLoss(regen)
 		if(user.getBruteLoss() > user.getFireLoss())
-			user.heal_ordered_damage(regen, list(CLONE, BRUTE, BURN))
+			user.heal_ordered_damage(regen, list(CLONE, BRUTE, BURN, STAMINA))
 		else
-			user.heal_ordered_damage(regen, list(CLONE, BURN, BRUTE))
-		if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss()) //If we don't have any of these, stop looping
+			user.heal_ordered_damage(regen, list(CLONE, BURN, BRUTE, STAMINA))
+		if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && !user.getStaminaLoss()) //If we don't have any of these, stop looping
 			to_chat(user, "<span class='warning'>We finish our healing</span>")
 			break
 		iterations++
