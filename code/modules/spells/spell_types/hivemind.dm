@@ -194,32 +194,17 @@
 		return
 	to_chat(user, "<span class='notice'>We begin increasing the psionic bandwidth between ourself and the vessel!</span>")
 	if(do_after(user,30,0,user))
-<<<<<<< HEAD
-		if(user.z == target.z)
-=======
-		var/power = 120-get_dist(user, target)
-		if(!is_hivehost(target))
-			switch(hive.hive_size)
-				if(0 to 4)
-				if(5 to 9)
-					power *= 1.5
-				if(10 to 14)
-					power *= 2
-				if(15 to 19)
-					power *= 2.5
-				else
-					power *= 3
+		var/power = (120-get_dist(user, target))/120
 		if(target.anti_magic_check(FALSE, FALSE, TRUE))
 			power *= 0.5
-		if(power > 50 && user.z == target.z)
->>>>>>> f66769a1131f51c8b2fd11f2c304fcb799682937
+		if(user.z == target.z)
 			to_chat(user, "<span class='notice'>We have overloaded the vessel for a short time!</span>")
-			target.blind_eyes(2)
-			target.blur_eyes(30)
-			target.minimumDeafTicks(15) //equivalent to 30s deafness
-			target.Jitter(7)
-			target.silent += 7
-			target.stuttering += 30
+			target.blind_eyes(4*power)
+			target.blur_eyes(30*power)
+			target.minimumDeafTicks(20*power) //equivalent to 40s deafness max
+			target.Jitter(10*power)
+			target.silent += 10*power
+			target.stuttering += 30*power
 			to_chat(target, "<span class='userdanger'>You feel your mind start to burn!</span>")
 		else
 			to_chat(user, "<span class='notice'>The vessel was too far away to be affected!</span>")
@@ -630,11 +615,12 @@
 		hive.threat_level += 1
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack
-	name = "Medullary Failure"
-	desc = "We overload the target's medulla, inducing an immediate heart attack."
+	name = "Living nightmares"
+	desc = "The target's fears break out and attack them."
 	range = 7
 	charge_max = 3000
-	action_icon_state = "attack"
+	action_icon_state = "nightmare"
+	var/curse_time_bonus = 600 //duration to be added for multiple curses on a target
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/target = targets[1]
@@ -642,26 +628,17 @@
 		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 		revert_cast()
 		return
-	if(!user.is_real_hivehost())
-		to_chat(user, "<span class='notice'>Our vessel is too weak to handle this power, we must cease our mind control beforehand.</span>")
-		revert_cast()
-		return
-	if(!target.undergoing_cardiac_arrest() && target.can_heartattack())
-		to_chat(target, "<span class='userdanger'>You start feeling a sharp pain, and foreign presence in your mind!!</span>")
-		var/success = TRUE
-		if(target.anti_magic_check(FALSE, FALSE, TRUE))
-			to_chat(user, "<span class='notice'>We begin bruteforcing the tinfoil barriers of [target.name] and overload [target.p_their()] medulla.</span>")
-			if(!do_after(user, 50, FALSE, user) || !(target in view(range)))
-				to_chat(user, "<span class='warning'>we fail to overload the vessel's medulla.</span>")
-				success = FALSE
-		if(success)
-			target.set_heartattack(TRUE)
-			to_chat(user, "<span class='notice'>We have overloaded the vessel's medulla! Without medical attention, they will shortly die.</span>")
-			if(target.stat == CONSCIOUS)
-				target.visible_message("<span class='userdanger'>[target] clutches at [target.p_their()] chest as if [target.p_their()] heart stopped!</span>")
-				deadchat_broadcast("<span class='deadsay'><span class='name'>[target]</span> has suffered a mysterious heart attack!</span>", target)
-	else
-		to_chat(user, "<span class='warning'>We are unable to induce a heart attack!</span>")
+	to_chat(target, "<span class='userdanger'>You see dark smoke swirling around you!</span>")
+	if(target.anti_magic_check(FALSE, FALSE, TRUE))
+		to_chat(user, "<span class='notice'>We begin bruteforcing the tinfoil barriers of [target.name] and pulling out their nightmares.</span>")
+		if(!do_after(user, 30, FALSE, user) || !(target in view(range)))
+			to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
+			return
+	target.apply_necropolis_curse(CURSE_SPAWNING,STATUS_EFFECT_HIVEMIND_CURSE,curse_time_bonus)
+	target.apply_necropolis_curse(CURSE_GRASPING,STATUS_EFFECT_HIVEMIND_CURSE,curse_time_bonus)
+	to_chat(user, "<span class='notice'>We have brought forth the targets nightmares!</span>")
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[target]</span> is suffering mysterious nightmares!</span>", target)
+
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	if(hive)
 		hive.threat_level += 4
