@@ -38,7 +38,6 @@
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
 	name = "blood"
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "ltrails_1"
 	desc = "Your instincts say you shouldn't be following these."
 	var/list/existing_dirs = list()
 
