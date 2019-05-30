@@ -340,8 +340,10 @@
 	set category = "Blob"
 	set name = "Reactive Strain Adaptation (40)"
 	set desc = "Replaces your strain with a random, different one."
-	if(free_strain_rerolls || can_buy(40))
+	if(!rerolling && (free_strain_rerolls || can_buy(40)))
+		rerolling = TRUE
 		reroll_strain()
+		rerolling = FALSE
 		if(free_strain_rerolls)
 			free_strain_rerolls--
 		last_reroll_time = world.time
