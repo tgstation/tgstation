@@ -13,19 +13,24 @@
 	reagent_flags = OPENCONTAINER
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
+	//Possible_states has the reagent type as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
 	var/list/possible_states = list(
-	 /datum/reagent/consumable/ketchup = list(/datum/reagent/consumable/ketchup, "ketchup bottle", "You feel more American already."),
+	 /datum/reagent/consumable/ketchup = list("ketchup", "ketchup bottle", "You feel more American already."),
 	 /datum/reagent/consumable/capsaicin = list("hotsauce", "hotsauce bottle", "You can almost TASTE the stomach ulcers now!"),
-	 /datum/reagent/consumable/enzyme = list(/datum/reagent/consumable/enzyme, "universal enzyme bottle", "Used in cooking various dishes"),
-	 /datum/reagent/consumable/soysauce = list(/datum/reagent/consumable/soysauce, "soy sauce bottle", "A salty soy-based flavoring"),
+	 /datum/reagent/consumable/enzyme = list("enzyme", "universal enzyme bottle", "Used in cooking various dishes"),
+	 /datum/reagent/consumable/soysauce = list("soysauce", "soy sauce bottle", "A salty soy-based flavoring"),
 	 /datum/reagent/consumable/frostoil = list("coldsauce", "coldsauce bottle", "Leaves the tongue numb in its passage"),
 	 /datum/reagent/consumable/sodiumchloride = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably"),
 	 /datum/reagent/consumable/blackpepper = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 	 /datum/reagent/consumable/cornoil = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 /datum/reagent/consumable/sugar = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
-	 /datum/reagent/consumable/mayonnaise = list(/datum/reagent/consumable/mayonnaise, "mayonnaise jar", "An oily condiment made from egg yolks."))
+	 /datum/reagent/consumable/mayonnaise = list("mayonnaise", "mayonnaise jar", "An oily condiment made from egg yolks."),
+	 )
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
+
+/obj/item/reagent_containers/food/condiment/Initialize()
+	. = ..()
+	possible_states = typelist("possible_states", possible_states)
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
@@ -236,7 +241,17 @@
 	volume = 10
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list()
-	possible_states = list(/datum/reagent/consumable/ketchup = list("condi_ketchup", "Ketchup", "You feel more American already."), /datum/reagent/consumable/capsaicin = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), /datum/reagent/consumable/soysauce = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"), /datum/reagent/consumable/frostoil = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"), /datum/reagent/consumable/sodiumchloride = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"), /datum/reagent/consumable/blackpepper = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"), /datum/reagent/consumable/cornoil = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), /datum/reagent/consumable/sugar = list("condi_sugar", "Sugar", "Tasty spacey sugar!"), /datum/reagent/consumable/astrotame = list("condi_astrotame", "Astrotame", "The sweetness of a thousand sugars but none of the calories."))
+	possible_states = list(
+		/datum/reagent/consumable/ketchup = list("condi_ketchup", "Ketchup", "You feel more American already."),
+		/datum/reagent/consumable/capsaicin = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"),
+		/datum/reagent/consumable/soysauce = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"),
+		/datum/reagent/consumable/frostoil = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"),
+		/datum/reagent/consumable/sodiumchloride = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"),
+		/datum/reagent/consumable/blackpepper = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"),
+		/datum/reagent/consumable/cornoil = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"),
+		/datum/reagent/consumable/sugar = list("condi_sugar", "Sugar", "Tasty spacey sugar!"),
+		/datum/reagent/consumable/astrotame = list("condi_astrotame", "Astrotame", "The sweetness of a thousand sugars but none of the calories."),
+		)
 
 /obj/item/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
