@@ -9,7 +9,7 @@
 		var/obj/item/projectile/P = mover
 		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
 	if(mover.throwing)
-		return (!density || !(mobility_flags & MOBILITY_STAND))
+		return (mover.throwing.thrower == src || !density || !(mobility_flags & MOBILITY_STAND))
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover))
