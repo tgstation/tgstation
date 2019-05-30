@@ -262,11 +262,11 @@
 
 /datum/sprite_accessory/hair/cornrowbraid
 	name = "Cornrow Braid"
-	icon_state = "hair_rowbraid"
+	icon_state = "hair_cornrowbraid"
 
 /datum/sprite_accessory/hair/cornrowdualtail
-	name = "Cornrow Dual Tail"
-	icon_state = "hair_rowdualtail"
+	name = "Cornrow Tail"
+	icon_state = "hair_cornrowtail"
 
 /datum/sprite_accessory/hair/crew
 	name = "Crewcut"
@@ -283,10 +283,6 @@
 /datum/sprite_accessory/hair/dandpompadour
 	name = "Dandy Pompadour"
 	icon_state = "hair_dandypompadour"
-
-/datum/sprite_accessory/hair/dave
-	name = "Dave"
-	icon_state = "hair_dave"
 
 /datum/sprite_accessory/hair/devillock
 	name = "Devil Lock"
@@ -490,7 +486,7 @@
 
 /datum/sprite_accessory/hair/shavedmohawk
 	name = "Mohawk (Unshaven)"
-	icon_state = "hair_unshavenmohawk"
+	icon_state = "hair_unshaven_mohawk"
 
 /datum/sprite_accessory/hair/mulder
 	name = "Mulder"
@@ -616,10 +612,6 @@
 	name = "Ponytail (Spiky)"
 	icon_state = "hair_spikyponytail"
 
-/datum/sprite_accessory/hair/ziegler
-	name = "Ponytail (Ziegler)"
-	icon_state = "hair_ziegler"
-
 /datum/sprite_accessory/hair/poofy
 	name = "Poofy"
 	icon_state = "hair_poofy"
@@ -631,10 +623,6 @@
 /datum/sprite_accessory/hair/ronin
 	name = "Ronin"
 	icon_state = "hair_ronin"
-
-/datum/sprite_accessory/hair/scully
-	name = "Scully"
-	icon_state = "hair_scully"
 
 /datum/sprite_accessory/hair/shaved
 	name = "Shaved"
@@ -869,10 +857,6 @@
 /datum/sprite_accessory/facial_hair/moonshiner
 	name = "Beard (Moonshiner)"
 	icon_state = "facial_moonshiner"
-
-/datum/sprite_accessory/facial_hair/tribearder
-	name = "Beard (Tribearder)"
-	icon_state = "facial_tribearder"
 
 /datum/sprite_accessory/facial_hair/longbeard
 	name = "Beard (Long)"

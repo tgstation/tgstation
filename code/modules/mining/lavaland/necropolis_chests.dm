@@ -455,7 +455,7 @@
 
 /obj/item/immortality_talisman/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
 
 /datum/action/item_action/immortality
 	name = "Immortality"
@@ -1050,6 +1050,11 @@
 //Colossus
 /obj/structure/closet/crate/necropolis/colossus
 	name = "colossus chest"
+
+/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/item/projectile/P)
+	if(istype(P, /obj/item/projectile/colossus))
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
 
 /obj/structure/closet/crate/necropolis/colossus/PopulateContents()
 	var/list/choices = subtypesof(/obj/machinery/anomalous_crystal)

@@ -61,7 +61,39 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
 
-	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
+	var/list/orphans = list()
+	var/list/uplinks = list()
+
+	for (var/datum/mind/M in get_antag_minds(/datum/antagonist/nukeop))
+		if (iscyborg(M.current))
+			continue
+		var/datum/component/uplink/uplink = M.find_syndicate_uplink()
+		if (!uplink)
+			orphans += M.current
+			continue
+		uplinks += uplink
+
+
+	var/tc_to_distribute = CHALLENGE_TELECRYSTALS
+	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
+
+	for (var/datum/component/uplink/uplink in uplinks)
+		uplink.telecrystals += tc_per_nukie
+		tc_to_distribute -= tc_per_nukie
+
+	for (var/mob/living/L in orphans)
+		var/TC = new /obj/item/stack/telecrystal(user.drop_location(), tc_per_nukie)
+		to_chat(L, "<span class='warning'>Your uplink could not be found so your share of the team's bonus telecrystals has been bluespaced to your [L.put_in_hands(TC) ? "hands" : "feet"].</span>")
+		tc_to_distribute -= tc_per_nukie
+
+	if (tc_to_distribute > 0) // What shall we do with the remainder...
+		for (var/mob/living/simple_animal/hostile/carp/cayenne/C in GLOB.mob_living_list)
+			if (C.stat != DEAD)
+				var/obj/item/stack/telecrystal/TC = new(C.drop_location(), tc_to_distribute)
+				TC.throw_at(get_step(C, C.dir), 3, 3)
+				C.visible_message("<span class='notice'>[C] coughs up a half-digested telecrystal</span>","<span class='usernotice'>You cough up a half-digested telecrystal!</span>")
+				break
+
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 

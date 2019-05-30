@@ -14,7 +14,7 @@
 /obj/item/storage/photo_album/Initialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.can_hold = typecacheof(list(/obj/item/photo))
+	STR.set_holdable(list(/obj/item/photo))
 	STR.max_combined_w_class = 42
 	STR.max_items = 21
 	LAZYADD(SSpersistence.photo_albums, src)

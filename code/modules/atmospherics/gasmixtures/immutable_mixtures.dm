@@ -43,7 +43,6 @@
 	. = ..()
 	temperature = initial_temperature
 
-
 //used by space tiles
 /datum/gas_mixture/immutable/space
 	initial_temperature = TCMB

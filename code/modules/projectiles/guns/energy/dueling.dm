@@ -1,6 +1,6 @@
 #define DUEL_IDLE 1
 #define DUEL_PREPARATION 2
-#define DUEL_READY 3 
+#define DUEL_READY 3
 #define DUEL_COUNTDOWN 4
 #define DUEL_FIRING 5
 
@@ -219,7 +219,7 @@
 	else
 		duel.fired[src] = TRUE
 		. = ..()
-	
+
 /obj/item/gun/energy/dueling/before_firing(target,user)
 	var/obj/item/ammo_casing/energy/duel/D = chambered
 	D.setting = setting
@@ -297,7 +297,7 @@
 	var/mob/living/L = target
 	if(!istype(target))
 		return BULLET_ACT_BLOCK
-	
+
 	var/obj/item/bodypart/B = L.get_bodypart(BODY_ZONE_HEAD)
 	B.dismember()
 	qdel(B)
@@ -321,7 +321,7 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_items = 2
-	STR.can_hold = typecacheof(list(/obj/item/gun/energy/dueling))
+	STR.set_holdable(list(/obj/item/gun/energy/dueling))
 
 /obj/item/storage/lockbox/dueling/update_icon()
 	cut_overlays()
