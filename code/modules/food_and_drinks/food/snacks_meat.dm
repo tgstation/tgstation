@@ -167,7 +167,7 @@
 	icon_state = "khinkali"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/garlic = 1)
 	cooked_type = /obj/item/reagent_containers/food/snacks/khinkali
-	tastes = list("meat" = 1, "onions" = 1, /datum/reagent/consumable/garlic = 1)
+	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/khinkali
@@ -177,7 +177,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/garlic = 1)
 	bitesize = 3
 	filling_color = "#F0F0F0"
-	tastes = list("meat" = 1, "onions" = 1, /datum/reagent/consumable/garlic = 1)
+	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/monkeycube

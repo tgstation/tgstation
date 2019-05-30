@@ -37,7 +37,7 @@
 	icon_state = "validsalad"
 	bonus_reagents = list(/datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("leaves" = 1, /datum/reagent/consumable/potato_juice = 1, "meat" = 1, "valids" = 1)
+	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
 	foodtype = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT
 
 /obj/item/reagent_containers/food/snacks/salad/oatmeal
@@ -46,7 +46,7 @@
 	icon_state = "oatmeal"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("oats" = 1, /datum/reagent/consumable/milk = 1)
+	tastes = list("oats" = 1, "milk" = 1)
 	foodtype = DAIRY | GRAIN
 
 /obj/item/reagent_containers/food/snacks/salad/fruit
@@ -81,7 +81,7 @@
 	icon_state = "ricebowl"
 	cooked_type = /obj/item/reagent_containers/food/snacks/salad/boiledrice
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
-	tastes = list(/datum/reagent/consumable/rice = 1)
+	tastes = list("rice" = 1)
 	foodtype = GRAIN | RAW
 
 /obj/item/reagent_containers/food/snacks/salad/boiledrice
@@ -90,7 +90,7 @@
 	icon_state = "boiledrice"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list(/datum/reagent/consumable/rice = 1)
+	tastes = list("rice" = 1)
 	foodtype = GRAIN
 
 /obj/item/reagent_containers/food/snacks/salad/ricepudding
@@ -98,7 +98,7 @@
 	desc = "Everybody loves rice pudding!"
 	icon_state = "ricepudding"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list(/datum/reagent/consumable/rice = 1, "sweetness" = 1)
+	tastes = list("rice" = 1, "sweetness" = 1)
 	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/salad/ricepork
@@ -106,7 +106,7 @@
 	desc = "Well, it looks like pork..."
 	icon_state = "riceporkbowl"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list(/datum/reagent/consumable/rice = 1, "meat" = 1)
+	tastes = list("rice" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/salad/eggbowl
@@ -114,5 +114,5 @@
 	desc = "A bowl of rice with a fried egg."
 	icon_state = "eggbowl"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list(/datum/reagent/consumable/rice = 1, "egg" = 1)
+	tastes = list("rice" = 1, "egg" = 1)
 	foodtype = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017

@@ -70,7 +70,7 @@
 	bitesize_mod = 2
 	foodtype = GRAIN
 	grind_results = list(/datum/reagent/consumable/rice = 0)
-	tastes = list(/datum/reagent/consumable/rice = 1)
+	tastes = list("rice" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/sake
 
 //Meatwheat - grows into synthetic meat

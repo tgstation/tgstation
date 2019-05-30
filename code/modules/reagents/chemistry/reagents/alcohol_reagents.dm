@@ -511,7 +511,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#8CFF8C" // rgb: 140, 255, 140
 	boozepwr = 45
 	taste_description = "sweet 'n creamy"
-	glass_icon_state = /datum/reagent/consumable/ethanol/booger
+	glass_icon_state = "booger"
 	glass_name = "Booger"
 	glass_desc = "Ewww..."
 

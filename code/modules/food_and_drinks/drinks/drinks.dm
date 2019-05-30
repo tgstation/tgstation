@@ -224,12 +224,12 @@
 	name = "mug"
 	desc = "A drink served in a classy mug."
 	icon_state = "tea"
-	item_state = /datum/reagent/consumable/coffee
+	item_state = "coffee"
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
 	if(reagents.total_volume)
-		icon_state = /datum/reagent/consumable/tea
+		icon_state = "tea"
 	else
 		icon_state = "tea_empty"
 
@@ -462,7 +462,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
 	desc = "Cola. in space."
-	icon_state = "space_cola"
+	icon_state = "cola"
 	list_reagents = list(/datum/reagent/consumable/space_cola = 30)
 	foodtype = SUGAR
 

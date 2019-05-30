@@ -26,7 +26,7 @@
 	filling_color = "#FFD700"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	tastes = list(/datum/reagent/consumable/coco = 1)
+	tastes = list("cocoa" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/creme_de_cacao
 
 // Vanilla Pod
@@ -48,5 +48,5 @@
 	icon_state = "vanillapod"
 	filling_color = "#FFD700"
 	foodtype = FRUIT
-	tastes = list(/datum/reagent/consumable/vanilla = 1)
+	tastes = list("vanilla" = 1)
 	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.

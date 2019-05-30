@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "n2o"
 	specific_heat = 40
 	name = "Nitrous Oxide"
-	gas_overlay = /datum/reagent/nitrous_oxide
+	gas_overlay = "nitrous_oxide"
 	moles_visible = MOLES_GAS_VISIBLE * 2
 	fusion_power = 10
 	dangerous = TRUE

@@ -18,5 +18,5 @@
 	icon_state = "garlic"
 	filling_color = "#C0C9A0"
 	bitesize_mod = 2
-	tastes = list(/datum/reagent/consumable/garlic = 1)
+	tastes = list("garlic" = 1)
 	wine_power = 10

@@ -22,7 +22,7 @@
 	icon_state = "plaincake"
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/cake
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list(/datum/reagent/consumable/vanilla = 1, "sweetness" = 2,"cake" = 5)
+	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
 	foodtype = GRAIN | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/cakeslice/plain
@@ -31,7 +31,7 @@
 	icon_state = "plaincake_slice"
 	filling_color = "#FFD700"
 	customfoodfilling = 1
-	tastes = list(/datum/reagent/consumable/vanilla = 1, "sweetness" = 2,"cake" = 5)
+	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
 	foodtype = GRAIN | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/store/cake/carrot

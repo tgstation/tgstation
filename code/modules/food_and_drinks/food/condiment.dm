@@ -194,7 +194,7 @@
 	name = "flour sack"
 	desc = "A big bag of flour. Good for baking!"
 	icon_state = "flour"
-	item_state = /datum/reagent/consumable/flour
+	item_state = "flour"
 	list_reagents = list(/datum/reagent/consumable/flour = 30)
 	possible_states = list()
 
@@ -212,7 +212,7 @@
 	name = "rice sack"
 	desc = "A big bag of rice. Good for cooking!"
 	icon_state = "rice"
-	item_state = /datum/reagent/consumable/flour
+	item_state = "flour"
 	list_reagents = list(/datum/reagent/consumable/rice = 30)
 	possible_states = list()
 
@@ -293,7 +293,7 @@
 //Ketchup
 /obj/item/reagent_containers/food/condiment/pack/ketchup
 	name = "ketchup pack"
-	originalname = /datum/reagent/consumable/ketchup
+	originalname = "ketchup"
 	list_reagents = list(/datum/reagent/consumable/ketchup = 10)
 
 //Hot sauce
@@ -304,5 +304,5 @@
 
 /obj/item/reagent_containers/food/condiment/pack/astrotame
 	name = "astrotame pack"
-	originalname = /datum/reagent/consumable/astrotame
+	originalname = "astrotame"
 	list_reagents = list(/datum/reagent/consumable/astrotame = 5)

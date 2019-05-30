@@ -189,7 +189,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/garlic = 2)
 	bitesize = 3
-	tastes = list("bread" = 1, /datum/reagent/consumable/garlic = 1, "butter" = 1)
+	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
 	foodtype = GRAIN
 
 /obj/item/reagent_containers/food/snacks/deepfryholder

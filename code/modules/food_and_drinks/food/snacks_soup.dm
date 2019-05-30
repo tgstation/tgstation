@@ -129,7 +129,7 @@
 	icon_state = "monkeysdelight"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
-	tastes = list("the jungle" = 1, /datum/reagent/consumable/banana = 1)
+	tastes = list("the jungle" = 1, "banana" = 1)
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/soup/tomato

@@ -86,7 +86,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	filling_color = "#D2B48C"
-	tastes = list(/datum/reagent/consumable/potato_juice = 1)
+	tastes = list("potato" = 1)
 	foodtype = VEGETABLES | DAIRY
 
 /obj/item/reagent_containers/food/snacks/fries
@@ -105,7 +105,7 @@
 	icon_state = "tatortot"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	filling_color = "FFD700"
-	tastes = list(/datum/reagent/consumable/potato_juice = 3, "valids" = 1)
+	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/soydope
@@ -212,7 +212,7 @@
 	icon_state = "spiderlollipop"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //lollipop, but vitamins = toxins
 	filling_color = "#00800"
-	tastes = list("cobwebs" = 1, /datum/reagent/consumable/sugar = 2)
+	tastes = list("cobwebs" = 1, "sugar" = 2)
 	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/reagent_containers/food/snacks/chococoin
@@ -355,7 +355,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, /datum/reagent/consumable/banana = 1)
+	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtype = FRUIT | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/honkdae
@@ -365,7 +365,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, /datum/reagent/consumable/banana = 1, "a bad joke" = 1)
+	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtype = FRUIT | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/nachos
@@ -417,7 +417,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/honey = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/honey = 5)
 	filling_color = "#F2CE91"
-	tastes = list("oats" = 3, "nuts" = 2, /datum/reagent/consumable/honey = 1)
+	tastes = list("oats" = 3, "nuts" = 2, "honey" = 1)
 	foodtype = FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/stuffedlegion
