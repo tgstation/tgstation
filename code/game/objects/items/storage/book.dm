@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible"
 //If you get these two lists not matching in size, there will be runtimes and I will hurt you in ways you couldn't even begin to imagine
 // if your bible has no custom itemstate, use one of the existing ones
 GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon","insuls"))
-GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "insuls"))
+GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "kingyellow"))
 
 /mob/proc/bible_check() //The bible, if held, might protect against certain things
 	var/obj/item/storage/book/bible/B = locate() in src
