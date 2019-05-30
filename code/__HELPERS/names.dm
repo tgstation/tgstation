@@ -158,8 +158,8 @@ GLOBAL_VAR(syndicate_code_phrase) //Code phrase for traitors.
 GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 
 //Cached regex search - for checking if codewords are used.
-GLOBAL_VAR(syndicate_code_phrase_regex)
-GLOBAL_VAR(syndicate_code_response_regex)
+GLOBAL_DATUM(syndicate_code_phrase_regex, /regex)
+GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 
 	/*
 	Should be expanded.
