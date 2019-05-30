@@ -100,7 +100,7 @@
 	return ..()
 	
 /obj/structure/projected_forcefield/emp_act(severity)
-	var/obj/structure/projected_forcefield/Destroy()
+	Destroy()
 
 /obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
