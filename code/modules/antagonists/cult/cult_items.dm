@@ -1002,6 +1002,6 @@
 							continue
 						throw_at(Next, 3, 1, D.thrower)
 						return
-					throw_at(D.thrower, 7, 1, D.thrower)
+					throw_at(D.thrower, 7, 1, null)
 	else
 		..()
