@@ -18,7 +18,6 @@
 	var/dont_project = FALSE
 
 /obj/item/forcefield_projector/emp_act(severity)
-	visible_message("<span class='warning'>The EMP blast short circuits the forcefield projector!</span>")
 	icon_state = "signmaker_forcefield_broken"
 	dont_project = TRUE
 
@@ -45,7 +44,7 @@
 		to_chat(user, "<span class='notice'>[src] cannot sustain any more forcefields!</span>")
 		return
 	if(dont_project)
-		to_chat(user, "<span class='notice'>[src] circuitry is broken!</span>")
+		to_chat(user, "<span class='notice'>[src]'s circuitry is broken!</span>")
 		return
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
