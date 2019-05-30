@@ -1868,10 +1868,11 @@
 /datum/reagent/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(30) && M.mobility_flags & MOBILITY_USE)
 		to_chat(M, "You scratch yourself.")
-		M.take_bodypart_damage(0.2 * REM)
+		M.take_bodypart_damage(0.2 * REM, required_status = BODYPART_ORGANIC)
 		. = TRUE
 	else
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "itch", /datum/mood_event/itching)	
+		if(!M.IsSleeping())
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "itch", /datum/mood_event/itching)	
 	if(prob(3))
 		M.reagents.add_reagent("histamine",rand(1,3))
 		M.reagents.remove_reagent("itching_powder",1.2)
