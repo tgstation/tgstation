@@ -32,10 +32,10 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	outfit_manager(admin)
 
 /datum/admins/proc/load_outfit(mob/admin)
-	var/mapfile = input("Pick file:", "File") as null|file
-	if(!mapfile)
+	var/outfit_file = input("Pick outfit json file:", "File") as null|file
+	if(!outfit_file)
 		return
-	var/filedata = file2text(mapfile)
+	var/filedata = file2text(outfit_file)
 	var/json = json_decode(filedata)
 	if(!json)
 		to_chat(admin,"<span class='warning'>JSON decode error.</span>")

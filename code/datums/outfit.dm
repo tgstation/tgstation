@@ -223,7 +223,7 @@
 	suit_store = text2path(outfit_data["suit_store"])
 	r_hand = text2path(outfit_data["r_hand"])
 	l_hand = text2path(outfit_data["l_hand"])
-	internals_slot = text2path(outfit_data["internals_slot"])
+	internals_slot = outfit_data["internals_slot"]
 	var/list/backpack = outfit_data["backpack_contents"]
 	backpack_contents = list()
 	for(var/item in backpack)
