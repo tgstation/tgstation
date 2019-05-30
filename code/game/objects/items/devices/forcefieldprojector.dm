@@ -9,12 +9,12 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(MAT_METAL=250, MAT_GLASS=500)
-	var/max_shield_integrity = 250
-	var/shield_integrity = 250
+	materials = list(MAT_METAL=500, MAT_GLASS=1000, MAT_DIAMOND=500)
+	var/max_shield_integrity = 100
+	var/shield_integrity = 100
 	var/max_fields = 3
 	var/list/current_fields
-	var/field_distance_limit = 7
+	var/field_distance_limit = 3
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -98,6 +98,9 @@
 	generator.current_fields -= src
 	generator = null
 	return ..()
+	
+/obj/structure/projected_forcefield/emp_act(severity)
+	var/obj/structure/projected_forcefield/Destroy()
 
 /obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
