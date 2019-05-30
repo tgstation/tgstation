@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - tweak: "Ghost darkness now starts at night vision level by default."
+  - tweak: "Ghost hud on by default."

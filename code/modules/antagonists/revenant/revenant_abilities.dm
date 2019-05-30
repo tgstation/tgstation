@@ -115,6 +115,7 @@
 	notice = "revennotice"
 	boldnotice = "revenboldnotice"
 	holy_check = TRUE
+	tinfoil_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0
