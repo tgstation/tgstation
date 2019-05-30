@@ -15,11 +15,12 @@
 	var/max_fields = 3
 	var/list/current_fields
 	var/field_distance_limit = 3
+	var/dont_project = FALSE
 
 /obj/item/forcefield_projector/emp_act(severity)
-	to_chat(user, "<span class='notice'>The EMP blast short circuits the [src]!</span>")
+	to_chat("<span class='notice'>The EMP blast short circuits the forcefield projector!</span>")
 	icon_state = "signmaker_forcefield_broken"
-	var/dont_project = TRUE
+	dont_project = TRUE
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
