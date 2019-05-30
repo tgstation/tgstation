@@ -126,13 +126,13 @@
 	cant_hold = typecacheof(cant_hold_list)
 
 /datum/component/storage/proc/generate_hold_desc(can_hold_list)
-	var/desc = ""
+	var/list/desc = list()
 
-	for(var/valid_obj in can_hold_list)
-		var/obj/item/valid_item = new valid_obj()
-		desc += "\n\t <span class='notice'>\a [valid_item.name]</span>"
+	for(var/valid_type in can_hold_list)
+		var/obj/item/valid_item = valid_type
+		desc += "\a [initial(valid_item.name)]"
 
-	return desc
+	return "\n\t<span class='notice'>[desc.Join("\n\t")]</span>"
 
 /datum/component/storage/proc/update_actions()
 	QDEL_NULL(modeswitch_action)
