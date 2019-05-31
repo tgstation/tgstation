@@ -110,12 +110,34 @@
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-// Default bounty state
+// Syndicate bounty state
 /obj/machinery/computer/bounty/proc/syndicate_contract_screen_state(mob/user)
 	var/dat = ""
+	var/background = "'background-color:#4F7529;'"
+	var/datum/antagonist/traitor/traitor_data = user.mind.has_antag_datum(/datum/antagonist/traitor)
 
+	// Flavour text
+	dat += {"<span style="text-align:center">"}
 	dat += "<h1>Welcome Agent...</h1>"
-	dat += "<h3><i>Connection lost...</i></h3>"
+	dat += "<h3>Current status: Onboard [GLOB.station_name].</h3>"
+	dat += "</span>"
+
+	// Table creation/styling and headers
+	dat += "<p>Available contracts to accept: <b>3</b></p>"
+	dat += "<p>Available rerolls: <b>3</b></p>"
+	dat += "<a href='?src=[REF(src)];reroll_contract=1'>Reroll</a>"
+	dat += {"<table style="text-align:center;" border="2" cellspacing="0" width="100%">"}
+	dat += "<tr><th>Target</th><th>Payment</th><th>Drop-Off</th><th></th></tr>"
+
+	// Currently rolled contract
+	dat += "<tr style=[background]>"
+	dat += text("<td>[]</td>", traitor_data.current_contract.target)
+	dat += text("<td>[]</td>", traitor_data.current_contract.reward)
+	dat += text("<td>[]</td>", traitor_data.current_contract.dropoff)
+	dat += text("<td><a href='?src=[REF(src)];accept_contract=1'>Accept</a></td>")
+	dat += "</tr>"
+
+	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "bounties", "Syndicate Bounties", 700, 600)
 	popup.set_content(dat)
@@ -171,5 +193,9 @@
 
 		// TODO: check if traitor/give some sort of interesting login perhaps
 		state = STATE_SYNDICATE_CONTRACTS
+
+	if(href_list["reroll_contract"])
+		var/datum/antagonist/traitor/traitor_data = usr.mind.has_antag_datum(/datum/antagonist/traitor)
+		traitor_data.current_contract.generate()
 
 	updateUsrDialog()

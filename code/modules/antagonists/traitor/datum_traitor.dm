@@ -13,6 +13,10 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
+	var/datum/syndicate_contract/current_contract = new
+	var/contracts_remaining = 3
+	var/rerolls = 3
+	var/TC_payed_out = 0
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
