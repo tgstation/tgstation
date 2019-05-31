@@ -61,6 +61,10 @@
 /area/ruin/space/has_grav/powered/authorship
 	name = "Authorship"
 
+/area/ruin/space/has_grav/powered/casino
+	name = "Space Casino"
+	icon_state = "bar"
+
 /area/ruin/space/has_grav/powered/aesthetic
 	name = "Aesthetic"
 	ambientsounds = list('sound/ambience/ambivapor1.ogg')

@@ -1,0 +1,123 @@
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/turf/closed/indestructible/rock,/area/ruin/space)
+"ac" = (/turf/closed/mineral/random/high_chance,/area/ruin/space)
+"ad" = (/turf/closed/wall/mineral/wood/nonmetal,/area/ruin/space/has_grav/powered/casino)
+"ae" = (/obj/structure/sign/poster/contraband/random,/turf/closed/wall/mineral/wood/nonmetal,/area/ruin/space/has_grav/powered/casino)
+"af" = (/obj/machinery/computer/slot_machine,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"ag" = (/obj/structure/chair/stool/bar{step_y = 9},/obj/machinery/light{dir = 8},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"ah" = (/turf/closed/wall/r_wall/rust,/area/ruin/space)
+"ai" = (/turf/closed/wall/r_wall,/area/ruin/space)
+"aj" = (/obj/structure/chair/stool/bar{step_y = 9},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"ak" = (/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"al" = (/obj/machinery/light{dir = 1},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"am" = (/obj/structure/chair/stool/bar{step_x = 2; step_y = 0},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"an" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/space)
+"ao" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/ruin/space)
+"ap" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating{icon_state = "panelscorched"},/area/ruin/space)
+"aq" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"ar" = (/obj/structure/table/wood/poker,/obj/effect/spawner/lootdrop/gambling,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"as" = (/obj/structure/table/wood/poker,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"at" = (/obj/structure/table/wood/poker,/obj/item/storage/pill_bottle/dice,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"au" = (/obj/structure/chair/stool/bar{step_x = 3; step_y = 3},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"av" = (/obj/structure/table/wood/poker,/obj/structure/chair/stool/bar{step_x = 0; step_y = 30},/obj/item/toy/cards/deck,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aw" = (/obj/structure/table/wood/poker,/obj/structure/chair/stool/bar{step_x = 29; step_y = 4},/obj/structure/chair/stool/bar{step_x = 0; step_y = 30},/obj/item/stack/spacecash/c100,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"ax" = (/obj/machinery/door/airlock/wood,/obj/structure/barricade/wooden/crude,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"ay" = (/obj/structure/table/wood/poker,/obj/item/gun/ballistic/revolver/russian,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"az" = (/obj/structure/table/wood/poker,/obj/item/clothing/head/cueball,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aA" = (/obj/structure/table/wood/poker,/obj/item/toy/cards/cardhand,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aB" = (/obj/structure/table/wood/poker,/obj/structure/chair/stool/bar{step_x = 29; step_y = 4},/obj/item/toy/cards/deck/syndicate,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aC" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/gibs,/turf/open/floor/plating,/area/ruin/space)
+"aD" = (/obj/structure/chair/stool/bar{step_x = 2; step_y = 0},/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{step_x = 28; step_y = 4},/obj/effect/decal/cleanable/vomit/old,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aE" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/bottle/vodka{step_x = 8},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aF" = (/obj/machinery/light{dir = 4; light_color = "#c1caff"},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aG" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/flask,/obj/item/reagent_containers/food/drinks/shaker,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aH" = (/obj/effect/decal/cleanable/dirt,/obj/item/gun/ballistic/shotgun/doublebarrel,/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/space)
+"aI" = (/obj/effect/decal/cleanable/dirt,/obj/effect/mob_spawn/human/corpse/russian,/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/space)
+"aJ" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/bubblegum,/turf/open/floor/plating{icon_state = "panelscorched"},/area/ruin/space)
+"aK" = (/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/stairs/left,/area/ruin/space/has_grav/powered/casino)
+"aL" = (/turf/open/floor/plasteel/stairs/medium,/area/ruin/space/has_grav/powered/casino)
+"aM" = (/turf/open/floor/plasteel/stairs/right,/area/ruin/space/has_grav/powered/casino)
+"aN" = (/obj/structure/table/wood/poker,/obj/structure/chair/stool/bar{step_x = 29; step_y = 0},/obj/item/stack/spacecash/c10,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aO" = (/obj/machinery/vending/boozeomat/all_access,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aP" = (/obj/effect/decal/cleanable/dirt,/obj/structure/closet/crate/secure/owned,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c500,/obj/item/stack/spacecash/c500,/obj/item/stack/spacecash/c500,/obj/item/stack/spacecash/c500,/obj/item/stack/spacecash/c200,/obj/item/stack/spacecash/c200,/obj/item/stack/spacecash/c50,/obj/item/stack/spacecash/c50,/turf/open/floor/plating{icon_state = "panelscorched"},/area/ruin/space)
+"aQ" = (/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/powered/casino)
+"aR" = (/obj/structure/chair/sofa/right{icon_state = "sofaend_right"; dir = 8},/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/powered/casino)
+"aS" = (/obj/structure/table/wood/poker,/obj/structure/chair/stool/bar{step_x = 29; step_y = 0},/obj/item/stack/spacecash/c10,/obj/machinery/light{dir = 8},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aT" = (/obj/structure/table/reinforced,/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{icon_state = "booze_dispenser"; dir = 8},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aU" = (/obj/structure/sign/poster/contraband/lusty_xenomorph,/turf/closed/wall/mineral/wood/nonmetal,/area/ruin/space/has_grav/powered/casino)
+"aV" = (/obj/structure/festivus{anchored = 1; name = "pole"},/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/powered/casino)
+"aW" = (/obj/structure/chair/sofa/left{icon_state = "sofaend_left"; dir = 8},/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/powered/casino)
+"aX" = (/obj/structure/table/wood/poker,/obj/structure/chair/stool/bar{step_x = 29; step_y = 0},/obj/item/stack/spacecash/c20,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aY" = (/obj/structure/chair/stool/bar{step_x = 2; step_y = 0},/obj/machinery/light{light_color = "#c9d3e8"},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"aZ" = (/obj/structure/table/reinforced,/obj/machinery/chem_dispenser/drinks/fullupgrade{icon_state = "soda_dispenser"; dir = 8},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"ba" = (/obj/machinery/door/morgue{name = "Private Room"; req_access_txt = "37"},/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/powered/casino)
+"bb" = (/obj/machinery/door/airlock/wood{name = "Casino"},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bc" = (/obj/structure/sign/poster/official/no_erp,/turf/closed/wall/mineral/wood/nonmetal,/area/ruin/space/has_grav/powered/casino)
+"bd" = (/obj/machinery/light{dir = 1; light_color = "#d1dfff"},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"be" = (/obj/machinery/door/window{dir = 4; icon_state = "left"; name = "Casino Reception"},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bf" = (/obj/machinery/computer/slot_machine,/obj/machinery/light{dir = 1; light_color = "#d1dfff"},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bg" = (/obj/item/clothing/under/schoolgirl{step_x = 30},/obj/structure/sign/poster/official/no_erp,/turf/closed/wall/mineral/wood/nonmetal,/area/ruin/space/has_grav/powered/casino)
+"bh" = (/obj/structure/closet/crate,/obj/item/clothing/head/kitty,/obj/item/clothing/head/collectable/rabbitears,/obj/item/clothing/under/sexymime,/obj/item/clothing/under/schoolgirl/red{step_x = 0},/obj/item/restraints/handcuffs,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/powered/casino)
+"bi" = (/obj/structure/bed/pod{dir = 4},/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/powered/casino)
+"bj" = (/obj/structure/chair/office,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bk" = (/obj/structure/table,/obj/item/reagent_containers/food/drinks/bottle/whiskey,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bl" = (/obj/structure/table,/obj/item/paper_bin,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bm" = (/obj/machinery/computer{icon_state = "computer"; dir = 1},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bn" = (/obj/structure/statue/gold/hos,/turf/open/floor/plating/asteroid/airless,/area/ruin/space)
+"bo" = (/turf/open/floor/plasteel/stairs/left,/area/ruin/space)
+"bp" = (/turf/open/floor/plasteel/stairs/right,/area/ruin/space)
+"bq" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/space)
+"br" = (/obj/structure/table,/obj/item/stack/spacecash/c10,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bs" = (/obj/structure/table,/obj/item/stack/spacecash/c50,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bt" = (/obj/structure/chair/stool/bar,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bu" = (/obj/structure/table/wood,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bv" = (/obj/machinery/light{light_color = "#c9d3e8"},/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bw" = (/obj/machinery/light{light_color = "#c9d3e8"},/obj/structure/chair/stool/bar,/turf/open/floor/wood,/area/ruin/space/has_grav/powered/casino)
+"bx" = (/obj/machinery/door/airlock/wood,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/powered/casino)
+"by" = (/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/powered/casino)
+"bz" = (/obj/machinery/door/airlock/external,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/powered/casino)
+"bA" = (/obj/structure/flora/rock/pile,/turf/open/floor/plating/asteroid/airless,/area/ruin/space)
+"bB" = (/obj/structure/flora/rock,/turf/open/floor/plating/asteroid/airless,/area/ruin/space)
+"bC" = (/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"bD" = (/obj/structure/flora/rock/pile,/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabababababaaaaababababaaaaaaaaaaaaaaabababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaababababababababababacabababaaaaaaaaababacababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaababadadaeadaeadadacacacabababababababacacabababaaaaaaaaaaaaaaaa
+aaaaaaaaabababadafafafafafadababacabababababababababacababaaaaaaaaaaaaaaaa
+aaaaaaaaabababadagajajajajadadaeadadadadadadahaiahahabababaaaaaaaaaaaaaaaa
+aaaaaaababababadakakakakakakakalakamaqakakadanaoapaiababaaaaaaaaaaaaaaaaaa
+aaaaabababacabaeakarasatakauavawakamaqakakaxapanaoahababaaaaaaaaaaaaaaaaaa
+aaaaababacacacadakayazarakauaAaBakaDaEakaFadaoapanaiabaaaaaaaaaaaaaaaaaaaa
+aaaaabacacacabadakakakakakakajajakamaqakaGaeaCaHaoahababaaaaaaaaaaaaaaaaaa
+aaaaababacacabadaKaLaMaeaNakakakakamaqakaOadaIaJaPahabacabaaaaaaaaaaaaaaaa
+aaaaaaabacacabadaQaQaRadaSakakakakamaqakaTadaiahaiaiabababaaaaaaaaaaaaaaaa
+aaaaaaababababaUaVaQaWadaXakakakakaYaqakaZadababababababaaaaaaaaaaaaaaaaaa
+aaaaaaabababadadbaadaeadadadbbbbadaeadadadadabababababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaababbcaQaQadakbdakbeakakbfafadabababababababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaacabbgbhbiadakbjakbkakakajajadabacabababacabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaababadbcbcadblbmbrbsakakakakadabacababababababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaababacabadakakakakakakbtbuadabacacababacababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaababababadakbvakakakakbwbuadabababababacabaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaacababadadaeadbxbxadaeadadabacabababacaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabababacacabadbybyadababacabababababababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaabababababacacadbzbzadabababacababababacababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaababacababababbnbobpbnabababababababacacacabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaabacacababbqbAbqbqbqbqbqbqabababaaabacabababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabababbAbqbqbqbqbqbBbqbqbqababaaaaabababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaababacabbqbqbqbqbqbqbAbqababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaababaaaabCbDbCbCbCbCaaaaacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
