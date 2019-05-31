@@ -87,10 +87,6 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new /obj/screen/craft
-	using.icon = ui_style
-	static_inventory += using
-
 	using = new/obj/screen/language_menu
 	using.icon = ui_style
 	static_inventory += using

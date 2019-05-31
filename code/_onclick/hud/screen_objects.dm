@@ -69,7 +69,7 @@
 /obj/screen/craft/Click()
 	if(isobserver(usr))
 		return
-	SEND_SIGNAL(usr, COMSIG_CRAFT_MENU_OPEN, usr)
+	SEND_SIGNAL(src, COMSIG_CLICK, usr)
 
 /obj/screen/area_creator
 	name = "create new area"

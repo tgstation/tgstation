@@ -1,5 +1,16 @@
-/datum/component/personal_crafting/Initialize()
-	RegisterSignal(parent, COMSIG_CRAFT_MENU_OPEN, .proc/ui_interact)
+datum/component/personal_crafting/Initialize()
+	if(ismob(parent))
+		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
+
+/datum/component/personal_crafting/proc/create_mob_button()
+	var/mob/M = parent
+	var/datum/hud/H = M.hud_used
+	var/client/CL = M.client
+	var/obj/screen/craft/C = new()
+	C.icon = H.ui_style
+	H.static_inventory += C
+	CL.screen += C
+	RegisterSignal(C, COMSIG_CLICK, .proc/ui_interact)
 
 /datum/component/personal_crafting
 	var/busy
@@ -290,7 +301,7 @@
 		qdel(DL)
 
 
-/datum/component/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
+/datum/component/personal_crafting/ui_interact(x, mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
