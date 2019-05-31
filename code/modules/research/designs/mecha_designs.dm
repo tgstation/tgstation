@@ -50,14 +50,6 @@
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/gygax_targ
-	name = "\"Gygax\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
-	id = "gygax_targ"
-	build_path = /obj/item/circuitboard/mecha/gygax/targeting
-	category = list("Exosuit Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/board/durand_main
 	name = "\"Durand\" Central Control module"
 	desc = "Allows for the construction of a \"Durand\" Central Control module."
@@ -71,14 +63,6 @@
 	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
 	id = "durand_peri"
 	build_path = /obj/item/circuitboard/mecha/durand/peripherals
-	category = list("Exosuit Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/durand_targ
-	name = "\"Durand\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
-	id = "durand_targ"
-	build_path = /obj/item/circuitboard/mecha/durand/targeting
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -123,16 +107,39 @@
 	build_path = /obj/item/circuitboard/mecha/phazon/peripherals
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+////////////////////////////////////////
+/////////// Combat Mecha Boards /////////////
+////////////////////////////////////////
+/datum/design/gygax_targ
+	name = "\"Gygax\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
+	id = "gygax_targ"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 900)
+	build_path = /obj/item/circuitboard/mecha/gygax/targeting
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY	
 
-/datum/design/board/phazon_targ
+/datum/design/durand_targ
+	name = "\"Durand\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
+	build_type = PROTOLATHE
+	id = "durand_targ"
+	materials = list(MAT_GLASS = 900)
+	build_path = /obj/item/circuitboard/mecha/durand/targeting
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	
+	
+/datum/design/phazon_targ
 	name = "\"Phazon\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
+	build_type = PROTOLATHE
 	id = "phazon_targ"
 	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	build_path = /obj/item/circuitboard/mecha/phazon/targeting
-	category = list("Exosuit Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
