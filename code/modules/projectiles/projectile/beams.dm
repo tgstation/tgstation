@@ -207,7 +207,7 @@
 /obj/item/projectile/beam/shock
 	name = "\improper charged beam"
 	icon_state = "spark"
-	damage = 22
+	damage = 18
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_CYAN
 	tracer_type = /obj/effect/projectile/tracer/xray
@@ -217,10 +217,10 @@
 /obj/item/projectile/beam/shock/on_hit(atom/target)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.electrocute_act(15, C, 1, FALSE, FALSE, FALSE, FALSE, FALSE)
+		C.electrocute_act(10, src, 1, FALSE, FALSE, FALSE, FALSE, FALSE)
+		C.confused += 6
 		if(prob(20))
 			C.dropItemToGround(C.get_active_held_item())
-		C.confused += 6
 
 /obj/item/projectile/beam/bitcoin
 	name = "\improper bitcoin stealing beam"
@@ -240,19 +240,27 @@
 		var/obj/item/card/id/C = H.get_idcard(TRUE)
 		if(C && C.registered_account)
 			C.registered_account.adjust_money(-100)
+			to_chat(H, "<span class='danger'>Your wallet feels lighter!</span>")
+			if(ishuman(firer))
+				var/mob/living/carbon/human/FH = firer
+				var/obj/item/card/id/FC = FH.get_idcard(TRUE)
+				if(FC && FC.registered_account)
+					FC.registered_account.adjust_money(100)
+					to_chat(FH, "<span class='notice'>Your wallet has received 100 credits.</span>")
+			else
+				var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
+				if(D)
+					D.adjust_money(100)
 		else
 			H.adjustStaminaLoss(40)
-		if(ishuman(firer))
-			var/mob/living/carbon/human/FH = firer
-			var/obj/item/card/id/FC = FH.get_idcard(TRUE)
-			if(FC && FC.registered_account)
-				FC.registered_account.adjust_money(100)
+			to_chat(H, "<span class='danger'>You feel your energy itself being turned into cryptocurrency!</span>")
 
 /obj/item/projectile/beam/tracer
 	name = "\improper tracing beam"
 	icon_state = "tracer"
 	homing = TRUE
 	damage = 5
+	irradiate = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_CYAN
 	tracer_type = /obj/effect/projectile/tracer/xray
@@ -311,14 +319,14 @@
 
 /obj/item/projectile/beam/blinding/on_hit(atom/target)
 	. = ..()
-	if(ishuman(target))
+	if(ishuman(target) && prob(80))
 		var/mob/living/carbon/human/H = target
 		H.blind_eyes(5)
 
 /obj/item/projectile/beam/incendiary
 	name = "\improper incendiary beam"
 	icon_state = "lava"
-	damage = 15
+	damage = 10
 	var/fire_stacks = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_ORANGE
@@ -347,29 +355,14 @@
 	name = "\improper bouncing plasma ball"
 	icon_state = "pulse0"
 	ricochets_max = 100
-	damage = 17
+	ricochet_chance = 100
+	reflectable = REFLECT_MAX
+	damage = 15
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_ORANGE
 	tracer_type = /obj/effect/projectile/tracer/xray
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
-
-/obj/item/projectile/beam/rico/Bump(atom/A)
-	var/turf/T = get_turf(A)
-	if(ricochets < ricochets_max)
-		ricochets++
-		if(A.handle_ricochet(src))
-			on_ricochet(A)
-			ignore_source_check = TRUE
-			return TRUE
-	var/distance = get_dist(T, starting)
-	def_zone = ran_zone(def_zone, max(100-(7*distance), 5))
-	if(isturf(A) && hitsound_wall)
-		var/volume = CLAMP(vol_by_damage() + 20, 0, 100)
-		if(suppressed)
-			volume = 5
-		playsound(loc, hitsound_wall, volume, 1, -1)
-	return process_hit(T, select_target(T, A))
 
 /obj/item/projectile/beam/invisible
 	invisibility = INVISIBILITY_MAXIMUM
@@ -408,7 +401,7 @@
 		C.charge -=  min(500, C.charge)
 	if(ishuman(firer))
 		var/mob/living/carbon/human/FH = firer
-		SEND_SIGNAL(src,"syphon", FH)
+		SEND_SIGNAL(FH,"syphon", FH)
 
 /obj/effect/projectile/tracer/solar
 	name = "syphon"
