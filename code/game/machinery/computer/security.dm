@@ -450,11 +450,9 @@ What a mess.*/
 							printing = 0
 			if("Print Missing")
 				if(!( printing ))
-					var/wanted_name = stripped_input(usr, "Please enter an alias for the missing person:", "Print Missing Persons Poster", active1.fields["name"])
-					if(wanted_name)
-						var/default_description = "A poster declaring [wanted_name] to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately."
-						var/list/major_crimes = active2.fields["ma_crim"]
-						var/list/minor_crimes = active2.fields["mi_crim"]
+					var/missing_name = stripped_input(usr, "Please enter an alias for the missing person:", "Print Missing Persons Poster", active1.fields["name"])
+					if(missing_name)
+						var/default_description = "A poster declaring [missing_name] to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately."
 
 						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Missing Persons Poster", default_description, null)
 						if(info)
@@ -463,7 +461,7 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
-								new /obj/item/poster/wanted/missing(loc, photo.picture.picture_image, wanted_name, info)
+								new /obj/item/poster/wanted/missing(loc, photo.picture.picture_image, missing_name, info)
 							printing = 0
 
 //RECORD DELETE
