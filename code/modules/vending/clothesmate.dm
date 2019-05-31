@@ -20,6 +20,9 @@
 		            /obj/item/clothing/head/beanie/stripedred = 3,
 		            /obj/item/clothing/head/beanie/stripedblue = 3,
 		            /obj/item/clothing/head/beanie/stripedgreen = 3,
+					/obj/item/clothing/head/beanie/rasta = 3,
+					/obj/item/clothing/head/kippah = 3,
+					/obj/item/clothing/head/taqiyahred = 3,
 		            /obj/item/clothing/gloves/fingerless = 2,
 		            /obj/item/clothing/neck/scarf/pink = 3,
 		            /obj/item/clothing/neck/scarf/red = 3,
@@ -119,6 +122,9 @@
 	default_price = 50
 	extra_price = 75
 	payment_department = NO_FREEBIES
+
+/obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
 
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"

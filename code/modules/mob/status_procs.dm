@@ -54,7 +54,7 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
+			if(HAS_TRAIT(L, TRAIT_BLIND))
 				blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
@@ -75,7 +75,7 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
+			if(HAS_TRAIT(L, TRAIT_BLIND))
 				blind_minimum = 1
 		eye_blind = blind_minimum
 		if(!eye_blind)

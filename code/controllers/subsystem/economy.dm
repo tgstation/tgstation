@@ -15,7 +15,6 @@ SUBSYSTEM_DEF(economy)
 	var/list/generated_accounts = list()
 	var/full_ancap = FALSE // Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
 							//Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
-	var/datum/station_state/engineering_check = new /datum/station_state()
 	var/alive_humans_bounty = 100
 	var/crew_safety_bounty = 1500
 	var/monster_bounty = 150
@@ -46,7 +45,7 @@ SUBSYSTEM_DEF(economy)
 							"adamantine" = 750,
 							// tier 4
 							"rainbow" = 1000)
-	var/list/bank_accounts = list()
+	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
 	var/list/dep_cards = list()
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
@@ -56,7 +55,7 @@ SUBSYSTEM_DEF(economy)
 	return ..()
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
-	boring_eng_payout()  // Payout based on integrity.
+	boring_eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows. 
 	boring_sci_payout() // Payout based on slimes.
 	boring_secmedsrv_payout() // Payout based on crew safety, health, and mood.
 	boring_civ_payout() // Payout based on ??? Profit
@@ -72,10 +71,6 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/proc/boring_eng_payout()
 	var/engineering_cash = 3000
-	engineering_check.count()
-	var/station_integrity = min(PERCENT(GLOB.start_state.score(engineering_check)), 100)
-	station_integrity *= 0.01
-	engineering_cash *= station_integrity
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_ENG)
 	if(D)
 		D.adjust_money(engineering_cash)

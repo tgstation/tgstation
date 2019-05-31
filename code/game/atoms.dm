@@ -93,7 +93,7 @@
 
 //called if Initialize returns INITIALIZE_HINT_LATELOAD
 /atom/proc/LateInitialize()
-	return
+	set waitfor = FALSE
 
 // Put your AddComponent() calls here
 /atom/proc/ComponentInitialize()
@@ -204,6 +204,9 @@
 		return loc.return_air()
 	else
 		return null
+
+/atom/proc/return_analyzable_air()
+	return null
 
 /atom/proc/check_eye(mob/user)
 	return

@@ -1,3 +1,4 @@
+
 /obj/item/reagent_containers/glass
 	name = "glass"
 	amount_per_transfer_from_this = 10
@@ -330,3 +331,66 @@
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
+
+/obj/item/pestle
+	name = "pestle"
+	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "pestle"
+	force = 7
+
+/obj/item/reagent_containers/glass/mortar
+	name = "mortar"
+	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting. Alt click to eject the item."
+	icon_state = "mortar"
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
+	volume = 100
+	reagent_flags = OPENCONTAINER
+	spillable = TRUE
+	var/obj/item/grinded
+
+/obj/item/reagent_containers/glass/mortar/AltClick(mob/user)
+	if(grinded)
+		grinded.forceMove(drop_location())
+		grinded = null
+		to_chat(user, "You eject the item inside.")
+
+/obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
+	..()
+	if(istype(I,/obj/item/pestle))
+		if(grinded)
+			if(user.getStaminaLoss() > 50)
+				to_chat(user, "<span class='danger'>You are too tired to work!</span>")
+				return
+			to_chat(user, "You start grinding...")
+			if((do_after(user, 25, target = src)) && grinded)
+				user.adjustStaminaLoss(40)
+				if(grinded.juice_results) //prioritize juicing
+					grinded.on_juice()
+					reagents.add_reagent_list(grinded.juice_results)
+					to_chat(user, "You juice [grinded] into a fine liquid.")
+					QDEL_NULL(grinded)
+					return
+				grinded.on_grind()
+				reagents.add_reagent_list(grinded.grind_results)
+				to_chat(user, "You break [grinded] into powder.")
+				QDEL_NULL(grinded)
+				return
+			return
+		else
+			to_chat(user, "<span class='danger'>There is nothing to grind!</span>")
+			return
+	if(grinded)
+		to_chat(user, "<span class='danger'>There is something inside already!</span>")
+		return
+	if(I.juice_results || I.grind_results)
+		I.forceMove(src)
+		grinded = I
+		return
+	to_chat(user, "<span class='danger'>You can't grind this!</span>")
+
+/obj/item/reagent_containers/glass/saline
+	name = "saline canister"
+	volume = 5000
+	list_reagents = list("salglu_solution" = 5000)

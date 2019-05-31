@@ -97,7 +97,7 @@
 	var/mob/M = get(loc, /mob)
 	if(!istype(M))
 		return
-	if(M.has_trait(TRAIT_CANNOT_OPEN_PRESENTS))
+	if(HAS_TRAIT(M, TRAIT_CANNOT_OPEN_PRESENTS))
 		GET_COMPONENT(STR, /datum/component/storage)
 		var/turf/floor = get_turf(src)
 		var/obj/item/I = new /obj/item/a_gift/anything(floor)
@@ -299,13 +299,13 @@
 
 /obj/item/storage/backpack/satchel/flat/Initialize()
 	. = ..()
-	add_trait(TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
 
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_combined_w_class = 15
-	STR.cant_hold = typecacheof(list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks
+	STR.set_holdable(null, list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/hide(intact)
 	if(intact)

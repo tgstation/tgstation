@@ -34,7 +34,7 @@
 		deity = "Nar'Sie"
 	else if(isliving(usr))
 		var/mob/living/L = usr
-		if(L.has_trait(TRAIT_SPIRITUAL))
+		if(HAS_TRAIT(L, TRAIT_SPIRITUAL))
 			cross.icon_state = "holylight"
 			font_color = "blue"
 			prayer_type = "SPIRITUAL PRAYER"
