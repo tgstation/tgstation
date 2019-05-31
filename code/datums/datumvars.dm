@@ -939,7 +939,7 @@
 					if("Search")
 						var/valid_id
 						while(!valid_id)
-							chosen_id = input(usr, "Enter the ID of the reagent you want to add.", "Search reagents")
+							chosen_id = input(usr, "Enter the ID of the reagent you want to add.", "Search reagents") as null|text
 							if(isnull(chosen_id)) //Get me out of here!
 								break
 							if (!ispath(text2path(chosen_id)))
