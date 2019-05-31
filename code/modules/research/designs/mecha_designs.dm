@@ -117,7 +117,7 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 900)
 	build_path = /obj/item/circuitboard/mecha/gygax/targeting
-	category = list("Equipment")
+	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY	
 
 /datum/design/durand_targ
@@ -127,7 +127,7 @@
 	id = "durand_targ"
 	materials = list(MAT_GLASS = 900)
 	build_path = /obj/item/circuitboard/mecha/durand/targeting
-	category = list("Equipment")
+	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 	
 	
@@ -138,7 +138,7 @@
 	id = "phazon_targ"
 	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
 	build_path = /obj/item/circuitboard/mecha/phazon/targeting
-	category = list("Equipment")
+	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
