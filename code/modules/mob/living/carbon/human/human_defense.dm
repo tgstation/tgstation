@@ -55,7 +55,7 @@
 						if(prob(30))
 							say(pick("OH NO!!!", "OH MY GOD!!", "HORY SHET!!"), forced = P.type)
 						var/mob/living/guardian = P.firer
-						if(prob(20))
+						if(prob(20) && guardian)
 							guardian.say("No one can just deflect the [P]!", forced = P.type)
 					else
 						if(!isturf(loc)) //if we're inside something and still got hit
