@@ -272,7 +272,7 @@
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/crematorium
-	req_access = list()
+	req_access = list(ACCESS_CREMATORIUM)
 	id = 1
 
 /obj/machinery/button/crematorium/indestructible
