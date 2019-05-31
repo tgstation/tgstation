@@ -84,7 +84,8 @@
 	var/list/blacklisted_hats = list( //Hats that don't really work on borgos
 	/obj/item/clothing/head/helmet/space/santahat,
 	/obj/item/clothing/head/welding,
-	/obj/item/clothing/head/mob_holder/drone //I am so very upset that this breaks things
+	/obj/item/clothing/head/mob_holder, //I am so very upset that this breaks things
+	/obj/item/clothing/head/helmet/space/eva,
 	)
 
 	can_buckle = TRUE
