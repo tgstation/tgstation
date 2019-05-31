@@ -133,7 +133,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "punji"
 	resistance_flags = FLAMMABLE
-	max_integrity = 50
+	max_integrity = 30
 	density = FALSE
 	anchored = TRUE
 
