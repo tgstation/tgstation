@@ -30,6 +30,7 @@
 	var/datum/team/revolution/revolution
 	var/list/datum/mind/headrev_candidates = list()
 	var/end_when_heads_dead = TRUE
+	var/victory_type = 0
 
 ///////////////////////////
 //Announces the game type//
@@ -173,6 +174,7 @@
 			if(ishuman(rev_mind.current) || ismonkey(rev_mind.current))
 				return FALSE
 	return TRUE
+	victory_type = 3
 
 
 /datum/game_mode/revolution/set_round_result()
@@ -225,6 +227,28 @@
 
 GLOBAL_VAR_INIT(dominator_count, 0)
 
+/datum/game_mode/revolution/proc/check_victory_type()
+	if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE || SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+		var/headcount = 0
+		var/untracked_heads = SSjob.get_all_heads()
+		for(var/mob/living/carbon/survivor in untracked_heads)
+			if(survivor.ckey && considered_escaped(survivor.mind))
+				headcount++
+		if(!headcount)
+			victory_type = 2
+		else
+			victory_type = 4
+
+/datum/game_mode/revolution/proc/considered_escaped(datum/mind/M)
+	if(M.force_escaped)
+		return TRUE
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return FALSE
+	var/turf/location = get_turf(M.current)
+	if(!location || istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/red/brig))
+		return FALSE
+	return location.onCentCom() || location.onSyndieBase()
+
 /datum/game_mode/revolution/domination
 	name = "domination"
 	config_tag = "domination"
@@ -236,14 +260,19 @@ GLOBAL_VAR_INIT(dominator_count, 0)
 	SSshuttle.clearHostileEnvironment(src)
 
 /datum/game_mode/revolution/domination/special_report()
-	if(finished == 1)
-		return "<div class='panel redborder'><span class='redtext big'>The revolutionaries assumed total control of the station!</span></div>"
-	else if(finished == 2)
-		return "<div class='panel redborder'><span class='redtext big'>The heads of staff managed to stop the revolution!</span></div>"
+	if(victory_type == 1)
+		return "<div class='panel redborder'><span class='redtext big'>Revolution Major Victory: The revolutionaries assumed total control of the station!</span></div>"
+	else if(victory_type == 2)
+		return "<div class='panel redborder'><span class='redtext big'>Revolution Minor Victory: An escape signal made it to Central Command, but the revolution did manage to kill most of the heads of staff!</span></div>"
+	else if(victory_type == 3)
+		return "<div class='panel redborder'><span class='redtext big'>Crew Major Victory: The crew managed to stop the revolutionaries from taking control of the station!</span></div>"
+	else if(victory_type == 4)
+		return "<div class='panel redborder'><span class='redtext big'>Crew Minor Victory: A head of staff managed to escape to warn Central Command of the revolution!</span></div>"
 
 /datum/game_mode/revolution/check_rev_victory()
 	for(var/obj/machinery/revdominator/N in GLOB.poi_list)
 		if(N.takeover_complete == 1)
+			victory_type = 1
 			return TRUE
 	return FALSE
 
@@ -254,8 +283,10 @@ GLOBAL_VAR_INIT(dominator_count, 0)
 		if(N.active && !N.takeover_complete == 2)
 			return FALSE
 		if(N.takeover_complete == 2)
+			victory_type = 3
 			return TRUE
 		if(dom_recount < GLOB.dominator_count)
+			victory_type = 3
 			return TRUE
 		else
 			return ..()
@@ -270,6 +301,7 @@ GLOBAL_VAR_INIT(dominator_count, 0)
 /datum/game_mode/revolution/domination/check_finished()
 	if(finished != 0)
 		return TRUE
+		check_victory_type()
 	else
 		return ..()
 
@@ -403,6 +435,7 @@ GLOBAL_VAR_INIT(dominator_count, 0)
 			next_beep = world.time + 10
 			playsound(loc, 'sound/items/nuke_toy_lowpower.ogg', 50, 1)
 			to_chat(user, "<b>You activate the [src].</b>")
+			message_admins("[ADMIN_LOOKUPFLW(user)] activated a dominator at [ADMIN_VERBOSEJMP(src.loc)] with a [seconds_remaining()] timer.")
 	else
 		to_chat(user, "<span class='notice'>Device does not have power, is blocked by a dense object, or is in space. Aborting.</span>")
 
