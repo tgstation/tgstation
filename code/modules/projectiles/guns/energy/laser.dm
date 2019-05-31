@@ -9,6 +9,7 @@
 	ammo_x_offset = 1
 	shaded_charge = 1
 	var/obj/item/external_lens/stored = null
+	modifystate = TRUE
 
 /obj/item/gun/energy/laser/attackby(obj/item/I, mob/user, params)
 	..()

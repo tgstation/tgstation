@@ -223,16 +223,17 @@
 /obj/item/projectile/Bump(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
-	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
-		ricochets++
-		if(A.handle_ricochet(src))
-			on_ricochet(A)
-			ignore_source_check = TRUE
-			decayedRange = max(0, decayedRange - reflect_range_decrease)
-			range = decayedRange
-			if(hitscan)
-				store_hitscan_collision(pcache)
-			return TRUE
+	if(ricochets < ricochets_max)
+		if(check_ricochet(A) && check_ricochet_flag(A) || (reflectable == "benis"))
+			ricochets++
+			if(A.handle_ricochet(src))
+				on_ricochet(A)
+				ignore_source_check = TRUE
+				decayedRange = max(0, decayedRange - reflect_range_decrease)
+				range = decayedRange
+				if(hitscan)
+					store_hitscan_collision(pcache)
+				return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.

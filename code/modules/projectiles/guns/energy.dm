@@ -147,7 +147,7 @@
 	var/itemState = null
 	if(!initial(item_state))
 		itemState = icon_state
-	if (modifystate)
+	if(modifystate)
 		add_overlay("[icon_state]_[shot.select_name]")
 		iconState += "_[shot.select_name]"
 		if(itemState)
