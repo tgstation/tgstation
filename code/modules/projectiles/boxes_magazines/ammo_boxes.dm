@@ -30,6 +30,31 @@
 	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 
+
+/obj/item/ammo_box/p40
+	name = "speed loader (.40 charged plasma)"
+	desc = "Designed to quickly reload revolvers."
+	icon_state = "38"
+	ammo_type = /obj/item/ammo_casing/p40
+	max_ammo = 6
+	multiple_sprites = 1
+	materials = list(MAT_METAL = 15000, MAT_PLASMA = 2500)
+
+/obj/item/ammo_box/p40/ion
+	name = "speed loader (.40 ionized plasma)"
+	desc = "Designed to quickly reload revolvers. Ionized plasma induces a directed electromagnetic pulse."
+	ammo_type = /obj/item/ammo_casing/p40/ion
+
+/obj/item/ammo_box/p40/hot
+	name = "speed loader (.40 high-temperature plasma)"
+	desc = "Designed to quickly reload revolvers. High-temperature plasma increases the target's temperature."
+	ammo_type = /obj/item/ammo_casing/p40/hot
+
+/obj/item/ammo_box/p40/cold
+	name = "speed loader (.40 low-temperature plasma)"
+	desc = "Designed to quickly reload revolvers. Low-temperature plasma decreases the target's temperature."
+	ammo_type = /obj/item/ammo_casing/p40/cold
+
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
 	icon_state = "9mmbox"

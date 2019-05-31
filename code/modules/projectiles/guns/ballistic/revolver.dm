@@ -133,6 +133,13 @@
 			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
 	return TRUE
 
+/obj/item/gun/ballistic/revolver/hos
+	name = "\improper S-02 charged plasma revolver"
+	desc = "The second coming of revolving cylinders, this time in space. This particular model is an abandoned prototype. Uses .40 charged plasma rounds."
+	fire_sound = 'sound/weapons/40plasmashot.ogg'
+	icon_state = "hos40p"
+	icon = 'icons/obj/guns/energy.dmi'
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/p40
 
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"

@@ -20,3 +20,9 @@
 /obj/item/ammo_box/magazine/internal/rus357/Initialize()
 	stored_ammo += new ammo_type(src)
 	. = ..()
+
+/obj/item/ammo_box/magazine/internal/cylinder/p40
+	name = ".40 charged plasma cylinder"
+	ammo_type = /obj/item/ammo_casing/p40
+	caliber = "40"
+	max_ammo = 6
