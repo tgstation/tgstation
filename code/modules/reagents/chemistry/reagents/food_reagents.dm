@@ -107,7 +107,6 @@
 	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
-	var/boiling //Used in mob life to determine if the oil kills, and only on touch application
 
 /datum/reagent/consumable/cooking_oil/reaction_obj(obj/O, reac_volume)
 	if(holder && holder.chem_temp >= fry_temperature)
@@ -120,18 +119,27 @@
 /datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
 		return
+	var/boiling = FALSE
 	if(holder && holder.chem_temp >= fry_temperature)
 		boiling = TRUE
-	if(method == VAPOR || method == TOUCH) //Directly coats the mob, and doesn't go into their bloodstream
-		if(boiling)
-			M.visible_message("<span class='warning'>The boiling oil sizzles as it covers [M]!</span>", \
-			"<span class='userdanger'>You're covered in boiling oil!</span>")
+	if(method != VAPOR && method != TOUCH) //Directly coats the mob, and doesn't go into their bloodstream
+		return ..()
+	if(!boiling)
+		return TRUE
+	var/oil_damage = ((holder.chem_temp / fry_temperature) * 0.33) //Damage taken per unit
+	if(method == TOUCH)
+		oil_damage *= 1 - M.get_permeability_protection()
+	var/FryLoss = round(min(38, oil_damage * reac_volume))
+	if(!HAS_TRAIT(M, TRAIT_OIL_FRIED))
+		M.visible_message("<span class='warning'>The boiling oil sizzles as it covers [M]!</span>", \
+		"<span class='userdanger'>You're covered in boiling oil!</span>")
+		if(FryLoss)
 			M.emote("scream")
-			playsound(M, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
-			var/oil_damage = (holder.chem_temp / fry_temperature) * 0.33 //Damage taken per unit
-			M.adjustFireLoss(min(35, oil_damage * reac_volume)) //Damage caps at 35
-	else
-		..()
+		playsound(M, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
+		ADD_TRAIT(M, TRAIT_OIL_FRIED, "cooking_oil_react")
+		addtimer(CALLBACK(M, /mob/living/proc/unfry_mob), 3)
+	if(FryLoss)
+		M.adjustFireLoss(FryLoss)
 	return TRUE
 
 /datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
