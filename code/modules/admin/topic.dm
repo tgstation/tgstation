@@ -1897,6 +1897,18 @@
 		var/ban_id = href_list["unbanlog"]
 		ban_log(ban_id)
 
+	// Force unlink a discord key
+	else if(href_list["force_discord_unlink"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/target_ckey = sanitizeSQL(href_list["force_discord_unlink"])
+		var/datum/DBQuery/admin_unlink_discord_id = SSdbcore.NewQuery("DELETE FROM [format_table_name("discord")] WHERE ckey = '[target_ckey]'")
+		admin_unlink_discord_id.Execute()
+		qdel(admin_unlink_discord_id)
+		to_chat(src, "<span class='notice'>Successfully forcefully unlinked discord account from [target_ckey]</span>")
+		message_admins("[key_name_admin(usr)] forcefully unlinked the discord account belonging to [target_ckey]")
+		log_admin("[key_name_admin(usr)] forcefully unlinked the discord account belonging to [target_ckey]")
+
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
 		return

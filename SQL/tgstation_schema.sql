@@ -513,6 +513,15 @@ CREATE TABLE `stickyban_matched_cid` (
 	PRIMARY KEY (`stickyban`, `matched_cid`)
 ) ENGINE=InnoDB;
 
+--
+-- Table structure for table `discord`
+--
+DROP TABLE IF EXISTS `discord`;
+CREATE TABLE `discord` (
+  `ckey` varchar(32) NOT NULL,
+  `discord_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

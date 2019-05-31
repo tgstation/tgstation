@@ -514,6 +514,15 @@ CREATE TABLE `SS13_stickyban_matched_cid` (
 ) ENGINE=InnoDB;
 
 
+--
+-- Table structure for table `SS13_discord`
+--
+DROP TABLE IF EXISTS `SS13_discord`;
+CREATE TABLE `SS13_discord` (
+  `ckey` varchar(32) NOT NULL,
+  `discord_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
