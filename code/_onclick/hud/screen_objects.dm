@@ -67,10 +67,9 @@
 	screen_loc = ui_crafting
 
 /obj/screen/craft/Click()
-	var/mob/living/M = usr
 	if(isobserver(usr))
 		return
-	M.OpenCraftingMenu()
+	SEND_SIGNAL(usr, COMSIG_CRAFT_MENU_OPEN, usr)
 
 /obj/screen/area_creator
 	name = "create new area"

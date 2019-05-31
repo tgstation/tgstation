@@ -1,4 +1,7 @@
-/datum/personal_crafting
+/datum/component/personal_crafting/Initialize()
+	RegisterSignal(parent, COMSIG_CRAFT_MENU_OPEN, .proc/ui_interact)
+
+/datum/component/personal_crafting
 	var/busy
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
 	var/viewing_subcategory = 1
@@ -51,7 +54,7 @@
 
 
 
-/datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
+/datum/component/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
 	contents = contents["other"]
 	main_loop:
 		for(var/A in R.reqs)
@@ -74,7 +77,7 @@
 			return 0
 	return 1
 
-/datum/personal_crafting/proc/get_environment(mob/user)
+/datum/component/personal_crafting/proc/get_environment(mob/user)
 	. = list()
 	for(var/obj/item/I in user.held_items)
 		. += I
@@ -90,7 +93,7 @@
 					continue
 				. += AM
 
-/datum/personal_crafting/proc/get_surroundings(mob/user)
+/datum/component/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
 	.["tool_behaviour"] = list()
 	.["other"] = list()
@@ -111,7 +114,7 @@
 						.["other"][A.type] += A.volume
 			.["other"][I.type] += 1
 
-/datum/personal_crafting/proc/check_tools(mob/user, datum/crafting_recipe/R, list/contents)
+/datum/component/personal_crafting/proc/check_tools(mob/user, datum/crafting_recipe/R, list/contents)
 	if(!R.tools.len)
 		return TRUE
 	var/list/possible_tools = list()
@@ -142,7 +145,7 @@
 			return FALSE
 	return TRUE
 
-/datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
+/datum/component/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(user)
 	var/send_feedback = 1
 	if(check_contents(R, contents))
@@ -188,7 +191,7 @@
 	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
 */
 
-/datum/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user)
+/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user)
 	var/list/surroundings
 	var/list/Deletion = list()
 	. = list()
@@ -287,14 +290,14 @@
 		qdel(DL)
 
 
-/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
+/datum/component/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
 		ui.open()
 
 
-/datum/personal_crafting/ui_data(mob/user)
+/datum/component/personal_crafting/ui_data(mob/user)
 	var/list/data = list()
 	var/list/subs = list()
 	var/cur_subcategory = CAT_NONE
@@ -317,7 +320,7 @@
 	var/list/cant_craft = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
-		
+
 		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 
@@ -332,21 +335,19 @@
 	return data
 
 
-/datum/personal_crafting/ui_act(action, params)
+/datum/component/personal_crafting/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
 		if("make")
 			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
 			busy = TRUE
-			ui_interact(usr) //explicit call to show the busy display
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
 				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
 			else
 				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
 			busy = FALSE
-			ui_interact(usr)
 		if("forwardCat") //Meow
 			viewing_category = next_cat(FALSE)
 			. = TRUE
@@ -368,19 +369,19 @@
 
 
 //Next works nicely with modular arithmetic
-/datum/personal_crafting/proc/next_cat(readonly = TRUE)
+/datum/component/personal_crafting/proc/next_cat(readonly = TRUE)
 	if (!readonly)
 		viewing_subcategory = 1
 	. = viewing_category % categories.len + 1
 
-/datum/personal_crafting/proc/next_subcat()
+/datum/component/personal_crafting/proc/next_subcat()
 	if(islist(subcategories[viewing_category]))
 		var/list/subs = subcategories[viewing_category]
 		. = viewing_subcategory % subs.len + 1
 
 
 //Previous can go fuck itself
-/datum/personal_crafting/proc/prev_cat(readonly = TRUE)
+/datum/component/personal_crafting/proc/prev_cat(readonly = TRUE)
 	if (!readonly)
 		viewing_subcategory = 1
 	if(viewing_category == categories.len)
@@ -390,7 +391,7 @@
 	if(. <= 0)
 		. = categories.len
 
-/datum/personal_crafting/proc/prev_subcat()
+/datum/component/personal_crafting/proc/prev_subcat()
 	if(islist(subcategories[viewing_category]))
 		var/list/subs = subcategories[viewing_category]
 		if(viewing_subcategory == subs.len)
@@ -403,7 +404,7 @@
 		. = null
 
 
-/datum/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
+/datum/component/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
 	var/list/data = list()
 	data["name"] = R.name
 	data["ref"] = "[REF(R)]"
