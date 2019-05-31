@@ -319,8 +319,6 @@ LINEN BINS
 		update_icon()
 	..()
 
-//obj/structure/bedsheetbin/default_deconstruction_screwdriver(mob/user, obj/item/I, time = 10)
-
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/bedsheet))
 		if(!user.transferItemToLoc(I, src))
@@ -334,6 +332,8 @@ LINEN BINS
 		return
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		if(flags_1 & NODECONSTRUCT_1)
+			return
 		if(amount)
 			to_chat(user, "<span clas='warn'>The [src] must be empty first!</span>")
 			return
