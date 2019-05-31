@@ -17,7 +17,7 @@ client/verb/check_antag_token()
 	if(!choices || !choices.len)
 		alert(src,"Antagonist tokens are unavialable at this time.","Antagonist Tokens","Ok")
 		return
-	if(!istype(mob,/mob/living/carbon/human) || !mob.mind)
+	if((!istype(mob,/mob/living/carbon/human)) || (!mob.mind) || (mob.mind in SSticker.mode.marked_objective))
 		if(!tokens)
 			alert(src,"You have [tokens] antagonist tokens","Antagonist Tokens","Ok")
 		else
@@ -62,7 +62,7 @@ client/verb/check_antag_token()
 	if(SSticker && SSticker.current_state < GAME_STATE_PLAYING)
 		to_chat(src, "<B>Wait untill the game starts to use an antagonist token.</B>")
 		return 0
-	if(!ckey || !antagtype || !istext(antagtype)||!mob.mind)
+	if((!ckey) || (!antagtype) || (!istext(antagtype)) || (!mob.mind) || (mob.mind in SSticker.mode.marked_objective))
 		to_chat(src, "<B>You can't use an antagonist token right now.</B>")
 		return 0
 	if(!(mob.mind in GLOB.Original_Minds))

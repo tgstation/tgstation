@@ -149,7 +149,11 @@
 	return 0
 /datum/antagonist/traitor/human/forge_single_objective() //Returns how many objectives are added
 	.=1
-	if(prob(50))
+	var/list/marked_targets = assign_marked_objective()
+	if(marked_targets)
+		for(var/datum/objective/O in marked_targets)
+			add_objective(O)
+	else if(prob(50))
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 			var/datum/objective/destroy/destroy_objective = new
@@ -227,7 +231,7 @@
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A))
 		A.hack_software = TRUE
-	
+
 /datum/antagonist/traitor/AI/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/silicon/ai/A = mob_override || owner.current

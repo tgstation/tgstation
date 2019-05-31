@@ -387,7 +387,10 @@
 			objectives += download_objective
 
 	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
+	var/list/marked_targets = assign_marked_objective()
+	if(marked_targets)
+		objectives |= marked_targets
+	else if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 		var/datum/objective/destroy/destroy_objective = new
 		destroy_objective.owner = owner
 		destroy_objective.find_target()

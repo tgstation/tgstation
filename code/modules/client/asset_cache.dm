@@ -303,7 +303,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"large_stamp-rd.png" = 'icons/stamp_icons/large_stamp-rd.png',
 		"large_stamp-cap.png" = 'icons/stamp_icons/large_stamp-cap.png',
 		"large_stamp-qm.png" = 'icons/stamp_icons/large_stamp-qm.png',
-		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
+		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png',
+		"large_stamp-cent.png" = 'icons/stamp_icons/large_stamp-cent.png'
 	)
 
 /datum/asset/simple/IRV

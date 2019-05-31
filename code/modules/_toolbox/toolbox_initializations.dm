@@ -110,9 +110,16 @@ GLOBAL_LIST_EMPTY(hub_features)
 	if(!H.wear_mask && H.ckey == "landrydragon")
 		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(H),slot_wear_mask)
 	if(H.ckey == "iksxde")
-		H.equip_to_slot_or_del(new /obj/item/bughunter(H), slot_back)
+		H.equip_to_slot_or_del(new /obj/item/bughunter(H), slot_in_backpack)
 	if(H.ckey == "nibberfa0t1337")
-		H.equip_to_slot_or_del(new /obj/item/reagent_containers/food/condiment/saltshaker(H), slot_back)
+		H.equip_to_slot_or_del(new /obj/item/reagent_containers/food/condiment/saltshaker(H), slot_in_backpack)
+	if(H.ckey == "silas4000")
+		var/obj/item/toy/plush/carpplushie/C = new()
+		C.name = "Gift of Carp-Sie"
+		C.desc = "I shall return some day."
+		H.equip_to_slot_or_del(C, slot_in_backpack)
+		if(H.mind && H.mind.assigned_role == "Chaplain")
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/hooded/carp_costume(H), slot_in_backpack)
 	//st patricks day
 	if(themonth == 3 && theday == 17 && !ignore_special_events)
 		if(H.w_uniform)

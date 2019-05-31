@@ -1036,6 +1036,7 @@
 #include "code\modules\_toolbox\true_assistant.dm"
 #include "code\modules\_toolbox\true_assistant_upgrades.dm"
 #include "code\modules\_toolbox\game_modes\abductors.dm"
+#include "code\modules\_toolbox\game_modes\marked.dm"
 #include "code\modules\_toolbox\game_modes\xeno.dm"
 #include "code\modules\_toolbox\medical\drugs.dm"
 #include "code\modules\_toolbox\medical\epi_filler.dm"

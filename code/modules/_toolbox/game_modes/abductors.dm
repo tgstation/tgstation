@@ -21,10 +21,13 @@
 
 	var/max_teams = 4
 
+	var/max_teams_at_player_count = 32 //always have max teams at this player count
+
 	var/list/toucher_types = list(/datum/antagonist/abductor/agent, /datum/antagonist/abductor/scientist)
 
 /datum/game_mode/anal_probers/pre_setup()
 
+	//This part isn't used by this game mode but antag tokens do use this so it stays in.
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
@@ -37,7 +40,14 @@
 	var/list/bum_touchers = list()
 	var/list/teams = list()
 
-	var/_max_teams = max(min(round(GLOB.clients.len/10),max_teams),1)
+	var/playercount = GLOB.clients.len
+	if(GLOB.override_lobby_player_count > 0)
+		playercount = GLOB.override_lobby_player_count
+
+	var/_max_teams = max(min(round(playercount/10),max_teams),1)
+
+	if(playercount >= max_teams_at_player_count)
+		_max_teams = max_teams
 
 	var/team_number = 1
 	while(team_number <= _max_teams && antag_candidates.len)
@@ -53,12 +63,15 @@
 			teams["team_[team_number]"] = the_team
 			team_number++
 
+	//Cleaning up teams so all teams have exactly 2 people, teams with less are deleted.
 	var/one_full_team = 0
 	for(var/t in teams)
 		var/list/the_team = teams[t]
 		if(the_team.len < 2)
 			teams.Remove(t)
 			continue
+
+		//making sure theres at least one full team.
 		else if(!one_full_team)
 			one_full_team = 1
 
