@@ -13,6 +13,7 @@
 
 	var/old_shard = FALSE
 	var/spent = FALSE
+	var/purified = FALSE
 
 /obj/item/soulstone/proc/was_used()
 	if(old_shard)
@@ -24,6 +25,12 @@
 
 /obj/item/soulstone/anybody
 	usability = TRUE
+	
+/obj/item/soulstone/anybody/purified
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "purified_soulstone"
+	purified = TRUE
+	
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -86,7 +93,10 @@
 		A.mobility_flags = MOBILITY_FLAGS_DEFAULT
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
-		icon_state = "soulstone"
+		if(purified)
+			icon_state = "purified_soulstone"
+		else
+			icon_state = "soulstone"
 		name = initial(name)
 		if(iswizard(user) || usability)
 			to_chat(A, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.</b>")
@@ -113,7 +123,7 @@
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/soulstone))
 		var/obj/item/soulstone/SS = O
-		if(!iscultist(user) && !iswizard(user) && !SS.usability)
+		if(!iscultist(user) && !iswizard(user) && !SS.purified)
 			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>")
 			user.Dizzy(30)
 			return
@@ -175,7 +185,10 @@
 				T.status_flags |= GODMODE
 				T.mobility_flags = NONE
 				T.health = T.maxHealth
-				icon_state = "soulstone2"
+				if(purified)
+					icon_state = "purified_soulstone2"
+				else
+					icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"
 				to_chat(T, "<span class='notice'>Your soul has been captured by the soulstone. Its arcane energies are reknitting your ethereal form.</span>")
 				if(user != T)
@@ -190,17 +203,29 @@
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
-
+						if(iscultist(user) || iswizard(user))
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
+						else
+							if(purified)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored/angelic, A, user, 0, T.loc)
+							else
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored/noncult, A, user, 0, T.loc)
 					if("Wraith")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
-
+						if(iscultist(user) || iswizard(user))
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
+						else
+							if(purified)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/angelic, A, user, 0, T.loc)
+							else
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, A, user, 0, T.loc)
 					if("Artificer")
 						if(iscultist(user) || iswizard(user))
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
-
-						else
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
+						else	
+							if(purified)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/angelic, A, user, 0, T.loc)
+							else
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
 						SSticker.mode.cult -= A.mind
@@ -251,7 +276,10 @@
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
-	icon_state = "soulstone2"
+	if(purified)
+		icon_state = "purified_soulstone2"
+	else
+		icon_state = "soulstone2"
 	if(U && (iswizard(U) || usability))
 		to_chat(S, "Your soul has been captured! You are now bound to [U.real_name]'s will. Help [U.p_them()] succeed in [U.p_their()] goals at all costs.")
 	else if(U && iscultist(U))
