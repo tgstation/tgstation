@@ -715,7 +715,6 @@
 
 /datum/reagent/consumable/secretsauce
 	name = "secret sauce"
-	id = "secretsauce"
 	description = "What could it be."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300"
