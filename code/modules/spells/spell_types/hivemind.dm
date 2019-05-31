@@ -571,22 +571,21 @@
 	for(var/mob/living/silicon/target in targets)
 		target.Unconscious(50)
 
-/obj/effect/proc_holder/spell/targeted/induce_sleep
-	name = "Circadian Shift"
-	desc = "We send out a controlled pulse of psionic energy, temporarily causing a deep sleep to anybody in sight, even in silicon-based lifeforms. The fewer people in sight, the more effective this power is. The weak mind of a vessels cannot handle this ability, using Mind Control and this at the same time would be most unwise."
+/obj/effect/proc_holder/spell/targeted/pin
+	name = "Psychic Pin"
+	desc = "We send out a controlled pulse of psionic energy, pinning everyone in sight, and knocking out silicon-based lifeforms."
 	panel = "Hivemind Abilities"
-	charge_max = 1200
+	charge_max = 600
 	range = 7
 	invocation_type = "none"
 	clothes_req = 0
 	max_targets = 0
-	include_user = 1 //Checks for real hivemind hosts during the cast, won't smack you unless using mind control
 	antimagic_allowed = TRUE
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "sleep"
 
-/obj/effect/proc_holder/spell/targeted/induce_sleep/cast(list/targets, mob/living/user = usr)
+/obj/effect/proc_holder/spell/targeted/pin/cast(list/targets, mob/living/user = usr)
 	if(!targets)
 		to_chat(user, "<span class='notice'>Nobody is in sight, it'd be a waste to do that now.</span>")
 		revert_cast()
@@ -598,18 +597,12 @@
 		if(target.is_real_hivehost() || (!iscarbon(target) && !issilicon(target)))
 			continue
 		victims += target
-	var/sleepytime = max(80,240/(1+round(victims.len/3)))
+	var/statustime = max(80,240/(1+round(victims.len/3)))
 	for(var/mob/living/carbon/victim in victims)
-		if(victim.anti_magic_check(FALSE, FALSE, TRUE))
-			to_chat(victim, "You suddendly feel so tired you could take a nap")
-			victim.apply_damage(max(30 - victims.len, 15), STAMINA, victim.get_bodypart(BODY_ZONE_HEAD))
-			victim.drowsyness += max(30 - victims.len, 15)
-			victim.confused += max(30 - victims.len, 15)
-		else
-			victim.Sleeping(sleepytime)
+		victim.Knockdown(statustime)
+		to_chat(target, "<span class='userdanger'>A sudden force throws you to the ground!</span>")
 	for(var/mob/living/silicon/victim in victims)
-		var/multiplier = victim.anti_magic_check(FALSE, FALSE, TRUE) ? 0.5 : 1
-		victim.Unconscious(sleepytime * multiplier)
+		victim.Unconscious(statustime)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	if(victims.len && hive)
 		hive.threat_level += 1
@@ -639,7 +632,7 @@
 
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	if(hive)
-		hive.threat_level += 4
+		hive.threat_level += 3
 
 /obj/item/extendohand/hivemind
 	name = "Telekinetic hand"
