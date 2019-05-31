@@ -519,7 +519,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							p_map = VM.map_name
 					else
 						p_map += " (No longer exists)"
-				if(CONFIG_GET(flag/allow_map_voting))
+				if(CONFIG_GET(flag/preference_map_voting))
 					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
@@ -1288,6 +1288,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						default += " ([config.defaultmap.map_name])"
 					for (var/M in config.maplist)
 						var/datum/map_config/VM = config.maplist[M]
+						if(!VM.votable)
+							continue
 						var/friendlyname = "[VM.map_name] "
 						if (VM.voteweight <= 0)
 							friendlyname += " (disabled)"
