@@ -8,7 +8,7 @@ datum/component/personal_crafting/Initialize()
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
-	RegisterSignal(C, COMSIG_CLICK, .proc/ui_interact)
+	RegisterSignal(C, COMSIG_CLICK, .proc/component_ui_interact)
 
 /datum/component/personal_crafting
 	var/busy
@@ -298,7 +298,10 @@ datum/component/personal_crafting/Initialize()
 		Deletion.Cut(Deletion.len)
 		qdel(DL)
 
-/datum/component/personal_crafting/ui_interact(a,b,c,d, mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
+/datum/component/personal_crafting/proc/component_ui_interact(a,b,c,d, user)
+	ui_interact(user)
+
+/datum/component/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
@@ -350,7 +353,7 @@ datum/component/personal_crafting/Initialize()
 		if("make")
 			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
 			busy = TRUE
-			ui_interact(,,,,usr)
+			ui_interact(usr)
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
 				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
@@ -375,7 +378,6 @@ datum/component/personal_crafting/Initialize()
 		if("toggle_compact")
 			display_compact = !display_compact
 			. = TRUE
-	ui_interact(,,,,usr)
 
 //Next works nicely with modular arithmetic
 /datum/component/personal_crafting/proc/next_cat(readonly = TRUE)
