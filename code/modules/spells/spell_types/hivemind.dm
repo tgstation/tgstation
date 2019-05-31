@@ -583,7 +583,7 @@
 	antimagic_allowed = TRUE
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
-	action_icon_state = "sleep"
+	action_icon_state = "pin"
 
 /obj/effect/proc_holder/spell/targeted/pin/cast(list/targets, mob/living/user = usr)
 	if(!targets)
@@ -607,14 +607,14 @@
 	if(victims.len && hive)
 		hive.threat_level += 1
 
-/obj/effect/proc_holder/spell/target_hive/hive_attack
+/obj/effect/proc_holder/spell/target_hive/nightmare
 	name = "Living nightmares"
 	desc = "The target's fears break out and attack them."
 	range = 7
 	charge_max = 3000
 	action_icon_state = "nightmare"
 
-/obj/effect/proc_holder/spell/target_hive/hive_attack/cast(list/targets, mob/living/user = usr)
+/obj/effect/proc_holder/spell/target_hive/nightmare/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/target = targets[1]
 	if(!do_after(usr,30,0,usr))
 		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")

@@ -36,7 +36,7 @@
 		/obj/effect/proc_holder/spell/target_hive/hive_control = 15,
 		//Tier 5 - Deadly powers
 		/obj/effect/proc_holder/spell/targeted/pin = 20,
-		/obj/effect/proc_holder/spell/target_hive/hive_attack = 20
+		/obj/effect/proc_holder/spell/target_hive/nightmare = 20
 	)
 
 
