@@ -116,28 +116,42 @@
 	var/background = "'background-color:#4F7529;'"
 	var/datum/antagonist/traitor/traitor_data = user.mind.has_antag_datum(/datum/antagonist/traitor)
 
-	// Flavour text
-	dat += {"<span style="text-align:center">"}
-	dat += "<h1>Welcome Agent...</h1>"
-	dat += "<h3>Current status: Onboard [GLOB.station_name].</h3>"
-	dat += "</span>"
+	if (traitor_data)
+		// Flavour text
+		dat += {"<span style="text-align:center">"}
+		dat += "<h1>Welcome Agent...</h1>"
+		dat += "<h3>Current status: Onboard [GLOB.station_name].</h3>"
+		dat += "</span>"
 
-	// Table creation/styling and headers
-	dat += "<p>Available contracts to accept: <b>3</b></p>"
-	dat += "<p>Available rerolls: <b>3</b></p>"
-	dat += "<a href='?src=[REF(src)];reroll_contract=1'>Reroll</a>"
-	dat += {"<table style="text-align:center;" border="2" cellspacing="0" width="100%">"}
-	dat += "<tr><th>Target</th><th>Payment</th><th>Drop-Off</th><th></th></tr>"
+		dat += "<p>We've identified potentional high-value targets that are currently \
+						assigned to your mission area. They are believed to hold valueable information \
+						which could be of immedient importance to our organisation.</p>"
 
-	// Currently rolled contract
-	dat += "<tr style=[background]>"
-	dat += text("<td>[]</td>", traitor_data.current_contract.target)
-	dat += text("<td>[]</td>", traitor_data.current_contract.reward)
-	dat += text("<td>[]</td>", traitor_data.current_contract.dropoff)
-	dat += text("<td><a href='?src=[REF(src)];accept_contract=1'>Accept</a></td>")
-	dat += "</tr>"
+		dat += "<p>We have a list of potentional contracts for you to take on below. \
+						Should you accept any, you are to bring the target to the designated drop-off, \
+						and contact us with your Uplink. We will send a specialised extraction unit \
+						to take care of the rest.</p>"
 
-	dat += "</table>"
+		dat += "<p>Dead or alive is no issue, we can retieve our intel through cloning, \
+						but we will provide a small increase in payment should you bring them alive.</p>"
+
+		// Table creation/styling and headers
+		dat += "<p>Available rerolls: <b>3</b></p>"
+		dat += "<a href='?src=[REF(src)];reroll_contract=1'>Reroll</a>"
+		dat += {"<table style="text-align:center;" border="2" cellspacing="0" width="100%">"}
+		dat += "<tr><th>Target</th><th>Payment</th><th>Drop-Off</th><th></th></tr>"
+
+		// Currently rolled contract
+		dat += "<tr style=[background]>"
+		dat += text("<td>[]</td>", traitor_data.current_contract.target)
+		dat += text("<td>[]</td>", traitor_data.current_contract.reward)
+		dat += text("<td>[]</td>", traitor_data.current_contract.dropoff)
+		dat += text("<td><a href='?src=[REF(src)];accept_contract=1'>Accept</a></td>")
+		dat += "</tr>"
+
+		dat += "</table>"
+
+		dat += text("<td><a href='?src=[REF(src)];synd_bounty_logout=1'>Log Out</a></td>")
 
 	var/datum/browser/popup = new(user, "bounties", "Syndicate Bounties", 700, 600)
 	popup.set_content(dat)
@@ -174,6 +188,8 @@
 	if(..())
 		return
 
+	var/datum/antagonist/traitor/traitor_data = usr.mind.has_antag_datum(/datum/antagonist/traitor)
+
 	switch(href_list["choice"])
 		if("Print")
 			if(printer_ready < world.time)
@@ -191,11 +207,13 @@
 	if(href_list["synd_bounty_connect"])
 		playsound(src, "terminal_type", 25, 0)
 
-		// TODO: check if traitor/give some sort of interesting login perhaps
-		state = STATE_SYNDICATE_CONTRACTS
+		if (traitor_data)
+			state = STATE_SYNDICATE_CONTRACTS
+		else
+			to_chat(usr, "You try to connect, but the system doesn't allow access.")
 
 	if(href_list["reroll_contract"])
-		var/datum/antagonist/traitor/traitor_data = usr.mind.has_antag_datum(/datum/antagonist/traitor)
-		traitor_data.current_contract.generate()
+		if (traitor_data)
+			traitor_data.current_contract.generate()
 
 	updateUsrDialog()
