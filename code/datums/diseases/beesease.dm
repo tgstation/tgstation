@@ -5,7 +5,7 @@
 	spread_text = "On contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "Sugar"
-	cures = list("sugar")
+	cures = list(/datum/reagent/consumable/sugar)
 	agent = "Apidae Infection"
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	desc = "If left untreated subject will regurgitate bees."

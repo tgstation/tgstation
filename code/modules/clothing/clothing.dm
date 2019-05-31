@@ -62,7 +62,7 @@
 /obj/item/reagent_containers/food/snacks/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	tastes = list("dust" = 1, "lint" = 1)
 	foodtype = CLOTH
 

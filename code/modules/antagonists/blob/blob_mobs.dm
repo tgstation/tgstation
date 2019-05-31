@@ -147,7 +147,7 @@
 	if(overmind && overmind.blobstrain)
 		overmind.blobstrain.on_sporedeath(src)
 	else
-		reagents.add_reagent("spore", 10)
+		reagents.add_reagent(/datum/reagent/toxin/spore, 10)
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)

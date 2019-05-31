@@ -1,7 +1,6 @@
 
 /datum/reagent/thermite
 	name = "Thermite"
-	id = "thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 	reagent_state = SOLID
 	color = "#550000"
@@ -18,14 +17,12 @@
 
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
-	id = "nitroglycerin"
 	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "oil"
 
 /datum/reagent/stabilizing_agent
 	name = "Stabilizing Agent"
-	id = "stabilizing_agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
 	reagent_state = LIQUID
 	color = "#FFFF00"
@@ -33,7 +30,6 @@
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
-	id = "clf3"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
 	reagent_state = LIQUID
 	color = "#FFC8C8"
@@ -77,7 +73,6 @@
 
 /datum/reagent/sorium
 	name = "Sorium"
-	id = "sorium"
 	description = "Sends everything flying from the detonation point."
 	reagent_state = LIQUID
 	color = "#5A64C8"
@@ -85,7 +80,6 @@
 
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
-	id = "liquid_dark_matter"
 	description = "Sucks everything into the detonation point."
 	reagent_state = LIQUID
 	color = "#210021"
@@ -93,7 +87,6 @@
 
 /datum/reagent/blackpowder
 	name = "Black Powder"
-	id = "blackpowder"
 	description = "Explodes. Violently."
 	reagent_state = LIQUID
 	color = "#000000"
@@ -114,7 +107,6 @@
 
 /datum/reagent/flash_powder
 	name = "Flash Powder"
-	id = "flash_powder"
 	description = "Makes a very bright flash."
 	reagent_state = LIQUID
 	color = "#C8C8C8"
@@ -122,7 +114,6 @@
 
 /datum/reagent/smoke_powder
 	name = "Smoke Powder"
-	id = "smoke_powder"
 	description = "Makes a large cloud of smoke that can carry reagents."
 	reagent_state = LIQUID
 	color = "#C8C8C8"
@@ -130,7 +121,6 @@
 
 /datum/reagent/sonic_powder
 	name = "Sonic Powder"
-	id = "sonic_powder"
 	description = "Makes a deafening noise."
 	reagent_state = LIQUID
 	color = "#C8C8C8"
@@ -138,7 +128,6 @@
 
 /datum/reagent/phlogiston
 	name = "Phlogiston"
-	id = "phlogiston"
 	description = "Catches you on fire and makes you ignite."
 	reagent_state = LIQUID
 	color = "#FA00AF"
@@ -160,7 +149,6 @@
 
 /datum/reagent/napalm
 	name = "Napalm"
-	id = "napalm"
 	description = "Very flammable."
 	reagent_state = LIQUID
 	color = "#FA00AF"
@@ -177,7 +165,6 @@
 
 /datum/reagent/cryostylane
 	name = "Cryostylane"
-	id = "cryostylane"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the container 0K."
 	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -185,8 +172,8 @@
 
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M) //TODO: code freezing into an ice cube
-	if(M.reagents.has_reagent("oxygen"))
-		M.reagents.remove_reagent("oxygen", 0.5)
+	if(M.reagents.has_reagent(/datum/reagent/oxygen))
+		M.reagents.remove_reagent(/datum/reagent/oxygen, 0.5)
 		M.adjust_bodytemperature(-15)
 	..()
 
@@ -197,21 +184,19 @@
 
 /datum/reagent/pyrosium
 	name = "Pyrosium"
-	id = "pyrosium"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly heats all other reagents in the container."
 	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M)
-	if(M.reagents.has_reagent("oxygen"))
-		M.reagents.remove_reagent("oxygen", 0.5)
+	if(M.reagents.has_reagent(/datum/reagent/oxygen))
+		M.reagents.remove_reagent(/datum/reagent/oxygen, 0.5)
 		M.adjust_bodytemperature(15)
 	..()
 
 /datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
 	name = "Teslium"
-	id = "teslium"
 	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow to come into contact with water."
 	reagent_state = LIQUID
 	color = "#20324D" //RGB: 32, 50, 77
@@ -229,7 +214,6 @@
 
 /datum/reagent/teslium/energized_jelly
 	name = "Energized Jelly"
-	id = "energized_jelly"
 	description = "Electrically-charged jelly. Boosts jellypeople's nervous system, but only shocks other lifeforms."
 	reagent_state = LIQUID
 	color = "#CAFF43"
@@ -248,7 +232,6 @@
 
 /datum/reagent/firefighting_foam
 	name = "Firefighting Foam"
-	id = "firefighting_foam"
 	description = "A historical fire suppressant. Originally believed to simply displace oxygen to starve fires, it actually interferes with the combustion reaction itself. Vastly superior to the cheap water-based extinguishers found on NT vessels."
 	reagent_state = LIQUID
 	color = "#A6FAFF55"
