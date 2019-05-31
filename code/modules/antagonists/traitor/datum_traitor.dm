@@ -13,9 +13,8 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
-	var/datum/syndicate_contract/current_contract = new
-	var/contracts_remaining = 3
-	var/rerolls = 3
+	var/datum/syndicate_contract/current_contract
+	var/list/assigned_contracts = list()
 	var/TC_payed_out = 0
 	can_hijack = HIJACK_HIJACKER
 
@@ -27,8 +26,19 @@
 	owner.special_role = special_role
 	if(give_objectives)
 		forge_traitor_objectives()
+	create_contracts()
 	finalize_traitor()
+
 	..()
+
+/datum/antagonist/traitor/proc/create_contracts()
+	// May have this change depending on server pop
+	// DEBUG TODO: Change this number - only for producing large amounts to test possible areas/values.
+	var/contract_generation_quantity = 20
+
+	for (var/i = 0; i < contract_generation_quantity; i++)
+		var/datum/syndicate_contract/contract_to_add = new
+		assigned_contracts.Add(contract_to_add)
 
 /datum/antagonist/traitor/apply_innate_effects()
 	if(owner.assigned_role == "Clown")

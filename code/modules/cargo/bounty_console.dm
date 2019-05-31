@@ -124,30 +124,34 @@
 		dat += "</span>"
 
 		dat += "<p>We've identified potentional high-value targets that are currently \
-						assigned to your mission area. They are believed to hold valueable information \
-						which could be of immedient importance to our organisation.</p>"
+						assigned to your mission area. They are believed to hold valuable information \
+						which could be of immediate importance to our organisation.</p>"
 
 		dat += "<p>We have a list of potentional contracts for you to take on below. \
-						Should you accept any, you are to bring the target to the designated drop-off, \
-						and contact us with your Uplink. We will send a specialised extraction unit \
-						to take care of the rest.</p>"
+				Should you accept any, you are to bring the target to the designated drop-off, \
+				and contact us via uplink. We will send a specialised extraction unit \
+				to take care of the rest.</p>"
 
-		dat += "<p>Dead or alive is no issue, we can retieve our intel through cloning, \
-						but we will provide a small increase in payment should you bring them alive.</p>"
+		dat += "<p>Dead or alive is of no great important, we can retrieve our intel through cloning \
+				when the target is extracted, but we will provide a small increase in \
+				payment should you bring them alive. Never know how memories get \
+				altered when bringing them back from the dead.</p>"
 
 		// Table creation/styling and headers
-		dat += "<p>Available rerolls: <b>3</b></p>"
-		dat += "<a href='?src=[REF(src)];reroll_contract=1'>Reroll</a>"
 		dat += {"<table style="text-align:center;" border="2" cellspacing="0" width="100%">"}
 		dat += "<tr><th>Target</th><th>Payment</th><th>Drop-Off</th><th></th></tr>"
 
-		// Currently rolled contract
-		dat += "<tr style=[background]>"
-		dat += text("<td>[]</td>", traitor_data.current_contract.target)
-		dat += text("<td>[]</td>", traitor_data.current_contract.reward)
-		dat += text("<td>[]</td>", traitor_data.current_contract.dropoff)
-		dat += text("<td><a href='?src=[REF(src)];accept_contract=1'>Accept</a></td>")
-		dat += "</tr>"
+		// Currently rolled contracts
+		var/contract_id = 1
+		for (var/datum/syndicate_contract/synd_contract in traitor_data.assigned_contracts)
+			dat += "<tr style=[background]>"
+			dat += text("<td>[]</td>", synd_contract.contract.target)
+			dat += text("<td>[] TC</td>", synd_contract.contract.payout)
+			dat += text("<td>[]</td>", synd_contract.contract.dropoff)
+			dat += text("<td><a href='?src=[REF(src)];accept_contract=1; contract_id=[contract_id]'>Accept</a></td>")
+			dat += "</tr>"
+
+			contract_id++
 
 		dat += "</table>"
 
@@ -215,5 +219,8 @@
 	if(href_list["reroll_contract"])
 		if (traitor_data)
 			traitor_data.current_contract.generate()
+
+	if(href_list["synd_bounty_logout"])
+		state = STATE_DEFAULT
 
 	updateUsrDialog()

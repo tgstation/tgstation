@@ -1,12 +1,18 @@
 /datum/syndicate_contract
-	var/target
-	var/reward = 0 // In TC
-	var/dropoff
+	var/datum/objective/contract/contract = new()
 
 /datum/syndicate_contract/New()
 	generate()
 
 /datum/syndicate_contract/proc/generate()
-	target = "First Surname"
-	reward = rand(6,15)
-	dropoff = "Dorm " + num2text(rand(1, 6))
+	contract.find_target()
+
+	// High payout
+	if (prob(20))
+		contract.payout = rand(13,18)
+	else if (prob(20)) // Low payout
+		contract.payout = rand(3,6)
+	else // Medium payout
+		contract.payout = rand(7,12)
+		
+	contract.generate_dropoff()

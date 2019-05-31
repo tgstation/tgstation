@@ -1054,3 +1054,15 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	for(var/T in allowed_types)
 		var/datum/objective/X = T
 		GLOB.admin_objective_list[initial(X.name)] = T
+
+/datum/objective/contract
+	var/payout = 0
+	var/area/dropoff = null
+
+/datum/objective/contract/proc/generate_dropoff()
+	var/found = FALSE
+	while (!found)
+		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		if(dropoff_area && is_station_level(dropoff_area.z) && dropoff_area.valid_territory)
+			dropoff = dropoff_area
+			found = TRUE
