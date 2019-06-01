@@ -55882,6 +55882,12 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
+"hwp" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "hAK" = (
 /obj/structure/table,
 /obj/item/storage/box/disks_nanite,
@@ -57105,6 +57111,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
+"riS" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "rmX" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/beer,
@@ -57204,6 +57216,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"skj" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "slk" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -57230,6 +57248,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"sra" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "suO" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel,
@@ -57874,6 +57898,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/explab)
+"wOj" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "wQy" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -100348,7 +100379,7 @@ byf
 byf
 bDb
 bEm
-bEm
+skj
 bEm
 bDb
 bJH
@@ -100359,15 +100390,15 @@ bOx
 bPx
 bJN
 bRT
-bEm
-bEm
-bJN
-bRT
-bEm
+wOj
 bEm
 bJN
 bRT
+wOj
 bEm
+bJN
+bRT
+hwp
 bEm
 bDb
 cfr
@@ -101890,7 +101921,7 @@ bAC
 bBW
 bDb
 bEm
-bEm
+sra
 bEm
 bDb
 cTX
@@ -103443,15 +103474,15 @@ bOx
 bPI
 bJN
 bEm
-bEm
+riS
 bUi
 bJN
 bEm
-bEm
+riS
 bUi
 bJN
 bEm
-bEm
+riS
 bUi
 bDb
 aaf
