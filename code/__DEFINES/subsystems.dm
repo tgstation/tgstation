@@ -78,7 +78,7 @@
 #define INIT_ORDER_SHUTTLE			-21
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
-#define INIT_ORDER_NOTIFY			-60
+#define INIT_ORDER_DISCORD			-60
 #define INIT_ORDER_PERSISTENCE		-100
 
 // Subsystem fire priority, from lowest to highest priority

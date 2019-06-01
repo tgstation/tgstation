@@ -12,14 +12,10 @@ In any query remember to add a prefix to the table names if you use one.
 
 
 Version 5.2, 30 May 2019, by AffectedArc07
-Added a table to track ckey and discord ID relationships
+Added a field to the `player` table to track ckey and discord ID relationships
 
-CREATE TABLE `discord` (
-  `ckey` varchar(32) NOT NULL,
-  `discord_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`ckey`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+ALTER TABLE `player`
+	ADD COLUMN `discord_id` BIGINT NULL DEFAULT NULL AFTER `flags`;
 ----------------------------------------------------
 
 Version 5.1, 25 Feb 2018, by MrStonedOne
