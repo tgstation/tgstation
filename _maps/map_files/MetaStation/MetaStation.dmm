@@ -77835,18 +77835,10 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"daE" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 10
-	},
-/obj/item/electropack,
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "daF" = (
-/obj/machinery/sparker{
-	id = "Xenobio";
-	pixel_x = -25
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -77861,15 +77853,8 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "daI" = (
-/obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 5
-	},
-/obj/item/stack/cable_coil,
-/obj/item/multitool,
-/obj/item/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -77887,26 +77872,6 @@
 /area/science/xenobiology)
 "daL" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine,
-/area/science/xenobiology)
-"daM" = (
-/obj/structure/table,
-/obj/item/assembly/igniter{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 2;
-	pixel_y = -1
-	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "daN" = (
@@ -119313,9 +119278,9 @@ ddo
 dds
 cTD
 cRi
-daE
+cSn
 daI
-daM
+cSn
 cRi
 cTA
 cRi
