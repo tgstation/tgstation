@@ -124,6 +124,8 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 							var/wholisttext = role.get_who_list_info()
 							if(wholisttext)
 								entry += " - [wholisttext]"
+					if(SSticker && SSticker.mode && (C.mob.mind in SSticker.mode.marked_objective))
+						entry += " - <font color='#3399ff'><b>MARKED</b></font>"
 				if(is_special_character(C.mob))
 					var/list/skip_texts = list("mode")
 					var/list/antag_texts = list()

@@ -209,6 +209,7 @@
 		dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"
 	dat += "<br><br>"
 
+	dat += list_marked_players()
 	dat += build_antag_listing()
 
 	dat += "</body></html>"

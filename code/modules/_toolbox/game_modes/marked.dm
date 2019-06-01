@@ -48,6 +48,20 @@
 				to_chat(marked_mind.current,"<B>Various Syndicate cartels have put a bounty on your head. There are agents onboard the station who are here to assassinate you. You have been given a folder that contains proof of this fact, we suggest you show this security so they can offer you the necessary protection.</B>")
 	return ..()
 
+/datum/game_mode/traitor/marked/special_report()
+	if(marked_objective.len)
+		var/result = "<div class='panel greenborder'>"
+		result += "<span class='header'>The marked players were:</span><br>"
+		var/count = 1
+		for(var/datum/mind/marked_mind in marked_objective)
+			result += printplayer(marked_mind)
+			if(count < marked_objective.len)
+				result += "<br>"
+			count++
+		result += "</div>"
+		return result
+	return ..()
+
 /datum/game_mode/traitor/marked/proc/create_certificate(mob/living/L)
 	var/obj/item/folder/blue/folder = new()
 	folder.name = "Central Command Witness Protection Documentation"
@@ -95,3 +109,27 @@
 	if(new_objectives.len)
 		return new_objectives
 	return null
+
+/datum/admins/proc/list_marked_players()
+	. = ""
+	if(SSticker && SSticker.mode && SSticker.mode.marked_objective.len)
+		. += "<B>Marked Players</B><br>"
+		. += "<table cellspacing=5>"
+		for(var/datum/mind/mind in SSticker.mode.marked_objective)
+			var/list/parts = list()
+			if(mind.current)
+				parts += "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(mind.current)]'>[mind.current.real_name]</a> "
+			else
+				parts += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(mind)]'>[mind.name]</a> "
+			if(!mind.current)
+				parts += "<font color=red>(Body destroyed)</font>"
+			else
+				if(mind.current.stat == DEAD)
+					parts += "<font color=red>(DEAD)</font>"
+				else if(!mind.current.client)
+					parts += "(No client)"
+			parts += "<a href='?priv_msg=[ckey(mind.key)]'>PM</a>"
+			if(mind.current)
+				parts += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(mind.current)]'>FLW</a>"
+			. += "<tr><td>[parts.Join("</td><td>")]</td></tr>"
+		. += "</table>"

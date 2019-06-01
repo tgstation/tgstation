@@ -81,6 +81,8 @@
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
 	if(!block_late_join_traitors)
+		if(character.mind && character.mind in marked_objective)
+			return
 		var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
 		var/traitorcap = min(round(GLOB.joined_player_list.len / (tsc * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len / tsc) + num_modifier)
 		if((SSticker.mode.traitors.len + pre_traitors.len) >= traitorcap) //Upper cap for number of latejoin antagonists
