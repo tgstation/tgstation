@@ -93,8 +93,9 @@
 					  float: left;
 					  padding-right: 10px;
 					}
-					.reagent > div {
+					.reagent > div, .reagent-div {
 					  float: right;
+					  width: 200px;
 					}
 					input.reagent {
 					  width: 50%;
@@ -263,7 +264,7 @@
 				 <ul>
 			  <li>
 
-			    <select class="select-new-reagent"></select><div style="float: right"><input style="width: 50%" type="text" name="newreagent" value="40" />&nbsp;&nbsp;<button class="add-reagent">
+			    <select class="select-new-reagent"></select><div class="reagent-div"><input style="width: 50%" type="text" name="newreagent" value="40" />&nbsp;&nbsp;<button class="add-reagent">
 			  <i class="fas fa-plus"></i>&nbsp;Add
 			  </button>
 
