@@ -25,9 +25,11 @@
 /obj/item/modular_computer/tablet/syndicate_contract_uplink
 	name = "tablet computer"
 	icon = 'icons/obj/modular_tablet.dmi'
-	icon_state = "tablet-black"
+	icon_state = "tablet-red"
 	icon_state_unpowered = "tablet"
 	icon_state_powered = "tablet"
 	icon_state_menu = "hostile"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
+	comp_light_luminosity = 2.3
+	finish_color = "red"

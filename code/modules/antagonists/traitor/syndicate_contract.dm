@@ -1,5 +1,10 @@
 /datum/syndicate_contract
+	var/id = 0
+	var status = STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
+	var/const/STATUS_INACTIVE = 1
+	var/const/STATUS_ACTIVE = 2
+	var/const/STATUS_COMPLETE = 3
 
 /datum/syndicate_contract/New(owner)
 	generate(owner)

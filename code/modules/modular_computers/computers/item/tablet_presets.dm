@@ -31,7 +31,7 @@
 // Given by the syndicate as part of the contract uplink bundle
 /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize()
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/small/hard_drive = new
+	var/obj/item/computer_hardware/hard_drive/small/syndicate/hard_drive = new
 	hard_drive.store_file(new /datum/computer_file/program/contract_uplink)
 
 	install_component(new /obj/item/computer_hardware/processor_unit/small)
