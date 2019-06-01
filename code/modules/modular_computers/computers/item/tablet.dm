@@ -22,17 +22,12 @@
 	icon_state_unpowered = "tablet-[finish_color]"
 	icon_state_powered = "tablet-[finish_color]"
 
-	/obj/item/modular_computer/tablet/syndicate_contract_uplink
-		name = "tablet computer"
-		icon = 'icons/obj/modular_tablet.dmi'
-		icon_state = "tablet-black"
-		icon_state_unpowered = "tablet"
-		icon_state_powered = "tablet"
-		icon_state_menu = "hostile"
-		hardware_flag = PROGRAM_TABLET
-		max_hardware_size = 1
-		w_class = WEIGHT_CLASS_SMALL
-		steel_sheet_cost = 1
-		slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
-		has_light = TRUE //LED flashlight!
-		comp_light_luminosity = 2.3 //Same as the PDA
+/obj/item/modular_computer/tablet/syndicate_contract_uplink
+	name = "tablet computer"
+	icon = 'icons/obj/modular_tablet.dmi'
+	icon_state = "tablet-black"
+	icon_state_unpowered = "tablet"
+	icon_state_powered = "tablet"
+	icon_state_menu = "hostile"
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
