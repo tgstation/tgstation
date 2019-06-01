@@ -77201,11 +77201,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/button/ignition{
-	id = "Xenobio";
-	pixel_x = -6;
-	pixel_y = -3
-	},
 /obj/machinery/button/door{
 	id = "Xenolab";
 	name = "Test Chamber Blast Doors";
