@@ -24,7 +24,7 @@
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
-	var/max_fuel = 20 	//The max amount of fuel the welder can hold
+	var/max_fuel = 10 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
@@ -296,7 +296,7 @@
 	name = "industrial welding tool"
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
-	max_fuel = 40
+	max_fuel = 20
 	materials = list(MAT_GLASS=60)
 
 /obj/item/weldingtool/largetank/cyborg
@@ -317,7 +317,7 @@
 	name = "emergency welding tool"
 	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
-	max_fuel = 10
+	max_fuel = 5
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	change_icons = 0
@@ -344,7 +344,7 @@
 	desc = "An upgraded welder based of the industrial welder."
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
-	max_fuel = 80
+	max_fuel = 40
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
 
 /obj/item/weldingtool/experimental
@@ -352,7 +352,7 @@
 	desc = "An experimental welder capable of self-fuel generation and less harmful to the eyes."
 	icon_state = "exwelder"
 	item_state = "exwelder"
-	max_fuel = 40
+	max_fuel = 20
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
 	var/last_gen = 0
 	change_icons = 0
