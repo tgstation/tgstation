@@ -559,7 +559,7 @@
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
 		M.Sleeping(40, 0)
-	M.adjustStaminaLoss(5*REM, 0)
+	M.adjustStaminaLoss(10*REM, 0)
 	..()
 	return TRUE
 
