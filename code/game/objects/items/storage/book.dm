@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(!H.can_read(src))
 		return FALSE
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
-	if(!SSreligion.bible_icon_state && H.job == "Chaplain")
+	if(!GLOB.bible_icon_state && H.job == "Chaplain")
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 		for(var/i in 1 to GLOB.biblestates.len)
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 /obj/item/storage/book/bible/Topic(href, href_list)
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
-	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
+	if(href_list["seticon"] && !GLOB.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
 		icon_state = GLOB.biblestates[iconi]
@@ -79,8 +79,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
 
-		SSreligion.bible_icon_state = icon_state
-		SSreligion.bible_item_state = item_state
+		GLOB.bible_icon_state = icon_state
+		GLOB.bible_item_state = item_state
 
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
