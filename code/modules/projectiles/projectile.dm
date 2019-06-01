@@ -194,8 +194,7 @@
 	if(reagents && reagents.reagent_list)
 		reagent_note = " REAGENTS:"
 		for(var/datum/reagent/R in reagents.reagent_list)
-			reagent_note += R.id + " ("
-			reagent_note += num2text(R.volume) + ") "
+			reagent_note += "[R.name] ([num2text(R.volume)])"
 
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)

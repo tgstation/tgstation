@@ -319,15 +319,8 @@
 
 /obj/item/organ/heart/gland/chem/Initialize()
 	. = ..()
-	for(var/X in subtypesof(/datum/reagent/drug))
-		var/datum/reagent/R = X
-		possible_reagents += initial(R.id)
-	for(var/X in subtypesof(/datum/reagent/medicine))
-		var/datum/reagent/R = X
-		possible_reagents += initial(R.id)
-	for(var/X in typesof(/datum/reagent/toxin))
-		var/datum/reagent/R = X
-		possible_reagents += initial(R.id)
+	for(var/R in subtypesof(/datum/reagent/drug) + subtypesof(/datum/reagent/medicine) + typesof(/datum/reagent/toxin))
+		possible_reagents += R
 
 /obj/item/organ/heart/gland/chem/activate()
 	var/chem_to_add = pick(possible_reagents)

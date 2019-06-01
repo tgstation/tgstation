@@ -54,7 +54,7 @@
 	icon_state = "eggs"
 	var/amount_grown = 0
 	var/player_spiders = 0
-	var/poison_type = "toxin"
+	var/poison_type = /datum/reagent/toxin
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/progenitor
