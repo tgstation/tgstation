@@ -376,7 +376,7 @@
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 
 /datum/quirk/insanity/on_process()
-	if(quirk_holder.reagents.has_reagent("mindbreaker"))
+	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
 		quirk_holder.hallucination = 0
 		return
 	if(prob(2)) //we'll all be mad soon enough
@@ -425,7 +425,7 @@
 	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
 	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
 	medical_record_text = "Patient has a history of hard drugs."
-	var/drug_list = list("crank", "krokodil", "morphine", "happiness", "methamphetamine") //List of possible IDs
+	var/drug_list = list(/datum/reagent/drug/crank, /datum/reagent/drug/krokodil, /datum/reagent/medicine/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
 	var/reagent_id //ID picked from list
 	var/datum/reagent/reagent_type //If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance

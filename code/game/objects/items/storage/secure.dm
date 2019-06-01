@@ -171,7 +171,7 @@
 /obj/item/storage/secure/safe/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.cant_hold = typecacheof(list(/obj/item/storage/secure/briefcase))
+	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
 	STR.max_w_class = 8						//??
 
 /obj/item/storage/secure/safe/PopulateContents()
