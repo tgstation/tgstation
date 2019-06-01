@@ -42,6 +42,8 @@
 	for (var/list/item in containerdata["reagents"])
 		var/datum/reagent/reagenttype = text2path(item["reagent"])
 		var/amount = text2num(item["volume"])
+		if ((reagents.total_volume + amount) > reagents.maximum_volume)
+			reagents.maximum_volume = reagents.total_volume + amount
 		reagents.add_reagent(reagenttype, amount)
 	return container
 
@@ -94,8 +96,8 @@
 					  padding-right: 10px;
 					}
 					.reagent > div, .reagent-div {
-					  float: right;
-					  width: 200px;
+						float: right;
+						width: 200px;
 					}
 					input.reagent {
 					  width: 50%;
@@ -110,10 +112,11 @@
 
 					$('select\[name="containertype"\]').select2({
 						data: containers,
-					  escapeMarkup: noEscape,
-					  templateResult: formatContainer,
-					  templateSelection: textSelection
-					  });
+						escapeMarkup: noEscape,
+						templateResult: formatContainer,
+						templateSelection: textSelection,
+						width: "300px"
+						});
 					$('.select-new-reagent').select2({
 					data: reagents,
 					escapeMarkup: noEscape,
