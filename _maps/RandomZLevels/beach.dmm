@@ -219,7 +219,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aO" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "aP" = (

@@ -38,7 +38,6 @@
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
 	name = "blood"
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "ltrails_1"
 	desc = "Your instincts say you shouldn't be following these."
 	var/list/existing_dirs = list()
 
@@ -58,7 +57,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	reagents.add_reagent("liquidgibs", 5)
+	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
 	if(already_rotting)
 		start_rotting(rename=FALSE)
 	else
@@ -75,7 +74,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
-		playsound(loc, 'sound/effects/gib_step.ogg', L.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
+		playsound(loc, 'sound/effects/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, 1)
 	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)

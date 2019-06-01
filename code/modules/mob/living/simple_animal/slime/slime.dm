@@ -140,9 +140,9 @@
 	. = ..()
 	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
 	var/amount = 0
-	if(reagents.has_reagent("morphine")) // morphine slows slimes down
+	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
-	if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
+	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
 		add_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
@@ -150,7 +150,7 @@
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()
 	var/mod = 0
-	if(!has_trait(TRAIT_IGNOREDAMAGESLOWDOWN))
+	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
 		var/health_deficiency = (maxHealth - health)
 		if(health_deficiency >= 45)
 			mod += (health_deficiency / 25)

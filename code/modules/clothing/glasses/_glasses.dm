@@ -45,7 +45,7 @@
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
-		if(!(H.has_trait(TRAIT_BLIND)))
+		if(!(HAS_TRAIT(H, TRAIT_BLIND)))
 			if(H.glasses == src)
 				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)
@@ -175,6 +175,12 @@
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
 
+/obj/item/clothing/glasses/regular/circle
+	name = "circle glasses"
+	desc = "Why would you wear something so controversial yet so brave?"
+	icon_state = "circle_glasses"
+	item_state = "circle_glasses"
+
 //Here lies green glasses, so ugly they died. RIP
 
 /obj/item/clothing/glasses/sunglasses
@@ -196,11 +202,11 @@
 /obj/item/clothing/glasses/sunglasses/reagent/equipped(mob/user, slot)
 	. = ..()
 	if(ishuman(user) && slot == SLOT_GLASSES)
-		user.add_trait(TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
 
 /obj/item/clothing/glasses/sunglasses/reagent/dropped(mob/user)
 	. = ..()
-	user.remove_trait(TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
 
 /obj/item/clothing/glasses/sunglasses/garb
 	name = "black gar glasses"
@@ -255,7 +261,6 @@
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_cover = GLASSESCOVERSEYES
-	visor_flags_inv = HIDEEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
 /obj/item/clothing/glasses/welding/attack_self(mob/user)
@@ -329,6 +334,12 @@
 		return
 	thermal_overload()
 
+/obj/item/clothing/glasses/thermal/xray
+	name = "syndicate xray goggles"
+	desc = "A pair of xray goggles manufactured by the Syndicate."
+	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
+	flash_protect = -1
+	
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
@@ -410,7 +421,7 @@
 
 /obj/item/clothing/glasses/godeye/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, EYE_OF_GOD_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)

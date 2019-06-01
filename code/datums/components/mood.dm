@@ -8,7 +8,7 @@
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/sanity_level = 5 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
-	var/datum/mood_event/list/mood_events = list()
+	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
 	var/obj/screen/sanity/screen_obj_sanity
@@ -191,19 +191,12 @@
 		if(9)
 			setSanity(sanity+0.4, maximum=INFINITY)
 
-	if(owner.has_trait(TRAIT_DEPRESSION))
-		if(prob(0.05))
-			add_event(null, "depression", /datum/mood_event/depression)
-			clear_event(null, "jolly")
-	if(owner.has_trait(TRAIT_JOLLY))
-		if(prob(0.05))
-			add_event(null, "jolly", /datum/mood_event/jolly)
-			clear_event(null, "depression")
-
 	HandleNutrition(owner)
 	HandleHygiene(owner)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
+	var/mob/living/owner = parent
+
 	if(amount == sanity)
 		return
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
@@ -212,7 +205,12 @@
 		amount = sanity + 0.5
 	else if(sanity > maximum && amount > sanity - 0.5)
 		amount = sanity - 0.5
-	sanity = amount
+
+	// Disturbed stops you from getting any more sane
+	if(HAS_TRAIT(owner, TRAIT_UNSTABLE))
+		sanity = min(amount,sanity)
+	else
+		sanity = amount
 
 	var/mob/living/master = parent
 	switch(sanity)
@@ -251,6 +249,8 @@
 
 /datum/component/mood/proc/add_event(datum/source, category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
+	if(!istext(category))
+		category = REF(category)
 	if(mood_events[category])
 		the_event = mood_events[category]
 		if(the_event.type != type)
@@ -269,6 +269,8 @@
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
+	if(!istext(category))
+		category = REF(category)
 	var/datum/mood_event/event = mood_events[category]
 	if(!event)
 		return 0
@@ -316,11 +318,11 @@
 		var/mob/living/carbon/human/H = L
 		if(isethereal(H))
 			HandleCharge(H)
-		if(H.has_trait(TRAIT_NOHUNGER))
+		if(HAS_TRAIT(H, TRAIT_NOHUNGER))
 			return FALSE //no mood events for nutrition
 	switch(L.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			if (!L.has_trait(TRAIT_VORACIOUS))
+			if (!HAS_TRAIT(L, TRAIT_VORACIOUS))
 				add_event(null, "nutrition", /datum/mood_event/fat)
 			else
 				add_event(null, "nutrition", /datum/mood_event/wellfed) // round and full
@@ -347,25 +349,9 @@
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
 
-
 /datum/component/mood/proc/HandleHygiene(mob/living/carbon/human/H)
-	switch(H.hygiene)
-		if(0 to HYGIENE_LEVEL_DIRTY)
-			if(has_trait(TRAIT_NEAT))
-				add_event(null, "neat", /datum/mood_event/dirty)
-			if(has_trait(TRAIT_NEET))
-				add_event(null, "NEET", /datum/mood_event/happy_neet)
-			HygieneMiasma(H)
-		if(HYGIENE_LEVEL_DIRTY to HYGIENE_LEVEL_NORMAL)
-			if(has_trait(TRAIT_NEAT))
-				clear_event(null, "neat")
-			if(has_trait(TRAIT_NEET))
-				clear_event(null, "NEET")
-		if(HYGIENE_LEVEL_NORMAL to HYGIENE_LEVEL_CLEAN)
-			if(has_trait(TRAIT_NEAT))
-				add_event(null, "neat", /datum/mood_event/neat)
-			if(has_trait(TRAIT_NEET))
-				clear_event(null, "NEET")
+	if(H.hygiene <= HYGIENE_LEVEL_DIRTY)
+		HygieneMiasma(H)
 
 /datum/component/mood/proc/HygieneMiasma(mob/living/carbon/human/H)
 	// Properly stored humans shouldn't create miasma

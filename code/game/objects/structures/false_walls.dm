@@ -7,7 +7,7 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
-	layer = CLOSED_TURF_LAYER
+	layer = LOW_OBJ_LAYER
 	density = TRUE
 	opacity = 1
 	max_integrity = 100

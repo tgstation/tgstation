@@ -25,13 +25,14 @@
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
+	var/list/required_jobs = list()		// alternative required job groups eg list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two secmans
 	var/required_players = 0
 	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/mob/living/living_antag_player = null
-	var/list/datum/game_mode/replacementmode = null
+	var/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
@@ -139,7 +140,7 @@
 		else
 			qdel(G)
 
-	if(!usable_modes)
+	if(!usable_modes.len)
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
 		return null
 
@@ -235,10 +236,11 @@
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
 		for(var/mob/Player in GLOB.alive_mob_list)
-			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
-				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging!
-					living_antag_player = Player
-					return 0
+			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client && (Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))) //Someone's still antagging but is their antagonist datum important enough to skip mulligan?
+				for(var/datum/antagonist/antag_types in Player.mind.antag_datums)
+					if(antag_types.prevent_roundtype_conversion)
+						living_antag_player = Player //they were an important antag, they're our new mark
+						return 0
 
 		if(!are_special_antags_dead())
 			return FALSE
@@ -358,7 +360,7 @@
 
 	// Ultimate randomizing code right here
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY && player.has_valid_preferences())
 			players += player
 
 	// Shuffling, the players list is now ping-independent!!!
@@ -384,24 +386,6 @@
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
 					if(!is_banned_from(player.ckey, list(role, ROLE_SYNDICATE)) && !QDELETED(player))
 						drafted += player.mind
-
-	if(restricted_jobs)
-		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
-			for(var/job in restricted_jobs)
-				if(player.assigned_role == job)
-					drafted -= player
-
-	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
-
-	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
-		if(drafted.len > 0)
-			applicant = pick(drafted)
-			if(applicant)
-				candidates += applicant
-				drafted.Remove(applicant)
-
-		else												// Not enough scrubs, ABORT ABORT ABORT
-			break
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist

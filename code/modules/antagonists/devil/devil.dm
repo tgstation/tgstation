@@ -391,7 +391,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(BANISH_FORMALDYHIDE)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
-				return H.reagents.has_reagent("formaldehyde")
+				return H.reagents.has_reagent(/datum/reagent/toxin/formaldehyde)
 			return 0
 		if(BANISH_RUNES)
 			if(body)
@@ -477,7 +477,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
 					A.convert_to_archdevil()
 	else
-		throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
+		CRASH("Unable to find a blobstart landmark for hellish resurrection")
 
 
 /datum/antagonist/devil/proc/update_hud()

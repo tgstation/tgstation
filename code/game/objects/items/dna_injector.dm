@@ -20,7 +20,7 @@
 	return attack_hand(user)
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
-	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA))
+	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/HM in remove_mutations)
@@ -304,6 +304,37 @@
 	name = "\improper DNA injector (Anti-Void)"
 	remove_mutations = list(VOID)
 
+/obj/item/dnainjector/antenna
+	name = "\improper DNA injector (Antenna)"
+	add_mutations = list(ANTENNA)
+
+/obj/item/dnainjector/antiantenna
+	name = "\improper DNA injector (Anti-Antenna)"
+	remove_mutations = list(ANTENNA)
+
+/obj/item/dnainjector/paranoia
+	name = "\improper DNA injector (Paranoia)"
+	add_mutations = list(PARANOIA)
+
+/obj/item/dnainjector/antiparanoia
+	name = "\improper DNA injector (Anti-Paranoia)"
+	remove_mutations = list(PARANOIA)
+
+/obj/item/dnainjector/mindread
+	name = "\improper DNA injector (Mindread)"
+	add_mutations = list(MINDREAD)
+
+/obj/item/dnainjector/antimindread
+	name = "\improper DNA injector (Anti-Mindread)"
+	remove_mutations = list(MINDREAD)
+
+/obj/item/dnainjector/radioactive
+	name = "\improper DNA injector (Radioactive)"
+	add_mutations = list(RADIOACTIVE)
+
+/obj/item/dnainjector/antiradioactive
+	name = "\improper DNA injector (Anti-Radioactive)"
+	remove_mutations = list(RADIOACTIVE)
 /obj/item/dnainjector/olfaction
 	name = "\improper DNA injector (Olfaction)"
 	add_mutations = list(OLFACTION)
@@ -384,6 +415,14 @@
 	name = "\improper DNA injector (Anti-Cryokinesis)"
 	remove_mutations = list(CRYOKINESIS)
 
+/obj/item/dnainjector/thermal
+	name = "\improper DNA injector (Thermal Vision)"
+	add_mutations = list(THERMAL)
+
+/obj/item/dnainjector/antithermal
+	name = "\improper DNA injector (Anti-Thermal Vision)"
+	remove_mutations = list(THERMAL)
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 
@@ -392,7 +431,7 @@
 		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
 		return FALSE
 
-	if(M.has_dna() && !(M.has_trait(TRAIT_BADDNA)))
+	if(M.has_dna() && !(HAS_TRAIT(M, TRAIT_BADDNA)))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
@@ -454,7 +493,7 @@
 	var/filled = FALSE
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
-	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA))
+	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/mutation in add_mutations)

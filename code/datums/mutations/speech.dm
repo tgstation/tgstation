@@ -33,12 +33,12 @@
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_MUTE, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_MUTE, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
 
 /datum/mutation/human/smile
@@ -72,6 +72,7 @@
 		message = replacetext(message," murder "," tease ")
 		message = replacetext(message," ugly "," beautiful ")
 		message = replacetext(message," douchbag "," nice guy ")
+		message = replacetext(message," douchebag "," nice guy ")
 		message = replacetext(message," whore "," lady ")
 		message = replacetext(message," nerd "," smart guy ")
 		message = replacetext(message," moron "," fun person ")
@@ -108,12 +109,12 @@
 /datum/mutation/human/unintelligible/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
 
 /datum/mutation/human/unintelligible/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
 
 /datum/mutation/human/swedish
 	name = "Swedish"
@@ -195,10 +196,11 @@
 		message = replacetext(message," man ",pick(" son "," buddy "," brother"," pal "," friendo "))
 		message = replacetext(message," out of "," outta ")
 		message = replacetext(message," thank you "," thank you, thank you very much ")
+		message = replacetext(message," thanks "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
 		message = replacetext(message," faggot "," square ")
-		message = replacetext(message," muh valids "," getting my kicks ")
+		message = replacetext(message," muh valids "," my kicks ")
 	return trim(message)
 
 
@@ -219,3 +221,4 @@
 	..()
 	owner.grant_language(/datum/language/common)
 	owner.remove_language(/datum/language/beachbum)
+

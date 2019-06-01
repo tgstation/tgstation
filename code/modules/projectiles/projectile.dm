@@ -45,6 +45,7 @@
 	var/ricochets = 0
 	var/ricochets_max = 2
 	var/ricochet_chance = 30
+	var/force_hit = FALSE //If the object being hit can pass ths damage on to something else, it should not do it for this bullet.
 
 	//Hitscan
 	var/hitscan = FALSE		//Whether this is hitscan. If it is, speed is basically ignored.
@@ -79,7 +80,7 @@
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
-	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
+	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
@@ -193,8 +194,7 @@
 	if(reagents && reagents.reagent_list)
 		reagent_note = " REAGENTS:"
 		for(var/datum/reagent/R in reagents.reagent_list)
-			reagent_note += R.id + " ("
-			reagent_note += num2text(R.volume) + ") "
+			reagent_note += "[R.name] ([num2text(R.volume)])"
 
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)

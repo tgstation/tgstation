@@ -23,7 +23,7 @@
 
 /obj/item/organ/heart/gland/examine(mob/user)
 	. = ..()
-	if(user.has_trait(TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || isobserver(user))
+	if(HAS_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || isobserver(user))
 		to_chat(user, "<span class='notice'>It is \a [true_name].</span>")
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
@@ -292,10 +292,10 @@
 
 /obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
 	..()
-	owner.add_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/heart/gland/electric/Remove(mob/living/carbon/M, special = 0)
-	owner.remove_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 	..()
 
 /obj/item/organ/heart/gland/electric/activate()
@@ -319,15 +319,8 @@
 
 /obj/item/organ/heart/gland/chem/Initialize()
 	. = ..()
-	for(var/X in subtypesof(/datum/reagent/drug))
-		var/datum/reagent/R = X
-		possible_reagents += initial(R.id)
-	for(var/X in subtypesof(/datum/reagent/medicine))
-		var/datum/reagent/R = X
-		possible_reagents += initial(R.id)
-	for(var/X in typesof(/datum/reagent/toxin))
-		var/datum/reagent/R = X
-		possible_reagents += initial(R.id)
+	for(var/R in subtypesof(/datum/reagent/drug) + subtypesof(/datum/reagent/medicine) + typesof(/datum/reagent/toxin))
+		possible_reagents += R
 
 /obj/item/organ/heart/gland/chem/activate()
 	var/chem_to_add = pick(possible_reagents)

@@ -237,7 +237,7 @@ Auto Patrol[]"},
 		targets += C
 	if(targets.len>0)
 		var/mob/living/carbon/t = pick(targets)
-		if((t.stat!=2) && (!(t.mobility_flags & MOBILITY_STAND)) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
+		if(t.stat != DEAD && (t.mobility_flags & MOBILITY_STAND) && !t.handcuffed) //we don't shoot people who are dead, cuffed or lying down.
 			shootAt(t)
 	switch(mode)
 
@@ -386,7 +386,7 @@ Auto Patrol[]"},
 	drop_part(cell_type, Tsec)
 
 	if(!lasercolor)
-		var/obj/item/gun/energy/e_gun/advtaser/G = new (Tsec)
+		var/obj/item/gun/energy/e_gun/dragnet/G = new (Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "b")
@@ -427,15 +427,15 @@ Auto Patrol[]"},
 			projectile = /obj/item/projectile/beam
 	else
 		if(!lasercolor)
-			shoot_sound = 'sound/weapons/taser.ogg'
-			projectile = /obj/item/projectile/energy/electrode
+			shoot_sound = 'sound/weapons/laser.ogg'
+			projectile = /obj/item/projectile/energy/net
 		else if(lasercolor == "b")
 			projectile = /obj/item/projectile/beam/lasertag/bluetag
 		else if(lasercolor == "r")
 			projectile = /obj/item/projectile/beam/lasertag/redtag
 
 /mob/living/simple_animal/bot/ed209/proc/shootAt(mob/target)
-	if(lastfired && world.time - lastfired < shot_delay)
+	if(world.time <= lastfired + shot_delay)
 		return
 	lastfired = world.time
 	var/turf/T = loc

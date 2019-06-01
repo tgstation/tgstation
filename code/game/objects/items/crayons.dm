@@ -62,7 +62,7 @@
 
 	var/edible = TRUE // That doesn't mean eating it is a good idea
 
-	var/list/reagent_contents = list("nutriment" = 1)
+	var/list/reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	// If the user can toggle the colour, a la vanilla spraycan
 	var/can_change_colour = FALSE
 
@@ -279,7 +279,7 @@
 		cost = 0
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if (H.has_trait(TRAIT_TAGGER))
+		if (HAS_TRAIT(H, TRAIT_TAGGER))
 			cost *= 0.5
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
@@ -427,68 +427,68 @@
 	icon_state = "crayonred"
 	paint_color = "#DA0000"
 	item_color = "red"
-	reagent_contents = list("nutriment" = 1, "redcrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	paint_color = "#FF9300"
 	item_color = "orange"
-	reagent_contents = list("nutriment" = 1, "orangecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/orange = 1)
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	paint_color = "#FFF200"
 	item_color = "yellow"
-	reagent_contents = list("nutriment" = 1, "yellowcrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/yellow = 1)
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	paint_color = "#A8E61D"
 	item_color = "green"
-	reagent_contents = list("nutriment" = 1, "greencrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/green = 1)
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	paint_color = "#00B7EF"
 	item_color = "blue"
-	reagent_contents = list("nutriment" = 1, "bluecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	paint_color = "#DA00FF"
 	item_color = "purple"
-	reagent_contents = list("nutriment" = 1, "purplecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/purple = 1)
 
 /obj/item/toy/crayon/black
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
 	item_color = "black"
-	reagent_contents = list("nutriment" = 1, "blackcrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/black = 1)
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
 	item_color = "white"
-	reagent_contents = list("nutriment" = 1, "whitecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/white = 1)
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
 	item_color = "mime"
-	reagent_contents = list("nutriment" = 1, "invisiblecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/invisible = 1)
 	charges = -1
 
 /obj/item/toy/crayon/rainbow
 	icon_state = "crayonrainbow"
 	paint_color = "#FFF000"
 	item_color = "rainbow"
-	reagent_contents = list("nutriment" = 1, "colorful_reagent" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent = 1)
 	drawtype = RANDOM_ANY // just the default starter.
 
 	charges = -1
 
-/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 	. = ..()
 
@@ -507,7 +507,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 7
-	STR.can_hold = typecacheof(list(/obj/item/toy/crayon))
+	STR.set_holdable(list(/obj/item/toy/crayon))
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -562,7 +562,7 @@
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
 
-	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
+	reagent_contents = list(/datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1)
 
 	pre_noise = TRUE
 	post_noise = FALSE
@@ -614,7 +614,7 @@
 		to_chat(user, "It is empty.")
 	to_chat(user, "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>")
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
@@ -654,10 +654,11 @@
 	if(isobj(target))
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-			if(color_hex2num(paint_color) < 255 && istype(target, /obj/structure/window))
-				target.set_opacity(255)
-			else
-				target.set_opacity(initial(target.opacity))
+			if(istype(target, /obj/structure/window))
+				if(color_hex2num(paint_color) < 255)
+					target.set_opacity(255)
+				else
+					target.set_opacity(initial(target.opacity))
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)
@@ -683,7 +684,7 @@
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = -1
 
-/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
+/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
 	var/diff = ..()
 	if(!iscyborg(user))
 		to_chat(user, "<span class='notice'>How did you get this?</span>")
@@ -712,7 +713,7 @@
 
 	volume_multiplier = 25
 	charges = 100
-	reagent_contents = list("clf3" = 1)
+	reagent_contents = list(/datum/reagent/clf3 = 1)
 	actually_paints = FALSE
 	paint_color = "#000000"
 
@@ -724,7 +725,7 @@
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
 
-	reagent_contents = list("lube" = 1, "banana" = 1)
+	reagent_contents = list(/datum/reagent/lube = 1, /datum/reagent/consumable/banana = 1)
 	volume_multiplier = 5
 
 /obj/item/toy/crayon/spraycan/lubecan/isValidSurface(surface)
@@ -743,7 +744,7 @@
 
 	pre_noise = FALSE
 	post_noise = FALSE
-	reagent_contents = list("nothing" = 1, "mutetoxin" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/toxin/mutetoxin = 1)
 
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER

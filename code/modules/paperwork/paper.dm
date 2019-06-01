@@ -87,7 +87,7 @@
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		if(H.has_trait(TRAIT_CLUMSY) && prob(25))
+		if(HAS_TRAIT(H, TRAIT_CLUMSY) && prob(25))
 			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
@@ -132,7 +132,7 @@
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
-	while(1)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
+	while(locid < 15)	//hey whoever decided a while(1) was a good idea here, i hate you
 		var/istart = 0
 		if(links)
 			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
@@ -196,7 +196,7 @@
 
 	// Count the fields
 	var/laststart = 1
-	while(1)
+	while(fields < 15)
 		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
 		if(i == 0)
 			break
@@ -208,7 +208,7 @@
 /obj/item/paper/proc/reload_fields() // Useful if you made the paper programicly and want to include fields. Also runs updateinfolinks() for you.
 	fields = 0
 	var/laststart = 1
-	while(1)
+	while(fields < 15)
 		var/i = findtext(info, "<span class=\"paper_field\">", laststart)
 		if(i == 0)
 			break
@@ -264,6 +264,7 @@
 		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/clipboard) && loc.loc != usr && usr.get_active_held_item() != i)	//Some check to see if he's allowed to write
 			return
 
+		log_paper("[key_name(usr)] writing to paper [t]")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
 		if(t != null)	//No input from the user means nothing needs to be added
@@ -312,7 +313,7 @@
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	if(P.is_hot())
-		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)

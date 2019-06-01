@@ -107,7 +107,7 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
-/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0
 
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -137,7 +137,7 @@
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 10
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/forcewall/cult,
-							/obj/effect/proc_holder/spell/dumbfire/juggernaut)
+							/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut)
 	runetype = /datum/action/innate/cult/create_rune/wall
 	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand heavy punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
@@ -174,7 +174,15 @@
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
 	return ..()
+	
+//////////////////////////Angelic-Juggernaut////////////////////////////
+/mob/living/simple_animal/hostile/construct/armored/angelic
+	icon_state = "behemoth_angelic"
+	icon_living = "behemoth_angelic"
+	loot = list(/obj/item/ectoplasm/angelic)
 
+/mob/living/simple_animal/hostile/construct/armored/noncult
+	
 ////////////////////////Wraith/////////////////////////////////////////////
 /mob/living/simple_animal/hostile/construct/wraith
 	name = "Wraith"
@@ -220,7 +228,13 @@
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
 
-
+//////////////////////////Angelic-Wraith////////////////////////////
+/mob/living/simple_animal/hostile/construct/wraith/angelic
+	icon_state = "floating_angelic"
+	icon_living = "floating_angelic"
+	loot = list(/obj/item/ectoplasm/angelic)
+	
+/mob/living/simple_animal/hostile/construct/wraith/noncult
 
 /////////////////////////////Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder
@@ -297,14 +311,21 @@
 	AIStatus = AI_ON
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
 
-/////////////////////////////Non-cult Artificer/////////////////////////
+/////////////////////////////Angelic Artificer/////////////////////////
+/mob/living/simple_animal/hostile/construct/builder/angelic
+	icon_state = "artificer_angelic"
+	icon_living = "artificer_angelic"
+	loot = list(/obj/item/ectoplasm/angelic)
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+
 /mob/living/simple_animal/hostile/construct/builder/noncult
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
-
 
 /////////////////////////////Harvester/////////////////////////
 /mob/living/simple_animal/hostile/construct/harvester
@@ -341,7 +362,7 @@
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(C.has_trait(TRAIT_NODISMEMBER))
+		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 			return ..()		//ATTACK!
 		var/list/parts = list()
 		var/undismembermerable_limbs = 0

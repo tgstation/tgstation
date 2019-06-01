@@ -167,7 +167,7 @@
 
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	if(synthetic)
@@ -189,20 +189,20 @@
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
 
-		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
+		if((!A.requiresID() || A.allowed(user)) && A.hasPower()) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message, power requirement is so this doesn't stop unpowered doors from being pried open if you have access
 			return
 		if(A.locked)
 			to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
 			return
 
 		if(A.hasPower())
-			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing [src] open.</span>", \
+			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the [A] open.</span>", \
 			"<span class='italics'>You hear a metal screeching sound.</span>")
 			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 			if(!do_after(user, 100, target = A))
 				return
 		//user.say("Heeeeeeeeeerrre's Johnny!")
-		user.visible_message("<span class='warning'>[user] forces the airlock to open with [user.p_their()] [src]!</span>", "<span class='warning'>We force [src] to open.</span>", \
+		user.visible_message("<span class='warning'>[user] forces the airlock to open with [user.p_their()] [src]!</span>", "<span class='warning'>We force the [A] to open.</span>", \
 		"<span class='italics'>You hear a metal screeching sound.</span>")
 		A.open(2)
 
@@ -251,7 +251,7 @@
 
 /obj/item/gun/magic/tentacle/Initialize(mapload, silent)
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		if(!silent)
 			loc.visible_message("<span class='warning'>[loc.name]\'s arm starts stretching inhumanly!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a tentacle.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -432,7 +432,7 @@
 
 /obj/item/shield/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
@@ -478,7 +478,7 @@
 
 /obj/item/clothing/suit/space/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
@@ -486,7 +486,7 @@
 /obj/item/clothing/suit/space/changeling/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		H.reagents.add_reagent("salbutamol", REAGENTS_METABOLISM)
+		H.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM)
 
 /obj/item/clothing/head/helmet/space/changeling
 	name = "flesh mass"
@@ -499,7 +499,7 @@
 
 /obj/item/clothing/head/helmet/space/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 /***************************************\
 |*****************ARMOR*****************|
@@ -532,7 +532,7 @@
 
 /obj/item/clothing/suit/armor/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
@@ -546,4 +546,4 @@
 
 /obj/item/clothing/head/helmet/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)

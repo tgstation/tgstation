@@ -199,10 +199,15 @@
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
-/datum/action/item_action/rcl
+/datum/action/item_action/rcl_col
 	name = "Change Cable Color"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_rainbow"
+
+/datum/action/item_action/rcl_gui
+	name = "Toggle Fast Wiring Gui"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_gui"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
@@ -289,10 +294,7 @@
 /datum/action/item_action/synthswitch/Trigger()
 	if(istype(target, /obj/item/instrument/piano_synth))
 		var/obj/item/instrument/piano_synth/synth = target
-		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
-		if(!synth.insTypes[chosen])
-			return
-		return synth.changeInstrument(chosen)
+		return synth.selectInstrument()
 	return ..()
 
 /datum/action/item_action/vortex_recall

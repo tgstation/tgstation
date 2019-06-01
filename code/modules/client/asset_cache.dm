@@ -44,6 +44,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if(client.cache.Find(asset_name) || client.sending.Find(asset_name))
 		return 0
 
+	log_asset("Sending asset [asset_name] to client [client]")
 	client << browse_rsc(SSassets.cache[asset_name], asset_name)
 	if(!verify)
 		client.cache += asset_name
@@ -92,6 +93,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		to_chat(client, "Sending Resources...")
 	for(var/asset in unreceived)
 		if (asset in SSassets.cache)
+			log_asset("Sending asset [asset] to client [client]")
 			client << browse_rsc(SSassets.cache[asset], asset)
 
 	if(!verify) // Can't access the asset cache browser, rip.
@@ -560,7 +562,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"none_button.png" = 'html/none_button.png',
 	)
 
-/datum/asset/simple/pills
+/datum/asset/spritesheet/simple/pills
+	name ="pills"
 	assets = list(
 		"pill1" = 'icons/UI_Icons/Pills/pill1.png',
 		"pill2" = 'icons/UI_Icons/Pills/pill2.png',
@@ -658,6 +661,40 @@ GLOBAL_LIST_EMPTY(asset_datums)
 					I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
 		Insert(initial(D.id), I)
+	return ..()
+
+/datum/asset/spritesheet/vending
+	name = "vending"
+
+/datum/asset/spritesheet/vending/register()
+	for (var/k in GLOB.vending_products)
+		var/atom/item = k
+
+
+		var/icon_file
+		var/icon_state
+		var/icon/I
+
+
+		if (!ispath(item, /atom))
+			continue
+
+		icon_file = initial(item.icon)
+		icon_state = initial(item.icon_state)
+
+		if(icon_state in icon_states(icon_file))
+			I = icon(icon_file, icon_state, SOUTH)
+			var/c = initial(item.color)
+			if (!isnull(c) && c != "#FFFFFF")
+				I.Blend(initial(c), ICON_MULTIPLY)
+		else
+			item = new item()
+			I = icon(item.icon, item.icon_state, SOUTH)
+			qdel(item)
+
+		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
+
+		Insert(imgid, I)
 	return ..()
 
 /datum/asset/simple/genetics

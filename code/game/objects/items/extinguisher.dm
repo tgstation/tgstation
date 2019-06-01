@@ -17,7 +17,7 @@
 	resistance_flags = FIRE_PROOF
 	var/max_water = 50
 	var/last_use = 1
-	var/chem = "water"
+	var/chem = /datum/reagent/water
 	var/safety = TRUE
 	var/refilling = FALSE
 	var/tanktype = /obj/structure/reagent_dispensers/watertank
@@ -41,11 +41,13 @@
 	sprite_name = "miniFE"
 	dog_fashion = null
 
-/obj/item/extinguisher/Initialize()
-	. = ..()
+/obj/item/extinguisher/proc/refill()
 	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
+/obj/item/extinguisher/Initialize()
+	. = ..()
+	refill()
 
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
@@ -53,7 +55,7 @@
 	icon_state = "foam_extinguisher0"
 	//item_state = "foam_extinguisher" needs sprite
 	dog_fashion = null
-	chem = "firefighting_foam"
+	chem = /datum/reagent/firefighting_foam
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
@@ -124,10 +126,13 @@
 	if (target.loc == user)
 		return
 	//TODO; Add support for reagents in water.
+
 	if(refilling)
 		refilling = FALSE
 		return
 	if (!safety)
+
+
 		if (src.reagents.total_volume < 1)
 			to_chat(usr, "<span class='warning'>\The [src] is empty!</span>")
 			return
@@ -229,3 +234,13 @@
 			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
+
+//firebot assembly
+/obj/item/extinguisher/attackby(obj/O, mob/user, params)
+	if(istype(O, /obj/item/bodypart/l_arm/robot) || istype(O, /obj/item/bodypart/r_arm/robot))
+		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
+		qdel(O)
+		qdel(src)
+		user.put_in_hands(new /obj/item/bot_assembly/firebot)
+	else
+		..()

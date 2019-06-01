@@ -32,7 +32,7 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	owner.reagents.add_reagent("bad_food", poison_amount / severity)
+	owner.reagents.add_reagent(/datum/reagent/toxin/bad_food, poison_amount / severity)
 	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
 
 
@@ -144,7 +144,7 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/toggle(silent = FALSE)
 	if(!on)
-		if(crit_fail)
+		if(broken_cyber_organ)
 			if(!silent)
 				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
 			return 0

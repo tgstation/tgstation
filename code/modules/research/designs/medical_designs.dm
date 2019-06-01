@@ -29,7 +29,7 @@
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
 	id = "bluespacebeaker"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 250, MAT_BLUESPACE = 250)
+	materials = list(MAT_GLASS = 5000, MAT_PLASMA = 3000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 1000)
 	build_path = /obj/item/reagent_containers/glass/beaker/bluespace
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -300,6 +300,17 @@
 	construction_time = 50
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 750, MAT_GOLD = 750)
 	build_path = /obj/item/organ/cyberimp/eyes/hud/security
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	
+/datum/design/cyberimp_diagnostic_hud
+	name = "Diagnostic HUD Implant"
+	desc = "These cybernetic eyes will display a diagnostic HUD over everything you see. Wiggle eyes to control."
+	id = "ci-diaghud"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 50
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600)
+	build_path = /obj/item/organ/cyberimp/eyes/hud/diagnostic
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 

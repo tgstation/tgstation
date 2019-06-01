@@ -176,7 +176,7 @@
 
 /datum/action/innate/cult/blood_spell/construction
 	name = "Twisted Construction"
-	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)"	
+	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
 	button_icon_state = "transmute"
 	magic_path = "/obj/item/melee/blood_magic/construction"
 	health_cost = 12
@@ -335,10 +335,12 @@
 // The "magic hand" items
 /obj/item/melee/blood_magic
 	name = "\improper magical aura"
-	desc = "Sinister looking aura that distorts the flow of reality around it."
+	desc = "A sinister looking aura that distorts the flow of reality around it."
 	icon = 'icons/obj/items_and_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
-	item_state = null
+	item_state = "disintegrate"
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 
 	w_class = WEIGHT_CLASS_HUGE
@@ -358,7 +360,7 @@
 
 /obj/item/melee/blood_magic/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))
@@ -556,7 +558,7 @@
 	desc = "Corrupts certain metalic objects on contact."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
-	
+
 /obj/item/melee/blood_magic/construction/examine(mob/user)
 	..()
 	to_chat(user,"<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)")
@@ -745,7 +747,7 @@
 	var/turf/T = get_turf(target)
 	if(T)
 		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
-			if(B.blood_state == "blood")
+			if(B.blood_state == BLOOD_STATE_HUMAN)
 				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
 					temp += 30
 				else
@@ -755,9 +757,9 @@
 		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
 			qdel(TH)
 		var/obj/item/clothing/shoes/shoecheck = user.shoes
-		if(shoecheck && shoecheck.bloody_shoes["blood"])
-			temp += shoecheck.bloody_shoes["blood"]/20
-			shoecheck.bloody_shoes["blood"] = 0
+		if(shoecheck && shoecheck.bloody_shoes[/datum/reagent/blood])
+			temp += shoecheck.bloody_shoes[/datum/reagent/blood]/20
+			shoecheck.bloody_shoes[/datum/reagent/blood] = 0
 		if(temp)
 			user.Beam(T,icon_state="drainbeam",time=15)
 			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
@@ -813,4 +815,3 @@
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
-						

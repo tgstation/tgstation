@@ -66,6 +66,19 @@
 			var/turf/target = get_ranged_target_turf(owner, turn(owner.dir, 180), cough_range)
 			owner.throw_at(target, cough_range, GET_MUTATION_POWER(src))
 
+/datum/mutation/human/paranoia
+	name = "Paranoia"
+	desc = "Subject is easily terrified, and may suffer from hallucinations."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
+	text_lose_indication = "<span class'notice'>The screaming in your mind fades.</span>"
+
+/datum/mutation/human/paranoia/on_life()
+	if(prob(5) && owner.stat == CONSCIOUS)
+		owner.emote("scream")
+		if(prob(25))
+			owner.hallucination += 20
+
 //Dwarfism shrinks your body and lets you pass tables.
 /datum/mutation/human/dwarfism
 	name = "Dwarfism"
@@ -103,12 +116,12 @@
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_CLUMSY, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
 
 /datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_CLUMSY, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
 
 
 //Tourettes causes you to randomly stand in place and shout.
@@ -145,12 +158,12 @@
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_DEAF, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
 
 /datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_DEAF, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
 
 
 //Monified turns you into a monkey.
@@ -164,11 +177,11 @@
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
-		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/mutation/human/glow
 	name = "Glowy"
@@ -214,12 +227,12 @@
 /datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_SHOCKIMMUNE, "genetics")
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "genetics")
 
 /datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_SHOCKIMMUNE, "genetics")
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "genetics")
 
 /datum/mutation/human/fire
 	name = "Fiery Sweat"
@@ -254,6 +267,9 @@
 	text_lose_indication = "<span class'notice'>The space around you settles back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and abuse
 	instability = 10
+	synchronizer_coeff = 1
+	energy_coeff = 1
+	power_coeff = 1
 	var/warpchance = 0
 
 /datum/mutation/human/badblink/on_life()
@@ -265,13 +281,13 @@
 		"<span class='warning'>[owner]'s torso starts folding inside out until it vanishes from reality, taking [owner] with it.</span>",
 		"<span class='warning'>One moment, you see [owner]. The next, [owner] is gone.</span>")
 		owner.visible_message(warpmessage, "<span class='userdanger'>You feel a wave of nausea as you fall through reality!</span>")
-		var/warpdistance = rand(10,15)
+		var/warpdistance = rand(10,15) * GET_MUTATION_POWER(src)
 		do_teleport(owner, get_turf(owner), warpdistance, channel = TELEPORT_CHANNEL_FREE)
-		owner.adjust_disgust((warpchance * warpdistance))
+		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * (warpchance * warpdistance))
 		warpchance = 0
 		owner.visible_message("<span class='danger'>[owner] appears out of nowhere!</span>")
 	else
-		warpchance += 0.25
+		warpchance += 0.25 * GET_MUTATION_ENERGY(src)
 
 /datum/mutation/human/acidflesh
 	name = "Acidic Flesh"

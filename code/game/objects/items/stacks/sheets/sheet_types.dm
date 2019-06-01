@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = TRUE, on_floor = TRUE), \
 	null, \
 	new/datum/stack_recipe_list("office chairs", list( \
-		new/datum/stack_recipe("dark office chair", /obj/structure/chair/office/dark, 5, one_per_turf = TRUE, on_floor = TRUE), \
+		new/datum/stack_recipe("dark office chair", /obj/structure/chair/office, 5, one_per_turf = TRUE, on_floor = TRUE), \
 		new/datum/stack_recipe("light office chair", /obj/structure/chair/office/light, 5, one_per_turf = TRUE, on_floor = TRUE), \
 		)), \
 	new/datum/stack_recipe_list("comfy chairs", list( \
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/metal
-	grind_results = list("iron" = 20)
+	grind_results = list(/datum/reagent/iron = 20)
 	point_value = 2
 
 /obj/item/stack/sheet/metal/ratvar_act()
@@ -145,10 +145,11 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = TRUE), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
+	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50), \
 	null, \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
-		new/datum/stack_recipe("high security airlock assembly", /obj/structure/door_assembly/door_assembly_highsecurity, 6, time = 50, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("vault door assembly", /obj/structure/door_assembly/door_assembly_vault, 8, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("high security airlock assembly", /obj/structure/door_assembly/door_assembly_highsecurity, 4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("vault door assembly", /obj/structure/door_assembly/door_assembly_vault, 6, time = 50, one_per_turf = 1, on_floor = 1), \
 	)), \
 ))
 
@@ -164,7 +165,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
-	grind_results = list("iron" = 20, "plasma" = 20)
+	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	point_value = 23
 
 /obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
@@ -205,6 +206,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/glass/mortar, 3), \
 	null, \
 	new/datum/stack_recipe_list("pews", list(
 		new /datum/stack_recipe("pew (middle)", /obj/structure/chair/pew, 3, one_per_turf = TRUE, on_floor = TRUE),
@@ -226,7 +228,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
-	grind_results = list("carbon" = 20)
+	grind_results = list(/datum/reagent/carbon = 20)
 
 /obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.wood_recipes
@@ -393,7 +395,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
 	novariants = TRUE
-	grind_results = list("iron" = 5, "blood" = 15)
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
 
 /obj/item/stack/sheet/runed_metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -460,7 +462,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/clockwork
 	novariants = FALSE
-	grind_results = list("iron" = 5, "teslium" = 15)
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/teslium = 15)
 	merge_type = /obj/item/stack/tile/brass
 
 /obj/item/stack/tile/brass/narsie_act()
@@ -510,7 +512,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/bronze
 	novariants = FALSE
-	grind_results = list("iron" = 5, "copper" = 3) //we have no "tin" reagent so this is the closest thing
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/copper = 3) //we have no "tin" reagent so this is the closest thing
 	merge_type = /obj/item/stack/tile/bronze
 
 /obj/item/stack/tile/bronze/attack_self(mob/living/user)
@@ -563,7 +565,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
-	grind_results = list("carbon" = 10)
+	grind_results = list(/datum/reagent/carbon = 10)
 	merge_type = /obj/item/stack/sheet/bone
 
 GLOBAL_LIST_INIT(plastic_recipes, list(

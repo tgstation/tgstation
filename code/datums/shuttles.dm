@@ -152,6 +152,10 @@
 	port_id = "pirate"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/hunter
+	port_id = "hunter"
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/ruin //For random shuttles in ruins
 	port_id = "ruin"
 	can_be_bought = FALSE
@@ -199,6 +203,13 @@
 	Has medical facilities."
 	credit_cost = 5000
 
+/datum/map_template/shuttle/emergency/pod
+	suffix = "pod"
+	name = "Emergency Pods"
+	description = "We did not expect an evacuation this quickly. All we have available is two escape pods."
+	admin_notes = "For player punishment."
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/emergency/russiafightpit
 	suffix = "russiafightpit"
 	name = "Mother Russia Bleeds"
@@ -209,9 +220,9 @@
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
 	name = "Asteroid With Engines Strapped To It"
-	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
+	description = "A hollowed out asteroid with engines strapped to it, the hollowing procedure makes it very difficult to hijack but is very expensive. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
-	credit_cost = -5000
+	credit_cost = 15000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/luxury
@@ -284,6 +295,12 @@
 	name = "Meta Station Emergency Shuttle"
 	credit_cost = 4000
 	description = "A fairly standard shuttle, though larger and slightly better equipped than the Box Station variant."
+
+/datum/map_template/shuttle/emergency/kilo
+	suffix = "kilo"
+	name = "Kilo Station Emergency Shuttle"
+	credit_cost = 5000
+	description = "A fully functional shuttle including a complete infirmary, storage facilties and regular amenities."
 
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
@@ -392,6 +409,11 @@
 	name = "fancy transport ferry"
 	description = "At some point, someone upgraded the ferry to have fancier flooring... and fewer seats."
 
+/datum/map_template/shuttle/ferry/kilo
+	suffix = "kilo"
+	name = "kilo transport ferry"
+	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
+
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
@@ -419,6 +441,10 @@
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
+
+/datum/map_template/shuttle/cargo/kilo
+	suffix = "kilo"
+	name = "supply shuttle (Kilo)"
 
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
@@ -468,6 +494,10 @@
 	suffix = "basic"
 	name = "basic syndicate infiltrator"
 
+/datum/map_template/shuttle/infiltrator/advanced
+	suffix = "basic"
+	name = "advanced syndicate infiltrator"
+
 /datum/map_template/shuttle/cargo/delta
 	suffix = "delta"
 	name = "cargo ferry (Delta)"
@@ -476,13 +506,29 @@
 	suffix = "delta"
 	name = "mining shuttle (Delta)"
 
+/datum/map_template/shuttle/mining/kilo
+	suffix = "kilo"
+	name = "mining shuttle (Kilo)"
+
+/datum/map_template/shuttle/mining/large
+	suffix = "large"
+	name = "mining shuttle (Large)"
+
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
 
+/datum/map_template/shuttle/labour/kilo
+	suffix = "kilo"
+	name = "labour shuttle (Kilo)"
+
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
 	name = "arrival shuttle (Delta)"
+
+/datum/map_template/shuttle/arrival/kilo
+	suffix = "kilo"
+	name = "arrival shuttle (Kilo)"
 
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
@@ -515,6 +561,14 @@
 /datum/map_template/shuttle/pirate/default
 	suffix = "default"
 	name = "pirate ship (Default)"
+
+/datum/map_template/shuttle/hunter/space_cop
+	suffix = "space_cop"
+	name = "Police Spacevan"
+
+/datum/map_template/shuttle/hunter/russian
+	suffix = "russian"
+	name = "Russian Cargo Ship"
 
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"

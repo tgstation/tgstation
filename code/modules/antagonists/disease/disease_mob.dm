@@ -138,6 +138,8 @@ the new instance inside the host to be updated to the template's stats.
 	. = ..()
 	if(!mind.has_antag_datum(/datum/antagonist/disease))
 		mind.add_antag_datum(/datum/antagonist/disease)
+	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	medsensor.add_hud_to(src)
 
 /mob/camera/disease/proc/pick_name()
 	var/static/list/taken_names
@@ -263,9 +265,12 @@ the new instance inside the host to be updated to the template's stats.
 	if(!move_listener)
 		move_listener = L.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/follow_mob)))
 	else
-		L.TakeComponent(move_listener)
-		if(QDELING(move_listener))
-			move_listener = null
+		if(L)
+			L.TakeComponent(move_listener)
+			if(QDELING(move_listener))
+				move_listener = null
+		else
+			QDEL_NULL(move_listener)
 	follow_mob()
 
 /mob/camera/disease/proc/follow_next(reverse = FALSE)

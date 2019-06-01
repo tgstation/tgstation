@@ -152,7 +152,7 @@
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
-	if(user.has_trait(TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.visible_message("<span class='warning'>[C] loses [C.p_their()] grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
 		C.dropItemToGround(src, TRUE)
@@ -217,13 +217,12 @@
 		loadedWeightClass -= I.w_class
 	else if (A == tank)
 		tank = null
-		update_icons()
+		update_icon()
 
-/obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
+/obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity
 	name = "improvised pneumatic cannon"
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
-	w_class = WEIGHT_CLASS_NORMAL
 	maxWeightClass = 7
 	gasPerThrow = 5
 
@@ -243,14 +242,13 @@
 			return
 		to_chat(user, "<span class='notice'>You hook \the [thetank] up to \the [src].</span>")
 		tank = thetank
-	update_icons()
+	update_icon()
 
-/obj/item/pneumatic_cannon/proc/update_icons()
+/obj/item/pneumatic_cannon/update_icon()
 	cut_overlays()
 	if(!tank)
 		return
 	add_overlay(tank.icon_state)
-	update_icon()
 
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj) && !ispath(type, /mob))
@@ -328,7 +326,7 @@
 	STR.max_items = 20
 	STR.max_combined_w_class = 40
 	STR.display_numerical_stacking = TRUE
-	STR.can_hold = typecacheof(list(
+	STR.set_holdable(list(
 		/obj/item/throwing_star/magspear
 		))
 

@@ -30,17 +30,19 @@
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	if(..())
 		return
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("send_message")
+		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["send_message"])
+		if (!istype(MT))
+			return
 		var/message = stripped_input(usr,"Input message","Transmit message")
 		var/obj/mecha/M = MT.in_mecha()
 		if(trim(message) && M)
 			M.occupant_message(message)
 		return
 	if(href_list["shock"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("shock")
-		MT.shock()
+		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["shock"])
+		if (istype(MT))
+			MT.shock()
 
 	updateUsrDialog()
 	return
@@ -61,7 +63,7 @@
 	var/answer = {"<b>Name:</b> [M.name]<br>
 <b>Integrity:</b> [round((M.obj_integrity/M.max_integrity*100), 0.01)]%<br>
 <b>Cell Charge:</b> [isnull(cell_charge)?"Not Found":"[M.cell.percent()]%"]<br>
-<b>Airtank:</b> [round(M.return_pressure(), 0.01)] kPa<br>
+<b>Airtank:</b> [M.internal_tank?"[round(M.return_pressure(), 0.01)]":"Not Equipped"] kPa<br>
 <b>Pilot:</b> [M.occupant||"None"]<br>
 <b>Location:</b> [get_area_name(M, TRUE)||"Unknown"]<br>
 <b>Active Equipment:</b> [M.selected||"None"]"}

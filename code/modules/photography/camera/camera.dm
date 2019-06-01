@@ -33,6 +33,8 @@
 	var/picture_size_y_min = 1
 	var/picture_size_x_max = 4
 	var/picture_size_y_max = 4
+	var/can_customise = TRUE
+	var/default_picture_name
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
@@ -45,14 +47,16 @@
 	. = ..()
 	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
 
-/obj/item/camera/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
+/obj/item/camera/proc/adjust_zoom(mob/user)
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num
 	var/desired_y = input(user, "How wide do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y) as num
 	picture_size_x = min(CLAMP(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	picture_size_y = min(CLAMP(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 
+/obj/item/camera/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	adjust_zoom(user)
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -124,7 +128,7 @@
 
 	var/realcooldown = cooldown
 	var/mob/living/carbon/human/H = user
-	if (H.has_trait(TRAIT_PHOTOGRAPHER))
+	if (HAS_TRAIT(H, TRAIT_PHOTOGRAPHER))
 		realcooldown *= 0.5
 	addtimer(CALLBACK(src, .proc/cooldown), realcooldown)
 
@@ -203,8 +207,10 @@
 		user.put_in_hands(p)
 		pictures_left--
 		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
-		var/customize = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
-		if(customize == "Yes")
+		var/customise = "No"
+		if(can_customise)
+			customise = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
+		if(customise == "Yes")
 			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32)
 			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128)
 			var/caption = stripped_input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption", max_length = 256)
@@ -214,6 +220,10 @@
 				picture.picture_desc = "[desc1] - [picture.picture_desc]"
 			if(caption)
 				picture.caption = caption
+		else
+			if(default_picture_name)
+				picture.picture_name = default_picture_name
+
 		p.set_picture(picture, TRUE, TRUE)
 		if(CONFIG_GET(flag/picture_logging_camera))
 			picture.log_to_file()

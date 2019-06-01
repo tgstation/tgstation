@@ -4,7 +4,6 @@
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
 	density = TRUE
-	layer = BELOW_OBJ_LAYER
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
 
@@ -151,6 +150,9 @@
 		deconstruct(FALSE)	//we automatically deconstruct the pod
 
 /obj/structure/transit_tube_pod/return_air()
+	return air_contents
+
+/obj/structure/transit_tube_pod/return_analyzable_air()
 	return air_contents
 
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)

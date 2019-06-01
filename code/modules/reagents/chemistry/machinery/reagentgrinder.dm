@@ -72,8 +72,9 @@
 	if(!(stat & (NOPOWER|BROKEN)))
 		to_chat(user, "<span class='notice'>The status display reads:</span>")
 		to_chat(user, "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>")
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
+		if(beaker)
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -165,7 +166,7 @@
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
-	if(operating || !user.canUseTopic(src))
+	if(operating || !user.canUseTopic(src, !issilicon(user)))
 		return
 
 	var/list/options = list()
@@ -196,7 +197,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src))
+	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
 		return
 
 	switch(choice)
@@ -297,12 +298,12 @@
 /obj/machinery/reagentgrinder/proc/mix_complete()
 	if(beaker?.reagents.total_volume)
 		//Recipe to make Butter
-		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF, 1)
-		beaker.reagents.remove_reagent("milk", MILK_TO_BUTTER_COEFF * butter_amt)
+		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
+		beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
 		for(var/i in 1 to butter_amt)
 			new /obj/item/reagent_containers/food/snacks/butter(drop_location())
 		//Recipe to make Mayonnaise
-		if (beaker.reagents.has_reagent("eggyolk"))
-			var/amount = beaker.reagents.get_reagent_amount("eggyolk")
-			beaker.reagents.remove_reagent("eggyolk", amount)
-			beaker.reagents.add_reagent("mayonnaise", amount)
+		if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
+			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk)
+			beaker.reagents.remove_reagent(/datum/reagent/consumable/eggyolk, amount)
+			beaker.reagents.add_reagent(/datum/reagent/consumable/mayonnaise, amount)

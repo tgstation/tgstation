@@ -30,17 +30,17 @@
 			damage = max(0, damage - 0.1)
 
 			var/provide_pain_message = HAS_NO_TOXIN
-			if(filterToxins && !owner.has_trait(TRAIT_TOXINLOVER))
+			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
 				for(var/I in C.reagents.reagent_list)
 					var/datum/reagent/pickedreagent = I
 					if(istype(pickedreagent, /datum/reagent/toxin))
-						var/datum/reagent/toxin/found_toxin = pickedreagent
-						var/thisamount = C.reagents.get_reagent_amount(initial(found_toxin.id))
+						var/thisamount = C.reagents.get_reagent_amount(pickedreagent)
 						if (thisamount <= toxTolerance && thisamount)
-							C.reagents.remove_reagent(initial(found_toxin.id), 1)
+							C.reagents.remove_reagent(pickedreagent, 1)
 						else
 							damage += (thisamount*toxLethality)
+							var/datum/reagent/toxin/found_toxin = pickedreagent
 							if(provide_pain_message != HAS_PAINFUL_TOXIN)
 								provide_pain_message = found_toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
@@ -59,7 +59,7 @@
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("iron", 5)
+	S.reagents.add_reagent(/datum/reagent/iron, 5)
 	return S
 
 /obj/item/organ/liver/fly

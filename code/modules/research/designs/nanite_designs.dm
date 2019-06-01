@@ -415,21 +415,21 @@
 	name = "Skull Echo"
 	desc = "The nanites echo a synthesized message inside the host's skull."
 	id = "voice_nanites"
-	program_type = /datum/nanite_program/triggered/voice
+	program_type = /datum/nanite_program/triggered/comm/voice
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/speech
 	name = "Forced Speech"
 	desc = "The nanites force the host to say a pre-programmed sentence when triggered."
 	id = "speech_nanites"
-	program_type = /datum/nanite_program/triggered/speech
+	program_type = /datum/nanite_program/triggered/comm/speech
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/hallucination
 	name = "Hallucination"
 	desc = "The nanites make the host see and hear things that aren't real."
 	id = "hallucination_nanites"
-	program_type = /datum/nanite_program/triggered/hallucination
+	program_type = /datum/nanite_program/triggered/comm/hallucination
 	category = list("Suppression Nanites")
 
 ////////////////////SENSOR NANITES//////////////////////////////////////

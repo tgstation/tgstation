@@ -23,7 +23,7 @@
 	name = "brain"
 
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
-		if(brainmob && !(C.stat == DEAD || (C.has_trait(TRAIT_DEATHCOMA))))
+		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
 		forceMove(C)
 		C.update_hair()
@@ -59,8 +59,9 @@
 		transfer_identity(C)
 	C.update_hair()
 
-/obj/item/organ/brain/prepare_eat()
-	return // Too important to eat.
+/obj/item/organ/brain/prepare_eat(mob/living/carbon/human/H)
+	if(iszombie(H))//braaaaaains... otherwise, too important to eat.
+		..()
 
 /obj/item/organ/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s brain"
@@ -78,7 +79,7 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		if(L.has_trait(TRAIT_BADDNA))
+		if(HAS_TRAIT(L, TRAIT_BADDNA))
 			brainmob.status_traits[TRAIT_BADDNA] = L.status_traits[TRAIT_BADDNA]
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
@@ -93,13 +94,13 @@
 	if(istype(O, /obj/item/organ_storage))
 		return //Borg organ bags shouldn't be killing brains
 
-	if(damaged_brain && O.is_drainable() && O.reagents.has_reagent("mannitol")) //attempt to heal the brain
+	if(damaged_brain && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
 		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, "<span class='warning'>[src] is far too damaged, there's nothing else we can do for it!</span>")
 			return
 
-		if(!O.reagents.has_reagent("mannitol", 10))
+		if(!O.reagents.has_reagent(/datum/reagent/medicine/mannitol, 10))
 			to_chat(user, "<span class='warning'>There's not enough mannitol in [O] to restore [src]!</span>")
 			return
 

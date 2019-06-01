@@ -1,3 +1,16 @@
+/proc/translate_legacy_chem_id(id)
+	switch (id)
+		if ("sacid")
+			return "sulphuricacid"
+		if ("facid")
+			return "fluorosulfuricacid"
+		if ("co2")
+			return "carbondioxide"
+		if ("mine_salve")
+			return "minerssalve"
+		else
+			return ckey(id)
+
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
@@ -9,7 +22,6 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
-	var/cell_type = /obj/item/stock_parts/cell/high
 	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.1
 	var/amount = 30
@@ -22,55 +34,54 @@
 	var/macroresolution = 1
 	var/obj/item/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
-		"hydrogen",
-		"lithium",
-		"carbon",
-		"nitrogen",
-		"oxygen",
-		"fluorine",
-		"sodium",
-		"aluminium",
-		"silicon",
-		"phosphorus",
-		"sulfur",
-		"chlorine",
-		"potassium",
-		"iron",
-		"copper",
-		"mercury",
-		"radium",
-		"water",
-		"ethanol",
-		"sugar",
-		"sacid",
-		"welding_fuel",
-		"silver",
-		"iodine",
-		"bromine",
-		"stable_plasma"
+		/datum/reagent/hydrogen,
+		/datum/reagent/lithium,
+		/datum/reagent/carbon,
+		/datum/reagent/nitrogen,
+		/datum/reagent/oxygen,
+		/datum/reagent/fluorine,
+		/datum/reagent/sodium,
+		/datum/reagent/aluminium,
+		/datum/reagent/silicon,
+		/datum/reagent/phosphorus,
+		/datum/reagent/sulfur,
+		/datum/reagent/chlorine,
+		/datum/reagent/potassium,
+		/datum/reagent/iron,
+		/datum/reagent/copper,
+		/datum/reagent/mercury,
+		/datum/reagent/uranium/radium,
+		/datum/reagent/water,
+		/datum/reagent/consumable/ethanol,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/toxin/acid,
+		/datum/reagent/fuel,
+		/datum/reagent/silver,
+		/datum/reagent/iodine,
+		/datum/reagent/bromine,
+		/datum/reagent/stable_plasma
 	)
 	//these become available once the manipulator has been upgraded to tier 4 (femto)
 	var/list/upgrade_reagents = list(
 		"oil",
-		"ash",
-		"acetone",
-		"saltpetre",
-		"ammonia",
-		"diethylamine"
+		/datum/reagent/ash,
+		/datum/reagent/acetone,
+		/datum/reagent/saltpetre,
+		/datum/reagent/ammonia,
+		/datum/reagent/diethylamine
 	)
 	var/list/emagged_reagents = list(
-		"space_drugs",
-		"morphine",
-		"carpotoxin",
-		"mine_salve",
-		"toxin"
+		/datum/reagent/drug/space_drugs,
+		/datum/reagent/medicine/morphine,
+		/datum/reagent/toxin/carpotoxin,
+		/datum/reagent/medicine/mine_salve,
+		/datum/reagent/toxin
 	)
 
 	var/list/saved_recipes = list()
 
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
-	cell = new cell_type
 	dispensable_reagents = sortList(dispensable_reagents)
 	update_icon()
 
@@ -98,7 +109,6 @@
 	recharge_counter++
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
-	..()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	b_o.pixel_y = -4
 	b_o.pixel_x = -7
@@ -190,7 +200,7 @@
 			var/chemname = temp.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals.Add(list(list("title" = chemname, "id" = temp.id)))
+			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name))))
 	for(var/recipe in saved_recipes)
 		recipes.Add(list(recipe))
 	data["chemicals"] = chemicals
@@ -212,7 +222,7 @@
 		if("dispense")
 			if(!is_operational() || QDELETED(cell))
 				return
-			var/reagent = params["reagent"]
+			var/reagent = GLOB.name2reagent[params["reagent"]]
 			if(beaker && dispensable_reagents.Find(reagent))
 				var/datum/reagents/R = beaker.reagents
 				var/free = R.maximum_volume - R.total_volume
@@ -244,7 +254,7 @@
 			var/res = macroresolution
 			for(var/key in chemicals_to_dispense) // i suppose you could edit the list locally before passing it
 				var/list/keysplit = splittext(key," ")
-				var/r_id = keysplit[1]
+				var/r_id = GLOB.name2reagent[translate_legacy_chem_id(keysplit[1])]
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
@@ -276,7 +286,8 @@
 				var/resmismatch = FALSE
 				for(var/reagents in first_process)
 					var/list/reagent = splittext(reagents, "=")
-					if(dispensable_reagents.Find(reagent[1]))
+					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent[1])]
+					if(dispensable_reagents.Find(reagent_id))
 						if (!resmismatch && !check_macro_part(reagents, res))
 							resmismatch = TRUE
 						continue
@@ -395,10 +406,9 @@
 	return final_list
 
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	replace_beaker(user)
-	return
+	..()
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		replace_beaker(user)
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()
@@ -441,35 +451,35 @@
 	nopower_state = null
 	pass_flags = PASSTABLE
 	dispensable_reagents = list(
-		"water",
-		"ice",
-		"coffee",
-		"cream",
-		"tea",
-		"icetea",
-		"cola",
-		"spacemountainwind",
-		"dr_gibb",
-		"space_up",
-		"tonic",
-		"sodawater",
-		"lemon_lime",
-		"pwr_game",
-		"shamblers",
-		"sugar",
-		"orangejuice",
-		"grenadine",
-		"limejuice",
-		"tomatojuice",
-		"lemonjuice",
-		"menthol"
+		/datum/reagent/water,
+		/datum/reagent/consumable/ice,
+		/datum/reagent/consumable/coffee,
+		/datum/reagent/consumable/cream,
+		/datum/reagent/consumable/tea,
+		/datum/reagent/consumable/icetea,
+		/datum/reagent/consumable/space_cola,
+		/datum/reagent/consumable/spacemountainwind,
+		/datum/reagent/consumable/dr_gibb,
+		/datum/reagent/consumable/space_up,
+		/datum/reagent/consumable/tonic,
+		/datum/reagent/consumable/sodawater,
+		/datum/reagent/consumable/lemon_lime,
+		/datum/reagent/consumable/pwr_game,
+		/datum/reagent/consumable/shamblers,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/consumable/orangejuice,
+		/datum/reagent/consumable/grenadine,
+		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/tomatojuice,
+		/datum/reagent/consumable/lemonjuice,
+		/datum/reagent/consumable/menthol
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
-		"thirteenloko",
-		"whiskeycola",
-		"mindbreaker",
-		"tirizene"
+		/datum/reagent/consumable/ethanol/thirteenloko,
+		/datum/reagent/consumable/ethanol/whiskey_cola,
+		/datum/reagent/toxin/mindbreaker,
+		/datum/reagent/toxin/staminatoxin
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -497,31 +507,32 @@
 	icon_state = "booze_dispenser"
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
-		"beer",
-		"kahlua",
-		"whiskey",
-		"wine",
-		"vodka",
-		"gin",
-		"rum",
-		"tequila",
-		"vermouth",
-		"cognac",
-		"ale",
-		"absinthe",
-		"hcider",
-		"creme_de_menthe",
-		"creme_de_cacao",
-		"triple_sec",
-		"sake"
+		/datum/reagent/consumable/ethanol/beer,
+		/datum/reagent/consumable/ethanol/kahlua,
+		/datum/reagent/consumable/ethanol/whiskey,
+		/datum/reagent/consumable/ethanol/wine,
+		/datum/reagent/consumable/ethanol/vodka,
+		/datum/reagent/consumable/ethanol/gin,
+		/datum/reagent/consumable/ethanol/rum,
+		/datum/reagent/consumable/ethanol/tequila,
+		/datum/reagent/consumable/ethanol/vermouth,
+		/datum/reagent/consumable/ethanol/cognac,
+		/datum/reagent/consumable/ethanol/ale,
+		/datum/reagent/consumable/ethanol/absinthe,
+		/datum/reagent/consumable/ethanol/hcider,
+		/datum/reagent/consumable/ethanol/creme_de_menthe,
+		/datum/reagent/consumable/ethanol/creme_de_cacao,
+		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/sake,
+		/datum/reagent/consumable/ethanol/applejack
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
-		"ethanol",
-		"iron",
-		"minttoxin",
-		"atomicbomb",
-		"fernet"
+		/datum/reagent/consumable/ethanol,
+		/datum/reagent/iron,
+		/datum/reagent/toxin/minttoxin,
+		/datum/reagent/consumable/ethanol/atomicbomb,
+		/datum/reagent/consumable/ethanol/fernet
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
@@ -545,9 +556,9 @@
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
-	dispensable_reagents = list("mutagen")
+	dispensable_reagents = list(/datum/reagent/toxin/mutagen)
 	upgrade_reagents = null
-	emagged_reagents = list("plasma")
+	emagged_reagents = list(/datum/reagent/toxin/plasma)
 
 
 /obj/machinery/chem_dispenser/mutagensaltpeter
@@ -556,19 +567,19 @@
 	flags_1 = NODECONSTRUCT_1
 
 	dispensable_reagents = list(
-		"mutagen",
-		"saltpetre",
-		"eznutriment",
-		"left4zednutriment",
-		"robustharvestnutriment",
-		"water",
-		"plantbgone",
-		"weedkiller",
-		"pestkiller",
-		"cryoxadone",
-		"ammonia",
-		"ash",
-		"diethylamine")
+		/datum/reagent/toxin/mutagen,
+		/datum/reagent/saltpetre,
+		/datum/reagent/plantnutriment/eznutriment,
+		/datum/reagent/plantnutriment/left4zednutriment,
+		/datum/reagent/plantnutriment/robustharvestnutriment,
+		/datum/reagent/water,
+		/datum/reagent/toxin/plantbgone,
+		/datum/reagent/toxin/plantbgone/weedkiller,
+		/datum/reagent/toxin/pestkiller,
+		/datum/reagent/medicine/cryoxadone,
+		/datum/reagent/ammonia,
+		/datum/reagent/ash,
+		/datum/reagent/diethylamine)
 	upgrade_reagents = null
 
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
