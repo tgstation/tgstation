@@ -5,6 +5,7 @@
 
 	var/on = FALSE
 	var/volume_rate = 1000
+	var/overpressure_m = 80
 	volume = 1000
 
 	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitryl, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor)
@@ -36,6 +37,9 @@
 		scrub(T.return_air())
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(var/datum/gas_mixture/mixture)
+	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
+		return
+	
 	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
 
 	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
@@ -122,6 +126,7 @@
 	active_power_usage = 500
 	idle_power_usage = 10
 
+	overpressure_m = 200
 	volume_rate = 1500
 	volume = 50000
 
