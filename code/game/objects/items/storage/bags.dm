@@ -183,6 +183,7 @@
 	desc = "This bag holds everything, be it an apple or a watermelon."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
+	item_state = "plantbag"
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
 
@@ -333,6 +334,7 @@
 	name = "chemistry bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bag"
+	item_state = "chembag"
 	desc = "A bag for storing pills, patches, and bottles."
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
@@ -353,6 +355,7 @@
 	name = "bio bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "biobag"
+	item_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
