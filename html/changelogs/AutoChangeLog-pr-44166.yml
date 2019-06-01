@@ -1,5 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "reagent IDs have been removed in favor using reagent typepaths where applicable"
-  - bugfix: "mechas, borg hyposprays etc no longer display internal reagent ids to the player"
