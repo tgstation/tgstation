@@ -44,10 +44,10 @@
 
 	if(A.stage >= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
-		if(M.reagents.has_reagent("mindbreaker"))
-			M.reagents.remove_reagent("mindbreaker", 5)
-		if(M.reagents.has_reagent("histamine"))
-			M.reagents.remove_reagent("histamine", 5)
+		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
+			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
+			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
 		M.hallucination = max(0, M.hallucination - 10)
 
 	if(A.stage >= 5)
