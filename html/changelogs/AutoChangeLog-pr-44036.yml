@@ -1,7 +1,0 @@
-author: "weeeeesoda"
-delete-after: True
-changes: 
-  - rscadd: "You can now purify soulstones! This can be done by any crew member using a bible on one."
-  - rscadd: "Purified constructs can be created by using a purifed soulstone on a construct shell. Amongst their normal abilities, purified constructs can dispel cult runes by clicking on them."
-  - rscdel: "Ability to place chaplains soulstone or mining soulstones in construct shells"
-  - imageadd: "angelplasm, angelic sprites, purifed sprites"

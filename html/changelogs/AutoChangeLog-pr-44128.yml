@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes splashed cooking oil bypassing any sort of mob impermeability. Also cut off message/sound spam from being repeatedly splashed within a minimal delay."
-  - balance: "Upped the cooking oil damage cap from 35 to 38 to account the mild bio protection of the average crewmember's attire. Also made hot deep fryer swirlies account the user's head covering gear's impermeability."
-  - refactor: "Standarized monkeys/humans get_permeability_coefficient()."

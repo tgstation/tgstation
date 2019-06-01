@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - tweak: "Linen bins can now be (un)achored with a wrench, or disassembled with a screwdriver (when empty)."
-  - rscadd: "You can now make linen bins using two rods."

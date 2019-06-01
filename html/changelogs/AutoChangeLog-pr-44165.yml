@@ -1,6 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - tweak: "Moved machine and computer frames below objects, parts are now always on top."
-  - tweak: "Moved structures (chairs, closets, windows, cult altars etc etc) below objects."
-  - tweak: "Moves mineral doors to airlock layers"
