@@ -943,7 +943,7 @@
 							if(isnull(chosen_id)) //Get me out of here!
 								break
 							if (!ispath(text2path(chosen_id)))
-								chosen_id = pick_closest_path(chosen_id, make_types_fancy(typesof(/datum/reagent)))
+								chosen_id = pick_closest_path(chosen_id, make_types_fancy(subtypesof(/datum/reagent)))
 								if (ispath(chosen_id))
 									valid_id = TRUE
 							else
@@ -951,7 +951,7 @@
 							if(!valid_id)
 								to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
 					if("Choose from a list")
-						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in typesof(/datum/reagent)
+						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in subtypesof(/datum/reagent)
 					if("I'm feeling lucky")
 						chosen_id = pick(subtypesof(/datum/reagent))
 				if(chosen_id)
