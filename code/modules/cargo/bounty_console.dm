@@ -124,8 +124,8 @@
 		dat += "</span>"
 
 		dat += "<p>We've identified potentional high-value targets that are currently \
-						assigned to your mission area. They are believed to hold valuable information \
-						which could be of immediate importance to our organisation.</p>"
+				assigned to your mission area. They are believed to hold valuable information \
+				which could be of immediate importance to our organisation.</p>"
 
 		dat += "<p>We have a list of potentional contracts for you to take on below. \
 				Should you accept any, you are to bring the target to the designated drop-off, \
@@ -133,9 +133,9 @@
 				to take care of the rest.</p>"
 
 		dat += "<p>Dead or alive is of no great important, we can retrieve our intel through cloning \
-				when the target is extracted, but we will provide a small increase in \
-				payment should you bring them alive. Never know how memories get \
-				altered when bringing them back from the dead.</p>"
+				when the target is extracted, but we will provide the bonus shown if you \
+				should bring them alive. Never know how memories get altered when bringing \
+				them back from the dead.</p>"
 
 		// Table creation/styling and headers
 		dat += {"<table style="text-align:center;" border="2" cellspacing="0" width="100%">"}
@@ -146,7 +146,7 @@
 		for (var/datum/syndicate_contract/synd_contract in traitor_data.assigned_contracts)
 			dat += "<tr style=[background]>"
 			dat += text("<td>[]</td>", synd_contract.contract.target)
-			dat += text("<td>[] TC</td>", synd_contract.contract.payout)
+			dat += text("<td>[](+[synd_contract.contract.payout_bonus]) TC</td>", synd_contract.contract.payout)
 			dat += text("<td>[]</td>", synd_contract.contract.dropoff)
 			dat += text("<td><a href='?src=[REF(src)];accept_contract=1; contract_id=[contract_id]'>Accept</a></td>")
 			dat += "</tr>"

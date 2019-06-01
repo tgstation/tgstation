@@ -37,7 +37,7 @@
 	var/contract_generation_quantity = 20
 
 	for (var/i = 0; i < contract_generation_quantity; i++)
-		var/datum/syndicate_contract/contract_to_add = new
+		var/datum/syndicate_contract/contract_to_add = new(owner)
 		assigned_contracts.Add(contract_to_add)
 
 /datum/antagonist/traitor/apply_innate_effects()
