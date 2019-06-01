@@ -298,7 +298,7 @@ datum/component/personal_crafting/Initialize()
 		Deletion.Cut(Deletion.len)
 		qdel(DL)
 
-/datum/component/personal_crafting/proc/component_ui_interact(a,b,c,d, user)
+/datum/component/personal_crafting/proc/component_ui_interact(image, location, control, params, user)
 	ui_interact(user)
 
 /datum/component/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
