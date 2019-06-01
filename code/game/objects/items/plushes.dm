@@ -107,10 +107,10 @@
 	if(stuffed || grenade)
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 		if(grenade && !grenade.active)
-			if(istype(grenade, /obj/item/grenade/chem_grenade))
+		/*	if(istype(grenade, /obj/item/grenade/chem_grenade))
 				var/obj/item/grenade/chem_grenade/G = grenade
-				if(G.nadeassembly) //We're activated through different methods
-					return
+				/f(G.nadeassembly) //We're activated through different methods
+					return*/
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.preprime(user, msg = FALSE, volume = 10)
 	else

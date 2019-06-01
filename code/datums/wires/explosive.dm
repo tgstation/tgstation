@@ -11,6 +11,31 @@
 /datum/wires/explosive/proc/explode()
 	return
 
+/datum/wires/explosive/chem_grenade
+	holder_type = /obj/item/grenade/chem_grenade
+	randomize = TRUE
+	var/fingerprint
+	var/assembly
+
+/datum/wires/explosive/chem_grenade/interactable(mob/user)
+	var/obj/item/grenade/chem_grenade/G = holder
+	if(G.stage == 2)
+		return TRUE
+
+/datum/wires/explosive/chem_grenade/attach_assembly(color, obj/item/assembly/S)
+	if(istype(S,/obj/item/assembly/timer))
+		var/obj/item/grenade/chem_grenade/G = holder
+		var/obj/item/assembly/timer/T = S
+		G.det_time = T.saved_time*10
+	fingerprint = S.fingerprintslast
+	assembly = "[S.name]"
+	return ..()
+
+/datum/wires/explosive/chem_grenade/explode()
+	var/obj/item/grenade/chem_grenade/G = holder
+	message_admins("An [assembly] has tried to trigger a grenade, which was installed by [fingerprint])")
+	log_game("An [assembly] has tried to trigger a grenade, which was installed by [fingerprint])")
+	G.prime()
 
 /datum/wires/explosive/c4
 	holder_type = /obj/item/grenade/plastic/c4
