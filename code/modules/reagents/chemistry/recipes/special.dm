@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	var/temp_results = unwrap_reagent_list(recipe_data["results"])
 	if(!temp_results)
 		return FALSE
-	required_catalysts = temp_results
+	results = temp_results
 	var/containerpath = text2path(recipe_data["required_container"])
 	if(!containerpath)
 		return FALSE
