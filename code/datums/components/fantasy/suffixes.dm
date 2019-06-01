@@ -107,7 +107,7 @@
 	// This works even with the species picks since we're only accessing the name
 
 	var/obj/item/master = comp.parent
-	var/max_mobs = CEILING(comp.quality/2, 1)
+	var/max_mobs = max(CEILING(comp.quality/2, 1), 1)
 	var/spawn_delay = 300 - 30 * comp.quality
 	comp.appliedComponents += master.AddComponent(/datum/component/summoning, list(picked_mobtype), 100, max_mobs, spawn_delay)
 	return "[newName] of [initial(picked_mobtype.name)] summoning"
@@ -116,24 +116,31 @@
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 
+/datum/fantasy_affix/shrapnel/validate(datum/component/fantasy/comp)
+	if(isgun(comp.parent))
+		return TRUE
+	return FALSE
+
 /datum/fantasy_affix/shrapnel/apply(datum/component/fantasy/comp, newName)
 	. = ..()
-	var/static/list/possible_projectiletypes
-	if(!possible_projectiletypes)
-		// The base list of allowed types
-		possible_projectiletypes = typecacheof(list(
-			/obj/item/projectile,
-			))
-		// Some particular types to disallow if they're too broad/abstract
-		possible_projectiletypes -= list(
-			/obj/item/projectile,
-			)
-		// Some types to remove them and their subtypes
-		possible_projectiletypes -= typecacheof(list(
-			/obj/item/projectile/magic,
-			))
+	// higher means more likely
+	var/list/weighted_projectile_types = list(/obj/item/projectile/meteor = 1,
+											  /obj/item/projectile/energy/nuclear_particle = 1,
+											  /obj/item/projectile/beam/pulse = 1,
+											  /obj/item/projectile/bullet/honker = 15,
+											  /obj/item/projectile/temp = 15,
+											  /obj/item/projectile/ion = 15,
+											  /obj/item/projectile/magic/door = 15,
+											  /obj/item/projectile/magic/locker = 15,
+											  /obj/item/projectile/magic/fetch = 15,
+											  /obj/item/projectile/beam/emitter = 15,
+											  /obj/item/projectile/magic/flying = 15,
+											  /obj/item/projectile/energy/net = 15,
+											  /obj/item/projectile/bullet/incendiary/c9mm = 15,
+											  /obj/item/projectile/temp/hot = 15,
+											  /obj/item/projectile/beam/disabler = 15)
 
-	var/obj/item/projectile/picked_projectiletype = pick(possible_projectiletypes)
+	var/obj/item/projectile/picked_projectiletype = pickweight(weighted_projectile_types)
 
 	var/obj/item/master = comp.parent
 	comp.appliedComponents += master.AddComponent(/datum/component/shrapnel, picked_projectiletype)
@@ -146,7 +153,7 @@
 /datum/fantasy_affix/strength/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/knockback, CEILING(comp.quality/2, 1), FALSE, FLOOR(comp.quality/10, 1))
+	comp.appliedComponents += master.AddComponent(/datum/component/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
 	return "[newName] of strength"
 
 //////////// Bad suffixes

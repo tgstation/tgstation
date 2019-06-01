@@ -1,14 +1,12 @@
 /datum/component/knockback
 	var/throw_distance
-	var/reverse
 	var/throw_anchored
 
-/datum/component/knockback/Initialize(throw_distance=1, reverse=FALSE, throw_anchored=FALSE)
+/datum/component/knockback/Initialize(throw_distance=1, throw_anchored=FALSE)
 	if(!isitem(parent) && !ishostile(parent) && !isgun(parent) && !ismachinery(parent) && !isstructure(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.throw_distance = throw_distance
-	src.reverse = reverse
 	src.throw_anchored = throw_anchored
 
 /datum/component/knockback/RegisterWithParent()
@@ -39,7 +37,8 @@
 	var/atom/movable/throwee = target
 	if(throwee.anchored && !throw_anchored)
 		return
-	if(reverse)
+	if(throw_distance < 0)
 		throw_dir = turn(throw_dir, 180)
+		throw_distance *= -1
 	var/atom/throw_target = get_edge_target_turf(throwee, throw_dir)
 	throwee.safe_throw_at(throw_target, throw_distance, 1, thrower)
