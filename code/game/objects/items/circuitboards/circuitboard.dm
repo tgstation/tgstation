@@ -12,7 +12,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_GLASS=1000)
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list("silicon" = 20)
+	grind_results = list(/datum/reagent/silicon = 20)
 	var/build_path = null
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)

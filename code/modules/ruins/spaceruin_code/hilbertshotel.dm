@@ -327,7 +327,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     for(var/obj/item/hilbertshotel/H in hotels)
         if(parentSphere == H)
             relocate(H)
- 
+
 /area/hilbertshotel/proc/relocate(obj/item/hilbertshotel/H)
     if(prob(0.135685)) //Because screw you
         qdel(H)
@@ -528,4 +528,3 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     Lay your head to rest, it soon becomes clear<br>
     There's always more room around every bend<br>
     Not all that's countable has an end...<i>"}
-

@@ -100,6 +100,9 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
 	summon_type = list(/obj/item/soulstone/anybody)
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified
+	summon_type = list(/obj/item/soulstone/anybody/purified)
+	
 /obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."

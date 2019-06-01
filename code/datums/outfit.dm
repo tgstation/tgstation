@@ -164,3 +164,78 @@
 	types += chameleon_extras
 	listclearnulls(types)
 	return types
+
+/datum/outfit/proc/get_json_data()
+	. = list()
+	.["outfit_type"] = type
+	.["name"] = name
+	.["uniform"] = uniform
+	.["suit"] = suit
+	.["toggle_helmet"] = toggle_helmet
+	.["back"] = back
+	.["belt"] = belt
+	.["gloves"] = gloves
+	.["shoes"] = shoes
+	.["head"] = head
+	.["mask"] = mask
+	.["neck"] = neck
+	.["ears"] = ears
+	.["glasses"] = glasses
+	.["id"] = id
+	.["l_pocket"] = l_pocket
+	.["r_pocket"] = r_pocket
+	.["suit_store"] = suit_store
+	.["r_hand"] = r_hand
+	.["l_hand"] = l_hand
+	.["internals_slot"] = internals_slot
+	.["backpack_contents"] = backpack_contents
+	.["box"] = box
+	.["implants"] = implants
+	.["accessory"] = accessory
+
+/datum/outfit/proc/save_to_file(mob/admin)
+	var/stored_data = get_json_data()
+	var/json = json_encode(stored_data)
+	//Kinda annoying but as far as i can tell you need to make actual file.
+	var/f = file("data/TempOutfitUpload") 
+	fdel(f)
+	WRITE_FILE(f,json)
+	admin << ftp(f,"[name].json")
+
+/datum/outfit/proc/load_from(list/outfit_data)
+	//This could probably use more strict validation
+	name = outfit_data["name"]
+	uniform = text2path(outfit_data["uniform"])
+	suit = text2path(outfit_data["suit"])
+	toggle_helmet = outfit_data["toggle_helmet"]
+	back = text2path(outfit_data["back"])
+	belt = text2path(outfit_data["belt"])
+	gloves = text2path(outfit_data["gloves"])
+	shoes = text2path(outfit_data["shoes"])
+	head = text2path(outfit_data["head"])
+	mask = text2path(outfit_data["mask"])
+	neck = text2path(outfit_data["neck"])
+	ears = text2path(outfit_data["ears"])
+	glasses = text2path(outfit_data["glasses"])
+	id = text2path(outfit_data["id"])
+	l_pocket = text2path(outfit_data["l_pocket"])
+	r_pocket = text2path(outfit_data["r_pocket"])
+	suit_store = text2path(outfit_data["suit_store"])
+	r_hand = text2path(outfit_data["r_hand"])
+	l_hand = text2path(outfit_data["l_hand"])
+	internals_slot = outfit_data["internals_slot"]
+	var/list/backpack = outfit_data["backpack_contents"]
+	backpack_contents = list()
+	for(var/item in backpack)
+		var/itype = text2path(item)
+		if(itype)
+			backpack_contents[itype] = backpack[item]
+	box = text2path(outfit_data["box"])
+	var/list/impl = outfit_data["implants"]
+	implants = list()
+	for(var/I in impl)
+		var/imptype = text2path(I)
+		if(imptype)
+			implants += imptype
+	accessory = text2path(outfit_data["accessory"])
+	return TRUE
