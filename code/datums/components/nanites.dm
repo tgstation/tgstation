@@ -179,7 +179,9 @@
 		var/datum/nanite_program/NP = X
 		NP.on_emp(severity)
 
-/datum/component/nanites/proc/on_shock(datum/source, shock_damage)
+/datum/component/nanites/proc/on_shock(datum/source, shock_damage, siemens_coeff, illusion)
+	if(illusion)
+		return
 	nanite_volume *= (rand(0.45, 0.80))		//Lose 20-55% of nanites
 	adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
 	for(var/X in programs)
