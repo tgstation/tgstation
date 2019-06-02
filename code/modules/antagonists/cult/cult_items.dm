@@ -639,7 +639,7 @@
 		if(A in user.GetAllContents())
 			to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
 			return
-		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
+		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!</span>")
 		cultist_to_receive.put_in_hands(A)
 		charges--
 		to_chat(user, "\The [src] now has [charges] charge\s.")
