@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	22
+#define SAVEFILE_VERSION_MAX	23
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -104,6 +104,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						new_value = JP_LOW
 			if(new_value)
 				job_preferences[initial(J.title)] = new_value
+	if(current_version < 23)
+		var/static/list/skin_tone_lookup = list(
+			"causacian1" = 		"Porcelain",
+			"caucasian2" = 		"Sand",
+			"caucasian3" = 		"Peach",
+			"asian1" = 			"Ivory",
+			"asian2" = 			"Beige",
+			"latino" = 			"Sienna",
+			"mediterranean" = 	"Olive",
+			"arab" = 			"Mocha",
+			"indian" = 			"Amber",
+			"african1" = 		"Caramel",
+			"african2" = 		"Espresso",
+			"albino" = 			"Albino"
+		)
+		skin_tone = skin_tone_lookup[skin_tone]
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -281,34 +297,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
 	S["skin_tone"]			>> skin_tone
-	if(S["skin_tone"])
-		if(S["skin_tone"] == "caucasian1")
-			"Porcelain"		>> skin_tone
-		else if(S["skin_tone"] == "asian1")
-			"Ivory"			>> skin_tone
-		else if(S["skin_tone"] == "caucasian2")
-			"Sand"			>> skin_tone
-		else if(S["skin_tone"] == "asian2")
-			"Beige"			>> skin_tone
-		else if(S["skin_tone"] == "caucasian3")
-			"Peach"			>> skin_tone
-		else if(S["skin_tone"] == "latino")
-			"Sienna"		>> skin_tone
-		else if(S["skin_tone"] == "mediterranean")
-			"Olive"			>> skin_tone
-		else if(S["skin_tone"] == "arab")
-			"Mocha"			>> skin_tone
-		else if(S["skin_tone"] == "indian")
-			"Amber"			>> skin_tone
-		else if(S["skin_tone"] == "african1")
-			"Caramel"		>> skin_tone
-		else if(S["skin_tone"] == "african2")
-			"Espresso"		>> skin_tone
-		else if(S["skin_tone"] == "albino")
-			"Albino"		>> skin_tone
-		else
-			S["skin_tone"]	>> skin_tone
-
 	S["hair_style_name"]	>> hair_style
 	S["facial_style_name"]	>> facial_hair_style
 	S["underwear"]			>> underwear
