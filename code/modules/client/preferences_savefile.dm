@@ -106,7 +106,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				job_preferences[initial(J.title)] = new_value
 	if(current_version < 23)
 		var/static/list/skin_tone_lookup = list(
-			"causacian1" = 		"Porcelain",
+			"caucasian1" = 		"Porcelain",
 			"caucasian2" = 		"Sand",
 			"caucasian3" = 		"Peach",
 			"asian1" = 			"Ivory",
