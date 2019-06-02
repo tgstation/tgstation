@@ -1,5 +1,5 @@
 /datum/wires/explosive/New(atom/holder)
-	add_duds(2) // In this case duds actually explode.
+	add_duds(1) // In this case duds actually explode.
 	..()
 
 /datum/wires/explosive/on_pulse(index)
@@ -37,19 +37,9 @@
 
 /datum/wires/explosive/chem_grenade/explode()
 	var/obj/item/grenade/chem_grenade/G = holder
+	message_admins("An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
+	log_game("An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	G.prime()
-
-/datum/wires/explosive/chem_grenade/on_cut(index, mend)
-	return
-
-/datum/wires/explosive/chem_grenade/pulse(wire, user)
-	if(user)
-		message_admins("[user] has pulsed a grenade wire.")
-		log_game("[user] has pulsed a grenade wire.")
-	else if(assembly)
-		message_admins("An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
-		log_game("An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
-	..()
 
 /datum/wires/explosive/chem_grenade/detach_assembly(color)
 	var/obj/item/assembly/S = get_attached(color)
