@@ -621,7 +621,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/stealthy_weapons/karambit
 	name = "Karambit"
-	desc = "A robust karambit with a plasteel blade for the stealthy agent. Less powerful than an energy sword, but a lot more quiet."
+	desc = "A robust karambit with a plasteel blade for the stealthy agent. Not as powerful as an esword, but it's a lot more quiet, and gives you the ability to slit a target's throat, making them unable to speak for a while."
 	item = /obj/item/weaponry/karambit
 	cost = 2
 	surplus = 10

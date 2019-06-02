@@ -347,12 +347,31 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 4
 	embedding = list("embedded_pain_multiplier" = 2, "embed_chance" = 50, "embedded_fall_chance" = 10)
-	desc = "A robust karambit with a plasteel blade."
+	desc = "A robust karambit with a plasteel blade. Use it in your hand to target an opponent's throat. After that a successful hit will mute them for a short time."
 	force = 17
 	throwforce = 17
 	attack_verb = list("slashed", "sliced", "torn", "cut")
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
+	var/slit_mode = 0
+
+/obj/item/weaponry/karambit/attack_self(mob/user)
+	if(!slit_mode)
+		slit_mode = 1
+		to_chat(user, "<span class='notice'>Your next attack will target your opponent's throat!</span>")
+	else
+		slit_mode = 0
+		to_chat(user, "<span class='notice'>You will use the karambit normally!</span>")
+	..()
+
+/obj/item/weaponry/karambit/attack(mob/living/carbon/M, mob/living/carbon/human/user)
+	..()
+	if(slit_mode)
+		to_chat(user, "<span class='userdanger'>You manage to slit [M]'s throat!</span>")
+		to_chat(M, "<span class='userdanger'>Your throat has been slit! You won't be able to speak for a while.</span>")
+		M.silent = 15
+		slit_mode=0
+
 
 /obj/item/phone
 	name = "red phone"
@@ -435,7 +454,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/ectoplasm/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!</span>")
 	return (OXYLOSS)
-	
+
 /obj/item/ectoplasm/angelic
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "angelplasm"
