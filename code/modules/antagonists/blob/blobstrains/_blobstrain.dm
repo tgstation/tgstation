@@ -22,6 +22,19 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		stack_trace("blobstrain created without overmind")
 	overmind = new_overmind
 
+/datum/blobstrain/proc/on_gain()
+	overmind.color = complementary_color
+	for(var/BL in GLOB.blobs)
+		var/obj/structure/blob/B = BL
+		B.update_icon()
+	for(var/BLO in overmind.blob_mobs)
+		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		BM.update_icons() //If it's getting a new strain, tell it what it does!
+		to_chat(BM, "Your overmind's blob strain is now: <b><font color=\"[color]\">[name]</b></font>!")
+		to_chat(BM, "The <b><font color=\"[color]\">[name]</b></font> strain [shortdesc ? "[shortdesc]" : "[description]"]")
+
+/datum/blobstrain/proc/on_lose()
+
 /datum/blobstrain/proc/on_sporedeath(mob/living/spore)
 
 /datum/blobstrain/proc/send_message(mob/living/M)
