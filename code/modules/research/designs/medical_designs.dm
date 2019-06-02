@@ -581,7 +581,7 @@
 /datum/design/surgery/healing/burn_upgrade
 	name = "Tend Wounds (Burn) Upgrade"
 	surgery = /datum/surgery/healing/burn/upgraded
-	id = "surgery_heal_brute_upgrade"
+	id = "surgery_heal_burn_upgrade"
 
 /datum/design/surgery/healing/burn_upgrade_2
 	name = "Tend Wounds (Burn) Upgrade"
