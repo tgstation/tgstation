@@ -281,6 +281,34 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
 	S["skin_tone"]			>> skin_tone
+	if(S["skin_tone"])
+		if(S["skin_tone"] == "caucasian1")
+			"Porcelain"		>> skin_tone
+		else if(S["skin_tone"] == "asian1")
+			"Ivory"			>> skin_tone
+		else if(S["skin_tone"] == "caucasian2")
+			"Sand"			>> skin_tone
+		else if(S["skin_tone"] == "asian2")
+			"Beige"			>> skin_tone
+		else if(S["skin_tone"] == "caucasian3")
+			"Peach"			>> skin_tone
+		else if(S["skin_tone"] == "latino")
+			"Sienna"		>> skin_tone
+		else if(S["skin_tone"] == "mediterranean")
+			"Olive"			>> skin_tone
+		else if(S["skin_tone"] == "arab")
+			"Mocha"			>> skin_tone
+		else if(S["skin_tone"] == "indian")
+			"Amber"			>> skin_tone
+		else if(S["skin_tone"] == "african1")
+			"Caramel"		>> skin_tone
+		else if(S["skin_tone"] == "african2")
+			"Espresso"		>> skin_tone
+		else if(S["skin_tone"] == "albino")
+			"Albino"		>> skin_tone
+		else
+			S["skin_tone"]	>> skin_tone
+
 	S["hair_style_name"]	>> hair_style
 	S["facial_style_name"]	>> facial_hair_style
 	S["underwear"]			>> underwear
