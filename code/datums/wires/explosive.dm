@@ -51,6 +51,16 @@
 		log_game("An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	..()
 
+/datum/wires/explosive/chem_grenade/detach_assembly(color)
+	var/obj/item/assembly/S = get_attached(color)
+	if(S && istype(S))
+		assemblies -= color
+		S.connected = null
+		S.forceMove(holder.drop_location())
+		var/obj/item/grenade/chem_grenade/G = holder
+		G.landminemode = null
+		return S
+
 /datum/wires/explosive/c4
 	holder_type = /obj/item/grenade/plastic/c4
 	randomize = TRUE	//Same behaviour since no wire actually disarms it
