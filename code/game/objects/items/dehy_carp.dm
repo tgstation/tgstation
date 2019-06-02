@@ -67,7 +67,7 @@
 		flick("carp_swell", src)
 		sleep(6) //let the animation play out
 	
-		if(src && !QDELETED(src))
+		if(!QDELETED(src))
 			var/mob/living/M = new mobtype(get_turf(src))
 			M.faction = list("neutral")
 			qdel(src)
