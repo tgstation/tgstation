@@ -23,7 +23,6 @@
 
 /datum/reagent/blob/energized_jelly
 	name = "Energized Jelly"
-	id = "energized_jelly"
 	taste_description = "gelatin"
 	color = "#EFD65A"
 

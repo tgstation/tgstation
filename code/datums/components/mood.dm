@@ -249,6 +249,8 @@
 
 /datum/component/mood/proc/add_event(datum/source, category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
+	if(!istext(category))
+		category = REF(category)
 	if(mood_events[category])
 		the_event = mood_events[category]
 		if(the_event.type != type)
@@ -267,6 +269,8 @@
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
+	if(!istext(category))
+		category = REF(category)
 	var/datum/mood_event/event = mood_events[category]
 	if(!event)
 		return 0

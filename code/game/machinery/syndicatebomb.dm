@@ -11,6 +11,7 @@
 	density = FALSE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	speed_process = TRUE
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 
@@ -22,7 +23,6 @@
 
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
-	var/defused = FALSE		//is the bomb capable of exploding?
 	var/obj/item/bombcore/payload = /obj/item/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE	//delay wire pulsed?
@@ -34,7 +34,7 @@
 	var/explode_now = FALSE
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
-	. = (payload in src) && (active || ignore_active) && !defused
+	. = (payload in src) && (active || ignore_active)
 	if(.)
 		payload.detonate()
 
@@ -52,6 +52,8 @@
 		detonation_timer = null
 		next_beep = null
 		countdown.stop()
+		if(payload in src)
+			payload.defuse()
 		return
 
 	if(!isnull(next_beep) && (next_beep <= world.time))
@@ -72,17 +74,11 @@
 		playsound(loc, beepsound, volume, 0)
 		next_beep = world.time + 10
 
-	if(active && !defused && ((detonation_timer <= world.time) || explode_now))
+	if(active && ((detonation_timer <= world.time) || explode_now))
 		active = FALSE
 		timer_set = initial(timer_set)
 		update_icon()
 		try_detonate(TRUE)
-	//Counter terrorists win
-	else if(!active || defused)
-		if(defused && payload in src)
-			payload.defuse()
-			countdown.stop()
-			STOP_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/syndicatebomb/Initialize()
 	. = ..()
@@ -91,6 +87,7 @@
 		payload = new payload(src)
 	update_icon()
 	countdown = new(src)
+	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/syndicatebomb/Destroy()
 	QDEL_NULL(wires)
@@ -173,7 +170,7 @@
 	else
 		var/old_integ = obj_integrity
 		. = ..()
-		if((old_integ > obj_integrity) && active && !defused && (payload in src))
+		if((old_integ > obj_integrity) && active  && (payload in src))
 			to_chat(user, "<span class='warning'>That seems like a really bad idea...</span>")
 
 /obj/machinery/syndicatebomb/interact(mob/user)
@@ -199,11 +196,7 @@
 		timer_set = CLAMP(new_timer, minimum_timer, maximum_timer)
 		loc.visible_message("<span class='notice'>[icon2html(src, viewers(src))] timer set for [timer_set] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
-		if(defused || active)
-			if(defused)
-				visible_message("<span class='warning'>[icon2html(src, viewers(src))] Device error: User intervention required.</span>")
-			return
-		else
+		if(!active)
 			visible_message("<span class='danger'>[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area.</span>")
 			activate()
 			update_icon()
@@ -287,8 +280,7 @@
 	qdel(src)
 
 /obj/item/bombcore/proc/defuse()
-//Note: 	Because of how var/defused is used you shouldn't override this UNLESS you intend to set the var to 0 or
-//			otherwise remove the core/reset the wires before the end of defuse(). It will repeatedly be called otherwise.
+//Note: 	the machine's defusal is mostly done from the wires code, this is here if you want the core itself to do anything.
 
 ///Bomb Core Subtypes///
 
@@ -304,12 +296,12 @@
 		if(holder.wires)
 			holder.wires.repair()
 			holder.wires.shuffle_wires()
-		holder.defused = 0
-		holder.open_panel = 0
 		holder.delayedbig = FALSE
 		holder.delayedlittle = FALSE
+		holder.explode_now = FALSE
 		holder.update_icon()
 		holder.updateDialog()
+		STOP_PROCESSING(SSfastprocess, holder)
 
 /obj/item/bombcore/training/detonate()
 	var/obj/machinery/syndicatebomb/holder = loc
