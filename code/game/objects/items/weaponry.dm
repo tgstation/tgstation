@@ -339,6 +339,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
+/obj/item/weaponry/karambit
+	name = "karambit"
+	icon_state = "karambit"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	throw_speed = 4
+	embedding = list("embedded_pain_multiplier" = 2, "embed_chance" = 50, "embedded_fall_chance" = 10)
+	desc = "A robust karambit with a plasteel blade."
+	force = 17
+	throwforce = 17
+	attack_verb = list("slashed", "sliced", "torn", "cut")
+	w_class = WEIGHT_CLASS_SMALL
+	sharpness = IS_SHARP
+
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."

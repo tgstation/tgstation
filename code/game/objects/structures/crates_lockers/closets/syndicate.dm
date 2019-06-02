@@ -14,6 +14,7 @@
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/crowbar/red(src)
+	new /obj/item/weaponry/karambit(src)
 	new /obj/item/clothing/glasses/night(src)
 
 /obj/structure/closet/syndicate/nuclear

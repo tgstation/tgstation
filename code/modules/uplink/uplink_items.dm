@@ -619,6 +619,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/stealthy_weapons/karambit
+	name = "Karambit"
+	desc = "A robust karambit with a plasteel blade for the stealthy agent. Less powerful than an energy sword, but a lot more quiet."
+	item = /obj/item/weaponry/karambit
+	cost = 2
+	surplus = 10
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
