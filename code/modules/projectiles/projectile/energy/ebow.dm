@@ -4,7 +4,7 @@
 	damage = 15
 	damage_type = TOX
 	nodamage = FALSE
-	stamina = 50
+	stamina = 60
 	eyeblur = 10
 	knockdown = 10
 	slur = 5
