@@ -57,7 +57,7 @@
 		..()
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/assembly) && stage == WIRED)
+	if((istype(I,/obj/item/assembly) || I.tool_behaviour == TOOL_MULTITOOL) && stage == WIRED)
 		wires.interact(user)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stage == WIRED)
@@ -70,7 +70,7 @@
 		else if(stage == READY)
 			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
 			if(landminemode)
-				landminemode.time = det_time
+				landminemode.time = det_time*0.1//overwrites the original timer and puts between 30 and 50
 			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 		else if(stage == EMPTY)
 			to_chat(user, "<span class='warning'>You need to add an activation mechanism!</span>")
