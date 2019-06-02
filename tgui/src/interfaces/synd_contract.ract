@@ -5,52 +5,70 @@
 	{{#if data.logged_in}}
 		<div style="text-align:center">
 			<h1>Welcome Agent...</h1>
-			<h3>Current status: Onboard [GLOB.station_name].</h3>
+			<br>
+			<h3>Current status: Onboard {{data.station_name}}.</h3>
 		</div>
 
 		<p>
-			We've identified potentional high-value targets that are currently \
-			assigned to your mission area. They are believed to hold valuable information \
+			We've identified potentional high-value targets that are currently
+			assigned to your mission area. They are believed to hold valuable information
 			which could be of immediate importance to our organisation.
 		</p>
 
 		<p>
-			We have a list of potentional contracts for you to take on below. \
-			Should you accept any, you are to bring the target to the designated drop-off, \
-			and contact us via uplink. We will send a specialised extraction unit \
-			to take care of the rest.
+			Listed below are all of the available contracts to you. You are to bring the
+			specified target to the designated drop-off, and contact us via uplink. We will send
+			a specialised extraction unit to take care of the rest.
 		</p>
 
 		<p>
-			Dead or alive is of no great important, we can retrieve our intel through cloning \
-			when the target is extracted, but we will provide the bonus shown if you \
-			should bring them alive. Never know how memories get altered when bringing \
-			them back from the dead.
+			Dead targets are acceptable, but you won't be provided the shown bonus. Additionally,
+			be sure to call for extraction when safe - we'd rather avoid direct conflict between
+			the crew and our dispatched unit.
 		</p>
+		{{#if data.ongoing_contract}}
+			<div style="text-align:center">
+				<ui-button action='PRG_call_extraction' {{#if extraction_enroute}}state='"disabled"'{{/if}}>Call Extraction</ui-button>
+			</div>
+		{{/if}}
 
 		<table style="text-align:center;" border="2" cellspacing="0" width="100%">
 			<tr>
-			<th>Target</th>
-			<th>Payment</th>
-			<th>Drop-Off</th>
-			<th></th>
+				<th>Target</th>
+				<th>Payment</th>
+				<th>Drop-Off</th>
+				<th></th>
 			</tr>
 
 			{{#each data.contracts}}
-			<tr>
-				<td>{{contracts.contract.target}}</td>
-				<td>{{contracts.contract.payout}}(+{{contracts.contract.payout_bonus}}) TC</td>
-				<td>{{contracts.contract.dropoff}}</td>
-				<td><ui-button action='PRG_contract-accept' params='{"contract_id": "{{id}}"}>Accept</ui-button></td>")
-			</tr>
+				{{#if data.ongoing_contract}}
+					{{#if status == 2 || status == 3}}
+						<tr>
+							<td>{{target}}</td>
+							<td>{{payout}}(+{{payout_bonus}}) TC</td>
+							<td>{{dropoff}}</td>
+							<td><ui-button action='PRG_contract_abort' {{#if extraction_enroute}}state='"disabled"'{{/if}} params='{"contract_id": "{{id}}"}'>Cancel {{status}} {{id}}</ui-button></td>
+						</tr>
+					{{/if}}
+				{{else}}
+					{{#if status != 5}}
+						<tr>
+							<td>{{target}}</td>
+							<td>{{payout}}(+{{payout_bonus}}) TC</td>
+							<td>{{dropoff}}</td>
+							<td><ui-button action='PRG_contract-accept' params='{"contract_id": "{{id}}"}'>Accept {{status}} {{id}}</ui-button></td>
+						</tr>
+					{{/if}}
+				{{/if}}
 			{{/each}}
 
 		</table>
 	{{else}}
-		<h1>{{error}}</h1>
 		<div style="text-align:center">
-			<ui-button action='PRG_login'>Log in</ui-button>
+			<ui-button action='PRG_login'>Log in</ui-button><br>
+			{{#if data.error}}
+				{{data.error}}
+			{{/if}}
 		</div>
 	{{/if}}
-  
 </ui-display>
