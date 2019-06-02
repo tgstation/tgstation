@@ -20,6 +20,7 @@
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
 	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
 	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10°K upon ignition." // Appears when examining empty casings.
+	var/obj/item/assembly/prox_sensor/landminemode = null
 
 /obj/item/grenade/chem_grenade/ComponentInitialize()
 	. = ..()
@@ -145,7 +146,28 @@
 		if(!exploded_beaker.reagents)
 			continue
 		reagent_string += " ([exploded_beaker.name] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ");"
-	log_bomber(user, "primed a", src, "containing:[reagent_string]")
+	if(landminemode)
+		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]")
+	else
+		log_bomber(user, "primed a", src, "containing:[reagent_string]")
+
+/obj/item/grenade/chem_grenade/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
+	var/turf/T = get_turf(src)
+	log_grenade(user, T) //Inbuilt admin procs already handle null users
+	if(user)
+		add_fingerprint(user)
+		if(msg)
+			if(landminemode)
+				to_chat(user, "<span class='warning'>You prime [src], activating its proximity sensor.</span>")
+			else
+				to_chat(user, "<span class='warning'>You prime [src]! [DisplayTimeText(det_time)]!</span>")
+	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
+	icon_state = initial(icon_state) + "_active"
+	if(landminemode)
+		landminemode.activate()
+		return
+	active = TRUE
+	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)
