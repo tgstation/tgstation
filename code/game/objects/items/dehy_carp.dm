@@ -50,10 +50,9 @@
 	
 /obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
-	user.visible_message("<span class='suicide'>[user] starts eating the [src]. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] starts eating [src]. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	if(istype(H))
-		H.Shake(duration = 20)
 		H.Paralyze(30)
 		forceMove(H) //we move it AWAAAYY
 		sleep(20)
