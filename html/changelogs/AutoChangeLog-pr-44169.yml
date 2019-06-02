@@ -1,0 +1,7 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - balance: "The timer of all grenades can now be adjusted with a screwdriver. Possible values are instant, 3 seconds and 5 seconds."
+  - rscadd: "You can now adjust the timer of grenades with a multitool. You can put it anywhere between 3 and 5 seconds. Instant detonations are also possible."
+  - tweak: "Advanced release grenades now open a window if you want to change the amount of units released."
+  - tweak: "The default timer on smoke grenades is now 3 seconds."
