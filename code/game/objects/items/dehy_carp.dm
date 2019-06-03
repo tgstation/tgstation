@@ -57,9 +57,9 @@
 		forceMove(H) //we move it AWAAAYY
 		sleep(20)
 		
-		if(!src || QDELETED(src))
+		if(QDELETED(src))
 			return SHAME
-		if(H && !QDELETED(H))
+		if(!QDELETED(H))
 			H.spawn_gibs()
 			H.apply_damage(200, def_zone = BODY_ZONE_CHEST)
 			forceMove(get_turf(H)) //we move it back
