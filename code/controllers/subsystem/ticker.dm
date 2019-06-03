@@ -685,6 +685,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
+		'sound/roundend/ohthatsit.ogg',
 		'sound/roundend/disappointed.ogg',
 		'sound/roundend/scrunglartiy.ogg'\
 		)
