@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - admin: "\"Spawn reagent container\" verb has been added to the Debug tab. It can be used to spawn reagent containers and grenades with fully customized contents."

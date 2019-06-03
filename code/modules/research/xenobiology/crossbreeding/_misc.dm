@@ -227,7 +227,7 @@ Slimecrossing Items
 	filling_color = "#964B00"
 	tastes = list("cardboard" = 3, "sadness" = 3)
 	foodtype = null //Don't ask what went into them. You're better off not knowing.
-	list_reagents = list("stabilizednutriment" = 10, "nutriment" = 2) //Won't make you fat. Will make you question your sanity.
+	list_reagents = list(/datum/reagent/consumable/nutriment/stabilized = 10, /datum/reagent/consumable/nutriment = 2) //Won't make you fat. Will make you question your sanity.
 
 /obj/item/reagent_containers/food/snacks/rationpack/checkLiked(fraction, mob/M)	//Nobody likes rationpacks. Nobody.
 	if(last_check_time + 50 < world.time)

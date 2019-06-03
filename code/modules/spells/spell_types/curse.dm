@@ -16,11 +16,8 @@ GLOBAL_VAR_INIT(curse_of_madness_triggered, FALSE)
 		var/turf/T = get_turf(H)
 		if(T && !is_station_level(T.z))
 			continue
-		if(H.anti_magic_check(TRUE, FALSE))
+		if(H.anti_magic_check(TRUE, FALSE, TRUE))
 			to_chat(H, "<span class='notice'>You have a strange feeling for a moment, but then it passes.</span>")
-			continue
-		if(istype(H.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-			to_chat(H, "<span class='warning'>Your protective headgear successfully deflects mind controlling brainwaves!</span>")
 			continue
 		give_madness(H, message)
 

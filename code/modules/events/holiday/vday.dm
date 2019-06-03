@@ -96,7 +96,7 @@
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "candyheart"
 	desc = "A heart-shaped candy that reads: "
-	list_reagents = list("sugar" = 2)
+	list_reagents = list(/datum/reagent/consumable/sugar = 2)
 	junkiness = 5
 
 /obj/item/reagent_containers/food/snacks/candyheart/Initialize()

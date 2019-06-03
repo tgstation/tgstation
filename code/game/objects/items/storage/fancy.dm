@@ -74,7 +74,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donut))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donut))
 
 /*
  * Egg Box
@@ -95,7 +95,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 12
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/egg))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/egg))
 
 /*
  * Candle Box
@@ -140,7 +140,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
-	STR.can_hold = typecacheof(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	STR.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	..()
@@ -278,7 +278,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 10
-	STR.can_hold = typecacheof(list(/obj/item/rollingpaper))
+	STR.set_holdable(list(/obj/item/rollingpaper))
 
 /obj/item/storage/fancy/rollingpapers/update_icon()
 	cut_overlays()
@@ -302,7 +302,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 5
-	STR.can_hold = typecacheof(list(/obj/item/clothing/mask/cigarette/cigar))
+	STR.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon()
 	cut_overlays()
@@ -349,4 +349,4 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 8
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/tinychocolate))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/tinychocolate))

@@ -148,7 +148,7 @@
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
-	list_reagents = list("sugar" = 3, "ethanol" = 2, "stabilizing_agent" = 3, "minttoxin" = 2)
+	list_reagents = list(/datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/ethanol = 2, /datum/reagent/stabilizing_agent = 3, /datum/reagent/toxin/minttoxin = 2)
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
@@ -166,7 +166,7 @@
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf
 	name = "mushroom leaf"
 	desc = "A leaf, from a mushroom."
-	list_reagents = list("nutriment" = 3, "vitfro" = 2, "nicotine" = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/vitfro = 2, /datum/reagent/drug/nicotine = 2)
 	icon_state = "mushroom_leaf"
 	seed = /obj/item/seeds/lavaland/porcini
 	wine_power = 40
@@ -174,7 +174,7 @@
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
 	name = "mushroom cap"
 	desc = "The cap of a large mushroom."
-	list_reagents = list("mindbreaker" = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
+	list_reagents = list(/datum/reagent/toxin/mindbreaker = 2, /datum/reagent/consumable/entpoly = 4, /datum/reagent/drug/mushroomhallucinogen = 2)
 	icon_state = "mushroom_cap"
 	seed = /obj/item/seeds/lavaland/inocybe
 	wine_power = 70
@@ -182,14 +182,14 @@
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
 	name = "mushroom stem"
 	desc = "A long mushroom stem. It's slightly glowing."
-	list_reagents = list("tinlux" = 2, "vitamin" = 1, "space_drugs" = 1)
+	list_reagents = list(/datum/reagent/consumable/tinlux = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/drug/space_drugs = 1)
 	icon_state = "mushroom_stem"
 	seed = /obj/item/seeds/lavaland/ember
 	wine_power = 60
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
 	name = "cactus fruit"
-	list_reagents = list("vitamin" = 2, "nutriment" = 2, "vitfro" = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/vitfro = 4)
 	desc = "A cactus fruit covered in a thick, reddish skin. And some ash."
 	icon_state = "cactus_fruit"
 	seed = /obj/item/seeds/lavaland/cactus
@@ -218,7 +218,7 @@
 		else if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
-			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
+			if(reagents.has_reagent(/datum/reagent/water, 10)) //are we starting a soup or a salad?
 				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup(get_turf(src))
 				A.initialize_custom_food(src, S, user)
 			else
