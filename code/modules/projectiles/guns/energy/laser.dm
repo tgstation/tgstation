@@ -13,7 +13,7 @@
 
 /obj/item/gun/energy/laser/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/external_lens))
+	if(istype(I, /obj/item/external_lens) && modifystate)
 		if(!stored)
 			equiplens(I,user)
 			return
@@ -218,16 +218,19 @@
 
 /obj/item/external_lens/SYP/Initialize()
 	. = ..()
-	AddComponent(/datum/component/Scharge)
-
+	AddComponent(/datum/component/Scharge)//could pass firer from laser in here with initilize in here
+	message_admins("epic1")
 /datum/component/Scharge/Initialize()
 	. = ..()
-	RegisterSignal(parent,"syphon", .proc/charge)
+	RegisterSignal(parent, CONSIG_SYPHON, .proc/charge)
+	message_admins("epic2")
 
-/datum/component/Scharge/proc/charge(mob/FH) //doenst work
-	var/obj/item/external_lens/LL = parent
+/datum/component/Scharge/proc/charge(datum/source) //doenst work
+	message_admins("epic")
+/*	var/obj/item/external_lens/LL = parent
 	var/obj/item/gun/energy/laser/L = LL.loc
 	if(ismob(L.loc))
 		var/mob/living/carbon/human/H = L.loc
 		if(FH == H)
 			L.cell.give(200)
+			*/
