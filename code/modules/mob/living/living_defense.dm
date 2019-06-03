@@ -313,21 +313,26 @@
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
 
-/mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, siemens_coeff, illusion)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage ,siemens_coeff, illusion) //We finally fix that stupid nanite bug.
 	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
-		return FALSE
-	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
-		return FALSE
-	if(shock_damage > 0)
-		if(!illusion)
-			adjustFireLoss(shock_damage)
-		visible_message(
-			"<span class='danger'>[src] was shocked by \the [source]!</span>", \
-			"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-			"<span class='italics'>You hear a heavy electrical crack.</span>" \
+		return 0 //Yes, this is a number. It's not a T/F
+	if(has_trait(TRAIT_SHOCKIMMUNE))
+		return 0
+		
+	shock_damage *= siemens_coeff
+	if(shock_damage < 1) //How are shocks even real?.
+		return 0
+	if(illusion)
+		adjustStaminaLoss(shock_damage)
+	else
+		adjustFireLoss(shock_damage)
+	visible_message(
+		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
+		"<span class='italics'>You hear a heavy electrical crack.</span>" \
 		)
-		return shock_damage
+	return shock_damage
 
 /mob/living/emp_act(severity)
 	. = ..()
