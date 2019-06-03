@@ -39,7 +39,7 @@
 		//	return
 
 		// Fade from sight
-		owner.alpha = max(0, owner.alpha - 50)
+		owner.alpha = max(0, owner.alpha - min(75, 20 + 15 * level_current))
 		bloodsuckerdatum.AddBloodVolume(-0.2)
 
 		sleep(5)

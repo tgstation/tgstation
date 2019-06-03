@@ -23,8 +23,8 @@
 
 
 	// Power-Related
-	var/level_current = 1		// Can increase to yield new abilities
-	var/level_max = 1			//
+	var/level_current = 0		// Can increase to yield new abilities. Each power goes up in strength each Rank.
+	//var/level_max = 1			//
 	var/bloodcost = 10
 	var/needs_button = TRUE 			// Taken from Changeling - for passive abilities that dont need a button
 	var/bloodsucker_can_buy = FALSE 	// Must be a bloodsucker to use this power.
@@ -32,6 +32,8 @@
 	var/can_use_in_torpor = FALSE		// Most powers don't function if you're in torpor.
 	var/must_be_capacitated = FALSE		// Some powers require you to be standing and ready.
 	var/can_be_immobilized = FALSE		// Brawn can be used when incapacitated/laying if it's because you're being immobilized. NOTE: If must_be_capacitated is FALSE, this is irrelevant.
+	var/can_be_staked = FALSE			// Only Feed can happen with a stake in you.
+	var/cooldown_static = FALSE			// Feed, Masquerade, and One-Shot powers don't improve their cooldown.
 	//var/not_bloodsucker = FALSE		// This goes to Vassals or Hunters, but NOT bloodsuckers.
 
 /datum/action/bloodsucker/New()
@@ -101,6 +103,10 @@
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Not while you're in Torpor.</span>")
 		return FALSE
+	// Stake?
+	if (!can_be_staked && owner.AmStaked())
+		if (display_error)
+			to_chat(owner, "<span class='warning'>You have a stake in your chest! Your powers are useless.</span>")
 	// Incap?
 	if (must_be_capacitated)
 		var/mob/living/L = owner
@@ -123,9 +129,13 @@
 	// Alpha Out
 	button.color = rgb(128,0,0,128)
 	button.alpha = 100
+	// Calculate Cooldown (by power's level)
+	var/this_cooldown = (cooldown_static || amSingleUse) ? cooldown : max(cooldown / 2, cooldown - (cooldown / 16 * level_current))
+	// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
+
 	// Wait for cooldown
-	cooldownUntil = world.time + cooldown
-	spawn(cooldown)
+	cooldownUntil = world.time + this_cooldown
+	spawn(this_cooldown)
 		// Alpha In
 		button.color = rgb(255,255,255,255)
 		button.alpha = 255

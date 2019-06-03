@@ -90,17 +90,24 @@
 	var/mob/living/carbon/target = A
 	var/mob/living/user = owner
 
+	if (istype(target))
+		ADD_TRAIT(target, TRAIT_MUTE, "bloodsucker_mesmerize")
+
 	if (do_mob(user, target, 40, 0, TRUE, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
 		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
-		var/power_time = 100
+		var/power_time = 90 + level_current * 15
 		to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
 		target.Immobilize(power_time)
-		target.silent += power_time / 10 // Silent isn't based on ticks.
+		//target.silent += power_time / 10 // Silent isn't based on ticks.
 		target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
+		target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
 		spawn(power_time)
-			// They Woke Up! (Notice if within view)
-			if (istype(target) && istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
-				to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
+			if (istype(target))
+				target.notransform = FALSE
+				REMOVE_TRAIT(target, TRAIT_MUTE, "bloodsucker_mesmerize")
+				// They Woke Up! (Notice if within view)
+				if (istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
+					to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
 
 
 /datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)

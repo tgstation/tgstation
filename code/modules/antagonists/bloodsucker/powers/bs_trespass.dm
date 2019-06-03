@@ -75,9 +75,11 @@
 	puff.set_up(3, 0, my_turf)
 	puff.start()
 
+	var/mist_delay = max(5, 20 - level_current * 2.5) // Level up and do this faster.
+
 	// Freeze Me
-	user.next_move = world.time + 10
-	user.Immobilize(10, ignore_canstun = TRUE)
+	user.next_move = world.time + mist_delay
+	user.Immobilize(mist_delay, ignore_canstun = TRUE)
 	user.notransform = TRUE
 	var/invis_was = user.invisibility
 	user.invisibility = INVISIBILITY_MAXIMUM
@@ -91,16 +93,23 @@
 		user.dropItemToGround(O)
 
 	// Wait...
-	sleep(10)
+	sleep(mist_delay / 2)
 
-	// Move
+	// Move & Freeze
 	if (isturf(target_turf))
-		user.dir = get_dir(get_turf(owner), target_turf)
 		do_teleport(owner, target_turf, no_effects=TRUE) // in teleport.dm?
-		user.next_move = world.time + 10
-		user.Immobilize(10, ignore_canstun = TRUE)
-		user.notransform = FALSE
-		user.invisibility = invis_was
+	user.next_move = world.time + mist_delay / 2
+	user.Immobilize(mist_delay / 2, ignore_canstun = TRUE)
+
+	// Wait...
+	sleep(mist_delay / 2)
+
+	// Un-Hide & Freeze
+	user.dir = get_dir(get_turf(owner), target_turf)
+	user.next_move = world.time + mist_delay / 2
+	user.Immobilize(mist_delay / 2, ignore_canstun = TRUE)
+	user.notransform = FALSE
+	user.invisibility = invis_was
 
 	// Effect Destination
 	playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', 60, 1)

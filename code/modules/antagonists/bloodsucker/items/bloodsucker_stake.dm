@@ -5,7 +5,7 @@
 
 
 // Do I have a stake in my heart?
-/mob/living/proc/AmStaked()
+/mob/living/AmStaked()
 	var/obj/item/bodypart/BP = get_bodypart("chest")
 	if (!BP)
 		return FALSE
@@ -13,6 +13,9 @@
 		if (istype(I,/obj/item/stake/))
 			return TRUE
 	return FALSE
+/mob/proc/AmStaked()
+	return FALSE
+
 
 /mob/living/proc/StakeCanKillMe()
 	return IsSleeping() || stat >= UNCONSCIOUS || blood_volume <= 0 || HAS_TRAIT(src, TRAIT_DEATHCOMA) // NOTE: You can't go to sleep in a coffin with a stake in you.
@@ -119,6 +122,8 @@
 				return
 			else
 				to_chat(target, "<span class='userdanger'>You have been staked! Your powers are useless, your death forever, while it remains in place.</span>")
+				to_chat(user, "<span class='warning'>You missed [C.p_their(TRUE)]'s heart! It would be easier if [C.p_they(TRUE)] were lying down...</span>")
+
 
 
 // Can this target be staked? If someone stands up before this is complete, it fails. Best used on someone stationary.

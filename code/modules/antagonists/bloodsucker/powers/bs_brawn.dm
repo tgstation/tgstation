@@ -74,13 +74,12 @@
 		var/hitStrength = user_C.dna.species.punchdamagehigh * 1.25 + 2
 
 		// Knockdown!
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		var/powerlevel = 1 + bloodsuckerdatum.vamplevel
+		var/powerlevel = min(7, 1 + level_current)
 		if (rand(10 + powerlevel) >= 5)
 			target.visible_message("<span class='danger'>[user] has knocked [target] down!</span>", \
 							  "<span class='userdanger'>[user] has knocked you down!</span>", null, COMBAT_MESSAGE_RANGE)
 
-			target.Knockdown(rand(10, 10 * powerlevel))
+			target.Knockdown( min(5, rand(10, 10 * powerlevel)) )
 			// Chance of KO
 			if (rand(5 + powerlevel) >= 5  && target.stat <= UNCONSCIOUS)
 				target.Unconscious(40)
@@ -93,9 +92,9 @@
 
 		// Knockback
 		var/send_dir = get_dir(owner, target)
-		var/turf/T = get_ranged_target_turf(target, send_dir, (hitStrength / 4))
+		var/turf/T = get_ranged_target_turf(target, send_dir, powerlevel)
 		owner.newtonian_move(send_dir) // Bounce back in 0 G
-		target.throw_at(T, (hitStrength / 4), TRUE, owner)  //new /datum/forced_movement(target, get_ranged_target_turf(target, send_dir, (hitStrength / 4)), 1, FALSE)
+		target.throw_at(T, powerlevel, TRUE, owner)  //new /datum/forced_movement(target, get_ranged_target_turf(target, send_dir, (hitStrength / 4)), 1, FALSE)
 
 	// Target Type: Door
 	else if (upgrade_canDoor && istype(target, /obj/machinery/door))

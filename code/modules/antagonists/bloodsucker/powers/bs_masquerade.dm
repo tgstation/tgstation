@@ -27,6 +27,7 @@
 	bloodsucker_can_buy = TRUE
 	warn_constant_cost = TRUE
 	can_use_in_torpor = TRUE // Masquerade is maybe the only one that can do this. It stops your healing.
+	cooldown_static = TRUE
 
 // NOTE: Firing off vulgar powers disables your Masquerade!
 

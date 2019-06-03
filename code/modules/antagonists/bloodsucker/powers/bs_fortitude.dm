@@ -12,6 +12,7 @@
 	amToggle = TRUE
 	warn_constant_cost = TRUE
 
+	var/this_brute_resist // So we can raise and lower your brute resist based on what your level_current WAS.
 
 /datum/action/bloodsucker/fortitude/ActivatePower()
 
@@ -26,7 +27,8 @@
 	ADD_TRAIT(user, TRAIT_STUNIMMUNE, "bloodsucker")
 	if (ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod *= 0.5
+		this_brute_resist = max(0.3, 0.7 - level_current * 0.1)
+		H.physiology.brute_mod *= this_brute_resist//0.5
 
 	while(bloodsuckerdatum && ContinueActive(user))
 
@@ -45,4 +47,4 @@
 	REMOVE_TRAIT(user, TRAIT_STUNIMMUNE, "bloodsucker")
 	if (ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod /= 0.5
+		H.physiology.brute_mod /= this_brute_resist//0.5

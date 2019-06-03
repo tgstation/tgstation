@@ -319,6 +319,10 @@ datum/antagonist/bloodsucker/proc/RankUp()
 			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, they can be built from wooden planks.</span><br>")
 
 
+datum/antagonist/bloodsucker/proc/LevelUpPowers()
+	for(var/datum/action/bloodsucker/power in powers)
+		power.level_current ++
+
 datum/antagonist/bloodsucker/proc/SpendRank()
 	set waitfor = FALSE
 	if (vamplevel_unspent <= 0 || !owner || !owner.current || !owner.current.client)
@@ -345,12 +349,16 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 		if (!choice || !options[choice] || (locate(options[choice]) in powers)) // ADDED: Check to see if you already have this power, due to window stacking.
 			to_chat(owner.current, "<span class='notice'>You prevent your blood from thickening just yet, but you may try again later.</span>")
 			return
+		// Buy New Powers
 		var/datum/action/bloodsucker/P = options[choice]
 		BuyPower(new P)
 		to_chat(owner.current, "<span class='notice'>You have learned [initial(P.name)]!</span>")
 	else
 		to_chat(owner.current, "<span class='notice'>You grow more ancient by the night!</span>")
 
+	/////////
+	// Advance Powers (including new)
+	LevelUpPowers()
 
 	/////////
 	// Advance Stats
@@ -379,6 +387,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 		SelectReputation(am_fledgling=FALSE, forced=TRUE)
 
 	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, resistence, health, feed rate, regen rate, and maximum blood have all increased!</span>")
+	to_chat(owner.current, "<span class='notice'>Your existing powers have all ranked up as well!</span>")
 	to_chat(owner.current, "<span class='warning'>However, your weakness to fire and sunlight have also increased!</span>")
 
 	update_hud(TRUE)

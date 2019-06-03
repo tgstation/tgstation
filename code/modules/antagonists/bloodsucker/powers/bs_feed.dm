@@ -9,15 +9,14 @@
 	cooldown = 30
 	amToggle = TRUE
 	bloodsucker_can_buy = TRUE
+	can_be_staked = TRUE
+	cooldown_static = TRUE
+
 	var/mob/living/feed_target // So we can validate more than just the guy we're grappling.
 	var/target_grappled = FALSE // If you started grappled, then ending it will end your Feed.
 
 /datum/action/bloodsucker/feed/CheckCanUse(display_error)
 	if(!..(display_error))// DEFAULT CHECKS
-		return FALSE
-
-	// Find my Target!
-	if (!FindMyTarget(display_error)) // Sets feed_target within after Validating
 		return FALSE
 
 	// Wearing mask
@@ -26,20 +25,26 @@
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You cannot feed with your mouth covered! Remove your mask.</span>")
 		return FALSE
+
+	// Find my Target!
+	if (!FindMyTarget(display_error)) // Sets feed_target within after Validating
+		return FALSE
+
 	// Not in correct state
 	//if (owner.grab_state < GRAB_PASSIVE)//GRAB_AGGRESSIVEs)
 	//	to_chat(owner, "<span class='warning'>You aren't grabbing anyone!</span>")
 	//	return FALSE
-	// Subtle targets MUST be carbon!
-	if (owner.grab_state < GRAB_AGGRESSIVE && !iscarbon(feed_target))//GRAB_AGGRESSIVEs)
-		if (display_error)
-			to_chat(owner, "<span class='warning'>Lesser beings require a tighter grip.</span>")
-		return FALSE
 
 	// DONE!
 	return TRUE
 
 /datum/action/bloodsucker/feed/proc/ValidateTarget(mob/living/target, display_error) // Called twice: validating a subtle victim, or validating your grapple victim.
+	// Non-Carbon Animals MUST be grabbed aggressively!
+	if (isliving(feed_target) && feed_target == owner.pulling && owner.grab_state < GRAB_AGGRESSIVE && !iscarbon(feed_target))
+		// NOTE: It's OKAY that we are checking if(!target) below, AFTER animals here. We want passive check vs animal to warn you first, THEN the standard warning.
+		if (display_error)
+			to_chat(owner, "<span class='warning'>Lesser beings require a tighter grip.</span>")
+		return FALSE
 	// Must have Target
 	if (!target)	 //  || !ismob(feed_target)
 		if (display_error)
@@ -94,8 +99,8 @@
 		targets = targets_dead
 	// No Targets
 	if (targets.len == 0)
-		if (display_error)
-			to_chat(owner, "<span class='warning'>There are no valid targets to feed from subtly.</span>")
+		//if (display_error)
+		//	to_chat(owner, "<span class='warning'>There are no valid targets to feed from subtly.</span>")
 		return FALSE
 	// Too Many Targets
 	//else if (targets.len > 1)
@@ -116,11 +121,11 @@
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 
 	// Am I SECRET or LOUD? It stays this way the whole time! I must END IT to try it the other way.
-	var/amSilent = !owner.pulling || owner.grab_state <= GRAB_PASSIVE || !iscarbon(target) // Non-carbons (animals) go straight into aggressive.
+	var/amSilent = (!target_grappled || owner.grab_state <= GRAB_PASSIVE) //  && iscarbon(target) // Non-carbons (animals) not passive. They go straight into aggressive.
 
 	// Initial Wait
-	var/feed_time = (amSilent ? 65 : 35) - (5 * level_current)
-	feed_time = max(10, feed_time)
+	var/feed_time = (amSilent ? 45 : 25) - (2.5 * level_current)
+	feed_time = max(15, feed_time)
 	if (amSilent)
 		to_chat(user, "<span class='notice'>You lean quietly toward [target] and secretly draw out your fangs...</span>")
 	else
@@ -162,7 +167,7 @@
 	var/warning_full = FALSE
 	var/warning_target_bloodvol = 99999
 	var/amount_taken = 0
-	var/blood_take_mult = amSilent ? 0.2 : 1 // Quantity to take per tick, based on Silent or not.
+	var/blood_take_mult = amSilent ? 0.3 : 1 // Quantity to take per tick, based on Silent or not.
 	var/was_alive = target.stat < DEAD && ishuman(target)
 	// Activate Effects
 	//target.add_trait(TRAIT_MUTE, "bloodsucker_victim")  // <----- Make mute a power you buy?
@@ -274,13 +279,13 @@
 	return ..()  && target && (!target_grappled || user.pulling == target)// Active, and still Antag,
 	// NOTE: We only care about pulling if target started off that way. Mostly only important for Aggressive feed.
 
-/datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target, powerLevel=1)
+/datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target)
 	//if (level_current >= 2)
 	target.Unconscious(50,0)
 	//if (level_current >= 3)
 	//	target.Sleeping(100,0)
 
-	target.Paralyze(40 + 10 * powerLevel,1)
+	target.Paralyze(40 + 5 * level_current,1)
 	// NOTE: THis is based on level of power!
 	if (ishuman(target))
 		target.adjustStaminaLoss(5, forced = TRUE)// Base Stamina Damage
