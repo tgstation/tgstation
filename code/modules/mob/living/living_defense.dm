@@ -317,7 +317,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage ,siemens_coeff, illusion) //We finally fix that stupid nanite bug.
 	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return 0 //Yes, this is a number. It's not a T/F
-	if(HAS_TRAIT(TRAIT_SHOCKIMMUNE, src))
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return 0
 		
 	shock_damage *= siemens_coeff
