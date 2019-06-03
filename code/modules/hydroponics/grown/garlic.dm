@@ -36,7 +36,7 @@
 	rarity = 30
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	reagents_add = list(/datum/reagent/consumable/garlic = 0.15, /datum/reagent/toxin/rotatium = 0.05, /datum/reagent/toxin/spewium = 0.05)
+	reagents_add = list(/datum/reagent/consumable/garlic = 0.15, /datum/reagent/toxin/spewium = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/awfulgarlic
 	seed = /obj/item/seeds/garlic/awful
