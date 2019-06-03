@@ -60,7 +60,8 @@
 	owner.pulling = null
 
 	// Will we Knock them Down?
-	var/do_knockdown = !is_A_facing_B(target,owner) || istype(owner.loc, /obj/structure/closet)
+	var/do_knockdown = !is_A_facing_B(target,owner) || owner.alpha <= 0 || istype(owner.loc, /obj/structure/closet)
+	// CAUSES: Target has their back to me, I'm invisible, or I'm in a Closet
 
 	// Step One: Heatseek toward Target's Turf
 	walk_towards(owner, T, 0.1, 10) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
@@ -83,7 +84,7 @@
 	if (target.Adjacent(owner))
 		// LEVEL 2: If behind target, mute or unconscious!
 		if (do_knockdown) // && level_current >= 1)
-			target.Paralyze(25 + 5 * level_current,1)
+			target.Paralyze(15 + 10 * level_current,1)
 		// Cancel Walk (we were close enough to contact them)
 		walk(owner,0)
 		//target.Paralyze(10,1)

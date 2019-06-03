@@ -1,9 +1,14 @@
 
 /datum/game_mode
-	var/list/datum/mind/bloodsuckers = list() 	// List of minds belonging to this game mode.
-	var/list/datum/mind/vassals = list() 		// List of minds that have been turned into Vassals.
-	var/list/datum/mind/vamphunters = list() 	// List of minds hunting vampires.
-	var/obj/effect/sunlight/bloodsucker_sunlight			// Sunlight Timer. Created on first Bloodsucker assign. Destroyed on last removed Bloodsucker.
+	var/list/datum/mind/bloodsuckers = list() 		// List of minds belonging to this game mode.
+	var/list/datum/mind/vassals = list() 			// List of minds that have been turned into Vassals.
+	var/list/datum/mind/vamphunters = list() 		// List of minds hunting vampires.
+	var/obj/effect/sunlight/bloodsucker_sunlight	// Sunlight Timer. Created on first Bloodsucker assign. Destroyed on last removed Bloodsucker.
+
+	// LISTS //
+	var/list/vassal_allowed_antags = list(/datum/antagonist/brother, /datum/antagonist/traitor, /datum/antagonist/traitor/internal_affairs, /datum/antagonist/survivalist, \
+										  /datum/antagonist/rev, /datum/antagonist/nukeop, /datum/antagonist/pirate, /datum/antagonist/cult, /datum/antagonist/clockcult, /datum/antagonist/abductee)
+	// The antags you're allowed to be if turning Vassal.
 
 /datum/game_mode/bloodsucker
 	name = "bloodsucker"
@@ -53,7 +58,7 @@
 		antag_candidates.Remove(bloodsucker) // Apparently you can also write antag_candidates -= bloodsucker
 
 	// Assign Hunters (as many as vamps, plus one)
-	for(var/i = 0, i < recommended_enemies + 1, i++)
+	for(var/i = 0, i < recommended_enemies, i++)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/hunter = pick(antag_candidates)
@@ -86,7 +91,7 @@
 			bloodsuckers -= bloodsucker
 	// Hunters
 	for(var/datum/mind/hunter in vamphunters)
-		hunter.add_antag_datum(ANTAG_DATUM_VASSAL)
+		hunter.add_antag_datum(ANTAG_DATUM_HUNTER)
 
 	return ..()
 
@@ -209,49 +214,72 @@
 			H.wear_id.GetID().update_label()
 
 
-/datum/game_mode/proc/can_make_vassal(mob/living/target, datum/mind/creator, display_warning=TRUE)
+/datum/game_mode/proc/can_make_vassal(mob/living/target, datum/mind/creator, display_warning=TRUE)//, check_antag_or_loyal=FALSE)
 	// Not Correct Type: Abort
 	if (!iscarbon(target) || !creator)
-		//message_admins("DEBUG1: can_make_vassal() Abort: Creator or Not Carbon [target] / [iscarbon(target)] / [creator]")
-		//to_chat(creator, "<span class='danger'>[src].</span>")
 		return FALSE
 	if (target.stat > UNCONSCIOUS)
-		//message_admins("DEBUG1: can_make_vassal() Abort: Dead")
 		return FALSE
-	// Check Overdose: Am I even addicted to blood? Do I even have any in me?
-	//if (!target.reagents.addiction_list || !target.reagents.reagent_list)
-		//message_admins("DEBUG2: can_make_vassal() Abort: No reagents")
-	//	return 0
-	// Check Overdose: Did my current volume go over the Overdose threshold?
-	//var/am_addicted = 0
-	//for (var/datum/reagent/blood/vampblood/blood in target.reagents.addiction_list) // overdosed is tracked in reagent_list, not addiction_list.
-		//message_admins("DEBUG3: can_make_vassal() Found Blood! [blood] [blood.overdose]")
-		//if (blood.overdosed)
-	//	am_addicted = 1 // Blood is present in addiction? That's all we need.
-	//	break
+				// Check Overdose: Am I even addicted to blood? Do I even have any in me?
+				//if (!target.reagents.addiction_list || !target.reagents.reagent_list)
+					//message_admins("DEBUG2: can_make_vassal() Abort: No reagents")
+				//	return 0
+				// Check Overdose: Did my current volume go over the Overdose threshold?
+				//var/am_addicted = 0
+				//for (var/datum/reagent/blood/vampblood/blood in target.reagents.addiction_list) // overdosed is tracked in reagent_list, not addiction_list.
+					//message_admins("DEBUG3: can_make_vassal() Found Blood! [blood] [blood.overdose]")
+					//if (blood.overdosed)
+				//	am_addicted = 1 // Blood is present in addiction? That's all we need.
+				//	break
 
-	//if (!am_addicted)
-		//message_admins("DEBUG4: can_make_vassal() Abort: No Blood")
-	//	return 0
+				//if (!am_addicted)
+					//message_admins("DEBUG4: can_make_vassal() Abort: No Blood")
+				//	return 0
 	// No Mind!
 	if (!target.mind || !target.mind.key)
 		if (display_warning)
-			to_chat(creator, "<span class='danger'>[target] isn't self-aware enough to be made into a Vassal!</span>")
+			to_chat(creator, "<span class='danger'>[target] isn't self-aware enough to be made into a Vassal.</span>")
 		return FALSE
 	// Already MY Vassal
 	var/datum/antagonist/vassal/V = target.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-	if (V && V.master && V.master.owner == creator)
-		//message_admins("DEBUG5: can_make_vassal() Abort: Already Mine")
-		if (display_warning)
-			to_chat(creator, "<span class='danger'>[target] is already your loyal Vassal!</span>")
+	if (istype(V) && V.master)
+		if (V.master.owner == creator)
+			if (display_warning)
+				to_chat(creator, "<span class='danger'>[target] is already your loyal Vassal!</span>")
+		else
+			if (display_warning)
+				to_chat(creator, "<span class='danger'>[target] is the loyal Vassal of another Bloodsucker!</span>")
 		return FALSE
 	// Already Antag or Loyal (Vamp Hunters count as antags)
-	if (target.mind.antag_datums && target.mind.antag_datums.len > 0 || (target.mind in SSticker.mode.vassals) || target.mind.enslaved_to || HAS_TRAIT(target, TRAIT_MINDSHIELD))
-		//message_admins("DEBUG6: can_make_vassal() Abort: Am Bad Guy Already [target.mind.antag_datums] [target.mind.current.isloyal()]")
+	if (target.mind.enslaved_to || AmInvalidAntag(target.mind)) //!VassalCheckAntagValid(target.mind, check_antag_or_loyal)) // HAS_TRAIT(target, TRAIT_MINDSHIELD, "implant") ||
 		if (display_warning)
 			to_chat(creator, "<span class='danger'>[target] resists the power of your blood to dominate their mind!</span>")
 		return FALSE
 	return TRUE
+
+
+/datum/game_mode/proc/AmValidAntag(datum/mind/M)
+	// No List?
+	if(!islist(M.antag_datums) || M.antag_datums.len == 0)
+		return FALSE
+
+	// Am I NOT an invalid Antag?    NOTE: We already excluded non-antags above. Don't worry about the "No List?" check in AmInvalidIntag()
+	return !AmInvalidAntag(M)
+
+/datum/game_mode/proc/AmInvalidAntag(datum/mind/M)
+	// No List?
+	if(!islist(M.antag_datums) || M.antag_datums.len == 0)
+		return FALSE
+
+	// Does even ONE antag appear in this mind that isn't in the list? Then FAIL!
+	for(var/datum/antagonist/antag_datum in M.antag_datums)
+		if (!(antag_datum.type in vassal_allowed_antags))  // vassal_allowed_antags is a list stored in the game mode, above.
+			//message_admins("DEBUG VASSAL: Found Invalid: [antag_datum] // [antag_datum.type]")
+			return TRUE
+
+	//message_admins("DEBUG VASSAL: Valid Antags! (total of [M.antag_datums.len])")
+	// WHEN YOU DELETE THE ABOVE: Remove the 3 second timer on converting the vassal too.
+	return FALSE
 
 
 /datum/game_mode/proc/make_vassal(mob/living/target, datum/mind/creator)

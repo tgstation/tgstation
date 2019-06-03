@@ -36,10 +36,11 @@
 /datum/action/bloodsucker/targeted/mesmerize/CheckValidTarget(atom/A)
 	return iscarbon(A)
 
-/datum/action/bloodsucker/targeted/mesmerize/CheckCanTarget(mob/living/target,display_error)
+/datum/action/bloodsucker/targeted/mesmerize/CheckCanTarget(atom/A,display_error)
 	// Check: Self
-	if (target == owner)
+	if (A == owner)
 		return FALSE
+	var/mob/living/carbon/target = A // We already know it's carbon due to CheckValidTarget()
 	// Bloodsucker
 	if (target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		if (display_error)
@@ -95,7 +96,7 @@
 		to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
 		target.Immobilize(power_time)
 		target.silent += power_time / 10 // Silent isn't based on ticks.
-
+		target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
 		spawn(power_time)
 			// They Woke Up! (Notice if within view)
 			if (istype(target) && istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )

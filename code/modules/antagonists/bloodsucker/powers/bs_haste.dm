@@ -5,10 +5,10 @@
 
 /datum/action/bloodsucker/targeted/haste
 	name = "Immortal Haste"
-	desc = "Sprint anywhere in the blink of an eye, slipping past open doors. Those nearby may be knocked away."
+	desc = "Sprint anywhere in the blink of an eye, slipping past open doors. Those nearby may be knocked away, stunned, or left empty-handed."
 	button_icon_state = "power_speed"
 	bloodcost = 6
-	cooldown = 50
+	cooldown = 30
 	target_range = 15
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
@@ -34,9 +34,9 @@
 	return isturf(A) || A.loc != owner.loc // Anything will do, if it's not me or my square
 
 
-/datum/action/bloodsucker/targeted/haste/CheckCanTarget(mob/living/target,display_error)
+/datum/action/bloodsucker/targeted/haste/CheckCanTarget(atom/A, display_error)
 	// Check: Range
-	if (!(target in view(target_range, get_turf(owner))))
+	if (!(A in view(target_range, get_turf(owner))))
 		return FALSE
 	return TRUE
 
@@ -48,6 +48,9 @@
 	var/mob/living/user = owner
 	var/turf/T = isturf(A) ? A : get_turf(A)
 
+	// Pulled? Not anymore.
+	owner.pulledby = null
+
 	// Step One: Heatseek toward Target's Turf
 	walk_to(owner, T, 0, 0.05, 20) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
 	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -57,7 +60,8 @@
 		safety --
 
 		// Did I get knocked down?
-		if (owner && owner.incapacitated())
+		if (owner && owner.incapacitated(ignore_restraints=TRUE,ignore_grab=TRUE,check_immobilized=TRUE))// owner.incapacitated())
+			// We're gonna cancel. But am I on the ground? Spin me!
 			if (user.lying)
 				var/send_dir = get_dir(owner, T)
 				new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
@@ -73,6 +77,9 @@
 			newtarget.Stun(5)
 			if(newtarget.IsStun())
 				newtarget.spin(10,1)
+				if (rand(0,4))
+					newtarget.drop_all_held_items()
+
 		sleep(1)
 
 	if (user)

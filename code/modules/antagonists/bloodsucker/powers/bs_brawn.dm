@@ -42,21 +42,21 @@
 
 
 
-/datum/action/bloodsucker/targeted/brawn/CheckCanTarget(mob/living/target,display_error)
+/datum/action/bloodsucker/targeted/brawn/CheckCanTarget(atom/A, display_error)
 	// Must outside Closet to target anyone!
 	if (!isturf(owner.loc))
 		return FALSE
 	// Check: Self
-	if (target == owner)
+	if (A == owner)
 		return FALSE
 	// Target Type: Living
-	if (isliving(target))
+	if (isliving(A))
 		return TRUE
 	// Target Type: Door
-	else if (upgrade_canDoor && istype(target, /obj/machinery/door))
+	else if (upgrade_canDoor && istype(A, /obj/machinery/door))
 		return TRUE
 	// Target Type: Closet
-	else if (upgrade_canLocker && istype(target, /obj/structure/closet))
+	else if (upgrade_canLocker && istype(A, /obj/structure/closet))
 		return TRUE
 
 	return FALSE // yes, FALSE! You failed if you got here! BAD TARGET
@@ -183,6 +183,9 @@
 	owner.newtonian_move(send_dir) // Bounce back in 0 G
 	M.throw_at(T, pull_power, TRUE, owner, FALSE) // Throw distance based on grab state! Harder grabs punished more aggressively.
 
+
+	// /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
+	log_combat(owner, M, "used Brawn power")
 
 	owner.visible_message("<span class='warning'>[owner] tears free of [M]'s grasp!</span>", \
 			 			"<span class='warning'>You shrug off [M]'s grasp!</span>")

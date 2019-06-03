@@ -80,7 +80,7 @@
 		warn_daylight(5,"<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>",\
 				  	  "<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>")
 		amDay = FALSE
-		remove_home_power()  // Remove VANISHING ACT power from all vamps who have it!
+		day_end()   // Remove VANISHING ACT power from all vamps who have it! Clear Warnings (sunlight, locker protection)
 		message_admins("BLOODSUCKER NOTICE: Daylight Ended. Resetting to Night (Lasts for [TIME_BLOODSUCKER_NIGHT / 60] minutes.)")
 
 
@@ -139,19 +139,42 @@
 				SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/coffinsleep)
 				continue
 			else
-				to_chat(M, "<span class='warning'>Your skin sizzles. The [M.current.loc] doesn't protect well against UV bombardment.</span>")
-				M.current.fireloss += bloodsuckerdatum.vamplevel  //  Do DIRECT damage. Being spaced was causing this to not occur. setFireLoss(bloodsuckerdatum.vamplevel)
+				if (!bloodsuckerdatum.warn_sun_locker)
+					to_chat(M, "<span class='warning'>Your skin sizzles. The [M.current.loc] doesn't protect well against UV bombardment.</span>")
+					bloodsuckerdatum.warn_sun_locker = TRUE
+				M.current.fireloss += 0.5 + bloodsuckerdatum.vamplevel / 2  //  Do DIRECT damage. Being spaced was causing this to not occur. setFireLoss(bloodsuckerdatum.vamplevel)
 				M.current.updatehealth()
 				SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/daylight_1)
 		else
 			if (M.current.fire_stacks <= 0)
 				M.current.fire_stacks = 0
-				to_chat(M, "<span class='userdanger'>The solar flare sets your skin ablaze!</span>")
+				if (!bloodsuckerdatum.warn_sun_burn)
+					to_chat(M, "<span class='userdanger'>The solar flare sets your skin ablaze!</span>")
+					bloodsuckerdatum.warn_sun_burn = TRUE
 			M.current.adjust_fire_stacks(0.4)
 			M.current.IgniteMob()
 			M.current.fireloss += 2 + bloodsuckerdatum.vamplevel   //  Do DIRECT damage. Being spaced was causing this to not occur.  //setFireLoss(2 + bloodsuckerdatum.vamplevel)
 			M.current.updatehealth()
 			SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/daylight_2)
+
+/obj/effect/sunlight/proc/day_end()
+	for (var/datum/mind/M in SSticker.mode.bloodsuckers)
+		if (!istype(M) || !istype(M.current))
+			continue
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if (!istype(bloodsuckerdatum))
+			continue
+
+		// Reset Warnings
+		bloodsuckerdatum.warn_sun_locker = FALSE
+		bloodsuckerdatum.warn_sun_burn = FALSE
+
+		// Remove Dawn Powers
+		for(var/datum/action/bloodsucker/P in bloodsuckerdatum.powers)
+			if (istype(P, /datum/action/bloodsucker/gohome))
+				bloodsuckerdatum.powers -= P
+				P.Remove(M.current)
+
 
 
 /obj/effect/sunlight/proc/vamps_rank_up()
@@ -174,16 +197,5 @@
 		if (istype(bloodsuckerdatum) && bloodsuckerdatum.lair && !(locate(/datum/action/bloodsucker/gohome) in bloodsuckerdatum.powers))
 			bloodsuckerdatum.BuyPower(new /datum/action/bloodsucker/gohome)
 
-/obj/effect/sunlight/proc/remove_home_power()
-	// It's night...! Sort thru all Vamps, remove the "Vanishing Act" gohome power
-	for (var/datum/mind/M in SSticker.mode.bloodsuckers)
-		if (!istype(M) || !istype(M.current))
-			continue
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		if (istype(bloodsuckerdatum))
-			for(var/datum/action/bloodsucker/P in bloodsuckerdatum.powers)
-				if (istype(P, /datum/action/bloodsucker/gohome))
-					bloodsuckerdatum.powers -= P
-					P.Remove(M.current)
 
 

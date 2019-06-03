@@ -16,6 +16,7 @@
 	//var/amPassive = FALSE		// REMOVED: Just made it its own kind. // Am I just "on" at all times? (aka NO ICON)
 	var/amTargetted = FALSE		// Am I asked to choose a target when enabled? (Shows as toggled ON when armed)
 	var/amToggle = FALSE		// Can I be actively turned on and off?
+	var/amSingleUse = FALSE		// Am I removed after a single use?
 	var/active = FALSE
 	var/cooldown = 20 		// 10 ticks, 1 second.
 	var/cooldownUntil = 0 //  From action.dm:  	next_use_time = world.time + cooldown_time
@@ -38,6 +39,8 @@
 		desc += "<br><br><b>COST:</b> [bloodcost] Blood"	// Modify description to add cost.
 	if (warn_constant_cost)
 		desc += "<br><br><i>Your over-time blood consumption increases while [name] is active.</i>"
+	if (amSingleUse)
+		desc += "<br><br><i>Useable once per night.</i>"
 	..()
 
 
@@ -70,6 +73,9 @@
 
 	if (active) // Did we not manually disable? Handle it here.
 		DeactivatePower()
+
+	if (amSingleUse)
+		RemoveAfterUse()
 
 /datum/action/bloodsucker/proc/CheckCanPayCost(display_error)
 	if(!owner || !owner.mind)
@@ -152,6 +158,13 @@
 /datum/action/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
 	return active && user && (!warn_constant_cost || user.blood_volume > 0)
 
+
+/datum/action/bloodsucker/proc/RemoveAfterUse()
+	// Un-Learn Me! (GO HOME
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if (istype(bloodsuckerdatum))
+		bloodsuckerdatum.powers -= src
+	Remove(owner)
 
 
 /datum/action/bloodsucker/proc/Upgrade()

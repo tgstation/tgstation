@@ -2,14 +2,16 @@
 
 /datum/action/bloodsucker/gohome
 	name = "Vanishing Act"
-	desc = "As dawn aproaches, disperse into mist and return directly to your Lair.<br><b>WARNING:</b> You will drop <b>ALL</b> of your possessions if being observed.<br><i>Useable once per night.</i>"
+	desc = "As dawn aproaches, disperse into mist and return directly to your Lair.<br><b>WARNING:</b> You will drop <b>ALL</b> of your possessions if observed by mortals."
 	button_icon_state = "power_gohome"
 	background_icon_state_on = "vamp_power_off_oneshot"		// Even though this never goes off.
 	background_icon_state_off = "vamp_power_off_oneshot"
 
-	bloodcost = 40
+	bloodcost = 25
 	cooldown = 99999 			// It'll never come back.
 	amToggle = FALSE
+	amSingleUse = TRUE
+
 	bloodsucker_can_buy = FALSE // You only get this if you've claimed a lair, and only just before sunrise.
 	can_use_in_torpor = TRUE
 	must_be_capacitated = TRUE
@@ -45,19 +47,20 @@
 
 	// From statue.dm
 	for(var/obj/machinery/light/L in view(3, get_turf(owner)))		// /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
-		L.flicker()
-	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', 10, 1)
+		L.flicker(5)
+	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', 20, 1)
+
+	sleep(50)
+
+	for(var/obj/machinery/light/L in view(3, get_turf(owner)))		// /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+		L.flicker(5)
+	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
 
 	sleep(50)
 
 	for(var/obj/machinery/light/L in view(6, get_turf(owner)))		// /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
-		L.flicker()
-	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', 30, 1)
-
-	sleep(50)
-
-	for(var/obj/machinery/light/L in view(8, get_turf(owner)))		// /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
-		L.flicker()
+		L.flicker(5)
+	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', 60, 1)
 
 
 	// ( STEP TWO: Lights OFF? )
@@ -67,22 +70,24 @@
 		to_chat(user, "<span class='warning'>Your coffin has been destroyed! You no longer have a destination.</span>")
 		return FALSE
 
-
+	if (!owner)
+		return
 
 	// SEEN?: (effects ONLY if there are witnesses! Otherwise you just POOF)
 	//		   NOTE: Stolen directly from statue.dm, thanks guys!
-	var/am_seen = FALSE
+	var/am_seen = FALSE		// Do Effects (seen by anyone)
+	var/drop_item = FALSE	// Drop Stuff (seen by non-vamp)
 	if (isturf(owner.loc)) // Only check if I'm not in a Locker or something.
 		// A) Check for Darkness (we can just leave)
 		var/turf/T = get_turf(user)
-		if(T && T.lighting_object && T.get_lumcount()> 0.1)
-			am_seen = FALSE
-		// B) Check for Viewers
-		else
+		if(T && T.lighting_object && T.get_lumcount()>= 0.1)
+			// B) Check for Viewers
 			for(var/mob/living/M in viewers(owner))
 				if(M != owner && isliving(M) && M.mind && !M.has_unlimited_silicon_privilege && !M.eye_blind) // M.client <--- add this in after testing!
 					am_seen = TRUE
-					break
+					if (!M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+						drop_item = TRUE
+						break
 
 	// LOSE CUFFS
 	if(user.handcuffed)
@@ -93,7 +98,7 @@
 		user.dropItemToGround(O)
 
 	// SEEN!
-	if (am_seen)
+	if (drop_item)
 		// DROP:	Clothes, held items, and cuffs etc
 		//			NOTE: Taken from unequip_everything() in inventory.dm. We need to
 		//			      *force* all items to drop, so we had to just gut the code out of it.
@@ -103,7 +108,7 @@
 			user.dropItemToGround(I,TRUE)
 		for(var/obj/item/I in owner.held_items)	// drop_all_held_items()
 			user.dropItemToGround(I, TRUE)
-
+	if (am_seen)
 		// POOF EFFECTS
 		playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', 60, 1)
 		var/datum/effect_system/steam_spread/puff = new /datum/effect_system/steam_spread/()
@@ -136,9 +141,3 @@
 
 
 
-/datum/action/bloodsucker/gohome/DeactivatePower(mob/living/user = owner, mob/living/target)
-	// Un-Learn Me! (GO HOME
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	if (istype(bloodsuckerdatum))
-		bloodsuckerdatum.powers -= src
-	Remove(owner)

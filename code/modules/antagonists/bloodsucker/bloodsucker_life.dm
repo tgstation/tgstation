@@ -24,7 +24,7 @@
 
 		// Deduct Blood
 		if (owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))
-			AddBloodVolume(-0.2) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
+			AddBloodVolume(-0.1) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
 
 		// Heal
 		if (HandleHealing(1))
@@ -162,9 +162,9 @@
 	if (poweron_masquerade == TRUE || owner.current.AmStaked())
 		return FALSE
 
-	owner.current.adjustStaminaLoss(-1 * mult, 0)
-	owner.current.adjustCloneLoss(-1 * mult, 0)
-	owner.current.adjustBrainLoss(-1 * mult, 0)
+	owner.current.adjustStaminaLoss(-5 * (regenRate * 4) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
+	owner.current.adjustCloneLoss(-1 * (regenRate * 4) * mult, 0)
+	owner.current.adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 
 	owner.current.setOxyLoss(0)
 	owner.current.setToxLoss(0)

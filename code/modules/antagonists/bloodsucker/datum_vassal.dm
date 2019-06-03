@@ -159,7 +159,7 @@
 
 //Displayed at the start of roundend_category section, default to roundend_category header
 /datum/antagonist/vassal/roundend_report_header()
-	return 	"<span class='header'>Loyal to their bloodsucking masters, the Vassals were:</span><br>"
+	return 	"<span class='header'>Loyal to their bloodsucking masters, the Vassals were:</span><br><br>"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

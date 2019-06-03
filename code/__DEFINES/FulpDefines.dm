@@ -4,6 +4,7 @@
 // ANTAGS
 #define ANTAG_DATUM_BLOODSUCKER			/datum/antagonist/bloodsucker
 #define ANTAG_DATUM_VASSAL				/datum/antagonist/vassal
+#define ANTAG_DATUM_HUNTER				/datum/antagonist/vamphunter
 
 // TRAITS
 #define TRAIT_COLDBLOODED		"coldblooded"

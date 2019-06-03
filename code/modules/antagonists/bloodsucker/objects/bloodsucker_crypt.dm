@@ -100,11 +100,14 @@
 	icon_state = "vassalrack"
 	buckle_lying = FALSE
 	anchored = FALSE
-	density = TRUE	// Start dense. Once fixed in place, go non-dense.
+	density = TRUE					// Start dense. Once fixed in place, go non-dense.
 	can_buckle = TRUE
-	var/useLock = FALSE	// So we can't just keep dragging ppl on here.
+	var/useLock = FALSE				// So we can't just keep dragging ppl on here.
 	var/mob/buckled
-	var/convert_progress = 3	// Resets on each new character to be added to the chair. Some effects should lower it...
+	var/convert_progress = 2		// Resets on each new character to be added to the chair. Some effects should lower it...
+	var/disloyalty_confirm = FALSE	// Command & Antags need to CONFIRM they are willing to lose their role (and will only do it if the Vassal'ing succeeds)
+	var/disloyalty_offered = FALSE	// Has the popup been issued? Don't spam them.
+	var/convert_cost = 10
 
 //obj/structure/kitchenspike/vassalrack/crowbar_act()
 //	// Do Nothing (Cancel crowbar deconstruct)
@@ -176,8 +179,9 @@
 	update_icon()
 
 	// Torture Stuff
-	convert_progress = 3 // Stays 3 til you start over.
-
+	convert_progress = 2 			// Goes down unless you start over.
+	disloyalty_confirm = FALSE		// New guy gets the chance to say NO if he's special.
+	disloyalty_offered = FALSE		// Prevents spamming torture window.
 
 /obj/structure/bloodsucker/vassalrack/user_unbuckle_mob(mob/living/M, mob/user)
 	// Attempt Unbuckle
@@ -266,12 +270,17 @@
 /obj/structure/bloodsucker/vassalrack/proc/torture_victim(mob/living/user, mob/living/target)
 
 	// Check Bloodmob/living/M, force = FALSE, check_loc = TRUE
-	if (user.blood_volume < 25)
+	if (user.blood_volume < convert_cost + 5)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
 		return
 
 	// Prep...
 	useLock = TRUE
+
+
+	// Step One:	Tick Down Conversion from 3 to 0
+	// Step Two:	Break mindshielding/antag (on approve)
+	// Step Three:	Blood Ritual
 
 	// Conversion Process
 	if (convert_progress > 0)
@@ -279,30 +288,47 @@
 		if (!do_torture(user,target))
 			to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		else
-			convert_progress --
+			convert_progress -- // Ouch. Stop. Don't.
+			// All done!
 			if (convert_progress <= 0)
-				if (!SSticker.mode.can_make_vassal(target,user,display_warning=FALSE))
+				// FAIL: Can't be Vassal
+				if (!SSticker.mode.can_make_vassal(target, user, display_warning=FALSE)) // If I'm an unconvertable Antag ONLY
 					to_chat(user, "<span class='danger'>[target] doesn't respond to your persuasion. It doesn't appear they can be converted to follow you.</span>")
+					convert_progress ++ // Pop it back up some. Avoids wasting Blood on a lost cause.
+				// SUCCESS: All done!
 				else
-					to_chat(user, "<span class='notice'>[target] looks ready for the <b>Dark Communion</b>.</span>")
+					if (RequireDisloyalty(target))
+						to_chat(user, "<span class='boldwarning'>[target] has external loyalties! [target.p_they(TRUE)] will require more <i>persuasion</i> to break [target.p_them()] to your will!</span>")
+					else
+						to_chat(user, "<span class='notice'>[target] looks ready for the <b>Dark Communion</b>.</span>")
+			// Still Need More Persuasion...
 			else
 				to_chat(user, "<span class='notice'>[target] could use [convert_progress == 1?"a little":"some"] more <i>persuasion</i>.</span>")
 
 		useLock = FALSE
 		return
 
+	// Check: Mindshield & Antag
+	if (!disloyalty_confirm && RequireDisloyalty(target))
+		if (!do_disloyalty(user,target))
+			to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
+		else if (!disloyalty_confirm)
+			to_chat(user, "<span class='danger'>[target] refuses to give into your persuasion. Perhaps a little more?</span>")
+		else
+			to_chat(user, "<span class='notice'>[target] looks ready for the <b>Dark Communion</b>.</span>")
+		useLock = FALSE
+		return
 
 	// Check: Blood
-	if (user.blood_volume < 20)
+	if (user.blood_volume < convert_cost)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
 		useLock = FALSE
 		return
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	bloodsuckerdatum.AddBloodVolume(-20)
+	bloodsuckerdatum.AddBloodVolume(-convert_cost)
 	target.add_mob_blood(user)
 	user.visible_message("<span class='notice'>[user] marks a bloody smear on [target]'s forehead and puts a wrist up to [target.p_their()] mouth!</span>", \
 				  	  "<span class='notice'>You paint a bloody marking across [target]'s forehead, place your wrist to [target.p_their()] mouth, and subject [target.p_them()] to the Dark Communion.</span>")
-
 	if(!do_mob(user, src, 50))
 		to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		useLock = FALSE
@@ -310,10 +336,12 @@
 
 	// Convert to Vassal!
 	if (bloodsuckerdatum && bloodsuckerdatum.attempt_turn_vassal(target))
-		if (!target.buckled)
-			to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
-			useLock = FALSE
-			return
+		remove_loyalties(target) // In case of Mindshield, or appropriate Antag (Traitor, Internal, etc)
+
+		//if (!target.buckled)
+		//	to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
+		//	useLock = FALSE
+		//	return
 		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, 1) 	// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, 1) 	// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 		target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) 		// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
@@ -324,7 +352,7 @@
 	useLock = FALSE
 
 
-/obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/target)
+/obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/target, mult=1)
 
 	var/torture_time = 15 // Fifteen seconds if you aren't using anything. Shorter with weapons and such.
 	var/torture_dmg_brute = 2
@@ -366,7 +394,7 @@
 	torture_time = max(50, torture_time * 10) // Minimum 5 seconds.
 
 	// Now run process.
-	if (!do_mob(user, target, torture_time))
+	if (!do_mob(user, target, torture_time * mult))
 		return FALSE
 
 	// SUCCESS
@@ -382,6 +410,79 @@
 	target.apply_damages(brute = torture_dmg_brute, burn = torture_dmg_burn, def_zone = (BP ? BP.body_zone : null)) // take_overall_damage(6,0)
 
 	return TRUE
+
+
+
+
+
+
+/obj/structure/bloodsucker/vassalrack/proc/do_disloyalty(mob/living/user, mob/living/target)
+
+	// OFFER YES/NO NOW!
+	spawn(10)
+		if (useLock && target && target.client) // Are we still torturing? Did we cancel? Are they still here?
+			to_chat(user, "<span class='notice'>[target] has been given the opportunity for servitude. You await their decision...</span>")
+			var/alert_text = "You are being tortured! Do you want to give in and pledge your undying loyalty to [user]?"
+			if (HAS_TRAIT(target, TRAIT_MINDSHIELD))
+				alert_text += "\n\nYou will no longer be loyal to the station!"
+			if (SSticker.mode.AmValidAntag(target.mind))
+				alert_text += "\n\nYou will not lose your current objectives, but they come second to the will of your new master!"
+			switch(alert(target, alert_text,"THE HORRIBLE PAIN! WHEN WILL IT END?!","Yes, Master!", "NEVER!"))
+				if("Yes, Master!")
+					disloyalty_accept(target)
+				else
+					disloyalty_refuse(target)
+	if (!do_torture(user,target, 2))
+		return FALSE
+
+	// NOTE: We only remove loyalties when we're CONVERTED!
+	return TRUE
+
+/obj/structure/bloodsucker/vassalrack/proc/RequireDisloyalty(mob/living/target)
+	return SSticker.mode.AmValidAntag(target.mind) || HAS_TRAIT(target, TRAIT_MINDSHIELD)
+
+/obj/structure/bloodsucker/vassalrack/proc/disloyalty_accept(mob/living/target)
+	// FAILSAFE: Still on the rack?
+	if (!(locate(target) in buckled_mobs))
+		return
+
+	// NOTE: You can say YES after torture. It'll apply to next time.
+
+	disloyalty_confirm = TRUE
+
+	if (HAS_TRAIT(target, TRAIT_MINDSHIELD))
+		to_chat(target, "<span class='boldnotice'>You give in to the will of your torturer. If they are successful, you will no longer be loyal to the station!</span>")
+
+
+/obj/structure/bloodsucker/vassalrack/proc/disloyalty_refuse(mob/living/target)
+	// FAILSAFE: Still on the rack?
+	if (!(locate(target) in buckled_mobs))
+		return
+	// Failsafe: You already said YES.
+	if (disloyalty_confirm)
+		return
+	to_chat(target, "<span class='notice'>You refuse to give in! You <i>will not</i> break!</span>")
+
+
+/obj/structure/bloodsucker/vassalrack/proc/remove_loyalties(mob/living/target)
+
+	// Find Mind Implant & Destroy
+	if (HAS_TRAIT(target, TRAIT_MINDSHIELD))
+		for(var/obj/item/implant/I in target.implants)
+			if(I.type == /obj/item/implant/mindshield)
+				I.removed(target,silent=TRUE)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

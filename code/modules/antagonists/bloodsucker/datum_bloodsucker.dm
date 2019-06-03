@@ -26,8 +26,8 @@
 	var/poweron_masquerade = FALSE
 
 	// STATS
-	var/vamplevel = 1
-	var/vamplevel_unspent = 0
+	var/vamplevel = 0
+	var/vamplevel_unspent = 1
 	var/regenRate = 0.3					// How many points of Brute do I heal per tick?
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding. // BLOOD_VOLUME_NORMAL  550 // BLOOD_VOLUME_SAFE 475 //BLOOD_VOLUME_OKAY 336 //BLOOD_VOLUME_BAD 224 // BLOOD_VOLUME_SURVIVE 122
@@ -39,6 +39,8 @@
 
 	// TRACKING
 	var/foodInGut = 0					// How much food to throw up later. You shouldn't have eaten that.
+	var/warn_sun_locker = FALSE			// So we only get the locker burn message once per day.
+	var/warn_sun_burn = FALSE			// So we only get the sun burn message once per day.
 
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, \
@@ -254,6 +256,10 @@
 	owner.current.cure_husk()//owner.current.disabilities = 0	// Can't do this. You get stuck with Husk if you just clear disabilities.
 	owner.current.cure_blind()
 
+	// Lose SOul (no clone)
+	owner.current.hellbound = TRUE
+	owner.hasSoul = FALSE
+
 /datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
 	// Blood/Rank Counter
@@ -294,6 +300,9 @@
 	if (owner.soulOwner == owner) // Return soul, if *I* own it.
 		owner.hasSoul = TRUE
 
+	// Regain Soul (can clone)
+	owner.current.hellbound = FALSE
+	owner.hasSoul = TRUE
 
 datum/antagonist/bloodsucker/proc/RankUp()
 	set waitfor = FALSE
@@ -355,7 +364,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	// More Health
 	owner.current.setMaxHealth(owner.current.maxHealth + 5)
 	// Vamp Stats
-	regenRate += 0.02			// Points of brute healed (starts at 0.3)
+	regenRate += 0.05			// Points of brute healed (starts at 0.3)
 	feedAmount += 2				// Increase how quickly I munch down vics (15)
 	maxBloodVolume += 25		// Increase my max blood (600)
 
@@ -613,6 +622,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 
 
 
+	//message_admins("DEBUG3: attempt_cast() [name] / [user_C.handcuffed] ")
 
 
 // TODO:
