@@ -37,10 +37,24 @@
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 
+	// for alpha masking
+	var/image/alpha_overlay
+	var/image/alpha_overlay_32x32
+	var/image/together_overlay
+
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
 	initialize_directions = dir
+
+	alpha_overlay = image('icons/obj/cryogenics.dmi', "pod-alpha")
+	alpha_overlay.appearance_flags |= KEEP_TOGETHER
+	alpha_overlay.color = list(0,0,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,0)
+	alpha_overlay_32x32 = image('icons/obj/cryogenics32x32.dmi', "pod-alpha")
+	alpha_overlay_32x32.appearance_flags |= KEEP_TOGETHER
+	alpha_overlay_32x32.color = list(0,0,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,0)
+	together_overlay = new()
+	together_overlay.appearance_flags |= KEEP_TOGETHER
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -106,37 +120,21 @@
 		return
 
 	if(occupant)
-		var/image/occupant_overlay
-
-		if(ismonkey(occupant)) // Monkey
-			occupant_overlay = image(CRYOMOBS, "monkey")
-		else if(isalienadult(occupant))
-			if(isalienroyal(occupant)) // Queen and prae
-				occupant_overlay = image(CRYOMOBS, "alienq")
-			else if(isalienhunter(occupant)) // Hunter
-				occupant_overlay = image(CRYOMOBS, "alienh")
-			else if(isaliensentinel(occupant)) // Sentinel
-				occupant_overlay = image(CRYOMOBS, "aliens")
-			else // Drone or other
-				occupant_overlay = image(CRYOMOBS, "aliend")
-
-		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
-			occupant_overlay = image(occupant.icon, occupant.icon_state)
-			occupant_overlay.copy_overlays(occupant)
-
-		else
-			occupant_overlay = image(CRYOMOBS, "generic")
-
-		occupant_overlay.dir = SOUTH
+		var/image/occupant_overlay = image(occupant.icon, occupant.icon_state, dir = SOUTH)
+		occupant_overlay.blend_mode = BLEND_MULTIPLY
+		occupant_overlay.appearance_flags |= KEEP_TOGETHER
+		occupant_overlay.copy_overlays(occupant)
 		occupant_overlay.pixel_y = 22
+
+		var/is_32x32 = icon(occupant.icon, occupant.icon_state).Height() < 64 // anything less than 64 should get the 32 overlay
 
 		if(on && !running_anim && is_operational())
 			icon_state = "pod-on"
 			running_anim = TRUE
-			run_anim(TRUE, occupant_overlay)
+			run_anim(is_32x32, occupant_overlay)
 		else
 			icon_state = "pod-off"
-			add_overlay(occupant_overlay)
+			add_masked_overlay(is_32x32, occupant_overlay)
 			add_overlay("cover-off")
 
 	else if(on && is_operational())
@@ -146,7 +144,7 @@
 		icon_state = "pod-off"
 		add_overlay("cover-off")
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(anim_up, image/occupant_overlay)
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(is32x32, image/occupant_overlay, anim_up = TRUE)
 	if(!on || !occupant || !is_operational())
 		running_anim = FALSE
 		return
@@ -157,9 +155,23 @@
 		occupant_overlay.pixel_y++
 	else
 		occupant_overlay.pixel_y--
-	add_overlay(occupant_overlay)
+	add_masked_overlay(is32x32, occupant_overlay)
 	add_overlay("cover-on")
-	addtimer(CALLBACK(src, .proc/run_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/run_anim, is32x32, occupant_overlay, anim_up), 7, TIMER_UNIQUE)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/add_masked_overlay(is32x32, image/overlay) // overlay blend mode needs to be multiply
+	var/old_color = overlay.color
+	overlay.color = list(0,0,0,0, 0,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,1)
+	if(is32x32)
+		alpha_overlay_32x32.pixel_y = overlay.pixel_y
+		alpha_overlay_32x32.overlays = list(overlay)
+		overlay.color = old_color
+		together_overlay.overlays = list(alpha_overlay_32x32, overlay)
+	else
+		alpha_overlay.overlays = list(overlay)
+		overlay.color = old_color
+		together_overlay.overlays = list(alpha_overlay, overlay)
+	add_overlay(together_overlay)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
