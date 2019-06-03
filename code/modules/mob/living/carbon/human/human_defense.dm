@@ -452,40 +452,35 @@
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 
 
-//Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock)
-		var/total_coeff = 1
+//Added a safety check in case you want to shock a human mob directly through electrocute_act. EDIT: This basically just determines if you get gloves applied.
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
+
+	if(tesla_shock) //We determine the protection against shocks by using goofcode(TM).
+		siemens_coeff = 1 //First thing we do is override our parameters. Very cool.
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
 			if(G.siemens_coefficient <= 0)
-				total_coeff -= 0.5
+				siemens_coeff -= 0.5
 		if(wear_suit)
 			var/obj/item/clothing/suit/S = wear_suit
 			if(S.siemens_coefficient <= 0)
-				total_coeff -= 0.95
+				siemens_coeff -= 0.95
 			else if(S.siemens_coefficient == (-1))
-				total_coeff -= 1
-		siemens_coeff = total_coeff
+				siemens_coeff -= 1
 		if(flags_1 & TESLA_IGNORE_1)
 			siemens_coeff = 0
 	else if(!safety)
-		var/gloves_siemens_coeff = 1
+		siemens_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
-			gloves_siemens_coeff = G.siemens_coefficient
-		siemens_coeff = gloves_siemens_coeff
-	if(undergoing_cardiac_arrest() && !illusion)
-		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-			heart.beating = TRUE
-			if(stat == CONSCIOUS)
-				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
-	siemens_coeff *= physiology.siemens_coeff
-
+			siemens_coeff = G.siemens_coefficient
+			
+	siemens_coeff *= physiology.siemens_coeff //We add the multipliers to it.
 	dna.species.spec_electrocute_act(src, shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
-	if(.)
+	siemens_coeff *= dna.species.siemens_coeff
+	
+	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun) //We send this to carbon
+	if(.) //We make it look fancy
 		electrocution_animation(40)
 
 /mob/living/carbon/human/emag_act(mob/user)
