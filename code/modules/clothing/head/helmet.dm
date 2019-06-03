@@ -25,10 +25,6 @@
 	if(attached_light)
 		alight = new(src)
 
-/obj/item/clothing/head/helmet/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
-
 /obj/item/clothing/head/helmet/examine(mob/user)
 	..()
 	if(attached_light)
@@ -52,6 +48,10 @@
 
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = TRUE
+
+/obj/item/clothing/head/helmet/sec/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
 	if(issignaler(I))
@@ -77,6 +77,10 @@
 	armor = list("melee" = 15, "bullet" = 60, "laser" = 10, "energy" = 10, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	can_flashlight = TRUE
 	dog_fashion = null
+
+/obj/item/clothing/head/helmet/alt/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
@@ -107,6 +111,10 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
+
+/obj/item/clothing/head/helmet/riot/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
 	if(can_toggle && !user.incapacitated())
@@ -161,6 +169,10 @@
 	clothing_flags = STOPSPRESSUREDAMAGE
 	strip_delay = 80
 	dog_fashion = null
+
+/obj/item/clothing/head/helmet/swat/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/police
 	name = "police officer's hat"
@@ -253,12 +265,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
-
-
-/obj/item/clothing/head/helmet/knight/Initialize(mapload)
-	. = ..()
-	var/datum/component = GetComponent(/datum/component/wearertargeting/earprotection)
-	qdel(component)
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"
