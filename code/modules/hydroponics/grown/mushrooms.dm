@@ -113,7 +113,7 @@
 // Brig Cap
 /obj/item/seeds/liberty/brig
 	name = "pack of brig-cap mycelium"
-	desc = "The permabrig's number 1 choice."
+	desc = "The warden's number 1 choice."
 	icon_state = "mycelium-brig"
 	species = "brig"
 	plantname = "Brig-Caps"
@@ -125,7 +125,7 @@
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/drug/mushroomhallucinogen = 0.25, /datum/reagent/consumable/nutriment = 0.02)
+	reagents_add = list( /datum/reagent/consumable/nutriment = 0.02,/datum/reagent/peaceborg/tire=0.1)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/brigcap
@@ -245,10 +245,10 @@
 	production = 12
 	yield = 1
 	potency = 5
-	growthstages = 3
+	growthstages = 2
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1,/datum/reagent/consumable/secretsauce=0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1,/datum/reagent/consumable/pricy=0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/truffle
 	seed = /obj/item/seeds/chanter/truffles

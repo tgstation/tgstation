@@ -730,3 +730,12 @@
 	quality = FOOD_AMAZING
 	taste_mult = 100
 	can_synth = FALSE
+
+/datum/reagent/consumable/pricy
+	name = "priciness"
+	description = "This better be amazing."
+	color = "#792300"
+	taste_description = "indescribable"
+	quality = DRINK_VERYGOOD
+	taste_mult = 100
+	can_synth = FALSE

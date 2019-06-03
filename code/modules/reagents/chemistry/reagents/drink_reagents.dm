@@ -85,6 +85,13 @@
 	color = "#ECFF56" // rgb: 236, 255, 86
 	taste_description = "apples"
 
+/datum/reagent/consumable/truffleoil
+	name = "Truffle oil"
+	description = "Some say there isn't anything tastier"
+	color = "#dbdb69"
+	taste_description = "truffles"
+	quality = FOOD_AMAZING
+
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
 	description = "A tasty juice blended from various kinds of very deadly and toxic berries."

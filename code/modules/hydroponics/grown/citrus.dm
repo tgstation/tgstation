@@ -22,7 +22,7 @@
 	potency = 15
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/orange)
+	mutatelist = list(/obj/item/seeds/orange,/obj/item/seeds/lime/lyeme)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/citrus/lime
@@ -32,7 +32,69 @@
 	icon_state = "lime"
 	filling_color = "#00FF00"
 	juice_results = list(/datum/reagent/consumable/limejuice = 0)
+//Lye-mes
+/obj/item/seeds/lime/lyeme
+	name = "pack of lye-me seeds"
+	desc = "These are very clean."
+	icon_state = "seed-lyeme"
+	species = "lyeme"
+	plantname = "Lye-me Tree"
+	product = /obj/item/reagent_containers/food/snacks/grown/citrus/lyeme
+	lifespan = 55
+	endurance = 50
+	yield = 4
+	potency = 15
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	genes = list(/datum/plant_gene/trait/slip,/datum/plant_gene/trait/repeated_harvest)
+	reagents_add = list(/datum/reagent/lye = 0.15, /datum/reagent/consumable/nutriment = 0.05)
+	rarity = 40
 
+/obj/item/reagent_containers/food/snacks/grown/citrus/lyeme
+	seed = /obj/item/seeds/lime/lyeme
+	name = "lye-me"
+	desc = "These could defeat the most robust of stains."
+	icon_state = "lyeme"
+	filling_color = "#00FF00"
+	var/cleanspeed = 50
+/obj/item/reagent_containers/food/snacks/grown/citrus/lyeme/add_juice()
+	..()
+	cleanspeed =round(50-(seed.potency/2))
+/obj/item/reagent_containers/food/snacks/grown/citrus/lyeme/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity || !check_allowed_items(target))
+		return
+	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
+		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
+	else if(istype(target, /obj/effect/decal/cleanable))
+		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
+		if(do_after(user, src.cleanspeed, target = target))
+			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
+			qdel(target)
+	else if(istype(target, /obj/structure/window))
+		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
+		if(do_after(user, src.cleanspeed, target = target))
+			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
+			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			target.set_opacity(initial(target.opacity))
+	else
+		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
+		if(do_after(user, src.cleanspeed, target = target))
+			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
+			for(var/obj/effect/decal/cleanable/C in target)
+				qdel(C)
+			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			if(seed.potency<20)
+				SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+			else if(seed.potency<40)
+				SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			else if(seed.potency<60)
+				SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
+			else if(seed.potency<80)
+				SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_IMPRESSIVE)
+			else
+				SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_GOD)
+			target.wash_cream()
+	return
 // Orange
 /obj/item/seeds/orange
 	name = "pack of orange seeds"
