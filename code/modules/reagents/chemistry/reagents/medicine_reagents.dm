@@ -540,29 +540,18 @@
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
 	var/oxycalc = 2.5*REM*current_cycle
-	oxycalc = min(oxycalc, M.oxyloss + PERF_BASE_DAMAGE) // this is so you always take at least PERF_BASE_DAMAGE tox even if you don't have oxygen loss to deter stacking (it is an emergency chem after all!)
-	if(oxycalc)
-		M.adjustOxyLoss(-oxycalc, 0)
-		M.adjustToxLoss(oxycalc/2.5, 0) //1*REM*current_cycle
+	if(!overdosed)
+		oxycalc = min(oxycalc,M.getOxyLoss()+PERF_BASE_DAMAGE) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.5. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
+	M.adjustOxyLoss(-oxycalc, 0)
+	M.adjustToxLoss(oxycalc/2.5, 0)
 	if(prob(current_cycle) && M.losebreath)
 		M.losebreath--
 	..()
 	return TRUE
 
 /datum/reagent/medicine/perfluorodecalin/overdose_process(mob/living/M)
-	. = TRUE
-	var/oxycalc = 2.5*REM*current_cycle
-	M.adjustOxyLoss(-oxycalc, 0)
-	M.adjustToxLoss(oxycalc/2.5, 0)
-	//we then cancel out any healing done by on_mob_life since we want to simulate the same mechanism and NOT doubledip. losebreath is done regardless so *shrug*
-	oxycalc = min(oxycalc,M.oxyloss + PERF_BASE_DAMAGE)
-	if(oxycalc)
-		M.adjustOxyLoss(oxycalc, 0)
-		M.adjustToxLoss(-oxycalc/2.5, 0)
-
-	metabolization_rate += 1
-	..()
-
+    metabolization_rate += 1
+    return ..()
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"

@@ -306,7 +306,7 @@
 /obj/item/reagent_containers/glass/bottle/tuberculosiscure
 	name = "BVAK bottle"
 	desc = "A small bottle containing Bio Virus Antidote Kit."
-	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+	list_reagents = list("atropine" = 5, "epinephrine" = 5, "perfluorodecalin" = 10, "spaceacillin" = 10)
 
 //Oldstation.dmm chemical storage bottles
 
