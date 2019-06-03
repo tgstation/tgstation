@@ -17,10 +17,10 @@
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
-		list("epinephrine", "morphine", "perfluorodecalin", "bicaridine", "kelotane"),
-		list("oculine","inacusiate"),
-		list("antitoxin", "mutadone", "mannitol", "pen_acid", "salbutamol"),
-		list("omnizine")
+		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/perfluorodecalin, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane),
+		list(/datum/reagent/medicine/oculine,/datum/reagent/medicine/inacusiate),
+		list(/datum/reagent/medicine/antitoxin, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
+		list(/datum/reagent/medicine/omnizine)
 	)
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
@@ -142,6 +142,8 @@
 		ui.open()
 
 /obj/machinery/sleeper/AltClick(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
 	if(state_open)
 		close_machine()
 	else
@@ -166,7 +168,7 @@
 	data["chems"] = list()
 	for(var/chem in available_chems)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
+		data["chems"] += list(list("name" = R.name, "id" = R.type, "allowed" = chem_allowed(chem)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -213,10 +215,10 @@
 				open_machine()
 			. = TRUE
 		if("inject")
-			var/chem = params["chem"]
-			if(!is_operational() || !mob_occupant)
+			var/chem = text2path(params["chem"])
+			if(!is_operational() || !mob_occupant || isnull(chem))
 				return
-			if(mob_occupant.health < min_health && chem != "epinephrine")
+			if(mob_occupant.health < min_health && chem != /datum/reagent/medicine/epinephrine)
 				return
 			if(inject_chem(chem, usr))
 				. = TRUE
@@ -239,7 +241,7 @@
 	if(!mob_occupant || !mob_occupant.reagents)
 		return
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
+	var/occ_health = mob_occupant.health > min_health || chem == /datum/reagent/medicine/epinephrine
 	return amount && occ_health
 
 /obj/machinery/sleeper/proc/reset_chem_buttons()
@@ -274,7 +276,7 @@
 	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
 	icon_state = "sleeper_clockwork"
 	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
-	possible_chems = list(list("epinephrine", "salbutamol", "bicaridine", "kelotane", "oculine", "inacusiate", "mannitol"))
+	possible_chems = list(list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/mannitol))
 
 /obj/machinery/sleeper/clockwork/process()
 	if(occupant && isliving(occupant))

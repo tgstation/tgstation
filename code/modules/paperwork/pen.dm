@@ -23,7 +23,7 @@
 	throw_range = 7
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
-	grind_results = list("iron" = 2, "iodine" = 1)
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "black"	//what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
@@ -165,9 +165,9 @@
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
 	create_reagents(45, OPENCONTAINER)
-	reagents.add_reagent("chloralhydratedelayed", 20)
-	reagents.add_reagent("mutetoxin", 15)
-	reagents.add_reagent("tirizene", 10)
+	reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 20)
+	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 15)
+	reagents.add_reagent(/datum/reagent/toxin/staminatoxin, 10)
 
 /*
  * (Alan) Edaggers
@@ -179,6 +179,14 @@
 /obj/item/pen/edagger/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg', TRUE)
+	
+/obj/item/pen/edagger/suicide_act(mob/user)
+	. = BRUTELOSS
+	if(on)
+		user.visible_message("<span class='suicide'>[user] forcefully rams the pen into their mouth!</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		attack_self(user)
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)

@@ -123,6 +123,9 @@
 	extra_price = 75
 	payment_department = NO_FREEBIES
 
+/obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
+
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"

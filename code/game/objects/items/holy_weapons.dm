@@ -42,11 +42,11 @@
 	return holy_item_list
 
 /obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
-	if(!SSreligion.holy_armor_type)
+	if(!GLOB.holy_armor_type)
 		..()
 		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, 1)
 		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
-		SSreligion.holy_armor_type = choice
+		GLOB.holy_armor_type = choice
 	else
 		to_chat(M, "<span class='warning'>A selection has already been made. Self-Destructing...</span>")
 		return
@@ -183,7 +183,7 @@
 
 /obj/item/nullrod/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, null, FALSE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
@@ -194,7 +194,7 @@
 		reskin_holy_weapon(user)
 
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
-	if(SSreligion.holy_weapon_type)
+	if(GLOB.holy_weapon_type)
 		return
 	var/obj/item/nullrod/holy_weapon
 	var/list/holy_weapons_list = typesof(/obj/item/nullrod)
@@ -211,7 +211,7 @@
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
 	holy_weapon = new A
 
-	SSreligion.holy_weapon_type = holy_weapon.type
+	GLOB.holy_weapon_type = holy_weapon.type
 
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
 

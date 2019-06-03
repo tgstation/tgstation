@@ -199,10 +199,15 @@
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
-/datum/action/item_action/rcl
+/datum/action/item_action/rcl_col
 	name = "Change Cable Color"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_rainbow"
+
+/datum/action/item_action/rcl_gui
+	name = "Toggle Fast Wiring Gui"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_gui"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"

@@ -1,5 +1,5 @@
 /datum/surgery/brain_surgery
-	name = "brain surgery"
+	name = "Brain surgery"
 	steps = list(
 	/datum/surgery_step/incise,
 	/datum/surgery_step/retract_skin,

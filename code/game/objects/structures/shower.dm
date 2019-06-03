@@ -12,7 +12,7 @@
 	var/on = FALSE
 	var/current_temperature = SHOWER_NORMAL
 	var/datum/looping_sound/showering/soundloop
-	var/reagent_id = "water"
+	var/reagent_id = /datum/reagent/water
 	var/reaction_volume = 200
 
 /obj/machinery/shower/Initialize()

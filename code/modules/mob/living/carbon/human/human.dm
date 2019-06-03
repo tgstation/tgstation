@@ -700,7 +700,7 @@
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(!Adjacent(M) && (M.loc != src))
-		if((be_close == 0) || (!no_tk && (dna.check_mutation(TK) && tkMaxRangeCheck(src, M))))
+		if((be_close == FALSE) || (!no_tk && (dna.check_mutation(TK) && tkMaxRangeCheck(src, M))))
 			return TRUE
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
@@ -732,7 +732,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = health - getStaminaLoss()
+			var/health_amount = min(health, maxHealth - getStaminaLoss())
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)

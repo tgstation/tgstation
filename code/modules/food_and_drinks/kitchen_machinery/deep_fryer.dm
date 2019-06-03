@@ -53,7 +53,7 @@ God bless America.
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
-	reagents.add_reagent("cooking_oil", 25)
+	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
 	component_parts += new /obj/item/stock_parts/micro_laser(null)
@@ -83,7 +83,7 @@ God bless America.
 		I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = user)
 		qdel(I)
 		return
-	if(!reagents.has_reagent("cooking_oil"))
+	if(!reagents.has_reagent(/datum/reagent/consumable/cooking_oil))
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
@@ -107,7 +107,7 @@ God bless America.
 
 /obj/machinery/deepfryer/process()
 	..()
-	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent("cooking_oil")
+	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent(/datum/reagent/consumable/cooking_oil)
 	if(!C)
 		return
 	reagents.chem_temp = C.fry_temperature
@@ -148,7 +148,8 @@ God bless America.
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
 		reagents.reaction(C, TOUCH)
-		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
+		var/permeability = 1 - C.get_permeability_protection(list(HEAD))
+		C.apply_damage(min(30 * permeability, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
 		C.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)

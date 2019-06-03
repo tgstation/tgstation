@@ -28,5 +28,5 @@
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()
 	if(inflamed)
-		S.reagents.add_reagent("bad_food", 5)
+		S.reagents.add_reagent(/datum/reagent/toxin/bad_food, 5)
 	return S

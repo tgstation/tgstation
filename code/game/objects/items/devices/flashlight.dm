@@ -260,7 +260,7 @@
 	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
-	grind_results = list("sulfur" = 15)
+	grind_results = list(/datum/reagent/sulfur = 15)
 
 /obj/item/flashlight/flare/Initialize()
 	. = ..()
@@ -429,7 +429,7 @@
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	item_state = "glowstick"
-	grind_results = list("phenol" = 15, "hydrogen" = 10, "oxygen" = 5) //Meth-in-a-stick
+	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	var/fuel = 0
 
 /obj/item/flashlight/glowstick/Initialize()
