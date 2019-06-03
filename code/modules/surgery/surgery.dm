@@ -19,7 +19,6 @@
 	var/self_operable = FALSE								//Can the surgery be performed on yourself.
 	var/requires_tech = FALSE								//handles techweb-oriented surgeries, previously restricted to the /advanced subtype (You still need to add designs)
 	var/replaced_by											//type; doesn't show up if this type exists. Set to /datum/surgery if you want to hide a "base" surgery (useful for typing parents IE healing.dm just make sure to null it out again)
-	var/is_base_type = FALSE 								//these will never show up in the list (for easier subtyping)
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
