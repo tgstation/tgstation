@@ -16,6 +16,14 @@
 
 	return TRUE
 
+/datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if ishuman(target)
+		var/mob/living/carbon/human/H = target
+		if (!(NOBLOOD in H.dna.species.species_traits))
+			user.visible_message("Blood pools around the incision in [H]'s [parse_zone(target_zone)].", "<span class='notice'>Blood pools around your incision in [H]'s [parse_zone(target_zone)].</span>")
+			H.bleed_rate += 5
+	return TRUE
+
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
 	name = "clamp bleeders"
@@ -29,8 +37,10 @@
 /datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
 		target.heal_bodypart_damage(20,0)
+	if ishuman(target)
+		var/mob/living/carbon/human/H = target
+		H.bleed_rate = max( (H.bleed_rate - 5), 0)
 	return ..()
-
 
 //retract skin
 /datum/surgery_step/retract_skin
