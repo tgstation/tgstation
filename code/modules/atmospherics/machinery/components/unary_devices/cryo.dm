@@ -41,6 +41,7 @@
 	var/image/alpha_overlay
 	var/image/alpha_overlay_32x32
 	var/image/together_overlay
+	var/overlay_pixel_y = 22
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
@@ -124,7 +125,7 @@
 		occupant_overlay.blend_mode = BLEND_MULTIPLY
 		occupant_overlay.appearance_flags |= KEEP_TOGETHER
 		occupant_overlay.copy_overlays(occupant)
-		occupant_overlay.pixel_y = 22
+		overlay_pixel_y = 22
 
 		var/is_32x32 = icon(occupant.icon, occupant.icon_state).Height() < 64 // anything less than 64 should get the 32 overlay
 
@@ -149,12 +150,12 @@
 		running_anim = FALSE
 		return
 	cut_overlays()
-	if(occupant_overlay.pixel_y != 23) // Same effect as occupant_overlay.pixel_y == 22 || occupant_overlay.pixel_y == 24
-		anim_up = occupant_overlay.pixel_y == 22 // Same effect as if(occupant_overlay.pixel_y == 22) anim_up = TRUE ; if(occupant_overlay.pixel_y == 24) anim_up = FALSE
+	if(overlay_pixel_y != 23) // Same effect as overlay_pixel_y == 22 || occupant_overlay.pixel_y == 24
+		anim_up = overlay_pixel_y == 22 // Same effect as if(overlay_pixel_y == 22) anim_up = TRUE ; if(overlay_pixel_y == 24) anim_up = FALSE
 	if(anim_up)
-		occupant_overlay.pixel_y++
+		overlay_pixel_y++
 	else
-		occupant_overlay.pixel_y--
+		overlay_pixel_y--
 	add_masked_overlay(is32x32, occupant_overlay)
 	add_overlay("cover-on")
 	addtimer(CALLBACK(src, .proc/run_anim, is32x32, occupant_overlay, anim_up), 7, TIMER_UNIQUE)
@@ -163,11 +164,15 @@
 	var/old_color = overlay.color
 	overlay.color = list(0,0,0,0, 0,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,1)
 	if(is32x32)
-		alpha_overlay_32x32.pixel_y = overlay.pixel_y
+		alpha_overlay_32x32.pixel_y = overlay_pixel_y
 		alpha_overlay_32x32.overlays = list(overlay)
 		overlay.color = old_color
+		var/old_pixel_y = overlay.pixel_y
+		overlay.pixel_y = overlay_pixel_y
 		together_overlay.overlays = list(alpha_overlay_32x32, overlay)
+		overlay.pixel_y = old_pixel_y
 	else
+		overlay.pixel_y = overlay_pixel_y
 		alpha_overlay.overlays = list(overlay)
 		overlay.color = old_color
 		together_overlay.overlays = list(alpha_overlay, overlay)
