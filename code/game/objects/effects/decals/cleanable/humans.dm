@@ -57,7 +57,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	reagents.add_reagent("liquidgibs", 5)
+	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
 	if(already_rotting)
 		start_rotting(rename=FALSE)
 	else

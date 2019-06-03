@@ -3,7 +3,7 @@
 	max_stages = 4
 	spread_text = "Airborne"
 	cure_text = "Banana products, especially banana bread."
-	cures = list("banana")
+	cures = list(/datum/reagent/consumable/banana)
 	cure_chance = 75
 	agent = "H0NI<42 Virus"
 	viable_mobtypes = list(/mob/living/carbon/human)

@@ -26,7 +26,6 @@
 
 /datum/reagent/blob/synchronous_mesh
 	name = "Synchronous Mesh"
-	id = "synchronous_mesh"
 	taste_description = "toxic mold"
 	color = "#65ADA2"
 

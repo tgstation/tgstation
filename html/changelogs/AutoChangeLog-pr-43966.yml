@@ -1,0 +1,8 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - rscadd: "stamina damage now pauses natural stamina regen for 10 seconds"
+  - rscadd: "stamina regenerates fully when it can."
+  - balance: "disabler damage reduced"
+  - tweak: "stamina damage no longer stacks with normal damage for the purposes of damage slowdown and crit"
+  - balance: "many sources of stamina damage have been adjusted, check PR for details"
