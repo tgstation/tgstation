@@ -2283,7 +2283,7 @@
 	},
 /area/awaymission/BMPship/Midship)
 "hh" = (
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Midship)
 "hi" = (
