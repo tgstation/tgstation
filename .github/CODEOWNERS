@@ -14,10 +14,9 @@
 /code/modules/reagents/chemistry/reagents/blob_reagents.dm @ChangelingRain
 
 # Cobby
-/code/modules/surgery/ @ExcessiveUseOfCobblestone
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
 /code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-
+/code/modules/surgery/ @ExcessiveUseOfCobblestone
 
 # Cyberboss
 
