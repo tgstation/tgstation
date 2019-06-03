@@ -485,7 +485,6 @@
 	name = "wet floor sign"
 	desc = "Caution! Wet Floor!"
 	icon_state = "caution"
-	body_parts_covered = CHEST|GROIN
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 1
@@ -493,7 +492,9 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
+	body_parts_covered = CHEST|GROIN
 	attack_verb = list("warned", "cautioned", "smashed")
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 
 
