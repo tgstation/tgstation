@@ -23,7 +23,8 @@
 	var/factions = null
 	var/list/quirks = null
 	var/contains_sample = 0
-
+	mutatelist = list(/obj/item/seeds/replicapod/treantshell,/obj/item/seeds/replicapod/mushroompod)
+	rarity = 70
 /obj/item/seeds/replicapod/Initialize()
 	. = ..()
 
@@ -119,6 +120,241 @@
 		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 		log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
+
+	else //else, one packet of seeds. maybe two
+		var/seed_count = 1
+		if(prob(getYield() * 20))
+			seed_count++
+		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+		for(var/i=0,i<seed_count,i++)
+			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
+			result.Add(harvestseeds)
+			harvestseeds.forceMove(output_loc)
+
+	parent.update_tray()
+	return result
+
+// Treant seed
+
+/obj/item/seeds/replicapod/treantshell
+	name = "pack of treant shell seeds"
+	desc = "The more robust variant of the replica pods."
+	icon_state = "seed-treantshell"
+	species = "treantshell"
+	plantname = "Treant Shell"
+	product = /mob/living/carbon/human/species/golem/wood
+	rarity = 30
+/obj/item/seeds/replicapod/treantshell/Initialize()
+	. = ..()
+
+	create_reagents(volume, INJECTABLE|DRAWABLE)
+
+/obj/item/seeds/replicapod/treantshell/on_reagent_change(changetype)
+	if(changetype == ADD_REAGENT)
+		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
+		if(B)
+			if(B.data["mind"] && B.data["cloneable"])
+				mind = B.data["mind"]
+				ckey = B.data["ckey"]
+				realName = B.data["real_name"]
+				blood_gender = B.data["gender"]
+				blood_type = B.data["blood_type"]
+				features = B.data["features"]
+				factions = B.data["factions"]
+				quirks = B.data["quirks"]
+				contains_sample = TRUE
+				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+				log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
+			else
+				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+
+	if(!reagents.has_reagent(/datum/reagent/blood))
+		mind = null
+		ckey = null
+		realName = null
+		blood_gender = null
+		blood_type = null
+		features = null
+		factions = null
+		contains_sample = FALSE
+
+/obj/item/seeds/replicapod/treantshell/get_analyzer_text()
+	var/text = ..()
+	if(contains_sample)
+		text += "\n It contains a blood sample!"
+	return text
+
+
+/obj/item/seeds/replicapod/treantshell/harvest(mob/user) //me love copy-paste
+	var/obj/machinery/hydroponics/parent = loc
+	var/make_podman = 0
+	var/ckey_holder = null
+	var/list/result = list()
+	if(CONFIG_GET(flag/revival_pod_plants))
+		if(ckey)
+			for(var/mob/M in GLOB.player_list)
+				if(isobserver(M))
+					var/mob/dead/observer/O = M
+					if(O.ckey == ckey && O.can_reenter_corpse)
+						make_podman = 1
+						break
+				else
+					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
+						make_podman = 1
+						if(isliving(M))
+							var/mob/living/L = M
+							make_podman = !L.hellbound
+						break
+		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
+			for(var/mob/M in GLOB.player_list)
+				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !M.suiciding)
+					if(isobserver(M))
+						var/mob/dead/observer/O = M
+						if(!O.can_reenter_corpse)
+							break
+					make_podman = 1
+					if(isliving(M))
+						var/mob/living/L = M
+						make_podman = !L.hellbound
+					ckey_holder = M.ckey
+					break
+
+	if(make_podman)	//all conditions met!
+		var/mob/living/carbon/human/golem = new /mob/living/carbon/human/species/golem/wood(parent.loc)
+		if(realName)
+			golem.real_name = realName
+		else
+			golem.real_name = "Treant ([rand(1,999)])"
+		mind.transfer_to(golem)
+		if(ckey)
+			golem.ckey = ckey
+		else
+			golem.ckey = ckey_holder
+		if(!features["mcolor"])
+			features["mcolor"] = "#59CE00"
+		for(var/V in quirks)
+			new V(golem)
+		log_cloning("[key_name(mind)] cloned as a treant via [src] in [parent] at [AREACOORD(parent)].")
+
+	else //else, one packet of seeds. maybe two
+		var/seed_count = 1
+		if(prob(getYield() * 20))
+			seed_count++
+		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+		for(var/i=0,i<seed_count,i++)
+			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
+			result.Add(harvestseeds)
+			harvestseeds.forceMove(output_loc)
+
+	parent.update_tray()
+	return result
+
+
+
+
+// mushroom pod
+
+/obj/item/seeds/replicapod/mushroompod
+	name = "pack of mushroom pod seeds"
+	desc = "A supposed ancestor of the replica pods"
+	icon_state = "mycelium-mushroompod"
+	species = "mushroompod"
+	plantname = "Mushroom Pod"
+	product = /mob/living/carbon/human/species/mush
+	rarity = 30
+	mutatelist = list(/obj/item/seeds/replicapod)
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+/obj/item/seeds/replicapod/mushroompod/Initialize()
+	. = ..()
+
+	create_reagents(volume, INJECTABLE|DRAWABLE)
+
+/obj/item/seeds/replicapod/mushroompod/on_reagent_change(changetype)
+	if(changetype == ADD_REAGENT)
+		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
+		if(B)
+			if(B.data["mind"] && B.data["cloneable"])
+				mind = B.data["mind"]
+				ckey = B.data["ckey"]
+				realName = B.data["real_name"]
+				blood_gender = B.data["gender"]
+				blood_type = B.data["blood_type"]
+				features = B.data["features"]
+				factions = B.data["factions"]
+				quirks = B.data["quirks"]
+				contains_sample = TRUE
+				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+				log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
+			else
+				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+
+	if(!reagents.has_reagent(/datum/reagent/blood))
+		mind = null
+		ckey = null
+		realName = null
+		blood_gender = null
+		blood_type = null
+		features = null
+		factions = null
+		contains_sample = FALSE
+
+/obj/item/seeds/replicapod/mushroompod/get_analyzer_text()
+	var/text = ..()
+	if(contains_sample)
+		text += "\n It contains a blood sample!"
+	return text
+
+
+/obj/item/seeds/replicapod/mushroompod/harvest(mob/user) //me love copy-paste
+	var/obj/machinery/hydroponics/parent = loc
+	var/make_podman = 0
+	var/ckey_holder = null
+	var/list/result = list()
+	if(CONFIG_GET(flag/revival_pod_plants))
+		if(ckey)
+			for(var/mob/M in GLOB.player_list)
+				if(isobserver(M))
+					var/mob/dead/observer/O = M
+					if(O.ckey == ckey && O.can_reenter_corpse)
+						make_podman = 1
+						break
+				else
+					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
+						make_podman = 1
+						if(isliving(M))
+							var/mob/living/L = M
+							make_podman = !L.hellbound
+						break
+		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
+			for(var/mob/M in GLOB.player_list)
+				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !M.suiciding)
+					if(isobserver(M))
+						var/mob/dead/observer/O = M
+						if(!O.can_reenter_corpse)
+							break
+					make_podman = 1
+					if(isliving(M))
+						var/mob/living/L = M
+						make_podman = !L.hellbound
+					ckey_holder = M.ckey
+					break
+
+	if(make_podman)	//all conditions met!
+		var/mob/living/carbon/human/mush = new /mob/living/carbon/human/species/mush(parent.loc)
+		if(realName)
+			mush.real_name = realName
+		else
+			mush.real_name = "Mushroom ([rand(1,999)])"
+		mind.transfer_to(mush)
+		if(ckey)
+			mush.ckey = ckey
+		else
+			mush.ckey = ckey_holder
+		if(!features["mcolor"])
+			features["mcolor"] = "#59CE00"
+		for(var/V in quirks)
+			new V(mush)
+		log_cloning("[key_name(mind)] cloned as a mushroom man via [src] in [parent] at [AREACOORD(parent)].")
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

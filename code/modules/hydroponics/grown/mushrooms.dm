@@ -97,6 +97,7 @@
 	yield = 5
 	potency = 15
 	growthstages = 3
+	mutatelist = list(/obj/item/seeds/liberty/brig)
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/drug/mushroomhallucinogen = 0.25, /datum/reagent/consumable/nutriment = 0.02)
@@ -109,6 +110,37 @@
 	filling_color = "#DAA520"
 	wine_power = 80
 
+// Brig Cap
+/obj/item/seeds/liberty/brig
+	name = "pack of brig-cap mycelium"
+	desc = "The permabrig's number 1 choice."
+	icon_state = "mycelium-brig"
+	species = "brig"
+	plantname = "Brig-Caps"
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/brigcap
+	maturation = 7
+	production = 1
+	yield = 2
+	potency = 15
+	growthstages = 3
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list(/datum/reagent/drug/mushroomhallucinogen = 0.25, /datum/reagent/consumable/nutriment = 0.02)
+	rarity = 30
+
+/obj/item/reagent_containers/food/snacks/grown/mushroom/brigcap
+	seed = /obj/item/seeds/liberty/brig
+	name = "brig-cap"
+	desc = "<B>Like it or not you're comming with me!</B>"
+	icon_state = "brigcap"
+	filling_color = "#DAA520"
+	wine_power = 80
+	distill_reagent = /datum/reagent/consumable/ethanol/beepsky_smash
+/obj/item/reagent_containers/food/snacks/grown/mushroom/brigcap/attackby(obj/item/W, mob/user, params)
+	if(W.sharpness)
+		user.show_message("<span class='notice'>You make hancuffs out of \the [src]!</span>", 1)
+		new /obj/item/restraints/handcuffs(user.loc)
+		qdel(src)
 // Plump Helmet
 /obj/item/seeds/plump
 	name = "pack of plump-helmet mycelium"
@@ -199,6 +231,31 @@
 	icon_state = "chanterelle"
 	filling_color = "#FFA500"
 
+//Truffles
+/obj/item/seeds/chanter/truffles
+	name = "pack of truffle mycelium"
+	desc = "A staple of good cuisine."
+	icon_state = "mycelium-truffles"
+	species = "truffles"
+	plantname = "Truffles"
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/truffle
+	lifespan = 35
+	endurance = 20
+	maturation = 10
+	production = 12
+	yield = 1
+	potency = 5
+	growthstages = 3
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1,/datum/reagent/consumable/secretsauce=0.05)
+
+/obj/item/reagent_containers/food/snacks/grown/mushroom/truffle
+	seed = /obj/item/seeds/chanter/truffles
+	name = "Truffles"
+	desc = "<I>Tuber melanosporum</I>: These are the pinacle of good food!"
+	icon_state = "truffle"
+	filling_color = "#564E3B"
 
 // Glowshroom
 /obj/item/seeds/glowshroom

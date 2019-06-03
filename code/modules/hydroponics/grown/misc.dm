@@ -44,7 +44,6 @@
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/replicapod)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/cabbage
@@ -57,6 +56,40 @@
 	foodtype = VEGETABLES
 	wine_power = 20
 
+//crabbage
+/obj/item/seeds/cabbage/crabbage
+	name = "pack of crabbage seeds"
+	desc = "Click click click."
+	icon_state = "seed-crabbage"
+	species = "crabbage"
+	plantname = "Crabbages"
+	product = /obj/item/reagent_containers/food/snacks/grown/crabbage
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 1
+	growthstages = 1
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1,/datum/reagent/toxin/itching_powder = 0.2)
+/obj/item/reagent_containers/food/snacks/grown/crabbage
+	seed = /obj/item/seeds/cabbage/crabbage
+	name = "Crabbage"
+	desc = "Clicky"
+	icon_state = "crabbage"
+	filling_color = "#90EE90"
+	bitesize_mod = 2
+	foodtype = VEGETABLES
+	wine_power = 20
+/obj/item/reagent_containers/food/snacks/grown/crabbage/attack_self(mob/user)
+	to_chat(user, "<span class='notice'>You hear clicking comming from the crabbage!</span>")
+	spawn(30)
+		if(!QDELETED(src))
+			var/mob/living/simple_animal/crab/K = new /mob/living/simple_animal/crab(get_turf(src.loc))
+			K.maxHealth += round(seed.endurance / 3)
+			K.health = K.maxHealth
+			K.visible_message("<span class='notice'>The crabbage turns into a cute crab!</span>")
+			qdel(src)
 // Sugarcane
 /obj/item/seeds/sugarcane
 	name = "pack of sugarcane seeds"

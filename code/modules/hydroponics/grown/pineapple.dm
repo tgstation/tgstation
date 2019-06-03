@@ -11,7 +11,7 @@
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/apple)
+	mutatelist = list(/obj/item/seeds/apple,/obj/item/seeds/pineapple/pizzapple)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.2, /datum/reagent/water = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/pineapple
@@ -32,3 +32,21 @@
 	foodtype = FRUIT | PINEAPPLE
 	tastes = list("pineapple" = 1)
 	wine_power = 40
+
+
+// Pizzapple(please send help)
+/obj/item/seeds/pineapple/pizzapple
+	name = "pack of pizzapple seeds"
+	desc = "Something went wrong..."
+	icon_state = "seed-pizzapple"
+	species = "pizzapple"
+	plantname = "Pizzapple Plant"
+	product = /obj/item/reagent_containers/food/snacks/pizza/pineapple
+	lifespan = 40
+	endurance = 10
+	maturation = 15
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	reagents_add = list(/datum/reagent/consumable/ketchup=0.2, /datum/reagent/toxin/acid = 0.03)
+	rarity = 20
