@@ -202,6 +202,16 @@ MIDROUND_ANTAG WIZARD
 #MIN_POP EXTENDED 0
 #MAX_POP EXTENDED -1
 
+## Uncomment to enable automatic switching to sandbox when player count falls below a threshold 
+AUTOSANDBOX_ENABLED
+
+## The threshold at which the server will automatically swap from secret to sandbox if server population is less than or equal to this number (default: 5)
+AUTOSANDBOX_MIN 5
+
+## The threshold at which the server will automatically swap from sandbox to secret if server population is greater than or equal to this number (default: 10)
+AUTOSANDBOX_MAX 10
+
+
 
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.

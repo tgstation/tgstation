@@ -14,6 +14,7 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/cola = 8,
 					/obj/item/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/reagent_containers/food/drinks/soda_cans/sodawater = 15,
+					/obj/item/reagent_containers/food/drinks/soda_cans/space_bitters = 6,
 					/obj/item/reagent_containers/food/drinks/bottle/grenadine = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/menthol = 4,
 					/obj/item/reagent_containers/food/drinks/ale = 6,
