@@ -245,7 +245,24 @@
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
 	if(motd || tm_info)
 		motd = motd ? "[motd]<br>[tm_info]" : tm_info
+/*
+Policy file should be a json file with a single object.
+Value is raw html.
 
+Possible keywords : 
+Job titles / Assigned roles (ghost spawners for example) : Assistant , Captain , Ash Walker
+Mob types : /mob/living/simple_animal/hostile/carp
+Antagonist types : /datum/antagonist/highlander
+Species types : /datum/species/lizard
+
+Example config:
+{
+    "Assistant" : "Don't kill everyone",
+    "/datum/antagonist/highlander" : "<b>Kill everyone</b>",
+    "Ash Walker" : "Kill all spacemans"
+}
+
+*/
 /datum/controller/configuration/proc/LoadPolicy()
 	policy = list()
 	var/rawpolicy = file2text("[directory]/policy.json")

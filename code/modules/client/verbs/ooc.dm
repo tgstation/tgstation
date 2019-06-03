@@ -360,23 +360,27 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set desc = "Show special server rules related to your current character."
 	set category = "OOC"
 	
-	//Collect keywords
+	//Collect keywords - should be turned into proper helper later.
 	var/list/keywords = list()
 	keywords += "[mob.type]"
 	var/mob/living/carbon/human/H = mob
 	if(istype(H))
-		keywords += H.dna.species.id
+		keywords += "[H.dna.species.type]"
 	var/datum/mind/M = mob.mind
 	keywords += M.assigned_role
-	keywords += M.special_role //In case there's something special leftover
+	keywords += M.special_role //In case there's something special leftover, try to avoid
 	for(var/datum/antagonist/A in M.antag_datums)
-		keywords += A.name
+		keywords += "[A.type]"
 
 	var/list/policytext = list("")
+	var/anything = FALSE
 	for(var/keyword in keywords)
 		var/p = get_policy(keyword)
 		if(p)
 			policytext += p
 			policytext += "<hr>"
+			anything = TRUE
+	if(!anything)
+		policytext += "No related rules found."
 
 	usr << browse(policytext.Join(""),"window=policy")
