@@ -379,16 +379,16 @@
 	name = "\improper syphoning beam"
 	range = 8
 	damage = 5
-	icon_state = ""
-	hitscan = TRUE
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+//	icon_state = ""
+//	hitscan = TRUE
+//	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_YELLOW
 	tracer_type = /obj/effect/projectile/tracer/solar
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
 
 /obj/item/projectile/beam/syphon/on_hit(atom/target)
-	if(istype(target, /obj/item/stock_parts/cell))
+/*	if(istype(target, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/C = target
 		C.charge -= min(1000, C.charge)
 	//	if(prob(5))
@@ -400,9 +400,10 @@
 		var/obj/machinery/power/apc/APC = target
 		var/obj/item/stock_parts/cell/C = APC.cell
 		C.charge -=  min(500, C.charge)
-	if(ishuman(firer))
-		var/mob/living/carbon/human/FH = firer
-		SEND_SIGNAL(FH,"syphon", FH)
+//	if(ishuman(firer))
+	var/mob/living/carbon/human/FH = firer
+	*/
+	SEND_SIGNAL(target, CONSIG_SYPHON)
 
 /obj/effect/projectile/tracer/solar
 	name = "syphon"

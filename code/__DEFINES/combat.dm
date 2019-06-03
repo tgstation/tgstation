@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //Projectile Reflect
 #define REFLECT_NORMAL 				(1<<0)
 #define REFLECT_FAKEPROJECTILE		(1<<1)
-#define REFLECT_MAX				"benis"
+#define REFLECT_MAX					(1<<2)
 
 //Object/Item sharpness
 #define IS_BLUNT			0
