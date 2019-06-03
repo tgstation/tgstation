@@ -14611,6 +14611,12 @@
 /obj/machinery/vending/wardrobe/viro_wardrobe,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"aIf" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/medical/sleeper)
 "aIg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -17949,12 +17955,14 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aQh" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
 /obj/machinery/camera{
 	c_tag = "Medical - Sleeper Bay";
 	dir = 1;
 	network = list("ss13","Medical")
 	},
-/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "aQi" = (
@@ -19414,10 +19422,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"aTD" = (
-/obj/machinery/stasis,
-/turf/open/floor/plasteel,
-/area/medical/sleeper)
 "aTE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -21871,10 +21875,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "aYo" = (
+/obj/machinery/sleeper,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "aYp" = (
@@ -48511,7 +48515,7 @@
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/circuitboard/machine/stasis,
+/obj/item/circuitboard/machine/sleeper,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bZY" = (
@@ -56886,7 +56890,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "wMM" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper,
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
@@ -80031,7 +80035,7 @@ aGQ
 aYo
 aJb
 aHP
-aTD
+aIf
 aGQ
 aTY
 bAF

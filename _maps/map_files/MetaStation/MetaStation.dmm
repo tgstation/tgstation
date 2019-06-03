@@ -59057,6 +59057,9 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "cld" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -59067,7 +59070,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cle" = (
@@ -59108,6 +59110,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "clh" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -59121,7 +59126,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cli" = (

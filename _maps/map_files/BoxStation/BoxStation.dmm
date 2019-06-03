@@ -7444,7 +7444,6 @@
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/capacitor,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "apM" = (
@@ -9695,7 +9694,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avS" = (
-/obj/item/circuitboard/machine/stasis,
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -10222,7 +10220,9 @@
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "axe" = (
-/obj/structure/frame/machine,
+/obj/machinery/sleeper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "axf" = (
@@ -10736,7 +10736,6 @@
 "ayt" = (
 /obj/structure/table/glass,
 /obj/item/hemostat,
-/obj/item/stock_parts/manipulator,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayu" = (
@@ -31372,7 +31371,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bwD" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bwE" = (
@@ -32992,12 +32993,14 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bAq" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /obj/machinery/camera{
 	c_tag = "Medbay Treatment Center";
 	network = list("ss13","medbay");
 	dir = 8
 	},
-/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bAr" = (
