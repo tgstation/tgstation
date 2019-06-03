@@ -1,5 +1,3 @@
-#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
-
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -467,5 +465,3 @@
 			node.atmosinit()
 			node.addMember(src)
 		build_network()
-
-#undef CRYOMOBS
