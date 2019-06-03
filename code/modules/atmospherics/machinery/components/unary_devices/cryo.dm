@@ -38,7 +38,6 @@
 	// for alpha masking
 	var/image/alpha_overlay
 	var/image/alpha_overlay_32x32
-	var/image/together_overlay
 	var/overlay_pixel_y = 22
 
 
@@ -52,8 +51,6 @@
 	alpha_overlay_32x32 = image('icons/obj/cryogenics32x32.dmi', "pod-alpha")
 	alpha_overlay_32x32.appearance_flags |= KEEP_TOGETHER
 	alpha_overlay_32x32.color = list(0,0,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,0)
-	together_overlay = new()
-	together_overlay.appearance_flags |= KEEP_TOGETHER
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -120,7 +117,6 @@
 
 	if(occupant)
 		var/image/occupant_overlay = image(occupant.icon, occupant.icon_state, dir = SOUTH)
-		occupant_overlay.blend_mode = BLEND_MULTIPLY
 		occupant_overlay.appearance_flags |= KEEP_TOGETHER
 		occupant_overlay.copy_overlays(occupant)
 		overlay_pixel_y = 22
@@ -159,22 +155,14 @@
 	addtimer(CALLBACK(src, .proc/run_anim, is32x32, occupant_overlay, anim_up), 7, TIMER_UNIQUE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/add_masked_overlay(is32x32, image/overlay) // overlay blend mode needs to be multiply
-	var/old_color = overlay.color
-	overlay.color = list(0,0,0,0, 0,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,1)
+	var/image/masked
 	if(is32x32)
-		alpha_overlay_32x32.pixel_y = overlay_pixel_y
-		alpha_overlay_32x32.overlays = list(overlay)
-		overlay.color = old_color
-		var/old_pixel_y = overlay.pixel_y
-		overlay.pixel_y = overlay_pixel_y
-		together_overlay.overlays = list(alpha_overlay_32x32, overlay)
-		overlay.pixel_y = old_pixel_y
+		masked = apply_alpha_mask(overlay, alpha_overlay_32x32)
+		masked.pixel_y = overlay_pixel_y
 	else
 		overlay.pixel_y = overlay_pixel_y
-		alpha_overlay.overlays = list(overlay)
-		overlay.color = old_color
-		together_overlay.overlays = list(alpha_overlay, overlay)
-	add_overlay(together_overlay)
+		masked = apply_alpha_mask(overlay, alpha_overlay)
+	add_overlay(masked)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
