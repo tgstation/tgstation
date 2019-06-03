@@ -297,10 +297,6 @@
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	level = 1
 
-/obj/item/storage/backpack/satchel/flat/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
-
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
@@ -312,10 +308,12 @@
 		invisibility = INVISIBILITY_OBSERVER
 		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
+		ADD_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
 	else
 		invisibility = initial(invisibility)
 		anchored = FALSE
 		icon_state = initial(icon_state)
+		REMOVE_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
 	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
