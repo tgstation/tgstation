@@ -10,7 +10,7 @@
 /obj/item/poster/wanted
 	icon_state = "rolled_poster"
 	var/postHeaderText = "WANTED" // MAX 7 Characters
-	var/postHeaderColor = "#FF0000";
+	var/postHeaderColor = "#FF0000"
 	var/background = "wanted_background"
 	var/postName = "wanted poster"
 	var/postDesc = "A wanted poster for"
@@ -56,7 +56,7 @@
 	the_icon.Blend(person_icon, ICON_OVERLAY)
 
 	// Print text on top of poster.
-	print_across_top(the_icon, postHeaderText, postHeaderColor);	
+	print_across_top(the_icon, postHeaderText, postHeaderColor)
 	
 	the_icon.Insert(the_icon, "wanted")
 	the_icon.Insert(icon('icons/obj/contraband.dmi', "poster_being_set"), "poster_being_set")
