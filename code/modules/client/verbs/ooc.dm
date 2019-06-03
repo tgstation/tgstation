@@ -372,7 +372,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	for(var/datum/antagonist/A in M.antag_datums)
 		keywords += "[A.type]"
 
-	var/list/policytext = list("")
+	var/list/policytext = list("<hr>")
 	var/anything = FALSE
 	for(var/keyword in keywords)
 		var/p = get_policy(keyword)
