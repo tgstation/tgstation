@@ -1,10 +1,9 @@
 /datum/round_event_control/disaster/ash_cloud
 	name = "Pyroclastic Nebula"
-	weight = 2
+	weight = 40
 	typepath = /datum/round_event/disaster/ash_cloud
-	max_occurrences = 999
-	earliest_start = 0 MINUTES
-	gamemode_blacklist = list()
+	max_occurrences = 1000
+	earliest_start = 10 MINUTES
 	gamemode_whitelist = list("disaster")
 
 /datum/round_event/disaster/ash_cloud

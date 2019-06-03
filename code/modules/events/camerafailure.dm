@@ -4,7 +4,6 @@
 	weight = 100
 	max_occurrences = 20
 	alert_observers = FALSE
-	gamemode_blacklist = list("disaster")
 
 /datum/round_event/camera_failure
 	fakeable = FALSE

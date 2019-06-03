@@ -3,7 +3,6 @@
 	typepath = /datum/round_event/obsessed
 	max_occurrences = 1
 	min_players = 20
-	gamemode_blacklist = list("disaster")
 
 /datum/round_event/obsessed
 	fakeable = FALSE

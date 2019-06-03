@@ -4,7 +4,6 @@
 	min_players = 20
 	max_occurrences = 2
 	weight = 5
-	gamemode_blacklist = list("disaster")
 
 /datum/round_event/anomaly/anomaly_vortex
 	startWhen = 10

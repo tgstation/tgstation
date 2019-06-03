@@ -4,11 +4,11 @@
 	desc = "The ground turns into surprisingly cool lava, lightly damaging anything on the floor."
 
 	telegraph_message = "<span class='warning'>You feel the ground beneath you getting hot. Waves of heat distort the air.</span>"
-	telegraph_duration = 150
+	telegraph_duration = 15 SECONDS
 
 	weather_message = "<span class='userdanger'>The floor is lava! Get on top of something!</span>"
-	weather_duration_lower = 300
-	weather_duration_upper = 600
+	weather_duration_lower = 30 SECONDS
+	weather_duration_upper = 60 SECONDS
 	weather_overlay = "lava"
 
 	end_message = "<span class='danger'>The ground cools and returns to its usual form.</span>"
@@ -41,7 +41,10 @@
 
 /datum/weather/floor_is_lava/molten
 	target_trait = ZTRAIT_STATION
+	probability = 0
+	telegraph_duration = 30 SECONDS
 	protected_areas = list(/area/shuttle)
+	barometer_predictable = TRUE
 
 /datum/weather/floor_is_lava/molten/telegraph()
 	..()

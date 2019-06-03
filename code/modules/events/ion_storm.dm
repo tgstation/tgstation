@@ -5,7 +5,6 @@
 	typepath = /datum/round_event/ion_storm
 	weight = 15
 	min_players = 2
-	gamemode_blacklist = list("disaster")
 
 /datum/round_event/ion_storm
 	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights

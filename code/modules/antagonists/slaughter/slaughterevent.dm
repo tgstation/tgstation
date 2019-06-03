@@ -5,7 +5,6 @@
 	max_occurrences = 1
 	earliest_start = 1 HOURS
 	min_players = 20
-	gamemode_blacklist = list("disaster")
 
 /datum/round_event/ghost_role/slaughter
 	minimum_required = 1

@@ -3,7 +3,6 @@
 	typepath = /datum/round_event/anomaly/anomaly_grav
 	max_occurrences = 5
 	weight = 20
-	gamemode_blacklist = list("disaster")
 
 /datum/round_event/anomaly/anomaly_grav
 	startWhen = 3

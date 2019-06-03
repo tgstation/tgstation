@@ -4,7 +4,6 @@
 	max_occurrences = 1
 	weight = 1
 	earliest_start = 5 MINUTES
-	gamemode_blacklist = list("disaster")
 
 /datum/round_event_control/aurora_caelus/canSpawnEvent(players, gamemode)
 	if(!CONFIG_GET(flag/starlight))

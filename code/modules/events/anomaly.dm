@@ -4,7 +4,6 @@
 	min_players = 1
 	max_occurrences = 0 //This one probably shouldn't occur! It'd work, but it wouldn't be very fun.
 	weight = 15
-	gamemode_blacklist = list("disaster")
 
 /datum/round_event/anomaly
 	var/area/impact_area

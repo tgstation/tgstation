@@ -4,13 +4,13 @@
 	probability = 90
 
 	telegraph_message = "<span class='warning'>Drifting particles of snow begin to dust the surrounding area..</span>"
-	telegraph_duration = 300
+	telegraph_duration = 30 SECONDS
 	telegraph_overlay = "light_snow"
 
 	weather_message = "<span class='userdanger'><i>Harsh winds pick up as dense snow begins to fall from the sky! Seek shelter!</i></span>"
 	weather_overlay = "snow_storm"
-	weather_duration_lower = 600
-	weather_duration_upper = 1500
+	weather_duration_lower = 60 SECONDS
+	weather_duration_upper = 150 SECONDS
 
 	end_duration = 100
 	end_message = "<span class='boldannounce'>The snowfall dies down, it should be safe to go outside again.</span>"
@@ -29,7 +29,6 @@
 /datum/weather/snow_storm/freeze
 	target_trait = ZTRAIT_STATION
 	probability = 0
-	barometer_predictable = FALSE
 	area_type = /area
 	protected_areas = list(/area/shuttle)
 	weather_message = "<span class='userdanger'><i>Harsh winds pick up as dense snow begins to fall around you!</i></span>"
@@ -38,8 +37,8 @@
 
 /datum/weather/snow_storm/freeze/telegraph()
 	..()
-	priority_announce("Incoming frozen vapors", "Anomaly Alert")
+	priority_announce("Incoming frozen vapors.", "Anomaly Alert")
 
 /datum/weather/acid_rain/cloud/end()
 	..()
-	priority_announce("The frozen vapors have passed", "Anomaly Alert")
+	priority_announce("The frozen vapors have passed.", "Anomaly Alert")

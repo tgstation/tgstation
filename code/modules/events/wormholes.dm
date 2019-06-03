@@ -4,7 +4,6 @@
 	max_occurrences = 3
 	weight = 2
 	min_players = 2
-	gamemode_blacklist = list("disaster")
 
 
 /datum/round_event/wormholes

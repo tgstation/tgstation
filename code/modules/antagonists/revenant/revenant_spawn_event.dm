@@ -6,8 +6,6 @@
 	weight = 7
 	max_occurrences = 1
 	min_players = 5
-	gamemode_blacklist = list("disaster")
-
 
 /datum/round_event/ghost_role/revenant
 	var/ignore_mobcheck = FALSE

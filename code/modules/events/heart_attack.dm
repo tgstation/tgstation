@@ -4,7 +4,6 @@
 	weight = 20
 	max_occurrences = 2
 	min_players = 40 // To avoid shafting lowpop
-	gamemode_blacklist = list("disaster")
 
 /datum/round_event/heart_attack/start()
 	var/list/heart_attack_contestants = list()

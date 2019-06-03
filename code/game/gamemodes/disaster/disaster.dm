@@ -12,9 +12,8 @@
 	var/check_counter = 0
 
 /datum/game_mode/disaster/pre_setup()
-	SSevents.scheduled = world.time + 10 MINUTES
-	SSevents.frequency_lower = 1500
-	SSevents.frequency_upper = 1800
+	SSevents.frequency_lower = 150 SECONDS
+	SSevents.frequency_upper = 180 SECONDS
 	return TRUE
 
 /datum/game_mode/disaster/post_setup()
@@ -25,7 +24,7 @@
 	return "Several disasters are incoming. Evacuate to Lavaland and see to it that work continues. We can't lose money over a little space-weather! While you're at it, if you could kill off the most dangerous wildlife down there, we could arrange for your extraction. Just something to think about."
 
 /datum/game_mode/disaster/send_intercept()
-	priority_announce("Due to inclement space weather, all staff are to relocate their work to Lavaland. You have 10 minutes. Hurry up!", sound = 'sound/effects/alert.ogg')
+	priority_announce("Due to inclement space weather, all staff are to relocate their work to Lavaland. You have 10 minutes. Hurry up!", sound = 'sound/weather/disastersiren.ogg')
 
 /datum/game_mode/disaster/process()
 	check_counter++
@@ -60,7 +59,6 @@
 		return TRUE
 	else
 		return ..()
-
 
 /datum/game_mode/disaster/set_round_result()
 	..()

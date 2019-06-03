@@ -3,17 +3,17 @@
 	name = "acid rain"
 	desc = "The planet's thunderstorms are by nature acidic, and will incinerate anyone standing beneath them without protection."
 
-	telegraph_duration = 400
+	telegraph_duration = 40 SECONDS
 	telegraph_message = "<span class='boldwarning'>Thunder rumbles far above. You hear droplets drumming against the canopy. Seek shelter.</span>"
 	telegraph_sound = 'sound/ambience/acidrain_start.ogg'
 
 	weather_message = "<span class='userdanger'><i>Acidic rain pours down around you! Get inside!</i></span>"
 	weather_overlay = "acid_rain"
-	weather_duration_lower = 600
-	weather_duration_upper = 1500
+	weather_duration_lower = 60 SECONDS
+	weather_duration_upper = 150 SECONDS
 	weather_sound = 'sound/ambience/acidrain_mid.ogg'
 
-	end_duration = 100
+	end_duration = 10 SECONDS
 	end_message = "<span class='boldannounce'>The downpour gradually slows to a light shower. It should be safe outside now.</span>"
 	end_sound = 'sound/ambience/acidrain_end.ogg'
 
@@ -26,12 +26,12 @@
 
 
 /datum/weather/acid_rain/weather_act(mob/living/L)
-	L.acid_act(100,1)
+	L.acid_act(20,1)
 
 /datum/weather/acid_rain/cloud
 	target_trait = ZTRAIT_STATION
 	probability = 0
-	barometer_predictable = FALSE
+	telegraph_duration = 30 SECONDS
 	area_type = /area
 	protected_areas = list(/area/shuttle)
 	telegraph_message = "<span class='boldwarning'>Droplets of acid begin to drip and sizzle around you.</span>"
