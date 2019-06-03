@@ -371,6 +371,18 @@
 			G.reagents.trans_to(L, injecting_amount)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 
+/datum/plant_gene/trait/smoke
+	name = "gaseous decomposition"
+
+/datum/plant_gene/trait/smoke/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+	var/datum/effect_system/smoke_spread/chem/S = new
+	var/splat_location = get_turf(target)
+	var/smoke_amount = round(sqrt(G.seed.potency * 0.1), 1)
+	S.attach(splat_location)
+	S.set_up(G.reagents, smoke_amount, splat_location, 0)
+	S.start()
+	G.reagents.clear_reagents()
+
 /datum/plant_gene/trait/fire_resistance // Lavaland
 	name = "Fire Resistance"
 

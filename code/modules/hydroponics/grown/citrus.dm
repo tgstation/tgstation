@@ -58,7 +58,7 @@
 	var/cleanspeed = 50
 /obj/item/reagent_containers/food/snacks/grown/citrus/lyeme/add_juice()
 	..()
-	cleanspeed =round(50-(seed.potency/2))
+	cleanspeed =cleanspeed =round(60-(seed.potency/2))
 /obj/item/reagent_containers/food/snacks/grown/citrus/lyeme/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity || !check_allowed_items(target))

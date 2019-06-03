@@ -52,7 +52,7 @@
 
 /obj/item/seeds/garlic/plasma
 	name = "pack of plasma garlic seeds"
-	desc = "Danger:Handle with care."
+	desc = "Not actually toxic to eat."
 	icon_state = "seed-plasmagarlic"
 	species = "plasmagarlic"
 	plantname = "Plasma Garlic Sprouts"
@@ -62,7 +62,7 @@
 	rarity = 25
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	reagents_add = list(/datum/reagent/consumable/garlic = 0.15, /datum/reagent/toxin/plasma = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.07, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/plasmagarlic
 	seed = /obj/item/seeds/garlic/plasma
@@ -70,6 +70,7 @@
 	desc = "Tasty for the daring."
 	icon_state = "plasmagarlic"
 	filling_color = "#D742F4"
+	juice_results = list(/datum/reagent/toxin/plasma=0)
 	bitesize_mod = 2
 	tastes = list("toxins" = 1)
 	wine_power = 10
