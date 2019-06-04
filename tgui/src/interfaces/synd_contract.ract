@@ -65,7 +65,7 @@
 		</table>
 	{{else}}
 		<div style="text-align:center">
-			<ui-button action='PRG_login'>Log in</ui-button><br>
+			<ui-button action='PRG_login'>Assign</ui-button><br>
 			{{#if data.error}}
 				{{data.error}}
 			{{/if}}

@@ -29,7 +29,7 @@
 			var/contract_id = text2num(params["contract_id"])
 
 			// Set as the active contract
-			hard_drive.traitor_data.assigned_contracts[contract_id].status = 2
+			hard_drive.traitor_data.assigned_contracts[contract_id].status = CONTRACT_STATUS_ACTIVE
 			hard_drive.traitor_data.current_contract = hard_drive.traitor_data.assigned_contracts[contract_id]
 			return 1
 		if("PRG_login")
@@ -43,16 +43,16 @@
 				error = "Incorrect login details."
 			return 1
 		if("PRG_call_extraction")
-			// Set as in progress extraction, and play soundbite.
-			// TODO: ONLY FOR DEBUG - TO MOVE TO HANDLING PROC
-			hard_drive.traitor_data.current_contract.status = 3
-			user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 35, 1)
+			to_chat(user, "Called extraction")
+			if (hard_drive.traitor_data.current_contract.handle_extraction(user))
+				user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 50, 1)
+
 			return 1
 		if("PRG_contract_abort")
 			var/contract_id = hard_drive.traitor_data.current_contract.id
 
 			hard_drive.traitor_data.current_contract = null
-			hard_drive.traitor_data.assigned_contracts[contract_id].status = 5
+			hard_drive.traitor_data.assigned_contracts[contract_id].status = CONTRACT_STATUS_ABORTED
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
 	var/list/data = list()
@@ -66,7 +66,7 @@
 
 		if (traitor_data.current_contract)
 			data["ongoing_contract"] = TRUE
-			if (traitor_data.current_contract.status == 3)
+			if (traitor_data.current_contract.status == CONTRACT_STATUS_EXTRACTING)
 				to_chat(usr, "extraction in progress")
 				data["extraction_enroute"] = TRUE
 
