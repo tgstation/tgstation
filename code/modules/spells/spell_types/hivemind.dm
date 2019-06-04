@@ -640,10 +640,11 @@
 	name = "Telekinetic hand"
 	desc = "Extends the reach of your unarmed combat. Drop to remove."
 	icon = 'icons/mob/actions/actions_hive.dmi'
-	icon_state = "hand"
-	item_state = "hand"
-	lefthand_file = null
-	righthand_file = null
+	icon_state = "hivehand"
+	item_state = "hivehand"
+	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
+	
 	reach = 3
 	min_reach = -1
 	item_flags = ABSTRACT | DROPDEL
@@ -658,7 +659,7 @@
 	panel = "Hivemind Abilities"
 	action_background_icon_state = "bg_hive"
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
-	action_icon_state = "hand"
+	action_icon_state = "hivehand"
 	var/spell_item = /obj/item/extendohand/hivemind
 
 /obj/effect/proc_holder/spell/self/telekinetic_hand/cast(mob/user = usr)
