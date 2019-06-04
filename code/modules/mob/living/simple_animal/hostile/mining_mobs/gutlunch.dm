@@ -145,8 +145,7 @@
 		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck(loc)
 	else
 		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen(loc)
-	if(mind)
-		mind.transfer_to(L)
+	mind?.transfer_to(L)
 	L.faction = faction
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
