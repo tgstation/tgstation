@@ -31,7 +31,7 @@
 			species.liked_food |= MEAT
 		if(!initial(species.disliked_food) & MEAT)
 			species.disliked_food &= ~MEAT
-	
+
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
@@ -88,14 +88,6 @@
 		var/datum/species/species = H.dna.species
 		species.liked_food = initial(species.liked_food)
 		species.disliked_food = initial(species.disliked_food)
-
-/datum/quirk/neat
-	name = "Neat"
-	desc = "You really don't like being unhygienic, and will get sad if you are."
-	mob_trait = TRAIT_NEAT
-	gain_text = "<span class='notice'>You feel like you have to stay clean.</span>"
-	lose_text = "<span class='danger'>You no longer feel the need to always be clean.</span>"
-	mood_quirk = TRUE
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"

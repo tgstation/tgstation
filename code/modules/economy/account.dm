@@ -7,7 +7,6 @@
 	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
 	var/account_id
-	var/welfare = FALSE
 	var/being_dumped = FALSE //pink levels are rising
 	var/withdrawDelay = 0
 
@@ -50,8 +49,6 @@
 
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
 	var/money_to_transfer = account_job.paycheck * amt_of_paychecks
-	if(welfare)
-		money_to_transfer += PAYCHECK_WELFARE
 	if(free)
 		adjust_money(money_to_transfer)
 	else
@@ -103,5 +100,5 @@
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
 	SSeconomy.generated_accounts += src
-	
+
 #undef DUMPTIME
