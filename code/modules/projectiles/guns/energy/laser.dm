@@ -173,64 +173,41 @@
 	icon = 'icons/obj/guns/energy.dmi'
 	var/stored_ammo_type = /obj/item/ammo_casing/energy/laser/scatter
 
-/obj/item/external_lens/BTC
+/obj/item/external_lens/bitcoin
 	name = "external lens: ticket dispenser"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/bitcoin
 	icon_state = "external_bitcoin"
 
-/obj/item/external_lens/RIC
+/obj/item/external_lens/ricochet
 	name = "external lens: bouncing ray"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/rico
 
-/obj/item/external_lens/TRA
+/obj/item/external_lens/tracing
 	name = "external lens: tracer ray"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/tracer
 
-/obj/item/external_lens/SHK
+/obj/item/external_lens/shocking
 	name = "external lens: shocking ray"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/shock
 
-/obj/item/external_lens/BLN
+/obj/item/external_lens/blinding
 	name = "external lens: blinding ray"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/blinding
 
-/obj/item/external_lens/STH
+/obj/item/external_lens/stealth
 	name = "external lens: stealth ray"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/invisible
 	icon_state = "external_stealth"
 
-/obj/item/external_lens/INC
+/obj/item/external_lens/incendiary
 	name = "external lens: incendiary ray"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/incendiary
 
-/obj/item/external_lens/HEA
+/obj/item/external_lens/heavy
 	name = "external lens: heavy plasma bolt"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/heavy
 	icon_state = "external_heavy"
 
-/obj/item/external_lens/ECO
+/obj/item/external_lens/economic
 	name = "external lens: low power consuption ray"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/lowenergy
-
-/obj/item/external_lens/SYP
-	name = "external lens: cell syphoning"
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/syphon
-
-/obj/item/external_lens/SYP/Initialize()
-	. = ..()
-	AddComponent(/datum/component/Scharge)//could pass firer from laser in here with initilize in here
-	message_admins("epic1")
-/datum/component/Scharge/Initialize()
-	. = ..()
-	RegisterSignal(parent, CONSIG_SYPHON, .proc/charge)
-	message_admins("epic2")
-
-/datum/component/Scharge/proc/charge(datum/source) //doenst work
-	message_admins("epic")
-/*	var/obj/item/external_lens/LL = parent
-	var/obj/item/gun/energy/laser/L = LL.loc
-	if(ismob(L.loc))
-		var/mob/living/carbon/human/H = L.loc
-		if(FH == H)
-			L.cell.give(200)
-			*/

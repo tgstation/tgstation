@@ -788,3 +788,36 @@
 	name = "TO THE STARS AND BEYOND!"
 	desc = "I must go, my people need me!"
 	icon_state = "high"
+
+//laserweak
+
+/obj/screen/alert/status_effect/laserweak
+	name = "high laser absortion"
+	desc = "You are covered in an high laser absorbing gel"
+	icon_state = "slime_stoneskin"
+
+/datum/status_effect/laserweak
+	id = "laserweak"
+	duration = 100
+	alert_type = /obj/screen/alert/status_effect/slimeskin
+	var/originalcolor
+	var/obj/effect/light_holder
+
+/datum/status_effect/laserweak/on_apply()
+	originalcolor = owner.color
+	owner.color = "#FF0000"
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		var/datum/species/S = H.dna.species
+		S.burnmod += 0.3
+		light_holder = new(H)
+		light_holder.set_light(7, 2.7, "#FFCC00")
+	return ..()
+
+/datum/status_effect/laserweak/on_remove()
+	owner.color = originalcolor
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		var/datum/species/S = H.dna.species
+		S.burnmod -= 0.3
+		QDEL_NULL(light_holder)

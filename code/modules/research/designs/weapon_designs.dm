@@ -350,7 +350,7 @@
 	id = "lens_BTC"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_URANIUM = 5000, MAT_SILVER = 2000,  MAT_GOLD = 1000)
-	build_path = /obj/item/external_lens/BTC
+	build_path = /obj/item/external_lens/bitcoin
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -360,7 +360,7 @@
 	id = "lens_RIC"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_URANIUM = 3000, MAT_PLASMA = 3000, MAT_BLUESPACE = 1000)
-	build_path = /obj/item/external_lens/RIC
+	build_path = /obj/item/external_lens/ricochet
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -370,7 +370,7 @@
 	id = "lens_TRA"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_GOLD = 9000)
-	build_path = /obj/item/external_lens/RIC
+	build_path = /obj/item/external_lens/tracing
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -380,7 +380,7 @@
 	id = "lens_SHK"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_URANIUM = 3000, MAT_SILVER = 7000)
-	build_path = /obj/item/external_lens/SHK
+	build_path = /obj/item/external_lens/shocking
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -390,7 +390,7 @@
 	id = "lens_BLN"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_SILVER = 2000,  MAT_GOLD = 5000, MAT_DIAMOND = 1000)
-	build_path = /obj/item/external_lens/BLN
+	build_path = /obj/item/external_lens/blinding
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -400,7 +400,7 @@
 	id = "lens_STH"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_URANIUM = 1500, MAT_TITANIUM = 2000, MAT_DIAMOND = 3000)
-	build_path = /obj/item/external_lens/STH
+	build_path = /obj/item/external_lens/stealth
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -410,7 +410,7 @@
 	id = "lens_INC"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_SILVER = 2000,  MAT_PLASMA = 8000)
-	build_path = /obj/item/external_lens/INC
+	build_path = /obj/item/external_lens/incendiary
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -420,16 +420,6 @@
 	id = "lens_ECO"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 12000)
-	build_path = /obj/item/external_lens/ECO
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/lensSYP
-	name = "external lens: syphon"
-	desc = "external lens"
-	id = "lens_SYP"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_SILVER = 12000,  MAT_GOLD = 10000)
-	build_path = /obj/item/external_lens/SYP
+	build_path = /obj/item/external_lens/economic
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

@@ -189,13 +189,13 @@
 	name = "\improper heavy laser beam"
 	icon_state = "heavylaser"
 	damage = 30
-	range = 15
+	range = 6
 	irradiate = 30
 	armour_penetration = 20
 	dismemberment = 10
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_RED
-	tracer_type = /obj/effect/projectile/tracer/xray
+	tracer_type = /obj/effect/projectile/tracer/heavy_laser
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
 	pass_flags = PASSTABLE
@@ -207,12 +207,14 @@
 /obj/item/projectile/beam/shock
 	name = "\improper charged beam"
 	icon_state = "spark"
-	damage = 18
+	damage = 10
+	jitter = 10
+	stutter = 10
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_CYAN
-	tracer_type = /obj/effect/projectile/tracer/xray
-	muzzle_type = /obj/effect/projectile/muzzle/xray
-	impact_type = /obj/effect/projectile/impact/xray
+	tracer_type = /obj/effect/projectile/tracer/stun
+	muzzle_type = /obj/effect/projectile/tracer/stun
+	impact_type = /obj/effect/projectile/impact/stun
 
 /obj/item/projectile/beam/shock/on_hit(atom/target)
 	if(iscarbon(target))
@@ -258,7 +260,6 @@
 /obj/item/projectile/beam/tracer
 	name = "\improper tracing beam"
 	icon_state = "tracer"
-	homing = TRUE
 	damage = 5
 	irradiate = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
@@ -271,40 +272,7 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.apply_status_effect(/datum/status_effect/laserweak)
-
-/obj/screen/alert/status_effect/laserweak
-	name = "high laser absortion"
-	desc = "You are covered in an high laser absorbing gel"
-	icon_state = "slime_stoneskin"
-
-/datum/status_effect/laserweak
-	id = "laserweak"
-	duration = 100
-	alert_type = /obj/screen/alert/status_effect/slimeskin
-	var/originalcolor
-	var/obj/effect/light_holder
-
-/datum/status_effect/laserweak/on_apply()
-	originalcolor = owner.color
-	owner.color = "#FF0000"
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		var/datum/species/S = H.dna.species
-		S.burnmod += 0.4
-		S.stunmod += 0.2
-		light_holder = new(H)
-		light_holder.set_light(7, 2.7, "#FFCC00")
-	return ..()
-
-/datum/status_effect/laserweak/on_remove()
-	owner.color = originalcolor
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		var/datum/species/S = H.dna.species
-		S.burnmod -= 0.4
-		S.stunmod -= 0.2
-		QDEL_NULL(light_holder)
+		H.apply_status_effect(STATUS_EFFECT_LASERWEAK)
 
 /obj/item/projectile/beam/blinding
 	name = "\improper blinding beam"
@@ -328,18 +296,16 @@
 	icon_state = "lava"
 	damage = 10
 	var/fire_stacks = 2
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_ORANGE
-	tracer_type = /obj/effect/projectile/tracer/xray
-	muzzle_type = /obj/effect/projectile/muzzle/xray
-	impact_type = /obj/effect/projectile/impact/xray
 
 /obj/item/projectile/beam/incendiary/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(fire_stacks)
-		M.IgniteMob()
+		M.adjust_bodytemperature(((100-blocked)/100)*(300 - M.bodytemperature))
+		if(prob(40))
+			M.adjust_fire_stacks(fire_stacks)
+			M.IgniteMob()
 
 /obj/item/projectile/beam/lowenergy
 	name = "\improper small laser beam"
@@ -373,37 +339,3 @@
 	tracer_type = /obj/effect/projectile/tracer/xray
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
-
-/obj/item/projectile/beam/syphon
-	name = "\improper syphoning beam"
-	range = 8
-	damage = 5
-//	icon_state = ""
-//	hitscan = TRUE
-//	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
-	light_color = LIGHT_COLOR_YELLOW
-	tracer_type = /obj/effect/projectile/tracer/solar
-	muzzle_type = /obj/effect/projectile/muzzle/xray
-	impact_type = /obj/effect/projectile/impact/xray
-
-/obj/item/projectile/beam/syphon/on_hit(atom/target)
-/*	if(istype(target, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/C = target
-		C.charge -= min(1000, C.charge)
-	//	if(prob(5))
-	//		cell.rigged = TRUE
-	if(istype(target, /obj/machinery/power/smes))
-		var/obj/machinery/power/smes/S = target
-		S.charge -= min(8000, S.charge)
-	if(istype(target, /obj/machinery/power/apc))
-		var/obj/machinery/power/apc/APC = target
-		var/obj/item/stock_parts/cell/C = APC.cell
-		C.charge -=  min(500, C.charge)
-//	if(ishuman(firer))
-	var/mob/living/carbon/human/FH = firer
-	*/
-	SEND_SIGNAL(target, CONSIG_SYPHON)
-
-/obj/effect/projectile/tracer/solar
-	name = "syphon"
-	icon_state = "solar"
