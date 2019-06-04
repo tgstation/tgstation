@@ -487,7 +487,7 @@
 		if(!in_list)
 			H.reagents.addiction_list += reagent_instance
 			reagent_instance.addiction_stage = 0
-			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...")
+			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...</span>")
 		tick_counter = 0
 	else
 		++tick_counter
