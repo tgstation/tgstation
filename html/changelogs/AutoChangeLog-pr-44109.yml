@@ -1,6 +1,0 @@
-author: "Akrilla"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the examine text on jackboots/winter boots to properly show what items can be stored inside."
-  - bugfix: "Can now, as originally intended, store a Luchador mask inside the champion belt."
-  - refactor: "Work on storage code."

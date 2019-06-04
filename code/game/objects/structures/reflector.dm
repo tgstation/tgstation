@@ -5,7 +5,6 @@
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
-	layer = BELOW_OBJ_LAYER
 	var/deflector_icon_state
 	var/image/deflector_overlay
 	var/finished = FALSE

@@ -13,6 +13,11 @@
 /code/game/objects/effects/temporary_visuals/ @ChangelingRain
 /code/modules/reagents/chemistry/reagents/blob_reagents.dm @ChangelingRain
 
+# Cobby
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/modules/surgery/ @ExcessiveUseOfCobblestone
+
 # Cyberboss
 
 /code/__DATASTRUCTURES/globals.dm @Cyberboss

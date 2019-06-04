@@ -225,6 +225,10 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 
+#define isprojectile(A) (istype(A, /obj/item/projectile))
+
+#define isgun(A) (istype(A, /obj/item/gun))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 

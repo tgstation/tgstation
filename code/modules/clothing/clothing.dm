@@ -62,7 +62,7 @@
 /obj/item/reagent_containers/food/snacks/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	tastes = list("dust" = 1, "lint" = 1)
 	foodtype = CLOTH
 
@@ -117,7 +117,7 @@
 	clothing_resistance_flag_examine_message(user)
 	if(damaged_clothes)
 		to_chat(user,  "<span class='warning'>It looks damaged!</span>")
-	GET_COMPONENT(pockets, /datum/component/storage)
+	var/datum/component/storage/pockets = GetComponent(/datum/component/storage)
 	if(pockets)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")
 		if(pockets.attack_hand_interact)
