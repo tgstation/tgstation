@@ -55,22 +55,22 @@
 
 		// We've got two valid locations - call extraction
 		to_chat(user, "to launch")
-		launch_extraction_pods(pod_1_rand_loc, pod_2_rand_loc)
+		launch_extraction_pods(possible_drop_loc[pod_1_rand_loc], possible_drop_loc[pod_2_rand_loc])
 
 		return 1
 	return 0
 
-/datum/syndicate_contract/proc/launch_extraction_pods(agent_pod_turf, empty_pod_turf)
+/datum/syndicate_contract/proc/launch_extraction_pods(turf/agent_pod_turf, turf/empty_pod_turf)
 	var/obj/structure/closet/supplypod/bluespacepod/agent_pod = new()
 	var/obj/structure/closet/supplypod/bluespacepod/empty_pod = new()
 
 	agent_pod.setStyle(STYLE_SYNDICATE)
 	empty_pod.setStyle(STYLE_SYNDICATE)
 
-	agent_pod.explosionSize = list(0,0,0,0)
-	empty_pod.explosionSize = list(0,0,0,0)
+	agent_pod.explosionSize = list(0,0,1,1)
+	empty_pod.explosionSize = list(0,0,1,1)
 
-	var/mob/living/simple_animal/hostile/syndicate/space/stormtrooper/agent_mob = new
+	var/mob/living/simple_animal/hostile/syndicate/space/stormtrooper/contract_agent/agent_mob = new(contract.owner.current)
 	var/obj/empty_obj = new
 
 	agent_mob.forceMove(agent_pod)

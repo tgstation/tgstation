@@ -46,7 +46,6 @@
 			to_chat(user, "Called extraction")
 			if (hard_drive.traitor_data.current_contract.handle_extraction(user))
 				user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 50, 1)
-
 			return 1
 		if("PRG_contract_abort")
 			var/contract_id = hard_drive.traitor_data.current_contract.id

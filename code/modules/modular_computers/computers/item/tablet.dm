@@ -31,5 +31,5 @@
 	icon_state_menu = "hostile"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
-	comp_light_luminosity = 2.3
+	comp_light_luminosity = 4.3
 	finish_color = "red"
