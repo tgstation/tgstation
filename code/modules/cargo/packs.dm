@@ -283,16 +283,15 @@
 	name = "Assorted external lens Crate"
 	desc = "Contains five experimental lens that can be applied to standard laser guns. Requires Security access to open."
 	cost = 8000
-	contains = list(/obj/item/external_lens/BTC,
-					/obj/item/external_lens/RIC,
-					/obj/item/external_lens/TRA,
-					/obj/item/external_lens/SHK,
-					/obj/item/external_lens/BLN,
-					/obj/item/external_lens/STH,
-					/obj/item/external_lens/INC,
-					/obj/item/external_lens/HEA,
-					/obj/item/external_lens/ECO,
-					/obj/item/external_lens/SYP)
+	contains = list(/obj/item/external_lens/bitcoin,
+					/obj/item/external_lens/ricochet,
+					/obj/item/external_lens/tracing,
+					/obj/item/external_lens/shocking,
+					/obj/item/external_lens/blinding,
+					/obj/item/external_lens/stealth,
+					/obj/item/external_lens/incendiary,
+					/obj/item/external_lens/heavy,
+					/obj/item/external_lens/economic)
 	crate_name = "external lens crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 

@@ -112,12 +112,6 @@
 	fire_sound = 'sound/weapons/laser3.ogg'
 	select_name = "incendiary"
 
-/obj/item/ammo_casing/energy/laser/syphon
-	projectile_type = /obj/item/projectile/beam/syphon
-	e_cost = 50
-	fire_sound = 'sound/weapons/laser3.ogg'
-	select_name = "syphon energy"
-
 /obj/item/ammo_casing/energy/laser/heavy
 	projectile_type = /obj/item/projectile/beam/heavy
 	e_cost = 200
