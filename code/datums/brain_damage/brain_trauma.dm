@@ -15,6 +15,7 @@
 	var/random_gain = TRUE //can this be gained through random traumas?
 	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
 	var/clonable = TRUE // will this transfer if the brain is cloned?
+	var/modifies_speech = FALSE
 
 /datum/brain_trauma/Destroy()
 	if(brain && brain.traumas)
@@ -40,19 +41,21 @@
 //Called when given to a mob
 /datum/brain_trauma/proc/on_gain()
 	to_chat(owner, gain_text)
+	if (modifies_speech)
+		RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 //Called when removed from a mob
 /datum/brain_trauma/proc/on_lose(silent)
 	if(!silent)
 		to_chat(owner, lose_text)
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
 //Called when hearing a spoken message
 /datum/brain_trauma/proc/on_hear(message, speaker, message_language, raw_message, radio_freq)
 	return message
 
 //Called when speaking
-/datum/brain_trauma/proc/on_say(message)
-	return message
+/datum/brain_trauma/proc/handle_speech(datum/source, list/speech_args)
 
 //Called when hugging. expand into generally interacting, where future coders could switch the intent?
 /datum/brain_trauma/proc/on_hug(mob/living/hugger, mob/living/hugged)

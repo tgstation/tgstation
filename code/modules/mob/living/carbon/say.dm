@@ -1,6 +1,4 @@
 /mob/living/carbon/treat_message(message)
-	for(var/datum/brain_trauma/trauma in get_traumas())
-		message = trauma.on_say(message)
 	message = ..(message)
 	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	if(!T) //hoooooouaah!
@@ -15,13 +13,6 @@
 	if(silent)
 		return 0
 	return ..()
-
-/mob/living/carbon/get_spans()
-	. = ..()
-
-	var/obj/item/I = get_active_held_item()
-	if(I)
-		. |= I.get_held_item_speechspans(src)
 
 /mob/living/carbon/could_speak_in_language(datum/language/dt)
 	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)

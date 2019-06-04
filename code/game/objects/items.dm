@@ -604,11 +604,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		. = ""
 
-
-//when an item modify our speech spans when in our active hand. Override this to modify speech spans.
-/obj/item/proc/get_held_item_speechspans(mob/living/carbon/user)
-	return
-
 /obj/item/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	return
 

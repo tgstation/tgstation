@@ -7,6 +7,7 @@
 	can_gain = TRUE
 	random_gain = FALSE
 	resilience = TRAUMA_RESILIENCE_SURGERY
+	modifies_speech = TRUE
 	var/mob/living/obsession
 	var/datum/objective/spendtime/attachedobsessedobj
 	var/datum/antagonist/obsessed/antagonist
@@ -65,17 +66,12 @@
 	..()
 	owner.mind.remove_antag_datum(/datum/antagonist/obsessed)
 
-/datum/brain_trauma/special/obsessed/on_say(message)
+/datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)
 	if(!viewing)
-		return message
-	var/choked_up
+		return
 	var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-	if(mood)
-		if(mood.sanity >= SANITY_GREAT)
-			choked_up = social_interaction()
-	if(choked_up)
-		return ""
-	return message
+	if(mood && mood.sanity >= SANITY_GREAT && social_interaction())
+		speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/special/obsessed/on_hug(mob/living/hugger, mob/living/hugged)
 	if(hugged == obsession)
