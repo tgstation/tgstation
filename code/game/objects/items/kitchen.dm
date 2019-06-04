@@ -151,7 +151,7 @@
 
 /obj/item/kitchen/karambit/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		force = 6
+		force /= 2
 		to_chat(user, "<span class='userdanger'>You manage to slit [M]'s throat!</span>")
 		to_chat(M, "<span class='userdanger'>Your throat has been slit! You won't be able to speak for a while.</span>")
 		M.silent = 5
@@ -160,7 +160,7 @@
 			if(M.bleed_rate >= 4)
 				M.bleed_rate = 4
 		..()
-		force = 12
+		force *= 2
 	else
 		..()
 
