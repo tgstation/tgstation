@@ -10,10 +10,16 @@
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, imp_in, TRUE)
 
 /obj/item/implant/storage/removed(source, silent = FALSE, special = 0)
-	. = ..()
-	if(.)
-		if(!special)
-			qdel(GetComponent(/datum/component/storage/concrete/implant))
+	if(!special)
+		var/datum/component/storage/lostimplant = GetComponent(/datum/component/storage/concrete/implant)
+		var/mob/living/implantee = source
+		for (var/obj/item/I in lostimplant.contents())
+			I.add_mob_blood(implantee)
+		lostimplant.do_quick_empty()
+		implantee.visible_message("<span class='warning'>A bluespace pocket opens around [src] as it exits [implantee], spewing out its contents and rupturing the surrounding tissue!</span>")
+		implantee.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
+		qdel(lostimplant)
+	return ..()
 
 /obj/item/implant/storage/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	for(var/X in target.implants)

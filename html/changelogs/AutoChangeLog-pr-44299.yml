@@ -1,0 +1,4 @@
+author: "WJohn"
+delete-after: True
+changes: 
+  - imagedel: "Fixed stray white pixel on durathread helmet."

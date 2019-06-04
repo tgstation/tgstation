@@ -467,7 +467,7 @@
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
 	M.adjustStaminaLoss(50)
 	M.Paralyze(100)
-	M.updatehealth() //forces health update before next life tick
+	M.updatehealth() //forces health update before next life tick //isn't this done by adjustStaminaLoss anyway?
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
 	log_combat(user, M, "stunned", src)

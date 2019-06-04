@@ -73,6 +73,11 @@
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
 	if(immune[A] || global_frozen_atoms[A] || !istype(A))
 		return FALSE
+	if(ismob(A))
+		var/mob/M = A
+		if(M.anti_magic_check(check_anti_magic, check_holy))
+			immune[A] = TRUE
+			return
 	var/frozen = TRUE
 	if(isliving(A))
 		freeze_mob(A)
@@ -154,9 +159,6 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
 	frozen_mobs += L
-	if(L.anti_magic_check(check_anti_magic, check_holy))
-		immune += L
-		return
 	L.Stun(20, 1, 1)
 	walk(L, 0) //stops them mid pathing even if they're stunimmune
 	if(isanimal(L))

@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(economy)
 	return ..()
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
-	boring_eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows. 
+	boring_eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows.
 	boring_sci_payout() // Payout based on slimes.
 	boring_secmedsrv_payout() // Payout based on crew safety, health, and mood.
 	boring_civ_payout() // Payout based on ??? Profit

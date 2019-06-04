@@ -49,6 +49,15 @@
 	build_path = /obj/item/circuitboard/machine/telecomms/server
 	category = list("Subspace Telecomms")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/telecomms_messaging
+	name = "Machine Design (Messaging Server)"
+	desc = "Allows for the construction of Telecommunications Messaging Servers."
+	id = "s-messaging"
+	build_path = /obj/item/circuitboard/machine/telecomms/message_server
+	category = list("Subspace Telecomms")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/subspace_broadcaster
 	name = "Machine Design (Subspace Broadcaster)"
