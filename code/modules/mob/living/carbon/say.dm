@@ -11,8 +11,6 @@
 			message = tongueless_upper.Replace(message, pick("AA","OO","'"))
 	if(wear_mask)
 		message = wear_mask.speechModification(message)
-	if(head)
-		message = head.speechModification(message)
 	return message
 
 /mob/living/carbon/can_speak_vocal(message)
