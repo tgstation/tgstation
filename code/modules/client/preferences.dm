@@ -104,6 +104,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/action_buttons_screen_locs = list()
 
+	var/icooc_warn = TRUE
+
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -562,7 +564,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Play Lobby Music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<b>See Pull Requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<br>"
-
+			dat +="<b>IC-OOC Warning:</b> <a href='?_src_=prefs;preference=icooc_warn'>[(toggles & icooc_warn) ? "Enabled":"Disabled"]</a><br>"
 
 			if(user.client)
 				if(unlock_content)
@@ -774,7 +776,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(job_preferences[j] == JP_HIGH)
 				job_preferences[j] = JP_MEDIUM
 				//technically break here
-	
+
 	job_preferences[job.title] = level
 	return TRUE
 
@@ -792,7 +794,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		to_chat(user, "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>")
 		ShowChoices(user)
 		return
-	
+
 	var/jpval = null
 	switch(desiredLvl)
 		if(3)
@@ -807,7 +809,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			jpval = null
 		else
 			jpval = JP_LOW
-	
+
 	SetJobPreferenceLevel(job, jpval)
 	SetChoices(user)
 
@@ -1422,6 +1424,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("pull_requests")
 					chat_toggles ^= CHAT_PULLR
 
+				if("icooc_warn")
+					chat_toggles ^= icooc_warn
+
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
 
@@ -1445,7 +1450,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					auto_fit_viewport = !auto_fit_viewport
 					if(auto_fit_viewport && parent)
 						parent.fit_viewport()
-				
+
 				if("widescreenpref")
 					widescreenpref = !widescreenpref
 					user.client.change_view(CONFIG_GET(string/default_view))

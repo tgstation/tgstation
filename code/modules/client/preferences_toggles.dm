@@ -360,6 +360,19 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		to_chat(src, "<span class='notice'>You will no longer examine things you click on.</span>")
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ghost Inquisitiveness", "[prefs.inquisitive_ghost ? "Enabled" : "Disabled"]"))
 
+/client/verb/toggle_icooc_warn() //Toggling the OOC warning if the round is in progress
+	set name = "Toggle Midround OOC Warning"
+	set desc = "Sets whether you receive a warning when sending OOC messages during a round"
+	set category = "Preferences"
+
+	prefs.icooc_warn = !prefs.icooc_warn
+	prefs.save_preferences()
+	if(prefs.icooc_warn)
+		to_chat(src, "<span class='notice'>You will be alerted if you are about to send a message to OOC during the round.</span>")
+	else
+		to_chat(src, "<span class='notice'>You will no longer be alerted if you are about to send a message to OOC during the round.</span>")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Midround OOC Warning", "[prefs.icooc_warn? "Enabled" : "Disabled"]"))
+
 //Admin Preferences
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"

@@ -36,6 +36,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	msg = emoji_parse(msg)
 
+	if(SSticker.IsRoundInProgress() && SSticker.HasRoundStarted() && !isnewplayer(usr) && prefs.icooc_warn)
+		if(alert("The Round is still ongoing. Are you sure you want to say this in OOC? Your Message was \" [raw_msg]\"", "Speak in OOC?", "No", "Yes") != "Yes")
+			return
+
 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
 		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
