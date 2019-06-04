@@ -229,9 +229,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	research_msg += "."
 	to_chat(user, research_msg.Join())
 
-/obj/item/proc/speechModification(message)			//for message modding by mask slot.
-	return message
-
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
 	ui_interact(user)
@@ -794,4 +791,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
-

@@ -9,8 +9,6 @@
 		if(copytext(message, 1, 2) != "*")
 			message = tongueless_lower.Replace(message, pick("aa","oo","'"))
 			message = tongueless_upper.Replace(message, pick("AA","OO","'"))
-	if(wear_mask)
-		message = wear_mask.speechModification(message)
 	return message
 
 /mob/living/carbon/can_speak_vocal(message)
