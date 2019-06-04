@@ -91,15 +91,6 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-<<<<<<< HEAD
-=======
-	using = new /obj/screen/craft
-	using.icon = ui_style
-	if(!widescreen_layout)
-		using.screen_loc = UI_BOXCRAFT
-	static_inventory += using
-
->>>>>>> e97ad26e7863aaa1c645bfacb2916bde48a32637
 	using = new/obj/screen/language_menu
 	using.icon = ui_style
 	if(!widescreen_layout)
