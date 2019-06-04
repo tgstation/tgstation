@@ -2,8 +2,8 @@
 	message = ..(message)
 	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	if(!T) //hoooooouaah!
-		var/regex/tongueless_lower = new("\[gdntke]+", "g")
-		var/regex/tongueless_upper = new("\[GDNTKE]+", "g")
+		var/static/regex/tongueless_lower = new("\[gdntke]+", "g")
+		var/static/regex/tongueless_upper = new("\[GDNTKE]+", "g")
 		if(copytext(message, 1, 2) != "*")
 			message = tongueless_lower.Replace(message, pick("aa","oo","'"))
 			message = tongueless_upper.Replace(message, pick("AA","OO","'"))
