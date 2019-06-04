@@ -1,6 +1,7 @@
-datum/component/personal_crafting/Initialize()
 	if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
+	else
+		. = COMPONENT_INCOMPATIBLE
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
 	var/datum/hud/H = user.hud_used
@@ -9,6 +10,22 @@ datum/component/personal_crafting/Initialize()
 	H.static_inventory += C
 	CL.screen += C
 	RegisterSignal(C, COMSIG_CLICK, .proc/component_ui_interact)
+
+/proc/whatever(a,b)
+	to_chat(world, "[b], [a]")
+
+/datum/component/personal_crafting/proc/smth(a, b)
+	to_chat(world, "[b], [a]")
+
+/datum/proc/foo(a,b)
+    world.log << "[a]"
+    world.log << "[b]"
+
+var/a = 5
+client/New()
+    var/datum/d = new
+    call(d, /datum/proc/foo)(arglist(list(b = 1, a = 2)))
+    world.log << "[a]"
 
 /datum/component/personal_crafting
 	var/busy
