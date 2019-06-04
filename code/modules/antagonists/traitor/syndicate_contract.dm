@@ -67,11 +67,20 @@
 	agent_pod.setStyle(STYLE_SYNDICATE)
 	empty_pod.setStyle(STYLE_SYNDICATE)
 
+	agent_pod.stay_after_drop = TRUE
+	empty_pod.stay_after_drop = TRUE
+
 	agent_pod.explosionSize = list(0,0,1,1)
 	empty_pod.explosionSize = list(0,0,1,1)
 
-	var/mob/living/simple_animal/hostile/syndicate/space/stormtrooper/contract_agent/agent_mob = new(contract.owner.current)
+	var/mob/living/simple_animal/hostile/syndicate/space/stormtrooper/contract_agent/agent_mob = new
 	var/obj/empty_obj = new
+
+	// Agent should not care much about people around them, but will attack if they get too close.
+	agent_mob.friends.Add(contract.owner.current)
+	agent_mob.vision_range = 2
+	agent_mob.aggro_vision_range = 3
+	agent_mob.lose_patience_timeout = 15
 
 	agent_mob.forceMove(agent_pod)
 	empty_obj.forceMove(empty_pod)
@@ -80,3 +89,15 @@
 
 	new /obj/effect/DPtarget(agent_pod_turf, agent_pod)
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
+
+	agent_logic(agent_mob)
+
+/datum/syndicate_contract/proc/agent_logic(agent_mob)
+	var/mob/living/simple_animal/hostile/syndicate/space/stormtrooper/contract_agent/agent = agent_mob
+
+	sleep(5)
+
+	agent.say("Good work agent. I'll take it from here - we need to be quick.")
+
+	// TODO: Go to target - drag them to their pod. Place them. Close pod. Walk back to their pod. Face you. Tell them to get payment. After recieved, go in.
+	// Can make this more fancy for special cases with if the caller of the evac isn't the same as the owner of contract, if enemies around, etc. 

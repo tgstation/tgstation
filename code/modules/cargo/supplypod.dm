@@ -41,6 +41,7 @@
 	var/soundVolume = 80 //Volume to play sounds at. Ignores the cap
 	var/bay //Used specifically for the centcom_podlauncher datum. Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
 	var/list/explosionSize = list(0,0,2,3)
+	var/stay_after_drop = FALSE
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
@@ -175,7 +176,8 @@
 	if (style == STYLE_SEETHROUGH)
 		depart(src)
 	else
-		addtimer(CALLBACK(src, .proc/depart, holder), departureDelay) //Finish up the pod's duties after a certain amount of time
+		if(!stay_after_drop)
+			addtimer(CALLBACK(src, .proc/depart, holder), departureDelay) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/proc/depart(atom/movable/holder)
 	if (leavingSound)
