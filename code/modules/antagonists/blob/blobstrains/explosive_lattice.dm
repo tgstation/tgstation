@@ -20,7 +20,6 @@
 
 /datum/reagent/blob/explosive_lattice
 	name = "Explosive Lattice"
-	id = "explosive_lattice"
 	taste_description = "the bomb"
 	color = "#8B2500"
 

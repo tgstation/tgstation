@@ -166,9 +166,9 @@
 				var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 				if(B)
 					data["has_blood"] = TRUE
-					data["blood"] = list()
-					data["blood"]["dna"] = B.data["blood_DNA"] || "none"
-					data["blood"]["type"] = B.data["blood_type"] || "none"
+					data[/datum/reagent/blood] = list()
+					data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
+					data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
 					data["viruses"] = get_viruses_data(B)
 					data["resistances"] = get_resistance_data(B)
 		if(SYMPTOM_DETAILS)
@@ -214,7 +214,7 @@
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
-			B.reagents.add_reagent("blood", 20, data)
+			B.reagents.add_reagent(/datum/reagent/blood, 20, data)
 			wait = TRUE
 			update_icon()
 			var/turf/source_turf = get_turf(src)
@@ -226,7 +226,7 @@
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[D.name] vaccine bottle"
-			B.reagents.add_reagent("vaccine", 15, list(id))
+			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 			wait = TRUE
 			update_icon()
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)

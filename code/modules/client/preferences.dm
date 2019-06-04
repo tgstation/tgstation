@@ -95,6 +95,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = FALSE
+	var/widescreenpref = TRUE
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
@@ -503,6 +504,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
+			if (CONFIG_GET(string/default_view) != CONFIG_GET(string/default_view_square))
+				dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled ([CONFIG_GET(string/default_view_square)])"]</a><br>"
 
 			if (CONFIG_GET(flag/maprotation))
 				var/p_map = preferred_map
@@ -519,7 +522,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							p_map = VM.map_name
 					else
 						p_map += " (No longer exists)"
-				if(CONFIG_GET(flag/allow_map_voting))
+				if(CONFIG_GET(flag/preference_map_voting))
 					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
@@ -1288,6 +1291,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						default += " ([config.defaultmap.map_name])"
 					for (var/M in config.maplist)
 						var/datum/map_config/VM = config.maplist[M]
+						if(!VM.votable)
+							continue
 						var/friendlyname = "[VM.map_name] "
 						if (VM.voteweight <= 0)
 							friendlyname += " (disabled)"
@@ -1442,6 +1447,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					auto_fit_viewport = !auto_fit_viewport
 					if(auto_fit_viewport && parent)
 						parent.fit_viewport()
+				
+				if("widescreenpref")
+					widescreenpref = !widescreenpref
+					user.client.change_view(CONFIG_GET(string/default_view))
 
 				if("save")
 					save_preferences()

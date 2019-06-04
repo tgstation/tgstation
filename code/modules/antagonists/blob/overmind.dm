@@ -38,6 +38,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/max_count = 0 //The biggest it got before death
 	var/blobwincount = 400
 	var/victory_in_progress = FALSE
+	var/rerolling = FALSE
 
 /mob/camera/blob/Initialize(mapload, starting_points = 60)
 	validate_location()
@@ -50,7 +51,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	real_name = new_name
 	last_attack = world.time
 	var/datum/blobstrain/BS = pick(GLOB.valid_blobstrains)
-	blobstrain = new BS(src)
+	set_strain(BS)
 	color = blobstrain.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
@@ -69,6 +70,22 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(!T)
 		CRASH("No blobspawnpoints and blob spawned in nullspace.")
 	forceMove(T)
+
+/mob/camera/blob/proc/set_strain(datum/blobstrain/new_strain)
+	if (ispath(new_strain))
+		var/hadstrain = FALSE
+		if (istype(blobstrain))
+			blobstrain.on_lose()
+			qdel(blobstrain)
+			hadstrain = TRUE
+		blobstrain = new new_strain(src)
+		blobstrain.on_gain()
+		if (hadstrain)
+			to_chat(src, "Your strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+			to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.description]")
+			if(blobstrain.effectdesc)
+				to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
+
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)

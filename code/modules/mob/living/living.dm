@@ -567,7 +567,7 @@
 	stuttering = 0
 	slurring = 0
 	jitteriness = 0
-	GET_COMPONENT(mood, /datum/component/mood)
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
 	update_mobility()
@@ -902,7 +902,7 @@
 	return 1
 
 //used in datum/reagents/reaction() proc
-/mob/living/proc/get_permeability_protection()
+/mob/living/proc/get_permeability_protection(list/target_zones)
 	return 0
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
@@ -995,7 +995,7 @@
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, major = TRUE, self = FALSE)
+/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
 	. = ..()
 	if(.)
 		return
@@ -1008,7 +1008,8 @@
 /mob/living/proc/fakefire()
 	return
 
-
+/mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
+	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()

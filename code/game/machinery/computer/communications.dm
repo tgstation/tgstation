@@ -43,12 +43,6 @@
 	. = ..()
 	GLOB.shuttle_caller_list += src
 
-/obj/machinery/computer/communications/process()
-	if(..())
-		var/ai_autoupdate = aistate != STATE_STATUSDISPLAY && aistate != STATE_CALLSHUTTLE && aistate != STATE_PURCHASE && aistate != STATE_VIEWMESSAGE
-		var/machine_user_autoupdate = state != STATE_STATUSDISPLAY && state != STATE_CALLSHUTTLE && state != STATE_PURCHASE && state != STATE_VIEWMESSAGE
-		updateDialog(machine_user_autoupdate,ai_autoupdate)
-
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
@@ -578,8 +572,6 @@
 
 	dat += "<BR><BR>\[ [(state != STATE_DEFAULT) ? "<A HREF='?src=[REF(src)];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=[REF(user)];mach_close=communications'>Close</A> \]"
 
-	popup.set_content(dat)
-	popup.open()
 	popup.set_content(dat)
 	popup.open()
 

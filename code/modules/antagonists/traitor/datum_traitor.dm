@@ -358,8 +358,14 @@
 	return result.Join("<br>")
 
 /datum/antagonist/traitor/roundend_report_footer()
-	return "<br><b>The code phrases were:</b> <span class='codephrase'>[GLOB.syndicate_code_phrase]</span><br>\
-		<b>The code responses were:</b> <span class='codephrase'>[GLOB.syndicate_code_response]</span><br>"
+	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
+	var/responses = jointext(GLOB.syndicate_code_response, ", ")
+
+	var message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
+								<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
+
+	return message
+
 
 /datum/antagonist/traitor/is_gamemode_hero()
 	return SSticker.mode.name == "traitor"

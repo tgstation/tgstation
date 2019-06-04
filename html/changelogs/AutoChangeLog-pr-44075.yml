@@ -1,4 +1,0 @@
-author: "Yenwodyah"
-delete-after: True
-changes: 
-  - tweak: "Non-antags can now forge all agent IDs if they find them before they've been forged."

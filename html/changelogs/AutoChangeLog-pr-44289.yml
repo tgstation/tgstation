@@ -1,0 +1,5 @@
+author: "blargety & WJohnston"
+delete-after: True
+changes: 
+  - imageadd: "Caution sign resprited"
+  - rscadd: "You can now wear the caution sign on your armor slot"

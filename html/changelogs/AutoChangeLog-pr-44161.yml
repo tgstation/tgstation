@@ -1,4 +1,0 @@
-author: "Rockdtben"
-delete-after: True
-changes: 
-  - bugfix: "Med Record, Sec Record, and Detective Scanner printed papers use paper_words icon state"

@@ -89,8 +89,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	roundend_category = "devils"
 	antagpanel_category = "Devil"
 	job_rank = ROLE_DEVIL
-	//Don't delete upon mind destruction, otherwise soul re-selling will break.
-	delete_on_mind_deletion = FALSE
 	var/obligation
 	var/ban
 	var/bane
@@ -391,7 +389,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(BANISH_FORMALDYHIDE)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
-				return H.reagents.has_reagent("formaldehyde")
+				return H.reagents.has_reagent(/datum/reagent/toxin/formaldehyde)
 			return 0
 		if(BANISH_RUNES)
 			if(body)

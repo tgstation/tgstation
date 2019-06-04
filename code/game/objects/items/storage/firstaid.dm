@@ -159,7 +159,7 @@
 
 /obj/item/storage/firstaid/tactical/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
@@ -216,10 +216,10 @@
 
 /obj/item/storage/pill_bottle/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
 	STR.click_gather = TRUE
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
+	STR.set_holdable(list(/obj/item/reagent_containers/pill, /obj/item/dice))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

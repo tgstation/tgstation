@@ -30,13 +30,13 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/process()
 	var/IsWorking = FALSE
-	if(reagents.has_reagent("plasma",amount = 2) && plasmarequired > 1) //Can absorb as much as 2
+	if(reagents.has_reagent(/datum/reagent/toxin/plasma,amount = 2) && plasmarequired > 1) //Can absorb as much as 2
 		IsWorking = TRUE
-		reagents.remove_reagent("plasma",2)
+		reagents.remove_reagent(/datum/reagent/toxin/plasma,2)
 		plasmaabsorbed += 2
-	else if(reagents.has_reagent("plasma",amount = 1)) //Can absorb as little as 1
+	else if(reagents.has_reagent(/datum/reagent/toxin/plasma,amount = 1)) //Can absorb as little as 1
 		IsWorking = TRUE
-		reagents.remove_reagent("plasma",1)
+		reagents.remove_reagent(/datum/reagent/toxin/plasma,1)
 		plasmaabsorbed += 1
 
 	if(plasmaabsorbed >= plasmarequired)

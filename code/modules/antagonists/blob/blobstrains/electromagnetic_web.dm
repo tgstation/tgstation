@@ -22,7 +22,6 @@
 
 /datum/reagent/blob/electromagnetic_web
 	name = "Electromagnetic Web"
-	id = "electromagnetic_web"
 	taste_description = "pop rocks"
 	color = "#83ECEC"
 
