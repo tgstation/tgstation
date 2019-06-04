@@ -95,7 +95,7 @@
 					user.add_mob_blood(src)
 					if(ishuman(user))
 						var/mob/living/carbon/human/dirtyboy = user
-						dirtyboy.adjust_hygiene(-10)
+						dirtyboy.adjust_hygiene(-4)
 				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)

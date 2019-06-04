@@ -270,6 +270,26 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/stinkbegone
+	name = "Stink Removal Device"
+	desc = "The SRD is an efficient weapon against unclean co-workers, Spray them with a load of this and they'll be sure to re-consider their disgusting choices."
+	id = "srdgun"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 200)
+	build_path = /obj/item/gun/hygienegun
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/stinkbegoneammo
+	name = "Stink Removal Device Ammunition"
+	desc = "This container has 8 rounds for the Stink Removal Device, great for shooting at hippies."
+	id = "srdgunammo"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 1000)
+	build_path = /obj/item/pressurizedsoap
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/advmop
 	name = "Advanced Mop"
 	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
@@ -278,6 +298,26 @@
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
 	build_path = /obj/item/mop/advanced
 	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/showerparts
+	name = "Shower parts"
+	desc = "Enough parts to build a shower with 2 bonus screws...Wait hold on a moment."
+	id = "showerparts"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500)
+	build_path = /obj/item/showerparts
+	category = list("Plumbing")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/deluxeshowerparts
+	name = "Deluxe shower parts"
+	desc = "The deluxe shower, Nanotrasen's solution to clothing."
+	id = "d-showerparts"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500)
+	build_path = /obj/item/showerparts/deluxe
+	category = list("Plumbing")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/blutrash

@@ -14,6 +14,7 @@
 	var/datum/looping_sound/showering/soundloop
 	var/reagent_id = /datum/reagent/water
 	var/reaction_volume = 200
+	var/parts_type = /obj/item/showerparts
 
 /obj/machinery/shower/Initialize()
 	. = ..()
@@ -64,6 +65,13 @@
 	handle_mist()
 	return TRUE
 
+/obj/machinery/shower/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
+	to_chat(user, "<span class='notice'>You begin to take apart the [src] with \the [I]...</span>")
+	if(I.use_tool(src, user, 50))
+		new parts_type(loc)
+		user.visible_message("<span class='notice'>[user] takes apart the [src] with \the [I].</span>", "<span class='notice'>You take apart the [src] with \the [I].</span>")
+		qdel(src)
 
 /obj/machinery/shower/update_icon()
 	cut_overlays()
@@ -239,11 +247,15 @@
 		. = TRUE
 	else if(H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY))
 		. = TRUE
-	else if(H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY))
-		. = TRUE
-	else if(H.head && !(H.head.clothing_flags & SHOWEROKAY))
-		. = TRUE
 
+/obj/machinery/shower/deluxe
+	name = "Deluxe Shower"
+	desc = "The DS-482X. An upgrade to older models, goes straight through your clothes onto your skin through advanced water evaporation methods, dont ask us how that works!"
+	icon_state = "d-shower"
+	parts_type = /obj/item/showerparts/deluxe
+
+/obj/machinery/shower/deluxe/check_clothes(mob/living/carbon/human/H)
+	return FALSE //Always returns false because we go through clothing.
 
 /obj/effect/mist
 	name = "mist"
@@ -252,3 +264,31 @@
 	layer = FLY_LAYER
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/item/showerparts
+	name = "shower parts"
+	desc = "All the things you need to construct a shower, comes with in-built H2O atom assembler to compensate for Nanotrasen's lack of plumbing installation."
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "showerparts"
+	var/created_shower_type = /obj/machinery/shower
+
+/obj/item/showerparts/attack_self(mob/user)
+	. = ..()
+	user.visible_message("<span class='danger'>[user] starts putting together a shower.</span>", \
+	"<span class='userdanger'>You start putting together a shower!</span>")
+	if(do_after(user, 40))
+		if(QDELETED(src))
+			return FALSE
+		PlaceShower(user)
+
+/obj/item/showerparts/proc/PlaceShower(mob/user)
+	new created_shower_type(get_turf(user))
+	user.visible_message("<span class='danger'>[user] finishes putting together a shower.</span>", \
+	"<span class='userdanger'>You finish putting together the shower!</span>")
+	qdel(src)
+
+/obj/item/showerparts/deluxe
+	name = "deluxe shower parts"
+	desc = "Enough parts to build a deluxe shower with 2 bonus screws...Wait hold on a moment."
+	icon_state = "d-showerparts"
+	created_shower_type = /obj/machinery/shower/deluxe
