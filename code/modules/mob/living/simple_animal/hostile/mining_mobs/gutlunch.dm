@@ -147,6 +147,7 @@
 		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen(loc)
 	if(mind)
 		mind.transfer_to(L)
+	L.faction = faction
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
 	visible_message("<span class='notice'>[src] grows up into [L].</span>")
