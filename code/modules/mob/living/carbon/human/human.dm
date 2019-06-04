@@ -835,76 +835,71 @@
 			return
 	. = ..()
 
-//Can C try to piggyback at all.
-/mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/C)
-	if(istype(C) && C.stat == CONSCIOUS)
-		return TRUE
-	return FALSE
+//src is the user that will be carrying, target is the mob to be carried
+/mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
+	return (istype(target) && target.stat == CONSCIOUS)
 
-/mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/C)
-	if(ishuman(C) && !(C.mobility_flags & MOBILITY_STAND))
-		return TRUE
-	return FALSE
+/mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
+	return (ishuman(target) && !(target.mobility_flags & MOBILITY_STAND))
 
-/mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/C)
-	if(can_be_firemanned(C))
-		visible_message("<span class='notice'>[src] starts lifting [C] onto their back...</span>", 
-			"<span class='notice'>You start lifting [C] onto your back...</span>")
-		if(do_after(src, 50, TRUE, C))
-			if(can_be_firemanned(C))//Second check to make sure they're still valid to be carried
+/mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
+	if(can_be_firemanned(target))
+		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>", 
+			"<span class='notice'>You start lifting [target] onto your back...</span>")
+		if(do_after(src, 50, TRUE, target))
+			if(can_be_firemanned(target))//Second check to make sure they're still valid to be carried
 				if(!incapacitated(FALSE, TRUE))
-					buckle_mob(C, TRUE, TRUE, 90, 1, 0)
+					buckle_mob(target, TRUE, TRUE, 90, 1, 0)
 					return
-		visible_message("<span class='warning'>[src] fails to fireman carry [C]!")
+		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
 	else
-		to_chat(src, "<span class='notice'>You can't fireman carry [C] while they're standing!</span>")
+		to_chat(src, "<span class='notice'>You can't fireman carry [target] while they're standing!</span>")
 
-
-/mob/living/carbon/human/proc/piggyback(mob/living/carbon/C)
-	if(can_piggyback(C))
-		visible_message("<span class='notice'>[C] starts to climb onto [src]...</span>")
-		if(do_after(C, 15, target = src))
-			if(can_piggyback(C))
-				if(C.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-					C.visible_message("<span class='warning'>[C] can't hang onto [src]!</span>")
+/mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
+	if(can_piggyback(target))
+		visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
+		if(do_after(target, 15, target = src))
+			if(can_piggyback(target))
+				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 					return
-				buckle_mob(C, TRUE, TRUE, FALSE, 0, 2)
+				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
 		else
-			visible_message("<span class='warning'>[C] fails to climb onto [src]!</span>")
+			visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")
 	else
-		to_chat(C, "<span class='warning'>You can't piggyback ride [src] right now!</span>")
+		to_chat(target, "<span class='warning'>You can't piggyback ride [src] right now!</span>")
 
-/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
+/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
-	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
+	if(!is_type_in_typecache(target, can_ride_typecache))
+		target.visible_message("<span class='warning'>[target] really can't seem to mount [src]...</span>")
 		return
 	buckle_lying = lying_buckle
 	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
 	riding_datum.ride_check_rider_restrained = TRUE
-	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
+	if(buckled_mobs && ((target in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
 		return
 	var/equipped_hands_self
 	var/equipped_hands_target
 	if(hands_needed)
-		equipped_hands_self = riding_datum.equip_buckle_inhands(src, hands_needed, M)
+		equipped_hands_self = riding_datum.equip_buckle_inhands(src, hands_needed, target)
 	if(target_hands_needed)
-		equipped_hands_target = riding_datum.equip_buckle_inhands(M, target_hands_needed)
+		equipped_hands_target = riding_datum.equip_buckle_inhands(target, target_hands_needed)
 
 	if(hands_needed || target_hands_needed)
 		if(hands_needed && !equipped_hands_self)
-			src.visible_message("<span class='warning'>[src] can't get a grip on [M] because their hands are full!</span>", 
-				"<span class='warning'>You can't get a grip on [M] because your hands are full!</span>")
+			src.visible_message("<span class='warning'>[src] can't get a grip on [target] because their hands are full!</span>", 
+				"<span class='warning'>You can't get a grip on [target] because your hands are full!</span>")
 			return
 		else if(target_hands_needed && !equipped_hands_target)
-			M.visible_message("<span class='warning'>[M] can't get a grip on [src] because their hands are full!</span>",
+			M.visible_message("<span class='warning'>[target] can't get a grip on [src] because their hands are full!</span>",
 				"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
 			return
 	
 	stop_pulling()
 	riding_datum.handle_vehicle_layer()
-	. = ..(M, force, check_loc)
+	. = ..(target, force, check_loc)
 
 /mob/living/carbon/human/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
