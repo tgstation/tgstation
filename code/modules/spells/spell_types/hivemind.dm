@@ -184,7 +184,7 @@
 	name = "Sensory Shock"
 	desc = "After a short charging time, we overload the mind of one of our vessels with psionic energy, temporarilly disrupting their sight, hearing, and speech."
 	action_icon_state = "shock"
-	charge_max = 900
+	charge_max = 600
 
 /obj/effect/proc_holder/spell/target_hive/hive_shock/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/human/target = targets[1]
@@ -193,7 +193,7 @@
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
 	to_chat(user, "<span class='notice'>We begin increasing the psionic bandwidth between ourself and the vessel!</span>")
-	if(do_after(user,30,0,user))
+	if(do_after(user,10,0,user))
 		var/power = (120-get_dist(user, target))/120
 		if(target.anti_magic_check(FALSE, FALSE, TRUE))
 			power *= 0.5
@@ -201,7 +201,7 @@
 			to_chat(user, "<span class='notice'>We have overloaded the vessel for a short time!</span>")
 			target.blind_eyes(4*power)
 			target.blur_eyes(30*power)
-			target.minimumDeafTicks(20*power) //equivalent to 40s deafness max
+			target.minimumDeafTicks(15*power) //equivalent to 30s deafness max
 			target.Jitter(10*power)
 			target.silent += 10*power
 			target.stuttering += 30*power
@@ -289,7 +289,6 @@
 /obj/effect/proc_holder/spell/self/hive_drain
 	name = "Repair Protocol"
 	desc = "Our many vessels sacrifice a small portion of their mind's vitality to cure us of our physical and mental ailments."
-
 	panel = "Hivemind Abilities"
 	charge_max = 600
 	clothes_req = 0
@@ -314,14 +313,14 @@
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
 	while(iterations < 7)
 		var/mob/living/carbon/target = pick(carbon_members)
-		if(!do_after(user,15,0,user))
+		if(!do_after(user,10,0,user))
 			to_chat(user, "<span class='warning'>Our concentration has been broken!</span>")
 			break
 		if(!target)
 			to_chat(user, "<span class='warning'>We have run out of vessels to drain.</span>")
 			break
-		var/regen = target.anti_magic_check(FALSE, FALSE, TRUE) ? 2.5 : 5
-		target.adjustBrainLoss(regen)
+		var/regen = target.anti_magic_check(FALSE, FALSE, TRUE) ? 5 : 10
+		target.adjustBrainLoss(regen/2)
 		if(user.getBruteLoss() > user.getFireLoss())
 			user.heal_ordered_damage(regen, list(CLONE, BRUTE, BURN, STAMINA))
 		else
@@ -354,7 +353,7 @@
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
 	desc = "We assume direct control of one of our vessels, leaving our current body for up to a minute. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it. Our ability to sense psionic energy is completely nullified while using this power, and it will end immediately should we attempt to move too far from our starting point."
-	charge_max = 1500
+	charge_max = 1200
 	action_icon_state = "force"
 	active  = FALSE
 	var/mob/living/carbon/human/original_body //The original hivemind host
@@ -520,7 +519,7 @@
 	name = "Induce Panic"
 	desc = "We unleash a burst of psionic energy, inducing a debilitating fear in those around us and reducing their combat readiness. We can also briefly affect silicon-based life with this burst."
 	panel = "Hivemind Abilities"
-	charge_max = 900
+	charge_max = 600
 	range = 7
 	invocation_type = "none"
 	clothes_req = 0
@@ -573,7 +572,7 @@
 
 /obj/effect/proc_holder/spell/targeted/pin
 	name = "Psychic Pin"
-	desc = "We send out a controlled pulse of psionic energy, pinning everyone in sight, and knocking out silicon-based lifeforms."
+	desc = "We send out a controlled pulse of psionic energy, pinning everyone in sight, and knocking out silicon-based lifeforms. This is weaker against enemy hiveminds."
 	panel = "Hivemind Abilities"
 	charge_max = 600
 	range = 7
@@ -599,8 +598,11 @@
 		victims += target
 	var/statustime = max(80,240/(1+round(victims.len/3)))
 	for(var/mob/living/carbon/victim in victims)
-		victim.Knockdown(statustime)
-		to_chat(target, "<span class='userdanger'>A sudden force throws you to the ground!</span>")
+		if(victim.is_real_hivehost())
+			victim.Knockdown(statustime/4)
+		else
+			victim.Knockdown(statustime)
+		to_chat(victim, "<span class='userdanger'>A sudden force throws you to the ground!</span>")
 	for(var/mob/living/silicon/victim in victims)
 		victim.Unconscious(statustime)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
