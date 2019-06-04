@@ -235,7 +235,7 @@
 	for(var/obj/item/jammer/jammer in GLOB.active_jammers)
 		var/turf/jammer_turf = get_turf(jammer)
 		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) < jammer.range))
-			message = Gibberish(message,100)
+			message = Radiojam(message)
 			break
 
 	// Determine the identity information which will be attached to the signal.

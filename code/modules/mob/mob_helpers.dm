@@ -180,6 +180,18 @@
 		message = stutter(message)
 	return message
 
+/proc/Radiojam(t) //Replaces text with asterisks
+	var/returntext = ""
+	for(var/i = 1, i <= length(t), i++)
+		var/letter = copytext(t, i, i+1)
+		if(letter==" ")
+			returntext += " "
+		else
+			if(prob(5))
+				returntext += letter
+			else
+				returntext += "*"
+	return returntext
 
 /proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
