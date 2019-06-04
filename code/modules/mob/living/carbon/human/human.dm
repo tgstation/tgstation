@@ -893,7 +893,7 @@
 				"<span class='warning'>You can't get a grip on [target] because your hands are full!</span>")
 			return
 		else if(target_hands_needed && !equipped_hands_target)
-			M.visible_message("<span class='warning'>[target] can't get a grip on [src] because their hands are full!</span>",
+			target.visible_message("<span class='warning'>[target] can't get a grip on [src] because their hands are full!</span>",
 				"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
 			return
 	
