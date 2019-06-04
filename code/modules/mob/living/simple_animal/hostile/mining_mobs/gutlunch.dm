@@ -146,6 +146,7 @@
 	else
 		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen(loc)
 	L.key = key //I don't think this needs logging
+	L.mind = mind
 	L.faction = faction
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
