@@ -9,8 +9,6 @@
 		if(copytext(message, 1, 2) != "*")
 			message = tongueless_lower.Replace(message, pick("aa","oo","'"))
 			message = tongueless_upper.Replace(message, pick("AA","OO","'"))
-	else
-		message = T.TongueSpeech(message)
 	if(wear_mask)
 		message = wear_mask.speechModification(message)
 	if(head)
@@ -24,9 +22,6 @@
 
 /mob/living/carbon/get_spans()
 	. = ..()
-	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
-	if(T)
-		. |= T.get_spans()
 
 	var/obj/item/I = get_active_held_item()
 	if(I)

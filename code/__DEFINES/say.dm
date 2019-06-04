@@ -78,3 +78,12 @@
 #define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
 #define MAX_CHARTER_LEN			80
+
+// /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+#define SPEECH_MESSAGE 1
+// #define SPEECH_BUBBLE_TYPE 2
+#define SPEECH_SPANS 3
+/* #define SPEECH_SANITIZE 4
+#define SPEECH_LANGUAGE 5
+#define SPEECH_IGNORE_SPAM 6
+#define SPEECH_FORCED 7 */
