@@ -544,7 +544,7 @@
 //ANIMAL RIDING
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
-	GET_COMPONENT(riding_datum, /datum/component/riding)
+	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 	if(riding_datum)
 		if(user.incapacitated())
 			return
@@ -555,7 +555,7 @@
 		return ..()
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
-	GET_COMPONENT(riding_datum, /datum/component/riding)
+	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 

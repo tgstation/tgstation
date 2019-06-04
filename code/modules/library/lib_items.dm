@@ -78,7 +78,7 @@
 				state = 0
 
 		if(2)
-			GET_COMPONENT_FROM(STR, /datum/component/storage, I)
+			var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
 			if(is_type_in_list(I, allowed_books))
 				if(!user.transferItemToLoc(I, src))
 					return
