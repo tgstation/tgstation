@@ -172,7 +172,7 @@
 			setting = DUEL_SETTING_C
 		if(DUEL_SETTING_C)
 			setting = DUEL_SETTING_A
-	to_chat(user,"<span class='notice'>You switch [src] setting to [setting] mode.")
+	to_chat(user,"<span class='notice'>You switch [src] setting to [setting] mode.</span>")
 	update_icon()
 
 /obj/item/gun/energy/dueling/update_icon(force_update)

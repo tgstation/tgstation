@@ -71,7 +71,7 @@
 	if(!channeling)
 		channeling = TRUE
 	else
-		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!")
+		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!</span>")
 		return
 	if(do_after(owner, 100 - rune*60, target = owner))
 		if(ishuman(owner))
