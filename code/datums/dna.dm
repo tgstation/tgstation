@@ -202,12 +202,6 @@
 		update_instability(FALSE)
 		return
 
-/datum/dna/proc/mutations_say_mods(message)
-	if(message)
-		for(var/datum/mutation/human/M in mutations)
-			message = M.say_mod(message)
-		return message
-
 /datum/dna/proc/mutations_get_spans()
 	var/list/spans = list()
 	for(var/datum/mutation/human/M in mutations)

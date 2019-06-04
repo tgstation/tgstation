@@ -22,7 +22,8 @@
 					pick_list -= H //Make sure that you dont HONK the same word twice
 				message = jointext(temp_message, " ")
 	message = ..(message)
-	message = dna.mutations_say_mods(message)
+	for(var/datum/mutation/human/M in dna.mutations)
+		message = M.say_mod(message)
 	return message
 
 /mob/living/carbon/human/get_spans()
