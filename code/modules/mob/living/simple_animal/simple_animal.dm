@@ -80,7 +80,6 @@
 
 	var/dextrous = FALSE //If the creature has, and can use, hands
 	var/dextrous_hud_type = /datum/hud/dextrous
-	var/datum/personal_crafting/handcrafting
 
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players)
 	var/can_have_ai = TRUE //once we have become sentient, we can never go back
@@ -97,7 +96,6 @@
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
-	handcrafting = new()
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
 	if(!real_name)
@@ -105,6 +103,8 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 	update_simplemob_varspeed()
+	if(dextrous)
+		AddComponent(/datum/component/personal_crafting)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -429,9 +429,9 @@
 			mobility_flags = MOBILITY_FLAGS_DEFAULT
 		else
 			mobility_flags = NONE
-	if(!(mobility_flags & MOBILITY_MOVE)) 
+	if(!(mobility_flags & MOBILITY_MOVE))
 		walk(src, 0) //stop mid walk
-			
+
 	update_transform()
 	update_action_buttons_icon()
 
@@ -472,10 +472,6 @@
 
 /mob/living/simple_animal/get_idcard(hand_first)
 	return access_card
-
-/mob/living/simple_animal/OpenCraftingMenu()
-	if(dextrous)
-		handcrafting.ui_interact(src)
 
 /mob/living/simple_animal/can_hold_items()
 	return dextrous
