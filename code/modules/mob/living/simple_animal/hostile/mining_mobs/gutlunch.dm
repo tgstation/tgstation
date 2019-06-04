@@ -145,9 +145,8 @@
 		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck(loc)
 	else
 		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen(loc)
-	L.key = key //I don't think this needs logging
-	L.mind = mind
-	L.faction = faction
+	if(mind)
+		mind.transfer_to(L)
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
 	visible_message("<span class='notice'>[src] grows up into [L].</span>")
