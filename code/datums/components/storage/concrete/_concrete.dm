@@ -187,6 +187,7 @@
 			parent.add_fingerprint(M)
 			if(!prevent_warning)
 				mob_item_insertion_feedback(usr, M, I)
+	I.item_flags |= IN_INVENTORY
 	update_icon()
 	return TRUE
 
