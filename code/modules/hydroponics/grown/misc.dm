@@ -41,7 +41,7 @@
 	mutatelist = list()
 
 /obj/item/seeds/starthistle/corpse_flower/pre_attack(obj/machinery/hydroponics/I)
-	if(ishydroponics(I))
+	if(istype(I, /obj/machinery/hydroponics))
 		if(!I.myseed)
 			START_PROCESSING(SSobj, src)
 	return ..()
@@ -49,11 +49,11 @@
 /obj/item/seeds/starthistle/corpse_flower/process()
 	var/obj/machinery/hydroponics/parent = loc
 	if(parent.age < maturation) // Start a little before it blooms
-		return FALSE
+		return
 
 	var/turf/open/T = get_turf(parent)
 	if(T.return_air().return_pressure() > (ONE_ATMOSPHERE + potency/10 + 10)) // clouds can begin showing at around 50-60 potency in standard atmos
-		return TRUE
+		return
 
 	var/datum/gas_mixture/stank = new
 	ADD_GAS(/datum/gas/miasma, stank.gases)
