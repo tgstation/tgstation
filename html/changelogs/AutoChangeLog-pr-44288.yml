@@ -1,7 +1,0 @@
-author: "BeloneX"
-delete-after: True
-changes: 
-  - balance: "Changed bone bracers armour stats from:
-`melee= 15, bullet= 35, laser= 35, energy= 20, bomb= 35, bio= 35, rad= 35, fire= 0, acid= 0)`
-to:
-`melee = 15, bullet = 25, laser= 15, energy= 15, bomb= 20, bio= 10, rad= 0, fire= 0, acid = 0`"
