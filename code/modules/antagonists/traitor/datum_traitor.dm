@@ -197,7 +197,7 @@
 			.=2
 
 /datum/antagonist/traitor/greet()
-	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role].</font></B>")
+	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role].</span>")
 	owner.announce_objectives()
 	if(should_give_codewords)
 		give_codewords()
