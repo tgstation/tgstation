@@ -34,7 +34,7 @@
 	else if(isalienadult(target))
 		return 5000
 	else if(ismonkey(target))
-		return 1500
+		return 1000
 	else if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(H.dna && H.dna.species)
@@ -44,7 +44,7 @@
 				return 4000
 			if(isjellyperson(H) || ispodperson(H))
 				return 4000
-			return 2500
+			return 2000
 
 /datum/surgery_step/dissection/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] dissects [target]!", "<span class='notice'>You dissect [target], and add your discoveries to the research database!</span>")
