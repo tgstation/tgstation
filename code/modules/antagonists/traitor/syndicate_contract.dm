@@ -90,14 +90,46 @@
 	new /obj/effect/DPtarget(agent_pod_turf, agent_pod)
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
 
-	agent_logic(agent_mob)
+	agent_logic(agent_mob, contract.target.current, agent_pod, empty_pod)
 
-/datum/syndicate_contract/proc/agent_logic(agent_mob)
+// We create some form of basic narrative with the mob. They quite blindly just pick up the target and put it in the pod. 
+/datum/syndicate_contract/proc/agent_logic(agent_mob, var/mob/living/target_mob, var/obj/agent_pod, var/obj/empty_pod)
 	var/mob/living/simple_animal/hostile/syndicate/space/stormtrooper/contract_agent/agent = agent_mob
 
-	sleep(5)
+	sleep(55) // We wait for the pod to land - it's just a fancy effect, so we need to do this to stop things messing up.
 
 	agent.say("Good work agent. I'll take it from here - we need to be quick.")
 
+	sleep(20)
+
+	agent.Goto(target_mob, 3, 1)
+
+	sleep(20)
+
+	agent.start_pulling(target_mob)
+
+	sleep(20)
+
+	agent.Goto(empty_pod, 3, 1)
+
+	sleep(20)
+
+	target_mob.forceMove(empty_pod)
+
+	sleep(20)
+
+	agent.say("Alright - let's go.")
+
+	agent.Goto(agent_pod, 3, 1)
+
+	sleep(20)
+
 	// TODO: Go to target - drag them to their pod. Place them. Close pod. Walk back to their pod. Face you. Tell them to get payment. After recieved, go in.
 	// Can make this more fancy for special cases with if the caller of the evac isn't the same as the owner of contract, if enemies around, etc. 
+
+	// Wait time for pod to land.
+	// Keep trying to go to the target body if they're still in the area zone. Otherwise return to pod.
+	// When close enough to body to grab, grab. If grabbing - return to empty pod, otherwise keep trying to get to body like above.
+	// When next to pod, wait time, then force inside.
+	// Return to own pod.
+	// Return.
