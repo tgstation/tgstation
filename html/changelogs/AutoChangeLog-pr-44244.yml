@@ -1,6 +1,0 @@
-author: "TheChosenEvilOne"
-delete-after: True
-changes: 
-  - rscadd: "Added map voting in vote verb"
-  - config: "map config can define which maps are votable"
-  - config: "renamed ALLOW_MAP_VOTE to PREFERENCE_MAP_VOTING"
