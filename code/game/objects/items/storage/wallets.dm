@@ -11,7 +11,7 @@
 
 /obj/item/storage/wallet/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 4
 	STR.set_holdable(list(
 		/obj/item/stack/spacecash,
