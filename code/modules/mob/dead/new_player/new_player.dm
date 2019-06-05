@@ -13,6 +13,9 @@
 
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
+	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
+	var/ineligible_for_roles = FALSE
+
 /mob/dead/new_player/Initialize()
 	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
@@ -527,3 +530,29 @@
 	src << browse(null, "window=preferences") //closes job selection
 	src << browse(null, "window=mob_occupation")
 	src << browse(null, "window=latechoices") //closes late job selection
+
+// Used to make sure that a player has a valid job preference setup, used to knock players out of eligibility for anything if their prefs don't make sense.
+// A "valid job preference setup" in this situation means at least having one job set to low, or not having "return to lobby" enabled
+// Prevents "antag rolling" by setting antag prefs on, all jobs to never, and "return to lobby if preferences not availible"
+// Doing so would previously allow you to roll for antag, then send you back to lobby if you didn't get an antag role
+// This also does some admin notification and logging as well, as well as some extra logic to make sure things don't go wrong
+/mob/dead/new_player/proc/check_preferences()
+	if(!client)
+		return FALSE //Not sure how this would get run without the mob having a client, but let's just be safe.
+	if(client.prefs.joblessrole != RETURNTOLOBBY)
+		return TRUE
+	// If they have antags enabled, they're potentially doing this on purpose instead of by accident. Notify admins if so.
+	var/has_antags = FALSE
+	if(client.prefs.be_special.len > 0)
+		has_antags = TRUE
+	if(client.prefs.job_preferences.len == 0)
+		if(!ineligible_for_roles)
+			to_chat(src, "<span class='danger'>You have no jobs enabled, along with return to lobby if job is unavailable. This makes you ineligible for any round start role, please update your job preferences.</span>")
+		ineligible_for_roles = TRUE
+		ready = PLAYER_NOT_READY
+		if(has_antags)
+			log_admin("[src.ckey] just got booted back to lobby with no jobs, but antags enabled.")
+			message_admins("[src.ckey] just got booted back to lobby with no jobs enabled, but antag rolling enabled. Likely antag rolling abuse.")
+		
+		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
+	return TRUE
