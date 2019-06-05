@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Airlock cycling no long breaks if something is in the way. As a bonus, you can now door crush people."
