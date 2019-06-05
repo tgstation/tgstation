@@ -50,7 +50,7 @@
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = " [message]"
-		var/static/list/italian_words = strings("italian_replacement.json", "italian")
+		var/list/italian_words = strings("italian_replacement.json", "italian")
 
 		for(var/key in italian_words)
 			var/value = italian_words[key]
@@ -326,7 +326,7 @@
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = " [message]"
-		var/static/list/spurdo_words = strings("spurdo_replacement.json", "spurdo")
+		var/list/spurdo_words = strings("spurdo_replacement.json", "spurdo")
 		for(var/key in spurdo_words)
 			var/value = spurdo_words[key]
 			if(islist(value))

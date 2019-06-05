@@ -18,15 +18,15 @@
 	return OXYLOSS
 
 /obj/item/megaphone/equipped(mob/M, slot)
+	. = ..()
 	if (slot == SLOT_HANDS)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
-	return ..()
 
 /obj/item/megaphone/dropped(mob/M)
+	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
-	return ..()
 
 /obj/item/megaphone/proc/handle_speech(mob/living/carbon/user, list/speech_args)
 	if (user.get_active_held_item() == src)

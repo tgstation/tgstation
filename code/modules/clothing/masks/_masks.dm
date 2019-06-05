@@ -16,15 +16,15 @@
 		to_chat(user, "<span class='notice'>You turn the voice box in [src] [status ? "on" : "off"].</span>")
 
 /obj/item/clothing/mask/equipped(mob/M, slot)
+	. = ..()
 	if (slot == SLOT_WEAR_MASK && modifies_speech)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
-	return ..()
 
 /obj/item/clothing/mask/dropped(mob/M)
+	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
-	return ..()
 
 /obj/item/clothing/mask/proc/handle_speech()
 

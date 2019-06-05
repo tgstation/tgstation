@@ -4,7 +4,6 @@
 	scan_desc = "phobia"
 	gain_text = "<span class='warning'>You start finding default values very unnerving...</span>"
 	lose_text = "<span class='notice'>You no longer feel afraid of default values.</span>"
-	modifies_speech = TRUE
 	var/phobia_type
 	var/next_check = 0
 	var/next_scare = 0

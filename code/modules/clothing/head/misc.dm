@@ -351,15 +351,15 @@
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
+	. = ..()
 	if (slot == SLOT_HEAD)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
-	return ..()
 
 /obj/item/clothing/head/frenchberet/dropped(mob/M)
+	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
-	return ..()
 
 /obj/item/clothing/head/frenchberet/proc/handle_speech(datum/source, mob/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]

@@ -211,13 +211,12 @@
 		song.playing = FALSE
 
 /obj/item/instrument/harmonica/equipped(mob/M, slot)
+	. = ..()
 	RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
-	return ..()
 
 /obj/item/instrument/harmonica/dropped(mob/M)
+	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
-	return ..()
-
 
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"
