@@ -209,6 +209,8 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
+#define ishydroponics(A) (istype(A, /obj/machinery/hydroponics))
+
 #define ismecha(A) (istype(A, /obj/mecha))
 
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable

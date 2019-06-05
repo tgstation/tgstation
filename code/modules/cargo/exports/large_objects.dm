@@ -146,7 +146,7 @@
 	worth += gases[/datum/gas/bz][MOLES]*4
 	worth += gases[/datum/gas/stimulum][MOLES]*100
 	worth += gases[/datum/gas/hypernoblium][MOLES]*1000
-	worth += gases[/datum/gas/miasma][MOLES]*40
+	worth += gases[/datum/gas/miasma][MOLES]*10
 	worth += gases[/datum/gas/tritium][MOLES]*5
 	worth += gases[/datum/gas/pluoxium][MOLES]*50
 	return worth
