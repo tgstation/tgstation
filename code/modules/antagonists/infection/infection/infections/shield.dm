@@ -12,22 +12,23 @@
 	var/damaged_icon = "smooth"
 	var/damaged_desc = "A wall of twitching tendrils."
 	var/damaged_name = "weakened strong infection"
-	var/list/crystal_colors = list("#0000ff" = 20,
-								   "#00ff00" = 15,
-								   "#ff0000" = 15,
+	var/list/crystal_colors = list("#3333ff" = 20,
+								   "#33ff33" = 15,
+								   "#ff3333" = 15,
 								   "#ffffff" = 8,
-								   "#800080" = 4,
-								   "#000000" = 1)
+								   "#822282" = 4,
+								   "#444444" = 1)
 
 /obj/structure/infection/shield/Initialize(mapload)
 	canSmoothWith = typecacheof(list(/obj/structure/infection/shield))
-	var/chosen_crystal = rand(1, 15)
-	var/obj/effect/overlay/vis/crystal_overlay = new
-	crystal_overlay.icon = 'icons/mob/infection.dmi'
-	crystal_overlay.icon_state = "crystal-[chosen_crystal]"
-	crystal_overlay.layer = layer
-	crystal_overlay.color = pickweight(crystal_colors)
-	vis_contents += crystal_overlay
+	if(prob(25))
+		var/chosen_crystal = rand(1, 15)
+		var/obj/effect/overlay/vis/crystal_overlay = new
+		crystal_overlay.icon = 'icons/mob/infection.dmi'
+		crystal_overlay.icon_state = "crystal-[chosen_crystal]"
+		crystal_overlay.layer = layer
+		crystal_overlay.color = pickweight(crystal_colors)
+		vis_contents += crystal_overlay
 	. = ..()
 
 /obj/structure/infection/shield/show_infection_menu(var/mob/camera/commander/C)

@@ -25,6 +25,7 @@
 	var/build_time = 0 // time it takes to build this type when created (in deciseconds)
 	var/building = FALSE // if the infection is being used to create another currently
 	var/list/upgrade_types = list() // the types of upgrades
+	var/list/upgrades = list()
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -39,7 +40,7 @@
 	timecreated = world.time
 	AddComponent(/datum/component/no_beacon_crossing)
 	for(var/upgrade_type in upgrade_types)
-		AddComponent(upgrade_type)
+		upgrades += new upgrade_type()
 
 /obj/structure/infection/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -61,7 +62,7 @@
 /obj/structure/infection/proc/upgrade_menu(var/mob/camera/commander/C)
 	var/list/choices = list()
 	var/list/upgrades_temp = list()
-	for(var/datum/component/infection/upgrade/U in get_upgrades())
+	for(var/datum/infection_upgrade/U in get_upgrades())
 		if(U.times == 0)
 			continue
 		var/upgrade_index = "[U.name] ([U.cost])"
@@ -74,24 +75,24 @@
 	var/upgrade_index = choices.Find(choice)
 	if(!upgrade_index)
 		return
-	var/datum/component/infection/upgrade/Chosen = upgrades_temp[upgrade_index]
+	var/datum/infection_upgrade/Chosen = upgrades_temp[upgrade_index]
 	if(overmind.can_buy(Chosen.cost))
-		Chosen.do_upgrade()
+		Chosen.do_upgrade(src)
 		to_chat(overmind, "<span class='warning'>Successfully upgraded [Chosen.name]!</span>")
 	return
 
 /obj/structure/infection/proc/get_upgrades()
-	return GetComponents(/datum/component/infection/upgrade)
+	return upgrades
 
 /obj/structure/infection/proc/max_upgrade()
-	for(var/datum/component/infection/upgrade/U in get_upgrades())
+	for(var/datum/infection_upgrade/U in get_upgrades())
 		var/times = U.times
 		for(var/i = 1 to times)
-			U.do_upgrade()
+			U.do_upgrade(src)
 
 /obj/structure/infection/proc/show_description()
 	to_chat(overmind, "<span class='cultlarge'>Upgrades List</span>")
-	for(var/datum/component/infection/upgrade/U in get_upgrades())
+	for(var/datum/infection_upgrade/U in get_upgrades())
 		to_chat(overmind, "<b>[U.name]:</b> [U.description]")
 	return
 
@@ -171,7 +172,6 @@
 	Life()
 
 /obj/structure/infection/proc/Life()
-	SEND_SIGNAL(src, COMSIG_INFECTION_LIFE_TICK)
 	return
 
 /obj/structure/infection/proc/reset_angles()
@@ -214,7 +214,6 @@
 	var/turf/T = get_turf(src)
 	if(istype(T, /turf/open/chasm))
 		T.ChangeTurf(/turf/open/space)
-	SEND_SIGNAL(src, COMSIG_INFECTION_PULSED)
 
 /obj/structure/infection/proc/ConsumeTile()
 	for(var/atom/A in loc)
@@ -307,7 +306,6 @@
 	. = ..()
 	if(. && obj_integrity > 0)
 		update_icon()
-		SEND_SIGNAL(src, COMSIG_INFECTION_TAKE_DAMAGE)
 
 /obj/structure/infection/obj_destruction(damage_flag)
 	..()

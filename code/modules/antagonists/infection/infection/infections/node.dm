@@ -13,8 +13,8 @@
 
 /obj/structure/infection/node/Initialize()
 	GLOB.infection_nodes += src
-	START_PROCESSING(SSobj, src)
 	. = ..()
+	START_PROCESSING(SSobj, src)
 	base_pulse_cd = pulse_cooldown
 
 /obj/structure/infection/node/Pulse_Area(mob/camera/commander/pulsing_overmind)

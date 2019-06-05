@@ -20,7 +20,6 @@ GLOBAL_VAR(infection_commander)
 	pass_flags = PASSBLOB
 	faction = list(ROLE_INFECTION)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	call_life = TRUE
 	hud_type = /datum/hud/infection_commander
 	var/obj/structure/infection/core/infection_core = null // The infection commanders's core
 	var/obj/effect/meteor/infection/meteor = null // The infection's incoming meteor
@@ -60,17 +59,17 @@ GLOBAL_VAR(infection_commander)
 		var/datum/action/innate/infection/add_action = new type_action()
 		add_action.Grant(src)
 	.= ..()
+	START_PROCESSING(SSobj, src)
 
 /mob/camera/commander/proc/generate_announcement()
-	priority_announce("Unfortunate news, [station_name()]. An infectious core is headed to your station on a meteor.\n\n\
+	priority_announce("Unfortunate news. An infectious core is headed to your station on a meteor.\n\n\
 					   Infectious cores are almost indestructible beings that consume everything around them in order to replicate themselves. They adapt to almost any environment.\n\n\
 					   Our calculations estimate the infection core will arrive in [(autoplace_time - world.time)/600] minutes.\n\n\
-					   Forcefield Generators are being deployed to defend specific sections of your station. Defend these from the bulk of the infection.",
+					   Forcefield Generators are being deployed to defend your station. Protect these from the bulk of the infection.",
 					  "Biohazard Containment Commander", 'sound/misc/notice1.ogg')
 
 /mob/camera/commander/proc/defeated_announcement()
-	priority_announce("You've defeated the infection, congratulations.\n\
-					   I'll be moving onto another station now, good luck on trying to repair the damage to yours.",
+	priority_announce("You've defeated the infection, congratulations.",
 					  "Biohazard Containment Commander", 'sound/misc/notice2.ogg')
 
 /mob/camera/commander/proc/place_beacons()
@@ -82,7 +81,7 @@ GLOBAL_VAR(infection_commander)
 		INVOKE_ASYNC(G, /obj/structure/beacon_generator.proc/generateWalls)
 		sleep(100 / GLOB.beacon_spawns.len)
 
-/mob/camera/commander/Life()
+/mob/camera/commander/process()
 	if(!infection_core && !meteor)
 		if(!placed)
 			if(autoplace_time && world.time >= autoplace_time)
@@ -91,7 +90,7 @@ GLOBAL_VAR(infection_commander)
 			qdel(src)
 	else if(!victory_in_progress && !GLOB.infection_beacons.len && !meteor)
 		victory_in_progress = TRUE
-		priority_announce("We've lost, there's nothing else we can do anymore. Spend your last moments as you wish.", "Biohazard Containment Commander")
+		priority_announce("It's over, the infection is unstoppable now.", "Biohazard Containment Commander")
 		set_security_level("delta")
 		max_infection_points = INFINITY
 		infection_points = INFINITY
@@ -156,6 +155,7 @@ GLOBAL_VAR(infection_commander)
 		if(I)
 			I.overmind = null
 			I.update_icons()
+	STOP_PROCESSING(SSobj, src)
 
 	SSshuttle.clearHostileEnvironment(src)
 

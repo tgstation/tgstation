@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 
 /obj/structure/beacon_generator
 	name = "beacon generator"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/infection.dmi'
 	icon_state = "generator"
 	light_range = 4
 	desc = "It sustains the barriers."
@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 
 /obj/structure/beacon_wall
 	name = "beacon wall"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/infection.dmi'
 	icon_state = "beaconbarrier"
 	light_range = 4
 	desc = "A generated wall keeping any infection out."

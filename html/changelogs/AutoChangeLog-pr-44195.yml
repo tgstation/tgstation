@@ -1,0 +1,7 @@
+author: "spessbro"
+delete-after: True
+changes: 
+  - rscadd: "Added new chaplain book option"
+  - rscadd: "Added hypertool null rod option"
+  - imageadd: "added Insuls book to storage.dmi"
+  - imageadd: "added hypertool icon to device.dmi"

@@ -17,7 +17,6 @@
 	if(GLOB.infection_core)
 		return INITIALIZE_HINT_QDEL // just making sure admins can't break everything
 	GLOB.infection_core = src
-	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
@@ -33,6 +32,7 @@
 	SSevents.toggleInfectionmode()
 	SSevents.reschedule()
 	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/infection/core/proc/generate_announcement()
 	priority_announce("The infection core has landed, I hope you've prepared well.\n\n\

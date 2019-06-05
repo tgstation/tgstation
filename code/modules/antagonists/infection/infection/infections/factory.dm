@@ -10,12 +10,12 @@
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/spore_cooldown = 80 //8 seconds between spores and after spore death
-	upgrade_types = list(/datum/component/infection/upgrade/structure/factory/royal_guard,
-						 /datum/component/infection/upgrade/structure/factory/defensive_shield)
+	upgrade_types = list(/datum/infection_upgrade/royal_guard,
+						 /datum/infection_upgrade/defensive_shield)
 
 /obj/structure/infection/factory/Initialize()
-	START_PROCESSING(SSobj, src)
 	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/infection/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/spore in spores)

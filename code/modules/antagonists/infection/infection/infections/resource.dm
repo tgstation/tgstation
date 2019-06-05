@@ -8,12 +8,12 @@
 	var/resource_delay = 0
 	var/set_delay = 40
 	var/produced = 1 // points produced
-	upgrade_types = list(/datum/component/infection/upgrade/structure/resource/production_rate,
-						 /datum/component/infection/upgrade/structure/resource/storage_unit)
+	upgrade_types = list(/datum/infection_upgrade/production_rate,
+						 /datum/infection_upgrade/storage_unit)
 
 /obj/structure/infection/resource/Initialize()
-	START_PROCESSING(SSobj, src)
 	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/infection/resource/creation_action()
 	if(overmind)
