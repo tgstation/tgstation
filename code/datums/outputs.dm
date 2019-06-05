@@ -112,3 +112,7 @@
 /datum/outputs/squelch
 	text = "You hear a horrendous squelching sound."
 	sounds = 'sound/effects/blobattack.ogg'
+
+/datum/outputs/bee
+	text = "You hear a buzzing noise."
+	sounds = 'sound/voice/moth/scream_moth.ogg'
