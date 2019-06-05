@@ -68,12 +68,9 @@
 			else
 				to_chat(user, "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>")
 		else if(stage == READY)
-      var/newtime = text2num(stripped_input(user, "Please enter a new detonation time", name))
-			if(newtime != null && user.canUseTopic(src, BE_CLOSE))
-				change_det_time(newtime)
-				to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
-				if(round(newtime * 10) != det_time)
-					to_chat(user, "<span class='warning'>The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible.</span>")
+			det_time = det_time == 50 ? 30 : 50 //toggle between 30 and 50
+			if(landminemode)
+				landminemode.time = det_time * 0.1	//overwrites the proxy sensor activation timer and puts between 30 and 50
 		return
 			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 		else if(stage == EMPTY)
@@ -128,25 +125,6 @@
 		to_chat(user, "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>")
 	else
 		return ..()
-
-/obj/item/grenade/chem_grenade/change_det_time(time)
-	if(time != null)
-		if(time < 3)
-			time = 3
-		det_time = round(CLAMP(time * 10, 0, 50))
-	else
-		var/previous_time = det_time
-		switch(det_time)
-			if (0)
-				det_time = 30
-			if (30)
-				det_time = 50
-			if (50)
-				det_time = 0
-		if(det_time == previous_time)
-			det_time = 50
-    if(landminemode)
-      landminemode.time = det_time
 
 /obj/item/grenade/chem_grenade/proc/stage_change(N)
 	if(N)
