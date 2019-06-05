@@ -11,7 +11,7 @@ GLOBAL_VAR(infection_commander)
 	icon = 'icons/mob/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_on_shuttle = 1
+	move_on_shuttle = TRUE
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
@@ -31,12 +31,12 @@ GLOBAL_VAR(infection_commander)
 	var/list/infection_mobs = list()
 	var/list/resource_infection = list()
 	var/nodes_required = 1 //if the infection needs nodes to place resource and factory blobs
-	var/placed = 0
+	var/placed = FALSE
 	var/base_point_rate = 2 //for core placement
 	var/autoplace_time = 200 // a few seconds, just so it isnt sudden at game start
 	var/place_beacons_delay = 100
 	var/victory_in_progress = FALSE
-	var/infection_color = "#ff5800"
+	var/infection_color = "#ffffff"
 	var/list/default_actions = list(/datum/action/innate/infection/creator/shield,
 									/datum/action/innate/infection/creator/resource,
 									/datum/action/innate/infection/creator/node,
@@ -141,7 +141,7 @@ GLOBAL_VAR(infection_commander)
 			main_objective.completed = TRUE
 	to_chat(world, "<B>[real_name] consumed the station in an unstoppable tide!</B>")
 	SSticker.news_report = BLOB_WIN
-	SSticker.force_ending = 1
+	SSticker.force_ending = TRUE
 
 /mob/camera/commander/Destroy()
 	GLOB.infection_commander = null
@@ -233,6 +233,6 @@ GLOBAL_VAR(infection_commander)
 
 /mob/camera/commander/Move(NewLoc, Dir = 0)
 	if(meteor)
-		return 0
+		return FALSE
 	forceMove(NewLoc)
-	return 1
+	return TRUE

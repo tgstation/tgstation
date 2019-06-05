@@ -1,6 +1,6 @@
 /obj/structure/infection
 	name = "infection"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/infection/infection.dmi'
 	light_range = 4
 	desc = "A thick wall of writhing tendrils."
 	density = FALSE
@@ -9,7 +9,6 @@
 	anchored = TRUE
 	layer = TABLE_LAYER
 	CanAtmosPass = ATMOS_PASS_NO
-	smooth = SMOOTH_TRUE
 	var/point_return = 0 //How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
@@ -26,6 +25,7 @@
 	var/building = FALSE // if the infection is being used to create another currently
 	var/list/upgrade_types = list() // the types of upgrades
 	var/list/upgrades = list()
+	var/upgrade_subtype = null
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -39,6 +39,11 @@
 	ConsumeTile()
 	timecreated = world.time
 	AddComponent(/datum/component/no_beacon_crossing)
+	generate_upgrades()
+
+/obj/structure/infection/proc/generate_upgrades()
+	if(ispath(upgrade_subtype))
+		upgrade_types += subtypesof(upgrade_subtype)
 	for(var/upgrade_type in upgrade_types)
 		upgrades += new upgrade_type()
 
@@ -49,8 +54,8 @@
 	if(C != overmind)
 		return
 	var/list/choices = list(
-		"Upgrade Structure" = image(icon = 'icons/mob/infection.dmi', icon_state = "ui_increase"),
-		"Structure Overview" = image(icon = 'icons/mob/infection.dmi', icon_state = "ui_help_radial")
+		"Upgrade Structure" = image(icon = 'icons/mob/infection/infection.dmi', icon_state = "ui_increase"),
+		"Structure Overview" = image(icon = 'icons/mob/infection/infection.dmi', icon_state = "ui_help_radial")
 	)
 	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
 	if(choice == choices[1])
@@ -224,13 +229,7 @@
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/structure/infection/proc/infection_attack_animation(atom/A = null) //visually attacks an atom
-	var/obj/effect/temp_visual/blob/O = new /obj/effect/temp_visual/blob(src.loc)
-	O.setDir(dir)
-	if(overmind)
-		O.color = overmind.infection_color
-	if(A)
-		O.do_attack_animation(A) //visually attack the whatever
-	return O //just in case you want to do something to the animation.
+	return
 
 /obj/structure/infection/proc/expand(turf/T = null, controller = null)
 	infection_attack_animation(T)
@@ -336,7 +335,7 @@
 
 /obj/structure/infection/normal
 	name = "normal infection"
-	icon_state = "blob"
+	icon_state = "normal"
 	//layer = TURF_LAYER
 	light_range = 2
 	obj_integrity = 25
@@ -374,15 +373,15 @@
 	if(building)
 		return
 	if(obj_integrity <= 15)
-		icon_state = "blob_damaged"
+		icon_state = "normal"
 		name = "fragile infection"
 		desc = "A thin lattice of slightly twitching tendrils."
 	else if (overmind)
-		icon_state = "blob"
+		icon_state = "normal"
 		name = "infection"
 		desc = "A thick wall of writhing tendrils."
 	else
-		icon_state = "blob"
+		icon_state = "normal"
 		name = "dead infection"
 		desc = "A thick wall of lifeless tendrils."
 		light_range = 0

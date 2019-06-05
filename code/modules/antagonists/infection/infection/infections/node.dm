@@ -24,7 +24,7 @@
 /obj/structure/infection/node/update_icon()
 	cut_overlays()
 	color = null
-	var/mutable_appearance/infection_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
+	var/mutable_appearance/infection_overlay = mutable_appearance('icons/mob/infection/infection.dmi', "normal")
 	if(overmind)
 		infection_overlay.color = overmind.infection_color
 	add_overlay(infection_overlay)

@@ -2,7 +2,7 @@
 	// display stuff
 	var/name = ""
 	var/description = ""
-	var/radial_icon = 'icons/mob/infection.dmi'
+	var/radial_icon = 'icons/mob/infection/infection.dmi'
 	var/radial_icon_state = ""
 
 	// application
@@ -60,38 +60,38 @@
 // Myconid Spore Upgrades//
 ///////////////////////////
 
-
+/datum/infection_upgrade/myconid
 
 ////////////////////////////
 // Infector Spore Upgrades//
 ////////////////////////////
 
-
+/datum/infection_upgrade/infector
 
 //////////////////////////
 // Hunter Spore Upgrades//
 //////////////////////////
 
-/datum/infection_upgrade/lifesteal
+/datum/infection_upgrade/hunter/lifesteal
 	name = "Lifesteal"
 	description = "Does true damage to living targets by sapping health directly from them as well as healing you."
 	radial_icon_state = "fire_bullet"
 	cost = 200
 
-/datum/infection_upgrade/lifesteal/upgrade_effect(atom/parent)
+/datum/infection_upgrade/hunter/lifesteal/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/lifesteal, 5)
 
 ///////////////////////////////
 // Destructive Spore Upgrades//
 ///////////////////////////////
 
-/datum/infection_upgrade/hydraulic_fists
+/datum/infection_upgrade/destructive/hydraulic_fists
 	name = "Hydraulic Fists"
 	description = "The compressed fluid in your arms allows you to deal much greater impacts which throw hit objects backward."
 	radial_icon_state = "blobbernaut"
 	cost = 200
 
-/datum/infection_upgrade/hydraulic_fists/upgrade_effect(atom/parent)
+/datum/infection_upgrade/destructive/hydraulic_fists/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/knockback, 4)
 
 ////////////////////////////////
@@ -128,26 +128,26 @@
 // Homing Turret Upgrades//
 ///////////////////////////
 
-/datum/infection_upgrade/homing_bullets
+/datum/infection_upgrade/homing/homing_bullets
 	name = "Homing Bullets"
 	description = "Causes the bullets of this turret to home in on their target."
 	times = 0
 	bought = 1
 
-/datum/infection_upgrade/homing_bullets/upgrade_effect(atom/parent)
+/datum/infection_upgrade/homing/homing_bullets/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/homing, 15)
 
-/datum/infection_upgrade/turn_speed
+/datum/infection_upgrade/homing/turn_speed
 	name = "Turn Speed"
 	description = "Increases turn speed of shot homing spores."
 	radial_icon_state = "tracking_bullet"
 	cost = 10
 	times = 3
 
-/datum/infection_upgrade/turn_speed/upgrade_effect(atom/parent)
+/datum/infection_upgrade/homing/turn_speed/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/homing, 15*(bought+1))
 
-/datum/infection_upgrade/flak_bullets
+/datum/infection_upgrade/homing/flak_bullets
 	name = "Flak Bullets"
 	description = "Bullets that hit targets will break into tiny spores that do damage to other living creatures around the target."
 	radial_icon_state = "blob_spore_temp"
@@ -155,80 +155,80 @@
 	increasing_cost = 10
 	times = 3
 
-/datum/infection_upgrade/flak_bullets/upgrade_effect(atom/parent)
+/datum/infection_upgrade/homing/flak_bullets/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/shrapnel, /obj/item/projectile/bullet/infection/flak, bought)
 
-/datum/infection_upgrade/stamina_damage
+/datum/infection_upgrade/homing/stamina_damage
 	name = "Stamina Damage"
 	description = "Homing spores deal only stamina damage, 1.5x damage bonus."
 	radial_icon = 'icons/obj/projectiles.dmi'
 	radial_icon_state = "omnilaser"
 	cost = 10
 
-/datum/infection_upgrade/stamina_damage/upgrade_effect(obj/structure/infection/turret/parentturret)
+/datum/infection_upgrade/homing/stamina_damage/upgrade_effect(obj/structure/infection/turret/parentturret)
 	parentturret.projectile_type = /obj/item/projectile/bullet/infection/homing/stamina
 
 /////////////////////////////
 // Infernal Turret Upgrades//
 /////////////////////////////
 
-/datum/infection_upgrade/burning_spores
+/datum/infection_upgrade/infernal/burning_spores
 	name = "Burning Spores"
 	description = "Sets fire to the target on hit."
 	radial_icon = 'icons/effects/fire.dmi'
 	radial_icon_state = "fire"
 	cost = 15
 
-/datum/infection_upgrade/burning_spores/upgrade_effect(atom/parent)
+/datum/infection_upgrade/infernal/burning_spores/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/igniter, 4)
 
-/datum/infection_upgrade/fire_rate
+/datum/infection_upgrade/infernal/fire_rate
 	name = "Fire Rate"
 	description = "Increases the fire rate of the turret."
 	radial_icon_state = "fire_bullet"
 	cost = 15
 	times = 3
 
-/datum/infection_upgrade/fire_rate/upgrade_effect(obj/structure/infection/turret/parentturret)
+/datum/infection_upgrade/infernal/fire_rate/upgrade_effect(obj/structure/infection/turret/parentturret)
 	parentturret.frequency++
 
-/datum/infection_upgrade/armour_penetration
+/datum/infection_upgrade/infernal/armour_penetration
 	name = "Armour Penetration"
 	description = "Increases the armour penetration of the turret."
 	radial_icon_state = "tracking_bullet"
 	cost = 15
 	times = 3
 
-/datum/infection_upgrade/armour_penetration/upgrade_effect(atom/parent)
+/datum/infection_upgrade/infernal/armour_penetration/upgrade_effect(atom/parent)
 	return
 
 //////////////////////////////
 // Resistant Turret Upgrades//
 //////////////////////////////
 
-/datum/infection_upgrade/knockback
+/datum/infection_upgrade/resistant/knockback
 	name = "Knockback Spores"
 	description = "Knocks the target back on hit."
 	radial_icon_state = "blobbernaut"
 	cost = 10
 
-/datum/infection_upgrade/knockback/upgrade_effect(atom/parent)
+/datum/infection_upgrade/resistant/knockback/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/knockback, 4)
 
-/datum/infection_upgrade/spore_bullets
+/datum/infection_upgrade/resistant/spore_bullets
 	name = "Spore Bullets"
 	description = "Has a chance to create infection spores on the target the bullet hits."
 	radial_icon_state = "blobpod"
 	cost = 10
 
-/datum/infection_upgrade/spore_bullets/upgrade_effect(atom/parent)
-	parent.AddComponent(/datum/component/summoning, list(/mob/living/simple_animal/hostile/infection/infectionspore), 10, 4, 0)
+/datum/infection_upgrade/resistant/spore_bullets/upgrade_effect(atom/parent)
+	parent.AddComponent(/datum/component/summoning, list(/mob/living/simple_animal/hostile/infection/infectionspore), 10, 4, 0, "forms from the raw energy", 'sound/effects/blobattack.ogg')
 
 //////////////////////
 // Resource Upgrades//
 //////////////////////
 
-/datum/infection_upgrade/production_rate
+/datum/infection_upgrade/resource/production_rate
 	name = "Production Rate"
 	description = "Increases the points produced per tick by the resource structure."
 	radial_icon_state = "ui_increase"
@@ -236,36 +236,37 @@
 	increasing_cost = 10
 	times = 3
 
-/datum/infection_upgrade/production_rate/upgrade_effect(obj/structure/infection/resource/parentresource)
+/datum/infection_upgrade/resource/production_rate/upgrade_effect(obj/structure/infection/resource/parentresource)
 	parentresource.produced++
 
-/datum/infection_upgrade/storage_unit
+/datum/infection_upgrade/resource/storage_unit
 	name = "Storage Unit"
 	description = "Increases the point return of this infection every time it produces, up to a maximum of 100 points. You can remove the structure at any time to claim the extra points."
 	radial_icon_state = "block2"
 	cost = 40
 
-/datum/infection_upgrade/storage_unit/upgrade_effect(obj/structure/infection/resource/parentresource)
+/datum/infection_upgrade/resource/storage_unit/upgrade_effect(obj/structure/infection/resource/parentresource)
+	parentresource.point_return_gain += 0.25
 	return
 
 //////////////////////
 // Factory Upgrades///
 //////////////////////
 
-/datum/infection_upgrade/royal_guard
+/datum/infection_upgrade/factory/royal_guard
 	name = "Royal Guard"
 	description = "Attempts to produce a spore automatically whenever this structure takes damage. Can only produce 3 more than maximum spores."
 	radial_icon_state = "blobpod"
 	cost = 10
 
-/datum/infection_upgrade/royal_guard/upgrade_effect(atom/parent)
+/datum/infection_upgrade/factory/royal_guard/upgrade_effect(atom/parent)
 	return
 
-/datum/infection_upgrade/defensive_shield
+/datum/infection_upgrade/factory/defensive_shield
 	name = "Defensive Shield"
 	description = "Automatically produces shield infection from all normal infection that are adjacent."
 	radial_icon_state = "blob_shield_radial"
 	cost = 20
 
-/datum/infection_upgrade/defensive_shield/upgrade_effect(atom/parent)
+/datum/infection_upgrade/factory/defensive_shield/upgrade_effect(atom/parent)
 	return

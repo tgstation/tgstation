@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	icon_state = "beacon_start"
 
 /obj/effect/landmark/beacon_start/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.beacon_spawns += src
 
 /obj/effect/landmark/beacon_start/west
@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 
 /obj/structure/beacon_generator
 	name = "beacon generator"
-	icon = 'icons/mob/infection.dmi'
+	icon = 'icons/mob/infection/infection.dmi'
 	icon_state = "generator"
 	light_range = 4
 	desc = "It sustains the barriers."
@@ -42,8 +42,8 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	var/list/walls = list()
 
 /obj/structure/beacon_generator/Initialize(mapload)
-	START_PROCESSING(SSobj,src)
 	. = ..()
+	START_PROCESSING(SSobj,src)
 	GLOB.infection_beacons += src
 	update_icon()
 
@@ -71,21 +71,21 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 /obj/structure/beacon_generator/blob_act()
 	obj_integrity -= 50
 	update_icon()
-	if(obj_integrity <= 0)
-		playsound(src.loc, 'sound/magic/repulse.ogg', 300, 1, 10, pressure_affected = FALSE)
-		var/mob/camera/commander/OM = GLOB.infection_commander
-		OM.playsound_local(OM, 'sound/magic/repulse.ogg', 300, 1)
-		var/explodeloc = src.loc
-		qdel(src)
-		for(var/i = 1 to 5)
-			for(var/atom/A in urange(i, explodeloc) - urange(i - 1, explodeloc))
-				A.ex_act(EXPLODE_LIGHT)
-				if(istype(A, /obj/structure/infection))
-					var/obj/structure/infection/INF = A
-					INF.take_damage(1000, BRUTE, "bomb", 0)
-			sleep(4)
-	else
+	if(obj_integrity > 0)
 		playsound(src.loc, 'sound/effects/empulse.ogg', 300, 1, 10, pressure_affected = FALSE)
+		return
+	playsound(src.loc, 'sound/magic/repulse.ogg', 300, 1, 10, pressure_affected = FALSE)
+	var/mob/camera/commander/OM = GLOB.infection_commander
+	OM.playsound_local(OM, 'sound/magic/repulse.ogg', 300, 1)
+	var/explodeloc = src.loc
+	qdel(src)
+	for(var/i = 1 to 5)
+		for(var/atom/A in urange(i, explodeloc) - urange(i - 1, explodeloc))
+			A.ex_act(EXPLODE_LIGHT)
+			if(istype(A, /obj/structure/infection))
+				var/obj/structure/infection/INF = A
+				INF.take_damage(1000, BRUTE, "bomb", 0)
+		sleep(4)
 
 /obj/structure/beacon_generator/update_icon()
 	vis_contents.Cut()
@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 
 /obj/structure/beacon_wall
 	name = "beacon wall"
-	icon = 'icons/mob/infection.dmi'
+	icon = 'icons/mob/infection/infection.dmi'
 	icon_state = "beaconbarrier"
 	light_range = 4
 	desc = "A generated wall keeping any infection out."

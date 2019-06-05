@@ -30,7 +30,7 @@
 		return FALSE
 	var/n_spores = min(CEILING(num_players() / 10, 1), antag_candidates.len)
 	if(n_spores >= required_enemies || GLOB.Debug2)
-		for(var/i = 0, i < n_spores, ++i)
+		for(var/i in 1 to n_spores)
 			var/datum/mind/new_spore = pick_n_take(antag_candidates)
 			pre_spores += new_spore
 			new_spore.assigned_role = "Infectious Creature"
@@ -48,17 +48,14 @@
 	var/datum/mind/leader = pre_spores[1] // what a lucky boy gets to be the commander
 	leader.add_antag_datum(commander_datum_type)
 	//Assign the remaining operatives
-	for(var/i = 2 to pre_spores.len)
+	for(var/i in 2 to pre_spores.len)
 		var/datum/mind/spore_mind = pre_spores[i]
 		spore_mind.add_antag_datum(spore_datum_type)
 	return ..()
 
 /datum/game_mode/infection/check_finished()
-	var/mob/camera/commander/C = GLOB.infection_commander
-	// end if commander is dead, or if beacons are destroyed (handled in antagonist win check)
-	if(C)
-		return FALSE
-	return TRUE
+	// true if commander is dead, or if beacons are destroyed (handled in antagonist win check)
+	return isnull(GLOB.infection_commander)
 
 /datum/game_mode/infection/generate_report()
 	return "An extremely dangerous infectious core was recently shot out into space at incredible speed after some form of planetary explosion. \

@@ -2,6 +2,9 @@
 	name = "infection core"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
+	layer = BELOW_OBJ_LAYER
+	pixel_x = -32
+	pixel_y = -16
 	desc = "A huge, pulsating infectious mass. It almost seems to beckon you."
 	max_integrity = 400
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 90)
@@ -21,6 +24,7 @@
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
 		return INITIALIZE_HINT_QDEL
+	. = ..()
 	if(overmind)
 		update_icon()
 		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S in overmind.contents)
@@ -31,7 +35,6 @@
 	SSevents.frequency_upper = DOOM_CLOCK_EVENT_DELAY
 	SSevents.toggleInfectionmode()
 	SSevents.reschedule()
-	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/infection/core/proc/generate_announcement()
@@ -46,14 +49,14 @@
 /obj/structure/infection/core/update_icon()
 	cut_overlays()
 	color = null
-	var/mutable_appearance/infection_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
+	var/mutable_appearance/core_base = mutable_appearance('icons/mob/infection/crystaline_infection_large.dmi', "crystalcore-base")
+	var/mutable_appearance/core_crystal = mutable_appearance('icons/mob/infection/crystaline_infection_large.dmi', "crystalcore-layer")
 	if(overmind)
-		infection_overlay.color = overmind.infection_color
-	add_overlay(infection_overlay)
-	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
+		core_crystal.color = overmind.infection_color
+	add_overlay(core_base)
+	add_overlay(core_crystal)
 
 /obj/structure/infection/core/Destroy()
-	. = ..()
 	deathExplosion()
 	GLOB.infection_core = null
 	if(overmind)
@@ -62,17 +65,11 @@
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list -= src
 	SSevents.toggleInfectionmode()
+	. = ..()
 
 /obj/structure/infection/core/proc/deathExplosion()
-	var/explodeloc = src.loc
-	for(var/i = 1 to 9)
-		for(var/atom/A in urange(i, explodeloc) - urange(i - 1, explodeloc))
-			var/power = CEILING(i/3, 1)
-			A.ex_act(power)
-			if(istype(A, /obj/structure/infection))
-				var/obj/structure/infection/INF = A
-				INF.take_damage(600 / power, BRUTE, "bomb", 0)
-		sleep(4)
+	playsound(src.loc, 'sound/magic/repulse.ogg', 300, 1, 10, pressure_affected = FALSE)
+	return explosion(src, 10, 20, 30, 40, FALSE, TRUE, 5, TRUE, FALSE)
 
 /obj/structure/infection/core/ex_act(severity, target)
 	return
@@ -132,7 +129,7 @@
 	if(overmind)
 		overmind.update_health_hud()
 		Pulse_Area(overmind, 20, 40)
-	for(var/obj/structure/infection/normal/I in range(1, src) + (range(6, src) - range(5, src)))
+	for(var/obj/structure/infection/normal/I in (range(2, src) - range(1, src)) + (range(6, src) - range(5, src)))
 		INVOKE_ASYNC(I, .proc/change_to, /obj/structure/infection/shield/reflective/strong/core, overmind)
 	var/list/turrets = list()
 	turrets += locate(x-5,y+5,z)

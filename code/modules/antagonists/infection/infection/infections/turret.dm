@@ -1,6 +1,6 @@
 /obj/structure/infection/turret
 	name = "infection turret"
-	icon = 'icons/mob/infection.dmi'
+	icon = 'icons/mob/infection/infection.dmi'
 	icon_state = "infection_turret_icon" // needed so when building you can see the type
 	desc = "A solid wall with a radiating material on the inside."
 	max_integrity = 150
@@ -10,9 +10,7 @@
 	var/frequency = 1 // amount of times the turret will fire per process tick (1 second)
 	var/scan_range = 7 // range to search for targets
 	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
-	upgrade_types = list(/datum/infection_upgrade/turret_type_change/resistant_turret,
-						 /datum/infection_upgrade/turret_type_change/infernal_turret,
-						 /datum/infection_upgrade/turret_type_change/homing_turret)
+	upgrade_subtype = /datum/infection_upgrade/turret_type_change
 
 /obj/structure/infection/turret/Initialize()
 	START_PROCESSING(SSobj, src)
@@ -25,11 +23,11 @@
 /obj/structure/infection/turret/update_icon()
 	cut_overlays()
 	color = null
-	var/mutable_appearance/infection_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
+	var/mutable_appearance/infection_overlay = mutable_appearance('icons/mob/infection/infection.dmi', "normal")
 	if(overmind)
 		infection_overlay.color = overmind.infection_color
 	add_overlay(infection_overlay)
-	add_overlay(mutable_appearance('icons/mob/infection.dmi', "infection_turret"))
+	add_overlay(mutable_appearance('icons/mob/infection/infection.dmi', "infection_turret"))
 
 /obj/structure/infection/turret/Life()
 	if(!overmind)
@@ -122,7 +120,7 @@
 
 /obj/item/projectile/bullet/infection
 	name = "bulky spore"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/infection/infection.dmi'
 	icon_state = "bullet"
 	layer = ABOVE_MOB_LAYER
 	damage = 20
@@ -173,9 +171,10 @@
 	desc = "A turret for the core of the infection. It holds destructive capabilities that many might find unbeatable."
 	point_return = -1
 	projectile_type = /obj/item/projectile/bullet/infection/core
-	upgrade_types = list(/datum/infection_upgrade/fire_rate,
-						 /datum/infection_upgrade/spore_bullets)
 	scan_range = 5
+	upgrade_subtype = null
+	upgrade_types = list(/datum/infection_upgrade/infernal/fire_rate,
+						 /datum/infection_upgrade/resistant/spore_bullets)
 
 /obj/structure/infection/turret/core/Initialize()
 	. = ..()
@@ -185,26 +184,20 @@
 	name = "resistant turret"
 	desc = "A very bulky turret fit for a war of attrition."
 	max_integrity = 300
-	upgrade_types = list(/datum/infection_upgrade/knockback,
-						 /datum/infection_upgrade/spore_bullets)
+	upgrade_subtype = /datum/infection_upgrade/resistant
 
 /obj/structure/infection/turret/infernal
 	name = "infernal turret"
 	desc = "A fiery turret intent on disintegrating its enemies."
 	projectile_type = /obj/item/projectile/bullet/infection/infernal // the bullet fired for this turret
-	upgrade_types = list(/datum/infection_upgrade/burning_spores,
-						 /datum/infection_upgrade/fire_rate,
-						 /datum/infection_upgrade/armour_penetration)
 	scan_range = 5
+	upgrade_subtype = /datum/infection_upgrade/infernal
 
 /obj/structure/infection/turret/homing
 	name = "homing turret"
 	desc = "A frail looking turret that seems to track your every movement."
 	max_integrity = 75
 	projectile_type = /obj/item/projectile/bullet/infection/homing // the bullet fired for this turret
-	upgrade_types = list(/datum/infection_upgrade/homing_bullets,
-						 /datum/infection_upgrade/turn_speed,
-						 /datum/infection_upgrade/flak_bullets,
-						 /datum/infection_upgrade/stamina_damage)
+	upgrade_subtype = /datum/infection_upgrade/homing
 
 

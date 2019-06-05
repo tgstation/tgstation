@@ -195,14 +195,17 @@
 	var/spent_upgrade_points = 0
 	var/max_upgrade_points = 1000
 	var/cycle_cooldown = 0 // cooldown before you can cycle nodes again
-	var/list/upgrade_types = list(/datum/infection_upgrade/spore_type_change/myconid_spore,
-								  /datum/infection_upgrade/spore_type_change/infector_spore,
-								  /datum/infection_upgrade/spore_type_change/hunter_spore,
-								  /datum/infection_upgrade/spore_type_change/destructive_spore)
+	var/list/upgrade_types = list()
 	var/list/upgrades = list()
+	var/upgrade_subtype = /datum/infection_upgrade/spore_type_change
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	. = ..()
+	generate_upgrades()
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/generate_upgrades()
+	if(ispath(upgrade_subtype))
+		upgrade_types += subtypesof(upgrade_subtype)
 	for(var/upgrade_type in upgrade_types)
 		upgrades += new upgrade_type()
 
@@ -391,7 +394,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	can_cross_beacons = TRUE
-	upgrade_types = list()
+	upgrade_subtype = /datum/infection_upgrade/myconid
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector
 	name = "infector spore"
@@ -402,7 +405,7 @@
 	maxHealth = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	upgrade_types = list()
+	upgrade_subtype = /datum/infection_upgrade/infector
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter
 	name = "hunter spore"
@@ -414,7 +417,7 @@
 	speed = -1
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	upgrade_types = list(/datum/infection_upgrade/lifesteal)
+	upgrade_subtype = /datum/infection_upgrade/hunter
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive
 	name = "destructive spore"
@@ -427,4 +430,4 @@
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	upgrade_types = list(/datum/infection_upgrade/hydraulic_fists)
+	upgrade_subtype = /datum/infection_upgrade/destructive

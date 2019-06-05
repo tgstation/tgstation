@@ -3,6 +3,7 @@
 	icon = 'icons/obj/smooth_structures/infection_wall.dmi'
 	icon_state = "smooth"
 	desc = "A solid wall of slightly twitching tendrils."
+	smooth = SMOOTH_TRUE
 	max_integrity = 150
 	brute_resist = 0.25
 	explosion_block = 3
@@ -12,19 +13,19 @@
 	var/damaged_icon = "smooth"
 	var/damaged_desc = "A wall of twitching tendrils."
 	var/damaged_name = "weakened strong infection"
-	var/list/crystal_colors = list("#3333ff" = 20,
-								   "#33ff33" = 15,
-								   "#ff3333" = 15,
+	var/list/crystal_colors = list("#3333aa" = 20,
+								   "#33aa33" = 15,
+								   "#aa3333" = 15,
 								   "#ffffff" = 8,
 								   "#822282" = 4,
 								   "#444444" = 1)
 
 /obj/structure/infection/shield/Initialize(mapload)
-	canSmoothWith = typecacheof(list(/obj/structure/infection/shield))
+	canSmoothWith = subtypesof(/obj/structure/infection/shield) + /obj/structure/infection/shield
 	if(prob(25))
-		var/chosen_crystal = rand(1, 15)
+		var/chosen_crystal = rand(0, 15)
 		var/obj/effect/overlay/vis/crystal_overlay = new
-		crystal_overlay.icon = 'icons/mob/infection.dmi'
+		crystal_overlay.icon = 'icons/mob/infection/infection.dmi'
 		crystal_overlay.icon_state = "crystal-[chosen_crystal]"
 		crystal_overlay.layer = layer
 		crystal_overlay.color = pickweight(crystal_colors)

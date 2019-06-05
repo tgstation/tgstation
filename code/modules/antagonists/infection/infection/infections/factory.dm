@@ -10,8 +10,7 @@
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/spore_cooldown = 80 //8 seconds between spores and after spore death
-	upgrade_types = list(/datum/infection_upgrade/royal_guard,
-						 /datum/infection_upgrade/defensive_shield)
+	upgrade_subtype = /datum/infection_upgrade/factory
 
 /obj/structure/infection/factory/Initialize()
 	. = ..()

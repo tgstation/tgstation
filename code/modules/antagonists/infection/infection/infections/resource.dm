@@ -8,8 +8,8 @@
 	var/resource_delay = 0
 	var/set_delay = 40
 	var/produced = 1 // points produced
-	upgrade_types = list(/datum/infection_upgrade/production_rate,
-						 /datum/infection_upgrade/storage_unit)
+	var/point_return_gain = 0
+	upgrade_subtype = /datum/infection_upgrade/resource
 
 /obj/structure/infection/resource/Initialize()
 	. = ..()
@@ -32,4 +32,5 @@
 	flick("blob_resource_glow", src)
 	if(overmind)
 		overmind.add_points(produced)
+	point_return = min(point_return + point_return_gain, 100)
 	resource_delay = world.time + set_delay
