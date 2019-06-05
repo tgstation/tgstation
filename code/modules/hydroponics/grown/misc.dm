@@ -32,8 +32,8 @@
 /obj/item/seeds/starthistle/corpse_flower
 	name = "pack of corpse flower seeds"
 	desc = "A species of plant that emits a horrible odor."
-	icon_state = "seed-starthistle"
-	species = "corpse_flower"
+	icon_state = "seed-corpse-flower"
+	species = "corpse-flower"
 	plantname = "Corpse flower"
 	production = 2
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
@@ -48,7 +48,7 @@
 
 /obj/item/seeds/starthistle/corpse_flower/process()
 	var/obj/machinery/hydroponics/parent = loc
-	if(parent.age < maturation) // Start when it blooms
+	if(parent.age < maturation) // Start a little before it blooms
 		return FALSE
 
 	var/turf/open/T = get_turf(parent)
