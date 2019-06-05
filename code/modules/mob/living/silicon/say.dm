@@ -1,6 +1,6 @@
 
 /mob/living/silicon/get_spans()
-	return ..() | SPAN_ROBOT
+	return list(SPAN_ROBOT)
 
 /mob/living/proc/robot_talk(message)
 	log_talk(message, LOG_SAY)

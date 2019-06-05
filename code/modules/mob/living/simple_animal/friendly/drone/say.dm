@@ -4,7 +4,7 @@
 //Drone speach
 
 /mob/living/simple_animal/drone/get_spans()
-	return ..() | SPAN_ROBOT
+	return list(SPAN_ROBOT)
 
 
 

@@ -60,9 +60,6 @@
 			radio.talk_into(src, message, radio_channel, get_spans())
 			next_warning = world.time + minimum_time_between_warnings
 
-/obj/machinery/computer/bank_machine/get_spans()
-	. = ..() | SPAN_ROBOT
-
 /obj/machinery/computer/bank_machine/ui_interact(mob/user)
 	. = ..()
 

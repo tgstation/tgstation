@@ -27,7 +27,7 @@
 	update_values()
 
 /mob/living/simple_animal/hostile/clockwork/get_spans()
-	return ..() | SPAN_ROBOT
+	return list(SPAN_ROBOT)
 
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()

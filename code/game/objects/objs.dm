@@ -203,7 +203,7 @@
 		step_towards(src,S)
 
 /obj/get_spans()
-	return ..() | SPAN_ROBOT
+	return list(SPAN_ROBOT)
 
 /obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)

@@ -126,7 +126,7 @@
 		stat("Resources:",resources)
 
 /mob/living/simple_animal/hostile/swarmer/get_spans()
-	return ..() | SPAN_ROBOT
+	return list(SPAN_ROBOT)
 
 /mob/living/simple_animal/hostile/swarmer/emp_act()
 	. = ..()

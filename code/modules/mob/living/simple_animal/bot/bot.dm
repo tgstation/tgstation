@@ -350,7 +350,7 @@
 		say(message)
 
 /mob/living/simple_animal/bot/get_spans()
-	return ..() | SPAN_ROBOT
+	return list(SPAN_ROBOT)
 
 /mob/living/simple_animal/bot/radio(message, message_mode, list/spans, language)
 	. = ..()
