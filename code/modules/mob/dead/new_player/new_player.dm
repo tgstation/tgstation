@@ -535,8 +535,8 @@
 // A "valid job preference setup" in this situation means at least having one job set to low, or not having "return to lobby" enabled
 // Prevents "antag rolling" by setting antag prefs on, all jobs to never, and "return to lobby if preferences not availible"
 // Doing so would previously allow you to roll for antag, then send you back to lobby if you didn't get an antag role
-// This also does some admin notification and logging as well
-/mob/dead/new_player/proc/has_valid_preferences()
+// This also does some admin notification and logging as well, as well as some extra logic to make sure things don't go wrong
+/mob/dead/new_player/proc/check_preferences()
 	if(!client)
 		return FALSE //Not sure how this would get run without the mob having a client, but let's just be safe.
 	if(client.prefs.joblessrole != RETURNTOLOBBY)
