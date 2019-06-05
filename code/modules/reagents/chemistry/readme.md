@@ -230,7 +230,7 @@ By default, all atom have a reagents var - but its empty. if you want to use an 
 			'pouring' our reagents into something else.
 
 		atom/proc/is_open_container()
-			Checks obj/var/container_type & OPENCONTAINER.
+			Checks atom/var/reagents.flags & OPENCONTAINER.
 			If this returns 1 , you can use syringes, beakers etc
 			to manipulate the contents of this object.
 			If it's 0, you'll need to write your own custom reagent

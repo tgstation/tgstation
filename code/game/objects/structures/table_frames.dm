@@ -147,9 +147,9 @@
 	framestack = /obj/item/stack/tile/brass
 	framestackamount = 1
 
-/obj/structure/table_frame/brass/New()
+/obj/structure/table_frame/brass/Initialize()
+	. = ..()
 	change_construction_value(1)
-	..()
 
 /obj/structure/table_frame/brass/Destroy()
 	change_construction_value(-1)

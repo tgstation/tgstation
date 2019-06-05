@@ -129,6 +129,24 @@
 	item_state = "pirate"
 	dog_fashion = /datum/dog_fashion/head/pirate
 
+/obj/item/clothing/head/pirate
+	var/datum/language/piratespeak/L = new
+
+/obj/item/clothing/head/pirate/equipped(mob/user, slot)
+	if(!ishuman(user))
+		return
+	if(slot == SLOT_HEAD)
+		user.grant_language(/datum/language/piratespeak/)
+		to_chat(user, "You suddenly know how to speak like a pirate!")
+
+/obj/item/clothing/head/pirate/dropped(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(SLOT_HEAD) == src)
+		user.remove_language(/datum/language/piratespeak/)
+		to_chat(user, "You can no longer speak like a pirate.")
+
 /obj/item/clothing/head/pirate/captain
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
@@ -186,7 +204,7 @@
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -220,8 +238,11 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
-	item_flags = NODROP
 	dog_fashion = null
+
+/obj/item/clothing/head/sombrero/shamebrero/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -326,7 +347,7 @@
 /obj/item/clothing/head/frenchberet
 	name = "french beret"
 	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
-	icon_state = "beretblack"
+	icon_state = "beret"
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/frenchberet/speechModification(M)
@@ -346,3 +367,30 @@
 		if(prob(3))
 			M += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
 	return trim(M)
+
+/obj/item/clothing/head/clownmitre
+	name = "Hat of the Honkmother"
+	desc = "It's hard for parishoners to see a banana peel on the floor when they're looking up at your glorious chapeau."
+	icon_state = "clownmitre"
+
+/obj/item/clothing/head/kippah
+	name = "kippah"
+	desc = "Signals that you follow the Jewish Halakha. Keeps the head covered and the soul extra-Orthodox."
+	icon_state = "kippah"
+
+/obj/item/clothing/head/medievaljewhat
+	name = "medieval Jew hat"
+	desc = "A silly looking hat, intended to be placed on the heads of the station's oppressed religious minorities."
+	icon_state = "medievaljewhat"
+
+/obj/item/clothing/head/taqiyahwhite
+	name = "white taqiyah"
+	desc = "An extra-mustahabb way of showing your devotion to Allah."
+	icon_state = "taqiyahwhite"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+
+/obj/item/clothing/head/taqiyahred
+	name = "red taqiyah"
+	desc = "An extra-mustahabb way of showing your devotion to Allah."
+	icon_state = "taqiyahred"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small

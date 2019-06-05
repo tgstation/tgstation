@@ -14,12 +14,14 @@ SUBSYSTEM_DEF(blackbox)
 							"explosion" = 2,
 							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2,
-							"round_end_stats" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+							"round_end_stats" = 2,
+							"testmerged_prs" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
 	record_feedback("amount", "random_seed", Master.random_seed)
 	record_feedback("amount", "dm_version", DM_VERSION)
+	record_feedback("amount", "dm_build", DM_BUILD)
 	record_feedback("amount", "byond_version", world.byond_version)
 	record_feedback("amount", "byond_build", world.byond_build)
 	. = ..()
@@ -308,7 +310,7 @@ Versioning
 
 	if(!SSdbcore.Connect())
 		return
-	
+
 	sqlname = sanitizeSQL(sqlname)
 	sqlkey = sanitizeSQL(sqlkey)
 	sqljob = sanitizeSQL(sqljob)

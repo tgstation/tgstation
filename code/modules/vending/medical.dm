@@ -14,9 +14,10 @@
 					/obj/item/reagent_containers/pill/salbutamol = 2,
 					/obj/item/reagent_containers/pill/insulin = 5,
 					/obj/item/reagent_containers/glass/bottle/charcoal = 4,
-					/obj/item/reagent_containers/glass/bottle/epinephrine = 4,
-					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
+					/obj/item/reagent_containers/glass/bottle/epinephrine = 3,
 					/obj/item/reagent_containers/glass/bottle/morphine = 4,
+					/obj/item/reagent_containers/glass/bottle/potass_iodide = 1,
+					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
 					/obj/item/reagent_containers/glass/bottle/toxin = 3,
 					/obj/item/reagent_containers/syringe/antiviral = 6,
 					/obj/item/reagent_containers/medspray/styptic = 2,
@@ -32,13 +33,15 @@
 		           /obj/item/storage/pill_bottle/psicodine = 2,
 		           /obj/item/reagent_containers/hypospray/medipen = 3,
 		           /obj/item/storage/belt/medical = 3,
-		           /obj/item/wrench/medical = 1)
+		           /obj/item/wrench/medical = 1,
+		           /obj/item/storage/firstaid/advanced = 2)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/medical
 	default_price = 25
 	extra_price = 100
 	payment_department = ACCOUNT_MED
+
 /obj/item/vending_refill/medical
 	machine_name = "NanoMed Plus"
 	icon_state = "refill_medical"

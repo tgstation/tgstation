@@ -43,12 +43,10 @@
 	if(!air)
 		air = new
 	var/list/possible_expansions = list(base)
-	while(possible_expansions.len>0)
+	while(possible_expansions.len)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
-
 			var/list/result = borderline.pipeline_expansion(src)
-
-			if(result.len>0)
+			if(result && result.len)
 				for(var/obj/machinery/atmospherics/P in result)
 					if(istype(P, /obj/machinery/atmospherics/pipe))
 						var/obj/machinery/atmospherics/pipe/item = P
@@ -57,10 +55,10 @@
 							if(item.parent)
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
-									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
-									pipenetwarnings -= 1
+									log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
+									pipenetwarnings--
 									if(pipenetwarnings == 0)
-										warning("build_pipeline(): further messages about pipenets will be suppressed")
+										log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
 							possible_expansions += item
 
@@ -220,7 +218,8 @@
 		var/datum/pipeline/P = PL[i]
 		if(!P)
 			continue
-		GL += P.return_air()
+		GL += P.other_airs
+		GL += P.air
 		for(var/atmosmch in P.other_atmosmch)
 			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
 				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
@@ -230,20 +229,29 @@
 			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
 				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
 				if(C.connected_device)
-					GL += C.portableConnectorReturnAir()
+					GL += C.connected_device.air_contents
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
 	var/datum/gas_mixture/total_gas_mixture = new(0)
 
+	var/list/total_gases = total_gas_mixture.gases
+
 	for(var/i in GL)
 		var/datum/gas_mixture/G = i
 		total_gas_mixture.volume += G.volume
 
-		total_gas_mixture.merge(G)
+		// This is sort of a combined merge + heat_capacity calculation
+
+		var/list/giver_gases = G.gases
+		//gas transfer
+		for(var/giver_id in giver_gases)
+			var/giver_gas_data = giver_gases[giver_id]
+			ASSERT_GAS(giver_id, total_gas_mixture)
+			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
+			total_heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 		total_thermal_energy += THERMAL_ENERGY(G)
-		total_heat_capacity += G.heat_capacity()
 
 	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
 

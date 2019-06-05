@@ -15,11 +15,11 @@
 	var/max_n_of_items = 1500
 	var/allow_ai_retrieve = FALSE
 	var/list/initial_contents
+	var/visible_contents = TRUE
 
 /obj/machinery/smartfridge/Initialize()
 	. = ..()
-	create_reagents()
-	reagents.set_reacting(FALSE)
+	create_reagents(100, NO_REACT)
 
 	if(islist(initial_contents))
 		for(var/typekey in initial_contents)
@@ -43,11 +43,21 @@
 	update_icon()
 
 /obj/machinery/smartfridge/update_icon()
-	var/startstate = initial(icon_state)
 	if(!stat)
-		icon_state = startstate
+		if (visible_contents)
+			switch(contents.len)
+				if(0)
+					icon_state = "[initial(icon_state)]"
+				if(1 to 25)
+					icon_state = "[initial(icon_state)]1"
+				if(26 to 75)
+					icon_state = "[initial(icon_state)]2"
+				if(76 to INFINITY)
+					icon_state = "[initial(icon_state)]3"
+		else
+			icon_state = "[initial(icon_state)]"
 	else
-		icon_state = "[startstate]-off"
+		icon_state = "[initial(icon_state)]-off"
 
 
 
@@ -56,7 +66,11 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
+		cut_overlays()
+		if(panel_open)
+			add_overlay("[initial(icon_state)]-panel")
+		updateUsrDialog()
 		return
 
 	if(default_pry_open(O))
@@ -80,6 +94,8 @@
 			load(O)
 			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 			updateUsrDialog()
+			if (visible_contents)
+				update_icon()
 			return TRUE
 
 		if(istype(O, /obj/item/storage/bag))
@@ -102,6 +118,8 @@
 										 "<span class='notice'>You load \the [src] with \the [O].</span>")
 				if(O.contents.len > 0)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
+				if (visible_contents)
+					update_icon()
 				return TRUE
 			else
 				to_chat(user, "<span class='warning'>There is nothing in [O] to put in [src]!</span>")
@@ -192,6 +210,8 @@
 							O.forceMove(drop_location())
 							adjust_item_drop_location(O)
 						break
+				if (visible_contents)
+					update_icon()
 				return TRUE
 
 			for(var/obj/item/O in src)
@@ -201,6 +221,8 @@
 					O.forceMove(drop_location())
 					adjust_item_drop_location(O)
 					desired--
+			if (visible_contents)
+				update_icon()
 			return TRUE
 	return FALSE
 
@@ -216,6 +238,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 200
+	visible_contents = FALSE
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
@@ -421,6 +444,7 @@
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
 	pass_flags = PASSTABLE
+	visible_contents = FALSE
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))

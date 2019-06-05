@@ -221,7 +221,7 @@
 	// From the channel, determine the frequency and get a reference to it.
 	var/freq
 	if(channel && channels && channels.len > 0)
-		if(channel == "department")
+		if(channel == MODE_DEPARTMENT)
 			channel = channels[1]
 		freq = secure_radio_connections[channel]
 		if (!channels[channel]) // if the channel is turned off, don't broadcast
@@ -320,6 +320,8 @@
 
 /obj/item/radio/examine(mob/user)
 	..()
+	if (frequency && in_range(src, user))
+		to_chat(user, "<span class='notice'>It is set to broadcast over the [frequency/10] frequency.</span>")
 	if (unscrewed)
 		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
 	else

@@ -94,7 +94,7 @@
 					inserted_id = I
 
 		if("release_items")
-			var/mob/M = locate(params["mobref"])
+			var/mob/M = locate(params["mobref"]) in stored_items
 			if(M == usr || allowed(usr))
 				if(inserted_id)
 					var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)

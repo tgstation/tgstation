@@ -8,10 +8,28 @@
 #define NUKE_RESULT_WRONG_STATION 7
 #define NUKE_RESULT_WRONG_STATION_DEAD 8
 
+//fugitive end results
+#define FUGITIVE_RESULT_BADASS_HUNTER 0
+#define FUGITIVE_RESULT_POSTMORTEM_HUNTER 1
+#define FUGITIVE_RESULT_MAJOR_HUNTER 2
+#define FUGITIVE_RESULT_HUNTER_VICTORY 3
+#define FUGITIVE_RESULT_MINOR_HUNTER 4
+#define FUGITIVE_RESULT_STALEMATE 5
+#define FUGITIVE_RESULT_MINOR_FUGITIVE 6
+#define FUGITIVE_RESULT_FUGITIVE_VICTORY 7
+#define FUGITIVE_RESULT_MAJOR_FUGITIVE 8
+
 #define APPRENTICE_DESTRUCTION "destruction"
 #define APPRENTICE_BLUESPACE "bluespace"
 #define APPRENTICE_ROBELESS "robeless"
 #define APPRENTICE_HEALING "healing"
+
+
+//Blob
+#define BLOB_REROLL_TIME 2400 //blob gets a free reroll every X time
+#define BLOB_SPREAD_COST 4
+#define BLOB_ATTACK_REFUND 2 //blob refunds this much if it attacks and doesn't spread
+#define BLOB_REFLECTOR_COST 15
 
 
 //ERT Types
@@ -35,3 +53,10 @@
 
 //Overthrow time to update heads obj
 #define OBJECTIVE_UPDATING_TIME 300
+
+//Assimilation
+#define TRACKER_DEFAULT_TIME 900
+#define TRACKER_MINDSHIELD_TIME 1200
+#define TRACKER_AWAKENED_TIME	3000
+#define TRACKER_BONUS_LARGE 300
+#define TRACKER_BONUS_SMALL 100

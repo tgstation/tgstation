@@ -5,7 +5,6 @@
 	icon_state = "cart"
 	anchored = FALSE
 	density = TRUE
-	container_type = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/storage/bag/trash/mybag	= null
@@ -18,7 +17,7 @@
 
 /obj/structure/janitorialcart/Initialize()
 	. = ..()
-	create_reagents(100)
+	create_reagents(100, OPENCONTAINER)
 
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/mop, mob/user)
 	if(reagents.total_volume < 1)
@@ -71,7 +70,7 @@
 			l.janicart_insert(user,src)
 		else
 			to_chat(user, fail_msg)
-	else if(istype(I, /obj/item/caution))
+	else if(istype(I, /obj/item/clothing/suit/caution))
 		if(signs < max_signs)
 			put_in_cart(I, user)
 			signs++
@@ -138,7 +137,7 @@
 			myreplacer = null
 	if(href_list["sign"])
 		if(signs)
-			var/obj/item/caution/Sign = locate() in src
+			var/obj/item/clothing/suit/caution/Sign = locate() in src
 			if(Sign)
 				user.put_in_hands(Sign)
 				to_chat(user, "<span class='notice'>You take \a [Sign] from [src].</span>")

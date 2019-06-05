@@ -281,13 +281,13 @@ Possible to do for anyone motivated enough:
 				new /datum/holocall(usr, src, callnames[result])
 
 	else if(href_list["connectcall"])
-		var/datum/holocall/call_to_connect = locate(href_list["connectcall"])
+		var/datum/holocall/call_to_connect = locate(href_list["connectcall"]) in holo_calls
 		if(!QDELETED(call_to_connect))
 			call_to_connect.Answer(src)
 		temp = ""
 
 	else if(href_list["disconnectcall"])
-		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"])
+		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"]) in holo_calls
 		if(!QDELETED(call_to_disconnect))
 			call_to_disconnect.Disconnect(src)
 		temp = ""

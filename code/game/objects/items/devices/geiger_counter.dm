@@ -200,8 +200,16 @@
 	to_chat(user, "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>")
 	obj_flags |= EMAGGED
 
+
+
 /obj/item/geiger_counter/cyborg
 	var/datum/component/mobhook
+
+/obj/item/geiger_counter/cyborg/cyborg_unequip(mob/user)
+	if(!scanning)
+		return
+	scanning = FALSE
+	update_icon()
 
 /obj/item/geiger_counter/cyborg/equipped(mob/user)
 	. = ..()

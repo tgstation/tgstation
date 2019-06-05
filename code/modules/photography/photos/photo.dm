@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	grind_results = list("iodine" = 4)
+	grind_results = list(/datum/reagent/iodine = 4)
 	var/datum/picture/picture
 	var/scribble		//Scribble on the back.
 
@@ -64,7 +64,7 @@
 /obj/item/photo/examine(mob/user)
 	..()
 
-	if(in_range(src, user))
+	if(in_range(src, user) || isobserver(user))
 		show(user)
 	else
 		to_chat(user, "<span class='warning'>You need to get closer to get a good look at this photo!</span>")

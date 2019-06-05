@@ -31,15 +31,12 @@
 	owner.special_role = null
 	return ..()
 
-/datum/antagonist/brother/proc/give_meeting_area()
-	if(!owner.current || !team || !team.meeting_area)
-		return
-	to_chat(owner.current, "<B>Your designated meeting area:</B> [team.meeting_area]")
-	antag_memory += "<b>Meeting Area</b>: [team.meeting_area]<br>"
+/datum/antagonist/brother/antag_panel_data()
+	return "Conspirators : [get_brother_names()]]"
 
-/datum/antagonist/brother/greet()
-	var/brother_text = ""
+/datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner
+	var/brother_text = ""
 	for(var/i = 1 to brothers.len)
 		var/datum/mind/M = brothers[i]
 		brother_text += M.name
@@ -47,6 +44,16 @@
 			brother_text += " and "
 		else if(i != brothers.len)
 			brother_text += ", "
+	return brother_text
+
+/datum/antagonist/brother/proc/give_meeting_area()
+	if(!owner.current || !team || !team.meeting_area)
+		return
+	to_chat(owner.current, "<B>Your designated meeting area:</B> [team.meeting_area]")
+	antag_memory += "<b>Meeting Area</b>: [team.meeting_area]<br>"
+
+/datum/antagonist/brother/greet()
+	var/brother_text = get_brother_names()
 	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role] of [brother_text].</font></B>")
 	to_chat(owner.current, "The Syndicate only accepts those that have proven themselves. Prove yourself and prove your [team.member_name]s by completing your objectives together!")
 	owner.announce_objectives()
@@ -109,7 +116,7 @@
 	var/objective_count = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
-			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
 			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 			win = FALSE

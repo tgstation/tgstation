@@ -6,7 +6,7 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
-	container_type = TRANSPARENT
+	reagent_flags = TRANSPARENT
 
 /obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -31,16 +31,7 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/victim = target
 
-				var/obj/item/safe_thing = null
-				if(victim.wear_mask)
-					if(victim.wear_mask.flags_cover & MASKCOVERSEYES)
-						safe_thing = victim.wear_mask
-				if(victim.head)
-					if(victim.head.flags_cover & MASKCOVERSEYES)
-						safe_thing = victim.head
-				if(victim.glasses)
-					if(!safe_thing)
-						safe_thing = victim.glasses
+				var/obj/item/safe_thing = victim.is_eyes_covered()
 
 				if(safe_thing)
 					if(!safe_thing.reagents)
@@ -67,8 +58,8 @@
 			var/R
 			if(reagents)
 				for(var/datum/reagent/A in src.reagents.reagent_list)
-					R += A.id + " ("
-					R += num2text(A.volume) + "),"
+					R += "[A] ([num2text(A.volume)]),"
+
 			log_combat(user, M, "squirted", R)
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)

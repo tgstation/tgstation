@@ -17,7 +17,7 @@
 
 /obj/item/storage/briefcase/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 21
 
@@ -35,7 +35,7 @@
 	..()
 
 /obj/item/storage/briefcase/sniperbundle
-	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."
+	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	force = 10
 
 /obj/item/storage/briefcase/sniperbundle/PopulateContents()

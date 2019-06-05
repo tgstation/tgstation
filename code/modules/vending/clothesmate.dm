@@ -4,7 +4,7 @@
 	desc = "A vending machine for clothing."
 	icon_state = "clothes"
 	icon_deny = "clothes-deny"
-	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
+	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/beanie = 3,
 		            /obj/item/clothing/head/beanie/black = 3,
@@ -20,6 +20,9 @@
 		            /obj/item/clothing/head/beanie/stripedred = 3,
 		            /obj/item/clothing/head/beanie/stripedblue = 3,
 		            /obj/item/clothing/head/beanie/stripedgreen = 3,
+					/obj/item/clothing/head/beanie/rasta = 3,
+					/obj/item/clothing/head/kippah = 3,
+					/obj/item/clothing/head/taqiyahred = 3,
 		            /obj/item/clothing/gloves/fingerless = 2,
 		            /obj/item/clothing/neck/scarf/pink = 3,
 		            /obj/item/clothing/neck/scarf/red = 3,
@@ -56,6 +59,7 @@
 		            /obj/item/clothing/under/pants/tan = 2,
 		            /obj/item/clothing/under/pants/track = 2,
 		            /obj/item/clothing/shoes/sneakers/black = 4,
+		            /obj/item/clothing/head/wig/natural  = 4,
 		            /obj/item/clothing/under/plaid_skirt = 2,
 		            /obj/item/clothing/under/plaid_skirt/blue = 2,
 		            /obj/item/clothing/under/plaid_skirt/purple = 2,
@@ -118,6 +122,10 @@
 	default_price = 50
 	extra_price = 75
 	payment_department = NO_FREEBIES
+
+/obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
+
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"

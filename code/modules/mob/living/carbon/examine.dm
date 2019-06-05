@@ -7,14 +7,15 @@
 	var/t_is = p_are()
 
 	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!\n"
+	var/list/obscured = check_obscured_slots()
 
 	if (handcuffed)
 		msg += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>\n"
 	if (head)
 		msg += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head. \n"
-	if (wear_mask)
+	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
 		msg += "[t_He] [t_is] wearing [wear_mask.get_examine_string(user)] on [t_his] face.\n"
-	if (wear_neck)
+	if(wear_neck && !(SLOT_NECK in obscured))
 		msg += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
 
 	for(var/obj/item/I in held_items)
@@ -67,7 +68,7 @@
 			else
 				msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
 
-	if(has_trait(TRAIT_DUMB))
+	if(HAS_TRAIT(src, TRAIT_DUMB))
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
 	if(fire_stacks > 0)
@@ -91,7 +92,7 @@
 
 	msg += common_trait_examine()
 
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
 	if(mood)
 		switch(mood.shown_mood)
 			if(-INFINITY to MOOD_LEVEL_SAD4)

@@ -40,7 +40,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	var/jb = jobban_isbanned(src, "OOC")
+	var/jb = is_banned_from(ckey, "OOC")
 	if(QDELETED(src))
 		return
 

@@ -4,7 +4,7 @@
 /obj/item/reagent_containers/food
 	possible_transfer_amounts = list()
 	volume = 50	//Sets the default container amount for all food items.
-	container_type = INJECTABLE
+	reagent_flags = INJECTABLE
 	resistance_flags = FLAMMABLE
 	var/foodtype = NONE
 	var/last_check_time
@@ -19,7 +19,7 @@
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(!H.has_trait(TRAIT_AGEUSIA))
+			if(!HAS_TRAIT(H, TRAIT_AGEUSIA))
 				if(foodtype & H.dna.species.toxic_food)
 					to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")
 					H.adjust_disgust(25 + 30 * fraction)
