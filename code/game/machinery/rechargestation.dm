@@ -104,7 +104,7 @@
 /obj/machinery/recharge_station/proc/process_occupant()
 	if(!occupant)
 		return
-	SEND_SIGNAL(occupant, COMSIG_LIVING_CHARGE, recharge_speed)
+	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed)
 	if(iscyborg(occupant))
 		var/mob/living/silicon/robot/R = occupant
 		restock_modules()
