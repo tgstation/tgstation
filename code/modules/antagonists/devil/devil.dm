@@ -89,8 +89,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	roundend_category = "devils"
 	antagpanel_category = "Devil"
 	job_rank = ROLE_DEVIL
-	//Don't delete upon mind destruction, otherwise soul re-selling will break.
-	delete_on_mind_deletion = FALSE
 	var/obligation
 	var/ban
 	var/bane

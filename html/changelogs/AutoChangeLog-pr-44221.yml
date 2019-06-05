@@ -1,0 +1,5 @@
+author: "Razharas"
+delete-after: True
+changes: 
+  - tweak: "Menucrafting is internally a component now"
+  - bugfix: "Fixed menucrafting opening new window when finishing construction"

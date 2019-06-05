@@ -172,7 +172,7 @@
 			setting = DUEL_SETTING_C
 		if(DUEL_SETTING_C)
 			setting = DUEL_SETTING_A
-	to_chat(user,"<span class='notice'>You switch [src] setting to [setting] mode.")
+	to_chat(user,"<span class='notice'>You switch [src] setting to [setting] mode.</span>")
 	update_icon()
 
 /obj/item/gun/energy/dueling/update_icon(force_update)
@@ -318,7 +318,7 @@
 
 /obj/item/storage/lockbox/dueling/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_items = 2
 	STR.set_holdable(list(/obj/item/gun/energy/dueling))

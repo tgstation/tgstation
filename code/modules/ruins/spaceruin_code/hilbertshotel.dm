@@ -140,7 +140,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
                         if(ismob(A))
                             var/mob/M = A
                             if(M.mind)
-                                to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!")
+                                to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!</span>")
                         var/max = world.maxx-TRANSITIONEDGE
                         var/min = 1+TRANSITIONEDGE
                         var/list/possible_transtitons = list()
