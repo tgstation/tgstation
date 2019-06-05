@@ -20,6 +20,7 @@
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
 	var/gas_stimulation_min = 0.002 //Nitryl and Stimulum
+	var/miasma_filter = 1 //Miasma effectiveness
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -285,49 +286,50 @@
 	// Miasma
 		if (breath_gases[/datum/gas/miasma])
 			var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
-
+			miasma_breath(miasma_pp, H)
+			miasma_pp *= miasma_filter
 			//Miasma sickness
 			if(prob(0.5 * miasma_pp))
 				var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
 				miasma_disease.name = "Unknown"
-				miasma_disease.try_infect(owner)
+				miasma_disease.try_infect(H)
 
 			// Miasma side effects
 			switch(miasma_pp)
 				if(0.25 to 5)
 					// At lower pp, give out a little warning
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+					SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "smell")
 					if(prob(5))
-						to_chat(owner, "<span class='notice'>There is an unpleasant smell in the air.</span>")
+						to_chat(H, "<span class='notice'>There is an unpleasant smell in the air.</span>")
 				if(5 to 15)
 					//At somewhat higher pp, warning becomes more obvious
 					if(prob(15))
-						to_chat(owner, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+						to_chat(H, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
+						SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
 				if(15 to 30)
 					//Small chance to vomit. By now, people have internals on anyway
 					if(prob(5))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-						owner.vomit()
+						to_chat(H, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+						SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+						H.vomit()
 				if(30 to INFINITY)
 					//Higher chance to vomit. Let the horror start
 					if(prob(15))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-						owner.vomit()
+						to_chat(H, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+						SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+						H.vomit()
 				else
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+					SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
 			// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
 			// Then again, this is a purely hypothetical scenario and hardly reachable
-			owner.adjust_disgust(0.1 * miasma_pp)
+			H.adjust_disgust(0.1 * miasma_pp)
 
 			breath_gases[/datum/gas/miasma][MOLES]-=gas_breathed
 
 		// Clear out moods when no miasma at all
 		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
@@ -383,6 +385,9 @@
 	S.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 5)
 	return S
 
+/obj/item/organ/lungs/proc/miasma_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
+	return
+
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
@@ -391,13 +396,18 @@
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
+	miasma_filter = 0 //I mean plasmamen use internals anyways
+
+/obj/item/organ/lungs/plasmaman/miasma_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
+	H.reagents.add_reagent(/datum/reagent/miasma, max(1, breath))
 
 /obj/item/organ/lungs/cybernetic
 	name = "cybernetic lungs"
-	desc = "A cybernetic version of the lungs found in traditional humanoid entities. Allows for greater intakes of oxygen than organic lungs, requiring slightly less pressure."
+	desc = "A cybernetic version of the lungs found in traditional humanoid entities. Allows for greater intakes of oxygen than organic lungs, requiring slightly less pressure. Filters terrible smells automatically aswell."
 	icon_state = "lungs-c"
 	synthetic = TRUE
 	safe_oxygen_min = 13
+	miasma_filter = 0.8
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	. = ..()
@@ -408,10 +418,11 @@
 
 /obj/item/organ/lungs/cybernetic/upgraded
 	name = "upgraded cybernetic lungs"
-	desc = "A more advanced version of the stock cybernetic lungs. Features the ability to filter out lower levels of toxins and carbon dioxide."
+	desc = "A more advanced version of the stock cybernetic lungs. Features the ability to filter out lower levels of toxins and carbon dioxide. Miasma almost smells like flowers in spring with these in your rib cage."
 	icon_state = "lungs-c-u"
 	safe_toxins_max = 20
 	safe_co2_max = 20
+	miasma_filter = 0.6
 
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140

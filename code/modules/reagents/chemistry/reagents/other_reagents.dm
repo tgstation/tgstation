@@ -1196,6 +1196,37 @@
 	L.remove_movespeed_modifier(type)
 	..()
 
+/datum/reagent/miasma
+	name = "Miasma"
+	description = "A putrid gas that in its pure state does nothing to humans"
+	reagent_state = GAS
+	color = "536852"
+	taste_description = "something rancid"
+
+/datum/reagent/miasma/on_mob_life(mob/living/carbon/M)
+	if(isplasmaman(M))
+		switch(volume)
+			if(1 to 10)
+				if(prob(10))
+					to_chat(M, "<span class='nicegreen'><i>It smells so nice...</i></span>")
+			if(10 to 50)
+				if(prob(10))
+					to_chat(M, "<span class='nicegreen'>It smells <b>AMAZING!</b></span>")
+					M.set_drugginess(15)
+					return
+				if(prob(5))
+					to_chat(M, "<span class='notice'>The fragance is almost overwhelming...")
+					M.set_drugginess(30)
+			if(50 to 99)
+				if(prob(10))
+					to_chat(M, "<span class='userdanger'>This smell is too good, it hurts!</span>")
+					M.set_drugginess(15)
+					if(prob(5))
+						M.vomit()
+			if(100 to INFINITY)
+				to_chat(M, "<span class='reallybig hypnophrase'>IT'S AMAZING!!!</span>")
+				M.gib()
+
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
