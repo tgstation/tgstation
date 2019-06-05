@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 					avail_chans += "use [MODE_TOKEN_DEPARTMENT] or [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 				else
 					avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
-		to_chat(user, "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].")
+		to_chat(user, "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].</span>")
 
 		if(command)
 			to_chat(user, "<span class='info'>Alt-click to toggle the high-volume mode.</span>")

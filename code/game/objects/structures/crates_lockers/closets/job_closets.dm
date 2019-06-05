@@ -60,7 +60,7 @@
 	new /obj/item/melee/flyswatter(src)
 	new /obj/item/flashlight(src)
 	for(var/i in 1 to 3)
-		new /obj/item/caution(src)
+		new /obj/item/clothing/suit/caution(src)
 	new /obj/item/holosign_creator/janibarrier(src)
 	new /obj/item/lightreplacer(src)
 	new /obj/item/soap(src)

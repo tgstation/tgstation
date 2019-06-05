@@ -17,7 +17,7 @@
 
 		if(istype(I, /obj/item/storage))
 			var/obj/item/storage/S = I
-			GET_COMPONENT_FROM(STR, /datum/component/storage, S)
+			var/datum/component/storage/STR = S.GetComponent(/datum/component/storage)
 			if(prob(upgrade_scroll_chance) && S.contents.len < STR.max_items && !S.invisibility)
 				var/obj/item/upgradescroll/scroll = new(get_turf(S))
 				SEND_SIGNAL(S, COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)

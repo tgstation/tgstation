@@ -991,7 +991,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if (H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
-		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+		var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
 		if(mood && mood.sanity > SANITY_DISTURBED)
 			hunger_rate *= max(0.5, 1 - 0.002 * mood.sanity) //0.85 to 0.75
 
@@ -1102,7 +1102,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(I.item_flags & SLOWS_WHILE_IN_HAND)
 				. += I.slowdown
 		if(!HAS_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN))
-			var/health_deficiency = (H.maxHealth - H.health + H.staminaloss)
+			var/health_deficiency = max(H.maxHealth - H.health, H.staminaloss)
 			if(health_deficiency >= 40)
 				if(flight)
 					. += (health_deficiency / 75)
@@ -1235,9 +1235,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(atk_verb == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
 			target.apply_damage(damage*1.5, attack_type, affecting, armor_block)
 			log_combat(user, target, "kicked")
-		else//other attacks to 1/2 raw damage + full in stamina damage
-			target.apply_damage(damage*0.5, attack_type, affecting, armor_block)
-			target.apply_damage(damage, STAMINA, affecting, armor_block)
+		else//other attacks deal full raw damage + 1.5x in stamina damage
+			target.apply_damage(damage, attack_type, affecting, armor_block)
+			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
 
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
