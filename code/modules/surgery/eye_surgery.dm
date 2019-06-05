@@ -1,5 +1,5 @@
 /datum/surgery/eye_surgery
-	name = "eye surgery"
+	name = "Eye surgery"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)

@@ -22,7 +22,7 @@
 	if(!T)
 		return
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/obj/item/stack/sheet/O in T)
 		materials.insert_stack(O, O.amount)
 
@@ -32,7 +32,7 @@
 		return
 	var/dat = "<b>Coin Press</b><br>"
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		if(!M.amount && chosen != mat_id)
@@ -65,7 +65,7 @@
 	if(processing==1)
 		to_chat(usr, "<span class='notice'>The machine is processing.</span>")
 		return
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(href_list["choose"])
 		if(materials.materials[href_list["choose"]])
 			chosen = href_list["choose"]

@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(economy)
 	return ..()
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
-	boring_eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows. 
+	boring_eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows.
 	boring_sci_payout() // Payout based on slimes.
 	boring_secmedsrv_payout() // Payout based on crew safety, health, and mood.
 	boring_civ_payout() // Payout based on ??? Profit
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(economy)
 				crew++
 				if(H.stat != DEAD)
 					alive_crew++
-					GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+					var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
 					var/medical_cash = (H.health / H.maxHealth) * alive_humans_bounty
 					if(mood)
 						var/datum/bank_account/D = get_dep_account(ACCOUNT_SRV)

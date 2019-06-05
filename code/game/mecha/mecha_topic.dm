@@ -216,73 +216,71 @@
 	if(usr.incapacitated())
 		return
 
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
-
 	if(in_range(src, usr))
+		var/obj/item/card/id/id_card
+		if (href_list["id_card"])
+			id_card = locate(href_list["id_card"])
+			if (!istype(id_card))
+				return
 
-		if(href_list["req_access"] && add_req_access)
-			output_access_dialog(afilter.getObj("id_card"),afilter.getMob("user"))
+		if(href_list["req_access"] && add_req_access && id_card)
+			output_access_dialog(id_card,usr)
 
-		if(href_list["maint_access"] && maint_access)
-			var/mob/user = afilter.getMob("user")
-			if(user)
-				if(state==0)
-					state = 1
-					to_chat(user, "The securing bolts are now exposed.")
-				else if(state==1)
-					state = 0
-					to_chat(user, "The securing bolts are now hidden.")
-				output_maintenance_dialog(afilter.getObj("id_card"),user)
+		if(href_list["maint_access"] && maint_access && id_card)
+			if(state==0)
+				state = 1
+				to_chat(usr, "The securing bolts are now exposed.")
+			else if(state==1)
+				state = 0
+				to_chat(usr, "The securing bolts are now hidden.")
+			output_maintenance_dialog(id_card,usr)
 
 		if(href_list["set_internal_tank_valve"] && state >=1)
-			var/mob/user = afilter.getMob("user")
-			if(user)
-				var/new_pressure = input(user,"Input new output pressure","Pressure setting",internal_tank_valve) as num
-				if(new_pressure)
-					internal_tank_valve = new_pressure
-					to_chat(user, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
+			var/new_pressure = input(usr,"Input new output pressure","Pressure setting",internal_tank_valve) as num
+			if(new_pressure)
+				internal_tank_valve = new_pressure
+				to_chat(usr, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
 
-		if(href_list["add_req_access"] && add_req_access && afilter.getObj("id_card"))
-			operation_req_access += afilter.getNum("add_req_access")
-			output_access_dialog(afilter.getObj("id_card"),afilter.getMob("user"))
+		if(href_list["add_req_access"] && add_req_access && id_card)
+			operation_req_access += text2num(href_list["add_req_access"])
+			output_access_dialog(id_card,usr)
 
-		if(href_list["del_req_access"] && add_req_access && afilter.getObj("id_card"))
-			operation_req_access -= afilter.getNum("del_req_access")
-			output_access_dialog(afilter.getObj("id_card"),afilter.getMob("user"))
+		if(href_list["del_req_access"] && add_req_access && id_card)
+			operation_req_access -= text2num(href_list["add_req_access"])
+			output_access_dialog(id_card, usr)
 
 		if(href_list["finish_req_access"])
 			add_req_access = 0
-			var/mob/user = afilter.getMob("user")
-			user << browse(null,"window=exosuit_add_access")
+			usr << browse(null,"window=exosuit_add_access")
 
 	if(usr != occupant)
 		return
 
 	if(href_list["update_content"])
-		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
+		send_byjax(usr,"exosuit.browser","content",src.get_stats_part())
 
 	if(href_list["select_equip"])
-		var/obj/item/mecha_parts/mecha_equipment/equip = afilter.getObj("select_equip")
+		var/obj/item/mecha_parts/mecha_equipment/equip = locate(href_list["select_equip"]) in src
 		if(equip && equip.selectable)
-			src.selected = equip
-			src.occupant_message("You switch to [equip]")
-			src.visible_message("[src] raises [equip]")
-			send_byjax(src.occupant,"exosuit.browser","eq_list",src.get_equipment_list())
+			selected = equip
+			occupant_message("You switch to [equip]")
+			visible_message("[src] raises [equip]")
+			send_byjax(usr,"exosuit.browser","eq_list",src.get_equipment_list())
 
 	if(href_list["rmictoggle"])
 		radio.broadcasting = !radio.broadcasting
-		send_byjax(src.occupant,"exosuit.browser","rmicstate",(radio.broadcasting?"Engaged":"Disengaged"))
+		send_byjax(usr,"exosuit.browser","rmicstate",(radio.broadcasting?"Engaged":"Disengaged"))
 
 	if(href_list["rspktoggle"])
 		radio.listening = !radio.listening
-		send_byjax(src.occupant,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
+		send_byjax(usr,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
 
 	if(href_list["rfreq"])
-		var/new_frequency = (radio.frequency + afilter.getNum("rfreq"))
+		var/new_frequency = (radio.frequency + text2num(href_list["rfreq"]))
 		if (!radio.freerange || (radio.frequency < MIN_FREE_FREQ || radio.frequency > MAX_FREE_FREQ))
 			new_frequency = sanitize_frequency(new_frequency)
 		radio.set_frequency(new_frequency)
-		send_byjax(src.occupant,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
+		send_byjax(usr,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
 
 	if (href_list["change_name"])
 		var/userinput = input(occupant, "Choose new exosuit name", "Rename exosuit", "") as null|text
@@ -292,14 +290,14 @@
 
 	if (href_list["toggle_id_upload"])
 		add_req_access = !add_req_access
-		send_byjax(src.occupant,"exosuit.browser","t_id_upload","[add_req_access?"L":"Unl"]ock ID upload panel")
+		send_byjax(usr,"exosuit.browser","t_id_upload","[add_req_access?"L":"Unl"]ock ID upload panel")
 
 	if(href_list["toggle_maint_access"])
 		if(state)
 			occupant_message("<span class='danger'>Maintenance protocols in effect</span>")
 			return
 		maint_access = !maint_access
-		send_byjax(src.occupant,"exosuit.browser","t_maint_access","[maint_access?"Forbid":"Permit"] maintenance protocols")
+		send_byjax(usr,"exosuit.browser","t_maint_access","[maint_access?"Forbid":"Permit"] maintenance protocols")
 
 	if (href_list["toggle_port_connection"])
 		if(internal_tank.connected_port)

@@ -19,6 +19,10 @@
 	var/list/cached_vars
 #endif
 
+/datum/Topic(href, href_list[])
+	..()
+	SEND_SIGNAL(src, COMSIG_TOPIC, usr, href_list)
+
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.

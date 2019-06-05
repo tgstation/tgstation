@@ -75,5 +75,7 @@
 
 /obj/item/clothing/gloves/rapid/attack_self(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
-	if(input)
+	if(input == "*me") //If they try to do a *me emote it will stop the attack to prompt them for an emote then they can walk away and enter the emote for a punch from far away
+		to_chat(user, "Invalid battlecry, please use another.")
+	else if(input)
 		warcry = input

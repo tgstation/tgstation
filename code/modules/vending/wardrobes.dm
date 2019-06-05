@@ -5,6 +5,10 @@
 	default_price = 50
 	extra_price = 75
 	payment_department = NO_FREEBIES
+	input_display_header = "Returned Clothing"
+
+/obj/machinery/vending/wardrobe/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
@@ -261,7 +265,7 @@
 					/obj/item/paint/paint_remover = 1,
 					/obj/item/melee/flyswatter = 1,
 					/obj/item/flashlight = 1,
-					/obj/item/caution = 6,
+					/obj/item/clothing/suit/caution = 6,
 					/obj/item/holosign_creator/janibarrier = 1,
 					/obj/item/lightreplacer = 1,
 					/obj/item/soap/nanotrasen = 1,
@@ -320,7 +324,7 @@
 					/obj/item/toy/plush/narplush = 1,
 					/obj/item/clothing/head/medievaljewhat = 3,
 					/obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
-					/obj/item/clothing/head/clownmitre = 1)		
+					/obj/item/clothing/head/clownmitre = 1)
 	premium = list(/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
 					/obj/item/clothing/head/bishopmitre = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe

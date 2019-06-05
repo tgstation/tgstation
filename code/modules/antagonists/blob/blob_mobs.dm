@@ -147,7 +147,7 @@
 	if(overmind && overmind.blobstrain)
 		overmind.blobstrain.on_sporedeath(src)
 	else
-		reagents.add_reagent("spore", 10)
+		reagents.add_reagent(/datum/reagent/toxin/spore, 10)
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
@@ -271,7 +271,7 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()
 	if(. && isliving(target) && overmind)
-		overmind.blobstrain.blobbernaut_attack(target)
+		overmind.blobstrain.blobbernaut_attack(target, src)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()
