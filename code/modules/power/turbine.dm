@@ -41,6 +41,11 @@
 	var/comp_id = 0
 	var/efficiency
 
+/obj/machinery/power/compressor/Destroy()
+	if (turbine && turbine.compressor == src)
+		turbine.compressor = null
+	turbine = null
+	return ..()
 
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
@@ -56,6 +61,12 @@
 	var/turf/outturf
 	var/lastgen
 	var/productivity = 1
+
+/obj/machinery/power/turbine/Destroy()
+	if (compressor && compressor.turbine == src)
+		compressor.turbine = null
+	compressor = null
+	return ..()
 
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
@@ -97,7 +108,7 @@
 /obj/machinery/power/compressor/examine(mob/user)
 	..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
+		to_chat(user, "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>")
 
 /obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))

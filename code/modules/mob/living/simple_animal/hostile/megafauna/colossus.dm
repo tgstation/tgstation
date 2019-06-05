@@ -73,7 +73,7 @@ Difficulty: Very Hard
 		telegraph()
 
 		if(health < maxHealth/3)
-			double_spiral()
+			INVOKE_ASYNC(src, .proc/double_spiral)
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
 			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
@@ -123,17 +123,17 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	dir_shots(GLOB.diagonals)
-	sleep(10)
+	SLEEP_CHECK_DEATH(10)
 	dir_shots(GLOB.cardinals)
-	sleep(10)
+	SLEEP_CHECK_DEATH(10)
 	dir_shots(GLOB.diagonals)
-	sleep(10)
+	SLEEP_CHECK_DEATH(10)
 	dir_shots(GLOB.cardinals)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
-	sleep(10)
+	SLEEP_CHECK_DEATH(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot)
 	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
 
@@ -151,7 +151,7 @@ Difficulty: Very Hard
 			counter = 16
 		shoot_projectile(start_turf, counter * 22.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
-		sleep(1)
+		SLEEP_CHECK_DEATH(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
 	if(!isnum(set_angle) && (!marker || marker == loc))

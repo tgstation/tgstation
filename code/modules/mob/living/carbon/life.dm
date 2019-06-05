@@ -8,7 +8,7 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(!IsInStasis())
+	if(!IS_IN_STASIS(src))
 
 		if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
 			handle_organs()
@@ -65,7 +65,7 @@
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
-	if(reagents.has_reagent("lexorin"))
+	if(reagents.has_reagent(/datum/reagent/toxin/lexorin))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
@@ -137,7 +137,7 @@
 
 	//CRIT
 	if(!breath || (breath.total_moles() == 0) || !lungs)
-		if(reagents.has_reagent("epinephrine") && lungs)
+		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine) && lungs)
 			return
 		adjustOxyLoss(1)
 
@@ -312,10 +312,17 @@
 	return
 
 /mob/living/carbon/proc/handle_bodyparts()
+	var/stam_regen = FALSE
+	if(stam_regen_start_time <= world.time)
+		stam_regen = TRUE
+		if(stam_paralysed)
+			stam_paralysed = FALSE
+			SetParalyzed(0) //Really we should have sources for status effects
+			update_health_hud()
 	for(var/I in bodyparts)
 		var/obj/item/bodypart/BP = I
 		if(BP.needs_processing)
-			. |= BP.on_life()
+			. |= BP.on_life(stam_regen)
 
 /mob/living/carbon/proc/handle_organs()
 	for(var/V in internal_organs)
@@ -374,23 +381,6 @@
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
 		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
-
-/mob/living/carbon/handle_stomach()
-	set waitfor = 0
-	for(var/mob/living/M in stomach_contents)
-		if(M.loc != src)
-			stomach_contents.Remove(M)
-			continue
-		if(iscarbon(M) && stat != DEAD)
-			if(M.stat == DEAD)
-				M.death(1)
-				stomach_contents.Remove(M)
-				qdel(M)
-				continue
-			if(SSmobs.times_fired%3==1)
-				if(!(M.status_flags & GODMODE))
-					M.adjustBruteLoss(5)
-				adjust_nutrition(10)
 
 
 /*

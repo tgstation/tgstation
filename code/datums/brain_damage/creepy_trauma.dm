@@ -69,7 +69,7 @@
 	if(!viewing)
 		return message
 	var/choked_up
-	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
+	var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
 	if(mood)
 		if(mood.sanity >= SANITY_GREAT)
 			choked_up = social_interaction()

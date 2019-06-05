@@ -93,6 +93,8 @@ SUBSYSTEM_DEF(ticker)
 				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
 					music += S
 			if(1) //sound.ogg -- common sound
+				if(L[1] == "exclude")
+					continue
 				music += S
 
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
@@ -115,9 +117,20 @@ SUBSYSTEM_DEF(ticker)
 
 
 	if(!GLOB.syndicate_code_phrase)
-		GLOB.syndicate_code_phrase	= generate_code_phrase()
+		GLOB.syndicate_code_phrase	= generate_code_phrase(return_list=TRUE)
+
+		var/codewords = jointext(GLOB.syndicate_code_phrase, "|")
+		var/regex/codeword_match = new("([codewords])", "ig")
+
+		GLOB.syndicate_code_phrase_regex = codeword_match
+
 	if(!GLOB.syndicate_code_response)
-		GLOB.syndicate_code_response = generate_code_phrase()
+		GLOB.syndicate_code_response = generate_code_phrase(return_list=TRUE)
+
+		var/codewords = jointext(GLOB.syndicate_code_response, "|")
+		var/regex/codeword_match = new("([codewords])", "ig")
+
+		GLOB.syndicate_code_response_regex = codeword_match
 
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 	if(CONFIG_GET(flag/randomize_shift_time))
@@ -228,7 +241,7 @@ SUBSYSTEM_DEF(ticker)
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
-	can_continue = can_continue && SSjob.DivideOccupations() 				//Distribute jobs
+	can_continue = can_continue && SSjob.DivideOccupations(mode.required_jobs) 				//Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
@@ -410,7 +423,7 @@ SUBSYSTEM_DEF(ticker)
 		queued_players.len = 0
 		queue_delay = 0
 		return
-		
+
 	queue_delay++
 	var/mob/dead/new_player/next_in_line = queued_players[1]
 

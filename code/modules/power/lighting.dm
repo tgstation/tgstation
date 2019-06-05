@@ -345,13 +345,16 @@
 		var/BR = brightness
 		var/PO = bulb_power
 		var/CO = bulb_colour
+		if(color)
+			CO = color
 		var/area/A = get_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
 		else if (nightshift_enabled)
 			BR = nightshift_brightness
 			PO = nightshift_light_power
-			CO = nightshift_light_color
+			if(!color)
+				CO = nightshift_light_color
 		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
 		if(!matching)
 			switchcount++
@@ -383,6 +386,10 @@
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
 	broken_sparks(start_only=TRUE)
+
+/obj/machinery/light/update_atom_colour()
+	..()
+	update()
 
 /obj/machinery/light/proc/broken_sparks(start_only=FALSE)
 	if(status == LIGHT_BROKEN && has_power())
@@ -754,7 +761,7 @@
 	var/base_state
 	var/switchcount = 0	// number of times switched
 	materials = list(MAT_GLASS=100)
-	grind_results = list("silicon" = 5, "nitrogen" = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
+	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	var/rigged = FALSE		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
@@ -836,7 +843,7 @@
 
 		to_chat(user, "<span class='notice'>You inject the solution into \the [src].</span>")
 
-		if(S.reagents.has_reagent("plasma", 5))
+		if(S.reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
 
 			rigged = TRUE
 

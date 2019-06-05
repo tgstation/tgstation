@@ -1129,6 +1129,27 @@ B --><-- A
 /proc/get_random_station_turf()
 	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
+/proc/get_safe_random_station_turf()
+	for (var/i in 1 to 5)
+		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
+		var/turf/target
+		while (L.len && !target)
+			var/I = rand(1, L.len)
+			var/turf/T = L[I]
+			if(!T.density)
+				var/clear = TRUE
+				for(var/obj/O in T)
+					if(O.density)
+						clear = FALSE
+						break
+				if(clear)
+					target = T
+			if (!target)
+				L.Cut(I,I+1)
+		if (target)
+			return target
+
+
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
 	var/closest_distance

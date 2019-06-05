@@ -16,6 +16,7 @@
 			handle_feeding()
 		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
 			handle_nutrition()
+			reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len) //Slimes are such snowflakes
 			handle_targets()
 			if (!ckey)
 				handle_mood()

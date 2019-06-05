@@ -29,6 +29,11 @@
 	. = ..()
 	recharging_turf = get_step(loc, dir)
 
+/obj/machinery/mech_bay_recharge_port/Destroy()
+	if (recharge_console && recharge_console.recharge_port == src)
+		recharge_console.recharge_port = null
+	return ..()
+
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
 	var/MC
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -135,3 +140,8 @@
 /obj/machinery/computer/mech_bay_power_console/Initialize()
 	. = ..()
 	reconnect()
+
+/obj/machinery/computer/mech_bay_power_console/Destroy()
+	if (recharge_port && recharge_port.recharge_console == src)
+		recharge_port.recharge_console = null
+	return ..()

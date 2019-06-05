@@ -23,8 +23,8 @@
 
 	harm_intent_damage = 8
 	obj_damage = 50
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 	speak_emote = list("gnashes")
@@ -37,12 +37,6 @@
 	movement_type = FLYING
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
-
-/mob/living/simple_animal/hostile/carp/AttackingTarget()
-	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.adjustStaminaLoss(8)
 
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"

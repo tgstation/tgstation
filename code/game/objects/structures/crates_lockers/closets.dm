@@ -4,7 +4,6 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "generic"
 	density = TRUE
-	layer = BELOW_OBJ_LAYER
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
@@ -417,7 +416,7 @@
 /obj/structure/closet/CtrlShiftClick(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_SKITTISH))
 		return ..()
-	if(!user.canUseTopic(src) || !isturf(user.loc))
+	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(user.loc))
 		return
 	dive_into(user)
 

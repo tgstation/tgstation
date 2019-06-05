@@ -83,15 +83,9 @@
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
-		add_atom_colour(overmind.blob_reagent_datum.color, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
-
-/obj/structure/blob/process()
-	Life()
-
-/obj/structure/blob/proc/Life()
-	return
 
 /obj/structure/blob/proc/Pulse_Area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	if(QDELETED(pulsing_overmind))
@@ -148,10 +142,10 @@
 	O.setDir(dir)
 	if(controller)
 		var/mob/camera/blob/BO = controller
-		O.color = BO.blob_reagent_datum.color
+		O.color = BO.blobstrain.color
 		O.alpha = 200
 	else if(overmind)
-		O.color = overmind.blob_reagent_datum.color
+		O.color = overmind.blobstrain.color
 	if(A)
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
@@ -192,7 +186,7 @@
 			B.forceMove(T)
 			B.update_icon()
 			if(B.overmind && expand_reaction)
-				B.overmind.blob_reagent_datum.expand_reaction(src, B, T, controller)
+				B.overmind.blobstrain.expand_reaction(src, B, T, controller)
 			return B
 		else
 			blob_attack_animation(T, controller)
@@ -209,14 +203,14 @@
 		return
 	if(severity > 0)
 		if(overmind)
-			overmind.blob_reagent_datum.emp_reaction(src, severity)
+			overmind.blobstrain.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
 /obj/structure/blob/tesla_act(power)
 	..()
 	if(overmind)
-		if(overmind.blob_reagent_datum.tesla_reaction(src, power))
+		if(overmind.blobstrain.tesla_reaction(src, power))
 			take_damage(power/400, BURN, "energy")
 	else
 		take_damage(power/400, BURN, "energy")
@@ -224,7 +218,7 @@
 /obj/structure/blob/extinguish()
 	..()
 	if(overmind)
-		overmind.blob_reagent_datum.extinguish_reaction(src)
+		overmind.blobstrain.extinguish_reaction(src)
 
 /obj/structure/blob/hulk_damage()
 	return 15
@@ -245,9 +239,9 @@
 
 /obj/structure/blob/proc/chemeffectreport(mob/user)
 	if(overmind)
-		to_chat(user, "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>")
-		to_chat(user, "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>")
-		to_chat(user, "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>")
+		to_chat(user, "<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>")
+		to_chat(user, "<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>")
+		to_chat(user, "<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span><br>")
 	else
 		to_chat(user, "<b>No Material Detected!</b><br>")
 
@@ -285,7 +279,7 @@
 		armor_protection = armor.getRating(damage_flag)
 	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 	if(overmind && damage_flag)
-		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, damage_amount, damage_type, damage_flag)
+		damage_amount = overmind.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)
 	return damage_amount
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -295,7 +289,7 @@
 
 /obj/structure/blob/obj_destruction(damage_flag)
 	if(overmind)
-		overmind.blob_reagent_datum.death_reaction(src, damage_flag)
+		overmind.blobstrain.death_reaction(src, damage_flag)
 	..()
 
 /obj/structure/blob/proc/change_to(type, controller)
@@ -330,7 +324,7 @@
 
 /obj/structure/blob/proc/get_chem_name()
 	if(overmind)
-		return overmind.blob_reagent_datum.name
+		return overmind.blobstrain.name
 	return "some kind of organic tissue"
 
 /obj/structure/blob/normal
