@@ -35,8 +35,8 @@
 	RegisterSignal(H, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/species/synth/on_species_loss(mob/living/carbon/human/H)
+	. = ..()
 	UnregisterSignal(H, COMSIG_MOB_SAY)
-	return ..()
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/medicine/synthflesh)

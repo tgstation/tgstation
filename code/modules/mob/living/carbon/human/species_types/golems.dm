@@ -531,8 +531,8 @@
 	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/species/golem/bananium/on_species_loss(mob/living/carbon/C)
+	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
-	return ..()
 
 /datum/species/golem/bananium/random_name(gender,unique,lastname)
 	var/clown_name = pick(GLOB.clown_names)
