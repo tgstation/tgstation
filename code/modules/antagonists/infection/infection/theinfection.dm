@@ -9,6 +9,7 @@
 	anchored = TRUE
 	layer = TABLE_LAYER
 	CanAtmosPass = ATMOS_PASS_NO
+	smooth = SMOOTH_TRUE
 	var/point_return = 0 //How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
@@ -47,8 +48,8 @@
 	if(C != overmind)
 		return
 	var/list/choices = list(
-		"Upgrade Structure" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
-		"Structure Overview" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help_radial")
+		"Upgrade Structure" = image(icon = 'icons/mob/infection.dmi', icon_state = "ui_increase"),
+		"Structure Overview" = image(icon = 'icons/mob/infection.dmi', icon_state = "ui_help_radial")
 	)
 	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
 	if(choice == choices[1])
@@ -320,9 +321,10 @@
 	var/obj/structure/infection/I = new type(src.loc, controller)
 	if(structure_build_time == null)
 		structure_build_time = I.build_time
+	icon = I.icon
 	icon_state = I.icon_state
-	alpha = 100 // faded out while building new type
-	animate(src, alpha = 200, time = structure_build_time)
+	transform = matrix(0, 0, 0, 0, 0, 0)
+	animate(src, transform = matrix(), time = structure_build_time)
 	name = "building [I.name]"
 	building = TRUE
 	qdel(I)

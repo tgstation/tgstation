@@ -1,7 +1,7 @@
 /obj/structure/infection/shield
 	name = "strong infection"
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "blob_shield"
+	icon = 'icons/obj/smooth_structures/infection_wall.dmi'
+	icon_state = "smooth"
 	desc = "A solid wall of slightly twitching tendrils."
 	max_integrity = 150
 	brute_resist = 0.25
@@ -9,9 +9,26 @@
 	point_return = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 	build_time = 100
-	var/damaged_icon = "blob_shield_damaged"
+	var/damaged_icon = "smooth"
 	var/damaged_desc = "A wall of twitching tendrils."
 	var/damaged_name = "weakened strong infection"
+	var/list/crystal_colors = list("#0000ff" = 20,
+								   "#00ff00" = 15,
+								   "#ff0000" = 15,
+								   "#ffffff" = 8,
+								   "#800080" = 4,
+								   "#000000" = 1)
+
+/obj/structure/infection/shield/Initialize(mapload)
+	canSmoothWith = typecacheof(list(/obj/structure/infection/shield))
+	var/chosen_crystal = rand(1, 15)
+	var/obj/effect/overlay/vis/crystal_overlay = new
+	crystal_overlay.icon = 'icons/mob/infection.dmi'
+	crystal_overlay.icon_state = "crystal-[chosen_crystal]"
+	crystal_overlay.layer = layer
+	crystal_overlay.color = pickweight(crystal_colors)
+	vis_contents += crystal_overlay
+	. = ..()
 
 /obj/structure/infection/shield/show_infection_menu(var/mob/camera/commander/C)
 	return
@@ -33,10 +50,8 @@
 /obj/structure/infection/shield/reflective
 	name = "reflective infection"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
-	damaged_icon = "blob_glow_damaged"
 	damaged_desc = "A wall of twitching tendrils with a reflective glow."
 	damaged_name = "weakened reflective infection"
-	icon_state = "blob_glow"
 	flags_1 = CHECK_RICOCHET_1
 	max_integrity = 200
 	brute_resist = 0.5
@@ -57,10 +72,8 @@
 
 /obj/structure/infection/shield/reflective/strong
 	name = "strong reflective infection"
-	damaged_icon = "blob_glow_damaged"
 	damaged_desc = "A wall of twitching tendrils with a reflective glow."
 	damaged_name = "weakened strong reflective infection"
-	icon_state = "blob_idle_glow"
 	brute_resist = 0.25
 
 /obj/structure/infection/shield/reflective/strong/core

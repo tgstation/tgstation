@@ -1,6 +1,6 @@
 /obj/structure/infection/turret
 	name = "infection turret"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/infection.dmi'
 	icon_state = "infection_turret_icon" // needed so when building you can see the type
 	desc = "A solid wall with a radiating material on the inside."
 	max_integrity = 150
@@ -29,7 +29,7 @@
 	if(overmind)
 		infection_overlay.color = overmind.infection_color
 	add_overlay(infection_overlay)
-	add_overlay(mutable_appearance('icons/mob/blob.dmi', "infection_turret"))
+	add_overlay(mutable_appearance('icons/mob/infection.dmi', "infection_turret"))
 
 /obj/structure/infection/turret/Life()
 	if(!overmind)

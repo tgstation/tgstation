@@ -232,7 +232,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set desc = "Improve yourself and your army to be unstoppable."
 	var/list/choices = list(
 		"Summon Sentient Spore (1)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
-		"Ability Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_increase"),
+		"Ability Unlocks" = image(icon = 'icons/mob/infection.dmi', icon_state = "ui_increase"),
 		"Effect Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
 	)
 	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)

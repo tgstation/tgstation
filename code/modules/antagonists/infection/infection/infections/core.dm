@@ -13,7 +13,6 @@
 	var/point_rate = 2
 	var/list/topulse = list()
 
-
 /obj/structure/infection/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
 	if(GLOB.infection_core)
 		return INITIALIZE_HINT_QDEL // just making sure admins can't break everything
@@ -145,14 +144,8 @@
 		if(I && prob(15))
 			INVOKE_ASYNC(I, .proc/change_to, /obj/structure/infection/turret/core, overmind)
 	INVOKE_ASYNC(src, .proc/pulseNodes)
-	shootSmoke()
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
 	..()
-
-/obj/structure/infection/core/proc/shootSmoke()
-	var/angle = rand(0, 360)
-	for(var/i = 1 to 3)
-		new /obj/effect/particle_effect/smoke/infection_smoke(loc, angle + 120 * i)
 
 /obj/structure/infection/core/proc/pulseNodes()
 	if(topulse.len)
@@ -173,36 +166,3 @@
 	if(overmind && is_station_level(new_z))
 		overmind.forceMove(get_turf(src))
 	return ..()
-
-/obj/effect/particle_effect/smoke/infection_smoke
-	name = "infectious smoke"
-	color = "#ff5800"
-	opaque = 0
-	animate_movement = SLIDE_STEPS
-	lifetime = 10
-	var/movement_range = 8
-	var/list/move_turfs = list()
-
-/obj/effect/particle_effect/smoke/infection_smoke/Initialize(mapload, var/angle)
-	. = ..()
-	var/range = movement_range
-	var/turf/end_turf = get_turf(src)
-	for(var/i in 1 to range)
-		var/turf/check = locate(src.x + cos(angle) * i, src.y + sin(angle) * i, src.z)
-		if(!check)
-			break
-		end_turf = check
-	move_turfs = getline(get_turf(src), end_turf) - get_turf(src)
-	smoke_movement()
-
-/obj/effect/particle_effect/smoke/infection_smoke/proc/smoke_movement()
-	var/diff = 40 / movement_range
-	INVOKE_ASYNC(src, .proc/fade_out, 40)
-	for(var/i = 1 to movement_range)
-		if(move_turfs.len)
-			var/turf/moveto = move_turfs[1]
-			forceMove(moveto)
-			move_turfs -= moveto
-		sleep(diff)
-	qdel(src)
-
