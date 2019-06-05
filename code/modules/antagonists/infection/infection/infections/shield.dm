@@ -21,7 +21,7 @@
 								   "#444444" = 1)
 
 /obj/structure/infection/shield/Initialize(mapload)
-	canSmoothWith = subtypesof(/obj/structure/infection/shield) + /obj/structure/infection/shield
+	canSmoothWith = typesof(/obj/structure/infection/shield)
 	if(prob(25))
 		var/chosen_crystal = rand(0, 15)
 		var/obj/effect/overlay/vis/crystal_overlay = new
