@@ -27,7 +27,7 @@
 	s+= "<b>[server_caption]</b>" // SSETH FANS WELCOME! // "<b>The Problems of the Future, <i>Today!</i></b>"  // "<b>[station_name()]</b>";	// FULPSTATION: We don't display the name of the Station anymore
 	s += " ("
 	//s += "<a href=\"[CONFIG_GET(string/forumurl)]\">"//Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
+	//	s += "[game_version]"
 	//s += "Forums"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	//s += "</a>"
 	//s += " | "

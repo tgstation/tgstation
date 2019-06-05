@@ -179,7 +179,7 @@
 	// Reputations [Fledgling]
 	else
 		vampreputation = pick ("Crude","Callow","Unlearned","Neophyte","Novice","Unseasoned","Fledgling","Young","Neonate","Scrapling","Untested","Unproven","Unknown","Newly Reisen","Born","Scavenger","Unknowing",\
-							   "Unspoiled")//,"Fresh")
+							   "Unspoiled","Disgraced","Defrocked","Shamed","Meek","Timid","Broken")//,"Fresh")
 
 
 /datum/antagonist/bloodsucker/proc/AmFledgling()
@@ -249,16 +249,12 @@
 	owner.current.grant_language(/datum/language/vampiric)
 
 	// Soul
+	owner.current.hellbound = TRUE
 	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
 	owner.isholy = FALSE 		// is this person a chaplain or admin role allowed to use bibles
 
 	// Disabilities
-	owner.current.cure_husk()//owner.current.disabilities = 0	// Can't do this. You get stuck with Husk if you just clear disabilities.
-	owner.current.cure_blind()
-
-	// Lose SOul (no clone)
-	owner.current.hellbound = TRUE
-	owner.hasSoul = FALSE
+	CureDisabilities()
 
 /datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
@@ -299,10 +295,8 @@
 	// Soul
 	if (owner.soulOwner == owner) // Return soul, if *I* own it.
 		owner.hasSoul = TRUE
-
-	// Regain Soul (can clone)
 	owner.current.hellbound = FALSE
-	owner.hasSoul = TRUE
+
 
 datum/antagonist/bloodsucker/proc/RankUp()
 	set waitfor = FALSE
@@ -681,6 +675,9 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	..()
 
 /datum/atom_hud/antag/bloodsucker/proc/check_valid_hud_user(mob/M, atom/A) // Remember: A is being added to M's hud. Because M's hud is a /antag/vassal hud, this means M is the vassal here.
+	// Ghost Admins always see Bloodsuckers/Vassals
+	if (isobserver(M))
+		return TRUE
 	// GOAL: Vassals see their Master and his other Vassals.
 	// GOAL: Vassals can BE seen by their Bloodsucker and his other Vassals.
 	// GOAL: Bloodsuckers can see each other.
@@ -689,9 +686,6 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	var/mob/A_mob = A
 	if (!A_mob.mind)
 		return FALSE
-	// Ghost Admins always see Bloodsuckers/Vassals
-	if (isobserver(M))
-		return TRUE
 
 	// Find Datums: Bloodsucker
 	var/datum/antagonist/bloodsucker/atom_B = A_mob.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)

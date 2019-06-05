@@ -175,7 +175,7 @@
 	job_rank = ROLE_BLOODSUCKER
 	var/list/datum/action/powers = list()// Purchased powers
 	var/list/datum/objective/objectives_given = list()	// For removal if needed.
-
+	var/datum/martial_art/my_kungfu // Hunters know a lil kung fu.
 
 /datum/antagonist/vamphunter/on_gain()
 
@@ -187,6 +187,11 @@
 	// Give Hunter Power
 	var/datum/action/P = new /datum/action/bloodsucker/trackvamp
 	P.Grant(owner.current)
+
+	// Give Hunter Martial Arts
+	var/datum/martial_art/pick_type = pick (/datum/martial_art/cqc, /datum/martial_art/krav_maga, /datum/martial_art/cqc, /datum/martial_art/krav_maga, /datum/martial_art/wrestling)  // /datum/martial_art/boxing  <--- doesn't include grabbing, so don't use!
+	my_kungfu = new pick_type //pick (/datum/martial_art/boxing, /datum/martial_art/cqc) // ick_type
+	my_kungfu.teach(owner.current, 0)
 
 	// Give Hunter Objective
 	var/datum/objective/bloodsucker/vamphunter/vamphunter_objective = new
@@ -209,6 +214,9 @@
 		for (var/datum/action/bloodsucker/P in owner.current.actions)
 			P.Remove(owner.current)
 
+	// Take Hunter Martial Arts
+	my_kungfu.remove(owner.current)
+
 	// Remove Hunter Objectives
 	for(var/O in objectives_given)
 		objectives -= O
@@ -220,8 +228,10 @@
 /datum/antagonist/vamphunter/greet()
 	to_chat(owner, "<span class='userdanger'>You are a fearless Vampire Hunter!</span>")
 	to_chat(owner, "<span class='boldannounce'>You know there's at least one filthy Bloodsucker on the station. It's your job to root them out, destroy their nests, and save the crew.<span>")
+	to_chat(owner, "<span class='announce'>Hunter Tip: Use your [my_kungfu.name] techniques to give you an advantage over the enemy.</span><br>")
 	antag_memory += "You remember your training: Bloodsuckers are weak to fire, or a stake to the heart. Removing their head or heart will also destroy them permanently.<br>"
 	antag_memory += "You remember your training: Wooden stakes can be made from planks, and your recipes list has ways of making them stronger.<br>"
+	antag_memory += "You are skilled in the [my_kungfu.name] style of combat.<br>"
 	owner.current.playsound_local(null, 'sound/weapons/sawclose.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/vamphunter/farewell()
@@ -234,7 +244,7 @@
 	alert_type = /obj/screen/alert/status_effect/agent_pinpointer/hunter_edition
 	minimum_range = HUNTER_SCAN_MIN_DISTANCE
 	tick_interval = HUNTER_SCAN_PING_TIME
-	duration = 100 // Lasts 10s
+	duration = 160 // Lasts 10s
 	range_fuzz_factor = 5//PINPOINTER_EXTRA_RANDOM_RANGE
 
 /obj/screen/alert/status_effect/agent_pinpointer/hunter_edition
@@ -250,7 +260,7 @@
 	var/list/mob/living/carbon/vamps = list()
 	// Track Bloodsuckers in Game Mode
 	for(var/datum/mind/M in SSticker.mode.bloodsuckers)
-		if (!M.current || M.current == owner || !isturf(M.current) || !isturf(new_owner))
+		if (!M.current || M.current == owner || !get_turf(M.current) || !get_turf(new_owner))
 			continue
 		var/datum/antagonist/bloodsucker/antag_datum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if(!istype(antag_datum))
@@ -278,7 +288,8 @@
 
 
 /datum/status_effect/agent_pinpointer/hunter_edition/Destroy()
-	to_chat(owner, "<span class='notice'>You've lost the trail.</span>")
+	if (scan_target)
+		to_chat(owner, "<span class='notice'>You've lost the trail.</span>")
 	..()
 
 
@@ -315,7 +326,7 @@
 
 	to_chat(user, "<span class='notice'>You look around, scanning your environment and discerning signs of those filthy, wretched bloodsuckers.</span>")
 
-	if (!do_mob(user,owner,60))
+	if (!do_mob(user,owner,80))
 		return
 
 	// Add Power

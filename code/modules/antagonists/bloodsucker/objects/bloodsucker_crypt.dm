@@ -293,7 +293,7 @@
 			if (convert_progress <= 0)
 				// FAIL: Can't be Vassal
 				if (!SSticker.mode.can_make_vassal(target, user, display_warning=FALSE)) // If I'm an unconvertable Antag ONLY
-					to_chat(user, "<span class='danger'>[target] doesn't respond to your persuasion. It doesn't appear they can be converted to follow you.</span>")
+					to_chat(user, "<span class='danger'>[target] doesn't respond to your persuasion. It doesn't appear they can be converted to follow you. <i>\[ALT+click to release\]</span>")
 					convert_progress ++ // Pop it back up some. Avoids wasting Blood on a lost cause.
 				// SUCCESS: All done!
 				else

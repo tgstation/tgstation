@@ -130,7 +130,7 @@
 	button.color = rgb(128,0,0,128)
 	button.alpha = 100
 	// Calculate Cooldown (by power's level)
-	var/this_cooldown = (cooldown_static || amSingleUse) ? cooldown : max(cooldown / 2, cooldown - (cooldown / 16 * level_current))
+	var/this_cooldown = (cooldown_static || amSingleUse) ? cooldown : max(cooldown / 2, cooldown - (cooldown / 16 * (level_current-1)))
 	// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
 
 	// Wait for cooldown

@@ -69,16 +69,19 @@
 			break
 
 		// Spin/Stun people we pass.
-		var/mob/living/newtarget = locate(/mob/living) in oview(1, owner)
-		if (newtarget && newtarget != target)//!newtarget.IsKnockdown())
-			if (rand(0, 5) < level_current)
-				playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
-				newtarget.Knockdown(10 + level_current * 5)
-			newtarget.Stun(5 + level_current * 2)
-			if(newtarget.IsStun())
-				newtarget.spin(10,1)
-				if (rand(0,4))
-					newtarget.drop_all_held_items()
+		//var/mob/living/newtarget = locate(/mob/living) in oview(1, owner)
+		var/list/mob/living/foundtargets = list()
+		for (var/mob/living/newtarget in oview(1, owner))
+			if (newtarget && newtarget != target && !(newtarget in foundtargets))//!newtarget.IsKnockdown())
+				if (rand(0, 5) < level_current)
+					playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
+					newtarget.Knockdown(10 + level_current * 5)
+				newtarget.Stun(5 + level_current * 2)
+				if(newtarget.IsStun())
+					newtarget.spin(10,1)
+					if (rand(0,4))
+						newtarget.drop_all_held_items()
+				foundtargets += newtarget
 
 		sleep(1)
 

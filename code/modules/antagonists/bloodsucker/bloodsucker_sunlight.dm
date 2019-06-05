@@ -2,7 +2,7 @@
 #define TIME_BLOODSUCKER_DAY_WARN	90 		// 1.5 minutes
 #define TIME_BLOODSUCKER_DAY_FINAL_WARN	25 	// 25 sec
 #define TIME_BLOODSUCKER_DAY	60 			// 1.5 minutes // 10 is a second, 600 is a minute.
-#define TIME_BLOODSUCKER_BURN_INTERVAL	4 	// 4 sec
+#define TIME_BLOODSUCKER_BURN_INTERVAL	40 	// 4 sec
 
 
 // Over Time, tick down toward a "Solar Flare" of UV buffeting the station. This period is harmful to vamps.
@@ -142,20 +142,26 @@
 				if (!bloodsuckerdatum.warn_sun_locker)
 					to_chat(M, "<span class='warning'>Your skin sizzles. The [M.current.loc] doesn't protect well against UV bombardment.</span>")
 					bloodsuckerdatum.warn_sun_locker = TRUE
-				M.current.fireloss += 0.5 + bloodsuckerdatum.vamplevel / 2  //  Do DIRECT damage. Being spaced was causing this to not occur. setFireLoss(bloodsuckerdatum.vamplevel)
+				M.current.adjustFireLoss(0.5 + bloodsuckerdatum.vamplevel / 2) // M.current.fireloss += 0.5 + bloodsuckerdatum.vamplevel / 2  //  Do DIRECT damage. Being spaced was causing this to not occur. setFireLoss(bloodsuckerdatum.vamplevel)
 				M.current.updatehealth()
 				SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/daylight_1)
+		// Out in the Open? Buh Bye
 		else
+			if (!bloodsuckerdatum.warn_sun_burn)
+				if (bloodsuckerdatum.vamplevel > 0)
+					to_chat(M, "<span class='userdanger'>The solar flare sets your skin ablaze!</span>")
+				else
+					to_chat(M, "<span class='userdanger'>The solar flare scalds your neophyte skin!</span>")
+				bloodsuckerdatum.warn_sun_burn = TRUE
 			if (M.current.fire_stacks <= 0)
 				M.current.fire_stacks = 0
-				if (!bloodsuckerdatum.warn_sun_burn)
-					to_chat(M, "<span class='userdanger'>The solar flare sets your skin ablaze!</span>")
-					bloodsuckerdatum.warn_sun_burn = TRUE
-			M.current.adjust_fire_stacks(0.4)
-			M.current.IgniteMob()
-			M.current.fireloss += 2 + bloodsuckerdatum.vamplevel   //  Do DIRECT damage. Being spaced was causing this to not occur.  //setFireLoss(2 + bloodsuckerdatum.vamplevel)
+			if (bloodsuckerdatum.vamplevel > 0)
+				M.current.adjust_fire_stacks(0.2 + bloodsuckerdatum.vamplevel / 10)
+				M.current.IgniteMob()
+			M.current.adjustFireLoss(2 + bloodsuckerdatum.vamplevel) // M.current.fireloss += 2 + bloodsuckerdatum.vamplevel   //  Do DIRECT damage. Being spaced was causing this to not occur.  //setFireLoss(2 + bloodsuckerdatum.vamplevel)
 			M.current.updatehealth()
 			SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/daylight_2)
+
 
 /obj/effect/sunlight/proc/day_end()
 	for (var/datum/mind/M in SSticker.mode.bloodsuckers)
@@ -174,7 +180,6 @@
 			if (istype(P, /datum/action/bloodsucker/gohome))
 				bloodsuckerdatum.powers -= P
 				P.Remove(M.current)
-
 
 
 /obj/effect/sunlight/proc/vamps_rank_up()

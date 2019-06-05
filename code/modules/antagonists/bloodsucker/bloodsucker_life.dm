@@ -230,8 +230,8 @@
 				return TRUE
 
 			// Cure Final Disabilities
-			owner.current.cure_blind()
-			owner.current.cure_husk()
+			CureDisabilities()
+
 			// Remove Embedded!
 			C.remove_all_embedded_objects()
 			// Heal Organs (will respawn original eyes etc. but we replace right away, next)
@@ -241,6 +241,12 @@
 
 	return FALSE
 
+
+/datum/antagonist/bloodsucker/proc/CureDisabilities()
+	owner.current.cure_blind(list(EYE_DAMAGE))//()
+	owner.current.cure_nearsighted(EYE_DAMAGE)
+	owner.current.adjust_eye_damage(-100)
+	owner.current.cure_husk()
 
 
 // I am hungry!

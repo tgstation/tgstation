@@ -12,7 +12,8 @@
 	can_be_staked = TRUE
 	cooldown_static = TRUE
 
-	var/mob/living/feed_target // So we can validate more than just the guy we're grappling.
+	var/notice_range = 2 		// Distance before silent feeding is noticed.
+	var/mob/living/feed_target 	// So we can validate more than just the guy we're grappling.
 	var/target_grappled = FALSE // If you started grappled, then ending it will end your Feed.
 
 /datum/action/bloodsucker/feed/CheckCanUse(display_error)
@@ -39,14 +40,21 @@
 	return TRUE
 
 /datum/action/bloodsucker/feed/proc/ValidateTarget(mob/living/target, display_error) // Called twice: validating a subtle victim, or validating your grapple victim.
-	// Non-Carbon Animals MUST be grabbed aggressively!
-	if (isliving(feed_target) && feed_target == owner.pulling && owner.grab_state < GRAB_AGGRESSIVE && !iscarbon(feed_target))
+	// Bloodsuckers + Animals MUST be grabbed aggressively!
+	if (!owner.pulling || target == owner.pulling && owner.grab_state < GRAB_AGGRESSIVE)
 		// NOTE: It's OKAY that we are checking if(!target) below, AFTER animals here. We want passive check vs animal to warn you first, THEN the standard warning.
-		if (display_error)
-			to_chat(owner, "<span class='warning'>Lesser beings require a tighter grip.</span>")
-		return FALSE
+		// Animals:
+		if (isliving(target) && !iscarbon(target))
+			if (display_error)
+				to_chat(owner, "<span class='warning'>Lesser beings require a tighter grip.</span>")
+			return FALSE
+		// Bloodsuckers:
+		else if (iscarbon(target) && target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+			if (display_error)
+				to_chat(owner, "<span class='warning'>Other Bloodsuckers will not fall for your subtle approach.</span>")
+			return FALSE
 	// Must have Target
-	if (!target)	 //  || !ismob(feed_target)
+	if (!target)	 //  || !ismob(target)
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You must be next to or grabbing a victim to feed from them.</span>")
 		return FALSE
@@ -83,24 +91,41 @@
 		return TRUE
 
 	// Find Targets
-	var/list/targets = list()
+	var/list/mob/living/seen_targets = view(1, owner)
+	var/list/mob/living/seen_mobs = list()
+	for(var/mob/living/M in seen_targets)
+		if (isliving(M) && M != owner)
+			seen_mobs += M
+
+	// None Seen!
+	if (seen_mobs.len == 0)
+		if (display_error)
+			to_chat(owner, "<span class='warning'>You must be next to or grabbing a victim to feed from them.</span>")
+		return FALSE
+
+	// Check Valids...
+	var/list/targets_valid = list()
 	var/list/targets_dead = list()
-	for(var/mob/living/M in view(1, owner))
+	for(var/mob/living/M in seen_mobs)
 		// Check adjecent Valid target
 		if (M != owner && ValidateTarget(M, display_error = FALSE)) // Do NOT display errors. We'll be doing this again in CheckCanUse(), which will rule out grabbed targets.
 			// Prioritize living, but remember dead as backup
 			if (M.stat < DEAD)
-				targets += M
+				targets_valid += M
 			else
 				targets_dead += M
 
 	// No Living? Try dead.
-	if (targets.len == 0 && targets_dead.len > 0)
-		targets = targets_dead
+	if (targets_valid.len == 0 && targets_dead.len > 0)
+		targets_valid = targets_dead
 	// No Targets
-	if (targets.len == 0)
-		//if (display_error)
-		//	to_chat(owner, "<span class='warning'>There are no valid targets to feed from subtly.</span>")
+	if (targets_valid.len == 0)
+		// Did I see targets? Then display at least one error
+		if (seen_mobs.len > 1)
+			if (display_error)
+				to_chat(owner, "<span class='warning'>None of these are valid targets to feed from subtly.</span>")
+		else
+			ValidateTarget(seen_mobs[1], display_error)
 		return FALSE
 	// Too Many Targets
 	//else if (targets.len > 1)
@@ -109,7 +134,7 @@
 	//	return FALSE
 	// One Target!
 	else
-		feed_target = pick(targets)//targets[1]
+		feed_target = pick(targets_valid)//targets[1]
 		return TRUE
 
 
@@ -137,10 +162,10 @@
 
 	// Put target to Sleep (Bloodsuckers are immune to their own bite's sleep effect)
 	if (!amSilent)
-		if((!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) && target.stat <= UNCONSCIOUS)
-			ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
+		ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
+		if(target.stat <= UNCONSCIOUS)
+			sleep(1)
 			// Wait, then Cancel if Invalid
-			sleep(5)
 			if (!ContinueActive(user,target)) // Cancel. They're gone.
 				//DeactivatePower(user,target)
 				return
@@ -150,11 +175,27 @@
 
 	// Broadcast Message
 	if (amSilent)
+		//if (!iscarbon(target))
+		//	user.visible_message("<span class='notice'>[user] shifts [target] closer to [user.p_their()] mouth.</span>", \
+		//					 	 "<span class='notice'>You secretly slip your fangs into [target]'s flesh.</span>", \
+		//					 	 vision_distance = 2, ignored_mob=target) // Only people who AREN'T the target will notice this action.
+		//else
 		var/deadmessage = target.stat == DEAD ? "" : " <i>[target.p_they(TRUE)] looks dazed, and will not remember this.</i>"
 		user.visible_message("<span class='notice'>[user] puts [target]'s wrist up to [user.p_their()] mouth.</span>", \
-						 	 "<span class='notice'>You slip your fangs into [target]'s wrist.[deadmessage]</span>", \
-						 	 vision_distance = 3, ignored_mob=target) // Only people who AREN'T the target will notice this action.
-	else				// /atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+						 	 "<span class='notice'>You secretly slip your fangs into [target]'s wrist.[deadmessage]</span>", \
+						 	 vision_distance = notice_range, ignored_mob=target) // Only people who AREN'T the target will notice this action.
+		// Warn Feeder about Witnesses...
+		var/was_unnoticed = TRUE
+		for(var/mob/living/M in viewers(notice_range, owner))
+			if(M != owner && M != target && iscarbon(M) && M.mind && !M.has_unlimited_silicon_privilege && !M.eye_blind && !M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+				was_unnoticed = FALSE
+				break
+		if (was_unnoticed)
+			to_chat(user, "<span class='notice'>You think no one saw you...</span>")
+		else
+			to_chat(user, "<span class='warning'>Someone may have noticed...</span>")
+
+	else						 // /atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
 		user.visible_message("<span class='warning'>[user] closes [user.p_their()] mouth around [target]'s neck!</span>", \
 						 "<span class='warning'>You sink your fangs into [target]'s neck.</span>")
 
@@ -280,15 +321,13 @@
 	// NOTE: We only care about pulling if target started off that way. Mostly only important for Aggressive feed.
 
 /datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target)
-	//if (level_current >= 2)
-	target.Unconscious(50,0)
-	//if (level_current >= 3)
-	//	target.Sleeping(100,0)
-
-	target.Paralyze(40 + 5 * level_current,1)
-	// NOTE: THis is based on level of power!
-	if (ishuman(target))
-		target.adjustStaminaLoss(5, forced = TRUE)// Base Stamina Damage
+	// Bloodsuckers not affected by "the Kiss" of another vampire
+	if (!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		target.Unconscious(50,0)
+		target.Paralyze(40 + 5 * level_current,1)
+		// NOTE: THis is based on level of power!
+		if (ishuman(target))
+			target.adjustStaminaLoss(5, forced = TRUE)// Base Stamina Damage
 
 /datum/action/bloodsucker/feed/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE
