@@ -1,4 +1,4 @@
-/datum/surgery/advanced/experimental_dissection
+/datum/surgery/experimental_dissection
 	name = "Experimental Dissection"
 	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
 	steps = list(/datum/surgery_step/incise,
@@ -10,7 +10,7 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	target_mobtypes = list(/mob/living/carbon) //Feel free to dissect devils but they're magic.
 
-/datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/experimental_dissection/can_start(mob/user, mob/living/carbon/target)
 	. = ..()
 	if(HAS_TRAIT(target, TRAIT_DISSECTED))
 		return FALSE
@@ -22,8 +22,8 @@
 
 /datum/surgery_step/dissection
 	name = "dissection"
-	implements = list(/obj/item/scalpel = 60, /obj/item/kitchen/knife = 30, /obj/item/shard = 15)
-	time = 125
+	implements = list(/obj/item/scalpel = 70, /obj/item/kitchen/knife = 20, /obj/item/shard = 10)
+	time = 200
 
 /datum/surgery_step/dissection/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] starts dissecting [target].", "<span class='notice'>You start dissecting [target].</span>")
@@ -34,7 +34,7 @@
 	else if(isalienadult(target))
 		return 5000
 	else if(ismonkey(target))
-		return 1000
+		return 1500
 	else if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(H.dna && H.dna.species)
@@ -43,8 +43,8 @@
 			if(isgolem(H) || iszombie(H))
 				return 4000
 			if(isjellyperson(H) || ispodperson(H))
-				return 3000
-			return 2000
+				return 4000
+			return 2500
 
 /datum/surgery_step/dissection/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] dissects [target]!", "<span class='notice'>You dissect [target], and add your discoveries to the research database!</span>")
