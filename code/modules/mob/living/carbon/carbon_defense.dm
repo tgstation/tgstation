@@ -251,7 +251,6 @@
 		addtimer(CALLBACK(src, .proc/endShockJitter), 20)
 	if(override) //We return shitcode to it's place of origin.
 		return override //Seriously, I still have no idea why this exists.
-	return .
 	
 /mob/living/carbon/proc/endShockJitter() //Think of a better name
 	jitteriness = max(jitteriness - 990, 10)
