@@ -191,8 +191,12 @@
 	foodtype = MEAT | SUGAR
 	var/faction
 	var/spawned_mob = /mob/living/carbon/monkey
+	var/expanding = FALSE
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
+	if(expanding)
+		return
+	expanding = TRUE
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
 	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer)
 	if(faction)
