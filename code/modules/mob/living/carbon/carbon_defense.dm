@@ -226,7 +226,7 @@
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
 	if(reagents.has_reagent(/datum/reagent/teslium))
 		siemens_coeff *= 1.5 //TODO, make this a reagent thing.
-	.=..(shock_damage, source, siemens_coeff, safety, tesla_shock, illusion, stun) //We say fuck it and just send it to living.
+	. = ..() //We say fuck it and just send it to living.
 	if(.) //We do stuff if it did stuff.
 	
 		if(undergoing_cardiac_arrest() && !illusion) //We reignite some hearts.
