@@ -1,0 +1,8 @@
+author: "cO2by"
+delete-after: True
+changes: 
+  - rscdel: "Salbu has been replaced in all roundstart items with the PERFect chem"
+  - rscadd: "Salbu is now a T3 sleeper upgrade"
+  - balance: "Perf now converts O2 deprivation to lesser amounts of Toxin more evenly than before"
+  - rscadd: "Perf effects scale based on O2 deprivation and how long perf is in your system"
+  - balance: "Perf now has a 35u OD which ignores O2dep adjustment (You will take scaled toxin damage regardless of healed oxygen damage)"
