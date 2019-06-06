@@ -188,10 +188,10 @@
 /obj/item/projectile/beam/heavy
 	name = "\improper heavy laser beam"
 	icon_state = "heavylaser"
-	damage = 30
+	damage = 35
 	range = 6
 	irradiate = 30
-	armour_penetration = 20
+	armour_penetration = 30
 	dismemberment = 10
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_RED
@@ -200,9 +200,10 @@
 	impact_type = /obj/effect/projectile/impact/xray
 	pass_flags = PASSTABLE
 
-/obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
-	. = BULLET_ACT_FORCE_PIERCE
-	..()
+obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/) ||  istype(target, /obj/machinery/)))
+		target.ex_act(EXPLODE_HEAVY)
 
 /obj/item/projectile/beam/shock
 	name = "\improper charged beam"
@@ -287,14 +288,14 @@
 
 /obj/item/projectile/beam/blinding/on_hit(atom/target)
 	. = ..()
-	if(ishuman(target) && prob(80))
+	if(ishuman(target) && prob(60))
 		var/mob/living/carbon/human/H = target
 		H.blind_eyes(5)
 
 /obj/item/projectile/beam/incendiary
 	name = "\improper incendiary beam"
 	icon_state = "lava"
-	damage = 10
+	damage = 8
 	var/fire_stacks = 2
 	light_color = LIGHT_COLOR_ORANGE
 

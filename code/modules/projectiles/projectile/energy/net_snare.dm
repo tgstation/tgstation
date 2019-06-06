@@ -95,3 +95,34 @@
 /obj/item/projectile/energy/trap/cyborg/on_range()
 	do_sparks(1, TRUE, src)
 	qdel(src)
+
+/obj/item/projectile/energy/shield
+	name = "energy barricade"
+	icon_state = "e_netting"
+	damage = 5
+	damage_type = STAMINA
+	hitsound = 'sound/weapons/resonator_fire.ogg'
+	range = 5
+
+/obj/item/projectile/energy/shield/Initialize()
+	. = ..()
+	SpinAnimation()
+
+/obj/item/projectile/energy/shield/on_hit(atom/target, blocked = FALSE)
+	var/turf/Tloc = get_turf(target)
+	if(!locate(/obj/structure/barricade/security/holobarricade) in Tloc)
+		new /obj/structure/barricade/security/holobarricade(Tloc)
+	..()
+
+/obj/item/projectile/energy/shield/on_range()
+	do_sparks(1, TRUE, src)
+	..()
+
+/obj/structure/holobarricade
+	name = "DRAGnet teleportation field"
+	desc = "A field of bluespace energy, locking on to teleport a target."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "dragnetfield"
+	light_range = 3
+	anchored = TRUE
+
