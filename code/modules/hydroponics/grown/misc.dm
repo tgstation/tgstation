@@ -31,7 +31,7 @@
 // Corpse flower
 /obj/item/seeds/starthistle/corpse_flower
 	name = "pack of corpse flower seeds"
-	desc = "A species of plant that emits a horrible odor."
+	desc = "A species of plant that emits a horrible odor. The odor stops being produced in difficult atmospheric conditions.s"
 	icon_state = "seed-corpse-flower"
 	species = "corpse-flower"
 	plantname = "Corpse flower"
