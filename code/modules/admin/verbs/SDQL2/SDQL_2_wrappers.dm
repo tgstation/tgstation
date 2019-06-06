@@ -214,8 +214,8 @@
 /proc/_step_away(ref, trg, max)
 	step_away(ref, trg, max)
 
-/proc/_has_trait(thing,trait,source)
-	return HAS_TRAIT(thing,trait,source)
+/proc/_has_trait(thing,trait)
+	return HAS_TRAIT(thing,trait)
 
 /proc/_add_trait(thing,trait,source)
 	ADD_TRAIT(thing,trait,source)
