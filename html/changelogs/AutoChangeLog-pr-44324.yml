@@ -1,0 +1,4 @@
+author: "plapatin"
+delete-after: True
+changes: 
+  - rscdel: "deletes null crates"
