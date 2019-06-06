@@ -44,7 +44,7 @@
 	name = "italian moustache"
 	desc = "Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly."
 	clothing_flags = SHOWEROKAY
-	
+
 /obj/item/clothing/mask/fakemoustache/italian/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
 		M = " [M]"
@@ -261,7 +261,7 @@
 			user.visible_message("<span class='notice'>You tie [src] up like a neckerchief.</span>", "<span class='notice'>[user] ties [src] up like a neckerchief.</span>")
 			qdel(src)
 		else
-			to_chat(user, "<span class='warning'>You must be holding [src] in order to tie it!")
+			to_chat(user, "<span class='warning'>You must be holding [src] in order to tie it!</span>")
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"

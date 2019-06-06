@@ -9,6 +9,8 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
+	var/map_voted = FALSE
+
 	var/list/map_templates = list()
 
 	var/list/ruins_templates = list()
@@ -274,11 +276,15 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		log_world("ERROR: Station areas list failed to generate!")
 
 /datum/controller/subsystem/mapping/proc/maprotate()
+	if(map_voted)
+		map_voted = FALSE
+		return
+	
 	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
 	//count votes
-	var/amv = CONFIG_GET(flag/allow_map_voting)
-	if(amv)
+	var/pmv = CONFIG_GET(flag/preference_map_voting)
+	if(pmv)
 		for (var/client/c in GLOB.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
@@ -311,7 +317,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			mapvotes.Remove(map)
 			continue
 
-		if(amv)
+		if(pmv)
 			mapvotes[map] = mapvotes[map]*VM.voteweight
 
 	var/pickedmap = pickweight(mapvotes)

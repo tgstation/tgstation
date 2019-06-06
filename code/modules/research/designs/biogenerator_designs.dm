@@ -4,7 +4,7 @@
 
 /datum/design/milk
 	name = "10 Milk"
-	id = /datum/reagent/consumable/milk
+	id = "milk"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 20)
 	make_reagents = list(/datum/reagent/consumable/milk = 10)
@@ -12,7 +12,7 @@
 
 /datum/design/cream
 	name = "10 Cream"
-	id = /datum/reagent/consumable/cream
+	id = "cream"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 30)
 	make_reagents = list(/datum/reagent/consumable/cream = 10)
@@ -53,7 +53,7 @@
 
 /datum/design/enzyme
 	name = "10u Universal Enzyme"
-	id = /datum/reagent/consumable/enzyme
+	id = "enzyme"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 30)
 	make_reagents = list(/datum/reagent/consumable/enzyme = 10)

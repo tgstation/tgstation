@@ -84,7 +84,7 @@
 		sleep(2)
 		if(i > 0)
 			var/list/datum/disease/diseases
-			GET_COMPONENT(infective, /datum/component/infective)
+			var/datum/component/infective/infective = GetComponent(/datum/component/infective)
 			if(infective)
 				diseases = infective.diseases
 			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)

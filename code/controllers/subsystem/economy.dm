@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(economy)
 				crew++
 				if(H.stat != DEAD)
 					alive_crew++
-					GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+					var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
 					var/medical_cash = (H.health / H.maxHealth) * alive_humans_bounty
 					if(mood)
 						var/datum/bank_account/D = get_dep_account(ACCOUNT_SRV)
