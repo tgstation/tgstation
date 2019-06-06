@@ -479,7 +479,7 @@
 	dna.species.spec_electrocute_act(src, shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	siemens_coeff *= dna.species.siemens_coeff
 	
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun) //We send this to carbon
+	. = ..() //We send this to carbon
 	if(.) //We make it look fancy
 		electrocution_animation(40)
 
