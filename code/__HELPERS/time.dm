@@ -64,7 +64,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
 /proc/DisplayTimeText(time_value, round_seconds_to = 0.1)
-	var/second = FLOOR(time_value * 0.1, round_seconds_to)
+	var/second = FLOOR(time_value * 0.1, round_seconds_to = 1)
 	if(!second)
 		return "right now"
 	if(second < 60)
