@@ -41,7 +41,7 @@
 			if(isabductor(H))
 				return 8000
 			if(isgolem(H) || iszombie(H) || isjellyperson(H) || ispodperson(H))
-    		    return 4000
+				return 4000
 			return 2000
 
 /datum/surgery_step/dissection/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
