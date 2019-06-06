@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Charcoal now purges other chemicals again. It will no longer purge itself."
