@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	src.log_talk(message, LOG_SAY)
 
-	var/message_a = say_quote(message, get_spans())
+	var/message_a = say_quote(message)
 	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]</font></span>"
 
 	for(var/mob/M in GLOB.mob_list)
