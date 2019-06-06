@@ -254,6 +254,7 @@ Job titles / Assigned roles (ghost spawners for example) : Assistant , Captain ,
 Mob types : /mob/living/simple_animal/hostile/carp
 Antagonist types : /datum/antagonist/highlander
 Species types : /datum/species/lizard
+special keywords defined in _DEFINES/admin.dm
 
 Example config:
 {
