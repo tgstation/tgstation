@@ -1300,3 +1300,45 @@
 	M.adjustToxLoss(1, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/trophazole
+	name = "Trophazole"
+	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing and if ingested turns nutriment into healing peptides"
+	reagent_state = LIQUID
+	color = "#07E79E"
+	overdose_threshold = 20
+
+/datum/reagent/medicine/trophazole/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-1.5*REM, 0.) // heals 3 brute & 0,5 burn if taken with food. compared to 2.5 brute from bicard + nutriment
+	..()
+	. = 1
+
+/datum/reagent/medicine/trophazole/overdose_process(mob/living/M)
+	M.adjustBruteLoss(3*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/trophazole/reaction_mob(mob/living/carbon/M, method=INGEST, reac_volume)
+	if(method != INGEST)
+		return
+
+	holder.remove_reagent(/datum/reagent/medicine/trophazole/, reac_volume * 0.05)
+	holder.add_reagent(/datum/reagent/medicine/metafactor, reac_volume * 0.25)
+
+	..()
+
+/datum/reagent/medicine/metafactor
+	name = "Mitogen Metabolism Factor"
+	description = "This enzyme catalyzes the conversion of nutricious food into healing peptides."
+	metabolization_rate = 0.0625  * REAGENTS_METABOLISM //slow metabolism rate so the patient can self heal with food even after the troph has metabolized away for amazing reagent efficency.
+	overdose_threshold = 10
+
+/datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
+	metabolization_rate = 2  * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/M)
+	if(prob(25))
+		M.vomit()
+	..()
+
+
