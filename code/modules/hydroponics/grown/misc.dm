@@ -106,6 +106,7 @@
 	yield = 4
 	growthstages = 3
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
+	mutatelist = list(/obj/item/seeds/bamboo)
 
 /obj/item/reagent_containers/food/snacks/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
