@@ -1252,6 +1252,7 @@
 /area/lavaland/surface/outdoors)
 "do" = (
 /obj/structure/sink/puddle,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "dp" = (
