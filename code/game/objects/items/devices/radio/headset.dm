@@ -160,7 +160,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	keyslot = new /obj/item/encryptionkey/headset_com
 
 /obj/item/radio/headset/heads
-	command = TRUE
 
 /obj/item/radio/headset/heads/captain
 	name = "\proper the captain's headset"
@@ -269,7 +268,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai
-	command = TRUE
 
 /obj/item/radio/headset/silicon/can_receive(freq, level)
 	return ..(freq, level, TRUE)
