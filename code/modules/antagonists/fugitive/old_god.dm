@@ -2,19 +2,30 @@
 /mob/camera/yalp_elor
 	name = "Yalp Elor"
 	real_name = "Yalp Elor"
-	desc = "An old, dying god. It's power has been severely sapped ever since it has lost it's standing in the world."
+	desc = "An old, dying god. Its power has been severely sapped ever since it has lost its standing in the world."
 	icon = 'icons/mob/cameramob.dmi'
 	icon_state = "yalp_elor"
 	invisibility = INVISIBILITY_OBSERVER
-	call_life = TRUE
 	var/lastWarning = 0
+	var/datum/action/innate/yalp_transmit/transmit
+	var/datum/action/innate/yalp_transport/transport
 
 /mob/camera/yalp_elor/Initialize()
-	..()
-	var/datum/action/innate/yalp_transmit/transmit = new
+	. = ..()
+	transmit = new
+	transport = new
 	transmit.Grant(src)
-	var/datum/action/innate/yalp_transport/transport = new
 	transport.Grant(src)
+	START_PROCESSING(SSobj, src)
+
+/mob/camera/yalp_elor/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/mob/camera/yalp_elor/Destroy()
+	QDEL_NULL(transmit)
+	QDEL_NULL(transport)
+	. = ..()
 
 /mob/camera/yalp_elor/CanPass(atom/movable/mover, turf/target)
 	return TRUE
@@ -24,26 +35,27 @@
 
 /mob/camera/yalp_elor/Login()
 	..()
-	to_chat(src, "<B>My destiny was supposed to control all of humanity! My power was once absolute, but I fell out of view because of that damned Nar'Sie. At least i'm still alive...</B>")
-	to_chat(src, "<B>But nevermind that. I have only three followers left. If they perish, I will be completely forgotten and will cease to exist. I must guide the faithful.</B>")
-	to_chat(src, "<B>I sense Nanotrasen has once again tracked us, and they will reach us in about 10 minutes. I must make sure my followers are ready when they arrive.</B>")
+	to_chat(src, "<B>You must protect your followers from Nanotrasen!</B>")
+	to_chat(src, "<B>Only your followers can hear you, and you can speak to send messages to all of them, wherever they are. You can also locally whisper to anyone.</B>")
+	to_chat(src, "<B>Nanotrasen will reach you and your followers in about 10 minutes. Make sure they are ready when the time is up.</B>")
 
 /mob/camera/yalp_elor/Move(NewLoc, direct)
+	if(!NewLoc)
+		return
 	var/OldLoc = loc
-	if(NewLoc)
-		var/turf/T = get_turf(NewLoc)
-		if(locate(/obj/effect/blessing, T))
-			if((world.time - lastWarning) >= 30)
-				lastWarning = world.time
-				to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
-			return
-		if(istype(get_area(T), /area/chapel))
-			if((world.time - lastWarning) >= 30)
-				lastWarning = world.time
-				to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a much, MUCH stronger deity, and can't be accessed!</span>")
-			return
-		forceMove(T)
-		Moved(OldLoc, direct)
+	var/turf/T = get_turf(NewLoc)
+	if(locate(/obj/effect/blessing, T))
+		if((world.time - lastWarning) >= 30)
+			lastWarning = world.time
+			to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
+		return
+	if(istype(get_area(T), /area/chapel))
+		if((world.time - lastWarning) >= 30)
+			lastWarning = world.time
+			to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a much, MUCH stronger deity, and can't be accessed!</span>")
+		return
+	forceMove(T)
+	Moved(OldLoc, direct)
 
 /mob/camera/yalp_elor/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(client)
@@ -56,16 +68,14 @@
 	if(!message)
 		return
 	src.log_talk(message, LOG_SAY, tag="fugitive god")
-	message = "<span class='cultitalic'><b>Yalp Elor:</b> \"[capitalize(message)]\"</span>"
+	message = "<span class='cultitalic'><b>[name]:</b> \"[capitalize(message)]\"</span>"
 	for(var/mob/V in GLOB.player_list)
 		if(V.mind.has_antag_datum(/datum/antagonist/fugitive))
 			to_chat(V, "[message]")
 		else if(isobserver(V))
-			var/link = FOLLOW_LINK(V, src)
-			to_chat(V, "[link] [message]")
+			to_chat(V, "[FOLLOW_LINK(V, src)] [message]")
 
-/mob/camera/yalp_elor/Life()
-	..()
+/mob/camera/yalp_elor/process()
 	var/safe = FALSE
 	for(var/mob/V in GLOB.player_list)
 		if(!V.mind)
@@ -73,7 +83,7 @@
 		var/datum/antagonist/fugitive/fug = V.mind.has_antag_datum(/datum/antagonist/fugitive)
 		if(!fug || V == src)
 			continue
-		if(!fug.is_captured) //doesn't matter if they are dead, they can still be revived so you get to live
+		if(!fug.is_captured) //they can still be revived
 			safe = TRUE
 			break
 	if(!safe)
@@ -136,11 +146,11 @@
 		var/datum/antagonist/fugitive/fug = V.mind.has_antag_datum(/datum/antagonist/fugitive)
 		if(!fug || V == src)
 			continue
-		if(fug.is_captured) //no, you can't teleport to people already captured. there's a lot of asterixes to that
+		if(fug.is_captured)
 			continue
 		faithful += V
 	if(!faithful.len)
-		to_chat(owner, "<span class='warning'>You have no faithful to jump to!</span>")
+		to_chat(owner, "<span class='warning'>You have nobody to jump to!</span>")
 		return FALSE
 	if(faithful.len == 1)
 		target = faithful[1]
@@ -151,5 +161,5 @@
 	if(target && T)
 		owner.forceMove(T)
 		return TRUE
-	to_chat(owner, "<span class='warning'>Either your target or the ground he is standing on has stopped existing!</span>")
+	to_chat(owner, "<span class='warning'>Something horrible just happened to your target!</span>")
 	return FALSE

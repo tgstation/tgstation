@@ -13,11 +13,12 @@
 	if(..())
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /datum/mutation/human/chameleon/on_life()
 	owner.alpha = max(0, owner.alpha - 25)
 
-/datum/mutation/human/chameleon/on_move()
+/datum/mutation/human/chameleon/proc/on_move()
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
 /datum/mutation/human/chameleon/on_attack_hand(atom/target, proximity)
@@ -29,3 +30,4 @@
 	if(..())
 		return
 	owner.alpha = 255
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
