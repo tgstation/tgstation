@@ -31,7 +31,7 @@
 // Corpse flower
 /obj/item/seeds/starthistle/corpse_flower
 	name = "pack of corpse flower seeds"
-	desc = "A species of plant that emits a horrible odor. The odor stops being produced in difficult atmospheric conditions.s"
+	desc = "A species of plant that emits a horrible odor. The odor stops being produced in difficult atmospheric conditions."
 	icon_state = "seed-corpse-flower"
 	species = "corpse-flower"
 	plantname = "Corpse flower"
@@ -104,9 +104,8 @@
 	endurance = 50
 	maturation = 3
 	yield = 4
-	growthstages = 2
+	growthstages = 3
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
-	mutatelist = list(/obj/item/seeds/bamboo)
 
 /obj/item/reagent_containers/food/snacks/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
