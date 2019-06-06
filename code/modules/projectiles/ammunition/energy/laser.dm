@@ -123,3 +123,9 @@
 	e_cost = 30
 	fire_sound = 'sound/weapons/laser3.ogg'
 	select_name = "economic"
+
+/obj/item/ammo_casing/energy/laser/shield
+	projectile_type = /obj/item/projectile/energy/shield
+	e_cost = 70
+	fire_sound = 'sound/weapons/resonator_fire.ogg'
+	select_name = "shield"

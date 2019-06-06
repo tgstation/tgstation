@@ -167,47 +167,79 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
 
 /obj/item/external_lens
-	name = "external lens: scatter ray"
-	icon_state = "external_scatter"
+	name = "external lens"
+	icon_state = "external"
 	desc = "external lens."
 	icon = 'icons/obj/guns/energy.dmi'
-	var/stored_ammo_type = /obj/item/ammo_casing/energy/laser/scatter
+	var/stored_ammo_type = /obj/item/ammo_casing/energy/laser
+	var/overlay = "laser"
+
+/obj/item/external_lens/Initialize()
+	..()
+	add_overlay("[overlay]")
 
 /obj/item/external_lens/bitcoin
 	name = "external lens: ticket dispenser"
+	desc = "It uses a special frequency that IDs can read and activate a fast money transfer to your account."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/bitcoin
-	icon_state = "external_bitcoin"
+	overlay = "bitcoin"
 
 /obj/item/external_lens/ricochet
 	name = "external lens: bouncing ray"
+	desc = "By making the laser pass through an high density gas its able to create a small ball of hot plasma with high elasticity"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/rico
+	overlay = "ricochet"
 
 /obj/item/external_lens/tracing
 	name = "external lens: tracer ray"
+	desc = "Marks your target with a special luminescent gel which makes them take more damage from lasers."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/tracer
+	overlay = "tracing"
 
 /obj/item/external_lens/shocking
 	name = "external lens: shocking ray"
+	desc = "Condenses energy into sparks that shock your enemies."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/shock
+	overlay = "shocking"
 
 /obj/item/external_lens/blinding
 	name = "external lens: blinding ray"
+	desc = "These ultra violet rays really do hurt the eyes, when you hit people with them."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/blinding
+	overlay = "blinding"
 
 /obj/item/external_lens/stealth
 	name = "external lens: stealth ray"
+	desc = "These rays are almost invisible to the human eye, they are less efficent in the dark."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/invisible
-	icon_state = "external_stealth"
+	overlay = "stealth"
 
 /obj/item/external_lens/incendiary
 	name = "external lens: incendiary ray"
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/incendiary
+	overlay = "incendiary"
 
 /obj/item/external_lens/heavy
 	name = "external lens: heavy plasma bolt"
+	desc = "Heats up whatever it hits, causing them to burst into fire."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/heavy
 	icon_state = "external_heavy"
+	overlay = "heavy"
 
 /obj/item/external_lens/economic
 	name = "external lens: low power consuption ray"
+	desc = "Trades fire power for high efficency, kill people with many smalls shots."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/lowenergy
+	overlay = "economic"
+
+/obj/item/external_lens/scatter
+	name = "external lens: scattershot"
+	desc = "Diffusion lenses."
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/lowenergy
+	overlay = "scatter"
+
+/obj/item/external_lens/shield
+	name = "external lens: barricade projector"
+	desc = "Projects holobarricades which temporary absorb projectiles, watch out as even your target might use them as cover."
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/lowenergy
+	overlay = "shield"
