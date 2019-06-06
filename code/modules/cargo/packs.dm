@@ -882,37 +882,6 @@
 	group = "Engine Construction"
 	crate_type = /obj/structure/closet/crate/engineering
 
-/datum/supply_pack/engine/am_jar
-	name = "Antimatter Containment Jar Crate"
-	desc = "Two Antimatter containment jars stuffed into a single crate."
-	cost = 2000
-	contains = list(/obj/item/am_containment,
-					/obj/item/am_containment)
-	crate_name = "antimatter jar crate"
-
-/datum/supply_pack/engine/am_core
-	name = "Antimatter Control Crate"
-	desc = "The brains of the Antimatter engine, this device is sure to teach the station's powergrid the true meaning of real power."
-	cost = 5000
-	contains = list(/obj/machinery/power/am_control_unit)
-	crate_name = "antimatter control crate"
-
-/datum/supply_pack/engine/am_shielding
-	name = "Antimatter Shielding Crate"
-	desc = "Contains ten Antimatter shields, somehow crammed into a crate."
-	cost = 2000
-	contains = list(/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container) //10 shields: 3x3 containment and a core
-	crate_name = "antimatter shielding crate"
-
 /datum/supply_pack/engine/emitter
 	name = "Emitter Crate"
 	desc = "Useful for powering forcefield generators while destroying locked crates and intruders alike. Contains two high-powered energy emitters. Requires CE access to open."
@@ -1699,7 +1668,7 @@
 					/obj/item/seeds/liberty,
 					/obj/item/seeds/amanita,
 					/obj/item/seeds/reishi,
-					/obj/item/seeds/banana,
+					/obj/item/seeds/bamboo,
 					/obj/item/seeds/eggplant/eggy,
 					/obj/item/seeds/rainbow_bunch,
 					/obj/item/seeds/rainbow_bunch,

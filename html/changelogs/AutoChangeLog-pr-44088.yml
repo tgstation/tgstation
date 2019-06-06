@@ -1,0 +1,6 @@
+author: "PHDby"
+delete-after: True
+changes: 
+  - rscadd: "Reconstruction is now available roundstart (nerfed)"
+  - tweak: "You can upgrade both the Burn/Brute trees via techwebs"
+  - rscadd: "Advancing far enough into the tree enables Mixed reconstruction surgery, which heals less of each but is considerably faster. Get alien tech for the best of the best!"

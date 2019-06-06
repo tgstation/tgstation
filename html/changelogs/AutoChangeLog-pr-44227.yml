@@ -1,0 +1,4 @@
+author: "Floyd / Qustinnus"
+delete-after: True
+changes: 
+  - balance: "Crab-17 machine has higher health and higher drain rate now."
