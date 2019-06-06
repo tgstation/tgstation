@@ -85,7 +85,13 @@ SUBSYSTEM_DEF(vote)
 					else
 						factor = 1.4
 				choices["Initiate Crew Transfer"] += round(non_voters.len * factor)
-
+			else if(mode == "map")
+				for (var/non_voter_ckey in non_voters)
+					var/client/C = non_voters[non_voter_ckey]
+					if(C.prefs.preferred_map)
+						choices[C.prefs.preferred_map] += 1
+					else
+						choices[global.config.defaultmap.map_name] += 1
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -145,6 +151,9 @@ SUBSYSTEM_DEF(vote)
 					var/obj/machinery/computer/communications/C = locate() in GLOB.machines
 					if(C)
 						C.post_status("shuttle")
+			if("map")
+				SSmapping.changemap(global.config.maplist[.])
+				SSmapping.map_voted = TRUE
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in GLOB.admins)
@@ -196,6 +205,12 @@ SUBSYSTEM_DEF(vote)
 				choices.Add(config.votable_modes)
 			if("transfer")
 				choices.Add("Initiate Crew Transfer","Continue Playing")
+			if("map")
+				for(var/map in global.config.maplist)
+					var/datum/map_config/VM = config.maplist[map]
+					if(!VM.votable)
+						continue
+					choices.Add(VM.map_name)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -274,6 +289,16 @@ SUBSYSTEM_DEF(vote)
 			. += "\t(<a href='?src=[REF(src)];vote=toggle_gamemode'>[avm ? "Allowed" : "Disallowed"]</a>)"
 
 		. += "</li>"
+		//map
+		var/avmap = CONFIG_GET(flag/allow_vote_map)
+		if(trialmin || avmap)
+			. += "<a href='?src=[REF(src)];vote=map'>Map</a>"
+		else
+			. += "<font color='grey'>Map (Disallowed)</font>"
+		if(trialmin)
+			. += "\t(<a href='?src=[REF(src)];vote=toggle_map'>[avmap ? "Allowed" : "Disallowed"]</a>)"
+
+		. += "</li>"
 		//custom
 		if(trialmin)
 			. += "<li><a href='?src=[REF(src)];vote=custom'>Custom</a></li>"
@@ -285,6 +310,12 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)
 		return	//not necessary but meh...just in-case somebody does something stupid
+
+	var/trialmin = 0
+	if(usr.client.holder)
+		if(check_rights_for(usr.client, R_ADMIN))
+			trialmin = 1
+	
 	switch(href_list["vote"])
 		if("close")
 			voting -= usr.client
@@ -294,17 +325,23 @@ SUBSYSTEM_DEF(vote)
 			if(usr.client.holder)
 				reset()
 		if("toggle_restart")
-			if(usr.client.holder)
+			if(usr.client.holder && trialmin)
 				CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
 		if("toggle_gamemode")
-			if(usr.client.holder)
+			if(usr.client.holder && trialmin)
 				CONFIG_SET(flag/allow_vote_mode, !CONFIG_GET(flag/allow_vote_mode))
+		if("toggle_map")
+			if(usr.client.holder && trialmin)
+				CONFIG_SET(flag/allow_vote_map, !CONFIG_GET(flag/allow_vote_map))
 		if("restart")
 			if(CONFIG_GET(flag/allow_vote_restart) || usr.client.holder)
 				initiate_vote("restart",usr.key)
 		if("gamemode")
 			if(CONFIG_GET(flag/allow_vote_mode) || usr.client.holder)
 				initiate_vote("gamemode",usr.key)
+		if("map")
+			if(CONFIG_GET(flag/allow_vote_map) || usr.client.holder)
+				initiate_vote("map",usr.key)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)

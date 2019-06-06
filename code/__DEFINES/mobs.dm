@@ -308,3 +308,5 @@
 #define SLIME_EXTRACT (1<<5)
 //Wabbacjack staff projectiles
 #define WABBAJACK     (1<<6)
+
+#define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
