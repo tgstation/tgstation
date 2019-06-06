@@ -312,6 +312,7 @@
 				L.Paralyze(40)
 			O.forceMove(T)
 			close()
+			SEND_SIGNAL(src, COMSIG_CLOSET_STUFFED_INSIDE, L, user, src)
 	else
 		O.forceMove(T)
 	return 1

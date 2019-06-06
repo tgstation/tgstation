@@ -5,6 +5,7 @@
 
 /datum/syndicate_contract/New(owner)
 	generate(owner)
+	RegisterSignal(src, COMSIG_CLOSET_STUFFED_INSIDE, .proc/enter_check)
 
 /datum/syndicate_contract/proc/generate(owner)
 	contract.owner = owner
@@ -65,9 +66,16 @@
 
 	empty_pod.explosionSize = list(0,0,2,1)
 
-	var/mob/living/simple_animal/hostile/syndicate/space/stormtrooper/contract_agent/agent_mob = new
 	var/obj/empty_obj = new
 
 	empty_obj.forceMove(empty_pod)
 
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
+
+/datum/syndicate_contract/proc/enter_check(var/mob/living/M, mob/living/user, /obj/structure/closet/pod)
+	to_chat(usr, "in hrer934")
+
+	if (is_type(pod, obj/structure/closet/supplypod/bluespacepod))
+		to_chat(usr, "is pod")
+
+
