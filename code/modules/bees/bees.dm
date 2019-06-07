@@ -1,7 +1,7 @@
 obj/item/bees
 	name = "bee"
 	desc = "make a bug report if you're reading this" //should not happen in regular gameplay
-	var/specie
+	var/datum/bee/species/specie
 	var/strength
 	var/aggresivity
 	var/list/sting_toxin = list()

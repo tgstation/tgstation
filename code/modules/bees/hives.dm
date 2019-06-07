@@ -17,7 +17,6 @@
 	if(!queen)
 		if(princess & drone)
 			queen = new /obj/item/bees/queen(src)
-			queen.species = princess.specie
 			queen.strength = princess.strength + drone.strength *0.5
 			queen.aggresivity = drone.aggresivity
 			queen.size = princess.size
@@ -27,6 +26,14 @@
 			queen.sting_potency = princess.sting_potency
 			queen.production_speed = princess.production_speed + drone.production_speed*0.5
 			queen.life = queen.endurance
+			if(prob(66))
+				queen.specie = princess.specie
+			else
+				if(prob(50))
+					queen.specie = drone.specie
+				else
+					if(princess.specie.matelist(drone.specie)!=0)
+						queen.specie = princess.specie.evolutions[princess.specie.matelist(drone.specie)]
 
 	else
 		if(frames.len >0 | istype(src , /obj/structure/hive/natural))
@@ -56,3 +63,6 @@
 				else
 					frame.del_reagent(/datum/reagent/consumable/nutriment)
 					N-=frame.get_reagent_amount(/datum/reagent/consumable/nutriment)*0.5
+			 if(istype(src , /obj/structure/hive/natural))
+			 	nutrition = 200
+
