@@ -645,3 +645,13 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternate_worn_layer = UNDER_HEAD_LAYER
+
+/obj/item/clothing/suit/asuka_plugsuit
+	name = "red plugsuit"
+	desc = "A red plugsuit. Might make your butt look big"
+	icon_state = "asuka_plugsuit"
+	item_state = "asuka_plugsuit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	allowed = list()
