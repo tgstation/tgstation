@@ -477,8 +477,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(.)
 		return
-	if(!do_after(user, 20, target = src))
-		return
 	add_fingerprint(user)
 	user.visible_message("[user] stops to admire off [src].", \
 						 "<span class='notice'>You take in [src], admiring its fine craftsmanship.</span>")
