@@ -486,7 +486,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "holyflask"
 	color = "#333333"
-	list_reagents = list("unholywater" = 50)
+	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
 /obj/item/shuttle_curse
 	name = "cursed orb"
@@ -785,7 +785,7 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stat != DEAD)
-				H.reagents.add_reagent("unholywater", 4)
+				H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
 		if(isshade(target) || isconstruct(target))
 			var/mob/living/simple_animal/M = target
 			if(M.health+5 < M.maxHealth)
@@ -889,7 +889,7 @@
 					if(ishuman(target))
 						var/mob/living/carbon/human/H = target
 						if(H.stat != DEAD)
-							H.reagents.add_reagent("unholywater", 7)
+							H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 7)
 					if(isshade(target) || isconstruct(target))
 						var/mob/living/simple_animal/M = target
 						if(M.health+15 < M.maxHealth)
@@ -1002,6 +1002,6 @@
 							continue
 						throw_at(Next, 3, 1, D.thrower)
 						return
-					throw_at(D.thrower, 7, 1, D.thrower)
+					throw_at(D.thrower, 7, 1, null)
 	else
 		..()

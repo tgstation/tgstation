@@ -17,7 +17,7 @@
 	resistance_flags = FIRE_PROOF
 	var/max_water = 50
 	var/last_use = 1
-	var/chem = "water"
+	var/chem = /datum/reagent/water
 	var/safety = TRUE
 	var/refilling = FALSE
 	var/tanktype = /obj/structure/reagent_dispensers/watertank
@@ -55,7 +55,7 @@
 	icon_state = "foam_extinguisher0"
 	//item_state = "foam_extinguisher" needs sprite
 	dog_fashion = null
-	chem = "firefighting_foam"
+	chem = /datum/reagent/firefighting_foam
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
