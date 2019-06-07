@@ -327,3 +327,6 @@
 //laser gun stuff
 #define CONSIG_SYPHON "syphon"			//used when the laser has syphoning lens equipped
 
+#define COMSIG_ATTACH_LENS "attach"
+#define COMSIG_DETACH_LENS "detach"
+
