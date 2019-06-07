@@ -8,33 +8,17 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
-	var/obj/item/external_lens/stored = null
 	modifystate = TRUE
+
+/obj/item/gun/energy/laser/Initialize()
+	..()
+	AddComponent(/datum/component/extralasers)
 
 /obj/item/gun/energy/laser/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/external_lens) && modifystate)
-		if(!stored)
-			equiplens(I,user)
-			return
-	if(istype(I, /obj/item/crowbar))
-		if(stored)
-			unequiplens(user)
-			return
-
-/obj/item/gun/energy/laser/proc/equiplens(obj/item/external_lens/L, mob/user)
-	var/shoot =  L.stored_ammo_type
-	ammo_type  += new shoot (src)
-	stored += L
-	L.forceMove(src)
-	return TRUE
-
-/obj/item/gun/energy/laser/proc/unequiplens(mob/user)
-	del(ammo_type[ammo_type.len]) //doesnt work
-	var/turf/T = user.loc
-	stored.forceMove(T)
-	stored = null
-	return TRUE
+	if(modifystate && istype(I, /obj/item/crowbar))
+		SEND_SIGNAL(src,COMSIG_DETACH_LENS)
+		return
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -178,6 +162,13 @@
 	..()
 	add_overlay("[overlay]")
 
+/obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
+	. = ..()
+	if(istype(AM, /obj/item/gun/energy/laser))
+		SEND_SIGNAL(AM,COMSIG_ATTACH_LENS, stored_ammo_type,src)
+		forceMove(AM)
+		return
+
 /obj/item/external_lens/bitcoin
 	name = "external lens: ticket dispenser"
 	desc = "It uses a special frequency that IDs can read and activate a fast money transfer to your account."
@@ -241,5 +232,26 @@
 /obj/item/external_lens/shield
 	name = "external lens: barricade projector"
 	desc = "Projects holobarricades which temporary absorb projectiles, watch out as even your target might use them as cover."
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/lowenergy
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/shield
 	overlay = "shield"
+
+/datum/component/extralasers //will move it to another file when it works
+	var/obj/item/external_lens/lens
+/datum/component/extralasers/Initialize()
+	RegisterSignal(parent, COMSIG_ATTACH_LENS, .proc/attach)
+	RegisterSignal(parent, COMSIG_DETACH_LENS, .proc/detach)
+
+/datum/component/extralasers/proc/attach(datum/source,var/obj/item/ammo_casing/energy/ammo, obj/item/external_lens/lenss)
+	var/shoot =  ammo
+	var/obj/item/gun/energy/laser/L = parent
+	L.ammo_type  += new shoot (src)
+	lens = lenss
+	return TRUE
+
+/datum/component/extralasers/proc/detach(datum/source) //doesnt work
+	var/obj/item/gun/energy/laser/L = parent
+	var/obj/item/ammo_casing/energy/lasergun/B
+	L.ammo_type = list()
+	L.ammo_type += new B (L)
+	qdel(lens)
+	return TRUE
