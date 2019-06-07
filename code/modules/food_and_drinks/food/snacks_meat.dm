@@ -193,9 +193,6 @@
 	var/spawned_mob = /mob/living/carbon/monkey
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
-	if(QDELETED(src)) //workaround for an exploit with showers.
-		return
-	forceMove(drop_location())
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
 	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer)
 	if(faction)
@@ -205,7 +202,7 @@
 		bananas.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
 	else if (!spammer) // Visible message in case there are no fingerprints
 		visible_message("<span class='notice'>[src] fails to expand!</span>")
-	qdel(src)
+	QDEL_NULL(src)
 
 /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
 	faction = list("neutral", ROLE_SYNDICATE)
