@@ -37,7 +37,7 @@
 /datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
 		target.heal_bodypart_damage(20,0)
-	if ishuman(target)
+	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.bleed_rate = max( (H.bleed_rate - 3), 0)
 	return ..()
