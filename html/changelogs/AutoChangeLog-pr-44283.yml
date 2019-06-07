@@ -1,0 +1,4 @@
+author: "bandit"
+delete-after: True
+changes: 
+  - tweak: "Surgical incisions cause actual bleeding now. Clamping bleeders and/or cauterizing the incision stops that bleeding."
