@@ -38,7 +38,7 @@
 	// for alpha masking
 	var/image/alpha_overlay
 	var/image/alpha_overlay_32x32
-	var/overlay_pixel_y = 22
+	var/overlay_pixel_y = 0
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
@@ -117,7 +117,8 @@
 		var/image/occupant_overlay = image(occupant.icon, occupant.icon_state, dir = SOUTH)
 		occupant_overlay.appearance_flags |= KEEP_TOGETHER
 		occupant_overlay.copy_overlays(occupant)
-		overlay_pixel_y = 22
+		occupant_overlay.pixel_x = occupant.pixel_x
+		overlay_pixel_y = 0
 
 		var/is_32x32 = icon(occupant.icon, occupant.icon_state).Height() < 64 // anything less than 64 should get the 32 overlay
 
@@ -142,8 +143,8 @@
 		running_anim = FALSE
 		return
 	cut_overlays()
-	if(overlay_pixel_y != 23) // Same effect as overlay_pixel_y == 22 || occupant_overlay.pixel_y == 24
-		anim_up = overlay_pixel_y == 22 // Same effect as if(overlay_pixel_y == 22) anim_up = TRUE ; if(overlay_pixel_y == 24) anim_up = FALSE
+	if(overlay_pixel_y != 1) // Same effect as overlay_pixel_y == 0 || occupant_overlay.pixel_y == 2
+		anim_up = overlay_pixel_y == 0 // Same effect as if(overlay_pixel_y == 0) anim_up = TRUE ; if(overlay_pixel_y == 2) anim_up = FALSE
 	if(anim_up)
 		overlay_pixel_y++
 	else
@@ -156,7 +157,7 @@
 	var/image/masked
 	if(is32x32)
 		masked = apply_alpha_mask(overlay, alpha_overlay_32x32)
-		masked.pixel_y = overlay_pixel_y
+		masked.pixel_y = 22 + overlay_pixel_y
 	else
 		overlay.pixel_y = overlay_pixel_y
 		masked = apply_alpha_mask(overlay, alpha_overlay)
