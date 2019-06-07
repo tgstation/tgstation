@@ -131,6 +131,7 @@
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+	flash_protect = 1
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "\improper HUD gar glasses"
