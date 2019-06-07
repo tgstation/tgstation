@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "Added gutlunch babies."
-  - bugfix: "Gutlunches now actually reproduce."
