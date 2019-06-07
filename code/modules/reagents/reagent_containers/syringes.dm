@@ -189,7 +189,7 @@
 /obj/item/reagent_containers/syringe/perfluorodecalin
 	name = "syringe (perfluorodecalin)"
 	desc = "Contains perfluorodecalin."
-	list_reagents = list("perfluorodecalin" = 15)
+	list_reagents = list(/datum/reagent/medicine/perfluorodecalin = 15) // FULP FIX: This fucking shit doesn't exist. Nice work guys.    //  list("perfluorodecalin" = 15)
 
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"

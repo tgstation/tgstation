@@ -240,7 +240,7 @@
 			P.Remove(owner.current)
 
 	// Take Hunter Martial Arts
-	my_kungfu.remove(owner.current)
+	//my_kungfu.remove(owner.current)
 
 	// Remove Hunter Objectives
 	for(var/O in objectives_given)
