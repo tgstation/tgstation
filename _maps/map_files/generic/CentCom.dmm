@@ -7545,12 +7545,11 @@
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "qM" = (
-/obj/machinery/vending/cigarette/syndicate,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership/control)
 "qN" = (
 /obj/structure/urinal{
@@ -8867,6 +8866,14 @@
 /obj/structure/dresser,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
+"tm" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/vending/cigarette/syndicate,
+/turf/open/floor/plasteel,
+/area/syndicate_mothership/control)
 "tn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -8929,6 +8936,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+"tv" = (
+/turf/closed/indestructible/rock/snow,
+/area/syndicate_mothership/control)
+"tw" = (
+/turf/open/space/basic,
+/area/syndicate_mothership/control)
 "tx" = (
 /obj/structure/table/wood,
 /obj/item/storage/pill_bottle/dice,
@@ -9164,6 +9177,14 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
+"tQ" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/syndicate_mothership/control)
 "tR" = (
 /obj/machinery/status_display/ai,
 /turf/closed/indestructible/riveted,
@@ -36210,7 +36231,7 @@ hl
 hl
 kt
 nz
-pZ
+tm
 pZ
 pZ
 sh
@@ -37753,12 +37774,12 @@ hl
 mz
 ma
 ku
-qM
-pZ
-pZ
-pZ
-pZ
-pZ
+ku
+ku
+rh
+ku
+ku
+tQ
 pZ
 wp
 ku
@@ -38008,12 +38029,12 @@ hl
 mz
 hl
 kt
-pG
+kt
 ku
 ku
-rh
-ku
-ku
+qN
+ri
+Wj
 ku
 nz
 uJ
@@ -38265,12 +38286,12 @@ mA
 hl
 hl
 pG
+qM
 ku
-ku
-qN
+qO
+OA
 ri
-Wj
-ku
+sj
 ku
 nz
 ll
@@ -38522,11 +38543,11 @@ mz
 hl
 hl
 pG
-ku
-qO
-OA
-ri
-sj
+qM
+nz
+pY
+qP
+rj
 ku
 ku
 nz
@@ -38779,10 +38800,10 @@ hl
 hl
 mA
 kt
-nz
-pY
-qP
-rj
+qM
+ku
+ku
+ku
 ku
 ku
 ku
@@ -39035,10 +39056,10 @@ hl
 mA
 mz
 hl
-ma
-ku
-ku
-ku
+hl
+qM
+tv
+tw
 ku
 ku
 ku
@@ -39293,7 +39314,7 @@ hl
 hl
 hl
 pG
-ma
+hl
 hh
 aa
 ku
