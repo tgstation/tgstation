@@ -1,0 +1,6 @@
+author: "Granpawalton"
+delete-after: True
+changes: 
+  - rscadd: "Added a new plant called the corpse flower that produces miasma while it is harvestable"
+  - tweak: "Harebells no longer mutate from starthistle"
+  - balance: "miasma's science and cargo point values have been reduced by 75%"
