@@ -202,25 +202,6 @@
 		update_instability(FALSE)
 		return
 
-/datum/dna/proc/mutations_say_mods(message)
-	if(message)
-		for(var/datum/mutation/human/M in mutations)
-			message = M.say_mod(message)
-		return message
-
-/datum/dna/proc/mutations_get_spans()
-	var/list/spans = list()
-	for(var/datum/mutation/human/M in mutations)
-		spans |= M.get_spans()
-	return spans
-
-/datum/dna/proc/species_get_spans()
-	var/list/spans = list()
-	if(species)
-		spans |= species.get_spans()
-	return spans
-
-
 /datum/dna/proc/is_same_as(datum/dna/D)
 	if(uni_identity == D.uni_identity && mutation_index == D.mutation_index && real_name == D.real_name)
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
