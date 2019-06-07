@@ -248,10 +248,13 @@
 	lens = lenss
 	return TRUE
 
-/datum/component/extralasers/proc/detach(datum/source) //doesnt work
+/datum/component/extralasers/proc/detach(datum/source)
 	var/obj/item/gun/energy/laser/L = parent
-	var/obj/item/ammo_casing/energy/lasergun/B
-	L.ammo_type = list()
-	L.ammo_type += new B (L)
+	L.select = 1
+	L.chambered = null
+	var/obj/item/ammo_casing/energy/R = LAZYACCESS(L.ammo_type, 2)
+	LAZYREMOVE(L.ammo_type, R)
+	L.recharge_newshot()
+	L.update_icon()
 	qdel(lens)
 	return TRUE
