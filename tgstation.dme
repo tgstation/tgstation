@@ -1461,6 +1461,7 @@
 #include "code\modules\awaymissions\mission_code\wildwest.dm"
 #include "code\modules\bees\bees.dm"
 #include "code\modules\bees\frames.dm"
+#include "code\modules\bees\genes.dm"
 #include "code\modules\bees\hives.dm"
 #include "code\modules\bees\species\common.dm"
 #include "code\modules\bees\species\specie.dm"
