@@ -20,7 +20,7 @@
 	if ishuman(target)
 		var/mob/living/carbon/human/H = target
 		if (!(NOBLOOD in H.dna.species.species_traits))
-			user.visible_message("Blood pools around the incision in [H]'s [parse_zone(target_zone)].", "<span class='notice'>Blood pools around your incision in [H]'s [parse_zone(target_zone)].</span>")
+			H.visible_message("Blood pools around the incision in [H]'s [parse_zone(target_zone)].", "<span class='notice'>Blood pools around the incision in your [parse_zone(target_zone)].</span>")
 			H.bleed_rate += 3
 	return TRUE
 
