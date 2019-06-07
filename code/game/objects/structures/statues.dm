@@ -19,8 +19,6 @@
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(!do_after(user, 20, target = src))
-		return
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(default_unfasten_wrench(user, W))
 			return
@@ -42,6 +40,8 @@
 	if(.)
 		return
 	add_fingerprint(user)
+	if(!do_after(user, 20, target = src))
+		return
 	user.visible_message("[user] rubs some dust off [src].", \
 						 "<span class='notice'>You take in [src], rubbing some dust off its surface.</span>")
 	if(!ishuman(user)) // only humans have the capacity to appreciate art
