@@ -1,0 +1,2 @@
+datum/bee/species/
+	var/
