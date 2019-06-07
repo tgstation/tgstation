@@ -58,7 +58,7 @@
 		antag_candidates.Remove(bloodsucker) // Apparently you can also write antag_candidates -= bloodsucker
 
 	// Assign Hunters (as many as vamps, plus one)
-	for(var/i = 0, i < recommended_enemies - 1, i++)
+	for(var/i = 1, i < recommended_enemies, i++) // Start at 1 so we skip Hunters if there's only one sucker.
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/hunter = pick(antag_candidates)

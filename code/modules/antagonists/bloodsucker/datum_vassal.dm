@@ -162,6 +162,30 @@
 	return 	"<span class='header'>Loyal to their bloodsucking masters, the Vassals were:</span><br><br>"
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -189,9 +213,10 @@
 	P.Grant(owner.current)
 
 	// Give Hunter Martial Arts
-	var/datum/martial_art/pick_type = pick (/datum/martial_art/cqc, /datum/martial_art/krav_maga, /datum/martial_art/cqc, /datum/martial_art/krav_maga, /datum/martial_art/wrestling)  // /datum/martial_art/boxing  <--- doesn't include grabbing, so don't use!
-	my_kungfu = new pick_type //pick (/datum/martial_art/boxing, /datum/martial_art/cqc) // ick_type
-	my_kungfu.teach(owner.current, 0)
+	//if (rand(1,3) == 1)
+	//	var/datum/martial_art/pick_type = pick (/datum/martial_art/cqc, /datum/martial_art/krav_maga, /datum/martial_art/cqc, /datum/martial_art/krav_maga, /datum/martial_art/wrestling)  // /datum/martial_art/boxing  <--- doesn't include grabbing, so don't use!
+	//	my_kungfu = new pick_type //pick (/datum/martial_art/boxing, /datum/martial_art/cqc) // ick_type
+	//	my_kungfu.teach(owner.current, 0)
 
 	// Give Hunter Objective
 	var/datum/objective/bloodsucker/vamphunter/vamphunter_objective = new
@@ -228,10 +253,11 @@
 /datum/antagonist/vamphunter/greet()
 	to_chat(owner, "<span class='userdanger'>You are a fearless Vampire Hunter!</span>")
 	to_chat(owner, "<span class='boldannounce'>You know there's at least one filthy Bloodsucker on the station. It's your job to root them out, destroy their nests, and save the crew.<span>")
-	to_chat(owner, "<span class='announce'>Hunter Tip: Use your [my_kungfu.name] techniques to give you an advantage over the enemy.</span><br>")
 	antag_memory += "You remember your training: Bloodsuckers are weak to fire, or a stake to the heart. Removing their head or heart will also destroy them permanently.<br>"
 	antag_memory += "You remember your training: Wooden stakes can be made from planks, and your recipes list has ways of making them stronger.<br>"
-	antag_memory += "You are skilled in the [my_kungfu.name] style of combat.<br>"
+	if (my_kungfu != null)
+		to_chat(owner, "<span class='announce'>Hunter Tip: Use your [my_kungfu.name] techniques to give you an advantage over the enemy.</span><br>")
+		antag_memory += "You remember your training: You are skilled in the [my_kungfu.name] style of combat.<br>"
 	owner.current.playsound_local(null, 'sound/weapons/sawclose.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/vamphunter/farewell()
@@ -335,3 +361,67 @@
 	// NOTE: DON'T DEACTIVATE!
 	//DeactivatePower()
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// From martial.dm
+
+/*
+/datum/martial_art/hunter
+	name = "Hunter-Fu"
+	id = "MARTIALART_HUNTER" //ID, used by mind/has_martialart
+	//streak = ""
+	//max_streak_length = 6
+	//current_target
+	//datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
+	//deflection_chance = 0 //Chance to deflect projectiles
+	//reroute_deflection = FALSE //Delete the bullet, or actually deflect it in some direction?
+	//block_chance = 0 //Chance to block melee attacks using items while on throw mode.
+	//restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
+	//help_verb
+	//no_guns = FALSE
+	//allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
+
+/datum/martial_art/hunter/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	return FALSE
+
+/datum/martial_art/hunter/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	return FALSE
+
+/datum/martial_art/hunter/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	return FALSE
+
+/datum/martial_art/hunter/can_use(mob/living/carbon/human/H)
+	return TRUE
+
+
+/datum/martial_art/hunter/add_to_streak(element,mob/living/carbon/human/D)
+	if(D != current_target)
+		current_target = D
+		streak = ""
+		restraining = 0
+	streak = streak+element
+	if(length(streak) > max_streak_length)
+		streak = copytext(streak,2)
+	return
+
+
+/datum/martial_art/hunter/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
+
+	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
+*/

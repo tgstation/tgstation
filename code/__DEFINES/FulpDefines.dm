@@ -22,6 +22,8 @@
 // RECIPES
 #define CAT_STRUCTURE	"Structures"
 
+// MARTIAL ARTS
+#define MARTIALART_HUNTER "hunter-fu"
 
 
 // MISSING REF

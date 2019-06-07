@@ -70,11 +70,11 @@ USE_EXP_TRACKING
 USE_EXP_RESTRICTIONS_HEADS
 ## Unhash this to override head jobs' playtime requirements with this number of hours.
 ## Leave this commented out to use the values defined in the job datums. Values in the datums are stored as minutes.
-USE_EXP_RESTRICTIONS_HEADS_HOURS 5
+USE_EXP_RESTRICTIONS_HEADS_HOURS 20
 ## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
 USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
 ## Unhash this to enable playtime requirements for certain non-head jobs, like Engineer and Scientist.
-USE_EXP_RESTRICTIONS_OTHER
+#USE_EXP_RESTRICTIONS_OTHER
 ## Allows admins to bypass job playtime requirements.
 USE_EXP_RESTRICTIONS_ADMIN_BYPASS
 
