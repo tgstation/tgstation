@@ -19,12 +19,12 @@
 /obj/structure/infection/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
 	if(GLOB.infection_core)
 		return INITIALIZE_HINT_QDEL // just making sure admins can't break everything
+	. = ..()
 	GLOB.infection_core = src
 	GLOB.poi_list |= src
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
 		return INITIALIZE_HINT_QDEL
-	. = ..()
 	if(overmind)
 		update_icon()
 		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S in overmind.contents)

@@ -352,6 +352,7 @@
 		INVOKE_ASYNC(new_spore, .proc/respawn, current_respawn_time)
 	overmind.infection_mobs += new_spore
 	qdel(src)
+	new_spore.update_icons()
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/refund_upgrades()
 	if(spent_upgrade_points == 0)

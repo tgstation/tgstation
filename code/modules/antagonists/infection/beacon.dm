@@ -54,9 +54,8 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	GLOB.infection_beacons -= src
 	var/mob/camera/commander/C = GLOB.infection_commander
 	C.upgrade_points++
-	C.all_upgrade_points++
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in C.infection_mobs)
-		spore.upgrade_points++
+		spore.add_points(200)
 	if(GLOB.infection_beacons.len > 1)
 		addtimer(CALLBACK(src, .proc/destroyed_announcement), 80)
 	return ..()
@@ -77,15 +76,8 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	playsound(src.loc, 'sound/magic/repulse.ogg', 300, 1, 10, pressure_affected = FALSE)
 	var/mob/camera/commander/OM = GLOB.infection_commander
 	OM.playsound_local(OM, 'sound/magic/repulse.ogg', 300, 1)
-	var/explodeloc = src.loc
+	explosion(src, 5, 10, 20, 20, FALSE, TRUE, 5, TRUE, FALSE)
 	qdel(src)
-	for(var/i = 1 to 5)
-		for(var/atom/A in urange(i, explodeloc) - urange(i - 1, explodeloc))
-			A.ex_act(EXPLODE_LIGHT)
-			if(istype(A, /obj/structure/infection))
-				var/obj/structure/infection/INF = A
-				INF.take_damage(1000, BRUTE, "bomb", 0)
-		sleep(4)
 
 /obj/structure/beacon_generator/update_icon()
 	vis_contents.Cut()

@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(doom_event_mobs)
+
 /datum/round_event_control/infection
 	name = "Doom Clock Event"
 	weight = 1
@@ -6,6 +8,13 @@
 	infectionevent = TRUE
 
 /datum/round_event_control/infection/preRunEvent()
+	// ok time to go old event mobs you had your fun
+	for(var/mob/living/oldmob in GLOB.doom_event_mobs)
+		GLOB.doom_event_mobs -= oldmob
+		oldmob.visible_message("<span class='notice'>[oldmob] fades away as all of it's energy leaves it's body...</span>",
+							   "<span class='notice'>Your consciousness fades away as the last remnants of the energy that brought you back into this world dissipate...</span>")
+		oldmob.health = 0 // need to snowflake this for mobs like megafauna that refuse to die
+		oldmob.death()
 	var/doom_delay = 300 // 30 seconds
 	INVOKE_ASYNC(src, .proc/doom_smash_sounds, doom_delay)
 	sleep(doom_delay - 90)
@@ -49,6 +58,7 @@
 		boss.loot = boss_drop_list
 		boss.faction += ROLE_INFECTION
 		boss.pass_flags |= PASSBLOB
+		GLOB.doom_event_mobs += boss
 	// everyone else gets minions
 	if(minion_types.len)
 		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in (C.infection_mobs - boss_spore))
@@ -60,21 +70,20 @@
 			minion.loot = minion_drop_list
 			minion.faction += ROLE_INFECTION
 			minion.pass_flags |= PASSBLOB
+			GLOB.doom_event_mobs += minion
 	if(warning_message && warning_jingle)
 		priority_announce("[warning_message]","Biohazard Containment Commander", warning_jingle)
 
 /datum/component/spore_controlled
-	var/mob/parentmob
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/realmob
 
-/datum/component/spore_controlled/Initialize(var/mob/real)
+/datum/component/spore_controlled/Initialize(mob/real, mob/parentmob = parent)
 	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/return_to_spore)
-	parentmob = parent
 	realmob = real
 	// transfer spore mind to temp body
 	parentmob.key = realmob.key
 
-/datum/component/spore_controlled/proc/return_to_spore()
+/datum/component/spore_controlled/proc/return_to_spore(mob/parentmob = parent)
 	realmob.key = parentmob.key
 	realmob.death()
 	qdel(src)

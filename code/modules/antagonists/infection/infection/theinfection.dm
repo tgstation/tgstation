@@ -124,7 +124,24 @@
 	return
 
 /obj/structure/infection/singularity_act()
+	eat_nearby_singularity()
 	return
+
+/obj/structure/infection/tesla_act(power)
+	. = ..()
+	eat_nearby_singularity()
+	return
+
+/obj/structure/infection/proc/eat_nearby_singularity()
+	var/list/contents_adjacent = urange(1, src)
+	var/obj/singularity/to_eat = locate(/obj/singularity) in contents_adjacent
+	if(to_eat)
+		for(var/mob/M in range(10,src))
+			if(M.client)
+				flash_color(M.client, "#FB6B00", 1)
+				shake_camera(M, 4, 3)
+		playsound(src.loc, pick('sound/effects/curseattack.ogg', 'sound/effects/curse1.ogg', 'sound/effects/curse2.ogg', 'sound/effects/curse3.ogg', 'sound/effects/curse4.ogg',), 300, 1, pressure_affected = FALSE)
+		visible_message("<span class='danger'[to_eat] is absorbed by the infection!</span>")
 
 /obj/structure/infection/singularity_pull()
 	return
@@ -205,12 +222,29 @@
 		for(var/j = 2 to toaffect.len)
 			var/obj/structure/infection/INF = locate(/obj/structure/infection) in toaffect[j]
 			if(!INF)
-				previous.expand(toaffect[j])
+				var/dir_to_next = get_dir(toaffect[j-1], toaffect[j])
+				// okay i know we said we were totally going to expand to toaffect[j] but cardinals look cleaner (connectivity) so we'll check if those are empty
+				var/turf/finalturf = get_final_expand_turf(toaffect[j-1], toaffect[j], dir_to_next)
+				previous.expand(finalturf)
 				break
 			INF.ConsumeTile()
 			INF.air_update_turf(1)
 			INF.Be_Pulsed()
 			previous = INF
+
+/obj/structure/infection/proc/get_final_expand_turf(var/turf/lastturf, var/turf/finalturf, var/dir_to_next)
+	var/list/checkturfs = list()
+	if(dir_to_next in GLOB.diagonals)
+		var/list/random_cardinals = GLOB.cardinals.Copy()
+		while(random_cardinals.len)
+			var/checkdir = pick_n_take(random_cardinals)
+			if(dir_to_next & checkdir)
+				checkturfs += get_step(lastturf, checkdir)
+	for(var/turf/checkturf in checkturfs)
+		if(locate(/obj/structure/infection) in checkturf.contents)
+			continue
+		return checkturf
+	return finalturf
 
 /obj/structure/infection/proc/Be_Pulsed()
 	ConsumeTile()
@@ -259,10 +293,6 @@
 
 /obj/structure/infection/ex_act(severity)
 	take_damage(30/severity * 4, BRUTE, "bomb", 0)
-
-/obj/structure/infection/tesla_act(power)
-	..()
-	return 0
 
 /obj/structure/infection/extinguish()
 	..()
@@ -318,10 +348,15 @@
 	var/obj/structure/infection/I = new type(src.loc, controller)
 	if(structure_build_time == null)
 		structure_build_time = I.build_time
-	icon = I.icon
-	icon_state = I.icon_state
-	transform = matrix(0, 0, 0, 0, 0, 0)
-	animate(src, transform = matrix(), time = structure_build_time)
+	var/obj/effect/overlay/vis/newicon = new
+	newicon.icon = I.icon
+	newicon.icon_state = I.icon_state
+	newicon.layer = layer
+	if(overmind)
+		newicon.color = overmind.infection_color
+	newicon.transform = matrix(0, 0, 0, 0, 0, 0)
+	animate(newicon, transform = matrix(), time = structure_build_time)
+	vis_contents += newicon
 	name = "building [I.name]"
 	building = TRUE
 	qdel(I)
