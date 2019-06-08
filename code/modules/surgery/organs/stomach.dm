@@ -87,7 +87,7 @@
 	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
 	..()
 
-/obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount)
+/obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
 	adjust_charge(amount / 70)
 
 /obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, illusion = FALSE)
