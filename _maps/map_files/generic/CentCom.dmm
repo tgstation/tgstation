@@ -8940,7 +8940,9 @@
 /turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership/control)
 "tw" = (
-/turf/open/space/basic,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/shaker,
+/turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "tx" = (
 /obj/structure/table/wood,
@@ -36240,7 +36242,7 @@ pZ
 rf
 vv
 wm
-vx
+tw
 ku
 kt
 my
@@ -37009,7 +37011,7 @@ sh
 sh
 pZ
 pZ
-vv
+vx
 wo
 tg
 ku
@@ -39059,7 +39061,7 @@ hl
 hl
 qM
 tv
-tw
+aa
 ku
 ku
 ku
