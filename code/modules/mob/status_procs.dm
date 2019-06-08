@@ -126,3 +126,8 @@
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
+
+//////////////////////////////// BROKEN BONES...? ///////////////////////////:
+//I don't know why this is here. Better than anywhere else, I guess.
+/mob/proc/mend_fractures()
+	return
