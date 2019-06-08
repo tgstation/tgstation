@@ -233,6 +233,17 @@ There are several things that need to be remembered:
 	apply_overlay(GLASSES_LAYER)
 
 
+/mob/living/carbon/human/update_inv_splints()
+	remove_overlay(SPLINT_LAYER)
+	var/list/standing = list()
+	for(var/obj/item/bodypart/B in bodyparts)
+		if(B.splinted)
+			var/mutable_appearance/some_overlay_thing = mutable_appearance('icons/mob/splints.dmi', B.body_zone, SPLINT_LAYER)
+			standing += some_overlay_thing
+
+ 	overlays_standing[SPLINT_LAYER] = standing
+	apply_overlay(SPLINT_LAYER)
+
 /mob/living/carbon/human/update_inv_ears()
 	remove_overlay(EARS_LAYER)
 

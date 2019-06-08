@@ -20,6 +20,9 @@
 	var/list/embedded_objects = list()
 	var/held_index = 0 //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
+	var/broken = FALSE //For whether...it's broken
+	var/splinted = FALSE //Whether it's splinted. Movement doesn't deal damage, but you still move slowly.
+	var/has_bones = FALSE
 
 	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
@@ -124,6 +127,38 @@
 	for(var/obj/item/I in src)
 		I.forceMove(T)
 
+/obj/item/bodypart/proc/can_break_bone()
+	if(broken)
+		return 0
+	if(status == BODYPART_ROBOTIC)
+		return 0
+	if(!has_bones)
+		return 0
+	return 1
+
+/obj/item/bodypart/proc/break_bone()
+	if(!can_break_bone())
+		return
+	broken = TRUE
+	spawn(1) // Delay so it happens after the punch message
+		owner.visible_message("<span class='userdanger'>You hear a cracking sound coming from [owner]'s [parse_zone(src)].</span>", "<span class='warning'>You feel something crack in your [parse_zone(src)]!</span>", "<span class='warning'>You hear an awful cracking sound.</span>")
+
+/obj/item/bodypart/proc/fix_bone()
+	broken = FALSE
+	splinted = FALSE
+	owner.update_inv_splints()
+
+/obj/item/bodypart/proc/on_mob_move()
+	if(!broken || status == BODYPART_ROBOTIC || !owner || splinted)
+		return
+
+	if(prob(5))
+		to_chat(owner, "<span class='userdange'>[pick("You feel broken bones moving around in your [src]!", "There are broken bones moving around in your [src]!", "The bones in your [src] are moving around!")]</span>")
+		receive_damage(rand(1, 3))
+		//1-3 damage every 20 tiles for every broken bodypart.
+		//A single broken bodypart will give you an average of 650 tiles to run before you get a total of 100 damage and fall into crit
+
+
 /obj/item/bodypart/proc/consider_processing()
 	if(stamina_dam > DAMAGE_PRECISION)
 		. = TRUE
@@ -141,7 +176,7 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null, break_modifier = 1)
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn && !stamina) || hit_percent <= 0)
 		return FALSE
@@ -165,6 +200,9 @@
 	switch(animal_origin)
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
+
+	if(prob(brute*break_modifier) && ((brute_dam + burn_dam)/max_damage) > 0.3 )
+		break_bone()
 
 	var/can_inflict = max_damage - get_damage()
 	if(can_inflict <= 0)
@@ -291,6 +329,8 @@
 		C = owner
 		no_update = FALSE
 
+	has_bones = C.has_bones//get the carbon's default bone settings
+
 	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
@@ -308,6 +348,12 @@
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
 		species_flags_list = H.dna.species.species_traits
+
+		if(NO_BONES in S.species_traits)
+			has_bones = FALSE
+			fix_bone()
+		else
+			has_bones = TRUE
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
