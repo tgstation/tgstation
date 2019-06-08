@@ -1,5 +1,8 @@
+/datum/wires/explosive
+	var/duds_number = 2
+
 /datum/wires/explosive/New(atom/holder)
-	add_duds(1) // In this case duds actually explode.
+	add_duds(duds_number) // In this case duds actually explode.
 	..()
 
 /datum/wires/explosive/on_pulse(index)
@@ -12,6 +15,7 @@
 	return
 
 /datum/wires/explosive/chem_grenade
+	duds_number = 1
 	holder_type = /obj/item/grenade/chem_grenade
 	randomize = TRUE
 	var/fingerprint
@@ -27,7 +31,7 @@
 		var/obj/item/grenade/chem_grenade/G = holder
 		var/obj/item/assembly/timer/T = S
 		G.det_time = T.saved_time*10
-	if(istype(S,/obj/item/assembly/prox_sensor))
+	else if(istype(S,/obj/item/assembly/prox_sensor))
 		var/obj/item/grenade/chem_grenade/G = holder
 		G.landminemode = S
 		S.proximity_monitor.wire = TRUE
@@ -37,8 +41,8 @@
 
 /datum/wires/explosive/chem_grenade/explode()
 	var/obj/item/grenade/chem_grenade/G = holder
-	message_admins("An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
-	log_game("An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
+	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
+	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	G.prime()
 
 /datum/wires/explosive/chem_grenade/detach_assembly(color)

@@ -70,11 +70,11 @@
 		else if(stage == READY)
 			det_time = det_time == 50 ? 30 : 50 //toggle between 30 and 50
 			if(landminemode)
-				landminemode.time = det_time * 0.1	//overwrites the proxy sensor activation timer and puts between 30 and 50
-		return
+				landminemode.time = det_time * 0.1	//overwrites the proxy sensor activation timer
+
 			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
-		else if(stage == EMPTY)
-			to_chat(user, "<span class='warning'>You need to add an activation mechanism!</span>")
+		else
+			to_chat(user, "<span class='warning'>You need to add a wire!</span>")
 		return
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
 		. = TRUE //no afterattack
