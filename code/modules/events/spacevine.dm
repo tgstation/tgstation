@@ -16,7 +16,13 @@
 	for(var/area/hallway/A in world)
 		for(var/turf/F in A)
 			if(F.Enter(SV))
-				turfs += F
+				var/valid = TRUE
+				for(var/mob/living/L in view(F, 7))
+					if(L.client)
+						valid = FALSE
+						break
+				if(valid)
+					turfs += F
 
 	qdel(SV)
 
