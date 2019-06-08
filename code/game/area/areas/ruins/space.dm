@@ -66,69 +66,6 @@
 	ambientsounds = list('sound/ambience/ambivapor1.ogg')
 
 
-//Ruin of Hotel
-
-/area/ruin/space/has_grav/hotel
-	name = "Hotel"
-
-/area/ruin/space/has_grav/hotel/guestroom
-	name = "Hotel Guest Room"
-	icon_state = "Sleep"
-
-/area/ruin/space/has_grav/hotel/guestroom/room_1
-	name = "Hotel Guest Room 1"
-
-/area/ruin/space/has_grav/hotel/guestroom/room_2
-	name = "Hotel Guest Room 2"
-
-/area/ruin/space/has_grav/hotel/guestroom/room_3
-	name = "Hotel Guest Room 3"
-
-/area/ruin/space/has_grav/hotel/guestroom/room_4
-	name = "Hotel Guest Room 4"
-
-/area/ruin/space/has_grav/hotel/guestroom/room_5
-	name = "Hotel Guest Room 5"
-
-/area/ruin/space/has_grav/hotel/guestroom/room_6
-	name = "Hotel Guest Room 6"
-
-/area/ruin/space/has_grav/hotel/security
-	name = "Hotel Security Post"
-	icon_state = "security"
-
-/area/ruin/space/has_grav/hotel/pool
-	name = "Hotel Pool Room"
-	icon_state = "fitness"
-
-/area/ruin/space/has_grav/hotel/bar
-	name = "Hotel Bar"
-	icon_state = "cafeteria"
-
-/area/ruin/space/has_grav/hotel/power
-	name = "Hotel Power Room"
-	icon_state = "engine_smes"
-
-/area/ruin/space/has_grav/hotel/custodial
-	name = "Hotel Custodial Closet"
-	icon_state = "janitor"
-
-/area/ruin/space/has_grav/hotel/shuttle
-	name = "Hotel Shuttle"
-	icon_state = "shuttle"
-	requires_power = FALSE
-
-/area/ruin/space/has_grav/hotel/dock
-	name = "Hotel Shuttle Dock"
-	icon_state = "start"
-
-/area/ruin/space/has_grav/hotel/workroom
-	name = "Hotel Staff Room"
-	icon_state = "crew_quarters"
-
-
-
-
 //Ruin of Derelict Oupost
 
 /area/ruin/space/has_grav/derelictoutpost
