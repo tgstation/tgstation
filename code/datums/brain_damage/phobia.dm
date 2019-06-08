@@ -60,14 +60,14 @@
 
 		if(LAZYLEN(trigger_mobs) || LAZYLEN(trigger_objs))
 			for(var/mob/M in seen_atoms)
-				if(is_type_in_typecache(M, trigger_mobs))
+				if(M != owner && is_type_in_typecache(M, trigger_mobs))
 					freak_out(M)
 					return
 
 				else if(ishuman(M)) //check their equipment for trigger items
 					var/mob/living/carbon/human/H = M
 
-					if(LAZYLEN(trigger_species) && H.dna && H.dna.species && is_type_in_typecache(H.dna.species, trigger_species))
+					if(H != owner && LAZYLEN(trigger_species) && H.dna && H.dna.species && is_type_in_typecache(H.dna.species, trigger_species))
 						freak_out(H)
 
 					for(var/X in H.get_all_slots() | H.held_items)
