@@ -847,10 +847,10 @@
 		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>", 
 			"<span class='notice'>You start lifting [target] onto your back...</span>")
 		if(do_after(src, 50, TRUE, target))
-			if(can_be_firemanned(target))//Second check to make sure they're still valid to be carried
-				if(!incapacitated(FALSE, TRUE))
-					buckle_mob(target, TRUE, TRUE, 90, 1, 0)
-					return
+			//Second check to make sure they're still valid to be carried
+			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+				return
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
 	else
 		to_chat(src, "<span class='notice'>You can't fireman carry [target] while they're standing!</span>")
@@ -877,7 +877,8 @@
 		return
 	buckle_lying = lying_buckle
 	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
-	riding_datum.ride_check_rider_restrained = TRUE
+	if(target_hands_needed)
+		riding_datum.ride_check_rider_restrained = TRUE
 	if(buckled_mobs && ((target in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
 		return
 	var/equipped_hands_self
