@@ -1,4 +1,6 @@
 #define BUBBLEGUM_SMASH (health <= maxHealth*0.5) // angery
+#define CAN_ENRAGE (enrage_till + (enrage_time * 2) <= world.time)
+#define IS_ENRAGED (enrage_till > world.time)
 
 /*
 
@@ -54,7 +56,8 @@ Difficulty: Hard
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = FALSE
-	var/enrage_till = null
+	var/enrage_till = 0
+	var/enrage_time = 70
 	var/revving_charge = FALSE
 	internal_type = /obj/item/gps/internal/bubblegum
 	medal_type = BOSS_MEDAL_BUBBLEGUM
@@ -107,6 +110,7 @@ Difficulty: Hard
 		return
 
 	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
+	enrage_time = initial(enrage_time) * CLAMP(anger_modifier / 20, 0.5, 1)
 	ranged_cooldown = world.time + 50
 
 	if(client)
@@ -128,7 +132,7 @@ Difficulty: Hard
 		if(prob(50 + anger_modifier))
 			triple_charge()
 		else
-			charge()
+			slaughterlings()
 	else
 		if(prob(50 + anger_modifier))
 			hallucination_charge()
@@ -142,24 +146,24 @@ Difficulty: Hard
 	SetRecoveryTime(15)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge()
-	if(!BUBBLEGUM_SMASH)
-		hallucination_charge_around(times = 6, delay = 10 - anger_modifier / 5)
+	if(!BUBBLEGUM_SMASH || prob(33))
+		hallucination_charge_around(times = 6, delay = 8)
 		SetRecoveryTime(10)
 	else
 		hallucination_charge_around(times = 4, delay = 9)
 		hallucination_charge_around(times = 4, delay = 8)
 		hallucination_charge_around(times = 4, delay = 7)
 		triple_charge()
-		SetRecoveryTime(15)
+		SetRecoveryTime(20)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/surround_with_hallucinations()
 	for(var/i = 1 to 5)
-		INVOKE_ASYNC(src, .proc/hallucination_charge_around, 2, 10, 2, 0, 4)
+		INVOKE_ASYNC(src, .proc/hallucination_charge_around, 2, 8, 2, 0, 4)
 		if(ismob(target))
-			charge(delay = 8)
+			charge(delay = 6)
 		else
-			sleep(10)
-	SetRecoveryTime(10)
+			sleep(6)
+	SetRecoveryTime(20)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(var/atom/chargeat = target, var/delay = 3, var/chargepast = 2)
 	if(!chargeat)
@@ -307,10 +311,12 @@ Difficulty: Hard
 	return FALSE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/be_aggressive()
+	if(IS_ENRAGED)
+		return TRUE
 	if(isliving(target))
 		var/mob/living/livingtarget = target
-		return (is_enraged() || livingtarget.stat != CONSCIOUS || !(livingtarget.mobility_flags & MOBILITY_STAND))
-	return is_enraged()
+		return (livingtarget.stat != CONSCIOUS || !(livingtarget.mobility_flags & MOBILITY_STAND))
+	return FALSE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_retreat_distance()
 	return (be_aggressive() ? null : initial(retreat_distance))
@@ -322,24 +328,21 @@ Difficulty: Hard
 	retreat_distance = get_retreat_distance()
 	minimum_distance = get_minimum_distance()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage(var/boost_time = 70)
-	if((enrage_till + boost_time > world.time))
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage()
+	if(!CAN_ENRAGE)
 		return FALSE
-	enrage_till = world.time + boost_time
+	enrage_till = world.time + enrage_time
 	update_approach()
-	change_move_delay(2.5)
+	change_move_delay(3.75)
 	var/newcolor = rgb(149, 10, 10)
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
-	addtimer(cb, boost_time)
+	addtimer(cb, enrage_time)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(var/newcolor = rgb(149, 10, 10))
 	update_approach()
 	change_move_delay()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/is_enraged()
-	return (enrage_till > world.time)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/change_move_delay(var/newmove = initial(move_to_delay))
 	move_to_delay = newmove
@@ -431,7 +434,7 @@ Difficulty: Hard
 			recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/item/projectile/P)
-	if(is_enraged())
+	if(IS_ENRAGED)
 		visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 300, 1)
 		return BULLET_ACT_BLOCK
@@ -563,7 +566,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/slaughterlings()
 	visible_message("<span class='danger'>[src] summons a shoal of slaughterlings!</span>")
-	var/max_amount = 6
+	var/max_amount = CLAMP(anger_modifier / 4, 3, 5)
 	for(var/H in get_pools(get_turf(src), 1))
 		if(!max_amount)
 			break
