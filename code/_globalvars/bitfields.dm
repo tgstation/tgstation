@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"DROPDEL" = DROPDEL,
 		"NOBLUDGEON" = NOBLUDGEON,
 		"ABSTRACT" = ABSTRACT,
+		"IN_STORAGE" = IN_STORAGE,
 		),
 	"admin_flags" = list(
 		"BUILDMODE" = R_BUILD,
