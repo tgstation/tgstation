@@ -151,6 +151,16 @@
 	#define SPEECH_LANGUAGE 5
 	#define SPEECH_IGNORE_SPAM 6
 	#define SPEECH_FORCED 7 */
+#define COMSIG_MOB_HEAR "mob_hear" // from /mob/living/Hear(): (proc args list)
+// (message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	#define HEARING_MESSAGE 1
+/*	#define HEARING_SPEAKER 2
+	#define HEARING_LANGUAGE 3
+	#define HEARING_RAW_MESSAGE 4
+	#define HEARING_RADIO_FREQ 5
+	#define HEARING_SPANS 6
+	#define HEARING_MESSAGE_MODE 7 */
+
 
 // /mob/living signals
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
