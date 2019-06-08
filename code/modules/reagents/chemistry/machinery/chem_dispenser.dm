@@ -83,6 +83,9 @@
 
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
+	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
+	emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
+	upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
