@@ -31,13 +31,13 @@ Difficulty: Medium
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	speed = 5
-	ranged = 1
-	del_on_death = 1
+	ranged = TRUE
+	del_on_death = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
 	var/size = 5
-	var/charging = 0
+	var/charging = FALSE
 	internal_type = /obj/item/gps/internal/legion
 	medal_type = BOSS_MEDAL_LEGION
 	score_type = LEGION_SCORE
@@ -46,7 +46,7 @@ Difficulty: Medium
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE
-	elimination = 1
+	elimination = TRUE
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
 	attack_action_types = list(/datum/action/innate/megafauna_attack/create_skull,
@@ -73,10 +73,11 @@ Difficulty: Medium
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 	if(client)
-		if(chosen_attack == 1)
-			create_legion_skull()
-		else if(chosen_attack == 2)
-			charge_target()
+		switch(chosen_attack)
+			if(1)
+				create_legion_skull()
+			if(2)
+				charge_target()
 		return
 
 	if(prob(75))
@@ -93,11 +94,11 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/legion/proc/charge_target()
 	visible_message("<span class='warning'><b>[src] charges!</b></span>")
 	SpinAnimation(speed = 20, loops = 5)
-	ranged = 0
+	ranged = FALSE
 	retreat_distance = 0
 	minimum_distance = 0
-	speed = 0
-	charging = 1
+	set_varspeed(0)
+	charging = TRUE
 	addtimer(CALLBACK(src, .proc/reset_charge), 50)
 
 /mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
@@ -119,11 +120,11 @@ Difficulty: Medium
 			A.infest(L)
 
 /mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
-	ranged = 1
+	ranged = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
-	speed = 2
-	charging = 0
+	set_varspeed(2)
+	charging = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	if(health > 0)
@@ -161,7 +162,7 @@ Difficulty: Medium
 				break
 		if(last_legion)
 			loot = list(/obj/item/staff/storm)
-			elimination = 0
+			elimination = FALSE
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		if(!true_spawn)

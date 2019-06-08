@@ -49,7 +49,7 @@ Difficulty: Medium
 	melee_damage_upper = 40
 	speed = 5
 	move_to_delay = 5
-	ranged = 1
+	ranged = TRUE
 	pixel_x = -16
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
@@ -105,14 +105,15 @@ Difficulty: Medium
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 	if(client)
-		if(chosen_attack == 1)
-			fire_cone(meteors = FALSE)
-		else if(chosen_attack == 2)
-			fire_cone()
-		else if(chosen_attack == 3)
-			mass_fire()
-		else if(chosen_attack == 4)
-			lava_swoop()
+		switch(chosen_attack)
+			if(1)
+				fire_cone(meteors = FALSE)
+			if(2)
+				fire_cone()
+			if(3)
+				mass_fire()
+			if(4)
+				lava_swoop()
 		return
 
 	if(prob(15 + anger_modifier))
@@ -340,8 +341,8 @@ Difficulty: Medium
 		sleep(0.5)
 
 	// Ash drake flies onto its target and rains fire down upon them
-	var/descentTime = 10;
-	var/lava_success = 1
+	var/descentTime = 10
+	var/lava_success = TRUE
 	if(lava_arena)
 		lava_success = lava_arena()
 
@@ -394,7 +395,7 @@ Difficulty: Medium
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
-	if(severity == 3)
+	if(severity == EXPLODE_LIGHT)
 		return
 	..()
 

@@ -13,7 +13,7 @@
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 	movement_type = FLYING
-	robust_searching = 1
+	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -36,7 +36,7 @@
 	var/obj/item/gps/internal
 	var/internal_type
 	var/recovery_time = 0
-	var/true_spawn = 1 // if this is a megafauna that should grant achievements, or have a gps signal
+	var/true_spawn = TRUE // if this is a megafauna that should grant achievements, or have a gps signal
 	var/nest_range = 10
 	var/chosen_attack = 1 // chosen attack num
 	var/list/attack_action_types = list()
@@ -119,13 +119,14 @@
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
-		return
+		return FALSE
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
+	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
@@ -165,7 +166,7 @@
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = ""
 	var/mob/living/simple_animal/hostile/megafauna/M
-	var/chosen_message = ""
+	var/chosen_message
 	var/chosen_attack_num = 0
 
 /datum/action/innate/megafauna_attack/Grant(mob/living/L)

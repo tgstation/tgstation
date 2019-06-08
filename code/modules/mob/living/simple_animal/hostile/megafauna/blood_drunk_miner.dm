@@ -36,7 +36,7 @@ Difficulty: Medium
 	move_to_delay = 3
 	projectiletype = /obj/item/projectile/kinetic/miner
 	projectilesound = 'sound/weapons/kenetic_accel.ogg'
-	ranged = 1
+	ranged = TRUE
 	ranged_cooldown_time = 16
 	pixel_x = -16
 	crusher_loot = list(/obj/item/melee/transforming/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
@@ -86,12 +86,13 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	if(client)
-		if(chosen_attack == 1)
-			dash(target)
-		else if(chosen_attack == 2)
-			shoot_ka()
-		else if(chosen_attack == 3)
-			transform_weapon()
+		switch(chosen_attack)
+			if(1)
+				dash(target)
+			if(2)
+				shoot_ka()
+			if(3)
+				transform_weapon()
 		return
 
 	Goto(target, move_to_delay, minimum_distance)

@@ -40,9 +40,9 @@ Difficulty: Very Hard
 	melee_damage_upper = 40
 	speed = 10
 	move_to_delay = 10
-	ranged = 1
+	ranged = TRUE
 	pixel_x = -32
-	del_on_death = 1
+	del_on_death = TRUE
 	internal_type = /obj/item/gps/internal/colossus
 	medal_type = BOSS_MEDAL_COLOSSUS
 	score_type = COLOSSUS_SCORE
@@ -89,14 +89,15 @@ Difficulty: Very Hard
 	ranged_cooldown = world.time + 120
 
 	if(client)
-		if(chosen_attack == 1)
-			select_spiral_attack()
-		else if(chosen_attack == 2)
-			random_shots()
-		else if(chosen_attack == 3)
-			blast()
-		else if(chosen_attack == 4)
-			alternating_dir_shots()
+		switch(chosen_attack)
+			if(1)
+				select_spiral_attack()
+			if(2)
+				random_shots()
+			if(3)
+				blast()
+			if(4)
+				alternating_dir_shots()
 		return
 
 	if(enrage(target))
@@ -670,7 +671,7 @@ Difficulty: Very Hard
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	var/heal_power = 5
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
@@ -723,13 +724,13 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/possessor/ActivationReaction(mob/user, method)
 	if(..())
 		if(ishuman(user))
-			var/mobcheck = 0
+			var/mobcheck = FALSE
 			for(var/mob/living/simple_animal/A in range(1, src))
 				if(A.melee_damage_upper > 5 || A.mob_size >= MOB_SIZE_LARGE || A.ckey || A.stat)
 					break
 				var/obj/structure/closet/stasis/S = new /obj/structure/closet/stasis(A)
 				user.forceMove(S)
-				mobcheck = 1
+				mobcheck = TRUE
 				break
 			if(!mobcheck)
 				new /mob/living/simple_animal/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it
@@ -794,7 +795,7 @@ Difficulty: Very Hard
 	invocation_type = "none"
 	max_targets = 1
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	selection_type = "view"
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "exit_possession"

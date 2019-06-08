@@ -52,7 +52,7 @@ Difficulty: Hard
 	melee_damage_upper = 15
 	speed = 10
 	move_to_delay = 10
-	ranged = 1
+	ranged = TRUE
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/hierophant_club)
@@ -138,17 +138,18 @@ Difficulty: Hard
 	chaser_speed = max(1, (3 - anger_modifier * 0.04) + ((target_slowness - 1) * 0.5))
 
 	if(client)
-		if(chosen_attack == 1)
-			blink(target)
-		else if(chosen_attack == 2)
-			chaser_swarm(blink_counter, target_slowness, cross_counter)
-		else if(chosen_attack == 3)
-			cross_blast_spam(blink_counter, target_slowness, cross_counter)
-		else if(chosen_attack == 4)
-			blink_spam(blink_counter, target_slowness, cross_counter)
+		switch(chosen_attack)
+			if(1)
+				blink(target)
+			if(2)
+				chaser_swarm(blink_counter, target_slowness, cross_counter)
+			if(3)
+				cross_blast_spam(blink_counter, target_slowness, cross_counter)
+			if(4)
+				blink_spam(blink_counter, target_slowness, cross_counter)
 		return
 
-	if(L && !blinking && L.stat == DEAD && get_dist(src, L) > 2)
+	if(L?.stat == DEAD && !blinking && get_dist(src, L) > 2)
 		blink(L)
 		return
 
@@ -453,7 +454,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(src && . > 0 && !blinking)
+	if(src && . && !blinking)
 		wander = TRUE
 		did_reset = FALSE
 
