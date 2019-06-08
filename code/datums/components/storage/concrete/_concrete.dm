@@ -126,6 +126,7 @@
 		var/obj/item/I = AM
 		var/mob/M = parent.loc
 		I.dropped(M)
+		I.item_flags &= ~IN_STORAGE
 	if(new_location)
 		//Reset the items values
 		_removal_reset(AM)
@@ -173,6 +174,7 @@
 				I.forceMove(parent.drop_location())
 		return FALSE
 	I.on_enter_storage(master)
+	I.item_flags |= IN_STORAGE
 	refresh_mob_views()
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	if(M)
@@ -187,7 +189,6 @@
 			parent.add_fingerprint(M)
 			if(!prevent_warning)
 				mob_item_insertion_feedback(usr, M, I)
-	I.item_flags |= IN_INVENTORY
 	update_icon()
 	return TRUE
 
