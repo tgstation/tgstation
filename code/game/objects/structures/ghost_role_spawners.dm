@@ -56,7 +56,7 @@
 	var/datum/language_holder/holder = new_spawn.get_language_holder()
 	holder.selected_default_language = /datum/language/draconic
 
-	ADD_TRAIT(new_spawn.mind, TRAIT_SAVAGE, JOB_TRAIT) //full time savage
+	ADD_TRAIT(new_spawn.mind, TRAIT_SAVAGE, TRAIT_GENERIC) //full time savage
 
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
