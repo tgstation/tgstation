@@ -675,7 +675,7 @@
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	if(!owner.can_hear())
 		return
-	if(speaker == owner)
+	if(hearing_args[HEARING_SPEAKER] == owner)
 		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis

@@ -191,8 +191,8 @@
 /datum/brain_trauma/severe/split_personality/brainwashing/on_life()
 	return //no random switching
 
-/datum/brain_trauma/split_personality/brainwashing/handle_hearing(datum/source, list/hearing_args)
-	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == speaker)
+/datum/brain_trauma/severe/split_personality/brainwashing/handle_hearing(datum/source, list/hearing_args)
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 	var/message = hearing_args[HEARING_MESSAGE]
 	if(findtext(message, codeword))
