@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
-	SEND_SIGNAL(src, COMSIG_MOB_HEAR, args)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 	message = hear_intercept(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
 	show_message(message, 2, deaf_message, deaf_type)

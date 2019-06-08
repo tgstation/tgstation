@@ -130,11 +130,11 @@
 /datum/status_effect/bugged/on_apply(mob/living/new_owner, mob/living/tracker)
 	. = ..()
 	if (.)
-		RegisterSignal(new_owner, COMSIG_MOB_HEAR, .proc/handle_hearing)
+		RegisterSignal(new_owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
 /datum/status_effect/bugged/on_remove()
 	. = ..()
-	UnregisterSignal(owner, COMSIG_MOB_HEAR)
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 
 /datum/status_effect/bugged/proc/handle_hearing(datum/source, list/hearing_args)
 	listening_in.show_message(hearing_args[HEARING_MESSAGE])
