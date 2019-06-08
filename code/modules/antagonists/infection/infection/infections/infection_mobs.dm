@@ -346,6 +346,7 @@
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/new_spore = new new_type(loc, null, overmind)
 	new_spore.key = key
 	new_spore.upgrade_points = upgrade_points
+	new_spore.spent_upgrade_points = spent_upgrade_points
 	// check if we were respawning
 	if(current_respawn_time != -1)
 		// restart respawn for new spore

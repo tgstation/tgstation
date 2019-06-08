@@ -102,8 +102,6 @@ GLOBAL_VAR(infection_commander)
 		max_infection_points = INFINITY
 		infection_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 250)
-	. = ..()
-
 
 /mob/camera/commander/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')

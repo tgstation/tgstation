@@ -251,6 +251,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	name = "Create Turret Infection"
 	desc = "Create a turret that will automatically fire at your enemies."
 	cost = 30
+	icon_icon = 'icons/mob/infection/infection.dmi'
 	button_icon_state = "infection_turret"
 	type_to_create = /obj/structure/infection/turret
 	distance_from_similar = 8
