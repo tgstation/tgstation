@@ -66,7 +66,7 @@
 		var/datum/component/butchering/BT = LoadComponent(/datum/component/butchering)
 		BT.butchering_enabled = TRUE
 	else
-		GET_COMPONENT(BT, /datum/component/butchering)
+		var/datum/component/butchering/BT = GetComponent(/datum/component/butchering)
 		if(BT)
 			BT.butchering_enabled = FALSE
 	transform_messages(user, supress_message_text)

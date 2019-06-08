@@ -1473,6 +1473,10 @@
 	name = "Knee-high (White)"
 	icon_state = "white_knee"
 
+/datum/sprite_accessory/socks/bee_knee
+	name = "Knee-high (Bee)"
+	icon_state = "bee_knee"
+
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal (Black)"
 	icon_state = "black_norm"
@@ -1492,6 +1496,42 @@
 /datum/sprite_accessory/socks/white_short
 	name = "Short (White)"
 	icon_state = "white_short"
+
+/datum/sprite_accessory/socks/stockings_black
+	name = "Stockings (Black)"
+	icon_state = "stockings_black"
+
+/datum/sprite_accessory/socks/stockings_blue
+	name = "Stockings (Blue)"
+	icon_state = "stockings_blue"
+
+/datum/sprite_accessory/socks/stockings_cyan
+	name = "Stockings (Cyan)"
+	icon_state = "stockings_cyan"
+
+/datum/sprite_accessory/socks/stockings_dpink
+	name = "Stockings (Dark Pink)"
+	icon_state = "stockings_dpink"
+
+/datum/sprite_accessory/socks/stockings_green
+	name = "Stockings (Green)"
+	icon_state = "stockings_black"
+
+/datum/sprite_accessory/socks/stockings_orange
+	name = "Stockings (Orange)"
+	icon_state = "stockings_orange"
+
+/datum/sprite_accessory/socks/stockings_programmer
+	name = "Stockings (Programmer)"
+	icon_state = "stockings_lpink"
+
+/datum/sprite_accessory/socks/stockings_purple
+	name = "Stockings (Purple)"
+	icon_state = "stockings_purple"
+
+/datum/sprite_accessory/socks/stockings_yellow
+	name = "Stockings (Yellow)"
+	icon_state = "stockings_yellow"
 
 /datum/sprite_accessory/socks/black_thigh
 	name = "Thigh-high (Black)"
@@ -1524,6 +1564,10 @@
 /datum/sprite_accessory/socks/white_thigh
 	name = "Thigh-high (White)"
 	icon_state = "white_thigh"
+
+/datum/sprite_accessory/socks/bee_thigh
+	name = "Thigh-high (Bee)"
+	icon_state = "bee_thigh"
 
 //////////.//////////////////
 // MutantParts Definitions //

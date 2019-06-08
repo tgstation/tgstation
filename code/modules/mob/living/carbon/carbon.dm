@@ -468,7 +468,7 @@
 				add_splatter_floor(T)
 			if(stun)
 				adjustBruteLoss(3)
-		else if(src.reagents.has_reagent("blazaam"))
+		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam))
 			if(T)
 				T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
@@ -530,11 +530,12 @@
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
 	if(stam > DAMAGE_PRECISION)
-		var/total_health = (health - stam)
+		var/total_health = (maxHealth - stam)
 		if(total_health <= crit_threshold && !stat)
 			if(!IsParalyzed())
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Paralyze(100)
+			stam_paralysed = TRUE
 			update_health_hud()
 
 /mob/living/carbon/update_sight()
@@ -615,6 +616,17 @@
 
 	else
 		. += INFINITY
+
+/mob/living/carbon/get_permeability_protection(list/target_zones = list(HANDS = 0, CHEST = 0, GROIN = 0, LEGS = 0, FEET = 0, ARMS = 0, HEAD = 0))
+	for(var/obj/item/I in get_equipped_items())
+		for(var/zone in target_zones)
+			if(I.body_parts_covered & zone)
+				target_zones[zone] = max(1 - I.permeability_coefficient, target_zones[zone])
+	var/protection = 0
+	for(var/zone in target_zones)
+		protection += target_zones[zone]
+	protection *= INVERSE(target_zones.len)
+	return protection
 
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
@@ -863,7 +875,7 @@
 
 /mob/living/carbon/do_after_coefficent()
 	. = ..()
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src) //Currently, only carbons or higher use mood, move this once that changes.
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood) //Currently, only carbons or higher use mood, move this once that changes.
 	if(mood)
 		switch(mood.sanity) //Alters do_after delay based on how sane you are
 			if(SANITY_INSANE to SANITY_DISTURBED)
@@ -904,7 +916,7 @@
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE

@@ -3,7 +3,6 @@
 
 #define SWOOP_DAMAGEABLE 1
 #define SWOOP_INVULNERABLE 2
-#define DRAKE_SLEEP(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
 
 /*
 
@@ -148,7 +147,7 @@ Difficulty: Medium
 		var/turf/T = pick(RANGE_TURFS(1, target))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
-		DRAKE_SLEEP(delay)
+		SLEEP_CHECK_DEATH(delay)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
 	if(health < maxHealth * 0.5)
@@ -159,9 +158,9 @@ Difficulty: Medium
 		return
 	fire_cone()
 	if(health < maxHealth*0.5)
-		DRAKE_SLEEP(10)
+		SLEEP_CHECK_DEATH(10)
 		fire_cone()
-		DRAKE_SLEEP(10)
+		SLEEP_CHECK_DEATH(10)
 	fire_cone()
 	SetRecoveryTime(40)
 
@@ -175,7 +174,7 @@ Difficulty: Medium
 		for(var/j = 1 to spiral_count)
 			var/list/turfs = line_target(j * increment + i * increment / 2, range, src)
 			INVOKE_ASYNC(src, .proc/fire_line, turfs)
-		DRAKE_SLEEP(25)
+		SLEEP_CHECK_DEATH(25)
 	SetRecoveryTime(30)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_arena()
@@ -196,7 +195,7 @@ Difficulty: Medium
 			T.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface)
 		else
 			indestructible_turfs += T
-	DRAKE_SLEEP(10) // give them a bit of time to realize what attack is actually happening
+	SLEEP_CHECK_DEATH(10) // give them a bit of time to realize what attack is actually happening
 
 	var/list/turfs = RANGE_TURFS(2, center)
 	while(amount > 0)
@@ -220,7 +219,7 @@ Difficulty: Medium
 			else if(!istype(T, /turf/closed/indestructible))
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
-		DRAKE_SLEEP(24)
+		SLEEP_CHECK_DEATH(24)
 	return 1 // attack finished completely
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
@@ -268,7 +267,7 @@ Difficulty: Medium
 	return (getline(src, T) - get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(var/list/turfs)
-	DRAKE_SLEEP(0)
+	SLEEP_CHECK_DEATH(0)
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted

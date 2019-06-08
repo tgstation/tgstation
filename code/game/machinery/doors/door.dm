@@ -160,7 +160,7 @@
 			open()
 		else
 			close()
-		return
+		return TRUE
 	if(density)
 		do_animate("deny")
 
