@@ -471,14 +471,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hippocratic"
 
 /obj/item/statuebust/attack_self(mob/living/user)
+	add_fingerprint(user)
 	user.examinate(src)
 
 /obj/item/statuebust/examine(mob/living/user)
 	. = ..()
 	if(.)
 		return
-	add_fingerprint(user)
-	user.visible_message("[user] stops to admire off [src].", \
+	if (!isliving(user))
+		return
+	user.visible_message("[user] stops to admire [src].", \
 						 "<span class='notice'>You take in [src], admiring its fine craftsmanship.</span>")
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
 
