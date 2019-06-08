@@ -19,12 +19,18 @@
 
 /obj/structure/lavaland/ash_walker/Initialize()
 	.=..()
-	START_PROCESSING(SSprocessing, src)	
+	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/lavaland/ash_walker/deconstruct(disassembled)
 	new /obj/item/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
 	new	/obj/effect/collapse(loc)
 	return ..()
+
+/obj/structure/lavaland/ash_walker/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_SAVAGE))
+		visible_message("1")
+		return TRUE
 
 /obj/structure/lavaland/ash_walker/process()
 	consume()
@@ -44,6 +50,11 @@
 				meat_counter++
 			H.gib()
 			obj_integrity = min(obj_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
+			for(var/mob/living/L in view(src, 5))
+				if(HAS_TRAIT(L.mind, TRAIT_SAVAGE))
+					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
+				else
+					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_bad)
 
 /obj/structure/lavaland/ash_walker/proc/spawn_mob()
 	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)

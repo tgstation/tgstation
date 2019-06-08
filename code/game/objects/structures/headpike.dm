@@ -13,7 +13,6 @@
 	icon_state = "headpike-bone"
 	bonespear = TRUE
 
-
 /obj/structure/headpike/CheckParts(list/parts_list)
 	..()
 	victim = locate(/obj/item/bodypart/head) in parts_list
@@ -36,6 +35,11 @@
 		MA.copy_overlays(H)
 		MA.pixel_y = 12
 		add_overlay(H)
+
+/obj/structure/headpike/examine(mob/user)
+	if(HAS_TRAIT(user.mind, TRAIT_SAVAGE))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
+	. = ..()
 
 /obj/structure/headpike/attack_hand(mob/user)
 	. = ..()
