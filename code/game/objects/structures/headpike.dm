@@ -28,6 +28,11 @@
 	. = ..()
 	pixel_x = rand(-8, 8)
 
+/obj/structure/headpike/examine(mob/user)
+	if(HAS_TRAIT(user.mind, TRAIT_SAVAGE))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
+	. = ..()
+
 /obj/structure/headpike/update_icon()
 	..()
 	var/obj/item/bodypart/head/H = locate() in contents
