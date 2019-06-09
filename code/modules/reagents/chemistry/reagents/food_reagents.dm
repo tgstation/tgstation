@@ -722,7 +722,7 @@
 	. = 1
 
 /datum/reagent/consumable/secretsauce
-	name = "secret sauce"
+	name = "Secret Sauce"
 	description = "What could it be."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300"
@@ -732,10 +732,10 @@
 	can_synth = FALSE
 
 /datum/reagent/consumable/caramel
-	name = "caramel"
+	name = "Caramel"
 	description = "Who would have guessed that heating sugar is so delicious?"
 	nutriment_factor = 10 * REAGENTS_METABOLISM
-	color = "C65A00"
+	color = "#C65A00"
 	taste_mult = 2
 	taste_description = "bitter sweetness"
 	reagent_state = SOLID
