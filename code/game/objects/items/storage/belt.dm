@@ -259,6 +259,7 @@
 		/obj/item/resonator,
 		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
+		/obj/item/shovel,
 		/obj/item/stack/sheet/animalhide,
 		/obj/item/stack/sheet/sinew,
 		/obj/item/stack/sheet/bone,
