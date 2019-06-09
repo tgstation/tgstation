@@ -382,6 +382,7 @@
 			to_chat(src, "<span class='notice'>Unable to locate the holopad.</span>")
 	if(href_list["track"])
 		var/string = href_list["track"]
+		var/mob/living/living = locate(href_list["speakerreference"])
 		trackable_mobs()
 		var/list/trackeable = list()
 		trackeable += track.humans + track.others
@@ -392,6 +393,8 @@
 				target += M
 		if(name == string)
 			target += src
+		if(!target.len && living && (html_encode(Clean_up_hashtags(living.name)) == string))
+			target += living
 		if(target.len)
 			ai_actual_track(pick(target))
 		else
@@ -825,7 +828,7 @@
 	raw_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)
 	var/start = "Relayed Speech: "
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
-	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+	var/hrefpart = "<a href='?src=[REF(src)];speakerreference=[REF(speaker)];track=[html_encode(Clean_up_hashtags(namepart))]'>"
 	var/jobpart
 
 	if (iscarbon(speaker))

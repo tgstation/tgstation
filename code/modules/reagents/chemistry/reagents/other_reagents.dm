@@ -21,6 +21,7 @@
 
 			if(isliving(M))
 				var/mob/living/L = M
+				D.log_disease_transfer_attempt(holder.my_atom,L,method)
 				if((method == TOUCH || method == VAPOR) && (D.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 					L.ContactContractDisease(D)
 				else //ingest, patch or inject

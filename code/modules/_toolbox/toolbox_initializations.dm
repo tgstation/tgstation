@@ -310,3 +310,34 @@ GLOBAL_LIST_EMPTY(hub_features)
 			break
 	if(!foundexistinghead)
 		H.give_acting_captaincy()
+
+//this is so AI can track things with a hashtag in the name like mule bots. Yeah thats what its for...... -falaskian
+/proc/Clean_up_hashtags(name)
+	. = ""
+	if(length(name))
+		for(var/i=1,i<=length(name),i++)
+			var/theletter = copytext(name,i,i+1)
+			if(theletter != "#")
+				. += theletter
+
+//making drone dispensers start with metal.
+/obj/machinery/droneDispenser/Initialize(thing)
+	if(thing)
+		starting_amount = 5000
+	return ..()
+
+//tooblox on mob login -falaskian
+/client
+	var/datum/mind/previous_mind
+	var/previous_mob_type
+/mob/proc/toolbox_on_mob_login()
+	if(client)
+		if(!client.previous_mind)
+			client.previous_mind = mind
+		if(!client.previous_mob_type)
+			client.previous_mob_type = type
+		if(!(client.previous_mind.assigned_role == client.previous_mind.special_role) && ((client.previous_mob_type != /mob/dead/new_player) && (!istype(src,/mob/living/carbon/human/jesus))))
+			if(client.previous_mind != mind)
+				alert(client,"You are in control of another entity. You remember nothing that happened previously up until this point.","Memories Wiped.","Ok")
+		client.previous_mind = mind
+		client.previous_mob_type = type

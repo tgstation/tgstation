@@ -114,11 +114,13 @@
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+			D.log_disease_transfer_attempt(src,user,"Hand Touch")
 			user.ContactContractDisease(D)
 
 	for(var/thing in user.diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+			D.log_disease_transfer_attempt(user,src,"Hand Touch")
 			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
@@ -135,11 +137,13 @@
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
 			if((D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN) && prob(85))
+				D.log_disease_transfer_attempt(src,M,"Monkey Touch")
 				M.ContactContractDisease(D)
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+			D.log_disease_transfer_attempt(M,src,"Monkey Touch")
 			ContactContractDisease(D)
 
 	if(M.a_intent == INTENT_HELP)

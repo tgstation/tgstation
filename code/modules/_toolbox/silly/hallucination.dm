@@ -104,9 +104,7 @@
 	test_hallucination(/datum/hallucination/uber_mice_attack)
 
 /mob/living/carbon/proc/test_hallucination(hall = null)
-	if(!(usr && usr.client && usr.client.holder))
-		return
-	if(!hall)
+	if(!hall && usr && usr.client && usr.client.holder)
 		var/list/hallucinations_list = list()
 		for(var/t in typesof(/datum/hallucination))
 			if(t == /datum/hallucination)
@@ -119,5 +117,23 @@
 			if(theinput && ispath(hallucinations_list[theinput]))
 				hall = hallucinations_list[theinput]
 	if(hall && src && src.loc)
-		new hall(src,FALSE)
+		new hall(src,TRUE)
+
+/proc/mass_hallucinate(hall = null)
+	if(!hall && usr && usr.client && usr.client.holder)
+		var/list/hallucinations_list = list()
+		for(var/t in typesof(/datum/hallucination))
+			if(t == /datum/hallucination)
+				continue
+			var/textversion = "[t]"
+			if(findtext(textversion,"/datum/hallucination/",1,length(textversion)+1))
+				hallucinations_list[replacetext(textversion,"/datum/hallucination/","",1,length(textversion)+1)] = t
+		if(hallucinations_list.len)
+			var/theinput = input(usr,"Choose a Hallucination.","Test Hallucination",null) as null|anything in hallucinations_list
+			if(theinput && ispath(hallucinations_list[theinput]))
+				hall = hallucinations_list[theinput]
+	if(hall)
+		for(var/mob/living/carbon/C in GLOB.alive_mob_list)
+			C.test_hallucination(hall)
+
 

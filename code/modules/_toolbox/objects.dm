@@ -529,3 +529,92 @@
 				else
 					airlock.unbolt()
 
+//disease logging
+/datum/disease/proc/log_disease_transfer_attempt(atom/cause,atom/victim,method)
+	if(istype(victim,/mob/living/carbon))
+		var/mob/living/carbon/C = victim
+		if(!C.CanContractDisease(src))
+			return
+	var/logtext = "DISEASE: Disease transfer attempt. Disease name: "
+	if(istype(src,/datum/disease/advance))
+		logtext += "Advanced(Symptoms:"
+		var/datum/disease/advance/A = src
+		var/symptomcount = 1
+		for(var/datum/symptom/S in A.symptoms)
+			logtext += "[S.name]"
+			if(symptomcount < A.symptoms.len)
+				logtext += ","
+		logtext += ")"
+	else
+		logtext += "[name]"
+	if(method)
+		logtext += " Transfer method: "
+		var/transfermethod = "Unknown"
+		if(isnum(method) || isnum(text2num(method)))
+			var/nummethod = "[method]"
+			var/list/methods = list(
+				"[TOUCH]" = "Contact",
+				"[INGEST]" = "Injestion",
+				"[VAPOR]" = "Breathing Vapor",
+				"[PATCH]" = "Patch",
+				"[INJECT]" = "Direct Blood Injection"
+				)
+			if(methods[nummethod])
+				transfermethod = "[methods[nummethod]]"
+		else
+			transfermethod = "[method]"
+		logtext += "[transfermethod] "
+	var/causetext = "No Origin"
+	var/victimtext = "No Victim"
+	if(istype(cause))
+		var/atom/tool_used
+		if(!istype(cause,/mob/living))
+			var/atom/find_mob = cause
+			var/timeout = 15
+			while(timeout > 0 && find_mob && !istype(find_mob,/mob))
+				find_mob = find_mob.loc
+				timeout--
+			if(istype(find_mob, /mob/living))
+				tool_used = cause
+				cause = find_mob
+		if(istype(cause,/mob/living))
+			var/mob/living/living = cause
+			var/theckey = "no-ckey"
+			if(living.ckey)
+				theckey = "[living.ckey]"
+			causetext = "[living.real_name]([theckey])"
+		else
+			causetext = "[cause.name]"
+		var/turf/T = get_turf(cause)
+		if(T)
+			causetext += "([T.x],[T.y],[T.z]"
+			var/area/A = get_area(T)
+			if(A)
+				causetext += " \"[A.name]\""
+			causetext += ")"
+		if(tool_used)
+			causetext += " Tool used: [tool_used.name]"
+		causetext += " "
+	if(istype(victim))
+		if(istype(victim,/mob/living))
+			var/mob/living/living = victim
+			var/theckey = "no-ckey"
+			if(living.ckey)
+				theckey = "[living.ckey]"
+			victimtext = "[living.real_name]([theckey])"
+		else
+			victimtext = "[victim.name]"
+		var/turf/T = get_turf(victim)
+		if(T)
+			victimtext += "([T.x],[T.y],[T.z]"
+			var/area/A = get_area(T)
+			if(A)
+				victimtext += " \"[A.name]\""
+			victimtext += ")"
+		victimtext += " "
+	logtext += "Origin: [causetext] Victim: [victimtext]"
+	if(istype(victim,/mob/living))
+		var/mob/living/V = victim
+		V.log_message("<font color='orange'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
+	log_game(logtext)
+	return logtext

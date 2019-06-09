@@ -62,3 +62,5 @@
 	var/damageoverlaytemp = 0
 
 	var/heart_bypass = null
+
+	var/additional_sight_flags //easy adding sight flags

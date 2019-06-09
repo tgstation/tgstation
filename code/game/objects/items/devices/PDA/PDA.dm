@@ -695,7 +695,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
-			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
+			var/mob/living/the_sender
+			var/sender_name = signal.data["name"]
+			if(sender_name)
+				for(var/mob/living/Living in GLOB.player_list)
+					if(Living.name == sender_name)
+						the_sender = Living
+						break
+			hrefstart = "<a href='?src=[REF(L)];speakerreference=[REF(the_sender)];track=[html_encode(Clean_up_hashtags(signal.data["name"]))]'>"
 			hrefend = "</a>"
 
 		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)")

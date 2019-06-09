@@ -542,6 +542,8 @@
 		sight |= E.sight_flags
 		if(!isnull(E.lighting_alpha))
 			lighting_alpha = E.lighting_alpha
+		if(additional_sight_flags)
+			sight |= additional_sight_flags
 
 	if(client.eye && client.eye != src)
 		var/atom/A = client.eye

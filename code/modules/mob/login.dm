@@ -54,3 +54,5 @@
 		GLOB.individual_log_list[ckey] = logging
 	else
 		logging = GLOB.individual_log_list[ckey]
+
+	toolbox_on_mob_login()

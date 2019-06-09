@@ -120,11 +120,13 @@
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
 			if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+				D.log_disease_transfer_attempt(src,L,"Bump")
 				L.ContactContractDisease(D)
 
 		for(var/thing in L.diseases)
 			var/datum/disease/D = thing
 			if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+				D.log_disease_transfer_attempt(L,src,"Bump")
 				ContactContractDisease(D)
 
 		//Should stop you pushing a restrained person out of the way
@@ -273,11 +275,13 @@
 			for(var/thing in diseases)
 				var/datum/disease/D = thing
 				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+					D.log_disease_transfer_attempt(src,L,"Mob Pulling")
 					L.ContactContractDisease(D)
 
 			for(var/thing in L.diseases)
 				var/datum/disease/D = thing
 				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+					D.log_disease_transfer_attempt(L,src,"Mob Pulling")
 					ContactContractDisease(D)
 
 //mob verbs are a lot faster than object verbs
