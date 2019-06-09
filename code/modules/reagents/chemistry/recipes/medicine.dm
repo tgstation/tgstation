@@ -264,3 +264,10 @@
 	id = /datum/reagent/medicine/psicodine
 	results = list(/datum/reagent/medicine/psicodine = 5)
 	required_reagents = list( /datum/reagent/medicine/mannitol = 2, /datum/reagent/water = 2, /datum/reagent/impedrezene = 1)
+
+/datum/chemical_reaction/rhigoxane
+	name = "Rhigoxane"
+	id = /datum/reagent/medicine/rhigoxane
+	results = list(/datum/reagent/medicine/rhigoxane/ = 3)
+	required_reagents = list(/datum/reagent/cryostylane = 1, /datum/reagent/bromine = 1, /datum/reagent/lye = 1)
+	required_temp = 200

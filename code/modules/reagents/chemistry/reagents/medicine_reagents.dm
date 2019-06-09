@@ -1331,6 +1331,7 @@
 	name = "Mitogen Metabolism Factor"
 	description = "This enzyme catalyzes the conversion of nutricious food into healing peptides."
 	metabolization_rate = 0.0625  * REAGENTS_METABOLISM //slow metabolism rate so the patient can self heal with food even after the troph has metabolized away for amazing reagent efficency.
+	reagent_state = SOLID
 	overdose_threshold = 10
 
 /datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
@@ -1341,4 +1342,32 @@
 		M.vomit()
 	..()
 
+/datum/reagent/medicine/rhigoxane
+	name = "Rhigoxane"
+	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. It's high halogen content helps extiguish fires."
+	reagent_state = LIQUID
+	color = "#B6D2F2"
+	overdose_threshold = 25
+	reagent_weight = 0.6
 
+/datum/reagent/medicine/rhigoxane/on_mob_life(mob/living/carbon/M)
+	M.adjustFireLoss(-2*REM, 0.)
+	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+	. = 1
+
+/datum/reagent/medicine/rhigoxane/reaction_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
+	if(method != VAPOR)
+		return
+
+	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT * 20, 200)
+	M.adjust_fire_stacks(-reac_volume / 2)
+	if(reac_volume >= metabolization_rate)
+		M.ExtinguishMob()
+
+	..()
+
+/datum/reagent/medicine/rhigoxane/overdose_process(mob/living/carbon/M)
+	M.adjustFireLoss(3*REM, 0.)
+	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	..()
