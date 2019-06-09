@@ -11,10 +11,10 @@
 			. += legcuffed.slowdown
 
 	for(var/obj/item/bodypart/X in bodyparts)
-		if(!X.broken)
-			return
-		if(X.body_part == LEG_RIGHT || X.body_part == LEG_LEFT)
-			. += 2 //can't move fast with a broken leg
+		if(X.bone_status == BONE_FLAG_BROKEN)
+			if(X.body_part == LEG_RIGHT || X.body_part == LEG_LEFT)
+				. += 2 //can't move fast with a broken leg
+				break // Dont stack the speed if a lot of shit is broken
 
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	if(movement_type & FLYING)

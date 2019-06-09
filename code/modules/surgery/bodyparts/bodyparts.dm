@@ -20,9 +20,8 @@
 	var/list/embedded_objects = list()
 	var/held_index = 0 //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
-	var/broken = FALSE //For whether...it's broken
-	var/splinted = FALSE //Whether it's splinted. Movement doesn't deal damage, but you still move slowly.
-	var/has_bones = FALSE
+	
+	var/bone_status = BONE_FLAG_NO_BONES // Is it fine, broken, splinted, or just straight up fucking gone
 
 	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
@@ -128,28 +127,23 @@
 		I.forceMove(T)
 
 /obj/item/bodypart/proc/can_break_bone()
-	if(broken)
-		return 0
-	if(status == BODYPART_ROBOTIC)
-		return 0
-	if(!has_bones)
-		return 0
-	return 1
+	// Do they have bones, are the bones not broken, is the limb not robotic? If yes to all, return 1
+    return (bone_status && bone_status != BONE_FLAG_BROKEN && status != BODYPART_ROBOTIC)
 
 /obj/item/bodypart/proc/break_bone()
 	if(!can_break_bone())
 		return
-	broken = TRUE
+	bone_status = BONE_FLAG_BROKEN
 	spawn(1) // Delay so it happens after the punch message
 		owner.visible_message("<span class='userdanger'>You hear a cracking sound coming from [owner]'s [parse_zone(src)].</span>", "<span class='warning'>You feel something crack in your [parse_zone(src)]!</span>", "<span class='warning'>You hear an awful cracking sound.</span>")
 
 /obj/item/bodypart/proc/fix_bone()
-	broken = FALSE
-	splinted = FALSE
+	bone_status = BONE_FLAG_NORMAL
 	owner.update_inv_splints()
 
 /obj/item/bodypart/proc/on_mob_move()
-	if(!broken || status == BODYPART_ROBOTIC || !owner || splinted)
+	// Dont trigger if it aint broke, or robotic, or if its splinted, or if it has no owner??
+	if(bone_status != BONE_FLAG_NO_BONES || status == BODYPART_ROBOTIC || bone_status == BONE_FLAG_SPLINTED || !owner)
 		return
 
 	if(prob(5))
@@ -329,7 +323,10 @@
 		C = owner
 		no_update = FALSE
 
-	has_bones = C.has_bones//get the carbon's default bone settings
+	if(C.has_bones) // Get the data from default carbon
+		bone_status = BONE_FLAG_NORMAL //get the carbon's default bone settings
+	else
+		bone_status = BONE_FLAG_NO_BONES
 
 	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
 		species_id = "husk" //overrides species_id
@@ -350,10 +347,10 @@
 		species_flags_list = H.dna.species.species_traits
 
 		if(NO_BONES in S.species_traits)
-			has_bones = FALSE
+			bone_status = BONE_FLAG_NO_BONES
 			fix_bone()
 		else
-			has_bones = TRUE
+			bone_status = BONE_FLAG_NORMAL
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
