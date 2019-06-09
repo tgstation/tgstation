@@ -1,6 +1,6 @@
 #define BUBBLEGUM_SMASH (health <= maxHealth*0.5) // angery
-#define CAN_ENRAGE (enrage_till + (enrage_time * 2) <= world.time)
-#define IS_ENRAGED (enrage_till > world.time)
+#define BUBBLEGUM_CAN_ENRAGE (enrage_till + (enrage_time * 2) <= world.time)
+#define BUBBLEGUM_IS_ENRAGED (enrage_till > world.time)
 
 /*
 
@@ -162,7 +162,7 @@ Difficulty: Hard
 		if(ismob(target))
 			charge(delay = 6)
 		else
-			sleep(6)
+			SLEEP_CHECK_DEATH(6)
 	SetRecoveryTime(20)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(var/atom/chargeat = target, var/delay = 3, var/chargepast = 2)
@@ -183,11 +183,11 @@ Difficulty: Hard
 	setDir(dir)
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
-	sleep(delay)
+	SLEEP_CHECK_DEATH(delay)
 	revving_charge = FALSE
 	var/movespeed = 0.7
 	walk_towards(src, T, movespeed)
-	sleep(get_dist(src, T) * movespeed)
+	SLEEP_CHECK_DEATH(get_dist(src, T) * movespeed)
 	walk(src, 0) // cancel the movement
 	try_bloodattack()
 	charging = FALSE
@@ -244,14 +244,14 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/bubblegum_hands/rightsmack(T)
 	else
 		new /obj/effect/temp_visual/bubblegum_hands/leftsmack(T)
-	sleep(4)
+	SLEEP_CHECK_DEATH(4)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
 			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, 1, -1)
 			var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 			L.apply_damage(10, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
-	sleep(3)
+	SLEEP_CHECK_DEATH(3)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodgrab(turf/T, handedness)
 	if(handedness)
@@ -260,7 +260,7 @@ Difficulty: Hard
 	else
 		new /obj/effect/temp_visual/bubblegum_hands/leftpaw(T)
 		new /obj/effect/temp_visual/bubblegum_hands/leftthumb(T)
-	sleep(6)
+	SLEEP_CHECK_DEATH(6)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
 			if(L.stat != CONSCIOUS)
@@ -270,7 +270,7 @@ Difficulty: Hard
 				L.forceMove(targetturf)
 				playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, 1, -1)
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
-	sleep(1)
+	SLEEP_CHECK_DEATH(1)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
 	if(Adjacent(target))
@@ -290,7 +290,7 @@ Difficulty: Hard
 	var/oldtransform = DA.transform
 	DA.transform = matrix()*2
 	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 3)
-	sleep(3)
+	SLEEP_CHECK_DEATH(3)
 	qdel(DA)
 
 	var/obj/effect/decal/cleanable/blood/found_bloodpool
@@ -311,7 +311,7 @@ Difficulty: Hard
 	return FALSE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/be_aggressive()
-	if(IS_ENRAGED)
+	if(BUBBLEGUM_IS_ENRAGED)
 		return TRUE
 	if(isliving(target))
 		var/mob/living/livingtarget = target
@@ -329,7 +329,7 @@ Difficulty: Hard
 	minimum_distance = get_minimum_distance()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage()
-	if(!CAN_ENRAGE)
+	if(!BUBBLEGUM_CAN_ENRAGE)
 		return FALSE
 	enrage_till = world.time + enrage_time
 	update_approach()
@@ -434,7 +434,7 @@ Difficulty: Hard
 			recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/item/projectile/P)
-	if(IS_ENRAGED)
+	if(BUBBLEGUM_IS_ENRAGED)
 		visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 300, 1)
 		return BULLET_ACT_BLOCK

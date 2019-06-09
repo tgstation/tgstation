@@ -154,19 +154,17 @@ Difficulty: Medium
 		return swoop_attack(lava_arena = TRUE, swoop_cooldown = 60)
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
 	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
-	if(QDELETED(src) || stat == DEAD)
-		return
+	SLEEP_CHECK_DEATH(0)
 	fire_cone()
 	if(health < maxHealth*0.5)
 		SLEEP_CHECK_DEATH(10)
 		fire_cone()
 		SLEEP_CHECK_DEATH(10)
-	fire_cone()
+		fire_cone()
 	SetRecoveryTime(40)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/mass_fire(var/spiral_count = 12, var/range = 15, var/times = 3)
-	if(QDELETED(src) || stat == DEAD)
-		return
+	SLEEP_CHECK_DEATH(0)
 	for(var/i = 1 to times)
 		SetRecoveryTime(50)
 		playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
@@ -223,26 +221,22 @@ Difficulty: Medium
 	return 1 // attack finished completely
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
-	if(QDELETED(src) || stat == DEAD)
-		return //angry but helpless
+	SLEEP_CHECK_DEATH(0)
 	SetRecoveryTime(80)
 	visible_message("<span class='boldwarning'>[src] starts to glow vibrantly as its wounds close up!</span>")
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
 	light_range = 10
-	sleep(10) // run.
-	if(!QDELETED(src))
-		if(stat != DEAD)
-			mass_fire(20, 15, 3)
-			move_to_delay = initial(move_to_delay)
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-		light_range = initial(light_range)
+	SLEEP_CHECK_DEATH(10) // run.
+	mass_fire(20, 15, 3)
+	move_to_delay = initial(move_to_delay)
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	light_range = initial(light_range)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(var/atom/at = target, var/meteors = TRUE)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
-	if(QDELETED(src) || stat == DEAD) // we dead no fire
-		return
+	SLEEP_CHECK_DEATH(0)
 	if(prob(50) && meteors)
 		INVOKE_ASYNC(src, .proc/fire_rain)
 	var/range = 15
@@ -332,12 +326,11 @@ Difficulty: Medium
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	sleep(7)
-	//badmins please don't kill it while it's invulnerable
+	SLEEP_CHECK_DEATH(7)
 
 	while(target && loc != get_turf(target))
 		forceMove(get_step(src, get_dir(src, target)))
-		sleep(0.5)
+		SLEEP_CHECK_DEATH(0.5)
 
 	// Ash drake flies onto its target and rains fire down upon them
 	var/descentTime = 10
@@ -356,7 +349,7 @@ Difficulty: Medium
 	new /obj/effect/temp_visual/dragon_flight/end(loc, negative)
 	new /obj/effect/temp_visual/dragon_swoop(loc)
 	animate(src, alpha = 255, transform = oldtransform, descentTime)
-	sleep(descentTime)
+	SLEEP_CHECK_DEATH(descentTime)
 	swooping &= ~SWOOP_INVULNERABLE
 	mouse_opacity = initial(mouse_opacity)
 	icon_state = "dragon"
@@ -381,9 +374,7 @@ Difficulty: Medium
 		shake_camera(M, 15, 1)
 
 	density = TRUE
-	sleep(1)
-	if(QDELETED(src))
-		return
+	SLEEP_CHECK_DEATH(1)
 	swooping &= ~SWOOP_DAMAGEABLE
 	SetRecoveryTime(swoop_cooldown)
 	if(!lava_success)
@@ -648,8 +639,7 @@ obj/effect/temp_visual/fireball
 
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/fire_stream(var/atom/at = target)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
-	if(QDELETED(src) || stat == DEAD) // we dead no fire
-		return
+	SLEEP_CHECK_DEATH(0)
 	var/range = 20
 	var/list/turfs = list()
 	turfs = line_target(0, range, at)
