@@ -270,7 +270,7 @@ GENE SCANNER
 		
 		var/list/broken_stuff = list()
 		for(var/obj/item/bodypart/B in C.bodyparts)
-			if(B.broken)
+			if(B.bone_status == BONE_FLAG_BROKEN)
 				broken_stuff += B.name
 		if(broken_stuff.len)
 			to_chat(user, "\t<span class='alert'>Bone fractures detected. Subject's [english_list(broken_stuff)] [broken_stuff.len > 1 ? "require" : "requires"] surgical treatment!</span>")

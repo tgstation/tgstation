@@ -103,6 +103,7 @@
 	if(B)
 		. = B.cure_all_traumas(resilience)
 
-/mob/living/carbon/mend_fractures()
+//////////////////////////////// BROKEN BONES ///////////////////////////
+/mob/living/carbon/proc/mend_fractures()
 	for(var/obj/item/bodypart/B in bodyparts)
 		B.fix_bone() 

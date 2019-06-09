@@ -287,3 +287,15 @@
 		overlays_standing[BODYPARTS_LAYER] = limb_icon_cache[icon_render_key]
 		apply_overlay(BODYPARTS_LAYER)
 	update_damage_overlays()
+
+
+/mob/living/carbon/proc/update_inv_splints()
+	remove_overlay(SPLINT_LAYER)
+	var/list/standing = list()
+	for(var/obj/item/bodypart/B in bodyparts)
+		if(B.bone_status == BONE_FLAG_SPLINTED)
+			var/mutable_appearance/some_overlay_thing = mutable_appearance('icons/mob/splints.dmi', B.body_zone, SPLINT_LAYER)
+			standing += some_overlay_thing
+
+ 	overlays_standing[SPLINT_LAYER] = standing
+	apply_overlay(SPLINT_LAYER)

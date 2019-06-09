@@ -52,10 +52,10 @@
 		if(splint_fracture)
 			if(affecting.body_part in list(CHEST, HEAD))
 				to_chat(user, "<span class='warning'>You can't splint that bodypart!</span>")
-			else if(!affecting.broken)
+			else if(!affecting.bone_status == BONE_FLAG_BROKEN)
 				to_chat(user, "<span class='warning'>[M]'s [parse_zone(user.zone_selected)] isn't broken!</span>")
 				return
-			else if(affecting.splinted)
+			else if(affecting.bone_status == BONE_FLAG_SPLINTED)
 				to_chat(user, "<span class='warning'>[M]'s [parse_zone(user.zone_selected)] is already splinted!</span>")
 				return
 
@@ -105,7 +105,7 @@
 			if(affecting.heal_damage(heal_brute, heal_burn))
 				C.update_damage_overlays()
 			if(splint_fracture)
-				affecting.splinted = TRUE
+				affecting.bone_status = BONE_FLAG_SPLINTED
 				C.update_inv_splints()
 		else
 			to_chat(user, "<span class='notice'>[src] won't work on a robotic limb!</span>")

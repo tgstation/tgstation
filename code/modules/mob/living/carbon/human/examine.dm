@@ -122,9 +122,9 @@
 	var/list/broken_stuff = list()
 	var/list/splinted_stuff = list()
 	for(var/obj/item/bodypart/B in bodyparts)
-		if(B.splinted)
+		if(B.bone_status == BONE_FLAG_SPLINTED)
 			splinted_stuff += B.name
-		else if(B.broken)
+		else if(B.bone_status == BONE_FLAG_BROKEN)
 			broken_stuff += B.name
 	if(broken_stuff.len)
 		msg += "<span class='warning'><B>[t_His] [english_list(broken_stuff)] appear[broken_stuff.len > 1 ? "" : "s"] to be broken!</B></span>\n"
