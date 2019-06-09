@@ -6,7 +6,7 @@
 
 /datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
 	if(islist(_diseases))
-		diseases = diseases
+		diseases = _diseases
 	else
 		diseases = list(_diseases)
 	if(expire_in)
