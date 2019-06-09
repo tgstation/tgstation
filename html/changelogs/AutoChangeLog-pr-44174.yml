@@ -1,4 +1,0 @@
-author: "bandit"
-delete-after: True
-changes: 
-  - rscadd: "Art now affects mood depending on its quality."
