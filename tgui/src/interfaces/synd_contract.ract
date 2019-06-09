@@ -16,17 +16,20 @@
 		</p>
 
 		<p>
-			Listed below are all of the available contracts to you. You are to bring the
-			specified target to the designated drop-off, and contact us via uplink. We will send
-			a specialised extraction unit to take care of the rest.
+			Listed below are all of the contracts available to you. You are to bring the
+			specified target to the designated drop-off, and contact us via this uplink. We will send
+			a specialised extraction unit to put the body into.
 		</p>
 
 		<p>
-			Dead targets are acceptable, but you won't be provided the shown bonus. Additionally,
-			be sure to call for extraction when safe - we'd rather avoid direct conflict between
-			the crew and our dispatched unit.
+			Dead targets are acceptable, but you won't be provided the shown bonus. You can redeem your
+			payment through this uplink in the form of raw telecrystals. You can put these in your regular
+			Syndicate uplink to purchase whatever you may need.
 		</p>
-		{{data.redeemable_tc}}
+		
+		<p>
+			You have {{data.redeemable_tc}} to redeem. <ui-button action='PRG_redeem_TC'>Collect</ui-button>
+		</p>
 		{{data.extraction_enroute}}
 		{{#if data.ongoing_contract}}
 			<div style="text-align:center">

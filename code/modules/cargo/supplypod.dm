@@ -130,6 +130,7 @@
 		bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
 
 		QDEL_IN(risingPod, 10)
+		qdel(holder)
 
 /obj/structure/closet/supplypod/proc/preOpen() //Called before the open() proc. Handles anything that occurs right as the pod lands.
 	var/turf/T = get_turf(src)

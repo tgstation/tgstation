@@ -86,22 +86,22 @@
 		if (isliving(M))
 			to_chat(usr, "isliving")
 
+			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
+			
 			if (M == contract.target.current)
 				to_chat(usr, "they were our target")
+
+				traitor_data.contract_TC_to_redeem += contract.payout
+
+				if (M.stat != DEAD)
+					traitor_data.contract_TC_to_redeem += contract.payout_bonus
+
+				status = CONTRACT_STATUS_COMPLETE
+				traitor_data.current_contract = null
 			else
 				to_chat(usr, "not our target")
+				status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
+				traitor_data.current_contract = null
 
-			if (M.stat != DEAD)
-				to_chat(usr, "isalive")
-			else
-				to_chat(usr, "isdead")
-
-			status = CONTRACT_STATUS_COMPLETE
-
-			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
-
-			traitor_data.contract_TC_to_redeem += contract.payout
-			traitor_data.current_contract = null
-
-		// We send the pod back, and check if it was the target. If it wasn't, we send them a message
+			qdel(M)
 

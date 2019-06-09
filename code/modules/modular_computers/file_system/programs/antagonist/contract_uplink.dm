@@ -44,15 +44,36 @@
 			return 1
 		if("PRG_call_extraction")
 			to_chat(user, "Called extraction")
-			if (hard_drive.traitor_data.current_contract.handle_extraction(user))
-				user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 50, 1)
-				hard_drive.traitor_data.current_contract.status = CONTRACT_STATUS_EXTRACTING
+			if (hard_drive.traitor_data.current_contract.status != CONTRACT_STATUS_EXTRACTING)
+				if (hard_drive.traitor_data.current_contract.handle_extraction(user))
+					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 75, 1)
+					hard_drive.traitor_data.current_contract.status = CONTRACT_STATUS_EXTRACTING
+			else 
+				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
+			
 			return 1
 		if("PRG_contract_abort")
 			var/contract_id = hard_drive.traitor_data.current_contract.id
 
 			hard_drive.traitor_data.current_contract = null
 			hard_drive.traitor_data.assigned_contracts[contract_id].status = CONTRACT_STATUS_ABORTED
+
+			return 1
+		if("PRG_redeem_TC")
+			var/obj/item/stack/telecrystal/crystals = new /obj/item/stack/telecrystal(get_turf(user))
+			crystals.amount = hard_drive.traitor_data.contract_TC_to_redeem
+
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(H.put_in_hands(crystals))
+					to_chat(H, "Your payment materializes into your hands!")
+					return 1
+			to_chat(user, "Your payment materializes onto the floor.")
+
+			hard_drive.traitor_data.contract_TC_payed_out += contract_TC_to_redeem
+			hard_drive.traitor_data.contract_TC_to_redeem = 0
+			return 1
+
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
 	var/list/data = list()
