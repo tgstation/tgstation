@@ -38,7 +38,7 @@
 		return
 	if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
 		if(affecting.brute_dam && brute || affecting.burn_dam && burn)
-			to_chat(user, "<span class='notice'>You heal [C]'s [affecting.name] with \the [src].</span>")
+			user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
 			if(affecting.heal_damage(brute, burn))
 				C.update_damage_overlays()
 			return TRUE
@@ -69,7 +69,7 @@
 		else if (critter.health == critter.maxHealth)
 			to_chat(user, "<span class='notice'> [M] is at full health.</span>")
 			return FALSE
-		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply [src] on [M].</span>")
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
 		M.heal_bodypart_damage((heal_brute/2))
 		return TRUE
 	if(iscarbon(M))
