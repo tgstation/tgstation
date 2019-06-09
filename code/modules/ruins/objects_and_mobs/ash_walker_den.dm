@@ -26,12 +26,6 @@
 	new	/obj/effect/collapse(loc)
 	return ..()
 
-/obj/structure/lavaland/ash_walker/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_SAVAGE))
-		visible_message("1")
-		return TRUE
-
 /obj/structure/lavaland/ash_walker/process()
 	consume()
 	spawn_mob()
