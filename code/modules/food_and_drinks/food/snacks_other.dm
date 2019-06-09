@@ -593,3 +593,10 @@
 	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
 	tastes = list("peaches" = 1, "tin" = 7)
+
+/obj/item/reagent_containers/food/snacks/candyapple
+	name = "Candy Apple"
+	desc = "Finally some good fricking fruit."
+	icon_state = "candyapple"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/caramel = 5)
+	tastes = list("caramel" = 5, "apple" = 3)
