@@ -26,10 +26,7 @@
 	contract.generate_dropoff()
 
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
-	to_chat(user, "Handling extraction")
-
 	if (contract.dropoff_check(user, contract.target.current))
-		to_chat(user, "we're in")
 
 		var/list/turfs = RANGE_TURFS(3, user)
 		var/list/possible_drop_loc = list()
@@ -48,20 +45,14 @@
 				if (location_clear)
 					possible_drop_loc.Add(found_turf)
 
-		to_chat(user, "we've done our turf checks")
-		
 		// Need at least one free location.
 		if (possible_drop_loc.len < 1)
 			return FALSE
 
-		to_chat(user, "we have one")
-
 		var/pod_rand_loc = rand(1, possible_drop_loc.len)
 
 		// We've got a valid location, launch.
-		to_chat(user, "to launch")
 		launch_extraction_pod(possible_drop_loc[pod_rand_loc])
-
 		return 1
 	return 0
 
@@ -77,20 +68,11 @@
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
 
 /datum/syndicate_contract/proc/enter_check(datum/source, var/mob/living/M)
-	to_chat(usr, "entercheck")
-	to_chat(usr, "deleting")
-
 	if (istype(source, /obj/structure/closet/supplypod/extractionpod))
-		to_chat(usr, "ispod")
-
 		if (isliving(M))
-			to_chat(usr, "isliving")
-
 			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
 			
 			if (M == contract.target.current)
-				to_chat(usr, "they were our target")
-
 				traitor_data.contract_TC_to_redeem += contract.payout
 
 				if (M.stat != DEAD)
@@ -99,9 +81,7 @@
 				status = CONTRACT_STATUS_COMPLETE
 				traitor_data.current_contract = null
 			else
-				to_chat(usr, "not our target")
 				status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
 				traitor_data.current_contract = null
-
 			qdel(M)
 

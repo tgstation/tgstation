@@ -33,9 +33,9 @@
 	..()
 
 /datum/antagonist/traitor/proc/create_contracts()
-	// May have this change depending on server pop
-	// DEBUG TODO: Change this number - only for producing large amounts to test possible areas/values.
-	var/contract_generation_quantity = 20
+	// May have this change depending on server pop, however contracts are 
+	// currently only available at a certain pop anyway.
+	var/contract_generation_quantity = 6
 
 	for (var/i = 1; i < contract_generation_quantity; i++)
 		var/datum/syndicate_contract/contract_to_add = new(owner)

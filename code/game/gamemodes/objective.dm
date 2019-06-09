@@ -1071,17 +1071,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 // Check if both the contractor and contract target are at the dropoff point.
 /datum/objective/contract/proc/dropoff_check(mob/user, mob/target)
-	to_chat(user, "in check")
-
 	var/area/user_area = get_area(user)
 	var/area/target_area = get_area(target)
-
-	to_chat(user, "got areas")
-
-	to_chat(user, user_area.name)
-	to_chat(user, target_area.name)
-	to_chat(user, dropoff.name)
-
-	to_chat(user, "returning")
 
 	return (istype(user_area, dropoff) && istype(target_area, dropoff))

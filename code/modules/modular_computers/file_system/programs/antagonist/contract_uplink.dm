@@ -43,7 +43,6 @@
 				error = "Incorrect login details."
 			return 1
 		if("PRG_call_extraction")
-			to_chat(user, "Called extraction")
 			if (hard_drive.traitor_data.current_contract.status != CONTRACT_STATUS_EXTRACTING)
 				if (hard_drive.traitor_data.current_contract.handle_extraction(user))
 					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 75, 1)
@@ -88,7 +87,6 @@
 		if (traitor_data.current_contract)
 			data["ongoing_contract"] = TRUE
 			if (traitor_data.current_contract.status == CONTRACT_STATUS_EXTRACTING)
-				to_chat(usr, "extraction in progress")
 				data["extraction_enroute"] = TRUE
 
 		data["logged_in"] = TRUE

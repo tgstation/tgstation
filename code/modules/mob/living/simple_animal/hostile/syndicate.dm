@@ -75,11 +75,6 @@
 	maxHealth = 250
 	health = 250
 
-/mob/living/simple_animal/hostile/syndicate/space/stormtrooper/contract_agent
-	name = "Syndicate Extraction Unit"
-	desc = "A specialised unit for extracting high-value targets out of hostile territory."
-	loot = list(/obj/effect/gibspawner/human)
-
 /mob/living/simple_animal/hostile/syndicate/melee //dude with a knife and no shields
 	melee_damage_lower = 15
 	melee_damage_upper = 15
