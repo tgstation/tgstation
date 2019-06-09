@@ -52,7 +52,7 @@
 
 		// We've got a valid location, launch.
 		to_chat(user, "to launch")
-		launch_extraction_pod(pod_rand_loc)
+		launch_extraction_pod(possible_drop_loc[pod_rand_loc])
 
 		return 1
 	return 0
@@ -61,21 +61,16 @@
 	var/obj/structure/closet/supplypod/bluespacepod/empty_pod = new()
 
 	empty_pod.setStyle(STYLE_SYNDICATE)
-
 	empty_pod.stay_after_drop = TRUE
-
 	empty_pod.explosionSize = list(0,0,2,1)
-
-	var/obj/empty_obj = new
-
-	empty_obj.forceMove(empty_pod)
 
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
 
-/datum/syndicate_contract/proc/enter_check(var/mob/living/M, mob/living/user, /obj/structure/closet/pod)
-	to_chat(usr, "in hrer934")
-
-	if (is_type(pod, obj/structure/closet/supplypod/bluespacepod))
-		to_chat(usr, "is pod")
+/datum/syndicate_contract/proc/enter_check(var/mob/living/M, var/mob/living/user, pod)
+	to_chat(user, "in hrer934")
+	to_chat(M, "in hrer934")
 
 
+	if (istype(pod, /obj/structure/closet/supplypod/bluespacepod))
+		to_chat(user, "is pod")
+		to_chat(M, "in dsad2")
