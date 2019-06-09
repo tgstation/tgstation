@@ -548,6 +548,13 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/firebrand
+	name = "Firebrand"
+	result = /obj/item/match/firebrand
+	time = 100 //Long construction time. Making fire is hard work.
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 2)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/gold_horn
 	name = "Golden Bike Horn"
 	result = /obj/item/bikehorn/golden

@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime", "bees")
+						"aliens", "strangers", "birds", "falling", "anime")
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
 						"space"     = strings(PHOBIA_FILE, "space"),
@@ -33,8 +33,7 @@ SUBSYSTEM_DEF(traumas)
 						"conspiracies" = strings(PHOBIA_FILE, "conspiracies"),
 						"birds" = strings(PHOBIA_FILE, "birds"),
 						"falling" = strings(PHOBIA_FILE, "falling"),
-						"anime" = strings(PHOBIA_FILE, "anime"),
-						"bees" = strings(PHOBIA_FILE, "bees")
+						"anime" = strings(PHOBIA_FILE, "anime")
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -53,8 +52,7 @@ SUBSYSTEM_DEF(traumas)
 					   /mob/living/simple_animal/pet/penguin)),
 					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
 					   /mob/living/simple_animal/pet/penguin)),
-					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
-					   "bee" = typecacheof(list(/mob/living/simple_animal/hostile/poison/bees))
+					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian))
 					   )
 
 	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius)),
@@ -68,7 +66,8 @@ SUBSYSTEM_DEF(traumas)
 
 					  "clowns"    = typecacheof(list(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes,
 												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/instrument/bikehorn,
-												 /obj/item/pda/clown, /obj/item/grown/bananapeel)),
+												 /obj/item/pda/clown, /obj/item/grown/bananapeel, /obj/item/reagent_containers/food/snacks/cheesiehonkers,
+												 /obj/item/trash/cheesie)),
 
 					  "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
 												 /obj/item/twohanded/spear, /obj/item/clothing/mask/gas)),
@@ -144,11 +143,7 @@ SUBSYSTEM_DEF(traumas)
 					   "anime" = typecacheof(list(/obj/item/clothing/under/schoolgirl, /obj/item/katana, /obj/item/reagent_containers/food/snacks/sashimi, /obj/item/reagent_containers/food/snacks/chawanmushi,
 					   /obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
 					   /obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/twohanded/vibro_weapon,
-					   /obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)),
-
-					   "bees" = typecacheof(list(/obj/item/toy/plush/beeplushie, /obj/structure/beebox, /obj/item/clothing/head/beekeeper_head, /obj/item/clothing/suit/beekeeper_suit,
-					   /obj/item/honey_frame, /obj/item/reagent_containers/honeycomb, /obj/item/clothing/head/hooded/bee_hood, /obj/item/clothing/suit/hooded/bee_costume,
-					   /obj/item/clothing/mask/rat/bee))
+					   /obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe))
 						)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
