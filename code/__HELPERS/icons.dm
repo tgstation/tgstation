@@ -1200,28 +1200,3 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	var/icon/I = getFlatIcon(thing)
 	return icon2html(I, target)
-
-//Masks should be an image or a list of images
-//May not work correctly if appearance_flag does not have KEEP_TOGETHER
-//If you are using icons, consider using /icon/UseAlphaMask instead
-/proc/apply_alpha_mask(image/target, image/mask)
-	var/target_old_color = target.color
-	var/target_old_blend_mode = target.blend_mode
-	var/mask_old_color = mask.color
-
-	target.color = list(0,0,0,0, 0,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,1)
-	target.blend_mode = BLEND_MULTIPLY
-	mask.color = list(0,0,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,0)
-
-	var/image/together = new()
-	together.appearance_flags |= KEEP_TOGETHER
-
-	mask.add_overlay(target)
-	target.color = target_old_color
-	together.overlays = list(mask, target)
-
-	target.blend_mode = target_old_blend_mode
-	mask.color = mask_old_color
-	mask.cut_overlay(target)
-
-	return together
