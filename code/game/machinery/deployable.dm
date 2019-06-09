@@ -195,18 +195,24 @@
 	name = "holobarrier"
 	desc = "It blocks bullets, but it wont last for long."
 	icon = 'icons/obj/guns/energy.dmi'
-	icon_state = "holobarrier"
+	icon_state = "holobarrier0"
 	density = FALSE
 	max_integrity = 100
 	proj_pass_rate = 25
 	armor = list("melee" = 10, "bullet" = 20, "laser" = 70, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 10, "acid" = 0)
+	deploy_time = 20
+
+/obj/structure/barricade/security/holobarricade/deploy()
+	icon_state = "holobarrier1"
 
 /obj/structure/barricade/security/holobarricade/Initialize()
 	..()
-	addtimer(CALLBACK(src, .proc/qdel, src), 80)
+	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
+	QDEL_IN(src, 120)
 
 /obj/structure/barricade/security/holobarricade/attackby(obj/item/I, mob/user, params)
 	return ..()
+
 #undef SINGLE
 #undef VERTICAL
 #undef HORIZONTAL

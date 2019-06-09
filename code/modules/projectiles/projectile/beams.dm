@@ -189,21 +189,19 @@
 	name = "\improper heavy laser beam"
 	icon_state = "heavylaser"
 	damage = 35
-	range = 6
 	irradiate = 30
 	armour_penetration = 30
 	dismemberment = 10
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_RED
 	tracer_type = /obj/effect/projectile/tracer/heavy_laser
-	muzzle_type = /obj/effect/projectile/muzzle/xray
-	impact_type = /obj/effect/projectile/impact/xray
+	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
+	impact_type = /obj/effect/projectile/impact/heavy_laser
 	pass_flags = PASSTABLE
 
 obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/) ||  istype(target, /obj/machinery/)))
-		target.ex_act(EXPLODE_HEAVY)
+		target.ex_act(EXPLODE_LIGHT)
 
 /obj/item/projectile/beam/shock
 	name = "\improper charged beam"
@@ -211,7 +209,7 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	damage = 10
 	jitter = 10
 	stutter = 10
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+//	impact_effect_type = /obj/effect/temp_visual/impact_effect/impact_blue
 	light_color = LIGHT_COLOR_CYAN
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = /obj/effect/projectile/tracer/stun
@@ -241,14 +239,14 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/card/id/C = H.get_idcard(TRUE)
-		if(C && C.registered_account)
-			C.registered_account.adjust_money(-100)
+		if(C && C.registered_account && !(C.registered_account.account_balance == 0))
+			C.registered_account.adjust_money(max(-100, C.registered_account.account_balance * -1))
 			to_chat(H, "<span class='danger'>Your wallet feels lighter!</span>")
 			if(ishuman(firer))
 				var/mob/living/carbon/human/FH = firer
 				var/obj/item/card/id/FC = FH.get_idcard(TRUE)
 				if(FC && FC.registered_account)
-					FC.registered_account.adjust_money(100)
+					FC.registered_account.adjust_money(min(100, FC.registered_account.account_balance))
 					to_chat(FH, "<span class='notice'>Your wallet has received 100 credits.</span>")
 			else
 				var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
@@ -265,9 +263,9 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	irradiate = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_CYAN
-	tracer_type = /obj/effect/projectile/tracer/xray
-	muzzle_type = /obj/effect/projectile/muzzle/xray
-	impact_type = /obj/effect/projectile/impact/xray
+//	tracer_type = /obj/effect/projectile/tracer/solar
+//	muzzle_type = /obj/effect/projectile/muzzle/solar
+//	impact_type = /obj/effect/projectile/impact/solar
 
 /obj/item/projectile/beam/tracer/on_hit(atom/target)
 	. = ..()
@@ -312,11 +310,6 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	name = "\improper small laser beam"
 	icon_state = "mini"
 	damage = 10
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
-	light_color = LIGHT_COLOR_BLUE
-	tracer_type = /obj/effect/projectile/tracer/xray
-	muzzle_type = /obj/effect/projectile/muzzle/xray
-	impact_type = /obj/effect/projectile/impact/xray
 
 /obj/item/projectile/beam/rico
 	name = "\improper bouncing plasma ball"
@@ -335,8 +328,4 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	invisibility = INVISIBILITY_MAXIMUM
 	damage = 15
 	range = 12
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_PINK
-	tracer_type = /obj/effect/projectile/tracer/xray
-	muzzle_type = /obj/effect/projectile/muzzle/xray
-	impact_type = /obj/effect/projectile/impact/xray
