@@ -312,10 +312,7 @@
 				L.Paralyze(40)
 			O.forceMove(T)
 			close()
-			to_chat(user, "in here 999")
-			SEND_SIGNAL(src, COMSIG_CLOSET_STUFFED_INSIDE, L, user, src)
-			to_chat(user, "in here 333")
-
+			Entered(O)
 	else
 		O.forceMove(T)
 	return 1

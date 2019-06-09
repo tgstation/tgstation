@@ -192,6 +192,8 @@
 			qdel(holder)
 
 /obj/structure/closet/supplypod/centcompod/close(atom/movable/holder) //Closes the supplypod and sends it back to centcom. Should only ever be called if the "reversing" variable is true
+	if (!holder)
+		holder = src
 	opened = FALSE
 	INVOKE_ASYNC(holder, .proc/setClosed) //Use the INVOKE_ASYNC proc to call setClosed() on whatever the holder may be, without giving the atom/movable base class a setClosed() proc definition
 	for (var/atom/movable/O in get_turf(holder))
