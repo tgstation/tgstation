@@ -130,3 +130,18 @@
 	description ="<span class='nicegreen'>The gods are pleased with this offering!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/artok
+	description = "<span class='nicegreen'>It's nice to see people are making art around here.</span>\n"
+	mood_change = 2
+	timeout = 2 MINUTES
+
+/datum/mood_event/artgood
+	description = "<span class='nicegreen'>What a thought-provoking piece of art. I'll remember that for a while.</span>\n"
+	mood_change = 3
+	timeout = 3 MINUTES
+
+/datum/mood_event/artgreat
+	description = "<span class='nicegreen'>That work of art was so great it made me believe in the goodness of humanity. Says a lot in a place like this.</span>\n"
+	mood_change = 4
+	timeout = 4 MINUTES

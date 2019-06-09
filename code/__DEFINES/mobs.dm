@@ -293,6 +293,9 @@
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
 #define GRAB_PIXEL_SHIFT_NECK 16
 
+#define PULL_PRONE_SLOWDOWN 1.5
+#define HUMAN_CARRY_SLOWDOWN 0.35
+
 //Flags that control what things can spawn species (whitelist)
 //Badmin magic mirror
 #define MIRROR_BADMIN (1<<0)
