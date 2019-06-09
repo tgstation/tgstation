@@ -27,9 +27,8 @@
 /obj/structure/lavaland/ash_walker/deconstruct(disassembled)
 	new /obj/item/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
 	new	/obj/effect/collapse(loc)
-	for(var/datum/objective/nest in ashies.objectives)
-		if(nest.tendril == src)
-			nest.tendril = null
+	if(ashies.tendril == src)
+		ashies.tendril = null
 	return ..()
 
 /obj/structure/lavaland/ash_walker/process()
