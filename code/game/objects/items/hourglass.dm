@@ -1,3 +1,5 @@
+#define HOURGLASS_STATES 7 //Remember to update if you change the sprite
+
 /obj/item/hourglass
 	name = "hourglass"
 	desc = "Nanotrasen patented gravity invariant hourglass. Guaranteed to flow perfectly under any conditions."
@@ -20,15 +22,11 @@
 
 /obj/item/hourglass/proc/toggle(mob/user)
 	if(!timing_id)
-		to_chat(user,"You flip the [src]")
+		to_chat(user,"<span class='notice'>You flip the [src]</span>")
 		start()
-		//fancy flip
-		var/old_transform = transform
-		animate(src,time = 1, transform = turn(old_transform, 90))
-		animate(time = 1, transform = turn(old_transform, 180))
-		animate(time = 0,transform = old_transform)
+		flick("hourglass_flip",src)
 	else
-		to_chat(user,"You stop the [src].") //Sand magically flows back because that's more convinient to use.
+		to_chat(user,"<span class='notice'>You stop the [src].</span>") //Sand magically flows back because that's more convinient to use.
 		stop()
 
 /obj/item/hourglass/update_icon()
@@ -41,7 +39,13 @@
 	finish_time = world.time + time
 	timing_id = addtimer(CALLBACK(src, .proc/finish), time, TIMER_STOPPABLE)
 	countdown.start()
-	update_icon()
+	timing_animation()
+
+/obj/item/hourglass/proc/timing_animation()
+	var/step_time = time / HOURGLASS_STATES
+	animate(src, time = step_time, icon_state = "hourglass_1")
+	for(var/i in 2 to HOURGLASS_STATES)
+		animate(time = step_time, icon_state = "hourglass_[i]")
 
 /obj/item/hourglass/proc/stop()
 	if(timing_id)
@@ -49,10 +53,11 @@
 		timing_id = null
 	countdown.stop()
 	finish_time = null
+	animate(src)
 	update_icon()
 
 /obj/item/hourglass/proc/finish()
-	visible_message("[src] stops.")
+	visible_message("<span class='notice'>[src] stops.</span>")
 	stop()
 
 /obj/item/hourglass/Destroy()
@@ -73,3 +78,5 @@
 /obj/item/hourglass/admin/attack_ghost(mob/user)
 	if(user.client && user.client.holder)
 		toggle(user)
+
+#undef HOURGLASS_STATES
