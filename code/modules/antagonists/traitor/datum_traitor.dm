@@ -15,7 +15,8 @@
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	var/datum/syndicate_contract/current_contract
 	var/list/assigned_contracts = list()
-	var/TC_payed_out = 0
+	var/contract_TC_payed_out = 0
+	var/contract_TC_to_redeem = 0
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()

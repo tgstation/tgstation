@@ -186,6 +186,8 @@
 	return TRUE
 
 /obj/structure/closet/proc/close(mob/living/user)
+	to_chat(usr, "We're in the wrong closing function")
+
 	if(!opened || !can_close(user))
 		return FALSE
 	take_contents()
@@ -312,7 +314,6 @@
 				L.Paralyze(40)
 			O.forceMove(T)
 			close()
-			Entered(O)
 	else
 		O.forceMove(T)
 	return 1

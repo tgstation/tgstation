@@ -26,9 +26,11 @@
 			be sure to call for extraction when safe - we'd rather avoid direct conflict between
 			the crew and our dispatched unit.
 		</p>
+		{{data.redeemable_tc}}
+		{{data.extraction_enroute}}
 		{{#if data.ongoing_contract}}
 			<div style="text-align:center">
-				<ui-button action='PRG_call_extraction' {{#if extraction_enroute}}state='"disabled"'{{/if}}>Call Extraction</ui-button>
+				<ui-button action='PRG_call_extraction' {{#if extraction_enroute}}state="disabled"{{/if}}>Call Extraction</ui-button>
 			</div>
 		{{/if}}
 
@@ -47,7 +49,7 @@
 							<td>{{target}}</td>
 							<td>{{payout}}(+{{payout_bonus}}) TC</td>
 							<td>{{dropoff}}</td>
-							<td><ui-button action='PRG_contract_abort' {{#if extraction_enroute}}state='"disabled"'{{/if}} params='{"contract_id": "{{id}}"}'>Cancel {{status}} {{id}}</ui-button></td>
+							<td><ui-button action='PRG_contract_abort' {{#if extraction_enroute}}state="disabled"{{/if}} params='{"contract_id": "{{id}}"}'>Cancel {{status}} {{id}}</ui-button></td>
 						</tr>
 					{{/if}}
 				{{else}}

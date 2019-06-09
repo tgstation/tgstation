@@ -66,11 +66,10 @@
 	return 0
 
 /datum/syndicate_contract/proc/launch_extraction_pod(turf/empty_pod_turf)
-	var/obj/structure/closet/supplypod/bluespacepod/empty_pod = new()
+	var/obj/structure/closet/supplypod/extractionpod/empty_pod = new()
 	
 	RegisterSignal(empty_pod, COMSIG_ATOM_ENTERED, .proc/enter_check)
 
-	empty_pod.setStyle(STYLE_SYNDICATE)
 	empty_pod.stay_after_drop = TRUE
 	empty_pod.reversing = TRUE
 	empty_pod.explosionSize = list(0,0,2,1)
@@ -79,18 +78,30 @@
 
 /datum/syndicate_contract/proc/enter_check(datum/source, var/mob/living/M)
 	to_chat(usr, "entercheck")
+	to_chat(usr, "deleting")
 
-	if (istype(source, /obj/structure/closet/supplypod/bluespacepod))
+	if (istype(source, /obj/structure/closet/supplypod/extractionpod))
 		to_chat(usr, "ispod")
-
-		var/obj/structure/closet/supplypod/bluespacepod/empty_pod = source
-
-		empty_pod.depart(empty_pod)
 
 		if (isliving(M))
 			to_chat(usr, "isliving")
-		else
-			to_chat(usr, "isdead")
+
+			if (M == contract.target.current)
+				to_chat(usr, "they were our target")
+			else
+				to_chat(usr, "not our target")
+
+			if (M.stat != DEAD)
+				to_chat(usr, "isalive")
+			else
+				to_chat(usr, "isdead")
+
+			status = CONTRACT_STATUS_COMPLETE
+
+			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
+
+			traitor_data.contract_TC_to_redeem += contract.payout
+			traitor_data.current_contract = null
 
 		// We send the pod back, and check if it was the target. If it wasn't, we send them a message
 

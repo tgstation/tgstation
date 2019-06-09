@@ -46,6 +46,7 @@
 			to_chat(user, "Called extraction")
 			if (hard_drive.traitor_data.current_contract.handle_extraction(user))
 				user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 50, 1)
+				hard_drive.traitor_data.current_contract.status = CONTRACT_STATUS_EXTRACTING
 			return 1
 		if("PRG_contract_abort")
 			var/contract_id = hard_drive.traitor_data.current_contract.id
@@ -71,6 +72,7 @@
 
 		data["logged_in"] = TRUE
 		data["station_name"] = GLOB.station_name
+		data["redeemable_tc"] = traitor_data.contract_TC_to_redeem
 
 		for (var/datum/syndicate_contract/contract in traitor_data.assigned_contracts)
 			data["contracts"] += list(list(

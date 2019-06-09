@@ -42,12 +42,22 @@
 	var/bay //Used specifically for the centcom_podlauncher datum. Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
 	var/list/explosionSize = list(0,0,2,3)
 	var/stay_after_drop = FALSE
+	var/specialised = TRUE // It's not a general use pod for cargo/admin use
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 	landingDelay = 15 //Slightly quicker than the supplypod
+
+/obj/structure/closet/supplypod/extractionpod
+	name = "Syndicate Extraction Pod"
+	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas."
+	specialised = TRUE
+	style = STYLE_SYNDICATE
+	bluespace = TRUE
+	explosionSize = list(0,0,1,2)
+	landingDelay = 25 //Slightly longer than others
 
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM
@@ -76,7 +86,7 @@
 		return
 	style = chosenStyle
 	icon_state = POD_STYLES[chosenStyle][POD_ICON_STATE] //POD_STYLES is a 2D array we treat as a dictionary. The style represents the verticle index, with the icon state, name, and desc being stored in the horizontal indexes of the 2D array.
-	if (!adminNamed) //We dont want to name it ourselves if it has been specifically named by an admin using the centcom_podlauncher datum
+	if (!adminNamed || !specialised) //We dont want to name it ourselves if it has been specifically named by an admin using the centcom_podlauncher datum
 		name = POD_STYLES[chosenStyle][POD_NAME]
 		desc = POD_STYLES[chosenStyle][POD_DESC]
 	update_icon()
@@ -98,6 +108,28 @@
 
 /obj/structure/closet/supplypod/toggle(mob/living/user) //Supplypods shouldn't be able to be manually opened under any circumstances, as the open() proc generates supply order datums
 	return
+
+/obj/structure/closet/supplypod/proc/handleReturningClose(atom/movable/holder, returntobay)
+	opened = FALSE
+	INVOKE_ASYNC(holder, .proc/setClosed) //Use the INVOKE_ASYNC proc to call setClosed() on whatever the holder may be, without giving the atom/movable base class a setClosed() proc definition
+	for (var/atom/movable/O in get_turf(holder))
+		if (ismob(O) && !isliving(O)) //We dont want to take ghosts with us
+			continue
+		O.forceMove(holder) //Put objects inside before we close
+	var/obj/effect/temp_visual/risingPod = new /obj/effect/DPfall(get_turf(holder), src) //Make a nice animation of flying back up
+	risingPod.pixel_z = 0 //The initial value of risingPod's pixel_z is 200 because it normally comes down from a high spot
+	animate(risingPod, pixel_z = 200, time = 10, easing = LINEAR_EASING) //Animate our rising pod
+	if (returntobay)
+		holder.forceMove(bay) //Move the pod back to centcom, where it belongs
+		QDEL_IN(risingPod, 10)
+		reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
+		bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
+		open(holder, forced = TRUE)
+	else
+		reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
+		bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
+
+		QDEL_IN(risingPod, 10)
 
 /obj/structure/closet/supplypod/proc/preOpen() //Called before the open() proc. Handles anything that occurs right as the pod lands.
 	var/turf/T = get_turf(src)
@@ -176,7 +208,7 @@
 	if (style == STYLE_SEETHROUGH)
 		depart(src)
 	else
-		if(!stay_after_drop)
+		if(!stay_after_drop) // Departing should be handled manually
 			addtimer(CALLBACK(src, .proc/depart, holder), departureDelay) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/proc/depart(atom/movable/holder)
@@ -192,22 +224,17 @@
 			qdel(holder)
 
 /obj/structure/closet/supplypod/centcompod/close(atom/movable/holder) //Closes the supplypod and sends it back to centcom. Should only ever be called if the "reversing" variable is true
+	handleReturningClose(holder, TRUE)
+
+/obj/structure/closet/supplypod/extractionpod/close(atom/movable/holder) //handles closing, and returns pod - deletes itself when returned
+	to_chat(usr, "We're closing now")
 	if (!holder)
 		holder = src
-	opened = FALSE
-	INVOKE_ASYNC(holder, .proc/setClosed) //Use the INVOKE_ASYNC proc to call setClosed() on whatever the holder may be, without giving the atom/movable base class a setClosed() proc definition
-	for (var/atom/movable/O in get_turf(holder))
-		if (ismob(O) && !isliving(O)) //We dont want to take ghosts with us
-			continue
-		O.forceMove(holder) //Put objects inside before we close
-	var/obj/effect/temp_visual/risingPod = new /obj/effect/DPfall(get_turf(holder), src) //Make a nice animation of flying back up
-	risingPod.pixel_z = 0 //The initial value of risingPod's pixel_z is 200 because it normally comes down from a high spot
-	holder.forceMove(bay) //Move the pod back to centcom, where it belongs
-	animate(risingPod, pixel_z = 200, time = 10, easing = LINEAR_EASING) //Animate our rising pod
-	QDEL_IN(risingPod, 10)
-	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
-	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
-	open(holder, forced = TRUE)
+
+	if (leavingSound)
+		playsound(get_turf(holder), leavingSound, soundVolume, 0, 0)
+
+	handleReturningClose(holder, FALSE)
 
 /obj/structure/closet/supplypod/proc/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open() proc for more details
 	update_icon()
