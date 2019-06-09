@@ -33,7 +33,6 @@
 	var/has_panel_overlay = TRUE
 	var/macroresolution = 1
 	var/obj/item/reagent_containers/beaker = null
-	//These lists aren't automatically sorted, make sure you add chems in the right order.
 	var/list/dispensable_reagents = list(	
 		/datum/reagent/aluminium,
 		/datum/reagent/bromine,
