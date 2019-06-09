@@ -112,13 +112,7 @@
 	var/turf/Tloc = get_turf(src)
 	if(!locate(/obj/structure/barricade/security/holobarricade) in Tloc)
 		new /obj/structure/barricade/security/holobarricade(Tloc)
-	..()
+	do_sparks(1, TRUE, src)
+	qdel(src)
 
-/obj/structure/holobarricade
-	name = "DRAGnet teleportation field"
-	desc = "A field of bluespace energy, locking on to teleport a target."
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "dragnetfield"
-	light_range = 3
-	anchored = TRUE
 

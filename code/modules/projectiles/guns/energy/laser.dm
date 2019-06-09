@@ -10,14 +10,10 @@
 	shaded_charge = 1
 	modifystate = TRUE
 
-/obj/item/gun/energy/laser/Initialize()
-	..()
-	AddComponent(/datum/component/extralasers)
-
 /obj/item/gun/energy/laser/attackby(obj/item/I, mob/user, params)
-	..()
+	. = ..()
 	if(modifystate && istype(I, /obj/item/crowbar))
-		SEND_SIGNAL(src,COMSIG_DETACH_LENS)
+		SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY)
 		return
 
 /obj/item/gun/energy/laser/practice
@@ -159,13 +155,13 @@
 	var/overlay = "laser"
 
 /obj/item/external_lens/Initialize()
-	..()
-	add_overlay("[overlay]")
+	. = ..()
+	add_overlay(overlay)
 
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
 	if(istype(AM, /obj/item/gun/energy/laser))
-		SEND_SIGNAL(AM,COMSIG_ATTACH_LENS, stored_ammo_type,src)
+		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, src)
 		forceMove(AM)
 		return
 
@@ -226,7 +222,7 @@
 /obj/item/external_lens/scatter
 	name = "external lens: scattershot"
 	desc = "Diffusion lenses."
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/lowenergy
+	stored_ammo_type = /obj/item/ammo_casing/energy/laser/scatter/small
 	overlay = "scatter"
 
 /obj/item/external_lens/shield
@@ -237,16 +233,15 @@
 
 /datum/component/extralasers //will move it to another file when it works
 	var/obj/item/external_lens/lens
-/datum/component/extralasers/Initialize()
-	RegisterSignal(parent, COMSIG_ATTACH_LENS, .proc/attach)
-	RegisterSignal(parent, COMSIG_DETACH_LENS, .proc/detach)
+	var/obj/item/ammo_casing/energy/ammo
 
-/datum/component/extralasers/proc/attach(datum/source,var/obj/item/ammo_casing/energy/ammo, obj/item/external_lens/lenss)
-	var/shoot =  ammo
+/datum/component/extralasers/Initialize(ammo,lenss)
+	lens = lenss
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/detach)
+
+	var/obj/item/ammo_casing/energy/shoot =  ammo
 	var/obj/item/gun/energy/laser/L = parent
 	L.ammo_type  += new shoot (src)
-	lens = lenss
-	return TRUE
 
 /datum/component/extralasers/proc/detach(datum/source)
 	var/obj/item/gun/energy/laser/L = parent
