@@ -47,6 +47,7 @@
 	flavour_text = "<span class='big bold'>You are an ash walker.</span><b> Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
 	assignedrole = "Ash Walker"
+	var/datum/team/ashwalkers/team = null
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.fully_replace_character_name(null,random_unique_lizard_name(gender))
@@ -56,16 +57,20 @@
 	var/datum/language_holder/holder = new_spawn.get_language_holder()
 	holder.selected_default_language = /datum/language/draconic
 
-	ADD_TRAIT(new_spawn.mind, TRAIT_SAVAGE, JOB_TRAIT) //Full time savage
+	new_spawn.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
 
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
 
-/obj/effect/mob_spawn/human/ash_walker/Initialize(mapload)
+/obj/effect/mob_spawn/human/ash_walker/Initialize(mapload, datum/team/ashwalkers/ashteam)
 	. = ..()
 	var/area/A = get_area(src)
+	if(ashteam)
+		team = ashteam
+	else
+		team = new()
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
 
