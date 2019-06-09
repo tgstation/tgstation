@@ -1158,7 +1158,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Radio Jammer"
 	desc = "This device will disrupt any nearby outgoing radio communication when activated. Does not affect binary chat."
 	item = /obj/item/jammer
-	cost = 2
+	cost = 5
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
