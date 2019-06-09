@@ -36,9 +36,8 @@
 	payment_department = ACCOUNT_MED
 
 	// for alpha masking
-	var/datum/alpha_mask/alpha_mask
-	var/datum/alpha_mask/alpha_mask_32x32
-	var/image/alpha_masked
+	var/image/alpha_overlay
+	var/image/alpha_overlay_32x32
 	var/overlay_pixel_y = 0
 
 
@@ -46,8 +45,10 @@
 	. = ..()
 	initialize_directions = dir
 
-	alpha_mask = new(image('icons/obj/cryogenics.dmi', "pod-alpha"))
-	alpha_mask_32x32 = new(image('icons/obj/cryogenics32x32.dmi', "pod-alpha"))
+	alpha_overlay = image('icons/obj/cryogenics.dmi', "pod-alpha")
+	alpha_overlay.appearance_flags |= KEEP_TOGETHER
+	alpha_overlay_32x32 = image('icons/obj/cryogenics32x32.dmi', "pod-alpha")
+	alpha_overlay_32x32.appearance_flags |= KEEP_TOGETHER
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -119,15 +120,15 @@
 		occupant_overlay.pixel_x = occupant.pixel_x
 		overlay_pixel_y = 0
 
-		var/is32x32 = icon(occupant.icon, occupant.icon_state).Height() < 64 // anything less than 64 should get the 32 overlay
+		var/is_32x32 = icon(occupant.icon, occupant.icon_state).Height() < 64 // anything less than 64 should get the 32 overlay
 
 		if(on && !running_anim && is_operational())
 			icon_state = "pod-on"
 			running_anim = TRUE
-			run_anim(is32x32, occupant_overlay)
+			run_anim(is_32x32, occupant_overlay)
 		else
 			icon_state = "pod-off"
-			add_masked_overlay(is32x32, occupant_overlay)
+			add_masked_overlay(is_32x32, occupant_overlay)
 			add_overlay("cover-off")
 
 	else if(on && is_operational())
@@ -139,7 +140,6 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(is32x32, image/occupant_overlay, anim_up = TRUE)
 	if(!on || !occupant || !is_operational())
-		alpha_masked = null
 		running_anim = FALSE
 		return
 	cut_overlays()
@@ -153,15 +153,15 @@
 	add_overlay("cover-on")
 	addtimer(CALLBACK(src, .proc/run_anim, is32x32, occupant_overlay, anim_up), 7, TIMER_UNIQUE)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/add_masked_overlay(is32x32, image/overlay)
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/add_masked_overlay(is32x32, image/overlay) // overlay blend mode needs to be multiply
+	var/image/masked
 	if(is32x32)
-		if(!alpha_masked)
-			alpha_masked = alpha_mask_32x32.apply_to(overlay)
-		alpha_masked.pixel_y = 22 + overlay_pixel_y
+		masked = apply_alpha_mask(overlay, alpha_overlay_32x32)
+		masked.pixel_y = 22 + overlay_pixel_y
 	else
 		overlay.pixel_y = overlay_pixel_y
-		alpha_masked = alpha_mask.apply_to(overlay)
-	add_overlay(alpha_masked)
+		masked = apply_alpha_mask(overlay, alpha_overlay)
+	add_overlay(masked)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
