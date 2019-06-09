@@ -247,7 +247,7 @@
 		if(get_dist(src, I) <= 1 || I == loc)
 			found_node = I
 			break
-	return found_node
+	return get_turf(found_node)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/evolve_menu()
 	var/found_node = find_anchor()

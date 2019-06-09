@@ -1,7 +1,7 @@
 /obj/structure/infection/turret
 	name = "infection turret"
 	icon = 'icons/mob/infection/infection.dmi'
-	icon_state = "infection_turret_icon" // needed so when building you can see the type
+	icon_state = "infection_turret" // needed so when building you can see the type
 	desc = "A solid wall with a radiating material on the inside."
 	max_integrity = 150
 	point_return = 10

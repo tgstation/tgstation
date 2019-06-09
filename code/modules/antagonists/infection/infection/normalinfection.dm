@@ -57,7 +57,7 @@
 		"Upgrade Structure" = image(icon = 'icons/mob/infection/infection.dmi', icon_state = "ui_increase"),
 		"Structure Overview" = image(icon = 'icons/mob/infection/infection.dmi', icon_state = "ui_help_radial")
 	)
-	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
+	var/choice = show_radial_menu(overmind, get_turf(src), choices, tooltips = TRUE)
 	if(choice == choices[1])
 		upgrade_menu(overmind)
 	if(choice == choices[2])
@@ -351,6 +351,8 @@
 	var/obj/effect/overlay/vis/newicon = new
 	newicon.icon = I.icon
 	newicon.icon_state = I.icon_state
+	newicon.pixel_x = I.pixel_x
+	newicon.pixel_y = I.pixel_y
 	newicon.layer = layer
 	if(overmind)
 		newicon.color = overmind.infection_color

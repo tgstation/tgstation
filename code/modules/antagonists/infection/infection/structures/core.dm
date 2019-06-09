@@ -1,7 +1,7 @@
 /obj/structure/infection/core
 	name = "infection core"
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "blank_blob"
+	icon = 'icons/mob/infection/crystaline_infection_large.dmi'
+	icon_state = "crystalcore-layer"
 	layer = BELOW_OBJ_LAYER
 	pixel_x = -32
 	pixel_y = -16
