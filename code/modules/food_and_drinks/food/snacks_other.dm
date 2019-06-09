@@ -153,9 +153,9 @@
 	icon_state = "candiedapple"
 	bitesize = 3
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 3)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/caramel = 5)
 	filling_color = "#FF4500"
-	tastes = list("apple" = 2, "sweetness" = 2)
+	tastes = list("apple" = 2, "caramel" = 3)
 	foodtype = JUNKFOOD | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/mint
@@ -593,10 +593,3 @@
 	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
 	tastes = list("peaches" = 1, "tin" = 7)
-
-/obj/item/reagent_containers/food/snacks/candyapple
-	name = "Candy Apple"
-	desc = "Finally some good fricking fruit."
-	icon_state = "candyapple"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/caramel = 5)
-	tastes = list("caramel" = 5, "apple" = 3)
