@@ -1,0 +1,4 @@
+author: "Onule"
+delete-after: True
+changes: 
+  - imageadd: "New stasis bed sprites!"
