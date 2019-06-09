@@ -16,8 +16,7 @@
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
-	if(!M.can_inject(user, 1))
-		to_chat(user, "<span class='warning'>[M] does not have any exposed skin!</span>")
+	if(!M.can_inject(user, TRUE))
 		return
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
@@ -44,7 +43,7 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>[C]'s [affecting.name] can not be healed with \the [src].</span>")
 		return
-	to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
+	to_chat(user, "<span class='notice'>\The [src] won't work on a robotic limb!</span>")
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
