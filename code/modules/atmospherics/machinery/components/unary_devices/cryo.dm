@@ -46,9 +46,7 @@
 	initialize_directions = dir
 
 	alpha_overlay = image('icons/obj/cryogenics.dmi', "pod-alpha")
-	alpha_overlay.appearance_flags |= KEEP_TOGETHER
 	alpha_overlay_32x32 = image('icons/obj/cryogenics32x32.dmi', "pod-alpha")
-	alpha_overlay_32x32.appearance_flags |= KEEP_TOGETHER
 
 	radio = new(src)
 	radio.keyslot = new radio_key
