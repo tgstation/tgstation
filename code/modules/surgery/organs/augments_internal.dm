@@ -98,34 +98,24 @@
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
-	var/datum/component/redirect/listener
-	var/datum/callback/CB
+	
+	var/static/list/signalCache = list(
+		COMSIG_LIVING_STATUS_STUN,
+		COMSIG_LIVING_STATUS_KNOCKDOWN,
+		COMSIG_LIVING_STATUS_IMMOBILIZE,
+		COMSIG_LIVING_STATUS_PARALYZE,
+	)
+
 	var/stun_cap_amount = 40
 	var/working = FALSE
 
-/obj/item/organ/cyberimp/brain/anti_stun/Initialize()
-	. = ..()
-	initialize_callback()
-
-/obj/item/organ/cyberimp/brain/anti_stun/proc/initialize_callback()
-	if(CB)
-		return
-	CB = CALLBACK(src, .proc/on_signal)
-
 /obj/item/organ/cyberimp/brain/anti_stun/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
-	QDEL_NULL(listener)
+	UnregisterSignal(M, signalCache)
 
 /obj/item/organ/cyberimp/brain/anti_stun/Insert()
 	. = ..()
-	if(listener)
-		qdel(listener)
-	listener = owner.AddComponent(/datum/component/redirect, list(
-	COMSIG_LIVING_STATUS_STUN = CB,
-	COMSIG_LIVING_STATUS_KNOCKDOWN = CB,
-	COMSIG_LIVING_STATUS_IMMOBILIZE = CB,
-	COMSIG_LIVING_STATUS_PARALYZE = CB
-	))
+	RegisterSignal(owner, signalCache, .proc/on_signal)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal()
 	if(broken_cyber_organ || working)
