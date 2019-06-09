@@ -69,7 +69,7 @@
 					return 1
 			to_chat(user, "Your payment materializes onto the floor.")
 
-			hard_drive.traitor_data.contract_TC_payed_out += contract_TC_to_redeem
+			hard_drive.traitor_data.contract_TC_payed_out += hard_drive.traitor_data.contract_TC_to_redeem
 			hard_drive.traitor_data.contract_TC_to_redeem = 0
 			return 1
 

@@ -30,7 +30,6 @@
 		<p>
 			You have {{data.redeemable_tc}} to redeem. <ui-button action='PRG_redeem_TC'>Collect</ui-button>
 		</p>
-		{{data.extraction_enroute}}
 		{{#if data.ongoing_contract}}
 			<div style="text-align:center">
 				<ui-button action='PRG_call_extraction' {{#if extraction_enroute}}state="disabled"{{/if}}>Call Extraction</ui-button>
@@ -52,7 +51,7 @@
 							<td>{{target}}</td>
 							<td>{{payout}}(+{{payout_bonus}}) TC</td>
 							<td>{{dropoff}}</td>
-							<td><ui-button action='PRG_contract_abort' {{#if extraction_enroute}}state="disabled"{{/if}} params='{"contract_id": "{{id}}"}'>Cancel {{status}} {{id}}</ui-button></td>
+							<td><ui-button action='PRG_contract_abort' {{#if extraction_enroute}}state="disabled"{{/if}} params='{"contract_id": "{{id}}"}'>Cancel</ui-button></td>
 						</tr>
 					{{/if}}
 				{{else}}
@@ -61,7 +60,7 @@
 							<td>{{target}}</td>
 							<td>{{payout}}(+{{payout_bonus}}) TC</td>
 							<td>{{dropoff}}</td>
-							<td><ui-button action='PRG_contract-accept' params='{"contract_id": "{{id}}"}'>Accept {{status}} {{id}}</ui-button></td>
+							<td><ui-button action='PRG_contract-accept' params='{"contract_id": "{{id}}"}'>Accept</ui-button></td>
 						</tr>
 					{{/if}}
 				{{/if}}

@@ -5,7 +5,6 @@
 
 /datum/syndicate_contract/New(owner)
 	generate(owner)
-	RegisterSignal(src, COMSIG_CLOSET_STUFFED_INSIDE, .proc/enter_check)
 
 /datum/syndicate_contract/proc/generate(owner)
 	contract.owner = owner
