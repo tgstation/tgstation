@@ -74,9 +74,9 @@
 	log_talk(message, LOG_SAY, tag="DEAD")
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = key)
 
-/mob/proc/check_emote(message)
+/mob/proc/check_emote(message, forced)
 	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2), intentional = TRUE)
+		emote(copytext(message, 2), intentional = !forced)
 		return 1
 
 /mob/proc/hivecheck()
