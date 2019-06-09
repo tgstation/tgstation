@@ -21,6 +21,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, .proc/try_infect_impact_zone)
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
+	RegisterSignal(parent, COMSIG_GIBS_STREAK, .proc/try_infect_streak)
 
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	for(var/V in diseases)
@@ -72,6 +73,9 @@
 /datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/M)
 	if(isliving(M))
 		try_infect(M, BODY_ZONE_PRECISE_L_FOOT)
+
+/datum/component/infective/proc/try_infect_streak(datum/source, list/directions, list/output_diseases)
+	output_diseases |= diseases
 
 /datum/component/infective/proc/try_infect(mob/living/L, target_zone)
 	for(var/V in diseases)
