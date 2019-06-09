@@ -49,6 +49,7 @@
 	name = "chaos donut"
 	desc = "Like life, it never quite tastes the same."
 	bitesize = 10
+	icon_state = "donut3"
 	tastes = list("donut" = 3, "chaos" = 1)
 
 /obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
