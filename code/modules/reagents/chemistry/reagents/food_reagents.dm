@@ -730,3 +730,12 @@
 	quality = FOOD_AMAZING
 	taste_mult = 100
 	can_synth = FALSE
+
+/datum/reagent/consumable/caramel
+	name = "caramel"
+	description = "Who would have guessed that heating sugar is so delicious?"
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	color = "C65A00"
+	taste_mult = 2
+	taste_description = "bitter sweetness"
+	reagent_state = SOLID
