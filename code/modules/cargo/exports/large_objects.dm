@@ -137,5 +137,5 @@
 	worth += gases[/datum/gas/hypernoblium][MOLES]*1000
 	worth += gases[/datum/gas/miasma][MOLES]*10
 	worth += gases[/datum/gas/tritium][MOLES]*5
-	worth += gases[/datum/gas/pluoxium][MOLES]*50
+	worth += gases[/datum/gas/pluoxium][MOLES]*5
 	return worth
