@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - balance: "Charged oil explosions now look less stupid and are slightly weaker."
-  - balance: "Reworked burning oil. It no longer destroys nearby turfs but still damages mobs."

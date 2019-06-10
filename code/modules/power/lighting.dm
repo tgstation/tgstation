@@ -386,7 +386,7 @@
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
 	broken_sparks(start_only=TRUE)
-	
+
 /obj/machinery/light/update_atom_colour()
 	..()
 	update()
@@ -637,9 +637,12 @@
 			if(istype(eth_species))
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
 				if(do_after(user, 50, target = src))
-					to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
-					eth_species.adjust_charge(5)
-					return
+					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+						stomach.adjust_charge(5)
+					else
+						to_chat(H, "<span class='notice'>You can't receive charge from the [fitting].</span>")
 				return
 
 			if(H.gloves)
@@ -761,7 +764,7 @@
 	var/base_state
 	var/switchcount = 0	// number of times switched
 	materials = list(MAT_GLASS=100)
-	grind_results = list("silicon" = 5, "nitrogen" = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
+	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	var/rigged = FALSE		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
@@ -843,7 +846,7 @@
 
 		to_chat(user, "<span class='notice'>You inject the solution into \the [src].</span>")
 
-		if(S.reagents.has_reagent("plasma", 5))
+		if(S.reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
 
 			rigged = TRUE
 

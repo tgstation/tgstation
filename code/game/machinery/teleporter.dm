@@ -225,5 +225,7 @@
 		icon_state = "controller-o"
 	else if(stat & (BROKEN|NOPOWER))
 		icon_state = "controller-p"
+	else if(teleporter_console && teleporter_console.calibrating)
+		icon_state = "controller-c"
 	else
 		icon_state = "controller"

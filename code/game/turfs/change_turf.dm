@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 /turf/open/copyTurf(turf/T, copy_air = FALSE)
 	. = ..()
 	if (isopenturf(T))
-		GET_COMPONENT(slip, /datum/component/wet_floor)
+		var/datum/component/wet_floor/slip = GetComponent(/datum/component/wet_floor)
 		if(slip)
 			var/datum/component/wet_floor/WF = T.AddComponent(/datum/component/wet_floor)
 			WF.InheritComponent(slip)

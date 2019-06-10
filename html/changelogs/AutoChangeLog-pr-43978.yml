@@ -1,8 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - code_imp: "Merged tinfoil hat kind of protection into the anti_magic component."
-  - rscadd: "Tinfoil hats can also be warped up from excessive dampening of mindray/though control/psicotronic anomalies, or by simply being microwaved in an oven, and become useless."
-  - rscadd: "Immortality Talisman and Paranormal Hardsuit helmets now come with tinfoil protection too (minus the paranoia and limited charges)."
-  - balance: "Rebalanced many hivemind effects to be dampened/delayed by tinfoil shielding. Bruteforced Assimilate Vessel, One mind and Awake Vessel abilities will consume more tinfoil charges compared to others."
-  - balance: "Genetics/Slime/Alien Telepathy and Slime Link are now stopped by tinfoil protection."

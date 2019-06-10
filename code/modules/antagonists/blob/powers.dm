@@ -340,28 +340,25 @@
 	set category = "Blob"
 	set name = "Reactive Strain Adaptation (40)"
 	set desc = "Replaces your strain with a random, different one."
-	if(free_strain_rerolls || can_buy(40))
-		set_strain()
+	if(!rerolling && (free_strain_rerolls || can_buy(40)))
+		rerolling = TRUE
+		reroll_strain()
+		rerolling = FALSE
 		if(free_strain_rerolls)
 			free_strain_rerolls--
 		last_reroll_time = world.time
 
-/mob/camera/blob/proc/set_strain()
-	var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains - blobstrain.type))
-	blobstrain = new bs(src)
-	color = blobstrain.complementary_color
-	for(var/BL in GLOB.blobs)
-		var/obj/structure/blob/B = BL
-		B.update_icon()
-	for(var/BLO in blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
-		BM.update_icons() //If it's getting a new strain, tell it what it does!
-		to_chat(BM, "Your overmind's blob strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-		to_chat(BM, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
-	to_chat(src, "Your strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-	to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.description]")
-	if(blobstrain.effectdesc)
-		to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
+/mob/camera/blob/proc/reroll_strain()
+	var/list/choices = list()
+	while (length(choices) < 4)
+		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
+		choices[initial(bs.name)] = bs
+
+	var/choice = input(usr, "Please choose a new strain","Strain") as anything in choices
+	if (choice && choices[choice] && !QDELETED(src))
+		var/datum/blobstrain/bs = choices[choice]
+		set_strain(bs)
+
 
 /mob/camera/blob/verb/blob_help()
 	set category = "Blob"

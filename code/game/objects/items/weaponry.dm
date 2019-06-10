@@ -420,6 +420,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/ectoplasm/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!</span>")
 	return (OXYLOSS)
+	
+/obj/item/ectoplasm/angelic
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "angelplasm"
 
 /obj/item/mounted_chainsaw
 	name = "mounted chainsaw"
@@ -469,6 +473,20 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "hippocrates bust"
 	desc = "A bust of the famous Greek physician Hippocrates of Kos, often referred to as the father of western medicine."
 	icon_state = "hippocratic"
+
+/obj/item/statuebust/attack_self(mob/living/user)
+	add_fingerprint(user)
+	user.examinate(src)
+
+/obj/item/statuebust/examine(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	if (!isliving(user))
+		return
+	user.visible_message("[user] stops to admire [src].", \
+						 "<span class='notice'>You take in [src], admiring its fine craftsmanship.</span>")
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
 
 /obj/item/tailclub
 	name = "tail club"
