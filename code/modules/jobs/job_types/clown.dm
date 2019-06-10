@@ -38,7 +38,7 @@
 		/obj/item/reagent_containers/spray/waterflower = 1,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
 		/obj/item/instrument/bikehorn = 1,
-		)
+	)
 
 	implants = list(/obj/item/implant/sad_trombone)
 
@@ -57,3 +57,8 @@
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
 	H.dna.add_mutation(CLOWNMUT)
+
+	if(prob(20))	//20% chance the clown spawns with a single bananium sheet.
+		var/obj/item/stack/sheet/mineral/bananium/clowngold = new()
+		H.equip_to_slot_or_del(clowngold, SLOT_IN_BACKPACK)
+		to_chat(H, "<span class='nicegreen'>Your [H.back] feels heavier than usual.</span>")
