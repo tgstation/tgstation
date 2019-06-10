@@ -615,7 +615,7 @@
 	name = "Living nightmares"
 	desc = "The target's fears break out and attack them."
 	range = 7
-	charge_max = 3000
+	charge_max = 2400
 	action_icon_state = "nightmare"
 
 /obj/effect/proc_holder/spell/target_hive/nightmare/cast(list/targets, mob/living/user = usr)
@@ -630,7 +630,7 @@
 		if(!do_after(user, 30, FALSE, user) || !(target in view(range)))
 			to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 			return
-	target.apply_status_effect(STATUS_EFFECT_HIVEMIND_CURSE, CURSE_SPAWNING | CURSE_GRASPING)
+	target.apply_status_effect(STATUS_EFFECT_HIVEMIND_CURSE, CURSE_SPAWNING)
 	to_chat(user, "<span class='notice'>We have brought forth the targets nightmares!</span>")
 	deadchat_broadcast("<span class='deadsay'><span class='name'>[target]</span> is suffering mysterious nightmares!</span>", target)
 
