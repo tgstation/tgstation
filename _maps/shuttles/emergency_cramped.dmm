@@ -54,6 +54,7 @@
 "k" = (
 /obj/machinery/door/airlock/survival_pod,
 /obj/docking_port/mobile{
+	dir = 4;
 	dwidth = 3;
 	height = 5;
 	name = "Secure Transport Vessel 5";
