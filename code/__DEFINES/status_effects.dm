@@ -98,6 +98,7 @@
 #define STATUS_EFFECT_STASIS /datum/status_effect/incapacitating/stasis //Halts biological functions like bleeding, chemical processing, blood regeneration, walking, etc
 
 #define STATUS_EFFECT_LASERWEAK /datum/status_effect/laserweak //30%  more laser damage
+
 /////////////
 // NEUTRAL //
 /////////////

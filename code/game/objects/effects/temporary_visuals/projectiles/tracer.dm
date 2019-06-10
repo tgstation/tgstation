@@ -66,3 +66,6 @@
 
 /obj/effect/projectile/tracer/wormhole
 	icon_state = "wormhole_g"
+
+/obj/effect/projectile/tracer/solar
+	icon_state = "tracer_solar"

@@ -209,7 +209,7 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	damage = 10
 	jitter = 10
 	stutter = 10
-//	impact_effect_type = /obj/effect/temp_visual/impact_effect/impact_blue
+	hitsound = 'sound/weapons/wave.ogg'
 	light_color = LIGHT_COLOR_CYAN
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = /obj/effect/projectile/tracer/stun
@@ -228,6 +228,7 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	icon_state = "bitcoin"
 	damage = 0
 	nodamage = TRUE
+	hitsound = 'sound/weapons/cash.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 	tracer_type = /obj/effect/projectile/tracer/xray
@@ -239,19 +240,19 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/card/id/C = H.get_idcard(TRUE)
-		if(C && C.registered_account && !(C.registered_account.account_balance == 0))
-			C.registered_account.adjust_money(max(-100, C.registered_account.account_balance * -1))
+		if(C && C.registered_account && !(C.registered_account.account_balance < 50))
+			C.registered_account.adjust_money(-50)
 			to_chat(H, "<span class='danger'>Your wallet feels lighter!</span>")
 			if(ishuman(firer))
 				var/mob/living/carbon/human/FH = firer
 				var/obj/item/card/id/FC = FH.get_idcard(TRUE)
 				if(FC && FC.registered_account)
-					FC.registered_account.adjust_money(min(100, FC.registered_account.account_balance))
-					to_chat(FH, "<span class='notice'>Your wallet has received 100 credits.</span>")
+					FC.registered_account.adjust_money(50)
+					to_chat(FH, "<span class='notice'>Your wallet has received 50 credits.</span>")
 			else
 				var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
 				if(D)
-					D.adjust_money(100)
+					D.adjust_money(50)
 		else
 			H.adjustStaminaLoss(40)
 			to_chat(H, "<span class='danger'>You feel your energy itself being turned into cryptocurrency!</span>")
@@ -263,9 +264,9 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	irradiate = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_CYAN
-//	tracer_type = /obj/effect/projectile/tracer/solar
-//	muzzle_type = /obj/effect/projectile/muzzle/solar
-//	impact_type = /obj/effect/projectile/impact/solar
+	tracer_type = /obj/effect/projectile/tracer/solar
+	muzzle_type = /obj/effect/projectile/muzzle/solar
+	impact_type = /obj/effect/projectile/impact/solar
 
 /obj/item/projectile/beam/tracer/on_hit(atom/target)
 	. = ..()
@@ -318,6 +319,7 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	ricochet_chance = 100
 	reflectable = REFLECT_MAX
 	damage = 15
+	hitsound = 'sound/weapons/pulse3.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_ORANGE
 	tracer_type = /obj/effect/projectile/tracer/xray

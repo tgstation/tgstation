@@ -140,6 +140,9 @@
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
 
+
+//////////////EXTERNAL LENS////////////////////////////
+
 /obj/item/external_lens
 	name = "external lens"
 	icon_state = "external"
@@ -170,7 +173,7 @@
 
 /obj/item/external_lens/ricochet
 	name = "external lens: bouncing ray"
-	desc = "By making the laser pass through an high density gas its able to create a small ball of hot plasma with high elasticity"
+	desc = "By making the laser pass through an high density gas its able to create a small ball of hot plasma with high elasticity."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/rico
 	overlay = "ricochet"
 
@@ -200,12 +203,13 @@
 
 /obj/item/external_lens/incendiary
 	name = "external lens: incendiary ray"
+	desc = "Heats up whatever it hits, causing them to burst into fire."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/incendiary
 	overlay = "incendiary"
 
 /obj/item/external_lens/heavy
-	name = "external lens: heavy plasma bolt"
-	desc = "Heats up whatever it hits, causing them to burst into fire."
+	name = "external lens: heavy bolt"
+	desc = "Highly concentrated lasers that might break walls or doors."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/heavy
 	icon_state = "external_heavy"
 	overlay = "heavy"
@@ -227,29 +231,3 @@
 	desc = "Projects holobarricades which temporary absorb projectiles, watch out as even your target might use them as cover."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/shield
 	overlay = "shield"
-
-/datum/component/extralasers //will move it to another file when it works
-	var/obj/item/external_lens/lens
-	var/obj/item/ammo_casing/energy/laser/ammo
-
-/datum/component/extralasers/Initialize(ammo,lenss)
-	lens = lenss
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/detach)
-
-	var/obj/item/ammo_casing/energy/laser/shoot =  ammo
-	var/obj/item/gun/energy/laser/L = parent
-	L.ammo_type  += new shoot (src)
-
-/datum/component/extralasers/proc/detach(datum/source, obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		var/obj/item/gun/energy/laser/L = parent
-		L.chambered = null
-		var/obj/item/ammo_casing/energy/R = LAZYACCESS(L.ammo_type, L.ammo_type.len)
-		LAZYREMOVE(L.ammo_type, R)
-		L.select_fire(user)
-		L.recharge_newshot()
-		lens.forceMove(user.loc)
-		L.update_icon(TRUE)
-		L.modifystate = FALSE
-		RemoveComponent()
-		return TRUE

@@ -324,9 +324,3 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
 
-//laser gun stuff
-#define CONSIG_SYPHON "syphon"			//used when the laser has syphoning lens equipped
-
-#define COMSIG_ATTACH_LENS "attach"
-#define COMSIG_DETACH_LENS "detach"
-

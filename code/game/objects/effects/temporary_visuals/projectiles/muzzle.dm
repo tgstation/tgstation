@@ -28,3 +28,6 @@
 
 /obj/effect/projectile/muzzle/wormhole
 	icon_state = "wormhole_g"
+
+/obj/effect/projectile/muzzle/solar
+	icon_state = "muzzle_solar"
