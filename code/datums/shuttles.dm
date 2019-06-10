@@ -171,11 +171,11 @@
 	name = "Backup Shuttle"
 	can_be_bought = FALSE
 
-/datum/map_template/shuttle/emergency/airless
-	suffix = "airless"
+/datum/map_template/shuttle/emergency/construction
+	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
-	admin_notes = "No brig, no medical facilities, no air."
+	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
+	admin_notes = "No brig, no medical facilities, no shuttle console."
 	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/airless/prerequisites_met()
