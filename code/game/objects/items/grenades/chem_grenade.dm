@@ -54,6 +54,15 @@
 			..()
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		if(stage == READY && !nadeassembly && !active)
+			var/newtime = text2num(stripped_input(user, "Please enter a new detonation time", name))
+			if (newtime != null && user.canUseTopic(src, BE_CLOSE))
+				change_det_time(newtime)
+				to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
+				if (round(newtime * 10) != det_time)
+					to_chat(user, "<span class='warning'>The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible.</span>")
+		return
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stage == WIRED)
 			if(beakers.len)
@@ -62,12 +71,12 @@
 				I.play_tool_sound(src, 25)
 			else
 				to_chat(user, "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>")
-		else if(stage == READY && !nadeassembly)
-			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
+		else if(stage == READY && !nadeassembly && !active)
+			change_det_time()
 			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 		else if(stage == EMPTY)
 			to_chat(user, "<span class='warning'>You need to add an activation mechanism!</span>")
-
+		return
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
 		. = TRUE //no afterattack
 		if(is_type_in_list(I, banned_containers))
@@ -278,16 +287,14 @@
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		switch(unit_spread)
-			if(0 to 24)
-				unit_spread += 5
-			if(25 to 99)
-				unit_spread += 25
-			else
-				unit_spread = 5
-		to_chat(user, "<span class='notice'> You set the time release to [unit_spread] units per detonation.</span>")
-		return
+	if(I.tool_behaviour == TOOL_MULTITOOL && !active)
+		var/newspread = text2num(stripped_input(user, "Please enter a new spread amount", name))
+		if (newspread != null && user.canUseTopic(src, BE_CLOSE))
+			newspread = round(newspread)
+			unit_spread = CLAMP(newspread, 5, 100)
+			to_chat(user, "<span class='notice'>You set the time release to [unit_spread] units per detonation.</span>")
+		if (newspread != unit_spread)
+			to_chat(user, "<span class='notice'>The new value is out of bounds. Minimum spread is 5 units, maximum is 100 units.</span>")
 	..()
 
 /obj/item/grenade/chem_grenade/adv_release/prime()

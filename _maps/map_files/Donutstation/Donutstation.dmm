@@ -1571,12 +1571,6 @@
 /obj/structure/window/reinforced,
 /turf/open/space/basic,
 /area/space/nearstation)
-"aei" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
 "aej" = (
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
@@ -50739,9 +50733,9 @@
 /turf/open/floor/plasteel,
 /area/medical/cryo)
 "csr" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/server{
 	dir = 4;
-	pixel_x = -23
+	pixel_x = -22
 	},
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
@@ -82553,13 +82547,13 @@ bkQ
 avi
 adO
 ako
-aei
-aei
-aei
-aei
-aei
-aei
-aei
+adP
+adP
+adP
+adP
+adP
+adP
+adP
 bkX
 cIZ
 gst
@@ -83066,7 +83060,7 @@ avi
 avi
 avi
 adP
-aei
+adP
 aej
 auk
 auy

@@ -1,0 +1,4 @@
+author: "AnturK"
+delete-after: True
+changes: 
+  - rscadd: "Hourglasses now available in library game vending machine."
