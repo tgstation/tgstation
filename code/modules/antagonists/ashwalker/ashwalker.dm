@@ -25,6 +25,8 @@
 	var/datum/team/ashwalkers/ashies = team
 	if(istype(ashies) && ashies.tendril)
 		explanation_text = "Protect \the [ashies.tendril] at all costs."
+	else
+		explanation_text = "Protect the tendril at all costs."
 
 /datum/objective/nest/check_completion()
 	var/datum/team/ashwalkers/ashies = team
