@@ -274,7 +274,7 @@
 
 /datum/mutation/human/badblink/on_life()
 	if(prob(warpchance))
-		var/warpmessage = pick-
+		var/warpmessage = pick(
 		"<span class='warning'>With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air.</span>",
 		"<span class='warning'>[owner] does some sort of strange backflip into another dimension. It looks pretty painful.</span>",
 		"<span class='warning'>[owner] does a jump to the left, a step to the right, and warps out of reality.</span>",
