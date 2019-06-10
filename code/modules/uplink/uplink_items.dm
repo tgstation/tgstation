@@ -42,6 +42,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 				create_uplink_sales(10, "Limited Stock Team Gear", 1, sale_items, filtered_uplink_items)
 				nuclear_team.team_discounts = list("Discounted Team Gear" = filtered_uplink_items["Discounted Team Gear"], "Limited Stock Team Gear" = filtered_uplink_items["Limited Stock Team Gear"])
 			else
+				for(var/cat in nuclear_team.team_discounts)
+					for(var/item in nuclear_team.team_discounts[cat])
+						var/datum/uplink_item/D = nuclear_team.team_discounts[cat][item]
+						var/datum/uplink_item/O = filtered_uplink_items[initial(D.category)][initial(D.name)]
+						O.refundable = FALSE
+
 				filtered_uplink_items["Discounted Team Gear"] = nuclear_team.team_discounts["Discounted Team Gear"]
 				filtered_uplink_items["Limited Stock Team Gear"] = nuclear_team.team_discounts["Limited Stock Team Gear"]
 
@@ -1121,7 +1127,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Useful for disrupting headsets, cameras, doors, lockers and borgs during stealth operations. \
 			Attacking a target with this flashlight will direct an EM pulse at it and consumes a charge."
 	item = /obj/item/flashlight/emp
-	cost = 2
+	cost = 4
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/mulligan

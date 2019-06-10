@@ -75,9 +75,13 @@ SUBSYSTEM_DEF(vote)
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
 					if(C.prefs.preferred_map)
-						choices[C.prefs.preferred_map] += 1
-					else
-						choices[global.config.defaultmap.map_name] += 1
+						var/preferred_map = C.prefs.preferred_map
+						choices[preferred_map] += 1
+						greatest_votes = max(greatest_votes, choices[preferred_map])
+					else if(global.config.defaultmap)
+						var/default_map = global.config.defaultmap.map_name
+						choices[default_map] += 1
+						greatest_votes = max(greatest_votes, choices[default_map])
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)

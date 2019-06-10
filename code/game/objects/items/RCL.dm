@@ -20,8 +20,8 @@
 	var/ghetto = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	var/datum/component/mobhook
 	var/datum/radial_menu/persistent/wiring_gui_menu
+	var/mob/listeningTo
 
 /obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -86,7 +86,7 @@
 /obj/item/twohanded/rcl/Destroy()
 	QDEL_NULL(loaded)
 	last = null
-	QDEL_NULL(mobhook)
+	listeningTo = null
 	QDEL_NULL(wiring_gui_menu)
 	return ..()
 
@@ -130,9 +130,8 @@
 
 /obj/item/twohanded/rcl/dropped(mob/wearer)
 	..()
-	if(mobhook)
-		active = FALSE
-		QDEL_NULL(mobhook)
+	UnregisterSignal(wearer, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	last = null
 	QDEL_NULL(wiring_gui_menu)
 
@@ -148,14 +147,12 @@
 				break
 
 /obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
-	if(to_hook)
-		if(mobhook && mobhook.parent != to_hook)
-			QDEL_NULL(mobhook)
-		if (!mobhook)
-			mobhook = to_hook.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/trigger)))
-	else
-		QDEL_NULL(mobhook)
-
+	if(listeningTo == to_hook)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(listeningTo, COMSIG_MOVABLE_MOVED, .proc/trigger)
+	listeningTo = to_hook
 
 /obj/item/twohanded/rcl/proc/trigger(mob/user)
 	if(active)
