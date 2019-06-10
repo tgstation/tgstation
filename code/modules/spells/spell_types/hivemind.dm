@@ -387,7 +387,6 @@
 		else
 			backseat.mind.transfer_to(vessel,1)
 	vessel.visible_message("<span class='danger'>[src] suddenly wakes up, as though he was under foreign control!</span>")
-	vessel.Paralyze(3)
 	vessel.Jitter(3)
 	message_admins("[ADMIN_LOOKUPFLW(vessel)] is no longer being controlled by [ADMIN_LOOKUPFLW(original_body)] (Hivemind Host).")
 	log_game("[key_name(vessel)] was released from Mind Control by [key_name(original_body)].")
