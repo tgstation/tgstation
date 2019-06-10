@@ -291,14 +291,23 @@
 					/obj/item/external_lens/stealth,
 					/obj/item/external_lens/incendiary,
 					/obj/item/external_lens/heavy,
-					/obj/item/external_lens/economic)
+					/obj/item/external_lens/scatter,
+					/obj/item/external_lens/economic,
+					/obj/item/external_lens/shield)
 	crate_name = "external lens crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+	var/max = 7
 
 /datum/supply_pack/security/assorted_lens/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 6)
+	for(var/i in 1 to max)
 		var/item = pick(contains)
 		new item(C)
+
+/datum/supply_pack/security/assorted_lens/small
+	name = "Single external lens Crate"
+	desc = "Contains a random external lens part."
+	small_item = TRUE
+	max = 1
 
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
