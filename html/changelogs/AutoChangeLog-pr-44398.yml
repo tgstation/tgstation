@@ -1,4 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - rscadd: "suit sensors are now randomized when caught in an EMP"
