@@ -8,13 +8,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
-	modifystate = TRUE
-
-/obj/item/gun/energy/laser/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	if(modifystate && istype(I, /obj/item/crowbar))
-		SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY)
-		return
+	modifystate = FALSE
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -161,9 +155,12 @@
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
 	if(istype(AM, /obj/item/gun/energy/laser))
-		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, src)
-		forceMove(AM)
-		return
+		var/obj/item/gun/energy/laser/L = AM
+		if(!L.modifystate)
+			L.AddComponent(/datum/component/extralasers, stored_ammo_type, src)
+			forceMove(L)
+			L.modifystate = TRUE
+			return
 
 /obj/item/external_lens/bitcoin
 	name = "external lens: ticket dispenser"
@@ -233,23 +230,26 @@
 
 /datum/component/extralasers //will move it to another file when it works
 	var/obj/item/external_lens/lens
-	var/obj/item/ammo_casing/energy/ammo
+	var/obj/item/ammo_casing/energy/laser/ammo
 
 /datum/component/extralasers/Initialize(ammo,lenss)
 	lens = lenss
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/detach)
 
-	var/obj/item/ammo_casing/energy/shoot =  ammo
+	var/obj/item/ammo_casing/energy/laser/shoot =  ammo
 	var/obj/item/gun/energy/laser/L = parent
 	L.ammo_type  += new shoot (src)
 
-/datum/component/extralasers/proc/detach(datum/source)
-	var/obj/item/gun/energy/laser/L = parent
-	L.select = 1
-	L.chambered = null
-	var/obj/item/ammo_casing/energy/R = LAZYACCESS(L.ammo_type, 2)
-	LAZYREMOVE(L.ammo_type, R)
-	L.recharge_newshot()
-	L.update_icon()
-	qdel(lens)
-	return TRUE
+/datum/component/extralasers/proc/detach(datum/source, obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_CROWBAR)
+		var/obj/item/gun/energy/laser/L = parent
+		L.chambered = null
+		var/obj/item/ammo_casing/energy/R = LAZYACCESS(L.ammo_type, L.ammo_type.len)
+		LAZYREMOVE(L.ammo_type, R)
+		L.select_fire(user)
+		L.recharge_newshot()
+		lens.forceMove(user.loc)
+		L.update_icon(TRUE)
+		L.modifystate = FALSE
+		RemoveComponent()
+		return TRUE

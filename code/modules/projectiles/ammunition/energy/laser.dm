@@ -132,6 +132,7 @@
 
 /obj/item/ammo_casing/energy/laser/scatter/small
 	projectile_type = /obj/item/projectile/beam/lowenergy
-	pellets = 6
-	variance = 35
+	e_cost = 120
+	pellets = 5
+	variance = 50
 	select_name = "scatter"
