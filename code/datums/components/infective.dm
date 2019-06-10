@@ -12,16 +12,22 @@
 	if(expire_in)
 		expire_time = world.time + expire_in
 		QDEL_IN(src, expire_in)
+	
+	if(!ismovableatom(parent))
+		return COMPONENT_INCOMPATIBLE
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/try_infect_collide)
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/try_infect_crossed)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, .proc/try_infect_attack_zone)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_infect_attack)
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/try_infect_equipped)
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, .proc/try_infect_impact_zone)
-	RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
-	RegisterSignal(parent, COMSIG_GIBS_STREAK, .proc/try_infect_streak)
+	if(isitem(parent))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, .proc/try_infect_attack_zone)
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_infect_attack)
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/try_infect_equipped)
+		if(istype(parent, /obj/item/reagent_containers/food/snacks))
+			RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
+	else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
+		RegisterSignal(parent, COMSIG_GIBS_STREAK, .proc/try_infect_streak)
 
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	for(var/V in diseases)
