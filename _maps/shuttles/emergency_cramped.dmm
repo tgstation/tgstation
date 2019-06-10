@@ -131,6 +131,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
+"x" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -201,7 +205,7 @@ a
 a
 j
 a
-a
+x
 b
 b
 b
