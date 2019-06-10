@@ -5,7 +5,7 @@
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
 	flags_1 = CONDUCT_1
-	flags_2 = SURGICAL_TOOL_2
+	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
 
 
@@ -15,7 +15,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
-	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 
@@ -27,7 +26,7 @@
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
 	flags_1 = CONDUCT_1
-	flags_2 = SURGICAL_TOOL_2
+	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "pinched")
 
@@ -38,7 +37,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
-	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
@@ -51,7 +49,7 @@
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
 	flags_1 = CONDUCT_1
-	flags_2 = SURGICAL_TOOL_2
+	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("burnt")
 
@@ -62,7 +60,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
-	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("burnt")
@@ -78,7 +75,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
 	flags_1 = CONDUCT_1
-	flags_2 = SURGICAL_TOOL_2
+	item_flags = SURGICAL_TOOL
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("drilled")
@@ -91,7 +88,6 @@
 	icon_state = "drill"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
@@ -106,7 +102,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	flags_1 = CONDUCT_1
-	flags_2 = SURGICAL_TOOL_2
+	item_flags = SURGICAL_TOOL
+
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -126,7 +123,6 @@
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
-	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -153,7 +149,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	throwhitsound =  'sound/weapons/pierce.ogg'
 	flags_1 = CONDUCT_1
-	flags_2 = SURGICAL_TOOL_2
+	item_flags = SURGICAL_TOOL
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 9
@@ -174,7 +170,6 @@
 	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	throwhitsound =  'sound/weapons/pierce.ogg'
-	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 9
@@ -202,7 +197,7 @@
 	desc = "A container for holding body parts."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
-	flags_2 = SURGICAL_TOOL_2
+	item_flags = SURGICAL_TOOL
 
 /obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
 	. = ..()
