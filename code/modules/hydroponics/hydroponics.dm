@@ -602,6 +602,11 @@
 		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/pestkiller) * 0.5))
 		adjustPests(-rand(1,2))
 
+	//Nicotine is used as a pesticide IRL.
+	if(S.has_reagent(/datum/reagent/drug/nicotine, 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/drug/nicotine)))
+		adjustPests(-rand(1,2))
+
 	// Healing
 	if(S.has_reagent(/datum/reagent/medicine/cryoxadone, 1))
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/medicine/cryoxadone) * 3))
