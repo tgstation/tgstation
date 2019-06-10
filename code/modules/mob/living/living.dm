@@ -1331,3 +1331,10 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
+
+
+/mob/living/verb/heal()
+	set name = "Heal"
+	set category = "IC"
+	set desc = "Heals you"
+	fully_heal()
