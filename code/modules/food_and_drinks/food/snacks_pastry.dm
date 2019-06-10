@@ -48,6 +48,7 @@
 /obj/item/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
 	desc = "Like life, it never quite tastes the same."
+	icon_state = "donut3"
 	bitesize = 10
 	tastes = list("donut" = 3, "chaos" = 1)
 
@@ -88,6 +89,7 @@
 /obj/item/reagent_containers/food/snacks/donut/meat
 	bonus_reagents = list("ketchup" = 1)
 	list_reagents = list("nutriment" = 3, "ketchup" = 2)
+	icon_state = "donut4"
 	tastes = list("meat" = 1)
 	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
 
