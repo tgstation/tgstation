@@ -38,7 +38,7 @@
 		/obj/item/reagent_containers/spray/waterflower = 1,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
 		/obj/item/instrument/bikehorn = 1,
-	)
+		)
 
 	implants = list(/obj/item/implant/sad_trombone)
 
