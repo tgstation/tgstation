@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - rscadd: "Nicotine now kills pest and add toxicity when added to a plant tray."
