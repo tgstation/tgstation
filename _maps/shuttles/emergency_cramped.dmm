@@ -1,17 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "c" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/survival_pod,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "d" = (
 /turf/open/floor/plasteel/dark,
@@ -51,33 +48,28 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "j" = (
-/obj/machinery/status_display/evac,
+/obj/effect/spawner/structure/window/plastitanium,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "k" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
+/obj/machinery/door/airlock/survival_pod,
+/obj/docking_port/mobile{
 	dwidth = 3;
 	height = 5;
 	name = "Secure Transport Vessel 5";
 	width = 14
 	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"l" = (
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "m" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "n" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "o" = (
 /obj/structure/closet/crate,
@@ -86,17 +78,15 @@
 	name = "8maintenance loot spawner"
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "p" = (
 /obj/structure/closet/crate/secure/loot,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "q" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
+/obj/machinery/door/airlock/survival_pod,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "r" = (
@@ -106,7 +96,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "s" = (
 /obj/structure/chair/comfy/shuttle{
@@ -115,7 +105,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -30
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "t" = (
 /obj/structure/window/reinforced{
@@ -133,13 +123,13 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "w" = (
 /obj/structure/closet/crate/secure/weapon,
 /obj/effect/spawner/lootdrop/armory_contraband,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -154,7 +144,7 @@ b
 a
 q
 a
-q
+c
 a
 a
 "}
@@ -162,15 +152,15 @@ a
 b
 d
 g
-l
+d
 n
 n
 n
 n
 n
-l
+d
 s
-l
+d
 t
 u
 "}
@@ -178,15 +168,15 @@ u
 b
 e
 h
-l
-l
-l
-l
-l
-l
-l
-l
-l
+d
+d
+d
+d
+d
+d
+d
+d
+d
 t
 u
 "}
