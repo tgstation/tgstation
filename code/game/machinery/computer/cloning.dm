@@ -62,8 +62,8 @@
 			else if(!. && pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
 				. = pod
 
-/proc/grow_clone_from_record(obj/machinery/clonepod/pod, datum/data/record/R)
-	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mindref"], R.fields["last_death"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"])
+/proc/grow_clone_from_record(obj/machinery/clonepod/pod, datum/data/record/R, empty)
+	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mindref"], R.fields["last_death"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"], empty)
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
@@ -239,7 +239,7 @@
 				dat += "<font class='bad'>Record not found.</font>"
 			else
 				dat += "<h4>[active_record.fields["name"]]</h4>"
-				dat += "Scan ID [active_record.fields["id"]] <a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a><br>"
+				dat += "Scan ID [active_record.fields["id"]] <a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a> <a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]];empty=TRUE'>Empty Clone</a><br>"
 
 				var/obj/item/implant/health/H = locate(active_record.fields["imp"])
 
@@ -461,6 +461,7 @@
 
 	else if (href_list["clone"])
 		var/datum/data/record/C = find_record("id", href_list["clone"], records)
+		var/empty = href_list["empty"]
 		//Look for that player! They better be dead!
 		if(C)
 			var/obj/machinery/clonepod/pod = GetAvailablePod()
@@ -472,14 +473,14 @@
 			else if(!pod)
 				temp = "<font class='bad'>No Clonepods available.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(!CONFIG_GET(flag/revival_cloning))
+			else if(!CONFIG_GET(flag/revival_cloning) && !empty)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod.occupant)
 				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else
-				var/result = grow_clone_from_record(pod, C)
+				var/result = grow_clone_from_record(pod, C, empty)
 				if(result & CLONING_SUCCESS)
 					temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -487,7 +488,10 @@
 						active_record = null
 					menu = 1
 					success = TRUE
-					log_cloning("[key_name(usr)] initiated cloning of [key_name(C.fields["mindref"])] via [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
+					if(!empty)
+						log_cloning("[key_name(usr)] initiated cloning of [key_name(C.fields["mindref"])] via [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
+					else
+						log_cloning("[key_name(usr)] initiated EMPTY cloning of [key_name(C.fields["mindref"])] via [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 				if(result &	CLONING_DELETE_RECORD)
 					if(active_record == C)
 						active_record = null
