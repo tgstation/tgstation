@@ -113,6 +113,7 @@
 #include "code\__HELPERS\areas.dm"
 #include "code\__HELPERS\AStar.dm"
 #include "code\__HELPERS\cmp.dm"
+#include "code\__HELPERS\config.dm"
 #include "code\__HELPERS\dates.dm"
 #include "code\__HELPERS\dna.dm"
 #include "code\__HELPERS\files.dm"
