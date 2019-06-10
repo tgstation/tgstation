@@ -36,3 +36,6 @@
 
 /obj/effect/projectile/impact/wormhole
 	icon_state = "wormhole_g"
+
+/obj/effect/projectile/impact/solar
+	icon_state = "impact_solar"
