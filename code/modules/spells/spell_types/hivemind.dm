@@ -888,7 +888,7 @@
 /obj/effect/forcefield/wizard/hive
 	name = "Telekinetic Field"
 	desc = "You think, therefore it is."
-	timeleft = 150
+	timeleft = 300
 	pixel_x = -32 //Centres the 96x96 sprite
 	pixel_y = -32
 	icon = 'icons/effects/96x96.dmi'
