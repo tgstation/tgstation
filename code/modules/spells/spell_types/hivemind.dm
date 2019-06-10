@@ -194,7 +194,7 @@
 		return
 	to_chat(user, "<span class='notice'>We begin increasing the psionic bandwidth between ourself and the vessel!</span>")
 	if(do_after(user,10,0,user))
-		var/power = (120-get_dist(user, target))/120
+		var/power = max((120-get_dist(user, target))/120,0)
 		if(target.anti_magic_check(FALSE, FALSE, TRUE))
 			power *= 0.5
 		if(user.z == target.z)
