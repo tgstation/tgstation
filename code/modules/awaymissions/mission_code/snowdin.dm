@@ -150,7 +150,7 @@
 //liquid plasma!!!!!!//
 
 /turf/open/floor/plasteel/dark/snowdin
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = 1
 	temperature = 180
 
@@ -603,14 +603,6 @@
 	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
 
-/datum/outfit/vr/snowtide
-	name = "Snowdin Outfit"
-	shoes = /obj/item/clothing/shoes/winterboots
-	suit = /obj/item/clothing/suit/hooded/wintercoat
-	back = /obj/item/storage/backpack
-	mask = /obj/item/clothing/mask/breath
-	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
-	internals_slot = SLOT_R_STORE
 
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE
@@ -671,6 +663,3 @@
 
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
-
-/obj/effect/landmark/vr_spawn/snowdin
-	vr_outfit = /datum/outfit/vr/snowtide

@@ -275,5 +275,4 @@
 		for(var/X in components)
 			var/obj/item/I = X
 			I.forceMove(loc)
-
 	..()

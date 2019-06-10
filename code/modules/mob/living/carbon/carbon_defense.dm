@@ -35,31 +35,42 @@
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return TRUE
 
-/mob/living/carbon/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
-	if(check_glasses && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
-		return TRUE
+/mob/living/carbon/is_eyes_covered(check_glasses = TRUE, check_head = TRUE, check_mask = TRUE)
 	if(check_head && head && (head.flags_cover & HEADCOVERSEYES))
-		return TRUE
-	if(check_mask && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
-		return TRUE
+		return head
+	if(check_mask && wear_mask && (wear_mask.flags_cover & MASKCOVERSEYES))
+		return wear_mask
+	if(check_glasses && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
+		return glasses
 
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 
-/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
+	. = FALSE
+	if(!skip_throw_mode_check && !in_throw_mode)
+		return
+	if(get_active_held_item())
+		return
+	if(!(mobility_flags & MOBILITY_MOVE))
+		return
+	if(restrained())
+		return
+	return TRUE
+
+/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(!skipcatch)	//ugly, but easy
-		if(in_throw_mode && !get_active_held_item())	//empty active hand and we're in throw mode
-			if((mobility_flags & MOBILITY_MOVE) && !restrained())
-				if(istype(AM, /obj/item))
-					var/obj/item/I = AM
-					if(isturf(I.loc))
-						I.attack_hand(src)
-						if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-							visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
-							throw_mode_off()
-							return 1
+		if(can_catch_item())
+			if(istype(AM, /obj/item))
+				var/obj/item/I = AM
+				if(isturf(I.loc))
+					I.attack_hand(src)
+					if(get_active_held_item() == I) //if our attack_hand() picks up the item...
+						visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
+						throw_mode_off()
+						return 1
 	..()
 
 
@@ -82,7 +93,9 @@
 				add_splatter_floor(location)
 				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
-
+					if(ishuman(user))
+						var/mob/living/carbon/human/dirtyboy = user
+						dirtyboy.adjust_hygiene(-10)
 				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
@@ -118,9 +131,9 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-	if(!(mobility_flags & MOBILITY_STAND) && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
-			for(var/datum/surgery/S in surgeries)
+	for(var/datum/surgery/S in surgeries)
+		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
+			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 				if(S.next_step(user, user.a_intent))
 					return 1
 	return 0
@@ -210,17 +223,17 @@
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
-	if(has_trait(TRAIT_SHOCKIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
-	if(reagents.has_reagent("teslium"))
+	if(reagents.has_reagent(/datum/reagent/teslium))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	if(illusion)
 		adjustStaminaLoss(shock_damage)
@@ -231,6 +244,12 @@
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack.</span>" \
 		)
+	if(iscarbon(pulling) && !illusion && source != pulling)
+		var/mob/living/carbon/C = pulling
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
+	if(iscarbon(pulledby) && !illusion && source != pulledby)
+		var/mob/living/carbon/C = pulledby
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
@@ -252,7 +271,7 @@
 
 	if(!(mobility_flags & MOBILITY_STAND))
 		if(buckled)
-			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
+			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
 			return
 		M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 						"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
@@ -260,6 +279,14 @@
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
+			var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+			if (mood.sanity >= SANITY_GREAT)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+			else if (mood.sanity >= SANITY_DISTURBED)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
+		for(var/datum/brain_trauma/trauma in M.get_traumas())
+			trauma.on_hug(M, src)
 	AdjustStun(-60)
 	AdjustKnockdown(-60)
 	AdjustUnconscious(-60)
@@ -272,13 +299,16 @@
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	if(NOFLASH in dna?.species?.species_traits)
+		return
+	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes) //can't flash what can't see!
+		return
+
 	. = ..()
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
-		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-		if (!eyes)
-			return
 		if(visual)
 			return
 
@@ -301,12 +331,12 @@
 
 			if(eyes.eye_damage > 20)
 				if(prob(eyes.eye_damage - 20))
-					if(!has_trait(TRAIT_NEARSIGHT))
+					if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.eye_damage - 25))
-					if(!has_trait(TRAIT_BLIND))
+					if(!HAS_TRAIT(src, TRAIT_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 					become_blind(EYE_DAMAGE)
 
@@ -335,7 +365,7 @@
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount
-			var/deaf = max(ears.deaf, deafen_pwr * effect_amount)
+			var/deaf = deafen_pwr * effect_amount
 			adjustEarDamage(ear_damage,deaf)
 
 			if(ears.ear_damage >= 15)

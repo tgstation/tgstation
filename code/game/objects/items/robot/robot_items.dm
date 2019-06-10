@@ -396,7 +396,7 @@
 		if(DISPENSE_ICECREAM_MODE)
 			L = new /obj/item/reagent_containers/food/snacks/icecream(T)
 			var/obj/item/reagent_containers/food/snacks/icecream/I = L
-			I.add_ice_cream("vanilla")
+			I.add_ice_cream(/datum/reagent/consumable/vanilla)
 			I.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
@@ -426,7 +426,7 @@
 		A.BB.nodamage = FALSE
 	A.BB.speed = 0.5
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-	A.fire_casing(target, user, params, 0, 0, null, 0)
+	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
 	check_amount()
 
@@ -442,7 +442,7 @@
 	A.BB.speed = 0.5
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
-	A.fire_casing(target, user, params, 0, 0, null, 0)
+	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
 	check_amount()
 
@@ -523,7 +523,8 @@
 	var/color2 = rgb(0, 0, 0)
 	nodamage = TRUE
 
-/obj/item/projectile/bullet/reusable/lollipop/New()
+/obj/item/projectile/bullet/reusable/lollipop/Initialize()
+	. = ..()
 	var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
 	var/mutable_appearance/head = mutable_appearance('icons/obj/projectiles.dmi', "lollipop_2")
@@ -728,17 +729,15 @@
 	name = "medical hud"
 	icon_state = "healthhud"
 
-/obj/item/borg/sight/hud/med/New()
-	..()
+/obj/item/borg/sight/hud/med/Initialize()
+	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/health(src)
-	return
 
 
 /obj/item/borg/sight/hud/sec
 	name = "security hud"
 	icon_state = "securityhud"
 
-/obj/item/borg/sight/hud/sec/New()
-	..()
+/obj/item/borg/sight/hud/sec/Initialize()
+	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/security(src)
-	return

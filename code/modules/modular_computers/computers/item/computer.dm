@@ -97,7 +97,7 @@
 	if(issilicon(usr))
 		return
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(usr.canUseTopic(src))
+	if(usr.canUseTopic(src, BE_CLOSE))
 		card_slot.try_eject(null, usr)
 
 // Eject ID card from computer, if it has ID slot with card inside.
@@ -108,7 +108,7 @@
 	if(issilicon(usr))
 		return
 	var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
-	if(usr.canUseTopic(src))
+	if(usr.canUseTopic(src, BE_CLOSE))
 		ai_slot.try_eject(null, usr,1)
 
 
@@ -120,7 +120,7 @@
 	if(issilicon(usr))
 		return
 
-	if(usr.canUseTopic(src))
+	if(usr.canUseTopic(src, BE_CLOSE))
 		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 		if(uninstall_component(portable_drive, usr))
 			portable_drive.verb_pickup()
@@ -130,7 +130,7 @@
 	if(issilicon(user))
 		return
 
-	if(user.canUseTopic(src))
+	if(user.canUseTopic(src, BE_CLOSE))
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 		var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
 		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
@@ -159,7 +159,7 @@
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
+	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src, BE_CLOSE))
 		return attack_self(M)
 	return ..()
 

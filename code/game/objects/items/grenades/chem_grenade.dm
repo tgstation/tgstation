@@ -10,8 +10,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 2
 	var/stage = EMPTY
-	var/list/beakers = list()
+	var/list/obj/item/reagent_containers/glass/beakers = list()
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
+	var/list/banned_containers = list(/obj/item/reagent_containers/glass/beaker/bluespace) //Containers to exclude from specific grenade subtypes
 	var/affected_area = 3
 	var/obj/item/assembly_holder/nadeassembly = null
 	var/assemblyattacher
@@ -53,6 +54,15 @@
 			..()
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		if(stage == READY && !nadeassembly && !active)
+			var/newtime = text2num(stripped_input(user, "Please enter a new detonation time", name))
+			if (newtime != null && user.canUseTopic(src, BE_CLOSE))
+				change_det_time(newtime)
+				to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
+				if (round(newtime * 10) != det_time)
+					to_chat(user, "<span class='warning'>The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible.</span>")
+		return
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stage == WIRED)
 			if(beakers.len)
@@ -61,14 +71,17 @@
 				I.play_tool_sound(src, 25)
 			else
 				to_chat(user, "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>")
-		else if(stage == READY && !nadeassembly)
-			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
+		else if(stage == READY && !nadeassembly && !active)
+			change_det_time()
 			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 		else if(stage == EMPTY)
 			to_chat(user, "<span class='warning'>You need to add an activation mechanism!</span>")
-
+		return
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
-		. = 1 //no afterattack
+		. = TRUE //no afterattack
+		if(is_type_in_list(I, banned_containers))
+			to_chat(user, "<span class='warning'>[src] is too small to fit [I]!</span>") // this one hits home huh anon?
+			return
 		if(beakers.len == 2)
 			to_chat(user, "<span class='warning'>[src] can not hold more containers!</span>")
 			return
@@ -190,6 +203,7 @@
 				O.forceMove(drop_location())
 			beakers = list()
 		stage_change(EMPTY)
+		active = FALSE
 		return
 
 	if(nadeassembly)
@@ -207,10 +221,11 @@
 //Large chem grenades accept slime cores and use the appropriately.
 /obj/item/grenade/chem_grenade/large
 	name = "large grenade"
-	desc = "A custom made large grenade. Larger splash range and increased ignition temperature compared to basic grenades. Fits exotic containers."
-	casedesc = "This casing affects a larger area than the basic model and can fit exotic containers, including slime cores. Heats contents by 25°K upon ignition."
+	desc = "A custom made large grenade. Larger splash range and increased ignition temperature compared to basic grenades. Fits exotic and bluespace based containers."
+	casedesc = "This casing affects a larger area than the basic model and can fit exotic containers, including slime cores and bluespace beakers. Heats contents by 25°K upon ignition."
 	icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/condiment, /obj/item/reagent_containers/food/drinks)
+	banned_containers = list()
 	affected_area = 5
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
 	threatscale = 1.1	// 10% more effective.
@@ -272,16 +287,14 @@
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		switch(unit_spread)
-			if(0 to 24)
-				unit_spread += 5
-			if(25 to 99)
-				unit_spread += 25
-			else
-				unit_spread = 5
-		to_chat(user, "<span class='notice'> You set the time release to [unit_spread] units per detonation.</span>")
-		return
+	if(I.tool_behaviour == TOOL_MULTITOOL && !active)
+		var/newspread = text2num(stripped_input(user, "Please enter a new spread amount", name))
+		if (newspread != null && user.canUseTopic(src, BE_CLOSE))
+			newspread = round(newspread)
+			unit_spread = CLAMP(newspread, 5, 100)
+			to_chat(user, "<span class='notice'>You set the time release to [unit_spread] units per detonation.</span>")
+		if (newspread != unit_spread)
+			to_chat(user, "<span class='notice'>The new value is out of bounds. Minimum spread is 5 units, maximum is 100 units.</span>")
 	..()
 
 /obj/item/grenade/chem_grenade/adv_release/prime()
@@ -330,9 +343,9 @@
 	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("aluminium", 30)
-	B2.reagents.add_reagent("foaming_agent", 10)
-	B2.reagents.add_reagent("facid", 10)
+	B1.reagents.add_reagent(/datum/reagent/aluminium, 30)
+	B2.reagents.add_reagent(/datum/reagent/foaming_agent, 10)
+	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
 
 	beakers += B1
 	beakers += B2
@@ -348,9 +361,9 @@
 	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("aluminium", 75)
-	B2.reagents.add_reagent("smart_foaming_agent", 25)
-	B2.reagents.add_reagent("facid", 25)
+	B1.reagents.add_reagent(/datum/reagent/aluminium, 75)
+	B2.reagents.add_reagent(/datum/reagent/smart_foaming_agent, 25)
+	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
 
 	beakers += B1
 	beakers += B2
@@ -366,9 +379,9 @@
 	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("stable_plasma", 25)
-	B2.reagents.add_reagent("sacid", 25)
+	B1.reagents.add_reagent(/datum/reagent/phosphorus, 25)
+	B2.reagents.add_reagent(/datum/reagent/stable_plasma, 25)
+	B2.reagents.add_reagent(/datum/reagent/toxin/acid, 25)
 
 	beakers += B1
 	beakers += B2
@@ -384,10 +397,10 @@
 	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("plantbgone", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent(/datum/reagent/toxin/plantbgone, 25)
+	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
+	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
 
 	beakers += B1
 	beakers += B2
@@ -403,9 +416,9 @@
 	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("fluorosurfactant", 40)
-	B2.reagents.add_reagent("water", 40)
-	B2.reagents.add_reagent("cleaner", 10)
+	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 40)
+	B2.reagents.add_reagent(/datum/reagent/water, 40)
+	B2.reagents.add_reagent(/datum/reagent/space_cleaner, 10)
 
 	beakers += B1
 	beakers += B2
@@ -421,9 +434,9 @@
 	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
 
-	B1.reagents.add_reagent("fluorosurfactant", 40)
-	B2.reagents.add_reagent("water", 40)
-	B2.reagents.add_reagent("ez_clean", 60) //ensures a  t h i c c  distribution
+	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 40)
+	B2.reagents.add_reagent(/datum/reagent/water, 40)
+	B2.reagents.add_reagent(/datum/reagent/space_cleaner/ez_clean, 60) //ensures a  t h i c c  distribution
 
 	beakers += B1
 	beakers += B2
@@ -440,10 +453,10 @@
 	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
 
-	B1.reagents.add_reagent("condensedcapsaicin", 60)
-	B1.reagents.add_reagent("potassium", 40)
-	B2.reagents.add_reagent("phosphorus", 40)
-	B2.reagents.add_reagent("sugar", 40)
+	B1.reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 60)
+	B1.reagents.add_reagent(/datum/reagent/potassium, 40)
+	B2.reagents.add_reagent(/datum/reagent/phosphorus, 40)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 40)
 
 	beakers += B1
 	beakers += B2
@@ -459,11 +472,11 @@
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("facid", 290)
-	B1.reagents.add_reagent("potassium", 10)
-	B2.reagents.add_reagent("phosphorus", 10)
-	B2.reagents.add_reagent("sugar", 10)
-	B2.reagents.add_reagent("facid", 280)
+	B1.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 290)
+	B1.reagents.add_reagent(/datum/reagent/potassium, 10)
+	B2.reagents.add_reagent(/datum/reagent/phosphorus, 10)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 10)
+	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 280)
 
 	beakers += B1
 	beakers += B2
@@ -479,10 +492,10 @@
 	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("colorful_reagent", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent(/datum/reagent/colorful_reagent, 25)
+	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
+	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
 
 	beakers += B1
 	beakers += B2
@@ -491,7 +504,7 @@
 	name = "generic glitter grenade"
 	desc = "You shouldn't see this description."
 	stage = READY
-	var/glitter_type = "glitter"
+	var/glitter_type = /datum/reagent/glitter
 
 /obj/item/grenade/chem_grenade/glitter/Initialize()
 	. = ..()
@@ -499,9 +512,9 @@
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
 
 	B1.reagents.add_reagent(glitter_type, 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
+	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
 
 	beakers += B1
 	beakers += B2
@@ -509,17 +522,17 @@
 /obj/item/grenade/chem_grenade/glitter/pink
 	name = "pink glitter bomb"
 	desc = "For that HOT glittery look."
-	glitter_type = "pink_glitter"
+	glitter_type = /datum/reagent/glitter/pink
 
 /obj/item/grenade/chem_grenade/glitter/blue
 	name = "blue glitter bomb"
 	desc = "For that COOL glittery look."
-	glitter_type = "blue_glitter"
+	glitter_type = /datum/reagent/glitter/blue
 
 /obj/item/grenade/chem_grenade/glitter/white
 	name = "white glitter bomb"
 	desc = "For that somnolent glittery look."
-	glitter_type = "white_glitter"
+	glitter_type = /datum/reagent/glitter/white
 
 /obj/item/grenade/chem_grenade/clf3
 	name = "clf3 grenade"
@@ -531,10 +544,10 @@
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("fluorosurfactant", 250)
-	B1.reagents.add_reagent("clf3", 50)
-	B2.reagents.add_reagent("water", 250)
-	B2.reagents.add_reagent("clf3", 50)
+	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 250)
+	B1.reagents.add_reagent(/datum/reagent/clf3, 50)
+	B2.reagents.add_reagent(/datum/reagent/water, 250)
+	B2.reagents.add_reagent(/datum/reagent/clf3, 50)
 
 	beakers += B1
 	beakers += B2
@@ -549,13 +562,13 @@
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("cryptobiolin", 75)
-	B1.reagents.add_reagent("water", 50)
-	B1.reagents.add_reagent("mutetoxin", 50)
-	B1.reagents.add_reagent("spore", 75)
-	B1.reagents.add_reagent("itching_powder", 50)
-	B2.reagents.add_reagent("fluorosurfactant", 150)
-	B2.reagents.add_reagent("mutagen", 150)
+	B1.reagents.add_reagent(/datum/reagent/cryptobiolin, 75)
+	B1.reagents.add_reagent(/datum/reagent/water, 50)
+	B1.reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 50)
+	B1.reagents.add_reagent(/datum/reagent/toxin/spore, 75)
+	B1.reagents.add_reagent(/datum/reagent/toxin/itching_powder, 50)
+	B2.reagents.add_reagent(/datum/reagent/fluorosurfactant, 150)
+	B2.reagents.add_reagent(/datum/reagent/toxin/mutagen, 150)
 	beakers += B1
 	beakers += B2
 
@@ -569,11 +582,11 @@
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("potassium", 50)
-	B1.reagents.add_reagent("phosphorus", 50)
-	B1.reagents.add_reagent("fungalspores", 200)
-	B2.reagents.add_reagent("blood", 250)
-	B2.reagents.add_reagent("sugar", 50)
+	B1.reagents.add_reagent(/datum/reagent/potassium, 50)
+	B1.reagents.add_reagent(/datum/reagent/phosphorus, 50)
+	B1.reagents.add_reagent(/datum/reagent/fungalspores, 200)
+	B2.reagents.add_reagent(/datum/reagent/blood, 250)
+	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 50)
 
 	beakers += B1
 	beakers += B2
@@ -589,8 +602,8 @@
 	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
 
-	B1.reagents.add_reagent("potassium", 100)
-	B2.reagents.add_reagent("holywater", 100)
+	B1.reagents.add_reagent(/datum/reagent/potassium, 100)
+	B2.reagents.add_reagent(/datum/reagent/water/holywater, 100)
 
 	beakers += B1
 	beakers += B2

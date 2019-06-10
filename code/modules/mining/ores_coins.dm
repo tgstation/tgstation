@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	recipes = GLOB.sand_recipes
 	. = ..()
 
-/obj/item/stack/ore/glass/throw_impact(atom/hit_atom)
+/obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
 		return
 	var/mob/living/carbon/human/C = hit_atom
@@ -244,12 +244,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/twohanded/required/gibtonite/bullet_act(obj/item/projectile/P)
 	GibtoniteReaction(P.firer)
-	..()
+	. = ..()
 
 /obj/item/twohanded/required/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
-
-
 
 /obj/item/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
@@ -325,7 +323,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.visible_message("<span class='suicide'>[user] couldn't flip \the [src]!</span>")
 		return SHAME
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
-	return MANUAL_SUICIDE
+	return MANUAL_SUICIDE_NONLETHAL
 
 /obj/item/coin/proc/manual_suicide(mob/living/user)
 	var/index = sideslist.Find(coinflip)
@@ -333,6 +331,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
 		user.adjustOxyLoss(200)
 		user.death(0)
+		user.set_suicide(TRUE)
+		user.suicide_log()
 	else
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
 
@@ -350,25 +350,25 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "gold coin"
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
-	value = 50
+	value = 25
 	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("gold" = 4)
+	grind_results = list(/datum/reagent/gold = 4)
 
 /obj/item/coin/silver
 	name = "silver coin"
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
-	value = 20
+	value = 10
 	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("silver" = 4)
+	grind_results = list(/datum/reagent/silver = 4)
 
 /obj/item/coin/diamond
 	name = "diamond coin"
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
-	value = 500
+	value = 100
 	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("carbon" = 4)
+	grind_results = list(/datum/reagent/carbon = 4)
 
 /obj/item/coin/iron
 	name = "iron coin"
@@ -376,43 +376,43 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_iron_heads"
 	value = 1
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("iron" = 4)
+	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/plasma
 	name = "plasma coin"
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
-	value = 100
+	value = 40
 	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("plasma" = 4)
+	grind_results = list(/datum/reagent/toxin/plasma = 4)
 
 /obj/item/coin/uranium
 	name = "uranium coin"
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
-	value = 80
+	value = 25
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("uranium" = 4)
+	grind_results = list(/datum/reagent/uranium = 4)
 
 /obj/item/coin/bananium
 	name = "bananium coin"
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
-	value = 1000 //makes the clown cry
+	value = 200 //makes the clown cry
 	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list("banana" = 4)
+	grind_results = list(/datum/reagent/consumable/banana = 4)
 
 /obj/item/coin/adamantine
 	name = "adamantine coin"
 	cmineral = "adamantine"
 	icon_state = "coin_adamantine_heads"
-	value = 1500
+	value = 100
 
 /obj/item/coin/mythril
 	name = "mythril coin"
 	cmineral = "mythril"
 	icon_state = "coin_mythril_heads"
-	value = 3000
+	value = 300
 
 /obj/item/coin/twoheaded
 	cmineral = "iron"
@@ -421,7 +421,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	sideslist = list("heads")
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
 	value = 1
-	grind_results = list("iron" = 4)
+	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/antagtoken
 	name = "antag token"
@@ -430,7 +430,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
 	value = 0
-	grind_results = list("sodiumchloride" = 4)
+	grind_results = list(/datum/reagent/consumable/sodiumchloride = 4)
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))

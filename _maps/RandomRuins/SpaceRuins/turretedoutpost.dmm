@@ -57,7 +57,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/turretedoutpost)
 "an" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -264,7 +264,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aN" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/turretedoutpost)
 "aO" = (

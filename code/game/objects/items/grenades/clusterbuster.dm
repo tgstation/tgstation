@@ -94,11 +94,11 @@
 		var/chem = pick(slime_chems)
 		var/amount = 5
 		if(chem == "lesser plasma") //In the rare case we get another rainbow.
-			chem = "plasma"
+			chem = /datum/reagent/toxin/plasma
 			amount = 4
 		if(chem == "holy water and uranium")
-			chem = "uranium"
-			reagents.add_reagent("holywater")
+			chem = /datum/reagent/uranium
+			reagents.add_reagent(/datum/reagent/water/holywater)
 		reagents.add_reagent(chem,amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
@@ -173,10 +173,11 @@
 /obj/item/grenade/clusterbuster/random
 	icon_state = "random_clusterbang"
 
-/obj/item/grenade/clusterbuster/random/New()
+/obj/item/grenade/clusterbuster/random/Initialize()
+	..()
 	var/real_type = pick(subtypesof(/obj/item/grenade/clusterbuster))
 	new real_type(loc)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 //rainbow slime effect
 /obj/item/grenade/clusterbuster/slime

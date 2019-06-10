@@ -34,6 +34,6 @@
 		var/spawn_type = /obj/structure/spider/spiderling
 		if(prob(66))
 			spawn_type = /obj/structure/spider/spiderling/nurse
-		atom_of_interest = spawn_atom_to_turf(spawn_type, vent, 1, FALSE)
+		announce_to_ghosts(spawn_atom_to_turf(spawn_type, vent, 1, FALSE))
 		vents -= vent
 		spawncount--

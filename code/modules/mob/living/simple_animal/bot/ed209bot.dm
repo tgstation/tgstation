@@ -13,7 +13,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/encryptionkey/headset_sec
-	radio_channel = "Security"
+	radio_channel = RADIO_CHANNEL_SECURITY
 	bot_type = SEC_BOT
 	model = "ED-209"
 	bot_core = /obj/machinery/bot_core/secbot
@@ -188,7 +188,7 @@ Auto Patrol[]"},
 	..()
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(!W.tool_behaviour == TOOL_SCREWDRIVER && (!target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+	if(W.tool_behaviour != TOOL_SCREWDRIVER && (!target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		if(W.force && W.damtype != STAMINA)//If force is non-zero and damage type isn't stamina.
 			retaliate(user)
 			if(lasercolor)//To make up for the fact that lasertag bots don't hunt
@@ -210,7 +210,7 @@ Auto Patrol[]"},
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/ed209/handle_automated_action()
 	if(!..())
@@ -237,7 +237,7 @@ Auto Patrol[]"},
 		targets += C
 	if(targets.len>0)
 		var/mob/living/carbon/t = pick(targets)
-		if((t.stat!=2) && (!(t.mobility_flags & MOBILITY_STAND)) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
+		if(t.stat != DEAD && (t.mobility_flags & MOBILITY_STAND) && !t.handcuffed) //we don't shoot people who are dead, cuffed or lying down.
 			shootAt(t)
 	switch(mode)
 
@@ -386,7 +386,7 @@ Auto Patrol[]"},
 	drop_part(cell_type, Tsec)
 
 	if(!lasercolor)
-		var/obj/item/gun/energy/e_gun/advtaser/G = new (Tsec)
+		var/obj/item/gun/energy/e_gun/dragnet/G = new (Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "b")
@@ -427,15 +427,15 @@ Auto Patrol[]"},
 			projectile = /obj/item/projectile/beam
 	else
 		if(!lasercolor)
-			shoot_sound = 'sound/weapons/taser.ogg'
-			projectile = /obj/item/projectile/energy/electrode
+			shoot_sound = 'sound/weapons/laser.ogg'
+			projectile = /obj/item/projectile/energy/net
 		else if(lasercolor == "b")
 			projectile = /obj/item/projectile/beam/lasertag/bluetag
 		else if(lasercolor == "r")
 			projectile = /obj/item/projectile/beam/lasertag/redtag
 
 /mob/living/simple_animal/bot/ed209/proc/shootAt(mob/target)
-	if(lastfired && world.time - lastfired < shot_delay)
+	if(world.time <= lastfired + shot_delay)
 		return
 	lastfired = world.time
 	var/turf/T = loc
@@ -510,11 +510,11 @@ Auto Patrol[]"},
 			spawn(100)
 				disabled = 0
 				icon_state = "[lasercolor]ed2091"
-			return 1
+			return BULLET_ACT_HIT
 		else
-			..(Proj)
+			. = ..()
 	else
-		..(Proj)
+		. = ..()
 
 /mob/living/simple_animal/bot/ed209/bluetag
 	lasercolor = "b"

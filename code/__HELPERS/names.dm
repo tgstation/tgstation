@@ -4,6 +4,12 @@
 	else
 		return "[pick(GLOB.lizard_names_female)]-[pick(GLOB.lizard_names_female)]"
 
+/proc/ethereal_name()
+	var/tempname = "[pick(GLOB.ethereal_names)] [random_capital_letter()]"
+	if(prob(65))
+		tempname += random_capital_letter()
+	return tempname
+
 /proc/plasmaman_name()
 	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
 
@@ -150,6 +156,10 @@ GLOBAL_VAR(command_name)
 //Traitors and traitor silicons will get these. Revs will not.
 GLOBAL_VAR(syndicate_code_phrase) //Code phrase for traitors.
 GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
+
+//Cached regex search - for checking if codewords are used.
+GLOBAL_DATUM(syndicate_code_phrase_regex, /regex)
+GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 
 	/*
 	Should be expanded.

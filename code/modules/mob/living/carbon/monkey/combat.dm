@@ -68,8 +68,7 @@
 		for(var/mob/living/carbon/monkey/M in view(7,src))
 			M.next_battle_screech = world.time + battle_screech_cooldown
 
-/mob/living/carbon/monkey/proc/equip_item(var/obj/item/I)
-
+/mob/living/carbon/monkey/proc/equip_item(obj/item/I)
 	if(I.loc == src)
 		return TRUE
 
@@ -119,7 +118,7 @@
 		cuff_resist(I)
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
-	if(has_trait(TRAIT_PACIFISM))
+	if(HAS_TRAIT(src, TRAIT_PACIFISM))
 		return FALSE
 
 	if(enemies[L])
@@ -133,7 +132,7 @@
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	if(pickupTarget)
-		if(restrained() || blacklistItems[pickupTarget] || (pickupTarget.item_flags & NODROP))
+		if(IsDeadOrIncap() || restrained() || blacklistItems[pickupTarget] || HAS_TRAIT(pickupTarget, TRAIT_NODROP))
 			pickupTarget = null
 		else
 			pickupTimer++
@@ -310,8 +309,9 @@
 		for(var/obj/item/I in M.held_items)
 			if(I == pickupTarget)
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
-				if(M.temporarilyRemoveItemFromInventory(pickupTarget) && !QDELETED(pickupTarget))
-					equip_item(pickupTarget)
+				if(M.temporarilyRemoveItemFromInventory(pickupTarget))
+					if(!QDELETED(pickupTarget) && !equip_item(pickupTarget))
+						pickupTarget.forceMove(drop_location())
 				else
 					M.visible_message("<span class='danger'>[src] tried to snatch [pickupTarget] from [M], but failed!</span>", "<span class='userdanger'>[src] tried to grab [pickupTarget]!</span>")
 	pickpocketing = FALSE
@@ -399,9 +399,9 @@
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && isliving(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	. = ..()
 
-/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))

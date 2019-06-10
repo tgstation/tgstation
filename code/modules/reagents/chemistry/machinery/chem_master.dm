@@ -1,3 +1,6 @@
+#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
+#define RANDOM_PILL_STYLE 22 //Dont change this one though
+
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -13,12 +16,24 @@
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = FALSE
+	var/chosenPillStyle = 1
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
+	var/list/pillStyles = null
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
+
+	//Calculate the span tags and ids fo all the available pill icons
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+	pillStyles = list()
+	for (var/x in 1 to PILL_STYLE_COUNT)
+		var/list/SL = list()
+		SL["id"] = x
+		SL["htmltag"] = assets.icon_tag("pill[x]")
+		pillStyles += list(SL)
+
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -60,16 +75,6 @@
 	else
 		icon_state = "mixer0"
 
-/obj/machinery/chem_master/proc/eject_beaker(mob/user)
-	if(beaker)
-		beaker.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
-			user.put_in_hands(beaker)
-		else
-			adjust_item_drop_location(beaker)
-		beaker = null
-		update_icon()
-
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
 		qdel(src)
@@ -83,38 +88,51 @@
 
 	if(default_unfasten_wrench(user, I))
 		return
-
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		. = 1 // no afterattack
+		. = TRUE // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
-		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
+		var/obj/item/reagent_containers/B = I
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(B, src))
 			return
-		if(!user.transferItemToLoc(I, src))
-			return
-
-		beaker = I
-		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
-		src.updateUsrDialog()
+		replace_beaker(user, B)
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
 		update_icon()
-
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
 			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
-
 		bottle = I
 		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
-		src.updateUsrDialog()
+		updateUsrDialog()
 	else
 		return ..()
 
+/obj/machinery/chem_master/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
+	return
+
+/obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(new_beaker)
+		beaker = new_beaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
+
 /obj/machinery/chem_master/on_deconstruction()
-	eject_beaker()
+	replace_beaker()
 	if(bottle)
 		bottle.forceMove(drop_location())
 		adjust_item_drop_location(bottle)
@@ -125,9 +143,16 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+		assets.send(user)
+
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
 		ui.open()
 
+//Insert our custom spritesheet css link into the html
+/obj/machinery/chem_master/ui_base_html(html)
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
@@ -138,25 +163,27 @@
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
-
+	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
-		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 		data["pillBotContent"] = bottle.contents.len
 		data["pillBotMaxContent"] = STRB.max_items
 
 	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
 		data["beakerContents"] = beakerContents
 
 	var/bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
+			bufferContents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
 
+	//Calculated at init time as it never changes
+	data["pillStyles"] = pillStyles
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
@@ -164,7 +191,7 @@
 		return
 	switch(action)
 		if("eject")
-			eject_beaker(usr)
+			replace_beaker(usr)
 			. = TRUE
 
 		if("ejectp")
@@ -176,26 +203,26 @@
 
 		if("transferToBuffer")
 			if(beaker)
-				var/id = params["id"]
+				var/reagent = GLOB.name2reagent[params["id"]]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
-					beaker.reagents.trans_id_to(src, id, amount)
+					beaker.reagents.trans_id_to(src, reagent, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
-						beaker.reagents.trans_id_to(src, id, useramount)
+						beaker.reagents.trans_id_to(src, reagent, useramount)
 						. = TRUE
 
 		if("transferFromBuffer")
-			var/id = params["id"]
+			var/reagent = GLOB.name2reagent[params["id"]]
 			var/amount = text2num(params["amount"])
 			if (amount > 0)
 				if(mode)
-					reagents.trans_id_to(beaker, id, amount)
+					reagents.trans_id_to(beaker, reagent, amount)
 					. = TRUE
 				else
-					reagents.remove_reagent(id, amount)
+					reagents.remove_reagent(reagent, amount)
 					. = TRUE
 
 		if("toggleMode")
@@ -221,7 +248,7 @@
 				var/target_loc = drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
-					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+					var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
 
@@ -231,6 +258,12 @@
 					else
 						P = new(drop_location())
 					P.name = trim("[name] pill")
+					if(chosenPillStyle == RANDOM_PILL_STYLE)
+						P.icon_state ="pill[rand(1,21)]"
+					else
+						P.icon_state = "pill[chosenPillStyle]"
+					if(P.icon_state == "pill4")
+						P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each, transfered_by = usr)
 			else
@@ -244,6 +277,10 @@
 				P.desc = "A small condiment pack. The label says it contains [name]."
 				reagents.trans_to(P,10, transfered_by = usr)
 			. = TRUE
+
+		if("pillStyle")
+			var/id = text2num(params["id"])
+			chosenPillStyle = id
 
 		if("createPatch")
 			var/many = params["many"]
@@ -306,7 +343,7 @@
 			. = TRUE
 
 		if("analyze")
-			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)
@@ -365,3 +402,6 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
+
+#undef PILL_STYLE_COUNT
+#undef RANDOM_PILL_STYLE

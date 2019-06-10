@@ -5,13 +5,13 @@
 		return ..()
 
 	if(istype(I, /obj/item/reagent_containers/glass))//If it's a glass beaker.
-		if(I.reagents.has_reagent("radium", a_transfer) && a_boost < a_maxamount)
-			I.reagents.remove_reagent("radium", a_transfer)
+		if(I.reagents.has_reagent(/datum/reagent/uranium/radium, a_transfer) && a_boost < a_maxamount)
+			I.reagents.remove_reagent(/datum/reagent/uranium/radium, a_transfer)
 			a_boost++;
 			to_chat(U, "<span class='notice'>There are now [a_boost] adrenaline boosts remaining.</span>")
 			return
-		if(I.reagents.has_reagent("smoke_powder", a_transfer) && s_bombs < s_maxamount)
-			I.reagents.remove_reagent("smoke_powder", a_transfer)
+		if(I.reagents.has_reagent(/datum/reagent/smoke_powder, a_transfer) && s_bombs < s_maxamount)
+			I.reagents.remove_reagent(/datum/reagent/smoke_powder, a_transfer)
 			s_bombs++;
 			to_chat(U, "<span class='notice'>There are now [s_bombs] smoke bombs remaining.</span>")
 			return

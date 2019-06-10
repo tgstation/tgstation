@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	. = ..()
-	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
@@ -47,7 +47,7 @@
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	. = ..()
-	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src, force = TRUE)
@@ -78,6 +78,7 @@
 	default_storage = null
 	default_hatmask = null
 	picked = TRUE
+	flavortext = null
 
 /mob/living/simple_animal/drone/polymorphed/Initialize()
 	. = ..()

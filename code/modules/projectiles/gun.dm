@@ -19,8 +19,13 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
+	var/vary_fire_sound = TRUE
+	var/fire_sound_volume = 50
+	var/dry_fire_sound = 'sound/weapons/gun_dry_fire.ogg'
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
+	var/suppressed_sound = 'sound/weapons/gunshot_silenced.ogg'
+	var/suppressed_volume = 10
 	var/can_unsuppress = TRUE
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = TRUE
@@ -73,11 +78,16 @@
 	build_zooming()
 
 /obj/item/gun/Destroy()
-	QDEL_NULL(pin)
-	QDEL_NULL(gun_light)
-	QDEL_NULL(bayonet)
-	QDEL_NULL(chambered)
-	QDEL_NULL(azoom)
+	if(pin)
+		QDEL_NULL(pin)
+	if(gun_light)
+		QDEL_NULL(gun_light)
+	if(bayonet)
+		QDEL_NULL(bayonet)
+	if(chambered) //Not all guns are chambered (EMP'ed energy guns etc)
+		QDEL_NULL(chambered)
+	if(azoom)
+		QDEL_NULL(azoom)
 	return ..()
 
 /obj/item/gun/handle_atom_del(atom/A)
@@ -138,7 +148,7 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='danger'>*click*</span>")
-	playsound(src, "gun_dry_fire", 30, TRUE)
+	playsound(src, dry_fire_sound, 30, TRUE)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -146,9 +156,9 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
-		playsound(user, fire_sound, 10, TRUE)
+		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound)
 	else
-		playsound(user, fire_sound, 50, TRUE)
+		playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(message)
 			if(pointblank)
 				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -180,20 +190,19 @@
 		if(!can_trigger_gun(L))
 			return
 
-	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
-		shoot_with_empty_chamber(user)
-		return
-
 	if(flag)
 		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 			handle_suicide(user, target, params)
 			return
 
+	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
+		shoot_with_empty_chamber(user)
+		return
 
 	//Exclude lasertag guns from the TRAIT_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user))
-			if (user.has_trait(TRAIT_CLUMSY) && prob(40))
+			if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 				process_fire(user, user, FALSE, params, shot_leg)
@@ -201,7 +210,7 @@
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		to_chat(user, "<span class='userdanger'>You need both hands free to fire [src]!</span>")
+		to_chat(user, "<span class='userdanger'>You need both hands free to fire \the [src]!</span>")
 		return
 
 	//DUAL (or more!) WIELDING
@@ -249,7 +258,7 @@
 			firing_burst = FALSE
 			return FALSE
 	if(chambered && chambered.BB)
-		if(user.has_trait(TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
+		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
 				to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 				return
@@ -257,8 +266,8 @@
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 		else //Smart spread
 			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
-
-		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
+		before_firing(target,user)
+		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd, src))
 			shoot_with_empty_chamber(user)
 			firing_burst = FALSE
 			return FALSE
@@ -288,7 +297,7 @@
 	var/rand_spr = rand()
 	if(spread)
 		randomized_gun_spread =	rand(0,spread)
-	if(user.has_trait(TRAIT_POOR_AIM)) //nice shootin' tex
+	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
 		bonus_spread += 25
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
@@ -298,12 +307,13 @@
 			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), fire_delay * (i - 1))
 	else
 		if(chambered)
-			if(user.has_trait(TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
+			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 				if(chambered.harmful) // Is the bullet chambered harmful?
 					to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 					return
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
-			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
+			before_firing(target,user)
+			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, src))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -476,8 +486,15 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
+/obj/item/gun/pickup(mob/user)
+	..()
+	if(azoom)
+		azoom.Grant(user)
+
 /obj/item/gun/dropped(mob/user)
 	. = ..()
+	if(azoom)
+		azoom.Remove(user)
 	if(zoomed)
 		zoom(user,FALSE)
 
@@ -519,6 +536,10 @@
 	if(pin)
 		qdel(pin)
 	pin = new /obj/item/firing_pin
+
+//Happens before the actual projectile creation
+/obj/item/gun/proc/before_firing(atom/target,mob/user)
+	return
 
 /////////////
 // ZOOMING //

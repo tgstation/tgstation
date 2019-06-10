@@ -114,7 +114,7 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
-	forcedodge = TRUE
+	movement_type = FLYING | UNSTOPPABLE
 	var/heavyr = 0
 	var/mediumr = 0
 	var/lightr = 0

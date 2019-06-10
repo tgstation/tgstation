@@ -189,7 +189,7 @@
 
 /obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!spans)
-		spans = M.get_spans()
+		spans = list(M.speech_span)
 	if(!language)
 		language = M.get_default_language()
 	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
@@ -221,7 +221,7 @@
 	// From the channel, determine the frequency and get a reference to it.
 	var/freq
 	if(channel && channels && channels.len > 0)
-		if(channel == "department")
+		if(channel == MODE_DEPARTMENT)
 			channel = channels[1]
 		freq = secure_radio_connections[channel]
 		if (!channels[channel]) // if the channel is turned off, don't broadcast
@@ -230,13 +230,12 @@
 		freq = frequency
 		channel = null
 
-	// Nearby active jammers severely gibberish the message
+	// Nearby active jammers prevent the message from transmitting
 	var/turf/position = get_turf(src)
 	for(var/obj/item/jammer/jammer in GLOB.active_jammers)
 		var/turf/jammer_turf = get_turf(jammer)
-		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) < jammer.range))
-			message = Gibberish(message,100)
-			break
+		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range))
+			return
 
 	// Determine the identity information which will be attached to the signal.
 	var/atom/movable/virtualspeaker/speaker = new(null, M, src)
@@ -320,6 +319,8 @@
 
 /obj/item/radio/examine(mob/user)
 	..()
+	if (frequency && in_range(src, user))
+		to_chat(user, "<span class='notice'>It is set to broadcast over the [frequency/10] frequency.</span>")
 	if (unscrewed)
 		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
 	else

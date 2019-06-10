@@ -86,7 +86,8 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
-	copy_extra_settings_to(target)
+	if(istype(target,src))
+		copy_extra_settings_to(target)
 
 /datum/nanite_program/proc/set_extra_setting(user, setting)
 	return
@@ -136,8 +137,10 @@
 	if(timer && timer_counter > timer)
 		if(timer_type == NANITE_TIMER_DEACTIVATE)
 			deactivate()
+			return
 		else if(timer_type == NANITE_TIMER_SELFDELETE)
 			qdel(src)
+			return
 		else if(can_trigger && timer_type == NANITE_TIMER_TRIGGER)
 			trigger()
 			timer_counter = activation_delay
@@ -202,9 +205,6 @@
 /datum/nanite_program/proc/on_death()
 	return
 
-/datum/nanite_program/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	return
-
 /datum/nanite_program/proc/software_error(type)
 	if(!type)
 		type = rand(1,5)
@@ -252,4 +252,3 @@
 			return "Trigger"
 		if(NANITE_TIMER_RESET)
 			return "Reset Activation Timer"
-

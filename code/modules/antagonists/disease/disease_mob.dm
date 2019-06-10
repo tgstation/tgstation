@@ -18,7 +18,7 @@ the new instance inside the host to be updated to the template's stats.
 	layer = BELOW_MOB_LAYER
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	sight = SEE_SELF|SEE_THRU
-	initial_language_holder = /datum/language_holder/empty
+	initial_language_holder = /datum/language_holder/universal
 
 	var/freemove = TRUE
 	var/freemove_end = 0
@@ -31,7 +31,6 @@ the new instance inside the host to be updated to the template's stats.
 	var/browser_open = FALSE
 
 	var/mob/living/following_host
-	var/datum/component/redirect/move_listener
 	var/list/disease_instances
 	var/list/hosts //this list is associative, affected_mob -> disease_instance
 	var/datum/disease/advance/sentient_disease/disease_template
@@ -118,10 +117,28 @@ the new instance inside the host to be updated to the template's stats.
 			follow_next(Dir & NORTHWEST)
 			last_move_tick = world.time
 
+/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
+	var/atom/movable/to_follow = speaker
+	if(radio_freq)
+		var/atom/movable/virtualspeaker/V = speaker
+		to_follow = V.source
+	var/link
+	if(to_follow in hosts)
+		link = FOLLOW_LINK(src, to_follow)
+	else
+		link = ""
+	// Recompose the message, because it's scrambled by default
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+	to_chat(src, "[link] [message]")
+
+
 /mob/camera/disease/mind_initialize()
 	. = ..()
 	if(!mind.has_antag_datum(/datum/antagonist/disease))
 		mind.add_antag_datum(/datum/antagonist/disease)
+	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	medsensor.add_hud_to(src)
 
 /mob/camera/disease/proc/pick_name()
 	var/static/list/taken_names
@@ -243,13 +260,10 @@ the new instance inside the host to be updated to the template's stats.
 		refresh_adaptation_menu()
 
 /mob/camera/disease/proc/set_following(mob/living/L)
+	if(following_host)
+		UnregisterSignal(following_host, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(L, COMSIG_MOVABLE_MOVED, .proc/follow_mob)
 	following_host = L
-	if(!move_listener)
-		move_listener = L.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/follow_mob)))
-	else
-		L.TakeComponent(move_listener)
-		if(QDELING(move_listener))
-			move_listener = null
 	follow_mob()
 
 /mob/camera/disease/proc/follow_next(reverse = FALSE)
@@ -351,7 +365,7 @@ the new instance inside the host to be updated to the template's stats.
 		set_following(L)
 
 	if(href_list["buy_ability"])
-		var/datum/disease_ability/A = locate(href_list["buy_ability"])
+		var/datum/disease_ability/A = locate(href_list["buy_ability"]) in unpurchased_abilities
 		if(!istype(A))
 			return
 		if(A.CanBuy(src))
@@ -359,7 +373,7 @@ the new instance inside the host to be updated to the template's stats.
 		adaptation_menu()
 
 	if(href_list["refund_ability"])
-		var/datum/disease_ability/A = locate(href_list["refund_ability"])
+		var/datum/disease_ability/A = locate(href_list["refund_ability"]) in purchased_abilities
 		if(!istype(A))
 			return
 		if(A.CanRefund(src))
@@ -367,7 +381,7 @@ the new instance inside the host to be updated to the template's stats.
 		adaptation_menu()
 
 	if(href_list["examine_ability"])
-		var/datum/disease_ability/A = locate(href_list["examine_ability"])
+		var/datum/disease_ability/A = locate(href_list["examine_ability"]) in GLOB.disease_ability_singletons
 		if(!istype(A))
 			return
 		examining_ability = A

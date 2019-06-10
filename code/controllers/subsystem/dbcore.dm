@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(dbcore)
 	wait = 1 MINUTES
 	init_order = INIT_ORDER_DBCORE
 	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
+	var/failed_connection_timeout = 0
 
 	var/schema_mismatch = 0
 	var/db_minor = 0
@@ -64,7 +65,11 @@ SUBSYSTEM_DEF(dbcore)
 	if(IsConnected())
 		return TRUE
 
-	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
+	if(failed_connection_timeout <= world.time) //it's been more than 5 seconds since we failed to connect, reset the counter
+		failed_connections = 0
+
+	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect for 5 seconds.
+		failed_connection_timeout = world.time + 50
 		return FALSE
 
 	if(!CONFIG_GET(flag/sql_enabled))
@@ -176,6 +181,27 @@ SUBSYSTEM_DEF(dbcore)
 		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")
 		return FALSE
 	return new /datum/DBQuery(sql_query, connection)
+
+/datum/controller/subsystem/dbcore/proc/QuerySelect(list/querys, warn = FALSE, qdel = FALSE)
+	if (!islist(querys))
+		if (!istype(querys, /datum/DBQuery))
+			CRASH("Invalid query passed to QuerySelect: [querys]")
+		querys = list(querys)
+
+	for (var/thing in querys)
+		var/datum/DBQuery/query = thing
+		if (warn)
+			INVOKE_ASYNC(query, /datum/DBQuery.proc/warn_execute)
+		else
+			INVOKE_ASYNC(query, /datum/DBQuery.proc/Execute)
+
+	for (var/thing in querys)
+		var/datum/DBQuery/query = thing
+		UNTIL(!query.in_progress)
+		if (qdel)
+			qdel(query)
+
+
 
 /*
 Takes a list of rows (each row being an associated list of column => value) and inserts them via a single mass query.
@@ -302,13 +328,15 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if(!async)
 		start_time = REALTIMEOFDAY
 	Close()
-	query = connection.BeginQuery(sql)
-	if(!async)
-		timed_out = !query.WaitForCompletion()
-	else
-		in_progress = TRUE
-		UNTIL(query.IsComplete())
-		in_progress = FALSE
+	timed_out = run_query(async)
+	if(query.GetErrorCode() == 2006) //2006 is the return code for "MySQL server has gone away" time-out error, meaning the connection has been lost to the server (if it's still alive)
+		log_sql("Executing query encountered returned a lost database connection (2006).")
+		SSdbcore.Disconnect()
+		if(SSdbcore.Connect()) //connection was restablished, reattempt the query
+			log_sql("Connection restablished")
+			timed_out = run_query(async)
+		else
+			log_sql("Executing query failed to restablish database connection.")
 	skip_next_is_complete = TRUE
 	var/error = QDELETED(query) ? "Query object deleted!" : query.GetError()
 	last_error = error
@@ -321,6 +349,15 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		log_query_debug("Slow query timeout detected.")
 		log_query_debug("Query used: [sql]")
 		slow_query_check()
+
+/datum/DBQuery/proc/run_query(async)
+	query = connection.BeginQuery(sql)
+	if(!async)
+		. = !query.WaitForCompletion()
+	else
+		in_progress = TRUE
+		UNTIL(query.IsComplete())
+		in_progress = FALSE
 
 /datum/DBQuery/proc/slow_query_check()
 	message_admins("HEY! A database query timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")

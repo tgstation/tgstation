@@ -17,7 +17,7 @@
 			return FALSE
 		if(new_owner.unconvertable)
 			return FALSE
-		if(new_owner.current && new_owner.current.has_trait(TRAIT_MINDSHIELD))
+		if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
 			return FALSE
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
@@ -137,7 +137,7 @@
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Repairing flash failed!</span>")
 	else
-		flash.crit_fail = 0
+		flash.burnt_out = FALSE
 		flash.update_icon()
 
 /datum/antagonist/rev/head/proc/admin_demote(datum/mind/target,mob/user)

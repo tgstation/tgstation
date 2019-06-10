@@ -114,6 +114,9 @@
 	log_combat(user, pushed_mob, "places", null, "onto [src]")
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='danger'>Throwing [pushed_mob] onto the table might hurt them!</span>")
+		return
 	var/added_passtable = FALSE
 	if(!pushed_mob.pass_flags & PASSTABLE)
 		added_passtable = TRUE
@@ -124,8 +127,8 @@
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
 	pushed_mob.Paralyze(40)
-	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
-								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
+	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto [src]!</span>", \
+								"<span class='userdanger'>[user] slams you onto [src]!</span>")
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
 	if(!ishuman(pushed_mob))
 		return
@@ -195,7 +198,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	var/list/debris = list()
 
-/obj/structure/table/glass/New()
+/obj/structure/table/glass/Initialize()
 	. = ..()
 	debris += new frame
 	debris += new /obj/item/shard
@@ -298,25 +301,20 @@
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/fancy, /obj/structure/table/wood/fancy/black)
+	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
-/obj/structure/table/wood/fancy/New()
-	// New() is used so that the /black subtype can override `icon` easily and
-	// the correct value will be used by the smoothing subsystem.
+/obj/structure/table/wood/fancy/Initialize()
 	. = ..()
 	// Needs to be set dynamically because table smooth sprites are 32x34,
 	// which the editor treats as a two-tile-tall object. The sprites are that
 	// size so that the north/south corners look nice - examine the detail on
 	// the sprites in the editor to see why.
-	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
+	icon = smooth_icon
 
 /obj/structure/table/wood/fancy/black
 	icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
-
-/obj/structure/table/wood/fancy/black/New()
-	. = ..()
-	// Ditto above.
-	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /*
  * Reinforced tables
@@ -370,9 +368,9 @@
 	buildstackamount = 1
 	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
 
-/obj/structure/table/reinforced/brass/New()
+/obj/structure/table/reinforced/brass/Initialize()
+	. = ..()
 	change_construction_value(2)
-	..()
 
 /obj/structure/table/reinforced/brass/Destroy()
 	change_construction_value(-2)
@@ -418,13 +416,13 @@
 	buildstack = /obj/item/stack/sheet/mineral/silver
 	smooth = SMOOTH_FALSE
 	can_buckle = 1
-	buckle_lying = 1
+	buckle_lying = -1
 	buckle_requires_restraints = 1
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/structure/table/optable/New()
-	..()
+/obj/structure/table/optable/Initialize()
+	. = ..()
 	for(var/direction in GLOB.cardinals)
 		computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
 		if(computer)

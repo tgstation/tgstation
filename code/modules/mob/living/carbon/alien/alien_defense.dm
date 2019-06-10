@@ -5,7 +5,7 @@
 /mob/living/carbon/alien/get_ear_protection()
 	return 2 //no ears
 
-/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush)
+/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..(AM, skipcatch = TRUE, hitpush = FALSE)
 
 

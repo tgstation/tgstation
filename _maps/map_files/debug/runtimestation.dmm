@@ -66,7 +66,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/structure/closet/secure_closet/engineering_electrical{
 	locked = 0
@@ -112,7 +112,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Gravity Generator APC";
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -542,7 +542,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -619,15 +619,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bP" = (
-/obj/item/storage/box/beakers,
-/obj/item/storage/box/syringes,
-/obj/structure/table,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/syringe,
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bQ" = (
@@ -656,7 +652,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -964,6 +960,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/gun/magic/wand/resurrection/debug,
+/obj/item/gun/magic/wand/death/debug{
+	pixel_y = 10
+	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -1045,7 +1046,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
@@ -1082,7 +1083,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -1092,7 +1093,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable{
@@ -1306,7 +1307,7 @@
 "dO" = (
 /obj/structure/table,
 /obj/machinery/light,
-/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dP" = (
@@ -1499,11 +1500,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"er" = (
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/wand/resurrection/debug,
-/turf/open/floor/plasteel,
-/area/medical/medbay)
 "es" = (
 /obj/machinery/light,
 /obj/machinery/clonepod,
@@ -1579,7 +1575,6 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "eD" = (
-/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "eE" = (
@@ -1619,12 +1614,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"eI" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
 "eJ" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -1645,7 +1634,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -1666,12 +1655,11 @@
 /area/quartermaster/storage)
 "eP" = (
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -25
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -2068,7 +2056,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -2157,7 +2145,7 @@
 "fS" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -2287,12 +2275,11 @@
 /area/quartermaster/miningoffice)
 "gi" = (
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/machinery/airalarm/unlocked{
 	pixel_x = 32
@@ -2515,10 +2502,13 @@
 "hD" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/structure/closet/secure_closet/chemical/heisenberg{
+	locked = 0
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
@@ -2567,7 +2557,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 1;
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -2589,6 +2579,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"nq" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "ny" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
@@ -2770,6 +2766,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"EX" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/table,
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/plasteel,
@@ -2909,6 +2915,10 @@
 "Xg" = (
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/vending/syndichem{
+	onstation = 0;
+	req_access = null
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
@@ -6310,7 +6320,7 @@ gG
 ii
 dy
 dm
-dK
+dM
 cN
 Tt
 vm
@@ -7311,18 +7321,18 @@ cD
 bE
 bE
 cN
+dK
+do
+dz
+EG
+gy
+dz
+dz
+gy
+EG
+dz
+do
 cZ
-do
-dz
-EG
-gy
-dz
-dz
-gy
-EG
-dz
-do
-dM
 cN
 Tt
 Rb
@@ -7592,13 +7602,13 @@ dC
 dC
 dC
 dC
-eI
 eW
+nq
 dC
 dC
 dC
 dC
-eI
+eW
 vv
 fO
 fO
@@ -8132,7 +8142,7 @@ aI
 aI
 ak
 Ly
-pQ
+EX
 Xg
 Ce
 oV
@@ -8780,7 +8790,7 @@ af
 by
 cz
 by
-er
+cm
 es
 by
 eu

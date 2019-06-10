@@ -1,0 +1,6 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - rscadd: "Ethereals now have a stomach that stores their charge."
+  - bugfix: "Ethereals are no longer immune to disgust."
+  - balance: "Liquid electricity is now better at restoring charge to ethereals."

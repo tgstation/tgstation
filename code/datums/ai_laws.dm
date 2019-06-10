@@ -423,13 +423,14 @@
 		zeroth = null
 		zeroth_borg = null
 		return
-	else
-		if(owner && owner.mind && owner.mind.special_role)
+	if(owner?.mind?.special_role)
+		return
+	if (istype(owner, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/A=owner
+		if(A?.deployed_shell?.mind?.special_role)
 			return
-		else
-			zeroth = null
-			zeroth_borg = null
-			return
+	zeroth = null
+	zeroth_borg = null
 
 /datum/ai_laws/proc/clear_law_sixsixsix(force)
 	if(force || !is_devil(owner))

@@ -1,7 +1,7 @@
 
 /obj
-	var/crit_fail = FALSE
 	animate_movement = 2
+	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
@@ -124,7 +124,7 @@
 			if ((M.client && M.machine == src))
 				is_in_use = TRUE
 				ui_interact(M)
-		if(isAI(usr) || iscyborg(usr) || IsAdminGhost(usr))
+		if(issilicon(usr) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = TRUE
@@ -203,9 +203,6 @@
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
-/obj/get_spans()
-	return ..() | SPAN_ROBOT
-
 /obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
@@ -248,3 +245,8 @@
 		current_skin = choice
 		icon_state = unique_reskin[choice]
 		to_chat(M, "[src] is now skinned as '[choice].'")
+
+/obj/analyzer_act(mob/living/user, obj/item/I)
+	if(atmosanalyzer_scan(user, src))
+		return TRUE
+	return ..()

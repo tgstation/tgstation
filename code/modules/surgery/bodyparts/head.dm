@@ -119,6 +119,9 @@
 				for(var/datum/action/item_action/hands_free/activate_pill/AP in I.actions)
 					qdel(AP)
 			I.forceMove(T)
+	eyes = null
+	ears = null
+	tongue = null
 
 /obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
 	var/mob/living/carbon/C
@@ -128,7 +131,7 @@
 		C = owner
 
 	real_name = C.real_name
-	if(C.has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(C, TRAIT_HUSK))
 		real_name = "Unknown"
 		hair_style = "Bald"
 		facial_hair_style = "Shaved"
@@ -231,13 +234,13 @@
 			. += lips_overlay
 
 		// eyes
-		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes", -BODY_LAYER, SOUTH)
+		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 		. += eyes_overlay
-		if(!eyes)
-			eyes_overlay.icon_state = "eyes_missing"
+		if(eyes)
+			eyes_overlay.icon_state = eyes.eye_icon_state
 
-		else if(eyes.eye_color)
-			eyes_overlay.color = "#" + eyes.eye_color
+			if(eyes.eye_color)
+				eyes_overlay.color = "#" + eyes.eye_color
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'

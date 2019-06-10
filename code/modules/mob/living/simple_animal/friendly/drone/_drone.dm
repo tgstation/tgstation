@@ -37,6 +37,7 @@
 	gender = NEUTER
 	mob_biotypes = list(MOB_ROBOTIC)
 	speak_emote = list("chirps")
+	speech_span = SPAN_ROBOT
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
@@ -92,7 +93,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, SLOT_HEAD)
 
-	access_card.item_flags |= NODROP
+	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -132,6 +133,12 @@
 	if(!picked)
 		pickVisualAppearence()
 
+/mob/living/simple_animal/drone/auto_deadmin_on_login()
+	if(!client?.holder)
+		return TRUE
+	if(CONFIG_GET(flag/auto_deadmin_silicons) || (client.prefs?.toggles & DEADMIN_POSITION_SILICON))
+		return client.holder.auto_deadmin()
+	return ..()
 
 /mob/living/simple_animal/drone/death(gibbed)
 	..(gibbed)
@@ -271,5 +278,5 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring

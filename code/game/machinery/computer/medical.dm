@@ -546,6 +546,7 @@
 						P.info += "<B>Medical Record Lost!</B><BR>"
 						P.name = text("MR-[] '[]'", GLOB.data_core.medicalPrintCount, "Record Lost")
 					P.info += "</TT>"
+					P.update_icon()
 					src.printing = null
 
 	src.add_fingerprint(usr)
@@ -583,7 +584,7 @@
 	if(user)
 		if(message)
 			if(authenticated)
-				if(user.canUseTopic(src))
+				if(user.canUseTopic(src, BE_CLOSE))
 					if(!record1 || record1 == active1)
 						if(!record2 || record2 == active2)
 							return 1

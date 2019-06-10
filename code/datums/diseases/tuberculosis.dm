@@ -3,8 +3,8 @@
 	name = "Fungal tuberculosis"
 	max_stages = 5
 	spread_text = "Airborne"
-	cure_text = "Spaceacillin & salbutamol"
-	cures = list("spaceacillin", "salbutamol")
+	cure_text = "Spaceacillin & Perfluorodecalin"
+	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/perfluorodecalin)
 	agent = "Fungal Tubercle bacillus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 5//like hell are you getting out of hell
@@ -52,7 +52,7 @@
 			if(prob(3))
 				to_chat(affected_mob, "<span class='warning'><i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i></span>")
 				affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
-				affected_mob.nutrition = max(affected_mob.nutrition - 100, 0)
+				affected_mob.adjust_nutrition(-100)
 			if(prob(15))
 				to_chat(affected_mob, "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>")
 				affected_mob.adjust_bodytemperature(40)

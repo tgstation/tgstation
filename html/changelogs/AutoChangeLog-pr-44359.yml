@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - tweak: "Replaced the water tank in the ashlizard base with a puddle."

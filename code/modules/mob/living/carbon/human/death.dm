@@ -6,9 +6,9 @@
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
-		new /obj/effect/gibspawner/human(drop_location(), dna, get_static_viruses())
+		new /obj/effect/gibspawner/human(drop_location(), src, get_static_viruses())
 	else
-		new /obj/effect/gibspawner/humanbodypartless(drop_location(), dna, get_static_viruses())
+		new /obj/effect/gibspawner/human/bodypartless(drop_location(), src, get_static_viruses())
 
 /mob/living/carbon/human/spawn_dust(just_ash = FALSE)
 	if(just_ash)
@@ -47,13 +47,13 @@
 		hive.destroy_hive()
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	set_species(/datum/species/skeleton)
 	return 1
 
 
 /mob/living/carbon/proc/Drain()
 	become_husk(CHANGELING_DRAIN)
-	add_trait(TRAIT_NOCLONE, CHANGELING_DRAIN)
+	ADD_TRAIT(src, TRAIT_BADDNA, CHANGELING_DRAIN)
 	blood_volume = 0
 	return 1

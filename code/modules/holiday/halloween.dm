@@ -6,14 +6,14 @@
 //spooky recipes
 
 /datum/recipe/sugarcookie/spookyskull
-	reagents = list("flour" = 5, "sugar" = 5, "milk" = 5)
+	reagents = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/milk = 5)
 	items = list(
 		/obj/item/reagent_containers/food/snacks/egg,
 	)
 	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
 
 /datum/recipe/sugarcookie/spookycoffin
-	reagents = list("flour" = 5, "sugar" = 5, "coffee" = 5)
+	reagents = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/coffee = 5)
 	items = list(
 		/obj/item/reagent_containers/food/snacks/egg,
 	)

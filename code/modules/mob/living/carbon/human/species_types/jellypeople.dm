@@ -7,13 +7,14 @@
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
-	exotic_blood = "slimejelly"
+	exotic_blood = /datum/reagent/toxin/slimejelly
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	liked_food = MEAT
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -42,7 +43,7 @@
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 			H.blood_volume += 3
-			H.nutrition -= 2.5
+			H.adjust_nutrition(-2.5)
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
@@ -170,7 +171,7 @@
 			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 3
-		H.nutrition -= 2.5
+		H.adjust_nutrition(-2.5)
 
 	..()
 
@@ -330,7 +331,8 @@
 		return
 	switch(action)
 		if("swap")
-			var/mob/living/carbon/human/selected = locate(params["ref"])
+			var/datum/species/jelly/slime/SS = H.dna.species
+			var/mob/living/carbon/human/selected = locate(params["ref"]) in SS.bodies
 			if(!can_swap(selected))
 				return
 			SStgui.close_uis(src)
@@ -587,7 +589,9 @@
 /datum/species/jelly/stargazer/proc/link_mob(mob/living/M)
 	if(QDELETED(M) || M.stat == DEAD)
 		return FALSE
-	if(M.has_trait(TRAIT_MINDSHIELD)) //mindshield implant, no dice
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD)) //mindshield implant, no dice
+		return FALSE
+	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		return FALSE
 	if(M in linked_mobs)
 		return FALSE
@@ -674,9 +678,14 @@
 	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in options
 	if(!M)
 		return
-
+	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		to_chat(H, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+		return
 	var/msg = sanitize(input("Message:", "Telepathy") as text|null)
 	if(msg)
+		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+			to_chat(H, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+			return
 		log_directed_talk(H, M, msg, LOG_SAY, "slime telepathy")
 		to_chat(M, "<span class='notice'>You hear an alien voice in your head... </span><font color=#008CA2>[msg]</font>")
 		to_chat(H, "<span class='notice'>You telepathically said: \"[msg]\" to [M]</span>")

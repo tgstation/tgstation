@@ -89,8 +89,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	roundend_category = "devils"
 	antagpanel_category = "Devil"
 	job_rank = ROLE_DEVIL
-	//Don't delete upon mind destruction, otherwise soul re-selling will break.
-	delete_on_mind_deletion = FALSE
 	var/obligation
 	var/ban
 	var/bane
@@ -180,7 +178,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
-	owner.current.nutrition = NUTRITION_LEVEL_FULL
+	owner.current.set_nutrition(NUTRITION_LEVEL_FULL)
 	to_chat(owner.current, "<span class='warning'>You feel satiated as you received a new soul.</span>")
 	update_hud()
 	switch(SOULVALUE)
@@ -391,7 +389,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(BANISH_FORMALDYHIDE)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
-				return H.reagents.has_reagent("formaldehyde")
+				return H.reagents.has_reagent(/datum/reagent/toxin/formaldehyde)
 			return 0
 		if(BANISH_RUNES)
 			if(body)
@@ -477,7 +475,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
 					A.convert_to_archdevil()
 	else
-		throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
+		CRASH("Unable to find a blobstart landmark for hellish resurrection")
 
 
 /datum/antagonist/devil/proc/update_hud()

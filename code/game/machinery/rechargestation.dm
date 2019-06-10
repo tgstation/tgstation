@@ -10,7 +10,7 @@
 	req_access = list(ACCESS_ROBOTICS)
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/cyborgrecharger
-	occupant_typecache = list(/mob/living/silicon/robot)
+	occupant_typecache = list(/mob/living/silicon/robot, /mob/living/carbon/human)
 	var/recharge_speed
 	var/repairs
 
@@ -80,14 +80,12 @@
 
 /obj/machinery/recharge_station/open_machine()
 	. = ..()
-	if(iscyborg(occupant))
-		use_power = IDLE_POWER_USE
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/recharge_station/close_machine()
 	. = ..()
 	if(occupant)
-		if(iscyborg(occupant))
-			use_power = ACTIVE_POWER_USE
+		use_power = ACTIVE_POWER_USE //It always tries to charge, even if it can't.
 		add_fingerprint(occupant)
 
 /obj/machinery/recharge_station/update_icon()
@@ -104,17 +102,7 @@
 	update_icon()
 
 /obj/machinery/recharge_station/proc/process_occupant()
-	if(occupant && iscyborg(occupant))
-		var/mob/living/silicon/robot/R = occupant
-		restock_modules()
-		if(repairs)
-			R.heal_bodypart_damage(repairs, repairs - 1)
-		if(R.cell)
-			R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
+	if(!occupant)
+		return
+	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed, repairs)
 
-/obj/machinery/recharge_station/proc/restock_modules()
-	if(occupant)
-		var/mob/living/silicon/robot/R = occupant
-		if(R && R.module)
-			var/coeff = recharge_speed * 0.005
-			R.module.respawn_consumable(R, coeff)

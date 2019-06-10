@@ -100,7 +100,7 @@
 		name = "Show Buttons"
 	else
 		name = "Hide Buttons"
-	UpdateIcon()
+	update_icon()
 	usr.update_action_buttons()
 
 /obj/screen/movable/action_button/hide_toggle/AltClick(mob/user)
@@ -121,9 +121,9 @@
 	hide_icon = settings["toggle_icon"]
 	hide_state = settings["toggle_hide"]
 	show_state = settings["toggle_show"]
-	UpdateIcon()
+	update_icon()
 
-/obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
+/obj/screen/movable/action_button/hide_toggle/update_icon()
 	cut_overlays()
 	add_overlay(mutable_appearance(hide_icon, hidden ? show_state : hide_state))
 

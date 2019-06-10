@@ -84,8 +84,8 @@
 				print_paper()
 
 		if("Claim")
-			var/datum/bounty/B = locate(href_list["d_rec"])
-			if(B in GLOB.bounties_list)
+			var/datum/bounty/B = locate(href_list["d_rec"]) in GLOB.bounties_list
+			if(B)
 				B.claim()
 
 	if(href_list["refresh"])

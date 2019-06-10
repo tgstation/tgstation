@@ -18,7 +18,7 @@
 
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
 
 /obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
 	if(rand(2)>1)
@@ -43,7 +43,7 @@
 	. = list()
 	if(!isinhands)
 		var/bloody = FALSE
-		IF_HAS_BLOOD_DNA(src)
+		if(HAS_BLOOD_DNA(src))
 			bloody = TRUE
 		else
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]

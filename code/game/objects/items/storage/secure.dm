@@ -26,7 +26,7 @@
 
 /obj/item/storage/secure/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 14
 
@@ -136,7 +136,7 @@
 
 /obj/item/storage/secure/briefcase/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 21
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
@@ -146,7 +146,7 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	for(var/i = 0, i < STR.max_items - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
 
@@ -170,8 +170,8 @@
 
 /obj/item/storage/secure/safe/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.cant_hold = typecacheof(list(/obj/item/storage/secure/briefcase))
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
 	STR.max_w_class = 8						//??
 
 /obj/item/storage/secure/safe/PopulateContents()

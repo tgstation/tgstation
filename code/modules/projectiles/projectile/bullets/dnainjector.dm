@@ -12,7 +12,7 @@
 			if(M.can_inject(null, FALSE, def_zone, FALSE))
 				if(injector.inject(M, firer))
 					QDEL_NULL(injector)
-					return TRUE
+					return BULLET_ACT_HIT
 			else
 				blocked = 100
 				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \

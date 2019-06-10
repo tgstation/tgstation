@@ -1,5 +1,7 @@
 GLOBAL_LIST_EMPTY(uplinks)
 
+#define PEN_ROTATIONS 2
+
 /**
  * Uplinks
  *
@@ -25,9 +27,12 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/unlock_code
 	var/failsafe_code
 
+	var/list/previous_attempts
+
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
@@ -38,13 +43,14 @@ GLOBAL_LIST_EMPTY(uplinks)
 		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, .proc/new_implant)
 	else if(istype(parent, /obj/item/pda))
 		RegisterSignal(parent, COMSIG_PDA_CHANGE_RINGTONE, .proc/new_ringtone)
+		RegisterSignal(parent, COMSIG_PDA_CHECK_DETONATE, .proc/check_detonate)
 	else if(istype(parent, /obj/item/radio))
 		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
 	GLOB.uplinks += src
-	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	uplink_items = get_uplink_items(_gamemode, TRUE, allow_restricted)
 
 	if(_owner)
 		owner = _owner
@@ -60,6 +66,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
+
+	previous_attempts = list()
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/U)
 	lockable |= U.lockable
@@ -99,7 +107,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 			var/cost = UI.refund_amount || UI.cost
 			if(I.type == path && UI.refundable && I.check_uplink_validity())
 				telecrystals += cost
-				purchase_log.total_spent -= cost
+				if(purchase_log)
+					purchase_log.total_spent -= cost
 				to_chat(user, "<span class='notice'>[I] refunded.</span>")
 				qdel(I)
 				return
@@ -147,6 +156,16 @@ GLOBAL_LIST_EMPTY(uplinks)
 							is_inaccessible = 0
 					if(is_inaccessible)
 						continue
+				if(I.restricted_species)
+					if(ishuman(user))
+						var/is_inaccessible = TRUE
+						var/mob/living/carbon/human/H = user
+						for(var/F in I.restricted_species)
+							if(F == H.dna.species.id)
+								is_inaccessible = FALSE
+								break
+						if(is_inaccessible)
+							continue
 				cat["items"] += list(list(
 					"name" = I.name,
 					"cost" = I.cost,
@@ -234,6 +253,9 @@ GLOBAL_LIST_EMPTY(uplinks)
 	master.mode = 0
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
+/datum/component/uplink/proc/check_detonate()
+	return COMPONENT_PDA_NO_DETONATE
+
 // Radio signal responses
 
 /datum/component/uplink/proc/new_frequency(datum/source, list/arguments)
@@ -251,14 +273,19 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /datum/component/uplink/proc/pen_rotation(datum/source, degrees, mob/living/carbon/user)
 	var/obj/item/pen/master = parent
-	if(degrees != unlock_code)
-		if(degrees == failsafe_code) //Getting failsafes on pens is risky business
-			failsafe()
-		return
-	locked = FALSE
-	master.degrees = 0
-	interact(null, user)
-	to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
+	previous_attempts += degrees
+	if(length(previous_attempts) > PEN_ROTATIONS)
+		popleft(previous_attempts)
+
+	if(compare_list(previous_attempts, unlock_code))
+		locked = FALSE
+		previous_attempts.Cut()
+		master.degrees = 0
+		interact(null, user)
+		to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
+
+	else if(compare_list(previous_attempts, failsafe_code))
+		failsafe()
 
 /datum/component/uplink/proc/setup_unlock_code()
 	unlock_code = generate_code()
@@ -268,7 +295,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	else if(istype(parent,/obj/item/radio))
 		unlock_note = "<B>Radio Frequency:</B> [format_frequency(unlock_code)] ([P.name])."
 	else if(istype(parent,/obj/item/pen))
-		unlock_note = "<B>Uplink Degrees:</B> [unlock_code] ([P.name])."
+		unlock_note = "<B>Uplink Degrees:</B> [english_list(unlock_code)] ([P.name])."
 
 /datum/component/uplink/proc/generate_code()
 	if(istype(parent,/obj/item/pda))
@@ -276,7 +303,10 @@ GLOBAL_LIST_EMPTY(uplinks)
 	else if(istype(parent,/obj/item/radio))
 		return sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 	else if(istype(parent,/obj/item/pen))
-		return rand(1, 360)
+		var/list/L = list()
+		for(var/i in 1 to PEN_ROTATIONS)
+			L += rand(1, 360)
+		return L
 
 /datum/component/uplink/proc/failsafe()
 	if(!parent)

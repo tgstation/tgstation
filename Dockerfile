@@ -1,4 +1,4 @@
-FROM tgstation/byond:512.1453 as base
+FROM tgstation/byond:512.1463 as base
 
 FROM base as build_base
 

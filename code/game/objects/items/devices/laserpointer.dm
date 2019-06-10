@@ -28,14 +28,14 @@
 /obj/item/laser_pointer/purple
 	pointer_icon_state = "purple_laser"
 
-/obj/item/laser_pointer/New()
-	..()
+/obj/item/laser_pointer/Initialize()
+	. = ..()
 	diode = new(src)
 	if(!pointer_icon_state)
 		pointer_icon_state = pick("red_laser","green_laser","blue_laser","purple_laser")
 
-/obj/item/laser_pointer/upgraded/New()
-	..()
+/obj/item/laser_pointer/upgraded/Initialize()
+	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
 
 /obj/item/laser_pointer/attackby(obj/item/W, mob/user, params)
@@ -77,7 +77,7 @@
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	if(user.has_trait(TRAIT_NOGUNS))
+	if(HAS_TRAIT(user, TRAIT_NOGUNS))
 		to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
 		return
 	if(ishuman(user))

@@ -81,6 +81,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 		if("setMusicVolume")
 			data = setMusicVolume(arglist(params))
+		if("swaptodarkmode")
+			swaptodarkmode()
+		if("swaptolightmode")
+			swaptolightmode()
 
 	if(data)
 		ehjax_send(data = data)
@@ -115,12 +119,16 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
 
-/datum/chatOutput/proc/sendMusic(music, pitch)
+/datum/chatOutput/proc/sendMusic(music, list/extra_data)
 	if(!findtext(music, GLOB.is_http_protocol))
 		return
 	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
-	if(pitch)
-		music_data["musicRate"] = pitch
+
+	if(extra_data?.len)
+		music_data["musicRate"] = extra_data["pitch"]
+		music_data["musicSeek"] = extra_data["start"]
+		music_data["musicHalt"] = extra_data["end"]
+
 	ehjax_send(data = music_data)
 
 /datum/chatOutput/proc/stopMusic()
@@ -154,7 +162,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
-				if (world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only=TRUE))
+				if (world.IsBanned(row["ckey"], row["ip"], row["compid"], real_bans_only=TRUE))
 					found = row
 					break
 
@@ -179,23 +187,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	if(!target)
 		return
 
-	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
-	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
-	if (istype(target, /savefile))
-		CRASH("Invalid message! [message]")
-
-	if(!istext(message))
-		if (istype(message, /image) || istype(message, /sound))
-			CRASH("Invalid message! [message]")
-		return
-
 	if(target == world)
 		target = GLOB.clients
 
 	var/original_message = message
-	//Some macros remain in the string even after parsing and fuck up the eventual output
-	message = replacetext(message, "\improper", "")
-	message = replacetext(message, "\proper", "")
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
@@ -240,3 +235,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
+
+/datum/chatOutput/proc/swaptolightmode() //Dark mode light mode stuff. Yell at KMC if this breaks! (See darkmode.dm for documentation)
+	owner.force_white_theme()
+
+/datum/chatOutput/proc/swaptodarkmode()
+	owner.force_dark_theme()

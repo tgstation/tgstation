@@ -18,6 +18,7 @@
 	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
+	var/forensicPrintCount = 0
 	actions_types = list(/datum/action/item_action/displayDetectiveScanResults)
 
 /datum/action/item_action/displayDetectiveScanResults
@@ -42,12 +43,17 @@
 /obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper
 	var/obj/item/paper/P = new(get_turf(src))
-	P.name = "paper- 'Scanner Report'"
-	P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
+
+	//This could be a global count like sec and med record printouts. See GLOB.data_core.medicalPrintCount AKA datacore.dm
+	var frNum = ++forensicPrintCount
+
+	P.name = text("FR-[] 'Forensic Record'", frNum)
+	P.info = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
 	P.info += jointext(log, "<BR>")
 	P.info += "<HR><B>Notes:</B><BR>"
 	P.info_links = P.info
 	P.updateinfolinks()
+	P.update_icon()
 
 	if(ismob(loc))
 		var/mob/M = loc

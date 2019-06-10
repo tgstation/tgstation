@@ -42,7 +42,7 @@
 	vendingMachines.Remove(originMachine)
 	originMachine.shut_up = 0
 	originMachine.shoot_inventory = 1
-	atom_of_interest = originMachine
+	announce_to_ghosts(originMachine)
 
 /datum/round_event/brand_intelligence/tick()
 	if(!originMachine || QDELETED(originMachine) || originMachine.shut_up || originMachine.wires.is_all_cut())	//if the original vending machine is missing or has it's voice switch flipped

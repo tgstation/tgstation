@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - rscadd: "You can now craft bolas and spears with sinew restraints."

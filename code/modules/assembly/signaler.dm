@@ -21,12 +21,14 @@
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.transferItemToLoc(src, user, TRUE)
 	suicider = user
-	return MANUAL_SUICIDE
+	return MANUAL_SUICIDE_NONLETHAL
 
 /obj/item/assembly/signaler/proc/manual_suicide(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user]'s \the [src] receives a signal, killing [user.p_them()] instantly!</span>")
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
+	user.set_suicide(TRUE)
+	user.suicide_log()
 
 /obj/item/assembly/signaler/Initialize()
 	. = ..()
@@ -58,18 +60,12 @@
 <A href='byond://?src=[REF(src)];send=1'>Send Signal</A><BR>
 <B>Frequency/Code</B> for signaler:<BR>
 Frequency:
-<A href='byond://?src=[REF(src)];freq=-10'>-</A>
-<A href='byond://?src=[REF(src)];freq=-2'>-</A>
 [format_frequency(src.frequency)]
-<A href='byond://?src=[REF(src)];freq=2'>+</A>
-<A href='byond://?src=[REF(src)];freq=10'>+</A><BR>
+<A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
 
 Code:
-<A href='byond://?src=[REF(src)];code=-5'>-</A>
-<A href='byond://?src=[REF(src)];code=-1'>-</A>
 [src.code]
-<A href='byond://?src=[REF(src)];code=1'>+</A>
-<A href='byond://?src=[REF(src)];code=5'>+</A><BR>
+<A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
 [t1]
 </TT>"}
 		user << browse(dat, "window=radio")
@@ -85,17 +81,23 @@ Code:
 		onclose(usr, "radio")
 		return
 
-	if (href_list["freq"])
-		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
-			new_frequency = sanitize_frequency(new_frequency)
-		set_frequency(new_frequency)
+	if (href_list["set"])
 
-	if(href_list["code"])
-		src.code += text2num(href_list["code"])
-		src.code = round(src.code)
-		src.code = min(100, src.code)
-		src.code = max(1, src.code)
+		if(href_list["set"] == "freq")
+			var/new_freq = input(usr, "Input a new signalling frequency", "Remote Signaller Frequency", format_frequency(frequency)) as num|null
+			if(!usr.canUseTopic(src, BE_CLOSE))
+				return
+			new_freq = unformat_frequency(new_freq)
+			new_freq = sanitize_frequency(new_freq, TRUE)
+			set_frequency(new_freq)
+
+		if(href_list["set"] == "code")
+			var/new_code = input(usr, "Input a new signalling code", "Remote Signaller Code", code) as num|null
+			if(!usr.canUseTopic(src, BE_CLOSE))
+				return
+			new_code = round(new_code)
+			new_code = CLAMP(new_code, 1, 100)
+			code = new_code
 
 	if(href_list["send"])
 		spawn( 0 )
