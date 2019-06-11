@@ -440,14 +440,10 @@
 /obj/item/twohanded/dualsaber/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You deconstruct the double-bladed energy sword into two energy swords.</span>")
-		var/obj/item/weapon/twohanded/dualsaber = W
-		var/obj/item/weapon/melee/energy/sword/saber/newSabers = new(user.loc, 2)
-		if(W.hacked)
-			newSabers.hacked = TRUE
-			newSabers.item_color = "rainbow"
-		user.unEquip(W)
-		qdel(W)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
+		for(var/_i in 1 to 2)
+			new /obj/item/melee/transforming/energy/sword/saber(user.loc)
+		qdel(src)
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
@@ -462,9 +458,12 @@
 	icon_state = "duallass0"
 	name = "double-bladed energy cutlass"
 	desc = "You are a pirate!"
-	light_color = "#ff0000"//R E D
+	light_color = "#ff0000"
 	
-/obj/item/twohanded/dualsaber/update_icon()
+/obj/item/twohanded/dualsaber/pirate/Initialize()
+	light color = "#ff0000"
+
+/obj/item/twohanded/dualsaber/pirate/update_icon()
 	if(wielded)
 		icon_state = "duallass[wielded]"
 	else
@@ -474,10 +473,9 @@
 /obj/item/twohanded/dualsaber/pirate/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You deconstruct the double-bladed energy cutlass into two energy cutlasses.</span>")
-		var/obj/item/weapon/twohanded/dualsaber/pirate = W
-		var/obj/item/weapon/melee/energy/sword/pirate/newLasses = new(user.loc, 2)
-		user.unEquip(W)
-		qdel(W)
+		for(var/_i in 1 to 2)
+			new /obj/item/melee/transforming/energy/sword/pirate(user.loc)
+		qdel(src)
 	else
 		return ..()
 
