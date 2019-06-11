@@ -97,7 +97,7 @@
 	key_third_person = "wags"
 	message = "wags their tail."
 
-/datum/emote/living/carbon/human/wag/run_emote(mob/user, params)
+/datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
 		return
@@ -109,7 +109,7 @@
 	else
 		H.dna.species.stop_wagging_tail(H)
 
-/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE , intentional)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
@@ -145,7 +145,7 @@
 	else
 		. = "closes " + message
 
-/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user

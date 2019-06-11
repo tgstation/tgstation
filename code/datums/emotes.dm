@@ -24,12 +24,7 @@
 	var/vary = FALSE	//used for the honk borg emote
 	var/only_forced_audio = FALSE //can only code call this event instead of the player.
 
-	var/static/list/emote_list = list()
-
-
 /datum/emote/New()
-	if(key_third_person)
-		emote_list[key_third_person] = src
 	if (ispath(mob_type_allowed_typecache))
 		switch (mob_type_allowed_typecache)
 			if (/mob)
