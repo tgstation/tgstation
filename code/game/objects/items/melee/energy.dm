@@ -222,7 +222,7 @@
 			energy cutlasses, making a single double-bladed weapon! \
 			Yarr harr.</span>")
 		var/obj/item/weapon/melee/energy/sword/pirate/other_elass = W
-		var/obj/item/weapon/twohanded/duallass/newCutlass = new(user.loc)
+		var/obj/item/weapon/twohanded/dualsaber/lass/newCutlass = new(user.loc)
 		user.unEquip(W)
 		user.unEquip(src)
 		qdel(W)
