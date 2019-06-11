@@ -241,7 +241,7 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/card/id/C = H.get_idcard(TRUE)
-		if(C && C.registered_account && !(C.registered_account.account_balance < 50))
+		if(C?.registered_account && !(C.registered_account.account_balance < 50))
 			C.registered_account.adjust_money(-50)
 			to_chat(H, "<span class='danger'>Your wallet feels lighter!</span>")
 			if(ishuman(firer))
