@@ -44,7 +44,7 @@
 		ashie_team = team
 		objectives |= ashie_team.objectives
 	else
-		ashie_team = new()
+		ashie_team = new
 
 /datum/antagonist/ashwalker/get_team()
 	return ashie_team
