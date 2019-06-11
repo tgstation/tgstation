@@ -99,8 +99,7 @@
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	var/obj/mecha/M = in_mecha()
 	if(M)
-		M.emp_act(EMP_LIGHT)
-	qdel(src)
+		M.emp_act(EMP_HEAVY)
 
 /obj/item/mecha_parts/mecha_tracking/ai_control
 	name = "exosuit AI control beacon"

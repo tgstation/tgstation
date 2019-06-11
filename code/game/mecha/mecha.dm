@@ -37,6 +37,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
+	var/equipment_disabled = 0 //disabled due to EMP
 	var/obj/item/stock_parts/cell/cell
 	var/state = 0
 	var/last_message = 0
@@ -155,6 +156,10 @@
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
 	diag_hud_set_mechtracking()
+	if(istype(src, /obj/mecha/combat)) //Auto-attaching a tracking beacon
+		var/obj/item/mecha_parts/mecha_tracking/N = new /obj/item/mecha_parts/mecha_tracking(src,1)
+		trackers += N
+		diag_hud_set_mechtracking()
 
 /obj/mecha/update_icon()
 	if (silicon_pilot && silicon_icon_state)
@@ -220,6 +225,14 @@
 
 	GLOB.mechas_list -= src //global mech list
 	return ..()
+
+/obj/mecha/proc/restore_equipment()
+	equipment_disabled = 0
+	SEND_SOUND(occupant, sound('sound/items/timer.ogg', volume=50))
+	to_chat(occupant, "<span=notice>Equipment controller rebooted successfuly.</span>")
+	if(istype(src, /obj/mecha/combat))
+		mouse_pointer = 'icons/mecha/mecha_mouse.dmi'
+		occupant.update_mouse_pointer()
 
 /obj/mecha/CheckParts(list/parts_list)
 	..()
