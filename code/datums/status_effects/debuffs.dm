@@ -483,7 +483,7 @@
 	
 /datum/status_effect/necropolis_curse/hivemind
 	id = "hivecurse"
-	duration = 1200
+	duration = 600
 
 /datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
 	. = ..()
