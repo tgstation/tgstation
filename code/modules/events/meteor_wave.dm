@@ -52,6 +52,7 @@
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))
 		spawn_meteors(5, wave_type) //meteor list types defined in gamemode/meteor/meteors.dm
+		SSshuttle.shuttle_purchase_requirements_met |= "meteor"
 
 /datum/round_event_control/meteor_wave/threatening
 	name = "Meteor Wave: Threatening"
