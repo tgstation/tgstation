@@ -287,6 +287,7 @@
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
+	var/hackable = TRUE
 	var/hacked = FALSE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
@@ -444,13 +445,16 @@
 			new /obj/item/melee/transforming/energy/sword/saber(user.loc)
 		qdel(src)
 	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!hacked)
-			hacked = TRUE
-			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
-			item_color = "rainbow"
-			update_icon()
+		if(hackable)
+			if(!hacked)
+				hacked = TRUE
+				to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
+				item_color = "rainbow"
+				update_icon()
+			else
+				to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
 		else
-			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+		 return ..()
 	else
 		return ..()
 
@@ -460,6 +464,7 @@
 	desc = "You are a pirate!"
 	possible_colors = null
 	light_color = "#ff0000"
+	var/hackable = FALSE
 
 /obj/item/twohanded/dualsaber/pirate/update_icon()
 	if(wielded)
@@ -474,6 +479,8 @@
 		for(var/_i in 1 to 2)
 			new /obj/item/melee/transforming/energy/sword/pirate(user.loc)
 		qdel(src)
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
+		return
 	else
 		return ..()
 
