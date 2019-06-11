@@ -1329,12 +1329,12 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "dw" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
 /obj/item/reagent_containers/glass/bucket{
 	icon_state = "woodbucket";
 	item_state = "woodbucket"
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
