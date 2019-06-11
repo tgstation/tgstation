@@ -1,9 +1,3 @@
-
-
-#define EMPTY 1
-#define WIRED 2
-#define READY 3
-
 /obj/item/grenade/chem_grenade
 	name = "chemical grenade"
 	desc = "A custom made grenade."
@@ -579,7 +573,3 @@
 
 	beakers += B1
 	beakers += B2
-
-#undef READY
-#undef WIRED
-#undef EMPTY

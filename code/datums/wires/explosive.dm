@@ -19,11 +19,10 @@
 	holder_type = /obj/item/grenade/chem_grenade
 	randomize = TRUE
 	var/fingerprint
-	var/assembly
 
 /datum/wires/explosive/chem_grenade/interactable(mob/user)
 	var/obj/item/grenade/chem_grenade/G = holder
-	if(G.stage == 2)
+	if(G.stage == WIRED)
 		return TRUE
 
 /datum/wires/explosive/chem_grenade/attach_assembly(color, obj/item/assembly/S)
@@ -36,11 +35,11 @@
 		G.landminemode = S
 		S.proximity_monitor.wire = TRUE
 	fingerprint = S.fingerprintslast
-	assembly = "[S.name]"
 	return ..()
 
 /datum/wires/explosive/chem_grenade/explode()
 	var/obj/item/grenade/chem_grenade/G = holder
+	var/obj/item/assembly/assembly = get_attached(get_wire(1))
 	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	G.prime()
