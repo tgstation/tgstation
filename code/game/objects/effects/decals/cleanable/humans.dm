@@ -78,15 +78,13 @@
 	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
-	set waitfor = 0
+	set waitfor = FALSE
+	var/list/diseases = list()
+	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, diseases)
 	var/direction = pick(directions)
-	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
+	for(var/i in 0 to pick(0, 200; 1, 150; 2, 50))
 		sleep(2)
 		if(i > 0)
-			var/list/datum/disease/diseases
-			var/datum/component/infective/infective = GetComponent(/datum/component/infective)
-			if(infective)
-				diseases = infective.diseases
 			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
 		if(!step_to(src, get_step(src, direction), 0))
 			break

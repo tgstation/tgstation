@@ -1,0 +1,7 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - balance: "Most high paying jobs have had their paychecks reduced"
+  - balance: "The payout bonus from the NEET quirk has been reduced"
+  - code_imp: "The maximum amount of departmental cash intake now has a hard cap"
+  - code_imp: "Economy subsistem vars are more sensibly named"
