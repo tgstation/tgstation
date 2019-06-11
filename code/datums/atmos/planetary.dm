@@ -14,9 +14,8 @@
 	restricted_gases = list(
 		/datum/gas/bz=10,
 		/datum/gas/miasma=10,
-		/datum/gas/nitrous_oxide=10,
 		/datum/gas/plasma=0.1,
-		/datum/gas/water_vapor=1,
+		/datum/gas/water_vapor=0.1,
 	)
 	restricted_chance = 50
 
@@ -24,4 +23,4 @@
 	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1
 
 	minimum_temp = 200
-	maximum_temp = 500
+	maximum_temp = 350
