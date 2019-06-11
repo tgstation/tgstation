@@ -86,7 +86,7 @@
 
 /obj/item/melee/transforming/energy/sword
 	name = "energy sword"
-	desc = "May the force be within you."
+	desc = "May the force be within you. You could combine two of them for some purpose..."
 	icon_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -192,7 +192,7 @@
 		qdel(W)
 		qdel(src)
 		user.put_in_hands(newSaber)
-	else if(istype(W, /obj/item/device/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			item_color = "rainbow"
@@ -214,6 +214,19 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	icon_state_on = "cutlass1"
 	light_color = "#ff0000"
+	
+/obj/item/melee/transforming/energy/sword/pirate/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/weapon/melee/energy/sword/pirate))
+		user << "<span class='notice'>You attach the ends of the two \
+			energy cutlasses, making a single double-bladed weapon! \
+			Yarr harr.</span>"
+		var/obj/item/weapon/melee/energy/sword/pirate/other_elass = W
+		var/obj/item/weapon/twohanded/duallass/newCutlass = new(user.loc)
+		user.unEquip(W)
+		user.unEquip(src)
+		qdel(W)
+		qdel(src)
+		user.put_in_hands(newCutlass)
 
 /obj/item/melee/transforming/energy/blade
 	name = "energy blade"
