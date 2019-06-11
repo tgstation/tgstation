@@ -21,7 +21,7 @@
 	explanation_text = "Protect the tendril at all costs."
 
 /datum/objective/nest/update_explanation_text()
-	..()
+	. = ..()
 	var/datum/team/ashwalkers/ashies = team
 	if(istype(ashies) && ashies.tendril)
 		explanation_text = "Protect \the [ashies.tendril] at all costs."
