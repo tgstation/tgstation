@@ -228,6 +228,8 @@
 		qdel(W)
 		qdel(src)
 		user.put_in_hands(newCutlass)
+	else
+		return ..()
 
 /obj/item/melee/transforming/energy/blade
 	name = "energy blade"
