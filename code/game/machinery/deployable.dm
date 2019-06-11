@@ -206,7 +206,7 @@
 	icon_state = "holobarrier1"
 
 /obj/structure/barricade/security/holobarricade/Initialize()
-	..()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
 	QDEL_IN(src, 120)
 
