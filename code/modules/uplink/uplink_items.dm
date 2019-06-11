@@ -368,18 +368,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/dangerous/doublesword
-	name = "Double-Bladed Energy Sword"
-	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
-			all energy projectiles, but requires two hands to wield."
-	item = /obj/item/twohanded/dualsaber
-	player_minimum = 25
-	cost = 16
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-
-/datum/uplink_item/dangerous/doublesword/get_discount()
-	return pick(4;0.8,2;0.65,1;0.5)
-
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
