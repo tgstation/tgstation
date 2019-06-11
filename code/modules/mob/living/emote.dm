@@ -266,6 +266,11 @@
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/scream/select_message_type(mob/user, intentional)
+	. = ..()
+	if(!intentional && isanimal(user))
+		return "makes a loud and pained whimper."
+
 /datum/emote/living/scowl
 	key = "scowl"
 	key_third_person = "scowls"
@@ -463,7 +468,7 @@
 		if(e in keys)
 			continue
 		E = emote_list[e]
-		if(E.can_run_emote(user, status_check = FALSE))
+		if(E.can_run_emote(user, status_check = FALSE , intentional = TRUE))
 			keys += E.key
 
 	keys = sortList(keys)

@@ -47,7 +47,7 @@
 	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
-	var/msg = select_message_type(user)
+	var/msg = select_message_type(user, intentional)
 	if(params && message_param)
 		msg = select_param(user, params)
 
@@ -92,7 +92,7 @@
 		message = replacetext(message, "%s", user.p_s())
 	return message
 
-/datum/emote/proc/select_message_type(mob/user)
+/datum/emote/proc/select_message_type(mob/user, intentional)
 	. = message
 	if(!muzzle_ignore && user.is_muzzled() && emote_type == EMOTE_AUDIBLE)
 		return "makes a [pick("strong ", "weak ", "")]noise."
