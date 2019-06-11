@@ -216,10 +216,15 @@
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
 	name = "Asteroid With Engines Strapped To It"
-	description = "A hollowed out asteroid with engines strapped to it, the hollowing procedure makes it very difficult to hijack but is very expensive. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
+	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
-	credit_cost = 15000
+	credit_cost = 0
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+
+/datum/map_template/shuttle/emergency/meteor/prerequisites_met()
+	if("meteor" in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
