@@ -56,6 +56,15 @@
 		Feedstop()
 		return 0
 
+	if(isanimal(M))
+		var/mob/living/simple_animal/S = M
+		if(S.damage_coeff[TOX] <= 0 && S.damage_coeff[CLONE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+			"This subject does not have life energy", "This subject is empty", \
+			"I am not satisified", "I can not feed from this subject", \
+			"I do not feel nourished", "This subject is not food")]!</span>")
+			return 0
+
 	if(isslime(M))
 		to_chat(src, "<span class='warning'><i>I can't latch onto another slime...</i></span>")
 		return 0
