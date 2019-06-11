@@ -1058,10 +1058,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
-/obj/item/cultivator{
-	icon_state = "rake";
-	name = "rake"
-	},
+/obj/item/cultivator/rake,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -1304,10 +1301,7 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/center,
-/obj/item/hatchet{
-	desc = "A very sharp axe blade upon a short wooden handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	icon_state = "woodhatchet"
-	},
+/obj/item/hatchet/wooden,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -1332,10 +1326,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/obj/item/reagent_containers/glass/bucket{
-	icon_state = "woodbucket";
-	item_state = "woodbucket"
-	},
+/obj/item/reagent_containers/glass/bucket/wooden,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
