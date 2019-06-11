@@ -29,7 +29,6 @@
 
 /datum/reagent/blob/zombifying_pods
 	name = "Zombifying Pods"
-	id = "zombifying_pods"
 	color = "#E88D5D"
 
 /datum/reagent/blob/zombifying_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)

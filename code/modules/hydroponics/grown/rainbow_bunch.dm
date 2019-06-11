@@ -16,7 +16,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_dead = "rainbowbunch-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("nutriment" = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/rainbow_flower
 	seed = /obj/item/seeds/rainbow_bunch
@@ -38,40 +38,40 @@
 		if(1)
 			item_color = "red"
 			color = "#DA0000"
-			list_reagents = list("redcrayonpowder" = 3)
+			list_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/red = 3)
 			desc += " This one is in a bright red color."
 		if(2)
 			item_color = "orange"
 			color = "#FF9300"
-			list_reagents = list("orangecrayonpowder" = 3)
+			list_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/orange = 3)
 			desc += " This one is in a citrus orange color."
 		if(3)
 			item_color = "yellow"
 			color = "#FFF200"
-			list_reagents = list("yellowcrayonpowder" = 3)
+			list_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/yellow = 3)
 			desc += " This one is in a bright yellow color."
 		if(4)
 			item_color = "green"
 			color = "#A8E61D"
-			list_reagents = list("greencrayonpowder" = 3)
+			list_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green = 3)
 			desc += " This one is in a grassy green color."
 		if(5)
 			item_color = "blue"
 			color = "#00B7EF"
-			list_reagents = list("bluecrayonpowder" = 3)
+			list_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/blue = 3)
 			desc += " This one is in a soothing blue color."
 		if(6)
 			item_color = "purple"
 			color = "#DA00FF"
-			list_reagents = list("purplecrayonpowder" = 3)
+			list_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/purple = 3)
 			desc += " This one is in a vibrant purple color."
 		if(7)
 			item_color = "black"
 			color = "#1C1C1C"
-			list_reagents = list("blackcrayonpowder" = 3)
+			list_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/black = 3)
 			desc += " This one is in a midnight black color."
 		if(8)
 			item_color = "white"
 			color = "#FFFFFF"
-			list_reagents = list("whitecrayonpowder" = 3)
+			list_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/white = 3)
 			desc += " This one is in a pure white color."

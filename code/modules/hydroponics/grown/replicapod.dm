@@ -31,7 +31,7 @@
 
 /obj/item/seeds/replicapod/on_reagent_change(changetype)
 	if(changetype == ADD_REAGENT)
-		var/datum/reagent/blood/B = reagents.has_reagent("blood")
+		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
 		if(B)
 			if(B.data["mind"] && B.data["cloneable"])
 				mind = B.data["mind"]
@@ -41,14 +41,14 @@
 				blood_type = B.data["blood_type"]
 				features = B.data["features"]
 				factions = B.data["factions"]
-				factions = B.data["quirks"]
+				quirks = B.data["quirks"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
 				log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
 			else
 				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
 
-	if(!reagents.has_reagent("blood"))
+	if(!reagents.has_reagent(/datum/reagent/blood))
 		mind = null
 		ckey = null
 		realName = null

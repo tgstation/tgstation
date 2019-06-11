@@ -337,6 +337,7 @@
 
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
+	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
 	in_melee = TRUE
 	return target.attack_animal(src)
 
@@ -406,12 +407,13 @@
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, 1)
-		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone())
+		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone(), src)
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
 		P.starting = startloc
 		P.firer = src
+		P.fired_from = src
 		P.yo = targeted_atom.y - startloc.y
 		P.xo = targeted_atom.x - startloc.x
 		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space

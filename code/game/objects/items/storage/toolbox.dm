@@ -147,7 +147,7 @@
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.silent = TRUE
 
 /obj/item/storage/toolbox/syndicate/PopulateContents()
@@ -187,7 +187,7 @@
 
 /obj/item/storage/toolbox/brass/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 28
 	STR.max_items = 28
@@ -225,7 +225,7 @@
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 20
 	STR.max_items = 10
 

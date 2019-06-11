@@ -29,26 +29,55 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
 			sale_items += I
 	if(allow_sales)
-		for(var/i in 1 to 3)
-			var/datum/uplink_item/I = pick_n_take(sale_items)
-			var/datum/uplink_item/A = new I.type
-			var/discount = A.get_discount()
-			var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
-			A.limited_stock = 1
-			I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
-			A.refundable = FALSE
-			if(A.cost >= 20) //Tough love for nuke ops
-				discount *= 0.5
-			A.cost = max(round(A.cost * discount),1)
-			A.category = "Discounted Gear"
-			A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
-			A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
-			A.item = I.item
+		var/datum/team/nuclear/nuclear_team
+		if (gamemode == /datum/game_mode/nuclear) 					// uplink code kind of needs a redesign
+			nuclear_team = locate() in GLOB.antagonist_teams	// the team discounts could be a in a GLOB with this design but it would make sense for them to be team specific...
+		if (!nuclear_team)
+			create_uplink_sales(3, "Discounted Gear", 1, sale_items, filtered_uplink_items)
+		else
+			if (!nuclear_team.team_discounts)
+				// create 5 unlimited stock discounts
+				create_uplink_sales(5, "Discounted Team Gear", -1, sale_items, filtered_uplink_items)
+				// Create 10 limited stock discounts
+				create_uplink_sales(10, "Limited Stock Team Gear", 1, sale_items, filtered_uplink_items)
+				nuclear_team.team_discounts = list("Discounted Team Gear" = filtered_uplink_items["Discounted Team Gear"], "Limited Stock Team Gear" = filtered_uplink_items["Limited Stock Team Gear"])
+			else
+				for(var/cat in nuclear_team.team_discounts)
+					for(var/item in nuclear_team.team_discounts[cat])
+						var/datum/uplink_item/D = nuclear_team.team_discounts[cat][item]
+						var/datum/uplink_item/O = filtered_uplink_items[initial(D.category)][initial(D.name)]
+						O.refundable = FALSE
 
-			if(!filtered_uplink_items[A.category])
-				filtered_uplink_items[A.category] = list()
-			filtered_uplink_items[A.category][A.name] = A
+				filtered_uplink_items["Discounted Team Gear"] = nuclear_team.team_discounts["Discounted Team Gear"]
+				filtered_uplink_items["Limited Stock Team Gear"] = nuclear_team.team_discounts["Limited Stock Team Gear"]
+
+
 	return filtered_uplink_items
+
+/proc/create_uplink_sales(num, category_name, limited_stock, sale_items, uplink_items)
+	if (num <= 0)
+		return
+
+	if(!uplink_items[category_name])
+		uplink_items[category_name] = list()
+
+	for (var/i in 1 to num)
+		var/datum/uplink_item/I = pick_n_take(sale_items)
+		var/datum/uplink_item/A = new I.type
+		var/discount = A.get_discount()
+		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
+		A.limited_stock = limited_stock
+		I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
+		A.refundable = FALSE
+		if(A.cost >= 20) //Tough love for nuke ops
+			discount *= 0.5
+		A.category = category_name
+		A.cost = max(round(A.cost * discount),1)
+		A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
+		A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
+		A.item = I.item
+
+		uplink_items[category_name][A.name] = A
 
 
 /**
@@ -66,7 +95,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/refund_amount = 0 // specified refund amount in case there needs to be a TC penalty for refunds.
 	var/refundable = FALSE
 	var/surplus = 100 // Chance of being included in the surplus crate.
-	var/surplus_nullcrates //Chance of being included in null crates. null = pull from surplus
 	var/cant_discount = FALSE
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
 	var/list/include_modes = list() // Game modes to allow this item in.
@@ -77,11 +105,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/restricted = FALSE // Adds restrictions for VR/Events
 	var/list/restricted_species //Limits items to a specific species. Hopefully.
 	var/illegal_tech = TRUE // Can this item be deconstructed to unlock certain techweb research nodes?
-
-/datum/uplink_item/New()
-	. = ..()
-	if(isnull(surplus_nullcrates))
-		surplus_nullcrates = surplus
 
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
@@ -1104,7 +1127,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Useful for disrupting headsets, cameras, doors, lockers and borgs during stealth operations. \
 			Attacking a target with this flashlight will direct an EM pulse at it and consumes a charge."
 	item = /obj/item/flashlight/emp
-	cost = 2
+	cost = 4
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/mulligan
@@ -1263,7 +1286,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
-	surplus_nullcrates = 0
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. PDA Cartridge"
@@ -1424,6 +1446,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/suspiciousphone
 	restricted = TRUE
 	cost = 7
+	limited_stock = 1
 
 // Implants
 /datum/uplink_item/implants

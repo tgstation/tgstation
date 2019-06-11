@@ -1,5 +1,5 @@
 /datum/surgery/lipoplasty
-	name = "lipoplasty"
+	name = "Lipoplasty"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/cut_fat, /datum/surgery_step/remove_fat, /datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
 
@@ -48,6 +48,6 @@
 	newmeat.desc = "Extremely fatty tissue taken from a patient."
 	newmeat.subjectname = H.real_name
 	newmeat.subjectjob = H.job
-	newmeat.reagents.add_reagent ("nutriment", (removednutriment / 15)) //To balance with nutriment_factor of nutriment
+	newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, (removednutriment / 15)) //To balance with nutriment_factor of nutriment
 	newmeat.forceMove(target.loc)
 	return 1

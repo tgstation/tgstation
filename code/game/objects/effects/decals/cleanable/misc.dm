@@ -13,7 +13,7 @@
 
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
-	reagents.add_reagent("ash", 30)
+	reagents.add_reagent(/datum/reagent/ash, 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
@@ -27,7 +27,7 @@
 
 /obj/effect/decal/cleanable/ash/large/Initialize()
 	. = ..()
-	reagents.add_reagent("ash", 30) //double the amount of ash.
+	reagents.add_reagent(/datum/reagent/ash, 30) //double the amount of ash.
 
 /obj/effect/decal/cleanable/glass
 	name = "tiny shards"
@@ -84,7 +84,7 @@
 
 /obj/effect/decal/cleanable/greenglow/filled/Initialize()
 	. = ..()
-	reagents.add_reagent(pick("uranium", "radium"), 5)
+	reagents.add_reagent(pick(/datum/reagent/uranium, /datum/reagent/uranium/radium), 5)
 
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
@@ -132,7 +132,7 @@
 						var/datum/reagent/consumable/nutri_check = R
 						if(nutri_check.nutriment_factor >0)
 							H.adjust_nutrition(nutri_check.nutriment_factor * nutri_check.volume)
-							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
+							reagents.remove_reagent(nutri_check.type,nutri_check.volume)
 			reagents.trans_to(H, reagents.total_volume, transfered_by = user)
 			qdel(src)
 

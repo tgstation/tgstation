@@ -4,7 +4,6 @@
 	desc = "A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
-	layer = BELOW_OBJ_LAYER
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it

@@ -51,7 +51,7 @@
 /obj/structure/AIcore/latejoin_inactive/examine(mob/user)
 	. = ..()
 	to_chat(user, "Its transmitter seems to be <b>[active? "on" : "off"]</b>.")
-	to_chat(user, "<span class='notice'>You could [active? "deactivate" : "activate"] it with a multitool.")
+	to_chat(user, "<span class='notice'>You could [active? "deactivate" : "activate"] it with a multitool.</span>")
 
 /obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
@@ -333,9 +333,11 @@ That prevents a few funky behaviors.
 		to_chat(AI, "You have been uploaded to a stationary terminal. Remote device connection restored.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
+		AI.battery = circuit.battery
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		to_chat(user, "There is no AI loaded on this terminal!")
 
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
+	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core

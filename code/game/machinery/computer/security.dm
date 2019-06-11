@@ -263,7 +263,7 @@
 					else
 						dat += "Security Record Lost!<br>"
 						dat += "<A href='?src=[REF(src)];choice=New Record (Security)'>New Security Record</A><br><br>"
-					dat += "<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR><BR>"
+					dat += "<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Print Missing'>Print Missing Persons Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR><BR>"
 					dat += "<A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"
 				else
 		else
@@ -417,6 +417,7 @@ What a mess.*/
 						P.info += "<B>Security Record Lost!</B><BR>"
 						P.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, "Record Lost")
 					P.info += "</TT>"
+					P.update_icon()
 					printing = null
 			if("Print Poster")
 				if(!( printing ))
@@ -438,6 +439,8 @@ What a mess.*/
 								default_description += "\n[c.crimeName]\n"
 								default_description += "[c.crimeDetails]\n"
 
+						var/headerText = stripped_input(usr, "Please enter Poster Heading (Max 7 Chars):", "Print Wanted Poster", "WANTED", 8)
+
 						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description, null)
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
@@ -445,7 +448,24 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
-								new /obj/item/poster/wanted(loc, photo.picture.picture_image, wanted_name, info)
+								new /obj/item/poster/wanted(loc, photo.picture.picture_image, wanted_name, info, headerText)
+							printing = 0
+			if("Print Missing")
+				if(!( printing ))
+					var/missing_name = stripped_input(usr, "Please enter an alias for the missing person:", "Print Missing Persons Poster", active1.fields["name"])
+					if(missing_name)
+						var/default_description = "A poster declaring [missing_name] to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately."
+
+						var/headerText = stripped_input(usr, "Please enter Poster Heading (Max 7 Chars):", "Print Missing Persons Poster", "MISSING", 8)
+
+						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Missing Persons Poster", default_description, null)
+						if(info)
+							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+							printing = 1
+							sleep(30)
+							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
+								var/obj/item/photo/photo = active1.fields["photo_front"]
+								new /obj/item/poster/wanted/missing(loc, photo.picture.picture_image, missing_name, info, headerText)
 							printing = 0
 
 //RECORD DELETE
@@ -816,7 +836,7 @@ What a mess.*/
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)
 		if(authenticated)
-			if(user.canUseTopic(src))
+			if(user.canUseTopic(src, BE_CLOSE))
 				if(!trim(message1))
 					return 0
 				if(!record1 || record1 == active1)
@@ -825,7 +845,7 @@ What a mess.*/
 	return 0
 
 /obj/machinery/computer/secure_data/AltClick(mob/user)
-	if(user.canUseTopic(src))
+	if(user.canUseTopic(src, !issilicon(user)))
 		eject_id(user)
 
 /obj/machinery/computer/secure_data/proc/eject_id(mob/user)

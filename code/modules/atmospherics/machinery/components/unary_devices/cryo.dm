@@ -48,6 +48,12 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
+	var/oldoccupant = occupant
+	. = ..() // Parent proc takes care of removing occupant if necessary
+	if (AM == oldoccupant)
+		update_icon()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
 
@@ -184,7 +190,7 @@
 		if(autoeject) // Eject if configured.
 			msg += " Auto ejecting patient now."
 			open_machine()
-		radio.talk_into(src, msg, radio_channel, get_spans(), get_default_language())
+		radio.talk_into(src, msg, radio_channel)
 		return
 
 	var/datum/gas_mixture/air1 = airs[1]
