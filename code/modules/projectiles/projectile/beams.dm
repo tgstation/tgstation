@@ -247,7 +247,7 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 			if(ishuman(firer))
 				var/mob/living/carbon/human/FH = firer
 				var/obj/item/card/id/FC = FH.get_idcard(TRUE)
-				if(FC && FC.registered_account)
+				if(FC?.registered_account)
 					FC.registered_account.adjust_money(50)
 					to_chat(FH, "<span class='notice'>Your wallet has received 50 credits.</span>")
 			else
