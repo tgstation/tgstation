@@ -15,7 +15,7 @@
 			client.dsay(message)
 		return
 
-	if(check_emote(message))
+	if(check_emote(message, forced))
 		return
 
 	. = say_dead(message)

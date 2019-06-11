@@ -18,7 +18,7 @@
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 
-	if(M.stat == DEAD)
+	if(M.stat == DEAD && !stop_bleeding)
 		var/t_him = "it"
 		if(M.gender == MALE)
 			t_him = "him"
@@ -111,7 +111,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_brute = 40
 	self_delay = 20
-	grind_results = list("styptic_powder" = 10)
+	grind_results = list(/datum/reagent/medicine/styptic_powder = 10)
 
 /obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -166,7 +166,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_burn = 40
 	self_delay = 20
-	grind_results = list("silver_sulfadiazine" = 10)
+	grind_results = list(/datum/reagent/medicine/silver_sulfadiazine = 10)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")

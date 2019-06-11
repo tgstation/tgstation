@@ -238,7 +238,7 @@
 		var/single_flash = FALSE
 		if(!flash1 || !flash2)
 			single_flash = TRUE
-			to_chat(user, "One of it's eye sockets are currently occupied by a flash.")
+			to_chat(user, "One of its eye sockets is currently occupied by a flash.")
 			to_chat(user, "<span class='info'>It has an empty eye socket for another <b>flash</b>.</span>")
 		else
 			to_chat(user, "It has two eye sockets occupied by flashes.")

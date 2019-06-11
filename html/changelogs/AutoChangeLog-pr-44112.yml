@@ -1,5 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "/client/mousemove has been removed."
-  - balance: "the aiming beam of a beam rifle is only shown with the mouse button held down"

@@ -8,8 +8,8 @@
 	flags_1 = NODECONSTRUCT_1
 	use_power = NO_POWER_USE
 	var/static/list/shortcuts = list(
-		"meth" = "methamphetamine",
-		"tricord" = "tricordrazine"
+		"meth" = /datum/reagent/drug/methamphetamine,
+		"tricord" = /datum/reagent/medicine/tricordrazine
 	)
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -36,7 +36,7 @@
 				input_reagent = shortcuts[input_reagent]
 			else
 				input_reagent = find_reagent(input_reagent)
-			if(!input_reagent || !GLOB.chemical_reagents_list[input_reagent])
+			if(!input_reagent || !GLOB.name2reagent[input_reagent])
 				say("OUT OF RANGE")
 				return
 			else

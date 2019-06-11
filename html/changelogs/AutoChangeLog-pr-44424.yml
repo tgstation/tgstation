@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - rscdel: "The Daniel shuttle can no longer be purchased and is now admin only."

@@ -7,18 +7,18 @@
 	attack_sound = 'sound/weapons/etherealhit.ogg'
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal
-	exotic_blood = "liquidelectricity" //Liquid Electricity. fuck you think of something better gamer
+	mutantstomach = /obj/item/organ/stomach/ethereal
+	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
 	attack_type = BURN //burn bish
 	damage_overlay_type = "" //We are too cool for regular damage overlays
-	species_traits = list(DYNCOLORS, NOSTOMACH, AGENDER, NO_UNDERWEAR)
+	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	inherent_traits = list(TRAIT_NOHUNGER)
 	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
 	var/current_color
-	var/ethereal_charge = ETHEREAL_CHARGE_FULL
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
 	var/r1
@@ -90,15 +90,6 @@
 	.=..()
 	handle_charge(H)
 
-/datum/species/ethereal/spec_fully_heal(mob/living/carbon/human/H)
-	.=..()
-	set_charge(ETHEREAL_CHARGE_FULL)
-
-/datum/species/ethereal/spec_electrocute_act(mob/living/carbon/human/H, shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	.=..()
-	adjust_charge(shock_damage * siemens_coeff * 2)
-	to_chat(H, "<span class='notice'>You absorb some of the shock into your body!</span>")
-
 
 /datum/species/ethereal/proc/stop_emp(mob/living/carbon/human/H)
 	EMPeffect = FALSE
@@ -119,10 +110,8 @@
 	H.visible_message("<span class='danger'>[H] stops flickering and goes back to their normal state!</span>")
 
 /datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/H)
-	var/charge_rate = ETHEREAL_CHARGE_FACTOR
 	brutemod = 1.25
-	adjust_charge(-charge_rate)
-	switch(ethereal_charge)
+	switch(get_charge(H))
 		if(ETHEREAL_CHARGE_NONE)
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 3)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
@@ -136,8 +125,8 @@
 		else
 			H.clear_alert("ethereal_charge")
 
-/datum/species/ethereal/proc/adjust_charge(var/change)
-	ethereal_charge = CLAMP(ethereal_charge + change, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)
-
-/datum/species/ethereal/proc/set_charge(var/change)
-	ethereal_charge = CLAMP(change, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)
+/datum/species/ethereal/proc/get_charge(mob/living/carbon/H) //this feels like it should be somewhere else. Eh?
+	var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+	if(istype(stomach))
+		return stomach.crystal_charge
+	return ETHEREAL_CHARGE_NONE

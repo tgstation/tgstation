@@ -95,7 +95,7 @@
 		if(SCANGATE_NANITES)
 			if(SEND_SIGNAL(M, COMSIG_HAS_NANITES))
 				if(nanite_cloud)
-					GET_COMPONENT_FROM(nanites, /datum/component/nanites, M)
+					var/datum/component/nanites/nanites = M.GetComponent(/datum/component/nanites)
 					if(nanites && nanites.cloud_id == nanite_cloud)
 						beep = TRUE
 				else

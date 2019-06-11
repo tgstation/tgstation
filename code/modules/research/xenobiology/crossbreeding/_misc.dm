@@ -227,7 +227,7 @@ Slimecrossing Items
 	filling_color = "#964B00"
 	tastes = list("cardboard" = 3, "sadness" = 3)
 	foodtype = null //Don't ask what went into them. You're better off not knowing.
-	list_reagents = list("stabilizednutriment" = 10, "nutriment" = 2) //Won't make you fat. Will make you question your sanity.
+	list_reagents = list(/datum/reagent/consumable/nutriment/stabilized = 10, /datum/reagent/consumable/nutriment = 2) //Won't make you fat. Will make you question your sanity.
 
 /obj/item/reagent_containers/food/snacks/rationpack/checkLiked(fraction, mob/M)	//Nobody likes rationpacks. Nobody.
 	if(last_check_time + 50 < world.time)
@@ -235,7 +235,7 @@ Slimecrossing Items
 			var/mob/living/carbon/human/H = M
 			if(H.mind && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>That didn't taste very good...</span>") //No disgust, though. It's just not good tasting.
-				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+				var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
 				if(mood)
 					mood.add_event(null,"gross_food", /datum/mood_event/gross_food)
 				last_check_time = world.time

@@ -40,19 +40,24 @@
 //Called when given to a mob
 /datum/brain_trauma/proc/on_gain()
 	to_chat(owner, gain_text)
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
 //Called when removed from a mob
 /datum/brain_trauma/proc/on_lose(silent)
 	if(!silent)
 		to_chat(owner, lose_text)
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 
 //Called when hearing a spoken message
-/datum/brain_trauma/proc/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	return message
+/datum/brain_trauma/proc/handle_hearing(datum/source, list/hearing_args)
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 
 //Called when speaking
-/datum/brain_trauma/proc/on_say(message)
-	return message
+/datum/brain_trauma/proc/handle_speech(datum/source, list/speech_args)
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
 
 //Called when hugging. expand into generally interacting, where future coders could switch the intent?
 /datum/brain_trauma/proc/on_hug(mob/living/hugger, mob/living/hugged)
