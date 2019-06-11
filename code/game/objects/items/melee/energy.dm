@@ -86,7 +86,7 @@
 
 /obj/item/melee/transforming/energy/sword
 	name = "energy sword"
-	desc = "May the force be within you. You could combine two of them for some purpose..."
+	desc = "May the force be within you."
 	icon_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -148,6 +148,7 @@
 	return 0
 
 /obj/item/melee/transforming/energy/sword/saber
+	desc = "May the force be within you. You could combine two of them for some purpose..."
 	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
 	var/hacked = FALSE
 
@@ -208,7 +209,7 @@
 
 /obj/item/melee/transforming/energy/sword/pirate
 	name = "energy cutlass"
-	desc = "Arrrr matey."
+	desc = "Arrrr matey. You could combine two of these for somethin' no pirate would think of!"
 	icon_state = "cutlass0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
