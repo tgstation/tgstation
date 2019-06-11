@@ -37,7 +37,7 @@
 		add_overlay(H)
 
 /obj/structure/headpike/examine(mob/user)
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/ashwalker))
+	if(user?.mind.has_antag_datum(/datum/antagonist/ashwalker))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
 	. = ..()
 

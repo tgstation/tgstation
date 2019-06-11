@@ -4,15 +4,15 @@
 	var/show_roundend_report = FALSE
 
 /datum/team/ashwalkers/New(starting_members, var/obj/structure/goal)
-	..()
+	. = ..()
 	tendril = goal
 
 /datum/team/ashwalkers/roundend_report()
 	if(show_roundend_report)
-		. = ..()
+		return ..()
 
 /datum/team/ashwalkers/proc/forge_objectives()
-	var/datum/objective/nest/protect = new()
+	var/datum/objective/nest/protect = new
 	protect.team = src
 	protect.update_explanation_text()
 	objectives += protect
