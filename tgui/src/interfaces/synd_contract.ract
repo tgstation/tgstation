@@ -28,7 +28,7 @@
 		</p>
 		
 		<p>
-			You have {{data.redeemable_tc}} to redeem. <ui-button action='PRG_redeem_TC'>Collect</ui-button>
+			You have {{data.redeemable_tc}} TC to redeem. <ui-button action='PRG_redeem_TC'>Collect</ui-button>
 		</p>
 		{{#if data.ongoing_contract}}
 			<div style="text-align:center">
