@@ -222,6 +222,16 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/bone_fixer
+	name = "Bluespace Bone Repair Tool"
+	desc = "Repair bones with bluespace"
+	id = "bs_bone_repair"
+	build_path = /obj/item/bluespace_bonefixer
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000, MAT_SILVER = 500, MAT_DIAMOND = 100)
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////

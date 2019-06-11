@@ -373,3 +373,30 @@
 	to_chat(user, "<span class='notice'>You focus the lensess, it is now set to drilling mode.</span>")
 	qdel(src)
 	user.put_in_active_hand(surgicaldrill)
+
+/obj/item/bluespace_bonefixer
+	name = "bluespace bone repair tool"
+	desc = "This marvel of medical technology allows you to fix bones simply by holding it over the affected limb"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bs_bonefixer"
+	hitsound = 'sound/items/pshoom.ogg'
+	force = 15
+	toolspeed = 0.7
+
+/obj/item/bluespace_bonefixer/attack(mob/living/M, mob/user)
+	var/obj/item/bodypart/A
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		A = C.get_bodypart(check_zone(user.zone_selected))
+		if(!A) // Do they even have the limb
+			to_chat(user, "<span class='warning'>[M] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
+			return
+		if(A.bone_status != BONE_FLAG_BROKEN) // Is the bone even broken
+			to_chat(user, "<span class='warning'>[M]'s [parse_zone(user.zone_selected)] isn't broken!</span>")
+			return
+		to_chat(user, "<span class='notice'>You start to repair [M]'s [parse_zone(user.zone_selected)]")
+		do_mob(user , M, 50) // Delay
+		A.fix_bone() // Fix the bone
+		to_chat(user, "<span class='notice'>You repair [M]'s [parse_zone(user.zone_selected)]")
+	else
+		to_chat(user, "<span class='notice'>The bone repair tool cannot be used on that")
