@@ -294,7 +294,6 @@
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
 		user.visible_message("<span class='suicide'>[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
 		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 		B.vital = FALSE//this cant possibly be a good idea
@@ -456,6 +455,29 @@
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+	else
+		return ..()
+
+/obj/item/twohanded/dualsaber/pirate
+	icon_state = "duallass0"
+	name = "double-bladed energy cutlass"
+	desc = "You are a pirate!"
+	light_color = "#ff0000"//R E D
+	
+/obj/item/twohanded/dualsaber/update_icon()
+	if(wielded)
+		icon_state = "duallass[wielded]"
+	else
+		icon_state = "duallass0"
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+
+/obj/item/twohanded/dualsaber/pirate/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_WRENCH)
+		to_chat(user, "<span class='notice'>You deconstruct the double-bladed energy cutlass into two energy cutlasses.</span>")
+		var/obj/item/weapon/twohanded/dualsaber/pirate = W
+		var/obj/item/weapon/melee/energy/sword/pirate/newLasses = new(user.loc, 2)
+		user.unEquip(W)
+		qdel(W)
 	else
 		return ..()
 
