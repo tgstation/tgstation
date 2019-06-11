@@ -180,9 +180,9 @@
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
-		user << "<span class='notice'>You attach the ends of the two \
+		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy swords, making a single double-bladed weapon! \
-			You're cool.</span>"
+			You're cool.</span>")
 		var/obj/item/weapon/melee/energy/sword/saber/other_esword = W
 		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
 		if(hacked || other_esword.hacked)
@@ -218,9 +218,9 @@
 	
 /obj/item/melee/transforming/energy/sword/pirate/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/melee/energy/sword/pirate))
-		user << "<span class='notice'>You attach the ends of the two \
+		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy cutlasses, making a single double-bladed weapon! \
-			Yarr harr.</span>"
+			Yarr harr.</span>")
 		var/obj/item/weapon/melee/energy/sword/pirate/other_elass = W
 		var/obj/item/weapon/twohanded/duallass/newCutlass = new(user.loc)
 		user.unEquip(W)
