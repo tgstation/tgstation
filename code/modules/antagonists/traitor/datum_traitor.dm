@@ -33,11 +33,9 @@
 	..()
 
 /datum/antagonist/traitor/proc/create_contracts()
-	// May have this change depending on server pop, however contracts are 
-	// currently only available at a certain pop anyway.
 	var/contract_generation_quantity = 6
 
-	for (var/i = 1; i < contract_generation_quantity; i++)
+	for (var/i = 1; i <= contract_generation_quantity; i++)
 		var/datum/syndicate_contract/contract_to_add = new(owner)
 		contract_to_add.id = i
 		assigned_contracts.Add(contract_to_add)
@@ -370,6 +368,15 @@
 	result += objectives_text
 
 	var/special_role_text = lowertext(name)
+
+	var/completed_contracts = 0
+	var/tc_total = contract_TC_payed_out + contract_TC_to_redeem
+	for (var/datum/syndicate_contract/contract in assigned_contracts)
+		if (contract.status == CONTRACT_STATUS_COMPLETE)
+			completed_contracts++
+
+	result += "<br>Completed <span class='greentext'>[completed_contracts]</span> contracts for a total of \
+				<span class='greentext'>[tc_total] TC</span>!"
 
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
