@@ -207,6 +207,7 @@
 
 	if(use_command)
 		spans |= SPAN_COMMAND
+		use_command = FALSE
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
