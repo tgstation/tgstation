@@ -72,11 +72,11 @@
 			to_chat(user, "<span class='info'>It seems to be leaking some kind of... clear fluid? The brain inside must be in pretty bad shape... There is no coming back from that.</span>")
 		else if(brainmob)
 			if(brainmob.get_ghost(FALSE, TRUE))
-				to_chat(user, "<span class='info'>It's muscles are still twitching slightly... It still seems to have a bit of life left to it.</span>")
+				to_chat(user, "<span class='info'>Its muscles are still twitching slightly... It still seems to have a bit of life left to it.</span>")
 			else
 				to_chat(user, "<span class='info'>It seems seems particularly lifeless. Perhaps there'll be a chance for them later.</span>")
 		else if(brain?.decoy_override)
-			to_chat(user, "<span class='info'>It seems seems particularly lifeless. Perhaps there'll be a chance for them later.</span>")
+			to_chat(user, "<span class='info'>It seems particularly lifeless. Perhaps there'll be a chance for them later.</span>")
 		else
 			to_chat(user, "<span class='info'>It seems completely devoid of life.</span>")
 
