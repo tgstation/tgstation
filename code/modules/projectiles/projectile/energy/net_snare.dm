@@ -113,6 +113,6 @@
 	if(!locate(/obj/structure/barricade/security/holobarricade) in Tloc)
 		new /obj/structure/barricade/security/holobarricade(Tloc)
 	do_sparks(1, TRUE, src)
-	qdel(src)
+	return ..()
 
 
