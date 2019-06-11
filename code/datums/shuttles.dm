@@ -216,7 +216,7 @@
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
 	name = "Asteroid With Engines Strapped To It"
-	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
+	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area. Only available after a meteor wave, for both financial and practicality reasons."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = 0
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
