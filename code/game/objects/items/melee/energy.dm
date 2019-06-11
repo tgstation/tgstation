@@ -180,18 +180,17 @@
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/melee/transforming/energy/sword/saber))
-		to_chat(user, "<span class='notice'>You attach the ends of the two \
-			energy swords, making a single double-bladed weapon! \
-			You're cool.</span>")
-		/obj/item/melee/transforming/energy/sword/saber/W
-		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
-		if(hacked || W.hacked)
-			newSaber.hacked = TRUE
-			newSaber.item_color = "rainbow"
-		qdel(W)
-		qdel(src)
-		user.put_in_hands(newSaber)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(W == src)
+			to_chat(user, "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>")
+			if(ishuman(user))
+				user.adjustBrainLoss(25)
+		else
+			to_chat(user, "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>")
+			var/obj/item/twohanded/dualsaber/newSaber = new(user.loc)
+			qdel(W)
+			qdel(src)
+			user.put_in_hands(newSaber)
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			item_color = "rainbow"
@@ -216,14 +215,16 @@
 	
 /obj/item/melee/transforming/energy/sword/pirate/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/melee/transforming/energy/sword/pirate))
-		to_chat(user, "<span class='notice'>You attach the ends of the two \
-			energy cutlasses, making a single double-bladed weapon! \
-			Yarr harr.</span>")
-		var/obj/item/melee/transforming/energy/sword/pirate/W
-		var/obj/item/weapon/twohanded/dualsaber/pirate/newCutlass = new(user.loc)
-		qdel(W)
-		qdel(src)
-		user.put_in_hands(newCutlass)
+		if(W == src)
+			to_chat(user, "<span class='notice'>You try to attach the end of the energy cutlass to... itself. You're not a very smart matey, are you?</span>")
+			if(ishuman(user))
+				user.adjustBrainLoss(25)
+		else
+			to_chat(user, "<span class='notice'>You attach the ends of the two energy cutlasses, making a single double-bladed weapon! Yarr harr.</span>")
+			var/obj/item/twohanded/dualsaber/pirate/newCutlass = new(user.loc)
+			qdel(W)
+			qdel(src)
+			user.put_in_hands(newCutlass)
 	else
 		return ..()
 
