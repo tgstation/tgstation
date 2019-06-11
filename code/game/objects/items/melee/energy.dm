@@ -183,9 +183,9 @@
 		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy swords, making a single double-bladed weapon! \
 			You're cool.</span>")
-		/obj/item/melee/transforming/energy/sword/saber/other_esword = W
+		/obj/item/melee/transforming/energy/sword/saber/W
 		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
-		if(hacked || other_esword.hacked)
+		if(hacked || W.hacked)
 			newSaber.hacked = TRUE
 			newSaber.item_color = "rainbow"
 		qdel(W)
@@ -219,7 +219,7 @@
 		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy cutlasses, making a single double-bladed weapon! \
 			Yarr harr.</span>")
-		var/obj/item/melee/transforming/energy/sword/pirate/other_elass = W
+		var/obj/item/melee/transforming/energy/sword/pirate/W
 		var/obj/item/weapon/twohanded/dualsaber/pirate/newCutlass = new(user.loc)
 		qdel(W)
 		qdel(src)
