@@ -178,7 +178,21 @@
 	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
+	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
+		user << "<span class='notice'>You attach the ends of the two \
+			energy swords, making a single double-bladed weapon! \
+			You're cool.</span>"
+		var/obj/item/weapon/melee/energy/sword/saber/other_esword = W
+		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
+		if(hacked || other_esword.hacked)
+			newSaber.hacked = TRUE
+			newSaber.item_color = "rainbow"
+		user.unEquip(W)
+		user.unEquip(src)
+		qdel(W)
+		qdel(src)
+		user.put_in_hands(newSaber)
+	else if(istype(W, /obj/item/device/multitool))
 		if(!hacked)
 			hacked = TRUE
 			item_color = "rainbow"
