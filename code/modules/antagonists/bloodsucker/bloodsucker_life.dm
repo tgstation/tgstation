@@ -362,7 +362,7 @@
  	return owner && owner.AmFinalDeath()
 
 /datum/mind/proc/AmFinalDeath()
- 	return !current || !isliving(current) || isbrain(current) || !get_turf(current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
+ 	return !current || QDELETED(current) || !isliving(current) || isbrain(current) || !get_turf(current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
 
 /datum/antagonist/bloodsucker/proc/FinalDeath()
 
