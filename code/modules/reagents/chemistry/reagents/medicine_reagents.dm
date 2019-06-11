@@ -1371,3 +1371,77 @@
 	M.adjustFireLoss(3*REM, 0.)
 	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
+
+/datum/reagent/medicine/thializid
+	name = "Thializid"
+	description = "A potent antidote for intravenous use with a narrow therapeutic index, it is considered an active prodrug of oxalizid."
+	reagent_state = LIQUID
+	color = "#8CDF24" // heavy saturation to make the color blend better
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	overdose_threshold = 6
+	var/conversion_amount
+
+/datum/reagent/medicine/thializid/reaction_mob(mob/living/carbon/M, method=INJECT, reac_volume)
+	if(method != INJECT)
+		return
+	if(reac_volume >= 0.6) //prevents cheesing with ultralow doses.
+		M.adjustToxLoss(-1.5 * min(2, reac_volume) * REM, 0)	  //This is to promote iv pole use for that chemotherapy feel.
+	if(!locate(/obj/item/organ/liver) in M.internal_organs)
+		return
+	var/obj/item/organ/liver/L = M.internal_organs_slot[ORGAN_SLOT_LIVER]
+	if(L.failing)
+		return
+	conversion_amount = reac_volume	* (min(100 -L.damage, 80) / 100) //the more damaged the liver the worse we metabolize
+	to_chat(M, "conversion amount:[conversion_amount]")
+	to_chat(M, "reaction volume:[reac_volume]")
+	to_chat(M, "Liver damage:[L.damage]")
+	M.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
+	M.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
+	..()
+
+/datum/reagent/medicine/thializid/on_mob_life(mob/living/carbon/M)
+	M.adjustToxLoss(-1*REM, 0)
+	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.type,1)
+
+	M.reagents.add_reagent("oxalizid", 0.075 * REM) //add a little bit of the metabolite after metabolism
+	..()
+	. = 1
+
+/datum/reagent/medicine/thializid/overdose_process(mob/living/carbon/M)
+	M.adjustLiverLoss(2)
+	M.adjust_disgust(5)
+	M.reagents.add_reagent("oxalizid", 0.225 * REM)
+	..()
+	. = 1
+
+/datum/reagent/medicine/oxalizid
+	name = "Oxalizid"
+	description = "The active metabolite of thializid. Causes muscle weakness on overdose"
+	reagent_state = LIQUID
+	color = "#DFD54E"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 20
+	var/datum/brain_trauma/mild/muscle_weakness/U
+
+/datum/reagent/medicine/oxalizid/on_mob_life(mob/living/carbon/M)
+	M.adjustToxLoss(-1*REM, 0)
+	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.type,1)
+	..()
+	. = 1
+/datum/reagent/medicine/oxalizid/overdose_start(mob/living/carbon/M)
+	U = new()
+	M.gain_trauma(U, TRAUMA_RESILIENCE_ABSOLUTE)
+	..()
+
+/datum/reagent/medicine/oxalizid/on_mob_delete(mob/living/carbon/M)
+	if(U)
+		QDEL_NULL(U)
+	return ..()
+
+/datum/reagent/medicine/oxalizid/overdose_process(mob/living/carbon/M)
+	M.adjustLiverLoss(2)
+	M.adjust_disgust(3)
+	..()
+	. = 1
