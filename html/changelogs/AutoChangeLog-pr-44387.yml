@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - tweak: "Advanced surgical tools can now be found in the tool section with their basic counterparts."
+  - tweak: "Special .38 ammo now can be found in the ammo section with the other ammo types."
