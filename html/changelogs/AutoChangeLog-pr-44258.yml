@@ -1,0 +1,6 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - refactor: "how to make a custom primed grenade now: apply wire, apply beakers, interact with the wire by multitool or hitting the grenade with an assembly, attach assembly to wire.\\n
+if its an proxy sensor when you prime it it ll activate the activation mode of the sensor with whatever time it was set in the prox sensor ( you can screwdrive to speed set it to 5 or 3 s)\\n
+if its a timer it ll change the det_time to whatever the timer had( you can screwdrive to speed set it to 5 or 3 s)\\n"

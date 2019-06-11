@@ -120,8 +120,6 @@
 	chassis = M
 	forceMove(M)
 	log_message("[src] initialized.", LOG_MECHA)
-	if(!M.selected && selectable)
-		M.selected = src
 	update_chassis_page()
 	return
 
