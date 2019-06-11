@@ -192,6 +192,15 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/surgical_drapes
+	name = "Surgical Drapes"
+	id = "surgical_drapes"
+	build_type = PROTOLATHE
+	materials = list(MAT_PLASTIC = 2000)
+	build_path = /obj/item/surgical_drapes
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/laserscalpel
 	name = "Laser Scalpel"
 	desc = "A laser scalpel used for precise cutting."
@@ -302,7 +311,7 @@
 	build_path = /obj/item/organ/cyberimp/eyes/hud/security
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	
+
 /datum/design/cyberimp_diagnostic_hud
 	name = "Diagnostic HUD Implant"
 	desc = "These cybernetic eyes will display a diagnostic HUD over everything you see. Wiggle eyes to control."
