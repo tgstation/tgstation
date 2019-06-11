@@ -17948,7 +17948,10 @@
 	dir = 1;
 	network = list("ss13","Medical")
 	},
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	icon_state = "sleeper";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "aQi" = (
@@ -56880,9 +56883,12 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "wMM" = (
-/obj/machinery/stasis,
 /obj/machinery/airalarm{
 	pixel_y = 25
+	},
+/obj/machinery/sleeper{
+	icon_state = "sleeper";
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)

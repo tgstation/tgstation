@@ -33242,7 +33242,10 @@
 	network = list("ss13","medbay");
 	dir = 4
 	},
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	icon_state = "sleeper";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzQ" = (
@@ -53176,9 +53179,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
-"dbi" = (
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
 "dci" = (
 /obj/structure/rack,
 /obj/item/gun/energy/laser/practice,
@@ -54282,12 +54282,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"fIu" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
 "fIN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -102502,12 +102496,12 @@ apX
 apX
 apX
 avl
-fIu
-dbi
+awv
+avk
 aIh
 azA
-dbi
-dbi
+avk
+avk
 aDk
 aEd
 aFb

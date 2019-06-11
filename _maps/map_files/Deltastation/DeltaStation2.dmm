@@ -95754,7 +95754,10 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	icon_state = "sleeper";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "deD" = (
@@ -128115,12 +128118,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
-"twt" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "txy" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -183547,7 +183544,7 @@ ajr
 aad
 aad
 cuM
-twt
+cwi
 cxy
 czk
 cAD
@@ -183804,7 +183801,7 @@ aaa
 aaa
 aaa
 cuM
-twt
+cwi
 cxy
 czl
 cAE
@@ -184061,7 +184058,7 @@ aad
 ajr
 aad
 cuM
-twt
+cwi
 cwi
 czm
 cAF

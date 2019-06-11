@@ -31372,7 +31372,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bwD" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	icon_state = "sleeper";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bwE" = (
