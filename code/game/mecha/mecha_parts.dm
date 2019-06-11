@@ -23,6 +23,7 @@
 	name = "Mecha Chassis"
 	icon_state = "backbone"
 	interaction_flags_item = NONE			//Don't pick us up!!
+	var/beacon = 0 //Combat mechs get true
 	var/construct_type
 
 /obj/item/mecha_parts/chassis/Initialize()
@@ -102,6 +103,7 @@
 /obj/item/mecha_parts/chassis/gygax
 	name = "\improper Gygax chassis"
 	construct_type = /datum/component/construction/unordered/mecha_chassis/gygax
+	beacon = 1
 
 /obj/item/mecha_parts/part/gygax_torso
 	name = "\improper Gygax torso"
@@ -145,6 +147,7 @@
 /obj/item/mecha_parts/chassis/durand
 	name = "\improper Durand chassis"
 	construct_type = /datum/component/construction/unordered/mecha_chassis/durand
+	beacon = 1
 
 /obj/item/mecha_parts/part/durand_torso
 	name = "\improper Durand torso"
@@ -194,6 +197,7 @@
 /obj/item/mecha_parts/chassis/honker
 	name = "\improper H.O.N.K chassis"
 	construct_type = /datum/component/construction/unordered/mecha_chassis/honker
+	beacon = 1
 
 /obj/item/mecha_parts/part/honker_torso
 	name = "\improper H.O.N.K torso"
@@ -231,6 +235,7 @@
 /obj/item/mecha_parts/chassis/phazon
 	name = "\improper Phazon chassis"
 	construct_type = /datum/component/construction/unordered/mecha_chassis/phazon
+	beacon = 1
 
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"
