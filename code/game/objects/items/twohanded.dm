@@ -458,10 +458,8 @@
 	icon_state = "duallass0"
 	name = "double-bladed energy cutlass"
 	desc = "You are a pirate!"
+	possible_colors = null
 	light_color = "#ff0000"
-	
-/obj/item/twohanded/dualsaber/pirate/Initialize()
-	light color = "#ff0000"
 
 /obj/item/twohanded/dualsaber/pirate/update_icon()
 	if(wielded)
