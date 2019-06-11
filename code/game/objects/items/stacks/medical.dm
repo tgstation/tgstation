@@ -149,3 +149,37 @@
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")
 	return TOXLOSS
+
+/obj/item/stack/medical/splints
+	name = "medical splints"
+	desc = "Use these to bodge a broken bone"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "splint"
+	self_delay = 20
+	max_amount = 10
+			
+/obj/item/stack/medical/splints/attack(mob/living/M, mob/user)
+	var/obj/item/bodypart/affecting
+	// Only do this on humans (Well you know what I mean)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		affecting = C.get_bodypart(check_zone(user.zone_selected))
+
+		if(affecting.body_part in list(CHEST, HEAD))
+			to_chat(user, "<span class='warning'>You can't splint that bodypart!</span>")
+			return
+		if(affecting.bone_status != BONE_FLAG_BROKEN)
+			to_chat(user, "<span class='warning'>[M]'s [parse_zone(user.zone_selected)] isn't broken!</span>")
+			return
+		if(affecting.bone_status == BONE_FLAG_SPLINTED)
+			to_chat(user, "<span class='warning'>[M]'s [parse_zone(user.zone_selected)] is already splinted!</span>")
+			return
+		// If we got here we passed our checks
+		affecting.bone_status = BONE_FLAG_SPLINTED
+		C.update_inv_splints()
+		to_chat(user, "<span class='notice'>You splint [M]'s [parse_zone(user.zone_selected)]</span>")
+		use(1) 
+	else
+		to_chat(user, "<span class='warning'>You cant splint a robotic limb!</span>")
+
+				
