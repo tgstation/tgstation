@@ -457,3 +457,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define BONE_FLAG_NORMAL 1
 #define BONE_FLAG_BROKEN 2
 #define BONE_FLAG_SPLINTED 3
+
+//chem grenades defines
+#define EMPTY 1
+#define WIRED 2
+#define READY 3

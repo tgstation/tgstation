@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - tweak: "Create object admin tool enter key behaviour changed."
