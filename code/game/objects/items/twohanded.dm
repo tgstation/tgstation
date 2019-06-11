@@ -439,6 +439,15 @@
 	possible_colors = list("purple")
 
 /obj/item/twohanded/dualsaber/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_WRENCH)
+		to_chat(user, "<span class='notice'>You deconstruct the double-bladed energy sword into two energy swords.</span>")
+		var/obj/item/weapon/twohanded/dualsaber = W
+		var/obj/item/weapon/melee/energy/sword/saber/newSabers = new(user.loc, 2)
+		if(W.hacked)
+			newSabers.hacked = TRUE
+			newSabers.item_color = "rainbow"
+		user.unEquip(W)
+		qdel(W)
 	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
