@@ -179,17 +179,15 @@
 	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
+	if(istype(W, /obj/item/melee/transforming/energy/sword/saber))
 		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy swords, making a single double-bladed weapon! \
 			You're cool.</span>")
-		var/obj/item/weapon/melee/energy/sword/saber/other_esword = W
+		/obj/item/melee/transforming/energy/sword/saber/other_esword = W
 		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
 		if(hacked || other_esword.hacked)
 			newSaber.hacked = TRUE
 			newSaber.item_color = "rainbow"
-		user.unEquip(W)
-		user.unEquip(src)
 		qdel(W)
 		qdel(src)
 		user.put_in_hands(newSaber)
@@ -217,14 +215,12 @@
 	light_color = "#ff0000"
 	
 /obj/item/melee/transforming/energy/sword/pirate/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/melee/energy/sword/pirate))
+	if(istype(W, /obj/item/melee/transforming/energy/sword/pirate))
 		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy cutlasses, making a single double-bladed weapon! \
 			Yarr harr.</span>")
-		var/obj/item/weapon/melee/energy/sword/pirate/other_elass = W
+		var/obj/item/melee/transforming/energy/sword/pirate/other_elass = W
 		var/obj/item/weapon/twohanded/dualsaber/pirate/newCutlass = new(user.loc)
-		user.unEquip(W)
-		user.unEquip(src)
 		qdel(W)
 		qdel(src)
 		user.put_in_hands(newCutlass)
