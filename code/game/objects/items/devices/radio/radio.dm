@@ -283,7 +283,7 @@
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()
-	if(radio_freq || !broadcasting || !canbroadcast || get_dist(src, speaker) > canhear_range)
+	if(radio_freq || !broadcasting || !can_broadcast || get_dist(src, speaker) > canhear_range)
 		return
 
 	if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
