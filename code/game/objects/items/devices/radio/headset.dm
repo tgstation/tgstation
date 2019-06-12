@@ -244,6 +244,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "clown_headset"
 	honk = TRUE
 
+/obj/item/radio/headset/headset_srv/mime
+	name = "mime radio headset"
+	desc = "Headset used by the mime, the master of silen- wait, why does he have one?"
+	icon_state = "mime_headset"
+	can_broadcast = FALSE
+
 /obj/item/radio/headset/headset_cent
 	name = "\improper CentCom headset"
 	desc = "A headset used by the upper echelons of Nanotrasen."
