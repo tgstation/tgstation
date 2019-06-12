@@ -1034,6 +1034,11 @@
 	icon_state = "female_babydoll"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/female_beekini
+	name = "Bee-Kini"
+	icon_state = "beekini"
+	gender = FEMALE
+
 /datum/sprite_accessory/underwear/female_babyblue
 	name = "Ladies' Baby-Blue"
 	icon_state = "female_babyblue"
