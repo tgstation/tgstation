@@ -352,4 +352,4 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")
 	if (honk)
 		use_honk = !use_honk
-		to_chat(user, "<span class='notice'>You toggle HONK mode [use_command ? "on" : "off"].</span>")
+		to_chat(user, "<span class='notice'>You toggle HONK mode [use_honk ? "on" : "off"].</span>")
