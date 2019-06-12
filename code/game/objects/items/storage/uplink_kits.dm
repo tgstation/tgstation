@@ -191,6 +191,7 @@
 	new /obj/item/storage/box/syndie_kit/space(src)
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/card/id/syndicate(src)
 
 	// All 4 TC or less - some nukeops only items, but fit nicely to the theme.
 	var/list/item_list = list(
@@ -201,7 +202,6 @@
 		/obj/item/pen/edagger,
 		/obj/item/pen/sleepy,
 		/obj/item/gun/ballistic/automatic/toy/pistol/riot,
-		/obj/item/card/id/syndicate,
 		/obj/item/flashlight/emp,
 		/obj/item/reagent_containers/syringe/mulligan,
 		/obj/item/clothing/shoes/chameleon/noslip,

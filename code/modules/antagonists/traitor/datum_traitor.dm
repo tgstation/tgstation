@@ -375,8 +375,12 @@
 		if (contract.status == CONTRACT_STATUS_COMPLETE)
 			completed_contracts++
 
-	result += "<br>Completed <span class='greentext'>[completed_contracts]</span> contracts for a total of \
-				<span class='greentext'>[tc_total] TC</span>!"
+	var/pluralCheck = "contract"
+	if (completed_contracts > 1) 
+		pluralCheck = "contracts"
+	
+	result += "Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
+				<span class='greentext'>[tc_total] TC</span>!<br>"
 
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"

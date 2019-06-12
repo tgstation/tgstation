@@ -14,13 +14,13 @@
 	// a fairly significant bonus comparatively.
 	// High payout
 	if (prob(10))
-		contract.payout = rand(7,10)
-	else if (prob(35)) // Low payout
-		contract.payout = rand(1,3)
+		contract.payout_bonus = rand(6,8)
+	else if (prob(50)) // Low payout
+		contract.payout_bonus = rand(1,2)
 	else // Medium payout
-		contract.payout = rand(4,6)
+		contract.payout_bonus = rand(3,5)
 
-	contract.payout_bonus = rand(1, 5)
+	contract.payout = rand(0, 2)
 
 	contract.generate_dropoff()
 
@@ -63,6 +63,7 @@
 	empty_pod.stay_after_drop = TRUE
 	empty_pod.reversing = TRUE
 	empty_pod.explosionSize = list(0,0,2,1)
+	empty_pod.leavingSound = 'sound/effects/podwoosh.ogg'
 
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
 
@@ -78,9 +79,13 @@
 					traitor_data.contract_TC_to_redeem += contract.payout_bonus
 
 				status = CONTRACT_STATUS_COMPLETE
-				traitor_data.current_contract = null
+
+				if (traitor_data.current_contract == src) {
+					traitor_data.current_contract = null
+				}
 			else
 				status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
-				traitor_data.current_contract = null
-			qdel(M)
-
+				
+				if (traitor_data.current_contract == src) {
+					traitor_data.current_contract = null
+				}
