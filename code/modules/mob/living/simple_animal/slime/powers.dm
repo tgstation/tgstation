@@ -48,7 +48,7 @@
 	var/mob/living/simple_animal/slime/S = owner
 	S.Feed()
 
-/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M)
+/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M, silent = FALSE)
 	if(!Adjacent(M))
 		return 0
 
@@ -56,9 +56,14 @@
 		Feedstop()
 		return 0
 
+	if(issilicon(M))
+		return 0
+
 	if(isanimal(M))
 		var/mob/living/simple_animal/S = M
 		if(S.damage_coeff[TOX] <= 0 && S.damage_coeff[CLONE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+			if(silent)
+				return 0
 			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
@@ -66,22 +71,32 @@
 			return 0
 
 	if(isslime(M))
+		if(silent)
+			return 0
 		to_chat(src, "<span class='warning'><i>I can't latch onto another slime...</i></span>")
 		return 0
 
 	if(docile)
+		if(silent)
+			return 0
 		to_chat(src, "<span class='notice'><i>I'm not hungry anymore...</i></span>")
 		return 0
 
 	if(stat)
+		if(silent)
+			return 0
 		to_chat(src, "<span class='warning'><i>I must be conscious to do this...</i></span>")
 		return 0
 
 	if(M.stat == DEAD)
+		if(silent)
+			return 0
 		to_chat(src, "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>")
 		return 0
 
 	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
+		if(silent)
+			return 0
 		to_chat(src, "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>")
 		return 0
 	return 1

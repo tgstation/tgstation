@@ -62,7 +62,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(issilicon(Target) || !CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
+				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
