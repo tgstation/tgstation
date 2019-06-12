@@ -32,7 +32,7 @@
 		vis_contents += crystal_overlay
 	. = ..()
 
-/obj/structure/infection/shield/show_infection_menu(var/mob/camera/commander/C)
+/obj/structure/infection/shield/evolve_menu(var/mob/camera/commander/C)
 	return
 
 /obj/structure/infection/shield/update_icon()

@@ -23,9 +23,10 @@
 	var/timecreated
 	var/build_time = 0 // time it takes to build this type when created (in deciseconds)
 	var/building = FALSE // if the infection is being used to create another currently
+	var/list/upgrades = list() // the actual upgrade datums
 	var/list/upgrade_types = list() // the types of upgrades
-	var/list/upgrades = list()
-	var/upgrade_subtype = null
+	var/upgrade_subtype = null // adds all subtypes of this to the upgrade list
+	var/datum/infection_menu/menu_handler
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -40,6 +41,7 @@
 	timecreated = world.time
 	AddComponent(/datum/component/no_beacon_crossing)
 	generate_upgrades()
+	menu_handler = new /datum/infection_menu(src)
 
 /obj/structure/infection/proc/generate_upgrades()
 	if(ispath(upgrade_subtype))
@@ -47,58 +49,16 @@
 	for(var/upgrade_type in upgrade_types)
 		upgrades += new upgrade_type()
 
-/obj/structure/infection/proc/creation_action() //When it's created by the overmind, do this.
-	return
-
-/obj/structure/infection/proc/show_infection_menu(var/mob/camera/commander/C)
-	if(C != overmind)
-		return
-	var/list/choices = list(
-		"Upgrade Structure" = image(icon = 'icons/mob/infection/infection.dmi', icon_state = "ui_increase"),
-		"Structure Overview" = image(icon = 'icons/mob/infection/infection.dmi', icon_state = "ui_help_radial")
-	)
-	var/choice = show_radial_menu(overmind, get_turf(src), choices, tooltips = TRUE)
-	if(choice == choices[1])
-		upgrade_menu(overmind)
-	if(choice == choices[2])
-		to_chat(overmind, show_description())
-	return
-
-/obj/structure/infection/proc/upgrade_menu(var/mob/camera/commander/C)
-	var/list/choices = list()
-	var/list/upgrades_temp = list()
-	for(var/datum/infection_upgrade/U in get_upgrades())
-		if(U.times == 0)
-			continue
-		var/upgrade_index = "[U.name] ([U.cost])"
-		choices[upgrade_index] = image(icon = U.radial_icon, icon_state = U.radial_icon_state)
-		upgrades_temp += U
-	if(!choices.len)
-		to_chat(overmind, "<span class='warning'>You have already bought every upgrade for this structure!</span>")
-		return
-	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
-	var/upgrade_index = choices.Find(choice)
-	if(!upgrade_index)
-		return
-	var/datum/infection_upgrade/Chosen = upgrades_temp[upgrade_index]
-	if(overmind.can_buy(Chosen.cost))
-		Chosen.do_upgrade(src)
-		to_chat(overmind, "<span class='warning'>Successfully upgraded [Chosen.name]!</span>")
-	return
-
-/obj/structure/infection/proc/get_upgrades()
-	return upgrades
+/obj/structure/infection/proc/evolve_menu(var/mob/camera/commander/C)
+	menu_handler.ui_interact(overmind)
 
 /obj/structure/infection/proc/max_upgrade()
-	for(var/datum/infection_upgrade/U in get_upgrades())
+	for(var/datum/infection_upgrade/U in upgrades)
 		var/times = U.times
 		for(var/i = 1 to times)
 			U.do_upgrade(src)
 
-/obj/structure/infection/proc/show_description()
-	to_chat(overmind, "<span class='cultlarge'>Upgrades List</span>")
-	for(var/datum/infection_upgrade/U in get_upgrades())
-		to_chat(overmind, "<b>[U.name]:</b> [U.description]")
+/obj/structure/infection/proc/creation_action() //When it's created by the overmind, do this.
 	return
 
 /obj/structure/infection/relaymove(mob/user)
@@ -381,7 +341,7 @@
 	brute_resist = 0.25
 	var/overlay_fade_time = 40 // time in deciseconds for overlay on entering and exiting to fade in and fade out
 
-/obj/structure/infection/normal/show_infection_menu(var/mob/camera/commander/C)
+/obj/structure/infection/normal/evolve_menu(var/mob/camera/commander/C)
 	return
 
 /obj/structure/infection/normal/CanPass(atom/movable/mover, turf/target)

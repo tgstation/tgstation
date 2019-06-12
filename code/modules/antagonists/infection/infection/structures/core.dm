@@ -43,7 +43,7 @@
 					   Good luck. I'll be here to notify you should anything change for better or for worse.",
 					  "Biohazard Containment Commander", 'sound/misc/notice1.ogg')
 
-/obj/structure/infection/core/show_infection_menu(var/mob/camera/commander/C)
+/obj/structure/infection/core/evolve_menu(var/mob/camera/commander/C)
 	return
 
 /obj/structure/infection/core/update_icon()

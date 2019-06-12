@@ -19,7 +19,7 @@
 /obj/screen/infection/Refund
 	icon_state = "ui_factory"
 	name = "Refund Upgrades"
-	desc = "Refund all currently purchased traits at the cost of one upgrade point."
+	desc = "Refund all currently purchased traits."
 
 /obj/screen/infection/Refund/Click()
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr

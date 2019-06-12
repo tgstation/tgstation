@@ -101,7 +101,7 @@
 /datum/infection_upgrade/turret_type_change
 	cost = 30
 	var/new_type
-	var/upgrade_wait_time = 40
+	var/upgrade_wait_time = 0
 
 /datum/infection_upgrade/turret_type_change/upgrade_effect(obj/structure/infection/turret/parentturret)
 	parentturret.change_to(new_type, parentturret.overmind, upgrade_wait_time)

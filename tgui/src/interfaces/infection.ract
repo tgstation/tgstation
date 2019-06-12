@@ -1,0 +1,22 @@
+<ui-display title="Evolution Menu" button>
+  <ui-section label='Evolution Points' right>
+    {{data.evolution_points}}
+  </ui-section>
+</ui-display>
+<ui-display>
+{{#each data.upgrades}}
+  <ui-section label='{{name}}' candystripe right>
+    <span>{{desc}}</span>
+    <span>Cost: {{upgrade_cost}}</span>
+    <ui-button
+      state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
+      action='evolve'
+      params='{"name": "{{name}}"}'>
+      {{owned ? "Purchased" : "Evolve"}}
+    </ui-button>
+  </ui-section>
+{{/each}}
+{{^data.upgrades}}
+  <span class='warning'>No evolutions available.</span>
+{{/data.upgrades}}
+</ui-display>

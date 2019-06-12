@@ -25,14 +25,10 @@
 	pulse_effect()
 
 /obj/structure/infection/node/update_icon()
-	cut_overlays()
-	color = null
+	. = ..()
+	underlays.Cut()
 	var/mutable_appearance/node_base = mutable_appearance('icons/mob/infection/crystaline_infection_large.dmi', "crystalnode-base")
-	var/mutable_appearance/node_crystal = mutable_appearance('icons/mob/infection/crystaline_infection_large.dmi', "crystalnode-layer")
-	if(overmind)
-		node_crystal.color = overmind.infection_color
-	add_overlay(node_base)
-	add_overlay(node_crystal)
+	underlays += node_base
 
 /obj/structure/infection/node/Destroy()
 	. = ..()
@@ -47,7 +43,4 @@
 /obj/structure/infection/node/proc/pulse_effect()
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
 	var/state_chosen = prob(50) ? "right" : "left"
-	var/image/I = new('icons/mob/infection/crystaline_infection_large.dmi', src, "crystalnode-layer-[state_chosen]", layer+0.01)
-	if(overmind)
-		I.color = overmind.infection_color
-	flick_overlay_view(I, src, 12.5)
+	flick("crystalnode-layer-[state_chosen]", src)
