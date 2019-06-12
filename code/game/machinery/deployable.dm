@@ -208,10 +208,7 @@
 /obj/structure/barricade/security/holobarricade/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
-	QDEL_IN(src, 120)
-
-/obj/structure/barricade/security/holobarricade/attackby(obj/item/I, mob/user, params)
-	return ..()
+	QDEL_IN(src, 200)
 
 #undef SINGLE
 #undef VERTICAL

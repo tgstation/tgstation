@@ -8,7 +8,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
-	modifystate = FALSE
+	modifystate = TRUE //this is used for different icons based on the projectile type
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -159,11 +159,9 @@
 	. = ..()
 	if(istype(AM, /obj/item/gun/energy/laser))
 		var/obj/item/gun/energy/laser/L = AM
-		if(!L.modifystate)
+		if(!L.GetComponent(/datum/component/extralasers))
 			L.AddComponent(/datum/component/extralasers, stored_ammo_type, src)
-			forceMove(L)
-			L.modifystate = TRUE
-			return
+			qdel(src)
 
 /obj/item/external_lens/bitcoin
 	name = "external lens: ticket dispenser"

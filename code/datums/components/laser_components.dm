@@ -1,14 +1,15 @@
 /datum/component/extralasers
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/obj/item/external_lens/lens
 	var/obj/item/ammo_casing/energy/laser/ammo
 
 /datum/component/extralasers/Initialize(ammo, _lens)
+	if(!istype(parent, /obj/item/gun/energy/laser))
+		return COMPONENT_INCOMPATIBLE
+	var/obj/item/gun/energy/laser/L = parent
+	L.ammo_type  += new ammo (src)
 	lens = _lens
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/detach)
-
-	var/obj/item/ammo_casing/energy/laser/shoot =  ammo
-	var/obj/item/gun/energy/laser/L = parent
-	L.ammo_type  += new shoot (src)
 
 /datum/component/extralasers/proc/detach(datum/source, obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -18,8 +19,8 @@
 		LAZYREMOVE(L.ammo_type, R)
 		L.select_fire(user)
 		L.recharge_newshot()
-		lens.forceMove(user.loc)
 		L.update_icon(TRUE)
-		L.modifystate = FALSE
 		RemoveComponent()
+		var/turf/T = user.loc
+		new lens(T)
 		return TRUE
