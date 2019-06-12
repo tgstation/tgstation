@@ -49,6 +49,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 		if(command)
 			to_chat(user, "<span class='info'>Alt-click to toggle the high-volume mode.</span>")
+		if(honk)
+			to_chat(user, "<span class='info'>Alt-click to toggle the HONK mode.</span>")
 	else
 		to_chat(user, "<span class='notice'>A small screen on the headset flashes, it's too small to read without holding or wearing the headset.</span>")
 
@@ -235,6 +237,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "Headset used by the service staff, tasked with keeping the station full, happy and clean."
 	icon_state = "srv_headset"
 	keyslot = new /obj/item/encryptionkey/headset_service
+	
+/obj/item/radio/headset/headset_srv/clown
+	name = "clown radio headset"
+	desc = "Headset used by the clown, the master of pranks and jokes."
+	icon_state = "clown_headset"
+	honk = TRUE
 
 /obj/item/radio/headset/headset_cent
 	name = "\improper CentCom headset"
@@ -342,3 +350,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if (command)
 		use_command = !use_command
 		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")
+	if (honk)
+		use_honk = !use_honk
+		to_chat(user, "<span class='notice'>You toggle HONK mode [use_command ? "on" : "off"].</span>")
