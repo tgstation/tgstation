@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			continue
 		if (I.restricted && !allow_restricted)
 			continue
+		I.setup_item()
 
 		if(!filtered_uplink_items[I.category])
 			filtered_uplink_items[I.category] = list()
@@ -102,6 +103,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
+	
+/datum/uplink_item/proc/setup_item()
+	return
 
 /datum/uplink_item/proc/purchase(mob/user, datum/component/uplink/U)
 	var/atom/A = spawn_item(item, user, U)
@@ -376,7 +380,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/dangerous/sword/Initialize()
+/datum/uplink_item/dangerous/sword/setup_item()
 	if(GLOB.joined_player_list.len < 25)
 		limited_stock = 1
 
