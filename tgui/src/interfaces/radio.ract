@@ -34,6 +34,14 @@
         {{data.useCommand ? "On": "Off"}}</ui-button>
     </ui-section>
   {{/if}}
+  {{/if}}
+  {{#if data.command}}
+    <ui-section label='HONK Mode'>
+      <ui-button icon='{{data.useHONK ? "power-off" : "close"}}' style='{{data.useHONK ? "selected" : null}}'
+        action='honk'>
+        {{data.useHONK ? "On": "Off"}}</ui-button>
+    </ui-section>
+  {{/if}}
 </ui-display>
 <ui-display title='Channel'>
   <ui-section label='Frequency'>
