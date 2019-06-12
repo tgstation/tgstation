@@ -66,6 +66,14 @@
 	landingDelay = 20 //Very speedy!
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+	
+/obj/structure/closet/supplypod/proc/specialisedPod()
+	return 1
+
+/obj/structure/closet/supplypod/extractionpod/specialisedPod(atom/movable/holder)
+	holder.forceMove(pick(GLOB.holdingfacility)) // land in ninja jail
+	open(holder, forced = TRUE)
+
 /obj/structure/closet/supplypod/Initialize()
 	. = ..()
 	setStyle(style, TRUE) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
@@ -129,9 +137,11 @@
 		reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
 		bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
 
-		audible_message("<span class='notice'>The pod hisses, closing quickly and launching itself away from the station.</span>", "<span class='notice'>The ground vibrates, the nearby pod launching away from the station.</span>")
 		QDEL_IN(risingPod, 10)
-		qdel(holder)
+		audible_message("<span class='notice'>The pod hisses, closing quickly and launching itself away from the station.</span>", "<span class='notice'>The ground vibrates, the nearby pod launching away from the station.</span>")
+		
+		stay_after_drop = FALSE
+		specialisedPod(holder) // Do special actions for specialised pods - this is likely if we were already doing manual launches
 
 /obj/structure/closet/supplypod/proc/preOpen() //Called before the open() proc. Handles anything that occurs right as the pod lands.
 	var/turf/T = get_turf(src)
@@ -229,7 +239,6 @@
 	handleReturningClose(holder, TRUE)
 
 /obj/structure/closet/supplypod/extractionpod/close(atom/movable/holder) //handles closing, and returns pod - deletes itself when returned
-	to_chat(usr, "We're closing now")
 	if (!holder)
 		holder = src
 
