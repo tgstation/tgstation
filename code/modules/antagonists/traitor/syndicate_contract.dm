@@ -55,6 +55,7 @@
 		return 1
 	return 0
 
+// Launch the pod to collect our victim.
 /datum/syndicate_contract/proc/launch_extraction_pod(turf/empty_pod_turf)
 	var/obj/structure/closet/supplypod/extractionpod/empty_pod = new()
 	
@@ -89,3 +90,66 @@
 				if (traitor_data.current_contract == src) {
 					traitor_data.current_contract = null
 				}
+			
+			handleVictimExperience(M)
+
+// They're off to holding - handle the return timer and give some text about what's going on.
+/datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
+	// Ship 'em back - dead or alive, it depends on if the Syndicate get paid... 5 minutes wait.
+	// Even if they weren't the target, we're still treating them the same.
+	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
+
+	M.flash_act()
+	M.confused += 10
+	M.blur_eyes(10)
+	to_chat(M, "<span class='warning'>You feel strange...</span>")
+	sleep(60)
+	to_chat(M, "<span class='warning'>That pod did something to you...</span>")
+	M.Dizzy(35)
+	sleep(65)
+	to_chat(M, "<span class='danger'>Your head POUNDS. It feels like it's going to burst out your skull!</span>")
+	M.flash_act()
+	M.confused += 20
+	M.blur_eyes(15)
+	sleep(100)
+	M.flash_act()
+	M.Unconscious(200)
+	to_chat(M, "<span class='reallybig hypnophrase'>A million voices speak to you at once... <i>\"Your brain held many valuable secrets - \
+	        	we thank you for providing them. Your value is expended, should your station not pay for your return, we'll return you \
+				dead. Whatever their decision, in five minutes, you're going home - but their choice might lead it to be without a beating \
+				heart...\"</i></span>")
+	M.blur_eyes(80)
+
+/datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
+	var/list/possible_drop_loc = list()
+
+	for (var/turf/possible_drop in contract.dropoff.contents)
+		var/location_clear = TRUE
+		if (isfloorturf(possible_drop))
+			for (var/content in possible_drop.contents)
+				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
+					location_clear = FALSE
+			if (location_clear)
+				possible_drop_loc.Add(possible_drop)
+
+	if (possible_drop_loc.len > 0)
+		var/pod_rand_loc = rand(1, possible_drop_loc.len)
+		
+		var/obj/structure/closet/supplypod/return_pod = new()
+		return_pod.bluespace = TRUE
+		return_pod.explosionSize = list(0,0,0,0)
+		return_pod.style = STYLE_SYNDICATE
+
+		do_sparks(8, FALSE, M)
+		M.visible_message("<span class='notice'>[M] vanishes...</span>")
+		M.forceMove(return_pod)
+
+		new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
+	else
+		to_chat(M, "<span class='reallybig hypnophrase'>A million voices speak to you at once...</span> <i>\"Seems where you got sent here from won't \
+		            fit our return pod - sorry.\"</i>")
+		if (iscarbon(M))
+			var/mob/living/carbon/C = M
+			if (C.can_heartattack())
+				var/datum/disease/D = new /datum/disease/heart_failure()
+				C.ForceContractDisease(D, FALSE, TRUE)

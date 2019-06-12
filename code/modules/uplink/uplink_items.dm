@@ -200,8 +200,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Contract Kit"
 	desc = "The Syndicate have a number of urgent contracts for you to take on, become a contractor and complete them for TC. Upon purchase, \
 			you'll be granted your own contract uplink embedded within the supplied tablet computer. Additonally, you'll be granted contractor \
-			gear to help with your mission - comes supplied with the tablet, space suit, chameleon jumpsuit and mask, and two additional low cost \
-			items."
+			gear to help with your mission - comes supplied with the tablet, space suit, chameleon jumpsuit and mask, agent card, and two \
+			additional low cost items."
 	item = /obj/item/storage/box/syndicate/contract_kit
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
