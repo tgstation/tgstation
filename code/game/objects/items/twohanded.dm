@@ -267,7 +267,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "double-bladed energy sword"
-	desc = "Handle with care."
+	desc = "Handle with care. You could deconstruct it with a wrench."
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -461,7 +461,7 @@
 /obj/item/twohanded/dualsaber/pirate
 	icon_state = "duallass0"
 	name = "double-bladed energy cutlass"
-	desc = "You are a pirate!"
+	desc = "You are a pirate! Yarr harr, you could deconstruct this with a wrench matey."
 	possible_colors = null
 	light_color = "#ff0000"
 	hackable = FALSE
