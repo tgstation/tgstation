@@ -306,7 +306,7 @@
 	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
 	build_path = /obj/item/rcd_ammo
 	category = list("initial","Construction")
-	departemental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/kitchen_knife
 	name = "Kitchen Knife"
