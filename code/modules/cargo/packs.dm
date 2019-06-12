@@ -307,6 +307,7 @@
 	name = "Single external lens Crate"
 	desc = "Contains a random external lens part."
 	small_item = TRUE
+	cost = 1400
 	max = 1
 
 /datum/supply_pack/security/disabler
