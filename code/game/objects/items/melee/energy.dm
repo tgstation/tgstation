@@ -180,19 +180,16 @@
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/melee/transforming/energy/sword/saber))
-		if(GLOB.joined_player_list.len > 25)
-			if(W == src)
-				to_chat(user, "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>")
-				if(ishuman(user))
-					user.adjustBrainLoss(25)
-			else
-				to_chat(user, "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>")
-				var/obj/item/twohanded/dualsaber/newSaber = new(user.loc)
-				qdel(W)
-				qdel(src)
-				user.put_in_hands(newSaber)
+		if(W == src)
+			to_chat(user, "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>")
+			if(ishuman(user))
+				user.adjustBrainLoss(25)
 		else
-			to_chat(user, "<span class='notice'>You can't seem to connect the blades together... maybe there's too little people?</span>")
+			to_chat(user, "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>")
+			var/obj/item/twohanded/dualsaber/newSaber = new(user.loc)
+			qdel(W)
+			qdel(src)
+			user.put_in_hands(newSaber)
 	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
