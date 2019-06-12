@@ -59,18 +59,20 @@
 
 			return 1
 		if("PRG_redeem_TC")
-			var/obj/item/stack/telecrystal/crystals = new /obj/item/stack/telecrystal(get_turf(user))
-			crystals.amount = hard_drive.traitor_data.contract_TC_to_redeem
+			if (hard_drive.traitor_data.contract_TC_to_redeem) {
+				var/obj/item/stack/telecrystal/crystals = new /obj/item/stack/telecrystal(get_turf(user), 
+															hard_drive.traitor_data.contract_TC_to_redeem)
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if(H.put_in_hands(crystals))
+						to_chat(H, "Your payment materializes into your hands!")
+					else
+						to_chat(user, "Your payment materializes onto the floor.")
 
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if(H.put_in_hands(crystals))
-					to_chat(H, "Your payment materializes into your hands!")
-					return 1
-			to_chat(user, "Your payment materializes onto the floor.")
-
-			hard_drive.traitor_data.contract_TC_payed_out += hard_drive.traitor_data.contract_TC_to_redeem
-			hard_drive.traitor_data.contract_TC_to_redeem = 0
+				hard_drive.traitor_data.contract_TC_payed_out += hard_drive.traitor_data.contract_TC_to_redeem
+				hard_drive.traitor_data.contract_TC_to_redeem = 0
+				return 1
+			}
 			return 1
 
 
