@@ -464,7 +464,7 @@
 	desc = "You are a pirate!"
 	possible_colors = null
 	light_color = "#ff0000"
-	var/hackable = FALSE
+	hackable = FALSE
 
 /obj/item/twohanded/dualsaber/pirate/update_icon()
 	if(wielded)
