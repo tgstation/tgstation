@@ -29,6 +29,8 @@
 	var/freqlock = FALSE  // Frequency lock to stop the user from untuning specialist radios.
 	var/use_command = FALSE  // If true, broadcasts will be large and BOLD.
 	var/command = FALSE  // If true, use_command can be toggled at will.
+	var/use_honk = FALSE // If true, broadcast will be- HOOOOOOOOOOOOOOOOONK
+	var/honk = FALSE // If true, use_honk can be toggled at will.
 
 	// Encryption key handling
 	var/obj/item/encryptionkey/keyslot
