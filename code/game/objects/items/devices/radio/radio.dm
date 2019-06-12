@@ -209,6 +209,8 @@
 
 	if(use_command)
 		spans |= SPAN_COMMAND
+	if(use_honk)
+		spans |= SPAN_CLOWN
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
