@@ -130,6 +130,8 @@
 		data["channels"][channel] = channels[channel] & FREQ_LISTENING
 	data["command"] = command
 	data["useCommand"] = use_command
+	data["honk"] = honk
+	data["useHONK"] = use_honk
 	data["subspace"] = subspace_transmission
 	data["subspaceSwitchable"] = subspace_switchable
 	data["headset"] = istype(src, /obj/item/radio/headset)
