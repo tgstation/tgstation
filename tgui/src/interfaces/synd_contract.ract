@@ -31,7 +31,7 @@
 			You have {{data.redeemable_tc}} TC to redeem. <ui-button action='PRG_redeem_TC'>Collect</ui-button>
 		</p>
 		{{#if data.ongoing_contract}}
-			<div style="text-align:center">
+			<div style="text-align:center; margin-bottom:3px">
 				<ui-button action='PRG_call_extraction' {{#if extraction_enroute}}state="disabled"{{/if}}>Call Extraction</ui-button>
 			</div>
 		{{/if}}
@@ -46,7 +46,7 @@
 
 			{{#each data.contracts}}
 				{{#if data.ongoing_contract}}
-					{{#if status == 2 || status == 3}}
+					{{#if status == 2 || status == 3 || status == 4}}
 						<tr>
 							<td>{{target}}</td>
 							<td>{{payout}}(+{{payout_bonus}}) TC</td>
@@ -55,7 +55,7 @@
 						</tr>
 					{{/if}}
 				{{else}}
-					{{#if status != 5}}
+					{{#if status != 5 && status != 6}}
 						<tr>
 							<td>{{target}}</td>
 							<td>{{payout}}(+{{payout_bonus}}) TC</td>
