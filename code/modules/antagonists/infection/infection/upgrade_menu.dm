@@ -34,12 +34,24 @@
 	if(istype(upgrading, /mob/camera/commander))
 		var/mob/camera/commander/C = upgrading
 		return C.upgrade_points
-	return
+	return 0
+
+/datum/infection_menu/proc/try_purchase(point_cost)
+	if(istype(upgrading, /obj/structure/infection))
+		var/obj/structure/infection/I = upgrading
+		return I.overmind.can_buy(point_cost)
+	if(istype(upgrading, /mob/living/simple_animal/hostile/infection/infectionspore/sentient))
+		var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S = upgrading
+		return S.can_upgrade(point_cost)
+	if(istype(upgrading, /mob/camera/commander))
+		var/mob/camera/commander/C = upgrading
+		return C.can_upgrade(point_cost)
+	return FALSE
 
 /datum/infection_menu/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "infection", name, 900, 480, master_ui, state)
+		ui = new(user, src, ui_key, "infection_menu", name, 900, 480, master_ui, state)
 		ui.open()
 
 /datum/infection_menu/ui_data(mob/user)
@@ -58,7 +70,8 @@
 		var/list/AL = list()
 		AL["name"] = evolution.name
 		AL["desc"] = evolution.description
-		AL["owned"] = evolution.bought
+		AL["owned"] = evolution.times <= 0
+		AL["times"] = evolution.times
 		AL["upgrade_cost"] = point_cost
 		AL["can_purchase"] = (points_remaining >= point_cost)
 
@@ -74,4 +87,8 @@
 
 	switch(action)
 		if("evolve")
-			var/upgrade_name = params["name"]
+			var/evolution_name = params["name"]
+			for(var/datum/infection_upgrade/evolution in get_evolution_list())
+				if(evolution.name == evolution_name && evolution.times)
+					if(try_purchase(evolution.cost))
+						evolution.do_upgrade(upgrading)

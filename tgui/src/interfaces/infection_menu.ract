@@ -5,14 +5,19 @@
 </ui-display>
 <ui-display>
 {{#each data.upgrades}}
-  <ui-section label='{{name}}' candystripe right>
-    <span>{{desc}}</span>
+  <ui-section label='{{name}}' candystripe left>
+    <section class="candystripe" align='left'>
+      {{desc}}
+    </section>
+    <section class="candystripe" align='left'>
+      Evolutions Left: {{times}}
+    </section>
     <span>Cost: {{upgrade_cost}}</span>
     <ui-button
       state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
       action='evolve'
       params='{"name": "{{name}}"}'>
-      {{owned ? "Purchased" : "Evolve"}}
+      {{owned ? "Evolved" : "Evolve"}}
     </ui-button>
   </ui-section>
 {{/each}}

@@ -22,8 +22,7 @@ GLOBAL_VAR(infection_commander)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	hud_type = /datum/hud/infection_commander
 	var/obj/structure/infection/core/infection_core = null // The infection commanders's core
-	var/obj/effect/meteor/infection/meteor = null // The infection's incoming meteor
-	var/infection_points = 0
+	var/infection_points = 300
 	var/max_infection_points = 300
 	var/upgrade_points = 10 // obtained by destroying beacons
 	var/last_attack = 0
@@ -33,8 +32,8 @@ GLOBAL_VAR(infection_commander)
 	var/placed = FALSE
 	var/freecam = FALSE
 	var/base_point_rate = 2 //for core placement
-	var/autoplace_time = 200 // a few seconds, just so it isnt sudden at game start
-	var/place_beacons_delay = 100
+	var/autoplace_time = 20 // a few seconds, just so it isnt sudden at game start
+	var/place_beacons_delay = 10
 	var/victory_in_progress = FALSE
 	var/infection_color = "#ffffff"
 	var/datum/atom_hud/medical_hud
@@ -89,13 +88,13 @@ GLOBAL_VAR(infection_commander)
 		sleep(100 / GLOB.beacon_spawns.len)
 
 /mob/camera/commander/process()
-	if(!infection_core && !meteor)
+	if(!infection_core)
 		if(!placed)
 			if(autoplace_time && world.time >= autoplace_time)
 				place_infection_core()
 		else
 			qdel(src)
-	else if(!victory_in_progress && !GLOB.infection_beacons.len && !meteor)
+	else if(!victory_in_progress && !GLOB.infection_beacons.len)
 		victory_in_progress = TRUE
 		priority_announce("It's over, the infection is unstoppable now.", "Biohazard Containment Commander")
 		set_security_level("delta")
@@ -248,8 +247,6 @@ GLOBAL_VAR(infection_commander)
 			stat(null, "Time Before Automatic Placement: [max(round((autoplace_time - world.time)*0.1, 0.1), 0)]")
 
 /mob/camera/commander/Move(NewLoc, Dir = 0)
-	if(meteor)
-		return FALSE
 	if(freecam || !placed)
 		forceMove(NewLoc)
 		return TRUE

@@ -6,13 +6,14 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	if(placed)
 		return
 	var/turf/start = pick(GLOB.infection_spawns)
-	var/obj/effect/meteor/infection/M = new/obj/effect/meteor/infection(start, start, src)
-	M.pixel_x = pick(-32, 32)
-	M.pixel_y = pick(-32, 32)
-	M.pixel_z = 270
-	new /obj/effect/temp_visual/dragon_swoop(M.loc)
-	animate(M, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 10)
-	qdel(M)
+	forceMove(get_turf(start))
+	var/obj/structure/infection/core/I = new(get_turf(start), src, base_point_rate, 1)
+	infection_core = I
+	I.update_icon()
+	update_health_hud()
+	reset_perspective()
+	transport_core()
+	placed = TRUE
 
 /obj/effect/landmark/infection_start
 	name = "infectionstart"
@@ -23,59 +24,20 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	GLOB.infection_spawns += get_turf(src)
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/meteor/infection
-	name = "infectious core"
-	desc = "It's bright."
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "blob_shield"
-	heavy = 1
-	var/mob/camera/commander/overmind = null
-
-/obj/effect/meteor/infection/Destroy()
-	var/obj/structure/infection/core/I = new(get_turf(src), overmind, overmind.base_point_rate, 1)
-	overmind.infection_core = I
-	I.update_icon()
-	overmind.update_health_hud()
-	overmind.reset_perspective()
-	overmind.transport_core()
-	overmind.placed = 1
-	overmind.meteor = null
-	meteor_effect()
-	return ..()
-
-/obj/effect/meteor/infection/Initialize(mapload, target, temp)
-	if(!iscommander(temp))
-		return
-	overmind = temp
-	var/mutable_appearance/infection_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_shield")
-	infection_overlay.color = overmind.infection_color
-	add_overlay(infection_overlay)
-	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
-	overmind.reset_perspective(src)
-	overmind.meteor = src
-	. = ..()
-
-/obj/effect/meteor/infection/get_hit()
-	return
-
-/obj/effect/meteor/infection/Move()
-	if(!overmind.infection_core)
-		overmind.forceMove(get_turf(src))
-
 /mob/camera/commander/proc/can_buy(cost = 0)
 	if(infection_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>")
-		return 0
+		return FALSE
 	add_points(-cost)
-	return 1
+	return TRUE
 
 /mob/camera/commander/proc/can_upgrade(cost = 1)
 	var/diff = upgrade_points - cost
 	if(diff < 0)
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [diff * -1] more upgrade points! Destroy beacons to acquire them!</span>")
-		return 0
+		return FALSE
 	upgrade_points = diff
-	return 1
+	return TRUE
 
 /mob/camera/commander/verb/transport_core()
 	set category = "Infection"
