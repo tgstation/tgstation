@@ -122,6 +122,10 @@
 	description = "<span class='boldwarning'>I drank dead blood. I am better than this.</span>\n"
 	mood_change = -7
 	timeout = 900
+/datum/mood_event/drankblood_synth
+	description = "<span class='boldwarning'>I drank synthetic blood. What is wrong with me?</span>\n"
+	mood_change = -7
+	timeout = 900
 /datum/mood_event/drankkilled
 	description = "<span class='boldwarning'>I drank from my victim until they died. I feel...less human.</span>\n"
 	mood_change = -12

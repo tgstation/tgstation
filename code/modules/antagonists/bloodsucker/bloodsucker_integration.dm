@@ -124,9 +124,9 @@
 
 /mob/living/carbon/proc/scan_blood_volume()
 	// Vamps don't show up normally to scanners unless Masquerade power is on ----> scanner.dm
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	if (istype(bloodsuckerdatum) && bloodsuckerdatum.poweron_masquerade)
-		return BLOOD_VOLUME_NORMAL
+	if (ismind(mind))
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if (istype(bloodsuckerdatum) && bloodsuckerdatum.poweron_masquerade)
+			return BLOOD_VOLUME_NORMAL
 
-	else
-		return blood_volume
+	return blood_volume
