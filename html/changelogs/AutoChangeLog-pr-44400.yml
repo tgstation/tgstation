@@ -1,4 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - bugfix: "attaching something to a mech wont auto select it"
