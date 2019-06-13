@@ -20,7 +20,7 @@
 		/obj/effect/proc_holder/spell/target_hive/hive_add = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_remove = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_see = 0,
-		/obj/effect/proc_holder/spell/target_hive/hive_shock = 0,
+		/obj/effect/proc_holder/spell/targeted/hive_shock = 0,
 		/obj/effect/proc_holder/spell/self/telekinetic_hand = 0,
 		//Tier 2 - Tracking related powers
 		/obj/effect/proc_holder/spell/self/hive_scan = 5,

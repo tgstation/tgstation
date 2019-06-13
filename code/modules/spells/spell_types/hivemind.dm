@@ -180,38 +180,43 @@
 	else
 		perform(,user)
 
-/obj/effect/proc_holder/spell/target_hive/hive_shock
+/obj/effect/proc_holder/spell/targeted/hive_shock
 	name = "Sensory Shock"
 	desc = "After a short charging time, we overload the mind of one of our vessels with psionic energy, temporarilly disrupting their sight, hearing, and speech."
-	action_icon_state = "shock"
 	charge_max = 600
+	invocation_type = "none"
+	clothes_req = 0
+	human_req = 1
+	action_icon = 'icons/mob/actions/actions_hive.dmi'
+	action_background_icon_state = "bg_hive"
+	action_icon_state = "shock"
+	antimagic_allowed = TRUE
+	range = 7
+	selection_type = "range"
 
-/obj/effect/proc_holder/spell/target_hive/hive_shock/cast(list/targets, mob/living/user = usr)
-	var/mob/living/carbon/human/target = targets[1]
+/obj/effect/proc_holder/spell/targeted/hive_shock/cast(list/targets, mob/user = usr)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
-	if(!hive)
+	if(!hive || !hive.hivemembers)
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
-	to_chat(user, "<span class='notice'>We begin increasing the psionic bandwidth between ourself and the vessel!</span>")
-	if(do_after(user,10,0,user))
-		var/power = max((120-get_dist(user, target))/120,0)
-		if(target.anti_magic_check(FALSE, FALSE, TRUE))
-			power *= 0.5
-		if(user.z == target.z)
-			to_chat(user, "<span class='notice'>We have overloaded the vessel for a short time!</span>")
-			target.blind_eyes(4*power)
-			target.blur_eyes(30*power)
-			target.minimumDeafTicks(15*power) //equivalent to 30s deafness max
-			target.Jitter(10*power)
-			target.silent += 10*power
-			target.stuttering += 30*power
-			to_chat(target, "<span class='userdanger'>You feel your mind start to burn!</span>")
-		else
-			to_chat(user, "<span class='notice'>The vessel was too far away to be affected!</span>")
-	else
-		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
-		revert_cast()
-
+	var/mob/living/carbon/target = targets[1]
+	to_chat(user, "<span class='notice'>We increase the psionic bandwidth between ourself and the target!</span>")
+	var/power = 1
+	if(target.anti_magic_check(FALSE, FALSE, TRUE))
+		power *= 0.5
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+		power *= 0.25
+	else if(hive.is_carbon_member(target))
+		power *= 0.5
+	target.blind_eyes(4*power)
+	target.blur_eyes(30*power)
+	target.minimumDeafTicks(15*power) //equivalent to 30s deafness max
+	target.Jitter(10*power)
+	target.silent += 10*power
+	target.stuttering += 30*power
+	target.Knockdown(1*power)
+	target.stop_pulling()
+	to_chat(target, "<span class='userdanger'>You feel your mind start to burn!</span>")
 
 /obj/effect/proc_holder/spell/self/hive_scan
 	name = "Psychoreception"
