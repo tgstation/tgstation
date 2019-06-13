@@ -192,7 +192,7 @@
 	else
 		return ..()
 
-/obj/item/melee/transforming/energy/sword/saber/bee  //yeah its fucking stupid but I wanted a yellow esword which is weaker than what we have
+/obj/item/melee/transforming/energy/sword/bee  //yeah its fucking stupid but I wanted a yellow esword which is weaker than what we have
 	name = "Bee Sword"
 	desc = "Channel the might of the bees with this powerful sword"
 	force = 0
