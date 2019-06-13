@@ -15,7 +15,6 @@
 	tac_reloads = FALSE
 	var/spin_delay = 10
 	var/recent_spin = 0
-	recoil = 1
 
 /obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE)
 	if(spin_cylinder)
@@ -134,6 +133,8 @@
 			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
 	return TRUE
 
+/obj/item/gun/ballistic/revolver/syndicate
+	recoil = 1
 
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
