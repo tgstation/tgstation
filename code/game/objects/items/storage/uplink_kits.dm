@@ -35,7 +35,7 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			
 		if("guns") // 28 tc now
-			new /obj/item/gun/ballistic/revolver(src)
+			new /obj/item/gun/ballistic/revolver/syndicate(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/card/emag(src)
