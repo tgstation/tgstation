@@ -57,7 +57,7 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (!mat_container)
 		return
-		
+
 	if(O.refined_type == null)
 		return
 
@@ -192,13 +192,13 @@
 		if(user.transferItemToLoc(W, src))
 			inserted_disk = W
 			return TRUE
-			
+
 	var/obj/item/stack/ore/O = W
 	if(istype(O))
 		if(O.refined_type == null)
 			to_chat(user, "<span class='notice'>[O] has already been refined!</span>")
 			return
-		
+
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -219,7 +219,8 @@
 	data["unclaimedPoints"] = points
 	if(inserted_id)
 		data["hasID"] = TRUE
-		data["claimedPoints"] = inserted_id.mining_points
+		if (inserted_id.registered_account)
+			data["hasAccount"] = TRUE
 
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -273,8 +274,7 @@
 				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
 			return TRUE
 		if("Claim")
-			if(inserted_id)
-				inserted_id.mining_points += points
+			if(inserted_id && inserted_id.registered_account.adjust_money(points))
 				points = 0
 			return TRUE
 		if("Release")

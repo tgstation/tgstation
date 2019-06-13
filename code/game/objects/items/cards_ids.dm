@@ -113,7 +113,6 @@
 	slot_flags = ITEM_SLOT_ID
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
@@ -228,8 +227,6 @@
 
 /obj/item/card/id/examine(mob/user)
 	..()
-	if(mining_points)
-		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 	if(registered_account)
 		to_chat(user, "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance].")
 		if(registered_account.account_job)
