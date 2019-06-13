@@ -1,7 +1,6 @@
 /datum/component/extralasers
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	var/obj/item/external_lens/lens
-	var/obj/item/ammo_casing/energy/laser/ammo
+	var/lens
 
 /datum/component/extralasers/Initialize(ammo, _lens)
 	if(!istype(parent, /obj/item/gun/energy/laser))
@@ -23,5 +22,5 @@
 		L.update_icon(TRUE)
 		RemoveComponent()
 		var/turf/T = user.loc
-		new ammo(T) //doest work
+		new lens(T)
 		return TRUE
