@@ -1,3 +1,5 @@
+#define BLOOD_REGEN_RATE 0.15
+
 /****************************************************
 				BLOOD SYSTEM
 ****************************************************/
@@ -49,7 +51,7 @@
 			if(satiety > 80)
 				nutrition_ratio *= 1.25
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR)
-			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
+			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + BLOOD_REGEN_RATE * nutrition_ratio)
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
