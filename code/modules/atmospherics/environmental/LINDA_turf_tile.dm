@@ -406,8 +406,6 @@
 
 				neighbor.consider_superconductivity()
 
-	radiate_to_spess()
-
 	finish_superconduction()
 
 /turf/proc/finish_superconduction(temp = temperature)
@@ -440,15 +438,6 @@
 	if(temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 		return FALSE
 	return ..()
-
-/turf/proc/radiate_to_spess() //Radiate excess tile heat to space
-	if(temperature > T0C) //Considering 0 degC as te break even point for radiation in and out
-		var/delta_temperature = (temperature_archived - TCMB) //hardcoded space temperature
-		if((heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
-
-			var/heat = thermal_conductivity*delta_temperature* \
-				(heat_capacity*HEAT_CAPACITY_VACUUM/(heat_capacity+HEAT_CAPACITY_VACUUM))
-			temperature -= heat/heat_capacity
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)
 	sharer.temperature = air.temperature_share(null, sharer.thermal_conductivity, sharer.temperature, sharer.heat_capacity)
