@@ -250,7 +250,7 @@
 	if(stat & BROKEN)
 		cut_overlays()
 		icon_state = "[icon_state]-1"
-		if(BLUESPACE)
+		if(bluespace)
 			add_overlay("can-holding-1")
 		return
 
