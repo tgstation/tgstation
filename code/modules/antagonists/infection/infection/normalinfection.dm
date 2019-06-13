@@ -312,12 +312,13 @@
 	var/obj/effect/overlay/vis/newicon = new
 	newicon.icon = I.icon
 	newicon.icon_state = I.icon_state
+	newicon.dir = I.dir
 	newicon.pixel_x = I.pixel_x
 	newicon.pixel_y = I.pixel_y
 	newicon.layer = layer
 	if(overmind)
 		newicon.color = overmind.infection_color
-	newicon.transform = matrix(0, 0, 0, 0, 0, 0)
+	newicon.transform = matrix(0.5, 0, 0, 0, 0.5, 0)
 	animate(newicon, transform = matrix(), time = structure_build_time)
 	vis_contents += newicon
 	name = "building [I.name]"

@@ -26,8 +26,10 @@
 		rally_spores(T)
 
 /mob/camera/commander/CtrlClickOn(atom/A)
-	// new stuff
-	return 1
+	var/datum/action/cooldown/infection/creator/shield/S = locate(/datum/action/cooldown/infection/creator/shield) in actions
+	var/turf/T = get_turf(A)
+	if(T)
+		S.fire(src, T)
 
 /mob/camera/commander/AltClickOn(atom/A) //Remove an infection
 	var/turf/T = get_turf(A)

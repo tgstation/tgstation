@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 			return //handholdotron 2000
 	if(nearEquals)
 		for(var/obj/structure/infection/L in orange(nearEquals, T))
-			if(istype(L, infectionType) || L.building == infectionType)
+			if(SAME_INFECTION_TYPE(L, infectionType))
 				to_chat(src, "<span class='warning'>There is a similar infection nearby, move more than [nearEquals] tiles away from it!</span>")
 				return
 	if(!can_buy(price))

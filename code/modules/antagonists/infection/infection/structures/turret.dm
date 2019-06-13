@@ -1,8 +1,10 @@
 /obj/structure/infection/turret
 	name = "infection turret"
-	icon = 'icons/mob/infection/infection.dmi'
-	icon_state = "infection_turret" // needed so when building you can see the type
 	desc = "A solid wall with a radiating material on the inside."
+	icon = 'icons/mob/infection/crystaline_infection_medium.dmi'
+	icon_state = "crystalturret-layer"
+	pixel_x = -16
+	pixel_y = -4
 	max_integrity = 150
 	point_return = 10
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
@@ -13,21 +15,24 @@
 	upgrade_subtype = /datum/infection_upgrade/turret_type_change
 
 /obj/structure/infection/turret/Initialize()
-	START_PROCESSING(SSobj, src)
 	. = ..()
+	dir = NORTH
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/infection/turret/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/infection/turret/update_icon()
-	cut_overlays()
-	color = null
-	var/mutable_appearance/infection_overlay = mutable_appearance('icons/mob/infection/infection.dmi', "normal")
-	if(overmind)
-		infection_overlay.color = overmind.infection_color
-	add_overlay(infection_overlay)
-	add_overlay(mutable_appearance('icons/mob/infection/infection.dmi', "infection_turret"))
+	. = ..()
+	underlays.Cut()
+	var/mutable_appearance/turret_base = mutable_appearance('icons/mob/infection/crystaline_infection_medium.dmi', "crystalturret-base")
+	var/mutable_appearance/infection_base = mutable_appearance('icons/mob/infection/infection.dmi', "normal")
+	turret_base.dir = dir
+	infection_base.pixel_x = -pixel_x
+	infection_base.pixel_y = -pixel_y
+	underlays += turret_base
+	underlays += infection_base
 
 /obj/structure/infection/turret/Life()
 	if(!overmind)
@@ -101,6 +106,7 @@
 	if(!istype(T) || !istype(U))
 		return
 
+	setDir(get_dir(src, target))
 	update_icon()
 	var/obj/item/projectile/bullet/infection/A = new projectile_type(T)
 	playsound(loc, 'sound/weapons/gunshot_smg.ogg', 75, 1)

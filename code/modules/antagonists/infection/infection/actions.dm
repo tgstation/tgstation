@@ -19,7 +19,6 @@
 	var/mob/camera/commander/I = owner
 	var/turf/T = get_turf(I)
 	if(T)
-		StartCooldown()
 		fire(I, T)
 		return TRUE
 	return FALSE
@@ -29,14 +28,14 @@
 
 /datum/action/cooldown/infection/freecam
 	name = "Full Vision"
-	desc = "Allows you to move your camera to anywhere whether or not you have an infection next to it."
+	desc = "Allows you to move your camera to anywhere, whether or not you have an infection next to it."
 	icon_icon = 'icons/obj/clothing/glasses.dmi'
 	button_icon_state = "godeye"
 	upgrade_cost = 1
 
 /datum/action/cooldown/infection/freecam/fire(mob/camera/commander/I, turf/T)
 	I.freecam = !I.freecam
-	to_chat(I, "<span class='notice'>Successfully toggled full vision!</span>")
+	to_chat(I, "<span class='notice'>Successfully toggled [name]!</span>")
 
 /datum/action/cooldown/infection/medicalhud
 	name = "Medical Hud"
@@ -47,7 +46,7 @@
 
 /datum/action/cooldown/infection/medicalhud/fire(mob/camera/commander/I, turf/T)
 	I.toggle_medical_hud()
-	to_chat(I, "<span class='notice'>Successfully toggled medical hud!</span>")
+	to_chat(I, "<span class='notice'>Successfully toggled [name]!</span>")
 
 /datum/action/cooldown/infection/emppulse
 	name = "Emp Pulse"
@@ -59,6 +58,7 @@
 
 /datum/action/cooldown/infection/emppulse/fire(mob/camera/commander/I, turf/T)
 	if(locate(/obj/structure/infection) in T.contents)
+		StartCooldown()
 		playsound(T, pick('sound/weapons/ionrifle.ogg'), 300, FALSE, pressure_affected = FALSE)
 		new /obj/effect/temp_visual/impact_effect/ion(T)
 		sleep(20)

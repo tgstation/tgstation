@@ -1,6 +1,6 @@
 /datum/infection_menu
 	var/name = "Evolution Menu"
-	var/upgrading
+	var/atom/upgrading
 
 /datum/infection_menu/New(upgrading)
 	src.upgrading = upgrading
@@ -73,7 +73,7 @@
 		AL["owned"] = evolution.times <= 0
 		AL["times"] = evolution.times
 		AL["upgrade_cost"] = point_cost
-		AL["can_purchase"] = (points_remaining >= point_cost)
+		AL["can_purchase"] = (points_remaining >= point_cost && !QDELETED(upgrading))
 
 		upgrades += list(AL)
 
