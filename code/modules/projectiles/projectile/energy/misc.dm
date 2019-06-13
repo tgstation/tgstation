@@ -5,6 +5,10 @@
 	damage_type = CLONE
 	irradiate = 100
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+	
+/obj/item/projectile/energy/declone/weak
+	damage = 5
+	irradiate = 25
 
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
