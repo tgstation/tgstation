@@ -43,7 +43,7 @@
 	build_path = /obj/item/gps
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
-	
+
 /datum/design/desynchronizer
 	name = "Desynchronizer"
 	desc = "A device that can desynchronize the user from spacetime."
@@ -63,3 +63,13 @@
 	build_path = /obj/item/storage/bag/ore/holding
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/canister_holding_parts
+	name = "Canister of Holding Parts"
+	desc = "Parts used to build a canister of holding."
+	id = "canister_holding_parts"
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250, MAT_BLUESPACE = 2000) //the same as a bag of holding
+	build_path = /obj/item/canister_holding_parts
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

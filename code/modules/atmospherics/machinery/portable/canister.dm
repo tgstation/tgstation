@@ -23,6 +23,7 @@
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
+	var/bluespace = FALSE //is it a canister of holding?
 	// Prototype vars
 	var/prototype = FALSE
 	var/valve_timer = null
@@ -145,6 +146,26 @@
 	gas_type = /datum/gas/miasma
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/holding
+	name = "canister of holding"
+	desc = "Holds more gas than a Space Mexican."
+	icon_state = "holding"
+	volume = 3000
+	bluespace = TRUE
+
+/obj/item/canister_holding_parts
+	name = "canister of holding parts"
+	desc = "Used to build a canister of holding."
+	icon = 'icons/obj/assemblies.dmi'
+	icon_state = "canister_holding_parts"
+	force = 5 //the same as a metal sheet
+	throwforce = 10 //the same as a metal sheet
+
+/obj/item/canister_holding_parts/attack_self(mob/user)
+	if(do_after(user, 30, target = user))
+		new /obj/machinery/portable_atmospherics/canister/holding(get_turf(user))
+		qdel(src)
+
 
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
@@ -224,6 +245,7 @@
 #define MEDIUM		(1<<4)
 #define FULL		(1<<5)
 #define DANGER		(1<<6)
+#define BLUESPACE	(1<<7)
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
@@ -233,6 +255,8 @@
 	var/last_update = update
 	update = 0
 
+	if(bluespace)
+		update |= BLUESPACE
 	if(holding)
 		update |= HOLDING
 	if(connected_port)
@@ -253,6 +277,8 @@
 		return
 
 	cut_overlays()
+	if(update & BLUESPACE)
+		add_overlay("can-holding")
 	if(update & HOLDING)
 		add_overlay("can-open")
 	if(update & CONNECTED)
@@ -272,6 +298,7 @@
 #undef MEDIUM
 #undef FULL
 #undef DANGER
+#undef BLUESPACE
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
