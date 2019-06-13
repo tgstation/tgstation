@@ -10,7 +10,7 @@
 
 	var/list/key_emotes = GLOB.emote_list[act]
 
-	if(!key_emotes || !key_emotes.len)
+	if(!length(key_emotes))
 		to_chat(src, "<span class='notice'>'[act]' emote does not exist. Say *help for a list.</span>")
 		return
 	for(var/datum/emote/P in key_emotes)

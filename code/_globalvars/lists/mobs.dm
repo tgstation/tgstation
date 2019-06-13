@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(emote_list)
 		if(!.[E.key])
 			.[E.key] = list(E)
 		else
-			.[E.key] |= E
+			.[E.key] += E
 		
 		if(!.[E.key_third_person])
 			.[E.key_third_person] = list(E)
