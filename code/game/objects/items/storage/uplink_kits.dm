@@ -11,6 +11,7 @@
 			new /obj/item/storage/box/syndie_kit/space(src) //4 tc
 			new /obj/item/grenade/syndieminibomb/concussion/frag(src) // ~2 tc each?
 			new /obj/item/grenade/syndieminibomb/concussion/frag(src) 
+			new /obj/item/flashlight/emp(src)
 			
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
@@ -33,6 +34,8 @@
 			new /obj/item/chameleon(src)
 			new /obj/item/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
+			new /obj/item/flashlight/emp(src)
+			new /obj/item/jammer(src)
 			
 		if("guns") // 28 tc now
 			new /obj/item/gun/ballistic/revolver(src)
@@ -74,12 +77,14 @@
 			new /obj/item/encryptionkey/binary(src)
 			new /obj/item/aiModule/toyAI(src)
 			new /obj/item/multitool/ai_detect(src)
+			new /obj/item/storage/toolbox/syndicate(src)
 
 		if("lordsingulo") // 24 tc
 			new /obj/item/sbeacondrop(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/card/emag(src)
+			new /obj/item/storage/toolbox/syndicate(src)
 
 		if("sabotage") // 26 tc now
 			new /obj/item/grenade/plastic/c4 (src)
@@ -91,6 +96,7 @@
 			new /obj/item/cartridge/virus/syndicate(src)
 			new /obj/item/storage/toolbox/syndicate(src) //To actually get to those places
 			new /obj/item/pizzabox/bomb(src)
+			new /obj/item/storage/box/syndie_kit/emp(src)
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
@@ -120,6 +126,7 @@
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/card/id/syndicate(src)
 			new /obj/item/reagent_containers/syringe/stimulants(src)
+			new /obj/item/reagent_containers/glass/rag(src)
 			
 		if("ninja") // 33 tc worth
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
@@ -157,6 +164,8 @@
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
+			new /obj/item/pen/edagger(src)
+			new /obj/item/gun/energy/decloner(src)
 			
 		if("bee") // ~25 tc
 			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
@@ -165,6 +174,7 @@
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
 			new /obj/item/storage/box/syndie_kit/bee_grenades(src) // 15 tc
 			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
+			new /obj/item/melee/transforming/energy/sword/saber/bee(src) //priceless
 			
 		if("mr_freeze")
 			new /obj/item/clothing/glasses/cold(src)
@@ -179,6 +189,7 @@
 			new /obj/item/dnainjector/geladikinesis(src)
 			new /obj/item/dnainjector/cryokinesis(src)
 			new /obj/item/gun/energy/temperature/security(src)
+			new /obj/item/melee/transforming/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
 			
 /obj/item/storage/box/syndie_kit
 	name = "box"
