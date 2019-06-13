@@ -91,7 +91,7 @@
 
 /datum/surgery/healing/burn/basic
 	replaced_by = /datum/surgery/healing/burn/upgraded
-	healing_step_type = /datum/surgery_step/heal/brute/basic
+	healing_step_type = /datum/surgery_step/heal/burn/basic
 
 /datum/surgery/healing/burn/upgraded
 	replaced_by = /datum/surgery/healing/burn/upgraded/femto

@@ -1,7 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - rscadd: "fireman carrying. Aggressive grab then click drag onto yourself."
-  - tweak: "pulling prone mobs slows you down."
-  - tweak: "carrying another human slows you down."
-  - tweak: "pacifists can aggressive grab."
