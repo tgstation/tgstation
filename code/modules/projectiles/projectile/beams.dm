@@ -279,7 +279,7 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 /obj/item/projectile/beam/blinding
 	name = "\improper blinding beam"
 	icon_state = "blinding"
-	eyeblur = 30
+	eyeblur = 5
 	damage = 8
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_PURPLE
