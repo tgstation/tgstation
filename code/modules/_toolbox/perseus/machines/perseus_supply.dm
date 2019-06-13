@@ -61,8 +61,8 @@ GLOBAL_LIST_EMPTY(perseus_supplypacks)
 		for(var/N in SSshuttle.supply_packs)
 			var/datum/supply_pack/S = SSshuttle.supply_packs[N]
 			var/white_listed = 0
-			for(var/T in white_listed)
-				if(istype(S,T))
+			for(var/T in white_list)
+				if(S.type == T)
 					white_listed = 1
 					break
 			if(!white_listed)

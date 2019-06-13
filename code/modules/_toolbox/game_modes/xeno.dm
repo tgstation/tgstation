@@ -111,10 +111,10 @@
 /datum/game_mode/ayylmaos/process()
 	if(digital_camo_timer && digital_camo_timer <= world.time)
 		for(var/mob/living/carbon/alien/A in GLOB.mob_list)
-			A.digitalcamo = initial(A.digitalcamo)
-			A.digitalinvis = initial(A.digitalinvis)
 			if(A.digitalcamo || A.digitalinvis)
 				to_chat(A,"Your digital camo fades.")
+			A.digitalcamo = 0
+			A.digitalinvis = 0
 		digital_camo_timer = 0
 	if(queen)
 		if(!istype(queen,/mob/living/carbon/alien/humanoid/royal/queen) || !queen.client || QDELETED(queen) || !queen.loc || queen.stat == DEAD)
@@ -131,6 +131,7 @@
 	var/alien_count = 0
 	var/living_count = 0
 	var/list/important_jobs_still_active = list()
+	var/list/active_antags = list()
 	for(var/mob/living/M in GLOB.player_list)
 		if(!M.client || !istype(M,/mob/living) || M.stat == DEAD || QDELETED(M) || !M.loc )
 			continue
@@ -143,6 +144,8 @@
 				SSshuttle.registerHostileEnvironment(queen)
 			alien_count++
 		else if((M.mind && M.mind in GLOB.Original_Minds) && (istype(M,/mob/living/carbon/human)))
+			if(is_special_character(M))
+				active_antags += M.mind
 			if(M.client && (M.mind.assigned_role in src.important_jobs))
 				important_jobs_still_active += M.mind
 			living_count++
@@ -157,10 +160,18 @@
 				important_job_text += ", "
 			count++
 		message_admins("DEBUG: Active important jobs. ([important_job_text])")
+		count = 1
+		var/antag_text = ""
+		for(var/datum/mind/M in active_antags)
+			antag_text += "[M.name]([M.special_role])"
+			if(count < active_antags.len)
+				antag_text += ", "
+			count++
+		message_admins("DEBUG: Active antags. ([antag_text])")
 		debug_check = 0
 	if(world.time+src.start_time >= ((alien_victory_timer*60)*10))
 		var/threshold = round(alien_count*0.7,1)
-		if((queen) && (living_count <= threshold) && (!important_jobs_still_active.len))
+		if((queen) && (living_count <= threshold) && (!important_jobs_still_active.len) && (!active_antags.len))
 			if(!Ayys_win)
 				if(debug_mode)
 					for(var/client/C in GLOB.admins)

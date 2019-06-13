@@ -12,8 +12,8 @@
 
 /obj/item/projectile/beam/wormhole/Initialize(mapload, obj/item/ammo_casing/energy/wormhole/casing)
 	. = ..()
-	if(casing)
-		gun = casing.gun
+	if(istype(loc,/obj/item/ammo_casing/energy/wormhole) && istype(loc.loc,/obj/item/gun/energy/wormhole_projector))
+		gun = loc.loc
 
 /obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(ismob(target))
@@ -22,4 +22,5 @@
 		return ..()
 	if(!gun)
 		qdel(src)
-	gun.create_portal(src, get_turf(src))
+	else
+		gun.create_portal(src, get_turf(src))

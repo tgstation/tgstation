@@ -11,6 +11,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	var/list/all_assemblies = list()								// Associative list of [assembly_name]:[assembly_path] pairs
 	var/list/cached_assemblies = list()								// Associative list of [assembly_path]:[assembly] pairs
 	var/list/all_circuits = list()									// Associative list of [circuit_name]:[circuit_path] pairs
+	var/list/cached_tools = list()
 	var/list/circuit_fabricator_recipe_list = list()				// Associative list of [category_name]:[list_of_circuit_paths] pairs
 	var/cost_multiplier = MINERAL_MATERIAL_AMOUNT / 10 // Each circuit cost unit is 200cm3
 
@@ -42,6 +43,11 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		all_assemblies[name] = path
 		cached_assemblies[A] = new path
 
+	for(var/path in typesof(/obj/item/device/integrated_electronics))
+		var/obj/item/device/integrated_electronics/A = path
+		var/name = initial(A.name)
+		all_assemblies[name] = path
+		cached_tools[A] = new path
 
 	circuit_fabricator_recipe_list["Assemblies"] = list(
 		/obj/item/device/electronic_assembly/default,

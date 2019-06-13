@@ -267,7 +267,7 @@ obj/machinery/chem_dispenser/update_icon()
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
 		return
-	if(default_deconstruction_screwdriver(user, "dispenser-o", "dispenser", I))
+	if(default_deconstruction_screwdriver(user, "dispenser-o", initial(icon_state), I))
 		return
 
 	if(exchange_parts(user, I))

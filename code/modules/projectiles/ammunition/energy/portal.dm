@@ -11,4 +11,5 @@
 
 /obj/item/ammo_casing/energy/wormhole/Initialize(mapload, obj/item/gun/energy/wormhole_projector/wh)
 	. = ..()
-	gun = wh
+	if(istype(loc,/obj/item/gun/energy/wormhole_projector))
+		gun = loc
