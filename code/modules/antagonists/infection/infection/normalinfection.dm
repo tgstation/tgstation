@@ -50,7 +50,8 @@
 		upgrades += new upgrade_type()
 
 /obj/structure/infection/proc/evolve_menu(var/mob/camera/commander/C)
-	menu_handler.ui_interact(overmind)
+	if(C == overmind)
+		menu_handler.ui_interact(overmind)
 
 /obj/structure/infection/proc/max_upgrade()
 	for(var/datum/infection_upgrade/U in upgrades)
@@ -320,7 +321,7 @@
 	animate(newicon, transform = matrix(), time = structure_build_time)
 	vis_contents += newicon
 	name = "building [I.name]"
-	building = TRUE
+	building = type
 	qdel(I)
 	sleep(structure_build_time)
 	I = new type(src.loc, controller)

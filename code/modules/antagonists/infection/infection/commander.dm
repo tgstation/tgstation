@@ -43,10 +43,9 @@ GLOBAL_VAR(infection_commander)
 									/datum/action/cooldown/infection/creator/node,
 									/datum/action/cooldown/infection/creator/factory)
 
-	var/list/unlockable_actions = list(/datum/action/cooldown/infection/creator/turret,
-									   /datum/action/cooldown/infection/freecam,
-									   /datum/action/cooldown/infection/emppulse,
-									   /datum/action/cooldown/infection/medicalhud)
+	var/list/unlockable_actions = list()
+
+	var/datum/infection_menu/menu_handler
 
 /mob/camera/commander/Initialize(mapload, starting_points = 0)
 	if(GLOB.infection_commander)
@@ -64,8 +63,14 @@ GLOBAL_VAR(infection_commander)
 	for(var/type_action in default_actions)
 		var/datum/action/cooldown/infection/add_action = new type_action()
 		add_action.Grant(src)
+	generate_unlockables()
 	SSmobs.clients_by_zlevel[z] += src
+	menu_handler = new /datum/infection_menu(src)
 	START_PROCESSING(SSobj, src)
+
+/mob/camera/commander/proc/generate_unlockables()
+	for(var/upgrade_type in subtypesof(/datum/infection_upgrade/overmind))
+		unlockable_actions += new upgrade_type()
 
 /mob/camera/commander/proc/generate_announcement()
 	priority_announce("Unfortunate news. An infectious core is headed to your station on a meteor.\n\n\

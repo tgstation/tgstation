@@ -1,6 +1,17 @@
 GLOBAL_LIST_EMPTY(infection_spawns)
 
-// Power verbs
+/obj/effect/landmark/infection_start
+	name = "infectionstart"
+	icon_state = "infection_start"
+
+/obj/effect/landmark/infection_start/Initialize(mapload)
+	..()
+	GLOB.infection_spawns += get_turf(src)
+	return INITIALIZE_HINT_QDEL
+
+////////////////////////
+// Overmind Abilities //
+////////////////////////
 
 /mob/camera/commander/proc/place_infection_core()
 	if(placed)
@@ -14,15 +25,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	reset_perspective()
 	transport_core()
 	placed = TRUE
-
-/obj/effect/landmark/infection_start
-	name = "infectionstart"
-	icon_state = "infection_start"
-
-/obj/effect/landmark/infection_start/Initialize(mapload)
-	..()
-	GLOB.infection_spawns += get_turf(src)
-	return INITIALIZE_HINT_QDEL
 
 /mob/camera/commander/proc/can_buy(cost = 0)
 	if(infection_points < cost)
@@ -79,7 +81,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 			return //handholdotron 2000
 	if(nearEquals)
 		for(var/obj/structure/infection/L in orange(nearEquals, T))
-			if(istype(L, infectionType))
+			if(istype(L, infectionType) || L.building == infectionType)
 				to_chat(src, "<span class='warning'>There is a similar infection nearby, move more than [nearEquals] tiles away from it!</span>")
 				return
 	if(!can_buy(price))
@@ -97,129 +99,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	else
 		to_chat(src, "<span class='warning'>You no longer require a nearby node or core to place factory and resource infections.</span>")
 
-/datum/action/cooldown/infection
-	name = "Infection Power"
-	desc = "New Infection Power"
-	icon_icon = 'icons/mob/blob.dmi'
-	button_icon_state = "blank_blob"
-	cooldown_time = 0
-	var/cost = 0 // cost to actually use
-	var/upgrade_cost = 0 // cost to buy from the evolution shop
-
-/datum/action/cooldown/infection/New()
-	name = name + " ([cost])"
-	. = ..()
-
-/datum/action/cooldown/infection/Trigger()
-	if(!..())
-		return FALSE
-	if(!iscommander(owner))
-		return FALSE
-	var/mob/camera/commander/I = owner
-	var/turf/T = get_turf(I)
-	if(T)
-		StartCooldown()
-		fire(I, T)
-		return TRUE
-	return FALSE
-
-/datum/action/cooldown/infection/proc/fire(mob/camera/commander/I, turf/T)
-	return TRUE
-
-/datum/action/cooldown/infection/freecam
-	name = "Full Vision"
-	desc = "Allows you to move your camera to anywhere whether or not you have an infection next to it."
-	icon_icon = 'icons/obj/clothing/glasses.dmi'
-	button_icon_state = "godeye"
-	upgrade_cost = 1
-
-/datum/action/cooldown/infection/freecam/fire(mob/camera/commander/I, turf/T)
-	I.freecam = !I.freecam
-	to_chat(I, "<span class='notice'>Successfully toggled full vision!</span>")
-
-/datum/action/cooldown/infection/medicalhud
-	name = "Medical Hud"
-	desc = "Allows you to see the health of creatures on your screen."
-	icon_icon = 'icons/obj/clothing/glasses.dmi'
-	button_icon_state = "healthhud"
-	upgrade_cost = 1
-
-/datum/action/cooldown/infection/medicalhud/fire(mob/camera/commander/I, turf/T)
-	I.toggle_medical_hud()
-	to_chat(I, "<span class='notice'>Successfully toggled medical hud!</span>")
-
-/datum/action/cooldown/infection/emppulse
-	name = "Emp Pulse"
-	desc = "Charges up an EMP Pulse centered on the infection you are above."
-	icon_icon = 'icons/obj/grenade.dmi'
-	button_icon_state = "emp"
-	cooldown_time = 300
-	upgrade_cost = 1
-
-/datum/action/cooldown/infection/emppulse/fire(mob/camera/commander/I, turf/T)
-	if(locate(/obj/structure/infection) in T.contents)
-		playsound(T, pick('sound/weapons/ionrifle.ogg'), 300, FALSE, pressure_affected = FALSE)
-		new /obj/effect/temp_visual/impact_effect/ion(T)
-		sleep(20)
-		return empulse(T, 3, 6)
-	to_chat(I, "<span class='warning'>You must be above an infection to use this ability!</span>")
-
-/datum/action/cooldown/infection/creator
-	name = "Create"
-	desc = "New Creation Power"
-	var/type_to_create
-	var/distance_from_similar = 0
-	var/needs_node = FALSE
-
-/datum/action/cooldown/infection/creator/fire(mob/camera/commander/I, turf/T)
-	I.createSpecial(cost, type_to_create, distance_from_similar, needs_node, T)
-	return TRUE
-
-/datum/action/cooldown/infection/creator/shield
-	name = "Create Shield Infection"
-	desc = "Create a shield infection, which is harder to kill. Using this on an existing shield blob turns it into a reflective shield, capable of reflecting most projectiles."
-	cost = 5
-	icon_icon = 'icons/obj/smooth_structures/infection_wall.dmi'
-	button_icon_state = "smooth"
-	type_to_create = /obj/structure/infection/shield
-
-/datum/action/cooldown/infection/creator/resource
-	name = "Create Resource Infection"
-	desc = "Create a resource tower which will generate resources for you."
-	cost = 10
-	button_icon_state = "blob_resource"
-	type_to_create = /obj/structure/infection/resource
-	distance_from_similar = 4
-	needs_node = TRUE
-
-/datum/action/cooldown/infection/creator/node
-	name = "Create Node Infection"
-	desc = "Create a node, which will power nearby factory and resource structures."
-	cost = 15
-	button_icon_state = "blob_node"
-	type_to_create = /obj/structure/infection/node
-	distance_from_similar = 5
-
-/datum/action/cooldown/infection/creator/factory
-	name = "Create Factory Infection"
-	desc = "Create a spore tower that will spawn spores to harass your enemies."
-	cost = 20
-	button_icon_state = "blob_factory"
-	type_to_create = /obj/structure/infection/factory
-	distance_from_similar = 7
-	needs_node = TRUE
-
-/datum/action/cooldown/infection/creator/turret
-	name = "Create Turret Infection"
-	desc = "Create a turret that will automatically fire at your enemies."
-	cost = 30
-	icon_icon = 'icons/mob/infection/infection.dmi'
-	button_icon_state = "infection_turret"
-	type_to_create = /obj/structure/infection/turret
-	distance_from_similar = 8
-	needs_node = TRUE
-	upgrade_cost = 1
-
 /mob/camera/commander/proc/create_spore()
 	to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
 
@@ -236,41 +115,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set category = "Infection"
 	set name = "Evolution"
 	set desc = "Improve yourself and your army to be unstoppable."
-	var/list/choices = list(
-		"Summon Sentient Spore (1)" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
-		"Ability Unlocks" = image(icon = 'icons/mob/infection/infection.dmi', icon_state = "ui_increase"),
-		"Effect Unlocks" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
-	)
-	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-	if(choice == choices[1] && can_upgrade(1))
-		INVOKE_ASYNC(src, .proc/create_spore)
-	if(choice == choices[2])
-		var/list/actions_temp = list()
-		choices = list()
-		for(var/type in unlockable_actions)
-			var/datum/action/cooldown/infection/temp_action = new type()
-			var/no_cost_name = initial(temp_action.name)
-			var/upgrade_index = "[no_cost_name] ([temp_action.upgrade_cost])"
-			choices[upgrade_index] = image(icon = temp_action.icon_icon, icon_state = temp_action.button_icon_state)
-			actions_temp += temp_action
-		if(!actions_temp.len)
-			to_chat(src, "<span class='warning'>You have already unlocked every single ability!</span>")
-		choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-		var/action_index = choices.Find(choice)
-		if(!action_index)
-			return
-		var/datum/action/cooldown/infection/Chosen = actions_temp[action_index]
-		if(can_upgrade(Chosen.upgrade_cost))
-			Chosen.Grant(src)
-			unlockable_actions -= Chosen.type
-			to_chat(src, "<span class='notice'>Successfully unlocked [initial(Chosen.name)]!</span>")
-		else
-			qdel(Chosen)
-		for(var/temp_action in (actions_temp - Chosen))
-			qdel(temp_action)
-		return
-	if(choice == choices[3])
-		return
+	menu_handler.ui_interact(src)
 
 /mob/camera/commander/verb/revert()
 	set category = "Infection"
@@ -291,42 +136,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		add_points(I.point_return)
 		to_chat(src, "<span class='notice'>Gained [I.point_return] resources from removing \the [I].</span>")
 	qdel(I)
-
-/mob/camera/commander/verb/expand_infection_power()
-	set category = "Infection"
-	set name = "Expand/Attack Infection (4)"
-	set desc = "Attempts to create a new infection in this tile. If the tile isn't clear, instead attacks it, damaging mobs and objects."
-	var/turf/T = get_turf(src)
-	expand_infection(T)
-
-/mob/camera/commander/proc/expand_infection(turf/T)
-	if(world.time < last_attack)
-		return
-	var/list/possibleinfection = list()
-	for(var/obj/structure/infection/AI in range(T, 1))
-		possibleinfection += AI
-	if(!possibleinfection.len)
-		to_chat(src, "<span class='warning'>There is no infection adjacent to the target tile!</span>")
-		return
-	if(can_buy(4))
-		var/attacksuccess = FALSE
-		for(var/mob/living/L in T)
-			if(ROLE_INFECTION in L.faction) //no friendly/dead fire
-				continue
-			if(L.stat != DEAD)
-				attacksuccess = TRUE
-		var/obj/structure/infection/I = locate() in T
-		if(I)
-			if(!attacksuccess) //if we successfully attacked a turf with an infection on it, don't refund shit
-				to_chat(src, "<span class='warning'>There is an infection there!</span>")
-				add_points(4) //otherwise, refund all of the cost
-		else
-			var/obj/structure/infection/IB = pick(possibleinfection)
-			IB.expand(T, src)
-		if(attacksuccess)
-			last_attack = world.time + CLICK_CD_MELEE
-		else
-			last_attack = world.time + CLICK_CD_RAPID
 
 /mob/camera/commander/verb/rally_spores_power()
 	set category = "Infection"
