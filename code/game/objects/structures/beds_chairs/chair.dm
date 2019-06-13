@@ -418,3 +418,12 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+
+/obj/structure/chair/mime
+	name = "invisible chair"
+	desc = "The mime needs to sit down and shut up."
+	anchored = FALSE
+	icon_state = null
+	buildstacktype = null
+	item_chair = null
+	flags_1 = NODECONSTRUCT_1
