@@ -20,15 +20,15 @@
 
 /obj/structure/lavaland/ash_walker/Initialize()
 	.=..()
-	ashies = new /datum/team/ashwalkers(goal = src)
-	ashies.forge_objectives()
+	ashies = new /datum/team/ashwalkers()
+	var/datum/objective/protect_object/objective = new
+	objective.set_target(src)
+	ashies.objectives += objective
 	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/lavaland/ash_walker/deconstruct(disassembled)
 	new /obj/item/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
 	new	/obj/effect/collapse(loc)
-	if(ashies.tendril == src)
-		ashies.tendril = null
 	return ..()
 
 /obj/structure/lavaland/ash_walker/process()
