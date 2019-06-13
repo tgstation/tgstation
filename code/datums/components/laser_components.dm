@@ -1,5 +1,5 @@
 /datum/component/extralasers
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/obj/item/external_lens/lens
 	var/obj/item/ammo_casing/energy/laser/ammo
 
@@ -9,6 +9,7 @@
 	var/obj/item/gun/energy/laser/L = parent
 	L.ammo_type  += new ammo (src)
 	lens = _lens
+	qdel(_lens)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/detach)
 
 /datum/component/extralasers/proc/detach(datum/source, obj/item/I, mob/user, params)
@@ -22,5 +23,5 @@
 		L.update_icon(TRUE)
 		RemoveComponent()
 		var/turf/T = user.loc
-		new lens(T)
+		new ammo(T) //doest work
 		return TRUE
