@@ -15,9 +15,6 @@
 	M.CheckParts(parent_chassis.contents)
 
 	SSblackbox.record_feedback("tally", "mechas_created", 1, M.name)
-	if(parent_chassis.beacon)
-		M.trackers += new /obj/item/mecha_parts/mecha_tracking(M)
-		M.diag_hud_set_mechtracking()
 	QDEL_NULL(parent)
 
 /datum/component/construction/mecha/update_parent(step_index)
