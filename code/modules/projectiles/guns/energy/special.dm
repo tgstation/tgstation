@@ -42,6 +42,7 @@
 
 /obj/item/gun/energy/decloner/unrestricted
 	pin = /obj/item/firing_pin
+	ammo_type = list(/obj/item/ammo_casing/energy/declone/weak)
 
 /obj/item/gun/energy/floragun
 	name = "floral somatoray"
