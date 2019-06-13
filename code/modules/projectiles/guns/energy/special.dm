@@ -40,6 +40,9 @@
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("decloner_spin")
 
+/obj/item/gun/energy/decloner/unrestricted
+	pin = /obj/item/firing_pin
+
 /obj/item/gun/energy/floragun
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
