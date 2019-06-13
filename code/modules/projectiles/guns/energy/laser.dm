@@ -157,11 +157,7 @@
 
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
-	if(istype(AM, /obj/item/gun/energy/laser))
-		var/obj/item/gun/energy/laser/L = AM
-		if(!L.GetComponent(/datum/component/extralasers))
-			L.AddComponent(/datum/component/extralasers, stored_ammo_type, src)
-			qdel(src)
+	AM.AddComponent(/datum/component/extralasers, stored_ammo_type, src)
 
 /obj/item/external_lens/bitcoin
 	name = "external lens: ticket dispenser"
