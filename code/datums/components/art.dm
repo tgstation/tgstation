@@ -7,18 +7,19 @@
 
 /datum/component/art/Initialize(impress)
 	impressiveness = impress
-	if(!isobj(parent))
-		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/apply_moodlet)
+	if(isobj(parent))
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_obj_examine)
+	else
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_other_examine)
 	if(isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/apply_moodlet)
 
-/datum/component/art/proc/apply_moodlet(datum/source, mob/living/M)
+/datum/component/art/proc/apply_moodlet(mob/living/M, impress)
 	M.visible_message("[M] stops to admire [parent].", \
-						 "<span class='notice'>You take in [parent], admiring its fine craftsmanship.</span>")
-	switch(get_total_impressiveness())
+						 "<span class='notice'>You take in [parent], admiring the fine craftsmanship.</span>")
+	switch(impress)
 		if(GREAT_ART to INFINITY)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
 		if (GOOD_ART to GREAT_ART)
@@ -28,17 +29,18 @@
 		if (0 to BAD_ART)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
 
+/datum/component/art/proc/on_other_examine(datum/source, mob/living/M)
+	apply_moodlet(M, impressiveness)
+
+/datum/component/art/proc/on_obj_examine(datum/source, mob/living/M)
+	var/obj/O = parent
+	apply_moodlet(M, impressiveness *(O.obj_integrity/O.max_integrity))
+
 /datum/component/art/proc/on_attack_hand(datum/source, mob/living/M)
 	to_chat(M, "You start examining [parent].")
 	if(!do_after(M, 20, target = parent))
 		return
-	apply_moodlet(source, M)
-
-/datum/component/art/proc/get_total_impressiveness()
-	if(ismob(parent))
-		return impressiveness
-	var/obj/O = parent
-	return impressiveness *(O.obj_integrity/O.max_integrity)
+	on_obj_examine(source, M)
 
 #undef BAD_ART
 #undef GOOD_ART
