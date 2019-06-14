@@ -16,19 +16,21 @@
 	for(var/area/hallway/A in world)
 		for(var/turf/F in A)
 			if(F.Enter(SV))
-				var/valid = TRUE
-				for(var/mob/living/L in view(F, 7))
-					if(L.client)
-						valid = FALSE
-						break
-				if(valid)
-					turfs += F
+				turfs += F
 
 	qdel(SV)
 
 	if(turfs.len) //Pick a turf to spawn at if we can
-		var/turf/T = pick(turfs)
-		new /datum/spacevine_controller(T, event = src) //spawn a controller at turf
+		for(var/retry = 1 to 50)
+			var/turf/T = pick(turfs)
+			var/ok = TRUE
+			for(var/mob/living/L in view(T, 7))
+				if(L.ckey)
+					ok = FALSE
+					break
+			if(ok)
+				new /datum/spacevine_controller(T, event = src) //spawn a controller at turf
+				break
 
 
 /datum/spacevine_mutation
