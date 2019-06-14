@@ -9,6 +9,7 @@ Mineral Sheets
 		- Plasma
 		- Gold
 		- Silver
+		- Copper
 		- Clown
 		- Titanium
 		- Plastitanium
@@ -245,6 +246,29 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/silver/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.silver_recipes
+	. = ..()
+
+/*
+ * Copper
+ */
+/obj/item/stack/sheet/mineral/copper
+	name = "copper"
+	icon_state = "sheet-copper"
+	item_state = "sheet-copper"
+	singular_name = "copper bar"
+	sheettype = "copper"
+	materials = list(MAT_COPPER=MINERAL_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/copper = 20)
+	point_value = 3
+	merge_type = /obj/item/stack/sheet/mineral/copper
+
+GLOBAL_LIST_INIT(copper_recipes, list ( \
+	new/datum/stack_recipe("copper door", /obj/structure/mineral_door/copper, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("copper tile", /obj/item/stack/tile/mineral/copper, 1, 4, 20), \
+	))
+
+/obj/item/stack/sheet/mineral/copper/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.copper_recipes
 	. = ..()
 
 /*
