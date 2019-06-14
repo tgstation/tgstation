@@ -133,7 +133,7 @@
 
 /obj/item/melee/sabre/bee
 	name = "the stinger"
-	desc = "Taken from a giant bee and forget one thousand time in pure honey. Its extremly light and sharp."
+	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "stinger"
 	item_state = "stinger"
