@@ -468,6 +468,12 @@ update_label("John Doe", "Clowny")
 	name = "mining ID"
 	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MECH_MINING, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 
+/obj/item/card/id/mining/Initialize()
+	. = ..()
+	var/static/datum/bank_account/remote/golem_account = new("The Founder")
+	golem_account.bank_cards += src
+	registered_account = golem_account
+
 /obj/item/card/id/away
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
