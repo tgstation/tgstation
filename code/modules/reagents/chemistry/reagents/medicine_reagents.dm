@@ -397,6 +397,13 @@
 			M.reagents.remove_reagent(type,1)
 	..()
 
+/datum/reagent/medicine/charcoal/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
+	if(method == INGEST)
+		return
+	M.reagents.remove_reagent(/datum/reagent/medicine/charcoal/, reac_volume) //We really should not be injecting an insoluble granular material.
+	M.reagents.add_reagent(/datum/reagent/carbon, reac_volume) // It's pores would get clogged with gunk anyway.
+	..()
+
 /datum/reagent/medicine/omnizine
 	name = "Omnizine"
 	description = "Slowly heals all damage types. Overdose will cause damage in all types instead."
@@ -1322,8 +1329,8 @@
 	if(method != INGEST)
 		return
 
-	holder.remove_reagent(/datum/reagent/medicine/trophazole/, reac_volume * 0.05)
-	holder.add_reagent(/datum/reagent/medicine/metafactor, reac_volume * 0.25)
+	M.reagents.remove_reagent(/datum/reagent/medicine/trophazole/, reac_volume * 0.05)
+	M.reagents.add_reagent(/datum/reagent/medicine/metafactor, reac_volume * 0.25)
 
 	..()
 

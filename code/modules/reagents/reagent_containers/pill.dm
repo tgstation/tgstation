@@ -52,8 +52,7 @@
 		to_chat(M, "<span class='notice'>[makes_me_think]</span>")
 
 	if(reagents.total_volume)
-		reagents.reaction(M, apply_type)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(M, reagents.total_volume, transfered_by = user, method = apply_type)
 	qdel(src)
 	return TRUE
 
