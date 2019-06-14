@@ -157,7 +157,8 @@
 
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
-	AM.AddComponent(/datum/component/extralasers, stored_ammo_type, src)
+	if(user)
+		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, src, overlay)
 
 /obj/item/external_lens/bitcoin
 	name = "external lens: ticket dispenser"
@@ -205,7 +206,6 @@
 	name = "external lens: heavy bolt"
 	desc = "Highly concentrated lasers that might break walls or doors."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/heavy
-	icon_state = "external_heavy"
 	overlay = "heavy"
 
 /obj/item/external_lens/economic
