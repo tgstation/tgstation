@@ -7,8 +7,8 @@
 
 /datum/component/art/Initialize(impress)
 	impressiveness = impress
-	if(!isobj(parent) || ismob(parent)) //No handsome squidward for now.
-		return
+	if(!isobj(parent))
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/apply_moodlet)
 	if(isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
@@ -35,6 +35,8 @@
 	apply_moodlet(source, M)
 
 /datum/component/art/proc/get_total_impressiveness()
+	if(ismob(parent))
+		return impressiveness
 	var/obj/O = parent
 	return impressiveness *(O.obj_integrity/O.max_integrity)
 
