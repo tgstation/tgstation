@@ -28,7 +28,7 @@
 		<input type="hidden" name="src" value="/* ref src */">
 		/* hreftokenfield */
 
-		Type <input type="text" name="filter" value="" onkeypress="submitFirst(event)" style="width:280px;height:25"> <input type = "button" value = "Search" onclick = "updateSearch()" /><br>
+		Type <input type="text" name="filter" value="" style="width:280px;height:25"> <input type = "submit" value = "Search" onclick = "updateSearch()" /><br>
 		Offset: <input type="text" name="offset" value="x,y,z" style="width:250px">
 		
 		A <input type="radio" name="offset_type" value="absolute">
@@ -74,7 +74,8 @@
 		function updateSearch()
 		{
 			old_search = document.spawner.filter.value.toLowerCase();
-			
+			if (!old_search)
+				return;
 			
 			var filtered = new Array();
 			var i;
@@ -90,19 +91,6 @@
 			}
 			
 			populateList(filtered);
-		}
-		
-		function submitFirst(event)
-		{
-			if (!object_list.options.length)
-			{
-				return false;
-			}
-			
-			if (event.keyCode == 13 || event.which == 13)
-			{
-				object_list.options[0].selected = 'true';
-			}
 		}
 	</script>
 </body>

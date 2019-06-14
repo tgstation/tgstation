@@ -1251,10 +1251,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "do" = (
-/obj/structure/stone_tile{
-	dir = 8
+/obj/structure/sink/puddle{
+	pixel_x = -3;
+	pixel_y = 1
 	},
-/obj/structure/reagent_dispensers/watertank,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)

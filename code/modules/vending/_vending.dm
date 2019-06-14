@@ -291,7 +291,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				if(contents.len >= MAX_VENDING_INPUT_AMOUNT) // no more than 30 item can fit inside, legacy from snack vending although not sure why it exists
 					to_chat(user, "<span class='warning'>[src]'s chef compartment is full.</span>")
 					break
-				if(loadingAttempt(the_item,user))
+				if(canLoadItem(the_item) && loadingAttempt(the_item,user))
 					SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, the_item, src, TRUE)
 					loaded++
 				else
@@ -451,7 +451,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
 		for(var/obj/O in contents)
 			if(O.name == N)
-				say("Thank you for supporting your local kitchen and purchasing [O]!")
+				say("Thank you for buying local and purchasing [O]!")
 				O.forceMove(drop_location())
 				break
 		vend_ready = 1

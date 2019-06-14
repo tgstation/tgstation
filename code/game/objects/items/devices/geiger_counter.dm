@@ -203,7 +203,7 @@
 
 
 /obj/item/geiger_counter/cyborg
-	var/datum/component/mobhook
+	var/mob/listeningTo
 
 /obj/item/geiger_counter/cyborg/cyborg_unequip(mob/user)
 	if(!scanning)
@@ -213,17 +213,20 @@
 
 /obj/item/geiger_counter/cyborg/equipped(mob/user)
 	. = ..()
-	if (mobhook && mobhook.parent != user)
-		QDEL_NULL(mobhook)
-	if (!mobhook)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT = CALLBACK(src, .proc/redirect_rad_act)))
+	if(listeningTo == user)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
+	RegisterSignal(user, COMSIG_ATOM_RAD_ACT, .proc/redirect_rad_act)
+	listeningTo = user
 
 /obj/item/geiger_counter/cyborg/proc/redirect_rad_act(datum/source, amount)
 	rad_act(amount)
 
 /obj/item/geiger_counter/cyborg/dropped()
 	. = ..()
-	QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
 
 #undef RAD_LEVEL_NORMAL
 #undef RAD_LEVEL_MODERATE

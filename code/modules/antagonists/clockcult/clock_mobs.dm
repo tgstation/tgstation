@@ -19,15 +19,13 @@
 	bubble_icon = "clock"
 	light_color = "#E42742"
 	deathsound = 'sound/magic/clockwork/anima_fragment_death.ogg'
+	speech_span = SPAN_ROBOT
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
 	var/empower_string = "<span class='heavy_brass'>You have nothing to empower, yell at the coders!</span>" //Shown to the mob when the herald beacon activates
 
 /mob/living/simple_animal/hostile/clockwork/Initialize()
 	. = ..()
 	update_values()
-
-/mob/living/simple_animal/hostile/clockwork/get_spans()
-	return ..() | SPAN_ROBOT
 
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()

@@ -207,6 +207,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/glass/mortar, 3), \
+	new/datum/stack_recipe("firebrand", /obj/item/match/firebrand, 2, time = 100), \
 	null, \
 	new/datum/stack_recipe_list("pews", list(
 		new /datum/stack_recipe("pew (middle)", /obj/structure/chair/pew, 3, one_per_turf = TRUE, on_floor = TRUE),
@@ -236,6 +237,33 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
+
+/*
+ * Bamboo
+ */
+
+GLOBAL_LIST_INIT(bamboo_recipes, list ( \
+	new/datum/stack_recipe("punji sticks trap", /obj/structure/punji_sticks, 5, time = 30, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("blow gun", /obj/item/gun/syringe/blowgun, 10, time = 70), \
+	))
+
+/obj/item/stack/sheet/mineral/bamboo
+	name = "bamboo cuttings"
+	desc = "Finely cut bamboo sticks."
+	singular_name = "cut bamboo"
+	icon_state = "sheet-bamboo"
+	item_state = "sheet-bamboo"
+	icon = 'icons/obj/stack_objects.dmi'
+	sheettype = "bamboo"
+	throwforce = 15
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/mineral/bamboo
+	grind_results = list("carbon" = 5)
+
+/obj/item/stack/sheet/mineral/bamboo/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.bamboo_recipes
+	return ..()
 
 /*
  * Cloth
