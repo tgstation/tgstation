@@ -3,6 +3,7 @@
  * Plasma floor
  * Gold floor
  * Silver floor
+ * Copper floor
  * Bananium floor
  * Diamond floor
  * Uranium floor
@@ -74,6 +75,14 @@
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
 	icons = list("silver","silver_dam")
+
+//COPPER
+
+/turf/open/floor/mineral/copper
+	name = "copper floor"
+	icon_state = "copper"
+	floor_tile = /obj/item/stack/tile/mineral/copper
+	icons = list("copper","copper_dam")
 
 //TITANIUM (shuttle)
 
