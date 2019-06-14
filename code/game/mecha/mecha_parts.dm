@@ -268,6 +268,37 @@
 	icon_state = "phazon_armor"
 
 
+/////////// Cleaner
+
+/obj/item/mecha_parts/chassis/cleaner
+	name = "\improper Cleaner chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/cleaner
+
+/obj/item/mecha_parts/part/cleaner_torso
+	name = "\improper Cleaner torso"
+	desc = "A torso part of Cleaner. Contains power unit, processing core and life support systems."
+	icon_state = "ripley_harness"
+
+/obj/item/mecha_parts/part/cleaner_left_arm
+	name = "\improper Cleaner left arm"
+	desc = "A Cleaner left arm. Data and power sockets are compatible with most exosuit tools."
+	icon_state = "ripley_l_arm"
+
+/obj/item/mecha_parts/part/cleaner_right_arm
+	name = "\improper Cleaner right arm"
+	desc = "A Cleaner right arm. Data and power sockets are compatible with most exosuit tools."
+	icon_state = "ripley_r_arm"
+
+/obj/item/mecha_parts/part/cleaner_left_leg
+	name = "\improper Cleaner left leg"
+	desc = "A Cleaner left leg. Contains somewhat complex servodrives and balance maintaining systems."
+	icon_state = "ripley_l_leg"
+
+/obj/item/mecha_parts/part/cleaner_right_leg
+	name = "\improper Cleaner right leg"
+	desc = "A Cleaner right leg. Contains somewhat complex servodrives and balance maintaining systems."
+	icon_state = "ripley_r_leg"
+
 ///////// Circuitboards
 
 /obj/item/circuitboard/mecha
@@ -347,3 +378,11 @@
 
 /obj/item/circuitboard/mecha/phazon/main
 	name = "Phazon Central Control module (Exosuit Board)"
+
+/obj/item/circuitboard/mecha/cleaner/peripherals
+	name = "Cleaner Peripherals Control module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/cleaner/main
+	name = "Cleaner Central Control module (Exosuit Board)"
+	icon_state = "mainboard"

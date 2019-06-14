@@ -28,6 +28,7 @@
 								"Durand",
 								"H.O.N.K",
 								"Phazon",
+								"Cleaner",
 								"Exosuit Equipment",
 								"Cyborg Upgrade Modules",
 								"Misc"

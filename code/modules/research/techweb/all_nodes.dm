@@ -528,7 +528,7 @@
 	display_name = "Advanced Sanitation Technology"
 	description = "Clean things better, faster, stronger, and harder!"
 	prereq_ids = list("adv_engi")
-	design_ids = list("advmop", "buffer", "blutrash", "light_replacer", "spraybottle", "beartrap")
+	design_ids = list("advmop", "buffer", "blutrash", "light_replacer", "spraybottle", "beartrap", "mech_spacecleaner", "mech_cleaner_grenade")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -715,6 +715,16 @@
 	prereq_ids = list("adv_mecha", "weaponry" , "micro_bluespace")
 	design_ids = list("phazon_chassis", "phazon_torso", "phazon_head", "phazon_left_arm", "phazon_right_arm", "phazon_left_leg", "phazon_right_leg", "phazon_main",
 	"phazon_peri", "phazon_targ", "phazon_armor")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/cleaner
+	id = "mecha_cleaner"
+	display_name = "EXOSUIT: Cleaner"
+	description = "For when things get real messy."
+	prereq_ids = list("adv_mecha", "janitor")
+	design_ids = list("cleaner_chassis", "cleaner_torso", "cleaner_left_arm", "cleaner_right_arm", "cleaner_left_leg", "cleaner_right_leg",
+	"cleaner_main", "cleaner_peri")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

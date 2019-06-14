@@ -475,6 +475,61 @@
 	construction_time = 300
 	category = list("Phazon")
 
+//Cleaner
+/datum/design/cleaner_chassis
+	name = "Exosuit Chassis (Cleaner)"
+	id = "cleaner_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/cleaner
+	materials = list(MAT_METAL=20000)
+	construction_time = 100
+	category = list("Cleaner")
+
+/datum/design/cleaner_torso
+	name = "Exosuit Torso (Cleaner)"
+	id = "cleaner_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/cleaner_torso
+	materials = list(MAT_METAL=20000, MAT_GLASS=7500)
+	construction_time = 200
+	category = list("Cleaner")
+
+/datum/design/cleaner_left_arm
+	name = "Exosuit Left Arm (Cleaner)"
+	id = "cleaner_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/cleaner_left_arm
+	materials = list(MAT_METAL=15000)
+	construction_time = 150
+	category = list("Cleaner")
+
+/datum/design/cleaner_right_arm
+	name = "Exosuit Right Arm (Cleaner)"
+	id = "cleaner_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/cleaner_right_arm
+	materials = list(MAT_METAL=15000)
+	construction_time = 150
+	category = list("Cleaner")
+
+/datum/design/cleaner_left_leg
+	name = "Exosuit Left Leg (Cleaner)"
+	id = "cleaner_left_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/cleaner_left_leg
+	materials = list(MAT_METAL=15000)
+	construction_time = 150
+	category = list("Cleaner")
+
+/datum/design/cleaner_right_leg
+	name = "Exosuit Right Leg (Cleaner)"
+	id = "cleaner_right_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/cleaner_right_leg
+	materials = list(MAT_METAL=15000)
+	construction_time = 150
+	category = list("Cleaner")
+
 //Exosuit Equipment
 /datum/design/ripleyupgrade
 	name = "Ripley MK-1 to MK-II conversion kit"
@@ -573,6 +628,24 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
 	materials = list(MAT_METAL=20000,MAT_BANANIUM=7500)
 	construction_time = 400
+	category = list("Exosuit Equipment")
+
+/datum/design/mech_janitor_spacecleaner
+	name = "Space Cleaner Sprayer"
+	id = "mech_spacecleaner"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/janitor/sprayer
+	materials = list(MAT_METAL=15000,MAT_SILVER=8000)
+	construction_time = 200
+	category = list("Exosuit Equipment")
+
+/datum/design/mech_spacecleaner
+	name = "Cleaner Grenade Launcher"
+	id = "mech_cleaner_grenade"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/cleaner
+	materials = list(MAT_METAL=22000,MAT_GOLD=6000,MAT_SILVER=8000)
+	construction_time = 200
 	category = list("Exosuit Equipment")
 
 /////////////////////////////////////////

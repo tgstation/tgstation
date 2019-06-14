@@ -133,6 +133,22 @@
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/cleaner_main
+	name = "\"Cleaner\" Central Control module"
+	desc = "Allows for the construction of a \"Cleaner\" Central Control module."
+	id = "cleaner_main"
+	build_path = /obj/item/circuitboard/mecha/cleaner/main
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/cleaner_peri
+	name = "\"Cleaner\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Cleaner\" Peripheral Control module."
+	id = "cleaner_peri"
+	build_path = /obj/item/circuitboard/mecha/cleaner/peripherals
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
