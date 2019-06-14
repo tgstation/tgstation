@@ -1,7 +1,6 @@
 /datum/component/cleaning
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/radius = 0
-	var/obj/effect/projectile
 
 /datum/component/cleaning/Initialize(_radius)
 	if(!ismovableatom(parent))
