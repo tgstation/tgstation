@@ -13,7 +13,7 @@
 	// Balanced around being low numbers, with bringing the target back alive giving
 	// a fairly significant bonus comparatively.
 	// High payout
-	if (prob(10))
+	if (prob(13))
 		contract.payout_bonus = rand(6,8)
 	else if (prob(40)) // Low payout
 		contract.payout_bonus = rand(1,2)

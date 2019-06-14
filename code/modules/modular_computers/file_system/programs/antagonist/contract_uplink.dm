@@ -47,6 +47,8 @@
 				if (hard_drive.traitor_data.current_contract.handle_extraction(user))
 					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 75, 1)
 					hard_drive.traitor_data.current_contract.status = CONTRACT_STATUS_EXTRACTING
+				else
+					user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
 			else 
 				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
 			
@@ -59,7 +61,7 @@
 
 			return 1
 		if("PRG_redeem_TC")
-			if (hard_drive.traitor_data.contract_TC_to_redeem) {
+			if (hard_drive.traitor_data.contract_TC_to_redeem)
 				var/obj/item/stack/telecrystal/crystals = new /obj/item/stack/telecrystal(get_turf(user), 
 															hard_drive.traitor_data.contract_TC_to_redeem)
 				if(ishuman(user))
@@ -72,7 +74,8 @@
 				hard_drive.traitor_data.contract_TC_payed_out += hard_drive.traitor_data.contract_TC_to_redeem
 				hard_drive.traitor_data.contract_TC_to_redeem = 0
 				return 1
-			}
+			else
+				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
 			return 1
 
 
