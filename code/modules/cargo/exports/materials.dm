@@ -55,6 +55,11 @@
 	material_id = MAT_GOLD
 	message = "cm3 of gold"
 
+/datum/export/material/copper
+	cost = 15
+	material_id = MAT_COPPER
+	message = "cm3 of copper"
+
 /datum/export/material/silver
 	cost = 50
 	material_id = MAT_SILVER
