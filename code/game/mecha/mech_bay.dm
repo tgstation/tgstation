@@ -35,7 +35,7 @@
 	return ..()
 
 /obj/machinery/mech_bay_recharge_port/setDir(new_dir)
-	..()
+	. = ..()
 	recharging_turf = get_step(loc, dir)
 
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
