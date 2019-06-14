@@ -17,7 +17,6 @@
 			continue
 
 		SEND_SIGNAL(tile, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-		new projectile(tile)
 		
 		for(var/A in tile)
 			if(is_cleanable(A))
