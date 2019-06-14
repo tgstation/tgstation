@@ -481,7 +481,7 @@
 	id = "cleaner_chassis"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/cleaner
-	materials = list(MAT_METAL=20000,MAT_GOLD = 2000, MAT_URANIUM = 1000)
+	materials = list(MAT_METAL=20000,MAT_GOLD = 2000,MAT_URANIUM = 1000)
 	construction_time = 100
 	category = list("Cleaner")
 
