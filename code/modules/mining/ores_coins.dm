@@ -136,6 +136,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
 	return TRUE
 
+/obj/item/stack/ore/copper
+	name = "copper ore"
+	icon_state = "copper_ore"
+	item_state = "Copper ore"
+	singular_name = "Copper ore chunk"
+	points = 5
+	materials = list(MAT_COPPER=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/copper
 
 /obj/item/stack/ore/silver
 	name = "silver ore"
