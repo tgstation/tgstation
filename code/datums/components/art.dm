@@ -3,7 +3,7 @@
 #define GREAT_ART 50
 
 /datum/component/art
-	var/impressiveness
+	var/impressiveness = 0
 
 /datum/component/art/Initialize(impress)
 	impressiveness = impress
