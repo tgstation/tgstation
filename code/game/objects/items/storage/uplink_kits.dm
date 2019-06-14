@@ -188,7 +188,7 @@
 
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
-	new /obj/item/storage/box/syndie_kit/space(src)
+	new /obj/item/storage/box/syndie_kit/space/contract(src)
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/mask/chameleon(src)
 	new /obj/item/card/id/syndicate(src)
@@ -315,6 +315,11 @@
 	else
 		new /obj/item/clothing/head/helmet/space/syndicate(src)
 		new /obj/item/clothing/suit/space/syndicate(src)
+
+/obj/item/storage/box/syndie_kit/space/contract/PopulateContents()
+	new /obj/item/clothing/suit/space/syndicate/black/red(src)
+	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+
 
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
