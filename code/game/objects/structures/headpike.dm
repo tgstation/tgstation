@@ -36,11 +36,6 @@
 		MA.pixel_y = 12
 		add_overlay(H)
 
-/obj/structure/headpike/examine(mob/user)
-	. = ..()
-	if(user?.mind.has_antag_datum(/datum/antagonist/ashwalker))
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
-
 /obj/structure/headpike/attack_hand(mob/user)
 	. = ..()
 	if(.)
