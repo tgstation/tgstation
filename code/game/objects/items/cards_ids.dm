@@ -470,7 +470,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/mining/Initialize()
 	. = ..()
-	var/static/datum/bank_account/remote/golem_account = new("The Founder")
+	var/static/datum/bank_account/remote/golem_account = new("Liberator")
 	golem_account.bank_cards += src
 	registered_account = golem_account
 
