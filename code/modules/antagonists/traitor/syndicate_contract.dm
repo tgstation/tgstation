@@ -15,7 +15,7 @@
 	// High payout
 	if (prob(10))
 		contract.payout_bonus = rand(6,8)
-	else if (prob(50)) // Low payout
+	else if (prob(40)) // Low payout
 		contract.payout_bonus = rand(1,2)
 	else // Medium payout
 		contract.payout_bonus = rand(3,5)
@@ -70,6 +70,7 @@
 
 /datum/syndicate_contract/proc/enter_check(datum/source, var/mob/living/M)
 	if (istype(source, /obj/structure/closet/supplypod/extractionpod))
+		UnregisterSignal(source, COMSIG_ATOM_ENTERED) // Takes a while for the pod to vanish - we don't want another person put in
 		if (isliving(M))
 			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
 			
@@ -99,33 +100,37 @@
 	// Even if they weren't the target, we're still treating them the same.
 	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
 
-	M.flash_act()
-	M.confused += 10
-	M.blur_eyes(10)
-	to_chat(M, "<span class='warning'>You feel strange...</span>")
-	sleep(60)
-	to_chat(M, "<span class='warning'>That pod did something to you...</span>")
-	M.Dizzy(35)
-	sleep(65)
-	to_chat(M, "<span class='danger'>Your head POUNDS. It feels like it's going to burst out your skull!</span>")
-	M.flash_act()
-	M.confused += 20
-	M.blur_eyes(15)
-	sleep(100)
-	M.flash_act()
-	M.Unconscious(200)
-	to_chat(M, "<span class='reallybig hypnophrase'>A million voices speak to you at once... <i>\"Your brain held many valuable secrets - \
-	        	we thank you for providing them. Your value is expended, should your station not pay for your return, we'll return you \
-				dead. Whatever their decision, in five minutes, you're going home - but their choice might lead it to be without a beating \
-				heart...\"</i></span>")
-	M.blur_eyes(80)
+	if (M.stat != DEAD)
+		M.flash_act()
+		M.confused += 10
+		M.blur_eyes(10)
+		to_chat(M, "<span class='warning'>You feel strange...</span>")
+		sleep(60)
+		to_chat(M, "<span class='warning'>That pod did something to you...</span>")
+		M.Dizzy(35)
+		sleep(65)
+		to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
+		M.flash_act()
+		M.confused += 20
+		M.blur_eyes(15)
+		sleep(30)
+		to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
+		sleep(100)
+		M.flash_act()
+		M.Unconscious(200)
+		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
+					we thank you for providing them. Your value is expended, should your station not pay for your return, we'll have no further \
+					use for you. Whatever their decision, in five minutes, you're going home - but their choice might lead it to be without a beating \
+					heart...\"</i></span>")
+		M.blur_eyes(80)
 
 /datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
 	var/list/possible_drop_loc = list()
 
 	for (var/turf/possible_drop in contract.dropoff.contents)
 		var/location_clear = TRUE
-		if (isfloorturf(possible_drop))
+		// We don't care as much about what we land on than we did for sending the pod down.
+		if (!isspaceturf(possible_drop))
 			for (var/content in possible_drop.contents)
 				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
 					location_clear = FALSE
@@ -146,8 +151,8 @@
 
 		new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
 	else
-		to_chat(M, "<span class='reallybig hypnophrase'>A million voices speak to you at once...</span> <i>\"Seems where you got sent here from won't \
-		            fit our return pod - sorry.\"</i>")
+		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
+		            be able to handle our pod... This jail will be your tomb.\"</i></span>")
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
 			if (C.can_heartattack())
