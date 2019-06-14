@@ -308,6 +308,18 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = 1
 
+/turf/closed/mineral/copper
+	mineralType = /obj/item/stack/ore/copper
+	spreadChance = 5
+	spread = 1
+	scan_state = "rock_Copper"
+
+/turf/closed/mineral/copper/volcanic
+	environment_type = "basalt"
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = 1
 
 /turf/closed/mineral/titanium
 	mineralType = /obj/item/stack/ore/titanium
