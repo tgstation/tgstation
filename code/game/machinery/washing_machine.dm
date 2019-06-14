@@ -12,7 +12,7 @@
 
 /obj/machinery/washing_machine/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
 
 /obj/machinery/washing_machine/examine(mob/user)
 	..()

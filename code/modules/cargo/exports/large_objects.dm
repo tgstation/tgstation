@@ -112,17 +112,6 @@
 	export_types = list(/obj/machinery/the_singularitygen)
 	include_subtypes = FALSE
 
-/datum/export/large/am_control_unit
-	cost = 4000
-	unit_name = "antimatter control unit"
-	export_types = list(/obj/machinery/power/am_control_unit)
-
-/datum/export/large/am_shielding_container
-	cost = 150
-	unit_name = "packaged antimatter reactor section"
-	export_types = list(/obj/item/am_shielding_container)
-
-
 /datum/export/large/iv
 	cost = 50
 	unit_name = "iv drip"
@@ -146,7 +135,7 @@
 	worth += gases[/datum/gas/bz][MOLES]*4
 	worth += gases[/datum/gas/stimulum][MOLES]*100
 	worth += gases[/datum/gas/hypernoblium][MOLES]*1000
-	worth += gases[/datum/gas/miasma][MOLES]*40
+	worth += gases[/datum/gas/miasma][MOLES]*10
 	worth += gases[/datum/gas/tritium][MOLES]*5
-	worth += gases[/datum/gas/pluoxium][MOLES]*50
+	worth += gases[/datum/gas/pluoxium][MOLES]*5
 	return worth

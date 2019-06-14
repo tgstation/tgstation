@@ -45,8 +45,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		force = 3
 		hitsound = 'sound/items/welder.ogg'
 		item_state = "cigon"
-		name = "lit match"
-		desc = "A match. This one is lit."
+		name = "lit [initial(name)]"
+		desc = "A [initial(name)]. This one is lit."
 		attack_verb = list("burnt","singed")
 		START_PROCESSING(SSobj, src)
 		update_icon()
@@ -59,8 +59,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		force = initial(force)
 		icon_state = "match_burnt"
 		item_state = "cigoff"
-		name = "burnt match"
-		desc = "A match. This one has seen better days."
+		name = "burnt [initial(name)]"
+		desc = "A [initial(name)]. This one has seen better days."
 		attack_verb = list("flicked")
 		STOP_PROCESSING(SSobj, src)
 
@@ -95,6 +95,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/match/is_hot()
 	return lit * heat
+
+/obj/item/match/firebrand
+	name = "firebrand"
+	desc = "An unlit firebrand. It makes you wonder why it's not just called a stick."
+	smoketime = 20 //40 seconds
+	grind_results = list(/datum/reagent/carbon = 2)
+
+/obj/item/match/firebrand/Initialize()
+	. = ..()
+	matchignite()
 
 //////////////////
 //FINE SMOKABLES//

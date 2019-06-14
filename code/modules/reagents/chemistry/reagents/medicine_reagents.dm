@@ -1,3 +1,4 @@
+#define PERF_BASE_DAMAGE		0.5
 
 //////////////////////////////////////////////////////////////////////////////////////////
 					// MEDICINE REAGENTS
@@ -394,7 +395,7 @@
 	. = 1
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			M.reagents.remove_reagent(type,1)
+			M.reagents.remove_reagent(R.type,1)
 	..()
 
 /datum/reagent/medicine/omnizine
@@ -505,16 +506,26 @@
 
 /datum/reagent/medicine/perfluorodecalin
 	name = "Perfluorodecalin"
-	description = "Extremely rapidly restores oxygen deprivation, but inhibits speech. May also heal small amounts of bruising and burns."
+	description = "Restores oxygen deprivation while producing a lesser amount of toxic byproducts. Both scale with exposure to the drug and current amount of oxygen deprivation. Overdose causes toxic byproducts regardless of oxygen deprivation."
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
-	M.adjustOxyLoss(-12*REM, 0)
-	M.adjustToxLoss(0.3*REM, 0)
+	var/oxycalc = 2.5*REM*current_cycle
+	if(!overdosed)
+		oxycalc = min(oxycalc,M.getOxyLoss()+PERF_BASE_DAMAGE) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.5. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
+	M.adjustOxyLoss(-oxycalc, 0)
+	M.adjustToxLoss(oxycalc/2.5, 0)
+	if(prob(current_cycle) && M.losebreath)
+		M.losebreath--
 	..()
 	return TRUE
+
+/datum/reagent/medicine/perfluorodecalin/overdose_process(mob/living/M)
+    metabolization_rate += 1
+    return ..()
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
@@ -1300,3 +1311,6 @@
 	M.adjustToxLoss(1, 0)
 	..()
 	. = 1
+
+
+#undef PERF_BASE_DAMAGE

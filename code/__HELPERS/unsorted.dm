@@ -1001,25 +1001,24 @@ B --><-- A
 
 //similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
 /proc/spiral_range(dist=0, center=usr, orange=0)
-	if(!dist)
-		if(!orange)
-			return list(center)
-		else
-			return list()
-
+	var/list/L = list()
 	var/turf/t_center = get_turf(center)
 	if(!t_center)
 		return list()
 
-	var/list/L = list()
+	if(!orange)
+		L += t_center
+		L += t_center.contents
+
+	if(!dist)
+		return L
+
+
 	var/turf/T
 	var/y
 	var/x
 	var/c_dist = 1
 
-	if(!orange)
-		L += t_center
-		L += t_center.contents
 
 	while( c_dist <= dist )
 		y = t_center.y + c_dist
