@@ -7,9 +7,9 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	
 /obj/item/projectile/energy/declone/weak
-	damage = 5
-	irradiate = 25
-
+	damage = 9
+	irradiate = 30
+	
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
 	icon_state = "toxin"
