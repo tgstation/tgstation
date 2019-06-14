@@ -199,6 +199,13 @@
 	name = "iron door"
 	max_integrity = 300
 
+/obj/structure/mineral_door/copper
+	name = "copper door"
+	icon_state = "copper"
+	sheetType = /obj/item/stack/sheet/mineral/copper
+	max_integrity = 300
+	rad_insulation = RAD_HEAVY_INSULATION
+
 /obj/structure/mineral_door/silver
 	name = "silver door"
 	icon_state = "silver"
