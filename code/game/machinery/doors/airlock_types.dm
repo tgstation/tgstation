@@ -153,6 +153,15 @@
 	Station Airlocks Mineral
 */
 
+/obj/machinery/door/airlock/copper
+	name = "copper airlock"
+	icon = 'icons/obj/doors/airlocks/station/copper.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_copper
+
+/obj/machinery/door/airlock/copper/glass
+	opacity = 0
+	glass = TRUE
+
 /obj/machinery/door/airlock/gold
 	name = "gold airlock"
 	icon = 'icons/obj/doors/airlocks/station/gold.dmi'
