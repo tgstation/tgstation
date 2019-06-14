@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(research)
 			continue
 		TN = new path
 		if(returned[initial(TN.id)])
-			stack_trace("WARNING: Techweb node ID clash with ID [initial(TN.id)] detected!")
+			stack_trace("WARNING: Techweb node ID clash with ID [initial(TN.id)] detected! Path: [path]")
 			errored_datums[TN] = initial(TN.id)
 			continue
 		returned[initial(TN.id)] = TN
@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(research)
 			continue
 		DN = new path
 		if(returned[initial(DN.id)])
-			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected!")
+			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected! Path: [path]")
 			errored_datums[DN] = initial(DN.id)
 			continue
 		returned[initial(DN.id)] = DN

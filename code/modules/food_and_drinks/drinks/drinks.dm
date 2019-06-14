@@ -456,7 +456,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
-		open_soda()
+		open_soda(user)
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola

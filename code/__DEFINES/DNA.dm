@@ -143,6 +143,7 @@
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
+#define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
 
 
 //used for the can_chromosome var on mutations

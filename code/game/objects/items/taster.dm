@@ -6,10 +6,9 @@
 
 	w_class = WEIGHT_CLASS_TINY
 
-	var/taste_sensitivity = 15
+	speech_span = null
 
-/obj/item/taster/get_spans()
-	return list()
+	var/taste_sensitivity = 15
 
 /obj/item/taster/afterattack(atom/O, mob/user, proximity)
 	. = ..()

@@ -20,7 +20,6 @@ Difficulty: Medium
 	name = "Legion"
 	health = 800
 	maxHealth = 800
-	spacewalk = TRUE
 	icon_state = "legion"
 	icon_living = "legion"
 	desc = "One of many."
@@ -31,14 +30,14 @@ Difficulty: Medium
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	speed = 2
-	ranged = 1
-	del_on_death = 1
+	speed = 5
+	ranged = TRUE
+	del_on_death = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
 	var/size = 5
-	var/charging = 0
+	var/charging = FALSE
 	internal_type = /obj/item/gps/internal/legion
 	medal_type = BOSS_MEDAL_LEGION
 	score_type = LEGION_SCORE
@@ -47,9 +46,60 @@ Difficulty: Medium
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE
-	elimination = 1
+	elimination = TRUE
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
+	attack_action_types = list(/datum/action/innate/megafauna_attack/create_skull,
+							   /datum/action/innate/megafauna_attack/charge_target)
+	small_sprite_type = /datum/action/small_sprite/megafauna/legion
+
+/datum/action/innate/megafauna_attack/create_skull
+	name = "Create Legion Skull"
+	icon_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "legion_head"
+	chosen_message = "<span class='colossus'>You are now creating legion skulls.</span>"
+	chosen_attack_num = 1
+
+/datum/action/innate/megafauna_attack/charge_target
+	name = "Charge Target"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "sniper_zoom"
+	chosen_message = "<span class='colossus'>You are now charging at your target.</span>"
+	chosen_attack_num = 2
+
+/mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
+	if(charging)
+		return
+	ranged_cooldown = world.time + ranged_cooldown_time
+
+	if(client)
+		switch(chosen_attack)
+			if(1)
+				create_legion_skull()
+			if(2)
+				charge_target()
+		return
+
+	if(prob(75))
+		create_legion_skull()
+	else
+		charge_target()
+
+/mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_skull()
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
+	A.GiveTarget(target)
+	A.friends = friends
+	A.faction = faction
+
+/mob/living/simple_animal/hostile/megafauna/legion/proc/charge_target()
+	visible_message("<span class='warning'><b>[src] charges!</b></span>")
+	SpinAnimation(speed = 20, loops = 5)
+	ranged = FALSE
+	retreat_distance = 0
+	minimum_distance = 0
+	set_varspeed(0)
+	charging = TRUE
+	addtimer(CALLBACK(src, .proc/reset_charge), 50)
 
 /mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
 	. = ..()
@@ -69,30 +119,12 @@ Difficulty: Medium
 			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 			A.infest(L)
 
-/mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
-	if(world.time >= ranged_cooldown && !charging)
-		if(prob(75))
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-			A.GiveTarget(target)
-			A.friends = friends
-			A.faction = faction
-			ranged_cooldown = world.time + ranged_cooldown_time
-		else
-			visible_message("<span class='warning'><b>[src] charges!</b></span>")
-			SpinAnimation(speed = 20, loops = 5)
-			ranged = 0
-			retreat_distance = 0
-			minimum_distance = 0
-			speed = 0
-			charging = 1
-			addtimer(CALLBACK(src, .proc/reset_charge), 50)
-
 /mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
-	ranged = 1
+	ranged = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
-	speed = 2
-	charging = 0
+	set_varspeed(2)
+	charging = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	if(health > 0)
@@ -130,7 +162,7 @@ Difficulty: Medium
 				break
 		if(last_legion)
 			loot = list(/obj/item/staff/storm)
-			elimination = 0
+			elimination = FALSE
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		if(!true_spawn)

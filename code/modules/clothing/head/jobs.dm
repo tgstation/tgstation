@@ -198,33 +198,41 @@
 		mode = DRILL_CANADIAN
 	return TRUE
 
-/obj/item/clothing/head/warden/drill/speechModification(M)
-	if(copytext(M, 1, 2) != "*")
-		if(mode == DRILL_DEFAULT)
-			M = " [M]"
-			return trim(M)
-		if(mode == DRILL_SHOUTING)
-			M = " [M]!"
-			return trim(M)
-		if(mode ==  DRILL_YELLING)
-			M = " [M]!!"
-			return trim(M)
-		if(mode == DRILL_CANADIAN)
-			M = " [M]"
-			var/list/canadian_words = strings("canadian_replacement.json", "canadian")
+/obj/item/clothing/head/warden/drill/equipped(mob/M, slot)
+	. = ..()
+	if (slot == SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
 
-			for(var/key in canadian_words)
-				var/value = canadian_words[key]
-				if(islist(value))
-					value = pick(value)
+/obj/item/clothing/head/warden/drill/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
 
-				M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
-				M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
-				M = replacetextEx(M, " [key]", " [value]")
+/obj/item/clothing/head/warden/drill/proc/handle_speech(datum/source, mob/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		switch (mode)
+			if(DRILL_SHOUTING)
+				message += "!"
+			if(DRILL_YELLING)
+				message += "!!"
+			if(DRILL_CANADIAN)
+				message = " [message]"
+				var/list/canadian_words = strings("canadian_replacement.json", "canadian")
 
-			if(prob(30))
-				M += pick(", eh?", ", EH?")
-		return trim(M)
+				for(var/key in canadian_words)
+					var/value = canadian_words[key]
+					if(islist(value))
+						value = pick(value)
+
+					message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+					message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+					message = replacetextEx(message, " [key]", " [value]")
+
+				if(prob(30))
+					message += pick(", eh?", ", EH?")
+		speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"

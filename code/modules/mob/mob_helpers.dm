@@ -180,7 +180,6 @@
 		message = stutter(message)
 	return message
 
-
 /proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
@@ -498,3 +497,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(HAS_TRAIT(src, TRAIT_DISSECTED))
 		. += "<span class='notice'>This body has been dissected and analyzed. It is no longer worth experimenting on.</span><br>"
+
+/mob/proc/get_policy_keywords()
+	. = list()
+	. += "[type]"
+	if(mind)
+		. += mind.assigned_role
+		. += mind.special_role //In case there's something special leftover, try to avoid
+		for(var/datum/antagonist/A in mind.antag_datums)
+			. += "[A.type]"
