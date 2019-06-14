@@ -25,7 +25,7 @@
 	contract.generate_dropoff()
 
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
-	if (contract.dropoff_check(user, contract.target.current))
+	if (contract.target && contract.dropoff_check(user, contract.target.current))
 
 		var/list/turfs = RANGE_TURFS(3, user)
 		var/list/possible_drop_loc = list()

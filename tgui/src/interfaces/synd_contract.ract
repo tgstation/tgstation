@@ -24,7 +24,14 @@
 		<p>
 			Dead targets are acceptable, but you won't be provided the shown bonus. You can redeem your
 			payment through this uplink in the form of raw telecrystals, which can be put into your regular
-			Syndicate uplink to purchase whatever you may need.
+			Syndicate uplink to purchase whatever you may need. We provide you with these crystals the moment
+			you send the target up to us.
+		</p>
+
+		<p>
+			Targets brought to us will be ransomed back to the station once their use to us is fulfilled.
+			You may want to keep this in mind when capturing your targets - as this is the same for if they were
+			alive or dead. If our ransom isn't paid, leave their fate with us... They won't be coming home.
 		</p>
 		
 		<p>
@@ -53,6 +60,12 @@
 							<td>{{dropoff}}</td>
 							<td><ui-button action='PRG_contract_abort' {{#if extraction_enroute}}state="disabled"{{/if}} params='{"contract_id": "{{id}}"}'>Cancel</ui-button></td>
 						</tr>
+						<div style="text-align:center;">
+							<ui-display title='Dropoff Locator'>
+								Current Location: {{data.current_location}}
+								Dropoff Location: {{data.dropoff_direction}}
+							</ui-display>
+						</div>
 					{{/if}}
 				{{else}}
 					{{#if status != 5 && status != 6}}

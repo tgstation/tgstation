@@ -107,6 +107,26 @@
 				"id" = contract.id,
 				"status" = contract.status
 			))
+
+		var/direction
+		if (traitor_data.current_contract)
+			var/turf/curr = get_turf(user)
+			var/turf/dropoff_turf 
+			data["current_location"] = "[get_area_name(curr, TRUE)]"
+			
+			for (var/content in traitor_data.current_contract.contract.dropoff.contents)
+				if (isturf(content))
+					dropoff_turf = content
+					break
+
+			if(curr.z == dropoff_turf.z) //Direction calculations for same z-level only
+				direction = uppertext(dir2text(get_dir(curr, dropoff_turf))) //Direction text (East, etc). Not as precise, but still helpful.
+				if(!direction)
+					direction = "LOCATION CONFIRMED"
+			else
+				direction = "???"
+
+			data["dropoff_direction"] = direction
 	else
 		data["error"] = error
 		data["logged_in"] = FALSE
