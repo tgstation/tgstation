@@ -34,6 +34,15 @@
 	mineralType = "silver"
 	materials = list(MAT_SILVER=500)
 
+/obj/item/stack/tile/mineral/copper
+	name = "copper tile"
+	singular_name = "copper floor tile"
+	desc = "A tile made out of copper, so shiny!"
+	icon_state = "tile_copper"
+	turf_type = /turf/open/floor/mineral/copper
+	mineralType = "copper"
+	materials = list(MAT_COPPER=500)
+
 /obj/item/stack/tile/mineral/diamond
 	name = "diamond tile"
 	singular_name = "diamond floor tile"
