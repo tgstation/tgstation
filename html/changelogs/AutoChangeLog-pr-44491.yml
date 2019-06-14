@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - rscdel: "Free nanomeds have been removed from mining capsules"
