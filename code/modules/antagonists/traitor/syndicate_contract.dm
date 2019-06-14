@@ -13,14 +13,14 @@
 	// Balanced around being low numbers, with bringing the target back alive giving
 	// a fairly significant bonus comparatively.
 	// High payout
-	if (prob(13))
+	if (prob(15))
 		contract.payout_bonus = rand(6,8)
-	else if (prob(40)) // Low payout
+	else if (prob(30)) // Low payout
 		contract.payout_bonus = rand(1,2)
 	else // Medium payout
 		contract.payout_bonus = rand(3,5)
 
-	contract.payout = rand(0, 2)
+	contract.payout = rand(0, 3)
 
 	contract.generate_dropoff()
 
@@ -82,47 +82,44 @@
 
 				status = CONTRACT_STATUS_COMPLETE
 
-				if (traitor_data.current_contract == src) {
+				if (traitor_data.current_contract == src) 
 					traitor_data.current_contract = null
-				}
+	
 			else
 				status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
 				
-				if (traitor_data.current_contract == src) {
+				if (traitor_data.current_contract == src) 
 					traitor_data.current_contract = null
-				}
-			
+				
 			handleVictimExperience(M)
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
 	// Ship 'em back - dead or alive, it depends on if the Syndicate get paid... 5 minutes wait.
 	// Even if they weren't the target, we're still treating them the same.
-	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
+	addtimer(CALLBACK(src, .proc/returnVictim, M), (10 * 10))
 
-	if (M.stat != DEAD)
-		M.flash_act()
-		M.confused += 10
-		M.blur_eyes(10)
-		to_chat(M, "<span class='warning'>You feel strange...</span>")
-		sleep(60)
-		to_chat(M, "<span class='warning'>That pod did something to you...</span>")
-		M.Dizzy(35)
-		sleep(65)
-		to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
-		M.flash_act()
-		M.confused += 20
-		M.blur_eyes(15)
-		sleep(30)
-		to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
-		sleep(100)
-		M.flash_act()
-		M.Unconscious(200)
-		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
-					we thank you for providing them. Your value is expended, should your station not pay for your return, we'll have no further \
-					use for you. Whatever their decision, in five minutes, you're going home - but their choice might lead it to be without a beating \
-					heart...\"</i></span>")
-		M.blur_eyes(80)
+	M.flash_act()
+	M.confused += 10
+	M.blur_eyes(10)
+	to_chat(M, "<span class='warning'>You feel strange...</span>")
+	sleep(60)
+	to_chat(M, "<span class='warning'>That pod did something to you...</span>")
+	M.Dizzy(35)
+	sleep(65)
+	to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
+	M.flash_act()
+	M.confused += 20
+	M.blur_eyes(15)
+	sleep(30)
+	to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
+	sleep(100)
+	M.flash_act()
+	M.Unconscious(200)
+	to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
+				we thank you for providing them. Your value is expended, should your station not pay for your return, this place will be \
+				your tomb...\"</i></span>")
+	M.blur_eyes(80)
 
 /datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
 	var/list/possible_drop_loc = list()

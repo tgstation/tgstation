@@ -60,12 +60,6 @@
 							<td>{{dropoff}}</td>
 							<td><ui-button action='PRG_contract_abort' {{#if extraction_enroute}}state="disabled"{{/if}} params='{"contract_id": "{{id}}"}'>Cancel</ui-button></td>
 						</tr>
-						<div style="text-align:center;">
-							<ui-display title='Dropoff Locator'>
-								Current Location: {{data.current_location}}
-								Dropoff Location: {{data.dropoff_direction}}
-							</ui-display>
-						</div>
 					{{/if}}
 				{{else}}
 					{{#if status != 5 && status != 6}}
@@ -80,6 +74,15 @@
 			{{/each}}
 
 		</table>
+		{{#if data.ongoing_contract}}
+			<div style="text-align:center;">
+				<ui-display title='Dropoff Locator'>
+					Current Location: {{data.current_location}}
+					<br>
+					Dropoff Location: {{data.dropoff_direction}}
+				</ui-display>
+			</div>
+		{{/if}}
 	{{else}}
 		<div style="text-align:center">
 			<ui-button action='PRG_login'>Assign</ui-button><br>
