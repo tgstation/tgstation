@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	var/list/possible_results = list()
 
 /datum/chemical_reaction/randomized/proc/GenerateRecipe()
+	created = world.time
 	if(randomize_container)
 		required_container = pick(possible_containers)
 	if(randomize_req_temperature)
@@ -120,7 +121,8 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 		.[pathR] = textreagents[R]
 
 /datum/chemical_reaction/randomized/proc/LoadOldRecipe(recipe_data)
-	created = recipe_data["timestamp"]
+	created = text2num(recipe_data["timestamp"])
+
 	var/req_reag = unwrap_reagent_list(recipe_data["required_reagents"])
 	if(!req_reag)
 		return FALSE
