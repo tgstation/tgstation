@@ -340,6 +340,11 @@
 	id = MAT_GLASS
 	sheet_type = /obj/item/stack/sheet/glass
 
+/datum/material/copper
+	name = "Copper"
+	id = MAT_COPPER
+	sheet_type = /obj/item/stack/sheet/mineral/copper
+
 /datum/material/silver
 	name = "Silver"
 	id = MAT_SILVER
