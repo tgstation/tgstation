@@ -231,6 +231,16 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/medical_spray_bottle
+	name = "Medical Spray Bottle"
+	desc = "A traditional spray bottle used to generate a fine mist. Not to be confused with a medspray."
+	id = "med_spray_bottle"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_PLASTIC = 2000)
+	build_path = /obj/item/reagent_containers/spray/medical
+	category = list("Medical Designs")
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
@@ -672,3 +682,5 @@
 	id = "surgery_zombie"
 	surgery = /datum/surgery/advanced/necrotic_revival
 	research_icon_state = "surgery_head"
+
+

@@ -1323,7 +1323,7 @@
 	name = "Trophazole"
 	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing and if ingested turns nutriment into healing peptides"
 	reagent_state = LIQUID
-	color = "#07E79E"
+	color = "#FFFF6B"
 	overdose_threshold = 20
 
 /datum/reagent/medicine/trophazole/on_mob_life(mob/living/carbon/M)
@@ -1350,6 +1350,7 @@
 	description = "This enzyme catalyzes the conversion of nutricious food into healing peptides."
 	metabolization_rate = 0.0625  * REAGENTS_METABOLISM //slow metabolism rate so the patient can self heal with food even after the troph has metabolized away for amazing reagent efficency.
 	reagent_state = SOLID
+	color = "#DC605D"
 	overdose_threshold = 10
 
 /datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
