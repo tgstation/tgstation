@@ -1,0 +1,5 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - bugfix: "Having very high sanity no longer takes away your action speed bonus."
+  - bugfix: "Sanity no longer constantly dips beyond its maximum/minimum, which caused issues."
