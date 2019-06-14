@@ -1175,55 +1175,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
 
-/obj/effect/temp_visual/fireball
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "fireball"
-	name = "fireball"
-	desc = "Get out of the way!"
-	layer = FLY_LAYER
-	randomdir = FALSE
-	duration = 9
-	pixel_z = 270
-
-/obj/effect/temp_visual/fireball/Initialize()
-	. = ..()
-	animate(src, pixel_z = 0, time = duration)
-
-/obj/effect/temp_visual/target
-	icon = 'icons/mob/actions/actions_items.dmi'
-	icon_state = "sniper_zoom"
-	layer = BELOW_MOB_LAYER
-	light_range = 2
-	duration = 9
-
-/obj/effect/temp_visual/target/ex_act()
-	return
-
-/obj/effect/temp_visual/target/Initialize(mapload, list/flame_hit)
-	. = ..()
-	INVOKE_ASYNC(src, .proc/fall, flame_hit)
-
-/obj/effect/temp_visual/target/proc/fall(list/flame_hit)
-	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
-	new /obj/effect/temp_visual/fireball(T)
-	sleep(duration)
-	if(ismineralturf(T))
-		var/turf/closed/mineral/M = T
-		M.gets_drilled()
-	playsound(T, "explosion", 80, 1)
-	new /obj/effect/hotspot(T)
-	T.hotspot_expose(700, 50, 1)
-	for(var/mob/living/L in T.contents)
-		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
-			continue
-		if(islist(flame_hit) && !flame_hit[L])
-			L.adjustFireLoss(40)
-			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
-			flame_hit[L] = TRUE
-		else
-			L.adjustFireLoss(10) //if we've already hit them, do way less damage
-
 /datum/admins/proc/cmd_show_exp_panel(client/C)
 	if(!check_rights(R_ADMIN))
 		return

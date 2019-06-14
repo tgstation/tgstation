@@ -290,7 +290,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq,get_spans(),get_default_language())
+				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_icon()
 				addtimer(CALLBACK(src, .proc/clear_emergency), 5 MINUTES)
 
@@ -403,7 +403,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	if(radio_freq)
 		Radio.set_frequency(radio_freq)
-		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq, get_spans(), get_default_language())
+		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
 
 /obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
 	if(O.tool_behaviour == TOOL_CROWBAR)

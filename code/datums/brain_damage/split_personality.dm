@@ -191,18 +191,17 @@
 /datum/brain_trauma/severe/split_personality/brainwashing/on_life()
 	return //no random switching
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == speaker)
-		return message
+/datum/brain_trauma/severe/split_personality/brainwashing/handle_hearing(datum/source, list/hearing_args)
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
+		return
+	var/message = hearing_args[HEARING_MESSAGE]
 	if(findtext(message, codeword))
-		message = replacetext(message, codeword, "<span class='warning'>[codeword]</span>")
+		hearing_args[HEARING_MESSAGE] = replacetext(message, codeword, "<span class='warning'>[codeword]</span>")
 		addtimer(CALLBACK(src, /datum/brain_trauma/severe/split_personality.proc/switch_personalities), 10)
-	return message
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_say(message)
-	if(findtext(message, codeword))
-		return "" //oh hey did you want to tell people about the secret word to bring you back?
-	return message
+/datum/brain_trauma/severe/split_personality/brainwashing/handle_speech(datum/source, list/speech_args)
+	if(findtext(speech_args[SPEECH_MESSAGE], codeword))
+		speech_args[SPEECH_MESSAGE] = "" //oh hey did you want to tell people about the secret word to bring you back?
 
 /mob/living/split_personality/traitor
 	name = "split personality"

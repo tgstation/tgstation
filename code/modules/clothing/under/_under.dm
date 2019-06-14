@@ -52,6 +52,14 @@
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 
+/obj/item/clothing/under/emp_act()
+	. = ..()
+	if(has_sensor > NO_SENSORS)
+		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
+		if(ismob(loc))
+			var/mob/M = loc
+			to_chat(M,"<span class='warning'>The sensors on the [src] change rapidly!</span>")
+
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
 	if(adjusted)

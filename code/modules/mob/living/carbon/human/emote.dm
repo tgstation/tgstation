@@ -97,7 +97,7 @@
 	key_third_person = "wags"
 	message = "wags their tail."
 
-/datum/emote/living/carbon/human/wag/run_emote(mob/user, params)
+/datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
 		return
@@ -109,13 +109,13 @@
 	else
 		H.dna.species.stop_wagging_tail(H)
 
-/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE , intentional)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
 	return H.dna && H.dna.species && H.dna.species.can_wag_tail(user)
 
-/datum/emote/living/carbon/human/wag/select_message_type(mob/user)
+/datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
 	. = ..()
 	var/mob/living/carbon/human/H = user
 	if(!H.dna || !H.dna.species)
@@ -128,16 +128,16 @@
 	key_third_person = "wings"
 	message = "their wings."
 
-/datum/emote/living/carbon/human/wing/run_emote(mob/user, params)
+/datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(.)
 		var/mob/living/carbon/human/H = user
-		if(findtext(select_message_type(user), "open"))
+		if(findtext(select_message_type(user,intentional), "open"))
 			H.OpenWings()
 		else
 			H.CloseWings()
 
-/datum/emote/living/carbon/human/wing/select_message_type(mob/user)
+/datum/emote/living/carbon/human/wing/select_message_type(mob/user, intentional)
 	. = ..()
 	var/mob/living/carbon/human/H = user
 	if("wings" in H.dna.species.mutant_bodyparts)
@@ -145,7 +145,7 @@
 	else
 		. = "closes " + message
 
-/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
