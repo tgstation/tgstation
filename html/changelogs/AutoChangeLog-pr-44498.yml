@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Decreased the cost of the advanced surgery node to 1500 from 2500, as was intended when adding the Improved Wound Mending node."
+  - bugfix: "Interrupting a surgery step or finishing a repeatable surgery step no longer uses the tool on the target, attacking or forcefeeding them."

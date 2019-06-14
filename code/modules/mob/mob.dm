@@ -316,6 +316,7 @@
 
 	face_atom(A)
 	A.examine(src)
+	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 //same as above
 //note: ghosts can point, this is intended

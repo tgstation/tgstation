@@ -140,6 +140,10 @@
 	empty()
 	add_fingerprint(usr)
 
+/obj/machinery/processor/container_resist(mob/living/user)
+	user.forceMove(drop_location())
+	user.visible_message("<span class='notice'>[user] crawls free of the processor!</span>")
+
 /obj/machinery/processor/proc/empty()
 	for (var/obj/O in src)
 		O.forceMove(drop_location())
