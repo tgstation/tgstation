@@ -1,4 +1,5 @@
-#define BLOOD_REGEN_RATE 0.15
+#define BLOOD_REGEN_RATE 0.25 //multiplier for how much blood regenerates naturally
+#define BLOOD_REGEN_NUTRITION_RATE 0.5 //multiplier for how much nutrition is lost during natural blood regeneration
 
 /****************************************************
 				BLOOD SYSTEM
@@ -50,7 +51,7 @@
 					nutrition_ratio = 1
 			if(satiety > 80)
 				nutrition_ratio *= 1.25
-			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR)
+			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * BLOOD_REGEN_NUTRITION_RATE)
 			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + BLOOD_REGEN_RATE * nutrition_ratio)
 
 		//Effects of bloodloss
