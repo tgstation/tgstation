@@ -30,17 +30,19 @@
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	if(..())
 		return
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("send_message")
+		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["send_message"])
+		if (!istype(MT))
+			return
 		var/message = stripped_input(usr,"Input message","Transmit message")
 		var/obj/mecha/M = MT.in_mecha()
 		if(trim(message) && M)
 			M.occupant_message(message)
 		return
 	if(href_list["shock"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("shock")
-		MT.shock()
+		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["shock"])
+		if (istype(MT))
+			MT.shock()
 
 	updateUsrDialog()
 	return

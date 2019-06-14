@@ -2706,7 +2706,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4

@@ -10,6 +10,15 @@
 	build_path = /obj/item/reagent_containers/glass/bucket
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	
+/datum/design/mop
+	name = "Mop"
+	id = "mop"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/mop
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/crowbar
 	name = "Pocket Crowbar"
@@ -644,10 +653,11 @@
 /datum/design/syringe
 	name = "Syringe"
 	id = "syringe"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GLASS = 20)
 	build_path = /obj/item/reagent_containers/syringe
-	category = list("initial", "Medical")
+	category = list("initial", "Medical", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/prox_sensor
 	name = "Proximity Sensor"

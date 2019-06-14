@@ -28,7 +28,6 @@
 //does massive brute and burn damage, but can only expand manually
 /datum/reagent/blob/networked_fibers
 	name = "Networked Fibers"
-	id = "networked_fibers"
 	taste_description = "efficiency"
 	color = "#CDC0B0"
 

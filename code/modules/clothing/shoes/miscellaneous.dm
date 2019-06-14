@@ -77,7 +77,7 @@
 	item_color = "clown"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/datum/component/waddle
-	var/enabled_waddle = FALSE
+	var/enabled_waddle = TRUE
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()

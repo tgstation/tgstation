@@ -26,7 +26,7 @@
 	return TRUE
 
 /datum/surgery_step/revive
-	name = "repair body"
+	name = "shock body"
 	implements = list(/obj/item/twohanded/shockpaddles = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
 	time = 120
 

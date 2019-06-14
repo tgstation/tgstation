@@ -52,7 +52,7 @@
 	else
 		steps++
 
-/datum/component/squeak/proc/play_squeak_crossed(atom/movable/AM)
+/datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/AM)
 	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.item_flags & ABSTRACT)
@@ -105,6 +105,9 @@
 
 /datum/component/squeak/slimeplushie
 	datum_outputs = list(/datum/outputs/squelch)
+
+/datum/component/squeak/beeplushie
+	datum_outputs = list(/datum/outputs/bee)
 
 /datum/component/squeak/mouse
 	datum_outputs = list(/datum/outputs/squeak)

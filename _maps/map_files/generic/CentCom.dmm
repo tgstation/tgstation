@@ -6513,11 +6513,9 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "oV" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
-/area/centcom/holding)
+/area/syndicate_mothership/control)
 "oW" = (
 /obj/structure/flora/bush,
 /obj/effect/light_emitter{
@@ -7547,12 +7545,11 @@
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "qM" = (
-/obj/machinery/vending/cigarette/syndicate,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership/control)
 "qN" = (
 /obj/structure/urinal{
@@ -8316,11 +8313,14 @@
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "si" = (
-/obj/machinery/computer/telecrystals/uplinker,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
+/obj/structure/sign/map/left{
+	pixel_y = -32
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
+/turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "sj" = (
 /obj/structure/toilet{
@@ -8827,11 +8827,14 @@
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "tg" = (
-/obj/machinery/computer/telecrystals/uplinker,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/obj/structure/sign/map/right{
+	pixel_y = -32
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "th" = (
 /obj/structure/closet/cardboard,
@@ -8863,6 +8866,14 @@
 /obj/structure/dresser,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
+"tm" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/vending/cigarette/syndicate,
+/turf/open/floor/plasteel,
+/area/syndicate_mothership/control)
 "tn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -8925,6 +8936,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+"tv" = (
+/turf/closed/indestructible/rock/snow,
+/area/syndicate_mothership/control)
+"tw" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/shaker,
+/turf/open/floor/wood,
+/area/syndicate_mothership/control)
 "tx" = (
 /obj/structure/table/wood,
 /obj/item/storage/pill_bottle/dice,
@@ -9160,6 +9179,14 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
+"tQ" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/syndicate_mothership/control)
 "tR" = (
 /obj/machinery/status_display/ai,
 /turf/closed/indestructible/riveted,
@@ -9520,13 +9547,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/syndicate_mothership/control)
-"uM" = (
-/obj/machinery/computer/telecrystals/uplinker,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/control)
 "uO" = (
 /obj/machinery/door/airlock/centcom{
@@ -9951,7 +9971,7 @@
 	name = "Hanger Bay Shutters";
 	pixel_x = -8;
 	pixel_y = 24;
-	req_access_txt = "2"
+	req_access_txt = "101"
 	},
 /obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
@@ -10313,7 +10333,7 @@
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
 	pixel_y = 24;
-	req_access_txt = "2"
+	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -10496,39 +10516,6 @@
 /obj/item/toy/cards/deck,
 /turf/open/floor/carpet,
 /area/wizard_station)
-"wV" = (
-/obj/machinery/computer/telecrystals/boss{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/syndicate_mothership/control)
-"wW" = (
-/obj/structure/sign/map/left{
-	pixel_y = -32
-	},
-/obj/structure/rack{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "minibar_left";
-	name = "skeletal minibar"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
-/turf/open/floor/wood,
-/area/syndicate_mothership/control)
-"wX" = (
-/obj/structure/sign/map/right{
-	pixel_y = -32
-	},
-/obj/structure/rack{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "minibar_right";
-	name = "skeletal minibar"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/gin,
-/turf/open/floor/wood,
-/area/syndicate_mothership/control)
 "wY" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Equipment Room";
@@ -12999,9 +12986,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/evac)
-"CT" = (
-/turf/open/floor/wood,
-/area/centcom/holding)
 "CV" = (
 /obj/structure/chair/stool,
 /turf/open/floor/wood,
@@ -13194,9 +13178,6 @@
 "Di" = (
 /turf/closed/indestructible/riveted,
 /area/ai_multicam_room)
-"Dj" = (
-/turf/open/floor/wood,
-/area/centcom/holding)
 "Dq" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/turf_decal/stripes/line{
@@ -15160,10 +15141,6 @@
 	},
 /turf/open/space,
 /area/space)
-"HH" = (
-/obj/machinery/light,
-/turf/open/floor/wood,
-/area/centcom/holding)
 "HI" = (
 /obj/structure/sink{
 	dir = 8;
@@ -17535,9 +17512,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/four)
-"Px" = (
-/turf/open/floor/wood,
-/area/centcom/holding)
 "Pz" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/pamphlet/centcom/visitor_info,
@@ -17548,9 +17522,6 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/centcom/holding)
-"PF" = (
-/turf/open/floor/wood,
 /area/centcom/holding)
 "PI" = (
 /obj/machinery/biogenerator,
@@ -17656,12 +17627,6 @@
 /obj/singularity/wizard/mapped,
 /turf/open/indestructible/binary,
 /area/fabric_of_reality)
-"Qu" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/centcom/holding)
 "QA" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
@@ -36268,16 +36233,16 @@ hl
 hl
 kt
 nz
+tm
 pZ
 pZ
-pZ
-rf
-rf
+sh
+sh
 pZ
 rf
 vv
 wm
-si
+tw
 ku
 kt
 my
@@ -36534,7 +36499,7 @@ pZ
 rf
 vw
 wn
-wV
+oV
 ku
 kt
 hl
@@ -36791,7 +36756,7 @@ pZ
 rf
 vv
 wn
-wW
+si
 ku
 oW
 hl
@@ -37042,13 +37007,13 @@ pF
 qa
 pZ
 rg
-rf
-rf
+sh
+sh
 pZ
 pZ
 vx
 wo
-wX
+tg
 ku
 kt
 ma
@@ -37556,10 +37521,10 @@ kt
 ku
 qL
 pZ
-sh
-sh
-sh
-sh
+pZ
+pZ
+pZ
+pZ
 pZ
 pZ
 wY
@@ -37811,12 +37776,12 @@ hl
 mz
 ma
 ku
-qM
-pZ
-si
-tg
-tg
-uM
+ku
+ku
+rh
+ku
+ku
+tQ
 pZ
 wp
 ku
@@ -38066,12 +38031,12 @@ hl
 mz
 hl
 kt
-pG
+kt
 ku
 ku
-rh
-ku
-ku
+qN
+ri
+Wj
 ku
 nz
 uJ
@@ -38323,12 +38288,12 @@ mA
 hl
 hl
 pG
+qM
 ku
-ku
-qN
+qO
+OA
 ri
-Wj
-ku
+sj
 ku
 nz
 ll
@@ -38580,11 +38545,11 @@ mz
 hl
 hl
 pG
-ku
-qO
-OA
-ri
-sj
+qM
+nz
+pY
+qP
+rj
 ku
 ku
 nz
@@ -38837,10 +38802,10 @@ hl
 hl
 mA
 kt
-nz
-pY
-qP
-rj
+qM
+ku
+ku
+ku
 ku
 ku
 ku
@@ -39093,10 +39058,10 @@ hl
 mA
 mz
 hl
-ma
-ku
-ku
-ku
+hl
+qM
+tv
+aa
 ku
 ku
 ku
@@ -39351,7 +39316,7 @@ hl
 hl
 hl
 pG
-ma
+hl
 hh
 aa
 ku
@@ -42991,12 +42956,12 @@ UV
 CV
 Xk
 NT
-CT
-oV
-CT
-CT
-oV
-CT
+Xk
+Yo
+Xk
+Xk
+Yo
+Xk
 Nd
 aa
 aa
@@ -43506,9 +43471,9 @@ CV
 Xk
 NT
 Xk
-PF
 Xk
-Px
+Xk
+Xk
 Xk
 Zt
 Nd
@@ -43763,11 +43728,11 @@ Xk
 Xk
 WY
 Xk
-PF
 Xk
-Px
 Xk
-PF
+Xk
+Xk
+Xk
 Nd
 aa
 aa
@@ -44020,9 +43985,9 @@ CV
 Xk
 NT
 Xk
-PF
 Xk
-Px
+Xk
+Xk
 Xk
 Zt
 Nd
@@ -44533,12 +44498,12 @@ Ym
 CV
 Xk
 NT
-Dj
-Qu
-Dj
-Dj
-Qu
-Dj
+Xk
+Xx
+Xk
+Xk
+Xx
+Xk
 Nd
 aa
 aa
@@ -44784,7 +44749,7 @@ Xk
 Xk
 Xk
 Xk
-HH
+Zt
 Nd
 Xk
 Xk
@@ -45812,7 +45777,7 @@ Xk
 Xk
 Xk
 Xk
-HH
+Zt
 Nd
 UJ
 Ud
