@@ -77,6 +77,11 @@
 
 /obj/item/clothing/head/hardhat/cakehat/is_hot()
 	return on * heat
+
+/obj/item/clothing/head/hardhat/cakehat/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] lights the candle on \the [src] and begins burning [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.IgniteMob()
+	return FIRELOSS
 /*
  * Ushanka
  */
