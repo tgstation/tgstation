@@ -21,6 +21,8 @@
 	var/pressure_scalar = target_pressure / maximum_pressure
 	var/current_pressure = 0
 	var/list/air_types = base_gases?.Copy() || list()
+	for(var/i in air_types)
+		current_pressure += air_types[i]
 	while(current_pressure < target_pressure)
 		var/datum/gas/gastype
 		var/amount
