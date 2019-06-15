@@ -1,12 +1,10 @@
 /turf/open/floor/plasteel
 	icon_state = "floor"
+	desc = "Looks quite plain.\n\
+			<span class='notice'>There's a visible <b>gap</b> along the edge.</span>"
 	floor_tile = /obj/item/stack/tile/plasteel
 	broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	burnt_states = list("floorscorched1", "floorscorched2")
-
-/turf/open/floor/plasteel/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
 
 /turf/open/floor/plasteel/update_icon()
 	if(!..())

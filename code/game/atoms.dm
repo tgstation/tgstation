@@ -271,10 +271,10 @@
 	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	to_chat(user, "[get_examine_string(user, TRUE)].")
+	var/msg = "[get_examine_string(user, TRUE)].\n"
 
 	if(desc)
-		to_chat(user, desc)
+		msg += "[desc]"
 
 	if(reagents)
 		if(reagents.flags & TRANSPARENT)
@@ -297,6 +297,8 @@
 				to_chat(user, "<span class='danger'>It's empty.</span>")
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
+	to_chat(user, msg)
+	return msg
 
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)

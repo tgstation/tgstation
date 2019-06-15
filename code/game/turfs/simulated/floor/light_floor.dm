@@ -1,6 +1,7 @@
 /turf/open/floor/light
 	name = "light floor"
-	desc = "A wired glass tile embedded into the floor."
+	desc = "A wired glass tile embedded into the floor.\n\
+			<span class='notice'>There's a visible <b>gap</b> along the edge.</span>"
 	light_range = 5
 	icon_state = "light_on"
 	floor_tile = /obj/item/stack/tile/light
@@ -12,10 +13,6 @@
 	var/can_modify_colour = TRUE
 	tiled_dirt = FALSE
 
-
-/turf/open/floor/light/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
 
 /turf/open/floor/light/Initialize()
 	. = ..()

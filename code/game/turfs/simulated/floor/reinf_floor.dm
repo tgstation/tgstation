@@ -1,7 +1,8 @@
 
 /turf/open/floor/engine
 	name = "reinforced floor"
-	desc = "Extremely sturdy."
+	desc = "Extremely sturdy.\n\
+			<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
@@ -11,10 +12,6 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
-
-/turf/open/floor/engine/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>")
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = AIRLESS_ATMOS

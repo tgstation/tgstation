@@ -8,7 +8,8 @@
  */
 
 /turf/open/floor/wood
-	desc = "Stylish dark wood."
+	desc = "Stylish dark wood.\n\
+			<span class='notice'>There are <b>screws</b> and a visible <b>gap</b> along the edge.</span>"
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
@@ -17,10 +18,6 @@
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
-
-/turf/open/floor/wood/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>")
 
 /turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -162,7 +159,8 @@
 
 /turf/open/floor/carpet
 	name = "carpet"
-	desc = "Soft velvet carpeting. Feels good between your toes."
+	desc = "Soft velvet carpeting. Feels good between your toes.\n\
+			<span class='notice'>There's a visible <b>gap</b> along the edge.</span>"
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
@@ -176,10 +174,6 @@
 	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
-
-/turf/open/floor/carpet/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()
