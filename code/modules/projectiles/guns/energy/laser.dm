@@ -158,7 +158,7 @@
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
 	if(user)
-		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, src, overlay)
+		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, src, src.type)
 
 /obj/item/external_lens/bitcoin
 	name = "external lens: ticket dispenser"
