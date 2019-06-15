@@ -77,7 +77,7 @@ Warping extracts:
 
 /obj/item/slimecross/warping/purple
 	colour = "purple"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/purple
 	effect_desc = "Forms a recoverable rune that converts cloth and plastic to medical supplies."
 
 /obj/item/slimecross/warping/blue
@@ -236,3 +236,20 @@ Warping extracts:
 
 /obj/structure/bonfire/prelit/slime/CheckOxygen()
 	return TRUE
+
+/obj/effect/slimerune/purple
+	name = "purple rune"
+	desc = "It longs for cloth to weave and plastics to catalyze."
+
+/obj/effect/slimerune/purple/process()
+	for(var/obj/item/stack/sheet/cloth/C in get_turf(loc))
+		if(C.use(20))
+			var/obj/item/stack/medical/bruise_pack/B = new(loc)
+			visible_message("<span class='notice'>[src] weaves [C] into [B].")
+			break
+
+	for(var/obj/item/stack/sheet/plastic/P in get_turf(loc))
+		if(P.use(20))
+			var/obj/item/stack/medical/ointment/O = new(loc)
+			visible_message("<span class='notice'>[src] melts down [P], creating [O].")
+			break
