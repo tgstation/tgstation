@@ -104,7 +104,7 @@
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
 	// Ship 'em back - dead or alive, it depends on if the Syndicate get paid... 5 minutes wait.
 	// Even if they weren't the target, we're still treating them the same.
-	addtimer(CALLBACK(src, .proc/returnVictim, M), (10 * 10))
+	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
 
 	if (M.stat != DEAD)
 		M.flash_act()
@@ -131,6 +131,7 @@
 		M.Dizzy(35)
 		M.confused += 20
 
+// We're returning the victim, with seperate logic dependant on what happened with the ransom.
 /datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
 	if (ransom_paid)
 		var/list/possible_drop_loc = list()
@@ -177,6 +178,6 @@
 			if (C.can_heartattack())
 				C.set_heartattack(TRUE)
 
-	// Even if they didn't pay, we mark this as complete so they can no longer pay now.
+	// Even if they didn't pay, we mark this as complete so they can no longer pay at this point.
 	status = CONTRACT_STATUS_RANSOM_COMPLETE
 				

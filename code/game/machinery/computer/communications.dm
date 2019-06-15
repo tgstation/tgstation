@@ -183,10 +183,11 @@
 
 		if ("payransom")
 			var/index = href_list["ransom_contract"]
-			var/datum/syndicate_contract/contract = GLOB.ransom_contracts[index]
+			var/datum/syndicate_contract/contract = GLOB.ransom_contracts[text2num(index)]
 			var/ransom_cost = contract.ransom
 			var/points_to_check
-			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)	
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+
 			if(D)
 				points_to_check = D.account_balance
 
@@ -194,6 +195,7 @@
 				D.adjust_money(-ransom_cost)
 				contract.ransom_paid = TRUE
 				contract.status = CONTRACT_STATUS_RANSOM_COMPLETE
+				playsound(src, 'sound/machines/terminal_alert.ogg', 50, 1)
 				
 		if("callshuttle")
 			state = STATE_DEFAULT
