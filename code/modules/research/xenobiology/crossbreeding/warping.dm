@@ -82,7 +82,7 @@ Warping extracts:
 
 /obj/item/slimecross/warping/blue
 	colour = "blue"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/blue
 	effect_desc = "Forms a recoverable rune that douses the area it is on with water."
 
 /obj/item/slimecross/warping/metal
@@ -253,3 +253,19 @@ Warping extracts:
 			var/obj/item/stack/medical/ointment/O = new(loc)
 			visible_message("<span class='notice'>[src] melts down [P], creating [O].")
 			break
+
+/obj/effect/slimerune/blue
+	name = "blue rune"
+	desc = "It constantly mists water from its intricate design."
+
+/obj/effect/slimerune/blue/ComponentInitialize()
+	AddComponent(/datum/component/slippery, 80)
+
+/obj/effect/slimerune/blue/process()
+	var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
+	var/datum/reagents/R = new/datum/reagents(10)
+	W.reagents = R
+	R.my_atom = W
+	R.add_reagent(/datum/reagent/water, 10)
+	for(var/atom/A in get_turf(loc))
+		W.Bump(A)
