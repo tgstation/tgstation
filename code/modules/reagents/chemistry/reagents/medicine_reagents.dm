@@ -1449,6 +1449,7 @@
 		M.reagents.remove_reagent(R.type,1)
 	..()
 	. = 1
+
 /datum/reagent/medicine/oxalizid/overdose_start(mob/living/carbon/M)
 	U = new()
 	M.gain_trauma(U, TRAUMA_RESILIENCE_ABSOLUTE)
