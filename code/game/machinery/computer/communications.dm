@@ -182,7 +182,8 @@
 							to_chat(usr, "Not enough credits.")
 
 		if ("payransom")
-			var/datum/syndicate_contract/contract = href_list["ransom_contract"]
+			var/index = href_list["ransom_contract"]
+			var/datum/syndicate_contract/contract = GLOB.ransom_contracts[index]
 			var/ransom_cost = contract.ransom
 			var/points_to_check
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)	
@@ -192,6 +193,7 @@
 			if(points_to_check >= ransom_cost)
 				D.adjust_money(-ransom_cost)
 				contract.ransom_paid = TRUE
+				contract.status = CONTRACT_STATUS_RANSOM_COMPLETE
 				
 		if("callshuttle")
 			state = STATE_DEFAULT
@@ -599,11 +601,14 @@
 			dat += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">"}
 			dat += "<tr><th>Name</th><th>Job Title</th><th>Ransom</th><th></th></tr>"
 
+			var/index = 1
 			for (var/datum/syndicate_contract/contract in GLOB.ransom_contracts)
 				if (!contract.ransom_paid)
 					var/datum/data/record/victim = find_record("name", contract.ransom_victim.name, GLOB.data_core.general)
 					if(victim)
-						dat += "<tr><th>[contract.ransom_victim.name]</th><th>[victim.fields["rank"]]</th><th>[contract.ransom]</th><th><A href='?src=[REF(src)];operation=payransom;ransom_contract=[REF(contract)]'>Pay</A></th></tr>"
+						dat += "<tr><th>[contract.ransom_victim.name]</th><th>[victim.fields["rank"]]</th><th>[contract.ransom]</th><th><A href='?src=[REF(src)];operation=payransom;ransom_contract=[index]'>Pay</A></th></tr>"
+				index++
+			dat += "</table>"
 
 	dat += "<BR><BR>\[ [(state != STATE_DEFAULT) ? "<A HREF='?src=[REF(src)];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=[REF(user)];mach_close=communications'>Close</A> \]"
 

@@ -2,7 +2,7 @@
 	var/id = 0
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
-	var/ransom
+	var/ransom = 0
 	var/mob/living/ransom_victim
 	var/ransom_paid = FALSE
 
@@ -95,11 +95,10 @@
 				if (traitor_data.current_contract == src) 
 					traitor_data.current_contract = null
 				
-			handleVictimExperience(M)
-
-			ransom = TRUE
 			ransom_victim = M
 			GLOB.ransom_contracts.Add(src)
+
+			handleVictimExperience(M)
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
@@ -161,7 +160,7 @@
 			new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
 		else
 			to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-						be able to handle our pod... You will die here.\"</i></span>")
+						be able to handle our pod... You will die here instead.\"</i></span>")
 			if (iscarbon(M))
 				var/mob/living/carbon/C = M
 				if (C.can_heartattack())
@@ -171,10 +170,13 @@
 		M.blur_eyes(30)
 		M.Dizzy(35)
 		M.confused += 20
-		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your ransom wasn't paid... We have no use for you.
+		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your ransom wasn't paid... We have no use for you. \
 		You will die here.\"</i></span>")
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
 			if (C.can_heartattack())
 				C.set_heartattack(TRUE)
+
+	// Even if they didn't pay, we mark this as complete so they can no longer pay now.
+	status = CONTRACT_STATUS_RANSOM_COMPLETE
 				
