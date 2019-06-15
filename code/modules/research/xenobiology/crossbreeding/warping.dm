@@ -87,7 +87,7 @@ Warping extracts:
 
 /obj/item/slimecross/warping/metal
 	colour = "metal"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/metal
 	effect_desc = "Forms a recoverable rune that functions as a transparent wall."
 
 /obj/item/slimecross/warping/yellow
@@ -269,3 +269,9 @@ Warping extracts:
 	R.add_reagent(/datum/reagent/water, 10)
 	for(var/atom/A in get_turf(loc))
 		W.Bump(A)
+
+/obj/effect/slimerune/metal
+	name = "metal rune"
+	desc = "The air above it feels solid to the touch."
+	density = TRUE
+	pickuptime = 100 //10 seconds.
