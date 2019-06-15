@@ -232,7 +232,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rearm()
-	if(projectile_energy_cost) //until I figure out how clown equipment should reload
+	if(projectile_energy_cost)
 		var/projectiles_to_add = initial(projectiles) - projectiles
 		while(chassis.get_charge() >= projectile_energy_cost && projectiles_to_add)
 			projectiles++
@@ -318,7 +318,7 @@
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/lmg
 	projectiles = 300
-	projectiles_cache = 900
+	projectiles_cache = 300
 	projectiles_cache_max = 1200
 	projectiles_per_shot = 3
 	variance = 6
@@ -370,7 +370,7 @@
 	projectile = /obj/item/grenade/flashbang
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 6
-	projectiles_cache = 18
+	projectiles_cache = 6
 	projectiles_cache_max = 24
 	missile_speed = 1.5
 	equip_cooldown = 60
@@ -387,7 +387,7 @@
 	name = "\improper SOB-3 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	projectiles = 3
-	projectiles_cache = 9
+	projectiles_cache = 3
 	projectiles_cache_max = 12
 	projectile = /obj/item/grenade/clusterbuster
 	equip_cooldown = 90

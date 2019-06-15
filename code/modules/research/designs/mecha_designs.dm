@@ -148,7 +148,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_scattershot_ammo
-	name = "LBX AC 10 Scatershot Ammunition"
+	name = "LBX AC 10 Scattershot Ammunition"
 	desc = "Ammunition for the LBX AC 10 exosuit weapon."
 	id = "mech_scattershot_ammo"
 	build_type = MECHFAB
