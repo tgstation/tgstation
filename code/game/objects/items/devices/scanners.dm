@@ -147,7 +147,7 @@ GENE SCANNER
 		if(H.undergoing_liver_failure() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>")
 		if(H.undergoing_lung_failure() && H.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject is suffering from lung failure: Begin a liver transplant immediately!</span>")
+			to_chat(user, "<span class='danger'>Subject is suffering from lung failure: Begin a lung transplant immediately!</span>")
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 

@@ -89,7 +89,7 @@
 	if(lungs.damage > lungs.maxHealth)	//Lungs have collapsed
 		losebreath++
 		lungs.failing = TRUE
-		if(prob(10))
+		if(prob(50))
 			to_chat(src, "<span class='warning'>You feel an unliftable weight around your chest!</span>")
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
