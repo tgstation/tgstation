@@ -139,6 +139,7 @@
 	item_state = "stinger"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
 	force = 7
 	block_chance = 20
 	armour_penetration = 85
