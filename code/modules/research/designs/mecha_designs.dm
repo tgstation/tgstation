@@ -151,11 +151,12 @@
 	name = "LBX AC 10 Scattershot Ammunition"
 	desc = "Ammunition for the LBX AC 10 exosuit weapon."
 	id = "mech_scattershot_ammo"
-	build_type = MECHFAB
+	build_type = PROTOLATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/scattershot
 	materials = list(MAT_METAL=6000)
 	construction_time = 20
-	category = list("Exosuit Ammunition")
+	category = list("Exosuit Ammunition", "Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_carbine
 	name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
@@ -171,11 +172,12 @@
 	name = "FNX-99 Carbine Ammunition"
 	desc = "Ammunition for the FNX-99 \"Hades\" Carbine."
 	id = "mech_carbine_ammo"
-	build_type = MECHFAB
+	build_type = PROTOLATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/incendiary
 	materials = list(MAT_METAL=6000)
-	construction_time = 100
-	category = list("Exosuit Ammunition")
+	construction_time = 20
+	category = list("Exosuit Ammunition", "Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_ion
 	name = "Exosuit Weapon (MKIV Ion Heavy Cannon)"
@@ -241,11 +243,12 @@
 	name = "SGL-6 Grenade Launcher Ammunition"
 	desc = "Ammunition for the SGL-6 Grenade Launcher."
 	id = "mech_grenade_launcher_ammo"
-	build_type = MECHFAB
+	build_type = PROTOLATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/flashbang
 	materials = list(MAT_METAL=4000,MAT_GOLD=500,MAT_SILVER=500)
-	construction_time = 100
-	category = list("Exosuit Ammunition")
+	construction_time = 20
+	category = list("Exosuit Ammunition", "Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_missile_rack
 	name = "Exosuit Weapon (SRM-8 Missile Rack)"
@@ -261,11 +264,12 @@
 	name = "SRM-8 Missile Rack Ammunition"
 	desc = "Ammunition for the SRM-8 Missile Rack."
 	id = "mech_missile_rack_ammo"
-	build_type = MECHFAB
+	build_type = PROTOLATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/missiles
 	materials = list(MAT_METAL=8000,MAT_GOLD=500,MAT_SILVER=500)
-	construction_time = 100
-	category = list("Exosuit Ammunition")
+	construction_time = 20
+	category = list("Exosuit Ammunition", "Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/clusterbang_launcher
 	name = "Exosuit Module (SOB-3 Clusterbang Launcher)"
@@ -281,11 +285,12 @@
 	name = "SOB-3 Clusterbang Launcher Ammunition"
 	desc = "Ammunition for the SOB-3 Clusterbang Launcher"
 	id = "clusterbang_launcher_ammo"
-	build_type = MECHFAB
+	build_type = PROTOLATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/clusterbang
 	materials = list(MAT_METAL=6000,MAT_GOLD=1500,MAT_URANIUM=1500)
-	construction_time = 100
-	category = list("Exosuit Ammunition")
+	construction_time = 20
+	category = list("Exosuit Ammunition", "Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_wormhole_gen
 	name = "Exosuit Module (Localized Wormhole Generator)"
@@ -406,6 +411,17 @@
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
+
+/datum/design/mech_lmg_ammo
+	name = "Ultra AC 2 Ammunition"
+	desc = "Ammunition for the Ultra AC 2 LMG"
+	id = "mech_lmg_ammo"
+	build_type = PROTOLATHE | MECHFAB
+	build_path = /obj/item/mecha_ammo/lmg
+	materials = list(MAT_METAL=4000)
+	construction_time = 20
+	category = list("Exosuit Ammunition", "Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_sleeper
 	name = "Exosuit Medical Equipment (Mounted Sleeper)"

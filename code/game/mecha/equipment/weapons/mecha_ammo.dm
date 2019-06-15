@@ -7,7 +7,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/rounds = 0
 	var/round_term = "round"
-	var/direct_load
+	var/direct_load //For weapons where we re-load the weapon itself rather than adding to the ammo storage.
 	var/ammo_type
 
 /obj/item/mecha_ammo/proc/update_name()

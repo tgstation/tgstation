@@ -1111,11 +1111,11 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 ////// Ammo stuff /////
 ///////////////////////
 
-/obj/mecha/proc/ammo_resupply(var/obj/item/mecha_ammo/A, mob/user)
-	to_chat(world, "DEBUG -- [A] has hit [src]")
+/obj/mecha/proc/ammo_resupply(var/obj/item/mecha_ammo/A, mob/user,var/fail_chat_override = FALSE)
 	if(!A.rounds)
-		to_chat(user, "<span class='warning'>This box of ammo is empty!</span>")
-		return
+		if(!fail_chat_override)
+			to_chat(user, "<span class='warning'>This box of ammo is empty!</span>")
+		return 0
 	var/ammo_needed
 	var/found_gun
 	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in equipment)
@@ -1139,7 +1139,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = A.rounds - ammo_needed
 					A.update_name()
-					return
+					return 1
 
 				else
 					if(A.direct_load)
@@ -1151,9 +1151,10 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 					to_chat(user, "<span class='notice'>You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = 0
 					A.update_name()
-					return
-	if(found_gun)
-		to_chat(user, "<span class='notice'>You can't fit any more ammo of this type!</span>")
-		return
-	else
-		to_chat(user, "<span class='notice'>None of the equipment on this exosuit can use this ammo!</span>")
+					return 1
+	if(!fail_chat_override)
+		if(found_gun)
+			to_chat(user, "<span class='notice'>You can't fit any more ammo of this type!</span>")
+		else
+			to_chat(user, "<span class='notice'>None of the equipment on this exosuit can use this ammo!</span>")
+	return 0
