@@ -2,14 +2,13 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/path
 
-/datum/component/extralasers/Initialize(ammo, _lens, overlay)
+/datum/component/extralasers/Initialize(ammo, _lens, _path)
 	if(!istype(parent, /obj/item/gun/energy/laser))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/item/gun/energy/laser/L = parent
 	L.ammo_type  += new ammo (src)
-
+	path = _path
 	qdel(_lens)
-	path = text2path( "/obj/item/external_lens/[overlay]")
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/detach)
 
 /datum/component/extralasers/proc/detach(datum/source, obj/item/I, mob/user, params)

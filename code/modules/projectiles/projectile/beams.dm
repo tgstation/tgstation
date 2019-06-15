@@ -247,7 +247,7 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 		else
 			H.adjustStaminaLoss(30)
 			to_chat(H, "<span class='danger'>You feel your energy itself being turned into cryptocurrency!</span>")
-			money_to_steal = 30
+			money_to_steal = 1
 	if(ishuman(firer))
 		var/mob/living/carbon/human/F = firer
 		var/obj/item/card/id/C = F.get_idcard(TRUE) // test
