@@ -16,7 +16,7 @@
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/apply_moodlet)
 
-/datum/component/art/proc/apply_moodlet(mob/living/M, impress)
+/datum/component/art/proc/apply_moodlet(mob/M, impress)
 	M.visible_message("[M] stops to admire [parent].", \
 						 "<span class='notice'>You take in [parent], admiring the fine craftsmanship.</span>")
 	switch(impress)
@@ -29,14 +29,14 @@
 		if (0 to BAD_ART)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
 
-/datum/component/art/proc/on_other_examine(datum/source, mob/living/M)
+/datum/component/art/proc/on_other_examine(datum/source, mob/M)
 	apply_moodlet(M, impressiveness)
 
-/datum/component/art/proc/on_obj_examine(datum/source, mob/living/M)
+/datum/component/art/proc/on_obj_examine(datum/source, mob/M)
 	var/obj/O = parent
 	apply_moodlet(M, impressiveness *(O.obj_integrity/O.max_integrity))
 
-/datum/component/art/proc/on_attack_hand(datum/source, mob/living/M)
+/datum/component/art/proc/on_attack_hand(datum/source, mob/M)
 	to_chat(M, "You start examining [parent].")
 	if(!do_after(M, 20, target = parent))
 		return
