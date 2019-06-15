@@ -1,6 +1,7 @@
 /obj/item/mecha_ammo
 	name = "Generic Ammo Box"
 	desc = "A box of ammo for an unknown weapon."
+	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/mecha/mecha_ammo.dmi'
 	icon_state = "empty"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -8,6 +9,7 @@
 	var/rounds = 0
 	var/round_term = "round"
 	var/direct_load //For weapons where we re-load the weapon itself rather than adding to the ammo storage.
+	var/load_audio = "sound/weapons/gun_magazine_insert_empty_1.ogg"
 	var/ammo_type
 
 /obj/item/mecha_ammo/proc/update_name()
@@ -60,6 +62,7 @@
 	rounds = 8
 	round_term = "missile"
 	direct_load = TRUE
+	load_audio = "sound/weapons/bulletinsert.ogg"
 	ammo_type = "missiles"
 
 /obj/item/mecha_ammo/flashbang

@@ -1132,10 +1132,9 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 				if(ammo_needed < A.rounds)
 					if(A.direct_load)
 						gun.projectiles = gun.projectiles + ammo_needed
-						playsound(get_turf(user),'sound/weapons/bulletinsert.ogg',50,1)
 					else
 						gun.projectiles_cache = gun.projectiles_cache + ammo_needed
-						playsound(get_turf(user),'sound/weapons/gun_magazine_insert_empty_1.ogg',50,1)
+					playsound(get_turf(user),A.load_audio,50,1)
 					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = A.rounds - ammo_needed
 					A.update_name()
@@ -1144,10 +1143,9 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 				else
 					if(A.direct_load)
 						gun.projectiles = gun.projectiles + A.rounds
-						playsound(get_turf(user),'sound/weapons/bulletinsert.ogg',50,1)
 					else
 						gun.projectiles_cache = gun.projectiles_cache + A.rounds
-						playsound(get_turf(user),'sound/weapons/gun_magazine_insert_empty_1.ogg',50,1)
+					playsound(get_turf(user),A.load_audio,50,1)
 					to_chat(user, "<span class='notice'>You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = 0
 					A.update_name()
