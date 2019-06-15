@@ -27,6 +27,7 @@
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_TOGGLE_EMERGENCY = 10
 	var/const/STATE_PURCHASE = 11
+	var/const/STATE_RANSOM_LIST = 12
 
 	var/stat_msg1
 	var/stat_msg2
@@ -180,6 +181,18 @@
 						else
 							to_chat(usr, "Not enough credits.")
 
+		if ("payransom")
+			var/datum/syndicate_contract/contract = href_list["ransom_contract"]
+			var/ransom_cost = contract.ransom
+			var/points_to_check
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)	
+			if(D)
+				points_to_check = D.account_balance
+
+			if(points_to_check >= ransom_cost)
+				D.adjust_money(-ransom_cost)
+				contract.ransom_paid = TRUE
+				
 		if("callshuttle")
 			state = STATE_DEFAULT
 			if(authenticated)
@@ -291,6 +304,10 @@
 				usr.log_talk(input, LOG_SAY, tag="CentCom announcement")
 				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has messaged CentCom, \"[input]\" at <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", usr)
 				CM.lastTimeUsed = world.time
+
+		if("showransoms")
+			playsound(src, "terminal_type", 50, 0)
+			state = STATE_RANSOM_LIST
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
@@ -487,6 +504,10 @@
 					else
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageSyndicate'>Send Message to \[UNKNOWN\]</A> \]"
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=RestoreBackup'>Restore Backup Routing Data</A> \]"
+				if (GLOB.ransom_contracts.len)
+					dat += "<BR><BR><B>???</B>"
+					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=showransoms'>Ransoms</A> \]"
+
 			else
 				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=login'>Log In</A> \]"
 		if(STATE_CALLSHUTTLE)
@@ -569,6 +590,20 @@
 					if(S.prerequisites)
 						dat += "Prerequisites: [S.prerequisites]<BR>"
 					dat += "<A href='?src=[REF(src)];operation=buyshuttle;chosen_shuttle=[REF(S)]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
+
+
+		if (STATE_RANSOM_LIST)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			dat += "Station Budget: [D.account_balance] Credits.<BR>"
+			dat += "<BR>"
+			dat += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">"}
+			dat += "<tr><th>Name</th><th>Job Title</th><th>Ransom</th><th></th></tr>"
+
+			for (var/datum/syndicate_contract/contract in GLOB.ransom_contracts)
+				if (!contract.ransom_paid)
+					var/datum/data/record/victim = find_record("name", contract.ransom_victim.name, GLOB.data_core.general)
+					if(victim)
+						dat += "<tr><th>[contract.ransom_victim.name]</th><th>[victim.fields["rank"]]</th><th>[contract.ransom]</th><th><A href='?src=[REF(src)];operation=payransom;ransom_contract=[REF(contract)]'>Pay</A></th></tr>"
 
 	dat += "<BR><BR>\[ [(state != STATE_DEFAULT) ? "<A HREF='?src=[REF(src)];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=[REF(user)];mach_close=communications'>Close</A> \]"
 

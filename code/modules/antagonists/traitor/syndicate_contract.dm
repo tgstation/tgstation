@@ -3,6 +3,7 @@
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
 	var/ransom
+	var/mob/living/ransom_victim
 	var/ransom_paid = FALSE
 
 /datum/syndicate_contract/New(owner)
@@ -71,9 +72,10 @@
 
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
 
-/datum/syndicate_contract/proc/enter_check(datum/source, mob/living/M)
+/datum/syndicate_contract/proc/enter_check(datum/source, sent_mob)
 	if (istype(source, /obj/structure/closet/supplypod/extractionpod))
-		if (isliving(M))
+		if (isliving(sent_mob))
+			var/mob/living/M = sent_mob
 			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
 			
 			if (M == contract.target.current)
@@ -94,6 +96,10 @@
 					traitor_data.current_contract = null
 				
 			handleVictimExperience(M)
+
+			ransom = TRUE
+			ransom_victim = M
+			GLOB.ransom_contracts.Add(src)
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
@@ -127,34 +133,43 @@
 		M.confused += 20
 
 /datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
-	var/list/possible_drop_loc = list()
+	if (ransom_paid)
+		var/list/possible_drop_loc = list()
 
-	for (var/turf/possible_drop in contract.dropoff.contents)
-		var/location_clear = TRUE
-		// We don't care as much about what we land on than we did for sending the pod down.
-		if (!isspaceturf(possible_drop))
-			for (var/content in possible_drop.contents)
-				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
-					location_clear = FALSE
-			if (location_clear)
-				possible_drop_loc.Add(possible_drop)
+		for (var/turf/possible_drop in contract.dropoff.contents)
+			var/location_clear = TRUE
+			// We don't care as much about what we land on than we did for sending the pod down.
+			if (!isspaceturf(possible_drop))
+				for (var/content in possible_drop.contents)
+					if (istype(content, /obj/machinery) || istype(content, /obj/structure))
+						location_clear = FALSE
+				if (location_clear)
+					possible_drop_loc.Add(possible_drop)
 
-	if (possible_drop_loc.len > 0)
-		var/pod_rand_loc = rand(1, possible_drop_loc.len)
-		
-		var/obj/structure/closet/supplypod/return_pod = new()
-		return_pod.bluespace = TRUE
-		return_pod.explosionSize = list(0,0,0,0)
-		return_pod.style = STYLE_SYNDICATE
+		if (possible_drop_loc.len > 0)
+			var/pod_rand_loc = rand(1, possible_drop_loc.len)
+			
+			var/obj/structure/closet/supplypod/return_pod = new()
+			return_pod.bluespace = TRUE
+			return_pod.explosionSize = list(0,0,0,0)
+			return_pod.style = STYLE_SYNDICATE
 
-		do_sparks(8, FALSE, M)
-		M.visible_message("<span class='notice'>[M] vanishes...</span>")
-		M.forceMove(return_pod)
+			do_sparks(8, FALSE, M)
+			M.visible_message("<span class='notice'>[M] vanishes...</span>")
+			M.forceMove(return_pod)
 
-		new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
+			new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
+		else
+			to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
+						be able to handle our pod... This jail will be your tomb.\"</i></span>")
+			if (iscarbon(M))
+				var/mob/living/carbon/C = M
+				if (C.can_heartattack())
+					var/datum/disease/D = new /datum/disease/heart_failure()
+					C.ForceContractDisease(D, FALSE, TRUE)
 	else
-		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-		            be able to handle our pod... This jail will be your tomb.\"</i></span>")
+		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your ransom wasn't paid... This place will be your \
+		tomb.\"</i></span>")
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
 			if (C.can_heartattack())
