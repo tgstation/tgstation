@@ -83,7 +83,7 @@
 		if(target.anti_magic_check(FALSE, FALSE, TRUE, 6))
 			target.adjustBrainLoss(10)
 		to_chat(user, "<span class='warning'>We are briefly exhausted by the effort required by our enhanced assimilation abilities.</span>")
-		user.Immobilize(50)
+		user.adjustStaminaLoss(50, 0)
 		SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
 		for(var/obj/item/implant/mindshield/M in target.implants)
 			qdel(M)
@@ -204,9 +204,7 @@
 	var/power = 1
 	if(target.anti_magic_check(FALSE, FALSE, TRUE))
 		power *= 0.5
-	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
-		power *= 0.25
-	else if(hive.is_carbon_member(target))
+	if(!hive.is_carbon_member(target))
 		power *= 0.5
 	target.blind_eyes(4*power)
 	target.blur_eyes(30*power)
@@ -369,13 +367,16 @@
 	var/time_initialized = 0
 	var/out_of_range = FALSE
 	var/restricted_range = FALSE
+	var/vessel_starting_health
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/proc/release_control() //If the spell is active, force everybody into their original bodies if they exist, ghost them otherwise, delete the backseat
 	if(!active)
 		return
 	active = FALSE
 	charge_counter = max((0.5-(world.time-time_initialized)/power)*charge_max, 0) //Partially refund the power based on how long it was used, up to a max of half the charge time
-
+	var/vessel_ending_health = vessel.health
+	var/vessel_health_loss = vessel_ending_health - vessel_starting_health
+	original_body.adjustBruteLoss(vessel_health_loss)
 	if(!QDELETED(vessel))
 		vessel.clear_fullscreen("hive_mc")
 		if(vessel.mind)
@@ -443,7 +444,7 @@
 			var/obj/effect/proc_holder/spell/target_hive/hive_see/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_see) in user.mind.spell_list
 			if(the_spell && the_spell.active) //Uncast Hive Sight just to make things easier when casting during mind control
 				the_spell.perform(,user)
-
+			vessel_starting_health = vessel.health
 			message_admins("[ADMIN_LOOKUPFLW(vessel)] has been temporarily taken over by [ADMIN_LOOKUPFLW(user)] (Hivemind Host).")
 			log_game("[key_name(vessel)] was Mind Controlled by [key_name(user)].")
 
@@ -480,20 +481,20 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/process()
 	if(active)
-		if(QDELETED(vessel)) //If we've been gibbed or otherwise deleted, ghost both of them and kill the original
+		if(0) //If we've been gibbed or otherwise deleted, ghost both of them and kill the original
 			original_body.adjustBrainLoss(200)
 			release_control()
-		else if(!is_hivemember(backseat)) //If the vessel is no longer a hive member, return to original bodies
+		else if(0) //If the vessel is no longer a hive member, return to original bodies
 			to_chat(vessel, "<span class='warning'>Our vessel is one of us no more!</span>")
 			release_control()
-		else if(!QDELETED(original_body) && (!backseat.ckey || vessel.stat == DEAD)) //If the original body exists and the vessel is dead/ghosted, return both to body but not before killing the original
+		else if(0) //If the original body exists and the vessel is dead/ghosted, return both to body but not before killing the original
 			original_body.adjustBrainLoss(200)
 			to_chat(vessel.mind, "<span class='warning'>Our vessel is one of us no more!</span>")
 			release_control()
-		else if(!QDELETED(original_body) && original_body.z != vessel.z) //Return to original bodies
+		else if(0) //Return to original bodies
 			release_control()
 			to_chat(original_body, "<span class='warning'>Our vessel is too far away to control!</span>")
-		else if(QDELETED(original_body) || original_body.stat == DEAD) //Return vessel to its body, either return or ghost the original
+		else if(0) //Return vessel to its body, either return or ghost the original
 			to_chat(vessel, "<span class='userdanger'>Our body has been destroyed, the hive cannot survive without its host!</span>")
 			release_control()
 		else

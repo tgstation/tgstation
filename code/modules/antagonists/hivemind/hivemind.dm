@@ -6,7 +6,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	var/special_role = ROLE_HIVE
 	var/list/hivemembers = list()
-	var/hive_size = 0
+	var/hive_size = 20
 	var/threat_level = 0 // Part of what determines how strong the radar is, on a scale of 0 to 10
 	var/track_bonus = 0 // Bonus time to your tracking abilities
 	var/size_mod = 0 // Bonus size for using reclaim
