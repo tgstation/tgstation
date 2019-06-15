@@ -16,8 +16,6 @@ SUBSYSTEM_DEF(server_maint)
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (CONFIG_GET(flag/hub))
 		world.update_hub_visibility(TRUE)
-	if(listclearnulls(GLOB.player_list)) // Do this here on the sly
-		log_world("Found a null in player_list!")
 	return ..()
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
@@ -26,7 +24,7 @@ SUBSYSTEM_DEF(server_maint)
 			log_world("Found a null in clients list!")
 		src.currentrun = GLOB.clients.Copy()
 
-		switch (cleanup_ticker) // do only one of these per fire()
+		switch (cleanup_ticker) // do only one of these at a time, once per 5 fires
 			if (0)
 				if(listclearnulls(GLOB.player_list))
 					log_world("Found a null in player_list!")
