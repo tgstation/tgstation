@@ -6,8 +6,23 @@
 	var/mob/living/ransom_victim
 	var/ransom_paid = FALSE
 
+	var/static/obj/item/radio/radio
+	var/static/atom/movable/radio_owner
+
+	var/command_channel = RADIO_CHANNEL_COMMAND
+
 /datum/syndicate_contract/New(owner)
 	generate(owner)
+
+	if (!radio)
+		radio = new(src)
+		radio_owner = new
+
+		radio_owner.name = "Syndicate"
+
+		radio.keyslot = new /obj/item/encryptionkey/headset_com
+		radio.listening = 0
+		radio.recalculateChannels()
 
 /datum/syndicate_contract/proc/generate(owner)
 	contract.owner = owner
@@ -24,8 +39,8 @@
 		contract.payout_bonus = rand(3,5)
 
 	contract.payout = rand(0, 3)
-
 	contract.generate_dropoff()
+
 	ransom = 100 * rand(20, 80)
 
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
@@ -104,7 +119,7 @@
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
 	// Ship 'em back - dead or alive, it depends on if the Syndicate get paid... 5 minutes wait.
 	// Even if they weren't the target, we're still treating them the same.
-	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
+	addtimer(CALLBACK(src, .proc/returnVictim, M), (40 * 10))
 
 	if (M.stat != DEAD)
 		M.flash_act()
@@ -130,6 +145,9 @@
 		M.blur_eyes(30)
 		M.Dizzy(35)
 		M.confused += 20
+
+	radio.talk_into(radio_owner, "Seems we have one of your crew... We'll give them back - for the right price. Check your communications console; \
+						if you pay what we ask, we'll release them in a few minutes unharmed. Otherwise, they won't be coming back... Tick tock.", command_channel)
 
 // We're returning the victim, with seperate logic dependant on what happened with the ransom.
 /datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
@@ -178,6 +196,21 @@
 			if (C.can_heartattack())
 				C.set_heartattack(TRUE)
 
+		radio.talk_into(radio_owner, "Didn't pay the ransom for one of your crew, they're going to be staying with us...", command_channel)
+
 	// Even if they didn't pay, we mark this as complete so they can no longer pay at this point.
 	status = CONTRACT_STATUS_RANSOM_COMPLETE
 				
+/datum/syndicate_contract/proc/ransomPaid()
+	var/mob/living/victim = contract.target.current
+
+	ransom_paid = TRUE
+	status = CONTRACT_STATUS_RANSOM_COMPLETE
+
+	victim.Unconscious(150)
+	victim.blur_eyes(30)
+	victim.Dizzy(35)
+	victim.confused += 20
+
+	to_chat(victim, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"It would seem your station, \
+	paid for your return... We'll send you back shortly.\"</i></span>")

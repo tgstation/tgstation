@@ -193,8 +193,7 @@
 
 			if(points_to_check >= ransom_cost)
 				D.adjust_money(-ransom_cost)
-				contract.ransom_paid = TRUE
-				contract.status = CONTRACT_STATUS_RANSOM_COMPLETE
+				contract.ransomPaid()
 				playsound(src, 'sound/machines/terminal_alert.ogg', 50, 1)
 				
 		if("callshuttle")
