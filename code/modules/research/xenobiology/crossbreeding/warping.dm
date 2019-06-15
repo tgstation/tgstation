@@ -92,7 +92,7 @@ Warping extracts:
 
 /obj/item/slimecross/warping/yellow
 	colour = "yellow"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/yellow
 	effect_desc = "Forms a recoverable rune that drains batteries on the tile to fuel the area's APC."
 
 /obj/item/slimecross/warping/darkpurple
@@ -275,3 +275,19 @@ Warping extracts:
 	desc = "The air above it feels solid to the touch."
 	density = TRUE
 	pickuptime = 100 //10 seconds.
+
+/obj/effect/slimerune/yellow
+	name = "yellow rune"
+	desc = "The air around it feels negatively charged."
+
+/obj/effect/slimerune/yellow/process()
+	var/total = 0
+	for(var/atom/movable/A in get_turf(loc))
+		var/obj/item/stock_parts/cell/C = A.get_cell()
+		if(C && C.charge > 0)
+			var/amount = min(C.charge, 1000)
+			total += amount
+			C.use(amount)
+	for(var/obj/machinery/power/apc/A in get_area(loc))
+		var/obj/item/stock_parts/cell/C = A.get_cell()
+		C.give(total)
