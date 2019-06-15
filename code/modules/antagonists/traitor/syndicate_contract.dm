@@ -2,6 +2,8 @@
 	var/id = 0
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
+	var/ransom
+	var/ransom_paid = FALSE
 
 /datum/syndicate_contract/New(owner)
 	generate(owner)
@@ -23,6 +25,7 @@
 	contract.payout = rand(0, 3)
 
 	contract.generate_dropoff()
+	ransom = 100 * rand(20, 80)
 
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
 	if (contract.target && contract.dropoff_check(user, contract.target.current))
