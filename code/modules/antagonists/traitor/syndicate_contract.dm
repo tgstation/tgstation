@@ -6,23 +6,8 @@
 	var/mob/living/ransom_victim
 	var/ransom_paid = FALSE
 
-	var/static/obj/item/radio/radio
-	var/static/atom/movable/radio_owner
-
-	var/command_channel = RADIO_CHANNEL_COMMAND
-
 /datum/syndicate_contract/New(owner)
 	generate(owner)
-
-	if (!radio)
-		radio = new(src)
-		radio_owner = new
-
-		radio_owner.name = "Syndicate"
-
-		radio.keyslot = new /obj/item/encryptionkey/headset_com
-		radio.listening = 0
-		radio.recalculateChannels()
 
 /datum/syndicate_contract/proc/generate(owner)
 	contract.owner = owner
@@ -146,8 +131,8 @@
 		M.Dizzy(35)
 		M.confused += 20
 
-	radio.talk_into(radio_owner, "Seems we have one of your crew... We'll give them back - for the right price. Check your communications console; \
-						if you pay what we ask, we'll release them in a few minutes unharmed. Otherwise, they won't be coming back... Tick tock.", command_channel)
+		minor_announce("Seems we have one of your crew... We'll give them back - for the right price. Check your communications console; \
+						if you pay what we ask, we'll release them in a few minutes unharmed. Otherwise, they won't be coming back... Tick tock.", "Unknown Transmission:")
 
 // We're returning the victim, with seperate logic dependant on what happened with the ransom.
 /datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
@@ -196,7 +181,7 @@
 			if (C.can_heartattack())
 				C.set_heartattack(TRUE)
 
-		radio.talk_into(radio_owner, "Didn't pay the ransom for one of your crew, they're going to be staying with us...", command_channel)
+		minor_announce("Didn't pay the ransom for one of your crew, they're going to be staying with us...", "Unknown Transmission:")
 
 	// Even if they didn't pay, we mark this as complete so they can no longer pay at this point.
 	status = CONTRACT_STATUS_RANSOM_COMPLETE
