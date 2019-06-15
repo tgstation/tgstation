@@ -271,7 +271,8 @@
 	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	var/msg = "[get_examine_string(user, TRUE)]."
+	var/msg = list()
+	msg += "[get_examine_string(user, TRUE)]."
 
 	if(desc)
 		msg += "\n[desc]"
@@ -298,7 +299,7 @@
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	to_chat(user, msg)
-	return msg
+	return
 
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)
