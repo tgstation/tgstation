@@ -23,7 +23,7 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-		IF_HAS_BLOOD_DNA(src)
+		if(HAS_BLOOD_DNA(src))
 			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 		if(accessory_overlay)
 			. += accessory_overlay
@@ -51,6 +51,14 @@
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
+
+/obj/item/clothing/under/emp_act()
+	. = ..()
+	if(has_sensor > NO_SENSORS)
+		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
+		if(ismob(loc))
+			var/mob/M = loc
+			to_chat(M,"<span class='warning'>The sensors on the [src] change rapidly!</span>")
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()

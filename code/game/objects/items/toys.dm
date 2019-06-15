@@ -651,6 +651,9 @@
 
 /obj/item/toy/cards/deck/Initialize()
 	. = ..()
+	populate_deck()
+
+/obj/item/toy/cards/deck/proc/populate_deck()
 	icon_state = "deck_[deckstyle]_full"
 	for(var/i in 2 to 10)
 		cards += "[i] of Hearts"
@@ -677,6 +680,9 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
+	draw_card(user)
+
+/obj/item/toy/cards/deck/proc/draw_card(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
@@ -986,7 +992,6 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
-	datum_outputs = list(/datum/outputs/alarm)
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
@@ -995,7 +1000,7 @@
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, datum_outputs[1], 100, 0)
+		playsound(src, 'sound/machines/alarm.ogg', 100, 0)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -1106,7 +1111,7 @@
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	..()
-	to_chat(user, "<span class='info'>Station Time: [station_time_timestamp()]")
+	to_chat(user, "<span class='info'>Station Time: [station_time_timestamp()]</span>")
 
 /*
  * Toy Dagger

@@ -1,13 +1,13 @@
 Today, Security killed ____.
 Security, the clown's breaking into ____.
-The Chaplain is worshiping the Church of _____.
+Our last Chaplain believed in nothing but _____.
 What angered the gods this time?
 Why didn't engineering set up the singularity?
 What does the traitor steal this time?
 Cargo: There's a galaxy-wide shortage of _______.
 I don't care what they called me back on the station, I'm not a traitor. I'm a man of _________.
 The Syndicate is offering crew members _________ to defect. 
-Cargo ordered a crate full of _____.
+What is Nanotrasen's highest-priority bounty?
 What is the gray tide protesting this time?
 If the Space Gods didn't want _________ they wouldn't have given us __________.
 Why was the death squad sent in?
@@ -30,11 +30,10 @@ What made the nuclear operatives fluke?
 Why did the Chief Engineer disable comms?
 Every spaceman receives an internals box and ________.
 What brought the space orgy to a grinding halt?
-Scientists are no longer allowed to make  _____.
+Scientists are no longer allowed to make ______.
 What was the clown's best joke?
 The HoP is now hiring assistants for __________.
 What happens when you emag an emag?
-Our gang doesn't wear uniforms. Our gang wears ___________.
 No matter how many lizards you have, _____ is never acceptable.
 No, the AI's second law is NOT to serve _____.
 First CentCom came for the ________. Now they're coming for the __________.
@@ -109,5 +108,12 @@ The auxiliary base was disabled after landing in the middle of _______.
 Xenobiologists have found slimes to be exceptionally responsive to _______.
 Why did the captain give me a medal?
 The curator's new exhibit is devoted solely to _________.
-There's no ______ on the new escape shuttle, but there is plenty of _________!
 What made me sell my soul to the devil?
+The engineers are testing an experimental supermatter setup involving _________.
+I'm __________ in the streets, __________ in the sheets.
+What's my family heirloom?
+The Lawyer was fired for messaging the entire station a picture of ___________.
+On Lavaland, it is rumored that ashwalkers roam, worshipping _________.
+How did the traitor die a glorious death?
+Nanotrasen's new state-of-the-art emergency shuttle was repurposed from _________ and _________.
+What caused my brain trauma?

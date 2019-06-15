@@ -24,11 +24,11 @@ This file contains the cult dagger and rune list code
 
 /obj/item/melee/cultblade/dagger/attack(mob/living/M, mob/living/user)
 	if(iscultist(M))
-		if(M.reagents && M.reagents.has_reagent("holywater")) //allows cultists to be rescued from the clutches of ordained religion
+		if(M.reagents && M.reagents.has_reagent(/datum/reagent/water/holywater)) //allows cultists to be rescued from the clutches of ordained religion
 			to_chat(user, "<span class='cult'>You remove the taint from [M].</span>" )
-			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
-			M.reagents.del_reagent("holywater")
-			M.reagents.add_reagent("unholywater",holy2unholy)
+			var/holy2unholy = M.reagents.get_reagent_amount(/datum/reagent/water/holywater)
+			M.reagents.del_reagent(/datum/reagent/water/holywater)
+			M.reagents.add_reagent(/datum/reagent/fuel/unholywater,holy2unholy)
 			log_combat(user, M, "smacked", src, " removing the holy water from them")
 		return FALSE
 	. = ..()
@@ -116,7 +116,7 @@ This file contains the cult dagger and rune list code
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
-	if(istype(get_turf(user), /turf/open/floor/engine/cult))
+	if(istype(get_turf(user), /turf/open/floor/engine/cult) && !(ispath(rune_to_scribe, /obj/effect/rune/narsie)))
 		scribe_mod *= 0.5
 	if(!do_after(user, scribe_mod, target = get_turf(user)))
 		for(var/V in shields)

@@ -175,6 +175,9 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
 
+//Same as above except gets the area instead
+#define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
+
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"
@@ -447,3 +450,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
+
+//chem grenades defines
+#define EMPTY 1
+#define WIRED 2
+#define READY 3
