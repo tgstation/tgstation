@@ -271,30 +271,30 @@
 	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	var/msg = "[get_examine_string(user, TRUE)].\n"
+	var/msg = "[get_examine_string(user, TRUE)]."
 
 	if(desc)
-		msg += "[desc]"
+		msg += "\n[desc]"
 
 	if(reagents)
 		if(reagents.flags & TRANSPARENT)
-			to_chat(user, "It contains:")
+			msg += "\nIt contains:"
 			if(reagents.reagent_list.len)
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/R in reagents.reagent_list)
-						to_chat(user, "[R.volume] units of [R.name]")
+						msg += "\n[R.volume] units of [R.name]"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
 						total_volume += R.volume
-					to_chat(user, "[total_volume] units of various reagents")
+					msg += "\n[total_volume] units of various reagents"
 			else
-				to_chat(user, "Nothing.")
+				msg += "\nNothing."
 		else if(reagents.flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
+				msg += "\n<span class='notice'>It has [reagents.total_volume] unit\s left.</span>"
 			else
-				to_chat(user, "<span class='danger'>It's empty.</span>")
+				msg += "\n<span class='danger'>It's empty.</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	to_chat(user, msg)
