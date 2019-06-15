@@ -121,7 +121,7 @@
 		M.confused += 20
 		M.blur_eyes(15)
 		sleep(30)
-		to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
+		to_chat(M, "<span class='warning'>Your head pounds...</span>")
 		sleep(100)
 		M.flash_act()
 		M.Unconscious(200)
@@ -161,17 +161,20 @@
 			new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
 		else
 			to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-						be able to handle our pod... This jail will be your tomb.\"</i></span>")
+						be able to handle our pod... You will die here.\"</i></span>")
 			if (iscarbon(M))
 				var/mob/living/carbon/C = M
 				if (C.can_heartattack())
-					var/datum/disease/D = new /datum/disease/heart_failure()
-					C.ForceContractDisease(D, FALSE, TRUE)
+					C.set_heartattack(TRUE)
 	else
-		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your ransom wasn't paid... This place will be your \
-		tomb.\"</i></span>")
+		M.Unconscious(150)
+		M.blur_eyes(30)
+		M.Dizzy(35)
+		M.confused += 20
+		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your ransom wasn't paid... We have no use for you.
+		You will die here.\"</i></span>")
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
 			if (C.can_heartattack())
-				var/datum/disease/D = new /datum/disease/heart_failure()
-				C.ForceContractDisease(D, FALSE, TRUE)
+				C.set_heartattack(TRUE)
+				
