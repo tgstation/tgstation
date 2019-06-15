@@ -1,5 +1,5 @@
 // Atmos types used for planetary airs
-/datum/atmos/lavaland
+/datum/atmosphere/lavaland
 	id = LAVALAND_DEFAULT_ATMOS
 
 	base_gases = list(

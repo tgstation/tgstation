@@ -394,8 +394,8 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/generate_atmos()
 	atmos_gen = list()
-	for(var/T in subtypesof(/datum/atmos))
-		var/datum/atmos/atmostype = T
+	for(var/T in subtypesof(/datum/atmosphere))
+		var/datum/atmosphere/atmostype = T
 		atmos_gen[initial(atmostype.id)] = new atmostype
 
 /datum/controller/subsystem/air/proc/preprocess_gas_string(gas_string)
@@ -403,7 +403,7 @@ SUBSYSTEM_DEF(air)
 		generate_atmos()
 	if(!atmos_gen[gas_string])
 		return gas_string
-	var/datum/atmos/mix = atmos_gen[gas_string]
+	var/datum/atmosphere/mix = atmos_gen[gas_string]
 	return mix.gas_string
 
 #undef SSAIR_PIPENETS
