@@ -72,7 +72,7 @@ Warping extracts:
 
 /obj/item/slimecross/warping/orange
 	colour = "orange"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/orange
 	effect_desc = "Forms a recoverable rune that functions as a fancy, magical bonfire."
 
 /obj/item/slimecross/warping/purple
@@ -218,3 +218,21 @@ Warping extracts:
 	S.set_colour(O.slimecolor)
 	qdel(O)
 	return
+
+/obj/effect/slimerune/orange
+	name = "orange rune"
+	desc = "It's hot to the touch..."
+	var/obj/structure/bonfire/prelit/slime/fire
+
+/obj/effect/slimerune/orange/on_place()
+	fire = new(loc)
+
+/obj/effect/slimerune/orange/on_remove()
+	qdel(fire)
+
+/obj/structure/bonfire/prelit/slime
+	name = "magical flame"
+	desc = "It floats above the rune with constrained purpose."
+
+/obj/structure/bonfire/prelit/slime/CheckOxygen()
+	return TRUE
