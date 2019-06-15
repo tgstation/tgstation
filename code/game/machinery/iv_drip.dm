@@ -13,7 +13,8 @@
 	var/obj/item/reagent_containers/beaker
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass))
+									/obj/item/reagent_containers/glass,
+									/obj/item/reagent_containers/chem_pack))
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
