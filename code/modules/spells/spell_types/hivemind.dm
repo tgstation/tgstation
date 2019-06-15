@@ -367,16 +367,12 @@
 	var/time_initialized = 0
 	var/out_of_range = FALSE
 	var/restricted_range = FALSE
-	var/vessel_starting_health
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/proc/release_control() //If the spell is active, force everybody into their original bodies if they exist, ghost them otherwise, delete the backseat
 	if(!active)
 		return
 	active = FALSE
 	charge_counter = max((0.5-(world.time-time_initialized)/power)*charge_max, 0) //Partially refund the power based on how long it was used, up to a max of half the charge time
-	var/vessel_ending_health = vessel.health
-	var/vessel_health_loss = vessel_ending_health - vessel_starting_health
-	original_body.adjustBruteLoss(vessel_health_loss)
 	if(!QDELETED(vessel))
 		vessel.clear_fullscreen("hive_mc")
 		if(vessel.mind)
