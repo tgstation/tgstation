@@ -204,6 +204,8 @@
 				A.AssignName(new_name)
 				. = TRUE
 		if("create_culture_bottle")
+			if (wait)
+				return
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
 			if(!istype(A) || !A.mutable)
