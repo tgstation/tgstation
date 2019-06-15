@@ -1,3 +1,5 @@
+#define LUNGS_DEFAULT_HEALTH 100
+
 /obj/item/organ/lungs
 	name = "lungs"
 	icon_state = "lungs"
@@ -8,7 +10,10 @@
 
 	//Breath damage
 
-	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
+	var/damage = 0 //lung damage, 0 is no damage, damage=maxHealth causes the lungs to fail
+	var/failing //are these lungs failing?
+	var/maxHealth = LUNGS_DEFAULT_HEALTH
+	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa, goes up with damage
 	var/safe_oxygen_max = 0
 	var/safe_nitro_min = 0
 	var/safe_nitro_max = 0
@@ -409,12 +414,14 @@
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. Allows for greater intakes of oxygen than organic lungs, requiring slightly less pressure."
 	icon_state = "lungs-c"
 	synthetic = TRUE
+	maxHealth = 2 * LUNGS_DEFAULT_HEALTH	//Twice the normal lung health
 	safe_oxygen_min = 13
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
+	owner.applyLungDamage(50)
 	owner.losebreath = 20
 
 
@@ -422,6 +429,7 @@
 	name = "upgraded cybernetic lungs"
 	desc = "A more advanced version of the stock cybernetic lungs. Features the ability to filter out lower levels of toxins and carbon dioxide."
 	icon_state = "lungs-c-u"
+	maxHealth = 5 * LUNGS_DEFAULT_HEALTH	//Five times the normal lung health
 	safe_toxins_max = 20
 	safe_co2_max = 20
 

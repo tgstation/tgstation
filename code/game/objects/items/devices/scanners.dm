@@ -146,6 +146,8 @@ GENE SCANNER
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
 		if(H.undergoing_liver_failure() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>")
+		if(H.undergoing_lung_failure() && H.stat != DEAD)
+			to_chat(user, "<span class='danger'>Subject is suffering from lung failure: Begin a liver transplant immediately!</span>")
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -254,6 +256,9 @@ GENE SCANNER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/ldamage = H.return_liver_damage()
+		var/udamage = H.return_lung_damage()
+		if(udamage > 0)	//check from 0 since any amount of damage will increase the amount of air needed to breath
+			to_chat(user, "\t<span class='alert'>[udamage > 45 ? "Severe" : "Minor"] lung damage detected.</span>")
 		if(ldamage > 10)
 			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "Severe" : "Minor"] liver damage detected.</span>")
 		if(advanced && H.has_dna())

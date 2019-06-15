@@ -52,6 +52,7 @@
 
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing(times_fired)
+
 	if((times_fired % 4) == 2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
 		if(failed_last_breath)
@@ -65,16 +66,31 @@
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
+	var/obj/item/organ/lungs/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(reagents.has_reagent(/datum/reagent/toxin/lexorin))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
+
+	//Send owner a message about their lung condition, depending on its damage
+	if((lungs.damage > (0.1 * lungs.maxHealth)) && (lungs.damage < (0.25 * lungs.maxHealth)) && prob(6))
+		to_chat(src, "<span class='warning'>Your breathing is strained...</span>")
+	else if((lungs.damage > (0.26 * lungs.maxHealth)) && (lungs.damage < (0.50 * lungs.maxHealth)) && prob(8))
+		to_chat(src, "<span class='warning'>You find yourself breathing faster than normal.</span>")
+	else if((lungs.damage > (0.51 * lungs.maxHealth)) && (lungs.damage < lungs.maxHealth) && prob(10))
+		to_chat(src, "<span class='warning'>You feel a weight on your chest, making breathing laborious.</span>")
 
 	var/datum/gas_mixture/environment
 	if(loc)
 		environment = loc.return_air()
 
 	var/datum/gas_mixture/breath
+
+	if(lungs.damage > lungs.maxHealth)	//Lungs have collapsed
+		losebreath++
+		lungs.failing = TRUE
+		if(prob(10))
+			to_chat(src, "<span class='warning'>You feel an unliftable weight around your chest!</span>")
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE))
@@ -307,6 +323,23 @@
 			. = internal.remove_air_volume(volume_needed)
 			if(!.)
 				return FALSE //to differentiate between no internals and active, but empty internals
+
+//Lung damage procs
+/mob/living/carbon/proc/return_lung_damage()
+	var/obj/item/organ/lungs/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	if(lungs)
+		return lungs.damage
+
+/mob/living/carbon/proc/applyLungDamage(var/d)
+	var/obj/item/organ/lungs/LU = getorganslot(ORGAN_SLOT_LUNGS)
+	if(LU)
+		LU.damage += d
+		LU.safe_oxygen_min += (d/LU.maxHealth)*5		//Increase the kPa of O2 we need by up to 5
+
+/mob/living/carbon/proc/undergoing_lung_failure()
+	var/obj/item/organ/lungs/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	return lungs.failing
+
 
 /mob/living/carbon/proc/handle_blood()
 	return
