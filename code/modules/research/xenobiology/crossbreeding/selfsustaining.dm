@@ -40,9 +40,6 @@ Self-sustaining extracts:
 		return
 	if(!reagentselect)
 		return
-	if(reagentselect == /datum/reagent/spider_extract)
-		to_chat(creator, "<span class='notice'>The extract lets out a sad puff of air, clearly it doesn't know much about penal colonies.</span>")
-		return
 	if(reagentselect == "lesser plasma")
 		amount = 4
 		reagentselect = "plasma"
