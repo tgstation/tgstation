@@ -3064,11 +3064,12 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered/syndicate_lava_base/arrivals)
+/area/lavaland/surface/outdoors/explored)
 "iN" = (
 /turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -4464,13 +4465,18 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 5
+/obj/item/storage/firstaid/fire{
+	step_x = 5;
+	step_y = 3
 	},
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/brute{
+	step_y = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white/telecomms,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "lp" = (
 /obj/effect/turf_decal/stripes/line{
@@ -4618,11 +4624,15 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lG" = (
-/obj/structure/table,
-/obj/item/storage/box/syringes,
+/obj/item/storage/box/syringes{
+	step_y = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/gun/syringe/syndicate,
+/obj/item/gun/syringe/syndicate{
+	step_y = 1
+	},
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -4641,12 +4651,16 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "lK" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
-	dir = 4
+/obj/item/storage/firstaid/regular{
+	step_x = 5;
+	step_y = 3
 	},
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/toxin{
+	step_y = 1
+	},
+/obj/machinery/door/window/westright,
+/turf/open/floor/plasteel/white/telecomms,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "lL" = (
 /obj/machinery/airalarm/syndicate{
@@ -4862,7 +4876,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/stasis/syndi,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white/side{
+	dir = 8
+	},
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "me" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
@@ -5220,7 +5236,9 @@
 "mZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/stasis/syndi,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white/side{
+	dir = 8
+	},
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "na" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -5232,6 +5250,7 @@
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
