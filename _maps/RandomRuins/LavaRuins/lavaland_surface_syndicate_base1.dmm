@@ -4465,12 +4465,13 @@
 	dir = 1
 	},
 /obj/item/storage/firstaid/fire{
-	step_x = 5;
-	step_y = 3
+	pixel_x = 5;
+	pixel_y = 2
 	},
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/brute{
-	step_y = 1
+	pixel_x = 2;
+	pixel_y = 0
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -4624,12 +4625,12 @@
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lG" = (
 /obj/item/storage/box/syringes{
-	step_y = 4
+	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/gun/syringe/syndicate{
-	step_y = 1
+	pixel_y = 1
 	},
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/white/side{
@@ -4651,12 +4652,12 @@
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "lK" = (
 /obj/item/storage/firstaid/regular{
-	step_x = 5;
-	step_y = 3
+	pixel_x = 5;
+	pixel_y = 2
 	},
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/toxin{
-	step_y = 1
+	pixel_x = 2
 	},
 /obj/machinery/door/window/westright,
 /turf/open/floor/plasteel/white/telecomms,
