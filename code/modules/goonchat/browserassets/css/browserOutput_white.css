@@ -382,7 +382,7 @@ h1.alert, h2.alert		{color: #000000;}
 .bigassimilator			{color: #800080;	font-size: 32px ; font-weight: bold;}
 .alertsyndie			{color: #FF0000;	font-size: 24px ; font-weight: bold;}
 
-.spider					{color: #4d004d;}
+.spider					{color: #4d004d; font-weight: bold; font-size: 24px;}
 
 .interface				{color: #330033;}
 

@@ -1632,6 +1632,17 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
+
+/datum/uplink_item/role_restricted/spider_injector
+	name = "Australian Slime Mutator"
+	desc = "Crikey mate, it's been a wild travel from the Australicus sector but we've managed to get \
+			some special spider extract from the giant spiders down there. Use this injector on a gold slime core \
+			to create a few of the same type of spiders we found on the planets over there. They're a bit tame until you \
+			also give them a bit of sentience though."
+	item = /obj/item/reagent_containers/syringe/spider_extract
+	cost = 10
+	restricted_roles = list("Scientist")
+
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
 	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
