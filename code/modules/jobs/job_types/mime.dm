@@ -55,9 +55,9 @@
 
 /obj/item/book/mimery/attack_self(mob/user,)
 	user.set_machine(src)
-	var/dat = "<B>Book of Dank Mimery</B><BR>"
+	var/dat = "<B>Guide to Dank Mimery</B><BR>"
 	dat += "Teaches one of three classic pantomime routines, allowing a practiced mime to conjure invisible objects into corporeal existence.<BR>"
-	dat += "Once you have chosen your routine, this book will have no more to say to you.<BR>"
+	dat += "Once you have mastered your routine, this book will have no more to say to you.<BR>"
 	dat += "<HR>"
 	dat += "<A href='byond://?src=[REF(src)];invisible_wall=1'>Invisible Wall</A><BR>"
 	dat += "<A href='byond://?src=[REF(src)];invisible_chair=1'>Invisible Chair</A><BR>"

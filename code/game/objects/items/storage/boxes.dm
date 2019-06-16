@@ -86,7 +86,7 @@
 
 /obj/item/storage/box/mime/attack_hand(mob/user)
 	..()
-	if(user.mind.assigned_role == "Mime")
+	if(user.mind.miming)
 		alpha = 255
 
 /obj/item/storage/box/mime/handle_drop

@@ -427,3 +427,18 @@
 	buildstacktype = null
 	item_chair = null
 	flags_1 = NODECONSTRUCT_1
+
+/obj/structure/chair/mime
+	name = "invisible chair"
+	desc = "The mime needs to sit down and shut up."
+	anchored = FALSE
+	icon_state = null
+	buildstacktype = null
+	item_chair = null
+	flags_1 = NODECONSTRUCT_1
+
+/obj/structure/chair/mime/post_buckle_mob(mob/living/M)
+	M.pixel_y += 5
+
+/obj/structure/chair/mime/post_unbuckle_mob(mob/living/M)
+	M.pixel_y -= 5
