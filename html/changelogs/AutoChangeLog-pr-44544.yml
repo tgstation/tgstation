@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Spamming the \"create virus culture bottle\" button in the pandemic no longer sometimes results in multiple bottles being created."

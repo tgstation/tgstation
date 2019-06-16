@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - rscdel: "/datum/reagent/vanilla ice cream has been replaced with regular vanilla ice cream in the borgs' treat fabricator"
