@@ -3,7 +3,7 @@
 /obj/item/projectile/bullet/honker
 	name = "banana"
 	damage = 0
-	paralyze = 60
+	knockdown = 100
 	movement_type = FLYING | UNSTOPPABLE
 	nodamage = TRUE
 	hitsound = 'sound/items/bikehorn.ogg'
