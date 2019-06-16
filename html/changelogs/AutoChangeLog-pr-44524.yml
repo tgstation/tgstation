@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Breaking limbs with damage now properly makes you drop the item you're holding with it."
