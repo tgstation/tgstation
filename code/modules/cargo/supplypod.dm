@@ -121,7 +121,7 @@
 	opened = FALSE
 	INVOKE_ASYNC(holder, .proc/setClosed) //Use the INVOKE_ASYNC proc to call setClosed() on whatever the holder may be, without giving the atom/movable base class a setClosed() proc definition
 	for (var/atom/movable/O in get_turf(holder))
-		if (ismob(O) && !isliving(O)) //We dont want to take ghosts with us
+		if ((ismob(O) && !isliving(O)) || (is_type_in_typecache(O, GLOB.blacklisted_cargo_types) || isliving(O))) //We dont want to take ghosts with us, and we don't want blacklisted items going, but we allow mobs.
 			continue
 		O.forceMove(holder) //Put objects inside before we close
 	var/obj/effect/temp_visual/risingPod = new /obj/effect/DPfall(get_turf(holder), src) //Make a nice animation of flying back up
