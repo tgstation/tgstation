@@ -62,6 +62,21 @@
 		message = lizard_hiSS.Replace(message, "SSS")
 	speech_args[SPEECH_MESSAGE] = message
 
+/obj/item/organ/tongue/felinid
+	name = "cat tongue"
+	desc = "A rough tongue found in felind species, nya!"
+	say_mod = "nyas"
+	modifies_speech = TRUE
+
+/obj/item/organ/tongue/felinid/handle_speech(datum/source, list/speech_args)
+	var/static/regex/nya_lr = new("l|r", "g")
+	var/static/regex/nya_LR = new("L|R", "g")
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = nya_lr.Replace(message, "w")
+		message = nya_LR.Replace(message, "W")
+	speech_args[SPEECH_MESSAGE] = message
+
 /obj/item/organ/tongue/fly
 	name = "proboscis"
 	desc = "A freakish looking meat tube that apparently can take in liquids."
