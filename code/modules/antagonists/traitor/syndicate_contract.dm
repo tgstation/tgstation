@@ -3,8 +3,6 @@
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
 	var/ransom = 0
-	var/mob/living/ransom_victim
-	var/ransom_paid = FALSE
 
 /datum/syndicate_contract/New(owner)
 	generate(owner)
@@ -26,7 +24,7 @@
 	contract.payout = rand(0, 3)
 	contract.generate_dropoff()
 
-	ransom = 100 * rand(20, 80)
+	ransom = 100 * rand(20, 65)
 
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
 	if (contract.target && contract.dropoff_check(user, contract.target.current))
@@ -94,11 +92,24 @@
 				
 				if (traitor_data.current_contract == src) 
 					traitor_data.current_contract = null
-				
-			ransom_victim = M
-			GLOB.ransom_contracts.Add(src)
 
 			handleVictimExperience(M)
+
+			// This is slightly delayed because of the sleep calls above to handle the narrative. 
+			// We don't want to tell the station instantly.
+			var/points_to_check
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+
+			if(D)
+				points_to_check = D.account_balance
+
+			if(points_to_check >= ransom)
+				D.adjust_money(-ransom)
+			else 
+				D.adjust_money(-points_to_check)
+			
+			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
+								As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection")
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
@@ -125,77 +136,49 @@
 		M.flash_act()
 		M.Unconscious(200)
 		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
-					we thank you for providing them. Your value is expended, should your station not pay for your return, this place will be \
-					your tomb...\"</i></span>")
+					we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
+					so it's only a matter of time before we ship you back...\"</i></span>")
 		M.blur_eyes(30)
 		M.Dizzy(35)
 		M.confused += 20
 
-		minor_announce("Seems we have one of your crew... We'll give them back - for the right price. Check your communications console; \
-						if you pay what we ask, we'll release them in a few minutes unharmed. Otherwise, they won't be coming back... Tick tock.", "Unknown Transmission:")
-
-// We're returning the victim, with seperate logic dependant on what happened with the ransom.
+// We're returning the victim
 /datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
-	if (ransom_paid)
-		var/list/possible_drop_loc = list()
+	var/list/possible_drop_loc = list()
 
-		for (var/turf/possible_drop in contract.dropoff.contents)
-			var/location_clear = TRUE
-			// We don't care as much about what we land on than we did for sending the pod down.
-			if (!isspaceturf(possible_drop))
-				for (var/content in possible_drop.contents)
-					if (istype(content, /obj/machinery) || istype(content, /obj/structure))
-						location_clear = FALSE
-				if (location_clear)
-					possible_drop_loc.Add(possible_drop)
+	for (var/turf/possible_drop in contract.dropoff.contents)
+		var/location_clear = TRUE
+		// We don't care as much about what we land on than we did for sending the pod down.
+		if (!isspaceturf(possible_drop))
+			for (var/content in possible_drop.contents)
+				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
+					location_clear = FALSE
+			if (location_clear)
+				possible_drop_loc.Add(possible_drop)
 
-		if (possible_drop_loc.len > 0)
-			var/pod_rand_loc = rand(1, possible_drop_loc.len)
-			
-			var/obj/structure/closet/supplypod/return_pod = new()
-			return_pod.bluespace = TRUE
-			return_pod.explosionSize = list(0,0,0,0)
-			return_pod.style = STYLE_SYNDICATE
+	if (possible_drop_loc.len > 0)
+		var/pod_rand_loc = rand(1, possible_drop_loc.len)
+		
+		var/obj/structure/closet/supplypod/return_pod = new()
+		return_pod.bluespace = TRUE
+		return_pod.explosionSize = list(0,0,0,0)
+		return_pod.style = STYLE_SYNDICATE
 
-			do_sparks(8, FALSE, M)
-			M.visible_message("<span class='notice'>[M] vanishes...</span>")
-			M.forceMove(return_pod)
+		do_sparks(8, FALSE, M)
+		M.visible_message("<span class='notice'>[M] vanishes...</span>")
+		M.forceMove(return_pod)
 
-			new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
-		else
-			to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-						be able to handle our pod... You will die here instead.\"</i></span>")
-			if (iscarbon(M))
-				var/mob/living/carbon/C = M
-				if (C.can_heartattack())
-					C.set_heartattack(TRUE)
-	else
-		M.Unconscious(150)
+		M.flash_act()
 		M.blur_eyes(30)
 		M.Dizzy(35)
 		M.confused += 20
-		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your ransom wasn't paid... We have no use for you. \
-		You will die here.\"</i></span>")
+
+		new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
+	else
+		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
+					be able to handle our pod... You will die here instead.\"</i></span>")
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
 			if (C.can_heartattack())
 				C.set_heartattack(TRUE)
 
-		minor_announce("Didn't pay the ransom for one of your crew, they're going to be staying with us...", "Unknown Transmission:")
-
-	// Even if they didn't pay, we mark this as complete so they can no longer pay at this point.
-	status = CONTRACT_STATUS_RANSOM_COMPLETE
-				
-/datum/syndicate_contract/proc/ransomPaid()
-	var/mob/living/victim = contract.target.current
-
-	ransom_paid = TRUE
-	status = CONTRACT_STATUS_RANSOM_COMPLETE
-
-	victim.Unconscious(150)
-	victim.blur_eyes(30)
-	victim.Dizzy(35)
-	victim.confused += 20
-
-	to_chat(victim, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"It would seem your station, \
-	paid for your return... We'll send you back shortly.\"</i></span>")
