@@ -63,28 +63,6 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/nicotine/addiction_act_stage1(mob/living/M)
-	M/carbon.applyLungDamage(0.5)
-	..()
-	. = 1
-
-/datum/reagent/drug/nicotine/addiction_act_stage2(mob/living/M)
-	M/carbon.applyLungDamage(0.7)
-	..()
-	. = 1
-
-/datum/reagent/drug/nicotine/addiction_act_stage3(mob/living/M)
-	M/carbon.applyLungDamage(0.9)
-	M.adjustToxLoss(1*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M/carbon.applyLungDamage(1.1)
-	M.adjustToxLoss(1.5*REM, 0)
-	..()
-	. = 1
-
 /datum/reagent/drug/crank
 	name = "Crank"
 	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."

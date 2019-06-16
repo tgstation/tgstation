@@ -246,6 +246,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
 	var/mob/living/M = loc
+	var/mob/living/carbon/C = loc
+	var/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 	if(isliving(loc))
 		M.IgniteMob()
 	smoketime--
@@ -255,6 +257,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 		qdel(src)
 		return
+	if (lungs && (src == C.wear_mask))
+		M/carbon.applyLungDamage(0.18)		//If you're smoking and you've got lungs, damage those lungs
 	open_flame()
 	if((reagents && reagents.total_volume) && (nextdragtime <= world.time))
 		nextdragtime = world.time + dragtime
@@ -444,11 +448,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
+	var/mob/living/M = loc
+	var/mob/living/carbon/C = loc
+	var/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 	smoketime--
 	if(smoketime < 1)
 		new /obj/effect/decal/cleanable/ash(location)
 		if(ismob(loc))
-			var/mob/living/M = loc
 			to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 			lit = 0
 			icon_state = icon_off
@@ -458,6 +464,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			name = "empty [initial(name)]"
 		STOP_PROCESSING(SSobj, src)
 		return
+	if (lungs && (src == C.wear_mask))
+		M/carbon.applyLungDamage(0.18)		//If you're smoking and you've got lungs, damage those lungs
 	open_flame()
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
 		handle_reagents()

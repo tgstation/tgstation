@@ -59,7 +59,18 @@
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
+//For when we're simply alive
+/obj/item/organ/lungs/on_life()
+	var/mob/living/carbon/C = owner
 
+	if(istype(C))
+		if(!failing)
+			//slowly heal lung damage
+			damage = max(0, damage - 0.1)
+			if(damage > 0)
+				safe_oxygen_min -= (0.1 / (maxHealth)) * 5	//lower the minimum again when we repair, unless we're uninjured
+
+//For when we breath
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if(H.status_flags & GODMODE)
 		return
