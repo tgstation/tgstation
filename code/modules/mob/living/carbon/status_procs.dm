@@ -5,6 +5,7 @@
 
 /mob/living/carbon/IsParalyzed(include_stamcrit = TRUE)
 	return ..() || (include_stamcrit && stam_paralyzed)
+
 /mob/living/carbon/proc/enter_stamcrit()
 	if(!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 		return
