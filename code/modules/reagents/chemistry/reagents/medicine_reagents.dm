@@ -402,7 +402,7 @@
 	if(method == INGEST)
 		return
 	M.reagents.remove_reagent(/datum/reagent/medicine/charcoal/, reac_volume) //We really should not be injecting an insoluble granular material.
-	M.reagents.add_reagent(/datum/reagent/carbon, reac_volume) // It's pores would get clogged with gunk anyway.
+	M.reagents.add_reagent(/datum/reagent/carbon, reac_volume) // Its pores would get clogged with gunk anyway.
 	..()
 
 /datum/reagent/medicine/omnizine
@@ -1327,7 +1327,7 @@
 	overdose_threshold = 20
 
 /datum/reagent/medicine/trophazole/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, 0.) // heals 3 brute & 0,5 burn if taken with food. compared to 2.5 brute from bicard + nutriment
+	M.adjustBruteLoss(-1.5*REM, 0.) // heals 3 brute & 0.5 burn if taken with food. compared to 2.5 brute from bicard + nutriment
 	..()
 	. = 1
 
@@ -1340,7 +1340,7 @@
 	if(method != INGEST)
 		return
 
-	M.reagents.remove_reagent(/datum/reagent/medicine/trophazole/, reac_volume * 0.05)
+	M.reagents.remove_reagent(/datum/reagent/medicine/trophazole, reac_volume * 0.05)
 	M.reagents.add_reagent(/datum/reagent/medicine/metafactor, reac_volume * 0.25)
 
 	..()
@@ -1410,10 +1410,7 @@
 	var/obj/item/organ/liver/L = M.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if(L.failing)
 		return
-	conversion_amount = reac_volume	* (min(100 -L.damage, 80) / 100) //the more damaged the liver the worse we metabolize
-	to_chat(M, "conversion amount:[conversion_amount]")
-	to_chat(M, "reaction volume:[reac_volume]")
-	to_chat(M, "Liver damage:[L.damage]")
+	conversion_amount = reac_volume	* (min(100 -L.damage, 80) / 100) //the more damaged the liver the worse we metabolize.
 	M.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
 	M.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
 	..()
