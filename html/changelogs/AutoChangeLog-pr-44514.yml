@@ -1,0 +1,4 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - rscdel: "Removed the piping overlay from the Lifeform Stasis Unit"
