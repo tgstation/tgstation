@@ -271,7 +271,7 @@
 	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	var/msg = list()
+	var/list/msg = list()
 	msg += "[get_examine_string(user, TRUE)]."
 
 	if(desc)
@@ -298,7 +298,7 @@
 				msg += "\n<span class='danger'>It's empty.</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
-	to_chat(user, msg)
+	to_chat(user, msg.Join())
 	return
 
 /atom/proc/relaymove(mob/user)
