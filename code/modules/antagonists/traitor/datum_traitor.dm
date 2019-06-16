@@ -27,7 +27,6 @@
 	owner.special_role = special_role
 	if(give_objectives)
 		forge_traitor_objectives()
-	create_contracts()
 	finalize_traitor()
 	RegisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	..()
@@ -375,12 +374,13 @@
 		if (contract.status == CONTRACT_STATUS_COMPLETE)
 			completed_contracts++
 
-	var/pluralCheck = "contract"
-	if (completed_contracts > 1) 
-		pluralCheck = "contracts"
-	
-	result += "Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
-				<span class='greentext'>[tc_total] TC</span>!<br>"
+
+	if (completed_contracts > 0)
+		var/pluralCheck = "contract"
+		if (completed_contracts > 1) 
+			pluralCheck = "contracts"
+		result += "<br>Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
+					<span class='greentext'>[tc_total] TC</span>!<br>"
 
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"

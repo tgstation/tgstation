@@ -37,7 +37,9 @@
 
 			// Bake their data right into the hard drive, or we don't allow non-antags gaining access to unused
 			// contract system.
+			// We also create their contracts at this point.
 			if (traitor_data)
+				traitor_data.create_contracts()
 				hard_drive.traitor_data = traitor_data
 			else
 				error = "Incorrect login details."

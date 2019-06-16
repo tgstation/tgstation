@@ -215,14 +215,8 @@
 		/obj/item/storage/box/syndie_kit/imp_uplink
 	)
 
-	var/first_num = rand(1, item_list.len)
-	var/second_num = rand(1, item_list.len)
-
-	while (second_num == first_num)
-		second_num = rand(1, item_list.len)
-
-	var/obj/item1 = item_list[first_num]
-	var/obj/item2 = item_list[second_num]
+	var/obj/item1 = pick_n_take(item_list)
+	var/obj/item2 = pick_n_take(item_list)
 
 	// Create two, non repeat items from the list.
 	new item1(src)
