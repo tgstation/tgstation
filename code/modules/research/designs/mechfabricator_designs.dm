@@ -506,29 +506,32 @@
 /datum/design/mech_mining_scanner
 	name = "Exosuit Engineering Equipment (Mining Scanner)"
 	id = "mech_mscanner"
-	build_type = MECHFAB
+	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	materials = list(MAT_METAL=5000,MAT_GLASS=2500)
 	construction_time = 50
-	category = list("Exosuit Equipment")
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/mech_extinguisher
 	name = "Exosuit Engineering Equipment (Extinguisher)"
 	id = "mech_extinguisher"
-	build_type = MECHFAB
+	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/extinguisher
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
-	category = list("Exosuit Equipment")
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/mech_cable_layer
 	name = "Exosuit Engineering Equipment (Cable Layer)"
 	id = "mech_cable_layer"
-	build_type = MECHFAB
+	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/cable_layer
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
-	category = list("Exosuit Equipment")
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/mech_generator
 	name = "Exosuit Equipment (Plasma Generator)"
