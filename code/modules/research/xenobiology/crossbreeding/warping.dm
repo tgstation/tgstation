@@ -97,7 +97,7 @@ Warping extracts:
 
 /obj/item/slimecross/warping/darkpurple
 	colour = "dark purple"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/darkpurple
 	effect_desc = "Forms a recoverable rune that grows crystallized plasma over time. It's too fragile to make sheets out of..."
 
 /obj/item/slimecross/warping/darkblue
@@ -291,3 +291,32 @@ Warping extracts:
 	for(var/obj/machinery/power/apc/A in get_area(loc))
 		var/obj/item/stock_parts/cell/C = A.get_cell()
 		C.give(total)
+
+/obj/effect/slimerune/darkpurple
+	name = "dark purple rune"
+	desc = "Plasma mist seeps from the edges of the rune, pooling in the center."
+
+/obj/effect/slimerune/darkpurple/process() //Will likely slow this down.
+	var/obj/item/plasmacrystal/crystal = locate(/obj/item/plasmacrystal) in get_turf(loc)
+	if(!istype(crystal))
+		crystal = new(loc)
+	crystal.reagents.add_reagent(/datum/reagent/toxin/plasma,5)
+	crystal.update_icon()
+
+/obj/item/plasmacrystal
+	name = "plasma crystal"
+	desc = "A fragile shard of crystallized plasma. Useless to fabricators, but it would probably fit in a grinder rather easily."
+	icon = 'icons/obj/shards.dmi' //Temp icons
+	icon_state = "plasmasmall"
+
+/obj/item/plasmacrystal/Initialize(mapload)
+	. = ..()
+	create_reagents(100)
+
+/obj/item/plasmacrystal/update_icon() //Temp icons
+	if(reagents.total_volume >= 100)
+		icon_state = "plasmalarge"
+	else if(reagents.total_volume >= 50)
+		icon_state = "plasmamedium"
+	else
+		icon_state = "plasmasmall"
