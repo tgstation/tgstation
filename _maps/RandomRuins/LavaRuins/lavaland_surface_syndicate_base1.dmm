@@ -3064,12 +3064,11 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/lavaland/surface/outdoors/explored)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "iN" = (
 /turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/unpowered/syndicate_lava_base/main)
