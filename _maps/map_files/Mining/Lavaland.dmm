@@ -2688,7 +2688,6 @@
 /area/lavaland/surface/outdoors)
 "gY" = (
 /obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 2;
 	height = 5;
@@ -4054,7 +4053,6 @@
 /area/mine/production)
 "Uq" = (
 /obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
@@ -4099,7 +4097,6 @@
 /area/mine/living_quarters)
 "Wp" = (
 /obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 3;
 	height = 10;

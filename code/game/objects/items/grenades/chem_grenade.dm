@@ -49,9 +49,11 @@
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
 	if(stage == READY && !active)
 		..()
+	if(stage == WIRED)
+		wires.interact(user)
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
-	if((istype(I,/obj/item/assembly) || I.tool_behaviour == TOOL_MULTITOOL) && stage == WIRED)
+	if(istype(I,/obj/item/assembly) && stage == WIRED)
 		wires.interact(user)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stage == WIRED)
@@ -113,6 +115,7 @@
 				user.log_message("removed [O] ([reagent_list]) from [src]", LOG_GAME)
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
+			wires.detach_assembly(wires.get_wire(1))
 			return
 		new /obj/item/stack/cable_coil(get_turf(src),1)
 		stage_change(EMPTY)
@@ -135,6 +138,11 @@
 		name = initial(name)
 		desc = initial(desc)
 		icon_state = "[initial(icon_state)]_locked"
+
+/obj/item/grenade/chem_grenade/on_found(mob/finder)
+	var/obj/item/assembly/A = wires.get_attached(wires.get_wire(1))
+	if(A)
+		A.on_found(finder)
 
 /obj/item/grenade/chem_grenade/log_grenade(mob/user, turf/T)
 	var/reagent_string = ""
