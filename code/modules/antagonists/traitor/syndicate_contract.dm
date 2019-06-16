@@ -149,9 +149,9 @@
 	for (var/turf/possible_drop in contract.dropoff.contents)
 		var/location_clear = TRUE
 		// We don't care as much about what we land on than we did for sending the pod down.
-		if (!isspaceturf(possible_drop))
+		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
 			for (var/content in possible_drop.contents)
-				if (istype(content, /obj/machinery) || istype(content, /obj/structure) || iswallturf(content))
+				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
 					location_clear = FALSE
 			if (location_clear)
 				possible_drop_loc.Add(possible_drop)
