@@ -76,8 +76,10 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Moved(oldLoc, dir)
 	. = ..()
-
-	if(vomiting || prob(0.5)) //its supposed to keep vomiting if you move
+	if(vomiting)
+		vomit() // its supposed to keep vomiting if you move
+		return
+	if(prob(0.5))
 		vomit_start(25)
 
 /datum/action/cooldown/vomit
