@@ -46,6 +46,16 @@
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
 	var/vomiting = FALSE
+	var/datum/action/cooldown/vomit/goosevomit
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize()
+	. = ..()
+	goosevomit = new()
+	goosevomit.Grant(src)
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/Destroy()
+	QDEL_NULL(goosevomit)
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
 	var/turf/T = get_turf(src)
@@ -66,5 +76,23 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Moved(oldLoc, dir)
 	. = ..()
-	if(vomiting || prob(0.5))
+
+	if(vomiting || prob(0.5)) //its supposed to keep vomiting if you move
 		vomit_start(25)
+
+/datum/action/cooldown/vomit
+	name = "Vomit"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "vomit"
+	icon_icon = 'icons/mob/animal.dmi'
+	cooldown_time = 250
+
+/datum/action/cooldown/vomit/Trigger()
+	if(!..())
+		return FALSE
+	if(!istype(owner, /mob/living/simple_animal/hostile/retaliate/goose/vomit))
+		return FALSE
+	var/mob/living/simple_animal/hostile/retaliate/goose/vomit/vomit = owner
+	if(!vomit.vomiting)
+		vomit.vomit_start(25)
+	return TRUE
