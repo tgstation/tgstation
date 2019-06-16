@@ -115,7 +115,7 @@
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
 	// Ship 'em back - dead or alive, it depends on if the Syndicate get paid... 5 minutes wait.
 	// Even if they weren't the target, we're still treating them the same.
-	addtimer(CALLBACK(src, .proc/returnVictim, M), (40 * 10))
+	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
 
 	if (M.stat != DEAD)
 		M.flash_act()
@@ -151,7 +151,7 @@
 		// We don't care as much about what we land on than we did for sending the pod down.
 		if (!isspaceturf(possible_drop))
 			for (var/content in possible_drop.contents)
-				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
+				if (istype(content, /obj/machinery) || istype(content, /obj/structure) || iswallturf(content))
 					location_clear = FALSE
 			if (location_clear)
 				possible_drop_loc.Add(possible_drop)
