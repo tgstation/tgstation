@@ -69,9 +69,6 @@
 
 	SSvis_overlays.remove_vis_overlay(src, overlays_to_remove)
 
-	if(occupant)
-		SSvis_overlays.add_vis_overlay(src, 'icons/obj/machines/stasis.dmi', "tubes", LYING_MOB_LAYER + 0.1, plane, dir) //using vis_overlays instead of normal overlays for mouse_opacity here
-
 	if(stat & BROKEN)
 		icon_state = "stasis_broken"
 		return

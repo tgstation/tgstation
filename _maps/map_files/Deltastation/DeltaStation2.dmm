@@ -127187,7 +127187,6 @@
 /area/science/misc_lab/range)
 "lTo" = (
 /obj/docking_port/stationary{
-	area_type = /area/construction/mining/aux_base;
 	dheight = 4;
 	dir = 4;
 	dwidth = 4;

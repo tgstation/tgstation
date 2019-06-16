@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, input, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, do_owner)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 		return
@@ -7,11 +7,12 @@
 
 	if (!turf_source)
 		return
-
+		
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || open_sound_channel()
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
+	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = (world.view + extrarange)
 	var/z = turf_source.z
 	var/list/listeners = SSmobs.clients_by_zlevel[z]
@@ -20,30 +21,12 @@
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			sound_or_datum(M, turf_source, source, input, do_owner, vol, vary, frequency, falloff, channel, pressure_affected)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
 	for(var/P in SSmobs.dead_players_by_zlevel[z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			sound_or_datum(M, turf_source, source, input, do_owner, vol, vary, frequency, falloff, channel, pressure_affected)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
 
-/proc/sound_or_datum(mob/receiver, turf/turf_source, atom/source, input, datum/do_owner, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
-	if(istype(input, /datum/outputs))
-		var/last_played_time
-		if(do_owner)
-			last_played_time = do_owner.datum_outputs[input]
-		else
-			last_played_time = source.datum_outputs[input]
-		var/datum/outputs/O = input
-		if(O.send_info(receiver, turf_source, vol, vary, frequency, falloff, channel, pressure_affected, last_played_time))
-			if(do_owner)
-				do_owner.datum_outputs[input] = world.time
-			else
-				source.datum_outputs[input] = world.time
-	else
-		var/sound/S = sound(get_sfx(input))
-		receiver.playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
-
-//kept for legacy support and uploaded admin sounds
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
 	if(!client || !can_hear())
 		return
