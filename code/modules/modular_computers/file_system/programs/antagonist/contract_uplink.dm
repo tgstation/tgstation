@@ -116,7 +116,7 @@
 			var/turf/dropoff_turf 
 			data["current_location"] = "[get_area_name(curr, TRUE)]"
 			
-			for (var/content in traitor_data.current_contract.contract.dropoff.contents)
+			for (var/turf/content in traitor_data.current_contract.contract.dropoff.contents)
 				if (isturf(content))
 					dropoff_turf = content
 					break
