@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -292,8 +292,8 @@ a
 a
 a
 a
-b
-b
+a
+a
 "}
 (2,1,1) = {"
 a
@@ -314,11 +314,11 @@ a
 a
 a
 a
-b
-b
+a
+a
 "}
 (3,1,1) = {"
-b
+a
 a
 a
 a
@@ -335,12 +335,12 @@ Q
 a
 a
 a
-b
 a
-b
+a
+a
 "}
 (4,1,1) = {"
-b
+a
 a
 a
 Q
@@ -428,7 +428,7 @@ a
 a
 "}
 (8,1,1) = {"
-b
+a
 a
 Q
 e
@@ -450,7 +450,7 @@ a
 a
 "}
 (9,1,1) = {"
-b
+a
 a
 Q
 f
@@ -516,7 +516,7 @@ a
 a
 "}
 (12,1,1) = {"
-b
+a
 a
 Q
 O
@@ -584,7 +584,7 @@ a
 (15,1,1) = {"
 a
 a
-b
+a
 Q
 Q
 Q
@@ -604,9 +604,9 @@ a
 a
 "}
 (16,1,1) = {"
-b
 a
-b
+a
+a
 j
 Q
 j
@@ -629,11 +629,11 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
 Q
 m
 m
@@ -644,8 +644,8 @@ b
 a
 a
 a
-b
-b
+a
+a
 "}
 (18,1,1) = {"
 a
@@ -666,8 +666,8 @@ b
 a
 a
 a
-b
-b
+a
+a
 "}
 (19,1,1) = {"
 a
@@ -676,20 +676,20 @@ a
 a
 b
 b
+b
+b
+b
+b
+b
+b
+b
+b
 a
-b
-b
-b
-b
-b
-b
-b
 a
 a
 a
-b
-b
-b
+a
+a
 "}
 (20,1,1) = {"
 a
@@ -701,15 +701,15 @@ b
 a
 b
 b
-b
-b
-b
+a
+a
 b
 b
 a
 a
 a
-b
-b
+a
+a
+a
 a
 "}

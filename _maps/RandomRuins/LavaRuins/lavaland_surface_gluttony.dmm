@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -92,6 +92,10 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
+"Z" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -138,7 +142,7 @@ a
 a
 "}
 (3,1,1) = {"
-b
+a
 a
 a
 a
@@ -148,7 +152,7 @@ b
 c
 c
 c
-b
+Z
 c
 c
 c
@@ -160,7 +164,7 @@ a
 a
 "}
 (4,1,1) = {"
-b
+a
 a
 a
 a
@@ -182,8 +186,8 @@ a
 a
 "}
 (5,1,1) = {"
-b
-b
+a
+a
 a
 a
 a
@@ -332,7 +336,7 @@ i
 i
 i
 S
-b
+Z
 b
 "}
 (12,1,1) = {"
@@ -500,7 +504,7 @@ a
 c
 c
 c
-b
+Z
 c
 c
 c
@@ -528,7 +532,7 @@ b
 b
 a
 a
-b
+a
 a
 a
 a

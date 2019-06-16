@@ -11,6 +11,9 @@
 "d" = (
 /turf/closed/wall/mineral/abductor,
 /area/ruin/unpowered)
+"g" = (
+/turf/template_noop,
+/area/template_noop)
 "j" = (
 /obj/machinery/abductor/experiment{
 	team_number = 100
@@ -100,18 +103,20 @@
 /area/ruin/unpowered)
 
 (1,1,1) = {"
+g
+g
+g
 a
 a
 a
 a
 a
-a
-a
-a
-a
-a
+g
+g
 "}
 (2,1,1) = {"
+g
+g
 a
 a
 a
@@ -119,13 +124,11 @@ a
 a
 a
 a
-a
-a
-a
+g
 "}
 (3,1,1) = {"
-a
-a
+g
+g
 a
 c
 a
@@ -136,8 +139,8 @@ a
 a
 "}
 (4,1,1) = {"
-a
-a
+g
+g
 c
 d
 a
@@ -148,8 +151,8 @@ a
 a
 "}
 (5,1,1) = {"
-a
-a
+g
+g
 d
 j
 k
@@ -160,8 +163,8 @@ d
 a
 "}
 (6,1,1) = {"
-a
-a
+g
+g
 d
 k
 o
@@ -172,8 +175,8 @@ d
 a
 "}
 (7,1,1) = {"
-a
-a
+g
+g
 d
 l
 p
@@ -181,11 +184,11 @@ k
 w
 A
 d
-a
+g
 "}
 (8,1,1) = {"
-a
-a
+g
+g
 c
 d
 q
@@ -193,11 +196,11 @@ t
 q
 d
 c
-a
+g
 "}
 (9,1,1) = {"
-a
-a
+g
+g
 b
 c
 d
@@ -205,94 +208,94 @@ d
 d
 c
 b
-a
+g
 "}
 (10,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (11,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (12,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (13,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (14,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (15,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (16,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (17,1,1) = {"
-a
+g
 b
 b
 b
@@ -300,24 +303,24 @@ b
 b
 b
 b
-a
-a
+g
+g
 "}
 (18,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (19,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
@@ -325,22 +328,22 @@ b
 b
 b
 b
-a
+g
 "}
 (20,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (21,1,1) = {"
-a
+g
 b
 b
 b
@@ -348,11 +351,11 @@ b
 b
 b
 b
-a
-a
+g
+g
 "}
 (22,1,1) = {"
-a
+g
 b
 b
 b
@@ -360,71 +363,71 @@ b
 b
 b
 b
-a
-a
+g
+g
 "}
 (23,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (24,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (25,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (26,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (27,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (28,1,1) = {"
-a
+g
 b
 b
 b
@@ -432,11 +435,11 @@ b
 b
 b
 b
-a
-a
+g
+g
 "}
 (29,1,1) = {"
-a
+g
 b
 b
 b
@@ -444,11 +447,11 @@ b
 b
 b
 b
-a
-a
+g
+g
 "}
 (30,1,1) = {"
-a
+g
 b
 b
 b
@@ -457,5 +460,5 @@ b
 b
 b
 b
-a
+g
 "}

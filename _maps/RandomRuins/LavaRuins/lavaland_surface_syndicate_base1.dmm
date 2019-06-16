@@ -4859,11 +4859,9 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "md" = (
-/obj/machinery/sleeper/syndie{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/stasis/syndi,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "me" = (
@@ -5220,10 +5218,8 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "mZ" = (
-/obj/machinery/sleeper/syndie{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/stasis/syndi,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "na" = (
@@ -6363,9 +6359,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+aa
+aa
+aa
 ab
 ab
 ab
@@ -6373,8 +6369,8 @@ ab
 ab
 aa
 aa
-ab
-ab
+aa
+aa
 ab
 ab
 ab
@@ -8669,7 +8665,7 @@ ab
 ab
 ab
 ab
-ab
+aa
 ab
 ab
 ab
@@ -8717,6 +8713,11 @@ ab
 ab
 ab
 ab
+aa
+aa
+aa
+aa
+aa
 ab
 ab
 ab
@@ -8730,17 +8731,12 @@ ab
 ab
 ab
 ab
+aa
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
 aa
 aa
 aa
