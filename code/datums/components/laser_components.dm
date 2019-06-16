@@ -9,9 +9,13 @@
 	L.ammo_type  += new ammo (src)
 	path = _path
 	qdel(_lens)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/detach)
+/datum/component/extralasers/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
 
-/datum/component/extralasers/proc/detach(datum/source, obj/item/I, mob/user, params)
+/datum/component/extralasers/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+
+/datum/component/extralasers/proc/attackby(datum/source, obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		var/obj/item/gun/energy/laser/L = parent
 		L?.chambered = null
