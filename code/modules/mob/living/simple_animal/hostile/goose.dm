@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose
 	name = "goose"
 	desc = "It's loose"
-	icon_state = "goose"
+	icon_state = "goose" // sprites by cogwerks from goonstation, used with permission
 	icon_living = "goose"
 	icon_dead = "goose_dead"
 	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
@@ -10,7 +10,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat = 2)
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
-	response_harm = "hits"
+	response_harm = "kicks"
 	emote_taunt = list("hisses")
 	taunt_chance = 30
 	speed = 0
@@ -25,33 +25,46 @@
 	faction = list("neutral")
 	attack_same = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN
-	var/icon_resting = "goose_sit"
-
-
-/mob/living/simple_animal/hostile/retaliate/goose/toggle_ai(togglestatus)
-	. = ..()
-	if(!key)
-		if(AIStatus != AI_ON)
-			set_resting(TRUE)
-		else
-			set_resting(FALSE)
-
-/mob/living/simple_animal/hostile/retaliate/goose/update_resting()
-	. = ..()
-	if(resting)
-		wander = FALSE
-	else
-		wander = TRUE
-	update_icon()
+	var/random_retaliate = TRUE
+	var/icon_vomit_start = "vomit_start"
+	var/icon_vomit = "vomit"
+	var/icon_vomit_end = "vomit_end"
 
 /mob/living/simple_animal/hostile/retaliate/goose/handle_automated_movement()
 	. = ..()
-	if(prob(5))
+	if(prob(5) && random_retaliate == TRUE)
 		Retaliate()
 
-/mob/living/simple_animal/hostile/retaliate/goose/proc/update_icon()
-	if(stat != DEAD)
-		icon_state = resting ? icon_resting : icon_living
-	else
-		icon_state = icon_dead
+/mob/living/simple_animal/hostile/retaliate/goose/vomit //https://cdn.discordapp.com/attachments/429431032228610058/585549032177401857/vomitgoose.png
+	name = "Birdboat"
+	real_name = "Birdboat"
+	desc = "It's a sick-looking goose. Probably ate too much maintenance trash."
+	gender = MALE
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
+	gold_core_spawnable = NO_SPAWN
+	random_retaliate = FALSE
+	var/vomiting = FALSE
 
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
+	var/turf/T = get_turf(src)
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
+	T.add_vomit_floor(src)
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
+	flick("vomit_start",src)
+	vomiting = TRUE
+	icon_state = "vomit"
+	vomit()
+	addtimer(CALLBACK(src, .proc/vomit_end), duration)
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_end()
+	flick("vomit_end",src)
+	vomiting = FALSE
+	icon_state = initial(icon_state)
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/Moved(oldLoc, dir)
+	. = ..()
+	if(vomiting || prob(0.5))
+		vomit_start(25)
