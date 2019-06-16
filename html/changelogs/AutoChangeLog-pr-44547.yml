@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - tweak: "Jump to Node ability now shows a location of each Blob node"
