@@ -816,3 +816,6 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		corrupted_text += pick(corruption_options)
 
 	return corrupted_text
+
+#define is_alpha(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
+#define is_digit(X) (length(text2num(X)) == 1)
