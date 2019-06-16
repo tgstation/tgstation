@@ -23,7 +23,7 @@
 		log_game("[key_name(user)] detonated a bag of holding at [loc_name(loccheck)].")
 
 		user.gib(TRUE, TRUE, TRUE)
-		for(var/turf/T in range(6,loccheck))
+		for(var/turf/T in range(2,loccheck))
 			if(istype(T, /turf/open/space/transit))
 				continue
 			for(var/mob/living/M in T)
