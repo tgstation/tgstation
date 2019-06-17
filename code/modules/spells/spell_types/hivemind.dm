@@ -83,7 +83,7 @@
 		if(target.anti_magic_check(FALSE, FALSE, TRUE, 6))
 			target.adjustBrainLoss(10)
 		to_chat(user, "<span class='warning'>We are briefly exhausted by the effort required by our enhanced assimilation abilities.</span>")
-		user.adjustStaminaLoss(50, 0)
+		user.Immobilize(50)
 		SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
 		for(var/obj/item/implant/mindshield/M in target.implants)
 			qdel(M)
@@ -476,20 +476,20 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/process()
 	if(active)
-		if(0) //If we've been gibbed or otherwise deleted, ghost both of them and kill the original
+		if(QDELETED(vessel)) //If we've been gibbed or otherwise deleted, ghost both of them and kill the original
 			original_body.adjustBrainLoss(200)
 			release_control()
-		else if(0) //If the vessel is no longer a hive member, return to original bodies
+		else if(!is_hivemember(backseat)) //If the vessel is no longer a hive member, return to original bodies
 			to_chat(vessel, "<span class='warning'>Our vessel is one of us no more!</span>")
 			release_control()
-		else if(0) //If the original body exists and the vessel is dead/ghosted, return both to body but not before killing the original
+		else if(!QDELETED(original_body) && (!backseat.ckey || vessel.stat == DEAD)) //If the original body exists and the vessel is dead/ghosted, return both to body but not before killing the original
 			original_body.adjustBrainLoss(200)
 			to_chat(vessel.mind, "<span class='warning'>Our vessel is one of us no more!</span>")
 			release_control()
-		else if(0) //Return to original bodies
+		else if(!QDELETED(original_body) && original_body.z != vessel.z) //Return to original bodies
 			release_control()
 			to_chat(original_body, "<span class='warning'>Our vessel is too far away to control!</span>")
-		else if(0) //Return vessel to its body, either return or ghost the original
+		else if(QDELETED(original_body) || original_body.stat == DEAD) //Return vessel to its body, either return or ghost the original
 			to_chat(vessel, "<span class='userdanger'>Our body has been destroyed, the hive cannot survive without its host!</span>")
 			release_control()
 		else
@@ -620,7 +620,7 @@
 
 /obj/effect/proc_holder/spell/target_hive/nightmare/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/target = targets[1]
-	if(!do_after(usr,30,0,usr))
+	if(!do_after(user,30,0,user))
 		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 		revert_cast()
 		return
@@ -665,12 +665,12 @@
 	var/spell_item = /obj/item/extendohand/hivemind
 
 /obj/effect/proc_holder/spell/self/telekinetic_hand/cast(mob/user = usr)
-	if(usr.get_active_held_item()==null)
+	if(user.get_active_held_item()==null)
 		var/obj/item/W = new spell_item
-		usr.put_in_hands(W)
-		to_chat(usr, "You make a telekinetic hand!")
+		user.put_in_hands(W)
+		to_chat(user, "<span class='notice'>You make a telekinetic hand!"</span>")
 	else
-		to_chat(usr, "You cannot make a telekinetic hand while holding something!")
+		to_chat(user,"<span class='notice'>"You cannot make a telekinetic hand while holding something!"</span>")
 
 /obj/effect/proc_holder/spell/targeted/hive_hack
 	name = "Network Invasion"
