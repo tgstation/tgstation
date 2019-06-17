@@ -46,6 +46,7 @@
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
 	var/vomiting = FALSE
+	var/vomitCoefficient = 1
 	var/datum/action/cooldown/vomit/goosevomit
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize()
@@ -57,10 +58,24 @@
 	QDEL_NULL(goosevomit)
 	return ..()
 
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/afterattack(obj/item/O, mob/user, proximity)
+	if(!proximity)
+		return
+	feed(O)
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/O)
+	if(istype(O, /obj/item/reagent_containers/food))
+		O.forceMove(src)
+		playsound(src,'sound/items/eatfood.ogg', rand(10,50), 1)
+		vomitCoefficient ++
+
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
 	var/turf/T = get_turf(src)
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 	T.add_vomit_floor(src)
+	for (var/atom/consumed in contents)
+		if(istype(consumed, /obj/item/reagent_containers/food))
+			consumed.forceMove(T)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
 	flick("vomit_start",src)
@@ -79,7 +94,11 @@
 	if(vomiting)
 		vomit() // its supposed to keep vomiting if you move
 		return
-	if(prob(0.5))
+	var/turf/T = get_turf(src)
+	for (var/atom/tasty in T)
+		if(istype(tasty, /obj/item/reagent_containers/food))
+			feed(tasty)
+	if(prob(vomitCoefficient * 0.5))
 		vomit_start(25)
 
 /datum/action/cooldown/vomit
