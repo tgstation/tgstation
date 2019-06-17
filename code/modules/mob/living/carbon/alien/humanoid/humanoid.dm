@@ -88,7 +88,7 @@
 	else
 		return initial(pixel_x)
 
-/mob/living/carbon/alien/humanoid/get_permeability_protection(list/target_zones)
+/mob/living/carbon/alien/humanoid/get_permeability_protection(list/target_zones = list(HANDS = 0, CHEST = 0, GROIN = 0, LEGS = 0, FEET = 0, ARMS = 0, HEAD = 0))
 	return 0.8
 
 /mob/living/carbon/alien/humanoid/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
