@@ -242,22 +242,22 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/card/id/C = H.get_idcard(TRUE)
-		if(C?.registered_account && !(C.registered_account.account_balance < 50))
+		if(C?.registered_account && !(C.registered_account.account_balance < money_to_steal))
 			C.registered_account.adjust_money(-money_to_steal)
 			to_chat(H, "<span class='danger'>Your wallet feels lighter!</span>")
 		else
 			H.adjustStaminaLoss(30)
 			to_chat(H, "<span class='danger'>You feel your energy itself being turned into cryptocurrency!</span>")
 			money_to_steal = 1
-	if(ishuman(firer))
-		var/mob/living/carbon/human/F = firer
-		var/obj/item/card/id/C = F.get_idcard(TRUE) // test
-		if(C?.registered_account)
-			C.registered_account.adjust_money(money_to_steal)
-			to_chat(F, "<span class='notice'>Your wallet has received 50 credits.</span>")
-		else
-			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
-			D?.adjust_money(money_to_steal)
+		if(ishuman(firer))
+			var/mob/living/carbon/human/F = firer
+			var/obj/item/card/id/C = F.get_idcard(TRUE)
+			if(C?.registered_account)
+				C.registered_account.adjust_money(money_to_steal)
+				to_chat(F, "<span class='notice'>Your wallet has received $[money_to_steal].</span>")
+			else
+				var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
+				D?.adjust_money(money_to_steal)
 
 /obj/item/projectile/beam/tracer
 	name = "\improper tracing beam"
