@@ -15,7 +15,7 @@ Sort out active, anchor and possible layers
 	var/datum/ductnet/duct
 	var/capacity = 10
 
-	var/active = TRUE
+	var/active = TRUE //wheter to even bother with plumbing code or not
 
 /obj/machinery/duct/bent
 	icon_state = "nduct_bent"
@@ -45,21 +45,24 @@ Sort out active, anchor and possible layers
 /obj/machinery/duct/ComponentInitialize()
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
-/obj/machinery/duct/setDir(newdir)
-	if(newdir == dir)
-		return
+/obj/machinery/duct/setDir(newdir) //This shouldn't ever happen, but someone is bound to make a wizard spell that spins everything and let's not do that
+	if(anchored || active)
+		return FALSE
+
+/obj/machinery/duct/proc/update_dir()
+	//Note that the use of the SOUTH define as default is because it's the initial direction of the ducts and it's connects
 	var/new_connects
-	var/angle = dir2angle(newdir) - dir2angle(dir) //SOUTH(270) - WEST(180) = 90 so we turn the other connects by 90 degrees in this case
-	if(newdir == SOUTH)
+	var/angle = 180 - dir2angle(dir)
+	if(dir == SOUTH)
 		connects = initial(connects)
 	else
 		for(var/D in GLOB.cardinals)
-			if(D & connects)
-				new_connects += turn(D, -angle) //turning is counterclockwise for some reason
-	connects = new_connects
-	dir = newdir
+			if(D & initial(connects))
+				new_connects += turn(D, angle)
+		connects = new_connects
 
 /obj/machinery/duct/proc/attempt_connect()
+	update_dir()
 	for(var/D in GLOB.cardinals)
 		if(D & connects)
 			for(var/A in get_step(src, D))
@@ -98,11 +101,7 @@ Sort out active, anchor and possible layers
 /obj/machinery/duct/proc/disconnect_duct()
 	if(!duct)
 		return
-	active = FALSE
-	duct.destroy_network()
-	for(var/A in get_adjacent_ducts())
-		var/obj/machinery/duct/D = A
-		D.attempt_connect()
+	duct.remove_duct(src)
 
 /obj/machinery/duct/proc/create_duct()
 	duct = new()
@@ -157,20 +156,29 @@ Sort out active, anchor and possible layers
 /datum/component/plumbing
 	var/list/datum/ductnet/ducts = list() //Index with "1" = /datum/ductnet/theductpointingnorth etc. "1" being the num2text from NORTH define
 	var/datum/reagents/reagents
+	var/use_overlays = TRUE //TRUE if we wanna add proper pipe outless under our parent object
+	var/list/image/ducterlays //We can't just cut all of the parents' overlays, so we'll track them here
 
 	var/supply_connects //directions in wich we act as a supplier
 	var/demand_connects //direction in wich we act as a demander
 
-/datum/component/plumbing/Initialize()
+	var/active = TRUE //FALSE to pretty much just not exist in the plumbing world
+	var/turn_connects = TRUE
+
+/datum/component/plumbing/Initialize(start=TRUE, _turn_connects=TRUE) //turn_connects for wheter or not we spin with the object to change our pipes
 	if(parent && !ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/atom/movable/AM = parent
 	if(!AM.reagents)
 		return COMPONENT_INCOMPATIBLE
 	reagents = AM.reagents
+	turn_connects = _turn_connects
 
-	if(demand_connects)
-		START_PROCESSING(SSfluids, src)
+	if(start)
+		start()
+
+	if(use_overlays)
+		create_overlays()
 
 
 /datum/component/plumbing/process()
@@ -183,6 +191,8 @@ Sort out active, anchor and possible layers
 				send_request(D)
 
 /datum/component/plumbing/proc/can_add(datum/ductnet/D, dir)
+	if(!active)
+		return
 	if(!dir || !D)
 		return FALSE
 	if(num2text(dir) in ducts)
@@ -229,6 +239,76 @@ Sort out active, anchor and possible layers
 	else
 		reagents.trans_to(target.reagents, amount)
 
+/datum/component/plumbing/proc/create_overlays()
+	var/atom/movable/AM = parent
+	for(var/image/I in ducterlays)
+		AM.overlays.Remove(I)
+		qdel(I)
+	ducterlays = list()
+	for(var/D in GLOB.cardinals)
+		var/color
+		var/direction
+		if(D & demand_connects)
+			color = "red" //red because red is mean and it takes
+		if(D & supply_connects)
+			color = "blue" //blue is nice and gives
+		switch(D)
+			if(NORTH)
+				direction = "north"
+			if(SOUTH)
+				direction = "south"
+			if(EAST)
+				direction = "east"
+			if(WEST)
+				direction = "west"
+		var/image/I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = AM.layer - 1)
+		AM.overlays += I
+		ducterlays += I
+
+/datum/component/plumbing/proc/disable() //we stop acting like a plumbing thing and disconnect if we are, so we can safely be moved and stuff
+	STOP_PROCESSING(SSfluids, src)
+	for(var/A in ducts)
+		var/datum/ductnet/D = A
+		D.remove_plumber(src)
+
+	active = FALSE
+
+/datum/component/plumbing/proc/start() //settle wherever we are, and start behaving like a piece of plumbing
+	update_dir()
+	active = TRUE
+
+	if(demand_connects)
+		START_PROCESSING(SSfluids, src)
+
+	for(var/D in GLOB.cardinals)
+		if(D in demand_connects + supply_connects)
+			for(var/obj/machinery/duct/duct in get_step(src, D))
+				if(turn(D, 180) & duct.connects)
+					duct.connect_network(parent, turn(D, 180))
+
+	//TODO: Let plumbers directly plumb into one another without ducts if placed adjacent to each other
+
+/datum/component/plumbing/proc/update_dir() //note that this is only called when we settle down. If someone wants it to fucking spin while connected to something go actually knock yourself out
+	if(!turn_connects)
+		return
+	var/atom/movable/AM = parent
+	var/new_demand_connects
+	var/new_supply_connects
+	var/new_dir = AM.dir
+	var/angle = 180 - dir2angle(new_dir)
+	if(new_dir == SOUTH)
+		demand_connects = initial(demand_connects)
+		supply_connects = initial(supply_connects)
+	else
+		for(var/D in GLOB.cardinals)
+			if(D & initial(demand_connects))
+				new_demand_connects += turn(D, angle)
+			if(D & initial(supply_connects))
+				new_supply_connects += turn(D, angle)
+		demand_connects = new_demand_connects
+		supply_connects = new_supply_connects
+
+
 /datum/component/plumbing/simple_demand
 	demand_connects = NORTH
 
@@ -238,3 +318,5 @@ Sort out active, anchor and possible layers
 /datum/component/plumbing/tank
 	demand_connects = WEST
 	supply_connects = EAST
+
+

@@ -182,3 +182,12 @@
 	icon_state = "vat"
 	anchored = TRUE
 	reagent_id = "cooking_oil"
+
+/obj/structure/reagent_dispensers/plumbed
+	name = "stationairy water tank"
+	anchored = TRUE
+	icon_state = "water_stationairy"
+	desc = "A stationairy, plumbed, water tank."
+
+/obj/structure/reagent_dispensers/plumbed/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/simple_supply)

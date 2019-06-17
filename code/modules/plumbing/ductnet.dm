@@ -11,6 +11,14 @@
 	ducts += D
 	D.duct = src
 
+/datum/ductnet/proc/remove_duct(obj/machinery/duct/D)
+	D.active = FALSE
+	destroy_network(FALSE)
+	for(var/A in D.get_adjacent_ducts())
+		var/obj/machinery/duct/duct = A
+		duct.attempt_connect() //we destroyed the network, so now we tell the disconnected ducts neighbours they can start making a new ductnet
+	qdel(src)
+
 /datum/ductnet/proc/add_plumber(datum/component/plumbing/P, dir)
 	if(!P.can_add(src, dir))
 		return
@@ -19,6 +27,16 @@
 		suppliers += P
 	else if(dir & P.demand_connects)
 		demanders += P
+
+/datum/ductnet/proc/remove_plumber(datum/component/plumbing/P)
+	if(!P.ducts.Find(src)) //out of bounds check, probably wont happen
+		return FALSE
+	suppliers.Remove(P) //we're probably only in one of these, but Remove() is inherently sane so this is fine
+	demanders.Remove(P)
+
+	for(var/dir in P.ducts)
+		if(P.ducts[dir] == src)
+			P.ducts -= dir
 
 /datum/ductnet/proc/assimilate(datum/ductnet/D)
 	ducts.Add(D.ducts)
@@ -35,10 +53,11 @@
 		M.duct = src //forget your old master
 	qdel(D)
 
-/datum/ductnet/proc/destroy_network()
+/datum/ductnet/proc/destroy_network(delete=TRUE)
 	for(var/A in suppliers + demanders)
-		qdel(A)
+		remove_plumber(A)
 	for(var/A in ducts)
 		var/obj/machinery/duct/D = A
 		D.duct = null
-	qdel(src)
+	if(delete) //I don't want code to run with qdeleted objects because that can never be good, so keep this in-case the ductnet has some business left to attend to before commiting suicide
+		qdel(src)
