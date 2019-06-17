@@ -279,13 +279,10 @@
 	if(do_after(user, 40))
 		if(QDELETED(src))
 			return FALSE
-		PlaceShower(user)
-
-/obj/item/showerparts/proc/PlaceShower(mob/user)
-	new created_shower_type(get_turf(user))
-	user.visible_message("<span class='danger'>[user] finishes putting together a shower.</span>", \
-	"<span class='userdanger'>You finish putting together the shower!</span>")
-	qdel(src)
+		new created_shower_type(get_turf(user))
+		user.visible_message("<span class='danger'>[user] finishes putting together a shower.</span>", \
+		"<span class='userdanger'>You finish putting together the shower!</span>")
+		qdel(src)
 
 /obj/item/showerparts/deluxe
 	name = "deluxe shower parts"

@@ -326,6 +326,35 @@
 				qdel(src)
 
 
+//Honkbot Assembly
+/obj/item/bot_assembly/hygienebot
+	name = "incomplete hygienebot assembly"
+	desc = "Clear out the swamp once and for all"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "drone"
+	created_name = "Hygienebot"
+
+/obj/item/bot_assembly/hygienebot/attackby(obj/item/I, mob/user, params)
+	..()
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(I.tool_behaviour == TOOL_WELDER)
+				if(I.use_tool(src, user, 0, volume=40))
+					add_overlay("hs_hole")
+					to_chat(user, "<span class='notice'>You weld a water hole in [src]!</span>")
+					build_step++
+
+		if(ASSEMBLY_SECOND_STEP)
+			if(istype(I, /obj/item/showerparts/deluxe))
+				if(!can_finish_build(I, user))
+					return
+				to_chat(user, "<span class='notice'>You add the [I] to [src]! Honk!</span>")
+				var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
+				H.name = created_name
+				qdel(I)
+				qdel(src)
+
+
 //Secbot Assembly
 /obj/item/bot_assembly/secbot
 	name = "incomplete securitron assembly"
