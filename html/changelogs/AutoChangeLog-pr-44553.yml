@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Electromagnetic web blob strain now has its in-game descriptions back."
