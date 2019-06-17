@@ -426,7 +426,7 @@
 	taste_description = "childhood whimsy"
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
@@ -694,12 +694,15 @@
 	color = "#97ee63"
 	taste_description = "pure electrictiy"
 
+/datum/reagent/consumable/liquidelectricity/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //can't be on life because of the way blood works.
+	if((method == INGEST || method == INJECT || method == PATCH) && iscarbon(M))
+		var/mob/living/carbon/C = M
+		var/obj/item/organ/stomach/ethereal/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
+		if(istype(stomach))
+			stomach.adjust_charge(reac_volume * REM)
+
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
-	if(isethereal(M))
-		var/mob/living/carbon/human/H = M
-		var/datum/species/ethereal/E = H.dna?.species
-		E.adjust_charge(5*REM)
-	else if(prob(25)) //scp13 optimization
+	if(prob(25) && !isethereal(M))
 		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
 		playsound(M, "sparks", 50, 1)
 	return ..()
@@ -722,7 +725,7 @@
 	. = 1
 
 /datum/reagent/consumable/secretsauce
-	name = "secret sauce"
+	name = "Secret Sauce"
 	description = "What could it be."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300"
@@ -730,3 +733,12 @@
 	quality = FOOD_AMAZING
 	taste_mult = 100
 	can_synth = FALSE
+
+/datum/reagent/consumable/caramel
+	name = "Caramel"
+	description = "Who would have guessed that heating sugar is so delicious?"
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	color = "#C65A00"
+	taste_mult = 2
+	taste_description = "bitter sweetness"
+	reagent_state = SOLID

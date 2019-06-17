@@ -74,19 +74,16 @@
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	if(light_power && light_range)
+	if (light_power && light_range)
 		update_light()
 
-	if(opacity && isturf(loc))
+	if (opacity && isturf(loc))
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
-	if(canSmoothWith)
+	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
-
-	if(datum_outputs)
-		for(var/i in 1 to length(datum_outputs))
-			datum_outputs[i] = SSoutputs.outputs[datum_outputs[i]]
+		
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
@@ -423,7 +420,7 @@
 /atom/proc/component_storage_contents_dump_act(datum/component/storage/src_object, mob/user)
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
 	qdel(progress)

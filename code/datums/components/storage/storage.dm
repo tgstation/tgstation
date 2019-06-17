@@ -619,7 +619,7 @@
 		return FALSE
 	if(isitem(host))
 		var/obj/item/IP = host
-		GET_COMPONENT_FROM(STR_I, /datum/component/storage, I)
+		var/datum/component/storage/STR_I = I.GetComponent(/datum/component/storage)
 		if((I.w_class >= IP.w_class) && STR_I && !allow_big_nesting)
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")

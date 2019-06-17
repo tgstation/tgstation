@@ -66,3 +66,35 @@
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+
+/obj/item/organ/stomach/ethereal
+	name = "biological battery"
+	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
+	desc = "A crystal-like organ that stores the electric charge of ethereals."
+	var/crystal_charge = ETHEREAL_CHARGE_FULL
+
+/obj/item/organ/stomach/ethereal/on_life()
+	..()
+	adjust_charge(-ETHEREAL_CHARGE_FACTOR)
+
+/obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0)
+	..()
+	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
+	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+
+/obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/M, special = 0)
+	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	..()
+
+/obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
+	adjust_charge(amount / 70)
+
+/obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, illusion = FALSE)
+	if(illusion)
+		return
+	adjust_charge(shock_damage * siemens_coeff * 2)
+	to_chat(owner, "<span class='notice'>You absorb some of the shock into your body!</span>")
+
+/obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
+	crystal_charge = CLAMP(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)

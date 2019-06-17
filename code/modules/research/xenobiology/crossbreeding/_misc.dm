@@ -235,7 +235,7 @@ Slimecrossing Items
 			var/mob/living/carbon/human/H = M
 			if(H.mind && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>That didn't taste very good...</span>") //No disgust, though. It's just not good tasting.
-				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+				var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
 				if(mood)
 					mood.add_event(null,"gross_food", /datum/mood_event/gross_food)
 				last_check_time = world.time

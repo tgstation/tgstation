@@ -347,15 +347,15 @@
 	return attack_hand(user)
 
 /obj/structure/closet/verb/verb_toggleopen()
-	set src in oview(1)
+	set src in view(1)
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.incapacitated())
+	if(!usr.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
-		return attack_hand(usr)
+		return toggle(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
