@@ -3,12 +3,13 @@
 	var/holy = FALSE
 	var/psychic = FALSE
 	var/allowed_slots = ITEM_SLOT_BACK|ITEM_SLOT_MASK|ITEM_SLOT_NECK|ITEM_SLOT_BELT|ITEM_SLOT_ID|ITEM_SLOT_EARS|ITEM_SLOT_EYES|ITEM_SLOT_GLOVES|ITEM_SLOT_HEAD|ITEM_SLOT_FEET|ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING|ITEM_SLOT_POCKET
+	var/works_in_hands = TRUE
 	var/charges = INFINITY
 	var/blocks_self = TRUE
 	var/datum/callback/reaction
 	var/datum/callback/expire
 
-/datum/component/anti_magic/Initialize(_magic = FALSE, _holy = FALSE, _psychic = FALSE, _allowed_slots, _charges, _blocks_self = TRUE, datum/callback/_reaction, datum/callback/_expire)
+/datum/component/anti_magic/Initialize(_magic = FALSE, _holy = FALSE, _psychic = FALSE, _allowed_slots, _works_in_hands, _charges, _blocks_self = TRUE, datum/callback/_reaction, datum/callback/_expire)
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
@@ -22,6 +23,8 @@
 	psychic = _psychic
 	if(_allowed_slots)
 		allowed_slots = _allowed_slots
+	if(_works_in_hands)
+		works_in_hands = _works_in_hands
 	if(!isnull(_charges))
 		charges = _charges
 	blocks_self = _blocks_self
@@ -29,7 +32,7 @@
 	expire = _expire
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
-	if(!CHECK_BITFIELD(allowed_slots, slotdefine2slotbit(slot)))
+	if(!(works_in_hands && slot == SLOT_HANDS) && !CHECK_BITFIELD(allowed_slots, slotdefine2slotbit(slot))) //If it's not handheld, check that the slot is valid for antimagic
 		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
 		return
 	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect, TRUE)
