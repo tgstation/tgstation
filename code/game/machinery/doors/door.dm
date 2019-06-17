@@ -112,7 +112,16 @@
 			else
 				do_animate("deny")
 		return
-	return
+
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(!density || (I.w_class < WEIGHT_CLASS_NORMAL && !LAZYLEN(I.GetAccess())))
+			return
+		if(check_access(I))
+			open()
+		else
+			do_animate("deny")
+		return
 
 /obj/machinery/door/Move()
 	var/turf/T = loc

@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Surgery steps are now shown in detail only to the surgeon and anyone standing adjacent to them; the patient and people watching from further away get a more vague/ambiguous description."

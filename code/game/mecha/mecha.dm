@@ -37,6 +37,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
+	var/equipment_disabled = 0 //disabled due to EMP
 	var/obj/item/stock_parts/cell/cell
 	var/state = 0
 	var/last_message = 0
@@ -154,7 +155,6 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
-	diag_hud_set_mechtracking()
 
 /obj/mecha/update_icon()
 	if (silicon_pilot && silicon_icon_state)
@@ -220,6 +220,15 @@
 
 	GLOB.mechas_list -= src //global mech list
 	return ..()
+
+/obj/mecha/proc/restore_equipment()
+	equipment_disabled = 0
+	if(istype(src, /obj/mecha/combat))
+		mouse_pointer = 'icons/mecha/mecha_mouse.dmi'
+	if(occupant)
+		SEND_SOUND(occupant, sound('sound/items/timer.ogg', volume=50))
+		to_chat(occupant, "<span=notice>Equipment control unit has been rebooted successfuly.</span>")
+		occupant.update_mouse_pointer()
 
 /obj/mecha/CheckParts(list/parts_list)
 	..()
@@ -429,7 +438,6 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
-	diag_hud_set_mechtracking()
 
 /obj/mecha/fire_act() //Check if we should ignite the pilot of an open-canopy mech
 	if (occupant && !enclosed && !silicon_pilot)

@@ -204,6 +204,8 @@
 				A.AssignName(new_name)
 				. = TRUE
 		if("create_culture_bottle")
+			if (wait)
+				return
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
 			if(!istype(A) || !A.mutable)
@@ -222,6 +224,8 @@
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			. = TRUE
 		if("create_vaccine_bottle")
+			if (wait)
+				return
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())

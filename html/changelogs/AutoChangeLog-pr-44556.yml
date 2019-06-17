@@ -1,0 +1,4 @@
+author: "Onule"
+delete-after: True
+changes: 
+  - imageadd: "Corpse flowers have been given proper sprites"
