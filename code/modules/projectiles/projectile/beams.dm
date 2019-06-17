@@ -251,9 +251,9 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 			money_to_steal = 1
 		if(ishuman(firer))
 			var/mob/living/carbon/human/F = firer
-			var/obj/item/card/id/C = F.get_idcard(TRUE)
-			if(C?.registered_account)
-				C.registered_account.adjust_money(money_to_steal)
+			var/obj/item/card/id/thief_card = F.get_idcard(TRUE)
+			if(thief_card?.registered_account)
+				thief_card.registered_account.adjust_money(money_to_steal)
 				to_chat(F, "<span class='notice'>Your wallet has received $[money_to_steal].</span>")
 			else
 				var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
@@ -331,5 +331,5 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 /obj/item/projectile/beam/invisible
 	invisibility = INVISIBILITY_MAXIMUM
 	damage = 15
-	range = 12
+	range = 10
 	light_color = LIGHT_COLOR_PINK
