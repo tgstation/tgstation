@@ -174,7 +174,8 @@ SUBSYSTEM_DEF(job)
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
 /datum/controller/subsystem/job/proc/FillHeadPosition()
-	for(var/level = 1 to 3)
+	var/list/levels = list(JP_HIGH,JP_MEDIUM,JP_LOW)
+	for(var/level in levels)
 		for(var/command_position in GLOB.command_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)
