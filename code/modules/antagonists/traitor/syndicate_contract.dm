@@ -4,6 +4,8 @@
 	var/datum/objective/contract/contract = new()
 	var/ransom = 0
 
+	var/list/victim_belongings = list()
+
 /datum/syndicate_contract/New(owner)
 	generate(owner)
 
@@ -24,7 +26,7 @@
 	contract.payout = rand(0, 3)
 	contract.generate_dropoff()
 
-	ransom = 100 * rand(20, 65)
+	ransom = 100 * rand(18, 45)
 
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
 	if (contract.target && contract.dropoff_check(user, contract.target.current))
@@ -92,6 +94,17 @@
 				
 				if (traitor_data.current_contract == src) 
 					traitor_data.current_contract = null
+
+			for(var/obj/item/W in M)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(W == H.w_uniform)
+						continue //So all they're left with are shoes and uniform.
+					if(W == H.shoes)
+						continue
+				
+				M.transferItemToLoc(W)
+				victim_belongings.Add(W)
 
 			handleVictimExperience(M)
 
@@ -166,6 +179,19 @@
 
 		do_sparks(8, FALSE, M)
 		M.visible_message("<span class='notice'>[M] vanishes...</span>")
+
+		for(var/obj/item/W in M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(W == H.w_uniform)
+					continue //So all they're left with are shoes and uniform.
+				if(W == H.shoes)
+					continue
+			M.dropItemToGround(W)
+
+		for(var/obj/item/W in victim_belongings)
+			W.forceMove(return_pod)
+		
 		M.forceMove(return_pod)
 
 		M.flash_act()
