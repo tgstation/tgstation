@@ -38,7 +38,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit //https://cdn.discordapp.com/attachments/429431032228610058/585549032177401857/vomitgoose.png
 	name = "Birdboat"
 	real_name = "Birdboat"
-	desc = "It's a sick-looking goose. Probably ate too much maintenance trash."
+	desc = "It's a sick-looking goose, probably ate too much maintenance trash. Best not to move it around too much."
 	gender = MALE
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -47,6 +47,7 @@
 	random_retaliate = FALSE
 	var/vomiting = FALSE
 	var/vomitCoefficient = 1
+	var/vomitTimeBonus = 0
 	var/datum/action/cooldown/vomit/goosevomit
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize()
@@ -58,24 +59,44 @@
 	QDEL_NULL(goosevomit)
 	return ..()
 
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/examine(user)
+	..()
+	to_chat(user, "<span class='notice'>Somehow, it still looks hungry.</span>")
+
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/attacked_by(obj/item/O, mob/user)
 	feed(O)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/O)
 	if(istype(O, /obj/item/reagent_containers/food))
-		O.forceMove(src)
-		playsound(src,'sound/items/eatfood.ogg', rand(10,50), 1)
-		vomitCoefficient ++
+		var/obj/item/reagent_containers/food/tasty = O
+		if (tasty.foodtype & GROSS)
+			visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
+			tasty.forceMove(src)
+			playsound(src,'sound/items/eatfood.ogg', 70, 1)
+			vomitCoefficient ++
+			vomitTimeBonus += 5
+		else
+			visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
 	var/turf/T = get_turf(src)
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
-	T.add_vomit_floor(src)
-	for (var/obj/item/consumed in contents)
-		if(istype(consumed, /obj/item/reagent_containers/food))
-			consumed.forceMove(T)
-			var/destination = get_edge_target_turf(T, pick(GLOB.alldirs)) //Pick a random direction to toss them in
-			consumed.throw_at(destination, 2, 3) //Thow the food at a random tile 3 spots away
+	if (prob(50))
+		var/obj/item/reagent_containers/food/consumed = locate() in contents //Barf out a single food item from our guts
+		if (consumed)
+			barf_food(consumed)
+	else
+		T.add_vomit_floor(src)
+	
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A)
+	if(istype(A, /obj/item/reagent_containers/food))
+		var/turf/T = get_turf(src)
+		var/obj/item/reagent_containers/food/consumed = A
+		consumed.forceMove(T)
+		var/destination = get_edge_target_turf(T, pick(GLOB.alldirs)) //Pick a random direction to toss them in
+		consumed.throw_at(destination, 1, 2) //Thow the food at a random tile 1 spot away
+		var/turf/T = get_turf(consumed)
+		T.add_vomit_floor(src)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
 	flick("vomit_start",src)
@@ -85,6 +106,8 @@
 	addtimer(CALLBACK(src, .proc/vomit_end), duration)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_end()
+	for (var/obj/item/consumed in contents) //Get rid of any food left in the poor thing
+		barf_food(consumed)
 	flick("vomit_end",src)
 	vomiting = FALSE
 	icon_state = initial(icon_state)
@@ -94,13 +117,12 @@
 	if(vomiting)
 		vomit() // its supposed to keep vomiting if you move
 		return
-	var/turf/T = get_turf(src)
-	for (var/atom/tasty in T)
-		if(istype(tasty, /obj/item/reagent_containers/food))
-			feed(tasty)
-	if(prob(vomitCoefficient * 0.5))
+	for (var/atom/tasty in get_turf(src))
+		feed(tasty)
+	if(prob(vomitCoefficient * 0.5))	
+		vomit_start(vomitTimeBonus + 25)
 		vomitCoefficient = 1
-		vomit_start(25)
+		vomitTimeBonus = 0
 
 /datum/action/cooldown/vomit
 	name = "Vomit"
