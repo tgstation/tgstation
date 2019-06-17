@@ -38,7 +38,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit //https://cdn.discordapp.com/attachments/429431032228610058/585549032177401857/vomitgoose.png
 	name = "Birdboat"
 	real_name = "Birdboat"
-	desc = "It's a sick-looking goose. Probably ate too much maintenance trash."
+	desc = "It's a sick-looking goose. Probably ate too much maintenance trash. Somehow, it still looks hungry."
 	gender = MALE
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -63,9 +63,12 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/O)
 	if(istype(O, /obj/item/reagent_containers/food))
-		O.forceMove(src)
-		playsound(src,'sound/items/eatfood.ogg', rand(10,50), 1)
-		vomitCoefficient ++
+		var/obj/item/reagent_containers/food/tasty = O
+		if (tasty.foodtype |= GROSS)
+			visible_message("<span class='notice'>[src] gobbles up \the [tasty]!</span>")
+			tasty.forceMove(src)
+			playsound(src,'sound/items/eatfood.ogg', 70, 1)
+			vomitCoefficient ++
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
 	var/turf/T = get_turf(src)
