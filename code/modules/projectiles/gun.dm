@@ -78,7 +78,7 @@
 	build_zooming()
 
 /obj/item/gun/Destroy()
-	if(pin)
+	if(isobj(pin)) //Can still be the initial path, then we skip
 		QDEL_NULL(pin)
 	if(gun_light)
 		QDEL_NULL(gun_light)
