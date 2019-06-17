@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(job)
 
 	var/overflow_role = "Assistant"
 
-	var/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
+	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.HACK_LoadMapConfig()
