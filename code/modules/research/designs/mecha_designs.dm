@@ -218,23 +218,21 @@
 	name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
 	desc = "Allows for the construction of SGL-6 Grenade Launcher."
 	id = "mech_grenade_launcher"
-	build_type = PROTOLATHE
+	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	materials = list(MAT_METAL=22000,MAT_GOLD=6000,MAT_SILVER=8000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/clusterbang_launcher
 	name = "Exosuit Module (SOB-3 Clusterbang Launcher)"
 	desc = "A weapon that violates the Geneva Convention at 3 rounds per minute"
 	id = "clusterbang_launcher"
-	build_type = PROTOLATHE
+	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang
 	materials = list(MAT_METAL=20000,MAT_GOLD=16000,MAT_URANIUM=16000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_wormhole_gen
 	name = "Exosuit Module (Localized Wormhole Generator)"
