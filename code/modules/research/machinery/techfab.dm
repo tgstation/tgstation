@@ -22,6 +22,7 @@
 								"Medical Machinery",
 								"Engineering Machinery",
 								"Exosuit Modules",
+								"Exosuit Equipment",
 								"Hydroponics Machinery",
 								"Subspace Telecomms",
 								"Research Machinery",

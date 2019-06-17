@@ -145,7 +145,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_carbine
@@ -156,7 +156,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_ion
@@ -167,7 +167,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	materials = list(MAT_METAL=20000,MAT_SILVER=6000,MAT_URANIUM=2000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_tesla
@@ -178,7 +178,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	materials = list(MAT_METAL=20000,MAT_SILVER=8000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_laser
@@ -189,7 +189,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_laser_heavy
@@ -200,7 +200,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	materials = list(MAT_METAL=10000,MAT_GLASS=1000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_disabler
@@ -211,7 +211,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_grenade_launcher
@@ -222,7 +222,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	materials = list(MAT_METAL=22000,MAT_GOLD=6000,MAT_SILVER=8000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/clusterbang_launcher
@@ -231,9 +231,9 @@
 	id = "clusterbang_launcher"
 	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang
-	materials = list(MAT_METAL=20000,MAT_GOLD=10000,MAT_URANIUM=10000)
+	materials = list(MAT_METAL=20000,MAT_GOLD=16000,MAT_URANIUM=16000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_wormhole_gen
@@ -264,7 +264,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/rcd
 	materials = list(MAT_METAL=30000,MAT_GOLD=20000,MAT_PLASMA=25000,MAT_SILVER=20000)
 	construction_time = 1200
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/mech_gravcatapult
@@ -325,7 +325,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	materials = list(MAT_METAL=10000,MAT_DIAMOND=6500)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/mech_generator_nuclear
@@ -346,7 +346,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	materials = list(MAT_METAL = 8000, MAT_GLASS = 1000, MAT_PLASMA = 2000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/mech_lmg
@@ -355,9 +355,9 @@
 	id = "mech_lmg"
 	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
-	materials = list(MAT_METAL=10000)
+	materials = list(MAT_METAL=16000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mech_sleeper
@@ -368,7 +368,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/sleeper
 	materials = list(MAT_METAL=5000,MAT_GLASS=10000)
 	construction_time = 100
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/mech_syringe_gun
@@ -379,7 +379,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
 	materials = list(MAT_METAL=3000,MAT_GLASS=2000)
 	construction_time = 200
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/mech_medical_beamgun
@@ -390,5 +390,5 @@
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_PLASMA = 3000, MAT_GOLD = 8000, MAT_DIAMOND = 2000)
 	construction_time = 250
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

@@ -497,11 +497,12 @@
 /datum/design/mech_drill
 	name = "Exosuit Engineering Equipment (Drill)"
 	id = "mech_drill"
-	build_type = MECHFAB
+	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/drill
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/mech_mining_scanner
 	name = "Exosuit Engineering Equipment (Mining Scanner)"
@@ -510,7 +511,7 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	materials = list(MAT_METAL=5000,MAT_GLASS=2500)
 	construction_time = 50
-	category = list("Exosuit Modules")
+	category = list("Exosuit Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/mech_extinguisher
@@ -520,8 +521,8 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/extinguisher
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
-	category = list("Exosuit Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+	category = list("Exosuit Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO|DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/mech_cable_layer
 	name = "Exosuit Engineering Equipment (Cable Layer)"
@@ -530,8 +531,8 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/cable_layer
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
-	category = list("Exosuit Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+	category = list("Exosuit Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/mech_generator
 	name = "Exosuit Equipment (Plasma Generator)"
@@ -545,38 +546,42 @@
 /datum/design/mech_mousetrap_mortar
 	name = "H.O.N.K Mousetrap Mortar"
 	id = "mech_mousetrap_mortar"
-	build_type = MECHFAB
+	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	materials = list(MAT_METAL=20000,MAT_BANANIUM=5000)
 	construction_time = 300
 	category = list("Exosuit Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/mech_banana_mortar
 	name = "H.O.N.K Banana Mortar"
 	id = "mech_banana_mortar"
-	build_type = MECHFAB
+	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
 	materials = list(MAT_METAL=20000,MAT_BANANIUM=5000)
 	construction_time = 300
 	category = list("Exosuit Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/mech_honker
 	name = "HoNkER BlAsT 5000"
 	id = "mech_honker"
-	build_type = MECHFAB
+	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/honker
 	materials = list(MAT_METAL=20000,MAT_BANANIUM=10000)
 	construction_time = 500
 	category = list("Exosuit Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/mech_punching_glove
 	name = "Oingo Boingo Punch-face"
 	id = "mech_punching_face"
-	build_type = MECHFAB
+	build_type = PROTOLATHE
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
 	materials = list(MAT_METAL=20000,MAT_BANANIUM=7500)
 	construction_time = 400
 	category = list("Exosuit Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////
