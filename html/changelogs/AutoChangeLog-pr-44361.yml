@@ -1,0 +1,8 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - balance: "max stamina damage to the chest is now 120."
+  - bugfix: "stamcrit and stuns now stack properly (stamcrit cleanse no longer cleanses other stuns)"
+  - bugfix: "stam paralysis now ends instantly on healing stamina damage to below 100"
+  - bugfix: "stamina damage will no longer spam exhaustion messages if you are stunimmune"
+  - tweak: "stamcrit will still respect stun immunity, but not stun reduction (as it has no well-defined duration)."

@@ -1,4 +1,0 @@
-author: "Citinited"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an exploit allowing you to move enabled emitters"
