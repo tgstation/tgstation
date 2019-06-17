@@ -58,9 +58,7 @@
 	QDEL_NULL(goosevomit)
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/afterattack(obj/item/O, mob/user, proximity)
-	if(!proximity)
-		return
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/attacked_by(obj/item/O, mob/user)
 	feed(O)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/O)
@@ -73,9 +71,11 @@
 	var/turf/T = get_turf(src)
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 	T.add_vomit_floor(src)
-	for (var/atom/consumed in contents)
+	for (var/obj/item/consumed in contents)
 		if(istype(consumed, /obj/item/reagent_containers/food))
 			consumed.forceMove(T)
+			var/destination = get_edge_target_turf(T, pick(GLOB.alldirs)) //Pick a random direction to toss them in
+			consumed.throw_at(destination, 2, 3) //Thow the food at a random tile 3 spots away
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
 	flick("vomit_start",src)
@@ -99,6 +99,7 @@
 		if(istype(tasty, /obj/item/reagent_containers/food))
 			feed(tasty)
 	if(prob(vomitCoefficient * 0.5))
+		vomitCoefficient = 1
 		vomit_start(25)
 
 /datum/action/cooldown/vomit
