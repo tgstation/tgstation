@@ -120,7 +120,7 @@
 	if (M.stat != DEAD)
 		M.flash_act()
 		M.confused += 10
-		M.blur_eyes(10)
+		M.blur_eyes(5)
 		to_chat(M, "<span class='warning'>You feel strange...</span>")
 		sleep(60)
 		to_chat(M, "<span class='warning'>That pod did something to you...</span>")
@@ -129,7 +129,7 @@
 		to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
 		M.flash_act()
 		M.confused += 20
-		M.blur_eyes(15)
+		M.blur_eyes(3)
 		sleep(30)
 		to_chat(M, "<span class='warning'>Your head pounds...</span>")
 		sleep(100)
@@ -138,8 +138,8 @@
 		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 					we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
 					so it's only a matter of time before we ship you back...\"</i></span>")
-		M.blur_eyes(30)
-		M.Dizzy(35)
+		M.blur_eyes(10)
+		M.Dizzy(15)
 		M.confused += 20
 
 // We're returning the victim

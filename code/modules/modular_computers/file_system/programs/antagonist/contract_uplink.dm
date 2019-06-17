@@ -69,9 +69,9 @@
 				if(ishuman(user))
 					var/mob/living/carbon/human/H = user
 					if(H.put_in_hands(crystals))
-						to_chat(H, "Your payment materializes into your hands!")
+						to_chat(H, "<span class='notice'>Your payment materializes into your hands!</span>")
 					else
-						to_chat(user, "Your payment materializes onto the floor.")
+						to_chat(user, "<span class='notice'>Your payment materializes onto the floor.</span>")
 
 				hard_drive.traitor_data.contract_TC_payed_out += hard_drive.traitor_data.contract_TC_to_redeem
 				hard_drive.traitor_data.contract_TC_to_redeem = 0
