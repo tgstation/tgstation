@@ -262,6 +262,8 @@ Sort out active, anchor and possible layers
 			if(WEST)
 				direction = "west"
 		var/image/I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = AM.layer - 1)
+		if(!turn_connects)
+			I.dir = 0 //no spinning, we always point south
 		AM.overlays += I
 		ducterlays += I
 
