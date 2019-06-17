@@ -33,6 +33,10 @@
 /obj/item/assembly/flash/update_icon(flash = FALSE)
 	cut_overlays()
 	attached_overlays = list()
+	if(world.time < (last_trigger + cooldown))
+		add_overlay("flashcool")
+		attached_overlays += "flashcool"
+		addtimer(CALLBACK(src, .proc/update_icon), cooldown)
 	if(burnt_out)
 		add_overlay("flashburnt")
 		attached_overlays += "flashburnt"
@@ -199,12 +203,12 @@
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	if(..())
+		new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	if(..())
+		new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
 	return
