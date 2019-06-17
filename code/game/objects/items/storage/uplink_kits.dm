@@ -180,6 +180,48 @@
 			new /obj/item/dnainjector/cryokinesis(src)
 			new /obj/item/gun/energy/temperature/security(src)
 
+/obj/item/storage/box/syndicate/contract_kit
+	name = "Contract Kit"
+	desc = "Supplied to Syndicate contractors in active mission areas."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndicate/contract_kit/PopulateContents()
+	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
+	new /obj/item/storage/box/syndie_kit/space/contract(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/card/id/syndicate(src)
+
+	// All 4 TC or less - some nukeops only items, but fit nicely to the theme.
+	var/list/item_list = list(
+		/obj/item/storage/backpack/duffelbag/syndie/x4,
+		/obj/item/storage/box/syndie_kit/emp,
+		/obj/item/storage/box/syndie_kit/throwing_weapons,
+		/obj/item/gun/syringe/syndicate,
+		/obj/item/pen/edagger,
+		/obj/item/pen/sleepy,
+		/obj/item/gun/ballistic/automatic/toy/pistol/riot,
+		/obj/item/flashlight/emp,
+		/obj/item/reagent_containers/syringe/mulligan,
+		/obj/item/clothing/shoes/chameleon/noslip,
+		/obj/item/storage/toolbox/syndicate,
+		/obj/item/storage/firstaid/tactical,
+		/obj/item/storage/backpack/duffelbag/syndie/surgery,
+		/obj/item/encryptionkey/syndicate,
+		/obj/item/clothing/glasses/thermal/syndi,
+		/obj/item/slimepotion/slime/sentience/nuclear,
+		/obj/item/storage/box/syndie_kit/imp_radio,
+		/obj/item/storage/box/syndie_kit/imp_uplink
+	)
+
+	var/obj/item1 = pick_n_take(item_list)
+	var/obj/item2 = pick_n_take(item_list)
+
+	// Create two, non repeat items from the list.
+	new item1(src)
+	new item2(src)
+
 /obj/item/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
@@ -267,6 +309,11 @@
 	else
 		new /obj/item/clothing/head/helmet/space/syndicate(src)
 		new /obj/item/clothing/suit/space/syndicate(src)
+
+/obj/item/storage/box/syndie_kit/space/contract/PopulateContents()
+	new /obj/item/clothing/suit/space/syndicate/black/red(src)
+	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+
 
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"

@@ -793,3 +793,26 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			rearranged += cword
 	message = "[prefix][jointext(rearranged," ")]"
 	. = message
+
+
+/proc/readable_corrupted_text(text)
+	var/list/corruption_options = list("..", "£%", "~~\"", "!!", "*", "^", "$!", "-", "}", "?")
+	var/corrupted_text = ""
+
+	// Have every letter have a chance of creating corruption on either side
+	// Small chance of letters being removed in place of corruption - still overall readable
+	for(var/letter_index = 1; letter_index <= length(text); letter_index++)
+		var/letter = text[letter_index]
+
+		if (prob(15))
+			corrupted_text += pick(corruption_options)
+
+		if (prob(95))
+			corrupted_text += letter
+		else
+			corrupted_text += pick(corruption_options)
+
+	if (prob(15))
+		corrupted_text += pick(corruption_options)
+
+	return corrupted_text
