@@ -80,14 +80,13 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
 	var/turf/T = get_turf(src)
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
-	if (prob(50))
-		var/obj/item/reagent_containers/food/consumed = locate() in contents //Barf out a single food item from our guts
-		if (consumed)
-			barf_food(consumed)
+	var/obj/item/reagent_containers/food/consumed = locate() in contents //Barf out a single food item from our guts
+	if (prob(50) && consumed)
+		barf_food(consumed)
 	else
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 		T.add_vomit_floor(src)
-	
+		
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A)
 	if(istype(A, /obj/item/reagent_containers/food))
 		var/turf/T = get_turf(src)
@@ -97,6 +96,7 @@
 		consumed.throw_at(destination, 1, 2) //Thow the food at a random tile 1 spot away
 		var/turf/T = get_turf(consumed)
 		T.add_vomit_floor(src)
+		playsound(get_turf(consumed), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
 	flick("vomit_start",src)
