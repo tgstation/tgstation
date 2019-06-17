@@ -23,7 +23,7 @@
     "es3ify": "0.2.1",
     "fg-loadcss": "1.0.0-0",
     "fontfaceobserver": "1.6.3",
-    "gulp": "git://github.com/gulpjs/gulp.git#v4.0.0-alpha.3",
+    "gulp": "^4.0.2",
     "gulp-bytediff": "1.0.0",
     "gulp-if": "2.0.0",
     "gulp-load-plugins": "^1.6.0",
