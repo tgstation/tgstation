@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Beepskys spawned from Beepsky Smash can no longer be heard by bystanders."
+  - bugfix: "The beepsky smash trauma can no longer be gained as a special trauma."
