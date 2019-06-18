@@ -37,6 +37,7 @@ GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
 GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 
+GLOBAL_LIST_EMPTY(emote_list)
 
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
 	var/list/mob_types = list()
@@ -55,3 +56,17 @@ GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 	for(var/i in GLOB.mob_list)
 		var/mob/M = i
 		M.update_config_movespeed()
+
+/proc/init_emote_list()
+	. = list()
+	for(var/path in subtypesof(/datum/emote))
+		var/datum/emote/E = new path()
+		if(!.[E.key])
+			.[E.key] = list(E)
+		else
+			.[E.key] += E
+		
+		if(!.[E.key_third_person])
+			.[E.key_third_person] = list(E)
+		else
+			.[E.key_third_person] |= E

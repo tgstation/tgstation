@@ -1,5 +1,0 @@
-author: "Joe Berry"
-delete-after: True
-changes: 
-  - rscadd: "Player controlled megafauna support. Now if you control any megafauna, or the space dragon, you have action buttons to choose the different moves you can use."
-  - refactor: "Fixed up megafauna code."

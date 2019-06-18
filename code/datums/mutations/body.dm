@@ -109,7 +109,7 @@
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
 	name = "Clumsiness"
-	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk"
+	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk!"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 
@@ -236,7 +236,7 @@
 
 /datum/mutation/human/fire
 	name = "Fiery Sweat"
-	desc = "The user's skin will randomly combust, but is generally alot more resilient to burning."
+	desc = "The user's skin will randomly combust, but is generally a lot more resilient to burning."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You feel hot.</span>"
 	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
@@ -275,7 +275,7 @@
 /datum/mutation/human/badblink/on_life()
 	if(prob(warpchance))
 		var/warpmessage = pick(
-		"<span class='warning'>With a sickening 720 degree twist of their back, [owner] vanishes into thin air.</span>",
+		"<span class='warning'>With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air.</span>",
 		"<span class='warning'>[owner] does some sort of strange backflip into another dimension. It looks pretty painful.</span>",
 		"<span class='warning'>[owner] does a jump to the left, a step to the right, and warps out of reality.</span>",
 		"<span class='warning'>[owner]'s torso starts folding inside out until it vanishes from reality, taking [owner] with it.</span>",
@@ -291,10 +291,10 @@
 
 /datum/mutation/human/acidflesh
 	name = "Acidic Flesh"
-	desc = "Subject has acidic chemicals building up underneath their skin. This is often lethal."
+	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
-	text_lose_indication = "<span class'notice'>A feeling of relief covers you as your flesh goes back to normal.</span>"
+	text_lose_indication = "<span class'notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and use on others
 	var/msgcooldown = 0
 
@@ -310,7 +310,7 @@
 
 /datum/mutation/human/gigantism
 	name = "Gigantism"//negative version of dwarfism
-	desc = "The cells within the subject spread out to cover more area, making them appear larger."
+	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
 	quality = MINOR_NEGATIVE
 	difficulty = 12
 	conflicts = list(DWARFISM)

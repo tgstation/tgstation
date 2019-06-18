@@ -1,0 +1,7 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - balance: "Utility mechs no longer automatically get beacons."
+  - balance: "Tracking beacons no longer delete themselves when EMPing a mech, and instead have a ten-second cooldown in-between EMPs. They also now do heavy EMP damage rather than light."
+  - balance: "Mechs that take EMP damage lose the use of their weapons and equipment temporarily. Movement and abilities are not effected."
+  - balance: "Mechs taking EMP damage no longer roll for a random malfunction."

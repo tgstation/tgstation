@@ -116,7 +116,7 @@ This file contains the cult dagger and rune list code
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
-	if(istype(get_turf(user), /turf/open/floor/engine/cult))
+	if(istype(get_turf(user), /turf/open/floor/engine/cult) && !(ispath(rune_to_scribe, /obj/effect/rune/narsie)))
 		scribe_mod *= 0.5
 	if(!do_after(user, scribe_mod, target = get_turf(user)))
 		for(var/V in shields)

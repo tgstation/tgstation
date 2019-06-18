@@ -55,10 +55,10 @@ SUBSYSTEM_DEF(economy)
 	return ..()
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
-	boring_eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows.
-	boring_sci_payout() // Payout based on slimes.
-	boring_secmedsrv_payout() // Payout based on crew safety, health, and mood.
-	boring_civ_payout() // Payout based on ??? Profit
+	eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows.
+	sci_payout() // Payout based on slimes.
+	secmedsrv_payout() // Payout based on crew safety, health, and mood.
+	civ_payout() // Payout based on ??? Profit
 	for(var/A in bank_accounts)
 		var/datum/bank_account/B = A
 		B.payday(1)
@@ -69,13 +69,13 @@ SUBSYSTEM_DEF(economy)
 		if(D.department_id == dep_id)
 			return D
 
-/datum/controller/subsystem/economy/proc/boring_eng_payout()
+/datum/controller/subsystem/economy/proc/eng_payout()
 	var/engineering_cash = 3000
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_ENG)
 	if(D)
 		D.adjust_money(engineering_cash)
 
-/datum/controller/subsystem/economy/proc/boring_secmedsrv_payout()
+/datum/controller/subsystem/economy/proc/secmedsrv_payout()
 	var/crew
 	var/alive_crew
 	var/dead_monsters
@@ -108,13 +108,13 @@ SUBSYSTEM_DEF(economy)
 			if(H.stat == DEAD && H.z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 				dead_monsters++
 		CHECK_TICK
-	var/fuck = alive_crew / crew
-	cash_to_grant = (crew_safety_bounty * fuck) + (monster_bounty * dead_monsters)
+	var/living_ratio = alive_crew / crew
+	cash_to_grant = (crew_safety_bounty * living_ratio) + (monster_bounty * dead_monsters)
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_SEC)
 	if(D)
-		D.adjust_money(cash_to_grant)
+		D.adjust_money(min(cash_to_grant, MAX_GRANT_SECMEDSRV))
 
-/datum/controller/subsystem/economy/proc/boring_sci_payout()
+/datum/controller/subsystem/economy/proc/sci_payout()
 	var/science_bounty = 0
 	for(var/mob/living/simple_animal/slime/S in GLOB.mob_list)
 		if(S.stat == DEAD)
@@ -122,9 +122,10 @@ SUBSYSTEM_DEF(economy)
 		science_bounty += slime_bounty[S.colour]
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_SCI)
 	if(D)
-		D.adjust_money(science_bounty)
+		D.adjust_money(min(science_bounty, MAX_GRANT_SCI))
 
-/datum/controller/subsystem/economy/proc/boring_civ_payout()
+/datum/controller/subsystem/economy/proc/civ_payout()
+	var/civ_cash = (rand(1,5) * 500)
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
 	if(D)
-		D.adjust_money((rand(1,5) * 500))
+		D.adjust_money(min(civ_cash, MAX_GRANT_CIV))
