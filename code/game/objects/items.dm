@@ -183,14 +183,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
-	..()
+	. = ..()
 	var/pronoun
 	if(src.gender == PLURAL)
 		pronoun = "They are"
 	else
 		pronoun = "It is"
 	var/size = weightclass2text(src.w_class)
-	to_chat(user, "[pronoun] a [size] item." )
+	. += "[pronoun] a [size] item."
 
 	if(!user.research_scanner)
 		return
@@ -227,7 +227,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		research_msg += "None"
 	research_msg += "."
-	to_chat(user, research_msg.Join())
+	. += research_msg.Join()
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)

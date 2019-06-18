@@ -32,8 +32,8 @@
 			icon_state = "light0"
 
 /obj/machinery/light_switch/examine(mob/user)
-	..()
-	to_chat(user, "It is [area.lightswitch ? "on" : "off"].")
+	. = ..()
+	. += "It is [area.lightswitch ? "on" : "off"]."
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()

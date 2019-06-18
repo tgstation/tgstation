@@ -24,9 +24,9 @@
 	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/secure_data/examine(mob/user)
-	..()
+	. = ..()
 	if(scan)
-		to_chat(user, "<span class='notice'>Alt-click to eject the ID card.</span>")
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"
