@@ -1,6 +1,0 @@
-author: "Akrilla"
-delete-after: True
-changes: 
-  - rscadd: "Syndicate Contracts. Use the new contract uplink to select a contract, and bring the assigned target dead or alive to the designated drop off. Call for the extraction pod and send them off for your TC payment, with much higher rewards for keeping them alive. A high risk, high reward choice for a traitor who wants a real challenge."
-  - rscadd: "New 20 TC contract kit - supplies you with your contractor loadout and uplink."
-  - rscadd: "Targets successfully extracted will be held for ransom by the Syndicate after their use to them is fulfilled. Central command covers the cost, but they'll be taking a cut out of station funds to offset their loss..."

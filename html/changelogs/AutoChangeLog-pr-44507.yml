@@ -1,7 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - rscdel: "Removed mining points. Miners now earn cold hard cash in return for their efforts. Their regular paycheck has been reduced to compensate for this extra income.
-change: ORM laser upgrades now increase the yield rather than the amount of mining points."
-  - rscadd: "Golems' mining IDs are now linked to the Liberator's account."
-  - tweak: "Half of the gulag points earned go to the prisoner as cash and the other half is put into the security budget, unless the prisoner's real ID is not in the gulag reclamation console in which case the full sum is awarded to the prisoner."
