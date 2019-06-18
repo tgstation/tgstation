@@ -1,0 +1,5 @@
+author: "granpawalton"
+delete-after: True
+changes: 
+  - tweak: "miasma now only spawns below 315 kpa"
+  - bugfix: "miasma now spawns at room temperature instead of 0 kelvin"
