@@ -34,7 +34,7 @@
 		var/datum/objective/brainwashing/obj = new(objective)
 		vessel.objectives += obj
 		var/message = " has been brainwashed with the following objectives: [objective]."
-		deadchat_broadcast("<b>[M]</b>", message, follow_target = M, turf_target = get_turf(M), message_type=DEADCHAT_REGULAR)
+		deadchat_broadcast(message, "<b>[M]</b>", follow_target = M, turf_target = get_turf(M), message_type=DEADCHAT_REGULAR)
 	if(!M.has_antag_datum(/datum/antagonist/hivevessel))
 		M.add_antag_datum(vessel)
 

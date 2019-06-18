@@ -449,7 +449,7 @@
 			message_admins("[ADMIN_LOOKUPFLW(vessel)] has been temporarily taken over by [ADMIN_LOOKUPFLW(user)] (Hivemind Host).")
 			log_game("[key_name(vessel)] was Mind Controlled by [key_name(user)].")
 
-			deadchat_broadcast("<span class='name'>[vessel]</span>", " has just been mind controlled!", vessel)
+			deadchat_broadcast(" has just been mind controlled!", "<span class='name'>[vessel]</span>", vessel)
 
 			original_body = user
 			backseat.loc = vessel
@@ -651,7 +651,7 @@
 			to_chat(user, "<span class='notice'>We have overloaded the vessel's medulla! Without medical attention, they will shortly die.</span>")
 			if(target.stat == CONSCIOUS)
 				target.visible_message("<span class='userdanger'>[target] clutches at [target.p_their()] chest as if [target.p_their()] heart stopped!</span>")
-				deadchat_broadcast("<span class='name'>[target]</span>", " has suffered a mysterious heart attack!", target)
+				deadchat_broadcast(" has suffered a mysterious heart attack!", "<span class='name'>[target]</span>", target)
 	else
 		to_chat(user, "<span class='warning'>We are unable to induce a heart attack!</span>")
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
