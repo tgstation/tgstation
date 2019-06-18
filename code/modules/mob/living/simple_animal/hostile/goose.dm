@@ -64,6 +64,7 @@
 	to_chat(user, "<span class='notice'>Somehow, it still looks hungry.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/attacked_by(obj/item/O, mob/user)
+	. = ..()
 	feed(O)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/O)
