@@ -89,3 +89,4 @@
 	melee_damage_upper = 15
 	a_intent = "harm"
 	resize = 1.5
+	gold_core_spawnable = NO_SPAWN
