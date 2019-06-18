@@ -242,7 +242,6 @@
 				if(C.powernet && use_old_if_found)
 					propagate_network(C, C.powernet, FALSE, TRUE)
 					return
-				PN.add_cable(C)
 			worklist |= C.get_connections(skip_assigned_powernets, worklist[P]) //get adjacents power objects, with or without a powernet
 
 		else if(P.anchored && istype(P, /obj/machinery/power))
@@ -251,6 +250,10 @@
 
 		else
 			continue
+
+	//Actually apply all the shit
+	for(var/obj/structure/cable/C in worklist)
+		PN.add_cable(C)
 
 	//now that the powernet is set, connect found machines to it
 	for(var/obj/machinery/power/PM in found_machines)
