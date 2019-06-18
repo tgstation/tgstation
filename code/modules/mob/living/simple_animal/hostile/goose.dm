@@ -67,6 +67,7 @@
 	feed(O)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/O)
+	. = ..()
 	if(istype(O, /obj/item/reagent_containers/food))
 		var/obj/item/reagent_containers/food/tasty = O
 		if (tasty.foodtype & GROSS)
@@ -86,16 +87,16 @@
 	else
 		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 		T.add_vomit_floor(src)
-		
+
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A)
 	if(istype(A, /obj/item/reagent_containers/food))
-		var/turf/T = get_turf(src)
+		var/turf/T1 = get_turf(src) //its not technically a one-letter var, checkmate ninjanom
 		var/obj/item/reagent_containers/food/consumed = A
-		consumed.forceMove(T)
-		var/destination = get_edge_target_turf(T, pick(GLOB.alldirs)) //Pick a random direction to toss them in
+		consumed.forceMove(T1)
+		var/destination = get_edge_target_turf(T1, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 		consumed.throw_at(destination, 1, 2) //Thow the food at a random tile 1 spot away
-		var/turf/T = get_turf(consumed)
-		T.add_vomit_floor(src)
+		var/turf/T2 = get_turf(consumed)
+		T2.add_vomit_floor(src)
 		playsound(get_turf(consumed), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
@@ -119,7 +120,7 @@
 		return
 	for (var/atom/tasty in get_turf(src))
 		feed(tasty)
-	if(prob(vomitCoefficient * 0.5))	
+	if(prob(vomitCoefficient * 0.5))
 		vomit_start(vomitTimeBonus + 25)
 		vomitCoefficient = 1
 		vomitTimeBonus = 0
