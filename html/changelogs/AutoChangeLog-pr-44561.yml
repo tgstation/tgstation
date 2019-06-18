@@ -1,0 +1,6 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - rscdel: "Removed individual buttons text in crayon/spraycan UI, speeding it up."
+  - bugfix: "Text mode buffer is actually visible in the UI."
+  - tweak: "Last letter of a text mode buffer no longer rotates out to be replaced with \"a\", allowing the text mode to be used for individual symbols."
