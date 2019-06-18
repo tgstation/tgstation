@@ -35,7 +35,7 @@
 	if(prob(5) && random_retaliate == TRUE)
 		Retaliate()
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit //https://cdn.discordapp.com/attachments/429431032228610058/585549032177401857/vomitgoose.png
+/mob/living/simple_animal/hostile/retaliate/goose/vomit
 	name = "Birdboat"
 	real_name = "Birdboat"
 	desc = "It's a sick-looking goose, probably ate too much maintenance trash. Best not to move it around too much."
