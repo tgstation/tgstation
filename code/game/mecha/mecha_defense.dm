@@ -296,11 +296,7 @@
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)
 
 /obj/mecha/narsie_act()
-	if(occupant)
-		var/mob/living/L = occupant
-		go_out(TRUE)
-		if(L)
-			L.narsie_act()
+	emp_act(EMP_HEAVY)
 
 /obj/mecha/ratvar_act()
 	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)
