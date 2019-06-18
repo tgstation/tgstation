@@ -76,3 +76,16 @@
 	icon_living = "evilkreb"
 	icon_dead = "evilkreb_dead"
 	gold_core_spawnable = NO_SPAWN
+
+/mob/living/simple_animal/crab/officer_kreb
+	name = "Officer Kreb"
+	desc = "This is Officer Kreb, the guardian of the Security Team."
+	real_name = "Officer Kreb"
+	icon_state = "evilcrab"
+	icon_living = "evilcrab"
+	icon_dead = "evilcrab_dead"
+	maxHealth = 20000
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	a_intent = "harm"
+	resize = 1.5
