@@ -318,13 +318,13 @@
 
 
 /obj/item/radio/examine(mob/user)
-	..()
+	. = ..()
 	if (frequency && in_range(src, user))
-		to_chat(user, "<span class='notice'>It is set to broadcast over the [frequency/10] frequency.</span>")
+		. += "<span class='notice'>It is set to broadcast over the [frequency/10] frequency.</span>"
 	if (unscrewed)
-		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
+		. += "<span class='notice'>It can be attached and modified.</span>"
 	else
-		to_chat(user, "<span class='notice'>It cannot be modified or attached.</span>")
+		. += "<span class='notice'>It cannot be modified or attached.</span>"
 
 /obj/item/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)

@@ -27,11 +27,6 @@
 	. = ..()
 	update_icon()
 
-/obj/item/storage/belt/examine(mob/user)
-	..()
-	clothing_resistance_flag_examine_message(user)
-
-
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."

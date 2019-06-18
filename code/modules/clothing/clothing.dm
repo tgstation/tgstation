@@ -113,10 +113,16 @@
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
 
 /obj/item/clothing/examine(mob/user)
-	..()
-	clothing_resistance_flag_examine_message(user)
+	. = ..()
+	switch (max_heat_protection_temperature)
+		if (400 to 1000)
+			. += "[src] offers the wearer limited protection from fire."
+		if (1001 to 1600)
+			. += "[src] offers the wearer some protection from fire."
+		if (1601 to 35000)
+			. += "[src] offers the wearer robust protection from fire."
 	if(damaged_clothes)
-		to_chat(user,  "<span class='warning'>It looks damaged!</span>")
+		. += "<span class='warning'>It looks damaged!</span>"
 	var/datum/component/storage/pockets = GetComponent(/datum/component/storage)
 	if(pockets)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")
@@ -133,7 +139,7 @@
 		if(pockets.silent)
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
-		to_chat(user, how_cool_are_your_threads.Join())
+		. += how_cool_are_your_threads.Join()
 
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
