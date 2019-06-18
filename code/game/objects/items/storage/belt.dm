@@ -636,50 +636,63 @@
 	item_state = "fannypack_yellow"
 	item_color = "yellow"
 
-/obj/item/storage/belt/sabre
-	name = "sabre sheath"
-	desc = "An ornate sheath designed to hold an officer's blade."
+/obj/item/storage/belt/sheath
 	icon_state = "sheath"
 	item_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
+	var/hold_type
 
-/obj/item/storage/belt/sabre/ComponentInitialize()
+/obj/item/storage/belt/sheath/Initialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 	STR.rustle_sound = FALSE
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
-		/obj/item/melee/sabre
+		hold_type
 		))
+	update_icon()
 
-/obj/item/storage/belt/sabre/examine(mob/user)
-	. = ..()
-	if(length(contents))
-		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
+/obj/item/storage/belt/sheath/attack_hand(mob/user)
+	if(loc == user)
+		if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+			return
+		if(length(contents))
+			user.visible_message("<span class='notice'>[user] takes \the [contents[1]] out of \the [src].</span>", "<span class='notice'>You take [contents[1]] out of [src].</span>")
+			user.put_in_hands(contents[1])
+			playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
+			update_icon()
+			return
+	return ..()
 
-/obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+/obj/item/storage/belt/sheath/attackby(obj/item/I, mob/living/user)
+	if(!istype(I, hold_type))
+		to_chat(user, "<span class='warning'>\The [I] doesn't seem to fit into \the [src]...</span>")
 		return
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>")
-		user.put_in_hands(I)
+	if(user.transferItemToLoc(I, src))
+		playsound(src, 'sound/items/sheath.ogg', 25, TRUE)
+		user.visible_message("<span class='notice'>[user] puts \the [I] into \the [src].</span>", "<span class='notice'>You take \the [contents[1]] out of \the [src].</span>")
 		update_icon()
-	else
-		to_chat(user, "[src] is empty.")
+		return
+	return ..()
 
-/obj/item/storage/belt/sabre/update_icon()
-	icon_state = "sheath"
-	item_state = "sheath"
-	if(contents.len)
-		icon_state += "-sabre"
-		item_state += "-sabre"
+/obj/item/storage/belt/sheath/update_icon()
+	if(!length(contents))
+		icon_state = initial(icon_state)
+		item_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-sabre"
+		item_state = "[initial(icon_state)]-sabre"
 	if(loc && isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
-	..()
+	return ..()
 
-/obj/item/storage/belt/sabre/PopulateContents()
-	new /obj/item/melee/sabre(src)
+/obj/item/storage/belt/sheath/PopulateContents()
+	new hold_type(src)
 	update_icon()
+
+/obj/item/storage/belt/sheath/sabre
+	name = "sabre sheath"
+	desc = "An ornate sheath designed to hold an officer's blade."
+	hold_type = /obj/item/melee/sabre
