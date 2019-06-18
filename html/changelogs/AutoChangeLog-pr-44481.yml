@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added a new advanced surgery, Muscled Veins: it makes the patient able to survive without a heart."
