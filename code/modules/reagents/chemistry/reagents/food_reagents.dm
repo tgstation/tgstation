@@ -561,11 +561,10 @@
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
 	M.reagents.add_reagent(/datum/reagent/consumable/sugar,3)
-	if(prob(55))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
+	M.adjustBruteLoss(-3*REM, 0)
+	M.adjustFireLoss(-3*REM, 0)
+	M.adjustOxyLoss(-1*REM, 0)
+	M.adjustToxLoss(-1*REM, 0)
 	..()
 
 /datum/reagent/consumable/honey/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
