@@ -648,9 +648,19 @@
 
 /obj/item/clothing/suit/asuka_plugsuit
 	name = "red plugsuit"
-	desc = "A red plugsuit. Might make your butt look big"
+	desc = "A red plugsuit. Might make your butt look big."
 	icon_state = "asuka_plugsuit"
 	item_state = "asuka_plugsuit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	allowed = list()
+
+/obj/item/clothing/suit/rei_plugsuit
+	name = "white plugsuit"
+	desc = "A white plugsuit. Placeholder text."
+	icon_state = "rei_plugsuit"
+	item_state = "rei_plugsuit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
