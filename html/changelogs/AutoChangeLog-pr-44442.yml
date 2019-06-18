@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Cloners now have the option to \"Empty Clone\" a record, creating a mindless replica of that person."
+  - rscadd: "To aid the above function, cloners can now do Body-Only scans, which can be used to create empty clones but not real clones, but bypass the sentience restrictions on scans. They can also be deleted without requiring access."

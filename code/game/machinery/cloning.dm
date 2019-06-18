@@ -140,35 +140,37 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas)
+/obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas, empty)
 	if(panel_open)
 		return NONE
 	if(mess || attempting)
 		return NONE
-	clonemind = locate(mindref) in SSticker.minds
-	if(!istype(clonemind))	//not a mind
-		return NONE
-	if(clonemind.last_death != last_death) //The soul has advanced, the record has not.
-		return NONE
-	if(!QDELETED(clonemind.current))
-		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
+
+	if(!empty) //Doesn't matter if we're just making a copy
+		clonemind = locate(mindref) in SSticker.minds
+		if(!istype(clonemind))	//not a mind
 			return NONE
-		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
+		if(clonemind.last_death != last_death) //The soul has advanced, the record has not.
 			return NONE
-	if(!clonemind.active)
-		// get_ghost() will fail if they're unable to reenter their body
-		var/mob/dead/observer/G = clonemind.get_ghost()
-		if(!G)
+		if(!QDELETED(clonemind.current))
+			if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
+				return NONE
+			if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
+				return NONE
+		if(!clonemind.active)
+			// get_ghost() will fail if they're unable to reenter their body
+			var/mob/dead/observer/G = clonemind.get_ghost()
+			if(!G)
+				return NONE
+			if(G.suiciding) // The ghost came from a body that is suiciding.
+				return NONE
+		if(clonemind.damnation_type) //Can't clone the damned.
+			INVOKE_ASYNC(src, .proc/horrifyingsound)
+			mess = TRUE
+			icon_state = "pod_g"
+			update_icon()
 			return NONE
-		if(G.suiciding) // The ghost came from a body that is suiciding.
-			return NONE
-	if(clonemind.damnation_type) //Can't clone the damned.
-		INVOKE_ASYNC(src, .proc/horrifyingsound)
-		mess = TRUE
-		icon_state = "pod_g"
-		update_icon()
-		return NONE
-	current_insurance = insurance
+		current_insurance = insurance
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
@@ -205,15 +207,16 @@
 	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	H.Unconscious(80)
 
-	clonemind.transfer_to(H)
+	if(!empty)
+		clonemind.transfer_to(H)
 
-	if(grab_ghost_when == CLONER_FRESH_CLONE)
-		H.grab_ghost()
-		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
+		if(grab_ghost_when == CLONER_FRESH_CLONE)
+			H.grab_ghost()
+			to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
 
-	if(grab_ghost_when == CLONER_MATURE_CLONE)
-		H.ghostize(TRUE)	//Only does anything if they were still in their old body and not already a ghost
-		to_chat(H.get_ghost(TRUE), "<span class='notice'>Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete.</span>")
+		if(grab_ghost_when == CLONER_MATURE_CLONE)
+			H.ghostize(TRUE)	//Only does anything if they were still in their old body and not already a ghost
+			to_chat(H.get_ghost(TRUE), "<span class='notice'>Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete.</span>")
 
 	if(H)
 		H.faction |= factions

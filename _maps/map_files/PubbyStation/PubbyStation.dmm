@@ -59554,7 +59554,6 @@
 /area/maintenance/department/engine)
 "rJZ" = (
 /obj/docking_port/stationary{
-	area_type = /area/construction/mining/aux_base;
 	dheight = 4;
 	dir = 1;
 	dwidth = 4;

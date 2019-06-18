@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - imageadd: "The smallstache beard now looks slightly less silly."

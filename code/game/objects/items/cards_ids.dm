@@ -88,6 +88,7 @@
 	var/atom/A = target
 	if(!proximity && prox_check)
 		return
+	log_combat(user, A, "attempted to emag")
 	A.emag_act(user)
 
 /obj/item/card/emagfake
