@@ -543,6 +543,8 @@
 	else
 		var/mob/living/L = target
 		if(!direct_target)
+			if(!initial(L.density)) //If they're always non-dense (e.g. mice), the projectile can pass over
+				return FALSE
 			if(!CHECK_BITFIELD(L.mobility_flags, MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE) || !(L.stat == CONSCIOUS))		//If they're able to 1. stand or 2. use items or 3. move, AND they are not softcrit,  they are not stunned enough to dodge projectiles passing over.
 				return FALSE
 	return TRUE
