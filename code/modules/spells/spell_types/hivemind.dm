@@ -632,7 +632,7 @@
 			return
 	target.apply_status_effect(STATUS_EFFECT_HIVEMIND_CURSE, CURSE_SPAWNING | CURSE_BLINDING)
 	to_chat(user, "<span class='notice'>We have brought forth the targets nightmares!</span>")
-	deadchat_broadcast(" is suffering corporial nightmares!</span>", "<span class='name'>[target]</span>", target)
+	deadchat_broadcast(" is suffering corporial nightmares!", "<span class='name'>[target]</span>", target)
 
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	if(hive)
