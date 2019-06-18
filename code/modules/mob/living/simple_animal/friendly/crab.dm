@@ -85,8 +85,8 @@
 	icon_living = "evilcrab"
 	icon_dead = "evilcrab_dead"
 	maxHealth = 20000
+	health = 20000
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	a_intent = "harm"
-	resize = 1.5
 	gold_core_spawnable = NO_SPAWN
