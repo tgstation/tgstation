@@ -378,11 +378,11 @@
 	glass_name = "glass of Nuka Cola"
 	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
 
-/datum/reagent/consumable/nuka_cola/on_mob_add(mob/living/L)
+/datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.75, blacklisted_movetypes=(FLYING|FLOATING))
 
-/datum/reagent/consumable/nuka_cola/on_mob_delete(mob/living/L)
+/datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
 	..()
 
@@ -406,11 +406,11 @@
 	glass_name = "glass of Grey Bull"
 	glass_desc = "Surprisingly it isnt grey."
 
-/datum/reagent/consumable/grey_bull/on_mob_add(mob/living/L)
+/datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
 
-/datum/reagent/consumable/grey_bull/on_mob_delete(mob/living/L)
+/datum/reagent/consumable/grey_bull/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
 	..()
 
@@ -793,7 +793,7 @@
 		H.emote("sneeze")
 	..()
 
-/datum/reagent/consumable/red_queen/on_mob_delete(mob/living/M)
+/datum/reagent/consumable/red_queen/on_mob_end_metabolize(mob/living/M)
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
