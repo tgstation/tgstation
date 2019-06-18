@@ -2718,6 +2718,7 @@
 #include "code\modules\surgery\lipoplasty.dm"
 #include "code\modules\surgery\mechanic_steps.dm"
 #include "code\modules\surgery\organ_manipulation.dm"
+#include "code\modules\surgery\organ_reconstruction.dm"
 #include "code\modules\surgery\organic_steps.dm"
 #include "code\modules\surgery\plastic_surgery.dm"
 #include "code\modules\surgery\prosthetic_replacement.dm"
