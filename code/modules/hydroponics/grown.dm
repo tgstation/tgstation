@@ -56,11 +56,11 @@
 	return 0
 
 /obj/item/reagent_containers/food/snacks/grown/examine(user)
-	..()
+	. = ..()
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			if(T.examine_line)
-				to_chat(user, T.examine_line)
+				. += T.examine_line
 
 /obj/item/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()

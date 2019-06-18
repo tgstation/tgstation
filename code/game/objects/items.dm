@@ -184,13 +184,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
-	var/pronoun
-	if(src.gender == PLURAL)
-		pronoun = "They are"
-	else
-		pronoun = "It is"
-	var/size = weightclass2text(src.w_class)
-	. += "[pronoun] a [size] item."
+	
+	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
 
 	if(!user.research_scanner)
 		return

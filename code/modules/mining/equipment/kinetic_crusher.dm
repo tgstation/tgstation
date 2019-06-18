@@ -38,12 +38,12 @@
 	return ..()
 
 /obj/item/twohanded/required/kinetic_crusher/examine(mob/living/user)
-	..()
-	to_chat(user, "<span class='notice'>Mark a large creature with the destabilizing force, then hit them in melee to do <b>[force + detonation_damage]</b> damage.</span>")
-	to_chat(user, "<span class='notice'>Does <b>[force + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force + detonation_damage]</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>Mark a large creature with the destabilizing force, then hit them in melee to do <b>[force + detonation_damage]</b> damage.</span>"
+	. += "<span class='notice'>Does <b>[force + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force + detonation_damage]</b>.</span>"
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
-		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
+		. += "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>"
 
 /obj/item/twohanded/required/kinetic_crusher/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -190,8 +190,8 @@
 	var/denied_type = /obj/item/crusher_trophy
 
 /obj/item/crusher_trophy/examine(mob/living/user)
-	..()
-	to_chat(user, "<span class='notice'>Causes [effect_desc()] when attached to a kinetic crusher.</span>")
+	. = ..()
+	. += "<span class='notice'>Causes [effect_desc()] when attached to a kinetic crusher.</span>"
 
 /obj/item/crusher_trophy/proc/effect_desc()
 	return "errors"
