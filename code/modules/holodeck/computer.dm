@@ -103,7 +103,7 @@
 	switch(action)
 		if("load_program")
 			var/program_to_load = text2path(params["type"])
-			if(!ispath(program_to_load))
+			if(!ispath(program_to_load) || !(program_to_load in program_cache || program_to_load in emag_programs))
 				return FALSE
 			var/area/A = locate(program_to_load) in GLOB.sortedAreas
 			if(A)
