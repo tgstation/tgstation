@@ -224,12 +224,11 @@
 
 
 //remove the old powernet and replace it with a new one throughout the network.
-/proc/propagate_network(obj/O, datum/powernet/PN, use_old_if_found = FALSE)
+/proc/propagate_network(obj/O, datum/powernet/PN, use_old_if_found = FALSE, skip_assigned_powernets = FALSE)
 	var/list/worklist = list()
 	var/list/found_machines = list()
 	var/index = 1
 	var/obj/P = null
-	var/old_found = FALSE
 
 	worklist |= O //start propagating from the passed object
 
@@ -240,11 +239,11 @@
 		if( istype(P, /obj/structure/cable))
 			var/obj/structure/cable/C = P
 			if(C.powernet != PN) //add it to the powernet, if it isn't already there
-				if(use_old_if_found && !old_found)
-					old_found = TRUE
-					PN = C.powernet
+				if(C.powernet && use_old_if_found)
+					propagate_network(C, C.powernet, FALSE, TRUE)
+					return
 				PN.add_cable(C)
-			worklist |= C.get_connections(FALSE, worklist[P]) //get adjacents power objects, with or without a powernet
+			worklist |= C.get_connections(skip_assigned_powernets, worklist[P]) //get adjacents power objects, with or without a powernet
 
 		else if(P.anchored && istype(P, /obj/machinery/power))
 			var/obj/machinery/power/M = P

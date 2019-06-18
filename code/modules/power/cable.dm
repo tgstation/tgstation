@@ -290,8 +290,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/machinery/pow
 	if(powernet)
 		return
 	var/datum/powernet/newPN = new()
-	if(!newPN)
-		to_chat(world, "what the fug")
 	propagate_network(src, newPN, TRUE)
 
 // cut the cable's powernet at this cable and updates the powergrid
