@@ -1,0 +1,4 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - bugfix: "Fixed snails retaining their lube crawling after changing to a different species"
