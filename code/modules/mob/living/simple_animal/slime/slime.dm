@@ -174,18 +174,15 @@
 			if(60 to 80)
 				hud_used.healths.icon_state = "slime_health2"
 				severity = 2
-			if(45 to 60)
+			if(40 to 60)
 				hud_used.healths.icon_state = "slime_health3"
 				severity = 3
-			if(30 to 45)
+			if(20 to 40)
 				hud_used.healths.icon_state = "slime_health4"
 				severity = 4
-			if(15 to 30)
+			if(1 to 20)
 				hud_used.healths.icon_state = "slime_health5"
 				severity = 5
-			if(1 to 15)
-				hud_used.healths.icon_state = "slime_health6"
-				severity = 6
 			else
 				hud_used.healths.icon_state = "slime_health7"
 				severity = 6
