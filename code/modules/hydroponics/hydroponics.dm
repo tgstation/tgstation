@@ -589,7 +589,7 @@
 		if(!(myseed.resistance_flags & FIRE_PROOF))
 			adjustHealth(-round(S.get_reagent_amount(/datum/reagent/napalm) * 6))
 			adjustToxic(round(S.get_reagent_amount(/datum/reagent/napalm) * 7))
-			adjustWeeds(-rand(5,9))
+		adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
 
 	//Weed Spray
 	if(S.has_reagent(/datum/reagent/toxin/plantbgone/weedkiller, 1))
