@@ -17,7 +17,15 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_RED]" = "redteamradio",
 	"[FREQ_CTF_BLUE]" = "blueteamradio"
 	))
-
+GLOBAL_LIST_INIT(netspeak_haha, list("lol"
+	,"xd"
+	,"roflmao"
+	,"lmao"
+	,"rolf"
+	,"kek"
+	,"lel"
+	,"lmfao"
+	))
 /atom/movable/proc/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!can_speak())
 		return
@@ -57,7 +65,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/endspanpart = "</span>"
 
 	//Message
-	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
+	var/clean_message = regular_speech(raw_message)
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, clean_message, spans, message_mode)]</span></span>"
 
 	var/languageicon = ""
 	var/datum/language/D = GLOB.language_datum_instances[message_language]
@@ -65,6 +74,39 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		languageicon = "[D.get_icon()] "
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
+
+/atom/movable/proc/regular_speech(message)
+	for(text in GLOB.netspeak_haha)
+		if(findtext(message,text))
+			message = copytext(message,1,findtext(message,text))+"haha"+copytext(message,findtext(message,text)+lentext(text))
+	while(findtext(message,"wth"))
+		message = copytext(message,1,findtext(message,"wth"))+"what the heck"+copytext(message,findtext(message,"wth")+3)
+	while(findtext(message,"nvm"))
+		message = copytext(message,1,findtext(message,"nvm"))+"nevermind"+copytext(message,findtext(message,"nvm")+3)
+	while(findtext(message,"wtf"))
+		message = copytext(message,1,findtext(message,"wtf"))+"what the frick"+copytext(message,findtext(message,"wtf")+3)
+	while(findtext(message,"idk"))
+		message = copytext(message,1,findtext(message,"idk"))+"I do not know"+copytext(message,findtext(message,"idk")+3)
+	while(findtext(message,"idc"))
+		message = copytext(message,1,findtext(message,"idc"))+"I do not care"+copytext(message,findtext(message,"idc")+3)
+	if(findtext(message,"u "))
+		message = copytext(message,1,findtext(message,"u "))+"you "+copytext(message,findtext(message,"u ")+2)
+	if(findtext(message," u"))
+		message = copytext(message,1,findtext(message," u"))+" you"+copytext(message,findtext(message," u")+2)
+	while(findtext(message,"rip "))
+		message = copytext(message,1,findtext(message,"rip "))+"rest in peace "+copytext(message,findtext(message,"rip ")+4)
+	while(findtext(message," rip"))
+		message = copytext(message,1,findtext(message," rip"))+" rest in peace"+copytext(message,findtext(message," rip")+4)
+	if(findtext(message,"rip")&lentext(message)==3)
+		message = "Rest in peace"
+	if(findtext(message,"u")&lentext(message)==1)
+		message = "You"
+	return message
+
+
+
+
+
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
