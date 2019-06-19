@@ -14,30 +14,6 @@
 #define EXPONENTIAL "Peaceful bias"
 #define UNIFORM "Uniform distribution"
 
-var/list/forced_roundstart_ruleset = list()
-
-var/list/threat_by_job = list(
-	"Captain" = 12,
-	"Head of Security" = 10,
-	"Head of Personnel" = 8,
-	"Warden" = 8,
-	"Security Officer" = 4,
-	"Detective" = 3,
-)
-
-// -- Distribution parameters chosen prior to roundstart --
-var/dynamic_curve_centre = 0
-var/dynamic_curve_width = 1.8
-var/dynamic_chosen_mode = LORENTZ
-
-// -- Dynamic tweaks chosen prior to roundstart --
-var/dynamic_no_stacking = 0 // NO STACKING : only one "round-ender", except if we're above 80 threat
-var/dynamic_classic_secret = 0 // Only one roundstart ruleset, and only autotraitor + minor rules allowed
-var/dynamic_high_pop_limit = 45 // Will switch to "high pop override" if the roundstart population is above this
-var/dynamic_forced_extended = 0 // No rulesets will be drated, ever
-
-var/stacking_limit = 90
-
 #define BASE_SOLO_REFUND 10
 
 /datum/game_mode/dynamic
@@ -78,8 +54,8 @@ var/stacking_limit = 90
 
 	var/distribution_mode = LORENTZ
 	var/relative_threat = 0 // Relative threat, Lorentz-distributed.
-	var/curve_centre_of_round = 0
-	var/curve_width_of_round = 1.8
+	var/curve_centre = 0
+	var/curve_width = 1.8
 
 	var/peaceful_percentage = 50
 
@@ -88,7 +64,16 @@ var/stacking_limit = 90
 	var/classic_secret = 0
 	var/high_pop_limit = 45
 	var/forced_extended = 0
+	var/stacking_limit = 90
 
+	var/list/threat_by_job = list(
+		"Captain" = 12,
+		"Head of Security" = 10,
+		"Head of Personnel" = 8,
+		"Warden" = 8,
+		"Security Officer" = 4,
+		"Detective" = 3,
+	)
 
 /datum/game_mode/dynamic/AdminPanelEntry()
 	var/dat = list()
@@ -96,7 +81,7 @@ var/stacking_limit = 90
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 	dat += "Threat to Spend: <b>[threat]</b> <a href='?_src_=holder;adjustthreat=1'>\[Adjust\]</A> <a href='?_src_=holder;threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
-	dat += "Parameters: centre = [curve_centre_of_round] ; width = [curve_width_of_round].<br/>"
+	dat += "Parameters: centre = [curve_centre] ; width = [curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
 	dat += "Forced extended: <a href='?src=\ref[src];forced_extended=1'><b>[forced_extended ? "On" : "Off"]</b></a><br/>"
 	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];no_stacking=1'><b>[no_stacking ? "On" : "Off"]</b></a><br/>"
@@ -163,22 +148,60 @@ var/stacking_limit = 90
 
 	usr << browse(out, "window=threatlog;size=700x500")
 
+/datum/game_mode/dynamic/proc/generate_threat()
+	message_admins("Generating threat ; mode is [distribution_mode]")
+	switch (distribution_mode)
+		if (LORENTZ)
+			relative_threat = lorentz_distribution(curve_centre, curve_width)
+			threat_level = lorentz2threat(relative_threat)
+			threat = round(threat, 0.1)
+
+			peaceful_percentage = round(lorentz_cummulative_distribution(relative_threat, curve_centre, curve_width), 0.01)*100
+
+			threat = threat_level
+			starting_threat = threat_level
+
+		if (GAUSS)
+			relative_threat = curve_centre + GaussRand(curve_centre)
+			threat_level = Gauss2threat(relative_threat)
+			threat = round(threat, 0.1)
+			peaceful_percentage = "Undefined" // No analytical form for this one
+
+			threat = threat_level
+			starting_threat = threat_level
+
+		if (DIRAC)
+			threat = curve_centre
+			threat_level = curve_centre
+			starting_threat = threat_level
+			peaceful_percentage = "Undefined"
+
+		if (EXPONENTIAL)
+			relative_threat = exp_distribution(curve_centre)
+			threat_level = exp2threat(relative_threat)
+			threat = round(threat, 0.1)
+
+			peaceful_percentage = round(exp_cummulative_distribution(relative_threat, curve_centre), 0.01)*100
+
+			threat = threat_level
+			starting_threat = threat_level
+
+		if (UNIFORM)
+			threat_level = rand(1, 100)
+			threat = threat_level
+			starting_threat = threat_level
+			peaceful_percentage = "Undefined"
+
 /datum/game_mode/dynamic/can_start()
-	distribution_mode = dynamic_chosen_mode
-	message_admins("Distribution mode is : [dynamic_chosen_mode].")
-	curve_centre_of_round = dynamic_curve_centre
-	curve_width_of_round = dynamic_curve_width
-	message_admins("Curve centre and curve width are : [curve_centre_of_round], [curve_width_of_round]")
-	forced_extended = dynamic_forced_extended
+	message_admins("Distribution mode is : [distribution_mode].")
+	message_admins("Curve centre and curve width are : [curve_centre], [curve_width]")
 	if (forced_extended)
 		message_admins("The round will be forced to extended.")
-	no_stacking = dynamic_no_stacking
 	if (no_stacking)
 		message_admins("Round-ending rulesets won't stack, unless the threat is above stacking_limit ([stacking_limit]).")
-	classic_secret = dynamic_classic_secret
 	if (classic_secret)
 		message_admins("Classic secret mode active: only autotraitors will spawn, and we will only have one roundstart ruleset.")
-	log_admin("Dynamic mode parameters for the round: distrib mode = [distribution_mode], centre = [curve_centre_of_round], width is [curve_width_of_round]. Extended : [forced_extended], no stacking : [no_stacking], classic secret: [classic_secret].")
+	log_admin("Dynamic mode parameters for the round: distrib mode = [distribution_mode], centre = [curve_centre], width is [curve_width]. Extended : [forced_extended], no stacking : [no_stacking], classic secret: [classic_secret].")
 
 	generate_threat()
 
@@ -187,18 +210,12 @@ var/stacking_limit = 90
 	message_admins("Dynamic Mode initialized with a Threat Level of... <font size='6'>[threat_level]</font>!")
 	log_admin("Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 
-	message_admins("Parameters were: centre = [curve_centre_of_round], width = [curve_width_of_round].")
-	log_admin("Parameters were: centre = [curve_centre_of_round], width = [curve_width_of_round].")
+	message_admins("Parameters were: centre = [curve_centre], width = [curve_width].")
+	log_admin("Parameters were: centre = [curve_centre], width = [curve_width].")
 
 	if (GLOB.player_list.len >= high_pop_limit)
 		message_admins("High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
 		log_admin("High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
-
-	if (round(threat_level*10) == 666)
-		forced_roundstart_ruleset += new /datum/dynamic_ruleset/roundstart/bloodcult()
-		forced_roundstart_ruleset += new /datum/dynamic_ruleset/roundstart/changeling()
-		log_admin("666 threat override.")
-		message_admins("666 threat override.", 1)
 
 	return TRUE
 
@@ -222,10 +239,8 @@ var/stacking_limit = 90
 	if (roundstart_rules.len <= 0)
 		message_admins("There are no roundstart rules within the code, what the fuck? The round will begin without any roles assigned.")
 		return TRUE
-	if(forced_roundstart_ruleset.len > 0)
-		rigged_roundstart()
-	else 
-		roundstart()
+	
+	roundstart()
 
 	var/starting_rulesets = ""
 	for (var/datum/dynamic_ruleset/roundstart/DR in executed_rules)
@@ -233,25 +248,11 @@ var/stacking_limit = 90
 	return TRUE
 
 /datum/game_mode/dynamic/post_setup(report)
-	//TODO: probably needs something more
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
-		// These are done after a delay
-		if(istype(rule, /datum/dynamic_ruleset/roundstart/delayed/))
-			continue
-		
 		if(rule.execute())
 			continue
 		else
 			message_admins("Something went wrong with executing roundstart rule [rule.name].")
-
-/datum/game_mode/dynamic/proc/rigged_roundstart()
-	message_admins("[forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
-	for (var/datum/dynamic_ruleset/roundstart/rule in forced_roundstart_ruleset)
-		rule.mode = src
-		rule.candidates = candidates.Copy()
-		rule.trim_candidates()
-		if (rule.ready(1))//ignoring enemy job requirements
-			picking_roundstart_rule(list(rule))
 
 /datum/game_mode/dynamic/proc/roundstart()
 	if (forced_extended)
@@ -346,22 +347,21 @@ var/stacking_limit = 90
 	return FALSE
 
 /datum/game_mode/dynamic/proc/pick_delay(var/datum/dynamic_ruleset/roundstart/delayed/rule)
+	rule.candidates = GLOB.player_list.Copy()
+	rule.trim_candidates()
 	if(!rule.pre_execute())
 		message_admins("....except not because whomever coded that ruleset forgot some cases in ready() apparently! pre_execute() returned 0.")
 		return FALSE
-	spawn()
-		sleep(rule.delay)
-		rule.candidates = GLOB.player_list.Copy()
-		rule.trim_candidates()
-		if (rule.execute())//this should never fail since ready() returned 1
-			executed_rules += rule
-			if (rule.persistent)
-				current_rules += rule
-		else
-			message_admins("....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
+	addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
 	return TRUE
 
-
+/datum/game_mode/dynamic/proc/execute_delayed(var/datum/dynamic_ruleset/roundstart/delayed/rule)
+	if(rule.execute())
+		executed_rules += rule
+		if (rule.persistent)
+			current_rules += rule
+		return TRUE
+	
 /datum/game_mode/dynamic/proc/picking_latejoin_rule(var/list/drafted_rules = list())
 	var/datum/dynamic_ruleset/latejoin/latejoin_rule = pickweight(drafted_rules)
 	if (latejoin_rule)
@@ -516,7 +516,6 @@ var/stacking_limit = 90
 				if (O.started_as_observer)//Observers
 					list_observers.Add(M)
 					continue
-				// TODO: this had "&& O.mind.current.ajourn", figure it out
 				if (O.mind && O.mind.current)//Cultists
 					living_players.Add(M)//yes we're adding a ghost to "living_players", so make sure to properly check for type when testing midround rules
 					continue
@@ -740,7 +739,3 @@ var/stacking_limit = 90
 			return
 	
 	message_admins("The rule was accepted.")
-
-//TODO: do this
-/datum/game_mode/dynamic/set_round_result()
-	..()
