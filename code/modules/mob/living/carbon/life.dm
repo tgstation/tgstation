@@ -24,8 +24,8 @@
 		if(stat != DEAD)
 			var/bprv = handle_bodyparts()
 			if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
+				update_stamina() //needs to go before updatehealth to remove stamcrit
 				updatehealth()
-				update_stamina()
 
 		if(stat != DEAD)
 			handle_brain_damage()
@@ -315,10 +315,8 @@
 	var/stam_regen = FALSE
 	if(stam_regen_start_time <= world.time)
 		stam_regen = TRUE
-		if(stam_paralysed)
-			stam_paralysed = FALSE
-			SetParalyzed(0) //Really we should have sources for status effects
-			update_health_hud()
+		if(stam_paralyzed)
+			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
 	for(var/I in bodyparts)
 		var/obj/item/bodypart/BP = I
 		if(BP.needs_processing)
@@ -606,8 +604,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		L.damage += d
 
 /mob/living/carbon/proc/liver_failure()
+	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
-	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
+	if(HAS_TRAIT(src, TRAIT_STABLELIVER))
 		return
 	adjustToxLoss(4, TRUE,  TRUE)
 	if(prob(30))

@@ -47,9 +47,9 @@
 	maxnutri = tmp_capacity * 5 // Up to 30
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.<span>"
 
 
 /obj/machinery/hydroponics/Destroy()
@@ -300,26 +300,26 @@
 
 
 /obj/machinery/hydroponics/examine(user)
-	..()
+	. = ..()
 	if(myseed)
-		to_chat(user, "<span class='info'>It has <span class='name'>[myseed.plantname]</span> planted.</span>")
+		. += "<span class='info'>It has <span class='name'>[myseed.plantname]</span> planted.</span>"
 		if (dead)
-			to_chat(user, "<span class='warning'>It's dead!</span>")
+			. += "<span class='warning'>It's dead!</span>"
 		else if (harvest)
-			to_chat(user, "<span class='info'>It's ready to harvest.</span>")
+			. += "<span class='info'>It's ready to harvest.</span>"
 		else if (plant_health <= (myseed.endurance / 2))
-			to_chat(user, "<span class='warning'>It looks unhealthy.</span>")
+			. += "<span class='warning'>It looks unhealthy.</span>"
 	else
-		to_chat(user, "<span class='info'>It's empty.</span>")
+		. += "<span class='info'>It's empty.</span>"
 
 	if(!self_sustaining)
-		to_chat(user, "<span class='info'>Water: [waterlevel]/[maxwater].</span>")
-		to_chat(user, "<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>")
+		. += {"<span class='info'>Water: [waterlevel]/[maxwater].</span>\n
+		<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>"}
 		if(self_sufficiency_progress > 0)
 			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
-			to_chat(user, "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>")
+			. += "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>"
 	else
-		to_chat(user, "<span class='info'>It doesn't require any water or nutrients.</span>")
+		. += "<span class='info'>It doesn't require any water or nutrients.</span>"
 
 	if(weedlevel >= 5)
 		to_chat(user, "<span class='warning'>It's filled with weeds!</span>")
@@ -589,7 +589,7 @@
 		if(!(myseed.resistance_flags & FIRE_PROOF))
 			adjustHealth(-round(S.get_reagent_amount(/datum/reagent/napalm) * 6))
 			adjustToxic(round(S.get_reagent_amount(/datum/reagent/napalm) * 7))
-			adjustWeeds(-rand(5,9))
+		adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
 
 	//Weed Spray
 	if(S.has_reagent(/datum/reagent/toxin/plantbgone/weedkiller, 1))

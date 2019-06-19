@@ -106,9 +106,9 @@
 
 /obj/item/tk_grab/examine(user)
 	if (focus)
-		focus.examine(user)
+		return focus.examine(user)
 	else
-		..()
+		return ..()
 
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)

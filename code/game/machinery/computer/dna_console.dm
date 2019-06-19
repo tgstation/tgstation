@@ -100,11 +100,11 @@
 	stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/examine(mob/user)
-	..()
+	. = ..()
 	if(jokerready < world.time)
-		to_chat(user, "<span class='notice'>JOKER algorithm available.</span>")
+		. += "<span class='notice'>JOKER algorithm available.</span>"
 	else
-		to_chat(user, "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.</span>")
+		. += "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.</span>"
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
 	. = ..()

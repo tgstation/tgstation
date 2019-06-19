@@ -18,8 +18,8 @@
 	return ..()
 
 /obj/item/gun/magic/wand/examine(mob/user)
-	..()
-	to_chat(user, "Has [charges] charge\s remaining.")
+	. = ..()
+	. += "Has [charges] charge\s remaining."
 
 /obj/item/gun/magic/wand/update_icon()
 	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"

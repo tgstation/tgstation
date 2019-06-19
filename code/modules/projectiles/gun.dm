@@ -78,7 +78,7 @@
 	build_zooming()
 
 /obj/item/gun/Destroy()
-	if(pin)
+	if(isobj(pin)) //Can still be the initial path, then we skip
 		QDEL_NULL(pin)
 	if(gun_light)
 		QDEL_NULL(gun_light)
@@ -112,25 +112,25 @@
 		qdel(src)
 
 /obj/item/gun/examine(mob/user)
-	..()
+	. = ..()
 	if(pin)
-		to_chat(user, "It has \a [pin] installed.")
+		. += "It has \a [pin] installed."
 	else
-		to_chat(user, "It doesn't have a <b>firing pin</b> installed, and won't fire.")
+		. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
 
 	if(gun_light)
-		to_chat(user, "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it.")
+		. += "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it."
 		if(can_flashlight) //if it has a light and this is false, the light is permanent.
-			to_chat(user, "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>")
+			. += "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_flashlight)
-		to_chat(user, "It has a mounting point for a <b>seclite</b>.")
+		. += "It has a mounting point for a <b>seclite</b>."
 
 	if(bayonet)
-		to_chat(user, "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it.")
+		. += "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it."
 		if(can_bayonet) //if it has a bayonet and this is false, the bayonet is permanent.
-			to_chat(user, "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>")
+			. += "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_bayonet)
-		to_chat(user, "It has a <b>bayonet</b> lug on it.")
+		. += "It has a <b>bayonet</b> lug on it."
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()

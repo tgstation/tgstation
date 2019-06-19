@@ -20201,7 +20201,6 @@
 /area/construction/mining/aux_base)
 "aVl" = (
 /obj/docking_port/stationary{
-	area_type = /area/construction/mining/aux_base;
 	dheight = 4;
 	dir = 8;
 	dwidth = 4;

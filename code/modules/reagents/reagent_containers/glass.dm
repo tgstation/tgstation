@@ -269,6 +269,14 @@
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
 
+/obj/item/reagent_containers/glass/bucket/wooden
+	name = "wooden bucket"
+	icon_state = "woodbucket"
+	item_state = "woodbucket"
+	materials = null
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	resistance_flags = FLAMMABLE
+
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
 		if(reagents.total_volume < 1)
@@ -277,7 +285,7 @@
 			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-	else if(isprox(O))
+	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
 		qdel(O)
 		qdel(src)
@@ -366,6 +374,8 @@
 			to_chat(user, "You start grinding...")
 			if((do_after(user, 25, target = src)) && grinded)
 				user.adjustStaminaLoss(40)
+				if(grinded.reagents) //food and pills
+					grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 				if(grinded.juice_results) //prioritize juicing
 					grinded.on_juice()
 					reagents.add_reagent_list(grinded.juice_results)
