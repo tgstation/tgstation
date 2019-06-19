@@ -13,7 +13,7 @@
 		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA))
 			obscure_name = TRUE
 
-	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!\n")
+	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -124,7 +124,7 @@
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 
-	var/list/msg = list("<span class='warning'>") //Everything below gets this span
+	var/list/msg = list("")
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/disabled = list()
@@ -292,11 +292,12 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
-	msg += "</span>" //End of default warning span
+	if (length(msg))
+		. += "<span class='warning'>[msg.Join("")]</span>"
 
-	. += msg.Join("")
-
-	. += common_trait_examine()
+	var/trait_exam = common_trait_examine()
+	if (!isnull(trait_exam))
+		. += trait_exam
 
 	var/traitstring = get_trait_string()
 	if(ishuman(user))
@@ -327,10 +328,7 @@
 					if(R)
 						. += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 					if(traitstring)
-						. += "<span class='info'>Detected physiological traits:</span>"
-						. += "<span class='info'>[traitstring]</span>"
-
-
+						. += "<span class='info'>Detected physiological traits:\n[traitstring]"
 
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/security))
 					if(!user.stat && user != src)

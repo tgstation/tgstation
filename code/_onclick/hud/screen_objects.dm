@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/screen/examine(mob/user)
-	return
+	return list()
 
 /obj/screen/orbit()
 	return

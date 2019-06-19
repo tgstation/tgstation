@@ -18,7 +18,7 @@
 	//	flags = CONDUCT_1
 
 /obj/structure/lattice/examine(mob/user)
-	..()
+	. = ..()
 	. += deconstruction_hints(user)
 
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)

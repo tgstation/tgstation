@@ -92,7 +92,9 @@
 		if(digitalcamo)
 			. += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner."
 
-	. += common_trait_examine()
+	var/trait_exam = common_trait_examine()
+	if (!isnull(trait_exam))
+		. += trait_exam
 
 	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
 	if(mood)

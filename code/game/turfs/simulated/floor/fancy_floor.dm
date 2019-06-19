@@ -178,8 +178,8 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/carpet/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+	. = ..()
+	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()
