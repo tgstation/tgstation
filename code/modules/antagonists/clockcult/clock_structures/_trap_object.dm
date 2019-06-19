@@ -18,14 +18,14 @@
 /obj/structure/destructible/clockwork/trap/examine(mob/user)
 	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		. + = "It's wired to:"
+		. += "It's wired to:"
 		if(!wired_to.len)
-			. + = "Nothing."
+			. += "Nothing."
 		else
 			for(var/V in wired_to)
 				var/obj/O = V
 				var/distance = get_dist(src, O)
-				. + = "[O] ([distance == 0 ? "same tile" : "[distance] tiles [dir2text(get_dir(src, O))]"])"
+				. += "[O] ([distance == 0 ? "same tile" : "[distance] tiles [dir2text(get_dir(src, O))]"])"
 
 /obj/structure/destructible/clockwork/trap/wrench_act(mob/living/user, obj/item/I)
 	if(!is_servant_of_ratvar(user))
