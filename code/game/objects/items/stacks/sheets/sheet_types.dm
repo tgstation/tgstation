@@ -322,7 +322,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("light tubes", /obj/item/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs", /obj/item/storage/box/lights/bulbs), \
 	new/datum/stack_recipe("disk box", /obj/item/storage/box/disks), \
-	new/datum/stack_recipe("pillbittle box", /obj/item/storage/box/pillbottles), \
+	new/datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles), \
 	new/datum/stack_recipe("beaker box", /obj/item/storage/box/beakers), \
 	new/datum/stack_recipe("mouse traps", /obj/item/storage/box/mousetraps), \
 	new/datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box), \
