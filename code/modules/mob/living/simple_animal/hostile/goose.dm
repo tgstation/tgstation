@@ -75,7 +75,7 @@
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, 1)
-		vomitCoefficient ++
+		vomitCoefficient += 3
 		vomitTimeBonus += 2
 	else
 		visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
@@ -130,21 +130,17 @@
 	if(vomiting)
 		vomit() // its supposed to keep vomiting if you move
 		return
-	findShitToEat(get_turf(src))
-	if(prob(vomitCoefficient * 0.1))	
+	var/turf/currentTurf = get_turf(src)
+	for (var/obj/item/reagent_containers/food/tasty in currentTurf)
+		if (tasty && get_turf(tasty) == currentTurf)
+			feed(tasty)
+		sleep(2)
+		if (QDELETED(src))
+			return
+	if(prob(vomitCoefficient * 0.2))	
 		vomit_prestart(vomitTimeBonus + 25)
 		vomitCoefficient = 1
 		vomitTimeBonus = 0
-
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/findShitToEat(var/turf/currentTurf)
-	if (get_turf(src) != currentTurf)
-		return
-	var/obj/item/reagent_containers/food/tasty = locate() in currentTurf
-	if(tasty)
-		feed(tasty)
-	else
-		return
-	addtimer(CALLBACK(src, .proc/findShitToEat, currentTurf), 2)
 
 /datum/action/cooldown/vomit
 	name = "Vomit"
