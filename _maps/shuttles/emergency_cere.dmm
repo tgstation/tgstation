@@ -1384,16 +1384,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
-"cL" = (
-/obj/machinery/sleeper{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/escape)
 "cM" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
@@ -2486,7 +2476,7 @@ cs
 cp
 cp
 cp
-cL
+cw
 ab
 cR
 cY
