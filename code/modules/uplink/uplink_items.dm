@@ -828,6 +828,20 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/dark_gygax/bag
+	name = "Dark Gygax Ammo Bag"
+	desc = "A duffel bag containing ammo for three full reloads of the incendiary carbine and flash bang launcher that are equipped on a standard Dark Gygax exosuit."
+	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/dark_gygax
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/mauler/bag
+	name = "Mauler Ammo Bag"
+	desc = "A duffel bag containing ammo for three full reloads of the LMG, scattershot carbine, and SRM-8 missile laucher that are equipped on a standard Mauler exosuit."
+	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
+	cost = 6
+	include_modes = list(/datum/game_mode/nuclear)
+
 //Grenades and Explosives
 /datum/uplink_item/explosives
 	category = "Grenades and Explosives"

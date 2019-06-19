@@ -1,5 +1,5 @@
 /obj/item/mecha_ammo
-	name = "Generic Ammo Box"
+	name = "generic ammo box"
 	desc = "A box of ammo for an unknown weapon."
 	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/mecha/mecha_ammo.dmi'
@@ -35,38 +35,49 @@
 		to_chat(user, "There [rounds > 1?"are":"is"] [rounds] [round_term][rounds > 1?"s":""] left.")
 
 /obj/item/mecha_ammo/incendiary
-	name = "Incendiary Ammo"
+	name = "incendiary ammo"
 	desc = "A box of incendiary ammunition for use with exosuit weapons."
 	icon_state = "incendiary"
 	rounds = 24
 	ammo_type = "incendiary"
 
 /obj/item/mecha_ammo/scattershot
-	name = "Scattershot Ammo"
+	name = "scattershot ammo"
 	desc = "A box of scaled-up buckshot, for use in exosuit shotguns."
 	icon_state = "scattershot"
 	rounds = 40
 	ammo_type = "scattershot"
 
 /obj/item/mecha_ammo/lmg
-	name = "Machine Gun Ammo"
+	name = "machine gun ammo"
 	desc = "A box of linked ammunition, designed for the Ultra AC 2 exosuit weapon."
 	icon_state = "lmg"
 	rounds = 300
 	ammo_type = "lmg"
 
-/obj/item/mecha_ammo/missiles
-	name = "Anti-Armor missiles"
+/obj/item/mecha_ammo/missiles_br
+	name = "breaching missiles"
+	desc = "A box of large missiles, ready for loading into a BRM-6 exosuit missile rack."
+	icon_state = "missile_br"
+	rounds = 6
+	round_term = "missile"
+	direct_load = TRUE
+	load_audio = "sound/weapons/bulletinsert.ogg"
+	ammo_type = "missiles_br"
+
+/obj/item/mecha_ammo/missiles_he
+	name = "anti-armor missiles"
 	desc = "A box of large missiles, ready for loading into an SRM-8 exosuit missile rack."
-	icon_state = "missile"
+	icon_state = "missile_he"
 	rounds = 8
 	round_term = "missile"
 	direct_load = TRUE
 	load_audio = "sound/weapons/bulletinsert.ogg"
-	ammo_type = "missiles"
+	ammo_type = "missiles_he"
+
 
 /obj/item/mecha_ammo/flashbang
-	name = "Launchable Flashbangs"
+	name = "launchable flashbangs"
 	desc = "A box of smooth flashbangs, for use with a large exosuit launcher. Cannot be primed by hand."
 	icon_state = "flashbang"
 	rounds = 6
@@ -74,9 +85,10 @@
 	ammo_type = "flashbang"
 
 /obj/item/mecha_ammo/clusterbang
-	name = "Launchable Flashbang Clusters"
+	name = "launchable flashbang clusters"
 	desc = "A box of clustered flashbangs, for use with a specialized exosuit cluster launcher. Cannot be primed by hand."
 	icon_state = "clusterbang"
 	rounds = 3
 	round_term = "cluster"
+	direct_load = TRUE
 	ammo_type = "clusterbang"

@@ -329,7 +329,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	name = "\improper SRM-8 missile rack"
-	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
+	desc = "A weapon for combat exosuits. Launches light explosive missiles."
 	icon_state = "mecha_missilerack"
 	projectile = /obj/item/projectile/bullet/a84mm_he
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
@@ -339,7 +339,21 @@
 	disabledreload = 1
 	equip_cooldown = 60
 	harmful = TRUE
-	ammo_type = "missiles"
+	ammo_type = "missiles_he"
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
+	name = "\improper BRM-6 missile rack"
+	desc = "A weapon for combat exosuits. Launches low-explosive breaching missiles designed to explode only when striking a sturdy target."
+	icon_state = "mecha_missilerack_six"
+	projectile = /obj/item/projectile/bullet/a84mm_br
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 6
+	projectiles_cache = 0
+	projectiles_cache_max = 0
+	disabledreload = 1
+	equip_cooldown = 60
+	harmful = TRUE
+	ammo_type = "missiles_br"
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher
@@ -387,8 +401,8 @@
 	name = "\improper SOB-3 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	projectiles = 3
-	projectiles_cache = 3
-	projectiles_cache_max = 12
+	projectiles_cache = 0
+	projectiles_cache_max = 0
 	projectile = /obj/item/grenade/clusterbuster
 	equip_cooldown = 90
 	ammo_type = "clusterbang"
