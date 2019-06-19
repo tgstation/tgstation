@@ -78,23 +78,23 @@ SUBSYSTEM_DEF(discord)
 
 // Returns ID from ckey
 /datum/controller/subsystem/discord/proc/lookup_id(lookup_ckey)
-	var/stored_id
-	var/datum/DBQuery/get_discord_id = SSdbcore.NewQuery("SELECT discord_id FROM [format_table_name("player")] WHERE ckey = '[sanitizeSQL(lookup_ckey)]'")
-	if(get_discord_id.Execute())
-		while(get_discord_id.NextRow())
-			stored_id = get_discord_id.item[1]
-	qdel(get_discord_id)
-	return stored_id
+	var/datum/DBQuery/query_get_discord_id = SSdbcore.NewQuery("SELECT discord_id FROM [format_table_name("player")] WHERE ckey = '[sanitizeSQL(lookup_ckey)]'")
+	if(!query_get_discord_id.Execute())
+		qdel(query_get_discord_id)
+		return
+	if(query_get_discord_id.NextRow())
+		. = query_get_discord_id.item[1]
+	qdel(query_get_discord_id)
 
 // Returns ckey from ID
 /datum/controller/subsystem/discord/proc/lookup_ckey(lookup_id)
-	var/stored_ckey
-	var/datum/DBQuery/get_discord_ckey = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE discord_id = '[sanitizeSQL(lookup_id)]'")
-	if(get_discord_ckey.Execute())
-		while(get_discord_ckey.NextRow())
-			stored_ckey = get_discord_ckey.item[1]
-	qdel(get_discord_ckey)
-	return stored_ckey
+	var/datum/DBQuery/query_get_discord_ckey = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE discord_id = '[sanitizeSQL(lookup_id)]'")
+	if(!query_get_discord_ckey.Execute())
+		qdel(query_get_discord_ckey)
+		return
+	if(query_get_discord_ckey.NextRow())
+		. = query_get_discord_ckey.item[1]
+	qdel(query_get_discord_ckey)
 
 // Finalises link
 /datum/controller/subsystem/discord/proc/link_account(ckey)
