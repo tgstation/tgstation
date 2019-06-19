@@ -24,7 +24,12 @@
 	check_friendly_fire = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	speak_emote = list("states")
+	verb_say = "states"
+	verb_ask = "queries"
+	verb_exclaim = "declares"
+	verb_yell = "alarms"
+	bubble_icon = "machine"
+	speech_span = SPAN_ROBOT
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
@@ -34,6 +39,33 @@
 /mob/living/simple_animal/hostile/hivebot/Initialize()
 	. = ..()
 	deathmessage = "[src] blows apart!"
+
+/mob/living/simple_animal/hostile/hivebot/Aggro()
+	. = ..()
+	a_intent = INTENT_HARM
+	update_icons()
+	if(prob(5))
+		say(pick("INTRUDER DETECTED!", "CODE 7-34.", "101010!!"), forced = type)
+
+/mob/living/simple_animal/hostile/hivebot/LoseAggro()
+	. = ..()
+	a_intent = INTENT_HELP
+	update_icons()
+
+/mob/living/simple_animal/hostile/hivebot/verb/hivebot_intent()
+	set name = "Change Alert Level"
+	set category = "IC"
+	if(a_intent != INTENT_HELP)
+		a_intent = INTENT_HELP
+	else
+		a_intent = INTENT_HARM
+	update_icons()
+
+/mob/living/simple_animal/hostile/hivebot/update_icons()
+	if(a_intent != INTENT_HELP)
+		icon_state = "[initial(icon_state)]_attack"
+	else
+		icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "hivebot"
