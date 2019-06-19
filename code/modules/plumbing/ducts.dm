@@ -45,10 +45,6 @@ Sort out active, anchor and possible layers
 /obj/machinery/duct/ComponentInitialize()
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
-/obj/machinery/duct/setDir(newdir) //This shouldn't ever happen, but someone is bound to make a wizard spell that spins everything and let's not do that
-	if(anchored || active)
-		return FALSE
-
 /obj/machinery/duct/proc/update_dir()
 	//Note that the use of the SOUTH define as default is because it's the initial direction of the ducts and it's connects
 	var/new_connects
@@ -148,11 +144,6 @@ Sort out active, anchor and possible layers
 				return FALSE
 	return TRUE
 
-
-
-
-
-
 /datum/component/plumbing
 	var/list/datum/ductnet/ducts = list() //Index with "1" = /datum/ductnet/theductpointingnorth etc. "1" being the num2text from NORTH define
 	var/datum/reagents/reagents
@@ -162,7 +153,7 @@ Sort out active, anchor and possible layers
 	var/supply_connects //directions in wich we act as a supplier
 	var/demand_connects //direction in wich we act as a demander
 
-	var/active = TRUE //FALSE to pretty much just not exist in the plumbing world
+	var/active = FALSE //FALSE to pretty much just not exist in the plumbing world so we can be moved, TRUE to go plumbo mode
 	var/turn_connects = TRUE
 
 /datum/component/plumbing/Initialize(start=TRUE, _turn_connects=TRUE) //turn_connects for wheter or not we spin with the object to change our pipes
@@ -250,24 +241,31 @@ Sort out active, anchor and possible layers
 		var/direction
 		if(D & demand_connects)
 			color = "red" //red because red is mean and it takes
-		if(D & supply_connects)
+		else if(D & supply_connects)
 			color = "blue" //blue is nice and gives
-		switch(D)
-			if(NORTH)
-				direction = "north"
-			if(SOUTH)
-				direction = "south"
-			if(EAST)
-				direction = "east"
-			if(WEST)
-				direction = "west"
-		var/image/I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = AM.layer - 1)
-		if(!turn_connects)
-			I.dir = 0 //no spinning, we always point south
-		AM.overlays += I
+		else
+			continue
+		var/image/I
+		if(turn_connects)
+			switch(D)
+				if(NORTH)
+					direction = "north"
+				if(SOUTH)
+					direction = "south"
+				if(EAST)
+					direction = "east"
+				if(WEST)
+					direction = "west"
+			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = AM.layer - 1)
+		else
+			I = image('icons/obj/plumbing/plumbers.dmi', color, layer = AM.layer - 1) //color is not color as in the var, it's just the name
+			I.dir = D
+		AM.add_overlay(I)
 		ducterlays += I
 
 /datum/component/plumbing/proc/disable() //we stop acting like a plumbing thing and disconnect if we are, so we can safely be moved and stuff
+	if(!active)
+		return
 	STOP_PROCESSING(SSfluids, src)
 	for(var/A in ducts)
 		var/datum/ductnet/D = A
@@ -276,6 +274,8 @@ Sort out active, anchor and possible layers
 	active = FALSE
 
 /datum/component/plumbing/proc/start() //settle wherever we are, and start behaving like a piece of plumbing
+	if(active)
+		return
 	update_dir()
 	active = TRUE
 
