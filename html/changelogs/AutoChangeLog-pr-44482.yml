@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Using the wrong surgery tool during surgery no longer attacks the patient, if on help or disarm intent."
