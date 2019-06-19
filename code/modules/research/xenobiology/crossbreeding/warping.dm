@@ -102,7 +102,7 @@ Warping extracts:
 
 /obj/item/slimecross/warping/darkblue
 	colour = "dark blue"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/darkblue
 	effect_desc = "Forms a recoverable rune that lowers the body temperature of creatures that enter its circle."
 
 /obj/item/slimecross/warping/silver
@@ -320,3 +320,18 @@ Warping extracts:
 		icon_state = "plasmamedium"
 	else
 		icon_state = "plasmasmall"
+
+/obj/effect/slimerune/darkblue
+	name = "dark blue rune"
+	desc = "The air doesn't feel colder around it, but it sends a chill through you nonetheless."
+
+/obj/effect/slimerune/darkpurple/process()
+	for(var/mob/living/L in get_turf(loc))
+		L.bodytemperature = max(L.bodytemperature - 100,-10)
+
+/obj/effect/slimerune/darkpurple/Crossed(atom/movable/AM)
+	. = ..()
+	var/mob/living/L = AM
+	if(!istype(L))
+		return
+	L.bodytemperature = max(L.bodytemperature - 200,-10) //Crossing it is much stronger of an effect.
