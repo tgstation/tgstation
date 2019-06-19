@@ -39,7 +39,7 @@
 			continue
 		. += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>"
 
-	var/msg = list("<span class='warning'>")
+	var/list/msg = list("<span class='warning'>")
 	var/temp = getBruteLoss()
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
 		if(temp)

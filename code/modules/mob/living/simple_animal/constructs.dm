@@ -77,8 +77,6 @@
 			. += "<span class='warning'><b>[t_He] look[t_s] severely dented!</b></span>"
 	. += "*---------*</span>"
 
-	to_chat(user, msg)
-
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(isconstruct(M)) //is it a construct?
 		var/mob/living/simple_animal/hostile/construct/C = M

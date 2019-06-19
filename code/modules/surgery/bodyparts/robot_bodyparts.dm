@@ -177,7 +177,7 @@
 		. += {"It has a [cell] inserted.\n
 		<span class='info'>You can use a <b>screwdriver</b> to remove [cell].</span>"}
 	else
-		. += "<span class='info'>It has an empty port for a <b>power cell</b>.</span>")
+		. += "<span class='info'>It has an empty port for a <b>power cell</b>.</span>"
 	if(wired)
 		. += {"Its all wired up[cell ? " and ready for usage" : ""].\n
 		<span class='info'>You can use <b>wirecutters</b> to remove the wiring.</span>"}

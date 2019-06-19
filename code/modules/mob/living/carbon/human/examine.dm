@@ -124,7 +124,7 @@
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 
-	msg = "<span class='warning'>" //Everything below gets this span
+	var/list/msg = list("<span class='warning'>") //Everything below gets this span
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/disabled = list()
@@ -294,7 +294,7 @@
 
 	msg += "</span>" //End of default warning span
 
-	. += msg
+	. += msg.Join("")
 
 	. += common_trait_examine()
 
