@@ -203,7 +203,9 @@
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
-		audible_message("<span class='italics'>\The [src] clicks!</span>", 2)
+		user.visible_message("<span class='italics'>[user]'s [src.name] clicks!</span>", \
+							"<span class='italics'>\The [src] clicks!</span>", \
+							"<span class='italics'>You hear a click!</span>", COMBAT_MESSAGE_RANGE)
 		playsound(src, 'sound/weapons/gun_dry_fire.ogg', 30, TRUE)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
