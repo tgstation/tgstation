@@ -48,8 +48,8 @@
 
 /obj/structure/mirror/examine_status(mob/user)
 	if(broken)
-		return // no message spam
-	..()
+		return list()// no message spam
+	return ..()
 
 /obj/structure/mirror/obj_break(damage_flag, mapload)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
