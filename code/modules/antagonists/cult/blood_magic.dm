@@ -560,8 +560,13 @@
 	color = "#000000" // black
 
 /obj/item/melee/blood_magic/construction/examine(mob/user)
-	..()
-	to_chat(user,"<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)")
+	. = ..()
+	. += {"<u>A sinister spell used to convert:</u>\n
+	Plasteel into runed metal\n
+	[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell\n
+	Living cyborgs into constructs after a delay\n
+	Cyborg shells into construct shells\n
+	Airlocks into brittle runed airlocks after a delay (harm intent)"}
 
 /obj/item/melee/blood_magic/construction/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag && iscultist(user))
@@ -657,7 +662,8 @@
 	color = "#7D1717"
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
-	to_chat(user,"Blood spear, blood bolt barrage, and blood beam cost [BLOOD_SPEAR_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively.")
+	. = ..()
+	. += "Blood spear, blood bolt barrage, and blood beam cost [BLOOD_SPEAR_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)
