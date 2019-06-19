@@ -1741,6 +1741,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
+"pf" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -2562,7 +2569,7 @@ ac
 ac
 ab
 ab
-ad
+pf
 cu
 cy
 cD

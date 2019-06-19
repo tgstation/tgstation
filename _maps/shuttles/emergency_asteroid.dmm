@@ -449,6 +449,13 @@
 "Jx" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"JM" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -835,7 +842,7 @@ aP
 ac
 bq
 ad
-ac
+JM
 ac
 ac
 ac

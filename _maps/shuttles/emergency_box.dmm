@@ -304,6 +304,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bj" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bk" = (

@@ -171,6 +171,10 @@
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"G" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "H" = (
 /obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
@@ -250,6 +254,12 @@
 /obj/item/crowbar,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"W" = (
+/obj/structure/table,
+/obj/item/clothing/suit/apron/surgical,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "X" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -303,7 +313,7 @@ b
 (3,1,1) = {"
 c
 d
-X
+W
 X
 X
 n
@@ -326,7 +336,7 @@ n
 (4,1,1) = {"
 c
 d
-g
+G
 l
 g
 n

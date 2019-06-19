@@ -575,6 +575,18 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"iJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/clothing/gloves/fingerless,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"wq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/optable,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -836,7 +848,7 @@ ax
 bw
 bB
 bB
-bB
+bF
 bK
 bL
 "}
@@ -883,7 +895,7 @@ ax
 ax
 ad
 bC
-bF
+iJ
 ad
 ad
 aa
@@ -906,7 +918,7 @@ bk
 bP
 bt
 ab
-bD
+wq
 ab
 ad
 aa
