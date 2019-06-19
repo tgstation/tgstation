@@ -222,8 +222,8 @@
 		to_chat(user, "<span class='warning'>This specimen is already marked!</span>")
 		return
 	if(isabductor(target) || iscow(target))
-			marked = target
-			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
+		marked = target
+		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 	else
 		prepare(target,user)
 
