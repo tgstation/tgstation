@@ -34,9 +34,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "g" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "h" = (

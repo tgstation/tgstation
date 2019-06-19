@@ -301,9 +301,7 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bf" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bg" = (
@@ -351,6 +349,10 @@
 /obj/machinery/light,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
+"zg" = (
+/obj/machinery/vending/wallmed,
+/turf/closed/indestructible/riveted/uranium,
+/area/shuttle/escape/luxury)
 
 (1,1,1) = {"
 aa
@@ -394,10 +396,10 @@ ab
 ab
 ab
 ab
-ab
+zg
 aj
 aj
-ab
+zg
 ab
 "}
 (4,1,1) = {"

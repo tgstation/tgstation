@@ -487,17 +487,8 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bD" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"bE" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bF" = (
@@ -796,7 +787,7 @@ ax
 ax
 ad
 bA
-bE
+bD
 bA
 bK
 bL

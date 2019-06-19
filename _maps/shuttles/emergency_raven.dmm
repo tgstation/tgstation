@@ -461,9 +461,7 @@
 /area/shuttle/escape)
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white/side{
 	dir = 5
 	},
@@ -586,9 +584,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
