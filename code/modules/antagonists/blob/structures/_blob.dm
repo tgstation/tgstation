@@ -249,7 +249,7 @@
 /obj/structure/blob/proc/typereport(mob/user)
 	return list({"<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>\n
 		<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>\n
-		<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"}
+		<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"})
 
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
@@ -309,7 +309,7 @@
 	. = ..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || hud_to_check.hudusers[user])
-		. += "<b>Your HUD displays an extensive report...</b><br>")
+		. += "<b>Your HUD displays an extensive report...</b><br>"
 		if(overmind)
 			. += "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>"
 		else

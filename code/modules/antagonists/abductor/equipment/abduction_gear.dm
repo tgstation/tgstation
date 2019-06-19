@@ -616,7 +616,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_CUFF)
 			. += "<span class='warning'>The baton is in restraining mode.</span>"
 		if(BATON_PROBE)
-			. += <span class='warning'>The baton is in probing mode.</span>"
+			. += "<span class='warning'>The baton is in probing mode.</span>"
 
 /obj/item/radio/headset/abductor
 	name = "alien headset"
