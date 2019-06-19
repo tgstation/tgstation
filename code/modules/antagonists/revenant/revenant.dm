@@ -181,6 +181,11 @@
 /mob/living/simple_animal/revenant/ratvar_act()
 	return //clocks get out reee
 
+/mob/living/simple_animal/revenant/bullet_act()
+	if(!revealed || stasis)
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
+
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
