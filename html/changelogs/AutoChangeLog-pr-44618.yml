@@ -1,0 +1,4 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Fixed all mechs being fire/lava proof."
