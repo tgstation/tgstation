@@ -356,13 +356,41 @@
 		return
 
 	// Add Power
-	user.apply_status_effect(/datum/status_effect/agent_pinpointer/hunter_edition)
+	// REMOVED //user.apply_status_effect(/datum/status_effect/agent_pinpointer/hunter_edition)
+	// We don't track direction anymore!
 
 	// NOTE: DON'T DEACTIVATE!
 	//DeactivatePower()
 
 
 
+/datum/status_effect/agent_pinpointer/hunter_edition/on_creation(mob/living/new_owner, ...)
+	..()
+
+	// Pick target
+	var/turf/my_loc = get_turf(owner)
+	var/list/mob/living/carbon/vamps = list()
+	// Track Bloodsuckers in Game Mode
+	for(var/datum/mind/M in SSticker.mode.bloodsuckers)
+		if (!M.current || M.current == owner || !get_turf(M.current) || !get_turf(new_owner))
+			continue
+		var/datum/antagonist/bloodsucker/antag_datum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if(!istype(antag_datum))
+			continue
+		var/their_loc = get_turf(M.current)
+		var/distance = get_dist_euclidian(my_loc, their_loc)
+		if (distance < HUNTER_SCAN_MAX_DISTANCE)
+			vamps[M.current] = (HUNTER_SCAN_MAX_DISTANCE ** 2) - (distance ** 2)
+	// Found one!
+	if(vamps.len)
+		var/mob/living/carbon/targetVamp = pickweight(vamps) // was "scan_target"  //Point at a 'random' vamp, biasing heavily towards closer ones.
+		var/distString = get_dist_euclidian(my_loc, get_turf(targetVamp)) < HUNTER_SCAN_MAX_DISTANCE / 2.5 ? "<b>somewhere closeby!</b>" : "somewhere in the distance."
+		//to_chat(owner, "<span class='warning'>You detect signs of Bloodsuckers to the <b>[dir2text(get_dir(my_loc,get_turf(targetVamp)))]!</b></span>")
+		to_chat(owner, "<span class='warning'>You detect signs of Bloodsuckers [distString]</span>")
+
+	// Will yield a "?"
+	else
+		to_chat(owner, "<span class='notice'>There are no bloodsuckers nearby.</span>")
 
 
 
