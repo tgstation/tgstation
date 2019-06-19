@@ -76,7 +76,7 @@
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, 1)
 		vomitCoefficient ++
-		vomitTimeBonus ++
+		vomitTimeBonus += 2
 	else
 		visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
 
@@ -89,14 +89,15 @@
 		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 		T.add_vomit_floor(src)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A, var/hard = FALSE)
 	if(!istype(A, /obj/item/reagent_containers/food))
 		return
 	var/turf/currentTurf = get_turf(src)
 	var/obj/item/reagent_containers/food/consumed = A
 	consumed.forceMove(currentTurf)
 	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
-	consumed.throw_at(destination, 1, 2) //Thow the food at a random tile 1 spot away
+	var/throwRange = hard ? rand(2,8) : 1
+	consumed.throw_at(destination, throwRange, 2) //Thow the food at a random tile 1 spot away
 	currentTurf = get_turf(consumed)
 	currentTurf.add_vomit_floor(src)
 	playsound(get_turf(consumed), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
@@ -113,8 +114,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_preend()
 	for (var/obj/item/consumed in contents) //Get rid of any food left in the poor thing
-		barf_food(consumed)
-		sleep(2)
+		barf_food(consumed, TRUE)
+		sleep(1)
 		if (QDELETED(src))
 			return
 	vomit_end()
