@@ -62,18 +62,18 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/machinery/pow
 	update_icon()
 
 /obj/structure/cable/Destroy()					// called when a cable is deleted
-	if(powernet)
-		cut_cable_from_powernet()				// update the powernets
-	GLOB.cable_list -= src							//remove it from global cable list
-
 	//Clear the linked indicator bitflags
 	for(var/check_dir in GLOB.cardinals)
 		var/inverse = turn(check_dir, 180)
 		if(linked_dirs & check_dir)
 			var/TB = get_step(loc, check_dir)
-			for(var/obj/structure/cable/C in TB)
-				C.linked_dirs &= ~inverse
-				C.update_icon()
+			var/obj/structure/cable/C = locate(/obj/structure/cable) in TB
+			C.linked_dirs &= ~inverse
+			C.update_icon()
+
+	if(powernet)
+		cut_cable_from_powernet()				// update the powernets
+	GLOB.cable_list -= src							//remove it from global cable list
 
 	return ..()									// then go ahead and delete the cable
 
@@ -302,8 +302,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/machinery/pow
 	if(!T1)
 		return
 	for(var/dir_check in GLOB.cardinals)
-		T1 = get_step(T1, dir_check)
-		P_list = power_list(T1, src, FALSE, TRUE)	// what adjacently joins on to cut cable...
+		if(linked_dirs & dir_check)
+			T1 = get_step(T1, dir_check)
+			P_list += power_list(T1, src, FALSE, TRUE)	// what adjacently joins on to cut cable...
 
 	P_list += power_list(loc, src, FALSE, TRUE)//... and on turf
 
@@ -315,14 +316,20 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/machinery/pow
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network (and delete powernet)
 		return
-
-	var/obj/O = P_list[1]
+	
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
 		moveToNullspace()
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-	addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
+	var/first = TRUE
+	var/delay = 0
+	for(var/obj/O in P_list)
+		if(first)
+			first = FALSE
+			continue
+		addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), delay) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
+		delay += 5
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
