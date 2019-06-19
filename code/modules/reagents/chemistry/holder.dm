@@ -678,15 +678,19 @@
 
 	return FALSE
 
-/datum/reagents/proc/has_reagent(reagent, amount = -1)
+/datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if (R.type == reagent)
 			if(!amount)
+				if(needs_metabolizing && !R.metabolizing)
+					return 0
 				return R
 			else
 				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
+					if(needs_metabolizing && !R.metabolizing)
+						return 0
 					return R
 				else
 					return 0

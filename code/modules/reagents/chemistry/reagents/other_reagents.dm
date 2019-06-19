@@ -184,6 +184,7 @@
 	glass_icon_state  = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
+	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
