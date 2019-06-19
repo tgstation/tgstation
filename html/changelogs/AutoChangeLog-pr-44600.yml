@@ -1,4 +1,0 @@
-author: "FrankFo"
-delete-after: True
-changes: 
-  - bugfix: "If your name is a valid url, it won't be linkified in deadchat anymore."

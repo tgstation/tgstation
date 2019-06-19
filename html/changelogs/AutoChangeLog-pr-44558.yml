@@ -1,6 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "Lavaland plants now have the fireproof gene."
-  - tweak: "Napalm now always burns weeds, even if the plant is fireproof."
-  - bugfix: "Lavaland plants now get their reagents from their genes."
