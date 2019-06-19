@@ -6,7 +6,7 @@
 
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))
-		to_chat(src, "<span class='warning'>This is feature requires the SQL backend to be running.</span>")
+		to_chat(src, "<span class='warning'>This feature requires the SQL backend to be running.</span>")
 		return
 
 	if(!CONFIG_GET(string/chat_announce_new_game))
@@ -18,7 +18,7 @@
 		return
 
 	if(!SSdiscord.enabled)
-		to_chat(src, "<span class='warning'>This is feature requires the server is running on the TGS toolkit, </span>")
+		to_chat(src, "<span class='warning'>This feature requires the server is running on the TGS toolkit, </span>")
 		return
 
 	var/stored_id = SSdiscord.lookup_id(usr.ckey)
