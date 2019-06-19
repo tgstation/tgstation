@@ -396,7 +396,7 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 * If your pull request is not finished make sure it is at least testable in a live environment. Pull requests that do not at least meet this requirement will be closed. You may request a maintainer reopen the pull request when you're ready, or make a new one.
 
-* Maintainers may close pull requests that are deemed to be substantialy flawed. For example pull requests which would need major rewrites to match our quality guidelines. You should take some time to discuss with maintainers or other contributors on how to improve the change.
+* While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality *before* you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
 
 ## Porting features/sprites/sounds/tools from other codebases
 
