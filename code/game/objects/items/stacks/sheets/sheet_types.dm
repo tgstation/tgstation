@@ -317,11 +317,12 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
  * Cardboard
  */
 GLOBAL_LIST_INIT(cardboard_recipes, list ( \
+	new/datum/stack_recipe("folder", /obj/item/folder), \
 	new/datum/stack_recipe("box", /obj/item/storage/box), \
 	new/datum/stack_recipe("light tubes", /obj/item/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs", /obj/item/storage/box/lights/bulbs), \
 	new/datum/stack_recipe("disk box", /obj/item/storage/box/disks), \
-	new/datum/stack_recipe("pillbittle box", /obj/item/storage/box/pillbottles), \	
+	new/datum/stack_recipe("pillbittle box", /obj/item/storage/box/pillbottles), \
 	new/datum/stack_recipe("beaker box", /obj/item/storage/box/beakers), \
 	new/datum/stack_recipe("mouse traps", /obj/item/storage/box/mousetraps), \
 	new/datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box), \
@@ -335,12 +336,11 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot), \
 	new/datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag), \
 	new/datum/stack_recipe("syringe box", /obj/item/storage/box/syringes), \
-	new/datum/stack_recipe("flashbang bpx", /obj/item/storage/box/flashbangs), \
+	new/datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs), \
 	new/datum/stack_recipe("flashes box", /obj/item/storage/box/flashes), \
 	null, \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
-	new/datum/stack_recipe("folder", /obj/item/folder), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
 ))
