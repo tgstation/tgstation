@@ -21,8 +21,8 @@
 	. = ..()
 
 /obj/item/assembly/prox_sensor/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].</span>")
+	. = ..()
+	. += "<span class='notice'>The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].</span>"
 
 /obj/item/assembly/prox_sensor/activate()
 	if(!..())
@@ -157,4 +157,3 @@
 
 	if(usr)
 		attack_self(usr)
-

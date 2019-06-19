@@ -24,6 +24,7 @@
 		if(!obsession)//we didn't find one
 			lose_text = ""
 			qdel(src)
+			return
 	gain_text = "<span class='warning'>You hear a sickening, raspy voice in your head. It wants one small task of you...</span>"
 	owner.mind.add_antag_datum(/datum/antagonist/obsessed)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/obsessed)

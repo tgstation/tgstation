@@ -10421,7 +10421,6 @@
 /area/awaymission/snowdin/post/mining_dock)
 "xK" = (
 /obj/docking_port/stationary{
-	area_type = /area/awaymission/snowdin/cave;
 	dir = 4;
 	dwidth = 3;
 	height = 6;
@@ -10464,7 +10463,6 @@
 /area/awaymission/snowdin/post/mining_dock)
 "xP" = (
 /obj/docking_port/stationary{
-	area_type = /area/awaymission/snowdin/post/mining_dock;
 	dir = 4;
 	dwidth = 3;
 	height = 6;
@@ -15390,7 +15388,6 @@
 /area/awaymission/snowdin/post/mining_main)
 "Kn" = (
 /obj/docking_port/stationary{
-	area_type = /area/awaymission/snowdin/post/mining_main;
 	dir = 4;
 	dwidth = 2;
 	height = 5;
@@ -15448,7 +15445,6 @@
 /area/awaymission/snowdin/post/mining_dock)
 "Kt" = (
 /obj/docking_port/stationary{
-	area_type = /area/awaymission/snowdin/post/mining_dock;
 	dir = 4;
 	dwidth = 2;
 	height = 5;

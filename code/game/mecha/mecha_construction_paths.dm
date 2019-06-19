@@ -11,8 +11,8 @@
 	var/obj/mecha/M = new result(drop_location())
 	QDEL_NULL(M.cell)
 
-	var/atom/parent_atom = parent
-	M.CheckParts(parent_atom.contents)
+	var/obj/item/mecha_parts/chassis/parent_chassis = parent
+	M.CheckParts(parent_chassis.contents)
 
 	SSblackbox.record_feedback("tally", "mechas_created", 1, M.name)
 	QDEL_NULL(parent)
