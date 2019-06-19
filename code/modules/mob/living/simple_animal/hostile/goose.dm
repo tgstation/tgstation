@@ -92,13 +92,13 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A)
 	if(!istype(A, /obj/item/reagent_containers/food))
 		return
-	var/turf/T = get_turf(src)
+	var/turf/currentTurf = get_turf(src)
 	var/obj/item/reagent_containers/food/consumed = A
-	consumed.forceMove(T)
-	var/destination = get_edge_target_turf(T, pick(GLOB.alldirs)) //Pick a random direction to toss them in
+	consumed.forceMove(currentTurf)
+	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 	consumed.throw_at(destination, 1, 2) //Thow the food at a random tile 1 spot away
-	T = get_turf(consumed)
-	T.add_vomit_floor(src)
+	currentTurf = get_turf(consumed)
+	currentTurf.add_vomit_floor(src)
 	playsound(get_turf(consumed), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_prestart(duration)
