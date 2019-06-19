@@ -20,7 +20,3 @@
 					/obj/item/reagent_containers/food/drinks/bottle/holywater = 1)
 	product_slogans = "It's not pyromania if you're getting paid!;You smell that? Plasma, son. Nothing else in the world smells like that.;I love the smell of Plasma in the morning."
 	resistance_flags = FIRE_PROOF
-
-/obj/machinery/stasis/syndi
-	desc = "This bed will keep a person in stasis indefinitly. It has a little sign on it: 'Sorry, we had to make some budget cuts'."
-	mattress_state = "syndistasis_on"
