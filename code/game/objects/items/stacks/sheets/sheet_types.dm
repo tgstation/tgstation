@@ -324,7 +324,11 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("pillbittle box", /obj/item/storage/box/pillbottles), \	
 	new/datum/stack_recipe("beaker box", /obj/item/storage/box/beakers), \
 	new/datum/stack_recipe("mouse traps", /obj/item/storage/box/mousetraps), \
+	new/datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box), \
+	null, \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
+	new/datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), \
+	new/datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box), \
 	null, \
 	new/datum/stack_recipe("sec box", /obj/item/storage/box/seclooking), \
 	new/datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot), \
@@ -338,7 +342,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("folder", /obj/item/folder), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
-	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5) \
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
 	))
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
