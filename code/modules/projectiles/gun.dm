@@ -147,7 +147,9 @@
 	return TRUE
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	user.visible_message("<span class='italics'>[user]'s [src] clicks!</span>", null, "<span class='italics'>\The [src] clicks!</span>", COMBAT_MESSAGE_RANGE)
+	user.visible_message("<span class='italics'>[user]'s [src.name] clicks!</span>", \
+						"<span class='italics'>\The [src] clicks!</span>", \
+						"<span class='italics'>\The [src] clicks!</span>", COMBAT_MESSAGE_RANGE)
 	playsound(src, dry_fire_sound, 30, TRUE)
 
 
