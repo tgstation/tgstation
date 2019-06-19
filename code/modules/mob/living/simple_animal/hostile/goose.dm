@@ -98,6 +98,9 @@
 	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 	var/throwRange = hard ? rand(2,8) : 1
 	consumed.throw_at(destination, throwRange, 2) //Thow the food at a random tile 1 spot away
+	sleep(2)
+	if (QDELETED(src) || QDELETED(consumed))
+		return
 	currentTurf = get_turf(consumed)
 	currentTurf.add_vomit_floor(src)
 	playsound(get_turf(consumed), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
@@ -132,10 +135,10 @@
 		return
 	var/turf/currentTurf = get_turf(src)
 	for (var/obj/item/reagent_containers/food/tasty in currentTurf)
-		if (tasty && get_turf(tasty) == currentTurf)
+		if (tasty && get_turf(tasty) == currentTurf) //Make sure the food hasn't moved from our turf
 			feed(tasty)
 		sleep(2)
-		if (QDELETED(src))
+		if (QDELETED(src) || (get_turf(src) != currentTurf)) //Make sure we don't keep eating if we move from the turf we started eating at
 			return
 	if(prob(vomitCoefficient * 0.2))	
 		vomit_prestart(vomitTimeBonus + 25)
