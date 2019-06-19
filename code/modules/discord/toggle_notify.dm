@@ -9,10 +9,6 @@
 		to_chat(src, "<span class='warning'>This feature requires the SQL backend to be running.</span>")
 		return
 
-	if(!CONFIG_GET(string/chat_announce_new_game))
-		to_chat(src, "<span class='warning'>Notify is not enabled in server configuration.</span>")
-		return
-
 	if(!SSdiscord) // SS is still starting
 		to_chat(src, "<span class='notice'>The server is still starting up. Please wait before attempting to link your account </span>")
 		return
