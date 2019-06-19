@@ -109,11 +109,17 @@
 	vomiting = TRUE
 	icon_state = "vomit"
 	vomit()
-	addtimer(CALLBACK(src, .proc/vomit_end), duration)
+	addtimer(CALLBACK(src, .proc/vomit_preend), duration)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_end()
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_preend()
 	for (var/obj/item/consumed in contents) //Get rid of any food left in the poor thing
 		barf_food(consumed)
+		sleep(2)
+		if (QDELETED(src))
+			return
+	vomit_end()
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_end()
 	flick("vomit_end",src)
 	vomiting = FALSE
 	icon_state = initial(icon_state)
@@ -153,7 +159,7 @@
 		return FALSE
 	var/mob/living/simple_animal/hostile/retaliate/goose/vomit/vomit = owner
 	if(!vomit.vomiting)
-		vomit_prestart(vomitTimeBonus + 25)
-		vomitCoefficient = 1
-		vomitTimeBonus = 0
+		vomit.vomit_prestart(vomit.vomitTimeBonus + 25)
+		vomit.vomitCoefficient = 1
+		vomit.vomitTimeBonus = 0
 	return TRUE
