@@ -75,7 +75,7 @@
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, 1)
-		vomitCoefficient ++
+		vomitCoefficient += 3
 		vomitTimeBonus += 2
 	else
 		visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
@@ -126,7 +126,6 @@
 	icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Moved(oldLoc, dir)
-	set waitfor = FALSE
 	. = ..()
 	if(vomiting)
 		vomit() // its supposed to keep vomiting if you move
@@ -138,7 +137,7 @@
 		sleep(2)
 		if (QDELETED(src))
 			return
-	if(prob(vomitCoefficient * 0.1))	
+	if(prob(vomitCoefficient * 0.2))	
 		vomit_prestart(vomitTimeBonus + 25)
 		vomitCoefficient = 1
 		vomitTimeBonus = 0
