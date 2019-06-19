@@ -22,10 +22,11 @@
 		var/know_how = alert("Do you know how to get a discord user ID? This ID is NOT your discord username and numbers! (Pressing NO will open a guide)","Question","Yes","No","Cancel Linking")
 		if(know_how == "No") // Opens discord support on how to collect IDs
 			src << link("https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID")
-
+		if(know_how == "Cancel Linking")
+			return
 		var/entered_id = input("Please enter your Discord ID (17 digits)", "Enter Discord ID", null, null) as text|null
 		SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
-		alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, follows by \"verify [usr.ckey]\" in the Discord to successfuly verify your account (Example: @Mr_Terry verify [usr.ckey]")
+		alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, follows by \"verify [usr.ckey]\" in the Discord to successfuly verify your account (Example: @Mr_Terry verify [usr.ckey])")
 
 	else // Account is already linked
 		var/choice = alert("You already have the Discord Account [stored_id] linked to [usr.ckey]. Would you like to link a different account?","Already Linked","Yes","No")
@@ -33,9 +34,12 @@
 			var/know_how = alert("Do you know how to get a discord user ID? This ID is NOT your discord username and numbers! (Pressing NO will open a guide)","Question","Yes","No", "Cancel Linking")
 			if(know_how == "No") // Opens discord support on how to collect IDs
 				src << link("https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID")
-
+	
+			if(know_how == "Cancel Linking")
+				return
+	
 			var/entered_id = input("Please enter your Discord ID (17 digits)", "Enter Discord ID", null, null) as text|null
 			SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
-			alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in the Discord to successfuly verify your account (Example: @Mr_Terry verify [usr.ckey]")
+			alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in the Discord to successfuly verify your account (Example: @Mr_Terry verify [usr.ckey])")
 			// This is so people cant fill the notify list with a fuckload of ckeys
 			SSdiscord.notify_members -= "[stored_id]" // The list uses strings because BYOND cannot handle a 17 digit integer
