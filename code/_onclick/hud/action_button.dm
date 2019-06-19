@@ -31,9 +31,11 @@
 		var/list/actions = usr.actions
 		actions.Swap(actions.Find(src.linked_action), actions.Find(B.linked_action))
 		moved = FALSE
+		ordered = TRUE
 		B.moved = FALSE
+		B.ordered = TRUE
 		usr.update_action_buttons()
-	else 
+	else
 		return ..()
 
 /obj/screen/movable/action_button/Click(location,control,params)
