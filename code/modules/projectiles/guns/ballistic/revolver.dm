@@ -222,7 +222,7 @@
 				chambered = null
 				return
 
-		user.visible_message("<span class='danger'>*click*</span>")
+		audible_message("<span class='italics'>\The [src] clicks!</span>")
 		playsound(src, dry_fire_sound, 30, TRUE)
 
 /obj/item/gun/ballistic/revolver/russian/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)

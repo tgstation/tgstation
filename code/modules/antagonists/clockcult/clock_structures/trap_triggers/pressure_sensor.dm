@@ -20,6 +20,6 @@
 		var/mob/living/L = AM
 		if(L.stat || L.m_intent == MOVE_INTENT_WALK || !(L.mobility_flags & MOBILITY_STAND))
 			return
-		audible_message("<i>*click*</i>")
+		audible_message("<span class='italics'>\The [src] clicks!</span>")
 		playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 		activate()
