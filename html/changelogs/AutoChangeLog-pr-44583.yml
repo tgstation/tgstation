@@ -1,0 +1,4 @@
+author: "Hulkamania"
+delete-after: True
+changes: 
+  - admin: "IC button changed to clarify that the issue should be dealt with IC, not display rule 10."
