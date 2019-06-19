@@ -2,4 +2,5 @@
 	. = ..()
 	if(laws && isobserver(user))
 		. += "<b>[src] has the following laws:</b>"
-		laws.show_laws(user)
+		for(var/law in laws.get_law_list(include_zeroth = TRUE))
+			. += law
