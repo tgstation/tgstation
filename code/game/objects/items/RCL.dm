@@ -1,6 +1,6 @@
 /obj/item/twohanded/rcl
-	name = "rapid pipe_cleaner layer"
-	desc = "A device used to rapidly deploy pipe_cleaners. It has screws on the side which can be removed to slide off the pipe_cleaners. Do not use without insulation!"
+	name = "rapid pipe cleaner layer"
+	desc = "A device used to rapidly deploy pipe cleaners. It has screws on the side which can be removed to slide off the pipe cleaners. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcl-0"
 	item_state = "rcl-0"
@@ -43,7 +43,7 @@
 		else
 			return
 		update_icon()
-		to_chat(user, "<span class='notice'>You add the pipe_cleaners to [src]. It now contains [loaded.amount].</span>")
+		to_chat(user, "<span class='notice'>You add the pipe cleaners to [src]. It now contains [loaded.amount].</span>")
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!loaded)
 			return
@@ -113,7 +113,7 @@
 	update_icon()
 	if(!loaded || !loaded.amount)
 		if(loud)
-			to_chat(user, "<span class='notice'>The last of the pipe_cleaners unreel from [src].</span>")
+			to_chat(user, "<span class='notice'>The last of the pipe cleaners unreel from [src].</span>")
 		if(loaded)
 			QDEL_NULL(loaded)
 			loaded = null
@@ -228,7 +228,7 @@
 		var/pipe_cleanersuffix = "[min(fromdir,dirnum)]-[max(fromdir,dirnum)]"
 		if(fromdir == dirnum) //pipe_cleaners can't loop back on themselves
 			pipe_cleanersuffix = "invalid"
-		var/image/img = image(icon = 'icons/mob/radial.dmi', icon_state = "pipe_cleaner_[pipe_cleanersuffix]")
+		var/image/img = image(icon = 'icons/mob/radial.dmi', icon_state = "cable_[pipe_cleanersuffix]")
 		img.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
 		wiredirs[icondir] = img
 	return wiredirs

@@ -321,7 +321,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	if(get_dist(C, user) > 1)		// make sure it's close enough
-		to_chat(user, "<span class='warning'>You can't lay pipe_cleaner at a place that far away!</span>")
+		to_chat(user, "<span class='warning'>You can't lay pipe cleaner at a place that far away!</span>")
 		return
 
 
@@ -337,7 +337,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if((C.d1 == dirn || C.d2 == dirn) && !forceddir)
 		if(!U.can_have_cabling())						//checking if it's a plating or catwalk
 			if (showerror)
-				to_chat(user, "<span class='warning'>You can only lay pipe_cleaners on catwalks and plating!</span>")
+				to_chat(user, "<span class='warning'>You can only lay pipe cleaners on catwalks and plating!</span>")
 			return
 		else
 			// pipe_cleaner is pointing at us, we're standing on an open tile
@@ -348,7 +348,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			for(var/obj/structure/pipe_cleaner/LC in U)		// check to make sure there's not a pipe_cleaner there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
 					if (showerror)
-						to_chat(user, "<span class='warning'>There's already a pipe_cleaner at that position!</span>")
+						to_chat(user, "<span class='warning'>There's already a pipe cleaner at that position!</span>")
 					return
 
 			var/obj/structure/pipe_cleaner/NC = get_new_pipe_cleaner (U)
@@ -379,7 +379,7 @@ By design, d1 is the smallest direction and d2 is the highest
 				continue
 			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no pipe_cleaner matches either direction
 				if (showerror)
-					to_chat(user, "<span class='warning'>There's already a pipe_cleaner at that position!</span>")
+					to_chat(user, "<span class='warning'>There's already a pipe cleaner at that position!</span>")
 
 				return
 
