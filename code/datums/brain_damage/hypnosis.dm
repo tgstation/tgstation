@@ -32,7 +32,7 @@
 	to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
 										as long as you act like the words are your highest priority.</span>")
 	var/obj/screen/alert/hypnosis/hypno_alert = owner.throw_alert("hypnosis", /obj/screen/alert/hypnosis)
-	hypno_alert.desc = "\"[hypnotic_phrase]\""... your mind seems to be fixated on this concept."
+	hypno_alert.desc = "\"[hypnotic_phrase]\"... your mind seems to be fixated on this concept."
 	..()
 
 /datum/brain_trauma/hypnosis/on_lose()
