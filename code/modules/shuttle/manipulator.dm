@@ -11,14 +11,6 @@
 
 	density = TRUE
 
-	// UI state variables
-	var/datum/map_template/shuttle/selected
-
-	var/obj/docking_port/mobile/existing_shuttle
-
-	var/obj/docking_port/mobile/preview_shuttle
-	var/datum/map_template/shuttle/preview_template
-
 /obj/machinery/shuttle_manipulator/Initialize()
 	. = ..()
 	update_icon()
@@ -98,7 +90,7 @@
 		L["description"] = S.description
 		L["admin_notes"] = S.admin_notes
 
-		if(selected == S)
+		if(SSshuttle.selected == S)
 			data["selected"] = L
 
 		templates[S.port_id]["templates"] += list(L)
@@ -128,7 +120,7 @@
 		if (M.mode != SHUTTLE_IDLE)
 			L["mode"] = capitalize(shuttlemode2str(M.mode))
 		L["status"] = M.getDbgStatusText()
-		if(M == existing_shuttle)
+		if(M == SSshuttle.existing_shuttle)
 			data["existing_shuttle"] = L
 
 		data["shuttles"] += list(L)
@@ -148,8 +140,8 @@
 	switch(action)
 		if("select_template")
 			if(S)
-				existing_shuttle = SSshuttle.getShuttle(S.port_id)
-				selected = S
+				SSshuttle.existing_shuttle = SSshuttle.getShuttle(S.port_id)
+				SSshuttle.selected = S
 				. = TRUE
 		if("jump_to")
 			if(params["type"] == "mobile")
@@ -182,13 +174,13 @@
 		if("preview")
 			if(S)
 				. = TRUE
-				unload_preview()
-				load_template(S)
-				if(preview_shuttle)
-					preview_template = S
-					user.forceMove(get_turf(preview_shuttle))
+				SSshuttle.unload_preview()
+				SSshuttle.load_template(S)
+				if(SSshuttle.preview_shuttle)
+					SSshuttle.preview_template = S
+					user.forceMove(get_turf(SSshuttle.preview_shuttle))
 		if("load")
-			if(existing_shuttle == SSshuttle.backup_shuttle)
+			if(SSshuttle.existing_shuttle == SSshuttle.backup_shuttle)
 				// TODO make the load button disabled
 				WARNING("The shuttle that the selected shuttle will replace \
 					is the backup shuttle. Backup shuttle is required to be \
@@ -196,7 +188,7 @@
 			else if(S)
 				. = TRUE
 				// If successful, returns the mobile docking port
-				var/obj/docking_port/mobile/mdp = action_load(S)
+				var/obj/docking_port/mobile/mdp = SSshuttle.action_load(S)
 				if(mdp)
 					user.forceMove(get_turf(mdp))
 					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
@@ -204,108 +196,6 @@
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 
 	update_icon()
-
-/obj/machinery/shuttle_manipulator/proc/action_load(datum/map_template/shuttle/loading_template, obj/docking_port/stationary/destination_port)
-	// Check for an existing preview
-	if(preview_shuttle && (loading_template != preview_template))
-		preview_shuttle.jumpToNullSpace()
-		preview_shuttle = null
-		preview_template = null
-
-	if(!preview_shuttle)
-		if(load_template(loading_template))
-			preview_shuttle.linkup(loading_template, destination_port)
-		preview_template = loading_template
-
-	// get the existing shuttle information, if any
-	var/timer = 0
-	var/mode = SHUTTLE_IDLE
-	var/obj/docking_port/stationary/D
-
-	if(istype(destination_port))
-		D = destination_port
-	else if(existing_shuttle)
-		timer = existing_shuttle.timer
-		mode = existing_shuttle.mode
-		D = existing_shuttle.get_docked()
-
-	if(!D)
-		CRASH("No dock found for preview shuttle ([preview_template.name]), aborting.")
-
-	var/result = preview_shuttle.canDock(D)
-	// truthy value means that it cannot dock for some reason
-	// but we can ignore the someone else docked error because we'll
-	// be moving into their place shortly
-	if((result != SHUTTLE_CAN_DOCK) && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
-		WARNING("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
-		return
-
-	if(existing_shuttle)
-		existing_shuttle.jumpToNullSpace()
-
-	var/list/force_memory = preview_shuttle.movement_force
-	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
-	preview_shuttle.initiate_docking(D)
-	preview_shuttle.movement_force = force_memory
-
-	. = preview_shuttle
-
-	// Shuttle state involves a mode and a timer based on world.time, so
-	// plugging the existing shuttles old values in works fine.
-	preview_shuttle.timer = timer
-	preview_shuttle.mode = mode
-
-	preview_shuttle.register()
-
-	// TODO indicate to the user that success happened, rather than just
-	// blanking the modification tab
-	preview_shuttle = null
-	preview_template = null
-	existing_shuttle = null
-	selected = null
-
-/obj/machinery/shuttle_manipulator/proc/load_template(datum/map_template/shuttle/S)
-	. = FALSE
-	// load shuttle template, centred at shuttle import landmark,
-	var/turf/landmark_turf = get_turf(locate(/obj/effect/landmark/shuttle_import) in GLOB.landmarks_list)
-	S.load(landmark_turf, centered = TRUE, register = FALSE)
-
-	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
-
-	var/found = 0
-	// Search the turfs for docking ports
-	// - We need to find the mobile docking port because that is the heart of
-	//   the shuttle.
-	// - We need to check that no additional ports have slipped in from the
-	//   template, because that causes unintended behaviour.
-	for(var/T in affected)
-		for(var/obj/docking_port/P in T)
-			if(istype(P, /obj/docking_port/mobile))
-				found++
-				if(found > 1)
-					qdel(P, force=TRUE)
-					log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
-				else
-					preview_shuttle = P
-			if(istype(P, /obj/docking_port/stationary))
-				log_world("Map warning: Shuttle Template [S.mappath] has a stationary docking port.")
-	if(!found)
-		var/msg = "load_template(): Shuttle Template [S.mappath] has no mobile docking port. Aborting import."
-		for(var/T in affected)
-			var/turf/T0 = T
-			T0.empty()
-
-		message_admins(msg)
-		WARNING(msg)
-		return
-	//Everything fine
-	S.post_load(preview_shuttle)
-	return TRUE
-
-/obj/machinery/shuttle_manipulator/proc/unload_preview()
-	if(preview_shuttle)
-		preview_shuttle.jumpToNullSpace()
-	preview_shuttle = null
 
 /obj/docking_port/mobile/proc/admin_fly_shuttle(mob/user)
 	var/list/options = list()

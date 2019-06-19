@@ -53,6 +53,13 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
+	var/datum/map_template/shuttle/selected
+
+	var/obj/docking_port/mobile/existing_shuttle
+
+	var/obj/docking_port/mobile/preview_shuttle
+	var/datum/map_template/shuttle/preview_template
+
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
@@ -621,3 +628,106 @@ SUBSYSTEM_DEF(shuttle)
 		C.update_hidden_docking_ports(remove_images, add_images)
 
 	QDEL_LIST(remove_images)
+
+
+/datum/controller/subsystem/shuttle/proc/action_load(datum/map_template/shuttle/loading_template, obj/docking_port/stationary/destination_port)
+	// Check for an existing preview
+	if(preview_shuttle && (loading_template != preview_template))
+		preview_shuttle.jumpToNullSpace()
+		preview_shuttle = null
+		preview_template = null
+
+	if(!preview_shuttle)
+		if(load_template(loading_template))
+			preview_shuttle.linkup(loading_template, destination_port)
+		preview_template = loading_template
+
+	// get the existing shuttle information, if any
+	var/timer = 0
+	var/mode = SHUTTLE_IDLE
+	var/obj/docking_port/stationary/D
+
+	if(istype(destination_port))
+		D = destination_port
+	else if(existing_shuttle)
+		timer = existing_shuttle.timer
+		mode = existing_shuttle.mode
+		D = existing_shuttle.get_docked()
+
+	if(!D)
+		CRASH("No dock found for preview shuttle ([preview_template.name]), aborting.")
+
+	var/result = preview_shuttle.canDock(D)
+	// truthy value means that it cannot dock for some reason
+	// but we can ignore the someone else docked error because we'll
+	// be moving into their place shortly
+	if((result != SHUTTLE_CAN_DOCK) && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
+		WARNING("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
+		return
+
+	if(existing_shuttle)
+		existing_shuttle.jumpToNullSpace()
+
+	var/list/force_memory = preview_shuttle.movement_force
+	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
+	preview_shuttle.initiate_docking(D)
+	preview_shuttle.movement_force = force_memory
+
+	. = preview_shuttle
+
+	// Shuttle state involves a mode and a timer based on world.time, so
+	// plugging the existing shuttles old values in works fine.
+	preview_shuttle.timer = timer
+	preview_shuttle.mode = mode
+
+	preview_shuttle.register()
+
+	// TODO indicate to the user that success happened, rather than just
+	// blanking the modification tab
+	preview_shuttle = null
+	preview_template = null
+	existing_shuttle = null
+	selected = null
+
+/datum/controller/subsystem/shuttle/proc/load_template(datum/map_template/shuttle/S)
+	. = FALSE
+	// load shuttle template, centred at shuttle import landmark,
+	var/turf/landmark_turf = get_turf(locate(/obj/effect/landmark/shuttle_import) in GLOB.landmarks_list)
+	S.load(landmark_turf, centered = TRUE, register = FALSE)
+
+	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
+
+	var/found = 0
+	// Search the turfs for docking ports
+	// - We need to find the mobile docking port because that is the heart of
+	//   the shuttle.
+	// - We need to check that no additional ports have slipped in from the
+	//   template, because that causes unintended behaviour.
+	for(var/T in affected)
+		for(var/obj/docking_port/P in T)
+			if(istype(P, /obj/docking_port/mobile))
+				found++
+				if(found > 1)
+					qdel(P, force=TRUE)
+					log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
+				else
+					preview_shuttle = P
+			if(istype(P, /obj/docking_port/stationary))
+				log_world("Map warning: Shuttle Template [S.mappath] has a stationary docking port.")
+	if(!found)
+		var/msg = "load_template(): Shuttle Template [S.mappath] has no mobile docking port. Aborting import."
+		for(var/T in affected)
+			var/turf/T0 = T
+			T0.empty()
+
+		message_admins(msg)
+		WARNING(msg)
+		return
+	//Everything fine
+	S.post_load(preview_shuttle)
+	return TRUE
+
+/datum/controller/subsystem/shuttle/proc/unload_preview()
+	if(preview_shuttle)
+		preview_shuttle.jumpToNullSpace()
+	preview_shuttle = null
