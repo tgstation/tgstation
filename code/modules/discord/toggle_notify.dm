@@ -14,7 +14,7 @@
 		return
 
 	if(!SSdiscord.enabled)
-		to_chat(src, "<span class='warning'>This feature requires the server is running on the TGS toolkit, </span>")
+		to_chat(src, "<span class='warning'>This feature requires the server is running on the TGS toolkit</span>")
 		return
 
 	var/stored_id = SSdiscord.lookup_id(usr.ckey)

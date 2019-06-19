@@ -33,4 +33,4 @@
 			var/returned_id = SSdiscord.lookup_id(lookup_ckey)
 			if(returned_id)
 				to_chat(usr, "<span class='notice'>Ckey <b>[lookup_ckey]</b> is assigned to Discord ID <b>[returned_id]</b></span>")
-				to_chat(usr, "<span class='notice'>Discord mention format: <b>&lt;@[lookup_ckey]&gt;</b></span>") // &lt; and &gt; print < > in HTML without using them as tags	
+				to_chat(usr, "<span class='notice'>Discord mention format: <b>&lt;@[returned_id]&gt;</b></span>") // &lt; and &gt; print < > in HTML without using them as tags	

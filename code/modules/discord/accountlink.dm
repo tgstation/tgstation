@@ -14,7 +14,7 @@
 		return
 
 	if(!SSdiscord.enabled)
-		to_chat(src, "<span class='warning'>This feature requires the server is running on the TGS toolkit, </span>")
+		to_chat(src, "<span class='warning'>This feature requires the server is running on the TGS toolkit</span>")
 		return
 
 	var/stored_id = SSdiscord.lookup_id(usr.ckey)
@@ -24,7 +24,7 @@
 			src << link("https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID")
 		if(know_how == "Cancel Linking")
 			return
-		var/entered_id = input("Please enter your Discord ID (17 digits)", "Enter Discord ID", null, null) as text|null
+		var/entered_id = input("Please enter your Discord ID (18-ish digits)", "Enter Discord ID", null, null) as text|null
 		SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
 		alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, follows by \"verify [usr.ckey]\" in the Discord to successfuly verify your account (Example: @Mr_Terry verify [usr.ckey])")
 
@@ -38,7 +38,7 @@
 			if(know_how == "Cancel Linking")
 				return
 	
-			var/entered_id = input("Please enter your Discord ID (17 digits)", "Enter Discord ID", null, null) as text|null
+			var/entered_id = input("Please enter your Discord ID (18-ish digits)", "Enter Discord ID", null, null) as text|null
 			SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
 			alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in the Discord to successfuly verify your account (Example: @Mr_Terry verify [usr.ckey])")
 			// This is so people cant fill the notify list with a fuckload of ckeys

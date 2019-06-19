@@ -108,3 +108,8 @@ SUBSYSTEM_DEF(discord)
 	var/datum/DBQuery/unlink_account = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET discord_id = NULL WHERE ckey = '[sanitizeSQL(ckey)]'")
 	unlink_account.Execute()
 	qdel(unlink_account)
+
+// Clean up a discord account mention
+/datum/controller/subsystem/discord/proc/id_clean(input)
+	var/regex/num_only = regex("\[^0-9\]", "g")
+	return num_only.Replace(input, "")
