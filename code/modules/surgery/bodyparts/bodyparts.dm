@@ -193,7 +193,7 @@
 			. = TRUE
 	consider_processing()
 	update_disabled()
-	return . || update_bodypart_damage_state()
+	return update_bodypart_damage_state() || .
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
