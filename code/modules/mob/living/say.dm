@@ -93,8 +93,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message || message == "")
 		return
 
-	var/static/regex/netspeak = regex("\\b(lol|brb|wtf|idk|omg|lmao|btw|ikr|rofl|tbh|nvm|thx|afaik)\\b", "i")
-	if(findtext(message, netspeak))
+	var/static/regex/netspeak = regex("\\b(lol|brb|wtf|idk|omg|lmao|btw|ikr|rofl|tbh|nvm|thx|afaik|ooc|ic|pls|plz)\\b", "i")
+	if(!derpspeech && findtext(message, netspeak))
 		to_chat(src, "<span class='warning'>Netspeak is not permitted in character!</span>")
 		return
 
