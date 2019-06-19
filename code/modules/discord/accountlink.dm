@@ -29,7 +29,7 @@
 
 		var/entered_id = input("Please enter your Discord ID (17 digits)", "Enter Discord ID", null, null) as text|null
 		SSdiscord.account_link_cache[lowertext(usr.ckey)] = "[entered_id]" // Prepares for TGS-side verification
-		alert(usr, "Account link started. Please do \"!tgs verify [lowertext(usr.ckey)]\" in the Discord to successfuly verify your account")
+		alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, follows by \"verify [usr.ckey]\" in the Discord to successfuly verify your account (Example: @Mr_Terry notify [usr.ckey]")
 
 	else // Account is already linked
 		var/choice = alert("You already have the Discord Account [stored_id] linked to [usr.ckey]. Would you like to link a different account?","Already Linked","Yes","No")
