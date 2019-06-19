@@ -1,0 +1,6 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - rscadd: "Updates recon, stealth, hacker, bond, sabotage, mad scientist, bee, and mr freeze bundles with several new items (most already in code) to make them less trash."
+  - rscadd: "Bee Sword (literally just a yellow, weaker esword variant, needed it for another piece of code)"
+  - rscadd: "A weaker variant of the decloner gun."
