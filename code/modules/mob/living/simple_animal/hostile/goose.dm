@@ -68,7 +68,6 @@
 	feed(O)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/O)
-	. = ..()
 	if(!istype(O, /obj/item/reagent_containers/food))
 		return
 	var/obj/item/reagent_containers/food/tasty = O
@@ -77,7 +76,7 @@
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, 1)
 		vomitCoefficient ++
-		vomitTimeBonus += 5
+		vomitTimeBonus += 2
 	else
 		visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
 
@@ -90,28 +89,38 @@
 		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 		T.add_vomit_floor(src)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A)
-	if(istype(A, /obj/item/reagent_containers/food))
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A, var/hard = FALSE)
+	if(!istype(A, /obj/item/reagent_containers/food))
 		return
-	var/turf/T1 = get_turf(src) //its not technically a one-letter var, checkmate ninjanom
+	var/turf/currentTurf = get_turf(src)
 	var/obj/item/reagent_containers/food/consumed = A
-	consumed.forceMove(T1)
-	var/destination = get_edge_target_turf(T1, pick(GLOB.alldirs)) //Pick a random direction to toss them in
-	consumed.throw_at(destination, 1, 2) //Thow the food at a random tile 1 spot away
-	var/turf/T2 = get_turf(consumed)
-	T2.add_vomit_floor(src)
+	consumed.forceMove(currentTurf)
+	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
+	var/throwRange = hard ? rand(2,8) : 1
+	consumed.throw_at(destination, throwRange, 2) //Thow the food at a random tile 1 spot away
+	currentTurf = get_turf(consumed)
+	currentTurf.add_vomit_floor(src)
 	playsound(get_turf(consumed), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_prestart(duration)
 	flick("vomit_start",src)
+	addtimer(CALLBACK(src, .proc/vomit_start, duration), 13) //13 is the length of the vomit_start animation in gooseloose.dmi
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
 	vomiting = TRUE
 	icon_state = "vomit"
 	vomit()
-	addtimer(CALLBACK(src, .proc/vomit_end), duration)
+	addtimer(CALLBACK(src, .proc/vomit_preend), duration)
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_preend()
+	for (var/obj/item/consumed in contents) //Get rid of any food left in the poor thing
+		barf_food(consumed, TRUE)
+		sleep(1)
+		if (QDELETED(src))
+			return
+	vomit_end()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_end()
-	for (var/obj/item/consumed in contents) //Get rid of any food left in the poor thing
-		barf_food(consumed)
 	flick("vomit_end",src)
 	vomiting = FALSE
 	icon_state = initial(icon_state)
@@ -121,12 +130,21 @@
 	if(vomiting)
 		vomit() // its supposed to keep vomiting if you move
 		return
-	for (var/tasty in get_turf(src))
-		feed(tasty)
-	if(prob(vomitCoefficient * 0.5))
-		vomit_start(vomitTimeBonus + 25)
+	findShitToEat(get_turf(src))
+	if(prob(vomitCoefficient * 0.1))	
+		vomit_prestart(vomitTimeBonus + 25)
 		vomitCoefficient = 1
 		vomitTimeBonus = 0
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/findShitToEat(var/turf/currentTurf)
+	if (get_turf(src) != currentTurf)
+		return
+	var/obj/item/reagent_containers/food/tasty = locate() in currentTurf
+	if(tasty)
+		feed(tasty)
+	else
+		return
+	addtimer(CALLBACK(src, .proc/findShitToEat, currentTurf), 2)
 
 /datum/action/cooldown/vomit
 	name = "Vomit"
@@ -142,5 +160,7 @@
 		return FALSE
 	var/mob/living/simple_animal/hostile/retaliate/goose/vomit/vomit = owner
 	if(!vomit.vomiting)
-		vomit.vomit_start(25)
+		vomit.vomit_prestart(vomit.vomitTimeBonus + 25)
+		vomit.vomitCoefficient = 1
+		vomit.vomitTimeBonus = 0
 	return TRUE
