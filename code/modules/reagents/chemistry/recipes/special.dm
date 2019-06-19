@@ -32,11 +32,11 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 	var/randomize_container = FALSE
 	var/list/possible_containers = list()
-	
+
 	var/randomize_req_temperature = TRUE
 	var/min_temp = 1
-	var/max_temp = 600 
-	
+	var/max_temp = 600
+
 	var/randomize_inputs = TRUE
 	var/min_input_reagent_amount = 1
 	var/max_input_reagent_amount = 10
@@ -81,13 +81,13 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 		var/in_reagent_count = min(rand(min_input_reagents,max_input_reagents),remaining_possible_reagents.len)
 		if(in_reagent_count <= 0)
 			return FALSE
-				
+
 		required_reagents = list()
 		for(var/i in 1 to in_reagent_count)
 			var/r_id = pick_n_take(remaining_possible_reagents)
 			required_reagents[r_id] = rand(min_input_reagent_amount,max_input_reagent_amount)
 			remaining_possible_catalysts -= r_id //Can't have same reagents both as catalyst and reagent. Or can we ?
-		
+
 		required_catalysts = list()
 		var/in_catalyst_count = min(rand(min_catalysts,max_catalysts),remaining_possible_catalysts.len)
 		for(var/i in 1 to in_catalyst_count)
@@ -127,15 +127,15 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	if(!req_reag)
 		return FALSE
 	required_reagents = req_reag
-	
+
 	var/req_catalysts = unwrap_reagent_list(recipe_data["required_catalysts"])
 	if(!req_catalysts)
 		return FALSE
 	required_catalysts = req_catalysts
-	
+
 	required_temp = recipe_data["required_temp"]
 	is_cold_recipe = recipe_data["is_cold_recipe"]
-	
+
 	var/temp_results = unwrap_reagent_list(recipe_data["results"])
 	if(!temp_results)
 		return FALSE
@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /obj/item/paper/secretrecipe/examine(mob/user) //Extra secret
 	if(isobserver(user))
-		return
+		return list()
 	. = ..()
 
 /obj/item/paper/secretrecipe/Initialize()

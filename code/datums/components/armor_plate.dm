@@ -29,21 +29,21 @@
 	var/obj/item/typecast = upgrade_item
 	upgrade_name = initial(typecast.name)
 
-/datum/component/armor_plate/proc/examine(datum/source, mob/user)
+/datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
 	//upgrade_item could also be typecast here instead
 	if(ismecha(parent))
 		if(amount)
 			if(amount < maxamount)
-				to_chat(user, "<span class='notice'>Its armor is enhanced with [amount] [upgrade_name].</span>")
+				examine_list += "<span class='notice'>Its armor is enhanced with [amount] [upgrade_name].</span>"
 			else
-				to_chat(user, "<span class='notice'>It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.</span>")
+				examine_list += "<span class='notice'>It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.</span>"
 		else
-			to_chat(user, "<span class='notice'>It has attachment points for strapping monster hide on for added protection.</span>")
+			examine_list += "<span class='notice'>It has attachment points for strapping monster hide on for added protection.</span>"
 	else
 		if(amount)
-			to_chat(user, "<span class='notice'>It has been strengthened with [amount]/[maxamount] [upgrade_name].</span>")
+			examine_list += "<span class='notice'>It has been strengthened with [amount]/[maxamount] [upgrade_name].</span>"
 		else
-			to_chat(user, "<span class='notice'>It can be strengthened with up to [maxamount] [upgrade_name].</span>")
+			examine_list += "<span class='notice'>It can be strengthened with up to [maxamount] [upgrade_name].</span>"
 
 /datum/component/armor_plate/proc/applyplate(datum/source, obj/item/I, mob/user, params)
 	if(!istype(I,upgrade_item))
