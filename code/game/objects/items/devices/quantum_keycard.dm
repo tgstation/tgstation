@@ -10,7 +10,7 @@
 	var/obj/machinery/quantumpad/qpad
 
 /obj/item/quantum_keycard/examine(mob/user)
-	..()
+	. = ..()
 	if(qpad)
 		. += "It's currently linked to a quantum pad."
 		. += "<span class='notice'>Alt-click to unlink the keycard.</span>"
