@@ -312,7 +312,7 @@
 /obj/item/twohanded/rcl/ghetto
 	actions_types = list()
 	max_amount = 30
-	name = "makeshift rapid pipe_cleaner layer"
+	name = "makeshift rapid pipe cleaner layer"
 	ghetto = TRUE
 
 /obj/item/twohanded/rcl/ghetto/update_icon()
