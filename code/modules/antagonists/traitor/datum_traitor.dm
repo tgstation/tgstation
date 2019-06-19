@@ -13,6 +13,10 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
+	var/datum/syndicate_contract/current_contract
+	var/list/assigned_contracts = list()
+	var/contract_TC_payed_out = 0
+	var/contract_TC_to_redeem = 0
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
@@ -26,6 +30,14 @@
 	finalize_traitor()
 	RegisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	..()
+
+/datum/antagonist/traitor/proc/create_contracts()
+	var/contract_generation_quantity = 6
+
+	for (var/i = 1; i <= contract_generation_quantity; i++)
+		var/datum/syndicate_contract/contract_to_add = new(owner)
+		contract_to_add.id = i
+		assigned_contracts.Add(contract_to_add)
 
 /datum/antagonist/traitor/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
@@ -355,6 +367,20 @@
 	result += objectives_text
 
 	var/special_role_text = lowertext(name)
+
+	var/completed_contracts = 0
+	var/tc_total = contract_TC_payed_out + contract_TC_to_redeem
+	for (var/datum/syndicate_contract/contract in assigned_contracts)
+		if (contract.status == CONTRACT_STATUS_COMPLETE)
+			completed_contracts++
+
+
+	if (completed_contracts > 0)
+		var/pluralCheck = "contract"
+		if (completed_contracts > 1) 
+			pluralCheck = "contracts"
+		result += "<br>Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
+					<span class='greentext'>[tc_total] TC</span>!<br>"
 
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
