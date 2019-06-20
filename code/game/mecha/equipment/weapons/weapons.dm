@@ -232,28 +232,28 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rearm()
-	if(projectile_energy_cost)
+	if(projectiles < initial(projectiles))
 		var/projectiles_to_add = initial(projectiles) - projectiles
-		while(chassis.get_charge() >= projectile_energy_cost && projectiles_to_add)
-			projectiles++
-			projectiles_to_add--
-			chassis.use_power(projectile_energy_cost)
-	else
-		if(projectiles_cache == 0)
-			return 1
-		if(projectiles < initial(projectiles))
+
+		if(projectile_energy_cost)
+			while(chassis.get_charge() >= projectile_energy_cost && projectiles_to_add)
+				projectiles++
+				projectiles_to_add--
+				chassis.use_power(projectile_energy_cost)
+
+		else
 			if(projectiles_cache == 0)
 				return 0
-			var/projectiles_to_add = initial(projectiles) - projectiles
 			if(projectiles_to_add <= projectiles_cache)
 				projectiles = projectiles + projectiles_to_add
 				projectiles_cache = projectiles_cache - projectiles_to_add
 			else
 				projectiles = projectiles + projectiles_cache
 				projectiles_cache = 0
-	send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
-	log_message("Rearmed [src.name].", LOG_MECHA)
-	return 1
+
+		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
+		log_message("Rearmed [src.name].", LOG_MECHA)
+		return 1
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/needs_rearm()

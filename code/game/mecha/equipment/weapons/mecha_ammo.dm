@@ -15,7 +15,7 @@
 /obj/item/mecha_ammo/proc/update_name()
 	if(!rounds)
 		name = "empty ammo box"
-		desc = "An empty ammo box. Please recycle."
+		desc = "An exosuit ammuniton box that has since been emptied. Please recycle."
 		icon_state = "empty"
 
 /obj/item/mecha_ammo/attack_self(mob/user)
