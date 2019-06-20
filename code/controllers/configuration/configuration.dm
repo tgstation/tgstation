@@ -49,6 +49,7 @@
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 	LoadPolicy()
+	LoadChatFilter()
 
 /datum/controller/configuration/proc/full_wipe()
 	if(IsAdminAdvancedProcCall())
@@ -249,7 +250,7 @@
 Policy file should be a json file with a single object.
 Value is raw html.
 
-Possible keywords : 
+Possible keywords :
 Job titles / Assigned roles (ghost spawners for example) : Assistant , Captain , Ash Walker
 Mob types : /mob/living/simple_animal/hostile/carp
 Antagonist types : /datum/antagonist/highlander
@@ -395,3 +396,18 @@ Example config:
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
+
+/datum/controller/configuration/proc/LoadChatFilter()
+	GLOB.in_character_filter = list()
+
+	if(!fexists("[directory]/in_character_filter.txt"))
+		return
+
+	log_config("Loading config file in_character_filter.txt...")
+
+	for(var/line in world.file2list("[directory]/in_character_filter.txt"))
+		if(!line)
+			continue
+		if(findtextEx(line,"#",1,2))
+			continue
+		GLOB.in_character_filter += line
