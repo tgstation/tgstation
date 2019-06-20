@@ -136,7 +136,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "A" = (
-/obj/machinery/computer/shuttle/pirate/hunter{
+/obj/machinery/computer/shuttle/hunter{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
