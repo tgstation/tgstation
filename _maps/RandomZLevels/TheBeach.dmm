@@ -1,0 +1,271 @@
+"aa" = (/turf/closed/indestructible/sandstone,/area/awaymission/beach)
+"ab" = (/turf/open/floor/plating/beach/water{density = 1; desc = "I can't move through this."; name = "deep ocean water"},/area/awaymission/beach)
+"ac" = (/turf/open/floor/plating/beach/water,/area/awaymission/beach)
+"ad" = (/turf/open/floor/plating/beach/coastline_b{icon_state = "sandwater_b"; dir = 1},/area/awaymission/beach)
+"ae" = (/turf/open/floor/plating/beach/coastline_b{icon_state = "sandwater_b"; dir = 8},/area/awaymission/beach)
+"af" = (/turf/open/floor/plating/beach/coastline_t{icon_state = "sandwater_t"; dir = 9},/area/awaymission/beach)
+"ag" = (/turf/open/floor/plating/beach/coastline_t{icon_state = "sandwater_t"; dir = 1},/area/awaymission/beach)
+"ah" = (/turf/open/floor/plating/beach/coastline_t{icon_state = "sandwater_t"; dir = 5},/area/awaymission/beach)
+"ai" = (/turf/open/floor/plating/beach/coastline_b{icon_state = "sandwater_b"; dir = 4},/area/awaymission/beach)
+"aj" = (/turf/open/floor/plating/beach/coastline_t{icon_state = "sandwater_t"; dir = 8},/area/awaymission/beach)
+"ak" = (/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"al" = (/obj/effect/overlay/palmtree_r{desc = "How did you get here?"; icon_state = "palm2"; name = "\proper island palm tree"},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"am" = (/turf/open/floor/plating/beach/coastline_t{icon_state = "sandwater_t"; dir = 4},/area/awaymission/beach)
+"an" = (/obj/effect/overlay/coconut{pixel_x = 17; pixel_y = 7},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"ao" = (/turf/open/floor/plating/beach/coastline_t{icon_state = "sandwater_t"; dir = 10},/area/awaymission/beach)
+"ap" = (/turf/open/floor/plating/beach/coastline_t,/area/awaymission/beach)
+"aq" = (/turf/open/floor/plating/beach/coastline_t{icon_state = "sandwater_t"; dir = 6},/area/awaymission/beach)
+"ar" = (/turf/open/floor/plating/beach/coastline_b,/area/awaymission/beach)
+"as" = (/obj/structure/flora/rock{desc = "A volcanic rock."; name = "coastal rock"},/obj/structure/flora/ausbushes/stalkybush{desc = "It can't be smoked."; name = "sea weed"},/turf/open/floor/plating/beach/water{density = 1; desc = "I can't move through this."; name = "deep ocean water"},/area/awaymission/beach)
+"at" = (/obj/structure/flora/rock{desc = "A volcanic rock."; name = "coastal rock"},/turf/open/floor/plating/beach/water{density = 1; desc = "I can't move through this."; name = "deep ocean water"},/area/awaymission/beach)
+"au" = (/obj/structure/closet/crate/wooden{desc = "Now this is what island exploration is all about."; name = "Treasure Chest"},/obj/item/clothing/head/pirate,/obj/item/clothing/glasses/eyepatch,/obj/item/clothing/suit/pirate,/obj/item/melee/sabre{desc = "This isn't real however it can trick someone into thinking you have something real.."; force = 0; name = "foam pirate's sabre"; throwforce = 0},/obj/item/melee/sabre{desc = "This isn't real however it can trick someone into thinking you have something real.."; force = 0; name = "foam pirate's sabre"; throwforce = 0},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"av" = (/turf/open/floor/plating/beach/water{desc = "What's the difference?"; name = "coastline water"},/area/awaymission/beach)
+"aw" = (/turf/open/floor/plating/beach/coastline_b{icon_state = "sandwater_b"; dir = 6},/area/awaymission/beach)
+"ax" = (/turf/open/floor/plating/beach/coastline_b{icon_state = "sandwater_b"; dir = 10},/area/awaymission/beach)
+"ay" = (/turf/open/floor/plating/beach/coastline_t/sandwater_inner{icon_state = "sandwater_inner"; dir = 4},/area/awaymission/beach)
+"az" = (/turf/open/floor/plating/beach/coastline_t/sandwater_inner{icon_state = "sandwater_inner"; dir = 1},/area/awaymission/beach)
+"aA" = (/obj/effect/overlay/palmtree_l,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aB" = (/mob/living/simple_animal/crab/kreb,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aC" = (/obj/item/flashlight/flare/torch,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aD" = (/obj/effect/overlay/coconut,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aE" = (/obj/structure/chair{dir = 4},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aF" = (/obj/structure/bonfire/prelit,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aG" = (/obj/item/clothing/mask/gas/tiki_mask,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aH" = (/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind{pixel_x = -17; pixel_y = 17},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aI" = (/obj/item/melee/skateboard{color = "#6666ff"; desc = "Yes, surf boards have wheels. Stop laughing."; name = "surf board"; pixel_x = -15; pixel_y = 1},/turf/open/floor/plating/beach/water,/area/awaymission/beach)
+"aJ" = (/obj/item/reagent_containers/food/drinks/beer/light{pixel_w = 0; pixel_x = -14; pixel_y = 15},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aK" = (/mob/living/simple_animal/crab,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aL" = (/obj/machinery/gateway{dir = 9},/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 9},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aM" = (/obj/machinery/gateway{dir = 1},/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 1},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aN" = (/obj/machinery/gateway{dir = 5},/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 5},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aO" = (/obj/effect/baseturf_helper/beach/sand,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aP" = (/obj/machinery/gateway{dir = 8},/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 8},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aQ" = (/obj/machinery/gateway/centeraway,/obj/effect/turf_decal/sand,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aR" = (/obj/machinery/gateway{dir = 4},/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aS" = (/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime{pixel_x = -12; pixel_y = 14},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aT" = (/turf/open/floor/plating/beach/coastline_t/sandwater_inner{icon_state = "sandwater_inner"; dir = 8},/area/awaymission/beach)
+"aU" = (/obj/machinery/gateway{dir = 10},/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 10},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aV" = (/obj/machinery/gateway,/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aW" = (/obj/machinery/gateway{dir = 6},/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 6},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"aX" = (/turf/closed/wall/mineral/sandstone,/area/awaymission/beach)
+"aY" = (/turf/open/floor/plating/beach/coastline_b{icon_state = "sandwater_b"; dir = 5},/area/awaymission/beach)
+"aZ" = (/obj/effect/overlay/palmtree_r,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"ba" = (/obj/effect/turf_decal/sand,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bb" = (/obj/structure/dresser{density = 0; pixel_y = 18},/turf/open/floor/wood,/area/awaymission/beach)
+"bc" = (/obj/structure/mirror{pixel_y = 28},/turf/open/floor/wood,/area/awaymission/beach)
+"bd" = (/turf/open/floor/wood,/area/awaymission/beach)
+"be" = (/obj/machinery/computer/security/telescreen/entertainment{pixel_y = 32},/turf/open/floor/wood,/area/awaymission/beach)
+"bf" = (/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 9},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bg" = (/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 1},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bh" = (/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 5},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bi" = (/obj/machinery/button/door{id = "changlinhut2"; name = "changing room lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/turf/open/floor/wood,/area/awaymission/beach)
+"bj" = (/obj/machinery/button/door{id = "changlinhut1"; name = "changing room lock"; normaldoorcontrol = 1; pixel_x = -24; specialfunctions = 4},/turf/open/floor/wood,/area/awaymission/beach)
+"bk" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/glasses/heat,/turf/open/floor/wood,/area/awaymission/beach)
+"bl" = (/obj/structure/bed,/obj/machinery/button/door{id = "theloveshack1"; name = "door lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/obj/item/bedsheet/dorms,/turf/open/floor/wood,/area/awaymission/beach)
+"bm" = (/obj/structure/bed,/obj/machinery/button/door{id = "theloveshack2"; name = "door lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/obj/item/bedsheet/dorms,/turf/open/floor/wood,/area/awaymission/beach)
+"bn" = (/obj/structure/bed,/obj/machinery/button/door{id = "theloveshack3"; name = "door lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/obj/item/bedsheet/dorms,/turf/open/floor/wood,/area/awaymission/beach)
+"bo" = (/turf/open/floor/plating/beach/coastline_t/sandwater_inner,/area/awaymission/beach)
+"bp" = (/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 8},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bq" = (/obj/effect/turf_decal/sand,/obj/machinery/telecomms/relay/preset/mining,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"br" = (/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 4},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bs" = (/obj/machinery/door/airlock/sandstone{id_tag = "changlinhut2"; name = "changing room"},/turf/open/floor/wood,/area/awaymission/beach)
+"bt" = (/obj/machinery/door/airlock/sandstone{id_tag = "changlinhut1"; name = "changing room"},/turf/open/floor/wood,/area/awaymission/beach)
+"bu" = (/obj/item/reagent_containers/food/drinks/bottle/wine,/obj/item/reagent_containers/food/drinks/bottle/rum,/obj/structure/table/wood,/turf/open/floor/wood,/area/awaymission/beach)
+"bv" = (/obj/effect/overlay/palmtree_r,/obj/effect/overlay/coconut,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bw" = (/turf/open/floor/plating/beach/coastline_b{icon_state = "sandwater_b"; dir = 9},/area/awaymission/beach)
+"bx" = (/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 10},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"by" = (/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bz" = (/obj/effect/turf_decal/sand,/obj/effect/turf_decal/stripes/asteroid/line{dir = 6},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bA" = (/obj/structure{desc = "Bar and beach south, dorms east."; icon = 'icons/obj/stationobjs.dmi'; icon_state = "signpost"; name = "directions signpost"},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bB" = (/obj/machinery/door/airlock/sandstone{id_tag = "theloveshack1"; name = "Beach Hut"},/turf/open/floor/wood,/area/awaymission/beach)
+"bC" = (/obj/machinery/door/airlock/sandstone{id_tag = "theloveshack2"; name = "Beach Hut"},/turf/open/floor/wood,/area/awaymission/beach)
+"bD" = (/obj/machinery/door/airlock/sandstone{id_tag = "theloveshack3"; name = "Beach Hut"},/turf/open/floor/wood,/area/awaymission/beach)
+"bE" = (/obj/effect/overlay/palmtree_l{pixel_y = 25},/obj/effect/overlay/coconut{pixel_x = -7; pixel_y = 7},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bF" = (/obj/structure/bedsheetbin{pixel_y = 0},/obj/effect/turf_decal/sand,/obj/structure/table/wood,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bG" = (/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/structure/closet/crate,/obj/effect/turf_decal/sand,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bH" = (/obj/structure/closet/athletic_mixed,/obj/effect/turf_decal/sand,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bI" = (/obj/machinery/door/airlock/sandstone{id_tag = "loveshack"; name = "Beach Hut"},/turf/open/floor/wood,/area/awaymission/beach)
+"bJ" = (/obj/machinery/door/airlock/sandstone{id_tag = "theloveshack4"; name = "Beach Hut"},/turf/open/floor/wood,/area/awaymission/beach)
+"bK" = (/obj/machinery/door/airlock/sandstone{id_tag = "theloveshack5"; name = "Beach Hut"},/turf/open/floor/wood,/area/awaymission/beach)
+"bL" = (/obj/structure/toilet{pixel_y = 8},/obj/effect/turf_decal/sand,/turf/open/floor/plasteel/white,/area/awaymission/beach)
+"bM" = (/obj/structure/mirror{pixel_x = 28; pixel_y = 0},/obj/effect/turf_decal/sand,/obj/structure/sink{pixel_y = 32},/turf/open/floor/plasteel/white,/area/awaymission/beach)
+"bN" = (/obj/structure/mirror{pixel_x = -28; pixel_y = 0},/obj/effect/turf_decal/sand,/obj/structure/sink{pixel_y = 32},/turf/open/floor/plasteel/white,/area/awaymission/beach)
+"bO" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/bottle/champagne,/turf/open/floor/wood,/area/awaymission/beach)
+"bP" = (/obj/item/trash/chips{pixel_x = -18; pixel_y = 7},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bQ" = (/obj/effect/turf_decal/sand,/turf/open/floor/plasteel/white,/area/awaymission/beach)
+"bR" = (/obj/machinery/button/door{id = "toilet1"; name = "restroom lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/obj/effect/turf_decal/sand,/turf/open/floor/plasteel/white,/area/awaymission/beach)
+"bS" = (/obj/machinery/button/door{id = "toilet2"; name = "restroom lock"; normaldoorcontrol = 1; pixel_x = -24; specialfunctions = 4},/obj/effect/turf_decal/sand,/turf/open/floor/plasteel/white,/area/awaymission/beach)
+"bT" = (/obj/structure/bed,/obj/machinery/button/door{id = "loveshack"; name = "love shack lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/obj/item/bedsheet/red,/turf/open/floor/wood,/area/awaymission/beach)
+"bU" = (/obj/structure/bed,/obj/machinery/button/door{id = "theloveshack4"; name = "door lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/obj/item/bedsheet/dorms,/turf/open/floor/wood,/area/awaymission/beach)
+"bV" = (/obj/structure/sign/poster/ripped{pixel_x = 32},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"bW" = (/obj/structure/bed,/obj/machinery/button/door{id = "theloveshack5"; name = "door lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/obj/item/bedsheet/dorms,/turf/open/floor/wood,/area/awaymission/beach)
+"bX" = (/obj/machinery/door/airlock/sandstone{id_tag = "toilet1"; name = "restroom stall"},/obj/effect/turf_decal/sand,/turf/open/floor/plasteel/white,/area/awaymission/beach)
+"bY" = (/obj/machinery/door/airlock/sandstone{id_tag = "toilet2"; name = "restroom stall"},/obj/effect/turf_decal/sand,/turf/open/floor/plasteel/white,/area/awaymission/beach)
+"bZ" = (/obj/structure/dresser{density = 0; pixel_y = 0},/turf/open/floor/wood,/area/awaymission/beach)
+"ca" = (/obj/machinery/computer/security/telescreen/entertainment{pixel_y = -32},/turf/open/floor/wood,/area/awaymission/beach)
+"cb" = (/obj/structure/sign/poster/contraband/syndicate_recruitment{pixel_x = -28},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cc" = (/obj/item/trash/can{pixel_x = 14; pixel_y = 7},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cd" = (/obj/effect/turf_decal/sand,/obj/machinery/vending/cola/starkist,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"ce" = (/obj/effect/turf_decal/sand,/obj/machinery/vending/snack/random,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cf" = (/obj/effect/turf_decal/sand,/obj/machinery/vending/cigarette,/obj/structure/sign/poster/contraband/smoke{pixel_y = -32},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cg" = (/obj/effect/turf_decal/sand,/obj/machinery/vending/cola/space_up,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"ch" = (/obj/effect/overlay/palmtree_l,/obj/effect/overlay/coconut,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"ci" = (/obj/structure/closet/gmcloset,/turf/open/floor/wood,/area/awaymission/beach)
+"cj" = (/obj/structure/closet/secure_closet/bar,/obj/item/storage/box/drinkingglasses,/obj/item/storage/box/drinkingglasses,/obj/item/storage/box/drinkingglasses,/obj/item/storage/box/drinkingglasses,/obj/item/storage/box/drinkingglasses,/obj/item/storage/box/drinkingglasses,/turf/open/floor/wood,/area/awaymission/beach)
+"ck" = (/obj/effect/mob_spawn/human/bartender/alive,/turf/open/floor/wood,/area/awaymission/beach)
+"cl" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/shaker,/turf/open/floor/wood,/area/awaymission/beach)
+"cm" = (/obj/structure/table/wood,/obj/item/clothing/glasses/sunglasses,/obj/item/reagent_containers/food/drinks/beer,/obj/item/reagent_containers/food/drinks/beer,/turf/open/floor/wood,/area/awaymission/beach)
+"cn" = (/obj/machinery/vending/boozeomat/all_access{desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one. May not work for bartenders that don't have Nanotrasen bank accounts."},/turf/open/floor/wood,/area/awaymission/beach)
+"co" = (/obj/structure/table/wood,/obj/machinery/chem_dispenser/drinks/fullupgrade,/obj/structure/sign/picture_frame{pixel_y = 32},/turf/open/floor/wood,/area/awaymission/beach)
+"cp" = (/obj/structure/table/wood,/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,/turf/open/floor/wood,/area/awaymission/beach)
+"cq" = (/obj/structure/table/wood,/obj/machinery/microwave,/turf/open/floor/wood,/area/awaymission/beach)
+"cr" = (/obj/structure/closet/secure_closet/freezer/kitchen{req_access = list(25)},/obj/item/storage/fancy/egg_box,/obj/item/reagent_containers/food/condiment/milk,/obj/item/reagent_containers/food/condiment/milk,/obj/item/reagent_containers/food/condiment/flour,/obj/item/reagent_containers/food/condiment/flour,/obj/item/reagent_containers/food/condiment/mayonnaise,/obj/item/reagent_containers/food/condiment/sugar,/obj/item/reagent_containers/food/condiment/sugar,/obj/item/reagent_containers/food/condiment/enzyme,/turf/open/floor/wood,/area/awaymission/beach)
+"cs" = (/obj/machinery/processor,/turf/open/floor/wood,/area/awaymission/beach)
+"ct" = (/obj/effect/turf_decal/stripes/white/corner,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cu" = (/obj/effect/turf_decal/stripes/white/line,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cv" = (/obj/effect/turf_decal/stripes/white/corner{dir = 4},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cw" = (/obj/structure/closet/secure_closet/freezer/meat/open,/obj/item/reagent_containers/food/snacks/meat/slab/goliath,/obj/item/reagent_containers/food/snacks/meat/slab/xeno,/obj/item/reagent_containers/food/snacks/meat/slab/spider,/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,/obj/item/reagent_containers/food/snacks/meat/slab/bear,/turf/open/floor/wood,/area/awaymission/beach)
+"cx" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cy" = (/obj/effect/turf_decal/stripes/white/full,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cz" = (/obj/effect/turf_decal/stripes/white/line{dir = 8},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cA" = (/obj/structure/mineral_door/wood{name = "bar"},/turf/open/floor/wood,/area/awaymission/beach)
+"cB" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/ale,/turf/open/floor/wood,/area/awaymission/beach)
+"cC" = (/obj/structure/table/wood,/turf/open/floor/wood,/area/awaymission/beach)
+"cD" = (/obj/structure/table/wood,/obj/item/reagent_containers/glass/rag{pixel_y = 7},/turf/open/floor/wood,/area/awaymission/beach)
+"cE" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,/turf/open/floor/wood,/area/awaymission/beach)
+"cF" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,/turf/open/floor/wood,/area/awaymission/beach)
+"cG" = (/obj/item/toy/beach_ball,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cH" = (/obj/structure/chair/stool,/obj/effect/turf_decal/sand,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cI" = (/obj/structure/sign/barsign{pixel_y = 32},/obj/effect/turf_decal/sand,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cJ" = (/obj/effect/turf_decal/stripes/white/corner,/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cK" = (/obj/structure/table,/obj/item/reagent_containers/food/drinks/beer,/obj/item/reagent_containers/food/drinks/beer,/obj/item/reagent_containers/food/drinks/beer,/obj/item/reagent_containers/food/drinks/beer,/obj/item/reagent_containers/food/drinks/beer,/obj/item/reagent_containers/food/drinks/beer,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cL" = (/obj/structure/table,/obj/item/clothing/under/color/rainbow,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/head/collectable/petehat{pixel_y = 5},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cM" = (/obj/structure/table,/obj/item/reagent_containers/food/snacks/chips,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cN" = (/obj/structure/table,/obj/item/reagent_containers/food/drinks/soda_cans/sodawater,/obj/item/reagent_containers/food/drinks/soda_cans/shamblers,/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,/obj/item/reagent_containers/food/drinks/soda_cans/air,/obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter,/obj/item/reagent_containers/food/drinks/soda_cans/tonic,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cO" = (/obj/structure/chair,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cP" = (/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime{pixel_x = -12},/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb{pixel_x = 13},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cQ" = (/obj/item/reagent_containers/food/drinks/soda_cans/starkist{pixel_x = -12; pixel_y = 3},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cR" = (/obj/item/reagent_containers/food/drinks/soda_cans/cola{pixel_x = -8; pixel_y = -4},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cS" = (/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb{pixel_x = -9; pixel_y = -7},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cT" = (/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cU" = (/obj/item/reagent_containers/food/drinks/soda_cans/cola{pixel_x = -8; pixel_y = -4},/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind{pixel_x = 15},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cV" = (/obj/effect/overlay/coconut{pixel_x = -5; pixel_y = 4},/turf/open/floor/plating/beach/coastline_t/sandwater_inner,/area/awaymission/beach)
+"cW" = (/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime{pixel_x = -12},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cX" = (/obj/item/reagent_containers/food/drinks/soda_cans/cola{pixel_x = -5},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cY" = (/obj/item/reagent_containers/food/drinks/soda_cans/starkist{pixel_x = -6},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"cZ" = (/obj/item/clothing/head/collectable/paper{desc = "What looks like an ordinary paper hat is actually a rare and valuable collector's edition paper hat. Keep away from fire, Curators, and ocean waves."},/turf/open/floor/plating/beach/water,/area/awaymission/beach)
+"da" = (/mob/living/simple_animal/parrot,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+"db" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/suit/jacket/letterman_nanotrasen,/turf/open/floor/wood,/area/awaymission/beach)
+"dc" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/suit/jacket/letterman_syndie,/turf/open/floor/wood,/area/awaymission/beach)
+"dd" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/suit/jacket/letterman_red,/turf/open/floor/wood,/area/awaymission/beach)
+"de" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/suit/jacket/letterman,/turf/open/floor/wood,/area/awaymission/beach)
+"df" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/neck/necklace/dope,/turf/open/floor/wood,/area/awaymission/beach)
+"dg" = (/obj/item/clothing/glasses/heat,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababacadadadadadacaaaa
+aaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaeafagagagahaiaaaa
+aaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaeajakaualamaiaaaa
+aaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaeajakanakamaiaaaa
+aaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaeajdaakakamaiaaaa
+aaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaeaoapapapaqaiaaaa
+aaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababacarararararacaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababasababababatababababababababababababababababababababababatabababababababababababababababababababababababababatababababababababababababababababababababababababababasatababababababababababasababababababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavasababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaababababababababababababatavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavatababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavasababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacadadadadadadadadadadadadadadadacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaababababababababababababasavavavavavavavavavavavavavacacacacacacacacawafagagagagagagagagagagagagagahaxadacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacadadadadadacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacawafayakakakakakakakakakakakakakazagahaxadadadadadadadadacacacacacacacacacacacacacacacacacacacacacacacawafagagagahaxadacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacawafayakakakakakaAakakakakakakakakakakazagagagagagagagagahaxadadadadacacacacacacacacacacacacacacacacawafagayakaAakazagahaxacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacawafayakakakaAakakakakakakaAakakakakakakakakakakakakakakakazagagagagahaxadadacacacacacacacacacacacadawafayakakakaBakakakazahaxacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacawafayakakakaAakakaCakaCakaDakakakakakakakakakakakakakakakakakakakaEakazagagahaiacacacacacacacacacawafagayakakakakakakakakakazahaxadacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacaeafayakakakakakakaCaFaGaFaCakakakakakakakakakakakakakakakakakakakakakaHakaEakamaxacacacacaIacacacaeafayakakakakakakakakakakakakazagahaxacacacacacacacacavavavavavavavavavavavavavatababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacaeajakakakaAakaDakakaCakaCakakakaAakakakakakakakakakakakakakakakakakakdgakakaJazahaiacacacacacacacawajaAaKakakakakakakakakakakakaKaAazahaxacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacaeajakakakakakakakakakaDakakakakakakakakakakakaLaMaNakakakakakakakakaAakakakaEakamaxadadadadadadawafayakakakakakakakakakaOakakakakakakazahaxadacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacaeajakakakakaAakakakakakakaAakakakakakakakakakaPaQaRakakakakakakakakakaDakakakaSazagagagagagagagagayakakakakakakakakakakakakakakakakakakazagahaxacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacaeaoaTakakakakakaDaAakakakakakaAakakakakakakakaUaVaWakakakaXaXaXaXakakakakaXaXaXaXakaAakakakaXaXaXaXaXakakaXaXaXaXaXaAakaXaXaXaXaXakakakakakazahaxacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacaYaoaTakakakakakakakakakakakakakakakaZakakakakbaakakakakaXbbbcaXakakakakaXbbbcaXakakakakakaXbbbdbeaXakakaXbbbdbeaXakakaXbbbdbeaXakakakakakakazahaiacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaababababababababababababatavavavavavavavavavavavavavacacacacacaYaoaTakakakakakakakakakakakakakakbfbgbhakakbaakakakakaXbdbiaXakakakakaXbjbdaXakakakakakaXdebdblaXakakaXdfbdbmaXakakaXddbdbnaXakakakakakakboaqaiacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacaYajakakakakakakakakakakakakakakbpbqbrbababaakakakakaXaXbsaXakakakakaXbtaXaXakakakakakaXbubdbdaXakakaXbubdbdaXakbvaXbubdbdaXakakakakakakambwacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacaeajakakakakakakaAakakakakakakakbxbybzakakbabAakakakakakbaakakakakakakbaakakakakakakakaXaXbBaXaXakakaXaXbCaXaXakakaXaXbDaXaXakakakakakakamaiacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacaeaoaTakakakakaDakakakakakakakakakakakakakbababababababababababababababababababababababababababababababababababababababababaakakakakakboaqaiacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacaYajakakakakakakakakakakakakakakakaAaDakbabababababababababababababababababababababababababababababababababababababababababEakakakakambwacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacaeajakakakakakakakakakakakakakaXaXaXaXakbaakaXaXaXaXakbFbGbHbGbHbGbHbGbHbGbHbGbHakakaXaXbIaXaXakakaXaXbJaXaXakakaXaXbKaXaXakakakakakamaxacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacaeajakakakakakakakakakakakakakaXbLbMaXakbaakaXbNbLaXakakakakakakakakakakakakakakakakaXbObdbdaXakakaXbubdbdaXakbPaXbubdbdaXakakakakakazahaiacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacaeajakakakakakakakakakaZakakakaXbQbRaXakbaakaXbSbQaXakakakakakakakakakakakakakakakakaXdbbdbTaXakakaXdcbdbUaXakbVaXbkbdbWaXakakakakakboaqaiacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacaeaoaTakakakakakakakakakakakakaXaXbXaXakbaakaXbYaXaXakakakakaZakakakakakakakakakakakaXbZbdcaaXakakaXbZbdcaaXcbccaXbZbdcaaXakakakboapaqbwacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacaYajakakakakakakakakakakakakakakbaakakbaakakbaakakakakakakakakakakakaAakakakakakakaXaXaXaXaXakakaXaXaXaXaXakakaXaXaXaXaXakakboaqbwaracacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacaeaoaTakakakakakakakakakbababababababababababababababaakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakambwacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacaYaoaTakakakakakakakakbabacdcebababacfbababacecgbabaakakakakakakakakakakakbvakakakakakaZakakakakakakakakakakakakakakakakboaqaiacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaababababababababababababatavavavavavavavavavavavavavacacacacacacacacacacaYajakakakakakakakakbaaXaXaXaXaXaXaXaXaXaXaXaXaXbaakakakakaDakakakakakakakakakakakakakaDakakakakakakakakakakakakaAakakambwacacacacacacacacavavavavavavavavavavavavavasababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacaeajakakakakakchakakbaaXcicjckclcmcncocpcqbdcraXbaakakakakakakakaAakakakakakakakakakakakakakakakakakakakakakakakakakakamaiacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacadawajakakakakakakakakbaaXbdbdbdbdbdbdbdbdbdbdcsaXbaakakakakakakakakakctcucucucucucucucucucucucvaZaDakakakaAakakakakakakamaiacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacaeafagayakakakakakakakakbaaXbdbdbdbdbdbdbdbdbdbdcwaXbaakakakakakakakakakcxakakakakakcyakakakakakczakakakakakakakakakakakakamaiacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacaeajakakakakakakakakakakbacAbdbdbdbdbdbdbdbdbdbdbdaXbaakakakakakakakaAakcxakakakakakcyakakakakakczakakakakakakakaKakakakakamaiacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacaeajaZakakakakakakakakakbaaXcBcBcCcDcCcEcFcCcCcCaXaXbaakakakakcGakakakakcxakakakakakcyakakakakakczakakakakakakakakakcGakakamaiacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacaeajakakakakakakakakakakbabacHcHcHcHcHcHcHcHcHcHcIbabaakakakakakakakakakcxakakakakakcyakakakakakczakakaZakakakakakakakakakamaiacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacaeajakakakakakakakakakakbababababababababababababababaakakakakakakakaKakcJcucucucucucycucucucucuczakakakakakakakakakakakboaqaiacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacaeajakakaKakakakakakakakakakakakakakakakakakakakakakakakakcKcLakaZakakakakakakakakakakakakakakakakakakakakakakakakaAakboaqbwacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacaeaoaTakakakakaAaDakakakakakakakakakakakakakakaAakakakakakcMcNakakaDakakakakakaZakaKakakakakakakakakakakakakakakakaDboaqbwacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacaYaoaTcGakakakakakakaKakakcOcPcOakcOcQcOcRcOcScOcTakakboapapaTakakakcOcUcOakboapapaTcVapapaTakcOcWcOcXcOcYaKakakboaqbwacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaababababababababababababatavavavavavavavavavavavavavacacacacacacacacacacaYaoapaTakboapapaTakakakakakakakakakakakakakakakboapaqbwaYaoapapaTakakakboaqbwaYaoaqbwaYaoaTakakakakakakakakboaqbwacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacaraYaoapaqbwaYaoapapapapapapapapapapapapapapapaqbwaracacararaYaoapapapaqbwacacararacacaYaoapapapapapapapapaqbwacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacarararacacarararararararararararararararararacacacacacacacarararararacacacacacacacacararararararararararacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavatababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaccZacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaababababababababababababasavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavasababababababababababababaaaa
+aaaaababababababababababababatavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaabababababababababababababavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavabababababababababababababaaaa
+aaaaababababababababababababatabababababababababasababababababababababababababababatabababababababababababababababatababababababasabatabababababababababababasababababababababababababababababababababababababababababatabababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
