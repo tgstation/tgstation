@@ -100,7 +100,7 @@
 	var/obj/item/choice_beacon/music/B = new(get_turf(H))
 	var/list/slots = list (
 		"backpack" = SLOT_IN_BACKPACK,
-		"hands" = SLOT_L_STORE,
+		"hands" = SLOT_HANDS,
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
 
