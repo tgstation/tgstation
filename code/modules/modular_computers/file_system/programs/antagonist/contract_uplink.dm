@@ -47,7 +47,7 @@
 		if("PRG_call_extraction")
 			if (hard_drive.traitor_data.current_contract.status != CONTRACT_STATUS_EXTRACTING)
 				if (hard_drive.traitor_data.current_contract.handle_extraction(user))
-					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 75, 1)
+					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 100, 1)
 					hard_drive.traitor_data.current_contract.status = CONTRACT_STATUS_EXTRACTING
 				else
 					user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)

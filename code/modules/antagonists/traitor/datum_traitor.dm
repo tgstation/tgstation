@@ -32,11 +32,11 @@
 	..()
 
 /datum/antagonist/traitor/proc/create_contracts()
-	var/contract_generation_quantity = 6
+	var/contract_generation_quantity = 12
 
 	for (var/i = 1; i <= contract_generation_quantity; i++)
 		var/datum/syndicate_contract/contract_to_add = new(owner)
-		contract_to_add.id = i
+		contract_to_add.id = assigned_contracts.len
 		assigned_contracts.Add(contract_to_add)
 
 /datum/antagonist/traitor/apply_innate_effects()

@@ -13,15 +13,15 @@
 	contract.owner = owner
 	contract.find_target()
 
-	// Balanced around being low numbers, with about 50/50 chance of getting at least one very high paying
+	// 50/50 chance of getting at least one very high paying
 	// contract.
 	// High payout
 	if (prob(15))
-		contract.payout_bonus = rand(6,12)
+		contract.payout_bonus = rand(7,10)
 	else // Medium payout
 		contract.payout_bonus = rand(2,6)
 
-	contract.payout = rand(1, 2)
+	contract.payout = rand(0, 2)
 	contract.generate_dropoff()
 
 	ransom = 100 * rand(18, 45)
@@ -38,30 +38,19 @@
 			// We check if both the turf is a floor, and that it's actually in the area. 
 			// We also want a location that's clear of any obstructions.
 			var/location_clear = TRUE
-			to_chat(user, "here at least")
 			
 			if (istype(turf_area, contract.dropoff) && (!isspaceturf(found_turf) && !isclosedturf(found_turf)))
-				to_chat(user, "matches crit")
 				for (var/content in found_turf.contents)
-				// THINKS THE CABLES/PIPES ISN'T VALID, MAKE ISCABLEPIPE HELPER
-					if (istype(content, /obj/machinery) || istype(content, /obj/structure))
-						to_chat(user, content)
-						if (isobj(content))
-							var/obj/content_obj = content
-							to_chat(user, content_obj.name)
+					// We don't want obstructions, but we don't care about wires/pipes.
+					if ((istype(content, /obj/machinery) || istype(content, /obj/structure)) && !ispipewire(content))
 						location_clear = FALSE
-						to_chat(user, "machine/struc")
 
 				if (location_clear)
-					to_chat(user, "we have free location in this spot")
 					possible_drop_loc.Add(found_turf)
 
 		// Need at least one free location.
 		if (possible_drop_loc.len < 1)
 			return FALSE
-
-		to_chat(user, "loc found")
-		
 
 		var/pod_rand_loc = rand(1, possible_drop_loc.len)
 
@@ -123,14 +112,28 @@
 			// We don't want to tell the station instantly.
 			var/points_to_check
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-
 			if(D)
 				points_to_check = D.account_balance
-
 			if(points_to_check >= ransom)
 				D.adjust_money(-ransom)
 			else 
 				D.adjust_money(-points_to_check)
+
+			// Pay contractor their portion of ransom
+			if (status == CONTRACT_STATUS_COMPLETE)
+				var/datum/bank_account/account
+				var/mob/living/carbon/human/H
+				var/obj/item/card/id/C
+				if(ishuman(contract.owner.current))
+					H = contract.owner.current
+					C = H.get_idcard(TRUE)
+
+				if(C && C.registered_account)
+					C.registered_account.adjust_money(ransom * 0.35)
+
+					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
+					[C.registered_account.account_balance].")
+
 			
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
 								As is policy we've taken a portion of the station's funds to offset the overall cost.", null, 'sound/ai/attention.ogg', null, "Nanotrasen Asset Protection")

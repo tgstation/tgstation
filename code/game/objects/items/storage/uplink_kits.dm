@@ -186,8 +186,8 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
-/obj/item/storage/box/syndicate/contractor_outfit
-	name = "Contractor Outfit"
+/obj/item/storage/box/syndicate/contractor_loadout
+	name = "Contractor Standard Loadout"
 	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
@@ -203,7 +203,7 @@
 
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
-	new /obj/item/storage/box/syndicate/contractor_outfit(src)
+	new /obj/item/storage/box/syndicate/contractor_loadout(src)
 
 	// All 5 TC or less - some nukeops only items, but fit nicely to the theme.
 	var/list/item_list = list(
@@ -230,12 +230,10 @@
 
 	var/obj/item1 = pick_n_take(item_list)
 	var/obj/item2 = pick_n_take(item_list)
-	var/obj/item3 = pick_n_take(item_list)
 
 	// Create two, non repeat items from the list.
 	new item1(src)
 	new item2(src)
-	new item3(src)
 
 /obj/item/storage/box/syndie_kit
 	name = "box"
