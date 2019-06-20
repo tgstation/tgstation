@@ -699,12 +699,13 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/load_template(datum/map_template/shuttle/S)
 	. = FALSE
 	// load shuttle template, centred at shuttle import landmark,
-	preview_reservation = SSmapping.RequestBlockReservation(S.width, S.height, SSmapping.transit.z, /datum/turf_reservation/transit)
+	preview_reservation = SSmapping.RequestBlockReservation(S.width, S.height, SSmapping.transit.z_value, /datum/turf_reservation/transit)
 	if(!preview_reservation)
 		CRASH("failed to reserve an area for shuttle template loading")
-	S.load(TURF_FROM_COORDS_LIST(preview_reservation.bottom_left_coords), centered = FALSE, register = FALSE)
+	var/turf/BL = TURF_FROM_COORDS_LIST(preview_reservation.bottom_left_coords)
+	S.load(BL, centered = FALSE, register = FALSE)
 
-	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
+	var/affected = S.get_affected_turfs(BL, centered=FALSE)
 
 	var/found = 0
 	// Search the turfs for docking ports
