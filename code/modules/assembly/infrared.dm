@@ -10,7 +10,7 @@
 	var/maxlength = 8
 	var/list/obj/effect/beam/i_beam/beams
 	var/olddir = 0
-	var/datum/component/redirect/listener
+	var/turf/listeningTo
 	var/hearing_range = 3
 
 /obj/item/assembly/infra/Initialize()
@@ -33,13 +33,13 @@
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(listener)
+	listeningTo = null
 	QDEL_LIST(beams)
 	. = ..()
 
 /obj/item/assembly/infra/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>")
+	. = ..()
+	. += "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>"
 
 /obj/item/assembly/infra/activate()
 	if(!..())
@@ -163,8 +163,12 @@
 	next_activate =  world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
-	QDEL_NULL(listener)
-	listener = newloc.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_EXITED = CALLBACK(src, .proc/check_exit)))
+	if(listeningTo == newloc)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_EXITED)
+	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
+	listeningTo = newloc
 
 /obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
 	if(QDELETED(src))

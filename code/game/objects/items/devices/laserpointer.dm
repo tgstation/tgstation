@@ -57,12 +57,12 @@
 		return ..()
 
 /obj/item/laser_pointer/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		if(!diode)
-			to_chat(user, "<span class='notice'>The diode is missing.<span>")
+			. += "<span class='notice'>The diode is missing.<span>"
 		else
-			to_chat(user, "<span class='notice'>A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.<span>")
+			. += "<span class='notice'>A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.<span>"
 
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
@@ -77,7 +77,7 @@
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	if(user.has_trait(TRAIT_NOGUNS))
+	if(HAS_TRAIT(user, TRAIT_NOGUNS))
 		to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
 		return
 	if(ishuman(user))

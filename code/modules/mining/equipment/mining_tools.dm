@@ -67,7 +67,7 @@
 
 /obj/item/pickaxe/drill/cyborg/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
@@ -85,6 +85,7 @@
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining, laughs at puny walls
+	w_class = WEIGHT_CLASS_HUGE //the epitome of power(gamer)tools is CHUNCKY
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."

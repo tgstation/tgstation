@@ -71,7 +71,7 @@
 	if(!channeling)
 		channeling = TRUE
 	else
-		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!")
+		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!</span>")
 		return
 	if(do_after(owner, 100 - rune*60, target = owner))
 		if(ishuman(owner))
@@ -360,7 +360,7 @@
 
 /obj/item/melee/blood_magic/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))
@@ -560,8 +560,13 @@
 	color = "#000000" // black
 
 /obj/item/melee/blood_magic/construction/examine(mob/user)
-	..()
-	to_chat(user,"<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)")
+	. = ..()
+	. += {"<u>A sinister spell used to convert:</u>\n
+	Plasteel into runed metal\n
+	[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell\n
+	Living cyborgs into constructs after a delay\n
+	Cyborg shells into construct shells\n
+	Airlocks into brittle runed airlocks after a delay (harm intent)"}
 
 /obj/item/melee/blood_magic/construction/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag && iscultist(user))
@@ -657,7 +662,8 @@
 	color = "#7D1717"
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
-	to_chat(user,"Blood spear, blood bolt barrage, and blood beam cost [BLOOD_SPEAR_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively.")
+	. = ..()
+	. += "Blood spear, blood bolt barrage, and blood beam cost [BLOOD_SPEAR_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)
@@ -747,7 +753,7 @@
 	var/turf/T = get_turf(target)
 	if(T)
 		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
-			if(B.blood_state == "blood")
+			if(B.blood_state == BLOOD_STATE_HUMAN)
 				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
 					temp += 30
 				else
@@ -757,9 +763,9 @@
 		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
 			qdel(TH)
 		var/obj/item/clothing/shoes/shoecheck = user.shoes
-		if(shoecheck && shoecheck.bloody_shoes["blood"])
-			temp += shoecheck.bloody_shoes["blood"]/20
-			shoecheck.bloody_shoes["blood"] = 0
+		if(shoecheck && shoecheck.bloody_shoes[/datum/reagent/blood])
+			temp += shoecheck.bloody_shoes[/datum/reagent/blood]/20
+			shoecheck.bloody_shoes[/datum/reagent/blood] = 0
 		if(temp)
 			user.Beam(T,icon_state="drainbeam",time=15)
 			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
@@ -815,4 +821,3 @@
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
-

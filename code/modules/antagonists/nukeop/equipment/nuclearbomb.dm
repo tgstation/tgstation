@@ -519,7 +519,7 @@
 /obj/machinery/nuclearbomb/beer/proc/fizzbuzz()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	R.my_atom = src
-	R.add_reagent("beer", 100)
+	R.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
 
 	var/datum/effect_system/foam_spread/foam = new
 	foam.set_up(200, get_turf(src), R)
@@ -618,8 +618,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	if(!fake)
 		return
 
-	if(isobserver(user) || user.has_trait(TRAIT_DISK_VERIFIER))
-		to_chat(user, "<span class='warning'>The serial numbers on [src] are incorrect.</span>")
+	if(isobserver(user) || HAS_TRAIT(user.mind, TRAIT_DISK_VERIFIER))
+		. += "<span class='warning'>The serial numbers on [src] are incorrect.</span>"
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/claymore/highlander) && !fake)

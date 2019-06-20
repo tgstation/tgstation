@@ -18,7 +18,7 @@
 		var/answer = TR.get_mecha_info()
 		if(answer)
 			dat += {"<hr>[answer]<br/><br>
-						<a href='?src=[REF(src)];send_message=[REF(TR)]'>Send Message</a> | <a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP Pulse)</a><br>"}
+						<a href='?src=[REF(src)];send_message=[REF(TR)]'>Send Message</a> | [TR.recharging?"Recharging EMP Pulse...<br>":"<a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP Pulse)</a><br>"]"}
 
 	dat += "<hr>"
 	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><BR>"
@@ -30,17 +30,19 @@
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	if(..())
 		return
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("send_message")
+		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["send_message"])
+		if (!istype(MT))
+			return
 		var/message = stripped_input(usr,"Input message","Transmit message")
 		var/obj/mecha/M = MT.in_mecha()
 		if(trim(message) && M)
 			M.occupant_message(message)
 		return
 	if(href_list["shock"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("shock")
-		MT.shock()
+		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["shock"])
+		if (istype(MT))
+			MT.shock()
 
 	updateUsrDialog()
 	return
@@ -52,6 +54,7 @@
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
 	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
+	var/recharging = 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
@@ -95,10 +98,16 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
+	if(recharging)
+		return
 	var/obj/mecha/M = in_mecha()
 	if(M)
-		M.emp_act(EMP_LIGHT)
-	qdel(src)
+		M.emp_act(EMP_HEAVY)
+		addtimer(CALLBACK(src, /obj/item/mecha_parts/mecha_tracking/proc/recharge), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		recharging = 1
+
+/obj/item/mecha_parts/mecha_tracking/proc/recharge()
+	recharging = 0
 
 /obj/item/mecha_parts/mecha_tracking/ai_control
 	name = "exosuit AI control beacon"

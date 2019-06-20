@@ -23,7 +23,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	grind_results = list("lye" = 10)
+	grind_results = list(/datum/reagent/lye = 10)
 	var/cleanspeed = 35 //slower than mop
 	force_string = "robust... against germs"
 	var/uses = 100
@@ -49,11 +49,11 @@
 				msg = "It's started to get a little smaller than it used to be, but it'll definitely still last for a while."
 			else
 				msg = "It's seen some light use, but it's still pretty fresh."
-	to_chat(user, "<span class='notice'>[msg]</span>")
+	. += "<span class='notice'>[msg]</span>"
 
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
-	grind_results = list("plasma" = 10, "lye" = 10)
+	grind_results = list(/datum/reagent/toxin/plasma = 10, /datum/reagent/lye = 10)
 	icon_state = "soapnt"
 	cleanspeed = 28 //janitor gets this
 	uses = 300
@@ -151,11 +151,10 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
-	var/component = /datum/component/squeak/bikehorn
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
-	AddComponent(component, 50)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
@@ -171,7 +170,10 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	component = /datum/component/squeak/airhorn
+
+/obj/item/bikehorn/airhorn/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
 
 //golden bikehorn
 /obj/item/bikehorn/golden
@@ -206,4 +208,4 @@
 	name = "Canned Laughter"
 	desc = "Just looking at this makes you want to giggle."
 	icon_state = "laughter"
-	list_reagents = list("laughter" = 50)
+	list_reagents = list(/datum/reagent/consumable/laughter = 50)

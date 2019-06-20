@@ -5,7 +5,6 @@
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	has_limbs = 1
 	held_items = list(null, null)
-	var/list/stomach_contents		= list()
 	var/list/internal_organs		= list()	//List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs_slot= list() //Same as above, but stores "slot ID" - "organ" pairs for easy access.
 	var/silent = FALSE 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
@@ -62,3 +61,5 @@
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+	var/stam_regen_start_time = 0 //used to halt stamina regen temporarily
+	var/stam_paralyzed = FALSE //knocks you down

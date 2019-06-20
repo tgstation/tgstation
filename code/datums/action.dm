@@ -199,10 +199,15 @@
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
-/datum/action/item_action/rcl
+/datum/action/item_action/rcl_col
 	name = "Change Cable Color"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_rainbow"
+
+/datum/action/item_action/rcl_gui
+	name = "Toggle Fast Wiring Gui"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_gui"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
@@ -701,11 +706,25 @@
 	small_icon = 'icons/mob/alien.dmi'
 	small_icon_state = "alienq"
 
-/datum/action/small_sprite/drake
+/datum/action/small_sprite/megafauna
+	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
+	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
 	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+
+/datum/action/small_sprite/megafauna/drake
 	small_icon_state = "ash_whelp"
 
-/datum/action/small_sprite/spacedragon
+/datum/action/small_sprite/megafauna/colossus
+	small_icon_state = "Basilisk"
+
+/datum/action/small_sprite/megafauna/bubblegum
+	small_icon_state = "goliath2"
+
+/datum/action/small_sprite/megafauna/legion
+	small_icon_state = "dwarf_legion"
+
+/datum/action/small_sprite/megafauna/spacedragon
 	small_icon = 'icons/mob/animal.dmi'
 	small_icon_state = "carp"
 

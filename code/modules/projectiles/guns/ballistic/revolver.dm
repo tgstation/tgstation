@@ -66,11 +66,11 @@
 	return boolets
 
 /obj/item/gun/ballistic/revolver/examine(mob/user)
-	..()
+	. = ..()
 	var/live_ammo = get_ammo(FALSE, FALSE)
-	to_chat(user, "[live_ammo ? live_ammo : "None"] of those are live rounds.")
+	. += "[live_ammo ? live_ammo : "None"] of those are live rounds."
 	if (current_skin)
-		to_chat(user, "It can be spun with <b>alt+click</b>")
+		. += "It can be spun with <b>alt+click</b>"
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper Colt Detective Special"
@@ -250,7 +250,7 @@
 	clumsy_check = 0
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
-	if((user.has_trait(TRAIT_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
+	if((HAS_TRAIT(user, TRAIT_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
 		return ..()
 	if(process_fire(user, user, FALSE, null, BODY_ZONE_HEAD))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")

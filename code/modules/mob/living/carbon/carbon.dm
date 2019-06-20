@@ -11,8 +11,8 @@
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. =  ..()
 
+	QDEL_LIST(hand_bodyparts)
 	QDEL_LIST(internal_organs)
-	QDEL_LIST(stomach_contents)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
 	remove_from_all_data_huds()
@@ -21,30 +21,6 @@
 
 /mob/living/carbon/initialize_footstep()
 	AddComponent(/datum/component/footstep, 1, 2)
-
-/mob/living/carbon/relaymove(mob/user, direction)
-	if(user in src.stomach_contents)
-		if(prob(40))
-			if(prob(25))
-				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
-							 "<span class='warning'>You hear something rumbling.</span>", 4,\
-							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
-			var/obj/item/I = user.get_active_held_item()
-			if(I && I.force)
-				var/d = rand(round(I.force / 4), I.force)
-				var/obj/item/bodypart/BP = get_bodypart(BODY_ZONE_CHEST)
-				if(BP.receive_damage(d, 0))
-					update_damage_overlays()
-				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>", \
-									"<span class='userdanger'>[user] attacks your stomach wall with the [I.name]!</span>")
-				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
-
-				if(prob(src.getBruteLoss() - 50))
-					for(var/atom/movable/A in stomach_contents)
-						A.forceMove(drop_location())
-						stomach_contents.Remove(A)
-					src.gib()
-
 
 /mob/living/carbon/swap_hand(held_index)
 	if(!held_index)
@@ -162,18 +138,18 @@
 			if(!throwable_mob.buckled)
 				thrown_thing = throwable_mob
 				stop_pulling()
-				if(has_trait(TRAIT_PACIFISM))
+				if(HAS_TRAIT(src, TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)
 					log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
-	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !I.has_trait(TRAIT_NODROP))
+	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
 		thrown_thing = I
 		dropItemToGround(I)
 
-		if(has_trait(TRAIT_PACIFISM) && I.throwforce)
+		if(HAS_TRAIT(src, TRAIT_PACIFISM) && I.throwforce)
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
@@ -411,13 +387,13 @@
 		return initial(pixel_y)
 
 /mob/living/carbon/proc/accident(obj/item/I)
-	if(!I || (I.item_flags & ABSTRACT) || I.has_trait(TRAIT_NODROP))
+	if(!I || (I.item_flags & ABSTRACT) || HAS_TRAIT(I, TRAIT_NODROP))
 		return
 
 	dropItemToGround(I)
 
 	var/modifier = 0
-	if(has_trait(TRAIT_CLUMSY))
+	if(HAS_TRAIT(src, TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
@@ -455,7 +431,7 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
-	if(has_trait(TRAIT_NOHUNGER))
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		return 1
 
 	if(nutrition < 100 && !blood)
@@ -492,9 +468,12 @@
 				add_splatter_floor(T)
 			if(stun)
 				adjustBruteLoss(3)
+		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam))
+			if(T)
+				T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
 			if(T)
-				T.add_vomit_floor(src, toxic)//toxic barf looks different
+				T.add_vomit_floor(src, VOMIT_TOXIC)//toxic barf looks different
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
@@ -548,15 +527,16 @@
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE)
 
+
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
-	if(stam > DAMAGE_PRECISION)
-		var/total_health = (health - stam)
-		if(total_health <= crit_threshold && !stat)
-			if(!IsParalyzed())
-				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			Paralyze(100)
-			update_health_hud()
+	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold && !stat)
+		enter_stamcrit()
+	else if(stam_paralyzed)
+		stam_paralyzed = FALSE
+	else
+		return
+	update_health_hud()
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -595,11 +575,11 @@
 		if(!isnull(G.lighting_alpha))
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
-	if(has_trait(TRAIT_THERMAL_VISION))
+	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		sight |= (SEE_MOBS)
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
-	if(has_trait(TRAIT_XRAY_VISION))
+	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = max(see_in_dark, 8)
 
@@ -636,6 +616,17 @@
 
 	else
 		. += INFINITY
+
+/mob/living/carbon/get_permeability_protection(list/target_zones = list(HANDS = 0, CHEST = 0, GROIN = 0, LEGS = 0, FEET = 0, ARMS = 0, HEAD = 0))
+	for(var/obj/item/I in get_equipped_items())
+		for(var/zone in target_zones)
+			if(I.body_parts_covered & zone)
+				target_zones[zone] = max(1 - I.permeability_coefficient, target_zones[zone])
+	var/protection = 0
+	for(var/zone in target_zones)
+		protection += target_zones[zone]
+	protection *= INVERSE(target_zones.len)
+	return protection
 
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
@@ -738,7 +729,7 @@
 	if(hud_used.healths)
 		if(stat != DEAD)
 			. = 1
-			if(!shown_health_amount)
+			if(shown_health_amount == null)
 				shown_health_amount = health
 			if(shown_health_amount >= maxHealth)
 				hud_used.healths.icon_state = "health0"
@@ -765,23 +756,23 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health <= HEALTH_THRESHOLD_DEAD && !has_trait(TRAIT_NODEATH))
+		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
-		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (has_trait(TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !has_trait(TRAIT_NOHARDCRIT)))
+		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
 			blind_eyes(1)
-			if(CONFIG_GET(flag/near_death_experience) && health <= HEALTH_THRESHOLD_NEARDEATH && !has_trait(TRAIT_NODEATH))
-				add_trait(TRAIT_SIXTHSENSE, "near-death")
+			if(CONFIG_GET(flag/near_death_experience) && health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
+				ADD_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 			else
-				remove_trait(TRAIT_SIXTHSENSE, "near-death")
+				REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 		else
-			if(health <= crit_threshold && !has_trait(TRAIT_NOSOFTCRIT))
+			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
-			remove_trait(TRAIT_SIXTHSENSE, "near-death")
+			REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 		update_mobility()
 	update_damage_hud()
 	update_health_hud()
@@ -865,19 +856,6 @@
 /mob/living/carbon/fakefireextinguish()
 	remove_overlay(FIRE_LAYER)
 
-
-/mob/living/carbon/proc/devour_mob(mob/living/carbon/C, devour_time = 130)
-	C.visible_message("<span class='danger'>[src] is attempting to devour [C]!</span>", \
-					"<span class='userdanger'>[src] is attempting to devour you!</span>")
-	if(!do_mob(src, C, devour_time))
-		return
-	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == INTENT_GRAB)
-		C.visible_message("<span class='danger'>[src] devours [C]!</span>", \
-						"<span class='userdanger'>[src] devours you!</span>")
-		C.forceMove(src)
-		stomach_contents.Add(C)
-		log_combat(src, C, "devoured")
-
 /mob/living/carbon/proc/create_bodyparts()
 	var/l_arm_index_next = -1
 	var/r_arm_index_next = 0
@@ -897,12 +875,12 @@
 
 /mob/living/carbon/do_after_coefficent()
 	. = ..()
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src) //Currently, only carbons or higher use mood, move this once that changes.
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood) //Currently, only carbons or higher use mood, move this once that changes.
 	if(mood)
 		switch(mood.sanity) //Alters do_after delay based on how sane you are
-			if(SANITY_INSANE to SANITY_DISTURBED)
+			if(-INFINITY to SANITY_DISTURBED)
 				. *= 1.25
-			if(SANITY_NEUTRAL to SANITY_GREAT)
+			if(SANITY_NEUTRAL to INFINITY)
 				. *= 0.90
 
 /mob/living/carbon/proc/create_internal_organs()
@@ -930,15 +908,15 @@
 	return bodyparts.len > 2 && ..()
 
 /mob/living/carbon/proc/hypnosis_vulnerable()
-	if(has_trait(TRAIT_MINDSHIELD))
+	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		return FALSE
 	if(hallucinating())
 		return TRUE
 	if(IsSleeping())
 		return TRUE
-	if(has_trait(TRAIT_DUMB))
+	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE

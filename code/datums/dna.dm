@@ -90,7 +90,13 @@
 	. = ""
 	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
 
-	L[DNA_GENDER_BLOCK] = construct_block((holder.gender!=MALE)+1, 2)
+	switch(holder.gender)
+		if(MALE)
+			L[DNA_GENDER_BLOCK] = construct_block(G_MALE, 3)
+		if(FEMALE)
+			L[DNA_GENDER_BLOCK] = construct_block(G_FEMALE, 3)
+		else
+			L[DNA_GENDER_BLOCK] = construct_block(G_PLURAL, 3)
 	if(ishuman(holder))
 		var/mob/living/carbon/human/H = holder
 		if(!GLOB.hair_styles_list.len)
@@ -178,7 +184,13 @@
 		if(DNA_EYE_COLOR_BLOCK)
 			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.eye_color))
 		if(DNA_GENDER_BLOCK)
-			setblock(uni_identity, blocknumber, construct_block((H.gender!=MALE)+1, 2))
+			switch(H.gender)
+				if(MALE)
+					setblock(uni_identity, blocknumber, construct_block(G_MALE, 3))
+				if(FEMALE)
+					setblock(uni_identity, blocknumber, construct_block(G_FEMALE, 3))
+				else
+					setblock(uni_identity, blocknumber, construct_block(G_PLURAL, 3))
 		if(DNA_FACIAL_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len))
 		if(DNA_HAIR_STYLE_BLOCK)
@@ -201,25 +213,6 @@
 		. = HM.on_losing(holder)
 		update_instability(FALSE)
 		return
-
-/datum/dna/proc/mutations_say_mods(message)
-	if(message)
-		for(var/datum/mutation/human/M in mutations)
-			message = M.say_mod(message)
-		return message
-
-/datum/dna/proc/mutations_get_spans()
-	var/list/spans = list()
-	for(var/datum/mutation/human/M in mutations)
-		spans |= M.get_spans()
-	return spans
-
-/datum/dna/proc/species_get_spans()
-	var/list/spans = list()
-	if(species)
-		spans |= species.get_spans()
-	return spans
-
 
 /datum/dna/proc/is_same_as(datum/dna/D)
 	if(uni_identity == D.uni_identity && mutation_index == D.mutation_index && real_name == D.real_name)
@@ -376,7 +369,14 @@
 /mob/living/carbon/proc/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
 	if(!has_dna())
 		return
-	gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
+
+	switch(deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 3))
+		if(G_MALE)
+			gender = MALE
+		if(G_FEMALE)
+			gender = FEMALE
+		else
+			gender = PLURAL
 
 /mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
 	..()
@@ -642,7 +642,7 @@
 
 
 /mob/living/carbon/human/proc/something_horrible_mindmelt()
-	if(!has_trait(TRAIT_BLIND))
+	if(!HAS_TRAIT(src, TRAIT_BLIND))
 		var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in internal_organs
 		if(!eyes)
 			return

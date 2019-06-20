@@ -1,3 +1,4 @@
+
 /obj/item/reagent_containers/glass
 	name = "glass"
 	amount_per_transfer_from_this = 10
@@ -26,8 +27,8 @@
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
 			if(reagents)
 				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.id + " ("
-					R += num2text(A.volume) + "),"
+					R += "[A] ([num2text(A.volume)]),"
+
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
 				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
@@ -213,32 +214,32 @@
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
-	list_reagents = list("cryoxadone" = 30)
+	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 
 /obj/item/reagent_containers/glass/beaker/sulphuric
-	list_reagents = list("sacid" = 50)
+	list_reagents = list(/datum/reagent/toxin/acid = 50)
 
 /obj/item/reagent_containers/glass/beaker/slime
-	list_reagents = list("slimejelly" = 50)
+	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/styptic
 	name = "styptic reserve tank"
-	list_reagents = list("styptic_powder" = 50)
+	list_reagents = list(/datum/reagent/medicine/styptic_powder = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/silver_sulfadiazine
 	name = "silver sulfadiazine reserve tank"
-	list_reagents = list("silver_sulfadiazine" = 50)
+	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/charcoal
 	name = "charcoal reserve tank"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list(/datum/reagent/medicine/charcoal = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
-	list_reagents = list("epinephrine" = 50)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
 /obj/item/reagent_containers/glass/beaker/synthflesh
-	list_reagents = list("synthflesh" = 50)
+	list_reagents = list(/datum/reagent/medicine/synthflesh = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
@@ -268,6 +269,14 @@
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
 
+/obj/item/reagent_containers/glass/bucket/wooden
+	name = "wooden bucket"
+	icon_state = "woodbucket"
+	item_state = "woodbucket"
+	materials = null
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	resistance_flags = FLAMMABLE
+
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
 		if(reagents.total_volume < 1)
@@ -276,7 +285,7 @@
 			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-	else if(isprox(O))
+	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
 		qdel(O)
 		qdel(src)
@@ -312,7 +321,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	item_state = "bottle"
-	list_reagents = list("water" = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
+	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -324,9 +333,74 @@
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
 	materials = list(MAT_GLASS=0)
-	list_reagents = list("water" = 100)
+	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
+
+/obj/item/pestle
+	name = "pestle"
+	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "pestle"
+	force = 7
+
+/obj/item/reagent_containers/glass/mortar
+	name = "mortar"
+	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting. Alt click to eject the item."
+	icon_state = "mortar"
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
+	volume = 100
+	reagent_flags = OPENCONTAINER
+	spillable = TRUE
+	var/obj/item/grinded
+
+/obj/item/reagent_containers/glass/mortar/AltClick(mob/user)
+	if(grinded)
+		grinded.forceMove(drop_location())
+		grinded = null
+		to_chat(user, "You eject the item inside.")
+
+/obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
+	..()
+	if(istype(I,/obj/item/pestle))
+		if(grinded)
+			if(user.getStaminaLoss() > 50)
+				to_chat(user, "<span class='danger'>You are too tired to work!</span>")
+				return
+			to_chat(user, "You start grinding...")
+			if((do_after(user, 25, target = src)) && grinded)
+				user.adjustStaminaLoss(40)
+				if(grinded.reagents) //food and pills
+					grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+				if(grinded.juice_results) //prioritize juicing
+					grinded.on_juice()
+					reagents.add_reagent_list(grinded.juice_results)
+					to_chat(user, "You juice [grinded] into a fine liquid.")
+					QDEL_NULL(grinded)
+					return
+				grinded.on_grind()
+				reagents.add_reagent_list(grinded.grind_results)
+				to_chat(user, "You break [grinded] into powder.")
+				QDEL_NULL(grinded)
+				return
+			return
+		else
+			to_chat(user, "<span class='danger'>There is nothing to grind!</span>")
+			return
+	if(grinded)
+		to_chat(user, "<span class='danger'>There is something inside already!</span>")
+		return
+	if(I.juice_results || I.grind_results)
+		I.forceMove(src)
+		grinded = I
+		return
+	to_chat(user, "<span class='danger'>You can't grind this!</span>")
+
+/obj/item/reagent_containers/glass/saline
+	name = "saline canister"
+	volume = 5000
+	list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)

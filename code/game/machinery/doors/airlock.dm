@@ -626,47 +626,47 @@
 				update_icon(AIRLOCK_CLOSED)
 
 /obj/machinery/door/airlock/examine(mob/user)
-	..()
+	. = ..()
 	if(obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>Its access panel is smoking slightly.</span>")
+		. += "<span class='warning'>Its access panel is smoking slightly.</span>"
 	if(charge && !panel_open && in_range(user, src))
-		to_chat(user, "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>")
+		. += "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>"
 	if(charge && panel_open)
-		to_chat(user, "<span class='warning'>Something is wired up to the airlock's electronics!</span>")
+		. += "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
 	if(note)
 		if(!in_range(user, src))
-			to_chat(user, "There's a [note.name] pinned to the front. You can't read it from here.")
+			. += "There's a [note.name] pinned to the front. You can't read it from here."
 		else
-			to_chat(user, "There's a [note.name] pinned to the front...")
-			note.examine(user)
+			. += "There's a [note.name] pinned to the front..."
+			. += note.examine(user)
 
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
-				to_chat(user, "Its wires are exposed!")
+				. += "Its wires are exposed!"
 			if(AIRLOCK_SECURITY_METAL)
-				to_chat(user, "Its wires are hidden behind a welded metal cover.")
+				. += "Its wires are hidden behind a welded metal cover."
 			if(AIRLOCK_SECURITY_PLASTEEL_I_S)
-				to_chat(user, "There is some shredded plasteel inside.")
+				. += "There is some shredded plasteel inside."
 			if(AIRLOCK_SECURITY_PLASTEEL_I)
-				to_chat(user, "Its wires are behind an inner layer of plasteel.")
+				. += "Its wires are behind an inner layer of plasteel."
 			if(AIRLOCK_SECURITY_PLASTEEL_O_S)
-				to_chat(user, "There is some shredded plasteel inside.")
+				. += "There is some shredded plasteel inside."
 			if(AIRLOCK_SECURITY_PLASTEEL_O)
-				to_chat(user, "There is a welded plasteel cover hiding its wires.")
+				. += "There is a welded plasteel cover hiding its wires."
 			if(AIRLOCK_SECURITY_PLASTEEL)
-				to_chat(user, "There is a protective grille over its panel.")
+				. += "There is a protective grille over its panel."
 	else if(security_level)
 		if(security_level == AIRLOCK_SECURITY_METAL)
-			to_chat(user, "It looks a bit stronger.")
+			. += "It looks a bit stronger."
 		else
-			to_chat(user, "It looks very robust.")
+			. += "It looks very robust."
 
 	if(issilicon(user) && (!stat & BROKEN))
-		to_chat(user, "<span class='notice'>Shift-click [src] to [ density ? "open" : "close"] it.</span>")
-		to_chat(user, "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>")
-		to_chat(user, "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>")
-		to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.</span>")
+		. += "<span class='notice'>Shift-click [src] to [ density ? "open" : "close"] it.</span>"
+		. += "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>"
+		. += "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>"
+		. += "<span class='notice'>Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.</span>"
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!canAIControl(user))
@@ -750,7 +750,7 @@
 
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
-		if((H.has_trait(TRAIT_DUMB)) && Adjacent(user))
+		if((HAS_TRAIT(H, TRAIT_DUMB)) && Adjacent(user))
 			playsound(src, 'sound/effects/bang.ogg', 25, TRUE)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \

@@ -38,11 +38,11 @@
 	var/static/mutable_appearance/cap_dead
 
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
-	..()
+	. = ..()
 	if(health >= maxHealth)
-		to_chat(user, "<span class='info'>It looks healthy.</span>")
+		. += "<span class='info'>It looks healthy.</span>"
 	else
-		to_chat(user, "<span class='info'>It looks like it's been roughed up.</span>")
+		. += "<span class='info'>It looks like it's been roughed up.</span>"
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
@@ -186,6 +186,6 @@
 	var/counter
 	for(counter=0, counter<=powerlevel, counter++)
 		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(src.loc)
-		S.reagents.add_reagent("mushroomhallucinogen", powerlevel)
-		S.reagents.add_reagent("omnizine", powerlevel)
-		S.reagents.add_reagent("synaptizine", powerlevel)
+		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
+		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
+		S.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)

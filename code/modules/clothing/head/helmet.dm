@@ -30,13 +30,13 @@
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/examine(mob/user)
-	..()
+	. = ..()
 	if(attached_light)
-		to_chat(user, "It has \a [attached_light] [can_flashlight ? "" : "permanently "]mounted on it.")
+		. += "It has \a [attached_light] [can_flashlight ? "" : "permanently "]mounted on it."
 		if(can_flashlight)
-			to_chat(user, "<span class='info'>[attached_light] looks like it can be <b>unscrewed</b> from [src].</span>")
+			. += "<span class='info'>[attached_light] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_flashlight)
-		to_chat(user, "It has a mounting point for a <b>seclite</b>.")
+		. += "It has a mounting point for a <b>seclite</b>."
 
 /obj/item/clothing/head/helmet/Destroy()
 	QDEL_NULL(attached_light)
@@ -295,7 +295,7 @@
 	desc = "It can hold a bottle of vodka."
 	icon_state = "rus_helmet"
 	item_state = "rus_helmet"
-	armor = list("melee" = 30, "bullet" = 60, "laser" = 20,"energy" = 15, "bomb" = 50, "bio" = 20, "rad" = 30, "fire" = 20, "acid" = 50)
+	armor = list("melee" = 30, "bullet" = 25, "laser" = 20,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 20, "fire" = 30, "acid" = 50)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/helmet
 
 /obj/item/clothing/head/helmet/rus_ushanka
@@ -303,11 +303,10 @@
 	desc = "100% bear."
 	icon_state = "rus_ushanka"
 	item_state = "rus_ushanka"
-	clothing_flags = THICKMATERIAL
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	armor = list("melee" = 20, "bullet" = 20, "laser" = 40,"energy" = 20, "bomb" = 20, "bio" = 80, "rad" = 70, "fire" = 20, "acid" = 80)
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 0)
 
 //LightToggle
 

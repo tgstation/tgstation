@@ -79,11 +79,11 @@
 
 /datum/status_effect/throat_soothed/on_apply()
 	. = ..()
-	owner.add_trait(TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
 
 /datum/status_effect/throat_soothed/on_remove()
 	. = ..()
-	owner.remove_trait(TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
 
 /datum/status_effect/bounty
 	id = "bounty"
@@ -126,6 +126,18 @@
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 	var/mob/living/listening_in
+
+/datum/status_effect/bugged/on_apply(mob/living/new_owner, mob/living/tracker)
+	. = ..()
+	if (.)
+		RegisterSignal(new_owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+
+/datum/status_effect/bugged/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+
+/datum/status_effect/bugged/proc/handle_hearing(datum/source, list/hearing_args)
+	listening_in.show_message(hearing_args[HEARING_MESSAGE])
 
 /datum/status_effect/bugged/on_creation(mob/living/new_owner, mob/living/tracker)
 	. = ..()

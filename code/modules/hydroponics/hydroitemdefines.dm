@@ -24,7 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	list_reagents = list("weedkiller" = 100)
+	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 100)
 
 /obj/item/reagent_containers/spray/weedspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -39,7 +39,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	list_reagents = list("pestkiller" = 100)
+	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
 
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -64,6 +64,16 @@
 /obj/item/cultivator/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
+
+/obj/item/cultivator/rake
+	name = "rake"
+	icon_state = "rake"
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("slashed", "sliced", "bashed", "clawed")
+	hitsound = null
+	materials = null
+	flags_1 = NONE
+	resistance_flags = FLAMMABLE
 
 /obj/item/hatchet
 	name = "hatchet"
@@ -92,6 +102,12 @@
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+
+/obj/item/hatchet/wooden
+	desc = "A crude axe blade upon a short wooden handle."
+	icon_state = "woodhatchet"
+	materials = null
+	flags_1 = NONE
 
 /obj/item/scythe
 	icon_state = "scythe0"
@@ -160,17 +176,17 @@
 /obj/item/reagent_containers/glass/bottle/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
 	desc = "Contains a fertilizer that causes mild mutations with each harvest."
-	list_reagents = list("eznutriment" = 50)
+	list_reagents = list(/datum/reagent/plantnutriment/eznutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	desc = "Contains a fertilizer that limits plant yields to no more than one and causes significant mutations in plants."
-	list_reagents = list("left4zednutriment" = 50)
+	list_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
 	desc = "Contains a fertilizer that increases the yield of a plant by 30% while causing no mutations."
-	list_reagents = list("robustharvestnutriment" = 50)
+	list_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/empty
 	name = "bottle"
@@ -183,9 +199,9 @@
 /obj/item/reagent_containers/glass/bottle/killer/weedkiller
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
-	list_reagents = list("weedkiller" = 50)
+	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 50)
 
 /obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
-	list_reagents = list("pestkiller" = 50)
+	list_reagents = list(/datum/reagent/toxin/pestkiller = 50)

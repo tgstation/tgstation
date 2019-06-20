@@ -167,16 +167,6 @@
 	icon_state = "griffin_wings"
 	item_state = "griffin_wings"
 
-
-/obj/item/clothing/suit/holidaypriest
-	name = "holiday priest"
-	desc = "This is a nice holiday, my son."
-	icon_state = "holidaypriest"
-	item_state = "w_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-
 /obj/item/clothing/suit/cardborg
 	name = "cardborg suit"
 	desc = "An ordinary cardboard box with holes cut in the sides."
@@ -240,7 +230,7 @@
 
 /obj/item/clothing/suit/poncho/ponchoshame/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/suit/whitedress
 	name = "white dress"
@@ -490,6 +480,21 @@
 	icon_state = "pharoah"
 	icon_state = "pharoah"
 	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/caution
+	name = "wet floor sign"
+	desc = "Caution! Wet Floor!"
+	icon_state = "caution"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	force = 1
+	throwforce = 3
+	throw_speed = 2
+	throw_range = 5
+	w_class = WEIGHT_CLASS_SMALL
+	body_parts_covered = CHEST|GROIN
+	attack_verb = list("warned", "cautioned", "smashed")
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 
 

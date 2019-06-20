@@ -60,6 +60,11 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/bishopmitre
+	name = "bishop mitre"
+	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
+	icon_state = "bishopmitre"
+
 //Detective
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
@@ -67,7 +72,7 @@
 	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 	icon_state = "detective"
 	var/candy_cooldown = 0
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/detective
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
 /obj/item/clothing/head/fedora/det_hat/Initialize()
@@ -75,8 +80,8 @@
 	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to take a candy corn.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to take a candy corn.</span>"
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -122,7 +127,7 @@
 
 /obj/item/clothing/head/beret/highlander/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"
@@ -193,33 +198,41 @@
 		mode = DRILL_CANADIAN
 	return TRUE
 
-/obj/item/clothing/head/warden/drill/speechModification(M)
-	if(copytext(M, 1, 2) != "*")
-		if(mode == DRILL_DEFAULT)
-			M = " [M]"
-			return trim(M)
-		if(mode == DRILL_SHOUTING)
-			M = " [M]!"
-			return trim(M)
-		if(mode ==  DRILL_YELLING)
-			M = " [M]!!"
-			return trim(M)
-		if(mode == DRILL_CANADIAN)
-			M = " [M]"
-			var/list/canadian_words = strings("canadian_replacement.json", "canadian")
+/obj/item/clothing/head/warden/drill/equipped(mob/M, slot)
+	. = ..()
+	if (slot == SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
 
-			for(var/key in canadian_words)
-				var/value = canadian_words[key]
-				if(islist(value))
-					value = pick(value)
+/obj/item/clothing/head/warden/drill/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
 
-				M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
-				M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
-				M = replacetextEx(M, " [key]", " [value]")
+/obj/item/clothing/head/warden/drill/proc/handle_speech(datum/source, mob/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		switch (mode)
+			if(DRILL_SHOUTING)
+				message += "!"
+			if(DRILL_YELLING)
+				message += "!!"
+			if(DRILL_CANADIAN)
+				message = " [message]"
+				var/list/canadian_words = strings("canadian_replacement.json", "canadian")
 
-			if(prob(30))
-				M += pick(", eh?", ", EH?")
-		return trim(M)
+				for(var/key in canadian_words)
+					var/value = canadian_words[key]
+					if(islist(value))
+						value = pick(value)
+
+					message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+					message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+					message = replacetextEx(message, " [key]", " [value]")
+
+				if(prob(30))
+					message += pick(", eh?", ", EH?")
+		speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"

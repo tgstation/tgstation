@@ -183,7 +183,7 @@
 	var/obj/item/ammo_box/magazine/old_mag = magazine
 	if (tac_load)
 		if (insert_magazine(user, tac_load, FALSE))
-			to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
+			to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>You dropped the old [magazine_wording], but the new one doesn't fit. How embarassing.</span>")
 			magazine = null
@@ -330,15 +330,15 @@
 
 
 /obj/item/gun/ballistic/examine(mob/user)
-	..()
+	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
-	to_chat(user, "It has [get_ammo(count_chambered)] round\s remaining.")
+	. += "It has [get_ammo(count_chambered)] round\s remaining."
 	if (!chambered)
-		to_chat(user, "It does not seem to have a round chambered.")
+		. += "It does not seem to have a round chambered."
 	if (bolt_locked)
-		to_chat(user, "The [bolt_wording] is locked back and needs to be released before firing.")
+		. += "The [bolt_wording] is locked back and needs to be released before firing."
 	if (suppressed)
-		to_chat(user, "It has a suppressor attached that can be removed with <b>alt+click</b>.")
+		. += "It has a suppressor attached that can be removed with <b>alt+click</b>."
 
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
 	var/boolets = 0 //mature var names for mature people

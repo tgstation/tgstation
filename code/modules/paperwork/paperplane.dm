@@ -83,7 +83,7 @@
 		update_icon()
 
 	else if(P.is_hot())
-		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 				"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)
@@ -124,8 +124,8 @@
 		H.emote("scream")
 
 /obj/item/paper/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>"
 
 /obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

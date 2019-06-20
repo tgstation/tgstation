@@ -2,7 +2,7 @@
 	var/mode = TRACK_NUKE_DISK
 
 /obj/item/pinpointer/nuke/examine(mob/user)
-	..()
+	. = ..()
 	var/msg = "Its tracking indicator reads "
 	switch(mode)
 		if(TRACK_NUKE_DISK)
@@ -13,10 +13,10 @@
 			msg += "\"vasvygengbefuvc\"."
 		else
 			msg = "Its tracking indicator is blank."
-	to_chat(user, msg)
+	. += msg
 	for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 		if(bomb.timing)
-			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
+			. += "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]."
 
 /obj/item/pinpointer/nuke/process()
 	..()
@@ -69,7 +69,7 @@
 
 /obj/item/pinpointer/syndicate_cyborg/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/pinpointer/syndicate_cyborg/cyborg_unequip(mob/user)
 	if(!active)

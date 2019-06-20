@@ -51,7 +51,7 @@
 			log_combat(user, M, "injected", src, "([contained])")
 
 /obj/item/reagent_containers/hypospray/CMO
-	list_reagents = list("omnizine" = 30)
+	list_reagents = list(/datum/reagent/medicine/omnizine = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/reagent_containers/hypospray/combat
@@ -61,12 +61,12 @@
 	icon_state = "combat_hypo"
 	volume = 90
 	ignore_flags = 1 // So they can heal their comrades.
-	list_reagents = list("epinephrine" = 30, "omnizine" = 30, "leporazine" = 15, "atropine" = 15)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 30, /datum/reagent/medicine/omnizine = 30, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/atropine = 15)
 
 /obj/item/reagent_containers/hypospray/combat/nanites
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with experimental medical compounds for rapid healing."
 	volume = 100
-	list_reagents = list("quantum_heal" = 80, "synaptizine" = 20)
+	list_reagents = list(/datum/reagent/medicine/adminordrazine/quantum_heal = 80, /datum/reagent/medicine/synaptizine = 20)
 
 /obj/item/reagent_containers/hypospray/magillitis
 	name = "experimental autoinjector"
@@ -74,7 +74,7 @@
 	icon_state = "combat_hypo"
 	volume = 5
 	reagent_flags = NONE
-	list_reagents = list("magillitis" = 5)
+	list_reagents = list(/datum/reagent/magillitis = 5)
 
 //MediPens
 
@@ -90,7 +90,7 @@
 	ignore_flags = 1 //so you can medipen through hardsuits
 	reagent_flags = DRAWABLE
 	flags_1 = null
-	list_reagents = list("epinephrine" = 10)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 10)
 	custom_price = 40
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
@@ -122,11 +122,11 @@
 		icon_state = "[initial(icon_state)]0"
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
-	..()
+	. = ..()
 	if(reagents && reagents.reagent_list.len)
-		to_chat(usr, "<span class='notice'>It is currently loaded.</span>")
+		. += "<span class='notice'>It is currently loaded.</span>"
 	else
-		to_chat(usr, "<span class='notice'>It is spent.</span>")
+		. += "<span class='notice'>It is spent.</span>"
 
 /obj/item/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
@@ -134,16 +134,16 @@
 	icon_state = "stimpen"
 	volume = 20
 	amount_per_transfer_from_this = 20
-	list_reagents = list("ephedrine" = 10, "coffee" = 10)
+	list_reagents = list(/datum/reagent/medicine/ephedrine = 10, /datum/reagent/consumable/coffee = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/stimpack/traitor
 	desc = "A modified stimulants autoinjector for use in combat situations. Has a mild healing effect."
-	list_reagents = list("stimulants" = 10, "omnizine" = 10)
+	list_reagents = list(/datum/reagent/medicine/stimulants = 10, /datum/reagent/medicine/omnizine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/morphine
 	name = "morphine medipen"
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
-	list_reagents = list("morphine" = 10)
+	list_reagents = list(/datum/reagent/medicine/morphine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
@@ -151,7 +151,7 @@
 	icon_state = "stimpen"
 	volume = 60
 	amount_per_transfer_from_this = 30
-	list_reagents = list("atropine" = 10, "epinephrine" = 10, "salbutamol" = 20, "spaceacillin" = 20)
+	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/salbutamol = 20, /datum/reagent/medicine/spaceacillin = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/survival
 	name = "survival medipen"
@@ -159,7 +159,7 @@
 	icon_state = "stimpen"
 	volume = 57
 	amount_per_transfer_from_this = 57
-	list_reagents = list("salbutamol" = 10, "leporazine" = 15, "tricordrazine" = 15, "epinephrine" = 10, "lavaland_extract" = 2, "omnizine" = 5)
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/tricordrazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
 
 /obj/item/reagent_containers/hypospray/medipen/species_mutator
 	name = "species mutator medipen"
@@ -173,16 +173,16 @@
 	name = "holy water autoinjector"
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water mixture."
 	volume = 250
-	list_reagents = list("holywater" = 150, "tiresolution" = 50, "dizzysolution" = 50)
+	list_reagents = list(/datum/reagent/water/holywater = 150, /datum/reagent/peaceborg/tire = 50, /datum/reagent/peaceborg/confuse = 50)
 	amount_per_transfer_from_this = 50
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
 	desc = "A rapid way to save a person from a critical injury state!"
-	list_reagents = list("atropine" = 10)
+	list_reagents = list(/datum/reagent/medicine/atropine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/snail
 	name = "snail shot"
 	desc = "All-purpose snail medicine! Do not use on non-snails!"
-	list_reagents = list("snailserum" = 10)
+	list_reagents = list(/datum/reagent/snail = 10)
 	icon_state = "snail"

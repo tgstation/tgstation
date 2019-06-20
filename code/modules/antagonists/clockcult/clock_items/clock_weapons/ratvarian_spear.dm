@@ -27,15 +27,15 @@
 		armour_penetration = initial(armour_penetration)
 
 /obj/item/clockwork/weapon/ratvarian_spear/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='inathneq_small'>Attacks on living non-Servants will generate <b>[bonus_burn]</b> units of vitality.</span>")
+		. += "<span class='inathneq_small'>Attacks on living non-Servants will generate <b>[bonus_burn]</b> units of vitality.</span>"
 		if(!iscyborg(user))
-			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and knock down the target.</span>")
+			. += "<span class='brass'>Throwing the spear will do massive damage, break the spear, and knock down the target.</span>"
 
 /obj/item/clockwork/weapon/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	. = ..()
-	if(!QDELETED(target) && target.stat != DEAD && !target.anti_magic_check(major = FALSE) && !is_servant_of_ratvar(target)) //we do bonus damage on attacks unless they're a servant, have a null rod, or are dead
+	if(!QDELETED(target) && target.stat != DEAD && !target.anti_magic_check(chargecost = 0) && !is_servant_of_ratvar(target)) //we do bonus damage on attacks unless they're a servant, have a null rod, or are dead
 		var/bonus_damage = bonus_burn //normally a total of 20 damage, 30 with ratvar
 		if(issilicon(target))
 			target.visible_message("<span class='warning'>[target] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
@@ -74,4 +74,3 @@
 			new /obj/effect/temp_visual/ratvar/spearbreak(T)
 			qdel(src)
 		action.weapon_reset(RATVARIAN_SPEAR_COOLDOWN)
-

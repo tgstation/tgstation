@@ -2688,7 +2688,6 @@
 /area/lavaland/surface/outdoors)
 "gY" = (
 /obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 2;
 	height = 5;
@@ -3757,6 +3756,9 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"tY" = (
+/turf/closed/mineral/random/labormineral/volcanic,
+/area/lavaland/surface/outdoors/explored)
 "vb" = (
 /obj/machinery/door/window/southleft,
 /obj/machinery/shower{
@@ -4051,7 +4053,6 @@
 /area/mine/production)
 "Uq" = (
 /obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
@@ -4096,10 +4097,9 @@
 /area/mine/living_quarters)
 "Wp" = (
 /obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 3;
-	height = 5;
+	height = 10;
 	id = "mining_away";
 	name = "lavaland mine";
 	width = 7
@@ -13652,7 +13652,7 @@ aD
 aT
 an
 aD
-aD
+tY
 aj
 aj
 aj
@@ -13908,9 +13908,9 @@ an
 an
 an
 an
-aD
-aD
-aD
+tY
+tY
+tY
 aj
 aj
 ai
@@ -14424,8 +14424,8 @@ an
 an
 an
 an
-an
-aD
+aj
+aw
 aj
 aj
 cM
@@ -14679,10 +14679,10 @@ an
 an
 an
 an
-an
-an
-aD
-aD
+aj
+aj
+aw
+aw
 aj
 aj
 cM
@@ -14934,12 +14934,12 @@ an
 an
 an
 an
-an
-an
-an
-an
-aD
-aD
+ab
+aj
+aj
+aj
+aw
+aw
 aj
 aj
 cM
@@ -15190,11 +15190,11 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
+ab
+aj
+aj
+aj
+aj
 aD
 aD
 aj
@@ -15447,14 +15447,14 @@ an
 an
 an
 an
-an
-an
-an
-an
-aD
-aD
 aj
 aj
+aj
+ab
+aD
+aD
+ab
+ab
 ab
 cM
 cW
@@ -15703,16 +15703,16 @@ aj
 an
 an
 an
-an
-an
+aj
+aj
+aw
 aD
 aD
 aD
-aD
-aj
-aj
-aj
-aj
+ab
+ab
+ab
+ab
 cM
 cM
 cM
@@ -15958,22 +15958,22 @@ aj
 aj
 aj
 aj
-aj
-aj
-aD
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
 ab
+aw
+aw
+aw
+aD
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
 cR
 dZ
 rP
@@ -16220,17 +16220,17 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 aj
-aj
-aj
-aj
-aj
-aj
-ab
 cR
 ek
 ew
@@ -16476,17 +16476,17 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
 ab
-aj
 ab
-aj
-aj
-aj
-aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aj
 cR
 cR
@@ -16733,19 +16733,19 @@ aj
 aj
 aj
 aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aj
-aj
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
 cR
 ey
 cR
@@ -17263,7 +17263,7 @@ aj
 cR
 BT
 cR
-ab
+aj
 aj
 aj
 aj
@@ -17520,7 +17520,7 @@ aj
 cR
 BT
 cR
-ab
+aj
 aj
 aj
 aj
@@ -17773,11 +17773,11 @@ ab
 ab
 ab
 aj
-ab
+aj
 br
 ez
 br
-ab
+aj
 aj
 aj
 aj
@@ -18030,11 +18030,11 @@ ab
 ab
 aj
 aj
-ab
+aj
 br
 ez
 br
-ab
+aj
 aj
 aj
 aj
@@ -18291,7 +18291,7 @@ ab
 br
 ez
 br
-ab
+aj
 aj
 aj
 aj
@@ -18549,7 +18549,7 @@ br
 UQ
 br
 ab
-ab
+aj
 aj
 aj
 aj

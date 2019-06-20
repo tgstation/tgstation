@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"DROPDEL" = DROPDEL,
 		"NOBLUDGEON" = NOBLUDGEON,
 		"ABSTRACT" = ABSTRACT,
+		"IN_STORAGE" = IN_STORAGE,
 		),
 	"admin_flags" = list(
 		"BUILDMODE" = R_BUILD,
@@ -173,5 +174,10 @@ GLOBAL_LIST_INIT(bitfields, list(
 	"rad_flags" = list(
 		"RAD_PROTECT_CONTENTS" = RAD_PROTECT_CONTENTS,
 		"RAD_NO_CONTAMINATE" = RAD_NO_CONTAMINATE,
+	),
+	"disease_flags" = list (
+		"CURABLE" = CURABLE,
+		"CAN_CARRY"	= CAN_CARRY,
+		"CAN_RESIST" = CAN_RESIST
 	)
 	))

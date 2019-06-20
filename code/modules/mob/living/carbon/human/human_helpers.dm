@@ -56,7 +56,7 @@
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
-	if( !O || (has_trait(TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -115,7 +115,7 @@
 			return id_card
 
 /mob/living/carbon/human/IsAdvancedToolUser()
-	if(has_trait(TRAIT_MONKEYLIKE))
+	if(HAS_TRAIT(src, TRAIT_MONKEYLIKE))
 		return FALSE
 	return TRUE//Humans can use guns and such
 
@@ -134,26 +134,6 @@
 
 	return ..()
 
-/mob/living/carbon/human/get_permeability_protection()
-	var/list/prot = list("hands"=0, "chest"=0, "groin"=0, "legs"=0, "feet"=0, "arms"=0, "head"=0)
-	for(var/obj/item/I in get_equipped_items())
-		if(I.body_parts_covered & HANDS)
-			prot["hands"] = max(1 - I.permeability_coefficient, prot["hands"])
-		if(I.body_parts_covered & CHEST)
-			prot["chest"] = max(1 - I.permeability_coefficient, prot["chest"])
-		if(I.body_parts_covered & GROIN)
-			prot["groin"] = max(1 - I.permeability_coefficient, prot["groin"])
-		if(I.body_parts_covered & LEGS)
-			prot["legs"] = max(1 - I.permeability_coefficient, prot["legs"])
-		if(I.body_parts_covered & FEET)
-			prot["feet"] = max(1 - I.permeability_coefficient, prot["feet"])
-		if(I.body_parts_covered & ARMS)
-			prot["arms"] = max(1 - I.permeability_coefficient, prot["arms"])
-		if(I.body_parts_covered & HEAD)
-			prot["head"] = max(1 - I.permeability_coefficient, prot["head"])
-	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
-	return protection
-
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 
@@ -161,7 +141,7 @@
 		if(src.dna.check_mutation(HULK))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return FALSE
-		if(has_trait(TRAIT_NOGUNS))
+		if(HAS_TRAIT(src, TRAIT_NOGUNS))
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return FALSE
 	if(mind)
@@ -180,3 +160,7 @@
 		return account
 
 	return FALSE
+
+/mob/living/carbon/human/get_policy_keywords()
+	. = ..()
+	. += "[dna.species.type]"

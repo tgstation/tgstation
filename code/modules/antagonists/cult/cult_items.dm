@@ -69,7 +69,7 @@
 
 /obj/item/melee/cultblade/ghost/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
@@ -119,10 +119,11 @@
 	AddComponent(/datum/component/butchering, 50, 80)
 
 /obj/item/twohanded/required/cult_bastard/examine(mob/user)
+	. = ..()
 	if(contents.len)
-		desc+="<br><b>There are [contents.len] souls trapped within the sword's core.</b>"
+		. += "<b>There are [contents.len] souls trapped within the sword's core.</b>"
 	else
-		desc+="<br>The sword appears to be quite lifeless."
+		. += "The sword appears to be quite lifeless."
 
 /obj/item/twohanded/required/cult_bastard/can_be_pulled(user)
 	return FALSE
@@ -310,7 +311,7 @@
 
 /obj/item/clothing/head/culthood/alt/ghost/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
@@ -323,7 +324,7 @@
 
 /obj/item/clothing/suit/cultrobes/alt/ghost/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 
 /obj/item/clothing/head/magus
@@ -486,7 +487,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "holyflask"
 	color = "#333333"
-	list_reagents = list("unholywater" = 50)
+	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
 /obj/item/shuttle_curse
 	name = "cursed orb"
@@ -550,11 +551,11 @@
 	var/uses = 4
 
 /obj/item/cult_shift/examine(mob/user)
-	..()
+	. = ..()
 	if(uses)
-		to_chat(user, "<span class='cult'>It has [uses] use\s remaining.</span>")
+		. += "<span class='cult'>It has [uses] use\s remaining.</span>"
 	else
-		to_chat(user, "<span class='cult'>It seems drained.</span>")
+		. += "<span class='cult'>It seems drained.</span>"
 
 /obj/item/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
 	var/mob/living/carbon/C = user
@@ -639,7 +640,7 @@
 		if(A in user.GetAllContents())
 			to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
 			return
-		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
+		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!</span>")
 		cultist_to_receive.put_in_hands(A)
 		charges--
 		to_chat(user, "\The [src] now has [charges] charge\s.")
@@ -785,7 +786,7 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stat != DEAD)
-				H.reagents.add_reagent("unholywater", 4)
+				H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
 		if(isshade(target) || isconstruct(target))
 			var/mob/living/simple_animal/M = target
 			if(M.health+5 < M.maxHealth)
@@ -814,7 +815,7 @@
 
 /obj/item/blood_beam/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 
 /obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)
@@ -889,7 +890,7 @@
 					if(ishuman(target))
 						var/mob/living/carbon/human/H = target
 						if(H.stat != DEAD)
-							H.reagents.add_reagent("unholywater", 7)
+							H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 7)
 					if(isshade(target) || isconstruct(target))
 						var/mob/living/simple_animal/M = target
 						if(M.health+15 < M.maxHealth)
@@ -1002,6 +1003,6 @@
 							continue
 						throw_at(Next, 3, 1, D.thrower)
 						return
-					throw_at(D.thrower, 7, 1, D.thrower)
+					throw_at(D.thrower, 7, 1, null)
 	else
 		..()

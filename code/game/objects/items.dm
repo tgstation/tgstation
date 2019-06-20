@@ -94,9 +94,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
-	var/datum/rpg_loot/rpg_loot = null
-
-
 	//Tooltip vars
 	var/force_string //string form of an item's force. Edit this var only to set a custom force string
 	var/last_force_string_check = 0
@@ -121,7 +118,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	actions_types = null
 
 	if(GLOB.rpg_loot_items)
-		rpg_loot = new(src)
+		AddComponent(/datum/component/fantasy)
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -146,7 +143,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
-	QDEL_NULL(rpg_loot)
 	return ..()
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
@@ -187,14 +183,21 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
-	..()
-	var/pronoun
-	if(src.gender == PLURAL)
-		pronoun = "They are"
+	. = ..()
+
+	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
+
+	if(resistance_flags & INDESTRUCTIBLE)
+		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
 	else
-		pronoun = "It is"
-	var/size = weightclass2text(src.w_class)
-	to_chat(user, "[pronoun] a [size] item." )
+		if(resistance_flags & LAVA_PROOF)
+			. += "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
+		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+			. += "[src] looks pretty robust! It'd probably be able to withstand acid!"
+		if(resistance_flags & FREEZE_PROOF)
+			. += "[src] is made of cold-resistant materials."
+		if(resistance_flags & FIRE_PROOF)
+			. += "[src] is made of fire-retardant materials."
 
 	if(!user.research_scanner)
 		return
@@ -231,10 +234,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		research_msg += "None"
 	research_msg += "."
-	to_chat(user, research_msg.Join())
-
-/obj/item/proc/speechModification(message)			//for message modding by mask slot.
-	return message
+	. += research_msg.Join()
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
@@ -260,7 +260,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			can_handle_hot = TRUE
 		else if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 			can_handle_hot = TRUE
-		else if(C.has_trait(TRAIT_RESISTHEAT) || C.has_trait(TRAIT_RESISTHEATHANDS))
+		else if(HAS_TRAIT(C, TRAIT_RESISTHEAT) || HAS_TRAIT(C, TRAIT_RESISTHEATHANDS))
 			can_handle_hot = TRUE
 
 		if(can_handle_hot)
@@ -296,6 +296,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	//If the item is in a storage item, take it out
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
+	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
+		return
 
 	if(throwing)
 		throwing.finalize(FALSE)
@@ -493,7 +495,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
-		if(!(M.has_trait(TRAIT_BLIND) || M.has_trait(TRAIT_NEARSIGHT)))
+		if(!(HAS_TRAIT(M, TRAIT_BLIND) || HAS_TRAIT(M, TRAIT_NEARSIGHT)))
 			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
 		M.become_nearsighted(EYE_DAMAGE)
 		if(prob(50))
@@ -534,7 +536,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
 		. = callback.Invoke()
-	throw_speed = initial(throw_speed) //explosions change this.
 	item_flags &= ~IN_INVENTORY
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
@@ -612,11 +613,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		. = ""
 
-
-//when an item modify our speech spans when in our active hand. Override this to modify speech spans.
-/obj/item/proc/get_held_item_speechspans(mob/living/carbon/user)
-	return
-
 /obj/item/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	return
 
@@ -692,7 +688,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
-	if((item_flags & IN_INVENTORY) && usr.client.prefs.enable_tips && !QDELETED(src))
+	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr.client.prefs.enable_tips && !QDELETED(src))
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
@@ -790,13 +786,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if(has_trait(TRAIT_NODROP))
+	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
-	return !has_trait(TRAIT_NODROP)
+	return !HAS_TRAIT(src, TRAIT_NODROP)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
-

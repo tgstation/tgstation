@@ -61,7 +61,7 @@ GENE SCANNER
 		if(O.level != 1)
 			continue
 
-		if(O.invisibility == INVISIBILITY_MAXIMUM || O.has_trait(TRAIT_T_RAY_VISIBLE))
+		if(O.invisibility == INVISIBILITY_MAXIMUM || HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128
@@ -106,10 +106,10 @@ GENE SCANNER
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
-	if ((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))
+	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
 		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
-		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")
+		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b></span>")
 		to_chat(user, "<span class='info'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>")
 		to_chat(user, "<span class='info'>\tDamage specifics: <font color='blue'>0</font>-<font color='green'>0</font>-<font color='#FF8000'>0</font>-<font color='red'>0</font></span>")
 		to_chat(user, "<span class='info'>Body temperature: ???</span>")
@@ -136,7 +136,7 @@ GENE SCANNER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
-	if(M.has_trait(TRAIT_FAKEDEATH) && !advanced)
+	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && !advanced)
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
@@ -209,10 +209,10 @@ GENE SCANNER
 			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b></span>")
 			if(istype(ears))
 				var/healthy = TRUE
-				if(C.has_trait(TRAIT_DEAF, GENETIC_MUTATION))
+				if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is genetically deaf.</span>")
-				else if(C.has_trait(TRAIT_DEAF))
+				else if(HAS_TRAIT(C, TRAIT_DEAF))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is deaf.</span>")
 				else
@@ -230,10 +230,10 @@ GENE SCANNER
 			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b></span>")
 			if(istype(eyes))
 				var/healthy = TRUE
-				if(C.has_trait(TRAIT_BLIND))
+				if(HAS_TRAIT(C, TRAIT_BLIND))
 					to_chat(user, "\t<span class='alert'>Subject is blind.</span>")
 					healthy = FALSE
-				if(C.has_trait(TRAIT_NEARSIGHT))
+				if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
 					to_chat(user, "\t<span class='alert'>Subject is nearsighted.</span>")
 					healthy = FALSE
 				if(eyes.eye_damage > 30)
@@ -300,7 +300,7 @@ GENE SCANNER
 	to_chat(user, "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>")
 
 	// Time of death
-	if(M.tod && (M.stat == DEAD || ((M.has_trait(TRAIT_FAKEDEATH)) && !advanced)))
+	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
 		to_chat(user, "<span class='info'>Time of Death:</span> [M.tod]")
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
@@ -322,7 +322,7 @@ GENE SCANNER
 					to_chat(user, "<span class='danger'>Subject is bleeding!</span>")
 			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
 			var/blood_type = C.dna.blood_type
-			if(blood_id != "blood")//special blood substance
+			if(blood_id != /datum/reagent/blood)//special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
 				if(R)
 					blood_type = R.name
@@ -398,14 +398,14 @@ GENE SCANNER
 	throw_range = 7
 	tool_behaviour = TOOL_ANALYZER
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
-	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
+	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	var/cooldown = FALSE
 	var/cooldown_time = 250
 	var/accuracy // 0 is the best accuracy.
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to activate the barometer function.</span>")
+	. += "<span class='notice'>Alt-click [src] to activate the barometer function.</span>"
 
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
@@ -472,7 +472,7 @@ GENE SCANNER
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
-	if(user.canUseTopic(src))
+	if(user.canUseTopic(src, BE_CLOSE))
 
 		if(cooldown)
 			to_chat(user, "<span class='warning'>[src]'s barometer function is preparing itself.</span>")
@@ -669,7 +669,7 @@ GENE SCANNER
 	item_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	desc = "A hand-held scanner able to swiftly scan someone for potential mutations. Hold near a DNA console to update from their database."
+	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Hold near a DNA console to update the internal database."
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
@@ -679,17 +679,24 @@ GENE SCANNER
 	throw_range = 7
 	materials = list(MAT_METAL=200)
 	var/list/discovered = list() //hit a dna console to update the scanners database
+	var/list/buffer
+	var/ready = TRUE
+	var/cooldown = 200
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if (!M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
 		user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
+		gene_scan(M, user)
 
-		gene_scan(M, user, src)
 	else
-
 		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
 
+/obj/item/sequence_scanner/attack_self(mob/user)
+	display_sequence(user)
+
+/obj/item/sequence_scanner/attack_self_tk(mob/user)
+	return
 
 /obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
 	. = ..()
@@ -704,23 +711,53 @@ GENE SCANNER
 		else
 			to_chat(user,"<span class='warning'>No database to update from.</span>")
 
-/proc/gene_scan(mob/living/carbon/C, mob/living/user, obj/item/sequence_scanner/G)
+/obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/C, mob/living/user)
 	if(!iscarbon(C) || !C.has_dna())
 		return
-	to_chat(user, "<span class='notice'>[C.name]'s potential mutations.")
-	for(var/A in C.dna.mutation_index)
-		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(A)
-		var/mut_name
-		if(G && (A in G.discovered))
-			mut_name = "[HM.name] ([HM.alias])"
-		else
-			mut_name = HM.alias
-		var/temp = GET_GENE_STRING(HM.type, C.dna)
-		var/display
-		for(var/i in 0 to length(temp) / DNA_MUTATION_BLOCKS-1)
-			if(i)
-				display += "-"
-			display += copytext(temp, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+	buffer = C.dna.mutation_index
+	to_chat(user, "<span class='notice'>Subject [C.name]'s DNA sequence has been saved to buffer.</span>")
+	if(LAZYLEN(buffer))
+		for(var/A in buffer)
+			to_chat(user, "<span class='notice'>[get_display_name(A)]</span>")
 
 
-		to_chat(user, "<span class='boldnotice'>- [mut_name] > [display]</span>")
+/obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
+	if(!LAZYLEN(buffer) || !ready)
+		return
+	var/list/options = list()
+	for(var/A in buffer)
+		options += get_display_name(A)
+
+	var/answer = input(user, "Analyze Potential", "Sequence Analyzer")  as null|anything in options
+	if(answer && ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		var/sequence
+		for(var/A in buffer) //this physically hurts but i dont know what anything else short of an assoc list
+			if(get_display_name(A) == answer)
+				sequence = buffer[A]
+				break
+
+		if(sequence)
+			var/display
+			for(var/i in 0 to length(sequence) / DNA_MUTATION_BLOCKS-1)
+				if(i)
+					display += "-"
+				display += copytext(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+
+			to_chat(user, "<span class='boldnotice'>[display]</span><br>")
+
+		ready = FALSE
+		icon_state = "[icon_state]_recharging"
+		addtimer(CALLBACK(src, .proc/recharge), cooldown, TIMER_UNIQUE)
+
+/obj/item/sequence_scanner/proc/recharge()
+	icon_state = initial(icon_state)
+	ready = TRUE
+
+/obj/item/sequence_scanner/proc/get_display_name(mutation)
+	var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation)
+	if(!HM)
+		return "ERROR"
+	if(mutation in discovered)
+		return  "[HM.name] ([HM.alias])"
+	else
+		return HM.alias

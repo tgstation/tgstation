@@ -146,30 +146,6 @@
 	filled = 1
 
 
-/obj/machinery/portable_atmospherics/canister/fusion_test
-	name = "Fusion Test Canister"
-	desc = "This should never be spawned in game."
-	icon_state = "green"
-/obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
-	air_contents.add_gases(/datum/gas/tritium,/datum/gas/plasma,/datum/gas/carbon_dioxide,/datum/gas/nitrous_oxide)
-	air_contents.gases[/datum/gas/tritium][MOLES] = 10
-	air_contents.gases[/datum/gas/plasma][MOLES] = 500
-	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 500
-	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = 100
-	air_contents.temperature = 9999
-
-/obj/machinery/portable_atmospherics/canister/fusion_test_2
-	name = "Fusion Test Canister"
-	desc = "This should never be spawned in game."
-	icon_state = "green"
-/obj/machinery/portable_atmospherics/canister/fusion_test_2/create_gas()
-	air_contents.add_gases(/datum/gas/tritium,/datum/gas/plasma,/datum/gas/carbon_dioxide,/datum/gas/nitrous_oxide)
-	air_contents.gases[/datum/gas/tritium][MOLES] = 10
-	air_contents.gases[/datum/gas/plasma][MOLES] = 15000
-	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 1500
-	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = 100
-	air_contents.temperature = 9999
-
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
@@ -241,13 +217,13 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
-#define HOLDING		(1<<0)
-#define CONNECTED	(1<<1)
-#define EMPTY		(1<<2)
-#define LOW			(1<<3)
-#define MEDIUM		(1<<4)
-#define FULL		(1<<5)
-#define DANGER		(1<<6)
+#define CANISTER_UPDATE_HOLDING		(1<<0)
+#define CANISTER_UPDATE_CONNECTED	(1<<1)
+#define CANISTER_UPDATE_EMPTY		(1<<2)
+#define CANISTER_UPDATE_LOW			(1<<3)
+#define CANISTER_UPDATE_MEDIUM		(1<<4)
+#define CANISTER_UPDATE_FULL		(1<<5)
+#define CANISTER_UPDATE_DANGER		(1<<6)
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
@@ -258,44 +234,44 @@
 	update = 0
 
 	if(holding)
-		update |= HOLDING
+		update |= CANISTER_UPDATE_HOLDING
 	if(connected_port)
-		update |= CONNECTED
+		update |= CANISTER_UPDATE_CONNECTED
 	var/pressure = air_contents.return_pressure()
 	if(pressure < 10)
-		update |= EMPTY
+		update |= CANISTER_UPDATE_EMPTY
 	else if(pressure < 5 * ONE_ATMOSPHERE)
-		update |= LOW
+		update |= CANISTER_UPDATE_LOW
 	else if(pressure < 10 * ONE_ATMOSPHERE)
-		update |= MEDIUM
+		update |= CANISTER_UPDATE_MEDIUM
 	else if(pressure < 40 * ONE_ATMOSPHERE)
-		update |= FULL
+		update |= CANISTER_UPDATE_FULL
 	else
-		update |= DANGER
+		update |= CANISTER_UPDATE_DANGER
 
 	if(update == last_update)
 		return
 
 	cut_overlays()
-	if(update & HOLDING)
+	if(update & CANISTER_UPDATE_HOLDING)
 		add_overlay("can-open")
-	if(update & CONNECTED)
+	if(update & CANISTER_UPDATE_CONNECTED)
 		add_overlay("can-connector")
-	if(update & LOW)
+	if(update & CANISTER_UPDATE_LOW)
 		add_overlay("can-o0")
-	else if(update & MEDIUM)
+	else if(update & CANISTER_UPDATE_MEDIUM)
 		add_overlay("can-o1")
-	else if(update & FULL)
+	else if(update & CANISTER_UPDATE_FULL)
 		add_overlay("can-o2")
-	else if(update & DANGER)
+	else if(update & CANISTER_UPDATE_DANGER)
 		add_overlay("can-o3")
-#undef HOLDING
-#undef CONNECTED
-#undef EMPTY
-#undef LOW
-#undef MEDIUM
-#undef FULL
-#undef DANGER
+#undef CANISTER_UPDATE_HOLDING
+#undef CANISTER_UPDATE_CONNECTED
+#undef CANISTER_UPDATE_EMPTY
+#undef CANISTER_UPDATE_LOW
+#undef CANISTER_UPDATE_MEDIUM
+#undef CANISTER_UPDATE_FULL
+#undef CANISTER_UPDATE_DANGER
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)

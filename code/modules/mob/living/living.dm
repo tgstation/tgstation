@@ -126,7 +126,7 @@
 			if(M.pulledby == src && a_intent == INTENT_GRAB && !too_strong)
 				mob_swap = TRUE
 			else if(
-				!(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))&&\
+				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
 				((M.restrained() && !too_strong) || M.a_intent == INTENT_HELP) &&\
 				(restrained() || a_intent == INTENT_HELP)
 			)
@@ -166,7 +166,7 @@
 		return TRUE
 	if(isliving(M))
 		var/mob/living/L = M
-		if(L.has_trait(TRAIT_PUSHIMMUNE))
+		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
 			return TRUE
 	//If they're a human, and they're not in help intent, block pushing
 	if(ishuman(M) && (M.a_intent != INTENT_HELP))
@@ -175,7 +175,7 @@
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
 			if(prob(I.block_chance*2))
-				return 
+				return
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/mob_details = list()
@@ -267,7 +267,7 @@
 			var/mob/living/carbon/human/H = src
 			if(H.dna.species.grab_sound)
 				sound_to_play = H.dna.species.grab_sound
-			if(H.has_trait(TRAIT_STRONG_GRABBER))
+			if(HAS_TRAIT(H, TRAIT_STRONG_GRABBER))
 				sound_to_play = null
 		playsound(src.loc, sound_to_play, 50, 1, -1)
 	update_pull_hud_icon()
@@ -276,7 +276,7 @@
 		var/mob/M = AM
 
 		log_combat(src, M, "grabbed", addition="passive grab")
-		if(!supress_message && !(iscarbon(AM) && has_trait(TRAIT_STRONG_GRABBER)))
+		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
@@ -297,8 +297,10 @@
 
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				if(src.has_trait(TRAIT_STRONG_GRABBER))
+				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
 					C.grippedby(src)
+			
+			update_pull_movespeed()
 
 		set_pull_offsets(M, state)
 
@@ -354,6 +356,7 @@
 	if(ismob(pulling))
 		reset_pull_offsets(pulling)
 	..()
+	update_pull_movespeed()
 	update_pull_hud_icon()
 
 /mob/living/verb/stop_pulling1()
@@ -365,7 +368,7 @@
 /mob/living/pointed(atom/A as mob|obj|turf in view())
 	if(incapacitated())
 		return FALSE
-	if(has_trait(TRAIT_DEATHCOMA))
+	if(HAS_TRAIT(src, TRAIT_DEATHCOMA))
 		return FALSE
 	if(!..())
 		return FALSE
@@ -382,8 +385,8 @@
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
-/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
-	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
+/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE, ignore_stasis = FALSE)
+	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)) || (!ignore_stasis && IS_IN_STASIS(src)))
 		return TRUE
 
 /mob/living/canUseStorage()
@@ -567,7 +570,7 @@
 	stuttering = 0
 	slurring = 0
 	jitteriness = 0
-	GET_COMPONENT(mood, /datum/component/mood)
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
 	update_mobility()
@@ -591,6 +594,10 @@
 
 	var/old_direction = dir
 	var/turf/T = loc
+
+	if(pulling)
+		update_pull_movespeed()
+
 	. = ..()
 
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
@@ -678,7 +685,7 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -691,7 +698,6 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	if(!restrained(ignore_grab = 1) && pulledby)
-		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
 		log_combat(src, pulledby, "resisted grab")
 		resist_grab()
 		return
@@ -719,13 +725,18 @@
 	. = TRUE
 	if(pulledby.grab_state || resting)
 		var/altered_grab_state = pulledby.grab_state
-		if(resting) //If resting, resisting out of a grab is equivalent to 1 grab state higher
+		if(resting && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
 			altered_grab_state++
-		if(prob(30/altered_grab_state))
+		var/resist_chance = BASE_GRAB_RESIST_CHANCE // see defines/combat.dm
+		resist_chance = max(resist_chance/altered_grab_state-sqrt((getStaminaLoss()+getBruteLoss()/2)*(3-altered_grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
+		if(prob(resist_chance))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
 			return FALSE
+		else
+			adjustStaminaLoss(rand(8,15))//8 is from 7.5 rounded up
+			visible_message("<span class='danger'>[src] struggles as they fail to break free of [pulledby]'s grip!</span>")
 		if(moving_resist && client) //we resisted by trying to move
 			client.move_delay = world.time + 20
 	else
@@ -804,7 +815,7 @@
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
-	if(what && (what.has_trait(TRAIT_NODROP)))
+	if(what && (HAS_TRAIT(what, TRAIT_NODROP)))
 		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
 		return
 	if(what)
@@ -898,7 +909,7 @@
 	return 1
 
 //used in datum/reagents/reaction() proc
-/mob/living/proc/get_permeability_protection()
+/mob/living/proc/get_permeability_protection(list/target_zones)
 	return 0
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
@@ -979,7 +990,7 @@
 /mob/living/rad_act(amount)
 	. = ..()
 
-	if(!amount || (amount < RAD_MOB_SKIN_PROTECTION) || has_trait(TRAIT_RADIMMUNE))
+	if(!amount || (amount < RAD_MOB_SKIN_PROTECTION) || HAS_TRAIT(src, TRAIT_RADIMMUNE))
 		return
 
 	amount -= RAD_BACKGROUND_RADIATION // This will always be at least 1 because of how skin protection is calculated
@@ -991,11 +1002,11 @@
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, major = TRUE, self = FALSE)
+/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
 	. = ..()
 	if(.)
 		return
-	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
+	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
 		return src
 
 /mob/living/proc/fakefireextinguish()
@@ -1004,7 +1015,8 @@
 /mob/living/proc/fakefire()
 	return
 
-
+/mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
+	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
@@ -1084,7 +1096,7 @@
 /mob/living/proc/update_mobility()
 	var/stat_softcrit = stat == SOFT_CRIT
 	var/stat_conscious = (stat == CONSCIOUS) || stat_softcrit
-	var/conscious = !IsUnconscious() && stat_conscious && !has_trait(TRAIT_DEATHCOMA)
+	var/conscious = !IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/restrained = restrained()
 	var/has_legs = get_num_legs()
@@ -1093,7 +1105,7 @@
 	var/stun = IsStun()
 	var/knockdown = IsKnockdown()
 	var/ignore_legs = get_leg_ignore()
-	var/canmove = !IsImmobilized() && !stun && conscious && !paralyzed && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && (has_arms || ignore_legs || has_legs)
+	var/canmove = !IsImmobilized() && !stun && conscious && !paralyzed && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && !IS_IN_STASIS(src) && (has_arms || ignore_legs || has_legs)
 	if(canmove)
 		mobility_flags |= MOBILITY_MOVE
 	else
@@ -1116,12 +1128,12 @@
 	else
 		mobility_flags |= MOBILITY_STAND
 		lying = 0
-	
+
 	if(should_be_lying || restrained || incapacitated())
 		mobility_flags &= ~(MOBILITY_UI|MOBILITY_PULL)
 	else
 		mobility_flags |= MOBILITY_UI|MOBILITY_PULL
-		
+
 
 
 	var/canitem = !paralyzed && !stun && conscious && !chokehold && !restrained && has_arms
@@ -1244,22 +1256,6 @@
 		return FALSE
 	mob_pickup(user)
 	return TRUE
-
-/mob/living/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num)
-	. = ..()
-		//Process icon
-	if(vfx && audiolocation)
-		var/image/sound_icon = image(vfx)
-		sound_icon.loc = turf_source
-		if(vol && S)
-			sound_icon.alpha = sound_icon.alpha * (vol / 100)
-		client.images += sound_icon
-		addtimer(CALLBACK(src, .proc/remove_image, sound_icon), 7)
-
-/mob/living/proc/remove_image(sound_image)
-	if(sound_image && client)
-		client.images -= sound_image
-		qdel(sound_image)
 
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))

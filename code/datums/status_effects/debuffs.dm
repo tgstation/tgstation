@@ -82,6 +82,43 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+//STASIS
+/datum/status_effect/incapacitating/stasis
+        id = "stasis"
+        duration = -1
+        tick_interval = 10
+        alert_type = /obj/screen/alert/status_effect/stasis
+        var/last_dead_time
+
+/datum/status_effect/incapacitating/stasis/proc/update_time_of_death()
+        if(last_dead_time)
+                var/delta = world.time - last_dead_time
+                var/new_timeofdeath = owner.timeofdeath + delta
+                owner.timeofdeath = new_timeofdeath
+                owner.tod = station_time_timestamp(wtime=new_timeofdeath)
+                last_dead_time = null
+        if(owner.stat == DEAD)
+                last_dead_time = world.time
+
+/datum/status_effect/incapacitating/stasis/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+        . = ..()
+        update_time_of_death()
+
+/datum/status_effect/incapacitating/stasis/tick()
+        update_time_of_death()
+
+/datum/status_effect/incapacitating/stasis/on_remove()
+        update_time_of_death()
+        return ..()
+
+/datum/status_effect/incapacitating/stasis/be_replaced()
+        update_time_of_death()
+        return ..()
+
+/obj/screen/alert/status_effect/stasis
+        name = "Stasis"
+        desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+        icon_state = "stasis"
 
 //GOLEM GANG
 
@@ -92,11 +129,11 @@
 	alert_type = /obj/screen/alert/status_effect/strandling
 
 /datum/status_effect/strandling/on_apply()
-	owner.add_trait(TRAIT_MAGIC_CHOKE, "dumbmoron")
+	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
 	return ..()
 
 /datum/status_effect/strandling/on_remove()
-	owner.remove_trait(TRAIT_MAGIC_CHOKE, "dumbmoron")
+	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
 	return ..()
 
 /obj/screen/alert/status_effect/strandling
@@ -121,11 +158,11 @@
 	. = ..()
 
 /datum/status_effect/pacify/on_apply()
-	owner.add_trait(TRAIT_PACIFISM, "status_effect")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
-	owner.remove_trait(TRAIT_PACIFISM, "status_effect")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 
 //OTHER DEBUFFS
 /datum/status_effect/pacify
@@ -141,11 +178,11 @@
 	. = ..()
 
 /datum/status_effect/pacify/on_apply()
-	owner.add_trait(TRAIT_PACIFISM, "status_effect")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
-	owner.remove_trait(TRAIT_PACIFISM, "status_effect")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
@@ -191,7 +228,7 @@
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
 	var/number_legs = owner.get_num_legs(FALSE)
-	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check(major = FALSE) && number_legs)
+	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check(chargecost = 0) && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
 				owner.Paralyze(20)
@@ -284,7 +321,7 @@
 		if(owner.confused)
 			owner.confused = 0
 		severity = 0
-	else if(!owner.anti_magic_check(major = FALSE) && owner.stat != DEAD && severity)
+	else if(!owner.anti_magic_check(chargecost = 0) && owner.stat != DEAD && severity)
 		var/static/hum = get_sfx('sound/effects/screech.ogg') //same sound for every proc call
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
@@ -317,7 +354,7 @@
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)
-		owner.reagents.del_reagent("holywater") //can't be deconverted
+		owner.reagents.del_reagent(/datum/reagent/water/holywater) //can't be deconverted
 
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
@@ -432,7 +469,7 @@
 		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
 	else
 		C.apply_curse(set_curse)
-		C.duration += 3000 //additional curses add 5 minutes
+		C.duration += 3000 //time added by additional curses
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
@@ -443,6 +480,10 @@
 	var/effect_last_activation = 0
 	var/effect_cooldown = 100
 	var/obj/effect/temp_visual/curse/wasting_effect = new
+	
+/datum/status_effect/necropolis_curse/hivemind
+	id = "hivecurse"
+	duration = 600
 
 /datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
 	. = ..()
@@ -581,16 +622,16 @@
 	alert_type = null
 
 /datum/status_effect/gonbolaPacify/on_apply()
-	owner.add_trait(TRAIT_PACIFISM, "gonbolaPacify")
-	owner.add_trait(TRAIT_MUTE, "gonbolaMute")
-	owner.add_trait(TRAIT_JOLLY, "gonbolaJolly")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
+	ADD_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
+	ADD_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
 	to_chat(owner, "<span class='notice'>You suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
 	return ..()
 
 /datum/status_effect/gonbolaPacify/on_remove()
-	owner.remove_trait(TRAIT_PACIFISM, "gonbolaPacify")
-	owner.remove_trait(TRAIT_MUTE, "gonbolaMute")
-	owner.remove_trait(TRAIT_JOLLY, "gonbolaJolly")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
+	REMOVE_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
 
 /datum/status_effect/trance
 	id = "trance"
@@ -615,7 +656,7 @@
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
-	owner.add_trait(TRAIT_MUTE, "trance")
+	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
 	if(!owner.has_quirk(/datum/quirk/monochromatic))
 		owner.add_client_colour(/datum/client_colour/monochrome)
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
@@ -629,20 +670,20 @@
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	owner.remove_trait(TRAIT_MUTE, "trance")
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.dizziness = 0
 	if(!owner.has_quirk(/datum/quirk/monochromatic))
 		owner.remove_client_colour(/datum/client_colour/monochrome)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
 
-/datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	if(!owner.can_hear())
 		return
-	if(speaker == owner)
+	if(hearing_args[HEARING_SPEAKER] == owner)
 		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
-	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message), 10)
+	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
 

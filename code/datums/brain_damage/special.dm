@@ -23,11 +23,11 @@
 			speak("neutral", prob(25))
 
 /datum/brain_trauma/special/godwoken/on_gain()
-	owner.add_trait(TRAIT_HOLY, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/godwoken/on_lose()
-	owner.remove_trait(TRAIT_HOLY, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/godwoken/proc/speak(type, include_owner = FALSE)
@@ -142,6 +142,7 @@
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
 	name = "Chemical Violent Psychosis"
+	clonable = FALSE
 
 /datum/brain_trauma/special/tenacity
 	name = "Tenacity"
@@ -151,13 +152,13 @@
 	lose_text = "<span class='warning'>You realize you can feel pain again.</span>"
 
 /datum/brain_trauma/special/tenacity/on_gain()
-	owner.add_trait(TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	owner.add_trait(TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/tenacity/on_lose()
-	owner.remove_trait(TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	owner.remove_trait(TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/death_whispers
@@ -179,12 +180,12 @@
 	..()
 
 /datum/brain_trauma/special/death_whispers/proc/whispering()
-	owner.add_trait(TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
 
 /datum/brain_trauma/special/death_whispers/proc/cease_whispering()
-	owner.remove_trait(TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = FALSE
 
 /datum/brain_trauma/special/beepsky
@@ -193,6 +194,8 @@
 	scan_desc = "criminal mind"
 	gain_text = "<span class='warning'>Justice is coming for you.</span>"
 	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
+	clonable = FALSE
+	random_gain = FALSE
 	var/obj/effect/hallucination/simple/securitron/beepsky
 
 /datum/brain_trauma/special/beepsky/on_gain()
@@ -209,24 +212,26 @@
 	..()
 
 /datum/brain_trauma/special/beepsky/on_life()
+	if(QDELETED(beepsky) || !beepsky.loc || beepsky.z != owner.z)
+		QDEL_NULL(beepsky)
+		if(prob(30))
+			create_securitron()
+		else
+			return
 	if(get_dist(owner, beepsky) >= 10 && prob(20))
 		QDEL_NULL(beepsky)
 		create_securitron()
 	if(owner.stat != CONSCIOUS)
 		if(prob(20))
-			playsound(owner, 'sound/voice/beepsky/iamthelaw.ogg', 50)
+			owner.playsound_local(beepsky, 'sound/voice/beepsky/iamthelaw.ogg', 50)
 		return
-	if(QDELETED(beepsky) || !beepsky.loc || beepsky.z != owner.z)
-		QDEL_NULL(beepsky)
-		create_securitron()
 	if(get_dist(owner, beepsky) <= 1)
-		playsound(owner, 'sound/weapons/egloves.ogg', 50)
-		owner.visible_message("<span class='warning'>[owner] tries to fight the law.</span>", "<span class='userdanger'>You feel the fist of the LAW.</span>")
-		owner.take_bodypart_damage(0,0,rand(30, 50))
+		owner.playsound_local(owner, 'sound/weapons/egloves.ogg', 50)
+		owner.visible_message("<span class='warning'>[owner]'s body jerks as if it was shocked.</span>", "<span class='userdanger'>You feel the fist of the LAW.</span>")
+		owner.take_bodypart_damage(0,0,rand(40, 70))
 		QDEL_NULL(beepsky)
-		create_securitron()
 	if(prob(20) && get_dist(owner, beepsky) <= 8)
-		playsound(owner, 'sound/voice/beepsky/criminal.ogg', 40)
+		owner.playsound_local(beepsky, 'sound/voice/beepsky/criminal.ogg', 40)
 	..()
 
 /obj/effect/hallucination/simple/securitron
@@ -245,7 +250,7 @@
 	if(prob(60))
 		forceMove(get_step_towards(src, victim))
 		if(prob(5))
-			say("Level 10 infraction alert!")
+			to_chat(victim, "<span class='name'>[name]</span> exclaims, \"<span class='robotic'>Level 10 infraction alert!\"</span>")
 
 /obj/effect/hallucination/simple/securitron/Destroy()
 	STOP_PROCESSING(SSfastprocess,src)

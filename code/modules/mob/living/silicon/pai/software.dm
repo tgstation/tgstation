@@ -1,5 +1,4 @@
 // TODO:
-//	- Additional radio modules
 //	- Potentially roll HUDs and Records into one
 //	- Shock collar/lock system for prisoner pAIs?
 //  - Put cable in user's hand instead of on the ground
@@ -7,20 +6,30 @@
 
 
 /mob/living/silicon/pai/var/list/available_software = list(
+															//Nightvision
+															//T-Ray
+															//radiation eyes
+															//chem goggs
+															//mesons
 															"crew manifest" = 5,
 															"digital messenger" = 5,
-															"medical records" = 15,
-															"security records" = 15,
-															//"camera jack" = 10,
-															"door jack" = 30,
 															"atmosphere sensor" = 5,
+															"photography module" = 5,
+															"remote signaller" = 10,
+															"medical records" = 10,
+															"security records" = 10,
+															"camera zoom" = 10,
+															"host scan" = 10,
+															//"camera jack" = 10,
 															//"heartbeat sensor" = 10,
-															"security HUD" = 20,
+															//"projection array" = 15,
 															"medical HUD" = 20,
-															"universal translator" = 35,
-															//"projection array" = 15
-															"remote signaller" = 5,
-															"loudness booster" = 25
+															"security HUD" = 20,
+															"loudness booster" = 20,
+															"newscaster" = 20,
+															"door jack" = 25,
+															"encryption keys" = 25,
+															"universal translator" = 35
 															)
 
 /mob/living/silicon/pai/proc/paiInterface()
@@ -51,6 +60,8 @@
 				left_part = softwareMedicalRecord()
 			if("securityrecord")
 				left_part = softwareSecurityRecord()
+			if("encryptionkeys")
+				left_part = softwareEncryptionKeys()
 			if("translator")
 				left_part = softwareTranslator()
 			if("atmosensor")
@@ -67,6 +78,9 @@
 				left_part = softwareSignal()
 			if("loudness")
 				left_part = softwareLoudness()
+			if("hostscan")
+				left_part = softwareHostScan()
+
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -112,170 +126,180 @@
 	onclose(src, "pai")
 	temp = null
 
-
-
 /mob/living/silicon/pai/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	var/soft = href_list["software"]
 	var/sub = href_list["sub"]
 	if(soft)
 		screen = soft
-	if(sub)
-		subscreen = text2num(sub)
-	switch(soft)
-		// Purchasing new software
-		if("buy")
-			if(subscreen == 1)
-				var/target = href_list["buy"]
-				if(available_software.Find(target) && !software.Find(target))
-					var/cost = available_software[target]
-					if(ram >= cost)
-						software.Add(target)
-						ram -= cost
+		if(sub)
+			subscreen = text2num(sub)
+		switch(soft)
+			if("buy") // Purchasing new software
+				if(subscreen == 1)
+					var/target = href_list["buy"]
+					if(available_software.Find(target) && !software.Find(target))
+						var/cost = available_software[target]
+						if(ram >= cost)
+							software.Add(target)
+							ram -= cost
+							var/datum/hud/pai/pAIhud = hud_used
+							pAIhud?.update_software_buttons()
+						else
+							temp = "Insufficient RAM available."
 					else
-						temp = "Insufficient RAM available."
-				else
-					temp = "Trunk <TT> \"[target]\"</TT> not found."
-
-		// Configuring onboard radio
-		if("radio")
-			radio.attack_self(src)
-
-		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
-			var/pID = 1
-
-			switch(newImage)
-				if("Happy")
-					pID = 1
-				if("Cat")
-					pID = 2
-				if("Extremely Happy")
-					pID = 3
-				if("Face")
-					pID = 4
-				if("Laugh")
-					pID = 5
-				if("Off")
-					pID = 6
-				if("Sad")
-					pID = 7
-				if("Angry")
-					pID = 8
-				if("What")
-					pID = 9
-				if("Null")
-					pID = 10
-			card.setEmotion(pID)
-
-		if("signaller")
-
-			if(href_list["send"])
-				signaler.send_activation()
-				audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
-				playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-
-			if(href_list["freq"])
-				var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
-				if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
-					new_frequency = sanitize_frequency(new_frequency)
-				signaler.set_frequency(new_frequency)
-
-			if(href_list["code"])
-				signaler.code += text2num(href_list["code"])
-				signaler.code = round(signaler.code)
-				signaler.code = min(100, signaler.code)
-				signaler.code = max(1, signaler.code)
+						temp = "Trunk <TT> \"[target]\"</TT> not found."
 
 
+			if("radio") // Configuring onboard radio
+				radio.attack_self(src)
 
-		if("directive")
-			if(href_list["getdna"])
-				var/mob/living/M = card.loc
-				var/count = 0
-				while(!isliving(M))
-					if(!M || !M.loc)
-						return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
-					M = M.loc
-					count++
-					if(count >= 6)
+			if("image") // Set pAI card display face
+				var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+				var/pID = 1
+
+				switch(newImage)
+					if("Happy")
+						pID = 1
+					if("Cat")
+						pID = 2
+					if("Extremely Happy")
+						pID = 3
+					if("Face")
+						pID = 4
+					if("Laugh")
+						pID = 5
+					if("Off")
+						pID = 6
+					if("Sad")
+						pID = 7
+					if("Angry")
+						pID = 8
+					if("What")
+						pID = 9
+					if("Null")
+						pID = 10
+				card.setEmotion(pID)
+
+			if("news")
+				newscaster.ui_interact(src)
+
+			if("camzoom")
+				aicamera.adjust_zoom(usr)
+
+			if("signaller")
+				if(href_list["send"])
+					signaler.send_activation()
+					audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+					playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+
+				if(href_list["freq"])
+					var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
+					if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
+						new_frequency = sanitize_frequency(new_frequency)
+					signaler.set_frequency(new_frequency)
+
+				if(href_list["code"])
+					signaler.code += text2num(href_list["code"])
+					signaler.code = round(signaler.code)
+					signaler.code = min(100, signaler.code)
+					signaler.code = max(1, signaler.code)
+
+			if("directive")
+				if(href_list["getdna"])
+					if(iscarbon(card.loc))
+						CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
+					else
 						to_chat(src, "You are not being carried by anyone!")
-						return 0
-				spawn CheckDNA(M, src)
+						return 0 // FALSE ? If you return here you won't call paiinterface() below
 
-		if("pdamessage")
-			if(!isnull(pda))
-				if(href_list["toggler"])
-					pda.toff = !pda.toff
-				else if(href_list["ringer"])
-					pda.silent = !pda.silent
-				else if(href_list["target"])
-					if(silent)
-						return alert("Communications circuits remain uninitialized.")
+			if("pdamessage")
+				if(!isnull(aiPDA))
+					if(href_list["toggler"])
+						aiPDA.toff = !aiPDA.toff
+					else if(href_list["ringer"])
+						aiPDA.silent = !aiPDA.silent
+					else if(href_list["target"])
+						if(silent)
+							return alert("Communications circuits remain uninitialized.")
+						var/target = locate(href_list["target"]) in GLOB.PDAs
+						aiPDA.create_message(src, target)
 
-					var/target = locate(href_list["target"]) in GLOB.PDAs
-					pda.create_message(src, target)
+			if("medicalrecord") // Accessing medical records
+				if(subscreen == 1)
+					medicalActive1 = find_record("id", href_list["med_rec"], GLOB.data_core.general)
+					if(medicalActive1)
+						medicalActive2 = find_record("id", href_list["med_rec"], GLOB.data_core.medical)
+					if(!medicalActive2)
+						medicalActive1 = null
+						temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
 
-		// Accessing medical records
-		if("medicalrecord")
-			if(subscreen == 1)
-				medicalActive1 = find_record("id", href_list["med_rec"], GLOB.data_core.general)
-				if(medicalActive1)
-					medicalActive2 = find_record("id", href_list["med_rec"], GLOB.data_core.medical)
-				if(!medicalActive2)
-					medicalActive1 = null
-					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
+			if("securityrecord")
+				if(subscreen == 1)
+					securityActive1 = find_record("id", href_list["sec_rec"], GLOB.data_core.general)
+					if(securityActive1)
+						securityActive2 = find_record("id", href_list["sec_rec"], GLOB.data_core.security)
+					if(!securityActive2)
+						securityActive1 = null
+						temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
 
-		if("securityrecord")
-			if(subscreen == 1)
-				securityActive1 = find_record("id", href_list["sec_rec"], GLOB.data_core.general)
-				if(securityActive1)
-					securityActive2 = find_record("id", href_list["sec_rec"], GLOB.data_core.security)
-				if(!securityActive2)
-					securityActive1 = null
-					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
-		if("securityhud")
-			if(href_list["toggle"])
-				secHUD = !secHUD
-				if(secHUD)
-					var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-					sec.add_hud_to(src)
-				else
-					var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-					sec.remove_hud_from(src)
-		if("medicalhud")
-			if(href_list["toggle"])
-				medHUD = !medHUD
-				if(medHUD)
-					var/datum/atom_hud/med = GLOB.huds[med_hud]
-					med.add_hud_to(src)
-				else
-					var/datum/atom_hud/med = GLOB.huds[med_hud]
-					med.remove_hud_from(src)
-		if("translator")
-			if(href_list["toggle"])
-				grant_all_languages(TRUE)
-					// this is PERMAMENT.
-		if("doorjack")
-			if(href_list["jack"])
-				if(cable && cable.machine)
-					hackdoor = cable.machine
-					hackloop()
-			if(href_list["cancel"])
-				hackdoor = null
-			if(href_list["cable"])
-				var/turf/T = get_turf(loc)
-				cable = new /obj/item/pai_cable(T)
-				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
-		if("loudness")
-			if(subscreen == 1) // Open Instrument
-				internal_instrument.interact(src)
-			if(subscreen == 2) // Change Instrument type
-				internal_instrument.selectInstrument()
+			if("securityhud")
+				if(href_list["toggle"])
+					secHUD = !secHUD
+					if(secHUD)
+						var/datum/atom_hud/sec = GLOB.huds[sec_hud]
+						sec.add_hud_to(src)
+					else
+						var/datum/atom_hud/sec = GLOB.huds[sec_hud]
+						sec.remove_hud_from(src)
 
-	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
-	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
-	return
+			if("medicalhud")
+				if(href_list["toggle"])
+					medHUD = !medHUD
+					if(medHUD)
+						var/datum/atom_hud/med = GLOB.huds[med_hud]
+						med.add_hud_to(src)
+					else
+						var/datum/atom_hud/med = GLOB.huds[med_hud]
+						med.remove_hud_from(src)
+
+			if("hostscan")
+				if(href_list["toggle"])
+					var/mob/living/silicon/pai/pAI = usr
+					pAI.hostscan.attack_self(usr)
+				if(href_list["toggle2"])
+					var/mob/living/silicon/pai/pAI = usr
+					pAI.hostscan.toggle_mode()
+
+			if("encryptionkeys")
+				if(href_list["toggle"])
+					encryptmod = TRUE
+
+			if("translator")
+				if(href_list["toggle"])
+					grant_all_languages(TRUE)
+						// this is PERMAMENT.
+
+			if("doorjack")
+				if(href_list["jack"])
+					if(cable && cable.machine)
+						hackdoor = cable.machine
+						hackloop()
+				if(href_list["cancel"])
+					hackdoor = null
+				if(href_list["cable"])
+					var/turf/T = get_turf(loc)
+					cable = new /obj/item/pai_cable(T)
+					T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+
+			if("loudness")
+				if(subscreen == 1) // Open Instrument
+					internal_instrument.interact(src)
+				if(subscreen == 2) // Change Instrument type
+					internal_instrument.selectInstrument()
+
+		paiInterface()
 
 // MENUS
 
@@ -297,6 +321,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=[REF(src)];software=manifest;sub=0'>Crew Manifest</a> <br>"
+		if(s == "host scan")
+			dat += "<a href='byond://?src=[REF(src)];software=hostscan;sub=0'>Host Health Scan</a>"
 		if(s == "medical records")
 			dat += "<a href='byond://?src=[REF(src)];software=medicalrecord;sub=0'>Medical Records</a> <br>"
 		if(s == "security records")
@@ -312,6 +338,8 @@
 	// Advanced
 	dat += "<b>Advanced</b> <br>"
 	for(var/s in software)
+		if(s == "camera zoom")
+			dat += "<a href='byond://?src=[REF(src)];software=camzoom;sub=0'>Adjust Camera Zoom</a> <br>"
 		if(s == "atmosphere sensor")
 			dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Atmospheric Sensor</a> <br>"
 		if(s == "heartbeat sensor")
@@ -320,6 +348,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=securityhud;sub=0'>Facial Recognition Suite</a>[(secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=[REF(src)];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+		if(s == "encryption keys")
+			dat += "<a href='byond://?src=[REF(src)];software=encryptionkeys;sub=0'>Channel Encryption Firmware</a>[(encryptmod) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
 			var/datum/language_holder/H = get_language_holder()
 			dat += "<a href='byond://?src=[REF(src)];software=translator;sub=0'>Universal Translator</a>[H.omnitongue ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
@@ -379,6 +409,8 @@
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
+	if(!istype(M))
+		return
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
 		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
@@ -439,7 +471,7 @@
 		if(1)
 			. += "<CENTER><B>Medical Record</B></CENTER><BR>"
 			if(medicalActive1 in GLOB.data_core.general)
-				. += "Name: [medicalActive1.fields["name"]] ID: [medicalActive1.fields["id"]]<BR>\nSex: [medicalActive1.fields["sex"]]<BR>\nAge: [medicalActive1.fields["age"]]<BR>\nFingerprint: [medicalActive1.fields["fingerprint"]]<BR>\nPhysical Status: [medicalActive1.fields["p_stat"]]<BR>\nMental Status: [medicalActive1.fields["m_stat"]]<BR>"
+				. += "Name: [medicalActive1.fields["name"]] ID: [medicalActive1.fields["id"]]<BR>\nGender: [medicalActive1.fields["gender"]]<BR>\nAge: [medicalActive1.fields["age"]]<BR>\nFingerprint: [medicalActive1.fields["fingerprint"]]<BR>\nPhysical Status: [medicalActive1.fields["p_stat"]]<BR>\nMental Status: [medicalActive1.fields["m_stat"]]<BR>"
 			else
 				. += "<pre>Requested medical record not found.</pre><BR>"
 			if(medicalActive2 in GLOB.data_core.medical)
@@ -461,7 +493,7 @@
 		if(1)
 			. += "<h3>Security Record</h3>"
 			if(securityActive1 in GLOB.data_core.general)
-				. += "Name: <A href='?src=[REF(src)];field=name'>[securityActive1.fields["name"]]</A> ID: <A href='?src=[REF(src)];field=id'>[securityActive1.fields["id"]]</A><BR>\nSex: <A href='?src=[REF(src)];field=sex'>[securityActive1.fields["sex"]]</A><BR>\nAge: <A href='?src=[REF(src)];field=age'>[securityActive1.fields["age"]]</A><BR>\nRank: <A href='?src=[REF(src)];field=rank'>[securityActive1.fields["rank"]]</A><BR>\nFingerprint: <A href='?src=[REF(src)];field=fingerprint'>[securityActive1.fields["fingerprint"]]</A><BR>\nPhysical Status: [securityActive1.fields["p_stat"]]<BR>\nMental Status: [securityActive1.fields["m_stat"]]<BR>"
+				. += "Name: <A href='?src=[REF(src)];field=name'>[securityActive1.fields["name"]]</A> ID: <A href='?src=[REF(src)];field=id'>[securityActive1.fields["id"]]</A><BR>\nGender: <A href='?src=[REF(src)];field=gender'>[securityActive1.fields["gender"]]</A><BR>\nAge: <A href='?src=[REF(src)];field=age'>[securityActive1.fields["age"]]</A><BR>\nRank: <A href='?src=[REF(src)];field=rank'>[securityActive1.fields["rank"]]</A><BR>\nFingerprint: <A href='?src=[REF(src)];field=fingerprint'>[securityActive1.fields["fingerprint"]]</A><BR>\nPhysical Status: [securityActive1.fields["p_stat"]]<BR>\nMental Status: [securityActive1.fields["m_stat"]]<BR>"
 			else
 				. += "<pre>Requested security record not found,</pre><BR>"
 			if(securityActive2 in GLOB.data_core.security)
@@ -470,6 +502,14 @@
 				. += "<pre>Requested security record not found,</pre><BR>"
 			. += "<BR>\n<A href='?src=[REF(src)];software=securityrecord;sub=0'>Back</A><BR>"
 	return .
+
+// Encryption Keys
+/mob/living/silicon/pai/proc/softwareEncryptionKeys()
+	var/dat = {"<h3>Encryption Key Firmware</h3><br>
+				When enabled, this device will be able to use up to two (2) encryption keys for departmental channel access.<br><br>
+				The device is currently [encryptmod ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[encryptmod ? "" : "<a href='byond://?src=[REF(src)];software=encryptionkeys;sub=0;toggle=1'>Activate Encryption Key Ports</a><br>"]"}
+	return dat
+
 
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
@@ -481,7 +521,7 @@
 
 // Security HUD
 /mob/living/silicon/pai/proc/facialRecognition()
-	var/dat = {"<h3>Facial Recognition Suite</h3><br>
+	var/dat = {"<h3>Facial Recognition Overlay</h3><br>
 				When enabled, this package will scan all viewable faces and compare them against the known criminal database, providing real-time graphical data about any detected persons of interest.<br><br>
 				The package is currently [ (secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 				<a href='byond://?src=[REF(src)];software=securityhud;sub=0;toggle=1'>Toggle Package</a><br>
@@ -491,47 +531,24 @@
 // Medical HUD
 /mob/living/silicon/pai/proc/medicalAnalysis()
 	var/dat = ""
-	if(subscreen == 0)
-		dat += {"<h3>Medical Analysis Suite</h3><br>
-				 <h4>Visual Status Overlay</h4><br>
-					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
-					The suite is currently [ (medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
-					<a href='byond://?src=[REF(src)];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
-					<br>
-					<a href='byond://?src=[REF(src)];software=medicalhud;sub=1'>Host Bioscan</a><br>
-					"}
-	if(subscreen == 1)
-		dat += {"<h3>Medical Analysis Suite</h3><br>
-				 <h4>Host Bioscan</h4><br>
-				"}
-		var/mob/living/M = card.loc
-		if(!isliving(M))
-			while(!isliving(M))
-				if(isturf(M))
-					temp = "Error: No biological host found. <br>"
-					subscreen = 0
-					return dat
-				M = M.loc
-		dat += {"Bioscan Results for [M]: <br>"
-		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br>
-		Scan Breakdown: <br>
-		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
-		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getToxLoss()]</font><br>
-		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getFireLoss()]</font><br>
-		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
-		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
-		"}
-		for(var/thing in M.diseases)
-			var/datum/disease/D = thing
-			dat += {"<h4>Infection Detected.</h4><br>
-					 Name: [D.name]<br>
-					 Type: [D.spread_text]<br>
-					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure_text]<br>
-					"}
-		dat += "<a href='byond://?src=[REF(src)];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
+	dat += {"<h3>Medical Analysis Overlay</h3><br>
+			When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
+			The suite is currently [ (medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+			<a href='byond://?src=[REF(src)];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
+			"}
 	return dat
 
+//Health Scanner
+/mob/living/silicon/pai/proc/softwareHostScan()
+
+	var/dat = ""
+	dat += {"<h3>Host Bisoscan Settings</h3><br>
+
+			<a href='byond://?src=[REF(src)];software=hostscan;sub=0;toggle=1'>Change Scan Type</a><br>
+
+			<a href='byond://?src=[REF(src)];software=hostscan;sub=0;toggle2=1'>Toggle Verbosity</a><br>
+			"}
+	return dat
 // Atmospheric Scanner
 /mob/living/silicon/pai/proc/softwareAtmo()
 	var/dat = "<h3>Atmospheric Sensor</h4>"
@@ -617,19 +634,19 @@
 
 	var/dat = "<h3>Digital Messenger</h3>"
 	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=[REF(src)];software=pdamessage;toggler=1'>
-	[(pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
+	[(aiPDA.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
 	<b>Ringer Status:</b> <A href='byond://?src=[REF(src)];software=pdamessage;ringer=1'>
-	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
+	[(aiPDA.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
-	if(!pda.toff)
+	if(!aiPDA.toff)
 		for (var/obj/item/pda/P in sortNames(get_viewable_pdas()))
-			if (P == pda)
+			if (P == aiPDA)
 				continue
 			dat += "<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"
 	dat += "<br><br>"
-	dat += "Messages: <hr> [pda.tnote]"
+	dat += "Messages: <hr> [aiPDA.tnote]"
 	return dat
 
 // Loudness Booster

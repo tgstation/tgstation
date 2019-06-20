@@ -6,6 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
+	layer = CLOSED_DOOR_LAYER
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
@@ -27,6 +28,7 @@
 
 /obj/structure/mineral_door/Initialize()
 	. = ..()
+
 	air_update_turf(TRUE)
 
 /obj/structure/mineral_door/Move()
@@ -91,6 +93,7 @@
 	sleep(10)
 	density = FALSE
 	door_opened = TRUE
+	layer = OPEN_DOOR_LAYER
 	air_update_turf(1)
 	update_icon()
 	isSwitchingStates = FALSE
@@ -111,6 +114,7 @@
 	density = TRUE
 	set_opacity(TRUE)
 	door_opened = FALSE
+	layer = initial(layer)
 	air_update_turf(1)
 	update_icon()
 	isSwitchingStates = FALSE
@@ -310,7 +314,7 @@
 /obj/structure/mineral_door/paperframe/examine(mob/user)
 	. = ..()
 	if(obj_integrity < max_integrity)
-		to_chat(user, "<span class='info'>It looks a bit damaged, you may be able to fix it with some <b>paper</b>.</span>")
+		. += "<span class='info'>It looks a bit damaged, you may be able to fix it with some <b>paper</b>.</span>"
 
 /obj/structure/mineral_door/paperframe/pickaxe_door(mob/living/user, obj/item/I)
 	return

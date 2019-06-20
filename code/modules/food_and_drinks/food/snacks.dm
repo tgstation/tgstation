@@ -21,8 +21,8 @@ Here is an example of the new formatting for anyone who wants to add more food i
 	icon_state = "xburger"												//Refers to an icon in food.dmi
 /obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
 	. = ..()														//Same here.
-	reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
-	reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
+	reagents.add_reagent(/datum/reagent/xenomicrobes, 10)						//This is what is in the food item. you may copy/paste
+	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)							//this line of code for all the contents.
 	bitesize = 3													//This is the amount each bite consumes.
 ```
 
@@ -60,7 +60,7 @@ All foods are distributed among various categories. Use common sense.
 		if(list_reagents)
 			for(var/rid in list_reagents)
 				var/amount = list_reagents[rid]
-				if(rid == "nutriment" || rid == "vitamin")
+				if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
 					reagents.add_reagent(rid, amount, tastes.Copy())
 				else
 					reagents.add_reagent(rid, amount)
@@ -98,7 +98,7 @@ All foods are distributed among various categories. Use common sense.
 			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
 
 		if(M == user)								//If you're eating it yourself.
-			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !user.has_trait(TRAIT_VORACIOUS))
+			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
 				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
 				return FALSE
 			else if(fullness <= 50)
@@ -112,7 +112,7 @@ All foods are distributed among various categories. Use common sense.
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return FALSE
-			if(M.has_trait(TRAIT_VORACIOUS))
+			if(HAS_TRAIT(M, TRAIT_VORACIOUS))
 				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
@@ -151,16 +151,16 @@ All foods are distributed among various categories. Use common sense.
 	return 0
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
-	..()
-	if(bitecount == 0)
-		return
-	else if(bitecount == 1)
-		to_chat(user, "[src] was bitten by someone!")
-	else if(bitecount <= 3)
-		to_chat(user, "[src] was bitten [bitecount] times!")
-	else
-		to_chat(user, "[src] was bitten multiple times!")
-
+	. = ..()
+	switch (bitecount)
+		if (0)
+			return
+		if(1)
+			. += "[src] was bitten by someone!"
+		if(2,3)
+			. += "[src] was bitten [bitecount] times!"
+		else
+			. += "[src] was bitten multiple times!"
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage))
@@ -206,7 +206,7 @@ All foods are distributed among various categories. Use common sense.
 	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]
-			if(r_id == "nutriment" || r_id == "vitamin")
+			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
 				reagents.add_reagent(r_id, amount, tastes)
 			else
 				reagents.add_reagent(r_id, amount)
@@ -285,7 +285,7 @@ All foods are distributed among various categories. Use common sense.
 	if(S.bonus_reagents && S.bonus_reagents.len)
 		for(var/r_id in S.bonus_reagents)
 			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
-			if(r_id == "nutriment" || r_id == "vitamin")
+			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
 				S.reagents.add_reagent(r_id, amount, tastes)
 			else
 				S.reagents.add_reagent(r_id, amount)

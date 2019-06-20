@@ -24,12 +24,7 @@
 	var/vary = FALSE	//used for the honk borg emote
 	var/only_forced_audio = FALSE //can only code call this event instead of the player.
 
-	var/static/list/emote_list = list()
-
-
 /datum/emote/New()
-	if(key_third_person)
-		emote_list[key_third_person] = src
 	if (ispath(mob_type_allowed_typecache))
 		switch (mob_type_allowed_typecache)
 			if (/mob)
@@ -47,7 +42,7 @@
 	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
-	var/msg = select_message_type(user)
+	var/msg = select_message_type(user, intentional)
 	if(params && message_param)
 		msg = select_param(user, params)
 
@@ -92,7 +87,7 @@
 		message = replacetext(message, "%s", user.p_s())
 	return message
 
-/datum/emote/proc/select_message_type(mob/user)
+/datum/emote/proc/select_message_type(mob/user, intentional)
 	. = message
 	if(!muzzle_ignore && user.is_muzzled() && emote_type == EMOTE_AUDIBLE)
 		return "makes a [pick("strong ", "weak ", "")]noise."
@@ -148,5 +143,5 @@
 
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.has_trait(TRAIT_EMOTEMUTE))
+		if(HAS_TRAIT(L, TRAIT_EMOTEMUTE))
 			return FALSE

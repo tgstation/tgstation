@@ -37,7 +37,7 @@
 /obj/item/weldingtool/Initialize()
 	. = ..()
 	create_reagents(max_fuel)
-	reagents.add_reagent("welding_fuel", max_fuel)
+	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_icon()
 
 
@@ -97,7 +97,7 @@
 
 /obj/item/weldingtool/proc/explode()
 	var/turf/T = get_turf(loc)
-	var/plasmaAmount = reagents.get_reagent_amount("plasma")
+	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 	dyn_explosion(T, plasmaAmount/5)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
 
@@ -142,7 +142,7 @@
 
 
 /obj/item/weldingtool/attack_self(mob/user)
-	if(src.reagents.has_reagent("plasma"))
+	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		explode()
 	switched_on(user)
@@ -154,7 +154,7 @@
 
 // Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount("welding_fuel")
+	return reagents.get_reagent_amount(/datum/reagent/fuel)
 
 
 // Uses fuel from the welding tool.
@@ -165,7 +165,7 @@
 	if(used)
 		burned_fuel_for = 0
 	if(get_fuel() >= used)
-		reagents.remove_reagent("welding_fuel", used)
+		reagents.remove_reagent(/datum/reagent/fuel, used)
 		check_fuel()
 		return TRUE
 	else
@@ -220,8 +220,8 @@
 
 
 /obj/item/weldingtool/examine(mob/user)
-	..()
-	to_chat(user, "It contains [get_fuel()] unit\s of fuel out of [max_fuel].")
+	. = ..()
+	. += "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
 /obj/item/weldingtool/is_hot()
 	return welding * heat
@@ -336,7 +336,7 @@
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
-		reagents.add_reagent("welding_fuel", 1)
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 	..()
 
 /obj/item/weldingtool/hugetank
@@ -373,6 +373,6 @@
 	..()
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)
 		nextrefueltick = world.time + 10
-		reagents.add_reagent("welding_fuel", 1)
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 
 #undef WELDER_FUEL_BURN_INTERVAL

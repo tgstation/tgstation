@@ -19,7 +19,7 @@
 		to_chat(user, "<span class='warning'>There doesn't seem to be anywhere to put [src]...</span>")
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
-	GET_COMPONENT(storage, /datum/component/storage)
+	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
 	if(storage)
 		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
 			return FALSE
@@ -80,10 +80,10 @@
 			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 
 /obj/item/clothing/accessory/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>")
+	. = ..()
+	. += "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>"
 	if(initial(above_suit))
-		to_chat(user, "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>")
+		. += "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>"
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"

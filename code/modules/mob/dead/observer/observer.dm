@@ -13,6 +13,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	density = FALSE
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
@@ -136,6 +137,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	. = ..()
 
 	grant_all_languages()
+	show_data_huds()
+	data_huds_on = 1
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -833,9 +836,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)
-	..()
+	. = ..()
 	if(!invisibility)
-		to_chat(user, "It seems extremely obvious.")
+		. += "It seems extremely obvious."
 
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value

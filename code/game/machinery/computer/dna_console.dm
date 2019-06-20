@@ -100,11 +100,11 @@
 	stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/examine(mob/user)
-	..()
+	. = ..()
 	if(jokerready < world.time)
-		to_chat(user, "<span class='notice'>JOKER algorithm available.</span>")
+		. += "<span class='notice'>JOKER algorithm available.</span>"
 	else
-		to_chat(user, "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.")
+		. += "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.</span>"
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
 	. = ..()
@@ -126,7 +126,7 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && !viable_occupant.has_trait(TRAIT_RADIMMUNE) && !viable_occupant.has_trait(TRAIT_BADDNA) || (connected.scan_level == 3)) //occupant is viable for dna modification
+			if(viable_occupant.has_dna() && !HAS_TRAIT(viable_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(viable_occupant, TRAIT_BADDNA) || (connected.scan_level == 3)) //occupant is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -817,7 +817,7 @@
 				if(chromosomes.len)
 					var/obj/item/chromosome/CM = input("Select a chromosome to apply", "Apply Chromosome") as null|anything in chromosomes
 					if(CM)
-						to_chat(usr, "<span class='notice'>You apply [CM] to [HM.name].")
+						to_chat(usr, "<span class='notice'>You apply [CM] to [HM.name].</span>")
 						stored_chromosomes -= CM
 						CM.apply(HM)
 
@@ -842,7 +842,7 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
-		if(!istype(viable_occupant) || !viable_occupant.dna || viable_occupant.has_trait(TRAIT_RADIMMUNE) || viable_occupant.has_trait(TRAIT_BADDNA))
+		if(!istype(viable_occupant) || !viable_occupant.dna || HAS_TRAIT(viable_occupant, TRAIT_RADIMMUNE) || HAS_TRAIT(viable_occupant, TRAIT_BADDNA))
 			viable_occupant = null
 	return viable_occupant
 

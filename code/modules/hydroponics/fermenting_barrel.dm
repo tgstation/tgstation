@@ -17,7 +17,7 @@
 
 /obj/structure/fermenting_barrel/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>")
+	. += "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>"
 
 /obj/structure/fermenting_barrel/proc/makeWine(obj/item/reagent_containers/food/snacks/grown/fruit)
 	if(fruit.reagents)
@@ -34,7 +34,7 @@
 			data["tastes"] = list(fruit.wine_flavor = 1)
 		else
 			data["tastes"] = list(fruit.tastes[1] = 1)
-		reagents.add_reagent("fruit_wine", amount, data)
+		reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, amount, data)
 	qdel(fruit)
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 

@@ -37,6 +37,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
+	var/equipment_disabled = 0 //disabled due to EMP
 	var/obj/item/stock_parts/cell/cell
 	var/state = 0
 	var/last_message = 0
@@ -154,7 +155,6 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
-	diag_hud_set_mechtracking()
 
 /obj/mecha/update_icon()
 	if (silicon_pilot && silicon_icon_state)
@@ -221,6 +221,15 @@
 	GLOB.mechas_list -= src //global mech list
 	return ..()
 
+/obj/mecha/proc/restore_equipment()
+	equipment_disabled = 0
+	if(istype(src, /obj/mecha/combat))
+		mouse_pointer = 'icons/mecha/mecha_mouse.dmi'
+	if(occupant)
+		SEND_SOUND(occupant, sound('sound/items/timer.ogg', volume=50))
+		to_chat(occupant, "<span=notice>Equipment control unit has been rebooted successfuly.</span>")
+		occupant.update_mouse_pointer()
+
 /obj/mecha/CheckParts(list/parts_list)
 	..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
@@ -276,36 +285,36 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /obj/mecha/examine(mob/user)
-	..()
+	. = ..()
 	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
-			to_chat(user, "It's fully intact.")
+			. += "It's fully intact."
 		if(65 to 85)
-			to_chat(user, "It's slightly damaged.")
+			. += "It's slightly damaged."
 		if(45 to 65)
-			to_chat(user, "It's badly damaged.")
+			. += "It's badly damaged."
 		if(25 to 45)
-			to_chat(user, "It's heavily damaged.")
+			. += "It's heavily damaged."
 		else
-			to_chat(user, "It's falling apart.")
+			. += "It's falling apart."
 	var/hide_weapon = locate(/obj/item/mecha_parts/concealed_weapon_bay) in contents
 	var/hidden_weapon = hide_weapon ? (locate(/obj/item/mecha_parts/mecha_equipment/weapon) in equipment) : null
 	var/list/visible_equipment = equipment - hidden_weapon
 	if(visible_equipment.len)
-		to_chat(user, "It's equipped with:")
+		. += "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
-			to_chat(user, "[icon2html(ME, user)] \A [ME].")
+			. += "[icon2html(ME, user)] \A [ME]."
 	if(!enclosed)
 		if(silicon_pilot)
-			to_chat(user, "[src] appears to be piloting itself...")
+			. += "[src] appears to be piloting itself..."
 		else if(occupant && occupant != user) //!silicon_pilot implied
-			to_chat(user, "You can see [occupant] inside.")
+			. += "You can see [occupant] inside."
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				for(var/O in H.held_items)
 					if(istype(O, /obj/item/gun))
-						to_chat(user, "<span class='warning'>It looks like you can hit the pilot directly if you target the center or above.</span>")
+						. += "<span class='warning'>It looks like you can hit the pilot directly if you target the center or above.</span>"
 						break //in case user is holding two guns
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
@@ -429,9 +438,9 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
-	diag_hud_set_mechtracking()
 
 /obj/mecha/fire_act() //Check if we should ignite the pilot of an open-canopy mech
+	. = ..()
 	if (occupant && !enclosed && !silicon_pilot)
 		if (occupant.fire_stacks < 5)
 			occupant.fire_stacks += 1
@@ -489,13 +498,13 @@
 	var/mob/living/L = user
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
-			if(L.has_trait(TRAIT_PACIFISM) && selected.harmful)
+			if(HAS_TRAIT(L, TRAIT_PACIFISM) && selected.harmful)
 				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
 			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
-		if(isliving(target) && selected.harmful && L.has_trait(TRAIT_PACIFISM))
+		if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
 		if(selected.action(target,params))
@@ -850,10 +859,6 @@
 	if(t_air)
 		. = t_air.return_temperature()
 	return
-
-/obj/mecha/portableConnectorReturnAir()
-	return internal_tank.return_air()
-
 
 /obj/mecha/MouseDrop_T(mob/M, mob/user)
 	if((user != M) || user.incapacitated() || !Adjacent(user))

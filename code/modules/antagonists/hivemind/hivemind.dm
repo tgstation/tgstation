@@ -20,8 +20,8 @@
 		/obj/effect/proc_holder/spell/target_hive/hive_add = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_remove = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_see = 0,
-		/obj/effect/proc_holder/spell/target_hive/hive_shock = 0,
-		/obj/effect/proc_holder/spell/target_hive/hive_warp = 0,
+		/obj/effect/proc_holder/spell/targeted/hive_shock = 0,
+		/obj/effect/proc_holder/spell/self/telekinetic_hand = 0,
 		//Tier 2 - Tracking related powers
 		/obj/effect/proc_holder/spell/self/hive_scan = 5,
 		/obj/effect/proc_holder/spell/targeted/hive_reclaim = 5,
@@ -35,8 +35,8 @@
 		/obj/effect/proc_holder/spell/self/hive_loyal = 15,
 		/obj/effect/proc_holder/spell/target_hive/hive_control = 15,
 		//Tier 5 - Deadly powers
-		/obj/effect/proc_holder/spell/targeted/induce_sleep = 20,
-		/obj/effect/proc_holder/spell/target_hive/hive_attack = 20
+		/obj/effect/proc_holder/spell/targeted/pin = 20,
+		/obj/effect/proc_holder/spell/target_hive/nightmare = 20
 	)
 
 
@@ -179,12 +179,12 @@
 	if(!C)
 		return
 	owner.AddSpell(new/obj/effect/proc_holder/spell/self/hive_comms)
-	C.add_trait(TRAIT_STUNIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
-	C.add_trait(TRAIT_SLEEPIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
-	C.add_trait(TRAIT_VIRUSIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
-	C.add_trait(TRAIT_NOLIMBDISABLE, HIVEMIND_ONE_MIND_TRAIT)
-	C.add_trait(TRAIT_NOHUNGER, HIVEMIND_ONE_MIND_TRAIT)
-	C.add_trait(TRAIT_NODISMEMBER, HIVEMIND_ONE_MIND_TRAIT)
+	ADD_TRAIT(C, TRAIT_STUNIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	ADD_TRAIT(C, TRAIT_SLEEPIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	ADD_TRAIT(C, TRAIT_VIRUSIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	ADD_TRAIT(C, TRAIT_NOLIMBDISABLE, HIVEMIND_ONE_MIND_TRAIT)
+	ADD_TRAIT(C, TRAIT_NOHUNGER, HIVEMIND_ONE_MIND_TRAIT)
+	ADD_TRAIT(C, TRAIT_NODISMEMBER, HIVEMIND_ONE_MIND_TRAIT)
 
 /datum/antagonist/hivemind/proc/go_back_to_sleep()
 	if(!active_one_mind)
@@ -198,12 +198,12 @@
 	if(!C)
 		return
 	owner.RemoveSpell(new/obj/effect/proc_holder/spell/self/hive_comms)
-	C.remove_trait(TRAIT_STUNIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
-	C.remove_trait(TRAIT_SLEEPIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
-	C.remove_trait(TRAIT_VIRUSIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
-	C.remove_trait(TRAIT_NOLIMBDISABLE, HIVEMIND_ONE_MIND_TRAIT)
-	C.remove_trait(TRAIT_NOHUNGER, HIVEMIND_ONE_MIND_TRAIT)
-	C.remove_trait(TRAIT_NODISMEMBER, HIVEMIND_ONE_MIND_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_STUNIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_SLEEPIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_VIRUSIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_NOLIMBDISABLE, HIVEMIND_ONE_MIND_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_NOHUNGER, HIVEMIND_ONE_MIND_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_NODISMEMBER, HIVEMIND_ONE_MIND_TRAIT)
 	active_one_mind.Destroy()
 
 /datum/antagonist/hivemind/on_gain()

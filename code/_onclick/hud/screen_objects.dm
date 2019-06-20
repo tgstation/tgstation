@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/screen/examine(mob/user)
-	return
+	return list()
 
 /obj/screen/orbit()
 	return
@@ -65,12 +65,6 @@
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
-
-/obj/screen/craft/Click()
-	var/mob/living/M = usr
-	if(isobserver(usr))
-		return
-	M.OpenCraftingMenu()
 
 /obj/screen/area_creator
 	name = "create new area"
