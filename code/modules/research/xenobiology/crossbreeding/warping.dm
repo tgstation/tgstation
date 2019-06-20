@@ -237,6 +237,9 @@ Warping extracts:
 /obj/structure/bonfire/prelit/slime/CheckOxygen()
 	return TRUE
 
+/obj/structure/bonfire/prelit/slime/extinguish()
+	return
+
 /obj/effect/slimerune/purple
 	name = "purple rune"
 	desc = "It longs for cloth to weave and plastics to catalyze."
@@ -295,8 +298,14 @@ Warping extracts:
 /obj/effect/slimerune/darkpurple
 	name = "dark purple rune"
 	desc = "Plasma mist seeps from the edges of the rune, pooling in the center."
+	var/time_to_produce = 2
+	var/production = 0
 
 /obj/effect/slimerune/darkpurple/process() //Will likely slow this down.
+	if(production < time_to_produce)
+		production++
+		return
+	production = 0
 	var/obj/item/plasmacrystal/crystal = locate(/obj/item/plasmacrystal) in get_turf(loc)
 	if(!istype(crystal))
 		crystal = new(loc)
@@ -308,6 +317,7 @@ Warping extracts:
 	desc = "A fragile shard of crystallized plasma. Useless to fabricators, but it would probably fit in a grinder rather easily."
 	icon = 'icons/obj/shards.dmi' //Temp icons
 	icon_state = "plasmasmall"
+	grind_results = list(/datum/reagent/toxin/plasma=0)
 
 /obj/item/plasmacrystal/Initialize(mapload)
 	. = ..()
@@ -325,13 +335,13 @@ Warping extracts:
 	name = "dark blue rune"
 	desc = "The air doesn't feel colder around it, but it sends a chill through you nonetheless."
 
-/obj/effect/slimerune/darkpurple/process()
+/obj/effect/slimerune/darkblue/process()
 	for(var/mob/living/L in get_turf(loc))
-		L.bodytemperature = max(L.bodytemperature - 100,-10)
+		L.adjust_bodytemperature(-20)
 
-/obj/effect/slimerune/darkpurple/Crossed(atom/movable/AM)
+/obj/effect/slimerune/darkblue/Crossed(atom/movable/AM)
 	. = ..()
 	var/mob/living/L = AM
 	if(!istype(L))
 		return
-	L.bodytemperature = max(L.bodytemperature - 200,-10) //Crossing it is much stronger of an effect.
+	L.adjust_bodytemperature(-70) //Crossing it is much stronger of an effect.
