@@ -8,7 +8,7 @@ agree
 alert
 allow
 amuse
-analyse
+analyze
 announce
 annoy
 answer
