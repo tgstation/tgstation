@@ -39,8 +39,10 @@
 			// contract system.
 			// We also create their contracts at this point.
 			if (traitor_data)
-				traitor_data.create_contracts()
-				hard_drive.traitor_data = traitor_data
+				// We don't give them more contracts if they somehow assign themselves to a new uplink.
+				if (!traitor_data.assigned_contracts.len)
+					traitor_data.create_contracts()
+					hard_drive.traitor_data = traitor_data
 			else
 				error = "Incorrect login details."
 			return 1

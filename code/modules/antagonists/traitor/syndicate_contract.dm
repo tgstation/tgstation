@@ -121,7 +121,6 @@
 
 			// Pay contractor their portion of ransom
 			if (status == CONTRACT_STATUS_COMPLETE)
-				var/datum/bank_account/account
 				var/mob/living/carbon/human/H
 				var/obj/item/card/id/C
 				if(ishuman(contract.owner.current))
@@ -133,7 +132,6 @@
 
 					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
 					[C.registered_account.account_balance].")
-
 			
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
 								As is policy we've taken a portion of the station's funds to offset the overall cost.", null, 'sound/ai/attention.ogg', null, "Nanotrasen Asset Protection")
