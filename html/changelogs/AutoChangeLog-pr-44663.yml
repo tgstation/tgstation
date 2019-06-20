@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Hypnosis and mind control now have alerts on the right side of the screen when active."
+  - rscadd: "Hovering over the hypnosis alert will display the hypno-phrase."
+  - rscadd: "Clicking the mind control alert will display the order again."
