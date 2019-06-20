@@ -226,19 +226,19 @@
 		registered_account.bank_card_talk("<span class='warning'>ERROR: The linked account requires [difference] more credit\s to perform that withdrawal.</span>", TRUE)
 
 /obj/item/card/id/examine(mob/user)
-	..()
+	. = ..()
 	if(registered_account)
-		to_chat(user, "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance].")
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance]."
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
-		to_chat(user, "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>")
-		to_chat(user, "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>")
+				. += "The [D.account_holder] reports a balance of $[D.account_balance]."
+		. += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
+		. += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
 		if(registered_account.account_holder == user.real_name)
-			to_chat(user, "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>")
+			. += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
 	else
-		to_chat(user, "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>")
+		. += "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>"
 
 /obj/item/card/id/GetAccess()
 	return access

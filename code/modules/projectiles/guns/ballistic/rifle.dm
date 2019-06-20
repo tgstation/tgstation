@@ -41,8 +41,8 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	return ..()
 
 /obj/item/gun/ballistic/rifle/examine(mob/user)
-	..()
-	to_chat(user, "The bolt is [bolt_locked ? "open" : "closed"].")
+	. = ..()
+	. += "The bolt is [bolt_locked ? "open" : "closed"]."
 
 ///////////////////////
 // BOLT ACTION RIFLE //

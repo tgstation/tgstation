@@ -121,30 +121,30 @@
 	damaged_brain = TRUE //brain was attacked, they're pretty fragile.
 
 /obj/item/organ/brain/examine(mob/user)
-	..()
+	. = ..()
 
 	if(suicided)
-		to_chat(user, "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>")
+		. += "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>"
 	else if(brainmob)
 		if(brainmob.get_ghost(FALSE, TRUE))
 			if(brain_death || brainmob.health <= HEALTH_THRESHOLD_DEAD)
-				to_chat(user, "<span class='info'>It's lifeless and severely damaged.</span>")
+				. += "<span class='info'>It's lifeless and severely damaged.</span>"
 			else if(damaged_brain)
-				to_chat(user, "<span class='info'>It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.</span>")
+				. += "<span class='info'>It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.</span>"
 			else
-				to_chat(user, "<span class='info'>You can feel the small spark of life still left in this one.</span>")
+				. += "<span class='info'>You can feel the small spark of life still left in this one.</span>"
 		else if(damaged_brain)
-			to_chat(user, "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>")
+			. += "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>"
 		else
-			to_chat(user, "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>")
+			. += "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>"
 	else
 		if(decoy_override)
 			if(damaged_brain)
-				to_chat(user, "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>")
+				. += "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>"
 			else
-				to_chat(user, "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>")
+				. += "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>"
 		else
-			to_chat(user, "<span class='info'>This one is completely devoid of life.</span>")
+			. += "<span class='info'>This one is completely devoid of life.</span>"
 
 /obj/item/organ/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))

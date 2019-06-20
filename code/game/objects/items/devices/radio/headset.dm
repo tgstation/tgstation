@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	return TOXLOSS
 
 /obj/item/radio/headset/examine(mob/user)
-	..()
+	. = ..()
 
 	if(item_flags & IN_INVENTORY && loc == user)
 		// construction of frequency description
@@ -45,12 +45,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 					avail_chans += "use [MODE_TOKEN_DEPARTMENT] or [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 				else
 					avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
-		to_chat(user, "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].</span>")
+		. += "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].</span>"
 
 		if(command)
-			to_chat(user, "<span class='info'>Alt-click to toggle the high-volume mode.</span>")
+			. += "<span class='info'>Alt-click to toggle the high-volume mode.</span>"
 	else
-		to_chat(user, "<span class='notice'>A small screen on the headset flashes, it's too small to read without holding or wearing the headset.</span>")
+		. += "<span class='notice'>A small screen on the headset flashes, it's too small to read without holding or wearing the headset.</span>"
 
 /obj/item/radio/headset/Initialize()
 	. = ..()
