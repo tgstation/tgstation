@@ -54,10 +54,12 @@
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
 
-		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
-			beat = BEAT_SLOW
-			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
-			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
+		if(beat != BEAT_SLOW)
+			..()	//heart only heals over time if it's pumping for a body not in the midst of dying
+			if(H.health <= H.crit_threshold)	//when entering into critical condition
+				beat = BEAT_SLOW
+				H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
+				to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
 		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE

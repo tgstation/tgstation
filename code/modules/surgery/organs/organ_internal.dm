@@ -13,6 +13,10 @@
 	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
 	var/external = FALSE
 	var/synthetic = FALSE // To distinguish between organic and synthetic organs
+	var/maxHealth = 100
+	var/damage = 0		//total damage this organ has sustained
+	var/failing	= FALSE			//is this organ failing or not
+	var/healing_factor = 0.001	//fraction of maxhealth healed per tick
 
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
@@ -53,6 +57,14 @@
 	return
 
 /obj/item/organ/proc/on_life()
+	var/mob/living/carbon/C = owner
+	//if we start to fail, cap our damage and fail the organ
+	if(damage > maxHealth)
+		failing = TRUE
+		damage = maxHealth
+	//repair organ damage if the organ is not failing
+	if((!failing) && C)
+		damage = max(0, damage - (maxHealth * healing_factor) )
 	return
 
 /obj/item/organ/examine(mob/user)
@@ -132,3 +144,11 @@
 		if(!getorganslot(ORGAN_SLOT_EARS))
 			var/obj/item/organ/ears/ears = new()
 			ears.Insert(src)
+
+/mob/living/carbon/proc/applyOrganDamage(var/d, var/obj/item/organ/organ)
+	if(organ)
+		organ.damage = max(0, organ.damage + d)
+
+/mob/living/carbon/proc/return_organ_damage(var/obj/item/organ/organ)
+	if(organ)
+		return organ.damage

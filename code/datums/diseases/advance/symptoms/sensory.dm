@@ -100,7 +100,7 @@
 				else if(M.eye_blind || M.eye_blurry)
 					M.set_blindness(0)
 					M.set_blurriness(0)
-				else if(eyes.eye_damage > 0)
+				else if(eyes.damage > 0)
 					M.adjust_eye_damage(-1)
 		else
 			if(prob(base_message_chance))

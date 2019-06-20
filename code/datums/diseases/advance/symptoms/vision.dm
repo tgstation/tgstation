@@ -57,9 +57,9 @@ Bonus
 			else
 				M.blur_eyes(20)
 				M.adjust_eye_damage(5)
-				if(eyes.eye_damage >= 10)
+				if(eyes.damage >= 10)
 					M.become_nearsighted(EYE_DAMAGE)
-				if(prob(eyes.eye_damage - 10 + 1))
+				if(prob(eyes.damage - 10 + 1))
 					if(!remove_eyes)
 						if(!HAS_TRAIT(M, TRAIT_BLIND))
 							to_chat(M, "<span class='userdanger'>You go blind!</span>")
