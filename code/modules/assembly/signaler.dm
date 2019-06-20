@@ -196,9 +196,17 @@ Code:
 		return FALSE
 	if(signal.data["code"] != code)
 		return FALSE
+	if(suicider)
+		manual_suicide(suicider)
 	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()
 	return TRUE
+
+/obj/item/assembly/signaler/anomaly/manual_suicide(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user]'s \the [src] is reacting to the radio signal, warping [user.p_their()] body!</span>")
+	user.gib()
+	user.set_suicide(TRUE)
+	user.suicide_log()
 
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return
