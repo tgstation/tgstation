@@ -3,9 +3,11 @@
 /turf/closed/indestructible/sandstone,
 /area/awaymission/beach)
 "ab" = (
-/turf/open/floor/plating/beach/water{
+/turf/open/indestructible/binary{
 	density = 1;
 	desc = "I can't move through this.";
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "water";
 	name = "deep ocean water"
 	},
 /area/awaymission/beach)
@@ -105,9 +107,11 @@
 	desc = "It can't be smoked.";
 	name = "sea weed"
 	},
-/turf/open/floor/plating/beach/water{
+/turf/open/indestructible/binary{
 	density = 1;
 	desc = "I can't move through this.";
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "water";
 	name = "deep ocean water"
 	},
 /area/awaymission/beach)
@@ -116,9 +120,11 @@
 	desc = "A volcanic rock.";
 	name = "coastal rock"
 	},
-/turf/open/floor/plating/beach/water{
+/turf/open/indestructible/binary{
 	density = 1;
 	desc = "I can't move through this.";
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "water";
 	name = "deep ocean water"
 	},
 /area/awaymission/beach)
