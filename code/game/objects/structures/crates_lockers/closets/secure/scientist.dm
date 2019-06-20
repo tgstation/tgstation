@@ -14,7 +14,7 @@
 	new /obj/item/clothing/under/rank/research_director/alt(src)
 	new /obj/item/clothing/under/rank/research_director/alt/skirt(src)
 	new /obj/item/clothing/under/rank/research_director/turtleneck(src)
-	new /obj/item/clothing/under/rank/turtleneck/skirt(src)
+	new /obj/item/clothing/under/rank/research_director/turtleneck/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/cartridge/rd(src)
 	new /obj/item/clothing/gloves/color/latex(src)

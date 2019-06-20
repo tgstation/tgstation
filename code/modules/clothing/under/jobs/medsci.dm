@@ -42,7 +42,7 @@
 
 /obj/item/clothing/under/rank/research_director/turtleneck
 	desc = "A dark purple turtleneck and tan khakis, for a director with a superior sense of style."
-	name = "research director's turtleneck skirt"
+	name = "research director's turtleneck"
 	icon_state = "rdturtle"
 	item_state = "p_suit"
 	item_color = "rdturtle"
@@ -50,9 +50,9 @@
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 
-/obj/item/clothing/under/rank/turtleneck/skirt
-	name = "research director's turtleneck"
-	desc = "A dark purple turtleneck and tan khakis, for a director with a superior sense of style."
+/obj/item/clothing/under/rank/research_director/turtleneck/skirt
+	name = "research director's turtleneck skirt"
+	desc = "A dark purple turtleneck and tan khaki skirt, for a director with a superior sense of style."
 	icon_state = "rdturtle_skirt"
 	item_state = "p_suit"
 	item_color = "rdturtle_skirt"
@@ -125,7 +125,7 @@
 	name = "geneticist's jumpsuit"
 	icon_state = "genetics"
 	item_state = "w_suit"
-	item_color = "genetics"
+	item_color = "geneticswhite"
 	permeability_coefficient = 0.5
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
 
