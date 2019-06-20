@@ -75,7 +75,7 @@
 	var/obj/item/reagent_containers/food/tasty = O
 	if(!istype(O, /obj/item/reagent_containers/food))
 		return
-	if (contents.len > GOOSE_SATIATED)
+	if (items_eaten > GOOSE_SATIATED)
 		visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
 		return
 	if (tasty.foodtype & GROSS)
