@@ -80,7 +80,11 @@
 		return
 	if (tasty.foodtype & GROSS)
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
-		tasty.forceMove(src)
+		if(!types_eaten)
+			types_eaten = list()
+		types_eaten |= tasty.type
+		items_eaten++
+		qdel(tasty)
 		playsound(src,'sound/items/eatfood.ogg', 70, 1)
 		vomitCoefficient += 3
 		vomitTimeBonus += 2
