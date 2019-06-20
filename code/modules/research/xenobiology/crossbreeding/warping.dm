@@ -107,8 +107,9 @@ Warping extracts:
 
 /obj/item/slimecross/warping/silver
 	colour = "silver"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/silver
 	effect_desc = "Forms a recoverable rune that absorbs food to feed those who cross its path."
+	var/nutrition = 0
 
 /obj/item/slimecross/warping/bluespace
 	colour = "bluespace"
@@ -345,3 +346,28 @@ Warping extracts:
 	if(!istype(L))
 		return
 	L.adjust_bodytemperature(-70) //Crossing it is much stronger of an effect.
+
+/obj/effect/slimerune/silver
+	name = "silver rune"
+	desc = "Sate its hunger, so that you might sate yours."
+
+/obj/effect/slimerune/silver/process()
+	var/obj/item/reagent_containers/food/snacks/snack = locate(/obj/item/reagent_containers/food/snacks) in get_turf(loc)
+	if(snack)
+		var/datum/reagent/N = snack.reagents.has_reagent(/datum/reagent/consumable/nutriment)
+		var/obj/item/slimecross/warping/silver/ex = extract
+		qdel(snack)
+		ex.nutrition += N.volume * 2
+
+/obj/effect/slimerune/silver/Crossed(atom/movable/AM)
+	. = ..()
+	var/mob/living/carbon/human/H = AM
+	if(!istype(H))
+		return
+	if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
+		var/difference = NUTRITION_LEVEL_FULL - H.nutrition
+		if(difference > 0)
+			var/obj/item/slimecross/warping/silver/ex = extract
+			var/nutrition = min(ex.nutrition, difference)
+			H.adjust_nutrition(nutrition)
+			ex.nutrition -= nutrition
