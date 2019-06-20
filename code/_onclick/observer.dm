@@ -51,12 +51,16 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_GHOST, user) & COMPONENT_NO_ATTACK_HAND)
 		return TRUE
 	if(user.client)
+		var/scanned = FALSE
+		if(user.radiation_scan && radiation_scan(src, user))
+			scanned = TRUE
 		if(user.gas_scan && atmosanalyzer_scan(user, src))
-			return TRUE
-		else if(IsAdminGhost(user))
-			attack_ai(user)
-		else if(user.client.prefs.inquisitive_ghost)
-			user.examinate(src)
+			scanned = TRUE
+		if(!scanned)
+			if(IsAdminGhost(user))
+				attack_ai(user)
+			else if(user.client.prefs.inquisitive_ghost)
+				user.examinate(src)
 	return FALSE
 
 /mob/living/attack_ghost(mob/dead/observer/user)
