@@ -93,10 +93,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message || message == "")
 		return
 
-	var/static/regex/netspeak = regex("\\b(lol|brb|wtf|idk|omg|lmao|btw|ikr|rofl|tbh|nvm|thx|afaik|ooc|ic|pls|plz)\\b", "i")
-	if(!derpspeech && findtext(message, netspeak))
-		to_chat(src, "<span class='warning'>Netspeak is not permitted in character!</span>")
-		return
+	if(GLOB.in_character_filter.len)
+		var/regex/filter = regex("\\b([jointext(GLOB.in_character_filter, "|")])\\b", "i")
+		if(!derpspeech && findtext(message, filter))
+			to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat!</span>")
+			return
 
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
 	var/message_mode = get_message_mode(message)
