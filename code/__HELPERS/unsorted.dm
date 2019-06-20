@@ -1592,4 +1592,4 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		return 0
 
-#define TURF_FROM_COORDS_LIST(List) (locate(List[0], List[1], List[2]))
+#define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
