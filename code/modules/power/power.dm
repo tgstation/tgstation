@@ -29,6 +29,10 @@
 // Machines should use add_load(), surplus(), avail()
 // Non-machines should use add_delayedload(), delayed_surplus(), newavail()
 
+//override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
+/obj/machinery/power/proc/should_have_node()
+	return FALSE
+
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
@@ -189,6 +193,13 @@
 			continue
 		. += C
 	return .
+
+/obj/machinery/power/proc/update_cables_on_turf()
+
+/obj/machinery/power/proc/update_cables_on_turf()
+	var/turf/T = get_turf(src)
+	for(var/obj/structure/cable/C in T.contents)
+		C.update_icon()
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling

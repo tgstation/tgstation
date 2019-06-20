@@ -104,6 +104,11 @@
 		return FALSE
 	return TRUE
 
+/obj/machinery/power/emitter/should_have_node()
+	if(state == EMITTER_WELDED)
+		return TRUE
+	return FALSE
+
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)

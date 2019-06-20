@@ -1,4 +1,6 @@
-GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/machinery/power/terminal, /obj/machinery/power/smes, /obj/structure/grille)))
+//Use this only for things that aren't a subtype of obj/machinery/power
+//For things that are, override "should_have_node()" on them
+GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille)))
 
 #define UNDER_SMES -1
 #define UNDER_TERMINAL 1
