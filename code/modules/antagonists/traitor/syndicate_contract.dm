@@ -175,7 +175,7 @@
 		var/location_clear = TRUE
 		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
 			for (var/content in possible_drop.contents)
-				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
+				if ((istype(content, /obj/machinery) || istype(content, /obj/structure)) && !ispipewire(content))
 					location_clear = FALSE
 			if (location_clear)
 				possible_drop_loc.Add(possible_drop)
