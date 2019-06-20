@@ -145,7 +145,7 @@
 	armour_penetration = 85
 	attack_verb = list("slashed", "stung", "prickled", "poked")
 
-/obj/item/melee/sabre/bee/afterattack(atom/target, mob/user, proximit)
+/obj/item/melee/sabre/bee/afterattack(atom/target, mob/user, proximity = TRUE)
 	. = ..()
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
