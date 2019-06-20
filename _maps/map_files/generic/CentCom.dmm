@@ -11911,6 +11911,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
+"AM" = (
+/obj/machinery/shuttle_manipulator,
+/turf/open/floor/circuit/green,
+/area/centcom/ferry)
 "AN" = (
 /turf/open/floor/circuit/green,
 /area/centcom/ferry)
@@ -56544,7 +56548,7 @@ nT
 sw
 zB
 Ae
-AN
+AM
 By
 Ca
 Cw
