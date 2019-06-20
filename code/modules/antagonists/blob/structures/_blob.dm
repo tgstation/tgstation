@@ -240,16 +240,16 @@
 /obj/structure/blob/proc/chemeffectreport(mob/user)
 	. = list()
 	if(overmind)
-		. += {"<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>\n
-				<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>\n
-				<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span>"}
+		. += "<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>"
+		. += "<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>"
+		. += "<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span>"
 	else
-		. += "<b>No Material Detected!</b><br>"
+		. += "<b>No Material Detected!</b>"
 
 /obj/structure/blob/proc/typereport(mob/user)
-	return list({"<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>\n
-		<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>\n
-		<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"})
+	return list("<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>",
+							"<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>",
+							"<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
 
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
