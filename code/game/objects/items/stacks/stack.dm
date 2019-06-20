@@ -356,7 +356,7 @@
 
 /obj/item/stack/AltClick(mob/living/user)
 	. = ..()
-	if(isturf(src.loc))
+	if(isturf(loc))
 		return
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
