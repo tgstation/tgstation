@@ -29,6 +29,7 @@
 	var/last_tick_amount = 0
 	var/fail_to_receive = 0
 	var/current_warning = 1
+	var/cooldown = 0
 
 /obj/item/geiger_counter/Initialize()
 	. = ..()
@@ -135,8 +136,11 @@
 	. = ..()
 	if(user.a_intent == INTENT_HELP)
 		if(!(obj_flags & EMAGGED))
+			if(world.time < cooldown)
+				return TRUE
+			cooldown = world.time + 20
 			user.visible_message("<span class='notice'>[user] scans [target] with [src].</span>", "<span class='notice'>You scan [target]'s radiation levels with [src]...</span>")
-			addtimer(radiation_scan(target, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents
+			radiation_scan(target, user)
 		else
 			user.visible_message("<span class='notice'>[user] scans [target] with [src].</span>", "<span class='danger'>You project [src]'s stored radiation into [target]!</span>")
 			target.rad_act(radiation_count)

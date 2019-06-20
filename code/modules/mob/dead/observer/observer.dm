@@ -34,7 +34,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/health_scan = FALSE //Are health scans currently enabled?
 	var/gas_scan = FALSE //Are gas scans currently enabled?
+	var/gas_scan_cooldown = 0 //gas scanning cooldown
 	var/radiation_scan = FALSE //Are radiation scans currently enabled?
+	var/radiation_scan_cooldown = 0 //radiation scanning cooldown
+	var/scanned = FALSE // is a scan already done?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
