@@ -55,7 +55,7 @@
 		if(user.radiation_scan)
 			user.scanned = TRUE
 			if(world.time >= user.radiation_scan_cooldown)
-				radiation_scan(user, src)
+				geigercounter_scan(user, src)
 				user.radiation_scan_cooldown = world.time + 20
 		if(user.gas_scan)
 			if(world.time >= user.gas_scan_cooldown)
