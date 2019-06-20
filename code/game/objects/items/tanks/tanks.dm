@@ -279,3 +279,69 @@
 
 	else if(integrity < 3)
 		integrity++
+
+
+
+/obj/item/tank/filter
+	name = "filter"
+	icon = 'icons/obj/tank.dmi'
+	icon_state = "plasmaman_tank_belt"
+	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
+	flags_1 = CONDUCT_1
+	slot_flags = ITEM_SLOT_BACK
+	hitsound = 'sound/weapons/smash.ogg'
+	pressure_resistance = ONE_ATMOSPHERE * 5
+	force = 5
+	throwforce = 10
+	throw_speed = 1
+	throw_range = 4
+	materials = list(MAT_METAL = 500)
+	actions_types = list(/datum/action/item_action/set_internals)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
+	air_contents = null
+	distribute_pressure = ONE_ATMOSPHERE
+	integrity = 3
+	volume = BREATH_VOLUME
+
+	var/filter_types = list(/datum/gas/oxygen)
+
+/obj/item/tank/filter/process()
+	..()
+
+	var/turf/tile = get_turf(src)
+	var/datum/gas_mixture/environment = tile.return_air()
+	//var/datum/gas_mixture/air_contents = airs[1]
+	var/list/env_gases = environment.gases
+
+	if(air_contents.return_pressure() >= environment.return_pressure())
+		return FALSE
+
+	if(length(env_gases & filter_types))
+		var/transfer_moles = min(1, volume/environment.volume)*environment.total_moles()
+
+		//Take a gas sample
+		var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
+
+		//Nothing left to remove from the tile
+		if(isnull(removed))
+			return FALSE
+
+		var/list/removed_gases = removed.gases
+
+		//Filter it
+		var/datum/gas_mixture/filtered_out = new
+		var/list/filtered_gases = filtered_out.gases
+		filtered_out.temperature = removed.temperature
+
+		for(var/gas in filter_types & removed_gases)
+			filtered_out.add_gas(gas)
+			filtered_gases[gas][MOLES] = removed_gases[gas][MOLES]
+			removed_gases[gas][MOLES] = 0
+
+		removed.garbage_collect()
+
+		//Remix the resulting gases
+		air_contents.merge(filtered_out)
+		tile.assume_air(removed)
+		tile.air_update_turf()
