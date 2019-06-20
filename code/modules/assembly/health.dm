@@ -5,7 +5,7 @@
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
 	attachable = TRUE
 
-	var/scanning = TRUE
+	var/scanning = FALSE
 	var/health_scan
 	var/alarm_health = HEALTH_THRESHOLD_CRIT
 
