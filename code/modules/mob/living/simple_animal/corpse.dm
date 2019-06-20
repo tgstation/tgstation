@@ -27,7 +27,6 @@
 	back = /obj/item/storage/backpack
 	id = /obj/item/card/id/syndicate
 
-
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
 	id_job = "Operative"
@@ -76,7 +75,7 @@
 
 /obj/effect/mob_spawn/human/corpse/pirate
 	name = "Pirate"
-	skin_tone = "Caucasian1" //all pirates are white because it's easier that way
+	skin_tone = "caucasian1" //all pirates are white because it's easier that way
 	outfit = /datum/outfit/piratecorpse
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
@@ -155,7 +154,7 @@
 	outfit = /datum/outfit/wizardcorpse
 	hair_style = "Bald"
 	facial_hair_style = "Long Beard"
-	skin_tone = "Caucasian1"
+	skin_tone = "caucasian1"
 
 /datum/outfit/wizardcorpse
 	name = "Space Wizard Corpse"
@@ -204,3 +203,19 @@
 	back = /obj/item/storage/backpack/satchel/med
 	id = /obj/item/card/id
 	glasses = /obj/item/clothing/glasses/hud/health
+
+/obj/effect/mob_spawn/human/corpse/bee_terrorist
+	name = "BLF Operative"
+	outfit = /datum/outfit/bee_terrorist
+	
+/datum/outfit/bee_terrorist
+	name = "BLF Operative"
+	uniform = /obj/item/clothing/under/color/yellow
+	suit = /obj/item/clothing/suit/hooded/bee_costume
+	shoes = /obj/item/clothing/shoes/sneakers/yellow
+	gloves = /obj/item/clothing/gloves/color/yellow
+	ears = /obj/item/radio/headset
+	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
+	id = /obj/item/card/id
+	l_pocket = /obj/item/paper/fluff/bee_objectives
+	mask = /obj/item/clothing/mask/rat/bee

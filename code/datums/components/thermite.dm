@@ -68,14 +68,14 @@
 	else
 		QDEL_IN(fakefire, 50)
 
-/datum/component/thermite/proc/clean_react(strength)
+/datum/component/thermite/proc/clean_react(datum/source, strength)
 	//Thermite is just some loose powder, you could probably clean it with your hands. << todo?
 	qdel(src)
 
-/datum/component/thermite/proc/flame_react(exposed_temperature, exposed_volume)
+/datum/component/thermite/proc/flame_react(datum/source, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 1922) // This is roughly the real life requirement to ignite thermite
 		thermite_melt()
 
-/datum/component/thermite/proc/attackby_react(obj/item/thing, mob/user, params)
+/datum/component/thermite/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
 	if(thing.is_hot())
 		thermite_melt(user)

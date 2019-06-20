@@ -12,7 +12,7 @@
 			grabbedby(M)
 
 		if("harm", "disarm")
-			if(M.has_trait(TRAIT_PACIFISM))
+			if(HAS_TRAIT(M, TRAIT_PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt [src]!</span>")
 				return
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
@@ -20,13 +20,13 @@
 			"<span class='userdanger'>[M] [response_harm] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, attacked_sound, 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
-			add_logs(M, src, "attacked")
+			log_combat(M, src, "attacked")
 			updatehealth()
 			return TRUE
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
-		if(user.has_trait(TRAIT_PACIFISM))
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
 			return FALSE
 		..(user, 1)
@@ -54,14 +54,14 @@
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
 					"<span class='userdanger'>[M] [response_disarm] [name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			add_logs(M, src, "disarmed")
+			log_combat(M, src, "disarmed")
 		else
 			var/damage = rand(15, 30)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 					"<span class='userdanger'>[M] has slashed at [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			attack_threshold_check(damage)
-			add_logs(M, src, "attacked")
+			log_combat(M, src, "attacked")
 		return 1
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
@@ -105,11 +105,9 @@
 		return TRUE
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
 	apply_damage(Proj.damage, Proj.damage_type)
 	Proj.on_hit(src)
-	return 0
+	return BULLET_ACT_HIT
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))

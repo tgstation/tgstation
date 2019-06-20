@@ -85,7 +85,7 @@
 
 	return not_handled
 
-/mob/living/carbon/doUnEquip(obj/item/I)
+/mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
 	. = ..() //Sets the default return value to what the parent returns.
 	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return
@@ -118,11 +118,12 @@
 			update_inv_legcuffed()
 
 //handle stuff to update when a mob equips/unequips a mask.
-/mob/living/proc/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
+/mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
 	update_inv_wear_mask()
 
-/mob/living/carbon/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
-	if(C.tint || initial(C.tint))
+/mob/living/carbon/wear_mask_update(obj/item/I, toggle_off = 1)
+	var/obj/item/clothing/C = I
+	if(istype(C) && (C.tint || initial(C.tint)))
 		update_tint()
 	update_inv_wear_mask()
 

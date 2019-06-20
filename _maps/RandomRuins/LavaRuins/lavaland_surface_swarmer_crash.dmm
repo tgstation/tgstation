@@ -9,7 +9,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
 "d" = (
-/turf/open/floor/mineral/plastitanium{
+/turf/open/floor/mineral/plastitanium/red{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -21,7 +21,7 @@
 /area/ruin/unpowered)
 "f" = (
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
-/turf/open/floor/mineral/plastitanium{
+/turf/open/floor/mineral/plastitanium/red{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)

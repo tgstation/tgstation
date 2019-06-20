@@ -23,21 +23,32 @@
 	if (notransform)
 		return
 
-	if(..()) //not dead
-		handle_active_genes()
+	. = ..()
 
-	if(stat != DEAD)
-		//heart attack stuff
-		handle_heart()
+	if (QDELETED(src))
+		return 0
 
-	if(stat != DEAD)
-		//Stuff jammed in your limbs hurts
-		handle_embedded_objects()
+	if(!IS_IN_STASIS(src))
+		if(.) //not dead
+
+			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
+				HM.on_life()
+
+		if(stat != DEAD)
+			//heart attack stuff
+			handle_heart()
+
+		if(stat != DEAD)
+			//Stuff jammed in your limbs hurts
+			handle_embedded_objects()
+
+		if(stat != DEAD)
+			handle_hygiene()
+
+		dna.species.spec_life(src) // for mutantraces
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
-
-	dna.species.spec_life(src) // for mutantraces
 
 	if(stat != DEAD)
 		return 1
@@ -54,20 +65,15 @@
 
 /mob/living/carbon/human/handle_traits()
 	if(eye_blind)			//blindness, heals slowly over time
-		if(has_trait(TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
+		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
 			adjust_blindness(-3)
 		else
 			adjust_blindness(-1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if (getBrainLoss() >= 60 && !incapacitated(TRUE))
+	if (getBrainLoss() >= 60)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
-		if(prob(3))
-			if(prob(25))
-				emote("drool")
-			else
-				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
 
@@ -84,9 +90,9 @@
 	var/L = getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(!L)
-		if(health >= crit_modifier())
+		if(health >= crit_threshold)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!has_trait(TRAIT_NOCRITDAMAGE))
+		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = 1
@@ -113,9 +119,19 @@
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	..()
+	. = ..()
+	if(.) //if the mob isn't on fire anymore
+		return
+
 	if(dna)
-		dna.species.handle_fire(src)
+		. = dna.species.handle_fire(src) //do special handling based on the mob's species. TRUE = they are immune to the effects of the fire.
+
+	if(!last_fire_update)
+		last_fire_update = fire_stacks
+	if((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM && last_fire_update <= HUMAN_FIRE_STACK_ICON_NUM) || (fire_stacks <= HUMAN_FIRE_STACK_ICON_NUM && last_fire_update > HUMAN_FIRE_STACK_ICON_NUM))
+		last_fire_update = fire_stacks
+		update_fire()
+
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
@@ -137,6 +153,7 @@
 
 /mob/living/carbon/human/ExtinguishMob()
 	if(!dna || !dna.species.ExtinguishMob(src))
+		last_fire_update = null
 		..()
 //END FIRE CODE
 
@@ -295,12 +312,8 @@
 					clear_alert("embeddedobject")
 					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
-/mob/living/carbon/human/proc/handle_active_genes()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_life(src)
-
 /mob/living/carbon/human/proc/handle_heart()
-	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
+	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
 
 	if(!undergoing_cardiac_arrest())
 		return
@@ -311,7 +324,35 @@
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
 
+/mob/living/carbon/human/proc/handle_hygiene()
+	if(HAS_TRAIT(src, TRAIT_ALWAYS_CLEAN))
+		set_hygiene(HYGIENE_LEVEL_CLEAN)
+		return
 
+	var/hygiene_loss = -HYGIENE_FACTOR * 0.25 //Small loss per life
+
+	//If you're covered in blood, you'll start smelling like shit faster.
+	var/obj/item/head = get_item_by_slot(SLOT_HEAD)
+	if(head && HAS_BLOOD_DNA(head))
+		hygiene_loss -= 1 * HYGIENE_FACTOR
+
+	var/obj/item/mask = get_item_by_slot(SLOT_HEAD)
+	if(mask && HAS_BLOOD_DNA(mask))
+		hygiene_loss -= 1 * HYGIENE_FACTOR
+
+	var/obj/item/uniform = get_item_by_slot(SLOT_W_UNIFORM)
+	if(uniform && HAS_BLOOD_DNA(uniform))
+		hygiene_loss -= 4 * HYGIENE_FACTOR
+
+	var/obj/item/suit = get_item_by_slot(SLOT_WEAR_SUIT)
+	if(suit && HAS_BLOOD_DNA(suit))
+		hygiene_loss -= 3 * HYGIENE_FACTOR
+
+	var/obj/item/feet = get_item_by_slot(SLOT_SHOES)
+	if(feet && HAS_BLOOD_DNA(feet))
+		hygiene_loss -= 0.5 * HYGIENE_FACTOR
+
+	adjust_hygiene(hygiene_loss)
 
 
 #undef THERMAL_PROTECTION_HEAD

@@ -30,6 +30,12 @@
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
 	visor_flags_inv = 0
 
+/obj/item/clothing/mask/gas/sechailer/swat/spacepol
+	name = "spacepol mask"
+	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
+	icon_state = "spacepol"
+	item_state = "spacepol"
+
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"
 	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
@@ -39,6 +45,8 @@
 	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/gas/sechailer/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	switch(aggressiveness)
 		if(1)
 			to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")

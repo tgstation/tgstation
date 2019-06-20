@@ -25,7 +25,7 @@
 		return
 	var/mob/living/carbon/C = owner
 	// genetic deafness prevents the body from using the ears, even if healthy
-	if(C.has_trait(TRAIT_DEAF))
+	if(HAS_TRAIT(C, TRAIT_DEAF))
 		deaf = max(deaf, 1)
 	else if(ear_damage < UNHEALING_EAR_DAMAGE) // if higher than UNHEALING_EAR_DAMAGE, no natural healing occurs.
 		ear_damage = max(ear_damage - 0.05, 0)
@@ -37,7 +37,7 @@
 
 	var/mob/living/carbon/C = owner
 
-	if(iscarbon(owner) && C.has_trait(TRAIT_DEAF))
+	if(iscarbon(owner) && HAS_TRAIT(C, TRAIT_DEAF))
 		deaf = 1
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
@@ -94,3 +94,27 @@
 		H.dna.features["ears"] = "None"
 		H.dna.species.mutant_bodyparts -= "ears"
 		H.update_body()
+
+/obj/item/organ/ears/penguin
+	name = "penguin ears"
+	desc = "The source of a penguin's happy feet."
+	var/datum/component/waddle
+
+/obj/item/organ/ears/penguin/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if(istype(H))
+		to_chat(H, "<span class='notice'>You suddenly feel like you've lost your balance.</span>")
+		waddle = H.AddComponent(/datum/component/waddling)
+
+/obj/item/organ/ears/penguin/Remove(mob/living/carbon/human/H,  special = 0)
+	. = ..()
+	if(istype(H))
+		to_chat(H, "<span class='notice'>Your sense of balance comes back to you.</span>")
+		QDEL_NULL(waddle)
+
+/obj/item/organ/ears/bronze
+	name = "tin ears"
+	desc = "The robust ears of a bronze golem. "
+	damage_multiplier = 0.1 //STRONK
+	bang_protect = 1 //Fear me weaklings. 
+

@@ -150,7 +150,6 @@
 				investigate_log("was set to [pump.target_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("eject")
 			if(holding)
-				holding.forceMove(drop_location())
-				holding = null
+				replace_tank(usr, FALSE)
 				. = TRUE
 	update_icon()

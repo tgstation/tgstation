@@ -23,6 +23,8 @@
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	var/list/copies = list()
 
+	do_footstep = TRUE
+
 
 //Summon Ability
 //Lets the wizard summon his art to fight for him
@@ -128,7 +130,7 @@
 			qdel(copy)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
-	..()
+	. = ..()
 	qdel(src) //I see through your ruse!
 
 //fancy effects
@@ -167,9 +169,3 @@
 	new /obj/item/clothing/suit/wizrobe/paper(T)
 	new /obj/item/clothing/head/collectable/paper(T)
 	return ..()
-
-
-
-
-
-

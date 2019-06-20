@@ -2,12 +2,12 @@
 	name = "Wishgranter Avatar"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/wishgranter/proc/forge_objectives()
 	var/datum/objective/hijack/hijack = new
 	hijack.owner = owner
 	objectives += hijack
-	owner.objectives |= objectives
 
 /datum/antagonist/wishgranter/on_gain()
 	owner.special_role = "Avatar of the Wish Granter"
@@ -25,5 +25,5 @@
 		return
 	H.dna.add_mutation(HULK)
 	H.dna.add_mutation(XRAY)
-	H.dna.add_mutation(COLDRES)
+	H.dna.add_mutation(SPACEMUT)
 	H.dna.add_mutation(TK)

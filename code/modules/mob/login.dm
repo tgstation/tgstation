@@ -16,7 +16,8 @@
 	next_move = 1
 
 	..()
-
+	if (client && key != client.key)
+		key = client.key
 	reset_perspective(loc)
 
 	if(loc)
@@ -41,12 +42,27 @@
 	update_client_colour()
 	update_mouse_pointer()
 	if(client)
-		client.click_intercept = null
-
 		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
 
 		if(client.player_details.player_actions.len)
 			for(var/datum/action/A in client.player_details.player_actions)
 				A.Grant(src)
 
-	log_message("Client [key_name(src)] has taken ownership of mob [src]", INDIVIDUAL_OWNERSHIP_LOG)
+		for(var/foo in client.player_details.post_login_callbacks)
+			var/datum/callback/CB = foo
+			CB.Invoke()
+		log_played_names(client.ckey,name,real_name)
+		auto_deadmin_on_login()
+
+	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
+	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
+
+/mob/proc/auto_deadmin_on_login() //return true if they're not an admin at the end.
+	if(!client?.holder)
+		return TRUE
+	if(CONFIG_GET(flag/auto_deadmin_players) || (client.prefs?.toggles & DEADMIN_ALWAYS))
+		return client.holder.auto_deadmin()
+	if(mind.has_antag_datum(/datum/antagonist) && (CONFIG_GET(flag/auto_deadmin_antagonists) || client.prefs?.toggles & DEADMIN_ANTAGONIST))
+		return client.holder.auto_deadmin()
+	if(job)
+		return SSjob.handle_auto_deadmin_roles(client, job)

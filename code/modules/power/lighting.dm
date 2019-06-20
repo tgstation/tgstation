@@ -9,7 +9,8 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-
+#define BROKEN_SPARKS_MIN (30 SECONDS)
+#define BROKEN_SPARKS_MAX (90 SECONDS)
 
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
@@ -66,22 +67,36 @@
 	return cell
 
 /obj/structure/light_construct/examine(mob/user)
-	..()
-	switch(src.stage)
+	. = ..()
+	switch(stage)
 		if(1)
-			to_chat(user, "It's an empty frame.")
+			. += "It's an empty frame."
 		if(2)
-			to_chat(user, "It's wired.")
+			. += "It's wired."
 		if(3)
-			to_chat(user, "The casing is closed.")
+			. += "The casing is closed."
 	if(cell_connectors)
 		if(cell)
-			to_chat(user, "You see [cell] inside the casing.")
+			. += "You see [cell] inside the casing."
 		else
-			to_chat(user, "The casing has no power cell for backup power.")
+			. += "The casing has no power cell for backup power."
 	else
-		to_chat(user, "<span class='danger'>This casing doesn't support power cells for backup power.</span>")
-		return
+		. += "<span class='danger'>This casing doesn't support power cells for backup power.</span>"
+
+/obj/structure/light_construct/attack_hand(mob/user)
+	if(cell)
+		user.visible_message("[user] removes [cell] from [src]!","<span class='notice'>You remove [cell].</span>")
+		user.put_in_hands(cell)
+		cell.update_icon()
+		cell = null
+		add_fingerprint(user)
+
+/obj/structure/light_construct/attack_tk(mob/user)
+	if(cell)
+		to_chat(user, "<span class='notice'>You telekinetically remove [cell].</span>")
+		cell.forceMove(drop_location())
+		cell.attack_tk(user)
+		cell = null
 
 /obj/structure/light_construct/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -89,34 +104,34 @@
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-		if(W.item_flags & NODROP)
+		if(HAS_TRAIT(W, TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
-		user.dropItemToGround(W)
 		if(cell)
-			user.visible_message("<span class='notice'>[user] swaps [W] out for [src]'s cell.</span>", \
-			"<span class='notice'>You swap [src]'s power cells.</span>")
-			cell.forceMove(drop_location())
-			user.put_in_hands(cell)
-		else
+			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
+		else if(user.temporarilyRemoveItemFromInventory(W))
 			user.visible_message("<span class='notice'>[user] hooks up [W] to [src].</span>", \
 			"<span class='notice'>You add [W] to [src].</span>")
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		W.forceMove(src)
-		cell = W
-		add_fingerprint(user)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			W.forceMove(src)
+			cell = W
+			add_fingerprint(user)
 		return
 	switch(stage)
 		if(1)
-			if(istype(W, /obj/item/wrench))
-				to_chat(usr, "<span class='notice'>You begin deconstructing [src]...</span>")
-				if (W.use_tool(src, user, 30, volume=50))
-					new /obj/item/stack/sheet/metal(drop_location(), sheets_refunded)
-					user.visible_message("[user.name] deconstructs [src].", \
-						"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
-					playsound(src.loc, 'sound/items/deconstruct.ogg', 75, 1)
-					qdel(src)
-				return
+			if(W.tool_behaviour == TOOL_WRENCH)
+				if(cell)
+					to_chat(user, "<span class='warning'>You have to remove the cell first!</span>")
+					return
+				else
+					to_chat(user, "<span class='notice'>You begin deconstructing [src]...</span>")
+					if (W.use_tool(src, user, 30, volume=50))
+						new /obj/item/stack/sheet/metal(drop_location(), sheets_refunded)
+						user.visible_message("[user.name] deconstructs [src].", \
+							"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
+						playsound(src, 'sound/items/deconstruct.ogg', 75, 1)
+						qdel(src)
+					return
 
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
@@ -129,11 +144,11 @@
 					to_chat(user, "<span class='warning'>You need one length of cable to wire [src]!</span>")
 				return
 		if(2)
-			if(istype(W, /obj/item/wrench))
+			if(W.tool_behaviour == TOOL_WRENCH)
 				to_chat(usr, "<span class='warning'>You have to remove the wires first!</span>")
 				return
 
-			if(istype(W, /obj/item/wirecutters))
+			if(W.tool_behaviour == TOOL_WIRECUTTER)
 				stage = 1
 				icon_state = "[fixture_type]-construct-stage1"
 				new /obj/item/stack/cable_coil(drop_location(), 1, "red")
@@ -142,7 +157,7 @@
 				W.play_tool_sound(src, 100)
 				return
 
-			if(istype(W, /obj/item/screwdriver))
+			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("[user.name] closes [src]'s casing.", \
 					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
 				W.play_tool_sound(src, 75)
@@ -267,8 +282,14 @@
 
 
 // create a new lighting fixture
-/obj/machinery/light/Initialize()
+/obj/machinery/light/Initialize(mapload)
 	. = ..()
+
+	if(!mapload) //sync up nightshift lighting for player made lights
+		var/area/A = get_area(src)
+		var/obj/machinery/power/apc/temp_apc = A.get_apc()
+		nightshift_enabled = temp_apc?.nightshift_lights
+
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 	spawn(2)
@@ -323,13 +344,16 @@
 		var/BR = brightness
 		var/PO = bulb_power
 		var/CO = bulb_colour
+		if(color)
+			CO = color
 		var/area/A = get_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
 		else if (nightshift_enabled)
 			BR = nightshift_brightness
 			PO = nightshift_light_power
-			CO = nightshift_light_color
+			if(!color)
+				CO = nightshift_light_color
 		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
 		if(!matching)
 			switchcount++
@@ -345,6 +369,7 @@
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
+		START_PROCESSING(SSmachines, src)
 	else
 		use_power = IDLE_POWER_USE
 		set_light(0)
@@ -359,9 +384,25 @@
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
+	broken_sparks(start_only=TRUE)
+
+/obj/machinery/light/update_atom_colour()
+	..()
+	update()
+
+/obj/machinery/light/proc/broken_sparks(start_only=FALSE)
+	if(status == LIGHT_BROKEN && has_power())
+		if(!start_only)
+			do_sparks(3, TRUE, src)
+		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
+		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /obj/machinery/light/process()
-	if(has_power() && cell)
+	if (!cell)
+		return PROCESS_KILL
+	if(has_power())
+		if (cell.charge == cell.maxcharge)
+			return PROCESS_KILL
 		cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
 	if(emergency_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
 		update(FALSE) //Disables emergency mode and sets the color to normal
@@ -384,18 +425,18 @@
 
 // examine verb
 /obj/machinery/light/examine(mob/user)
-	..()
+	. = ..()
 	switch(status)
 		if(LIGHT_OK)
-			to_chat(user, "It is turned [on? "on" : "off"].")
+			. += "It is turned [on? "on" : "off"]."
 		if(LIGHT_EMPTY)
-			to_chat(user, "The [fitting] has been removed.")
+			. += "The [fitting] has been removed."
 		if(LIGHT_BURNED)
-			to_chat(user, "The [fitting] is burnt out.")
+			. += "The [fitting] is burnt out."
 		if(LIGHT_BROKEN)
-			to_chat(user, "The [fitting] has been smashed.")
+			. += "The [fitting] has been smashed."
 	if(cell)
-		to_chat(user, "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%.")
+		. += "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%."
 
 
 
@@ -441,7 +482,7 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(istype(W, /obj/item/screwdriver)) //If it's a screwdriver open it.
+		if(W.tool_behaviour == TOOL_SCREWDRIVER) //If it's a screwdriver open it.
 			W.play_tool_sound(src, 75)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
@@ -585,12 +626,23 @@
 		to_chat(user, "There is no [fitting] in this light.")
 		return
 
-	// make it burn hands if not wearing fire-insulated gloves
+	// make it burn hands unless you're wearing heat insulated gloves or have the RESISTHEAT/RESISTHEATHANDS traits
 	if(on)
 		var/prot = 0
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
+			var/datum/species/ethereal/eth_species = H.dna?.species
+			if(istype(eth_species))
+				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
+				if(do_after(user, 50, target = src))
+					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+						stomach.adjust_charge(5)
+					else
+						to_chat(H, "<span class='notice'>You can't receive charge from the [fitting].</span>")
+				return
 
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
@@ -599,7 +651,7 @@
 		else
 			prot = 1
 
-		if(prot > 0)
+		if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 		else if(istype(user) && user.dna.check_mutation(TK))
 			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
@@ -711,8 +763,8 @@
 	var/base_state
 	var/switchcount = 0	// number of times switched
 	materials = list(MAT_GLASS=100)
-	grind_results = list("silicon" = 5, "nitrogen" = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
-	var/rigged = 0		// true if rigged to explode
+	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
+	var/rigged = FALSE		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
 /obj/item/light/suicide_act(mob/living/carbon/user)
@@ -748,7 +800,7 @@
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
 
-/obj/item/light/throw_impact(atom/hit_atom)
+/obj/item/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //not caught by a mob
 		shatter()
 
@@ -766,11 +818,23 @@
 			icon_state = "[base_state]-broken"
 			desc = "A broken [name]."
 
-
 /obj/item/light/Initialize()
 	. = ..()
 	update()
 
+/obj/item/light/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/caltrop, force)
+
+/obj/item/light/Crossed(mob/living/L)
+	. = ..()
+	if(istype(L) && has_gravity(loc))
+		if(HAS_TRAIT(L, TRAIT_LIGHT_STEP))
+			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
+		else
+			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
+		if(status == LIGHT_BURNED || status == LIGHT_OK)
+			shatter()
 
 // attack bulb/tube with object
 // if a syringe, can inject plasma to make it explode
@@ -781,9 +845,9 @@
 
 		to_chat(user, "<span class='notice'>You inject the solution into \the [src].</span>")
 
-		if(S.reagents.has_reagent("plasma", 5))
+		if(S.reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
 
-			rigged = 1
+			rigged = TRUE
 
 		S.reagents.clear_reagents()
 	else
@@ -804,6 +868,8 @@
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+		if(rigged)
+			atmos_spawn_air("plasma=5") //5u of plasma are required to rig a light bulb/tube
 		update()
 
 

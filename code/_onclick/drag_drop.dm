@@ -35,6 +35,8 @@
 	var/atom/middragatom
 
 /client/MouseDown(object, location, control, params)
+	if (mouse_down_icon)
+		mouse_pointer_icon = mouse_down_icon
 	var/delay = mob.CanMobAutoclick(object, location, params)
 	if(delay)
 		selected_target[1] = object
@@ -47,6 +49,8 @@
 		active_mousedown_item.onMouseDown(object, location, params, mob)
 
 /client/MouseUp(object, location, control, params)
+	if (mouse_up_icon)
+		mouse_pointer_icon = mouse_up_icon
 	selected_target[1] = null
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseUp(object, location, params, mob)
@@ -61,7 +65,7 @@
 	if(h)
 		. = h.CanItemAutoclick(object, location, params)
 
-/mob/proc/canMobMousedown(object, location, params)
+/mob/proc/canMobMousedown(atom/object, location, params)
 
 /mob/living/carbon/canMobMousedown(atom/object, location, params)
 	var/obj/item/H = get_active_held_item()
@@ -97,19 +101,6 @@
 
 /obj/screen/click_catcher/IsAutoclickable()
 	. = 1
-
-//Please don't roast me too hard
-/client/MouseMove(object,location,control,params)
-	mouseParams = params
-	mouseLocation = location
-	mouseObject = object
-	mouseControlObject = control
-	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
-		for(var/datum/D in mob.mousemove_intercept_objects)
-			D.onMouseMove(object, location, control, params)
-
-/datum/proc/onMouseMove(object, location, control, params)
-	return
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	var/list/L = params2list(params)

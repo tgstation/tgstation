@@ -23,9 +23,8 @@
 	throw_range = 7
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
-	grind_results = list("iron" = 2, "iodine" = 1)
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "black"	//what colour the ink is!
-	var/traitor_unlock_degrees = 0
 	var/degrees = 0
 	var/font = PEN_FONT
 
@@ -117,7 +116,7 @@
 				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
 			. = 1
 
-		add_logs(user, M, "stabbed", src)
+		log_combat(user, M, "stabbed", src)
 
 	else
 		. = ..()
@@ -151,9 +150,6 @@
 /*
  * Sleepypens
  */
-/obj/item/pen/sleepy
-	container_type = OPENCONTAINER
-
 
 /obj/item/pen/sleepy/attack(mob/living/M, mob/user)
 	if(!istype(M))
@@ -162,15 +158,16 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
-				reagents.trans_to(M, reagents.total_volume)
+				reagents.reaction(M, INJECT, reagents.total_volume)
+				reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 
 
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
-	create_reagents(45)
-	reagents.add_reagent("chloralhydratedelayed", 20)
-	reagents.add_reagent("mutetoxin", 15)
-	reagents.add_reagent("tirizene", 10)
+	create_reagents(45, OPENCONTAINER)
+	reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 20)
+	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 15)
+	reagents.add_reagent(/datum/reagent/toxin/staminatoxin, 10)
 
 /*
  * (Alan) Edaggers
@@ -182,11 +179,20 @@
 /obj/item/pen/edagger/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg', TRUE)
+	
+/obj/item/pen/edagger/suicide_act(mob/user)
+	. = BRUTELOSS
+	if(on)
+		user.visible_message("<span class='suicide'>[user] forcefully rams the pen into their mouth!</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		attack_self(user)
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
 		on = FALSE
 		force = initial(force)
+		throw_speed = initial(throw_speed)
 		w_class = initial(w_class)
 		name = initial(name)
 		hitsound = initial(hitsound)
@@ -197,6 +203,7 @@
 	else
 		on = TRUE
 		force = 18
+		throw_speed = 4
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
@@ -204,7 +211,7 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 	update_icon()
 

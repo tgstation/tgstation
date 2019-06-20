@@ -3,14 +3,15 @@
 	var/obj/item/claymore/highlander/sword
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-	L.add_trait(TRAIT_NOGUNS, "highlander")
+	ADD_TRAIT(L, TRAIT_NOGUNS, "highlander")
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-	L.remove_trait(TRAIT_NOGUNS, "highlander")
+	REMOVE_TRAIT(L, TRAIT_NOGUNS, "highlander")
 
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
@@ -22,8 +23,6 @@
 	hijack_objective.explanation_text = "Escape on the shuttle alone. Ensure that nobody else makes it out."
 	hijack_objective.owner = owner
 	objectives += hijack_objective
-
-	owner.objectives |= objectives
 
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
@@ -59,7 +58,7 @@
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = H.real_name
-	W.item_flags |= NODROP
+	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
 	W.update_label(H.real_name)
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 

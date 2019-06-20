@@ -32,15 +32,15 @@
 	CalculateAffectingAreas()
 
 /obj/machinery/door/firedoor/examine(mob/user)
-	..()
+	. = ..()
 	if(!density)
-		to_chat(user, "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>")
+		. += "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>"
 	else if(!welded)
-		to_chat(user, "<span class='notice'>It is closed, but could be <i>pried</i> open. Deconstruction would require it to be <b>welded</b> shut.</span>")
+		. += "<span class='notice'>It is closed, but could be <i>pried</i> open. Deconstruction would require it to be <b>welded</b> shut.</span>"
 	else if(boltslocked)
-		to_chat(user, "<span class='notice'>It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.</span>")
+		. += "<span class='notice'>It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.</span>"
 	else
-		to_chat(user, "<span class='notice'>The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.</span>")
+		. += "<span class='notice'>The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.</span>"
 
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
 	remove_from_areas()
@@ -67,7 +67,7 @@
 	affecting_areas.Cut()
 	return ..()
 
-/obj/machinery/door/firedoor/CollidedWith(atom/movable/AM)
+/obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)
 		return
 	if(!density)
@@ -100,7 +100,7 @@
 		return
 
 	if(welded)
-		if(istype(C, /obj/item/wrench))
+		if(C.tool_behaviour == TOOL_WRENCH)
 			if(boltslocked)
 				to_chat(user, "<span class='notice'>There are screws locking the bolts in place!</span>")
 				return
@@ -114,7 +114,7 @@
 								 "<span class='notice'>You undo [src]'s floor bolts.</span>")
 			deconstruct(TRUE)
 			return
-		if(istype(C, /obj/item/screwdriver))
+		if(C.tool_behaviour == TOOL_SCREWDRIVER)
 			user.visible_message("<span class='notice'>[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts.</span>", \
 								 "<span class='notice'>You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts.</span>")
 			C.play_tool_sound(src)
@@ -256,6 +256,7 @@
 
 /obj/item/electronics/firelock
 	name = "firelock circuitry"
+	custom_price = 5
 	desc = "A circuit board used in construction of firelocks."
 	icon_state = "mainboard"
 
@@ -270,18 +271,18 @@
 	var/reinforced = 0
 
 /obj/structure/firelock_frame/examine(mob/user)
-	..()
+	. = ..()
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
-			to_chat(user, "<span class='notice'>It is <i>unbolted</i> from the floor. A small <b>loosely connected</b> metal plate is covering the wires.</span>")
+			. += "<span class='notice'>It is <i>unbolted</i> from the floor. A small <b>loosely connected</b> metal plate is covering the wires.</span>"
 			if(!reinforced)
-				to_chat(user, "<span class='notice'>It could be reinforced with plasteel.</span>")
+				. += "<span class='notice'>It could be reinforced with plasteel.</span>"
 		if(CONSTRUCTION_WIRES_EXPOSED)
-			to_chat(user, "<span class='notice'>The maintenance plate has been <i>pried away</i>, and <b>wires</b> are trailing.</span>")
+			. += "<span class='notice'>The maintenance plate has been <i>pried away</i>, and <b>wires</b> are trailing.</span>"
 		if(CONSTRUCTION_GUTTED)
-			to_chat(user, "<span class='notice'>The maintenance panel is missing <i>wires</i> and the circuit board is <b>loosely connected</b>.</span>")
+			. += "<span class='notice'>The maintenance panel is missing <i>wires</i> and the circuit board is <b>loosely connected</b>.</span>"
 		if(CONSTRUCTION_NOCIRCUIT)
-			to_chat(user, "<span class='notice'>There are no <i>firelock electronics</i> in the frame. The frame could be <b>cut</b> apart.</span>")
+			. += "<span class='notice'>There are no <i>firelock electronics</i> in the frame. The frame could be <b>cut</b> apart.</span>"
 
 /obj/structure/firelock_frame/update_icon()
 	..()
@@ -290,7 +291,7 @@
 /obj/structure/firelock_frame/attackby(obj/item/C, mob/user)
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
-			if(istype(C, /obj/item/crowbar))
+			if(C.tool_behaviour == TOOL_CROWBAR)
 				C.play_tool_sound(src)
 				user.visible_message("<span class='notice'>[user] starts prying something out from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the wire cover...</span>")
@@ -304,7 +305,7 @@
 				constructionStep = CONSTRUCTION_WIRES_EXPOSED
 				update_icon()
 				return
-			if(istype(C, /obj/item/wrench))
+			if(C.tool_behaviour == TOOL_WRENCH)
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 					to_chat(user, "<span class='warning'>There's already a firelock there.</span>")
 					return
@@ -346,7 +347,7 @@
 				return
 
 		if(CONSTRUCTION_WIRES_EXPOSED)
-			if(istype(C, /obj/item/wirecutters))
+			if(C.tool_behaviour == TOOL_WIRECUTTER)
 				C.play_tool_sound(src)
 				user.visible_message("<span class='notice'>[user] starts cutting the wires from [src]...</span>", \
 									 "<span class='notice'>You begin removing [src]'s wires...</span>")
@@ -360,7 +361,7 @@
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return
-			if(istype(C, /obj/item/crowbar))
+			if(C.tool_behaviour == TOOL_CROWBAR)
 				C.play_tool_sound(src)
 				user.visible_message("<span class='notice'>[user] starts prying a metal plate into [src]...</span>", \
 									 "<span class='notice'>You begin prying the cover plate back onto [src]...</span>")
@@ -375,7 +376,7 @@
 				update_icon()
 				return
 		if(CONSTRUCTION_GUTTED)
-			if(istype(C, /obj/item/crowbar))
+			if(C.tool_behaviour == TOOL_CROWBAR)
 				user.visible_message("<span class='notice'>[user] begins removing the circuit board from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the circuit board from [src]...</span>")
 				if(!C.use_tool(src, user, 50, volume=50))
@@ -407,7 +408,7 @@
 					update_icon()
 				return
 		if(CONSTRUCTION_NOCIRCUIT)
-			if(istype(C, /obj/item/weldingtool))
+			if(C.tool_behaviour == TOOL_WELDER)
 				if(!C.tool_start_check(user, amount=1))
 					return
 				user.visible_message("<span class='notice'>[user] begins cutting apart [src]'s frame...</span>", \

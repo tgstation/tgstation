@@ -6,7 +6,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
 /obj/machinery/computer/shuttle/pod{
@@ -20,7 +20,6 @@
 	},
 /obj/docking_port/mobile/pod{
 	port_direction = 2;
-	timid = 1;
 	dwidth = 1;
 	width = 3;
 	height = 4

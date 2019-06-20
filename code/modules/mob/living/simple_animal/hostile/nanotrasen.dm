@@ -31,6 +31,8 @@
 	speak = list("Stop resisting!", "I AM THE LAW!", "Face the wrath of the golden bolt!", "Stop breaking the law, asshole!")
 	search_objects = 1
 
+	do_footstep = TRUE
+
 
 /mob/living/simple_animal/hostile/nanotrasen/Aggro()
 	..()
@@ -53,7 +55,7 @@
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg
 	icon_state = "nanotrasenrangedsmg"
 	icon_living = "nanotrasenrangedsmg"
-	rapid = 1
+	rapid = 3
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 	loot = list(/obj/item/gun/ballistic/automatic/wt550,

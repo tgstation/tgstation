@@ -1,17 +1,16 @@
 GLOBAL_VAR_INIT(total_runtimes, GLOB.total_runtimes || 0)
 GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
-#ifdef DEBUG
-
+#ifdef USE_CUSTOM_ERROR_HANDLER
 #define ERROR_USEFUL_LEN 2
 
 /world/Error(exception/E, datum/e_src)
 	GLOB.total_runtimes++
-	
+
 	if(!istype(E)) //Something threw an unusual exception
 		log_world("uncaught runtime error: [E]")
 		return ..()
-	
+
 	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this if
 	if(copytext(E.name,1,32) == "Maximum recursion level reached")
 		//log to world while intentionally triggering the byond bug.
@@ -19,7 +18,14 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		//if we got to here without silently ending, the byond bug has been fixed.
 		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
 		return //this will never happen.
-
+	
+	else if(copytext(E.name,1,18) == "Out of resources!")
+		log_world("BYOND out of memory. Restarting")
+		log_game("BYOND out of memory. Restarting")
+		TgsEndProcess()
+		Reboot(reason = 1)
+		return ..()
+	
 	if (islist(stack_trace_storage))
 		for (var/line in splittext(E.desc, "\n"))
 			if (text2ascii(line) != 32)
@@ -86,8 +92,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/list/usrinfo = null
 	var/locinfo
 	if(istype(usr))
-		usrinfo = list("  usr: [datum_info_line(usr)]")
-		locinfo = atom_loc_line(usr)
+		usrinfo = list("  usr: [key_name(usr)]")
+		locinfo = loc_name(usr)
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
 	// The proceeding mess will almost definitely break if error messages are ever changed
@@ -128,5 +134,4 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
 	log_runtime("runtime error: [E.name]\n[E.desc]")
-
 #endif

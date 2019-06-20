@@ -41,6 +41,11 @@
 	var/comp_id = 0
 	var/efficiency
 
+/obj/machinery/power/compressor/Destroy()
+	if (turbine && turbine.compressor == src)
+		turbine.compressor = null
+	turbine = null
+	return ..()
 
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
@@ -56,6 +61,12 @@
 	var/turf/outturf
 	var/lastgen
 	var/productivity = 1
+
+/obj/machinery/power/turbine/Destroy()
+	if (compressor && compressor.turbine == src)
+		compressor.turbine = null
+	compressor = null
+	return ..()
 
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
@@ -93,6 +104,11 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E / 6
+
+/obj/machinery/power/compressor/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
 
 /obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
@@ -132,6 +148,7 @@
 
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 
+	rpm = min(rpm, (COMPFRICTION*efficiency)/2)
 	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION*efficiency))
 
 
@@ -175,6 +192,11 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		P += C.rating
 	productivity = P / 6
+
+/obj/machinery/power/turbine/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<span>"
 
 /obj/machinery/power/turbine/locate_machinery()
 	if(compressor)

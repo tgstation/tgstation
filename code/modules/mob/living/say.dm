@@ -2,87 +2,86 @@ GLOBAL_LIST_INIT(department_radio_prefixes, list(":", "."))
 
 GLOBAL_LIST_INIT(department_radio_keys, list(
 	// Location
-	"r" = "right hand",
-	"l" = "left hand",
-	"i" = "intercom",
+	MODE_KEY_R_HAND = MODE_R_HAND,
+	MODE_KEY_L_HAND = MODE_L_HAND,
+	MODE_KEY_INTERCOM = MODE_INTERCOM,
 
 	// Department
-	"h" = "department",
-	"c" = "Command",
-	"n" = "Science",
-	"m" = "Medical",
-	"e" = "Engineering",
-	"s" = "Security",
-	"u" = "Supply",
-	"v" = "Service",
+	MODE_KEY_DEPARTMENT = MODE_DEPARTMENT,
+	RADIO_KEY_COMMAND = RADIO_CHANNEL_COMMAND,
+	RADIO_KEY_SCIENCE = RADIO_CHANNEL_SCIENCE,
+	RADIO_KEY_MEDICAL = RADIO_CHANNEL_MEDICAL,
+	RADIO_KEY_ENGINEERING = RADIO_CHANNEL_ENGINEERING,
+	RADIO_KEY_SECURITY = RADIO_CHANNEL_SECURITY,
+	RADIO_KEY_SUPPLY = RADIO_CHANNEL_SUPPLY,
+	RADIO_KEY_SERVICE = RADIO_CHANNEL_SERVICE,
 
 	// Faction
-	"t" = "Syndicate",
-	"y" = "CentCom",
+	RADIO_KEY_SYNDICATE = RADIO_CHANNEL_SYNDICATE,
+	RADIO_KEY_CENTCOM = RADIO_CHANNEL_CENTCOM,
 
 	// Admin
-	"p" = "admin",
-	"d" = "deadmin",
+	MODE_KEY_ADMIN = MODE_ADMIN,
+	MODE_KEY_DEADMIN = MODE_DEADMIN,
 
 	// Misc
-	"o" = "AI Private", // AI Upload channel
-	"x" = "cords",		// vocal cords, used by Voice of God
+	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
+	MODE_KEY_VOCALCORDS = MODE_VOCALCORDS,		// vocal cords, used by Voice of God
 
 
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"ê" = "right hand",
-	"ä" = "left hand",
-	"ø" = "intercom",
+	"ê" = MODE_R_HAND,
+	"ä" = MODE_L_HAND,
+	"ø" = MODE_INTERCOM,
 
 	// Department
-	"ð" = "department",
-	"ñ" = "Command",
-	"ò" = "Science",
-	"ü" = "Medical",
-	"ó" = "Engineering",
-	"û" = "Security",
-	"ã" = "Supply",
-	"ì" = "Service",
+	"ð" = MODE_DEPARTMENT,
+	"ñ" = RADIO_CHANNEL_COMMAND,
+	"ò" = RADIO_CHANNEL_SCIENCE,
+	"ü" = RADIO_CHANNEL_MEDICAL,
+	"ó" = RADIO_CHANNEL_ENGINEERING,
+	"û" = RADIO_CHANNEL_SECURITY,
+	"ã" = RADIO_CHANNEL_SUPPLY,
+	"ì" = RADIO_CHANNEL_SERVICE,
 
 	// Faction
-	"å" = "Syndicate",
-	"í" = "CentCom",
+	"å" = RADIO_CHANNEL_SYNDICATE,
+	"í" = RADIO_CHANNEL_CENTCOM,
 
 	// Admin
-	"ç" = "admin",
-	"â" = "deadmin",
+	"ç" = MODE_ADMIN,
+	"â" = MODE_ADMIN,
 
 	// Misc
-	"ù" = "AI Private",
-	"÷" = "cords"
+	"ù" = RADIO_CHANNEL_AI_PRIVATE,
+	"÷" = MODE_VOCALCORDS
 ))
 
 /mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
-    if(chance <= 0)
-        return "..."
-    if(chance >= 100)
-        return original_msg
+	if(chance <= 0)
+		return "..."
+	if(chance >= 100)
+		return original_msg
 
-    var/list
-        words = splittext(original_msg," ")
-        new_words = list()
+	var/list/words = splittext(original_msg," ")
+	var/list/new_words = list()
 
-    var/new_msg = ""
+	var/new_msg = ""
 
-    for(var/w in words)
-        if(prob(chance))
-            new_words += "..."
-            if(!keep_words)
-                continue
-        new_words += w
+	for(var/w in words)
+		if(prob(chance))
+			new_words += "..."
+			if(!keep_words)
+				continue
+		new_words += w
 
-    new_msg = jointext(new_words," ")
+	new_msg = jointext(new_words," ")
 
-    return new_msg
+	return new_msg
 
-/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
@@ -106,12 +105,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
 
-	if(message_mode == "admin")
+	if(message_mode == MODE_ADMIN)
 		if(client)
 			client.cmd_admin_say(message)
 		return
 
-	if(message_mode == "deadmin")
+	if(message_mode == MODE_DEADMIN)
 		if(client)
 			client.dsay(message)
 		return
@@ -120,7 +119,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		say_dead(original_message)
 		return
 
-	if(check_emote(original_message) || !can_speak_basic(original_message, ignore_spam))
+	if(check_emote(original_message, forced) || !can_speak_basic(original_message, ignore_spam))
 		return
 
 	if(in_critical)
@@ -164,7 +163,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
 		message_range = 1
 		message_mode = MODE_WHISPER
-		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
+		src.log_talk(message, LOG_WHISPER)
 		if(fullcrit)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
@@ -175,20 +174,20 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message_mode = MODE_WHISPER_CRIT
 			succumbed = TRUE
 	else
-		log_talk(src,"[name]/[key] : [message]",LOGSAY)
+		src.log_talk(message, LOG_SAY, forced_by=forced)
 
-	message = treat_message(message)
+	message = treat_message(message) // unfortunately we still need this
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
+	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
+		message = uppertext(message)
 	if(!message)
 		return
 
-	spans |= get_spans()
+	spans |= speech_span
 
 	if(language)
 		var/datum/language/L = GLOB.language_datum_instances[language]
 		spans |= L.spans
-
-	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
-	log_message(message, INDIVIDUAL_SAY_LOG)
 
 	var/radio_return = radio(message, message_mode, spans, language)
 	if(radio_return & ITALICS)
@@ -217,6 +216,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	if(!client)
 		return
 	var/deaf_message
@@ -231,6 +231,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
+
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
@@ -268,6 +270,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
 		else
 			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
@@ -296,7 +299,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(has_trait(TRAIT_MUTE))
+	if(HAS_TRAIT(src, TRAIT_MUTE))
 		return 0
 
 	if(is_muzzled())
@@ -322,6 +325,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return null
 
 /mob/living/proc/treat_message(message)
+
+	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))
+		message = unintelligize(message)
+
 	if(derpspeech)
 		message = derpspeech(message, stuttering)
 
@@ -384,8 +391,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	else
 		. = ..()
 
-/mob/living/whisper(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
-	say("#[message]", bubble_type, spans, sanitize, language)
+/mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced)
 
 /mob/living/get_language_holder(shadow=TRUE)
 	if(mind && shadow)

@@ -22,7 +22,8 @@ GLOBAL_LIST_EMPTY(cinematics)
 /obj/screen/cinematic
 	icon = 'icons/effects/station_explosion.dmi'
 	icon_state = "station_intact"
-	layer = 21
+	plane = SPLASHSCREEN_PLANE
+	layer = SPLASHSCREEN_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = "1,1"
 
@@ -84,12 +85,13 @@ GLOBAL_LIST_EMPTY(cinematics)
 	//Actually play it
 	content()
 	
+	//Cleanup
+	sleep(cleanup_time)
+
 	//Restore OOC
 	if(ooc_toggled)
 		toggle_ooc(TRUE)
-	
-	//Cleanup
-	sleep(cleanup_time)
+
 	qdel(src)
 
 //Sound helper

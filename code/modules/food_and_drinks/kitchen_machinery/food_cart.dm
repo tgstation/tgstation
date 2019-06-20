@@ -15,13 +15,11 @@
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
-	container_type = OPENCONTAINER
 	var/obj/item/reagent_containers/mixer
 
 /obj/machinery/food_cart/Initialize()
 	. = ..()
-	create_reagents(LIQUID_CAPACIY)
-	reagents.set_reacting(FALSE)
+	create_reagents(LIQUID_CAPACIY, OPENCONTAINER | NO_REACT)
 	mixer = new /obj/item/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 
@@ -37,16 +35,16 @@
 	dat += "Portion: <a href='?src=[REF(src)];portion=1'>[portion]</a><br>"
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];disposeI=[R.id]'>Purge</a>"
+		dat += "<a href='?src=[REF(src)];disposeI=[R.type]'>Purge</a>"
 		if (glasses > 0)
-			dat += "<a href='?src=[REF(src)];pour=[R.id]'>Pour in a glass</a>"
-		dat += "<a href='?src=[REF(src)];mix=[R.id]'>Add to the mixer</a><br>"
+			dat += "<a href='?src=[REF(src)];pour=[R.type]'>Pour in a glass</a>"
+		dat += "<a href='?src=[REF(src)];mix=[R.type]'>Add to the mixer</a><br>"
 	dat += "</div><br><b>MIXER CONTENTS</b><br><div class='statusDisplay'>"
 	for(var/datum/reagent/R in mixer.reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];transfer=[R.id]'>Transfer back</a>"
+		dat += "<a href='?src=[REF(src)];transfer=[R.type]'>Transfer back</a>"
 		if (glasses > 0)
-			dat += "<a href='?src=[REF(src)];m_pour=[R.id]'>Pour in a glass</a>"
+			dat += "<a href='?src=[REF(src)];m_pour=[R.type]'>Pour in a glass</a>"
 		dat += "<br>"
 	dat += "</div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
 	for(var/V in stored_food)
@@ -62,6 +60,9 @@
 	return food_stored >= STORAGE_CAPACITY
 
 /obj/machinery/food_cart/attackby(obj/item/O, mob/user, params)
+	if(O.tool_behaviour == TOOL_WRENCH)
+		default_unfasten_wrench(user, O, 0)
+		return TRUE
 	if(istype(O, /obj/item/reagent_containers/food/drinks/drinkingglass))
 		var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = O
 		if(!DG.reagents.total_volume) //glass is empty

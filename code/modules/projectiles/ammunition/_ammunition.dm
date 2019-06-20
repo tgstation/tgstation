@@ -21,6 +21,9 @@
 	var/heavy_metal = TRUE
 	var/harmful = TRUE //pacifism check for boolet, set to FALSE if bullet is non-lethal
 
+/obj/item/ammo_casing/spent
+	name = "spent bullet casing"
+	BB = null
 
 /obj/item/ammo_casing/Initialize()
 	. = ..()
@@ -34,7 +37,7 @@
 /obj/item/ammo_casing/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
-	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
+	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
@@ -62,7 +65,7 @@
 	else
 		return ..()
 
-/obj/item/ammo_casing/throw_impact(atom/A)
+/obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(heavy_metal)
 		bounce_away(FALSE, NONE)
 	. = ..()

@@ -1,6 +1,6 @@
 /datum/surgery/embedded_removal
-	name = "removal of embedded objects"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/remove_object)
+	name = "Removal of embedded objects"
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/remove_object)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 
 
@@ -15,6 +15,9 @@
 	L = surgery.operated_bodypart
 	if(L)
 		user.visible_message("[user] looks for objects embedded in [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for objects embedded in [target]'s [parse_zone(user.zone_selected)]...</span>")
+		display_results(user, target, "<span class='notice'>You look for objects embedded in [target]'s [parse_zone(user.zone_selected)]...</span>",
+			"[user] looks for objects embedded in [target]'s [parse_zone(user.zone_selected)].",
+			"[user] looks for something in [target]'s [parse_zone(user.zone_selected)].")
 	else
 		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
@@ -33,7 +36,9 @@
 				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 			if(objects > 0)
-				user.visible_message("[user] successfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>")
+				display_results(user, target, "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>",
+					"[user] successfully removes [objects] objects from [H]'s [L]!",
+					"[user] successfully removes [objects] objects from [H]'s [L]!")
 			else
 				to_chat(user, "<span class='warning'>You find no objects embedded in [H]'s [L]!</span>")
 

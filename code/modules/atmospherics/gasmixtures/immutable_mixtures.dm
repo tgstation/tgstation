@@ -3,6 +3,7 @@
 
 /datum/gas_mixture/immutable
 	var/initial_temperature
+	gc_share = TRUE
 
 /datum/gas_mixture/immutable/New()
 	..()
@@ -23,9 +24,6 @@
 	. = ..(sharer, 0)
 	garbage_collect()
 
-/datum/gas_mixture/immutable/after_share()
-	garbage_collect()
-
 /datum/gas_mixture/immutable/react()
 	return 0 //we're immutable.
 
@@ -44,7 +42,6 @@
 /datum/gas_mixture/immutable/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	. = ..()
 	temperature = initial_temperature
-
 
 //used by space tiles
 /datum/gas_mixture/immutable/space

@@ -66,7 +66,7 @@
 		var/datum/component/butchering/BT = LoadComponent(/datum/component/butchering)
 		BT.butchering_enabled = TRUE
 	else
-		GET_COMPONENT(BT, /datum/component/butchering)
+		var/datum/component/butchering/BT = GetComponent(/datum/component/butchering)
 		if(BT)
 			BT.butchering_enabled = FALSE
 	transform_messages(user, supress_message_text)
@@ -82,6 +82,6 @@
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 /obj/item/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
-	if(clumsy_check && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)

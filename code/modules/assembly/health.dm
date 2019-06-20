@@ -4,15 +4,14 @@
 	icon_state = "health"
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
 	attachable = TRUE
-	secured = FALSE
 
-	var/scanning = FALSE
+	var/scanning = TRUE
 	var/health_scan
-	var/alarm_health = 0
+	var/alarm_health = HEALTH_THRESHOLD_CRIT
 
 /obj/item/assembly/health/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>")
+	. = ..()
+	. += "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>"
 
 /obj/item/assembly/health/activate()
 	if(!..())
@@ -31,11 +30,11 @@
 	return secured
 
 /obj/item/assembly/health/multitool_act(mob/living/user, obj/item/I)
-	if(alarm_health == 0)
-		alarm_health = -90
+	if(alarm_health == HEALTH_THRESHOLD_CRIT)
+		alarm_health = HEALTH_THRESHOLD_DEAD
 		to_chat(user, "<span class='notice'>You toggle [src] to \"detect death\" mode.</span>")
 	else
-		alarm_health = 0
+		alarm_health = HEALTH_THRESHOLD_CRIT
 		to_chat(user, "<span class='notice'>You toggle [src] to \"detect critical state\" mode.</span>")
 	return TRUE
 
@@ -46,7 +45,6 @@
 	var/atom/A = src
 	if(connected && connected.holder)
 		A = connected.holder
-
 	for(A, A && !ismob(A), A=A.loc);
 	// like get_turf(), but for mobs.
 	var/mob/living/M = A
@@ -90,7 +88,7 @@
 
 	var/mob/user = usr
 
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		usr << browse(null, "window=hscan")
 		onclose(usr, "hscan")
 		return

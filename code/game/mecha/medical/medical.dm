@@ -1,7 +1,5 @@
-/obj/mecha/medical/Initialize()
-	. = ..()
-	trackers += new /obj/item/mecha_parts/mecha_tracking(src)
-
+/obj/mecha/medical
+	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_MEDICAL)
 
 /obj/mecha/medical/mechturn(direction)
 	setDir(direction)

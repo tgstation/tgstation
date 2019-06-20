@@ -1,6 +1,7 @@
 /datum/game_mode/sandbox
 	name = "sandbox"
 	config_tag = "sandbox"
+	report_type = "sandbox"
 	required_players = 0
 
 	announce_span = "info"

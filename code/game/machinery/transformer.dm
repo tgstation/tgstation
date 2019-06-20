@@ -28,7 +28,7 @@
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
 	if(cooldown && (issilicon(user) || isobserver(user)))
-		to_chat(user, "It will be ready in [DisplayTimeText(cooldown_timer - world.time)].")
+		. += "It will be ready in [DisplayTimeText(cooldown_timer - world.time)]."
 
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)
@@ -45,7 +45,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/transformer/CollidedWith(atom/movable/AM)
+/obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(cooldown == 1)
 		return
 
@@ -54,7 +54,7 @@
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)
 		var/mob/living/carbon/human/H = AM
-		if((transform_standing || H.lying) && move_dir == EAST)// || move_dir == WEST)
+		if((transform_standing || !(H.mobility_flags & MOBILITY_STAND)) && move_dir == EAST)// || move_dir == WEST)
 			AM.forceMove(drop_location())
 			do_transform(AM)
 

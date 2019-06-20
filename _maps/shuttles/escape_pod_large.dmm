@@ -45,7 +45,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -60,7 +60,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -74,7 +74,6 @@
 	height = 6;
 	launch_status = 0;
 	port_direction = 2;
-	timid = 1;
 	width = 5
 	},
 /turf/open/floor/mineral/titanium/blue,

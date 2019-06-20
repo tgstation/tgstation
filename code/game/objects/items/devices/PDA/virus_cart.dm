@@ -14,7 +14,7 @@
 	return " (<a href='byond://?src=[REF(loc)];choice=cart;special=virus;target=[REF(target)]'>*Send Virus*</a>)"
 
 /obj/item/cartridge/virus/special(mob/living/user, list/params)
-	var/obj/item/pda/P = locate(params["target"])//Leaving it alone in case it may do something useful, I guess.
+	var/obj/item/pda/P = locate(params["target"]) in GLOB.PDAs  //Leaving it alone in case it may do something useful, I guess.
 	send_virus(P,user)
 
 /obj/item/cartridge/virus/clown
@@ -71,15 +71,10 @@
 				difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
 			else
 				difficulty += 2
-		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
-		if(!target.detonatable || prob(difficulty * 15) || (hidden_uplink))
+		if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
 		else
-			message_admins("[!is_special_character(U) ? "Non-antag " : ""][ADMIN_LOOKUPFLW(U)] triggered a PDA explosion on [target.name] at [ADMIN_VERBOSEJMP(target)].")
-			var/message_log = "triggered a PDA explosion on [target.name] at at [AREACOORD(target)]."
-			U.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
-			log_game("[key_name(U)] [message_log]")
-			log_attack("[key_name(U)] [message_log]")
+			log_bomber(U, "triggered a PDA explosion on", target, "[!is_special_character(U) ? "(TRIGGED BY NON-ANTAG)" : ""]")
 			U.show_message("<span class='notice'>Success!</span>", 1)
 			target.explode()
 	else
@@ -98,10 +93,10 @@
 		charges--
 		var/lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
-		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
+		var/datum/component/uplink/hidden_uplink = target.GetComponent(/datum/component/uplink)
 		if(!hidden_uplink)
 			hidden_uplink = target.AddComponent(/datum/component/uplink)
-			target.lock_code = lock_code
+			hidden_uplink.unlock_code = lock_code
 		else
 			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
 		hidden_uplink.telecrystals = telecrystals

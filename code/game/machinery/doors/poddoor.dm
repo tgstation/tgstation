@@ -56,7 +56,7 @@
 	name = "combustion chamber vent"
 	id = INCINERATOR_SYNDICATELAVA_AUXVENT
 
-/obj/machinery/door/poddoor/CollidedWith(atom/movable/AM)
+/obj/machinery/door/poddoor/Bumped(atom/movable/AM)
 	if(density)
 		return 0
 	else
@@ -84,7 +84,7 @@
 		icon_state = "open"
 
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
- 	return
+	return
 
 /obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
 	if(stat & NOPOWER)

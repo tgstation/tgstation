@@ -34,10 +34,12 @@
 	faction = list("faithless")
 	gold_core_spawnable = HOSTILE_SPAWN
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()
 	if(. && prob(12) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.Knockdown(60)
+		C.Paralyze(60)
 		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 				"<span class='userdanger'>\The [src] knocks you down!</span>")

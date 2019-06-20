@@ -3,13 +3,13 @@
 	desc = "This spell can be used to recall a previously marked item to your hand from anywhere in the universe."
 	school = "transmutation"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "GAR YOK"
 	invocation_type = "whisper"
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 100
-	include_user = 1
+	include_user = TRUE
 
 	var/obj/marked_item
 
@@ -25,7 +25,9 @@
 			for(var/obj/item/item in hand_items)
 				if(item.item_flags & ABSTRACT)
 					continue
-				if(item.item_flags & NODROP)
+				if(SEND_SIGNAL(item, COMSIG_ITEM_MARK_RETRIEVAL) & COMPONENT_BLOCK_MARK_RETRIEVAL)
+					continue
+				if(HAS_TRAIT(item, TRAIT_NODROP))
 					message += "Though it feels redundant, "
 				marked_item = 		item
 				message += "You mark [item] for recall.</span>"
@@ -57,10 +59,14 @@
 					var/obj/item/organ/organ = item_to_retrieve
 					if(organ.owner)
 						// If this code ever runs I will be happy
-						add_logs(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
+						log_combat(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
 						organ.Remove(organ.owner)
 			else
 				while(!isturf(item_to_retrieve.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
+					if(isitem(item_to_retrieve.loc))
+						var/obj/item/I = item_to_retrieve.loc
+						if(I.item_flags & ABSTRACT) //Being able to summon abstract things because your item happened to get placed there is a no-no
+							break
 					if(ismob(item_to_retrieve.loc)) //If its on someone, properly drop it
 						var/mob/M = item_to_retrieve.loc
 
@@ -74,8 +80,6 @@
 
 						if(iscarbon(M)) //Edge case housekeeping
 							var/mob/living/carbon/C = M
-							if(C.stomach_contents && item_to_retrieve in C.stomach_contents)
-								C.stomach_contents -= item_to_retrieve
 							for(var/X in C.bodyparts)
 								var/obj/item/bodypart/part = X
 								if(item_to_retrieve in part.embedded_objects)

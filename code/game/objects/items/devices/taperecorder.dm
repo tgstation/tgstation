@@ -29,8 +29,8 @@
 
 
 /obj/item/taperecorder/examine(mob/user)
-	..()
-	to_chat(user, "The wire panel is [open_panel ? "opened" : "closed"].")
+	. = ..()
+	. += "The wire panel is [open_panel ? "opened" : "closed"]."
 
 
 /obj/item/taperecorder/attackby(obj/item/I, mob/user, params)
@@ -95,6 +95,7 @@
 
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+	. = ..()
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
@@ -120,9 +121,7 @@
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording started."
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
-		for(used, used < max)
-			if(recording == 0)
-				break
+		while(recording && used < max)
 			mytape.used_capacity++
 			used++
 			sleep(10)
@@ -277,7 +276,7 @@
 
 
 /obj/item/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined && istype(I, /obj/item/screwdriver) || istype(I, /obj/item/pen))
+	if(ruined && I.tool_behaviour == TOOL_SCREWDRIVER || istype(I, /obj/item/pen))
 		to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
 		if(I.use_tool(src, user, 120))
 			to_chat(user, "<span class='notice'>You wound the tape back in.</span>")
@@ -287,6 +286,6 @@
 /obj/item/tape/random
 	icon_state = "random_tape"
 
-/obj/item/tape/random/New()
+/obj/item/tape/random/Initialize()
+	. = ..()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
-	..()

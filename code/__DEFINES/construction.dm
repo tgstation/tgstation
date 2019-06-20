@@ -53,7 +53,7 @@
 
 //other construction-related things
 
-//windows affected by nar-sie turn this color.
+//windows affected by Nar'Sie turn this color.
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
 //let's just pretend fulltile windows being children of border windows is fine
@@ -107,3 +107,5 @@
 #define RCD_AIRLOCK 2
 #define RCD_DECONSTRUCT 3
 #define RCD_WINDOWGRILLE 4
+#define RCD_MACHINE 8
+#define RCD_COMPUTER 16

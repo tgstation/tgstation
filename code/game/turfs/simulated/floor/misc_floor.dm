@@ -3,6 +3,7 @@
 	icon_state = "plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
 	floor_tile = /obj/item/stack/tile/plasteel
+	tiled_dirt = FALSE
 
 /turf/open/floor/vault
 	icon_state = "rockvault"
@@ -44,14 +45,10 @@
 	on = FALSE
 
 /turf/open/floor/circuit/airless
-	initial_gas_mix = "TEMP=2.7"
-
-/turf/open/floor/circuit/killroom
-	name = "killroom floor"
-	initial_gas_mix = "n2=500;TEMP=80"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "mainframe base"
@@ -75,10 +72,10 @@
 	floor_tile = /obj/item/stack/tile/circuit/green/anim
 
 /turf/open/floor/circuit/green/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/green/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/circuit/green/telecomms/mainframe
 	name = "mainframe base"
@@ -99,10 +96,10 @@
 	floor_tile = /obj/item/stack/tile/circuit/red/anim
 
 /turf/open/floor/circuit/red/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/red/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/pod
 	name = "pod floor"
@@ -143,6 +140,11 @@
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
 	icon_state = "plating"
 	baseturfs = /turf/open/floor/clockwork
+	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	var/dropped_brass
 	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
@@ -200,7 +202,10 @@
 	return
 
 /turf/open/floor/clockwork/crowbar_act(mob/living/user, obj/item/I)
-	if(baseturfs == type)
+	if(islist(baseturfs))
+		if(type in baseturfs)
+			return TRUE
+	else if(baseturfs == type)
 		return TRUE
 	user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 	if(I.use_tool(src, user, 70, volume=80))
@@ -209,7 +214,14 @@
 	return TRUE
 
 /turf/open/floor/clockwork/make_plating()
-	new /obj/item/stack/tile/brass(src)
+	if(!dropped_brass)
+		new /obj/item/stack/tile/brass(src)
+		dropped_brass = TRUE
+	if(islist(baseturfs))
+		if(type in baseturfs)
+			return
+	else if(baseturfs == type)
+		return
 	return ..()
 
 /turf/open/floor/clockwork/narsie_act()
@@ -248,3 +260,12 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "clockwork_floor"
 	floor_tile = /obj/item/stack/tile/bronze
+
+/turf/open/floor/white
+	name = "white floor"
+	desc = "A tile in a pure white color."
+	icon_state = "pure_white"
+
+/turf/open/floor/black
+	name = "black floor"
+	icon_state = "black"

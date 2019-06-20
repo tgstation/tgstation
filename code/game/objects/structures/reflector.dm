@@ -5,7 +5,6 @@
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
-	layer = BELOW_OBJ_LAYER
 	var/deflector_icon_state
 	var/image/deflector_overlay
 	var/finished = FALSE
@@ -35,14 +34,14 @@
 		can_rotate = FALSE
 
 /obj/structure/reflector/examine(mob/user)
-	..()
+	. = ..()
 	if(finished)
-		to_chat(user, "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"].")
+		. += "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"]."
 		if(!admin)
 			if(can_rotate)
-				to_chat(user, "<span class='notice'>Alt-click to adjust its direction.</span>")
+				. += "<span class='notice'>Alt-click to adjust its direction.</span>"
 			else
-				to_chat(user, "<span class='notice'>Use screwdriver to unlock the rotation.</span>")
+				. += "<span class='notice'>Use screwdriver to unlock the rotation.</span>"
 
 /obj/structure/reflector/proc/setAngle(new_angle)
 	if(can_rotate)
@@ -65,27 +64,27 @@
 	var/ploc = get_turf(P)
 	if(!finished || !allowed_projectile_typecache[P.type] || !(P.dir in GLOB.cardinals))
 		return ..()
-	if(auto_reflect(P, pdir, ploc, pangle) != -1)
+	if(auto_reflect(P, pdir, ploc, pangle) != BULLET_ACT_FORCE_PIERCE)
 		return ..()
-	return -1
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/structure/reflector/proc/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	P.ignore_source_check = TRUE
 	P.range = P.decayedRange
 	P.decayedRange = max(P.decayedRange--, 0)
-	return -1
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
 	if(admin)
 		return
 
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		can_rotate = !can_rotate
 		to_chat(user, "<span class='notice'>You [can_rotate ? "unlock" : "lock"] [src]'s rotation.</span>")
 		W.play_tool_sound(src)
 		return
 
-	if(istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		if(anchored)
 			to_chat(user, "<span class='warning'>Unweld [src] from the floor first!</span>")
 			return
@@ -96,7 +95,7 @@
 			if(buildstackamount)
 				new buildstacktype(drop_location(), buildstackamount)
 			qdel(src)
-	else if(istype(W, /obj/item/weldingtool))
+	else if(W.tool_behaviour == TOOL_WELDER)
 		if(obj_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=0))
 				return

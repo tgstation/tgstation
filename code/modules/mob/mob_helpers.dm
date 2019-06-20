@@ -1,12 +1,4 @@
-
 // see _DEFINES/is_helpers.dm for mob type checks
-
-/mob/proc/isloyal() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	return 0
-
-/mob/living/carbon/isloyal()
-	for(var/obj/item/implant/mindshield/L in implants)
-		return TRUE
 
 /mob/proc/lowest_buckled_mob()
 	. = src
@@ -36,27 +28,10 @@
 
 
 /proc/ran_zone(zone, probability = 80)
-
-	zone = check_zone(zone)
-
 	if(prob(probability))
-		return zone
-
-	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
-	switch(t)
-		if(1)
-			return BODY_ZONE_HEAD
-		if(2)
-			return BODY_ZONE_CHEST
-		if(3 to 6)
-			return BODY_ZONE_L_ARM
-		if(7 to 10)
-			return BODY_ZONE_R_ARM
-		if(11 to 14)
-			return BODY_ZONE_L_LEG
-		if(15 to 18)
-			return BODY_ZONE_R_LEG
-
+		zone = check_zone(zone)
+	else
+		zone = pickweight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
 	return zone
 
 /proc/above_neck(zone)
@@ -78,14 +53,14 @@
 	var/te = n
 	var/t = ""
 	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
+
+	for(var/p = 1 to min(n,MAX_BROADCAST_LEN))
 		if ((copytext(te, p, p + 1) == " " || prob(pr)))
 			t = text("[][]", t, copytext(te, p, p + 1))
 		else
 			t = text("[]*", t)
-		p++
+	if(n > MAX_BROADCAST_LEN)
+		t += "..." //signals missing text
 	return sanitize(t)
 
 /proc/slur(n)
@@ -204,7 +179,6 @@
 	if(!stuttering && prob(15))
 		message = stutter(message)
 	return message
-
 
 /proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
@@ -375,14 +349,21 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, var/notify_volume = 100) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]</span>")
+			if(!notify_suiciders && (O in GLOB.suicided_mob_list))
+				continue
+			if (ignore_key && O.ckey in GLOB.poll_ignore[ignore_key])
+				continue
+			var/orbit_link
+			if (source && action == NOTIFY_ORBIT)
+				orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
+			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
 			if(ghost_sound)
-				SEND_SOUND(O, sound(ghost_sound))
+				SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
 			if(flashwindow)
 				window_flash(O.client)
 			if(source)
@@ -390,6 +371,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(A)
 					if(O.client.prefs && O.client.prefs.UI_style)
 						A.icon = ui_style2icon(O.client.prefs.UI_style)
+					if (header)
+						A.name = header
 					A.desc = message
 					A.action = action
 					A.target = source
@@ -408,10 +391,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		else
 			dam = 0
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-			if(affecting.heal_damage(brute_heal, burn_heal, 0, TRUE, FALSE))
+			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
-			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
+			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 			return 1 //successful heal
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
@@ -449,7 +432,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(M)])")
+		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(0)
 		M.key = C.key
 		return TRUE
@@ -473,22 +456,51 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-/mob/proc/log_message(message, message_type)
-	if(!LAZYLEN(message) || !message_type)
+// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
+/mob/log_message(message, message_type, color=null, log_globally = TRUE)
+	if(!LAZYLEN(message))
+		stack_trace("Empty message")
 		return
 
+	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
+	var/smessage_type = num2text(message_type)
+
 	if(client)
-		if(!islist(client.player_details.logging[message_type]))
-			client.player_details.logging[message_type] = list()
+		if(!islist(client.player_details.logging[smessage_type]))
+			client.player_details.logging[smessage_type] = list()
 
-	if(!islist(logging[message_type]))
-		logging[message_type] = list()
+	if(!islist(logging[smessage_type]))
+		logging[smessage_type] = list()
 
-	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [key_name(src)]" = message)
+	var/colored_message = message
+	if(color)
+		if(color[1] == "#")
+			colored_message = "<font color=[color]>[message]</font>"
+		else
+			colored_message = "<font color='[color]'>[message]</font>"
 
-	logging[message_type] += timestamped_message
+	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[time_stamp()]\] [key_name(src)] [loc_name(src)]" = colored_message)
+
+	logging[smessage_type] += timestamped_message
+
 	if(client)
-		client.player_details.logging[message_type] += timestamped_message
+		client.player_details.logging[smessage_type] += timestamped_message
+
+	..()
 
 /mob/proc/can_hear()
 	. = TRUE
+
+//Examine text for traits shared by multiple types. I wish examine was less copypasted.
+/mob/proc/common_trait_examine()
+	if(HAS_TRAIT(src, TRAIT_DISSECTED))
+		. += "<span class='notice'>This body has been dissected and analyzed. It is no longer worth experimenting on.</span><br>"
+
+/mob/proc/get_policy_keywords()
+	. = list()
+	. += "[type]"
+	if(mind)
+		. += mind.assigned_role
+		. += mind.special_role //In case there's something special leftover, try to avoid
+		for(var/datum/antagonist/A in mind.antag_datums)
+			. += "[A.type]"

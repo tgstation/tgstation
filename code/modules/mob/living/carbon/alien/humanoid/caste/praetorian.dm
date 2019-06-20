@@ -5,12 +5,8 @@
 	health = 250
 	icon_state = "alienp"
 
-
-
 /mob/living/carbon/alien/humanoid/royal/praetorian/Initialize()
-
 	real_name = name
-
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
 	. = ..()
@@ -21,11 +17,6 @@
 	internal_organs += new /obj/item/organ/alien/acid
 	internal_organs += new /obj/item/organ/alien/neurotoxin
 	..()
-
-
-/mob/living/carbon/alien/humanoid/royal/praetorian/movement_delay()
-	. = ..()
-	. += 1
 
 /obj/effect/proc_holder/alien/royal/praetorian/evolve
 	name = "Evolve"

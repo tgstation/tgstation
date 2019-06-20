@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
-	grind_results = list("silicon" = 20)
+	grind_results = list(/datum/reagent/silicon = 20)
 	point_value = 1
 
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
-	grind_results = list("silicon" = 20, "plasma" = 10)
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
-	grind_results = list("silicon" = 20, "iron" = 10)
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
 	point_value = 4
 
 /obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmarglass
-	grind_results = list("silicon" = 20, "plasma" = 10, "iron" = 10)
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 	point_value = 23
 
 /obj/item/stack/sheet/plasmarglass/Initialize(mapload, new_amount, merge = TRUE)
@@ -243,8 +243,9 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 100, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
 	max_integrity = 40
-	var/cooldown = 0
 	sharpness = IS_SHARP
+	var/icon_prefix
+
 
 /obj/item/shard/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide.</span>")
@@ -266,6 +267,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		if("large")
 			pixel_x = rand(-5, 5)
 			pixel_y = rand(-5, 5)
+	if (icon_prefix)
+		icon_state = "[icon_prefix][icon_state]"
 
 /obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
 	. = ..()
@@ -278,12 +281,12 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !H.has_trait(TRAIT_PIERCEIMMUNE)) // golems, etc
+		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
-		if(!M.has_trait(TRAIT_PIERCEIMMUNE))
+		if(!HAS_TRAIT(M, TRAIT_PIERCEIMMUNE))
 			to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 			M.apply_damage(force*0.5, BRUTE, hit_hand)
 
@@ -309,8 +312,17 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 /obj/item/shard/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
-		if(L.has_trait(TRAIT_LIGHT_STEP))
+		if(HAS_TRAIT(L, TRAIT_LIGHT_STEP))
 			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
 		else
 			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
-	. = ..()
+	return ..()
+
+/obj/item/shard/plasma
+	name = "purple shard"
+	desc = "A nasty looking shard of plasma glass."
+	force = 6
+	throwforce = 11
+	icon_state = "plasmalarge"
+	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	icon_prefix = "plasma"

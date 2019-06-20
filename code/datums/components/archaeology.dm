@@ -25,7 +25,7 @@
 	for(var/I in other_archdrops)
 		_archdrops[I] += other_archdrops[I]
 
-/datum/component/archaeology/proc/Dig(obj/item/I, mob/living/user)
+/datum/component/archaeology/proc/Dig(datum/source, obj/item/I, mob/living/user)
 	if(dug)
 		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
 		return
@@ -72,7 +72,7 @@
 	if(callback)
 		callback.Invoke()
 
-/datum/component/archaeology/proc/SingDig(S, current_size)
+/datum/component/archaeology/proc/SingDig(datum/source, S, current_size)
 	switch(current_size)
 		if(STAGE_THREE)
 			if(prob(30))
@@ -84,7 +84,7 @@
 			if(current_size >= STAGE_FIVE && prob(70))
 				gets_dug()
 
-/datum/component/archaeology/proc/BombDig(severity, target)
+/datum/component/archaeology/proc/BombDig(datum/source, severity, target)
 	switch(severity)
 		if(3)
 			return

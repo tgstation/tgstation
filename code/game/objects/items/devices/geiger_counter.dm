@@ -63,28 +63,28 @@
 	current_tick_amount = 0
 
 /obj/item/geiger_counter/examine(mob/user)
-	..()
+	. = ..()
 	if(!scanning)
-		return 1
-	to_chat(user, "<span class='info'>Alt-click it to clear stored radiation levels.</span>")
+		return
+	. += "<span class='info'>Alt-click it to clear stored radiation levels.</span>"
 	if(obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>The display seems to be incomprehensible.</span>")
-		return 1
+		. += "<span class='warning'>The display seems to be incomprehensible.</span>"
+		return
 	switch(radiation_count)
 		if(-INFINITY to RAD_LEVEL_NORMAL)
-			to_chat(user, "<span class='notice'>Ambient radiation level count reports that all is well.</span>")
+			. += "<span class='notice'>Ambient radiation level count reports that all is well.</span>"
 		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
-			to_chat(user, "<span class='disarm'>Ambient radiation levels slightly above average.</span>")
+			. += "<span class='disarm'>Ambient radiation levels slightly above average.</span>"
 		if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
-			to_chat(user, "<span class='warning'>Ambient radiation levels above average.</span>")
+			. += "<span class='warning'>Ambient radiation levels above average.</span>"
 		if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
-			to_chat(user, "<span class='danger'>Ambient radiation levels highly above average.</span>")
+			. += "<span class='danger'>Ambient radiation levels highly above average.</span>"
 		if(RAD_LEVEL_VERY_HIGH + 1 to RAD_LEVEL_CRITICAL)
-			to_chat(user, "<span class='suicide'>Ambient radiation levels nearing critical level.</span>")
+			. += "<span class='suicide'>Ambient radiation levels nearing critical level.</span>"
 		if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
-			to_chat(user, "<span class='boldannounce'>Ambient radiation levels above critical level!</span>")
+			. += "<span class='boldannounce'>Ambient radiation levels above critical level!</span>"
 
-	to_chat(user, "<span class='notice'>The last radiation amount detected was [last_tick_amount]</span>")
+	. += "<span class='notice'>The last radiation amount detected was [last_tick_amount]</span>"
 
 /obj/item/geiger_counter/update_icon()
 	if(!scanning)
@@ -166,7 +166,7 @@
 		to_chat(user, "<span class='notice'>[icon2html(src, user)] Target is free of radioactive contamination.</span>")
 
 /obj/item/geiger_counter/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver) && (obj_flags & EMAGGED))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
 		if(scanning)
 			to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
 			return 0
@@ -200,19 +200,33 @@
 	to_chat(user, "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>")
 	obj_flags |= EMAGGED
 
+
+
 /obj/item/geiger_counter/cyborg
-	var/datum/component/mobhook
+	var/mob/listeningTo
+
+/obj/item/geiger_counter/cyborg/cyborg_unequip(mob/user)
+	if(!scanning)
+		return
+	scanning = FALSE
+	update_icon()
 
 /obj/item/geiger_counter/cyborg/equipped(mob/user)
 	. = ..()
-	if (mobhook && mobhook.parent != user)
-		QDEL_NULL(mobhook)
-	if (!mobhook)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT), CALLBACK(src, /atom.proc/rad_act))
+	if(listeningTo == user)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
+	RegisterSignal(user, COMSIG_ATOM_RAD_ACT, .proc/redirect_rad_act)
+	listeningTo = user
+
+/obj/item/geiger_counter/cyborg/proc/redirect_rad_act(datum/source, amount)
+	rad_act(amount)
 
 /obj/item/geiger_counter/cyborg/dropped()
 	. = ..()
-	QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
 
 #undef RAD_LEVEL_NORMAL
 #undef RAD_LEVEL_MODERATE

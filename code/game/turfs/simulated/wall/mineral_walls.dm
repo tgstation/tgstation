@@ -80,7 +80,7 @@
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/CollidedWith(atom/movable/AM)
+/turf/closed/wall/mineral/uranium/Bumped(atom/movable/AM)
 	radiate()
 	..()
 
@@ -115,13 +115,12 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
-/turf/closed/wall/mineral/plasma/bullet_act(var/obj/item/projectile/Proj)
+/turf/closed/wall/mineral/plasma/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj, /obj/item/projectile/beam))
 		PlasmaBurn(2500)
 	else if(istype(Proj, /obj/item/projectile/ion))
 		PlasmaBurn(500)
-	..()
-
+	. = ..()
 
 /turf/closed/wall/mineral/wood
 	name = "wooden wall"
@@ -223,7 +222,7 @@
 		T.atom_colours = atom_colours.Copy()
 		T.update_atom_colour()
 	if(T.dir != dir)
-		T.dir = dir
+		T.setDir(dir)
 	T.transform = transform
 	return T
 
@@ -249,7 +248,7 @@
 
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"
-	desc = "An evil wall of plasma and titanium."
+	desc = "A durable wall made of an alloy of plasma and titanium."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle"
 	explosion_block = 4
@@ -295,7 +294,7 @@
 		T.atom_colours = atom_colours.Copy()
 		T.update_atom_colour()
 	if(T.dir != dir)
-		T.dir = dir
+		T.setDir(dir)
 	T.transform = transform
 	return T
 

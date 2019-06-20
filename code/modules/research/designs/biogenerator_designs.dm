@@ -7,7 +7,7 @@
 	id = "milk"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 20)
-	make_reagents = list("milk" = 10)
+	make_reagents = list(/datum/reagent/consumable/milk = 10)
 	category = list("initial","Food")
 
 /datum/design/cream
@@ -15,7 +15,7 @@
 	id = "cream"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 30)
-	make_reagents = list("cream" = 10)
+	make_reagents = list(/datum/reagent/consumable/cream = 10)
 	category = list("initial","Food")
 
 /datum/design/milk_carton
@@ -39,7 +39,7 @@
 	id = "black_pepper"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 25)
-	make_reagents = list("blackpepper" = 10)
+	make_reagents = list(/datum/reagent/consumable/blackpepper = 10)
 	category = list("initial","Food")
 
 /datum/design/pepper_mill
@@ -49,6 +49,22 @@
 	materials = list(MAT_BIOMASS = 50)
 	build_path = /obj/item/reagent_containers/food/condiment/peppermill
 	make_reagents = list()
+	category = list("initial","Food")
+
+/datum/design/enzyme
+	name = "10u Universal Enzyme"
+	id = "enzyme"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 30)
+	make_reagents = list(/datum/reagent/consumable/enzyme = 10)
+	category = list("initial","Food")
+
+/datum/design/flour_sack
+	name = "Flour Sack"
+	id = "flour_sack"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 150)
+	build_path = /obj/item/reagent_containers/food/condiment/flour
 	category = list("initial","Food")
 
 /datum/design/monkey_cube
@@ -137,7 +153,7 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/storage/belt/security
-	category = list("initial","Leather and Cloth")
+	category = list("initial","Organic Materials")
 
 /datum/design/medbelt
 	name = "Medical Belt"
@@ -145,7 +161,7 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/storage/belt/medical
-	category = list("initial","Leather and Cloth")
+	category = list("initial","Organic Materials")
 
 /datum/design/janibelt
 	name = "Janitorial Belt"
@@ -153,7 +169,7 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/storage/belt/janitor
-	category = list("initial","Leather and Cloth")
+	category = list("initial","Organic Materials")
 
 /datum/design/s_holster
 	name = "Shoulder Holster"
@@ -161,7 +177,7 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 400)
 	build_path = /obj/item/storage/belt/holster
-	category = list("initial","Leather and Cloth")
+	category = list("initial","Organic Materials")
 
 /datum/design/rice_hat
 	name = "Rice Hat"
@@ -169,4 +185,4 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/clothing/head/rice_hat
-	category = list("initial","Leather and Cloth")
+	category = list("initial","Organic Materials")

@@ -75,8 +75,7 @@ Buildable meters
 		new_layer = PIPING_LAYER_DEFAULT
 	piping_layer = new_layer
 
-	pixel_x += (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
-	pixel_y += (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+	PIPING_LAYER_SHIFT(src, piping_layer)
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/item/pipe/proc/update()
@@ -91,7 +90,7 @@ Buildable meters
 	set name = "Flip Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() || !usr.canmove )
+	if ( usr.incapacitated() )
 		return
 
 	do_a_flip()
@@ -212,6 +211,10 @@ Buildable meters
 	qdel(src)
 
 /obj/item/pipe_meter/screwdriver_act(mob/living/user, obj/item/S)
+	. = ..()
+	if(.)
+		return TRUE
+
 	if(!isturf(loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to the floor!</span>")
 		return TRUE
@@ -228,5 +231,4 @@ Buildable meters
 
 /obj/item/pipe_meter/proc/setAttachLayer(new_layer = PIPING_LAYER_DEFAULT)
 	piping_layer = new_layer
-	pixel_x = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
-	pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+	PIPING_LAYER_DOUBLE_SHIFT(src, piping_layer)

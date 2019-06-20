@@ -157,7 +157,7 @@
 	.["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 	.["gamestate"] = SSticker.current_state
 
-	.["map_name"] = SSmapping.config.map_name
+	.["map_name"] = SSmapping.config?.map_name || "Loading..."
 
 	if(key_valid)
 		.["active_players"] = get_active_player_count()
@@ -174,7 +174,13 @@
 	.["time_dilation_avg"] = SStime_track.time_dilation_avg
 	.["time_dilation_avg_slow"] = SStime_track.time_dilation_avg_slow
 	.["time_dilation_avg_fast"] = SStime_track.time_dilation_avg_fast
-
+	
+	//pop cap stats
+	.["soft_popcap"] = CONFIG_GET(number/soft_popcap) || 0
+	.["hard_popcap"] = CONFIG_GET(number/hard_popcap) || 0
+	.["extreme_popcap"] = CONFIG_GET(number/extreme_popcap) || 0
+	.["popcap"] = max(CONFIG_GET(number/soft_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/extreme_popcap)) //generalized field for this concept for use across ss13 codebases
+	
 	if(SSshuttle && SSshuttle.emergency)
 		.["shuttle_mode"] = SSshuttle.emergency.mode
 		// Shuttle status, see /__DEFINES/stat.dm

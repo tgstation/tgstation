@@ -14,16 +14,28 @@
 /obj/item/megaphone/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is uttering [user.p_their()] last words into \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	spamcheck = 0//so they dont have to worry about recharging
-	user.say("AAAAAAAAAAAARGHHHHH")//he must have died while coding this
+	user.say("AAAAAAAAAAAARGHHHHH", forced="megaphone suicide")//he must have died while coding this
 	return OXYLOSS
 
-/obj/item/megaphone/get_held_item_speechspans(mob/living/carbon/user)
-	if(spamcheck > world.time)
-		to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
+/obj/item/megaphone/equipped(mob/M, slot)
+	. = ..()
+	if (slot == SLOT_HANDS)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
-		playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
-		spamcheck = world.time + 50
-		return voicespan
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/megaphone/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/megaphone/proc/handle_speech(mob/living/carbon/user, list/speech_args)
+	if (user.get_active_held_item() == src)
+		if(spamcheck > world.time)
+			to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
+		else
+			playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
+			spamcheck = world.time + 50
+			speech_args[SPEECH_SPANS] |= voicespan
 
 /obj/item/megaphone/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

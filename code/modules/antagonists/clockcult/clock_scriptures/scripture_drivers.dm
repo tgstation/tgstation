@@ -199,11 +199,7 @@
 
 /datum/clockwork_scripture/abscond/scripture_effects()
 	var/take_pulling = invoker.pulling && isliving(invoker.pulling) && get_clockwork_power(ABSCOND_ABDUCTION_COST)
-	var/turf/T
-	if(GLOB.ark_of_the_clockwork_justiciar)
-		T = get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH)
-	else
-		T = get_turf(pick(GLOB.servant_spawns))
+	var/turf/T = GLOB.ark_of_the_clockwork_justiciar ? get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH) : get_turf(pick(GLOB.servant_spawns))
 	invoker.visible_message("<span class='warning'>[invoker] flickers and phases out of existence!</span>", \
 	"<span class='bold sevtug_small'>You feel a dizzying sense of vertigo as you're yanked back to Reebe!</span>")
 	T.visible_message("<span class='warning'>[invoker] flickers and phases into existence!</span>")

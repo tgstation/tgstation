@@ -9,10 +9,11 @@
 	max_integrity = 200
 	integrity_failure = 100
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 20)
-	var/brightness_on = 2
+	var/brightness_on = 1
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
+	var/time_to_scewdrive = 20
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -49,14 +50,19 @@
 
 /obj/machinery/computer/update_icon()
 	cut_overlays()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(stat & NOPOWER)
 		add_overlay("[icon_keyboard]_off")
 		return
 	add_overlay(icon_keyboard)
+
+	// This whole block lets screens ignore lighting and be visible even in the darkest room
+	// We can't do this for many things that emit light unfortunately because it layers over things that would be on top of it
+	var/overlay_state = icon_screen
 	if(stat & BROKEN)
-		add_overlay("[icon_state]_broken")
-	else
-		add_overlay(icon_screen)
+		overlay_state = "[icon_state]_broken"
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir, alpha=128)
 
 /obj/machinery/computer/power_change()
 	..()
@@ -68,9 +74,11 @@
 	return
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	if(circuit && !(flags_1&NODECONSTRUCT_1))
 		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
-		if(I.use_tool(src, user, 20, volume=50))
+		if(I.use_tool(src, user, time_to_scewdrive, volume=50))
 			deconstruct(TRUE, user)
 	return TRUE
 
@@ -109,7 +117,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(circuit) //no circuit, no computer frame
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-			A.dir = dir
+			A.setDir(dir)
 			A.circuit = circuit
 			A.setAnchored(TRUE)
 			if(stat & BROKEN)

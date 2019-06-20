@@ -25,18 +25,18 @@
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
 
 /obj/structure/bookcase/examine(mob/user)
-	..()
+	. = ..()
 	if(!anchored)
-		to_chat(user, "<span class='notice'>The <i>bolts</i> on the bottom are unsecured.</span>")
-	if(anchored)
-		to_chat(user, "<span class='notice'>It's secured in place with <b>bolts</b>.</span>")
+		. += "<span class='notice'>The <i>bolts</i> on the bottom are unsecured.</span>"
+	else
+		. += "<span class='notice'>It's secured in place with <b>bolts</b>.</span>"
 	switch(state)
 		if(0)
-			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the back panel.</span>")
+			. += "<span class='notice'>There's a <b>small crack</b> visible on the back panel.</span>"
 		if(1)
-			to_chat(user, "<span class='notice'>There's space inside for a <i>wooden</i> shelf.</span>")
+			. += "<span class='notice'>There's space inside for a <i>wooden</i> shelf.</span>"
 		if(2)
-			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>")
+			. += "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>"
 
 /obj/structure/bookcase/Initialize(mapload)
 	. = ..()
@@ -53,12 +53,12 @@
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
 		if(0)
-			if(istype(I, /obj/item/wrench))
+			if(I.tool_behaviour == TOOL_WRENCH)
 				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
-			if(istype(I, /obj/item/crowbar))
+			if(I.tool_behaviour == TOOL_CROWBAR)
 				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You pry the frame apart.</span>")
 					deconstruct(TRUE)
@@ -71,14 +71,14 @@
 					to_chat(user, "<span class='notice'>You add a shelf.</span>")
 					state = 2
 					icon_state = "book-0"
-			if(istype(I, /obj/item/wrench))
+			if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
 				anchored = FALSE
 				state = 0
 
 		if(2)
-			GET_COMPONENT_FROM(STR, /datum/component/storage, I)
+			var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
 			if(is_type_in_list(I, allowed_books))
 				if(!user.transferItemToLoc(I, src))
 					return
@@ -100,7 +100,7 @@
 					return
 				else
 					name = "bookcase ([sanitize(newname)])"
-			else if(istype(I, /obj/item/crowbar))
+			else if(I.tool_behaviour == TOOL_CROWBAR)
 				if(contents.len)
 					to_chat(user, "<span class='warning'>You need to remove the books first!</span>")
 				else
@@ -113,14 +113,16 @@
 				return ..()
 
 
-/obj/structure/bookcase/attack_hand(mob/user)
+/obj/structure/bookcase/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
+	if(!istype(user))
+		return
 	if(contents.len)
-		var/obj/item/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
+		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			if(!(user.mobility_flags & MOBILITY_USE) || user.stat || user.restrained() || !in_range(loc, user))
 				return
 			if(ishuman(user))
 				if(!user.get_active_held_item())
@@ -149,7 +151,7 @@
 
 /obj/structure/bookcase/manuals/medical/Initialize()
 	. = ..()
-	new /obj/item/book/manual/medical_cloning(src)
+	new /obj/item/book/manual/wiki/medical_cloning(src)
 	update_icon()
 
 
@@ -159,11 +161,10 @@
 /obj/structure/bookcase/manuals/engineering/Initialize()
 	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
-	new /obj/item/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
 	new /obj/item/book/manual/wiki/engineering_guide(src)
-	new /obj/item/book/manual/engineering_singularity_safety(src)
-	new /obj/item/book/manual/robotics_cyborgs(src)
+	new /obj/item/book/manual/wiki/engineering_singulo_tesla(src)
+	new /obj/item/book/manual/wiki/robotics_cyborgs(src)
 	update_icon()
 
 
@@ -172,7 +173,7 @@
 
 /obj/structure/bookcase/manuals/research_and_development/Initialize()
 	. = ..()
-	new /obj/item/book/manual/research_and_development(src)
+	new /obj/item/book/manual/wiki/research_and_development(src)
 	update_icon()
 
 
@@ -196,12 +197,9 @@
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
+
 /obj/item/book/attack_self(mob/user)
-	if(is_blind(user))
-		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid!</span>")
-		return
-	if(ismonkey(user))
-		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
+	if(!user.can_read(src))
 		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
@@ -292,7 +290,7 @@
 					scanner.computer.inventory.Add(src)
 					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
 
-	else if(istype(I, /obj/item/kitchen/knife) || istype(I, /obj/item/wirecutters))
+	else if(istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "<span class='notice'>You begin to carve out [title]...</span>")
 		if(do_after(user, 30, target = src))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")

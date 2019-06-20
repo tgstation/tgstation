@@ -21,6 +21,11 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
 
+/obj/machinery/processor/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.<span>"
+
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))
 		for(var/i = 0, i < rating_amount, i++)
@@ -126,11 +131,18 @@
 	set category = "Object"
 	set name = "Eject Contents"
 	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.stat || usr.restrained())
 		return
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_UI))
+			return
 	empty()
 	add_fingerprint(usr)
+
+/obj/machinery/processor/container_resist(mob/living/user)
+	user.forceMove(drop_location())
+	user.visible_message("<span class='notice'>[user] crawls free of the processor!</span>")
 
 /obj/machinery/processor/proc/empty()
 	for (var/obj/O in src)

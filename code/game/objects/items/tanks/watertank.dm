@@ -18,7 +18,7 @@
 
 /obj/item/watertank/Initialize()
 	. = ..()
-	create_reagents(volume)
+	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
 
 /obj/item/watertank/ui_action_click(mob/user)
@@ -62,10 +62,11 @@
 		remove_noz()
 
 /obj/item/watertank/proc/remove_noz()
-	if(ismob(noz.loc))
-		var/mob/M = noz.loc
-		M.temporarilyRemoveItemFromInventory(noz, TRUE)
-	noz.forceMove(src)
+	if(!QDELETED(noz))
+		if(ismob(noz.loc))
+			var/mob/M = noz.loc
+			M.temporarilyRemoveItemFromInventory(noz, TRUE)
+		noz.forceMove(src)
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)
@@ -112,7 +113,6 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
-	container_type = OPENCONTAINER
 	slot_flags = 0
 
 	var/obj/item/watertank/tank
@@ -141,14 +141,15 @@
 
 //Janitor tank
 /obj/item/watertank/janitor
-	name = "backpack water tank"
-	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
+	name = "backpack cleaner tank"
+	desc = "A janitorial cleaner backpack with nozzle to clean blood and graffiti."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
+	custom_price = 100
 
 /obj/item/watertank/janitor/Initialize()
 	. = ..()
-	reagents.add_reagent("cleaner", 500)
+	reagents.add_reagent(/datum/reagent/space_cleaner, 500)
 
 /obj/item/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
@@ -184,7 +185,7 @@
 
 /obj/item/watertank/atmos/Initialize()
 	. = ..()
-	reagents.add_reagent("water", 200)
+	reagents.add_reagent(/datum/reagent/water, 200)
 
 /obj/item/watertank/atmos/make_noz()
 	return new /obj/item/extinguisher/mini/nozzle(src)
@@ -334,7 +335,7 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 
@@ -436,13 +437,13 @@
 
 /obj/item/watertank/op/Initialize()
 	. = ..()
-	reagents.add_reagent("mutagen",350)
-	reagents.add_reagent("napalm",125)
-	reagents.add_reagent("welding_fuel",125)
-	reagents.add_reagent("clf3",300)
-	reagents.add_reagent("cryptobiolin",350)
-	reagents.add_reagent("plasma",250)
-	reagents.add_reagent("condensedcapsaicin",500)
+	reagents.add_reagent(/datum/reagent/toxin/mutagen,350)
+	reagents.add_reagent(/datum/reagent/napalm,125)
+	reagents.add_reagent(/datum/reagent/fuel,125)
+	reagents.add_reagent(/datum/reagent/clf3,300)
+	reagents.add_reagent(/datum/reagent/cryptobiolin,350)
+	reagents.add_reagent(/datum/reagent/toxin/plasma,250)
+	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin,500)
 
 /obj/item/reagent_containers/spray/mister/op
 	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."

@@ -34,6 +34,8 @@
 	del_on_death = 1
 	loot = list(/obj/effect/decal/remains/human)
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/skeleton/eskimo
 	name = "undead eskimo"
 	desc = "The reanimated remains of some poor traveler."

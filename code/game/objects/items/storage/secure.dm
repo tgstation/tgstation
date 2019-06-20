@@ -26,24 +26,24 @@
 
 /obj/item/storage/secure/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 14
 
 /obj/item/storage/secure/examine(mob/user)
-	..()
-	to_chat(user, text("The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."))
+	. = ..()
+	. += "The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
 	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
-		if (istype(W, /obj/item/screwdriver))
+		if (W.tool_behaviour == TOOL_SCREWDRIVER)
 			if (W.use_tool(src, user, 20))
 				open =! open
 				to_chat(user, "<span class='notice'>You [open ? "open" : "close"] the service panel.</span>")
 			return
-		if (istype(W, /obj/item/wirecutters))
+		if (W.tool_behaviour == TOOL_WIRECUTTER)
 			to_chat(user, "<span class='danger'>[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>.</span>")
-		if ((istype(W, /obj/item/multitool)) && (!l_hacking))
+		if ((W.tool_behaviour == TOOL_MULTITOOL) && (!l_hacking))
 			if(open == 1)
 				to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
 				l_hacking = 1
@@ -136,7 +136,7 @@
 
 /obj/item/storage/secure/briefcase/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 21
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
@@ -146,7 +146,7 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	for(var/i = 0, i < STR.max_items - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
 
@@ -170,8 +170,8 @@
 
 /obj/item/storage/secure/safe/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.cant_hold = typecacheof(list(/obj/item/storage/secure/briefcase))
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
 	STR.max_w_class = 8						//??
 
 /obj/item/storage/secure/safe/PopulateContents()

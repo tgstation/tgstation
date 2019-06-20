@@ -8,7 +8,6 @@
 	height = 6;
 	id = "snowdin_excavation";
 	name = "excavation elevator";
-	timid = 1;
 	width = 6
 	},
 /turf/open/floor/plating,

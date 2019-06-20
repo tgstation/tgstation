@@ -61,7 +61,7 @@
 
 
 /obj/item/inducer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		W.play_tool_sound(src)
 		if(!opened)
 			to_chat(user, "<span class='notice'>You unscrew the battery compartment.</span>")
@@ -154,13 +154,13 @@
 
 
 /obj/item/inducer/examine(mob/living/M)
-	..()
+	. = ..()
 	if(cell)
-		to_chat(M, "<span class='notice'>Its display shows: [DisplayEnergy(cell.charge)].</span>")
+		. += "<span class='notice'>Its display shows: [DisplayEnergy(cell.charge)].</span>"
 	else
-		to_chat(M,"<span class='notice'>Its display is dark.</span>")
+		. += "<span class='notice'>Its display is dark.</span>"
 	if(opened)
-		to_chat(M,"<span class='notice'>Its battery compartment is open.</span>")
+		. += "<span class='notice'>Its battery compartment is open.</span>"
 
 /obj/item/inducer/update_icon()
 	cut_overlays()

@@ -18,7 +18,7 @@ GLOBAL_VAR(test_log)
 /datum/unit_test
 	//Bit of metadata for the future maybe
 	var/list/procs_tested
-	
+
 	//usable vars
 	var/turf/run_loc_bottom_left
 	var/turf/run_loc_top_right

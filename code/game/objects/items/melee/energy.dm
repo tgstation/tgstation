@@ -139,6 +139,11 @@
 	sharpness = IS_SHARP
 	light_color = "#40ceff"
 
+/obj/item/melee/transforming/energy/sword/cyborg/saw/cyborg_unequip(mob/user)
+	if(!active)
+		return
+	transform_weapon(user, TRUE)
+
 /obj/item/melee/transforming/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
 
@@ -173,7 +178,7 @@
 	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			item_color = "rainbow"
@@ -186,6 +191,16 @@
 			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
 	else
 		return ..()
+
+/obj/item/melee/transforming/energy/sword/bee  //yeah its fucking stupid but I wanted a yellow esword which is weaker than what we have
+	name = "Bee Sword"
+	desc = "Channel the might of the bees with this powerful sword"
+	force = 0
+	throwforce = 0
+	force_on = 22
+	throwforce_on = 16
+	item_color = "yellow"
+	light_color = "#ffff00"
 
 /obj/item/melee/transforming/energy/sword/pirate
 	name = "energy cutlass"

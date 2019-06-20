@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/can_equip(obj/item/I, slot, disable_warning = 0)
+/mob/living/carbon/monkey/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	switch(slot)
 		if(SLOT_HANDS)
 			if(get_empty_held_indexes())

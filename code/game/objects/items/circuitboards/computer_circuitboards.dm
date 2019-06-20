@@ -62,15 +62,15 @@
 	var/list/dept_list = list("General","Security","Medical","Science","Engineering")
 
 /obj/item/circuitboard/computer/card/minor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		target_dept = (target_dept == dept_list.len) ? 1 : (target_dept + 1)
 		to_chat(user, "<span class='notice'>You set the board to \"[dept_list[target_dept]]\".</span>")
 	else
 		return ..()
 
 /obj/item/circuitboard/computer/card/minor/examine(user)
-	..()
-	to_chat(user, "Currently set to \"[dept_list[target_dept]]\".")
+	. = ..()
+	. += "Currently set to \"[dept_list[target_dept]]\"."
 
 //obj/item/circuitboard/computer/shield
 //	name = "Shield Control (Computer Board)"
@@ -94,6 +94,38 @@
 /obj/item/circuitboard/computer/atmos_control/tank
 	name = "Tank Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/oxygen_tank
+	name = "Oxygen Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/oxygen_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/toxin_tank
+	name = "Plasma Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/toxin_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/air_tank
+	name = "Mixed Air Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/air_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/mix_tank
+	name = "Gas Mix Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/mix_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/nitrous_tank
+	name = "Nitrous Oxide Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/nitrous_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/nitrogen_tank
+	name = "Nitrogen Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/nitrogen_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/carbon_tank
+	name = "Carbon Dioxide Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/carbon_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/incinerator
+	name = "Incinerator Air Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/incinerator
 
 /obj/item/circuitboard/computer/atmos_alert
 	name = "Atmospheric Alert (Computer Board)"
@@ -122,6 +154,10 @@
 /obj/item/circuitboard/computer/arcade/orion_trail
 	name = "Orion Trail (Computer Board)"
 	build_path = /obj/machinery/computer/arcade/orion_trail
+
+/obj/item/circuitboard/computer/arcade/amputation
+	name = "Mediborg's Amputation Adventure (Computer Board)"
+	build_path = /obj/machinery/computer/arcade/amputation
 
 /obj/item/circuitboard/computer/turbine_control
 	name = "Turbine control (Computer Board)"
@@ -167,7 +203,7 @@
 	build_path = /obj/machinery/computer/rdconsole/core
 
 /obj/item/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "R&D Console - Robotics (Computer Board)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
@@ -234,7 +270,7 @@
 
 /obj/item/circuitboard/computer/bounty
 	name = "Nanotrasen Bounty Console (Computer Board)"
-	build_path = /obj/machinery/computer/cargo/request
+	build_path = /obj/machinery/computer/bounty
 
 /obj/item/circuitboard/computer/operating
 	name = "Operating Computer (Computer Board)"
@@ -280,6 +316,14 @@
 	name = "White Ship (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship
 
+/obj/item/circuitboard/computer/white_ship/pod
+	name = "Salvage Pod (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/white_ship/pod
+
+/obj/item/circuitboard/computer/white_ship/pod/recall
+	name = "Salvage Pod Recall (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
+
 /obj/item/circuitboard/computer/auxillary_base
 	name = "Auxillary Base Management Console (Computer Board)"
 	build_path = /obj/machinery/computer/auxillary_base
@@ -301,7 +345,7 @@
 	build_path = /obj/machinery/computer/libraryconsole
 
 /obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole
@@ -342,3 +386,11 @@
 /obj/item/circuitboard/computer/sat_control
 	name = "Satellite Network Control (Computer Board)"
 	build_path = /obj/machinery/computer/sat_control
+
+/obj/item/circuitboard/computer/nanite_chamber_control
+	name = "Nanite Chamber Control (Computer Board)"
+	build_path = /obj/machinery/computer/nanite_chamber_control
+
+/obj/item/circuitboard/computer/nanite_cloud_controller
+	name = "Nanite Cloud Control (Computer Board)"
+	build_path = /obj/machinery/computer/nanite_cloud_controller

@@ -7,6 +7,8 @@
 	icon_state = "mflash1"
 	max_integrity = 250
 	integrity_failure = 100
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
@@ -39,7 +41,7 @@
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
 		stat &= ~NOPOWER
-		if(bulb.crit_fail)
+		if(bulb.burnt_out)
 			icon_state = "[base_state]1-p"
 		else
 			icon_state = "[base_state]1"
@@ -50,7 +52,7 @@
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if (istype(W, /obj/item/wirecutters))
+	if (W.tool_behaviour == TOOL_WIRECUTTER)
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			if(W.use_tool(src, user, 30, volume=50) && bulb)
@@ -69,7 +71,7 @@
 		else
 			to_chat(user, "<span class='warning'>A flashbulb is already installed in [src]!</span>")
 
-	else if (istype(W, /obj/item/wrench))
+	else if (W.tool_behaviour == TOOL_WRENCH)
 		if(!bulb)
 			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
@@ -94,25 +96,30 @@
 	if (!powered() || !bulb)
 		return
 
-	if (bulb.crit_fail || (last_flash && world.time < src.last_flash + 150))
+	if (bulb.burnt_out || (last_flash && world.time < src.last_flash + 150))
 		return
 
 	if(!bulb.flash_recharge(30)) //Bulb can burn out if it's used too often too fast
 		power_change()
 		return
-	bulb.times_used ++
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
+	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	last_flash = world.time
 	use_power(1000)
 
+	var/flashed = FALSE
 	for (var/mob/living/L in viewers(src, null))
 		if (get_dist(src, L) > range)
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
-			L.Knockdown(strength)
+			L.Paralyze(strength)
+			flashed = TRUE
+
+	if(flashed)
+		bulb.times_used++
 
 	return 1
 
@@ -161,7 +168,7 @@
 			flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench))
+	if (W.tool_behaviour == TOOL_WRENCH)
 		W.play_tool_sound(src, 100)
 
 		if (!anchored && !isinspace())
@@ -189,8 +196,8 @@
 	var/id = null
 
 /obj/item/wallframe/flasher/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
+	. = ..()
+	. += "<span class='notice'>Its channel ID is '[id]'.</span>"
 
 /obj/item/wallframe/flasher/after_attach(var/obj/O)
 	..()

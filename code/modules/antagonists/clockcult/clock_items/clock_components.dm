@@ -5,14 +5,14 @@
 	clockwork_desc = null
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/component_id //What the component is identified as
-	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
+	var/cultist_message = "You are not worthy of this meme." //Showed to Nar'Sian cultists if they pick up the component in addition to chaplains
 	var/list/servant_of_ratvar_messages = list("ayy" = FALSE, "lmao" = TRUE) //Fluff, shown to servants of Ratvar on a low chance, if associated value is TRUE, will automatically apply ratvarian
 	var/message_span = "heavy_brass"
 
 /obj/item/clockwork/component/examine(mob/user)
 	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='[get_component_span(component_id)]'>You can activate this in your hand to break it down for power.</span>")
+		. += "<span class='[get_component_span(component_id)]'>You can activate this in your hand to break it down for power.</span>"
 
 /obj/item/clockwork/component/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user))
@@ -181,9 +181,9 @@
 		pixel_y = rand(-sprite_shift, sprite_shift)
 
 /obj/item/clockwork/alloy_shards/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='brass'>Can be consumed by a replica fabricator as a source of power.</span>")
+		. += "<span class='brass'>Can be consumed by a replica fabricator as a source of power.</span>"
 
 /obj/item/clockwork/alloy_shards/proc/replace_name_desc()
 	name = "replicant alloy shard"
