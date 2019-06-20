@@ -240,9 +240,9 @@
 /obj/structure/blob/proc/chemeffectreport(mob/user)
 	. = list()
 	if(overmind)
-		. += "<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>"
-		. += "<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>"
-		. += "<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span>"
+		. += list("<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>",
+		"<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>",
+		"<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span>")
 	else
 		. += "<b>No Material Detected!</b>"
 
