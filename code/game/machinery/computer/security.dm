@@ -673,6 +673,15 @@ What a mess.*/
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
 							GLOB.data_core.addCitation(active1.fields["id"], crime)
+							var/message = "You have been fined [fine] for [t1]"
+							var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+								"name" = "Security Citation",
+								"job" = "Citation Server",
+								"message" = message,
+								"targets" = active1.fields["name"]
+							))
+							signal.send_to_receivers()
+
 							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("citation_delete")
 						if(istype(active1, /datum/data/record))
