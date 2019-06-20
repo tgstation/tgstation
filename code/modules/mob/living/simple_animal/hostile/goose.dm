@@ -70,12 +70,12 @@
 	feed(O)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/O)
+	var/obj/item/reagent_containers/food/tasty = O
 	if(!istype(O, /obj/item/reagent_containers/food))
 		return
-	if (contents.length > GOOSE_SATIATED)
+	if (contents.len > GOOSE_SATIATED)
 		visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
 		return
-	var/obj/item/reagent_containers/food/tasty = O
 	if (tasty.foodtype & GROSS)
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
 		tasty.forceMove(src)
@@ -145,7 +145,7 @@
 		sleep(2)
 		if (QDELETED(src) || (get_turf(src) != currentTurf)) //Make sure we don't keep eating if we move from the turf we started eating at
 			return
-	if(prob(vomitCoefficient * 0.2))	
+	if(prob(vomitCoefficient * 0.2))
 		vomit_prestart(vomitTimeBonus + 25)
 		vomitCoefficient = 1
 		vomitTimeBonus = 0
