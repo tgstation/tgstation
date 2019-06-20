@@ -53,8 +53,6 @@
 	var/datum/action/cooldown/vomit/goosevomit
 	var/list/types_eaten
 	var/items_eaten
-	var/list/types_eaten
-	var/items_eaten
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize()
 	. = ..()
