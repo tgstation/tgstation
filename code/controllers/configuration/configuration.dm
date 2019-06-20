@@ -21,6 +21,8 @@
 	var/motd
 	var/policy
 
+	var/static/regex/ic_filter_regex
+
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
 		return
@@ -411,3 +413,6 @@ Example config:
 		if(findtextEx(line,"#",1,2))
 			continue
 		GLOB.in_character_filter += line
+
+	if(!ic_filter_regex && GLOB.in_character_filter.len)
+		ic_filter_regex = regex("\\b([jointext(GLOB.in_character_filter, "|")])\\b", "i")
