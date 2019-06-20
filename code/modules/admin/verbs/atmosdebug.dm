@@ -52,5 +52,5 @@
 		if(term)
 			var/obj/structure/cable/C = locate(/obj/structure/cable) in T.contents
 			if(!C)
-				results += "Unwired APC at [ADMIN_VERBOSEJMP(term)]"
+				results += "Unwired terminal at [ADMIN_VERBOSEJMP(term)]"
 	to_chat(usr, "[results.Join("\n")]")
