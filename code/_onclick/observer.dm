@@ -51,18 +51,18 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_GHOST, user) & COMPONENT_NO_ATTACK_HAND)
 		return TRUE
 	if(user.client)
-		user.scanned = FALSE
+		var/scanned = FALSE // is a scan already done?
 		if(user.radiation_scan)
-			user.scanned = TRUE
+			scanned = TRUE
 			if(world.time >= user.radiation_scan_cooldown)
 				geigercounter_scan(user, src)
 				user.radiation_scan_cooldown = world.time + 20
 		if(user.gas_scan)
 			if(world.time >= user.gas_scan_cooldown)
 				if(atmosanalyzer_scan(user, src))
-					user.scanned = TRUE
+					scanned = TRUE
 				user.gas_scan_cooldown = world.time + 10
-		if(!user.scanned)
+		if(!scanned)
 			if(IsAdminGhost(user))
 				attack_ai(user)
 			else if(user.client.prefs.inquisitive_ghost)
