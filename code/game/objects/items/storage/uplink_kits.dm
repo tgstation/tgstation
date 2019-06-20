@@ -192,7 +192,7 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
-/obj/item/storage/box/syndicate/contractor_outfit/PopulateContents()
+/obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/syndicate/contract/black/red(src)
 	new /obj/item/clothing/suit/space/syndicate/contract/black/red(src)
 	new /obj/item/clothing/under/chameleon(src)
