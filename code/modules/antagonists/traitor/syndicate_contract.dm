@@ -17,13 +17,11 @@
 	// contract.
 	// High payout
 	if (prob(15))
-		contract.payout_bonus = rand(6,8)
-	else if (prob(45)) // Low payout
-		contract.payout_bonus = rand(1,2)
+		contract.payout_bonus = rand(6,12)
 	else // Medium payout
-		contract.payout_bonus = rand(3,5)
+		contract.payout_bonus = rand(2,6)
 
-	contract.payout = rand(0, 3)
+	contract.payout = rand(1, 2)
 	contract.generate_dropoff()
 
 	ransom = 100 * rand(18, 45)
@@ -34,23 +32,36 @@
 		var/list/turfs = RANGE_TURFS(3, user)
 		var/list/possible_drop_loc = list()
 
-		for(var/T in turfs)
-			var/turf/found_turf = T
+		for(var/turf/found_turf in turfs)
 			var/area/turf_area = get_area(found_turf)
 
 			// We check if both the turf is a floor, and that it's actually in the area. 
 			// We also want a location that's clear of any obstructions.
 			var/location_clear = TRUE
-			if (isfloorturf(found_turf) && istype(turf_area, contract.dropoff))
+			to_chat(user, "here at least")
+			
+			if (istype(turf_area, contract.dropoff) && (!isspaceturf(found_turf) && !isclosedturf(found_turf)))
+				to_chat(user, "matches crit")
 				for (var/content in found_turf.contents)
+				// THINKS THE CABLES/PIPES ISN'T VALID, MAKE ISCABLEPIPE HELPER
 					if (istype(content, /obj/machinery) || istype(content, /obj/structure))
+						to_chat(user, content)
+						if (isobj(content))
+							var/obj/content_obj = content
+							to_chat(user, content_obj.name)
 						location_clear = FALSE
+						to_chat(user, "machine/struc")
+
 				if (location_clear)
+					to_chat(user, "we have free location in this spot")
 					possible_drop_loc.Add(found_turf)
 
 		// Need at least one free location.
 		if (possible_drop_loc.len < 1)
 			return FALSE
+
+		to_chat(user, "loc found")
+		
 
 		var/pod_rand_loc = rand(1, possible_drop_loc.len)
 
@@ -161,7 +172,6 @@
 
 	for (var/turf/possible_drop in contract.dropoff.contents)
 		var/location_clear = TRUE
-		// We don't care as much about what we land on than we did for sending the pod down.
 		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
 			for (var/content in possible_drop.contents)
 				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
