@@ -33,16 +33,34 @@
 	var/crimeDetails = ""
 	var/author = ""
 	var/time = ""
+	var/fine = 0
 	var/dataId = 0
 
-/datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "")
+/datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "", fine = "")
 	var/datum/data/crime/c = new /datum/data/crime
 	c.crimeName = cname
 	c.crimeDetails = cdetails
 	c.author = author
 	c.time = time
+	c.fine = fine
 	c.dataId = ++securityCrimeCounter
 	return c
+
+/datum/datacore/proc/addCitation(id = "", datum/data/crime/crime)
+	for(var/datum/data/record/R in security)
+		if(R.fields["id"] == id)
+			var/list/crimes = R.fields["citation"]
+			crimes |= crime
+			return
+
+/datum/datacore/proc/removeCitation(id, cDataId)
+	for(var/datum/data/record/R in security)
+		if(R.fields["id"] == id)
+			var/list/crimes = R.fields["citation"]
+			for(var/datum/data/crime/crime in crimes)
+				if(crime.dataId == text2num(cDataId))
+					crimes -= crime
+					return
 
 /datum/datacore/proc/addMinorCrime(id = "", datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
@@ -260,6 +278,7 @@
 		S.fields["id"]			= id
 		S.fields["name"]		= H.real_name
 		S.fields["criminal"]	= "None"
+		S.fields["citation"]	= list()
 		S.fields["mi_crim"]		= list()
 		S.fields["ma_crim"]		= list()
 		S.fields["notes"]		= "No notes."

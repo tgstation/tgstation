@@ -209,6 +209,25 @@
 					if((istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2)))
 						dat += "<font size='4'><b>Security Data</b></font>"
 						dat += "<br>Criminal Status: <A href='?src=[REF(src)];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>"
+						dat += "<br><br>Citations: <A href='?src=[REF(src)];choice=Edit Field;field=citation_add'>Add New</A>"
+
+						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+						<tr>
+						<th>Crime</th>
+						<th>Fine</th>
+						<th>Author</th>
+						<th>Time Added</th>
+						<th>Del</th>
+						</tr>"}
+						for(var/datum/data/crime/c in active2.fields["citation"])
+							dat += "<tr><td>[c.crimeName]</td>"
+							dat += "<td>$[c.fine]</td>"
+							dat += "<td>[c.author]</td>"
+							dat += "<td>[c.time]</td>"
+							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=citation_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
+							dat += "</tr>"
+						dat += "</table>"
+
 						dat += "<br><br>Minor Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_add'>Add New</A>"
 
 
@@ -645,6 +664,23 @@ What a mess.*/
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_side"]
 								print_photo(P.img, active1.fields["name"])
+
+					if("citation_add")
+						if(istype(active1, /datum/data/record))
+							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
+							var/fine = input(usr, "Please input citation fine:", "Secure. records", 0) as num
+							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
+								return
+							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
+							GLOB.data_core.addCitation(active1.fields["id"], crime)
+							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+					if("citation_delete")
+						if(istype(active1, /datum/data/record))
+							if(href_list["cdataid"])
+								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
+									return
+								GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
+
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
