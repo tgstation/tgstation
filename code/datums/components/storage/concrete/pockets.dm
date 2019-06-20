@@ -85,10 +85,14 @@
 	return original_parent
 
 /datum/component/storage/concrete/pockets/small/helmet
-	max_items = 1
+	max_items = 2
 	quickdraw = TRUE
+	max_w_class = WEIGHT_CLASS_NORMAL
+	max_combined_w_class = 100
 
 /datum/component/storage/concrete/pockets/small/helmet/Initialize()
 	. = ..()
-	set_holdable(list(/obj/item/reagent_containers/glass/bottle,
-								/obj/item/ammo_box/a762))
+	set_holdable(list(/obj/item/reagent_containers/food/drinks/bottle/vodka,
+					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
+					  /obj/item/reagent_containers/food/drinks/drinkingglass,
+					  /obj/item/ammo_box/a762))
