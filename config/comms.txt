@@ -7,7 +7,7 @@
 #CROSS_SERVER ServerName byond:\\address:port
 
 ## Name that the server calls itself in communications
-#CROSS_COMMS_NAME
+PURITY
 
 ## Hub address for tracking stats
 ## example: Hubmakerckey.Hubname

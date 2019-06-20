@@ -1,5 +1,21 @@
 <!-- Most valid html will work in here, excluding images. -->
+<html>
+<head>
+</head>
+<body>
+<p> Managed by <i>RONOVO</i> and <i>PRETTY</i>.</p>
+<h1><i>T0TSTATION 13</i>, a team OF teams production!</h1>
+<p>Be sure to read the following before joining:</p>
+<ul>
+<li> <a href="https://tgstation13.org/wiki/TGMC:Rules"><b><u>RULES</b></u></a>
+<li> <a href="https://tgstation13.org/wiki/New_Players">New Player Guide<a>
+<li> <a href="https://tgstation13.org/wiki/Main_Page">WIKI</a>
+</ul>
+<p>Got a problem? Find us on <a href="https://discord.gg/NdgpSVf">Discord</a><br>
+Got a suggestion? <a href="https://www.youtube.com/watch?v=GBn6kTK7G7o">Click here!</a><br>
+By using this server, you agree to take cold calculated and evil revenge against someone who is annoying you instead of whining about it to the mods.
 
-<h1>Welcome to Space Station 13!</h1>
 
-<i>This server is running a /tg/station 13 Git build.</i>
+
+
+<p><small><i>This server is running a modified /tg/station 13 build.</i></small>
