@@ -26,5 +26,5 @@
 	paint_color = input("Which colour do you want to use?","Pipe painter") in GLOB.pipe_paint_colors
 
 /obj/item/pipe_painter/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It is set to [paint_color].</span>")
+	. = ..()
+	. += "<span class='notice'>It is set to [paint_color].</span>"

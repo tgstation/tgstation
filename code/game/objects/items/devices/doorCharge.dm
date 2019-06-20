@@ -35,8 +35,8 @@
 	return ..()
 
 /obj/item/doorCharge/examine(mob/user)
-	..()
+	. = ..()
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/traitor)) //No nuke ops because the device is excluded from nuclear
-		to_chat(user, "A small explosive device that can be used to sabotage airlocks to cause an explosion upon opening. To apply, remove the airlock's maintenance panel and place it within.")
+		. += "A small explosive device that can be used to sabotage airlocks to cause an explosion upon opening. To apply, remove the airlock's maintenance panel and place it within."
 	else
-		to_chat(user, "A small, suspicious object that feels lukewarm when held.")
+		. += "A small, suspicious object that feels lukewarm when held."
