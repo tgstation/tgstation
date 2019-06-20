@@ -57,7 +57,7 @@
 	return automatic
 
 /obj/item/pneumatic_cannon/examine(mob/user)
-	..()
+	. = ..()
 	var/list/out = list()
 	if(!in_range(user, src))
 		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
@@ -67,7 +67,7 @@
 		CHECK_TICK
 	if(tank)
 		out += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
-	to_chat(user, out.Join("<br>"))
+	. += out.Join("\n")
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/user, params)
 	if(user.a_intent == INTENT_HARM)

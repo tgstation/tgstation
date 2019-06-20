@@ -117,12 +117,11 @@
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	if (message1 || message2)
-		var/list/msg = list("The display says:")
+		. += "The display says:"
 		if (message1)
-			msg += "<br>\t<tt>[html_encode(message1)]</tt>"
+			. += "<br>\t<tt>[html_encode(message1)]</tt>"
 		if (message2)
-			msg += "<br>\t<tt>[html_encode(message2)]</tt>"
-		to_chat(user, msg.Join())
+			. += "<br>\t<tt>[html_encode(message2)]</tt>"
 
 // Helper procs for child display types.
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)
@@ -149,9 +148,9 @@
 				modestr = "<br>\t<tt>[modestr]: [shuttle.getTimerStr()]</tt>"
 			else
 				modestr = "<br>\t<tt>[modestr]</tt>"
-		to_chat(user, "The display says:<br>\t<tt>[shuttle.name]</tt>[modestr]")
+		return "The display says:<br>\t<tt>[shuttle.name]</tt>[modestr]"
 	else
-		to_chat(user, "The display says:<br>\t<tt>Shuttle missing!</tt>")
+		return "The display says:<br>\t<tt>Shuttle missing!</tt>"
 
 
 /// Evac display which shows shuttle timer or message set by Command.
@@ -198,9 +197,9 @@
 /obj/machinery/status_display/evac/examine(mob/user)
 	. = ..()
 	if(mode == SD_EMERGENCY)
-		examine_shuttle(user, SSshuttle.emergency)
+		. += examine_shuttle(user, SSshuttle.emergency)
 	else if(!message1 && !message2)
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 /obj/machinery/status_display/evac/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])
@@ -260,9 +259,9 @@
 	else
 		shuttleMsg = "[shuttle.getModeStr()]: [shuttle.getTimerStr()]"
 	if (shuttleMsg)
-		to_chat(user, "The display says:<br>\t<tt>[shuttleMsg]</tt>")
+		. += "The display says:<br>\t<tt>[shuttleMsg]</tt>"
 	else
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 
 /// General-purpose shuttle status display.
@@ -281,9 +280,9 @@
 /obj/machinery/status_display/shuttle/examine(mob/user)
 	. = ..()
 	if(shuttle_id)
-		examine_shuttle(user, SSshuttle.getShuttle(shuttle_id))
+		. += examine_shuttle(user, SSshuttle.getShuttle(shuttle_id))
 	else
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 /obj/machinery/status_display/shuttle/vv_edit_var(var_name, var_value)
 	. = ..()

@@ -150,8 +150,8 @@
 		open_machine()
 
 /obj/machinery/sleeper/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>"
 
 /obj/machinery/sleeper/process()
 	..()

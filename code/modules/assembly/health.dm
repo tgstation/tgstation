@@ -5,13 +5,13 @@
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
 	attachable = TRUE
 
-	var/scanning = FALSE
+	var/scanning = TRUE
 	var/health_scan
 	var/alarm_health = HEALTH_THRESHOLD_CRIT
 
 /obj/item/assembly/health/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Use in hand to turn it off/on and Alt-click to swap between \"detect death\" mode and \"detect critical state\" mode.  [src.scanning ? "The sensor is on and you can see [health_scan] displayed on the screen." : "The sensor is off" ]</span>")
+	. = ..()
+	. += "<span class='notice'>Use in hand to turn it off/on and Alt-click to swap between \"detect death\" mode and \"detect critical state\" mode.  [src.scanning ? "The sensor is on and you can see [health_scan] displayed on the screen." : "The sensor is off" ]</span>")
 
 /obj/item/assembly/health/activate()
 	if(!..())
