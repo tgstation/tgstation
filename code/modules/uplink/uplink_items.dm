@@ -198,10 +198,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/bundles_TC/contract_kit
 	name = "Contract Kit"
-	desc = "The Syndicate have a number of urgent contracts for you to take on, become a contractor and complete them for TC. Upon purchase, \
-			you'll be granted your own contract uplink embedded within the supplied tablet computer. Additonally, you'll be granted contractor \
-			gear to help with your mission - comes supplied with the tablet, space suit, chameleon jumpsuit and mask, agent card, and two \
-			randomly selected low cost items."
+	desc = "The Syndicate have offered you the chance to become a contractor, take on kidnapping contracts for TC and cash payouts. Upon purchase, \
+			you'll be granted your own contract uplink embedded within the supplied tablet computer. Additionally, you'll be granted \
+			standard contractor gear to help with your mission - comes supplied with the tablet, specialised space suit, chameleon jumpsuit and mask, \
+			agent card, and two randomly selected low cost items. Includes potentially otherwise unobtainable items."
 	item = /obj/item/storage/box/syndicate/contract_kit
 	cost = 20
 	player_minimum = 20
