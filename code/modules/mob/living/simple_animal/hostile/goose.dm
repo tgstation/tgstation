@@ -1,4 +1,4 @@
-#define GOOSE_SATIATED 170
+#define GOOSE_SATIATED 50
 
 /mob/living/simple_animal/hostile/retaliate/goose
 	name = "goose"
