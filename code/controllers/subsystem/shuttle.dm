@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/list/mobile = list()
 	var/list/stationary = list()
+	var/list/beacons = list()
 	var/list/transit = list()
 
 	var/list/transit_requesters = list()
@@ -127,7 +128,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
 	if(!threshold)
 		return
-	
+
 	var/alive = 0
 	for(var/I in GLOB.player_list)
 		var/mob/M = I

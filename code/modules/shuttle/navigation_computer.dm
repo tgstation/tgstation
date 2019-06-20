@@ -8,6 +8,7 @@
 	var/shuttlePortId = ""
 	var/shuttlePortName = "custom location"
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
+	var/list/beacon_codes = list() //hashset of beacon to jump to
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
 	var/view_range = 7
@@ -327,7 +328,15 @@
 		if(console.z_lock.len && !(S.z in console.z_lock))
 			continue
 		if(console.jumpto_ports[S.id])
-			L[S.name] = S
+			L["([L.len])[S.name]"] = S
+	for(var/V in SSshuttle.beacons)
+		if(!V)
+			continue
+		var/obj/machinery/bluespace_beacon/B = V
+		//if(console.z_lock.len && !(B.z in console.z_lock))
+		//	continue
+		//if(B.id && console.beacon_codes[B.id])
+		L["([L.len])[B.name]"] = B
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L

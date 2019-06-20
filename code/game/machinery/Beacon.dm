@@ -9,6 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
 	var/obj/item/beacon/Beacon
+	var/id
 
 /obj/machinery/bluespace_beacon/Initialize()
 	. = ..()
@@ -17,8 +18,10 @@
 	Beacon.invisibility = INVISIBILITY_MAXIMUM
 
 	hide(T.intact)
+	SSshuttle.beacons += src
 
 /obj/machinery/bluespace_beacon/Destroy()
+	SSshuttle.beacons -= src
 	QDEL_NULL(Beacon)
 	return ..()
 
