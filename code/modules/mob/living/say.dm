@@ -93,9 +93,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message || message == "")
 		return
 
-	if(GLOB.in_character_filter.len)
+	if(GLOB.in_character_filter.len && !forced)
 		var/regex/filter = regex("\\b([jointext(GLOB.in_character_filter, "|")])\\b", "i")
-		if(!derpspeech && findtext(message, filter))
+		if(findtext(message, filter))
 			to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat!</span>")
 			return
 
