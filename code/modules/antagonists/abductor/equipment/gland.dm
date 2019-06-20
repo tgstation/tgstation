@@ -24,7 +24,7 @@
 /obj/item/organ/heart/gland/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || isobserver(user))
-		to_chat(user, "<span class='notice'>It is \a [true_name].</span>")
+		. += "<span class='notice'>It is \a [true_name].</span>"
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))

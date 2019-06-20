@@ -38,8 +38,8 @@
 		to_chat(user, "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>")
+	. = ..()
+	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)

@@ -45,8 +45,8 @@ RLD
 	spark_system.attach(src)
 
 /obj/item/construction/examine(mob/user)
-	..()
-	to_chat(user, "\A [src]. It currently holds [matter]/[max_matter] matter-units." )
+	. = ..()
+	. += "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)

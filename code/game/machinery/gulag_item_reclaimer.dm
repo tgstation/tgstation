@@ -94,21 +94,39 @@
 					inserted_id = I
 
 		if("release_items")
-			var/mob/M = locate(params["mobref"]) in stored_items
-			if(M == usr || allowed(usr))
-				if(inserted_id)
+			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
+			if ((H == usr || allowed(usr)) && inserted_id)
+				var/obj/item/card/id/target_id
+				if (stored_items[H])
+					idloop:
+						for(var/obj/item/I in stored_items[H])
+							if (istype(I, /obj/item/card/id))
+								var/obj/item/card/id/potential_id = I
+								if (potential_id.registered_account && potential_id.registered_account == H.get_bank_account())
+									target_id = potential_id
+									break
+							for (var/obj/item/card/id/potential_id in I.GetAllContents())
+								if (potential_id.registered_account && potential_id.registered_account == H.get_bank_account())
+									target_id = potential_id
+									break idloop
+				if (target_id)
+					target_id.registered_account.adjust_money(inserted_id.points * 0.5)
 					var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
 					if(D)
-						D.adjust_money(inserted_id.points * 1.5)
-				drop_items(M)
+						D.adjust_money(inserted_id.points * 0.5)
+				else
+					new /obj/item/holochip(drop_location(), inserted_id.points)
+					to_chat(usr, "An ID with your bank account registration was not located amongst your items, a sum of [inserted_id.points] has been dispensed as holochips.")
+				drop_items(H)
 			else
 				to_chat(usr, "Access denied.")
 
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])
 		return
+	var/drop_location = drop_location()
 	for(var/i in stored_items[user])
 		var/obj/item/W = i
 		stored_items[user] -= W
-		W.forceMove(get_turf(src))
+		W.forceMove(drop_location)
 	stored_items -= user

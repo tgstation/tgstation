@@ -29,11 +29,11 @@
 	if(beaker)
 		var/is_close
 		if(Adjacent(user)) //don't reveal exactly what's inside unless they're close enough to see the UI anyway.
-			to_chat(user, "It contains \a [beaker].")
+			. += "It contains \a [beaker]."
 			is_close = TRUE
 		else
-			to_chat(user, "It has a beaker inside it.")
-		to_chat(user, "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>")
+			. += "It has a beaker inside it."
+		. += "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>"
 
 /obj/machinery/computer/pandemic/AltClick(mob/user)
 	. = ..()
