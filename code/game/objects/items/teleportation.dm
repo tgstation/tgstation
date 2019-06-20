@@ -12,8 +12,8 @@
  * Locator
  */
 /obj/item/locator
-	name = "locator"
-	desc = "Used to track those with locater implants."
+	name = "bluespace locator"
+	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/temp = null
@@ -80,7 +80,7 @@
 					else
 						var/mob/living/M = W.loc
 						if (M.stat == DEAD)
-							if (M.timeofdeath + 6000 < world.time)
+							if (M.timeofdeath + W.lifespan_postmortem < world.time)
 								continue
 
 					var/turf/tr = get_turf(W)
@@ -131,6 +131,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
 	var/max_portal_pairs = 3
+	var/atmos_link_override
 
 /obj/item/hand_tele/Initialize()
 	. = ..()
@@ -197,7 +198,7 @@
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	user.show_message("<span class='notice'>Locked In.</span>", 2)
-	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), src, 300, 1)
+	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), src, 300, 1, null, atmos_link_override)
 	if(!(LAZYLEN(created) == 2))
 		return
 	try_move_adjacent(created[1])

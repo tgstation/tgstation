@@ -1,5 +1,3 @@
-
-
 /atom/movable
 	var/can_buckle = 0
 	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
@@ -56,8 +54,12 @@
 		M.buckling = null
 		return FALSE
 
-	if(M.pulledby && buckle_prevents_pull)
-		M.pulledby.stop_pulling()
+	if(M.pulledby)
+		if(buckle_prevents_pull)
+			M.pulledby.stop_pulling()
+		else if(isliving(M.pulledby))
+			var/mob/living/L = M.pulledby
+			L.reset_pull_offsets(M, TRUE)
 
 	if(!check_loc && M.loc != loc)
 		M.forceMove(loc)
@@ -66,7 +68,7 @@
 	M.buckled = src
 	M.setDir(dir)
 	buckled_mobs |= M
-	M.update_canmove()
+	M.update_mobility()
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
 	post_buckle_mob(M)
 
@@ -85,7 +87,7 @@
 		. = buckled_mob
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
-		buckled_mob.update_canmove()
+		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")
 		buckled_mobs -= buckled_mob
 		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
@@ -138,4 +140,7 @@
 				"<span class='notice'>You unbuckle yourself from [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		add_fingerprint(user)
+		if(isliving(M.pulledby))
+			var/mob/living/L = M.pulledby
+			L.set_pull_offsets(M, L.grab_state)
 	return M

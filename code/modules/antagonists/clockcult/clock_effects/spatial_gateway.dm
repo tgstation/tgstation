@@ -53,9 +53,9 @@
 	return TRUE
 
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='brass'>It has [uses] use\s remaining.</span>")
+		. += "<span class='brass'>It has [uses] use\s remaining.</span>"
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/spatial_gateway/attack_ghost(mob/user)
@@ -119,7 +119,7 @@
 	return
 
 
-/obj/effect/clockwork/spatial_gateway/CollidedWith(atom/movable/AM)
+/obj/effect/clockwork/spatial_gateway/Bumped(atom/movable/AM)
 	..()
 	if(!QDELETED(AM))
 		pass_through_gateway(AM, FALSE)
@@ -133,6 +133,9 @@
 		return FALSE
 	if(!uses)
 		return FALSE
+	if(!do_teleport(A, get_turf(linked_gateway), forceMove = TRUE, channel = TELEPORT_CHANNEL_CULT))
+		visible_message("<span class='warning'>[A] bounces off [src]!</span>")
+		return FALSE
 	if(isliving(A))
 		var/mob/living/user = A
 		to_chat(user, "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>")
@@ -141,7 +144,7 @@
 	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, 1)
 	transform = matrix() * 1.5
 	linked_gateway.transform = matrix() * 1.5
-	A.forceMove(get_turf(linked_gateway))
+
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)

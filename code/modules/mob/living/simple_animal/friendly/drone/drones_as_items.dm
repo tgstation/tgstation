@@ -21,7 +21,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE)
 	GLOB.poi_list |= src
 	if(isnull(possible_seasonal_hats))
 		build_seasonal_hats()
@@ -41,7 +41,7 @@
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/drone_shell/attack_ghost(mob/user)
-	if(jobban_isbanned(user,"drone") || QDELETED(src) || QDELETED(user))
+	if(is_banned_from(user.ckey, ROLE_DRONE) || QDELETED(src) || QDELETED(user))
 		return
 	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
 		if(!isnum(user.client.player_age)) //apparently what happens when there's no DB connected. just don't let anybody be a drone without admin intervention
@@ -62,4 +62,6 @@
 		D.equip_to_slot_or_del(new_hat, SLOT_HEAD)
 	D.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	D.key = user.key
+	message_admins("[ADMIN_LOOKUPFLW(user)] has taken possession of \a [src] in [AREACOORD(src)].")
+	log_game("[key_name(user)] has taken possession of \a [src] in [AREACOORD(src)].")
 	qdel(src)

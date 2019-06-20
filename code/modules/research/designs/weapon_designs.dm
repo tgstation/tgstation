@@ -8,8 +8,44 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/c38_trac
+	name = "Speed Loader (.38 TRAC)"
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
+	id = "c38_trac"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_SILVER = 5000, MAT_GOLD = 1000)
+	build_path = /obj/item/ammo_box/c38/trac
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/c38_hotshot
+	name = "Speed Loader (.38 Hot Shot)"
+	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
+	id = "c38_hotshot"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_PLASMA = 5000)
+	build_path = /obj/item/ammo_box/c38/hotshot
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/c38_iceblox
+	name = "Speed Loader (.38 Iceblox)"
+	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
+	id = "c38_iceblox"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_PLASMA = 5000)
+	build_path = /obj/item/ammo_box/c38/iceblox
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/beanbag_slug/sec
+	id = "sec_beanbag_slug"
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -104,7 +140,7 @@
 	id = "decloner"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000)
-	reagents_list = list("mutagen" = 40)
+	reagents_list = list(/datum/reagent/toxin/mutagen = 40)
 	build_path = /obj/item/gun/energy/decloner
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -135,7 +171,7 @@
 	id = "flora_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
-	reagents_list = list("radium" = 20)
+	reagents_list = list(/datum/reagent/uranium/radium = 20)
 	build_path = /obj/item/gun/energy/floragun
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -259,8 +295,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/suppressor
-	name = "Universal Suppressor"
-	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
+	name = "Suppressor"
+	desc = "A reverse-engineered suppressor that fits on most small arms with threaded barrels."
 	id = "suppressor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)

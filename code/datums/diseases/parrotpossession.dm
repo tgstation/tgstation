@@ -5,7 +5,7 @@
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	disease_flags = CURABLE
 	cure_text = "Holy Water."
-	cures = list("holywater")
+	cures = list(/datum/reagent/water/holywater)
 	cure_chance = 20
 	agent = "Avian Vengence"
 	viable_mobtypes = list(/mob/living/carbon/human)
@@ -21,7 +21,7 @@
 		cure()
 	else if(prob(parrot.speak_chance))
 		if(parrot.speech_buffer.len)
-			affected_mob.say(pick(parrot.speech_buffer))
+			affected_mob.say(pick(parrot.speech_buffer), forced = "parrot possession")
 
 /datum/disease/parrot_possession/cure()
 	if(parrot && parrot.loc == affected_mob)

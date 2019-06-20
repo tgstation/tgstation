@@ -45,19 +45,13 @@
 	name = "Diamond Mining Drill"
 	description = "Central Command is willing to pay three months salary in exchange for one diamond mining drill."
 	reward = 15000
-	wanted_types = list(/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill)
+	wanted_types = list(/obj/item/pickaxe/drill/diamonddrill, /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill)
 
 /datum/bounty/item/science/floor_buffer
 	name = "Floor Buffer Upgrade"
 	description = "One of CentCom's janitors made a small fortune betting on carp races. Now they'd like to commission an upgrade to their floor buffer."
 	reward = 10000
 	wanted_types = list(/obj/item/janiupgrade)
-
-/datum/bounty/item/science/flightsuit
-	name = "Flight Suit"
-	description = "According to all known laws of physics, flight suits are cool. CentCom will pay at a premium for them, so get shipping!"
-	reward = 30000
-	wanted_types = list(/obj/item/clothing/suit/space/hardsuit/flightsuit)
 
 /datum/bounty/item/science/advanced_mop
 	name = "Advanced Mop"

@@ -24,7 +24,7 @@
 		if(stored_pulling)
 			stored_pulling.setDir(get_dir(stored_pulling.loc, newloc))
 			stored_pulling.forceMove(src)
-			H.start_pulling(stored_pulling, TRUE)
+			H.start_pulling(stored_pulling, supress_message = TRUE)
 
 /turf/closed/wall/mineral/cult/ratvar_act()
 	. = ..()

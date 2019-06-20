@@ -48,7 +48,7 @@
 
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
-		victim.Knockdown(stun_time)
+		victim.Paralyze(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"
@@ -129,14 +129,14 @@
 		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
 
 	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
-	add_logs(victim, null, "entered a blood frenzy")
+	victim.log_message("entered a blood frenzy", LOG_ATTACK)
 
-	chainsaw.item_flags |= NODROP
+	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
 	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
 	chainsaw.wield(victim)
-	victim.reagents.add_reagent("adminordrazine",25)
+	victim.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
 	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 
 	victim.client.color = pure_red
@@ -146,7 +146,7 @@
 	sleep(duration)
 	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
 	qdel(chainsaw)
-	add_logs(victim, null, "exited a blood frenzy")
+	victim.log_message("exited a blood frenzy", LOG_ATTACK)
 	qdel(src)
 
 /obj/effect/mine/pickup/healing
@@ -170,7 +170,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel fast!</span>")
-	victim.add_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
+	victim.add_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 	sleep(duration)
-	victim.remove_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
+	victim.remove_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB)
 	to_chat(victim, "<span class='notice'>You slow down.</span>")

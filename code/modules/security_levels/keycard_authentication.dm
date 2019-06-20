@@ -99,13 +99,13 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
 /obj/machinery/keycard_auth/proc/trigger_event(confirmer)
 	log_game("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
-	message_admins("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
+	message_admins("[ADMIN_LOOKUPFLW(triggerer)] triggered and [ADMIN_LOOKUPFLW(confirmer)] confirmed event [event]")
 
 	var/area/A1 = get_area(triggerer)
-	deadchat_broadcast("<span class='deadsay'><span class='name'>[triggerer]</span> triggered [event] at <span class='name'>[A1.name]</span>.</span>", triggerer)
+	deadchat_broadcast(" triggered [event] at <span class='name'>[A1.name]</span>.", "<span class='name'>[triggerer]</span>", triggerer)
 
 	var/area/A2 = get_area(confirmer)
-	deadchat_broadcast("<span class='deadsay'><span class='name'>[confirmer]</span> confirmed [event] at <span class='name'>[A2.name]</span>.</span>", confirmer)
+	deadchat_broadcast(" confirmed [event] at <span class='name'>[A2.name]</span>.", "<span class='name'>[confirmer]</span>", confirmer)
 	switch(event)
 		if(KEYCARD_RED_ALERT)
 			set_security_level(SEC_LEVEL_RED)

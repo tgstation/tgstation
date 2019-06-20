@@ -1,4 +1,4 @@
-/mob/living/brain/say(message, language)
+/mob/living/brain/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!(container && istype(container, /obj/item/mmi)))
 		return //No MMI, can't speak, bucko./N
 	else
@@ -10,14 +10,11 @@
 
 		..()
 
-/mob/living/brain/get_spans()
-	return ..() | SPAN_ROBOT
-
 /mob/living/brain/radio(message, message_mode, list/spans, language)
 	if(message_mode == MODE_HEADSET && istype(container, /obj/item/mmi))
 		var/obj/item/mmi/R = container
 		if(R.radio)
-			R.radio.talk_into(src, message, , get_spans(), language)
+			R.radio.talk_into(src, message, language = language)
 			return ITALICS | REDUCE_RANGE
 	else
 		return ..()

@@ -1,5 +1,5 @@
 /obj/item/melee/baton
-	name = "stunbaton"
+	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
@@ -30,12 +30,12 @@
 	. = ..()
 	if(preload_cell_type)
 		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
-			log_world("### MAP WARNING, [src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
+			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
 	update_icon()
 
-/obj/item/melee/baton/throw_impact(atom/hit_atom)
+/obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
 	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
@@ -58,18 +58,18 @@
 
 /obj/item/melee/baton/update_icon()
 	if(status)
-		icon_state = "[initial(name)]_active"
+		icon_state = "[initial(icon_state)]_active"
 	else if(!cell)
-		icon_state = "[initial(name)]_nocell"
+		icon_state = "[initial(icon_state)]_nocell"
 	else
-		icon_state = "[initial(name)]"
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/melee/baton/examine(mob/user)
-	..()
+	. = ..()
 	if(cell)
-		to_chat(user, "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>")
+		. += "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>"
 	else
-		to_chat(user, "<span class='warning'>\The [src] does not have a power source installed.</span>")
+		. += "<span class='warning'>\The [src] does not have a power source installed.</span>"
 
 /obj/item/melee/baton/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
@@ -86,7 +86,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(cell)
 			cell.update_icon()
 			cell.forceMove(get_turf(src))
@@ -112,10 +112,10 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stunforce*3)
+		user.Paralyze(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -157,14 +157,15 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	L.Knockdown(stunforce)
+	L.Paralyze(stunforce)
 	L.apply_effect(EFFECT_STUTTER, stunforce)
+	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
 		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-		add_logs(user, L, "stunned")
+		log_combat(user, L, "stunned")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
@@ -184,7 +185,7 @@
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
 	desc = "An improvised stun baton."
-	icon_state = "stunprod_nocell"
+	icon_state = "stunprod"
 	item_state = "prod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'

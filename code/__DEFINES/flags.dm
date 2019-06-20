@@ -4,6 +4,16 @@
 #define ALL (~0) //For convenience.
 #define NONE 0
 
+//for convenience
+#define ENABLE_BITFIELD(variable, flag) (variable |= (flag))
+#define DISABLE_BITFIELD(variable, flag) (variable &= ~(flag))
+#define CHECK_BITFIELD(variable, flag) (variable & (flag))
+#define TOGGLE_BITFIELD(variable, flag) (variable ^= (flag))
+
+
+//check if all bitflags specified are present
+#define CHECK_MULTIPLE_BITFIELDS(flagvar, flags) (((flagvar) & (flags)) == (flags))
+
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
 // for /datum/var/datum_flags
@@ -45,13 +55,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSCLOSEDTURF	(1<<5)
 #define LETPASSTHROW	(1<<6)
 
-
 //Movement Types
-#define GROUND (1<<0)
-#define FLYING (1<<1)
-
-// Flags for reagents
-#define REAGENT_NOREACT (1<<0)
+#define GROUND			(1<<0)
+#define FLYING			(1<<1)
+#define VENTCRAWLING	(1<<2)
+#define FLOATING		(1<<3)
+#define UNSTOPPABLE		(1<<4)			//When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)
@@ -71,8 +80,29 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define TESLA_MOB_STUN				(1<<4)
 
 #define TESLA_DEFAULT_FLAGS ALL
+#define TESLA_FUSION_FLAGS TESLA_OBJ_DAMAGE | TESLA_MOB_DAMAGE | TESLA_MOB_STUN
 
 //EMP protection
 #define EMP_PROTECT_SELF (1<<0)
 #define EMP_PROTECT_CONTENTS (1<<1)
 #define EMP_PROTECT_WIRES (1<<2)
+
+//Mob mobility var flags
+#define MOBILITY_MOVE			(1<<0)		//can move
+#define MOBILITY_STAND			(1<<1)		//can, and is, standing up
+#define MOBILITY_PICKUP			(1<<2)		//can pickup items
+#define MOBILITY_USE			(1<<3)		//can hold and use items
+#define MOBILITY_UI				(1<<4)		//can use interfaces like machinery
+#define MOBILITY_STORAGE		(1<<5)		//can use storage item
+#define MOBILITY_PULL			(1<<6)		//can pull things
+
+#define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
+#define MOBILITY_FLAGS_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
+
+// radiation
+#define RAD_PROTECT_CONTENTS (1<<0)
+#define RAD_NO_CONTAMINATE (1<<1)
+
+//alternate appearance flags
+#define AA_TARGET_SEE_APPEARANCE (1<<0)
+#define AA_MATCH_TARGET_OVERLAYS (1<<1)

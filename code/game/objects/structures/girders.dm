@@ -4,30 +4,27 @@
 	desc = "A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
-	layer = BELOW_OBJ_LAYER
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	max_integrity = 200
-
-/obj/structure/girder/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
 	switch(state)
 		if(GIRDER_REINF)
-			to_chat(user, "<span class='notice'>The support struts are <b>screwed</b> in place.</span>")
+			. += "<span class='notice'>The support struts are <b>screwed</b> in place.</span>"
 		if(GIRDER_REINF_STRUTS)
-			to_chat(user, "<span class='notice'>The support struts are <i>unscrewed</i> and the inner <b>grille</b> is intact.</span>")
+			. += "<span class='notice'>The support struts are <i>unscrewed</i> and the inner <b>grille</b> is intact.</span>"
 		if(GIRDER_NORMAL)
 			if(can_displace)
-				to_chat(user, "<span class='notice'>The bolts are <b>wrenched</b> in place.</span>")
+				. += "<span class='notice'>The bolts are <b>wrenched</b> in place.</span>"
 		if(GIRDER_DISPLACED)
-			to_chat(user, "<span class='notice'>The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.</span>")
+			. += "<span class='notice'>The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.</span>"
 		if(GIRDER_DISASSEMBLED)
-			to_chat(user, "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>")
+			. += "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>"
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -210,6 +207,9 @@
 
 // Screwdriver behavior for girders
 /obj/structure/girder/screwdriver_act(mob/user, obj/item/tool)
+	if(..())
+		return TRUE
+
 	. = FALSE
 	if(state == GIRDER_DISPLACED)
 		user.visible_message("<span class='warning'>[user] disassembles the girder.</span>",
@@ -343,7 +343,7 @@
 		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 		qdel(src)
 
-	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+	else if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -418,7 +418,7 @@
 
 /obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount = 0))
 			return
 		to_chat(user, "<span class='notice'>You start slicing apart [src]...</span>")

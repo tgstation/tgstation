@@ -50,6 +50,7 @@
 		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
+		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -137,6 +138,15 @@
 	gas_type = /datum/gas/water_vapor
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/miasma
+	name = "miasma canister"
+	desc = "Miasma. Makes you wish your nose were blocked."
+	icon_state = "miasma"
+	gas_type = /datum/gas/miasma
+	filled = 1
+
+
+
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
 		. = round(max(0, valve_timer - world.time) / 10, 1)
@@ -207,13 +217,13 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
-#define HOLDING		(1<<0)
-#define CONNECTED	(1<<1)
-#define EMPTY		(1<<2)
-#define LOW			(1<<3)
-#define MEDIUM		(1<<4)
-#define FULL		(1<<5)
-#define DANGER		(1<<6)
+#define CANISTER_UPDATE_HOLDING		(1<<0)
+#define CANISTER_UPDATE_CONNECTED	(1<<1)
+#define CANISTER_UPDATE_EMPTY		(1<<2)
+#define CANISTER_UPDATE_LOW			(1<<3)
+#define CANISTER_UPDATE_MEDIUM		(1<<4)
+#define CANISTER_UPDATE_FULL		(1<<5)
+#define CANISTER_UPDATE_DANGER		(1<<6)
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
@@ -224,44 +234,44 @@
 	update = 0
 
 	if(holding)
-		update |= HOLDING
+		update |= CANISTER_UPDATE_HOLDING
 	if(connected_port)
-		update |= CONNECTED
+		update |= CANISTER_UPDATE_CONNECTED
 	var/pressure = air_contents.return_pressure()
 	if(pressure < 10)
-		update |= EMPTY
+		update |= CANISTER_UPDATE_EMPTY
 	else if(pressure < 5 * ONE_ATMOSPHERE)
-		update |= LOW
+		update |= CANISTER_UPDATE_LOW
 	else if(pressure < 10 * ONE_ATMOSPHERE)
-		update |= MEDIUM
+		update |= CANISTER_UPDATE_MEDIUM
 	else if(pressure < 40 * ONE_ATMOSPHERE)
-		update |= FULL
+		update |= CANISTER_UPDATE_FULL
 	else
-		update |= DANGER
+		update |= CANISTER_UPDATE_DANGER
 
 	if(update == last_update)
 		return
 
 	cut_overlays()
-	if(update & HOLDING)
+	if(update & CANISTER_UPDATE_HOLDING)
 		add_overlay("can-open")
-	if(update & CONNECTED)
+	if(update & CANISTER_UPDATE_CONNECTED)
 		add_overlay("can-connector")
-	if(update & LOW)
+	if(update & CANISTER_UPDATE_LOW)
 		add_overlay("can-o0")
-	else if(update & MEDIUM)
+	else if(update & CANISTER_UPDATE_MEDIUM)
 		add_overlay("can-o1")
-	else if(update & FULL)
+	else if(update & CANISTER_UPDATE_FULL)
 		add_overlay("can-o2")
-	else if(update & DANGER)
+	else if(update & CANISTER_UPDATE_DANGER)
 		add_overlay("can-o3")
-#undef HOLDING
-#undef CONNECTED
-#undef EMPTY
-#undef LOW
-#undef MEDIUM
-#undef FULL
-#undef DANGER
+#undef CANISTER_UPDATE_HOLDING
+#undef CANISTER_UPDATE_CONNECTED
+#undef CANISTER_UPDATE_EMPTY
+#undef CANISTER_UPDATE_LOW
+#undef CANISTER_UPDATE_MEDIUM
+#undef CANISTER_UPDATE_FULL
+#undef CANISTER_UPDATE_DANGER
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
@@ -332,19 +342,19 @@
 	if(timing && valve_timer < world.time)
 		valve_open = !valve_open
 		timing = FALSE
-	if(!valve_open)
+	if(valve_open)
+		var/turf/T = get_turf(src)
+		pump.airs[1] = air_contents
+		pump.airs[2] = holding ? holding.air_contents : T.return_air()
+		pump.target_pressure = release_pressure
+
+		pump.process_atmos() // Pump gas.
+		if(!holding)
+			air_update_turf() // Update the environment if needed.
+	else
 		pump.airs[1] = null
 		pump.airs[2] = null
-		return
 
-	var/turf/T = get_turf(src)
-	pump.airs[1] = air_contents
-	pump.airs[2] = holding ? holding.air_contents : T.return_air()
-	pump.target_pressure = release_pressure
-
-	pump.process_atmos() // Pump gas.
-	if(!holding)
-		air_update_turf() // Update the environment if needed.
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -472,8 +482,8 @@
 		if("eject")
 			if(holding)
 				if(valve_open)
-					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
-				holding.forceMove(get_turf(src))
-				holding = null
+					message_admins("[ADMIN_LOOKUPFLW(usr)] removed [holding] from [src] with valve still open at [ADMIN_VERBOSEJMP(src)] releasing contents into the <span class='boldannounce'>air</span>.")
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span>.", INVESTIGATE_ATMOS)
+				replace_tank(usr, FALSE)
 				. = TRUE
 	update_icon()

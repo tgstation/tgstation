@@ -24,13 +24,13 @@
 	. = ..()
 
 /obj/machinery/defibrillator_mount/examine(mob/user)
-	..()
+	. = ..()
 	if(defib)
-		to_chat(user, "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.<span>")
+		. += "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.<span>"
 		if(GLOB.security_level >= SEC_LEVEL_RED)
-			to_chat(user, "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>")
+			. += "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>"
 		else
-			to_chat(user, "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>")
+			. += "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>"
 
 /obj/machinery/defibrillator_mount/process()
 	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge && is_operational())
@@ -59,17 +59,17 @@
 	if(!defib)
 		to_chat(user, "<span class='warning'>There's no defibrillator unit loaded!</span>")
 		return
-	if(defib.on)
+	if(defib.paddles.loc != defib)
 		to_chat(user, "<span class='warning'>[defib.paddles.loc == user ? "You are already" : "Someone else is"] holding [defib]'s paddles!</span>")
 		return
-	defib.attack_hand(user)
+	user.put_in_hands(defib.paddles)
 
 /obj/machinery/defibrillator_mount/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/defibrillator))
 		if(defib)
 			to_chat(user, "<span class='warning'>There's already a defibrillator in [src]!</span>")
 			return
-		if(I.item_flags & NODROP || !user.transferItemToLoc(I, src))
+		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \
@@ -77,6 +77,9 @@
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		defib = I
 		update_icon()
+		return
+	else if(defib && I == defib.paddles)
+		defib.paddles.snap_back()
 		return
 	var/obj/item/card/id = I.GetID()
 	if(id)

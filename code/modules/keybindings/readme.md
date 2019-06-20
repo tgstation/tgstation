@@ -1,7 +1,8 @@
 # In-code keypress handling system
 
 This whole system is heavily based off of forum_account's keyboard library.
-Thanks to forum_account for saving the day, the library can be found [here](https://secure.byond.com/developer/Forum_account/Keyboard)!
+Thanks to forum_account for saving the day, the library can be found
+[here](https://secure.byond.com/developer/Forum_account/Keyboard)!
 
 .dmf macros have some very serious shortcomings. For example, they do not allow reusing parts
 of one macro in another, so giving cyborgs their own shortcuts to swap active module couldn't
@@ -30,10 +31,11 @@ pressed.
 
 No client-set keybindings at this time, but it shouldn't be too hard if someone wants.
 
-Notes about certain keys
-`Tab` has client-sided behavior but acts normally
-`T`, `O`, and `M` move focus to the input when pressed. This fires the keyUp macro right away.
-`\` needs to be escaped in the dmf so any usage is `\\`
+Notes about certain keys:
+
+* `Tab` has client-sided behavior but acts normally
+* `T`, `O`, and `M` move focus to the input when pressed. This fires the keyUp macro right away.
+* `\` needs to be escaped in the dmf so any usage is `\\`
 
 You cannot `TICK_CHECK` or check `world.tick_usage` inside of procs called by key down and up
 events. They happen outside of a byond tick and have no meaning there. Key looping

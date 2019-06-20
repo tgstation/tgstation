@@ -43,9 +43,9 @@
 	item_state = "balloon-empty"
 
 
-/obj/item/toy/balloon/New()
+/obj/item/toy/balloon/Initialize()
+	. = ..()
 	create_reagents(10)
-	..()
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -61,7 +61,7 @@
 		else if(reagents.total_volume >= 10)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		else
-			A.reagents.trans_to(src, 10)
+			A.reagents.trans_to(src, 10, transfered_by = user)
 			to_chat(user, "<span class='notice'>You fill the balloon with the contents of [A].</span>")
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
 			update_icon()
@@ -76,14 +76,14 @@
 			else
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
 				to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
-				I.reagents.trans_to(src, 10)
+				I.reagents.trans_to(src, 10, transfered_by = user)
 				update_icon()
 	else if(I.is_sharp())
 		balloon_burst()
 	else
 		return ..()
 
-/obj/item/toy/balloon/throw_impact(atom/hit_atom)
+/obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		balloon_burst(hit_atom)
 
@@ -123,6 +123,24 @@
 	righthand_file = 'icons/mob/inhands/antag/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
+/obj/item/toy/syndicateballoon/pickup(mob/user)
+	. = ..()
+	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+
+/obj/item/toy/syndicateballoon/dropped(mob/user)
+	if(user)
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+	. = ..()
+
+
+/obj/item/toy/syndicateballoon/Destroy()
+	if(ismob(loc))
+		var/mob/M = loc
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+	. = ..()
+
+
 /*
  * Fake singularity
  */
@@ -151,8 +169,8 @@
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left.")
+	. = ..()
+	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
@@ -186,7 +204,7 @@
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click*</span>", 2)
-		playsound(src, "gun_dry_fire", 30, 1)
+		playsound(src, 'sound/weapons/gun_dry_fire.ogg', 30, TRUE)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
 	src.bullets--
@@ -207,8 +225,8 @@
 	src.icon_state = text("357OLD-[]", src.amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left.")
+	. = ..()
+	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /*
  * Toy swords
@@ -249,8 +267,8 @@
 // Copied from /obj/item/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-		if((W.item_flags & NODROP) || (item_flags & NODROP))
-			to_chat(user, "<span class='warning'>\the [item_flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [item_flags & NODROP ? W : src]!</span>")
+		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
+			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
@@ -260,7 +278,7 @@
 				newSaber.item_color = "rainbow"
 			qdel(W)
 			qdel(src)
-	else if(istype(W, /obj/item/multitool))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			item_color = "rainbow"
@@ -375,7 +393,7 @@
 /obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
 	pop_burst()
 
-/obj/item/toy/snappop/throw_impact(atom/hit_atom)
+/obj/item/toy/snappop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		pop_burst()
 
@@ -394,7 +412,7 @@
 /obj/effect/decal/cleanable/ash/snappop_phoenix
 	var/respawn_time = 300
 
-/obj/effect/decal/cleanable/ash/snappop_phoenix/New()
+/obj/effect/decal/cleanable/ash/snappop_phoenix/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
 
@@ -631,10 +649,13 @@
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
 
-/obj/item/toy/cards/deck/New()
-	..()
+/obj/item/toy/cards/deck/Initialize()
+	. = ..()
+	populate_deck()
+
+/obj/item/toy/cards/deck/proc/populate_deck()
 	icon_state = "deck_[deckstyle]_full"
-	for(var/i = 2; i <= 10; i++)
+	for(var/i in 2 to 10)
 		cards += "[i] of Hearts"
 		cards += "[i] of Spades"
 		cards += "[i] of Clubs"
@@ -659,8 +680,13 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
-	if(user.lying)
-		return
+	draw_card(user)
+
+/obj/item/toy/cards/deck/proc/draw_card(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 	var/choice = null
 	if(cards.len == 0)
 		to_chat(user, "<span class='warning'>There are no more cards to draw!</span>")
@@ -727,7 +753,7 @@
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	. = ..()
 	var/mob/living/M = usr
-	if(!istype(M) || usr.incapacitated() || usr.lying)
+	if(!istype(M) || !(M.mobility_flags & MOBILITY_PICKUP))
 		return
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)
@@ -773,9 +799,11 @@
 /obj/item/toy/cards/cardhand/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.stat || !ishuman(usr) || !usr.canmove)
+	if(usr.stat || !ishuman(usr))
 		return
 	var/mob/living/carbon/human/cardUser = usr
+	if(!(cardUser.mobility_flags & MOBILITY_USE))
+		return
 	var/O = src
 	if(href_list["pick"])
 		if (cardUser.is_holding(src))
@@ -850,12 +878,13 @@
 
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))
 			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname].</span>")
 		else
-			to_chat(cardUser, "<span class='warning'>You need to have the card in your hand to check it!</span>")
+			. += "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
 
 /obj/item/toy/cards/singlecard/verb/Flip()
@@ -914,8 +943,8 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/user)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
+	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()
 
@@ -944,6 +973,7 @@
 /obj/item/toy/cards/deck/syndicate
 	name = "suspicious looking deck of cards"
 	desc = "A deck of space-grade playing cards. They seem unusually rigid."
+	icon_state = "deck_syndicate_full"
 	deckstyle = "syndicate"
 	card_hitsound = 'sound/weapons/bladeslice.ogg'
 	card_force = 5
@@ -991,7 +1021,7 @@
 	icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
+/obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
 		for(var/mob/M in urange(10, src))
@@ -1039,7 +1069,7 @@
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
 
-/obj/item/toy/snowball/throw_impact(atom/hit_atom)
+/obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/pop.ogg', 20, 1)
 		qdel(src)
@@ -1081,8 +1111,8 @@
 		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>Station Time: [station_time_timestamp()]")
+	. = ..()
+	. += "<span class='info'>Station Time: [station_time_timestamp()]</span>"
 
 /*
  * Toy Dagger
@@ -1152,9 +1182,9 @@
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
 
-/obj/item/toy/figure/New()
-    desc = "A \"Space Life\" brand [src]."
-    ..()
+/obj/item/toy/figure/Initialize()
+	. = ..()
+	desc = "A \"Space Life\" brand [src]."
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
@@ -1367,8 +1397,11 @@
 	to_chat(user, "You name the dummy as \"[doll_name]\"")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
-	log_talk(M,"[key_name(M)] : through dummy : [message]",LOGSAY)
+/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)
+	var/mob/M = A
+	if (istype(M))
+		M.log_talk(message, LOG_SAY, tag="dummy toy")
+
 	say(message, language)
 	return NOPASS
 

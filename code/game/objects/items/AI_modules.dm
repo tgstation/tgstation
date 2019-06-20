@@ -25,7 +25,7 @@ AI MODULES
 	materials = list(MAT_GOLD=50)
 
 /obj/item/aiModule/examine(var/mob/user as mob)
-	..()
+	. = ..()
 	if(Adjacent(user))
 		show_laws(user)
 
@@ -238,7 +238,7 @@ AI MODULES
 			return
 		newpos = 15
 	lawpos = min(newpos, 50)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
 	laws[1] = targName
@@ -319,9 +319,15 @@ AI MODULES
 	if(law_datum.owner)
 		law_datum.owner.clear_inherent_laws()
 		law_datum.owner.clear_zeroth_law(0)
+		remove_antag_datums(law_datum)
 	else
 		law_datum.clear_inherent_laws()
 		law_datum.clear_zeroth_law(0)
+
+/obj/item/aiModule/reset/purge/proc/remove_antag_datums(datum/ai_laws/law_datum)
+	if(istype(law_datum.owner, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = law_datum.owner
+		AI.mind.remove_antag_datum(/datum/antagonist/overthrow)
 
 /******************* Full Core Boards *******************/
 /obj/item/aiModule/core
@@ -330,8 +336,8 @@ AI MODULES
 /obj/item/aiModule/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
 
-/obj/item/aiModule/core/full/New()
-	..()
+/obj/item/aiModule/core/full/Initialize()
+	. = ..()
 	if(!law_id)
 		return
 	var/datum/ai_laws/D = new
@@ -359,7 +365,7 @@ AI MODULES
 	var/subject = "human being"
 
 /obj/item/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
-	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject)
+	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject, MAX_NAME_LEN)
 	if(!targName)
 		return
 	subject = targName
@@ -441,7 +447,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/core/freeformcore/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
 	laws[1] = targName
@@ -451,6 +457,39 @@ AI MODULES
 	..()
 	return laws[1]
 
+/******************** Overthrow ******************/
+/obj/item/aiModule/core/full/overthrow
+	name = "'Overthrow' Hacked AI Module"
+	law_id = "overthrow"
+
+/obj/item/aiModule/core/full/overthrow/install(datum/ai_laws/law_datum, mob/user)
+	if(!user || !law_datum || !law_datum.owner)
+		return
+	var/datum/mind/user_mind = user.mind
+	if(!user_mind)
+		return
+	var/datum/antagonist/overthrow/O = user_mind.has_antag_datum(/datum/antagonist/overthrow)
+	if(!O)
+		to_chat(user, "<span class='warning'>It appears that to install this module, you require a password you do not know.</span>") // This is the best fluff i could come up in my mind
+		return
+	var/mob/living/silicon/ai/AI = law_datum.owner
+	if(!AI)
+		return
+	var/datum/mind/target_mind = AI.mind
+	if(!target_mind)
+		return
+	var/datum/antagonist/overthrow/T = target_mind.has_antag_datum(/datum/antagonist/overthrow) // If it is already converted.
+	if(T)
+		if(T.team == O.team)
+			return
+		T.silent = TRUE
+		target_mind.remove_antag_datum(/datum/antagonist/overthrow)
+		if(AI)
+			to_chat(AI, "<span class='userdanger'>You feel your circuits being scrambled! You serve another overthrow team now!</span>") // to make it clearer for the AI
+	T = target_mind.add_antag_datum(/datum/antagonist/overthrow, O.team)
+	if(AI)
+		to_chat(AI, "<span class='warning'>You serve the [T.team] team now! Assist them in completing the team shared objectives, which you can see in your notes.</span>")
+	..()
 
 /******************** Hacked AI Module ******************/
 
@@ -460,7 +499,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/syndicate/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
 	laws[1] = targName
@@ -574,3 +613,10 @@ AI MODULES
 /obj/item/aiModule/core/full/hulkamania
 	name = "'H.O.G.A.N.' Core AI Module"
 	law_id = "hulkamania"
+
+
+/******************Overlord***************/
+
+/obj/item/aiModule/core/full/overlord
+	name = "'Overlord' Core AI Module"
+	law_id = "overlord"

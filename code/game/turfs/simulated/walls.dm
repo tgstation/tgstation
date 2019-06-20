@@ -32,11 +32,11 @@
 	var/list/dent_decals
 
 /turf/closed/wall/examine(mob/user)
-	..()
-	deconstruction_hints(user)
+	. += ..()
+	. += deconstruction_hints(user)
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
-	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
+	return "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>"
 
 /turf/closed/wall/attack_tk()
 	return
@@ -139,7 +139,7 @@
 	..(user, 1)
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		dismantle_wall(1)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
@@ -180,7 +180,7 @@
 	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals))
 		return FALSE
 
-	if(istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return FALSE
 
@@ -205,16 +205,11 @@
 	else if(istype(W, /obj/item/poster))
 		place_poster(W,user)
 		return TRUE
-	//wall mounted IC assembly stuff
-	else if(istype(W, /obj/item/electronic_assembly/wallmount))
-		var/obj/item/electronic_assembly/wallmount/A = W
-		A.mount_assembly(src, user)
-		return TRUE
 
 	return FALSE
 
 /turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
-	if(istype(I, /obj/item/weldingtool) || istype(I, /obj/item/gun/energy/plasmacutter))
+	if(I.tool_behaviour == TOOL_WELDER)
 		if(!I.tool_start_check(user, amount=0))
 			return FALSE
 

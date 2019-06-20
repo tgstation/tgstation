@@ -91,6 +91,7 @@ Class Procs:
 	verb_yell = "blares"
 	pressure_resistance = 15
 	max_integrity = 200
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -112,8 +113,12 @@ Class Procs:
 	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+	var/damage_deflection = 0
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	var/fair_market_price = 69
+	var/market_verb = "Customer"
+	var/payment_department = ACCOUNT_ENG
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -130,7 +135,7 @@ Class Procs:
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
-	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA), CALLBACK(src, .proc/power_change))
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
@@ -142,6 +147,10 @@ Class Procs:
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
+	if(length(component_parts))
+		for(var/atom/A in component_parts)
+			qdel(A)
+		component_parts.Cut()
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
@@ -167,21 +176,26 @@ Class Procs:
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/proc/dropContents()
+/obj/machinery/proc/dropContents(list/subset = null)
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/A in contents)
+		if(subset && !(A in subset))
+			continue
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A
-			L.update_canmove()
+			L.update_mobility()
 	occupant = null
+
+/obj/machinery/proc/can_be_occupant(atom/movable/am)
+	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)
 
 /obj/machinery/proc/close_machine(atom/movable/target = null)
 	state_open = FALSE
 	density = TRUE
 	if(!target)
 		for(var/am in loc)
-			if (!(occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)))
+			if (!(can_be_occupant(am)))
 				continue
 			var/atom/movable/AM = am
 			if(AM.has_buckled_mobs())
@@ -218,11 +232,48 @@ Class Procs:
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
 		if(!silicon || !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
-	if(!silicon && (interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON))
-		return FALSE
-	else if(silicon && !(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
-		return FALSE
+
+	if(silicon)
+		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
+			return FALSE
+	else
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON)
+			return FALSE
+		if(!Adjacent(user))
+			var/mob/living/carbon/H = user
+			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
+				return FALSE
 	return TRUE
+
+/obj/machinery/proc/check_nap_violations()
+	if(!SSeconomy.full_ancap)
+		return TRUE
+	if(occupant && !state_open)
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
+			var/obj/item/card/id/I = H.get_idcard(TRUE)
+			if(I)
+				var/datum/bank_account/insurance = I.registered_account
+				if(!insurance)
+					say("[market_verb] NAP Violation: No bank account found.")
+					nap_violation(occupant)
+					return FALSE
+				else
+					if(!insurance.adjust_money(-fair_market_price))
+						say("[market_verb] NAP Violation: Unable to pay.")
+						nap_violation(occupant)
+						return FALSE
+					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+					if(D)
+						D.adjust_money(fair_market_price)
+			else
+				say("[market_verb] NAP Violation: No ID card found.")
+				nap_violation(occupant)
+				return FALSE
+	return TRUE
+
+/obj/machinery/proc/nap_violation(mob/violator)
+	return
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -231,11 +282,6 @@ Class Procs:
 	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
 		user.set_machine(src)
 	. = ..()
-
-/obj/machinery/ui_status(mob/user)
-	if(can_interact(user))
-		return ..()
-	return UI_CLOSE
 
 /obj/machinery/ui_act(action, params)
 	add_fingerprint(usr)
@@ -306,6 +352,7 @@ Class Procs:
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
+			component_parts.Cut()
 	qdel(src)
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -331,6 +378,11 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+
+/obj/machinery/run_obj_armor(damage_amount, damage_type, damage_flag = NONE, attack_dir)
+	if(damage_flag == "melee" && damage_amount < damage_deflection)
+		return 0
+	return ..()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -396,7 +448,7 @@ Class Procs:
 			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
 			var/P
 			if(W.works_from_distance)
-				display_parts(user)
+				to_chat(user, display_parts(user))
 			for(var/obj/item/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
@@ -424,34 +476,36 @@ Class Procs:
 							break
 			RefreshParts()
 		else
-			display_parts(user)
+			to_chat(user, display_parts(user))
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return TRUE
 	return FALSE
 
 /obj/machinery/proc/display_parts(mob/user)
-	to_chat(user, "<span class='notice'>It contains the following parts:</span>")
+	. = list()
+	. += "<span class='notice'>It contains the following parts:</span>"
 	for(var/obj/item/C in component_parts)
-		to_chat(user, "<span class='notice'>[icon2html(C, user)] \A [C].</span>")
+		. += "<span class='notice'>[icon2html(C, user)] \A [C].</span>"
+	. = jointext(., "")
 
 /obj/machinery/examine(mob/user)
-	..()
+	. = ..()
 	if(stat & BROKEN)
-		to_chat(user, "<span class='notice'>It looks broken and non-functional.</span>")
+		. += "<span class='notice'>It looks broken and non-functional.</span>"
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			to_chat(user, "<span class='warning'>It's on fire!</span>")
+			. += "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				to_chat(user,  "It looks slightly damaged.")
+				. += "It looks slightly damaged."
 			if(25 to 50)
-				to_chat(user,  "It appears heavily damaged.")
+				. += "It appears heavily damaged."
 			if(0 to 25)
-				to_chat(user,  "<span class='warning'>It's falling apart!</span>")
+				. += "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
-		display_parts(user)
+		. += display_parts(user, TRUE)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()

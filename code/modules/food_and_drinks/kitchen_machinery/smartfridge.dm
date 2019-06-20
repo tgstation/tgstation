@@ -13,14 +13,13 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
 	var/max_n_of_items = 1500
-	var/icon_on = "smartfridge"
-	var/icon_off = "smartfridge-off"
+	var/allow_ai_retrieve = FALSE
 	var/list/initial_contents
+	var/visible_contents = TRUE
 
 /obj/machinery/smartfridge/Initialize()
 	. = ..()
-	create_reagents()
-	reagents.set_reacting(FALSE)
+	create_reagents(100, NO_REACT)
 
 	if(islist(initial_contents))
 		for(var/typekey in initial_contents)
@@ -34,15 +33,31 @@
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
 
+/obj/machinery/smartfridge/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.<span>"
+
 /obj/machinery/smartfridge/power_change()
 	..()
 	update_icon()
 
 /obj/machinery/smartfridge/update_icon()
 	if(!stat)
-		icon_state = icon_on
+		if (visible_contents)
+			switch(contents.len)
+				if(0)
+					icon_state = "[initial(icon_state)]"
+				if(1 to 25)
+					icon_state = "[initial(icon_state)]1"
+				if(26 to 75)
+					icon_state = "[initial(icon_state)]2"
+				if(76 to INFINITY)
+					icon_state = "[initial(icon_state)]3"
+		else
+			icon_state = "[initial(icon_state)]"
 	else
-		icon_state = icon_off
+		icon_state = "[initial(icon_state)]-off"
 
 
 
@@ -51,7 +66,11 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
+		cut_overlays()
+		if(panel_open)
+			add_overlay("[initial(icon_state)]-panel")
+		updateUsrDialog()
 		return
 
 	if(default_pry_open(O))
@@ -75,6 +94,8 @@
 			load(O)
 			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 			updateUsrDialog()
+			if (visible_contents)
+				update_icon()
 			return TRUE
 
 		if(istype(O, /obj/item/storage/bag))
@@ -97,6 +118,8 @@
 										 "<span class='notice'>You load \the [src] with \the [O].</span>")
 				if(O.contents.len > 0)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
+				if (visible_contents)
+					update_icon()
 				return TRUE
 			else
 				to_chat(user, "<span class='warning'>There is nothing in [O] to put in [src]!</span>")
@@ -130,9 +153,6 @@
 		else
 			O.forceMove(src)
 			return TRUE
-
-/obj/machinery/smartfridge/attack_ai(mob/user)
-	return FALSE
 
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -171,6 +191,10 @@
 		if("Release")
 			var/desired = 0
 
+			if(!allow_ai_retrieve && isAI(usr))
+				to_chat(usr, "<span class='warning'>[src] does not seem to be configured to respect your authority!</span>")
+				return
+
 			if (params["amount"])
 				desired = text2num(params["amount"])
 			else
@@ -186,6 +210,8 @@
 							O.forceMove(drop_location())
 							adjust_item_drop_location(O)
 						break
+				if (visible_contents)
+					update_icon()
 				return TRUE
 
 			for(var/obj/item/O in src)
@@ -195,6 +221,8 @@
 					O.forceMove(drop_location())
 					adjust_item_drop_location(O)
 					desired--
+			if (visible_contents)
+				update_icon()
 			return TRUE
 	return FALSE
 
@@ -206,12 +234,11 @@
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and leather."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "drying_rack_on"
+	icon_state = "drying_rack"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 200
-	icon_on = "drying_rack_on"
-	icon_off = "drying_rack"
+	visible_contents = FALSE
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
@@ -416,6 +443,8 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
+	pass_flags = PASSTABLE
+	visible_contents = FALSE
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))

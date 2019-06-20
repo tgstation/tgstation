@@ -59,11 +59,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 /obj/machinery/rnd/destructive_analyzer/proc/reclaim_materials_from(obj/item/thing)
 	. = 0
-	if(linked_console && linked_console.linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
+	var/datum/component/material_container/storage = linked_console?.linked_lathe?.materials.mat_container
+	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
 		for(var/material in thing.materials)
-			var/can_insert = min((linked_console.linked_lathe.materials.max_amount - linked_console.linked_lathe.materials.total_amount), (max(thing.materials[material]*(decon_mod/10), thing.materials[material])))
-			linked_console.linked_lathe.materials.insert_amount(can_insert, material)
+			var/can_insert = min((storage.max_amount - storage.total_amount), (max(thing.materials[material]*(decon_mod/10), thing.materials[material])))
+			storage.insert_amount(can_insert, material)
 			. += can_insert
+		if (.)
+			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", 1, "[thing.name]", thing.materials)
 
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
 	if(QDELETED(thing) || QDELETED(src) || QDELETED(linked_console))
@@ -99,7 +102,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return FALSE
 
 	if (id && id != RESEARCH_MATERIAL_RECLAMATION_ID)
-		var/datum/techweb_node/TN = get_techweb_node_by_id(id)
+		var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
 		if(!istype(TN))
 			return FALSE
 		var/dpath = loaded_item.type
@@ -120,7 +123,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
 		if(destroy_item(loaded_item))
-			linked_console.stored_research.boost_with_path(SSresearch.techweb_nodes[TN.id], dpath)
+			linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
 
 	else
 		var/list/point_value = techweb_item_point_check(loaded_item)

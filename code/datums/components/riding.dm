@@ -19,6 +19,8 @@
 	var/ride_check_rider_restrained = FALSE
 	var/ride_check_ridden_incapacitated = FALSE
 
+	var/del_on_unbuckle_all = FALSE
+
 /datum/component/riding/Initialize()
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -26,11 +28,14 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 
-/datum/component/riding/proc/vehicle_mob_unbuckle(mob/living/M, force = FALSE)
+/datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	var/atom/movable/AM = parent
 	restore_position(M)
 	unequip_buckle_inhands(M)
+	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
+		qdel(src)
 
-/datum/component/riding/proc/vehicle_mob_buckle(mob/living/M, force = FALSE)
+/datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	handle_vehicle_offsets()
 
 /datum/component/riding/proc/handle_vehicle_layer()
@@ -46,7 +51,7 @@
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
 
-/datum/component/riding/proc/vehicle_moved()
+/datum/component/riding/proc/vehicle_moved(datum/source)
 	var/atom/movable/AM = parent
 	for(var/i in AM.buckled_mobs)
 		ride_check(i)
@@ -162,12 +167,12 @@
 		if(!Process_Spacemove(direction) || !isturf(AM.loc))
 			return
 		step(AM, direction)
-		
+
 		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
 			last_move_diagonal = TRUE
 		else
 			last_move_diagonal = FALSE
-		
+
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
@@ -190,33 +195,61 @@
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
+	del_on_unbuckle_all = TRUE
 
 /datum/component/riding/human/Initialize()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
+/datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	var/mob/living/carbon/human/H = parent
+	H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
+	. = ..()
+
+/datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
+	. = ..()
+	var/mob/living/carbon/human/H = parent
+	H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN)
+
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
-	var/mob/living/carbon/human/AM = parent
-	if(AM.a_intent == INTENT_DISARM && (target in AM.buckled_mobs))
+	var/mob/living/carbon/human/H = parent
+	if(H.a_intent == INTENT_DISARM && (target in H.buckled_mobs))
 		force_dismount(target)
 
 /datum/component/riding/human/handle_vehicle_layer()
 	var/atom/movable/AM = parent
 	if(AM.buckled_mobs && AM.buckled_mobs.len)
-		if(AM.dir == SOUTH)
-			AM.layer = ABOVE_MOB_LAYER
+		for(var/mob/M in AM.buckled_mobs) //ensure proper layering of piggyback and carry, sometimes weird offsets get applied
+			M.layer = MOB_LAYER
+		if(!AM.buckle_lying)
+			if(AM.dir == SOUTH)
+				AM.layer = ABOVE_MOB_LAYER
+			else
+				AM.layer = OBJ_LAYER
 		else
-			AM.layer = OBJ_LAYER
+			if(AM.dir == NORTH)
+				AM.layer = OBJ_LAYER
+			else
+				AM.layer = ABOVE_MOB_LAYER
 	else
 		AM.layer = MOB_LAYER
+
+/datum/component/riding/human/get_offsets(pass_index)
+	var/mob/living/carbon/human/H = parent
+	if(H.buckle_lying)
+		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
+	else
+		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
+	
 
 /datum/component/riding/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
-	user.Knockdown(60)
+	user.Paralyze(60)
 	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg
+	del_on_unbuckle_all = TRUE
 
 /datum/component/riding/cyborg/ride_check(mob/user)
 	var/atom/movable/AM = parent
@@ -271,14 +304,17 @@
 	M.Move(targetm)
 	M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>")
 	M.throw_at(target, 14, 5, AM)
-	M.Knockdown(60)
+	M.Paralyze(60)
 
-/datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
+/datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
 	var/atom/movable/AM = parent
 	var/amount_equipped = 0
 	for(var/amount_needed = amount_required, amount_needed > 0, amount_needed--)
 		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)
-		inhand.rider = user
+		if(!riding_target_override)
+			inhand.rider = user
+		else
+			inhand.rider = riding_target_override
 		inhand.parent = AM
 		if(user.put_in_hands(inhand, TRUE))
 			amount_equipped++
@@ -318,7 +354,7 @@
 	. = ..()
 
 /obj/item/riding_offhand/equipped()
-	if(loc != rider)
+	if(loc != rider && loc != parent)
 		selfdeleting = TRUE
 		qdel(src)
 	. = ..()

@@ -30,7 +30,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	usr.emote("me",1,message)
+	usr.emote("me",1,message,TRUE)
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name
@@ -40,14 +40,14 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	var/jb = jobban_isbanned(src, "OOC")
+	var/jb = is_banned_from(ckey, "OOC")
 	if(QDELETED(src))
 		return
 
 	if(jb)
 		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
 		return
-	
+
 
 
 	if (src.client)
@@ -69,19 +69,15 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-	var/K
+	var/spanned = say_quote(message)
+	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
+	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
+	log_talk(message, LOG_SAY, tag="DEAD")
+	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = key)
 
-	if(key)
-		K = src.key
-
-	message = src.say_quote(message, get_spans())
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
-	log_message("DEAD: [message]", INDIVIDUAL_SAY_LOG)
-	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
-
-/mob/proc/check_emote(message)
+/mob/proc/check_emote(message, forced)
 	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2))
+		emote(copytext(message, 2), intentional = !forced)
 		return 1
 
 /mob/proc/hivecheck()

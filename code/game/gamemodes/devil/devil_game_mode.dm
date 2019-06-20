@@ -1,6 +1,7 @@
 /datum/game_mode/devil
 	name = "devil"
 	config_tag = "devil"
+	report_type = "devil"
 	antag_flag = ROLE_DEVIL
 	false_report_weight = 1
 	protected_jobs = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")

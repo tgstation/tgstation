@@ -58,6 +58,8 @@
 		return ..()
 
 /obj/item/autosurgeon/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	if(!storedorgan)
 		to_chat(user, "<span class='notice'>There's no implant in [src] for you to remove.</span>")
 	else

@@ -33,6 +33,9 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+/obj/docking_port/has_gravity(turf/T)
+	return FALSE
+
 /obj/docking_port/take_damage()
 	return
 
@@ -152,8 +155,6 @@
 /obj/docking_port/stationary
 	name = "dock"
 
-	area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
-
 	var/last_dock_time
 
 	var/datum/map_template/shuttle/roundstart_template
@@ -166,6 +167,9 @@
 		id = "[SSshuttle.stationary.len]"
 	if(name == "dock")
 		name = "dock[SSshuttle.stationary.len]"
+	if(!area_type)
+		var/area/place = get_area(src)
+		area_type = place?.type // We might be created in nullspace
 
 	if(mapload)
 		for(var/turf/T in return_turfs())
@@ -179,6 +183,13 @@
 	if(force)
 		SSshuttle.stationary -= src
 	. = ..()
+
+/obj/docking_port/stationary/Moved(atom/oldloc, dir, forced)
+	. = ..()
+	if(area_type) // We already have one
+		return
+	var/area/newarea = get_area(src)
+	area_type = newarea?.type
 
 /obj/docking_port/stationary/proc/load_roundstart()
 	if(json_key)
@@ -238,6 +249,8 @@
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
 	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
 	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
+	var/rechargeTime = 0		// time spent after arrival before being able to begin ignition
+	var/prearrivalTime = 0		// time spent after transit 'landing' before actually arriving
 
 	// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
@@ -251,17 +264,13 @@
 
 	var/launch_status = NOLAUNCH
 
-	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
-
-	// A timid shuttle will not register itself with the shuttle subsystem
-	// All shuttle templates MUST be timid, imports will fail if they're not
-	// Shuttle defined already on the map MUST NOT be timid, or they won't work
-	var/timid = TRUE
+	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
 	var/initial_engines = 0 //initial engine power
+	var/list/engine_list = list()
 	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
 	var/list/hidden_turfs = list()
 
@@ -280,8 +289,6 @@
 
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
-	if(!timid)
-		register()
 
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
@@ -302,6 +309,23 @@
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#0f0")
 	#endif
+
+// Called after the shuttle is loaded from template
+/obj/docking_port/mobile/proc/linkup(datum/map_template/shuttle/template, obj/docking_port/stationary/dock)
+	var/list/static/shuttle_id = list()
+	var/idnum = ++shuttle_id[template]
+	if(idnum > 1)
+		if(id == initial(id))
+			id = "[id][idnum]"
+		if(name == initial(name))
+			name = "[name] [idnum]"
+	for(var/place in shuttle_areas)
+		var/area/area = place
+		area.connect_to_shuttle(src, dock, idnum, FALSE)
+		for(var/each in place)
+			var/atom/atom = each
+			atom.connect_to_shuttle(src, dock, idnum, FALSE)
+
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
@@ -399,8 +423,9 @@
 		mode = SHUTTLE_IDLE
 		return
 	previous = null
-//		if(!destination)
-//			return
+	if(!destination)
+		// sent to transit with no destination -> unlimited timer
+		timer = INFINITY
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
@@ -425,12 +450,7 @@
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 
-	var/area/underlying_area
-	for(var/i in GLOB.sortedAreas)
-		var/area/place = i
-		if(place.type == underlying_area_type)
-			underlying_area = place
-			break
+	var/area/underlying_area = GLOB.areas_by_type[underlying_area_type]
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
@@ -451,6 +471,22 @@
 				break
 
 	qdel(src, force=TRUE)
+
+/obj/docking_port/mobile/proc/intoTheSunset()
+	// Loop over mobs
+	for(var/t in return_turfs())
+		var/turf/T = t
+		for(var/mob/living/M in T.GetAllContents())
+			// If they have a mind and they're not in the brig, they escaped
+			if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
+				M.mind.force_escaped = TRUE
+			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
+			M.notransform = TRUE
+			M.ghostize(FALSE)
+			M.moveToNullspace()
+
+	// Now that mobs are stowed, delete the shuttle
+	jumpToNullSpace()
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
@@ -509,7 +545,11 @@
 	// If we can't dock or we don't have a transit slot, wait for 20 ds,
 	// then try again
 	switch(mode)
-		if(SHUTTLE_CALL)
+		if(SHUTTLE_CALL, SHUTTLE_PREARRIVAL)
+			if(prearrivalTime && mode != SHUTTLE_PREARRIVAL)
+				mode = SHUTTLE_PREARRIVAL
+				setTimer(prearrivalTime)
+				return
 			var/error = initiate_docking(destination, preferred_direction)
 			if(error && error & (DOCKING_NULL_DESTINATION | DOCKING_NULL_SOURCE))
 				var/msg = "A mobile dock in transit exited initiate_docking() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous][ADMIN_JMP(previous)] -> [destination][ADMIN_JMP(destination)])"
@@ -519,6 +559,10 @@
 				return
 			else if(error)
 				setTimer(20)
+				return
+			if(rechargeTime)
+				mode = SHUTTLE_RECHARGING
+				setTimer(rechargeTime)
 				return
 		if(SHUTTLE_RECALL)
 			if(initiate_docking(previous) != DOCKING_SUCCESS)
@@ -622,6 +666,10 @@
 			return "ESC"
 		if(SHUTTLE_STRANDED)
 			return "ERR"
+		if(SHUTTLE_RECHARGING)
+			return "RCH"
+		if(SHUTTLE_PREARRIVAL)
+			return "LDN"
 	return ""
 
 // returns 5-letter timer string, used by status screens and mob status panel
@@ -630,13 +678,34 @@
 		return "--:--"
 
 	var/timeleft = timeLeft()
-	if(timeleft > 0)
+	if(timeleft > 1 HOURS)
+		return "--:--"
+	else if(timeleft > 0)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	else
 		return "00:00"
 
 
 /obj/docking_port/mobile/proc/getStatusText()
+	var/obj/docking_port/stationary/dockedAt = get_docked()
+	var/docked_at = dockedAt?.name || "unknown"
+	if(istype(dockedAt, /obj/docking_port/stationary/transit))
+		if (timeLeft() > 1 HOURS)
+			return "hyperspace"
+		else
+			var/obj/docking_port/stationary/dst
+			if(mode == SHUTTLE_RECALL)
+				dst = previous
+			else
+				dst = destination
+			. = "transit towards [dst?.name || "unknown location"] ([getTimerStr()])"
+	else if(mode == SHUTTLE_RECHARGING)
+		return "[docked_at], recharging [getTimerStr()]"
+	else
+		return docked_at
+
+
+/obj/docking_port/mobile/proc/getDbgStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
 	. = (dockedAt && dockedAt.name) ? dockedAt.name : "unknown"
 	if(istype(dockedAt, /obj/docking_port/stationary/transit))
@@ -645,7 +714,14 @@
 			dst = previous
 		else
 			dst = destination
-		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
+		if(dst)
+			. = "(transit to) [dst.name || dst.id]"
+		else
+			. = "(transit to) nowhere"
+	else if(dockedAt)
+		. = dockedAt.name || dockedAt.id
+	else
+		. = "unknown"
 
 
 // attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
@@ -658,19 +734,47 @@
 	return null
 
 /obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
-	var/s
+	var/selected_sound
 	switch(phase)
 		if(HYPERSPACE_WARMUP)
-			s = 'sound/effects/hyperspace_begin.ogg'
+			selected_sound = "hyperspace_begin"
 		if(HYPERSPACE_LAUNCH)
-			s = 'sound/effects/hyperspace_progress.ogg'
+			selected_sound = "hyperspace_progress"
 		if(HYPERSPACE_END)
-			s = 'sound/effects/hyperspace_end.ogg'
+			selected_sound = "hyperspace_end"
 		else
 			CRASH("Invalid hyperspace sound phase: [phase]")
-	for(var/A in areas)
-		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
-			playsound(E, s, 100, FALSE, max(width, height) - world.view)
+	// This previously was played from each door at max volume, and was one of the worst things I had ever seen.
+	// Now it's instead played from the nearest engine if close, or the first engine in the list if far since it doesn't really matter.
+	// Or a door if for some reason the shuttle has no engine, fuck oh hi daniel fuck it
+	var/range = (engine_coeff * max(width, height))
+	var/long_range = range * 2.5
+	var/atom/distant_source
+	if(engine_list[1])
+		distant_source = engine_list[1]
+	else
+		for(var/A in areas)
+			distant_source = locate(/obj/machinery/door) in A
+			if(distant_source)
+				break
+
+	if(distant_source)
+		for(var/mob/M in SSmobs.clients_by_zlevel[z])
+			var/dist_far = get_dist(M, distant_source)
+			if(dist_far <= long_range && dist_far > range)
+				M.playsound_local(distant_source, "sound/effects/[selected_sound]_distance.ogg", 100, falloff = 20)
+			else if(dist_far <= range)
+				var/source
+				if(engine_list.len == 0)
+					source = distant_source
+				else
+					var/closest_dist = 10000
+					for(var/obj/O in engine_list)
+						var/dist_near = get_dist(M, O)
+						if(dist_near < closest_dist)
+							source = O
+							closest_dist = dist_near
+				M.playsound_local(source, "sound/effects/[selected_sound].ogg", 100, falloff = range / 2)
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time
@@ -682,14 +786,15 @@
 	current_engines = max(0,current_engines + mod)
 	if(in_flight())
 		var/delta_coeff = engine_coeff / old_coeff
-		modTimer(delta_coeff)
-
+		modTimer(delta_coeff) 
+ 
 /obj/docking_port/mobile/proc/count_engines()
 	. = 0
 	for(var/thing in shuttle_areas)
 		var/area/shuttle/areaInstance = thing
 		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
 			if(!QDELETED(E))
+				engine_list += E
 				. += E.engine_power
 
 // Double initial engines to get to 0.5 minimum
@@ -715,7 +820,7 @@
 
 /obj/docking_port/mobile/proc/in_flight()
 	switch(mode)
-		if(SHUTTLE_CALL,SHUTTLE_RECALL)
+		if(SHUTTLE_CALL,SHUTTLE_RECALL,SHUTTLE_PREARRIVAL)
 			return TRUE
 		if(SHUTTLE_IDLE,SHUTTLE_IGNITING)
 			return FALSE

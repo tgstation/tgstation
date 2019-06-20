@@ -5,16 +5,18 @@
 	icon_state = "door1"
 	opacity = 1
 	density = TRUE
+	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 	max_integrity = 350
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
+	damage_deflection = 10
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
-	var/secondsElectrified = 0
+	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby
 	var/visible = TRUE
 	var/operating = FALSE
@@ -30,20 +32,20 @@
 	var/locked = FALSE //whether the door is bolted or not.
 	var/assemblytype //the type of door frame to drop during deconstruction
 	var/datum/effect_system/spark_spread/spark_system
-	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/poddoor = FALSE
+	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 
 /obj/machinery/door/examine(mob/user)
-	..()
+	. = ..()
 	if(red_alert_access)
 		if(GLOB.security_level >= SEC_LEVEL_RED)
-			to_chat(user, "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>")
+			. += "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>"
 		else
-			to_chat(user, "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>")
+			. += "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>"
 	if(!poddoor)
-		to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
+		. += "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>"
 
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
@@ -69,9 +71,11 @@
 	else
 		layer = initial(layer)
 
+/obj/machinery/door/power_change()
+	..()
+	update_icon()
+
 /obj/machinery/door/Destroy()
-	density = FALSE
-	air_update_turf(1)
 	update_freelook_sight()
 	GLOB.airlocks -= src
 	if(spark_system)
@@ -79,7 +83,7 @@
 		spark_system = null
 	return ..()
 
-/obj/machinery/door/CollidedWith(atom/movable/AM)
+/obj/machinery/door/Bumped(atom/movable/AM)
 	if(operating || (obj_flags & EMAGGED))
 		return
 	if(ismob(AM))
@@ -108,7 +112,16 @@
 			else
 				do_animate("deny")
 		return
-	return
+
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(!density || (I.w_class < WEIGHT_CLASS_NORMAL && !LAZYLEN(I.GetAccess())))
+			return
+		if(check_access(I))
+			open()
+		else
+			do_animate("deny")
+		return
 
 /obj/machinery/door/Move()
 	var/turf/T = loc
@@ -156,14 +169,19 @@
 			open()
 		else
 			close()
-		return
+		return TRUE
 	if(density)
 		do_animate("deny")
 
 /obj/machinery/door/allowed(mob/M)
 	if(emergency)
 		return TRUE
+	if(unrestricted_side(M))
+		return TRUE
 	return ..()
+
+/obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	return get_dir(src, M) & unres_sides
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
@@ -172,21 +190,16 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/crowbar) || istype(I, /obj/item/twohanded/fireaxe)))
+	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/twohanded/fireaxe)))
 		try_to_crowbar(I, user)
 		return 1
-	else if(istype(I, /obj/item/weldingtool))
+	else if(I.tool_behaviour == TOOL_WELDER)
 		try_to_weld(I, user)
 		return 1
 	else if(!(I.item_flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
 		try_to_activate_door(user)
 		return 1
 	return ..()
-
-/obj/machinery/door/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < damage_deflection)
-		return 0
-	. = ..()
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -213,13 +226,13 @@
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
 	if(prob(severity*10 - 20))
-		if(secondsElectrified == 0)
-			secondsElectrified = -1
+		if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
+			secondsElectrified = MACHINE_ELECTRIFIED_PERMANENT
 			LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
 			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 
 /obj/machinery/door/proc/unelectrify()
-	secondsElectrified = 0
+	secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 /obj/machinery/door/update_icon()
 	if(density)
@@ -311,10 +324,10 @@
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.emote("scream")
-			L.Knockdown(100)
+			L.Paralyze(100)
 		else if(ismonkey(L)) //For monkeys
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			L.Knockdown(100)
+			L.Paralyze(100)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)

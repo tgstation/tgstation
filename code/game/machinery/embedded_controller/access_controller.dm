@@ -159,22 +159,21 @@
 		closeDoor(A)
 
 /obj/machinery/doorButtons/airlock_controller/proc/closeDoor(obj/machinery/door/airlock/A)
-	set waitfor = FALSE
 	if(A.density)
 		goIdle()
-		return 0
+		return FALSE
 	update_icon()
+	A.safe = FALSE //Door crushies, manual door after all. Set every time in case someone changed it, safe doors can end up waiting forever.
 	A.unbolt()
-	. = 1
-	if(A && A.close())
+	if(A.close())
 		if(stat & NOPOWER || lostPower || !A || QDELETED(A))
-			goIdle(1)
-			return
+			goIdle(TRUE)
+			return FALSE
 		A.bolt()
-		if(busy == CLOSING)
-			goIdle(1)
-	else
-		goIdle(1)
+		goIdle(TRUE)
+		return TRUE
+	goIdle(TRUE)
+	return FALSE
 
 /obj/machinery/doorButtons/airlock_controller/proc/cycleClose(obj/machinery/door/airlock/A)
 	if(!A || !exteriorAirlock || !interiorAirlock)
@@ -192,7 +191,7 @@
 
 /obj/machinery/doorButtons/airlock_controller/proc/cycleOpen(obj/machinery/door/airlock/A)
 	if(!A)
-		goIdle(1)
+		goIdle(TRUE)
 	if(A == exteriorAirlock)
 		if(interiorAirlock)
 			if(!interiorAirlock.density || !interiorAirlock.locked)
@@ -207,17 +206,17 @@
 
 /obj/machinery/doorButtons/airlock_controller/proc/openDoor(obj/machinery/door/airlock/A)
 	if(exteriorAirlock && interiorAirlock && (!exteriorAirlock.density || !interiorAirlock.density))
-		goIdle(1)
+		goIdle(TRUE)
 		return
 	A.unbolt()
 	spawn()
 		if(A && A.open())
 			if(stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
 				A.bolt()
-		goIdle(1)
+		goIdle(TRUE)
 
 /obj/machinery/doorButtons/airlock_controller/proc/goIdle(update)
-	lostPower = 0
+	lostPower = FALSE
 	busy = FALSE
 	if(update)
 		update_icon()
@@ -234,10 +233,10 @@
 /obj/machinery/doorButtons/airlock_controller/power_change()
 	..()
 	if(stat & NOPOWER)
-		lostPower = 1
+		lostPower = TRUE
 	else
 		if(!busy)
-			lostPower = 0
+			lostPower = FALSE
 	update_icon()
 
 /obj/machinery/doorButtons/airlock_controller/findObjsByTag()

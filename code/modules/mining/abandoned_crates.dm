@@ -169,6 +169,7 @@
 				locked = FALSE
 				cut_overlays()
 				add_overlay("securecrateg")
+				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 			else if (input == null || sanitycheck == null || length(input) != codelen)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
@@ -187,7 +188,7 @@
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
-		if(istype(W, /obj/item/multitool))
+		if(W.tool_behaviour == TOOL_MULTITOOL)
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")

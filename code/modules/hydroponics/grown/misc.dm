@@ -14,7 +14,7 @@
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
-	mutatelist = list(/obj/item/seeds/harebell)
+	mutatelist = list(/obj/item/seeds/starthistle/corpse_flower)
 
 /obj/item/seeds/starthistle/harvest(mob/user)
 	var/obj/machinery/hydroponics/parent = loc
@@ -27,6 +27,40 @@
 			harvestseeds.forceMove(output_loc)
 
 	parent.update_tray()
+
+// Corpse flower
+/obj/item/seeds/starthistle/corpse_flower
+	name = "pack of corpse flower seeds"
+	desc = "A species of plant that emits a horrible odor. The odor stops being produced in difficult atmospheric conditions."
+	icon_state = "seed-corpse-flower"
+	species = "corpse-flower"
+	plantname = "Corpse flower"
+	production = 2
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	genes = list()
+	mutatelist = list()
+
+/obj/item/seeds/starthistle/corpse_flower/pre_attack(obj/machinery/hydroponics/I)
+	if(istype(I, /obj/machinery/hydroponics))
+		if(!I.myseed)
+			START_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/seeds/starthistle/corpse_flower/process()
+	var/obj/machinery/hydroponics/parent = loc
+	if(parent.age < maturation) // Start a little before it blooms
+		return
+
+	var/turf/open/T = get_turf(parent)
+	if(abs(ONE_ATMOSPHERE - T.return_air().return_pressure()) > (potency/10 + 10)) // clouds can begin showing at around 50-60 potency in standard atmos
+		return
+
+	var/datum/gas_mixture/stank = new
+	ADD_GAS(/datum/gas/miasma, stank.gases)
+	stank.gases[/datum/gas/miasma][MOLES] = (yield + 6)*7*MIASMA_CORPSE_MOLES // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
+	T.assume_air(stank)
+	T.air_update_turf()
 
 // Cabbage
 /obj/item/seeds/cabbage
@@ -45,7 +79,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/cabbage
 	seed = /obj/item/seeds/cabbage
@@ -55,7 +89,7 @@
 	filling_color = "#90EE90"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-
+	wine_power = 20
 
 // Sugarcane
 /obj/item/seeds/sugarcane
@@ -70,8 +104,9 @@
 	endurance = 50
 	maturation = 3
 	yield = 4
-	growthstages = 3
-	reagents_add = list("sugar" = 0.25)
+	growthstages = 2
+	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
+	mutatelist = list(/obj/item/seeds/bamboo)
 
 /obj/item/reagent_containers/food/snacks/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
@@ -81,7 +116,7 @@
 	filling_color = "#FFD700"
 	bitesize_mod = 2
 	foodtype = VEGETABLES | SUGAR
-
+	distill_reagent = /datum/reagent/consumable/ethanol/rum
 
 // Gatfruit
 /obj/item/seeds/gatfruit
@@ -101,7 +136,7 @@
 	growthstages = 2
 	rarity = 60 // Obtainable only with xenobio+superluck.
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	reagents_add = list("sulfur" = 0.1, "carbon" = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)
+	reagents_add = list(/datum/reagent/sulfur = 0.1, /datum/reagent/carbon = 0.1, /datum/reagent/nitrogen = 0.07, /datum/reagent/potassium = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/shell/gatfruit
 	seed = /obj/item/seeds/gatfruit
@@ -112,6 +147,7 @@
 	bitesize_mod = 2
 	foodtype = FRUIT
 	tastes = list("gunpowder" = 1)
+	wine_power = 90 //It burns going down, too.
 
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb
@@ -122,7 +158,7 @@
 	plantname = "Cherry Bomb Tree"
 	product = /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
 	mutatelist = list()
-	reagents_add = list("nutriment" = 0.1, "sugar" = 0.1, "blackpowder" = 0.7)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/blackpowder = 0.7)
 	rarity = 60 //See above
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
@@ -134,11 +170,11 @@
 	bitesize_mod = 2
 	volume = 125 //Gives enough room for the black powder at max potency
 	max_integrity = 40
+	wine_power = 80
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
-	message_admins("[ADMIN_LOOKUPFLW(user)] primed a cherry bomb for detonation at [ADMIN_VERBOSEJMP(user)]")
-	log_game("[key_name(user)] primed a cherry bomb for detonation at [AREACOORD(user)].")
+	log_bomber(user, "primed a", src, "for detonation")
 	prime()
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/deconstruct(disassembled = TRUE)
@@ -155,15 +191,3 @@
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
 	reagents.chem_temp = 1000 //Sets off the black powder
 	reagents.handle_reactions()
-
-// Lavaland cactus
-
-/obj/item/seeds/lavaland/cactus
-	name = "pack of fruiting cactus seeds"
-	desc = "These seeds grow into fruiting cacti."
-	icon_state = "seed-cactus"
-	species = "cactus"
-	plantname = "Fruiting Cactus"
-	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	growthstages = 2

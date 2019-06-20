@@ -59,7 +59,7 @@
 /obj/item/areaeditor/blueprints/attack_self(mob/user)
 	. = ..()
 	if(!legend)
-		var/area/A = get_area()
+		var/area/A = get_area(user)
 		if(get_area_type() == AREA_STATION)
 			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 			. += "<p><a href='?src=[REF(src)];edit_area=1'>Change area name</a></p>"
@@ -140,22 +140,19 @@
 	legend = FALSE
 
 
-/obj/item/areaeditor/proc/get_area()
-	var/turf/T = get_turf(usr)
-	var/area/A = T.loc
-	return A
-
-/obj/item/areaeditor/proc/get_area_type(area/A = get_area())
+/obj/item/areaeditor/proc/get_area_type(area/A)
+	if (!A)
+		A = get_area(usr)
 	if(A.outdoors)
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,
-		/area/admin,
-		/area/arrival,
 		/area/centcom,
 		/area/asteroid,
 		/area/tdome,
-		/area/wizard_station
+		/area/wizard_station,
+		/area/hilbertshotel,
+		/area/hilbertshotelstorage
 	)
 	for (var/type in SPECIALS)
 		if ( istype(A,type) )
@@ -183,7 +180,7 @@
 	return ""
 
 /obj/item/areaeditor/proc/edit_area()
-	var/area/A = get_area()
+	var/area/A = get_area(usr)
 	var/prevname = "[A.name]"
 	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
@@ -191,20 +188,38 @@
 	if(length(str) > 50)
 		to_chat(usr, "<span class='warning'>The given name is too long.  The area's name is unchanged.</span>")
 		return
-	set_area_machinery_title(A,str,prevname)
-	A.name = str
-	if(A.firedoors)
-		for(var/D in A.firedoors)
-			var/obj/machinery/door/firedoor/FD = D
-			FD.CalculateAffectingAreas()
+
+	rename_area(A, str)
+
 	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
 	log_game("[key_name(usr)] has renamed [prevname] to [str]")
 	A.update_areasize()
 	interact()
-	return 1
+	return TRUE
+
+//Blueprint Subtypes
+
+/obj/item/areaeditor/blueprints/cyborg
+	name = "station schematics"
+	desc = "A digital copy of the station blueprints stored in your memory."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "blueprints"
+	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."
+
+/proc/rename_area(a, new_name)
+	var/area/A = get_area(a)
+	var/prevname = "[A.name]"
+	set_area_machinery_title(A, new_name, prevname)
+	A.name = new_name
+	if(A.firedoors)
+		for(var/D in A.firedoors)
+			var/obj/machinery/door/firedoor/FD = D
+			FD.CalculateAffectingAreas()
+	A.update_areasize()
+	return TRUE
 
 
-/obj/item/areaeditor/proc/set_area_machinery_title(area/A,title,oldtitle)
+/proc/set_area_machinery_title(area/A, title, oldtitle)
 	if(!oldtitle) // or replacetext goes to infinite loop
 		return
 	for(var/obj/machinery/airalarm/M in A)
@@ -218,12 +233,3 @@
 	for(var/obj/machinery/door/M in A)
 		M.name = replacetext(M.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
-
-//Blueprint Subtypes
-
-/obj/item/areaeditor/blueprints/cyborg
-	name = "station schematics"
-	desc = "A digital copy of the station blueprints stored in your memory."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "blueprints"
-	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."

@@ -1,5 +1,5 @@
 /datum/species/dullahan
-	name = "dullahan"
+	name = "Dullahan"
 	id = "dullahan"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
@@ -10,9 +10,9 @@
 	mutanteyes = /obj/item/organ/eyes/dullahan
 	mutanttongue = /obj/item/organ/tongue/dullahan
 	mutantears = /obj/item/organ/ears/dullahan
-	blacklisted = TRUE
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 
 	var/obj/item/dullahan_relay/myhead
 
@@ -68,17 +68,17 @@
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
+	modifies_speech = TRUE
 
-/obj/item/organ/tongue/dullahan/TongueSpeech(var/message)
+/obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		if(H.dna.species.id == "dullahan")
 			var/datum/species/dullahan/D = H.dna.species
 			if(isobj(D.myhead.loc))
 				var/obj/O = D.myhead.loc
-				O.say(message)
-	message = ""
-	return message
+				O.say(speech_args[SPEECH_MESSAGE])
+	speech_args[SPEECH_MESSAGE] = ""
 
 /obj/item/organ/ears/dullahan
 	zone = "abstract"
@@ -122,6 +122,7 @@
 		qdel(src)
 
 /obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	if(!QDELETED(owner))
 		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 		to_chat(owner,message)

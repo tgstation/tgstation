@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
-	..()
+	return ..()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
 	if(!istype(manipulator))
@@ -135,6 +135,8 @@ SUBSYSTEM_DEF(shuttle)
 			++alive
 
 	var/total = GLOB.joined_player_list.len
+	if(total <= 0)
+		return //no players no autoevac
 
 	if(alive / total <= threshold)
 		var/msg = "Automatically dispatching shuttle due to crew death."
@@ -169,7 +171,7 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \
 			shuttle was called. Using the backup shuttle instead.")
 		if(!backup_shuttle)
-			throw EXCEPTION("requestEvac(): There is no emergency shuttle, \
+			CRASH("requestEvac(): There is no emergency shuttle, \
 			or backup shuttle! The game will be unresolvable. This is \
 			possibly a mapping error, more likely a bug with the shuttle \
 			manipulation system, or badminry. It is possible to manually \
@@ -218,10 +220,18 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+
+	if(!frequency)
+		return
+
+	var/datum/signal/status_signal = new(list("command" = "update")) // Start processing shuttle-mode displays to display the timer
+	frequency.post_signal(src, status_signal)
+
 	var/area/A = get_area(user)
 
 	log_game("[key_name(user)] has called the shuttle.")
-	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> has called the shuttle at <span class='name'>[A.name]</span>.</span>", user)
+	deadchat_broadcast(" has called the shuttle at <span class='name'>[A.name]</span>.", "<span class='name'>[user.real_name]</span>", user)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
@@ -259,7 +269,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-		deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.</span>", user)
+		deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
@@ -393,7 +403,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
-		throw EXCEPTION("[M] is not a mobile docking port")
+		CRASH("[M] is not a mobile docking port")
 
 	if(M.assigned_transit)
 		return
@@ -529,9 +539,10 @@ SUBSYSTEM_DEF(shuttle)
 	if (istype(SSshuttle.shuttle_purchase_requirements_met))
 		shuttle_purchase_requirements_met = SSshuttle.shuttle_purchase_requirements_met
 
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
-	points = SSshuttle.points
+	points = D.account_balance
 	emergencyNoEscape = SSshuttle.emergencyNoEscape
 	emergencyCallAmount = SSshuttle.emergencyCallAmount
 	shuttle_purchased = SSshuttle.shuttle_purchased

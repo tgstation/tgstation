@@ -49,6 +49,8 @@
 		var/datum/track/T = new()
 		T.song_path = file("config/jukebox_music/sounds/[S]")
 		var/list/L = splittext(S,"+")
+		if(L.len != 3)
+			continue
 		T.song_name = L[1]
 		T.song_length = text2num(L[2])
 		T.song_beat = text2num(L[3])
@@ -63,7 +65,7 @@
 
 /obj/machinery/jukebox/attackby(obj/item/O, mob/user, params)
 	if(!active && !(flags_1 & NODECONSTRUCT_1))
-		if(istype(O, /obj/item/wrench))
+		if(O.tool_behaviour == TOOL_WRENCH)
 			if(!anchored && !isinspace())
 				to_chat(user,"<span class='notice'>You secure [src] to the floor.</span>")
 				setAnchored(TRUE)
@@ -229,11 +231,11 @@
 		sparkles += S
 		switch(i)
 			if(1 to 8)
-				S.orbit(src, 30, TRUE, 60, 36, TRUE, FALSE)
+				S.orbit(src, 30, TRUE, 60, 36, TRUE)
 			if(9 to 16)
-				S.orbit(src, 62, TRUE, 60, 36, TRUE, FALSE)
+				S.orbit(src, 62, TRUE, 60, 36, TRUE)
 			if(17 to 24)
-				S.orbit(src, 95, TRUE, 60, 36, TRUE, FALSE)
+				S.orbit(src, 95, TRUE, 60, 36, TRUE)
 			if(25)
 				S.pixel_y = 7
 				S.forceMove(get_turf(src))
@@ -375,10 +377,8 @@
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
-			// update resting manually to avoid chat spam
 			for(var/mob/living/carbon/NS in rangers)
-				NS.resting = !NS.resting
-				NS.update_canmove()
+				NS.set_resting(!NS.resting, TRUE)
 		 time--
 
 /obj/machinery/jukebox/disco/proc/dance5(var/mob/living/M)
@@ -461,5 +461,9 @@
 	. = ..()
 	if(active)
 		for(var/mob/M in rangers)
-			if(prob(5+(allowed(M)*4)) && M.canmove)
+			if(prob(5+(allowed(M)*4)))
+				if(isliving(M))
+					var/mob/living/L = M
+					if(!(L.mobility_flags & MOBILITY_MOVE))
+						continue
 				dance(M)

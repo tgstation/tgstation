@@ -112,7 +112,6 @@
 /area/awaymission/beach)
 "av" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -124,7 +123,6 @@
 /area/awaymission/beach)
 "ax" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -221,7 +219,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aO" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "aP" = (

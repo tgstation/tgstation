@@ -134,7 +134,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		shuttleId = "mining" //The base can only be dropped once, so this gives the console a new purpose.
 		possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 
-/obj/machinery/computer/auxillary_base/proc/set_landing_zone(turf/T, mob/user, var/no_restrictions)
+/obj/machinery/computer/auxillary_base/proc/set_landing_zone(turf/T, mob/user, no_restrictions)
 	var/obj/docking_port/mobile/auxillary_base/base_dock = locate(/obj/docking_port/mobile/auxillary_base) in SSshuttle.mobile
 	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
 		to_chat(user, "<span class='warning'>This station is not equipped with an auxillary base. Please contact your Nanotrasen contractor.</span>")
@@ -151,8 +151,8 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(!is_mining_level(T.z))
 			return BAD_ZLEVEL
 
-		var/colony_radius = CEILING(max(base_dock.width, base_dock.height)*0.5, 1)
-		var/list/colony_turfs = block(locate(T.x - colony_radius, T.y - colony_radius, T.z), locate(T.x + colony_radius, T.y + colony_radius, T.z))
+		
+		var/list/colony_turfs = base_dock.return_ordered_turfs(T.x,T.y,T.z,base_dock.dir)
 		for(var/i in 1 to colony_turfs.len)
 			CHECK_TICK
 			var/turf/place = colony_turfs[i]
@@ -239,7 +239,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/docking_port/mobile/auxillary_base
 	name = "auxillary base"
 	id = "colony_drop"
-	timid = FALSE
 	//Reminder to map-makers to set these values equal to the size of your base.
 	dheight = 4
 	dwidth = 4
@@ -355,7 +354,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			qdel(Mport)
 			return
 
-	if(!mining_shuttle.canDock(Mport))
+	if(mining_shuttle.canDock(Mport) != SHUTTLE_CAN_DOCK)
 		to_chat(user, "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>")
 		SSshuttle.stationary.Remove(Mport)
 		qdel(Mport)

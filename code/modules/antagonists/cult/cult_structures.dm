@@ -29,10 +29,10 @@
 
 
 /obj/structure/destructible/cult/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
+	. = ..()
+	. += "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
-		to_chat(user, "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		. += "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>"
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(iscultist(user) || isobserver(user))
@@ -57,7 +57,6 @@
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))
 		anchored = !anchored
-		density = !density
 		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
 		if(!anchored)
 			icon_state = "[initial(icon_state)]_off"
@@ -76,7 +75,7 @@
 
 /obj/structure/destructible/cult/talisman
 	name = "altar"
-	desc = "A bloodstained altar dedicated to Nar-Sie."
+	desc = "A bloodstained altar dedicated to Nar'Sie."
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
 
@@ -110,7 +109,7 @@
 
 /obj/structure/destructible/cult/forge
 	name = "daemon forge"
-	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
+	desc = "A forge used in crafting the unholy weapons used by the armies of Nar'Sie."
 	icon_state = "forge"
 	light_range = 2
 	light_color = LIGHT_COLOR_LAVA
@@ -131,7 +130,7 @@
 		return
 	var/choice
 	if(user.mind.has_antag_datum(/datum/antagonist/cult/master))
-		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
+		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
 	else
 		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
 	var/list/pickedtype = list()
@@ -140,14 +139,6 @@
 			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
 			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker
-		if("Bastard Sword")
-			if((world.time - SSticker.round_start_time) >= 12000)
-				pickedtype += /obj/item/twohanded/required/cult_bastard
-			else
-				cooldowntime = 12000 - (world.time - SSticker.round_start_time)
-				to_chat(user, "<span class='cult italic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
-				cooldowntime = 0
-				return
 		if("Mirror Shield")
 			pickedtype += /obj/item/shield/mirror
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
@@ -221,7 +212,10 @@
 
 		var/turf/T = safepick(validturfs)
 		if(T)
-			T.ChangeTurf(/turf/open/floor/engine/cult)
+			if(istype(T, /turf/open/floor/plating))
+				T.PlaceOnTop(/turf/open/floor/engine/cult)
+			else
+				T.ChangeTurf(/turf/open/floor/engine/cult)
 		else
 			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
 			if(F)

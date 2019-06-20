@@ -4,11 +4,11 @@ GLOBAL_VAR_INIT(servants_active, FALSE) //This var controls whether or not a lot
 
 CLOCKWORK CULT: Based off of the failed pull requests from /vg/
 
-While Nar-Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
-Ratvar, the Clockwork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
+While Nar'Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
+Ratvar, the Clockwork Justiciar, a homage to Nar'Sie granted sentience by its own power, is one such other force.
 Imprisoned within a massive construct known as the Celestial Derelict - or Reebe - an intense hatred of the Blood God festers.
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
-Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
+Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar'Sie, who can only influence natural life.
 
 This is a team-based gamemode, and the team's objective is shared by all cultists. Their goal is to defend an object called the Ark on a separate z-level.
 
@@ -59,8 +59,12 @@ Credit where due:
 			return FALSE
 	else
 		return FALSE
-	if(iscultist(M) || isconstruct(M) || M.isloyal() || ispAI(M))
+	if(iscultist(M) || isconstruct(M) || ispAI(M))
 		return FALSE
+	if(isliving(M))
+		var/mob/living/L = M
+		if(HAS_TRAIT(L, TRAIT_MINDSHIELD))
+			return FALSE
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
 	return FALSE
@@ -124,6 +128,7 @@ Credit where due:
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
+	report_type = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
 	required_players = 24
@@ -144,11 +149,13 @@ Credit where due:
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	var/list/errorList = list()
-	SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
+	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
 	if(errorList.len)	// reebe failed to load
 		message_admins("Reebe failed to load!")
 		log_game("Reebe failed to load!")
 		return FALSE
+	for(var/datum/parsed_map/PM in reebes)
+		PM.initTemplateBounds()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
@@ -172,13 +179,15 @@ Credit where due:
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
+	var/list/spread_out_spawns = GLOB.servant_spawns.Copy()
 	for(var/S in servants_to_serve)
+		if(!spread_out_spawns.len) //cycle through the list again if we've used all the inital spawnpoints.
+			spread_out_spawns = GLOB.servant_spawns.Copy()
 		var/datum/mind/servant = S
 		log_game("[key_name(servant)] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
-		var/turf/T = pick(GLOB.servant_spawns)
+		var/turf/T = pick_n_take(spread_out_spawns)
 		L.forceMove(T)
-		GLOB.servant_spawns -= T
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
@@ -342,6 +351,6 @@ Credit where due:
 	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
 
 /obj/item/paper/servant_primer/examine(mob/user)
+	. = ..()
 	if(!is_servant_of_ratvar(user) && !isobserver(user))
-		to_chat(user, "<span class='danger'>You can't understand any of the words on [src].</span>")
-	..()
+		. += "<span class='danger'>You can't understand any of the words on [src].</span>"

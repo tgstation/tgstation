@@ -55,9 +55,9 @@
 /obj/structure/life_candle/examine(mob/user)
 	. = ..()
 	if(linked_minds.len)
-		to_chat(user, "[src] is active, and linked to [linked_minds.len] souls.")
+		. += "[src] is active, and linked to [linked_minds.len] souls."
 	else
-		to_chat(user, "It is static, still, unmoving.")
+		. += "It is static, still, unmoving."
 
 /obj/structure/life_candle/process()
 	if(!linked_minds.len)

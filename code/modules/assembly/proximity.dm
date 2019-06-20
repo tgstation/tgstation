@@ -21,8 +21,8 @@
 	. = ..()
 
 /obj/item/assembly/prox_sensor/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].</span>")
+	. = ..()
+	. += "<span class='notice'>The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].</span>"
 
 /obj/item/assembly/prox_sensor/activate()
 	if(!..())
@@ -131,7 +131,7 @@
 
 /obj/item/assembly/prox_sensor/Topic(href, href_list)
 	..()
-	if(usr.incapacitated() || !in_range(loc, usr))
+	if(!usr.canUseTopic(src, BE_CLOSE))
 		usr << browse(null, "window=prox")
 		onclose(usr, "prox")
 		return
@@ -157,4 +157,3 @@
 
 	if(usr)
 		attack_self(usr)
-

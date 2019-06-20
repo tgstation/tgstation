@@ -3,7 +3,7 @@ For the main html chat area
 *********************************/
 
 //Precaching a bunch of shit
-GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of icons for the browser output
+GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of icons for the browser output
 
 //On client, created on login
 /datum/chatOutput
@@ -81,6 +81,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 		if("setMusicVolume")
 			data = setMusicVolume(arglist(params))
+		if("swaptodarkmode")
+			swaptodarkmode()
+		if("swaptolightmode")
+			swaptolightmode()
 
 	if(data)
 		ehjax_send(data = data)
@@ -115,12 +119,16 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
 
-/datum/chatOutput/proc/sendMusic(music, pitch)
+/datum/chatOutput/proc/sendMusic(music, list/extra_data)
 	if(!findtext(music, GLOB.is_http_protocol))
 		return
 	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
-	if(pitch)
-		music_data["musicRate"] = pitch
+
+	if(extra_data?.len)
+		music_data["musicRate"] = extra_data["pitch"]
+		music_data["musicSeek"] = extra_data["start"]
+		music_data["musicHalt"] = extra_data["end"]
+
 	ehjax_send(data = music_data)
 
 /datum/chatOutput/proc/stopMusic()
@@ -154,7 +162,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
-				if (world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only=TRUE))
+				if (world.IsBanned(row["ckey"], row["ip"], row["compid"], real_bans_only=TRUE))
 					found = row
 					break
 
@@ -175,65 +183,61 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
 //Global chat procs
-
 /proc/to_chat(target, message, handle_whitespace=TRUE)
 	if(!target)
-		return
-
-	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
-	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
-	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
-		CRASH("Invalid message! [message]")
-
-	if(!istext(message))
 		return
 
 	if(target == world)
 		target = GLOB.clients
 
-	var/list/targets
-	if(!islist(target))
-		targets = list(target)
-	else
-		targets = target
-		if(!targets.len)
-			return
 	var/original_message = message
-	//Some macros remain in the string even after parsing and fuck up the eventual output
-	message = replacetext(message, "\improper", "")
-	message = replacetext(message, "\proper", "")
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
 
-	for(var/I in targets)
-		//Grab us a client if possible
-		var/client/C
-		if (ismob(I))
-			var/mob/M = I
-			if(M.client)
-				C = M.client
-		else if(istype(I, /client))
-			C = I
-		else if(istype(I, /datum/mind))
-			var/datum/mind/M = I
-			if(M.current && M.current.client)
-				C = M.current.client
-			
+	if(islist(target))
+		// Do the double-encoding outside the loop to save nanoseconds
+		var/twiceEncoded = url_encode(url_encode(message))
+		for(var/I in target)
+			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
+
+			if (!C)
+				continue
+
+			//Send it to the old style output window.
+			SEND_TEXT(C, original_message)
+
+			if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+				continue
+
+			if(!C.chatOutput.loaded)
+				//Client still loading, put their messages in a queue
+				C.chatOutput.messageQueue += message
+				continue
+
+			C << output(twiceEncoded, "browseroutput:output")
+	else
+		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
 
 		if (!C)
-			continue
+			return
 
 		//Send it to the old style output window.
 		SEND_TEXT(C, original_message)
 
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-			continue
+			return
 
 		if(!C.chatOutput.loaded)
 			//Client still loading, put their messages in a queue
 			C.chatOutput.messageQueue += message
-			continue
+			return
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
+
+/datum/chatOutput/proc/swaptolightmode() //Dark mode light mode stuff. Yell at KMC if this breaks! (See darkmode.dm for documentation)
+	owner.force_white_theme()
+
+/datum/chatOutput/proc/swaptodarkmode()
+	owner.force_dark_theme()

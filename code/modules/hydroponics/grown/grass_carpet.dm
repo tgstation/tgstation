@@ -16,7 +16,7 @@
 	icon_dead = "grass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grass/carpet)
-	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/grass
 	seed = /obj/item/seeds/grass
@@ -27,6 +27,7 @@
 	bitesize_mod = 2
 	var/stacktype = /obj/item/stack/tile/grass
 	var/tile_coefficient = 0.02 // 1/50
+	wine_power = 15
 
 /obj/item/reagent_containers/food/snacks/grown/grass/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You prepare the astroturf.</span>")
@@ -44,7 +45,7 @@
 	name = "pack of carpet seeds"
 	desc = "These seeds grow into stylish carpet samples."
 	icon_state = "seed-carpet"
-	species = "carpet"
+	species = /datum/reagent/carpet
 	plantname = "Carpet"
 	product = /obj/item/reagent_containers/food/snacks/grown/grass/carpet
 	mutatelist = list()
@@ -56,3 +57,4 @@
 	desc = "The textile industry's dark secret."
 	icon_state = "carpetclump"
 	stacktype = /obj/item/stack/tile/carpet
+	can_distill = FALSE

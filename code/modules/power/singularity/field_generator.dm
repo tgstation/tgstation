@@ -161,7 +161,7 @@ field_generator power level display
 	if(Proj.flag != "bullet")
 		power = min(power + Proj.damage, field_generator_max_power)
 		check_power_level()
-	..()
+	. = ..()
 
 
 /obj/machinery/field/generator/Destroy()
@@ -245,6 +245,7 @@ field_generator power level display
 	if(state != FG_WELDED || !anchored)
 		turn_off()
 		return
+	move_resist = INFINITY
 	spawn(1)
 		setup_field(1)
 	spawn(2)
@@ -335,6 +336,8 @@ field_generator power level display
 					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
 					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
+
+	move_resist = initial(move_resist)
 
 /obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)

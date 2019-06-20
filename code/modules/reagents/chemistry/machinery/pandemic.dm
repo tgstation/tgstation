@@ -24,11 +24,27 @@
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/computer/pandemic/handle_atom_del(atom/A)
+/obj/machinery/computer/pandemic/examine(mob/user)
 	. = ..()
+	if(beaker)
+		var/is_close
+		if(Adjacent(user)) //don't reveal exactly what's inside unless they're close enough to see the UI anyway.
+			. += "It contains \a [beaker]."
+			is_close = TRUE
+		else
+			. += "It has a beaker inside it."
+		. += "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>"
+
+/obj/machinery/computer/pandemic/AltClick(mob/user)
+	. = ..()
+	if(user.canUseTopic(src, BE_CLOSE))
+		eject_beaker()
+
+/obj/machinery/computer/pandemic/handle_atom_del(atom/A)
 	if(A == beaker)
 		beaker = null
 		update_icon()
+	return ..()
 
 /obj/machinery/computer/pandemic/proc/get_by_index(thing, index)
 	if(!beaker || !beaker.reagents)
@@ -112,7 +128,7 @@
 /obj/machinery/computer/pandemic/proc/reset_replicator_cooldown()
 	wait = FALSE
 	update_icon()
-	playsound(loc, 'sound/machines/ping.ogg', 30, 1)
+	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
 /obj/machinery/computer/pandemic/update_icon()
 	if(stat & BROKEN)
@@ -150,9 +166,9 @@
 				var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 				if(B)
 					data["has_blood"] = TRUE
-					data["blood"] = list()
-					data["blood"]["dna"] = B.data["blood_DNA"] || "none"
-					data["blood"]["type"] = B.data["blood_type"] || "none"
+					data[/datum/reagent/blood] = list()
+					data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
+					data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
 					data["viruses"] = get_viruses_data(B)
 					data["resistances"] = get_resistance_data(B)
 		if(SYMPTOM_DETAILS)
@@ -188,9 +204,11 @@
 				A.AssignName(new_name)
 				. = TRUE
 		if("create_culture_bottle")
+			if (wait)
+				return
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
-			if(!A.mutable)
+			if(!istype(A) || !A.mutable)
 				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
 				return
 			A = A.Copy()
@@ -198,17 +216,21 @@
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
-			B.reagents.add_reagent("blood", 20, data)
+			B.reagents.add_reagent(/datum/reagent/blood, 20, data)
 			wait = TRUE
 			update_icon()
+			var/turf/source_turf = get_turf(src)
+			log_virus("A culture bottle was printed for the virus [A.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			. = TRUE
 		if("create_vaccine_bottle")
+			if (wait)
+				return
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[D.name] vaccine bottle"
-			B.reagents.add_reagent("vaccine", 15, list(id))
+			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 			wait = TRUE
 			update_icon()
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)

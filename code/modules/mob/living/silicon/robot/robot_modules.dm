@@ -30,8 +30,9 @@
 
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
-	var/ride_allow_incapacitated = FALSE
+	var/ride_allow_incapacitated = TRUE
 	var/allow_riding = TRUE
+	var/canDispose = FALSE // Whether the borg can stuff itself into disposal
 
 /obj/item/robot_module/Initialize()
 	. = ..()
@@ -119,7 +120,7 @@
 	if(I.loc != src)
 		I.forceMove(src)
 	modules += I
-	I.item_flags |= NODROP
+	ADD_TRAIT(I, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += I
@@ -145,7 +146,7 @@
 		if(istype(I, /obj/item/assembly/flash))
 			var/obj/item/assembly/flash/F = I
 			F.times_used = 0
-			F.crit_fail = 0
+			F.burnt_out = FALSE
 			F.update_icon()
 		else if(istype(I, /obj/item/melee/baton))
 			var/obj/item/melee/baton/B = I
@@ -389,10 +390,13 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
+		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
 		/obj/item/mop/cyborg,
+		/obj/item/reagent_containers/glass/bucket,
+		/obj/item/paint/paint_remover,
 		/obj/item/lightreplacer/cyborg,
-		/obj/item/holosign_creator,
+		/obj/item/holosign_creator/janibarrier,
 		/obj/item/reagent_containers/spray/cyborg_drying)
 	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
 	ratvar_modules = list(
@@ -406,11 +410,11 @@
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
 	color = "#A000A0"
-	list_reagents = list("drying_agent" = 250)
+	list_reagents = list(/datum/reagent/drying_agent = 250)
 
 /obj/item/reagent_containers/spray/cyborg_lube
 	name = "lube spray"
-	list_reagents = list("lube" = 250)
+	list_reagents = list(/datum/reagent/lube = 250)
 
 /obj/item/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
@@ -421,11 +425,11 @@
 
 	var/obj/item/reagent_containers/spray/cyborg_drying/CD = locate(/obj/item/reagent_containers/spray/cyborg_drying) in basic_modules
 	if(CD)
-		CD.reagents.add_reagent("drying_agent", 5 * coeff)
+		CD.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
 
 	var/obj/item/reagent_containers/spray/cyborg_lube/CL = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
 	if(CL)
-		CL.reagents.add_reagent("lube", 2 * coeff)
+		CL.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
 
 /obj/item/robot_module/clown
 	name = "Clown"
@@ -469,9 +473,9 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
-		/obj/item/instrument/violin,
+		/obj/item/rsf,
 		/obj/item/instrument/guitar,
-		/obj/item/rsf/cyborg,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
@@ -488,7 +492,7 @@
 	..()
 	var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
 	if(O)
-		O.reagents.add_reagent("enzyme", 2 * coeff)
+		O.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
@@ -524,7 +528,6 @@
 		/obj/item/weldingtool/mini,
 		/obj/item/extinguisher/mini,
 		/obj/item/storage/bag/sheetsnatcher/borg,
-		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
@@ -536,6 +539,16 @@
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	hat_offset = 0
+	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes.
+
+/obj/item/robot_module/miner/rebuild_modules()
+	. = ..()
+	if(!mining_scanner)
+		mining_scanner = new(src)
+
+/obj/item/robot_module/miner/Destroy()
+	QDEL_NULL(mining_scanner)
+	return ..()
 
 /obj/item/robot_module/syndicate
 	name = "Syndicate Assault"
@@ -595,6 +608,40 @@
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
 	hat_offset = 3
+
+/obj/item/robot_module/saboteur
+	name = "Syndicate Saboteur"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/borg/sight/thermal,
+		/obj/item/construction/rcd/borg/syndicate,
+		/obj/item/pipe_dispenser,
+		/obj/item/extinguisher,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/screwdriver/nuke,
+		/obj/item/wrench/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/multitool/cyborg,
+		/obj/item/stack/sheet/metal/cyborg,
+		/obj/item/stack/sheet/glass/cyborg,
+		/obj/item/stack/sheet/rglass/cyborg,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/destTagger/borg,
+		/obj/item/stack/cable_coil/cyborg,
+		/obj/item/pinpointer/syndicate_cyborg,
+		/obj/item/borg_chameleon,
+		)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg/engineer,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	cyborg_base_icon = "synd_engi"
+	moduleselect_icon = "malf"
+	can_be_pushed = FALSE
+	magpulsing = TRUE
+	hat_offset = -4
+	canDispose = TRUE
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"

@@ -4,17 +4,21 @@
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	species_traits = list(NOTRANSSTING) //all of these + whatever we inherit from the real species
-	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
-	dangerous_existence = 1
-	blacklisted = 1
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
-	var/list/initial_species_traits = list(NOTRANSSTING) //for getting these values back for assume_disguise()
-	var/list/initial_inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
-	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
+	var/datum/species/fake_species //a species to do most of our work for us, unless we're damaged
+	var/list/initial_species_traits //for getting these values back for assume_disguise()
+	var/list/initial_inherent_traits
+	changesource_flags = MIRROR_BADMIN | WABBAJACK
+
+/datum/species/synth/New()
+	initial_species_traits = species_traits.Copy()
+	initial_inherent_traits = inherent_traits.Copy()
+	..()
 
 /datum/species/synth/military
 	name = "Military Synth"
@@ -28,11 +32,16 @@
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
 	assume_disguise(old_species, H)
+	RegisterSignal(H, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/species/synth/on_species_loss(mob/living/carbon/human/H)
+	. = ..()
+	UnregisterSignal(H, COMSIG_MOB_SAY)
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "synthflesh")
+	if(chem.type == /datum/reagent/medicine/synthflesh)
 		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1
 	else
 		return ..()
@@ -111,17 +120,12 @@
 		return ..()
 
 
-/datum/species/synth/get_spans()
-	if(fake_species)
-		return fake_species.get_spans()
-	return list()
-
-
-/datum/species/synth/handle_speech(message, mob/living/carbon/human/H)
-	if(H.health > disguise_fail_health)
-		if(fake_species)
-			return fake_species.handle_speech(message,H)
-		else
-			return ..()
-	else
-		return ..()
+/datum/species/synth/proc/handle_speech(datum/source, list/speech_args)
+	if (isliving(source)) // yeah it's gonna be living but just to be clean
+		var/mob/living/L = source
+		if(fake_species && L.health > disguise_fail_health)
+			switch (fake_species.type)
+				if (/datum/species/golem/bananium)
+					speech_args[SPEECH_SPANS] |= SPAN_CLOWN
+				if (/datum/species/golem/clockwork)
+					speech_args[SPEECH_SPANS] |= SPAN_ROBOT

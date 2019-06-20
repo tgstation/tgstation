@@ -123,7 +123,6 @@
 		.manifest td, th {border:1px solid [monochrome?"black":"#DEF; background-color:white; color:black"]; padding:.25em}
 		.manifest th {height: 2em; [monochrome?"border-top-width: 3px":"background-color: #48C; color:white"]}
 		.manifest tr.head th { [monochrome?"border-top-width: 1px":"background-color: #488;"] }
-		.manifest td:first-child {text-align:right}
 		.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #DEF"]}
 	</style></head>
 	<table class="manifest" width='350px'>
@@ -232,13 +231,16 @@
 		if(!C)
 			C = H.client
 		var/image = get_id_photo(H, C, show_directions)
-		var/obj/item/photo/photo_front = new()
-		var/obj/item/photo/photo_side = new()
-		for(var/D in show_directions) 
-			if(D == SOUTH)
-				photo_front.photocreate(null, icon(image, dir = D))
-			if(D == WEST || D == EAST)
-				photo_side.photocreate(null, icon(image, dir = D))
+		var/datum/picture/pf = new
+		var/datum/picture/ps = new
+		pf.picture_name = "[H]"
+		ps.picture_name = "[H]"
+		pf.picture_desc = "This is [H]."
+		ps.picture_desc = "This is [H]."
+		pf.picture_image = icon(image, dir = SOUTH)
+		ps.picture_image = icon(image, dir = WEST)
+		var/obj/item/photo/photo_front = new(null, pf)
+		var/obj/item/photo/photo_side = new(null, ps)
 
 		//These records should ~really~ be merged or something
 		//General Record
@@ -251,7 +253,13 @@
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
-		G.fields["sex"]			= H.gender
+		G.fields["gender"]			= H.gender
+		if(H.gender == "male")
+			G.fields["gender"]  = "Male"
+		else if(H.gender == "female")
+			G.fields["gender"]  = "Female"
+		else
+			G.fields["gender"]  = "Other"
 		G.fields["photo_front"]	= photo_front
 		G.fields["photo_side"]	= photo_side
 		general += G
@@ -270,7 +278,7 @@
 		M.fields["alg_d"]		= "No allergies have been detected in this patient."
 		M.fields["cdi"]			= "None"
 		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-		M.fields["notes"]		= "No notes."
+		M.fields["notes"]		= H.get_trait_string(medical)
 		medical += M
 
 		//Security Record
@@ -290,10 +298,15 @@
 		L.fields["name"]		= H.real_name
 		L.fields["rank"] 		= H.mind.assigned_role
 		L.fields["age"]			= H.age
-		L.fields["sex"]			= H.gender
+		L.fields["gender"]			= H.gender
+		if(H.gender == "male")
+			G.fields["gender"]  = "Male"
+		else if(H.gender == "female")
+			G.fields["gender"]  = "Female"
+		else
+			G.fields["gender"]  = "Other"
 		L.fields["blood_type"]	= H.dna.blood_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes
-		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity
 		L.fields["species"]		= H.dna.species.type
 		L.fields["features"]	= H.dna.features

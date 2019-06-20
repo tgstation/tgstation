@@ -33,7 +33,7 @@
 /obj/structure/transit_tube/station/should_stop_pod(pod, from_dir)
 	return 1
 
-/obj/structure/transit_tube/station/CollidedWith(atom/movable/AM)
+/obj/structure/transit_tube/station/Bumped(atom/movable/AM)
 	if(!pod_moving && open_status == STATION_TUBE_OPEN && ismob(AM) && AM.dir == boarding_dir)
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(!pod.moving)
@@ -44,8 +44,10 @@
 
 //pod insertion
 /obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/user)
-	if(!user.canmove || user.stat || user.restrained())
-		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.incapacitated())
+			return
 	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)
@@ -74,8 +76,8 @@
 						pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
 						if(do_after(user, 15, target = src))
 							if(open_status == STATION_TUBE_OPEN && GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
-								GM.Knockdown(100)
-								src.CollidedWith(GM)
+								GM.Paralyze(100)
+								src.Bumped(GM)
 						break
 		else
 			for(var/obj/structure/transit_tube_pod/pod in loc)
@@ -97,7 +99,7 @@
 
 
 /obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/crowbar))
+	if(W.tool_behaviour == TOOL_CROWBAR)
 		for(var/obj/structure/transit_tube_pod/P in loc)
 			P.deconstruct(FALSE, user)
 	else

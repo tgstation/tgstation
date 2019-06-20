@@ -11,8 +11,9 @@
 	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 
 /obj/machinery/aug_manipulator/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to eject the limb.</span>")
+	. = ..()
+	if(storedpart)
+		. += "<span class='notice'>Alt-click to eject the limb.</span>"
 
 /obj/machinery/aug_manipulator/Initialize()
     initial_icon_state = initial(icon_state)
@@ -72,7 +73,7 @@
 			O.add_fingerprint(user)
 			update_icon()
 
-	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+	else if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(obj_integrity < max_integrity)
 			if(!O.tool_start_check(user, amount=0))
 				return
@@ -129,7 +130,7 @@
 
 /obj/machinery/aug_manipulator/AltClick(mob/living/user)
 	..()
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	else
 		eject_part(user)

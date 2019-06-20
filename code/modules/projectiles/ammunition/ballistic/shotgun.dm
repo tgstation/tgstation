@@ -92,10 +92,12 @@
 	variance = 35
 
 /obj/item/ammo_casing/shotgun/laserslug
-	name = "laser slug"
-	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a laser weapon in a ballistic package."
+	name = "scatter laser shell"
+	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/item/projectile/beam/laser
+	projectile_type = /obj/item/projectile/beam/weak
+	pellets = 6
+	variance = 35
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
@@ -109,31 +111,31 @@
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/bullet/dart
 	var/reagent_amount = 30
-	var/reagent_react = TRUE
+
+/obj/item/ammo_casing/shotgun/dart/Initialize()
+	. = ..()
+	create_reagents(reagent_amount, OPENCONTAINER)
+
+/obj/item/ammo_casing/shotgun/dart/attackby()
+	return
 
 /obj/item/ammo_casing/shotgun/dart/noreact
 	name = "cryostasis shotgun dart"
 	desc = "A dart for use in shotguns, using similar technology as cryostatis beakers to keep internal reagents from reacting. Can be injected with up to 10 units of any chemical."
 	icon_state = "cnrshell"
 	reagent_amount = 10
-	reagent_react = FALSE
 
-/obj/item/ammo_casing/shotgun/dart/Initialize()
+/obj/item/ammo_casing/shotgun/dart/noreact/Initialize()
 	. = ..()
-	container_type |= OPENCONTAINER
-	create_reagents(reagent_amount)
-	reagents.set_reacting(reagent_react)
-
-/obj/item/ammo_casing/shotgun/dart/attackby()
-	return
+	ENABLE_BITFIELD(reagents.flags, NO_REACT)
 
 /obj/item/ammo_casing/shotgun/dart/bioterror
 	desc = "A shotgun dart filled with deadly toxins."
 
 /obj/item/ammo_casing/shotgun/dart/bioterror/Initialize()
 	. = ..()
-	reagents.add_reagent("neurotoxin", 6)
-	reagents.add_reagent("spore", 6)
-	reagents.add_reagent("mutetoxin", 6) //;HELP OPS IN MAINT
-	reagents.add_reagent("coniine", 6)
-	reagents.add_reagent("sodium_thiopental", 6)
+	reagents.add_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 6)
+	reagents.add_reagent(/datum/reagent/toxin/spore, 6)
+	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 6) //;HELP OPS IN MAINT
+	reagents.add_reagent(/datum/reagent/toxin/coniine, 6)
+	reagents.add_reagent(/datum/reagent/toxin/sodium_thiopental, 6)

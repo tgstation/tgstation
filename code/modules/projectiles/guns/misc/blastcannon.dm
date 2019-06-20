@@ -102,9 +102,8 @@
 	playsound(user, "explosion", 100, 1)
 	var/turf/starting = get_turf(user)
 	var/turf/targturf = get_turf(target)
-	var/log_str = "Blast wave fired from [ADMIN_VERBOSEJMP(starting)] ([get_area_name(user, TRUE)]) at [ADMIN_VERBOSEJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
-	message_admins(log_str)
-	log_game(log_str)
+	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(starting)] at [ADMIN_VERBOSEJMP(targturf)] ([target.name]) by [ADMIN_LOOKUPFLW(user)] with power [heavy]/[medium]/[light].")
+	log_game("Blast wave fired from [AREACOORD(starting)] at [AREACOORD(targturf)] ([target.name]) by [key_name(user)] with power [heavy]/[medium]/[light].")
 	var/obj/item/projectile/blastwave/BW = new(loc, heavy, medium, light)
 	BW.hugbox = hugbox
 	BW.preparePixelProjectile(target, get_turf(src), params, 0)
@@ -115,7 +114,7 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
-	forcedodge = TRUE
+	movement_type = FLYING | UNSTOPPABLE
 	var/heavyr = 0
 	var/mediumr = 0
 	var/lightr = 0

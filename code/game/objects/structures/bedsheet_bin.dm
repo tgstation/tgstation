@@ -27,6 +27,8 @@ LINEN BINS
 		..()
 
 /obj/item/bedsheet/attack_self(mob/user)
+	if(!user.CanReach(src))		//No telekenetic grabbing.
+		return
 	if(!user.dropItemToGround(src))
 		return
 	if(layer == initial(layer))
@@ -39,7 +41,7 @@ LINEN BINS
 	return
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wirecutters) || I.is_sharp())
+	if(I.tool_behaviour == TOOL_WIRECUTTER || I.is_sharp())
 		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
@@ -244,6 +246,36 @@ LINEN BINS
 	new type(loc)
 	return INITIALIZE_HINT_QDEL
 
+/obj/item/bedsheet/dorms
+	icon_state = "random_bedsheet"
+	item_color = "rainbow"
+	name = "random dorms bedsheet"
+	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
+
+/obj/item/bedsheet/dorms/Initialize()
+	..()
+	var/type = pickweight(list("Colors" = 80, "Special" = 20))
+	switch(type)
+		if("Colors")
+			type = pick(list(/obj/item/bedsheet,
+				/obj/item/bedsheet/blue,
+				/obj/item/bedsheet/green,
+				/obj/item/bedsheet/grey,
+				/obj/item/bedsheet/orange,
+				/obj/item/bedsheet/purple,
+				/obj/item/bedsheet/red,
+				/obj/item/bedsheet/yellow,
+				/obj/item/bedsheet/brown,
+				/obj/item/bedsheet/black))
+		if("Special")
+			type = pick(list(/obj/item/bedsheet/patriot,
+				/obj/item/bedsheet/rainbow,
+				/obj/item/bedsheet/ian,
+				/obj/item/bedsheet/cosmos,
+				/obj/item/bedsheet/nanotrasen))
+	new type(loc)
+	return INITIALIZE_HINT_QDEL
+
 /obj/structure/bedsheetbin
 	name = "linen bin"
 	desc = "It looks rather cosy."
@@ -256,15 +288,20 @@ LINEN BINS
 	var/list/sheets = list()
 	var/obj/item/hidden = null
 
+/obj/structure/bedsheetbin/empty
+	amount = 0
+	icon_state = "linenbin-empty"
+	anchored = FALSE
+
 
 /obj/structure/bedsheetbin/examine(mob/user)
-	..()
+	. = ..()
 	if(amount < 1)
-		to_chat(user, "There are no bed sheets in the bin.")
+		. += "There are no bed sheets in the bin."
 	else if(amount == 1)
-		to_chat(user, "There is one bed sheet in the bin.")
+		. += "There is one bed sheet in the bin."
 	else
-		to_chat(user, "There are [amount] bed sheets in the bin.")
+		. += "There are [amount] bed sheets in the bin."
 
 
 /obj/structure/bedsheetbin/update_icon()
@@ -290,6 +327,21 @@ LINEN BINS
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		update_icon()
+
+	else if(default_unfasten_wrench(user, I, 5))
+		return
+
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		if(flags_1 & NODECONSTRUCT_1)
+			return
+		if(amount)
+			to_chat(user, "<span clas='warn'>The [src] must be empty first!</span>")
+			return
+		if(I.use_tool(src, user, 5, volume=50))
+			to_chat(user, "<span clas='notice'>You disassemble the [src].</span>")
+			new /obj/item/stack/rods(loc, 2)
+			qdel(src)
+
 	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
@@ -305,8 +357,10 @@ LINEN BINS
 	. = ..()
 	if(.)
 		return
-	if(user.lying)
-		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 	if(amount >= 1)
 		amount--
 

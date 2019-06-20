@@ -97,7 +97,7 @@
 // Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = 1 + (potency * rate)
 /datum/plant_gene/reagent
 	name = "Nutriment"
-	var/reagent_id = "nutriment"
+	var/reagent_id = /datum/reagent/consumable/nutriment
 	var/rate = 0.04
 
 /datum/plant_gene/reagent/get_name()
@@ -108,7 +108,7 @@
 	name = "UNKNOWN"
 
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reag_id]
-	if(R && R.id == reagent_id)
+	if(R && R.type == reagent_id)
 		name = R.name
 
 /datum/plant_gene/reagent/New(reag_id = null, reag_rate = 0)
@@ -180,6 +180,10 @@
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 
+/datum/plant_gene/trait/squash/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
+	// Squash the plant on slip.
+	G.squash(C)
+
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
 	// Applies other trait effects (teleporting, etc) to the target by on_slip.
@@ -194,7 +198,7 @@
 	var/obj/item/seeds/seed = G.seed
 	var/stun_len = seed.potency * rate
 
-	if(!istype(G, /obj/item/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
+	if(!istype(G, /obj/item/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent(/datum/reagent/lube)))
 		stun_len /= 3
 
 	G.AddComponent(/datum/component/slippery, min(stun_len,140), NONE, CALLBACK(src, .proc/handle_slip, G))
@@ -290,31 +294,18 @@
 		var/teleport_radius = max(round(G.seed.potency / 10), 1)
 		var/turf/T = get_turf(target)
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
-		do_teleport(target, T, teleport_radius)
+		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /datum/plant_gene/trait/teleport/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/teleport_radius = max(round(G.seed.potency / 10), 1)
 	var/turf/T = get_turf(C)
 	to_chat(C, "<span class='warning'>You slip through spacetime!</span>")
-	do_teleport(C, T, teleport_radius)
+	do_teleport(C, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 	if(prob(50))
-		do_teleport(G, T, teleport_radius)
+		do_teleport(G, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 	else
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		qdel(G)
-
-
-/datum/plant_gene/trait/noreact
-	// Makes plant reagents not react until squashed.
-	name = "Separated Chemicals"
-
-/datum/plant_gene/trait/noreact/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
-	..()
-	G.reagents.set_reacting(FALSE)
-
-/datum/plant_gene/trait/noreact/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
-	G.reagents.set_reacting(TRUE)
-	G.reagents.handle_reactions()
 
 
 /datum/plant_gene/trait/maxchem
@@ -356,7 +347,7 @@
 			pocell.name = "[G.name] battery"
 			pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."
 
-			if(G.reagents.has_reagent("plasma", 2))
+			if(G.reagents.has_reagent(/datum/reagent/toxin/plasma, 2))
 				pocell.rigged = TRUE
 
 			qdel(G)
@@ -366,6 +357,9 @@
 
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
+
+/datum/plant_gene/trait/stinging/on_slip(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+	on_throw_impact(G, target)
 
 /datum/plant_gene/trait/stinging/on_throw_impact(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target) && G.reagents && G.reagents.total_volume)

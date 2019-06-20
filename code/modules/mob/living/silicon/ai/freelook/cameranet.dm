@@ -91,11 +91,20 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 		for(var/chunk in remove)
 			var/datum/camerachunk/c = chunk
-			c.remove(eye)
+			c.remove(eye, FALSE)
 
 		for(var/chunk in add)
 			var/datum/camerachunk/c = chunk
 			c.add(eye)
+
+		if(!eye.visibleCameraChunks.len)
+			var/client/client = eye.GetViewerClient()
+			if(client)
+				switch(eye.use_static)
+					if(USE_STATIC_TRANSPARENT)
+						client.images -= GLOB.cameranet.obscured_transparent
+					if(USE_STATIC_OPAQUE)
+						client.images -= GLOB.cameranet.obscured
 
 // Updates the chunks that the turf is located in. Use this when obstacles are destroyed or	when doors open.
 

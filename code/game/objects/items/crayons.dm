@@ -1,6 +1,9 @@
 #define RANDOM_GRAFFITI "Random Graffiti"
 #define RANDOM_LETTER "Random Letter"
+#define RANDOM_PUNCTUATION "Random Punctuation"
 #define RANDOM_NUMBER "Random Number"
+#define RANDOM_SYMBOL "Random Symbol"
+#define RANDOM_DRAWING "Random Drawing"
 #define RANDOM_ORIENTED "Random Oriented"
 #define RANDOM_RUNE "Random Rune"
 #define RANDOM_ANY "Random Anything"
@@ -32,16 +35,16 @@
 	var/drawtype
 	var/text_buffer = ""
 
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag","prolizard","antilizard")
-	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
-	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
-	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
-	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
-		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
-	var/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
+	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard")
+	var/static/list/symbols = list("danger","firedanger","electricdanger","biohazard","radiation","safe","evac","space","med","trade","shop","food","peace","like","skull","nay","heart","credit")
+	var/static/list/drawings = list("smallbrush","brush","largebrush","splatter","snake","stickman","carp","ghost","clown","taser","disk","fireaxe","toolbox","corgi","cat","toilet","blueprint","beepsky","scroll","bottle","shotgun")
+	var/static/list/oriented = list("arrow","line","thinline","shortline","body","chevron","footprint","clawprint","pawprint") // These turn to face the same way as the drawer
+	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
+	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
+		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
+	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
 
-	var/list/all_drawables
+	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
 
 	var/paint_mode = PAINT_NORMAL
 
@@ -54,11 +57,9 @@
 	var/instant = FALSE
 	var/self_contained = TRUE // If it deletes itself when it is empty
 
-	var/list/validSurfaces = list(/turf/open/floor)
-
 	var/edible = TRUE // That doesn't mean eating it is a good idea
 
-	var/list/reagent_contents = list("nutriment" = 1)
+	var/list/reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	// If the user can toggle the colour, a la vanilla spraycan
 	var/can_change_colour = FALSE
 
@@ -68,6 +69,8 @@
 	var/pre_noise = FALSE
 	var/post_noise = FALSE
 
+/obj/item/toy/crayon/proc/isValidSurface(surface)
+	return istype(surface, /turf/open/floor)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -79,7 +82,6 @@
 	if(name == "crayon")
 		name = "[item_color] crayon"
 
-	all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
 	drawtype = pick(all_drawables)
 
 	refill()
@@ -151,55 +153,62 @@
 			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
 			update_icon()
 
-/obj/item/toy/crayon/ui_data()
-	var/list/data = list()
-	data["drawables"] = list()
-	var/list/D = data["drawables"]
+/obj/item/toy/crayon/proc/staticDrawables()
+
+	. = list()
 
 	var/list/g_items = list()
-	D += list(list("name" = "Graffiti", "items" = g_items))
+	. += list(list("name" = "Graffiti", "items" = g_items))
 	for(var/g in graffiti)
 		g_items += list(list("item" = g))
 
 	var/list/glh_items = list()
-	D += list(list("name" = "Graffiti Large Horizontal", "items" = glh_items))
+	. += list(list("name" = "Graffiti Large Horizontal", "items" = glh_items))
 	for(var/glh in graffiti_large_h)
 		glh_items += list(list("item" = glh))
 
-	var/list/L_items = list()
-	D += list(list("name" = "Letters", "items" = L_items))
-	for(var/L in letters)
-		L_items += list(list("item" = L))
+	var/list/S_items = list()
+	. += list(list("name" = "Symbols", "items" = S_items))
+	for(var/S in symbols)
+		S_items += list(list("item" = S))
 
-	var/list/N_items = list()
-	D += list(list(name = "Numerals", "items" = N_items))
-	for(var/N in numerals)
-		N_items += list(list("item" = N))
+	var/list/D_items = list()
+	. += list(list("name" = "Drawings", "items" = D_items))
+	for(var/D in drawings)
+		D_items += list(list("item" = D))
 
 	var/list/O_items = list()
-	D += list(list(name = "Oriented", "items" = O_items))
+	. += list(list(name = "Oriented", "items" = O_items))
 	for(var/O in oriented)
 		O_items += list(list("item" = O))
 
 	var/list/R_items = list()
-	D += list(list(name = "Runes", "items" = R_items))
+	. += list(list(name = "Runes", "items" = R_items))
 	for(var/R in runes)
 		R_items += list(list("item" = R))
 
 	var/list/rand_items = list()
-	D += list(list(name = "Random", "items" = rand_items))
+	. += list(list(name = "Random", "items" = rand_items))
 	for(var/i in randoms)
 		rand_items += list(list("item" = i))
 
-	data["selected_stencil"] = drawtype
-	data["text_buffer"] = text_buffer
 
-	data["has_cap"] = has_cap
-	data["is_capped"] = is_capped
-	data["can_change_colour"] = can_change_colour
-	data["current_colour"] = paint_color
+/obj/item/toy/crayon/ui_data()
 
-	return data
+	var/static/list/crayon_drawables
+
+	if (!crayon_drawables)
+		crayon_drawables = staticDrawables()
+
+	. = list()
+	.["drawables"] = crayon_drawables
+	.["selected_stencil"] = drawtype
+	.["text_buffer"] = text_buffer
+
+	.["has_cap"] = has_cap
+	.["is_capped"] = is_capped
+	.["can_change_colour"] = can_change_colour
+	.["current_colour"] = paint_color
 
 /obj/item/toy/crayon/ui_act(action, list/params)
 	if(..())
@@ -214,6 +223,7 @@
 			if(stencil in all_drawables + randoms)
 				drawtype = stencil
 				. = TRUE
+				text_buffer = ""
 			if(stencil in graffiti_large_h)
 				paint_mode = PAINT_LARGE_HORIZONTAL
 				text_buffer = ""
@@ -233,23 +243,25 @@
 	update_icon()
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
-	var/list/base = string2charlist(lowertext(text))
-	var/list/out = list()
-	for(var/a in base)
-		if(a in (letters|numerals))
-			out += a
-	return jointext(out,"")
+	var/static/regex/crayon_r = new /regex(@"[^\w!?,.=%#&+\/\-]")
+	return replacetext(lowertext(text), crayon_r, "")
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
 
+	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
+
 	var/cost = 1
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		cost = 5
 	if(istype(target, /obj/item/canvas))
 		cost = 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (HAS_TRAIT(H, TRAIT_TAGGER))
+			cost *= 0.5
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
 		return
@@ -258,13 +270,19 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 
-	if(!is_type_in_list(target,validSurfaces))
+	if(!isValidSurface(target))
 		return
 
 	var/drawing = drawtype
 	switch(drawtype)
 		if(RANDOM_LETTER)
-			drawing = pick(letters)
+			drawing = ascii2text(rand(97, 122)) // a-z
+		if(RANDOM_PUNCTUATION)
+			drawing = pick(punctuation)
+		if(RANDOM_SYMBOL)
+			drawing = pick(symbols)
+		if(RANDOM_DRAWING)
+			drawing = pick(drawings)
 		if(RANDOM_GRAFFITI)
 			drawing = pick(graffiti)
 		if(RANDOM_RUNE)
@@ -272,17 +290,24 @@
 		if(RANDOM_ORIENTED)
 			drawing = pick(oriented)
 		if(RANDOM_NUMBER)
-			drawing = pick(numerals)
+			drawing = ascii2text(rand(48, 57)) // 0-9
 		if(RANDOM_ANY)
 			drawing = pick(all_drawables)
 
+
 	var/temp = "rune"
-	if(drawing in letters)
+	if(is_alpha(drawing))
 		temp = "letter"
-	else if(drawing in graffiti)
-		temp = "graffiti"
-	else if(drawing in numerals)
+	else if(is_digit(drawing))
 		temp = "number"
+	else if(drawing in punctuation)
+		temp = "punctuation mark"
+	else if(drawing in symbols)
+		temp = "symbol"
+	else if(drawing in drawings)
+		temp = "drawing"
+	else if(drawing in graffiti|oriented)
+		temp = "graffiti"
 
 
 	var/graf_rot
@@ -312,18 +337,16 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	var/takes_time = !instant
-
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
 
-	if(takes_time)
+	if(!instant)
 		if(!do_after(user, 50, target = target))
 			return
 
 	if(length(text_buffer))
-		drawing = copytext(text_buffer,1,2)
+		drawing = text_buffer[1]
 
 
 	var/list/turf/affected_turfs = list()
@@ -339,7 +362,7 @@
 			if(PAINT_LARGE_HORIZONTAL)
 				var/turf/left = locate(target.x-1,target.y,target.z)
 				var/turf/right = locate(target.x+1,target.y,target.z)
-				if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
+				if(isValidSurface(left) && isValidSurface(right))
 					var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
 					C.add_hiddenprint(user)
 					affected_turfs += left
@@ -354,8 +377,9 @@
 	else
 		to_chat(user, "<span class='notice'>You spray a [temp] on \the [target.name]</span>")
 
-	if(length(text_buffer))
+	if(length(text_buffer) > 1)
 		text_buffer = copytext(text_buffer,2)
+		SStgui.update_uis(src)
 
 	if(post_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -366,7 +390,7 @@
 		fraction /= affected_turfs.len
 	for(var/t in affected_turfs)
 		reagents.reaction(t, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(t, ., volume_multiplier)
+		reagents.trans_to(t, ., volume_multiplier, transfered_by = user)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
@@ -377,7 +401,7 @@
 			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction * volume_multiplier)
-		reagents.trans_to(M, eaten, volume_multiplier)
+		reagents.trans_to(M, eaten, volume_multiplier, transfered_by = user)
 		// check_empty() is called during afterattack
 	else
 		..()
@@ -386,68 +410,68 @@
 	icon_state = "crayonred"
 	paint_color = "#DA0000"
 	item_color = "red"
-	reagent_contents = list("nutriment" = 1, "redcrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	paint_color = "#FF9300"
 	item_color = "orange"
-	reagent_contents = list("nutriment" = 1, "orangecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/orange = 1)
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	paint_color = "#FFF200"
 	item_color = "yellow"
-	reagent_contents = list("nutriment" = 1, "yellowcrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/yellow = 1)
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	paint_color = "#A8E61D"
 	item_color = "green"
-	reagent_contents = list("nutriment" = 1, "greencrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/green = 1)
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	paint_color = "#00B7EF"
 	item_color = "blue"
-	reagent_contents = list("nutriment" = 1, "bluecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	paint_color = "#DA00FF"
 	item_color = "purple"
-	reagent_contents = list("nutriment" = 1, "purplecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/purple = 1)
 
 /obj/item/toy/crayon/black
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
 	item_color = "black"
-	reagent_contents = list("nutriment" = 1, "blackcrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/black = 1)
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
 	item_color = "white"
-	reagent_contents = list("nutriment" = 1, "whitecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/white = 1)
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
 	item_color = "mime"
-	reagent_contents = list("nutriment" = 1, "invisiblecrayonpowder" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/invisible = 1)
 	charges = -1
 
 /obj/item/toy/crayon/rainbow
 	icon_state = "crayonrainbow"
 	paint_color = "#FFF000"
 	item_color = "rainbow"
-	reagent_contents = list("nutriment" = 1, "colorful_reagent" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent = 1)
 	drawtype = RANDOM_ANY // just the default starter.
 
 	charges = -1
 
-/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 	. = ..()
 
@@ -464,9 +488,9 @@
 
 /obj/item/storage/crayons/Initialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
-	STR.can_hold = typecacheof(list(/obj/item/toy/crayon))
+	STR.set_holdable(list(/obj/item/toy/crayon))
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -512,7 +536,7 @@
 	item_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	desc = "A metallic container containing tasty paint.\n Alt-click to toggle the cap."
+	desc = "A metallic container containing tasty paint."
 
 	instant = TRUE
 	edible = FALSE
@@ -521,23 +545,26 @@
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
 
-	validSurfaces = list(/turf/open/floor, /turf/closed/wall)
-	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
+	reagent_contents = list(/datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1)
 
 	pre_noise = TRUE
 	post_noise = FALSE
+
+/obj/item/toy/crayon/spraycan/isValidSurface(surface)
+	return (istype(surface, /turf/open/floor) || istype(surface, /turf/closed/wall))
+
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(is_capped || !actually_paints)
 		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!</span>")
-		user.say("MEDIOCRE!!")
+		user.say("MEDIOCRE!!", forced="spraycan suicide")
 		return SHAME
 	else
 		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!</span>")
-		user.say("WITNESS ME!!")
+		user.say("WITNESS ME!!", forced="spraycan suicide")
 		if(pre_noise || post_noise)
-			playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		if(can_change_colour)
 			paint_color = "#C0C0C0"
 		update_icon()
@@ -548,12 +575,12 @@
 		var/used = use_charges(user, 10, FALSE)
 		var/fraction = min(1, used / reagents.maximum_volume)
 		reagents.reaction(user, VAPOR, fraction * volume_multiplier)
-		reagents.trans_to(user, used, volume_multiplier)
+		reagents.trans_to(user, used, volume_multiplier, transfered_by = user)
 
 		return (OXYLOSS)
 
-/obj/item/toy/crayon/spraycan/New()
-	..()
+/obj/item/toy/crayon/spraycan/Initialize()
+	. = ..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
 		paint_color = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF",
@@ -565,11 +592,12 @@
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
 	if(charges_left)
-		to_chat(user, "It has [charges_left] use\s left.")
+		. += "It has [charges_left] use\s left."
 	else
-		to_chat(user, "It is empty.")
+		. += "It is empty."
+	. += "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>"
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
@@ -593,34 +621,35 @@
 			C.blind_eyes(1)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
 			C.confused = max(C.confused, 3)
-			C.Knockdown(60)
+			C.Paralyze(60)
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"
 			H.lip_color = paint_color
 			H.update_body()
 
-		// Caution, spray cans contain inflammable substances
 		. = use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(C, VAPOR, fraction * volume_multiplier)
 
 		return
 
-	if(istype(target, /obj/structure/window))
+	if(isobj(target))
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-			if(color_hex2num(paint_color) < 255)
-				target.set_opacity(255)
-			else
-				target.set_opacity(initial(target.opacity))
+			if(istype(target, /obj/structure/window))
+				if(color_hex2num(paint_color) < 255)
+					target.set_opacity(255)
+				else
+					target.set_opacity(initial(target.opacity))
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(target, ., volume_multiplier)
+		reagents.trans_to(target, ., volume_multiplier, transfered_by = user)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		user.visible_message("[user] coats [target] with spray paint!", "<span class='notice'>You coat [target] with spray paint.</span>")
 		return
 
 	. = ..()
@@ -638,7 +667,7 @@
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = -1
 
-/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
+/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
 	var/diff = ..()
 	if(!iscyborg(user))
 		to_chat(user, "<span class='notice'>How did you get this?</span>")
@@ -667,7 +696,7 @@
 
 	volume_multiplier = 25
 	charges = 100
-	reagent_contents = list("clf3" = 1)
+	reagent_contents = list(/datum/reagent/clf3 = 1)
 	actually_paints = FALSE
 	paint_color = "#000000"
 
@@ -679,9 +708,11 @@
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
 
-	reagent_contents = list("lube" = 1, "banana" = 1)
+	reagent_contents = list(/datum/reagent/lube = 1, /datum/reagent/consumable/banana = 1)
 	volume_multiplier = 5
-	validSurfaces = list(/turf/open/floor)
+
+/obj/item/toy/crayon/spraycan/lubecan/isValidSurface(surface)
+	return istype(surface, /turf/open/floor)
 
 /obj/item/toy/crayon/spraycan/mimecan
 	name = "silent spraycan"
@@ -696,10 +727,13 @@
 
 	pre_noise = FALSE
 	post_noise = FALSE
-	reagent_contents = list("nothing" = 1, "mutetoxin" = 1)
+	reagent_contents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/toxin/mutetoxin = 1)
 
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER
+#undef RANDOM_PUNCTUATION
+#undef RANDOM_SYMBOL
+#undef RANDOM_DRAWING
 #undef RANDOM_NUMBER
 #undef RANDOM_ORIENTED
 #undef RANDOM_RUNE

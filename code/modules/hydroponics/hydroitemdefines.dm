@@ -24,10 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-
-/obj/item/reagent_containers/spray/weedspray/Initialize()
-	. = ..()
-	reagents.add_reagent("weedkiller", 100)
+	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 100)
 
 /obj/item/reagent_containers/spray/weedspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -42,10 +39,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-
-/obj/item/reagent_containers/spray/pestspray/Initialize()
-	. = ..()
-	reagents.add_reagent("pestkiller", 100)
+	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
 
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -70,6 +64,16 @@
 /obj/item/cultivator/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
+
+/obj/item/cultivator/rake
+	name = "rake"
+	icon_state = "rake"
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("slashed", "sliced", "bashed", "clawed")
+	hitsound = null
+	materials = null
+	flags_1 = NONE
+	resistance_flags = FLAMMABLE
 
 /obj/item/hatchet
 	name = "hatchet"
@@ -98,6 +102,12 @@
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+
+/obj/item/hatchet/wooden
+	desc = "A crude axe blade upon a short wooden handle."
+	icon_state = "woodhatchet"
+	materials = null
+	flags_1 = NONE
 
 /obj/item/scythe
 	icon_state = "scythe0"
@@ -153,71 +163,45 @@
 
 /obj/item/reagent_containers/glass/bottle/nutrient
 	name = "bottle of nutrient"
-	icon = 'icons/obj/chemical.dmi'
 	volume = 50
-	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/Initialize()
 	. = ..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 
 /obj/item/reagent_containers/glass/bottle/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
 	desc = "Contains a fertilizer that causes mild mutations with each harvest."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/nutrient/ez/Initialize()
-	. = ..()
-	reagents.add_reagent("eznutriment", 50)
+	list_reagents = list(/datum/reagent/plantnutriment/eznutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	desc = "Contains a fertilizer that limits plant yields to no more than one and causes significant mutations in plants."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/nutrient/l4z/Initialize()
-	. = ..()
-	reagents.add_reagent("left4zednutriment", 50)
+	list_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
 	desc = "Contains a fertilizer that increases the yield of a plant by 30% while causing no mutations."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/nutrient/rh/Initialize()
-	. = ..()
-	reagents.add_reagent("robustharvestnutriment", 50)
+	list_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/empty
 	name = "bottle"
-	icon = 'icons/obj/chemical.dmi'
 
 /obj/item/reagent_containers/glass/bottle/killer
-	name = "bottle"
-	icon = 'icons/obj/chemical.dmi'
 	volume = 50
-	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
 /obj/item/reagent_containers/glass/bottle/killer/weedkiller
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/killer/weedkiller/Initialize()
-	. = ..()
-	reagents.add_reagent("weedkiller", 50)
+	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 50)
 
 /obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/killer/pestkiller/Initialize()
-	. = ..()
-	reagents.add_reagent("pestkiller", 50)
+	list_reagents = list(/datum/reagent/toxin/pestkiller = 50)

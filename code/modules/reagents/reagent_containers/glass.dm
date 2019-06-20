@@ -1,9 +1,10 @@
+
 /obj/item/reagent_containers/glass
 	name = "glass"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
@@ -26,14 +27,13 @@
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
 			if(reagents)
 				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.id + " ("
-					R += num2text(A.volume) + "),"
+					R += "[A] ([num2text(A.volume)]),"
+
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
-				add_logs(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
-				log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
+				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 			reagents.reaction(M, TOUCH)
-			add_logs(user, M, "splashed", R)
+			log_combat(user, M, "splashed", R)
 			reagents.clear_reagents()
 		else
 			if(M != user)
@@ -44,7 +44,7 @@
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
 				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
-				add_logs(user, M, "fed", reagents.log_list())
+				log_combat(user, M, "fed", reagents.log_list())
 			else
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
 			var/fraction = min(5/reagents.total_volume, 1)
@@ -57,6 +57,9 @@
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
 
+	if(!spillable)
+		return
+
 	if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
@@ -66,7 +69,7 @@
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
@@ -78,7 +81,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
 
 	else if(reagents.total_volume)
@@ -101,7 +104,7 @@
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
 				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
-				E.reagents.trans_to(src, E.reagents.total_volume)
+				E.reagents.trans_to(src, E.reagents.total_volume, transfered_by = user)
 				qdel(E)
 			return
 	..()
@@ -173,7 +176,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
 	volume = 120
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10,15,20,25,30,60,120)
+	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -187,7 +190,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
 	volume = 180
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10,15,20,25,30,60,120,180)
+	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -195,12 +198,9 @@
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
 	materials = list(MAT_METAL=3000)
+	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
-
-/obj/item/reagent_containers/glass/beaker/noreact/Initialize()
-	. = ..()
-	reagents.set_reacting(FALSE)
 
 /obj/item/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
@@ -208,38 +208,38 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units."
 	icon_state = "beakerbluespace"
-	materials = list(MAT_GLASS=3000)
+	materials = list(MAT_GLASS = 5000, MAT_PLASMA = 3000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 1000)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
-	list_reagents = list("cryoxadone" = 30)
+	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 
 /obj/item/reagent_containers/glass/beaker/sulphuric
-	list_reagents = list("sacid" = 50)
+	list_reagents = list(/datum/reagent/toxin/acid = 50)
 
 /obj/item/reagent_containers/glass/beaker/slime
-	list_reagents = list("slimejelly" = 50)
+	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/styptic
 	name = "styptic reserve tank"
-	list_reagents = list("styptic_powder" = 50)
+	list_reagents = list(/datum/reagent/medicine/styptic_powder = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/silver_sulfadiazine
 	name = "silver sulfadiazine reserve tank"
-	list_reagents = list("silver_sulfadiazine" = 50)
+	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/charcoal
 	name = "charcoal reserve tank"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list(/datum/reagent/medicine/charcoal = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
-	list_reagents = list("epinephrine" = 50)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
 /obj/item/reagent_containers/glass/beaker/synthflesh
-	list_reagents = list("synthflesh" = 50)
+	list_reagents = list(/datum/reagent/medicine/synthflesh = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
@@ -252,7 +252,7 @@
 	materials = list(MAT_METAL=200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,15,20,25,30,50,70)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
 	volume = 70
 	flags_inv = HIDEHAIR
 	slot_flags = ITEM_SLOT_HEAD
@@ -269,15 +269,23 @@
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
 
+/obj/item/reagent_containers/glass/bucket/wooden
+	name = "wooden bucket"
+	icon_state = "woodbucket"
+	item_state = "woodbucket"
+	materials = null
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	resistance_flags = FLAMMABLE
+
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
 		if(reagents.total_volume < 1)
 			to_chat(user, "<span class='warning'>[src] is out of water!</span>")
 		else
-			reagents.trans_to(O, 5)
+			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-	else if(isprox(O))
+	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
 		qdel(O)
 		qdel(src)
@@ -292,11 +300,11 @@
 			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
 			reagents.reaction(user, TOUCH)
 			reagents.clear_reagents()
-		container_type = NONE
+		reagents.flags = NONE
 
 /obj/item/reagent_containers/glass/bucket/dropped(mob/user)
 	. = ..()
-	container_type = initial(container_type)
+	reagents.flags = initial(reagent_flags)
 
 /obj/item/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
@@ -313,7 +321,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	item_state = "bottle"
-	list_reagents = list("water" = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
+	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -325,109 +333,74 @@
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
 	materials = list(MAT_GLASS=0)
-	list_reagents = list("water" = 100)
+	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
 
-/obj/item/reagent_containers/glass/beaker/large/hydrogen
-	name = "hydrogen beaker"
-	list_reagents = list("hydrogen" = 50)
+/obj/item/pestle
+	name = "pestle"
+	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "pestle"
+	force = 7
 
-/obj/item/reagent_containers/glass/beaker/large/lithium
-	name = "lithium beaker"
-	list_reagents = list("lithium" = 50)
+/obj/item/reagent_containers/glass/mortar
+	name = "mortar"
+	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting. Alt click to eject the item."
+	icon_state = "mortar"
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
+	volume = 100
+	reagent_flags = OPENCONTAINER
+	spillable = TRUE
+	var/obj/item/grinded
 
-/obj/item/reagent_containers/glass/beaker/large/carbon
-	name = "carbon beaker"
-	list_reagents = list("carbon" = 50)
+/obj/item/reagent_containers/glass/mortar/AltClick(mob/user)
+	if(grinded)
+		grinded.forceMove(drop_location())
+		grinded = null
+		to_chat(user, "You eject the item inside.")
 
-/obj/item/reagent_containers/glass/beaker/large/nitrogen
-	name = "nitrogen beaker"
-	list_reagents = list("nitrogen" = 50)
+/obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
+	..()
+	if(istype(I,/obj/item/pestle))
+		if(grinded)
+			if(user.getStaminaLoss() > 50)
+				to_chat(user, "<span class='danger'>You are too tired to work!</span>")
+				return
+			to_chat(user, "You start grinding...")
+			if((do_after(user, 25, target = src)) && grinded)
+				user.adjustStaminaLoss(40)
+				if(grinded.reagents) //food and pills
+					grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+				if(grinded.juice_results) //prioritize juicing
+					grinded.on_juice()
+					reagents.add_reagent_list(grinded.juice_results)
+					to_chat(user, "You juice [grinded] into a fine liquid.")
+					QDEL_NULL(grinded)
+					return
+				grinded.on_grind()
+				reagents.add_reagent_list(grinded.grind_results)
+				to_chat(user, "You break [grinded] into powder.")
+				QDEL_NULL(grinded)
+				return
+			return
+		else
+			to_chat(user, "<span class='danger'>There is nothing to grind!</span>")
+			return
+	if(grinded)
+		to_chat(user, "<span class='danger'>There is something inside already!</span>")
+		return
+	if(I.juice_results || I.grind_results)
+		I.forceMove(src)
+		grinded = I
+		return
+	to_chat(user, "<span class='danger'>You can't grind this!</span>")
 
-/obj/item/reagent_containers/glass/beaker/large/oxygen
-	name = "oxygen beaker"
-	list_reagents = list("oxygen" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/fluorine
-	name = "fluorine beaker"
-	list_reagents = list("fluorine" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/sodium
-	name = "sodium beaker"
-	list_reagents = list("sodium" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/aluminium
-	name = "aluminium beaker"
-	list_reagents = list("aluminium" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/silicon
-	name = "silicon beaker"
-	list_reagents = list("silicon" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/phosphorus
-	name = "phosphorus beaker"
-	list_reagents = list("phosphorus" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/sulfur
-	name = "sulfur beaker"
-	list_reagents = list("sulfur" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/chlorine
-	name = "chlorine beaker"
-	list_reagents = list("chlorine" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/potassium
-	name = "potassium beaker"
-	list_reagents = list("potassium" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/iron
-	name = "iron beaker"
-	list_reagents = list("iron" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/copper
-	name = "copper beaker"
-	list_reagents = list("copper" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/mercury
-	name = "mercury beaker"
-	list_reagents = list("mercury" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/radium
-	name = "radium beaker"
-	list_reagents = list("radium" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/water
-	name = "water beaker"
-	list_reagents = list("water" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/ethanol
-	name = "ethanol beaker"
-	list_reagents = list("ethanol" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/sugar
-	name = "sugar beaker"
-	list_reagents = list("sugar" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/sacid
-	name = "sulphuric acid beaker"
-	list_reagents = list("sacid" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/welding_fuel
-	name = "welding fuel beaker"
-	list_reagents = list("welding_fuel" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/silver
-	name = "silver beaker"
-	list_reagents = list("silver" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/iodine
-	name = "iodine beaker"
-	list_reagents = list("iodine" = 50)
-
-/obj/item/reagent_containers/glass/beaker/large/bromine
-	name = "bromine beaker"
-	list_reagents = list("bromine" = 50)
+/obj/item/reagent_containers/glass/saline
+	name = "saline canister"
+	volume = 5000
+	list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)

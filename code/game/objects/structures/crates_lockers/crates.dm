@@ -15,8 +15,8 @@
 	delivery_icon = "deliverycrate"
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
-/obj/structure/closet/crate/New()
-	..()
+/obj/structure/closet/crate/Initialize()
+	. = ..()
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
 	update_icon()
@@ -69,7 +69,7 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
-	max_integrity = 70 
+	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
 
@@ -107,6 +107,7 @@
 	new /obj/item/reagent_containers/blood/OMinus(src)
 	new /obj/item/reagent_containers/blood/OPlus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/ethereal(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 

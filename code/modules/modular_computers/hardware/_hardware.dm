@@ -32,13 +32,6 @@
 
 
 /obj/item/computer_hardware/attackby(obj/item/I, mob/living/user)
-	// Multitool. Runs diagnostics
-	if(istype(I, /obj/item/multitool))
-		to_chat(user, "***** DIAGNOSTICS REPORT *****")
-		diagnostics(user)
-		to_chat(user, "******************************")
-		return 1
-
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/S = I
@@ -51,9 +44,15 @@
 		return 1
 
 	if(try_insert(I, user))
-		return 1
+		return TRUE
 
 	return ..()
+
+/obj/item/computer_hardware/multitool_act(mob/living/user, obj/item/I)
+	to_chat(user, "***** DIAGNOSTICS REPORT *****")
+	diagnostics(user)
+	to_chat(user, "******************************")
+	return TRUE
 
 // Called on multitool click, prints diagnostic information to the user.
 /obj/item/computer_hardware/proc/diagnostics(var/mob/user)
@@ -76,11 +75,11 @@
 /obj/item/computer_hardware/examine(var/mob/user)
 	. = ..()
 	if(damage > damage_failure)
-		to_chat(user, "<span class='danger'>It seems to be severely damaged!</span>")
+		. += "<span class='danger'>It seems to be severely damaged!</span>"
 	else if(damage > damage_malfunction)
-		to_chat(user, "<span class='warning'>It seems to be damaged!</span>")
+		. += "<span class='warning'>It seems to be damaged!</span>"
 	else if(damage)
-		to_chat(user, "<span class='notice'>It seems to be slightly damaged.</span>")
+		. += "<span class='notice'>It seems to be slightly damaged.</span>"
 
 // Component-side compatibility check.
 /obj/item/computer_hardware/proc/can_install(obj/item/modular_computer/M, mob/living/user = null)

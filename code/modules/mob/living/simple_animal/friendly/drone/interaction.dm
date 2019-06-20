@@ -78,7 +78,7 @@
 
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/screwdriver) && stat != DEAD)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER && stat != DEAD)
 		if(health < maxHealth)
 			to_chat(user, "<span class='notice'>You start to tighten loose screws on [src]...</span>")
 			if(I.use_tool(src, user, 80))
@@ -89,7 +89,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src]'s screws can't get any tighter!</span>")
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
-	else if(istype(I, /obj/item/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
+	else if(I.tool_behaviour == TOOL_WRENCH && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
 		if(I.use_tool(src, user, 50, volume=50))
@@ -135,7 +135,7 @@
 		mind.special_role = "hacked drone"
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
-		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
+		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
 	else
 		if(!hacked)
 			return
@@ -152,7 +152,7 @@
 		speed = initial(speed)
 		if(is_servant_of_ratvar(src))
 			remove_servant_of_ratvar(src, TRUE)
-		message_admins("[src] ([src.key]), a hacked drone, was restored to factory defaults!")
+		message_admins("[ADMIN_LOOKUPFLW(src)], a hacked drone, was restored to factory defaults!")
 	update_drone_icon()
 
 /mob/living/simple_animal/drone/proc/liberate()

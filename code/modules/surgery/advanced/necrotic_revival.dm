@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/necrotic_revival
-	name = "Necrotic Revival Surgery Disk"
-	desc = "The disk provides instructions on how to make bodies keep working past death."
-	surgeries = list(/datum/surgery/advanced/necrotic_revival)
-
 /datum/surgery/advanced/necrotic_revival
-	name = "necrotic revival"
+	name = "Necrotic Revival"
+	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/saw,
@@ -22,16 +18,20 @@
 
 /datum/surgery_step/bionecrosis
 	name = "start bionecrosis"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	implements = list(/obj/item/reagent_containers/syringe = 100, /obj/item/pen = 30)
 	time = 50
-	chems_needed = list("zombiepowder", "rezadone")
+	chems_needed = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 	require_all_chems = FALSE
 
 /datum/surgery_step/bionecrosis/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to stimulate [target]'s brain.", "<span class='notice'>You begin to stimulate [target]'s brain...</span>")
+	display_results(user, target, "<span class='notice'>You begin to grow a romerol tumor on [target]'s brain...</span>",
+		"[user] begins to tinker with [target]'s brain...",
+		"[user] begins to perform surgery on [target]'s brain.")
 
 /datum/surgery_step/bionecrosis/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] successfully grows a necrotic tumor on [target]'s brain!", "<span class='notice'>You succeed in growing a necrotic tumor on [target]'s brain.</span>")
+	display_results(user, target, "<span class='notice'>You succeed in growing a romerol tumor on [target]'s brain.</span>",
+		"[user] successfully grows a romerol tumor on [target]'s brain!",
+		"[user] completes the surgery on [target]'s brain.")
 	if(!target.getorganslot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/zombie_infection/ZI = new()
 		ZI.Insert(target)

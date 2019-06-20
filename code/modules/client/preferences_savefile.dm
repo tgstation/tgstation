@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	20
+#define SAVEFILE_VERSION_MAX	22
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -49,7 +49,61 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		pda_style = "mono"
 	if(current_version < 20)
 		pda_color = "#808000"
+	if((current_version < 21) && features["ethcolor"] && (features["ethcolor"] == "#9c3030"))
+		features["ethcolor"] = "9c3030"
+	if(current_version < 22)
+		job_preferences = list() //It loaded null from nonexistant savefile field.
+		var/job_civilian_high = 0
+		var/job_civilian_med = 0
+		var/job_civilian_low = 0
+		
+		var/job_medsci_high = 0
+		var/job_medsci_med = 0
+		var/job_medsci_low = 0
 
+		var/job_engsec_high = 0
+		var/job_engsec_med = 0
+		var/job_engsec_low = 0
+
+		S["job_civilian_high"]	>> job_civilian_high
+		S["job_civilian_med"]	>> job_civilian_med
+		S["job_civilian_low"]	>> job_civilian_low
+		S["job_medsci_high"]	>> job_medsci_high
+		S["job_medsci_med"]		>> job_medsci_med
+		S["job_medsci_low"]		>> job_medsci_low
+		S["job_engsec_high"]	>> job_engsec_high
+		S["job_engsec_med"]		>> job_engsec_med
+		S["job_engsec_low"]		>> job_engsec_low
+
+		//Can't use SSjob here since this happens right away on login
+		for(var/job in subtypesof(/datum/job))
+			var/datum/job/J = job
+			var/new_value
+			var/fval = initial(J.flag)
+			switch(initial(J.department_flag))
+				if(CIVILIAN)
+					if(job_civilian_high & fval)
+						new_value = JP_HIGH
+					else if(job_civilian_med & fval)
+						new_value = JP_MEDIUM
+					else if(job_civilian_low & fval)
+						new_value = JP_LOW
+				if(MEDSCI)
+					if(job_medsci_high & fval)
+						new_value = JP_HIGH
+					else if(job_medsci_med & fval)
+						new_value = JP_MEDIUM
+					else if(job_medsci_low & fval)
+						new_value = JP_LOW
+				if(ENGSEC)
+					if(job_engsec_high & fval)
+						new_value = JP_HIGH
+					else if(job_engsec_med & fval)
+						new_value = JP_MEDIUM
+					else if(job_engsec_low & fval)
+						new_value = JP_LOW
+			if(new_value)
+				job_preferences[initial(J.title)] = new_value
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -58,20 +112,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
-		return 0
+		return FALSE
 	if(!fexists(path))
-		return 0
+		return FALSE
 
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/"
 
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == -2)		//fatal, can't load any data
-		return 0
+		return FALSE
 
 	//general preferences
+	S["asaycolor"]			>> asaycolor
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
@@ -99,6 +154,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["ambientocclusion"]	>> ambientocclusion
 	S["auto_fit_viewport"]	>> auto_fit_viewport
+	S["widescreenpref"]	    >> widescreenpref
 	S["menuoptions"]		>> menuoptions
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
@@ -110,6 +166,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
 
 	//Sanitize
+	asaycolor		= sanitize_ooccolor(sanitize_hexcolor(asaycolor, 6, 1, initial(asaycolor)))
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, GLOB.available_ui_styles, GLOB.available_ui_styles[1])
@@ -117,13 +174,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	buttons_locked	= sanitize_integer(buttons_locked, 0, 1, initial(buttons_locked))
-	windowflashing		= sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
+	windowflashing	= sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
+	widescreenpref  = sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
 	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
@@ -133,19 +191,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 
-	return 1
+	return TRUE
 
 /datum/preferences/proc/save_preferences()
 	if(!path)
-		return 0
+		return FALSE
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/"
 
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX)		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	//general preferences
+	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["ooccolor"], ooccolor)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
 	WRITE_FILE(S["UI_style"], UI_style)
@@ -171,22 +230,23 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["parallax"], parallax)
 	WRITE_FILE(S["ambientocclusion"], ambientocclusion)
 	WRITE_FILE(S["auto_fit_viewport"], auto_fit_viewport)
+	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["menuoptions"], menuoptions)
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
 
-	return 1
+	return TRUE
 
 /datum/preferences/proc/load_character(slot)
 	if(!path)
-		return 0
+		return FALSE
 	if(!fexists(path))
-		return 0
+		return FALSE
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/"
 	if(!slot)
 		slot = default_slot
@@ -198,17 +258,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/character[slot]"
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == -2)		//fatal, can't load any data
-		return 0
+		return FALSE
 
 	//Species
 	var/species_id
 	S["species"]			>> species_id
 	if(species_id)
 		var/newtype = GLOB.species_list[species_id]
-		pref_species = new newtype()
+		if(newtype)
+			pref_species = new newtype
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
+
+	if(!S["feature_ethcolor"] || S["feature_ethcolor"] == "#000")
+		WRITE_FILE(S["feature_ethcolor"]	, "9c3030")
 
 	//Character
 	S["real_name"]			>> real_name
@@ -228,6 +292,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]			>> backbag
 	S["uplink_loc"]			>> uplink_spawn_loc
 	S["feature_mcolor"]					>> features["mcolor"]
+	S["feature_ethcolor"]					>> features["ethcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
 	S["feature_lizard_horns"]			>> features["horns"]
@@ -242,26 +307,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		S["feature_human_tail"]				>> features["tail_human"]
 		S["feature_human_ears"]				>> features["ears"]
-	S["human_name"]         >> custom_names["human"]
-	S["clown_name"]			>> custom_names["clown"]
-	S["mime_name"]			>> custom_names["mime"]
-	S["ai_name"]			>> custom_names["ai"]
-	S["cyborg_name"]		>> custom_names["cyborg"]
-	S["religion_name"]		>> custom_names["religion"]
-	S["deity_name"]			>> custom_names["deity"]
+
+	//Custom names
+	for(var/custom_name_id in GLOB.preferences_custom_names)
+		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
+		S[savefile_slot_name] >> custom_names[custom_name_id]
+
+	S["preferred_ai_core_display"] >> preferred_ai_core_display
 	S["prefered_security_department"] >> prefered_security_department
 
 	//Jobs
 	S["joblessrole"]		>> joblessrole
-	S["job_civilian_high"]	>> job_civilian_high
-	S["job_civilian_med"]	>> job_civilian_med
-	S["job_civilian_low"]	>> job_civilian_low
-	S["job_medsci_high"]	>> job_medsci_high
-	S["job_medsci_med"]		>> job_medsci_med
-	S["job_medsci_low"]		>> job_medsci_low
-	S["job_engsec_high"]	>> job_engsec_high
-	S["job_engsec_med"]		>> job_engsec_med
-	S["job_engsec_low"]		>> job_engsec_low
+	//Load prefs
+	S["job_preferences"] >> job_preferences
 
 	//Quirks
 	S["all_quirks"]			>> all_quirks
@@ -274,24 +332,44 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	real_name		= reject_bad_name(real_name)
-	if(!features["mcolor"] || features["mcolor"] == "#000")
-		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+
+	real_name = reject_bad_name(real_name)
+	gender = sanitize_gender(gender)
 	if(!real_name)
 		real_name = random_unique_name(gender)
+
+	for(var/custom_name_id in GLOB.preferences_custom_names)
+		var/namedata = GLOB.preferences_custom_names[custom_name_id]
+		custom_names[custom_name_id] = reject_bad_name(custom_names[custom_name_id],namedata["allow_numbers"])
+		if(!custom_names[custom_name_id])
+			custom_names[custom_name_id] = get_default_name(custom_name_id)
+
+	if(!features["mcolor"] || features["mcolor"] == "#000")
+		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+
+	if(!features["ethcolor"] || features["ethcolor"] == "#000")
+		features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
+
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
-	gender			= sanitize_gender(gender)
+
 	if(gender == MALE)
 		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_male_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_male_list)
 		underwear		= sanitize_inlist(underwear, GLOB.underwear_m)
 		undershirt 		= sanitize_inlist(undershirt, GLOB.undershirt_m)
-	else
+	else if(gender == FEMALE)
 		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_female_list)
 		underwear		= sanitize_inlist(underwear, GLOB.underwear_f)
 		undershirt		= sanitize_inlist(undershirt, GLOB.undershirt_f)
+	else
+		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_list)
+		underwear		= sanitize_inlist(underwear, GLOB.underwear_list)
+		undershirt 		= sanitize_inlist(undershirt, GLOB.undershirt_list)
+
+
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
@@ -301,6 +379,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backbag			= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
+	features["ethcolor"]	= copytext(features["ethcolor"],1,7)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], GLOB.tails_list_human, "None")
 	features["snout"]	= sanitize_inlist(features["snout"], GLOB.snouts_list)
@@ -313,29 +392,24 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["moth_wings"] 	= sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list, "Plain")
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
-	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
-	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
-	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
-	job_medsci_high = sanitize_integer(job_medsci_high, 0, 65535, initial(job_medsci_high))
-	job_medsci_med = sanitize_integer(job_medsci_med, 0, 65535, initial(job_medsci_med))
-	job_medsci_low = sanitize_integer(job_medsci_low, 0, 65535, initial(job_medsci_low))
-	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
-	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
-	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
+	//Validate job prefs
+	for(var/j in job_preferences)
+		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
+			job_preferences -= j
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 	positive_quirks = SANITIZE_LIST(positive_quirks)
 	negative_quirks = SANITIZE_LIST(negative_quirks)
 	neutral_quirks = SANITIZE_LIST(neutral_quirks)
 
-	return 1
+	return TRUE
 
 /datum/preferences/proc/save_character()
 	if(!path)
-		return 0
+		return FALSE
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/character[default_slot]"
 
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
@@ -359,6 +433,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
 	WRITE_FILE(S["species"]			, pref_species.id)
 	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
+	WRITE_FILE(S["feature_ethcolor"]					, features["ethcolor"])
 	WRITE_FILE(S["feature_lizard_tail"]			, features["tail_lizard"])
 	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
 	WRITE_FILE(S["feature_lizard_snout"]			, features["snout"])
@@ -369,26 +444,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
 	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
 	WRITE_FILE(S["feature_moth_wings"]			, features["moth_wings"])
-	WRITE_FILE(S["human_name"]			, custom_names["human"])
-	WRITE_FILE(S["clown_name"]			, custom_names["clown"])
-	WRITE_FILE(S["mime_name"]			, custom_names["mime"])
-	WRITE_FILE(S["ai_name"]			, custom_names["ai"])
-	WRITE_FILE(S["cyborg_name"]		, custom_names["cyborg"])
-	WRITE_FILE(S["religion_name"]		, custom_names["religion"])
-	WRITE_FILE(S["deity_name"]			, custom_names["deity"])
+
+	//Custom names
+	for(var/custom_name_id in GLOB.preferences_custom_names)
+		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
+		WRITE_FILE(S[savefile_slot_name],custom_names[custom_name_id])
+
+	WRITE_FILE(S["preferred_ai_core_display"] ,  preferred_ai_core_display)
 	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
 
 	//Jobs
 	WRITE_FILE(S["joblessrole"]		, joblessrole)
-	WRITE_FILE(S["job_civilian_high"]	, job_civilian_high)
-	WRITE_FILE(S["job_civilian_med"]	, job_civilian_med)
-	WRITE_FILE(S["job_civilian_low"]	, job_civilian_low)
-	WRITE_FILE(S["job_medsci_high"]	, job_medsci_high)
-	WRITE_FILE(S["job_medsci_med"]		, job_medsci_med)
-	WRITE_FILE(S["job_medsci_low"]		, job_medsci_low)
-	WRITE_FILE(S["job_engsec_high"]	, job_engsec_high)
-	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
-	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
+	//Write prefs
+	WRITE_FILE(S["job_preferences"] , job_preferences)
 
 	//Quirks
 	WRITE_FILE(S["all_quirks"]			, all_quirks)
@@ -396,7 +464,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["negative_quirks"]		, negative_quirks)
 	WRITE_FILE(S["neutral_quirks"]		, neutral_quirks)
 
-	return 1
+	return TRUE
 
 
 #undef SAVEFILE_VERSION_MAX

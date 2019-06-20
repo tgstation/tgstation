@@ -17,7 +17,7 @@
 	return TRUE
 
 /obj/item/onetankbomb/examine(mob/user)
-	bombtank.examine(user)
+	return bombtank.examine(user)
 
 /obj/item/onetankbomb/update_icon()
 	cut_overlays()
@@ -51,15 +51,10 @@
 		return
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
-		GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-		message_admins("[ADMIN_LOOKUPFLW(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
+		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bombtank.air_contents.temperature-T0C]")
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		add_fingerprint(user)
 		return TRUE
-
-
-/obj/item/onetankbomb/analyzer_act(mob/living/user, obj/item/I)
-	bombtank.analyzer_act(user, I)
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, TRUE)
@@ -201,3 +196,9 @@
 		return
 	T.assume_air(removed)
 	air_update_turf()
+
+/obj/item/onetankbomb/return_analyzable_air()
+	if(bombtank)
+		return bombtank.return_analyzable_air()
+	else
+		return null

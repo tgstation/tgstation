@@ -26,7 +26,7 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM && material == METAL)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -148,8 +148,8 @@
 	var/mode = SINGLE
 
 /obj/item/grenade/barrier/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to toggle modes.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to toggle modes.</span>"
 
 /obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))

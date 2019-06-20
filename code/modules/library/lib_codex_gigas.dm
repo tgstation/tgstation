@@ -21,12 +21,8 @@
 	var/currentSection = PRE_TITLE
 
 /obj/item/book/codex_gigas/attack_self(mob/user)
-	if(is_blind(user))
-		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid.</span>")
-		return
-	if(!user.is_literate())
-		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
-		return
+	if(!user.can_read(src))
+		return FALSE
 	if(inUse)
 		to_chat(user, "<span class='notice'>Someone else is reading it.</span>")
 	if(ishuman(user))

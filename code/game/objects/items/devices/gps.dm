@@ -14,8 +14,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 
 /obj/item/gps/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>"
 
 /obj/item/gps/Initialize()
 	. = ..()
@@ -156,7 +156,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon_state = "gps-b"
 	gpstag = "BORG0"
 	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
-	item_flags = NODROP
+
+/obj/item/gps/cyborg/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/gps/internal
 	icon_state = null

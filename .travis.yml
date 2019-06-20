@@ -1,52 +1,59 @@
 language: generic
+dist: trusty
 sudo: false
+dist: xenial
 branches:
   except:
   - ___TGS3TempBranch
-env:
-    global:
-    - BYOND_MAJOR="512"
-    - BYOND_MINOR="1427"
-    - NODE_VERSION="4"
-    - RUST_G_VERSION="0.3.0"
+  - ___TGSTempBranch
 matrix:
   include:
     - env:
       - BUILD_TOOLS=true
+      name: "Build Tools"
       addons:
         apt:
           packages:
             - python3
             - python3-pip
+            - python3-setuptools
       cache:
         directories:
           - tgui/node_modules
     - env:
       - BUILD_TESTING=true
       - BUILD_TOOLS=false
+      name: "Build All Maps"
       addons:
         apt:
           packages:
             - libstdc++6:i386
       cache:
         directories:
-          - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          - $HOME/BYOND
     - env:
       - BUILD_TESTING=false
       - BUILD_TOOLS=false
+      name: "Build and Run Unit Tests"
       addons:
         mariadb: '10.2'
         apt:
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
             - libstdc++6:i386
             - libssl-dev:i386
             - gcc-multilib
+            - g++-7
+            - g++-7-multilib
+            - libmariadb-client-lgpl-dev:i386
+            - libmariadbd-dev
       cache:
         directories:
-          - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-          - $HOME/libmariadb
-          - $HOME/.rustup
           - $HOME/.cargo
+          - $HOME/BYOND
+          - $HOME/MariaDB
+          - $HOME/.rustup
 
 install:
   - tools/travis/install_build_tools.sh
@@ -64,4 +71,3 @@ script:
   - tools/travis/build_tools.sh || travis_terminate 1
   - tools/travis/build_dependencies.sh || travis_terminate 1
   - tools/travis/build_byond.sh
-

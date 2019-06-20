@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/ertCom
-	name = "commander's closet"
-	desc = "Emergency Response Team equipment locker."
+	name = "emergency response team commander's locker"
+	desc = "A storage unit containing equipment for an Emergency Response Team Commander."
 	req_access = list(ACCESS_CENT_CAPTAIN)
 	icon_state = "cap"
 
@@ -20,8 +20,8 @@
 		new /obj/item/gun/ballistic/revolver/mateba(src)
 
 /obj/structure/closet/secure_closet/ertSec
-	name = "security closet"
-	desc = "Emergency Response Team equipment locker."
+	name = "emergency response team security locker"
+	desc = "A storage unit containing equipment for an Emergency Response Team Security Officer."
 	req_access = list(ACCESS_CENT_SPECOPS)
 	icon_state = "hos"
 
@@ -34,8 +34,8 @@
 	new /obj/item/shield/riot/tele(src)
 
 /obj/structure/closet/secure_closet/ertMed
-	name = "medical closet"
-	desc = "Emergency Response Team equipment locker."
+	name = "emergency response team medical locker"
+	desc = "A storage unit containing equipment for an Emergency Response Team Medical Officer."
 	req_access = list(ACCESS_CENT_MEDICAL)
 	icon_state = "cmo"
 
@@ -50,8 +50,8 @@
 	new /mob/living/simple_animal/bot/medbot(src)
 
 /obj/structure/closet/secure_closet/ertEngi
-	name = "engineer closet"
-	desc = "Emergency Response Team equipment locker."
+	name = "emergency response team engineer locker"
+	desc = "A storage unit containing equipment for an Emergency Response Team Engineer."
 	req_access = list(ACCESS_CENT_STORAGE)
 	icon_state = "ce"
 
@@ -62,6 +62,6 @@
 	new /obj/item/stack/sheet/glass(src, 50)
 	new /obj/item/stack/sheet/mineral/sandbags(src, 30)
 	new /obj/item/clothing/shoes/magboots(src)
-	new /obj/item/storage/box/metalfoam(src)
+	new /obj/item/storage/box/smart_metal_foam(src)
 	for(var/i in 1 to 3)
 		new /obj/item/rcd_ammo/large(src)

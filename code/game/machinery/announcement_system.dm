@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/Initialize()
 	. = ..()
 	GLOB.announcement_systems += src
-	radio = new /obj/item/radio/headset/ai(src)
+	radio = new /obj/item/radio/headset/silicon/ai(src)
 	update_icon()
 
 /obj/machinery/announcement_system/update_icon()
@@ -59,14 +59,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	update_icon()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/screwdriver))
+	if(P.tool_behaviour == TOOL_SCREWDRIVER)
 		P.play_tool_sound(src)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
 		update_icon()
 	else if(default_deconstruction_crowbar(P))
 		return
-	else if(istype(P, /obj/item/multitool) && panel_open && (stat & BROKEN))
+	else if(P.tool_behaviour == TOOL_MULTITOOL && panel_open && (stat & BROKEN))
 		to_chat(user, "<span class='notice'>You reset [src]'s firmware.</span>")
 		stat &= ~BROKEN
 		update_icon()
@@ -92,10 +92,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
 	if(channels.len == 0)
-		radio.talk_into(src, message, null, list(SPAN_ROBOT), get_default_language())
+		radio.talk_into(src, message, null)
 	else
 		for(var/channel in channels)
-			radio.talk_into(src, message, channel, list(SPAN_ROBOT), get_default_language())
+			radio.talk_into(src, message, channel)
 
 //config stuff
 

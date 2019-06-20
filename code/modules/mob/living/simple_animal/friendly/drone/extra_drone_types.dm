@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	. = ..()
-	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
@@ -47,10 +47,10 @@
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	. = ..()
-	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
-	W.implant(src)
+	W.implant(src, force = TRUE)
 
 /mob/living/simple_animal/drone/snowflake
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
@@ -78,6 +78,7 @@
 	default_storage = null
 	default_hatmask = null
 	picked = TRUE
+	flavortext = null
 
 /mob/living/simple_animal/drone/polymorphed/Initialize()
 	. = ..()
@@ -164,7 +165,7 @@
 	..()
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/screwdriver) && stat == DEAD)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER && stat == DEAD)
 		try_reactivate(user)
 	else
 		..()
@@ -207,37 +208,6 @@
 	else
 		icon_state = "[visualAppearence]_dead"
 
-/mob/living/simple_animal/drone/cogscarab/Stun(amount, updating = 1, ignore_canstun = 0)
+/mob/living/simple_animal/drone/cogscarab/update_mobility()
 	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/SetStun(amount, updating = 1, ignore_canstun = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/AdjustStun(amount, updating = 1, ignore_canstun = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/SetKnockdown(amount, updating = 1, ignore_canknockdown = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/AdjustKnockdown(amount, updating = 1, ignore_canknockdown = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/update_canmove()
-	. = ..()
-	if(.)
-		update_icons()
+	update_icons()

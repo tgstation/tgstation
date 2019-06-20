@@ -1,10 +1,10 @@
 /mob/living/proc/alien_talk(message, shown_name = real_name)
-	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
+	src.log_talk(message, LOG_SAY)
 	message = trim(message)
 	if(!message)
 		return
 
-	var/message_a = say_quote(message, get_spans())
+	var/message_a = say_quote(message)
 	var/rendered = "<i><span class='alien'>Hivemind, <span class='name'>[shown_name]</span> <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/S in GLOB.player_list)
 		if(!S.stat && S.hivecheck())

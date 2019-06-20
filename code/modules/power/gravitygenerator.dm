@@ -23,11 +23,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	desc = "A device which produces a graviton field when set up."
 	icon = 'icons/obj/machines/gravity_generator.dmi'
 	density = TRUE
+	move_resist = INFINITY
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
-/obj/machinery/gravity_generator/safe_throw_at()
+/obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
 	return FALSE
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
@@ -186,14 +187,14 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user, params)
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
-			if(istype(I, /obj/item/screwdriver))
+			if(I.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, "<span class='notice'>You secure the screws of the framework.</span>")
 				I.play_tool_sound(src)
 				broken_state++
 				update_icon()
 				return
 		if(GRAV_NEEDS_WELDING)
-			if(istype(I, /obj/item/weldingtool))
+			if(I.tool_behaviour == TOOL_WELDER)
 				if(I.use_tool(src, user, 0, volume=50, amount=1))
 					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
 					broken_state++
@@ -212,7 +213,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 					to_chat(user, "<span class='warning'>You need 10 sheets of plasteel!</span>")
 				return
 		if(GRAV_NEEDS_WRENCH)
-			if(istype(I, /obj/item/wrench))
+			if(I.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You secure the plating to the framework.</span>")
 				I.play_tool_sound(src)
 				set_fix()

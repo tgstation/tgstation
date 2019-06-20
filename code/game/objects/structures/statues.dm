@@ -1,3 +1,8 @@
+
+#define BAD_ART 12.5
+#define GOOD_ART 25
+#define GREAT_ART 50
+
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
@@ -8,19 +13,19 @@
 	max_integrity = 100
 	var/oreAmount = 5
 	var/material_drop_type = /obj/item/stack/sheet/metal
+	var/impressiveness = 15
 	CanAtmosPass = ATMOS_PASS_DENSITY
-
 
 /obj/structure/statue/Initialize()
 	. = ..()
+	AddComponent(/datum/component/art, impressiveness)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	user.changeNext_move(CLICK_CD_MELEE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(default_unfasten_wrench(user, W))
 			return
-		if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+		if(W.tool_behaviour == TOOL_WELDER)
 			if(!W.tool_start_check(user, amount=0))
 				return FALSE
 
@@ -32,15 +37,6 @@
 				deconstruct(TRUE)
 			return
 	return ..()
-
-/obj/structure/statue/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	add_fingerprint(user)
-	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
-						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -61,6 +57,8 @@
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
 	var/last_event = 0
 	var/active = null
+	impressiveness = 25 // radiation makes an impression
+
 
 /obj/structure/statue/uranium/nuke
 	name = "statue of a nuclear fission explosive"
@@ -76,7 +74,7 @@
 	radiate()
 	return ..()
 
-/obj/structure/statue/uranium/CollidedWith(atom/movable/AM)
+/obj/structure/statue/uranium/Bumped(atom/movable/AM)
 	radiate()
 	..()
 
@@ -103,6 +101,7 @@
 /obj/structure/statue/plasma
 	max_integrity = 200
 	material_drop_type = /obj/item/stack/sheet/mineral/plasma
+	impressiveness = 20
 	desc = "This statue is suitably made from plasma."
 
 /obj/structure/statue/plasma/scientist
@@ -116,8 +115,7 @@
 
 /obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
 	var/burn = FALSE
-	if(!(Proj.nodamage) && Proj.damage_type == BURN)
-		PlasmaBurn(2500)
+	if(!(Proj.nodamage) && Proj.damage_type == BURN && !QDELETED(src))
 		burn = TRUE
 	if(burn)
 		var/turf/T = get_turf(src)
@@ -127,10 +125,11 @@
 		else
 			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_VERBOSEJMP(T)]")
 			log_game("Plasma statue ignited by [Proj] in [AREACOORD(T)]. No known firer.")
-	..()
+		PlasmaBurn(2500)
+	. = ..()
 
 /obj/structure/statue/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+	if(W.is_hot() > 300 && !QDELETED(src))//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Plasma statue ignited by [key_name(user)] in [AREACOORD(T)]")
@@ -139,6 +138,8 @@
 		return ..()
 
 /obj/structure/statue/plasma/proc/PlasmaBurn(exposed_temperature)
+	if(QDELETED(src))
+		return
 	atmos_spawn_air("plasma=[oreAmount*10];TEMP=[exposed_temperature]")
 	deconstruct(FALSE)
 
@@ -151,6 +152,7 @@
 /obj/structure/statue/gold
 	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/gold
+	impressiveness = 25
 	desc = "This is a highly valuable statue made from gold."
 
 /obj/structure/statue/gold/hos
@@ -178,6 +180,7 @@
 /obj/structure/statue/silver
 	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/silver
+	impressiveness = 25
 	desc = "This is a valuable statue made from silver."
 
 /obj/structure/statue/silver/md
@@ -205,6 +208,7 @@
 /obj/structure/statue/diamond
 	max_integrity = 1000
 	material_drop_type = /obj/item/stack/sheet/mineral/diamond
+	impressiveness = 50
 	desc = "This is a very expensive diamond statue."
 
 /obj/structure/statue/diamond/captain
@@ -224,6 +228,7 @@
 /obj/structure/statue/bananium
 	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/bananium
+	impressiveness = 50
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
 
@@ -231,7 +236,7 @@
 	name = "statue of a clown"
 	icon_state = "clown"
 
-/obj/structure/statue/bananium/CollidedWith(atom/movable/AM)
+/obj/structure/statue/bananium/Bumped(atom/movable/AM)
 	honk()
 	..()
 
@@ -259,6 +264,7 @@
 /obj/structure/statue/sandstone
 	max_integrity = 50
 	material_drop_type = /obj/item/stack/sheet/mineral/sandstone
+	impressiveness = 15
 
 /obj/structure/statue/sandstone/assistant
 	name = "statue of an assistant"

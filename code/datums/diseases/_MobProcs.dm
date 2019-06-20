@@ -8,7 +8,7 @@
 
 
 /mob/living/proc/CanContractDisease(datum/disease/D)
-	if(stat == DEAD)
+	if(stat == DEAD && !D.process_dead)
 		return FALSE
 
 	if(D.GetDiseaseID() in disease_resistances)
@@ -117,7 +117,7 @@
 /mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
 	if(internal)
 		return
-	if(has_trait(TRAIT_NOBREATH))
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return
 	..()
 
@@ -137,10 +137,16 @@
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 	if(dna)
-		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
+		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
 			return FALSE
 
 	for(var/thing in D.required_organs)
 		if(!((locate(thing) in bodyparts) || (locate(thing) in internal_organs)))
 			return FALSE
 	return ..()
+
+/mob/living/proc/CanSpreadAirborneDisease()
+	return !is_mouth_covered()
+
+/mob/living/carbon/CanSpreadAirborneDisease()
+	return !((head && (head.flags_cover & HEADCOVERSMOUTH) && (head.armor.getRating("bio") >= 25)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.armor.getRating("bio") >= 25)))

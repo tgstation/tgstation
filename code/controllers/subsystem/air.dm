@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(air)
 	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
-	..()
+	return ..()
 
 
 /datum/controller/subsystem/air/fire(resumed = 0)
@@ -288,9 +288,12 @@ SUBSYSTEM_DEF(air)
 	var/list/active_turfs = src.active_turfs
 	var/times_fired = ++src.times_fired
 
+	// Clear active turfs - faster than removing every single turf in the world
+	// one-by-one, and Initalize_Atmos only ever adds `src` back in.
+	active_turfs.Cut()
+
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
-		active_turfs -= T
 		if (T.blocks_air)
 			continue
 		T.Initalize_Atmos(times_fired)
@@ -300,7 +303,7 @@ SUBSYSTEM_DEF(air)
 		var/starting_ats = active_turfs.len
 		sleep(world.tick_lag)
 		var/timer = world.timeofday
-		warning("There are [starting_ats] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
+		log_mapping("There are [starting_ats] active turfs at roundstart caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required).")
 		for(var/turf/T in active_turfs)
 			GLOB.active_turfs_startlist += T
 
