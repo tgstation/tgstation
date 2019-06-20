@@ -54,3 +54,17 @@
 	icon_state = "botany_envirosuit"
 	item_state = "botany_envirosuit"
 	item_color = "botany_envirosuit"
+
+/obj/item/clothing/under/plasmaman/mime
+	name = "mime envirosuit"
+	desc = "It's not very colourful."
+	icon_state = "mime_envirosuit"
+	item_state = "mime_envirosuit"
+	item_color = "mime_envirosuit"
+
+/obj/item/clothing/under/plasmaman/clown
+	name = "clown envirosuit"
+	desc = "<i>'HONK!'</i>"
+	icon_state = "clown_envirosuit"
+	item_state = "clown_envirosuit"
+	item_color = "clown_envirosuit"
