@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/chem_pack
 	name = "intravenous medicine bag"
-	desc = "A plastic pressure barg, or 'chem pack', for IV administration of drugs. It is fitted with a thermosealing strip."
+	desc = "A plastic pressure bag, or 'chem pack', for IV administration of drugs. It is fitted with a thermosealing strip."
 	icon = 'icons/obj/bloodpack.dmi'
 	icon_state = "chempack"
 	volume = 100
@@ -36,11 +36,12 @@
 	sealed = TRUE
 
 /obj/item/reagent_containers/chem_pack/examine()
-	..()
+	. = ..()
 	if(sealed)
-		to_chat(usr, "<span class='notice'>The bag is sealed shut.</span>")
+		. += "<span class='notice'>The bag is sealed shut.</span>"
 	else
-		to_chat(usr, "<span class='notice'>Alt click to seal it.</span>")
+		. += "<span class='notice'>Alt-click to seal it.</span>"
+
 
 obj/item/reagent_containers/chem_pack/attack_self(mob/user)
 	if(sealed)
