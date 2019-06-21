@@ -28,6 +28,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
+	/client/proc/gamemode_panel,        /*game moed panel, game mode specified admin stuff*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
@@ -713,3 +714,12 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+
+/client/proc/gamemode_panel()
+	set name = "Game Mode Panel"
+	set category = "Admin"
+	if(holder)
+		if(!SSticker.HasRoundStarted() || !SSticker.mode)
+			alert("The game hasn't started yet!")
+			return
+		SSticker.mode.AdminPanel()

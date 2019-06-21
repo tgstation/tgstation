@@ -587,5 +587,5 @@
 		if(SSshuttle.emergency.is_hijacked())
 			SSticker.news_report = SHUTTLE_HIJACK
 
-/datum/game_mode/proc/AdminPanelEntry()
+/datum/game_mode/proc/AdminPanel()
 	return

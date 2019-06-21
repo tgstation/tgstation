@@ -212,7 +212,5 @@
 
 	dat += build_antag_listing()
 
-	dat += SSticker.mode.AdminPanelEntry()
-
 	dat += "</body></html>"
 	usr << browse(dat.Join(), "window=roundstatus;size=500x500")

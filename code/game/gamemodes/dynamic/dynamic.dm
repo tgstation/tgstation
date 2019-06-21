@@ -54,7 +54,6 @@
 
 	// -- Special tweaks --
 	var/no_stacking = 1
-	var/classic_secret = 0
 	var/high_pop_limit = 45
 	var/forced_extended = 0
 	var/stacking_limit = 90
@@ -68,18 +67,17 @@
 		"Detective" = 3,
 	)
 
-/datum/game_mode/dynamic/AdminPanelEntry()
-	var/dat = list()
-	dat += "Dynamic Mode <a href='?_src_=vars;Vars=\ref[src]'>\[VV\]</A><BR>"
+/datum/game_mode/dynamic/AdminPanel()
+	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
+	dat += "Dynamic Mode <a href='?src=\ref[src];Vars=\ref[src]'>\[VV\]</A><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
-	dat += "Threat to Spend: <b>[threat]</b> <a href='?_src_=holder;adjustthreat=1'>\[Adjust\]</A> <a href='?_src_=holder;threatlog=1'>\[View Log\]</a><br/>"
+	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
 	dat += "Parameters: centre = [curve_centre] ; width = [curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
 	dat += "Forced extended: <a href='?src=\ref[src];forced_extended=1'><b>[forced_extended ? "On" : "Off"]</b></a><br/>"
 	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];no_stacking=1'><b>[no_stacking ? "On" : "Off"]</b></a><br/>"
-	dat += "Classic secret (only autotraitor): <a href='?src=\ref[src];classic_secret=1'><b>[classic_secret ? "On" : "Off"]</b></a><br/>"
-	dat += "Stacking limit: <a href='?src=\ref[usr.client.holder];stacking_limit=1'>[stacking_limit]</a>"
+	dat += "Stacking limit: [stacking_limit] <a href='?src=\ref[src];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
 	dat += "Executed rulesets: "
 	if (executed_rules.len > 0)
@@ -96,9 +94,9 @@
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[GetInjectionChance()]%</b> chance)<BR>"
-	dat += "Latejoin: [latejoin_injection_cooldown>60 ? "[round(latejoin_injection_cooldown/60,0.1)] minutes" : "[latejoin_injection_cooldown] seconds"] <a href='?_src_=holder;injectnow=1'>\[Now!\]</A><BR>"
-	dat += "Midround: [midround_injection_cooldown>60 ? "[round(midround_injection_cooldown/60,0.1)] minutes" : "[midround_injection_cooldown] seconds"] <a href='?_src_=holder;injectnow=2'>\[Now!\]</A><BR>"
-	return jointext(dat, "")
+	dat += "Latejoin: [latejoin_injection_cooldown>60 ? "[round(latejoin_injection_cooldown/60,0.1)] minutes" : "[latejoin_injection_cooldown] seconds"] <a href='?src=\ref[src];injectnow=1'>\[Now!\]</A><BR>"
+	dat += "Midround: [midround_injection_cooldown>60 ? "[round(midround_injection_cooldown/60,0.1)] minutes" : "[midround_injection_cooldown] seconds"] <a href='?src=\ref[src];injectnow=2'>\[Now!\]</A><BR>"
+	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
 	if (..()) // Sanity, maybe ?
@@ -106,13 +104,27 @@
 	if(!usr.client || !check_rights(R_ADMIN))
 		return
 	if (href_list["forced_extended"])
-		forced_extended =! forced_extended
+		forced_extended = !forced_extended
 	else if (href_list["no_stacking"])
-		no_stacking =! no_stacking
-	else if (href_list["classic_secret"])
-		classic_secret =! classic_secret
-
-	usr.client.holder.check_antagonists() // Refreshes the window
+		no_stacking = !no_stacking
+	else if (href_list["adjustthreat"])
+		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0) as null|num
+		if(!threatadd)
+			return
+		if(threatadd > 0)
+			create_threat(threatadd)
+		else
+			spend_threat(-threatadd)
+	else if (href_list["injectnow"] == 1)
+		latejoin_injection_cooldown = 0
+	else if (href_list["injectnow"] == 2)
+		midround_injection_cooldown = 0
+	else if (href_list["threatlog"])
+		show_threatlog(usr)
+	else if (href_list["stacking_limit"])
+		stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
+	
+	AdminPanel() // Refreshes the window
 
 /datum/game_mode/dynamic/set_round_result()
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
@@ -149,7 +161,7 @@
 	starting_threat = threat_level
 
 /datum/game_mode/dynamic/can_start()
-	message_admins("Dynamic mode parameters for the round: centre = [curve_centre], width is [curve_width]. Extended : [forced_extended], no stacking : [no_stacking], classic secret: [classic_secret].")
+	message_admins("Dynamic mode parameters for the round: centre = [curve_centre], width is [curve_width]. Extended : [forced_extended], no stacking : [no_stacking].")
 
 	generate_threat()
 
@@ -214,19 +226,16 @@
 	var/indice_pop = min(10,round(roundstart_pop_ready/5)+1)
 	var/extra_rulesets_amount = 0
 
-	if (classic_secret) // Classic secret experience : one & only one roundstart ruleset
-		extra_rulesets_amount = 0
+	if (GLOB.player_list.len > high_pop_limit)
+		if (threat_level > 50)
+			extra_rulesets_amount++
+			if (threat_level > 75)
+				extra_rulesets_amount++
 	else
-		if (GLOB.player_list.len > high_pop_limit)
-			if (threat_level > 50)
+		if (threat_level >= second_rule_req[indice_pop])
+			extra_rulesets_amount++
+			if (threat_level >= third_rule_req[indice_pop])
 				extra_rulesets_amount++
-				if (threat_level > 75)
-					extra_rulesets_amount++
-		else
-			if (threat_level >= second_rule_req[indice_pop])
-				extra_rulesets_amount++
-				if (threat_level >= third_rule_req[indice_pop])
-					extra_rulesets_amount++
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
 		if (extra_rulesets_amount > 0)//we've got enough population and threat for a second rulestart rule
@@ -382,9 +391,6 @@
 			current_players[CURRENT_OBSERVERS] = list_observers.Copy()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
 				if (rule.acceptable(living_players.len,threat_level) && threat >= rule.cost)
-					// Classic secret : only autotraitor/minor roles
-					if (classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-						continue
 					// No stacking : only one round-enter, unless > stacking_limit threat.
 					if (threat < stacking_limit && no_stacking)
 						var/skip_ruleset = 0
@@ -477,9 +483,6 @@
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 			if (rule.acceptable(living_players.len,threat_level) && threat >= rule.cost)
-				// Classic secret : only autotraitor/minor roles
-				if (classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-					continue
 				// No stacking : only one round-enter, unless > stacking_limit threat.
 				if (threat < stacking_limit && no_stacking)
 					var/skip_ruleset = 0
@@ -517,107 +520,3 @@
 //Expend threat, but do not fall below 0.
 /datum/game_mode/dynamic/proc/spend_threat(var/cost)
 	threat = max(threat-cost,0)
-
-// -- For the purpose of testing & simulation.
-/datum/game_mode/dynamic/proc/simulate_roundstart(var/mob/user = usr)
-	// Picking part
-	var/done = 0
-	var/list/rules_to_simulate = list()
-	var/list/choices = list()
-	for (var/datum/dynamic_ruleset/roundstart/DR in roundstart_rules)
-		choices[DR.name] = DR
-	choices["None"] = null
-	while (!done)
-		var/choice = input(user, "Which rule to you want to add to the simulated list? It has currently [rules_to_simulate.len] items.", "Midround rules to simulate") as null|anything in choices
-		if (!choice || choice == "None")
-			done = 1
-		var/datum/dynamic_ruleset/to_test = choices[choice]
-		if (threat < stacking_limit && no_stacking)
-			var/skip_ruleset = 0
-			for (var/datum/dynamic_ruleset/roundstart/DR in rules_to_simulate)
-				if ((DR.flags & HIGHLANDER_RULESET) && (to_test.flags & HIGHLANDER_RULESET))
-					skip_ruleset = 1
-					break
-			if (!skip_ruleset)
-				rules_to_simulate += to_test
-		else 
-			rules_to_simulate += to_test
-
-/datum/game_mode/dynamic/proc/simulate_midround_injection(var/mob/user = usr)
-	// Picking part
-	var/done = 0
-	var/list/rules_to_simulate = list()
-	var/list/choices_a = list()
-	for (var/datum/dynamic_ruleset/DR in midround_rules + roundstart_rules)
-		choices_a[DR.name] = DR
-	choices_a["None"] = null
-	while (!done)
-		var/choice = input(user, "Which rule to you want to add to the simulated list? It has currently [rules_to_simulate.len] items.", "Midround rules to simulate") as null|anything in choices_a
-		if (!choice || choice == "None")
-			done = 1
-		else
-			rules_to_simulate += choices_a[choice]
-
-	var/list/choices_b = list()
-	for (var/datum/dynamic_ruleset/midround/DR in midround_rules)
-		choices_b[DR.name] = DR
-	choices_b["None"] = null
-
-	var/name_to_test = input(user, "What rule to you want to test?", "Midround rule to test") as null|anything in choices_b
-	if (!name_to_test || name_to_test == "None")
-		return
-
-	var/datum/dynamic_ruleset/midround/to_test = choices_b[name_to_test]
-
-	// Concrete testing
-
-	if (classic_secret && !((to_test.flags & TRAITOR_RULESET) || (to_test.flags & MINOR_RULESET)))
-		return
-	// No stacking : only one round-enter, unless > stacking_limit threat.
-	if (threat < stacking_limit && no_stacking)
-		var/skip_ruleset = 0
-		for (var/datum/dynamic_ruleset/DR in rules_to_simulate)
-			if ((DR.flags & HIGHLANDER_RULESET) && (to_test.flags & HIGHLANDER_RULESET))
-				skip_ruleset = 1
-			if (skip_ruleset)
-				return
-	
-/datum/game_mode/dynamic/proc/simulate_latejoin_injection(var/mob/user = usr)
-	// Picking part
-	var/done = 0
-	var/list/rules_to_simulate = list()
-	var/list/choices_a = list()
-	for (var/datum/dynamic_ruleset/DR in midround_rules + roundstart_rules)
-		choices_a[DR.name] = DR
-	choices_a["None"] = null
-	while (!done)
-		var/choice = input(user, "Which rule to you want to add to the simulated list? It has currently [rules_to_simulate.len] items.", "Midround rules to simulate") as null|anything in choices_a
-		if (!choice || choice == "None")
-			done = 1
-		else
-			rules_to_simulate += choices_a[choice]
-
-	var/list/choices_b = list()
-	for (var/datum/dynamic_ruleset/latejoin/DR in latejoin_rules)
-		choices_b[DR.name] = DR
-	choices_b["None"] = null
-
-	var/name_to_test = input(user, "What rule to you want to test?", "Midround rule to test") as null|anything in choices_b
-	if (!name_to_test || name_to_test == "None")
-		return
-
-	var/datum/dynamic_ruleset/latejoin/to_test = choices_b[name_to_test]
-
-	// Concrete testing
-
-	if (classic_secret && !((to_test.flags & TRAITOR_RULESET) || (to_test.flags & MINOR_RULESET)))
-		return
-	// No stacking : only one round-enter, unless > stacking_limit threat.
-	if (threat < stacking_limit && no_stacking)
-		var/skip_ruleset = 0
-		for (var/datum/dynamic_ruleset/DR in rules_to_simulate)
-			if ((DR.flags & HIGHLANDER_RULESET) && (to_test.flags & HIGHLANDER_RULESET))
-				skip_ruleset = 1
-				break
-		if (skip_ruleset)
-			return
