@@ -119,7 +119,7 @@
 		stat |= NOPOWER
 	return
 
-// connect the machine to a powernet if a node cable is present on the turf
+// connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 	if(!T || !istype(T))
@@ -127,7 +127,12 @@
 
 	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
-		return FALSE
+		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
+		if(!term || !term.powernet)
+			return FALSE
+		else
+			term.powernet.add_machine(src)
+			return TRUE
 
 	C.powernet.add_machine(src)
 	return TRUE
