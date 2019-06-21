@@ -95,7 +95,17 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(GLOB.in_character_filter.len && !forced)
 		if(findtext(message, config.ic_filter_regex))
-			to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.</span>")
+			// let's try to be a bit more informative!
+			var/warning_message = "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.</br>The bolded terms are disallowed: &quot;"
+			var/list/words = splittext(message, " ")
+			for (var/word in words)
+				if (findtext(word, config.ic_filter_regex))
+					warning_message = "[warning_message]<b>[word]</b> "
+				else
+					warning_message = "[warning_message][word] "
+
+			warning_message = trim(warning_message)
+			to_chat(src, "[warning_message]&quot;</span>")
 			return
 
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
