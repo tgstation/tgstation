@@ -9675,7 +9675,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "axy" = (
@@ -10350,7 +10349,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "ayK" = (
@@ -10961,7 +10959,6 @@
 /obj/structure/window/plasma/reinforced{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -18082,7 +18079,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -47626,6 +47622,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/transit_tube)
 "bLJ" = (
@@ -49002,7 +48999,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/transit_tube)
 "bNN" = (

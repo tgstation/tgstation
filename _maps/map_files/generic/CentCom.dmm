@@ -9884,6 +9884,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vG" = (
@@ -10306,6 +10307,7 @@
 /area/centcom/ferry)
 "wy" = (
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "wz" = (
@@ -10757,6 +10759,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "xS" = (
@@ -11430,6 +11433,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zD" = (
@@ -11687,6 +11691,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/ert_spawn,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Ai" = (
@@ -11898,6 +11903,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "AQ" = (
@@ -11934,6 +11940,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "AT" = (
@@ -12399,6 +12406,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/ert_spawn,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cb" = (
@@ -12416,6 +12424,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cc" = (
@@ -12633,6 +12642,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cx" = (
@@ -14795,6 +14805,20 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"GZ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
 "Hb" = (
 /obj/structure/sink{
 	dir = 8;
@@ -17377,6 +17401,12 @@
 "OA" = (
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership/control)
+"OC" = (
+/obj/machinery/door/poddoor/ert,
+/obj/effect/turf_decal/delivery,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
 "OD" = (
 /obj/machinery/microwave{
 	desc = "Cooks and boils stuff, somehow.";
@@ -17397,6 +17427,18 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/one)
+"OQ" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Briefing Room";
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
 "OU" = (
 /obj/item/clothing/under/jabroni,
 /obj/item/clothing/under/geisha,
@@ -17566,6 +17608,10 @@
 /obj/singularity/wizard/mapped,
 /turf/open/indestructible/binary,
 /area/fabric_of_reality)
+"Qq" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
 "Qu" = (
 /obj/machinery/light{
 	dir = 4
@@ -17952,6 +17998,12 @@
 /obj/effect/landmark/holding_facility,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Ue" = (
+/obj/structure/chair/office,
+/obj/effect/landmark/ert_spawn,
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
 "Uf" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -56496,7 +56548,7 @@ ur
 uU
 vF
 wy
-ws
+GZ
 xQ
 nT
 sw
@@ -56753,10 +56805,10 @@ oB
 uV
 rz
 wz
-ws
+GZ
 xR
-yr
-sw
+OQ
+uU
 zC
 Af
 AN
@@ -57014,7 +57066,7 @@ ws
 ts
 rz
 zd
-zB
+Ue
 Ag
 AO
 BA
@@ -57271,11 +57323,11 @@ ws
 ts
 mD
 uV
-sw
+uU
 Ah
 AP
 Ah
-sw
+uU
 Cz
 mD
 aa
@@ -57530,7 +57582,7 @@ qR
 pH
 zA
 sw
-zA
+Qq
 sw
 zA
 CA
@@ -57787,7 +57839,7 @@ mD
 nT
 rz
 Ai
-Ai
+OC
 Ai
 rz
 nU
@@ -58044,7 +58096,7 @@ mD
 ze
 zD
 sw
-sw
+uU
 sw
 zD
 CB
@@ -58299,9 +58351,9 @@ xf
 ts
 mD
 zf
-sw
-sw
-sw
+uU
+uU
+uU
 sw
 sw
 CC
@@ -58556,7 +58608,7 @@ ws
 ts
 mD
 zg
-sw
+uU
 Aj
 AQ
 BB
@@ -58813,7 +58865,7 @@ ws
 ts
 mD
 zh
-sw
+uU
 Ak
 AR
 BC
@@ -59070,9 +59122,9 @@ xk
 ts
 mD
 zi
-sw
-sw
-sw
+uU
+uU
+uU
 sw
 sw
 CF

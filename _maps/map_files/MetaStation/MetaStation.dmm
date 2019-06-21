@@ -9294,7 +9294,6 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "ati" = (
-/obj/structure/cable,
 /obj/structure/table,
 /obj/item/paper/guides/jobs/engi/gravity_gen{
 	layer = 3
@@ -20919,7 +20918,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aTX" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
@@ -22355,7 +22353,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "aWP" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -22363,7 +22360,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "aWQ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
@@ -26342,7 +26338,6 @@
 "bex" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bey" = (
@@ -29747,7 +29742,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/satellite)
 "blK" = (
-/obj/machinery/recharge_station,
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
@@ -29761,7 +29755,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/satellite)
 "blL" = (
@@ -29786,8 +29783,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/satellite)
 "blM" = (
-/obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -29798,6 +29793,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/recharge_station,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/satellite)
 "blT" = (
@@ -30605,10 +30601,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bnF" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -30618,21 +30610,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/satellite)
 "bnG" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/satellite)
 "bnH" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -30653,7 +30643,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -49240,7 +49229,6 @@
 /area/maintenance/disposal/incinerator)
 "ccJ" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -49810,7 +49798,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -67202,7 +67189,6 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cNw" = (
-/obj/structure/cable,
 /obj/machinery/power/compressor{
 	comp_id = "incineratorturbine";
 	dir = 1;
@@ -67444,7 +67430,6 @@
 /obj/machinery/power/turbine{
 	luminosity = 2
 	},
-/obj/structure/cable,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "cOb" = (
