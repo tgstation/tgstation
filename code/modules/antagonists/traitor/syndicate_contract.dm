@@ -16,8 +16,10 @@
 	// 50/50 chance of getting at least one very high paying
 	// contract.
 	// High payout
-	if (prob(15))
+	if (prob(18))
 		contract.payout_bonus = rand(7,10)
+	else if (prob(45))
+		contract.payout_bonus = rand(1,3)
 	else // Medium payout
 		contract.payout_bonus = rand(2,6)
 
