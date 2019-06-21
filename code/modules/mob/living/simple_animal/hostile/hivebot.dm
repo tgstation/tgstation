@@ -65,11 +65,9 @@
 /mob/living/simple_animal/hostile/hivebot/update_icons()
 	if(a_intent != INTENT_HELP)
 		icon_state = "[initial(icon_state)]_attack"
-		set_light(6, 0.4, COLOR_RED_LIGHT)
-		alert_light = mob_light(6, 0.4, COLOR_RED_LIGHT)
+		alert_light = mob_light(COLOR_RED_LIGHT, 6, 0.4)
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
 		qdel(alert_light)
 
 /mob/living/simple_animal/hostile/hivebot/range
