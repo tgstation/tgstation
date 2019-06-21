@@ -30,9 +30,9 @@
 	user.put_in_hands(I)
 
 /obj/item/mecha_ammo/examine(mob/user)
-	..()
+	. = ..()
 	if(rounds)
-		to_chat(user, "There [rounds > 1?"are":"is"] [rounds] [round_term][rounds > 1?"s":""] left.")
+		. += "There [rounds > 1?"are":"is"] [rounds] [round_term][rounds > 1?"s":""] left."
 
 /obj/item/mecha_ammo/incendiary
 	name = "incendiary ammo"
