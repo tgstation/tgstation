@@ -311,14 +311,14 @@
 	if(user.research_scanner || hud_to_check.hudusers[user])
 		. += "<b>Your HUD displays an extensive report...</b><br>"
 		if(overmind)
-			. += "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>"
+			. += overmind.blobstrain.examine(user)
 		else
 			. += "<b>Core neutralized. Critical mass no longer attainable.</b>"
 		. += chemeffectreport(user)
 		. += typereport(user)
 	else
-		if(isobserver(user) && overmind)
-			. += "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>"
+		if((user == overmind || isobserver(user)) && overmind)
+			. += overmind.blobstrain.examine(user)
 		. += "It seems to be made of [get_chem_name()]."
 
 /obj/structure/blob/proc/scannerreport()
