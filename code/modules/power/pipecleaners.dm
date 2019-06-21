@@ -127,7 +127,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // Items usable on a pipe_cleaner :
 //   - Wirecutters : cut it duh !
-//   - pipe cleaner coil coil : merge pipe cleaners
+//   - pipe cleaner coil : merge pipe cleaners
 //
 /obj/structure/pipe_cleaner/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
@@ -317,7 +317,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/turf/T = C.loc
 
-	if(!isturf(T) || T.intact)		// sanity checks, also stop use interacting with T-scanner revealed pipe_cleaner
+	if(!isturf(T))		// sanity check
 		return
 
 	if(get_dist(C, user) > 1)		// make sure it's close enough
@@ -351,7 +351,7 @@ By design, d1 is the smallest direction and d2 is the highest
 						to_chat(user, "<span class='warning'>There's already a pipe cleaner at that position!</span>")
 					return
 
-			var/obj/structure/pipe_cleaner/NC = get_new_pipe_cleaner (U)
+			var/obj/structure/pipe_cleaner/NC = get_new_pipe_cleaner(U)
 
 			NC.d1 = 0
 			NC.d2 = fdirn
