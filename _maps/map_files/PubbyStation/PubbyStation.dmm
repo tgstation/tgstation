@@ -4557,6 +4557,7 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 30
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "amT" = (
@@ -10035,6 +10036,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "aAD" = (
@@ -10331,6 +10333,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "aBx" = (
@@ -10347,6 +10350,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "aBy" = (
@@ -28420,14 +28424,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
-"buN" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plasteel/dark,
-/area/science/xenobiology)
 "buQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -35933,7 +35929,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bKX" = (
@@ -42521,7 +42516,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cbd" = (
@@ -45150,12 +45144,14 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "clZ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "cma" = (
@@ -45166,12 +45162,14 @@
 	name = "Telecommunications Maintenance";
 	req_access_txt = "61"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "cmb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "cmc" = (
@@ -45183,6 +45181,7 @@
 /area/tcommsat/computer)
 "cmd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "cme" = (
@@ -45233,6 +45232,7 @@
 	req_access_txt = "61"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "cmj" = (
@@ -45249,6 +45249,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "cmk" = (
@@ -45267,6 +45268,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "cml" = (
@@ -45327,6 +45329,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "cmr" = (
@@ -45463,6 +45466,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "cmG" = (
@@ -45541,7 +45545,6 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnc" = (
-/obj/machinery/power/terminal,
 /obj/machinery/ntnet_relay,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
@@ -49427,6 +49430,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"dJF" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/tcommsat/computer)
 "dKs" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -53036,9 +53044,10 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "mxy" = (
-/obj/machinery/power/terminal{
-	dir = 4
+/obj/machinery/power/smes{
+	charge = 5e+006
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "myk" = (
@@ -53103,8 +53112,8 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
 "mDW" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
+/obj/machinery/power/terminal{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
@@ -53581,6 +53590,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "nMP" = (
@@ -55044,7 +55054,6 @@
 "rse" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "rsZ" = (
@@ -55441,6 +55450,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
+"svK" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai_upload)
 "svN" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/sign/departments/restroom{
@@ -55459,7 +55478,6 @@
 	},
 /obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -56321,6 +56339,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "uAU" = (
@@ -57143,7 +57162,6 @@
 /obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "wIv" = (
@@ -57421,6 +57439,10 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"xlB" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/tcommsat/server)
 "xlQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -57583,6 +57605,7 @@
 	areastring = "/area/tcommsat/server";
 	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "xIx" = (
@@ -85761,7 +85784,7 @@ clw
 cmf
 cmm
 cmu
-clG
+dJF
 cmB
 xFl
 cmL
@@ -86018,9 +86041,9 @@ clw
 cmg
 cmn
 cmv
-clG
+dJF
 cmG
-cmK
+xlB
 cmM
 cmK
 cmW
@@ -86274,10 +86297,10 @@ cmd
 cmh
 uzn
 cmo
-clG
-clG
-clG
-cmK
+dJF
+dJF
+dJF
+xlB
 cmN
 cmK
 cmK
@@ -86788,9 +86811,9 @@ clL
 clw
 cmj
 cmq
-clG
-clG
-clG
+dJF
+dJF
+dJF
 cmK
 cmO
 cmK
@@ -87046,7 +87069,7 @@ clw
 cmk
 cmr
 cmx
-clG
+dJF
 cmH
 cmK
 cmP
@@ -87303,7 +87326,7 @@ clw
 cml
 cms
 cmy
-clG
+dJF
 cmB
 cmK
 cmQ
@@ -88724,7 +88747,7 @@ axb
 ayb
 azk
 aAB
-aBu
+svK
 aCK
 aDL
 aEH
@@ -105985,7 +106008,7 @@ blX
 bqK
 bsd
 pMI
-buN
+dxc
 fVV
 bxS
 bzr

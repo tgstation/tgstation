@@ -1641,6 +1641,7 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "eh" = (
@@ -1653,6 +1654,7 @@
 	name = "Armory APC";
 	pixel_x = 24
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ei" = (
@@ -2904,6 +2906,10 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
+"po" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/deepstorage/armory)
 "qh" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -4630,7 +4636,7 @@ aQ
 dc
 du
 dO
-dt
+po
 ew
 eO
 fb
