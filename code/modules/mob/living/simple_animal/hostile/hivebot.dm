@@ -33,6 +33,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
+	var/alert_light
 
 	do_footstep = TRUE
 
@@ -65,9 +66,11 @@
 	if(a_intent != INTENT_HELP)
 		icon_state = "[initial(icon_state)]_attack"
 		set_light(6, 0.4, COLOR_RED_LIGHT)
+		alert_light = mob_light(6, 0.4, COLOR_RED_LIGHT)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
+		qdel(alert_light)
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "hivebot"
