@@ -124,6 +124,8 @@
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
 							As is policy we've taken a portion of the station's funds to offset the overall cost.", null, 'sound/ai/attention.ogg', null, "Nanotrasen Asset Protection")
 
+			sleep(30)
+
 			// Pay contractor their portion of ransom
 			if (status == CONTRACT_STATUS_COMPLETE)
 				var/mob/living/carbon/human/H
