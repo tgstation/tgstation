@@ -96,7 +96,7 @@
 		if(!usr.mind.miming)
 			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
 			return
-		invocation = "<B>[usr.real_name]</B> moves [usr.p_their()] hands around in the shape of a box."
+		invocation = "<B>[usr.real_name]</B> moves [usr.p_their()] hands in the shape of a cube, pressing a box out of the air."
 	else
 		invocation_type ="none"
 	..()
