@@ -1,0 +1,6 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "stamina damage instantly updates health"
+  - bugfix: "high amounts of other damage types in a limb will no longer make you stamina damage resistant in that limb"
+  - balance: "stamina damage to limbs increased"
