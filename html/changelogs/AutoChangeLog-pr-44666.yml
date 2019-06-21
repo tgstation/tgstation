@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Added SlimeHUD, which means slimes will have their own custom health display indicator and red corner injury overlay"
