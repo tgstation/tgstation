@@ -32668,6 +32668,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
 "bmu" = (
+/obj/structure/cable,
 /mob/living/simple_animal/hostile/carp/cayenne/experiment{
 	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as an authority figure's pet.";
 	health = 200;
