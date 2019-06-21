@@ -394,6 +394,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/moveuserlater = FALSE
 	var/movesuccess = FALSE
 	for(var/atom/movable/A in T)
+		if(istype(A, /obj/effect/dummy/phased_mob))
+			continue
 		if(ismob(A))
 			if(!isliving(A)) //Let's not teleport ghosts and AI eyes.
 				continue
