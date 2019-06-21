@@ -36,9 +36,9 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	update_icon()
 
 /obj/item/stack/marker_beacon/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Use in-hand to place a [singular_name].</span>")
-	to_chat(user, "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>")
+	. = ..()
+	. += {"<span class='notice'>Use in-hand to place a [singular_name].\n
+	Alt-click to select a color. Current color is [picked_color].</span>"}
 
 /obj/item/stack/marker_beacon/update_icon()
 	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
@@ -93,8 +93,8 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	qdel(src)
 
 /obj/structure/marker_beacon/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>"
 
 /obj/structure/marker_beacon/update_icon()
 	while(!picked_color || !GLOB.marker_beacon_colors[picked_color])

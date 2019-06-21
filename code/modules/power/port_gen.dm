@@ -68,8 +68,8 @@
 		handleInactive()
 
 /obj/machinery/power/port_gen/examine(mob/user)
-	..()
-	to_chat(user, "It is[!active?"n't":""] running.")
+	. = ..()
+	. += "It is[!active?"n't":""] running."
 
 /////////////////
 // P.A.C.M.A.N //
@@ -114,12 +114,12 @@
 	consumption = consumption_coeff
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [DisplayPower(power_gen)] per cycle.</span>")
+	. = ..()
+	. += "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [DisplayPower(power_gen)] per cycle.</span>"
 	if(anchored)
-		to_chat(user, "<span class='notice'>It is anchored to the ground.</span>")
+		. += "<span class='notice'>It is anchored to the ground.</span>"
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.<span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)

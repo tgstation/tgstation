@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Reagents now stop their passive effects (for example, stun immunity) if the liver stops working while they're active."

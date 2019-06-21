@@ -49,3 +49,5 @@ GLOBAL_LIST_INIT(preferences_custom_names, list(
 	"religion" = list("pref_name" = "Chaplain religion", "qdesc" = "religion" , "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = FALSE),
 	"deity" = list("pref_name" = "Chaplain deity", "qdesc" = "deity", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = FALSE)
 	))
+
+GLOBAL_LIST_EMPTY(in_character_filter)
