@@ -280,6 +280,8 @@
 	name = "soulstone: Shade of [T.real_name]"
 	if(purified)
 		icon_state = "purified_soulstone2"
+		S.icon_state = "ghost1"
+		S.name = "Purified [EX.name]"
 	else
 		icon_state = "soulstone2"
 	if(U && (iswizard(U) || usability))
