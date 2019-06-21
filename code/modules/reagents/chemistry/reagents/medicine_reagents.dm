@@ -1338,12 +1338,12 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, volume)
+/datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, trans_volume)
 	if(method != INGEST || !iscarbon(A))
 		return
 
-	A.reagents.remove_reagent(/datum/reagent/medicine/trophazole, volume * 0.05)
-	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, volume * 0.25)
+	A.reagents.remove_reagent(/datum/reagent/medicine/trophazole, trans_volume * 0.05)
+	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
 
 	..()
 
