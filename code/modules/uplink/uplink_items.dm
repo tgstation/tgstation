@@ -1634,7 +1634,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 
 /datum/uplink_item/role_restricted/spider_injector
-	name = "Australian Slime Mutator"
+	name = "Australicus Slime Mutator"
 	desc = "Crikey mate, it's been a wild travel from the Australicus sector but we've managed to get \
 			some special spider extract from the giant spiders down there. Use this injector on a gold slime core \
 			to create a few of the same type of spiders we found on the planets over there. They're a bit tame until you \
