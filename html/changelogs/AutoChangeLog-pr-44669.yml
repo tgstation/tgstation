@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Fixed not being able to uninstall Voice Sensor nanite programs from the cloud console."

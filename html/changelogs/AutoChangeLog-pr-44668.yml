@@ -1,4 +1,0 @@
-author: "ike709"
-delete-after: True
-changes: 
-  - rscadd: "IC chat can now be filtered via config to prevent things like netspeak or anything else against the rules."
