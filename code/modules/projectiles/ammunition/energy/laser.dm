@@ -70,24 +70,11 @@
 	select_name = "MINDFUCK"
 	fire_sound = 'sound/weapons/laser.ogg'
 
-/obj/item/ammo_casing/energy/laser/tracer
-	projectile_type = /obj/item/projectile/beam/tracer
-	e_cost = 50
-	fire_sound = 'sound/weapons/laser3.ogg'
-	select_name = "tracer"
-
 /obj/item/ammo_casing/energy/laser/rico
 	projectile_type = /obj/item/projectile/beam/rico
 	e_cost = 100
 	fire_sound = 'sound/weapons/laser3.ogg'
 	select_name = "bouncing"
-
-/obj/item/ammo_casing/energy/laser/bitcoin
-	projectile_type = /obj/item/projectile/beam/bitcoin
-	e_cost = 100
-	fire_sound = 'sound/weapons/laser3.ogg'
-	harmful = FALSE
-	select_name = "ticket dispensing"
 
 /obj/item/ammo_casing/energy/laser/shock
 	projectile_type = /obj/item/projectile/beam/shock
@@ -112,12 +99,6 @@
 	e_cost = 120
 	fire_sound = 'sound/weapons/laser3.ogg'
 	select_name = "incendiary"
-
-/obj/item/ammo_casing/energy/laser/heavy
-	projectile_type = /obj/item/projectile/beam/heavy
-	e_cost = 200
-	fire_sound = 'sound/weapons/laser3.ogg'
-	select_name = "heavy"
 
 /obj/item/ammo_casing/energy/laser/lowenergy
 	projectile_type = /obj/item/projectile/beam/lowenergy

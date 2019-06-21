@@ -9,6 +9,7 @@
 	L.ammo_type  += new ammo (src)
 	path = _path
 	qdel(_lens)
+
 /datum/component/extralasers/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
 

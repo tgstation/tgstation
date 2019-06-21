@@ -158,25 +158,13 @@
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
 	if(user)
-		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, src, src.type)
-
-/obj/item/external_lens/bitcoin
-	name = "external lens: ticket dispenser"
-	desc = "It uses a special frequency that IDs can read and activate a fast money transfer to your account."
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/bitcoin
-	overlay = "bitcoin"
+		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, src, type)
 
 /obj/item/external_lens/ricochet
 	name = "external lens: bouncing ray"
 	desc = "By making the laser pass through an high density gas its able to create a small ball of hot plasma with high elasticity."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/rico
 	overlay = "ricochet"
-
-/obj/item/external_lens/tracing
-	name = "external lens: tracer ray"
-	desc = "Marks your target with a special luminescent gel which makes them take more damage from lasers."
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/tracer
-	overlay = "tracing"
 
 /obj/item/external_lens/shocking
 	name = "external lens: shocking ray"
@@ -201,12 +189,6 @@
 	desc = "Heats up whatever it hits, causing them to burst into fire."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/incendiary
 	overlay = "incendiary"
-
-/obj/item/external_lens/heavy
-	name = "external lens: heavy bolt"
-	desc = "Highly concentrated lasers that might break walls or doors."
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/heavy
-	overlay = "heavy"
 
 /obj/item/external_lens/economic
 	name = "external lens: low power consuption ray"

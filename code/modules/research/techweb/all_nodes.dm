@@ -628,7 +628,7 @@
 	display_name = "Beam Weaponry"
 	description = "Various basic beam weapons"
 	prereq_ids = list("adv_weaponry")
-	design_ids = list("temp_gun", "xray_laser", "lens_SCT", "lens_BTC", "lens_TRA", "lens_ECO", "lens_INC")
+	design_ids = list("temp_gun", "xray_laser", "lens_SCT", "lens_ECO", "lens_INC")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -637,7 +637,7 @@
 	display_name = "Advanced Beam Weaponry"
 	description = "Various advanced beam weapons"
 	prereq_ids = list("beam_weapons")
-	design_ids = list("beamrifle", "lens_STH", "lens_BLN", "lens_HEA")
+	design_ids = list("beamrifle", "lens_STH", "lens_BLN")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
