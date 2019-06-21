@@ -684,30 +684,7 @@ What a mess.*/
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_side"]
-                print_photo(P.img, active1.fields["name"])
-					if("citation_add")
-						if(istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
-							var/fine = input(usr, "Please input citation fine:", "Secure. records", 0) as num
-							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
-								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
-							GLOB.data_core.addCitation(active1.fields["id"], crime)
-							var/message = "You have been fined [fine] for [t1]"
-							var/datum/signal/subspace/messaging/pda/signal = new(src, list(
-								"name" = "Security Citation",
-								"job" = "Citation Server",
-								"message" = message,
-								"targets" = active1.fields["name"]
-							))
-							signal.send_to_receivers()
-							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-					if("citation_delete")
-						if(istype(active1, /datum/data/record))
-							if(href_list["cdataid"])
-								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
-									return
-								GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
+								print_photo(P.picture.picture_image, active1.fields["name"])
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
@@ -738,6 +715,31 @@ What a mess.*/
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
+					if("citation_add")
+						if(istype(active1, /datum/data/record))
+							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
+							var/fine = input(usr, "Please input citation fine:", "Secure. records", 0) as num
+							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
+								return
+							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
+							GLOB.data_core.addCitation(active1.fields["id"], crime)
+							var/message = "You have been fined [fine] credits for [t1]"
+							var/datum/signal/subspace/messaging/pda/signal = new(usr, list(
+								"name" = "Security Citation",
+								"job" = "Citation Server",
+								"message" = message,
+								"target" = active1.fields["name"]
+							))
+							signal.send_to_receivers()
+							to_chat(world, json_encode(signal))
+							usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+					if("citation_delete")
+						if(istype(active1, /datum/data/record))
+							if(href_list["cdataid"])
+								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
+									return
+								GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
