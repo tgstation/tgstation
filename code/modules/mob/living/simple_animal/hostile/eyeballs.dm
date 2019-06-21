@@ -1,5 +1,3 @@
-
-
 /mob/living/simple_animal/hostile/carp/eyeball
 	name = "eyeball"
 	desc = "An odd looking creature, it won't stop staring..."
@@ -27,3 +25,6 @@
 
 	faction = list("spooky")
 	del_on_death = 1
+
+/mob/living/simple_animal/hostile/carp/eyeball/carp_randomify(rarechance)
+	return

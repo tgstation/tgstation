@@ -532,7 +532,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				A = image('icons/mob/monkey.dmi',H,"monkey1")
 				A.name = "Monkey ([rand(1,999)])"
 			if("carp")//Carp
-				A = image('icons/mob/animal.dmi',H,"carp")
+				A = image('icons/mob/carp.dmi',H,"carp")
 				A.name = "Space Carp"
 			if("corgi")//Corgi
 				A = image('icons/mob/pets.dmi',H,"corgi")

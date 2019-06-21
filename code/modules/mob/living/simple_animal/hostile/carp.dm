@@ -3,6 +3,7 @@
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
+	icon = 'icons/mob/carp.dmi'
 	icon_state = "carp"
 	icon_living = "carp"
 	icon_dead = "carp_dead"
@@ -38,12 +39,33 @@
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
 
+	var/carp_color = "carp" //holder for icon set
+	var/list/icon_sets = list("carp", "blue", "yellow", "grape", "rust", "teal", "purple")
+	var/rarechance = 1
+
+/mob/living/simple_animal/hostile/carp/Initialize(mapload)
+	. = ..()
+	carp_randomify(rarechance)
+	update_icons()
+
+/mob/living/simple_animal/hostile/carp/proc/carp_randomify(rarechance)
+	if(prob(rarechance))
+		carp_color = pick("white", "black")
+	else
+		carp_color = pick(icon_sets)
+	icon_state = "[carp_color]"
+	icon_living = "[carp_color]"
+	icon_dead = "[carp_color]_dead"
+
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
 	maxbodytemp = INFINITY
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
+
+/mob/living/simple_animal/hostile/carp/holocarp/carp_randomify(rarechance)
+	return
 
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/broadMobs.dmi'
@@ -63,6 +85,9 @@
 	melee_damage_upper = 20
 
 	var/regen_cooldown = 0
+
+/mob/living/simple_animal/hostile/carp/megacarp/carp_randomify(rarechance)
+	return
 
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize()
 	. = ..()
@@ -90,5 +115,6 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	AIStatus = AI_OFF
+	rarechance = 10
 
 #undef REGENERATION_DELAY
