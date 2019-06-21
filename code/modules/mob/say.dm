@@ -70,9 +70,10 @@
 			alt_name = " (died as [real_name])"
 
 	var/spanned = say_quote(message)
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[emoji_parse(spanned)]</span></span>"
+	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
+	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
-	deadchat_broadcast(rendered, follow_target = src, speaker_key = key)
+	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = key)
 
 /mob/proc/check_emote(message, forced)
 	if(copytext(message, 1, 2) == "*")

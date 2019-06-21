@@ -29,13 +29,13 @@
 	update_cut_status()
 
 /obj/structure/fence/examine(mob/user)
-	.=..()
+	. = ..()
 
 	switch(hole_size)
 		if(MEDIUM_HOLE)
-			user.show_message("There is a large hole in \the [src].")
+			. += "There is a large hole in \the [src]."
 		if(LARGE_HOLE)
-			user.show_message("\The [src] has been completely cut through.")
+			. += "\The [src] has been completely cut through."
 
 /obj/structure/fence/end
 	icon_state = "end"

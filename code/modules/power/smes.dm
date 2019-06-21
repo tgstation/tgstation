@@ -39,9 +39,9 @@
 	var/obj/machinery/power/terminal/terminal = null
 
 /obj/machinery/power/smes/examine(user)
-	..()
+	. = ..()
 	if(!terminal)
-		to_chat(user, "<span class='warning'>This SMES has no power terminal!</span>")
+		. += "<span class='warning'>This SMES has no power terminal!</span>"
 
 /obj/machinery/power/smes/Initialize()
 	. = ..()

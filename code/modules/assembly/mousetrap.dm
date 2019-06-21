@@ -9,8 +9,8 @@
 
 
 /obj/item/assembly/mousetrap/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The pressure plate is [armed?"primed":"safe"].</span>")
+	. = ..()
+	. += "<span class='notice'>The pressure plate is [armed?"primed":"safe"].</span>"
 
 /obj/item/assembly/mousetrap/activate()
 	if(..())

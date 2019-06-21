@@ -39,8 +39,8 @@
 	var/canwalk = FALSE
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
-	..()
-	to_chat(user, "<span class='info'>It's integrated integrity meter reads: <b>HEALTH: [obj_integrity]</b>.</span>")
+	. = ..()
+	. += "<span class='info'>It's integrated integrity meter reads: <b>HEALTH: [obj_integrity]</b>.</span>"
 
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/i in accounts_to_rob)
@@ -210,7 +210,7 @@
 	bogdanoff = user
 	addtimer(CALLBACK(src, .proc/startLaunch), 100)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
-	deadchat_broadcast("<span class='deadsay'>Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!</span>", turf_target = get_turf(src))
+	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src))
 
 /obj/effect/dumpeetTarget/proc/startLaunch()
 	DF = new /obj/effect/dumpeetFall(drop_location())

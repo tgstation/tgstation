@@ -29,7 +29,7 @@
 	{{/each}}
 </ui-display>
 <ui-display title="Text Mode">
-	<ui-section label='Current Buffer'>{{text_buffer}}
+	<ui-section label='Current Buffer'>{{data.text_buffer}}
 	</ui-section>
 	<ui-section><ui-button action='enter_text'>New Text</ui-button></ui-section>
 </ui-display>

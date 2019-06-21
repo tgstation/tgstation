@@ -93,6 +93,6 @@
 	detonate(user)
 
 /obj/guardian_bomb/examine(mob/user)
-	stored_obj.examine(user)
+	. = stored_obj.examine(user)
 	if(get_dist(user,src)<=2)
-		to_chat(user, "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>")
+		. += "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>"

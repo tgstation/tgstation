@@ -27,11 +27,11 @@
 		armour_penetration = initial(armour_penetration)
 
 /obj/item/clockwork/weapon/ratvarian_spear/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='inathneq_small'>Attacks on living non-Servants will generate <b>[bonus_burn]</b> units of vitality.</span>")
+		. += "<span class='inathneq_small'>Attacks on living non-Servants will generate <b>[bonus_burn]</b> units of vitality.</span>"
 		if(!iscyborg(user))
-			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and knock down the target.</span>")
+			. += "<span class='brass'>Throwing the spear will do massive damage, break the spear, and knock down the target.</span>"
 
 /obj/item/clockwork/weapon/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	. = ..()
@@ -74,4 +74,3 @@
 			new /obj/effect/temp_visual/ratvar/spearbreak(T)
 			qdel(src)
 		action.weapon_reset(RATVARIAN_SPEAR_COOLDOWN)
-

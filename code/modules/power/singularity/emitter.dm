@@ -90,9 +90,9 @@
 	active_power_usage = power_usage
 
 /obj/machinery/power/emitter/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Emitting one beam each <b>[fire_delay*0.1]</b> seconds.<br>Power consumption at <b>[active_power_usage]W</b>.<span>")
+		. += "<span class='notice'>The status display reads: Emitting one beam each <b>[fire_delay*0.1]</b> seconds.<br>Power consumption at <b>[active_power_usage]W</b>.<span>"
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()

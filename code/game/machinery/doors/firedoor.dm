@@ -32,15 +32,15 @@
 	CalculateAffectingAreas()
 
 /obj/machinery/door/firedoor/examine(mob/user)
-	..()
+	. = ..()
 	if(!density)
-		to_chat(user, "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>")
+		. += "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>"
 	else if(!welded)
-		to_chat(user, "<span class='notice'>It is closed, but could be <i>pried</i> open. Deconstruction would require it to be <b>welded</b> shut.</span>")
+		. += "<span class='notice'>It is closed, but could be <i>pried</i> open. Deconstruction would require it to be <b>welded</b> shut.</span>"
 	else if(boltslocked)
-		to_chat(user, "<span class='notice'>It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.</span>")
+		. += "<span class='notice'>It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.</span>"
 	else
-		to_chat(user, "<span class='notice'>The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.</span>")
+		. += "<span class='notice'>The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.</span>"
 
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
 	remove_from_areas()
@@ -271,18 +271,18 @@
 	var/reinforced = 0
 
 /obj/structure/firelock_frame/examine(mob/user)
-	..()
+	. = ..()
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
-			to_chat(user, "<span class='notice'>It is <i>unbolted</i> from the floor. A small <b>loosely connected</b> metal plate is covering the wires.</span>")
+			. += "<span class='notice'>It is <i>unbolted</i> from the floor. A small <b>loosely connected</b> metal plate is covering the wires.</span>"
 			if(!reinforced)
-				to_chat(user, "<span class='notice'>It could be reinforced with plasteel.</span>")
+				. += "<span class='notice'>It could be reinforced with plasteel.</span>"
 		if(CONSTRUCTION_WIRES_EXPOSED)
-			to_chat(user, "<span class='notice'>The maintenance plate has been <i>pried away</i>, and <b>wires</b> are trailing.</span>")
+			. += "<span class='notice'>The maintenance plate has been <i>pried away</i>, and <b>wires</b> are trailing.</span>"
 		if(CONSTRUCTION_GUTTED)
-			to_chat(user, "<span class='notice'>The maintenance panel is missing <i>wires</i> and the circuit board is <b>loosely connected</b>.</span>")
+			. += "<span class='notice'>The maintenance panel is missing <i>wires</i> and the circuit board is <b>loosely connected</b>.</span>"
 		if(CONSTRUCTION_NOCIRCUIT)
-			to_chat(user, "<span class='notice'>There are no <i>firelock electronics</i> in the frame. The frame could be <b>cut</b> apart.</span>")
+			. += "<span class='notice'>There are no <i>firelock electronics</i> in the frame. The frame could be <b>cut</b> apart.</span>"
 
 /obj/structure/firelock_frame/update_icon()
 	..()
