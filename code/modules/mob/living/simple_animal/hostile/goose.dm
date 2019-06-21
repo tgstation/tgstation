@@ -54,7 +54,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize()
 	. = ..()
-	goosevomit = new()
+	goosevomit = new
 	goosevomit.Grant(src)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Destroy()
