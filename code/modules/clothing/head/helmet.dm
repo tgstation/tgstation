@@ -296,7 +296,7 @@
 	icon_state = "rus_helmet"
 	item_state = "rus_helmet"
 	armor = list("melee" = 30, "bullet" = 25, "laser" = 20,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 20, "fire" = 30, "acid" = 50)
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/helmet
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/helmet
 
 /obj/item/clothing/head/helmet/rus_ushanka
 	name = "battle ushanka"
