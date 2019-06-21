@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "The CNS rebooter now purges stuns after 4 seconds of not being stunned, instead of doing nothing."
