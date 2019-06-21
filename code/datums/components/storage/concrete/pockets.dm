@@ -84,13 +84,11 @@
 	// if the component is reparented to a jumpsuit, the items still go in the protector
 	return original_parent
 
-/datum/component/storage/concrete/pockets/small/helmet
-	max_items = 2
+/datum/component/storage/concrete/pockets/helmet
 	quickdraw = TRUE
-	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 100
 
-/datum/component/storage/concrete/pockets/small/helmet/Initialize()
+/datum/component/storage/concrete/pockets/helmet/Initialize()
 	. = ..()
 	set_holdable(list(/obj/item/reagent_containers/food/drinks/bottle/vodka,
 					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
