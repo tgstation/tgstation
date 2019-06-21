@@ -416,7 +416,8 @@
 ////////////////////////////
 
 
-/obj/mecha/proc/click_action(atom/target,mob/user,params)
+/obj/mecha/click_action(atom/target,mob/user,params)
+	. = TRUE
 	if(!occupant || occupant != user )
 		return
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled

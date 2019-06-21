@@ -103,9 +103,10 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(ismecha(loc))
-		var/obj/mecha/M = loc
-		return M.click_action(A,src,params)
+	if(istype(loc,/atom/movable))
+		var/atom/movable/M = loc
+		if(M.click_action(A,src,params))
+			return
 
 	if(istype(loc, /obj/pod))
 		var/obj/pod/pod = loc
@@ -505,4 +506,10 @@
 		if(call(click_intercept, "InterceptClickOn")(src, params, A))
 			return TRUE
 
+	/*if(SendSignal(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
+		return*/
+
+	return FALSE
+
+/atom/movable/proc/click_action(atom/target,mob/user,params)
 	return FALSE

@@ -97,7 +97,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	var/list/zdata = update_data(z)
 	. = list()
 	.["sensors"] = zdata
-	.["link_allowed"] = isAI(user)
+	.["link_allowed"] = FALSE
 
 /datum/crewmonitor/proc/update_data(z)
 	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)

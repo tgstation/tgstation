@@ -40,14 +40,17 @@
 	add_occupant(M)
 	return TRUE
 
-/obj/vehicle/sealed/proc/mob_try_exit(mob/M, mob/user, silent = FALSE)
-	mob_exit(M, silent)
+/obj/vehicle/sealed/proc/mob_try_exit(mob/M, mob/user, silent = FALSE, randomstep = FALSE)
+	mob_exit(M, silent, randomstep)
 
-/obj/vehicle/sealed/proc/mob_exit(mob/M, silent = FALSE)
+/obj/vehicle/sealed/proc/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
 	if(!istype(M))
 		return FALSE
 	remove_occupant(M)
 	M.forceMove(exit_location(M))
+	if(randomstep)
+		var/turf/target_turf = get_step(exit_location(M), pick(GLOB.cardinals))
+		M.throw_at(target_turf, 5, 10)
 	if(!silent)
 		M.visible_message("<span class='boldnotice'>[M] drops out of \the [src]!</span>")
 	return TRUE

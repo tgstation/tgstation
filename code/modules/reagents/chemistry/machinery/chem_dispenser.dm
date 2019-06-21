@@ -393,6 +393,7 @@ obj/machinery/chem_dispenser/update_icon()
 	layer = WALL_OBJ_LAYER
 	working_state = null
 	nopower_state = null
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
 	dispensable_reagents = list(
 		"water",
 		"ice",
@@ -422,12 +423,17 @@ obj/machinery/chem_dispenser/update_icon()
 		"tirizene"
 	)
 
+/obj/item/circuitboard/machine/chem_dispenser/drinks
+	name = "soda dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/drinks
+
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
 	desc = "Contains a large reservoir of the good stuff."
 	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
 		"beer",
 		"kahlua",
@@ -453,17 +459,25 @@ obj/machinery/chem_dispenser/update_icon()
 		"atomicbomb"
 	)
 
+/obj/item/circuitboard/machine/chem_dispenser/drinks/beer
+	name = "booze dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/drinks/beer
 
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
 	emagged_reagents = list("plasma")
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/mutagen
 
+/obj/item/circuitboard/machine/chem_dispenser/mutagen
+	name = "mutagen dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/mutagen
 
 /obj/machinery/chem_dispenser/mutagensaltpeter
 	name = "botanical chemical dispenser"
 	desc = "Creates and dispenses chemicals useful for botany."
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
 	dispensable_reagents = list(
 		"mutagen",
 		"saltpetre",
@@ -478,3 +492,7 @@ obj/machinery/chem_dispenser/update_icon()
 		"ammonia",
 		"ash",
 		"diethylamine")
+
+/obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
+	name = "botanical chemical dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/mutagensaltpeter

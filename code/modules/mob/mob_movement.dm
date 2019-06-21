@@ -50,7 +50,15 @@
 	if(!isliving(mob))
 		return mob.Move(n, direct)
 	if(mob.stat == DEAD)
-		mob.ghostize()
+		if(!mob.ask_to_ghost_on_move)
+			mob.ghostize()
+		else
+			move_delay = world.time+30
+			spawn(0)
+				var/remembermob = mob
+				var/shallweghost = alert(src,"Are you sure you want to ghost right now? You can return to your corpse after.","Ghost?","Yes","No")
+				if(shallweghost == "Yes" && mob == remembermob)
+					mob.ghostize()
 		return FALSE
 	if(mob.force_moving)
 		return FALSE

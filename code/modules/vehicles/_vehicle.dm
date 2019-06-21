@@ -1,5 +1,5 @@
-#define VEHICLE_CONTROL_PERMISSION 1
-#define VEHICLE_CONTROL_DRIVE 2
+/*#define VEHICLE_CONTROL_PERMISSION 1
+#define VEHICLE_CONTROL_DRIVE 2*/
 
 /obj/vehicle
 	name = "generic vehicle"
@@ -72,8 +72,8 @@
 		return FALSE
 	occupants[M] = NONE
 	add_control_flags(M, control_flags)
-	grant_passenger_actions(M)
 	after_add_occupant(M)
+	grant_passenger_actions(M)
 	return TRUE
 
 /obj/vehicle/proc/after_add_occupant(mob/M)
@@ -106,6 +106,8 @@
 		return FALSE
 	if(!default_driver_move)
 		return
+	if(!canmove)
+		return
 	vehicle_move(direction)
 
 /obj/vehicle/proc/vehicle_move(direction)
@@ -119,7 +121,11 @@
 			step(trailer, dir_to_move)
 		return did_move
 	else
+		after_move(direction)
 		return step(src, direction)
+
+/obj/vehicle/proc/after_move(direction)
+	return
 
 /obj/vehicle/proc/add_control_flags(mob/controller, flags)
 	if(!istype(controller) || !flags)
@@ -142,7 +148,7 @@
 /obj/vehicle/Collide(atom/movable/M)
 	. = ..()
 	if(emulate_door_bumps)
-		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
+		if(istype(M, /obj/machinery/door)) // && has_buckled_mobs()
 			for(var/m in occupants)
 				M.CollidedWith(m)
 

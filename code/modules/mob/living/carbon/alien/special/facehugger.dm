@@ -211,6 +211,21 @@
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
 		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			new /obj/item/organ/body_egg/alien_embryo(target)
+		var/ckeytext = "[target.real_name]"
+		if(target.key)
+			ckeytext += "([target.key])"
+		var/turf/T = get_turf(target)
+		var/loctext = ""
+		if(T)
+			loctext = "([T.x],[T.y],[T.y] [get_area(T)])"
+		var/logtext = "[ckeytext] has been facehugged at [loctext]."
+		if(fingerprintslast)
+			logtext += " Facehugger last touched by ckey [fingerprintslast]."
+		log_game("[logtext]")
+		target.log_message("<font color='orange'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
+		if(!GLOB.aliensexist)
+			message_admins("An alien impregnation has occured before an alien event. [logtext]")
+			log_game("An alien impregnation has occured before an alien event.")
 
 	else
 		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \

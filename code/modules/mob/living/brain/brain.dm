@@ -5,6 +5,7 @@
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
 	see_invisible = SEE_INVISIBLE_LIVING
+	ask_to_ghost_on_move = 1
 
 /mob/living/brain/Initialize()
 	. = ..()

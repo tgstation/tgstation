@@ -7,6 +7,14 @@
 	var/stage = 0
 	var/bursting = FALSE
 
+/obj/item/organ/body_egg/alien_embryo/Initialize()
+	. = ..()
+	if(loc && !ismob(loc))
+		var/mob/living/carbon/alien/larva/L = new(loc)
+		L.death()
+		moveToNullspace()
+		qdel(src)
+
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
 	if(stage < 4)
@@ -101,6 +109,18 @@
 	new_xeno.canmove = 0 //so we don't move during the bursting animation
 	new_xeno.notransform = 1
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
+
+	var/ckeytext = "[owner.real_name]"
+	if(owner.key)
+		ckeytext += "([owner.key])"
+	var/turf/T = get_turf(owner)
+	var/loctext = ""
+	if(T)
+		loctext = "([T.x],[T.y],[T.y] [get_area(T)])"
+	var/logtext = "[ckeytext] has been chestbursted in to an alien at [loctext]."
+	log_game("[logtext]")
+	owner.log_message("<font color='orange'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
+	GLOB.aliensexist = 1
 
 	sleep(6)
 

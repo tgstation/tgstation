@@ -1,3 +1,6 @@
+/mob
+	var/ask_to_ghost_on_move = 0
+
 /mob/living
 	var/adapt_size_to_health = 0 //activating this causes a mob to shrink as it loses health.
 	var/lastadaptedhealth = null

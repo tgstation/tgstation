@@ -1,5 +1,7 @@
 #define ALIENS_WIN 25
 
+GLOBAL_VAR_INIT(aliensexist,0)
+
 /datum/game_mode/ayylmaos
 	name = "xenomorphs"
 	config_tag = "xenomorphs"
@@ -106,6 +108,7 @@
 			var/turf/T = find_safe_turf(SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
 			if(T)
 				spawn_the_alien(L,T)
+	GLOB.aliensexist = 1
 	return ..()
 
 /datum/game_mode/ayylmaos/process()
