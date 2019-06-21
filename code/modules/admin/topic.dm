@@ -1244,6 +1244,33 @@
 		else
 			show_traitor_panel(M)
 
+	else if(href_list["ickock"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = locate(href_list["ickock"])
+		var/client/C = M.client
+		var/response = alert(usr, "Ick Ock!", "IC in OOC quick ban/note", "Note", "Ban", "Cancel")
+		if(response != "Cancel")
+			var/reason = input(usr, "Put the player's offending word(s) here.", "Why?", "")
+			if(response == "Note")
+				create_message("note", C.key, usr.ckey, "IC in OOC: " + reason, secret = 0, logged = 1, note_severity = "Minor")
+			if(response == "Ban")
+				create_ban(C.key, FALSE, "", TRUE, C.computer_id, TRUE, FALSE, 15, "MINUTE", "Minor", "IC in OOC: " + reason, list("Server"))
+
+	else if(href_list["ockick"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = locate(href_list["ockick"])
+		var/client/C = M.client
+		var/response = alert(usr, "Ock Ick!", "OOC in IC quick ban/note", "Note", "Ban", "Cancel")
+		if(response != "Cancel")
+			var/reason = input(usr, "Put the player's offending word(s) here.", "Why?", "")
+			if(response == "Note")
+				create_message("note", C.key, usr.ckey, "OOC in IC: " + reason, secret = 0, logged = 1, note_severity = "Minor")
+			if(response == "Ban")
+				create_ban(C.key, FALSE, "", TRUE, C.computer_id, TRUE, FALSE, 15, "MINUTE", "Minor", "OOC in IC: " + reason, list("Server"))
+
+
 	else if(href_list["borgpanel"])
 		if(!check_rights(R_ADMIN))
 			return

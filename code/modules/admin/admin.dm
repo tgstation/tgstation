@@ -107,6 +107,10 @@
 	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>Subtle message</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(M)]'>Language Menu</A>"
 
+	body += "<br><br>"
+	body += "<A href='?_src_=holder;[HrefToken()];ickock=[REF(M)]'>IC in OOC</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];ockick=[REF(M)]'>OOC in IC</A>"
+
 	if (M.client)
 		if(!isnewplayer(M))
 			body += "<br><br>"
