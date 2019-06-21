@@ -42,10 +42,9 @@
 				I.use(1)
 				to_chat(user, "<span class='notice'>You repair the guillotine with the plasteel.</span>")
 			else
-				to_chat(user, "<span class='notice'>You stop repairing the guillotine with the plasteel.</span>")
-	else
-		to_chat(user, "<span class='notice'>The guillotine is already fully repaired!</span>")
-			
+				to_chat(user, "<span class='notice'>The guillotine is already fully repaired!</span>")
+		else
+			to_chat(user, "<span class='notice'>You stop repairing the guillotine with the plasteel.</span>")
 /obj/structure/guillotine/examine(mob/user)
 	. = ..()
 
