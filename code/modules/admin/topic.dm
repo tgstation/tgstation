@@ -1253,7 +1253,7 @@
 		if(response != "Cancel")
 			var/reason = input(usr, "Put the player's offending word(s) here.", "Why?", "")
 			if(response == "Note")
-				create_message("note", C.key, usr.ckey, "IC in OOC: " + reason, secret = 0, logged = 1, note_severity = "Minor")
+				create_message("note", C.key, usr.ckey, "IC in OOC: " + reason, secret = 0, logged = 1, note_severity = "Minor", expiry = null)
 			if(response == "Ban")
 				create_ban(C.key, FALSE, "", TRUE, C.computer_id, TRUE, FALSE, 15, "MINUTE", "Minor", "IC in OOC: " + reason, list("Server"))
 
@@ -1266,7 +1266,7 @@
 		if(response != "Cancel")
 			var/reason = input(usr, "Put the player's offending word(s) here.", "Why?", "")
 			if(response == "Note")
-				create_message("note", C.key, usr.ckey, "OOC in IC: " + reason, secret = 0, logged = 1, note_severity = "Minor")
+				create_message("note", C.key, usr.ckey, "OOC in IC: " + reason, secret = 0, logged = 1, note_severity = "Minor", expiry = null)
 			if(response == "Ban")
 				create_ban(C.key, FALSE, "", TRUE, C.computer_id, TRUE, FALSE, 15, "MINUTE", "Minor", "OOC in IC: " + reason, list("Server"))
 
