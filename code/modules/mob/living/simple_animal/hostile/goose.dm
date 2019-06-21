@@ -93,11 +93,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
 	var/turf/T = get_turf(src)
-	if(!length(types_eaten))
-		return
-	var/type_to_spawn = pick(types_eaten)
-	var/atom/movable/consumed = new type_to_spawn(loc)
-	items_eaten--
+	var/obj/item/reagent_containers/food/consumed = locate() in contents //Barf out a single food item from our guts
 	if (prob(50) && consumed)
 		barf_food(consumed)
 	else
