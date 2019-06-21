@@ -283,14 +283,10 @@
 	name = "Assorted external lens Crate"
 	desc = "Contains five experimental lens that can be applied to standard laser guns. Requires Security access to open."
 	cost = 8000
-	contains = list(/obj/item/external_lens/bitcoin,
-					/obj/item/external_lens/ricochet,
-					/obj/item/external_lens/tracing,
-					/obj/item/external_lens/shocking,
+	contains = list(/obj/item/external_lens/ricochet,
 					/obj/item/external_lens/blinding,
 					/obj/item/external_lens/stealth,
 					/obj/item/external_lens/incendiary,
-					/obj/item/external_lens/heavy,
 					/obj/item/external_lens/scatter,
 					/obj/item/external_lens/economic,
 					/obj/item/external_lens/shield)

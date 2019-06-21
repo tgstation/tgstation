@@ -186,24 +186,6 @@
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
 
-/obj/item/projectile/beam/heavy
-	name = "\improper heavy laser beam"
-	icon_state = "heavylaser"
-	damage = 35
-	irradiate = 30
-	armour_penetration = 30
-	dismemberment = 10
-	light_color = LIGHT_COLOR_RED
-	tracer_type = /obj/effect/projectile/tracer/heavy_laser
-	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
-	impact_type = /obj/effect/projectile/impact/heavy_laser
-	pass_flags = PASSTABLE
-
-obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
-	. = ..()
-	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/) ||  istype(target, /obj/machinery/)))
-		target.ex_act(EXPLODE_LIGHT)
-
 /obj/item/projectile/beam/shock
 	name = "\improper charged beam"
 	icon_state = "spark"
@@ -223,58 +205,6 @@ obj/item/projectile/beam/heavy/on_hit(atom/target, blocked = FALSE)
 		C.confused += 6
 		if(prob(20))
 			C.dropItemToGround(C.get_active_held_item())
-
-/obj/item/projectile/beam/bitcoin
-	name = "\improper bitcoin stealing beam"
-	icon_state = "bitcoin"
-	damage = 0
-	nodamage = TRUE
-	hitsound = 'sound/weapons/cash.ogg'
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
-	light_color = LIGHT_COLOR_GREEN
-	tracer_type = /obj/effect/projectile/tracer/xray
-	muzzle_type = /obj/effect/projectile/muzzle/xray
-	impact_type = /obj/effect/projectile/impact/xray
-
-/obj/item/projectile/beam/bitcoin/on_hit(atom/target)
-	. = ..()
-	var/money_to_steal = 50
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		var/obj/item/card/id/C = H.get_idcard(TRUE)
-		if(C?.registered_account && !(C.registered_account.account_balance < money_to_steal))
-			C.registered_account.adjust_money(-money_to_steal)
-			to_chat(H, "<span class='danger'>Your wallet feels lighter!</span>")
-		else
-			H.adjustStaminaLoss(30)
-			to_chat(H, "<span class='danger'>You feel your energy itself being turned into cryptocurrency!</span>")
-			money_to_steal = 1
-		if(ishuman(firer))
-			var/mob/living/carbon/human/F = firer
-			var/obj/item/card/id/thief_card = F.get_idcard(TRUE)
-			if(thief_card?.registered_account)
-				thief_card.registered_account.adjust_money(money_to_steal)
-				to_chat(F, "<span class='notice'>Your wallet has received $[money_to_steal].</span>")
-			else
-				var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
-				D?.adjust_money(money_to_steal)
-
-/obj/item/projectile/beam/tracer
-	name = "\improper tracing beam"
-	icon_state = "tracer"
-	damage = 5
-	irradiate = 50
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
-	light_color = LIGHT_COLOR_CYAN
-	tracer_type = /obj/effect/projectile/tracer/solar
-	muzzle_type = /obj/effect/projectile/muzzle/solar
-	impact_type = /obj/effect/projectile/impact/solar
-
-/obj/item/projectile/beam/tracer/on_hit(atom/target)
-	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.apply_status_effect(STATUS_EFFECT_LASERWEAK)
 
 /obj/item/projectile/beam/blinding
 	name = "\improper blinding beam"
