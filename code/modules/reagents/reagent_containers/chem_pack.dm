@@ -23,8 +23,12 @@
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
 
-/obj/item/reagent_containers/chem_pack/AltClick(mob/user)
+/obj/item/reagent_containers/chem_pack/AltClick(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERY) && !sealed)
+		if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
+			to_chat(user, "<span class='warning'>Uh... whoops! You accidentally spill the content of the bag onto yourself.</span>")
+			SplashReagents(user)
+			return
 		seal()
 		to_chat(user, "<span class='notice'>You seal the bag.</span>")
 
