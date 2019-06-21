@@ -205,7 +205,9 @@
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
-	host_mob.adjust_nutrition(-0.5)
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		C.adjust_nutrition(-0.5)
 
 /datum/nanite_program/triggered/access
 	name = "Subdermal ID"

@@ -44,10 +44,9 @@
 	var/name_archive //For admin things like possession
 
 	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
-	var/drowsyness = 0//Carbon
-	var/dizziness = 0//Carbon
-	var/jitteriness = 0//Carbon
-	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
+	var/drowsyness = 0//Carbon <--- Naksu said he'd fix these, if he doesn't you can kill him.
+	var/dizziness = 0//Carbon <--- Naksu said he'd fix these, if he doesn't you can kill him.
+	var/jitteriness = 0//Carbon <--- Naksu said he'd fix these, if he doesn't you can kill him.
 	var/satiety = 0//Carbon
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon

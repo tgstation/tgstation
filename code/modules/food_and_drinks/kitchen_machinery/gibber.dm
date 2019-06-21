@@ -152,10 +152,13 @@
 	var/mob/living/mob_occupant = occupant
 	var/sourcename = mob_occupant.real_name
 	var/sourcejob
+	var/sourcenutriment
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
 		sourcejob = gibee.job
-	var/sourcenutriment = mob_occupant.nutrition / 15
+		sourcenutriment = gibee.nutrition / 15
+	else
+		sourcenutriment = 14 //Idk what a good number is
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
 	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
 	var/typeofskin

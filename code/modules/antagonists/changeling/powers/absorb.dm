@@ -55,9 +55,10 @@
 	if(!changeling.has_dna(target.dna))
 		changeling.add_new_profile(target)
 		changeling.trueabsorbs++
-
-	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
-		user.set_nutrition(min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.nutrition < NUTRITION_LEVEL_WELL_FED)
+			C.set_nutrition(min((C.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
 
 	if(target.mind && user.mind)//if the victim and user have minds
 		// Absorb a lizard, speak Draconic.

@@ -73,4 +73,6 @@
 		user.adjustCloneLoss(-hp_gained, 0)
 		user.updatehealth()
 		user.adjustBrainLoss(-hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
-		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.set_nutrition(min(C.nutrition + hp_gained, NUTRITION_LEVEL_FULL))

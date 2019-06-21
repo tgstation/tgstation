@@ -7,6 +7,7 @@
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
+	var/nutrition
 	faction = list("slime","neutral")
 
 	harm_intent_damage = 5
@@ -467,6 +468,13 @@
 				. += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>"
 
 	. += "*---------*</span>"
+
+/mob/living/simple_animal/slime/proc/adjust_nutrition(var/change)
+	nutrition = max(0, nutrition + change)
+
+/mob/living/simple_animal/slime/proc/set_nutrition(var/change)
+	nutrition = max(0, change)
+
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
 	if(stat)

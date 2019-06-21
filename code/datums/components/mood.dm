@@ -191,8 +191,13 @@
 		if(9)
 			setSanity(sanity+0.4, maximum=INFINITY)
 
-	HandleNutrition(owner)
-	HandleHygiene(owner)
+	
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		HandleNutrition(C)
+		if(ishuman(C))
+			var/mob/living/carbon/human/H
+			HandleHygiene(H)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
 	var/mob/living/owner = parent
@@ -314,16 +319,16 @@
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
 	print_mood(user)
 
-/datum/component/mood/proc/HandleNutrition(mob/living/L)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
+/datum/component/mood/proc/HandleNutrition(mob/living/carbon/C)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
 		if(isethereal(H))
 			HandleCharge(H)
 		if(HAS_TRAIT(H, TRAIT_NOHUNGER))
 			return FALSE //no mood events for nutrition
-	switch(L.nutrition)
+	switch(C.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			if (!HAS_TRAIT(L, TRAIT_VORACIOUS))
+			if (!HAS_TRAIT(C, TRAIT_VORACIOUS))
 				add_event(null, "nutrition", /datum/mood_event/fat)
 			else
 				add_event(null, "nutrition", /datum/mood_event/wellfed) // round and full

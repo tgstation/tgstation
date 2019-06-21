@@ -40,6 +40,8 @@
 
 	var/rotate_on_lying = 1
 
+	var/nutrition = NUTRITION_LEVEL_START_MIN
+
 	var/tinttotal = 0	// Total level of visualy impairing items
 
 	var/list/bodyparts = list(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,

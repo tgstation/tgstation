@@ -4,6 +4,7 @@
 /mob/living/carbon/Initialize()
 	. = ..()
 	create_reagents(1000)
+	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 
@@ -794,6 +795,7 @@
 	update_mobility()
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
+	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	if(reagents)
 		reagents.clear_reagents()
 	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
@@ -920,3 +922,10 @@
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
+
+
+/mob/living/carbon/proc/adjust_nutrition(var/change)
+	nutrition = max(0, nutrition + change)
+
+/mob/living/carbon/proc/set_nutrition(var/change)
+	nutrition = max(0, change)
