@@ -135,7 +135,8 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and makes their belly feel round and full."
 
 /obj/item/slimecross/regenerative/silver/core_effect(mob/living/target, mob/user)
-	var/mob/living/carbon/C = target
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
 		C.set_nutrition(NUTRITION_LEVEL_FULL - 1)
 		to_chat(target, "<span class='notice'>You feel satiated.</span>")
 
