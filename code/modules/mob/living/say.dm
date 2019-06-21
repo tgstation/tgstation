@@ -81,6 +81,23 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	return new_msg
 
+// Recursive proc for filtering messages efficiently
+/mob/living/proc/BuildFilterResponse(message, filter)
+	var/search_result = findtext(message, filter)
+
+	if (!search_result) // No more filtered words
+		return message
+	else
+		var word_end = findtext(message, " ");
+		if (search_result == 1) // We are at the first instance
+			if (!word_end) // No more following words
+				return "<b>[message]</b>"
+			else
+				return "<b>[copytext(message, 1, word_end)]</b>" + BuildFilterResponse(copytext(message, word_end + 1, 0), filter)
+		else
+			return copytext(message, 1, search_result - 1) + BuildFilterResponse(copytext(message, search_result, 0), filter)
+			
+
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
@@ -94,16 +111,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	if(GLOB.in_character_filter.len && !forced)
-		if(findtext(message, config.ic_filter_regex))
+		var/bad_message_start = findtext(message, config.ic_filter_regex)
+		if(bad_message_start)
 			// let's try to be a bit more informative!
 			var/warning_message = "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.</br>The bolded terms are disallowed: &quot;"
-			var/list/words = splittext(message, " ")
-			for (var/word in words)
-				if (findtext(word, config.ic_filter_regex))
-					warning_message = "[warning_message]<b>[word]</b> "
-				else
-					warning_message = "[warning_message][word] "
-
+			warning_message += BuildFilterResponse(message, config.ic_filter_regex)
 			warning_message = trim(warning_message)
 			to_chat(src, "[warning_message]&quot;</span>")
 			return
