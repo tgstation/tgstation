@@ -105,9 +105,6 @@
 	},
 /area/shuttle/caravan/freighter1)
 "ec" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating/airless,
@@ -202,11 +199,14 @@
 	},
 /area/shuttle/caravan/freighter1)
 "lt" = (
-/obj/structure/cable,
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 10
 	},
-/obj/item/wrench,
+/obj/item/stack/rods/ten,
+/obj/item/storage/box/lights/bulbs,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -221,16 +221,14 @@
 	},
 /area/shuttle/caravan/freighter1)
 "lC" = (
-/obj/machinery/power/smes{
-	charge = 0
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/item/wrench,
+/obj/machinery/power/terminal,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
@@ -438,7 +436,6 @@
 /turf/open/floor/plasteel/dark/airless,
 /area/shuttle/caravan/freighter1)
 "uS" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -449,6 +446,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel/dark/airless,
 /area/shuttle/caravan/freighter1)
 "vt" = (
@@ -643,10 +641,10 @@
 /area/shuttle/caravan/freighter1)
 "EI" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/syndicate/melee/sword/space/stormtrooper,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/plasteel/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -663,10 +661,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -949,7 +947,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Small Freighter APC";
@@ -959,6 +956,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "QY" = (
@@ -968,7 +966,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/item/stack/cable_coil/yellow{
+/obj/item/stack/cable_coil{
 	pixel_x = 12;
 	pixel_y = 4
 	},
@@ -1120,22 +1118,13 @@
 	},
 /area/shuttle/caravan/freighter1)
 "WZ" = (
-/obj/machinery/power/terminal{
-	dir = 1
+/obj/machinery/power/smes{
+	charge = 0
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/twenty,
-/obj/item/stack/sheet/glass{
-	amount = 10
-	},
-/obj/item/stack/rods/ten,
-/obj/item/storage/box/lights/bulbs,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
