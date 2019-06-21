@@ -203,6 +203,7 @@
 		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
 		if(method)
 			R.react_single(T, target_atom, method, part, show_message)
+			T.on_transfer(target_atom, method, transfer_amount * multiplier)
 		remove_reagent(T.type, transfer_amount)
 
 	update_total()

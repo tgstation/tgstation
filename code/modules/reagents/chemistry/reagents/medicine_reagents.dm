@@ -398,11 +398,11 @@
 			M.reagents.remove_reagent(R.type,1)
 	..()
 
-/datum/reagent/medicine/charcoal/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
-	if(method == INGEST)
+/datum/reagent/medicine/charcoal/on_transfer(atom/A, method=TOUCH, volume)
+	if(method == INGEST || !iscarbon(A)) //the atom not the charcoal
 		return
-	M.reagents.remove_reagent(/datum/reagent/medicine/charcoal/, reac_volume) //We really should not be injecting an insoluble granular material.
-	M.reagents.add_reagent(/datum/reagent/carbon, reac_volume) // Its pores would get clogged with gunk anyway.
+	A.reagents.remove_reagent(/datum/reagent/medicine/charcoal/, volume) //We really should not be injecting an insoluble granular material.
+	A.reagents.add_reagent(/datum/reagent/carbon, volume) // Its pores would get clogged with gunk anyway.
 	..()
 
 /datum/reagent/medicine/omnizine
@@ -1338,12 +1338,12 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/trophazole/reaction_mob(mob/living/carbon/M, method=INGEST, reac_volume)
-	if(method != INGEST)
+/datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, volume)
+	if(method != INGEST || !iscarbon(A))
 		return
 
-	M.reagents.remove_reagent(/datum/reagent/medicine/trophazole, reac_volume * 0.05)
-	M.reagents.add_reagent(/datum/reagent/medicine/metafactor, reac_volume * 0.25)
+	A.reagents.remove_reagent(/datum/reagent/medicine/trophazole, volume * 0.05)
+	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, volume * 0.25)
 
 	..()
 
@@ -1402,34 +1402,33 @@
 	overdose_threshold = 6
 	var/conversion_amount
 
-/datum/reagent/medicine/thializid/reaction_mob(mob/living/carbon/M, method=INJECT, reac_volume)
-	if(method != INJECT)
+/datum/reagent/medicine/thializid/on_transfer(atom/A, method=INJECT, trans_volume)
+	if(method != INJECT || !iscarbon(A))
 		return
-	if(reac_volume >= 0.6) //prevents cheesing with ultralow doses.
-		M.adjustToxLoss(-1.5 * min(2, reac_volume) * REM, 0)	  //This is to promote iv pole use for that chemotherapy feel.
-	if(!locate(/obj/item/organ/liver) in M.internal_organs)
+	var/mob/living/carbon/C = A
+	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
+		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, 0)	  //This is to promote iv pole use for that chemotherapy feel.
+	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
+	if(L.failing || !L)
 		return
-	var/obj/item/organ/liver/L = M.internal_organs_slot[ORGAN_SLOT_LIVER]
-	if(L.failing)
-		return
-	conversion_amount = reac_volume	* (min(100 -L.damage, 80) / 100) //the more damaged the liver the worse we metabolize.
-	M.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
-	M.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
+	conversion_amount = trans_volume * (min(100 -L.damage, 80) / 100) //the more damaged the liver the worse we metabolize.
+	C.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
+	C.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
 	..()
 
 /datum/reagent/medicine/thializid/on_mob_life(mob/living/carbon/M)
+	M.adjustLiverLoss(0.8)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
 
-	M.reagents.add_reagent("oxalizid", 0.075 * REM) //add a little bit of the metabolite after metabolism
 	..()
 	. = 1
 
 /datum/reagent/medicine/thializid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(2)
-	M.adjust_disgust(5)
-	M.reagents.add_reagent("oxalizid", 0.225 * REM)
+	M.adjustLiverLoss(1.5)
+	M.adjust_disgust(3)
+	M.reagents.add_reagent(/datum/reagent/medicine/oxalizid, 0.225 * REM)
 	..()
 	. = 1
 
@@ -1439,10 +1438,11 @@
 	reagent_state = LIQUID
 	color = "#DFD54E"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 20
+	overdose_threshold = 25
 	var/datum/brain_trauma/mild/muscle_weakness/U
 
 /datum/reagent/medicine/oxalizid/on_mob_life(mob/living/carbon/M)
+	M.adjustLiverLoss(0.1)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
@@ -1460,7 +1460,7 @@
 	return ..()
 
 /datum/reagent/medicine/oxalizid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(2)
+	M.adjustLiverLoss(1.5)
 	M.adjust_disgust(3)
 	..()
 	. = 1
