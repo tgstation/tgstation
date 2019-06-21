@@ -102,7 +102,7 @@
 	consumed.forceMove(currentTurf)
 	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 	var/throwRange = hard ? rand(2,8) : 1
-	consumed.throw_at(destination, throwRange, 2) //Thow the food at a random tile 1 spot away
+	consumed.safe_throw_at(destination, throwRange, 2) //Thow the food at a random tile 1 spot away
 	sleep(2)
 	if (QDELETED(src) || QDELETED(consumed))
 		return
