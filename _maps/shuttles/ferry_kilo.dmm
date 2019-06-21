@@ -196,7 +196,6 @@
 	pixel_y = 6
 	},
 /obj/item/radio{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/machinery/light{
