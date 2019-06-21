@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			user.visible_message("<span class='notice'>[user] has purified the [sword]!</span>")
 			qdel(sword)
 
-	else if(istype(A, /obj/item/soulstone) && !iscultist(user) && SS.purified != TRUE)
+	else if(istype(A, /obj/item/soulstone) && !iscultist(user) && A.purified != TRUE)
 		var/obj/item/soulstone/SS = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
