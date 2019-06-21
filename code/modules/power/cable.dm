@@ -37,24 +37,30 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/under_thing = NONE
 	if(clear_before_updating)
 		linked_dirs = 0
+	var/obj/machinery/power/search_parent
 	for(var/obj/machinery/power/P in loc)
 		if(istype(P, /obj/machinery/power/terminal))
 			under_thing = UNDER_TERMINAL
+			search_parent = P
 			break
 		if(istype(P, /obj/machinery/power/smes))
 			under_thing = UNDER_SMES
+			search_parent = P
 			break
 	for(var/check_dir in GLOB.cardinals)
 		var/TB = get_step(src, check_dir)
 		if(under_thing)
-			var/search_target
 			switch(under_thing)
 				if(UNDER_SMES)
-					search_target = /obj/machinery/power/terminal
+					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
+					to_chat(world, "smes: [search_parent] term: [term] term master: [term.master]")
+					if(term && term.master == search_parent)
+						continue
 				if(UNDER_TERMINAL)
-					search_target = /obj/machinery/power/smes
-			if(locate(search_target) in TB)
-				continue
+					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
+					to_chat(world, "term: [search_parent] smes: [S] smes term: [S.terminal]")
+					if(S && S.terminal == search_parent)
+						continue
 		var/inverse = turn(check_dir, 180)
 		for(var/obj/structure/cable/C in TB)
 			linked_dirs |= check_dir
