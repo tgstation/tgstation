@@ -205,22 +205,23 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			user.visible_message("<span class='notice'>[user] has purified the [sword]!</span>")
 			qdel(sword)
 
-	else if(istype(A, /obj/item/soulstone) && !iscultist(user) && !/obj/item/soulstone.purified)
+	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
 		var/obj/item/soulstone/SS = A
-		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
-		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
-		if(do_after(user, 40, target = SS))
-			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
-			SS.usability = TRUE
-			SS.purified = TRUE
-			SS.icon_state = "purified_soulstone"
-			for(var/mob/M in SS.contents)
-				if(M.mind)
-					SS.icon_state = "purified_soulstone2"
-			for(var/mob/living/simple_animal/shade/EX in SS)
-				EX.icon_state = "ghost1"
-				EX.name = "Purified [EX.name]"				
-			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
+		if(!SS.purified)
+			to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
+			playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
+			if(do_after(user, 40, target = SS))
+				playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
+				SS.usability = TRUE
+				SS.purified = TRUE
+				SS.icon_state = "purified_soulstone"
+				for(var/mob/M in SS.contents)
+					if(M.mind)
+						SS.icon_state = "purified_soulstone2"
+				for(var/mob/living/simple_animal/shade/EX in SS)
+					EX.icon_state = "ghost1"
+					EX.name = "Purified [EX.name]"				
+				user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
 			
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."
