@@ -117,4 +117,9 @@
 	AIStatus = AI_OFF
 	rarechance = 10
 
+/mob/living/simple_animal/hostile/carp/cayenne/experiment
+
+/mob/living/simple_animal/hostile/carp/cayenne/experiment/carp_randomify(rarechance)
+	return
+
 #undef REGENERATION_DELAY
