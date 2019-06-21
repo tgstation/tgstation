@@ -18,6 +18,7 @@
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/update_cable_icons_on_turf, get_turf(src)), 3)
 	return ..()
 
 ///////////////////////////////
@@ -194,10 +195,7 @@
 		. += C
 	return .
 
-/obj/machinery/power/proc/update_cables_on_turf()
-
-/obj/machinery/power/proc/update_cables_on_turf()
-	var/turf/T = get_turf(src)
+/proc/update_cable_icons_on_turf(var/turf/T)
 	for(var/obj/structure/cable/C in T.contents)
 		C.update_icon()
 

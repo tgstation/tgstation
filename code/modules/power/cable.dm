@@ -108,6 +108,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				if(GLOB.wire_node_generating_types[O.type])
 					dir_string = "[dir_string]-node"
 					break
+				else if(istype(O, /obj/machinery/power))
+					var/obj/machinery/power/P = O
+					if(P.should_have_node())
+						dir_string = "[dir_string]-node"
+						break
 		icon_state = dir_string
 	
 

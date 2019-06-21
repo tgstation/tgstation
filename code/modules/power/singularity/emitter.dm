@@ -273,6 +273,7 @@
 				state = EMITTER_WELDED
 				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 				connect_to_network()
+				update_cable_icons_on_turf(get_turf(src))
 		if(EMITTER_WELDED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
@@ -283,6 +284,7 @@
 				state = EMITTER_WRENCHED
 				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 				disconnect_from_network()
+				update_cable_icons_on_turf(get_turf(src))
 
 	return TRUE
 
