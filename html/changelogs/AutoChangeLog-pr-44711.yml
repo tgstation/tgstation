@@ -1,0 +1,4 @@
+author: "Tetr4"
+delete-after: True
+changes: 
+  - bugfix: "Suicides are permanent for the nth time"
