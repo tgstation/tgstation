@@ -43,15 +43,21 @@
 	var/rarechance = 1 //chance for rare color variant
 
 	var/static/list/carp_colors = list(\
-	"teal" = "#7C7A6C", \
-	"blue" = "#FDFBF3", \
-	"yellow" = "#F9F4D9", \
-	"lightpurple" = "#8773C1", \
-	"rusty" = "#ffe6d5", \
+	"lightpurple" = "#c3b9f1", \
+	"red" = "#fe011f", \
+	"green" = "#2ecf0c", \
+	"grape" = "#bc0bdf", \
+	"swamp" = "#e5e75a", \
+	"turquoise" = "#04e1ed", \
+	"brown" = "#ca805a", \
+	"teal" = "#20e28e", \
+	"lightblue" = "#4d88cc", \
+	"rusty" = "#dd5f34", \
+	"beige" = "#bbaeaf", \
+	"yellow" = "#e5c958", \
 	)
 	var/static/list/carp_colors_rare = list(\
-	"black" = rgb(064, 064, 064), \
-	"white" = "#fdfbf3", \
+	"silver" = "#fdfbf3", \
 	)
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload)
@@ -66,19 +72,25 @@
 			our_color = pick(carp_colors_rare)
 			add_atom_colour(carp_colors_rare[our_color], FIXED_COLOUR_PRIORITY)
 		else
-			our_color = rgb(rand(0,255),rand(0,255),rand(0,255))
-			add_atom_colour(our_color, FIXED_COLOUR_PRIORITY)
-		update_overlay()
+			our_color = pick(carp_colors)
+			add_atom_colour(carp_colors[our_color], FIXED_COLOUR_PRIORITY)
+		add_carp_overlay()
 
-/mob/living/simple_animal/hostile/carp/proc/update_overlay()
-	if(!random_color) //icon override
+/mob/living/simple_animal/hostile/carp/proc/add_carp_overlay()
+	if(!random_color)
 		return
-	cut_overlays()
-	var/mutable_appearance/base_overlay = mutable_appearance(icon_living, "base_mouth")
-	var/mutable_appearance/base_dead_overlay = mutable_appearance(icon_dead, "base_dead_mouth")
+	cut_overlays(TRUE)
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "base_mouth")
 	base_overlay.appearance_flags = RESET_COLOR
-	base_dead_overlay.appearance_flags = RESET_COLOR
 	add_overlay(base_overlay)
+
+/mob/living/simple_animal/hostile/carp/death(gibbed)
+	. = ..()
+	cut_overlays(TRUE)
+	if(!random_color || gibbed)
+		return
+	var/mutable_appearance/base_dead_overlay = mutable_appearance(icon, "base_dead_mouth")
+	base_dead_overlay.appearance_flags = RESET_COLOR
 	add_overlay(base_dead_overlay)
 
 /mob/living/simple_animal/hostile/carp/holocarp
