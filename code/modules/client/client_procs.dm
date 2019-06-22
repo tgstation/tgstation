@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// asset_cache
 	var/asset_cache_job
 	if(href_list["asset_cache_confirm_arrival"])
-		var/asset_cache_job = round(text2num(href_list["asset_cache_confirm_arrival"]))
+		asset_cache_job = round(text2num(href_list["asset_cache_confirm_arrival"]))
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
 		//	into letting append to a list without limit.
 		if (asset_cache_job > 0 && asset_cache_job <= last_asset_job && !(asset_cache_job in completed_asset_jobs))
