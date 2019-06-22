@@ -218,7 +218,7 @@
 			Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed 
 			to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>
 
-			<p>The two additional items, apart from the tablet and loadout box, have been randomly selected from what we had available. We hope 
+			<p>The three additional items, apart from the tablet and loadout box, have been randomly selected from what we had available. We hope 
 			they're useful to you for you mission.</p>
 
 			<h3>Using the tablet</h3>
