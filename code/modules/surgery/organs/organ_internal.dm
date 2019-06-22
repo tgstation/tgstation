@@ -1,3 +1,6 @@
+#define STANDARD_ORGAN_THRESHOLD 100
+#define STANDARD_ORGAN_HEALING 0.001
+
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
@@ -13,10 +16,12 @@
 	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
 	var/external = FALSE
 	var/synthetic = FALSE // To distinguish between organic and synthetic organs
-	var/maxHealth = 100
+	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	var/damage = 0		//total damage this organ has sustained
 	var/failing	= FALSE			//is this organ failing or not
-	var/healing_factor = 0.001	//fraction of maxhealth healed per tick
+	var/healing_factor = STANDARD_ORGAN_HEALING	//fraction of maxhealth healed per tick
+	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
+	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
 
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
@@ -113,11 +118,15 @@
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
-/obj/item/organ/proc/applyOrganDamage(var/d)
-		damage = max(0, damage + d)
+/obj/item/organ/proc/applyOrganDamage(var/d)	//use for damaging effects
+	damage = max(0, damage + d)
 
-/mob/living/carbon/proc/return_organ_damage(var/obj/item/organ/organ)
-		return organ.damage
+/obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals
+	damage = CLAMP(d, 0 ,maxHealth)
+	if(d >= maxHealth)
+		failing = TRUE
+	else
+		failing = FALSE
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
