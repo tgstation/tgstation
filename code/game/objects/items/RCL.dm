@@ -151,7 +151,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(listeningTo, COMSIG_MOVABLE_MOVED, .proc/trigger)
+	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, .proc/trigger)
 	listeningTo = to_hook
 
 /obj/item/twohanded/rcl/proc/trigger(mob/user)
