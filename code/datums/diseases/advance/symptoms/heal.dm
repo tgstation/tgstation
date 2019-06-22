@@ -119,9 +119,8 @@
 /datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.type, actual_power)
-		if(food_conversion && iscarbon(M))
-			var/mob/living/carbon/C = M
-			C.adjust_nutrition(0.3)
+		if(food_conversion)
+			M.adjust_nutrition(0.3)
 		if(prob(2))
 			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	return 1
