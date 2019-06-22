@@ -173,7 +173,7 @@
 		"in your right pocket" = SLOT_R_STORE,
 		"in your backpack" = SLOT_IN_BACKPACK
 	)
-	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
+	where = H.equip_in_one_of_slots(heirloom, slots, TRUE)
 
 /datum/quirk/family_heirloom/post_add()
 	if(where == "in your backpack")
