@@ -118,11 +118,11 @@
 		return ..()
 
 /obj/item/paper_bin/examine(mob/user)
-	..()
+	. = ..()
 	if(total_paper)
-		to_chat(user, "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+".")
+		. += "It contains [total_paper > 1 ? "[total_paper] papers" : " one paper"]."
 	else
-		to_chat(user, "It doesn't contain anything.")
+		. += "It doesn't contain anything."
 
 
 /obj/item/paper_bin/update_icon()

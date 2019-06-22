@@ -27,8 +27,8 @@
 	is_secret_monitor = TRUE
 
 /obj/machinery/computer/monitor/secret/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It's operating system seems quite outdated... It doesn't seem like it'd be compatible with the latest remote NTOS monitoring systems.</span>")
+	. = ..()
+	. += "<span class='notice'>It's operating system seems quite outdated... It doesn't seem like it'd be compatible with the latest remote NTOS monitoring systems.</span>"
 
 /obj/machinery/computer/monitor/Initialize()
 	. = ..()

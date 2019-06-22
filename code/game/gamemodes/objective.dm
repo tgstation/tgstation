@@ -676,6 +676,24 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		target_amount = count
 	update_explanation_text()
 
+/datum/objective/protect_object
+	name = "protect object"
+	var/obj/protect_target
+
+/datum/objective/protect_object/proc/set_target(obj/O)
+	protect_target = O
+	update_explanation_text()
+
+/datum/objective/protect_object/update_explanation_text()
+	. = ..()
+	if(protect_target)
+		explanation_text = "Protect \the [protect_target] at all costs."
+	else
+		explanation_text = "Free objective."
+
+/datum/objective/protect_object/check_completion()
+	return !QDELETED(protect_target)
+
 //Changeling Objectives
 
 /datum/objective/absorb
@@ -1054,3 +1072,24 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	for(var/T in allowed_types)
 		var/datum/objective/X = T
 		GLOB.admin_objective_list[initial(X.name)] = T
+
+/datum/objective/contract
+	var/payout = 0
+	var/payout_bonus = 0
+	var/area/dropoff = null
+
+// Generate a random valid area on the station that the dropoff will happen.
+/datum/objective/contract/proc/generate_dropoff()
+	var/found = FALSE
+	while (!found)
+		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		if(dropoff_area && is_station_level(dropoff_area.z) && dropoff_area.valid_territory)
+			dropoff = dropoff_area
+			found = TRUE
+
+// Check if both the contractor and contract target are at the dropoff point.
+/datum/objective/contract/proc/dropoff_check(mob/user, mob/target)
+	var/area/user_area = get_area(user)
+	var/area/target_area = get_area(target)
+
+	return (istype(user_area, dropoff) && istype(target_area, dropoff))

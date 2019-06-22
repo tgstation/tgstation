@@ -169,7 +169,7 @@
 	return has_status_effect(STATUS_EFFECT_PARALYZED)
 
 /mob/living/proc/AmountParalyzed() //How many deciseconds remain in our Paralyzed status effect
-	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
+	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
 	if(P)
 		return P.duration - world.time
 	return 0
@@ -180,7 +180,7 @@
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
+		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
 		if(P)
 			P.duration = max(world.time + amount, P.duration)
 		else if(amount > 0)
@@ -191,7 +191,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
+		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
 		if(amount <= 0)
 			if(P)
 				qdel(P)
@@ -210,7 +210,7 @@
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
+		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
 		if(P)
 			P.duration += amount
 		else if(amount > 0)
@@ -355,8 +355,10 @@
 		"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
 
 /mob/living/proc/absorb_stun(amount, ignoring_flag_presence)
-	if(!amount || amount <= 0 || stat || ignoring_flag_presence || !islist(stun_absorption))
+	if(amount < 0 || stat || ignoring_flag_presence || !islist(stun_absorption))
 		return FALSE
+	if(!amount)
+		amount = 0
 	var/priority_absorb_key
 	var/highest_priority
 	for(var/i in stun_absorption)
@@ -364,14 +366,15 @@
 			priority_absorb_key = stun_absorption[i]
 			highest_priority = priority_absorb_key["priority"]
 	if(priority_absorb_key)
-		if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
-			if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
-				visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
-			else if(priority_absorb_key["visible_message"])
-				visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
-			else if(priority_absorb_key["self_message"])
-				to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
-		priority_absorb_key["stuns_absorbed"] += amount
+		if(amount) //don't spam up the chat for continuous stuns
+			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
+				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+				else if(priority_absorb_key["visible_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
+				else if(priority_absorb_key["self_message"])
+					to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+			priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
 
 /////////////////////////////////// DISABILITIES ////////////////////////////////////

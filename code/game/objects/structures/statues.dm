@@ -16,6 +16,9 @@
 	var/impressiveness = 15
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
+/obj/structure/statue/Initialize()
+	. = ..()
+	AddComponent(/datum/component/art, impressiveness)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -34,28 +37,6 @@
 				deconstruct(TRUE)
 			return
 	return ..()
-
-/obj/structure/statue/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	add_fingerprint(user)
-	if(!do_after(user, 20, target = src))
-		return
-	user.visible_message("[user] rubs some dust off [src].", \
-						 "<span class='notice'>You take in [src], rubbing some dust off its surface.</span>")
-	if(!ishuman(user)) // only humans have the capacity to appreciate art
-		return
-	var/totalimpressiveness = (impressiveness *(obj_integrity/max_integrity))
-	switch(totalimpressiveness)
-		if(GREAT_ART to 100)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
-		if (GOOD_ART to GREAT_ART)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
-		if (BAD_ART to GOOD_ART)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
-		if (0 to BAD_ART)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

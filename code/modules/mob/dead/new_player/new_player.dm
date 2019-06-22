@@ -415,8 +415,7 @@
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
-
+	var/list/dat = list("<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>")
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_ESCAPE)
@@ -424,56 +423,39 @@
 			if(SHUTTLE_CALL)
 				if(!SSshuttle.canRecall())
 					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
-
-	var/available_job_count = 0
-	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
-			available_job_count++;
-
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
 			SSjob.prioritized_jobs -= prioritized_job
-
-	if(length(SSjob.prioritized_jobs))
-		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
-		var/amt = length(SSjob.prioritized_jobs)
-		var/amt_count
-		for(var/datum/job/a in SSjob.prioritized_jobs)
-			amt_count++
-			if(amt_count != amt) // checks for the last job added.
-				dat += " [a.title], "
-			else
-				dat += " [a.title]. </div>"
-
-	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
-	dat += "<div class='jobs'><div class='jobsColumn'>"
-	var/job_count = 0
-	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
-			job_count++;
-			if (job_count > round(available_job_count / 2))
-				dat += "</div><div class='jobsColumn'>"
-			var/position_class = "otherPosition"
-			if (job.title in GLOB.command_positions)
-				position_class = "commandPosition"
-			dat += "<a class='[position_class]' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-	if(!job_count) //if there's nowhere to go, overflow opens up.
-		for(var/datum/job/job in SSjob.occupations)
-			if(job.title != SSjob.overflow_role)
-				continue
-			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-			break
+	dat += "<table><tr><td valign='top'>"
+	var/column_counter = 0
+	for(var/list/category in list(GLOB.command_positions) + list(GLOB.engineering_positions) + list(GLOB.supply_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
+		var/cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
+		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
+		dat += "<legend align='center' style='color: [cat_color]'>[SSjob.name_occupations[category[1]].exp_type_department]</legend>"
+		var/list/dept_dat = list()
+		for(var/job in category)
+			var/datum/job/job_datum = SSjob.name_occupations[job]
+			if(job_datum && IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
+				var/command_bold = ""
+				if(job in GLOB.command_positions)
+					command_bold = " command"
+				if(job_datum in SSjob.prioritized_jobs)
+					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
+				else
+					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
+		if(!dept_dat.len)
+			dept_dat += "<span class='nopositions'>No positions open.</span>"
+		dat += jointext(dept_dat, "")
+		dat += "</fieldset><br>"
+		column_counter++
+		if(column_counter > 0 && (column_counter % 3 == 0))
+			dat += "</td><td valign='top'>"
+	dat += "</td></tr></table></center>"
 	dat += "</div></div>"
-
-	// Removing the old window method but leaving it here for reference
-	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
-
-	// Added the new browser window method
-	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, 580)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
-	popup.set_content(dat)
-	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
-
+	popup.set_content(jointext(dat, ""))
+	popup.open(FALSE) // 0 is passed to open so that it doesn't use the onclose() proc
 
 /mob/dead/new_player/proc/create_character(transfer_after)
 	spawning = 1

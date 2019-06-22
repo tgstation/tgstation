@@ -18,9 +18,9 @@
 	var/recurring = FALSE
 
 /obj/item/slime_extract/examine(mob/user)
-	..()
+	. = ..()
 	if(Uses > 1)
-		to_chat(user,"It has [Uses] uses remaining.")
+		. += "It has [Uses] uses remaining."
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
@@ -632,7 +632,12 @@
 	if(M.stat)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return
-
+	if(M.rabid) //Stops being rabid, but doesn't become truly docile.
+		to_chat(M, "<span class='warning'>You absorb the potion, and your rabid hunger finally settles to a normal desire to feed.</span>")
+		to_chat(user, "<span class='notice'>You feed the slime the potion, calming its rabid rage.</span>")
+		M.rabid = FALSE
+		qdel(src)
+		return
 	M.docile = 1
 	M.set_nutrition(700)
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
