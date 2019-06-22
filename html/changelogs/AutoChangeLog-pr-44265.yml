@@ -1,7 +1,0 @@
-author: "actioninja and wjohn"
-delete-after: True
-changes: 
-  - rscadd: "Cables have been completely reworked. Simple per tile connection logic, automatically connects to things above it. Think minecraft redstone."
-  - rscadd: "Old cables have been kept as pipe cleaner. They are non-functional in terms of power, but otherwise have the same connection logic. Also can go on top of tiles.
-remove: mech cable layer has been removed because it was terrible shitcode nobody used"
-  - tweak: "(sort of balance) cable stack sized has been reduced to 15."
