@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				addtimer(CALLBACK(C, /client/proc/ResetCensorAbuseCounter), 600)
 
 			// let's try to be a bit more informative!
-			var/warning_message = "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.</br>The bolded terms are disallowed: &quot;"
+			var/warning_message = "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.</br>The bolded terms are blocked: &quot;"
 			warning_message += BuildFilterResponse(message, config.ic_filter_regex)
 			warning_message = trim(warning_message)
 			to_chat(C, "[warning_message]&quot;</span>")
