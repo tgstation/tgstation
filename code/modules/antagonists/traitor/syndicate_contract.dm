@@ -28,6 +28,14 @@
 
 	ransom = 100 * rand(18, 45)
 
+/datum/syndicate_contract/proc/ispipewire(item)
+	var/static/list/pire_wire = list(
+		/obj/machinery/atmospherics,
+		/obj/structure/disposalpipe,
+		/obj/structure/cable
+	)
+	return (is_type_in_list(item, pire_wire))
+
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
 	if (contract.target && contract.dropoff_check(user, contract.target.current))
 

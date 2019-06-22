@@ -229,7 +229,6 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
-#define ispipewire(A) (istype(A, /obj/machinery/atmospherics) || istype(A, /obj/structure/disposalpipe) || istype(A, /obj/structure/cable))
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 
