@@ -131,21 +131,21 @@
 			else
 				to_chat(M, "<span class='userdanger'>You are blinded by [src]!</span>")
 			M.Paralyze(rand(80,120))
-                        return TRUE 
+            return TRUE 
 		else if(user)
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
 			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
-                        return FALSE 
+            return FALSE 
 		else
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
-                        return FALSE 
+            return FALSE 
 	else
 		if(M.flash_act())
 			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 			M.confused += min(power, diff)
-                        return TRUE 
-                return 
+            return TRUE 
+        return FALSE
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
