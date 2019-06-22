@@ -126,11 +126,11 @@
 				if(H.hygiene <= detect_hygiene && detect_hygiene == HYGIENE_LEVEL_DIRTY)
 					beep = TRUE
 		if(SCANGATE_NUTRITION)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.nutrition <= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_STARVING)
+			if(isliving(M))
+				var/mob/living/L = M
+				if(L.nutrition <= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_STARVING)
 					beep = TRUE
-				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
+				if(L.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
 
 	if(reverse)

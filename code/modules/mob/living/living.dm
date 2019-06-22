@@ -1314,3 +1314,9 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
+
+/mob/living/proc/adjust_nutrition(var/change)
+	nutrition = max(0, nutrition + change)
+
+/mob/living/proc/set_nutrition(var/change)
+	nutrition = max(0, change)

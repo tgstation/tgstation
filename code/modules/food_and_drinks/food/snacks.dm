@@ -90,15 +90,14 @@ All foods are distributed among various categories. Use common sense.
 		qdel(src)
 		return FALSE
 	if(iscarbon(M))
-		var/mob/living/carbon/Carb = user
-		if(!canconsume(Carb, user))
+		if(!canconsume(M, user))
 			return FALSE
-		var/fullness = Carb.nutrition + 10
+		var/fullness = 	M.nutrition + 10
 		for(var/datum/reagent/consumable/C in M.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
 			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
 
 		if(M == user)								//If you're eating it yourself.
-			if(junkiness && Carb.satiety < -150 && Carb.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
+			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
 				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
 				return FALSE
 			else if(fullness <= 50)
@@ -109,7 +108,7 @@ All foods are distributed among various categories. Use common sense.
 				user.visible_message("<span class='notice'>[user] [eatverb]s \the [src].</span>", "<span class='notice'>You [eatverb] \the [src].</span>")
 			else if(fullness > 500 && fullness < 600)
 				user.visible_message("<span class='notice'>[user] unwillingly [eatverb]s a bit of \the [src].</span>", "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
-			else if(fullness > (600 * (1 + Carb.overeatduration / 2000)))	// The more you eat - the more you can eat
+			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return FALSE
 			if(HAS_TRAIT(M, TRAIT_VORACIOUS))

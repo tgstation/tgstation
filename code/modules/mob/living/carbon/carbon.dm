@@ -922,10 +922,3 @@
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
-
-
-/mob/living/carbon/proc/adjust_nutrition(var/change)
-	nutrition = max(0, nutrition + change)
-
-/mob/living/carbon/proc/set_nutrition(var/change)
-	nutrition = max(0, change)

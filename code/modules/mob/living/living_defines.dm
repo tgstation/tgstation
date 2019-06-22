@@ -26,6 +26,8 @@
 
 	var/resting = FALSE
 
+	var/nutrition = NUTRITION_LEVEL_START_MIN
+
 	var/lying = 0			//number of degrees. DO NOT USE THIS IN CHECKS. CHECK FOR MOBILITY FLAGS INSTEAD!!
 	var/lying_prev = 0		//last value of lying on update_mobility
 

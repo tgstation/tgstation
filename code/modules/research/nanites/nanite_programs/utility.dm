@@ -197,17 +197,12 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/metabolic_synthesis/check_conditions()
-	if(!iscarbon(host_mob))
-		return FALSE
-	var/mob/living/carbon/C = host_mob
-	if(C.nutrition <= NUTRITION_LEVEL_WELL_FED)
+	if(host_mob.nutrition <= NUTRITION_LEVEL_WELL_FED)
 		return FALSE
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
-	if(iscarbon(host_mob))
-		var/mob/living/carbon/C = host_mob
-		C.adjust_nutrition(-0.5)
+	host_mob.adjust_nutrition(-0.5)
 
 /datum/nanite_program/triggered/access
 	name = "Subdermal ID"

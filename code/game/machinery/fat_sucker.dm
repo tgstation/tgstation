@@ -134,12 +134,12 @@
 		open_machine()
 		return
 
-	var/mob/living/carbon/C = occupant
-	if(C.nutrition <= stop_at)
+	var/mob/living/L = occupant
+	if(L.nutrition <= stop_at)
 		open_machine()
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 		return
-	C.adjust_nutrition(-bite_size)
+	L.adjust_nutrition(-bite_size)
 	nutrients += bite_size
 
 	if(next_fact <= 0)
@@ -153,9 +153,9 @@
 /obj/machinery/fat_sucker/proc/start_extracting()
 	if(state_open || !occupant || processing || !powered(EQUIP))
 		return
-	if(iscarbon(occupant))
-		var/mob/living/carbon/C = occupant
-		if(C.nutrition > start_at)
+	if(isliving(occupant))
+		var/mob/living/L = occupant
+		if(L.nutrition > start_at)
 			processing = TRUE
 			soundloop.start()
 			update_icon()
