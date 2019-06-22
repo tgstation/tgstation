@@ -43,8 +43,8 @@ Bonus
 	switch(A.stage)
 		if(1, 2, 3, 4)
 			if(prob(base_message_chance))
-				to_chat(affected_mob, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
+				to_chat(A.affected_mob, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
 		else
-			to_chat(affected_mob, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
-			affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
-			affected_mob.adjust_nutrition(-100)
+			to_chat(A.affected_mob, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
+			A.affected_mob.overeatduration = max(A.affected_mob.overeatduration - 100, 0)
+			A.affected_mob.adjust_nutrition(-100)

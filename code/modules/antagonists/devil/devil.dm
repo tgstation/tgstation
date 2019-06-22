@@ -178,10 +178,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
-	if(iscarbon(owner.current))
-		var/mob/living/carbon/C = owner.current
-		C.set_nutrition(NUTRITION_LEVEL_FULL)
-		to_chat(C, "<span class='warning'>You feel satiated as you received a new soul.</span>")
+	owner.current.set_nutrition(NUTRITION_LEVEL_FULL)
+	to_chat(owner.current, "<span class='warning'>You feel satiated as you received a new soul.</span>")
 	update_hud()
 	switch(SOULVALUE)
 		if(0)
