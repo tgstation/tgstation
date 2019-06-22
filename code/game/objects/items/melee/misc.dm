@@ -77,12 +77,12 @@
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/component/storage/concrete/S)
-	var/obj/item/storage/belt/sheath/B = S.real_location()
+	var/obj/item/storage/belt/sheath/sabre/B = S.real_location()
 	if(istype(B))
 		playsound(src, 'sound/items/unsheath.ogg', 25, 1)
 
 /obj/item/melee/sabre/on_enter_storage(datum/component/storage/concrete/S)
-	var/obj/item/storage/belt/sheath/B = S.real_location()
+	var/obj/item/storage/belt/sheath/sabre/B = S.real_location()
 	if(istype(B))
 		playsound(src, 'sound/items/sheath.ogg', 25, 1)
 
