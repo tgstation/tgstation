@@ -1,5 +1,6 @@
 /mob/living/Initialize()
 	. = ..()
+	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))	
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name

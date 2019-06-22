@@ -4,7 +4,6 @@
 /mob/living/carbon/Initialize()
 	. = ..()
 	create_reagents(1000)
-	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 
