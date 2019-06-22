@@ -48,6 +48,7 @@
 /obj/item/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
 	desc = "Like life, it never quite tastes the same."
+	icon_state = "donut3"
 	bitesize = 10
 	tastes = list("donut" = 3, "chaos" = 1)
 
@@ -86,6 +87,9 @@
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT
 
 /obj/item/reagent_containers/food/snacks/donut/meat
+	name = "Meat Donut"
+	desc = "Tastes as gross as it looks."
+	icon_state = "donut4"
 	bonus_reagents = list(/datum/reagent/consumable/ketchup = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ketchup = 2)
 	tastes = list("meat" = 1)
@@ -430,11 +434,11 @@
 	if (pancakeCount)
 		var/obj/item/reagent_containers/food/snacks/S = contents[pancakeCount]
 		bitecount = S.bitecount
-	..()
+	. = ..()
 	if (pancakeCount)
 		for(var/obj/item/reagent_containers/food/snacks/pancakes/ING in contents)
 			ingredients_listed += "[ING.name], "
-		to_chat(user, "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)].")
+		. += "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)]."
 	bitecount = originalBites
 
 /obj/item/reagent_containers/food/snacks/pancakes/attackby(obj/item/I, mob/living/user, params)

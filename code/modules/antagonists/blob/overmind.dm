@@ -189,9 +189,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	add_points(0)
 
 /mob/camera/blob/examine(mob/user)
-	..()
+	. = ..()
 	if(blobstrain)
-		to_chat(user, "Its strain is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>.")
+		. += "Its strain is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>."
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
