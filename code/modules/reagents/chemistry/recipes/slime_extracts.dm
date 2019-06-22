@@ -136,6 +136,16 @@
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Friendly Gold Slime", FRIENDLY_SPAWN, "neutral"), 50)
 
+/datum/chemical_reaction/slime/slimemobspawn/spider
+	name = "Slime Crit Traitor Spider"
+	id = "m_tele6"
+	required_reagents = list(/datum/reagent/spider_extract = 1)
+
+/datum/chemical_reaction/slime/slimemobspawn/spider/summon_mobs(datum/reagents/holder, turf/T)
+	T.visible_message("<span class='danger'>The slime extract begins to vibrate crikey-ingly!</span>")
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Traitor Spider Slime", /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife, "neutral", FALSE), 50)
+
+
 //Silver
 /datum/chemical_reaction/slime/slimebork
 	name = "Slime Bork"

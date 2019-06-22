@@ -1885,46 +1885,26 @@
 "dC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/smes/engineering,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dD" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dE" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
 /obj/item/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/smes/engineering,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dH" = (
@@ -1957,32 +1937,22 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dM" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dN" = (
 /obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"dO" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "dP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dQ" = (
@@ -2008,12 +1978,6 @@
 /area/shuttle/escape)
 "dT" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dU" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dV" = (
@@ -2084,17 +2048,17 @@
 "ec" = (
 /obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ed" = (
-/obj/structure/cable/yellow,
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/monitor{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ee" = (
@@ -2493,7 +2457,7 @@ bP
 ax
 dC
 dM
-dU
+dD
 ec
 ek
 el
@@ -2560,8 +2524,8 @@ bP
 ds
 ax
 dE
-dO
-dO
+dD
+dD
 ed
 ax
 ax
@@ -2627,9 +2591,9 @@ dd
 dm
 bQ
 ax
-dG
+dC
 dP
-dU
+dD
 ec
 ek
 el

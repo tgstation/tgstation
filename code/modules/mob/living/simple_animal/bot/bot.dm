@@ -368,8 +368,12 @@
 		return REDUCE_RANGE
 
 /mob/living/simple_animal/bot/proc/drop_part(obj/item/drop_item, dropzone)
-	var/dropped_item = new drop_item(dropzone)
-	drop_item = null
+	var/obj/item/dropped_item
+	if(ispath(drop_item))
+		dropped_item = new drop_item(dropzone)
+	else
+		dropped_item = drop_item
+		dropped_item.forceMove(dropzone)
 
 	if(istype(dropped_item, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/dropped_cell = dropped_item

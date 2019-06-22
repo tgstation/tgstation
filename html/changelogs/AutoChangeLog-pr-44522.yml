@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Launchpads now gain 15 range instead of 1 when upgraded, up to a maximum of 60."
+  - rscadd: "Launchpads now have a targeting reticle which is visible on Diagnostic HUD. It also indicates if the launchpad is currently sending or receiving."
+  - tweak: "Launchpad Consoles now use TGUI and are far more responsive. They can also set their coordinate offsets manually instead of only using arrows."
