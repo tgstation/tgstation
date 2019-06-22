@@ -65,6 +65,7 @@
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 	var/lockcharge //Boolean of whether the borg is locked down or not
+	var/hardlock //Boolean of whether the lock was placed by a human or an AI. AIs cannot undo a lock placed by a human.
 
 	var/toner = 0
 	var/tonermax = 40
