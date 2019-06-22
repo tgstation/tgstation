@@ -40,12 +40,11 @@ Bonus
 /datum/symptom/weight_loss/Activate(datum/disease/advance/A)
 	if(!..())
 		return
-	var/mob/living/carbon/human/C = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
 			if(prob(base_message_chance))
-				to_chat(C, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
+				to_chat(affected_mob, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
 		else
-			to_chat(C, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
-			C.overeatduration = max(C.overeatduration - 100, 0)
-			C.adjust_nutrition(-100)
+			to_chat(affected_mob, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
+			affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
+			affected_mob.adjust_nutrition(-100)
