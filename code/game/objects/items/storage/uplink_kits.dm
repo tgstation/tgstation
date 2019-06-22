@@ -285,10 +285,12 @@
 
 	var/obj/item1 = pick_n_take(item_list)
 	var/obj/item2 = pick_n_take(item_list)
+	var/obj/item3 = pick_n_take(item_list)
 
 	// Create two, non repeat items from the list.
 	new item1(src)
 	new item2(src)
+	new item3(src)
 
 	// Paper guide
 	new /obj/item/paper/contractor_guide(src)
