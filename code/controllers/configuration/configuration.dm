@@ -416,7 +416,7 @@ Example config:
 		in_character_filter += line
 
 	if(in_character_filter.len)
-		var/regex_text = 	"(\\b)([jointext(in_character_filter, "|")])(\\b)"
+		var/regex_text = 	"\\b([jointext(in_character_filter, "|")])\\b"
 		ic_filter_regex = 	regex(regex_text, "i")
 		ic_filter_regex_G = regex(regex_text, "ig")
 	else

@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	if(client && !forced && config.ic_filter_regex && findtext(message, config.ic_filter_regex))
-		var/list/words = replacetext(message, config.ic_filter_regex_G, "$1<span class='boldwarning'>$2</span>$3")
+		var/list/words = replacetext(message, config.ic_filter_regex_G, "<span class='boldwarning'>$1</span>")
 		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n\"[words]\"</span>")
 		return
 
