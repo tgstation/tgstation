@@ -25,6 +25,4 @@
 
 	faction = list("spooky")
 	del_on_death = 1
-
-/mob/living/simple_animal/hostile/carp/eyeball/carp_randomify(rarechance)
-	return
+	random_color = FALSE
