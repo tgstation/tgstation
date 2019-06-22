@@ -20,12 +20,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard/fore)
-"aaf" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/crew_quarters/abandoned_gambling_den)
 "aag" = (
 /obj/machinery/power/solar{
 	id = "forestarboard";
@@ -96335,6 +96329,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"dvV" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/crew_quarters/abandoned_gambling_den)
 "dvW" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
@@ -139739,7 +139739,7 @@ dpS
 dpS
 dod
 duh
-aaf
+dvV
 dsW
 dsW
 dmj
