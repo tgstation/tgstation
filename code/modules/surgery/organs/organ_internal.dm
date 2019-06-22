@@ -113,6 +113,12 @@
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
+/obj/item/organ/proc/applyOrganDamage(var/d)
+		damage = max(0, damage + d)
+
+/mob/living/carbon/proc/return_organ_damage(var/obj/item/organ/organ)
+		return organ.damage
+
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
@@ -144,11 +150,3 @@
 		if(!getorganslot(ORGAN_SLOT_EARS))
 			var/obj/item/organ/ears/ears = new()
 			ears.Insert(src)
-
-/mob/living/carbon/proc/applyOrganDamage(var/d, var/obj/item/organ/organ)
-	if(organ)
-		organ.damage = max(0, organ.damage + d)
-
-/mob/living/carbon/proc/return_organ_damage(var/obj/item/organ/organ)
-	if(organ)
-		return organ.damage
