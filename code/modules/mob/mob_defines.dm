@@ -20,7 +20,7 @@
 	var/list/datum/action/actions = list()
 	var/list/datum/action/chameleon_item_actions
 
-	var/stat = CONSCIOUS //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
+	var/stat = CONSCIOUS //Whether a mob is alive or dead. TODO: Move this to living - Nodrak <---- Nodrak is a fucking lazy liar
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
