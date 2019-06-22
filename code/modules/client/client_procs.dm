@@ -44,9 +44,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (job > 0 && job <= last_asset_job && !(job in completed_asset_jobs))
 			completed_asset_jobs += job
 			return
-		else if (job in completed_asset_jobs) //byond bug ID:2256651
-			to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
-			src << browse("...", "window=asset_cache_browser")
 
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
 	if (!holder && mtl)
@@ -83,6 +80,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
 		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
+	
+	//byond bug ID:2256651
+	if (href_list["asset_cache_confirm_arrival"] && href_list["asset_cache_confirm_arrival"] in completed_asset_jobs)
+		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
+		src << browse("...", "window=asset_cache_browser")
 
 	// Admin PM
 	if(href_list["priv_msg"])
