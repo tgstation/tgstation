@@ -111,7 +111,7 @@
 
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
-		return
+		return FALSE //fail2flash, easy enough
 	if(user)
 		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	else //caused by emp/remote signal
@@ -119,7 +119,7 @@
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
-		if(M.flash_act(1, 1))
+		if(M.flash_act(1, 1)) //if this is true we will always successfully flash the user, so a return goes under here but not needed for each individual sub-check
 			if(M.confused < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 				M.confused += min(power, diff)
@@ -131,16 +131,21 @@
 			else
 				to_chat(M, "<span class='userdanger'>You are blinded by [src]!</span>")
 			M.Paralyze(rand(80,120))
+                        return TRUE 
 		else if(user)
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
 			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
+                        return FALSE 
 		else
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
+                        return FALSE 
 	else
 		if(M.flash_act())
 			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 			M.confused += min(power, diff)
+                        return TRUE 
+                return 
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
