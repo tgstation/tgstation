@@ -118,16 +118,18 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(bad_message_start)
 			// Catch potential baddies
 			var/client/C = src.client
+			if (C.censoredMessageCounter == 0) // Add 60-second timeout for baddy catching
+				addtimer(CALLBACK(C, /client/proc/ResetCensorAbuseCounter), 600)
+			
 			C.censoredMessageCounter++
+
 			if (C.censoredMessageCounter > CENSOR_MESSAGE_LIMIT)
 				to_chat(C, "<span class='userdanger'>You have exceeded the limit of [CENSOR_MESSAGE_LIMIT] censored messages in 60 seconds and have been disconnected. Administrators have been notified of this event.</span><br><span class='danger'>You may reconnect via the button in the file menu or by <b><u><a href='byond://winset?command=.reconnect'>clicking here to reconnect</a></u></b>.</span>")
 				QDEL_IN(C, 1) //to ensure they get our message before getting disconnected
 				message_admins("[key_name(src)] has been kicked for exceeding the limit of [CENSOR_MESSAGE_LIMIT] censored messages in 60 seconds.")
 			else if (C.censoredMessageCounter > CENSOR_MESSAGE_LIMIT - 5)
 				to_chat(C, "<span class='warning'>You are approaching the limit of [CENSOR_MESSAGE_LIMIT] censored messages in 60 seconds. You will be disconnected if you exceed this limit.</span>")
-			else if (C.censoredMessageCounter == 0)
-				addtimer(CALLBACK(C, /client/proc/ResetCensorAbuseCounter), 600)
-
+			
 			// let's try to be a bit more informative!
 			var/warning_message = "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.</br>The bolded terms are blocked: &quot;"
 			warning_message += BuildFilterResponse(message, config.ic_filter_regex)
