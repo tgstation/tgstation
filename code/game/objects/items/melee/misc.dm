@@ -157,7 +157,7 @@
 		H.reagents.add_reagent(/datum/reagent/toxin/histamine, 4)
 
 /obj/item/melee/beesword/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is stabbing himself in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(get_turf(src), hitsound, 75, 1, -1)
 	return TOXLOSS
 
