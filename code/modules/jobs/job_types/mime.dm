@@ -69,7 +69,7 @@
 	if (usr.stat || usr.restrained() || src.loc != usr)
 		return
 	if (!ishuman(usr))
-		return 1
+		return
 	var/mob/living/carbon/human/H = usr
 	if(H.is_holding(src) && H.mind)
 		H.set_machine(src)
