@@ -76,6 +76,12 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
+/obj/item/melee/sabre/on_exit_storage(datum/component/storage/concrete/S)
+	playsound(src, 'sound/items/unsheath.ogg', 25, 1)
+
+/obj/item/melee/sabre/on_enter_storage(datum/component/storage/concrete/S)
+	playsound(src, 'sound/items/sheath.ogg', 25, 1)
+
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/i = 0
