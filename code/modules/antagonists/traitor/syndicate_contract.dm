@@ -13,20 +13,28 @@
 	contract.owner = owner
 	contract.find_target()
 
-	// Balanced around being low numbers, with about 50/50 chance of getting at least one very high paying
+	// 50/50 chance of getting at least one very high paying
 	// contract.
 	// High payout
-	if (prob(15))
-		contract.payout_bonus = rand(6,8)
-	else if (prob(45)) // Low payout
-		contract.payout_bonus = rand(1,2)
+	if (prob(18))
+		contract.payout_bonus = rand(7,10)
+	else if (prob(45))
+		contract.payout_bonus = rand(1,3)
 	else // Medium payout
-		contract.payout_bonus = rand(3,5)
+		contract.payout_bonus = rand(2,6)
 
-	contract.payout = rand(0, 3)
+	contract.payout = rand(0, 2)
 	contract.generate_dropoff()
 
 	ransom = 100 * rand(18, 45)
+
+/datum/syndicate_contract/proc/ispipewire(item)
+	var/static/list/pire_wire = list(
+		/obj/machinery/atmospherics,
+		/obj/structure/disposalpipe,
+		/obj/structure/cable
+	)
+	return (is_type_in_list(item, pire_wire))
 
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
 	if (contract.target && contract.dropoff_check(user, contract.target.current))
@@ -34,17 +42,19 @@
 		var/list/turfs = RANGE_TURFS(3, user)
 		var/list/possible_drop_loc = list()
 
-		for(var/T in turfs)
-			var/turf/found_turf = T
+		for(var/turf/found_turf in turfs)
 			var/area/turf_area = get_area(found_turf)
 
 			// We check if both the turf is a floor, and that it's actually in the area. 
 			// We also want a location that's clear of any obstructions.
 			var/location_clear = TRUE
-			if (isfloorturf(found_turf) && istype(turf_area, contract.dropoff))
+			
+			if (istype(turf_area, contract.dropoff) && (!isspaceturf(found_turf) && !isclosedturf(found_turf)))
 				for (var/content in found_turf.contents)
-					if (istype(content, /obj/machinery) || istype(content, /obj/structure))
+					// We don't want obstructions, but we don't care about wires/pipes.
+					if ((istype(content, /obj/machinery) || istype(content, /obj/structure)) && !ispipewire(content))
 						location_clear = FALSE
+
 				if (location_clear)
 					possible_drop_loc.Add(found_turf)
 
@@ -112,17 +122,31 @@
 			// We don't want to tell the station instantly.
 			var/points_to_check
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-
 			if(D)
 				points_to_check = D.account_balance
-
 			if(points_to_check >= ransom)
 				D.adjust_money(-ransom)
 			else 
 				D.adjust_money(-points_to_check)
-			
+
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
-								As is policy we've taken a portion of the station's funds to offset the overall cost.", null, 'sound/ai/attention.ogg', null, "Nanotrasen Asset Protection")
+							As is policy we've taken a portion of the station's funds to offset the overall cost.", null, 'sound/ai/attention.ogg', null, "Nanotrasen Asset Protection")
+
+			sleep(30)
+
+			// Pay contractor their portion of ransom
+			if (status == CONTRACT_STATUS_COMPLETE)
+				var/mob/living/carbon/human/H
+				var/obj/item/card/id/C
+				if(ishuman(contract.owner.current))
+					H = contract.owner.current
+					C = H.get_idcard(TRUE)
+
+				if(C && C.registered_account)
+					C.registered_account.adjust_money(ransom * 0.35)
+
+					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
+					$[C.registered_account.account_balance].")
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
@@ -161,10 +185,9 @@
 
 	for (var/turf/possible_drop in contract.dropoff.contents)
 		var/location_clear = TRUE
-		// We don't care as much about what we land on than we did for sending the pod down.
 		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
 			for (var/content in possible_drop.contents)
-				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
+				if ((istype(content, /obj/machinery) || istype(content, /obj/structure)) && !ispipewire(content))
 					location_clear = FALSE
 			if (location_clear)
 				possible_drop_loc.Add(possible_drop)
