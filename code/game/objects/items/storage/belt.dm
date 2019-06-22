@@ -642,7 +642,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/hold_type
 
-/obj/item/storage/belt/sheath/Initialize()
+/obj/item/storage/belt/sheath/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
