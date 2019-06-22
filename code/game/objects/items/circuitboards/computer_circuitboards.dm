@@ -83,7 +83,7 @@
 	name = "Security Records Console (Computer Board)"
 	build_path = /obj/machinery/computer/secure_data
 
-/obj/item/circuitboard/computer/warrants
+/obj/item/circuitboard/computer/warrant
 	name = "Security Warrant Viewer (Computer Board)"
 	build_path = /obj/machinery/computer/warrant
 
