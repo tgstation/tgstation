@@ -93,6 +93,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message || message == "")
 		return
 
+	if(GLOB.in_character_filter.len && !forced)
+		if(findtext(message, config.ic_filter_regex))
+			to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.</span>")
+			return
+
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
 	var/message_mode = get_message_mode(message)
 	var/original_message = message

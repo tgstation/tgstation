@@ -28,7 +28,7 @@
 		//this is largely copypasted from there.
 
 		//handle facial hair (if necessary)
-		if(H.gender == MALE)
+		if(H.gender != FEMALE)
 			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return	//no tele-grooming
@@ -48,8 +48,8 @@
 
 /obj/structure/mirror/examine_status(mob/user)
 	if(broken)
-		return // no message spam
-	..()
+		return list()// no message spam
+	return ..()
 
 /obj/structure/mirror/obj_break(damage_flag, mapload)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))

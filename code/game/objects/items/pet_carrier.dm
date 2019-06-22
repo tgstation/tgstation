@@ -43,17 +43,17 @@
 	..()
 
 /obj/item/pet_carrier/examine(mob/user)
-	..()
+	. = ..()
 	if(occupants.len)
 		for(var/V in occupants)
 			var/mob/living/L = V
-			to_chat(user, "<span class='notice'>It has [L] inside.</span>")
+			. += "<span class='notice'>It has [L] inside.</span>"
 	else
-		to_chat(user, "<span class='notice'>It has nothing inside.</span>")
+		. += "<span class='notice'>It has nothing inside.</span>"
 	if(user.canUseTopic(src))
-		to_chat(user, "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its door.</span>")
+		. += "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its door.</span>"
 		if(!open)
-			to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its door.</span>")
+			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its door.</span>"
 
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)

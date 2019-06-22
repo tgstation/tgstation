@@ -38,7 +38,10 @@
 		woundtype = "bruises"
 	else //why are you trying to 0,0...?
 		woundtype = "burns"
-	user.visible_message("[user] attempts to patch some of [target]'s [woundtype].", "<span class='notice'>You attempt to patch some of [target]'s [woundtype].</span>")
+	display_results(user, target, "<span class='notice'>You attempt to patch some of [target]'s [woundtype].</span>",
+		"[user] attempts to patch some of [target]'s [woundtype].",
+		"[user] attempts to patch some of [target]'s [woundtype].")
+
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(..())
@@ -47,12 +50,17 @@
 				break
 
 /datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] fixes some of [target]'s wounds.", "<span class='notice'>You succeed in fixing some of [target]'s wounds.</span>")
+	display_results(user, target, "<span class='notice'>You succeed in fixing some of [target]'s wounds.</span>",
+		"[user] fixes some of [target]'s wounds.",
+		"[user] fixes some of [target]'s wounds.")
 	target.heal_bodypart_damage(brutehealing,burnhealing)
 	return TRUE
 
 /datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] screws up!", "<span class='warning'>You screwed up!</span>")
+	display_results(user, target, "<span class='warning'>You screwed up!</span>",
+		"[user] screws up!",
+		"[user] fixes some of [target]'s wounds.", TRUE)
 	target.take_bodypart_damage(5,0)
 	return FALSE
 
@@ -91,7 +99,7 @@
 
 /datum/surgery/healing/burn/basic
 	replaced_by = /datum/surgery/healing/burn/upgraded
-	healing_step_type = /datum/surgery_step/heal/brute/basic
+	healing_step_type = /datum/surgery_step/heal/burn/basic
 
 /datum/surgery/healing/burn/upgraded
 	replaced_by = /datum/surgery/healing/burn/upgraded/femto

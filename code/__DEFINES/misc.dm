@@ -149,11 +149,12 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define LOCKED_SENSORS 2
 
 //Wet floor type flags. Stronger ones should be higher in number.
-#define TURF_DRY		0
-#define TURF_WET_WATER	1
-#define TURF_WET_PERMAFROST	2
-#define TURF_WET_ICE 4
-#define TURF_WET_LUBE	8
+#define TURF_DRY			(0)
+#define TURF_WET_WATER		(1<<0)
+#define TURF_WET_PERMAFROST	(1<<1)
+#define TURF_WET_ICE 		(1<<2)
+#define TURF_WET_LUBE		(1<<3)
+#define TURF_WET_SUPERLUBE	(1<<4)
 
 #define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
 
@@ -450,3 +451,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
+
+//chem grenades defines
+#define GRENADE_EMPTY 1
+#define GRENADE_WIRED 2
+#define GRENADE_READY 3

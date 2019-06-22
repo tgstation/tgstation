@@ -298,6 +298,7 @@
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -382,9 +383,6 @@
 /area/awaymission/moonoutpost19/syndicate)
 "aX" = (
 /obj/machinery/gateway,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -395,6 +393,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -465,9 +464,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bg" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -607,12 +604,10 @@
 	name = "Gateway Access";
 	req_access_txt = "150"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -716,10 +711,8 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bC" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -852,22 +845,17 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bQ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Gateway";
 	req_access_txt = "150"
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bR" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
@@ -878,21 +866,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bS" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/computer/monitor/secret,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -905,9 +889,7 @@
 	output_level = 15000;
 	outputting = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1048,13 +1030,11 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cf" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
@@ -1090,9 +1070,6 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ci" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/machinery/light/small{
@@ -1103,6 +1080,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1118,12 +1096,10 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1215,22 +1191,15 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ct" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cu" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
@@ -1238,13 +1207,11 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cv" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
@@ -1252,52 +1219,34 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cw" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/airlock/engineering{
 	name = "Power Maintenance";
 	req_access_txt = "150"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cx" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cy" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cz" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cA" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -1405,7 +1354,6 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cK" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 1;
@@ -1419,6 +1367,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
@@ -1451,7 +1400,6 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cN" = (
-/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman{
 	desc = "A portable generator for emergency backup power.";
 	name = "P.A.C.M.A.N.-type portable generator"
@@ -1459,12 +1407,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cO" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/port_gen/pacman/super{
 	desc = "A portable generator for emergency backup power.";
@@ -1473,6 +1421,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2000,13 +1949,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006;
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating";
-	temperature = 251
-	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
 /area/awaymission/moonoutpost19/syndicate)
 "dJ" = (
 /obj/item/storage/bag/ore,
@@ -2026,22 +1970,12 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006;
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating";
-	temperature = 251
-	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
 /area/awaymission/moonoutpost19/syndicate)
 "dM" = (
-/turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006;
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating";
-	temperature = 251
-	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
 /area/awaymission/moonoutpost19/main)
 "dN" = (
 /obj/item/stack/ore/iron{
@@ -2180,39 +2114,20 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ei" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
 /obj/structure/alien/weeds,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/moonoutpost19/research)
 "ej" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"ek" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/shieldwallgen{
-	locked = 0;
-	req_access = null
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
@@ -2287,13 +2202,11 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ex" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	level = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/moonoutpost19/research)
 "ey" = (
@@ -2313,16 +2226,13 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ez" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
 	name = "Acid-Proof containment chamber blast door"
 	},
-/obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2381,13 +2291,11 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "eN" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/chair/office/light{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/moonoutpost19/research)
 "eO" = (
@@ -2422,9 +2330,7 @@
 	desc = "A portable generator for emergency backup power.";
 	name = "P.A.C.M.A.N.-type portable generator"
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2434,9 +2340,7 @@
 	desc = "A portable generator for emergency backup power.";
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
@@ -2450,6 +2354,7 @@
 /obj/structure/sign/poster/official/build{
 	pixel_y = 32
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2458,21 +2363,16 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
 	req_access = null
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "eW" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/smes{
 	charge = 1.5e+006;
 	input_level = 10000;
@@ -2480,61 +2380,43 @@
 	output_level = 15000;
 	outputting = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "eX" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "eY" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/item/newspaper,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "eZ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/moonoutpost19/research)
 "fa" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	dir = 8;
 	icon_state = "ltrails_1"
 	},
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"fb" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "fc" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "201"
 	},
@@ -2543,14 +2425,12 @@
 	dir = 8;
 	icon_state = "ltrails_1"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "fd" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	dir = 5;
@@ -2559,6 +2439,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -2567,13 +2448,11 @@
 /obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/tile/purple{
 	dir = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -2642,10 +2521,8 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/moonoutpost19/research)
 "fl" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/moonoutpost19/research)
 "fm" = (
@@ -2659,69 +2536,15 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"fn" = (
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/door/poddoor/preopen{
-	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
-	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "fp" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
-"fq" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "fr" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"fs" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"ft" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	icon_state = "platingdmg1"
-	},
-/area/awaymission/moonoutpost19/research)
-"fu" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2743,24 +2566,16 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "fw" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/tile/purple{
 	dir = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "fx" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research{
@@ -2771,53 +2586,44 @@
 	opacity = 0;
 	req_access_txt = "201"
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "fy" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "fz" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "fA" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "fB" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/alien/weeds/node,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/moonoutpost19/research)
 "fC" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/moonoutpost19/research)
 "fD" = (
@@ -2858,9 +2664,7 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "fF" = (
@@ -2936,34 +2740,16 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"fP" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "fQ" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "fR" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /obj/effect/decal/cleanable/oil,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3051,13 +2837,11 @@
 /obj/structure/sign/warning/biohazard{
 	pixel_x = 32
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/tile/purple{
 	dir = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -3088,18 +2872,13 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gb" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
 	name = "Acid-Proof containment chamber blast door"
 	},
-/obj/item/stack/cable_coil/cut/red{
-	amount = 1
-	},
+/obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3123,15 +2902,6 @@
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
-	},
-/area/awaymission/moonoutpost19/research)
-"gh" = (
-/obj/effect/decal/cleanable/oil,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "gi" = (
@@ -3179,9 +2949,6 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gm" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 28
@@ -3190,6 +2957,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -3265,9 +3033,6 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gt" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
@@ -3278,8 +3043,8 @@
 	id = "Awaylab";
 	name = "Acid-Proof containment chamber blast door"
 	},
-/obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3408,7 +3173,6 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gG" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 4;
 	locked = 0;
@@ -3420,6 +3184,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -3469,21 +3234,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"gL" = (
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
-	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "gM" = (
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
@@ -3493,10 +3243,8 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "gN" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/item/stack/rods,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
@@ -3670,28 +3418,15 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "hd" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "he" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"hf" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3786,10 +3521,8 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "hp" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/decal/cleanable/oil,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
@@ -4114,9 +3847,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "hW" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -4468,15 +4199,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"iE" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "iF" = (
 /obj/structure/sink{
 	pixel_y = 28
@@ -4819,15 +4541,6 @@
 	dir = 5
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"jp" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "jq" = (
 /obj/item/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
@@ -4973,9 +4686,6 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jH" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	locked = 0;
@@ -4984,6 +4694,7 @@
 	req_access = null;
 	start_charge = 100
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5079,50 +4790,33 @@
 	dir = 5
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"jS" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	icon_state = "platingdmg1"
-	},
-/area/awaymission/moonoutpost19/research)
 "jT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jU" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jV" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jX" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/item/cigbutt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5131,9 +4825,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
 	req_access = null
@@ -5141,48 +4832,41 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jZ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ka" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kb" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kc" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
@@ -5192,9 +4876,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kd" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
@@ -5204,11 +4886,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ke" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
@@ -5219,10 +4899,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
@@ -5230,9 +4908,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kg" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
@@ -5242,9 +4918,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kh" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
@@ -5253,9 +4927,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ki" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
@@ -5265,33 +4937,20 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kj" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kk" = (
 /obj/machinery/light/small,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/arrivals)
-"kl" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6699,13 +6358,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006;
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating";
-	temperature = 251
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
 	},
+/turf/open/floor/plating/airless,
 /area/awaymission/moonoutpost19/arrivals)
 "nw" = (
 /obj/machinery/washing_machine,
@@ -6998,13 +6655,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006;
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating";
-	temperature = 251
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
 	},
+/turf/open/floor/plating/airless,
 /area/awaymission/moonoutpost19/arrivals)
 "nX" = (
 /obj/structure/chair/comfy/black{
@@ -7034,13 +6689,12 @@
 /area/awaymission/moonoutpost19/arrivals)
 "nZ" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006;
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating";
-	temperature = 251
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/corner,
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 8
 	},
+/turf/open/floor/plating/airless,
 /area/awaymission/moonoutpost19/main)
 "oa" = (
 /obj/structure/chair/comfy/black,
@@ -7069,13 +6723,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006;
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating";
-	temperature = 251
-	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
 /area/awaymission/moonoutpost19/main)
 "od" = (
 /obj/item/shard{
@@ -7121,6 +6770,29 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"qK" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/main)
+"rk" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/main)
+"vJ" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/main)
 "vV" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -7137,6 +6809,27 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"DS" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/main)
+"Hw" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/main)
+"IW" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/main)
 "Mm" = (
 /obj/machinery/door/airlock/medical{
 	name = "Research Division";
@@ -7149,6 +6842,27 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"SE" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/main)
+"VE" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/arrivals)
 "Wf" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -7158,6 +6872,20 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"Yn" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/main)
+"Zf" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/moonoutpost19/main)
 
 (1,1,1) = {"
 aa
@@ -33257,11 +32985,11 @@ ba
 eJ
 hK
 eX
-fu
-iE
-fu
-jp
-jS
+eX
+he
+eX
+fR
+eZ
 eI
 ba
 ba
@@ -33503,7 +33231,7 @@ ba
 ba
 eI
 eS
-fq
+fO
 fL
 fL
 gw
@@ -33518,7 +33246,7 @@ ea
 ea
 dZ
 dZ
-fb
+eX
 eJ
 ba
 ba
@@ -33766,11 +33494,11 @@ gf
 gx
 eI
 hd
-fu
+eX
 hp
-ft
-fu
-hf
+eZ
+eX
+he
 dZ
 iF
 iZ
@@ -34017,12 +33745,12 @@ ba
 ba
 eJ
 eU
-fb
+fO
 fN
 fN
 gy
 eI
-fb
+eX
 ea
 ea
 dZ
@@ -34274,12 +34002,12 @@ ba
 ba
 eJ
 eV
-fs
+fO
 fO
 gg
 gz
 eI
-fb
+eX
 ea
 hq
 hB
@@ -34531,9 +34259,9 @@ ba
 ba
 eI
 eW
-ft
-fP
-gh
+eZ
+eX
+fR
 gA
 eJ
 he
@@ -34793,7 +34521,7 @@ fQ
 eJ
 eJ
 eI
-fb
+eX
 ea
 hs
 hB
@@ -35045,12 +34773,12 @@ ba
 ba
 eI
 eX
-fu
+eX
 fR
-fu
-fu
+eX
+eX
 gN
-hf
+he
 dZ
 ht
 hC
@@ -36072,7 +35800,7 @@ dZ
 dZ
 ea
 ea
-fb
+eX
 ea
 fU
 gj
@@ -36617,7 +36345,7 @@ zZ
 nA
 nK
 Wf
-dM
+qK
 ba
 ba
 ba
@@ -36874,7 +36602,7 @@ zZ
 lM
 lN
 Wf
-dM
+qK
 ba
 ba
 ba
@@ -37131,7 +36859,7 @@ hI
 nB
 nL
 hI
-nW
+VE
 ba
 ba
 ba
@@ -39410,14 +39138,14 @@ ba
 ba
 ba
 dZ
-ek
+gZ
 ez
 ez
-fn
+ez
 fE
 gb
 gt
-gL
+ez
 gZ
 ea
 ba
@@ -41485,7 +41213,7 @@ ix
 hJ
 hI
 jH
-kl
+jV
 kI
 kV
 lp
@@ -41500,13 +41228,13 @@ hJ
 lM
 lN
 hI
-dM
+Zf
 ba
 ba
 ba
-dM
-dM
-dM
+vJ
+Hw
+Zf
 od
 ba
 ba
@@ -41758,12 +41486,12 @@ lN
 nQ
 nV
 nZ
-nZ
-nZ
-nZ
-nZ
+rk
+rk
+rk
+SE
 oc
-dM
+qK
 ba
 ba
 ba
@@ -42014,13 +41742,13 @@ hI
 nJ
 nR
 hJ
-dM
+DS
 ba
 ba
 ba
-dM
-dM
-dM
+Yn
+IW
+DS
 ba
 oe
 ba
@@ -42778,8 +42506,8 @@ lN
 hJ
 ba
 ba
-dM
-dM
+Yn
+IW
 nu
 ba
 ba

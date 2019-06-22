@@ -74,19 +74,16 @@
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	if(light_power && light_range)
+	if (light_power && light_range)
 		update_light()
 
-	if(opacity && isturf(loc))
+	if (opacity && isturf(loc))
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
-	if(canSmoothWith)
+	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	if(datum_outputs)
-		for(var/i in 1 to length(datum_outputs))
-			datum_outputs[i] = SSoutputs.outputs[datum_outputs[i]]
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
@@ -268,35 +265,35 @@
 		. = override.Join("")
 
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
-	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	to_chat(user, "[get_examine_string(user, TRUE)].")
+	. = list("[get_examine_string(user, TRUE)].")
 
 	if(desc)
-		to_chat(user, desc)
+		. += desc
 
 	if(reagents)
 		if(reagents.flags & TRANSPARENT)
-			to_chat(user, "It contains:")
-			if(reagents.reagent_list.len)
+			. += "It contains:"
+			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/R in reagents.reagent_list)
-						to_chat(user, "[R.volume] units of [R.name]")
+						. += "[R.volume] units of [R.name]"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
 						total_volume += R.volume
-					to_chat(user, "[total_volume] units of various reagents")
+					. += "[total_volume] units of various reagents"
 			else
-				to_chat(user, "Nothing.")
+				. += "Nothing."
 		else if(reagents.flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
+				. += "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>"
 			else
-				to_chat(user, "<span class='danger'>It's empty.</span>")
+				. += "<span class='danger'>It's empty.</span>"
 
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)
