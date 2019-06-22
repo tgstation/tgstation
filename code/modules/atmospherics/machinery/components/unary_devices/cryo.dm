@@ -1,5 +1,3 @@
-#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
-
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -37,10 +35,18 @@
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 
+	// for alpha masking
+	var/image/alpha_overlay
+	var/image/alpha_overlay_32x32
+	var/overlay_pixel_y = 0
+
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
 	initialize_directions = dir
+
+	alpha_overlay = image('icons/obj/cryogenics.dmi', "pod-alpha")
+	alpha_overlay_32x32 = image('icons/obj/cryogenics32x32.dmi', "pod-alpha")
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -69,9 +75,9 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better beaker, better results"
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.<span>"
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	QDEL_NULL(radio)
@@ -106,37 +112,21 @@
 		return
 
 	if(occupant)
-		var/image/occupant_overlay
+		var/image/occupant_overlay = image(occupant.icon, occupant.icon_state, dir = SOUTH)
+		occupant_overlay.appearance_flags |= KEEP_TOGETHER
+		occupant_overlay.copy_overlays(occupant)
+		occupant_overlay.pixel_x = occupant.pixel_x
+		overlay_pixel_y = 0
 
-		if(ismonkey(occupant)) // Monkey
-			occupant_overlay = image(CRYOMOBS, "monkey")
-		else if(isalienadult(occupant))
-			if(isalienroyal(occupant)) // Queen and prae
-				occupant_overlay = image(CRYOMOBS, "alienq")
-			else if(isalienhunter(occupant)) // Hunter
-				occupant_overlay = image(CRYOMOBS, "alienh")
-			else if(isaliensentinel(occupant)) // Sentinel
-				occupant_overlay = image(CRYOMOBS, "aliens")
-			else // Drone or other
-				occupant_overlay = image(CRYOMOBS, "aliend")
-
-		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
-			occupant_overlay = image(occupant.icon, occupant.icon_state)
-			occupant_overlay.copy_overlays(occupant)
-
-		else
-			occupant_overlay = image(CRYOMOBS, "generic")
-
-		occupant_overlay.dir = SOUTH
-		occupant_overlay.pixel_y = 22
+		var/is_32x32 = icon(occupant.icon, occupant.icon_state).Height() < 64 // anything less than 64 should get the 32 overlay
 
 		if(on && !running_anim && is_operational())
 			icon_state = "pod-on"
 			running_anim = TRUE
-			run_anim(TRUE, occupant_overlay)
+			run_anim(is_32x32, occupant_overlay)
 		else
 			icon_state = "pod-off"
-			add_overlay(occupant_overlay)
+			add_masked_overlay(is_32x32, occupant_overlay)
 			add_overlay("cover-off")
 
 	else if(on && is_operational())
@@ -146,20 +136,30 @@
 		icon_state = "pod-off"
 		add_overlay("cover-off")
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(anim_up, image/occupant_overlay)
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(is32x32, image/occupant_overlay, anim_up = TRUE)
 	if(!on || !occupant || !is_operational())
 		running_anim = FALSE
 		return
 	cut_overlays()
-	if(occupant_overlay.pixel_y != 23) // Same effect as occupant_overlay.pixel_y == 22 || occupant_overlay.pixel_y == 24
-		anim_up = occupant_overlay.pixel_y == 22 // Same effect as if(occupant_overlay.pixel_y == 22) anim_up = TRUE ; if(occupant_overlay.pixel_y == 24) anim_up = FALSE
+	if(overlay_pixel_y != 1) // Same effect as overlay_pixel_y == 0 || occupant_overlay.pixel_y == 2
+		anim_up = overlay_pixel_y == 0 // Same effect as if(overlay_pixel_y == 0) anim_up = TRUE ; if(overlay_pixel_y == 2) anim_up = FALSE
 	if(anim_up)
-		occupant_overlay.pixel_y++
+		overlay_pixel_y++
 	else
-		occupant_overlay.pixel_y--
-	add_overlay(occupant_overlay)
+		overlay_pixel_y--
+	add_masked_overlay(is32x32, occupant_overlay)
 	add_overlay("cover-on")
-	addtimer(CALLBACK(src, .proc/run_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/run_anim, is32x32, occupant_overlay, anim_up), 7, TIMER_UNIQUE)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/add_masked_overlay(is32x32, image/overlay) // overlay blend mode needs to be multiply
+	var/image/masked
+	if(is32x32)
+		masked = apply_alpha_mask(overlay, alpha_overlay_32x32)
+		masked.pixel_y = 22 + overlay_pixel_y
+	else
+		overlay.pixel_y = overlay_pixel_y
+		masked = apply_alpha_mask(overlay, alpha_overlay)
+	add_overlay(masked)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
@@ -284,14 +284,14 @@
 		open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
-	..()
+	. = ..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Someone's inside [src]!")
+			. += "Someone's inside [src]!"
 		else
-			to_chat(user, "You can barely make out a form floating in [src].")
+			. += "You can barely make out a form floating in [src]."
 	else
-		to_chat(user, "[src] seems empty.")
+		. += "[src] seems empty."
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -450,5 +450,3 @@
 			node.atmosinit()
 			node.addMember(src)
 		build_network()
-
-#undef CRYOMOBS

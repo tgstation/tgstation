@@ -18,7 +18,7 @@
 /obj/item/nanite_hijacker/examine(mob/user)
 	. = ..()
 	if(disk)
-		to_chat(user, "<span class='notice'>Alt-click [src] to eject the disk.</span>")
+		. += "<span class='notice'>Alt-click [src] to eject the disk.</span>"
 
 /obj/item/nanite_hijacker/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))

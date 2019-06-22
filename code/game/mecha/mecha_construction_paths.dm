@@ -11,8 +11,8 @@
 	var/obj/mecha/M = new result(drop_location())
 	QDEL_NULL(M.cell)
 
-	var/atom/parent_atom = parent
-	M.CheckParts(parent_atom.contents)
+	var/obj/item/mecha_parts/chassis/parent_chassis = parent
+	M.CheckParts(parent_chassis.contents)
 
 	SSblackbox.record_feedback("tally", "mechas_created", 1, M.name)
 	QDEL_NULL(parent)
@@ -1606,7 +1606,7 @@
 				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
 		if(14)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures [I].", "<span class='notice'>You secure [I].</span>")
+				user.visible_message("[user] secures the capacitor.", "<span class='notice'>You secure the capacitor.</span>")
 			else
 				user.visible_message("[user] removes the capacitor from [parent].", "<span class='notice'>You remove the capacitor from [parent].</span>")
 		if(15)

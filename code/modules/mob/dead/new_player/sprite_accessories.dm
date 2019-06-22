@@ -1497,10 +1497,6 @@
 	name = "Short (White)"
 	icon_state = "white_short"
 
-/datum/sprite_accessory/socks/stockings_black
-	name = "Stockings (Black)"
-	icon_state = "stockings_black"
-
 /datum/sprite_accessory/socks/stockings_blue
 	name = "Stockings (Blue)"
 	icon_state = "stockings_blue"

@@ -16,10 +16,15 @@
 
 	var/faction = list("ashwalker")
 	var/meat_counter = 6
+	var/datum/team/ashwalkers/ashies
 
 /obj/structure/lavaland/ash_walker/Initialize()
 	.=..()
-	START_PROCESSING(SSprocessing, src)	
+	ashies = new /datum/team/ashwalkers()
+	var/datum/objective/protect_object/objective = new
+	objective.set_target(src)
+	ashies.objectives += objective
+	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/lavaland/ash_walker/deconstruct(disassembled)
 	new /obj/item/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
@@ -44,9 +49,14 @@
 				meat_counter++
 			H.gib()
 			obj_integrity = min(obj_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
+			for(var/mob/living/L in view(src, 5))
+				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))
+					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
+				else
+					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_bad)
 
 /obj/structure/lavaland/ash_walker/proc/spawn_mob()
 	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)
-		new /obj/effect/mob_spawn/human/ash_walker(get_step(loc, pick(GLOB.alldirs)))
+		new /obj/effect/mob_spawn/human/ash_walker(get_step(loc, pick(GLOB.alldirs)), ashies)
 		visible_message("<span class='danger'>One of the eggs swells to an unnatural size and tumbles free. It's ready to hatch!</span>")
 		meat_counter -= ASH_WALKER_SPAWN_THRESHOLD
