@@ -47,9 +47,7 @@
 	var/drowsyness = 0//Carbon <--- Naksu said he'd fix these, if he doesn't you can kill him.
 	var/dizziness = 0//Carbon <--- Naksu said he'd fix these, if he doesn't you can kill him.
 	var/jitteriness = 0//Carbon <--- Naksu said he'd fix these, if he doesn't you can kill him.
-	var/satiety = 0//Carbon
 
-	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/a_intent = INTENT_HELP//Living
 	var/list/possible_a_intents = null//Living
 	var/m_intent = MOVE_INTENT_RUN//Living
