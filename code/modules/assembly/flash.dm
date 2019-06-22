@@ -111,7 +111,7 @@
 
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
-		return FALSE //fail2flash, easy enough
+		return FALSE 
 	if(user)
 		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	else //caused by emp/remote signal
@@ -119,7 +119,7 @@
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
-		if(M.flash_act(1, 1)) //if this is true we will always successfully flash the user, so a return goes under here but not needed for each individual sub-check
+		if(M.flash_act(1, 1)) 
 			if(M.confused < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 				M.confused += min(power, diff)
