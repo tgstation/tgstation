@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
 		//	into letting append to a list without limit.
 		if (asset_cache_job > 0 && asset_cache_job <= last_asset_job && !(asset_cache_job in completed_asset_jobs))
-			completed_asset_jobs += job
+			completed_asset_jobs += asset_cache_job
 			return
 
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
