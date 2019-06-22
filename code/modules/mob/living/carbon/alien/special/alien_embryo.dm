@@ -10,7 +10,17 @@
 /obj/item/organ/body_egg/alien_embryo/Initialize()
 	. = ..()
 	if(loc && !ismob(loc))
-		var/mob/living/carbon/alien/larva/L = new(loc)
+		var/mob/living/simple_animal/hostile/alien/L = new(loc)
+		L.name = "alien larva"
+		L.icon = 'icons/mob/alien.dmi'
+		L.icon_state = "larva1"
+		L.icon_living = "larva1"
+		L.icon_dead = "larva1_dead"
+		L.melee_damage_lower = 3
+		L.melee_damage_upper = 3
+		L.health = 20
+		L.maxHealth = 20
+		L.attacktext = "bites"
 		L.death()
 		moveToNullspace()
 		qdel(src)
