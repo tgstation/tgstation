@@ -1,0 +1,8 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - rscadd: "Adds a third random item, as well as a small guide on using the contract kit. Also added new possible items that can appear."
+  - rscadd: "Contractors now receive a small portion of the ransom into their equipped ID."
+  - tweak: "Supplied space suit in the contract kit is now an improved variant on the normal Syndicate version."
+  - balance: "TC payouts adjusted to be a bit more fair to the contractor. Total payout can never be below a certain threshold."
+  - bugfix: "Broken dropoff locations work again, and general bugfixes."
