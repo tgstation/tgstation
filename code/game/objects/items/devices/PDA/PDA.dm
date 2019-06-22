@@ -685,7 +685,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			hrefend = "</a>"
 
 		if(signal.data["automated"])
-			reply = "[Automated Message]"
+			reply = "\[Automated Message\]"
 
 		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] [reply]")
 
