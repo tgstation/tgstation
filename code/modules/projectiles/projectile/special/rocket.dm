@@ -50,6 +50,12 @@
 	icon_state = "missile"
 	damage = 30
 	ricochets_max = 0 //it's a MISSILE
+	var/sturdy = list(
+	/turf/closed,
+	/obj/mecha,
+	/obj/machinery/door/,
+	/obj/machinery/door/poddoor/shutters
+	)
 
 /obj/item/broken_missile
 	name = "\improper broken missile"
@@ -61,7 +67,9 @@
 
 /obj/item/projectile/bullet/a84mm_br/on_hit(atom/target, blocked=0)
 	..()
-	if(istype(target, /turf/closed) || ismecha(target))
-		explosion(target, 0, 1, 1, 2)
-		return BULLET_ACT_HIT
+	for(var/i in sturdy)
+		if(istype(target, i))
+			explosion(target, 0, 1, 1, 2)
+			return BULLET_ACT_HIT
+	//if(istype(target, /turf/closed) || ismecha(target))
 	new /obj/item/broken_missile(get_turf(src), 1)
