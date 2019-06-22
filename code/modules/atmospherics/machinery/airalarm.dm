@@ -222,11 +222,11 @@
 	. = ..()
 	switch(buildstage)
 		if(0)
-			to_chat(user, "<span class='notice'>It is missing air alarm electronics.</span>")
+			. += "<span class='notice'>It is missing air alarm electronics.</span>"
 		if(1)
-			to_chat(user, "<span class='notice'>It is missing wiring.</span>")
+			. += "<span class='notice'>It is missing wiring.</span>"
 		if(2)
-			to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>")
+			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>"
 
 /obj/machinery/airalarm/ui_status(mob/user)
 	if(user.has_unlimited_silicon_privilege && aidisabled)

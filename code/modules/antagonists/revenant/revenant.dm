@@ -181,6 +181,11 @@
 /mob/living/simple_animal/revenant/ratvar_act()
 	return //clocks get out reee
 
+/mob/living/simple_animal/revenant/bullet_act()
+	if(!revealed || stasis)
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
+
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
@@ -381,11 +386,11 @@
 	scatter()
 
 /obj/item/ectoplasm/revenant/examine(mob/user)
-	..()
+	. = ..()
 	if(inert)
-		to_chat(user, "<span class='revennotice'>It seems inert.</span>")
+		. += "<span class='revennotice'>It seems inert.</span>"
 	else if(reforming)
-		to_chat(user, "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>")
+		. += "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>"
 
 /obj/item/ectoplasm/revenant/proc/reform()
 	if(QDELETED(src) || QDELETED(revenant) || inert)

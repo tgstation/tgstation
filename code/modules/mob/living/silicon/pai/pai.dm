@@ -262,8 +262,8 @@
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)
-	..()
-	to_chat(user, "A personal AI in holochassis mode. Its master ID string seems to be [master].")
+	. = ..()
+	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
 /mob/living/silicon/pai/Life()
 	if(stat == DEAD)

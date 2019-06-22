@@ -67,22 +67,21 @@
 	return cell
 
 /obj/structure/light_construct/examine(mob/user)
-	..()
-	switch(src.stage)
+	. = ..()
+	switch(stage)
 		if(1)
-			to_chat(user, "It's an empty frame.")
+			. += "It's an empty frame."
 		if(2)
-			to_chat(user, "It's wired.")
+			. += "It's wired."
 		if(3)
-			to_chat(user, "The casing is closed.")
+			. += "The casing is closed."
 	if(cell_connectors)
 		if(cell)
-			to_chat(user, "You see [cell] inside the casing.")
+			. += "You see [cell] inside the casing."
 		else
-			to_chat(user, "The casing has no power cell for backup power.")
+			. += "The casing has no power cell for backup power."
 	else
-		to_chat(user, "<span class='danger'>This casing doesn't support power cells for backup power.</span>")
-		return
+		. += "<span class='danger'>This casing doesn't support power cells for backup power.</span>"
 
 /obj/structure/light_construct/attack_hand(mob/user)
 	if(cell)
@@ -426,18 +425,18 @@
 
 // examine verb
 /obj/machinery/light/examine(mob/user)
-	..()
+	. = ..()
 	switch(status)
 		if(LIGHT_OK)
-			to_chat(user, "It is turned [on? "on" : "off"].")
+			. += "It is turned [on? "on" : "off"]."
 		if(LIGHT_EMPTY)
-			to_chat(user, "The [fitting] has been removed.")
+			. += "The [fitting] has been removed."
 		if(LIGHT_BURNED)
-			to_chat(user, "The [fitting] is burnt out.")
+			. += "The [fitting] is burnt out."
 		if(LIGHT_BROKEN)
-			to_chat(user, "The [fitting] has been smashed.")
+			. += "The [fitting] has been smashed."
 	if(cell)
-		to_chat(user, "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%.")
+		. += "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%."
 
 
 
@@ -637,9 +636,12 @@
 			if(istype(eth_species))
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
 				if(do_after(user, 50, target = src))
-					to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
-					eth_species.adjust_charge(5)
-					return
+					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+						stomach.adjust_charge(5)
+					else
+						to_chat(H, "<span class='notice'>You can't receive charge from the [fitting].</span>")
 				return
 
 			if(H.gloves)

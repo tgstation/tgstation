@@ -27,11 +27,6 @@
 	. = ..()
 	update_icon()
 
-/obj/item/storage/belt/examine(mob/user)
-	..()
-	clothing_resistance_flag_examine_message(user)
-
-
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
@@ -259,6 +254,7 @@
 		/obj/item/resonator,
 		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
+		/obj/item/shovel,
 		/obj/item/stack/sheet/animalhide,
 		/obj/item/stack/sheet/sinew,
 		/obj/item/stack/sheet/bone,
@@ -658,9 +654,9 @@
 		))
 
 /obj/item/storage/belt/sabre/examine(mob/user)
-	..()
+	. = ..()
 	if(length(contents))
-		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
+		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
 	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

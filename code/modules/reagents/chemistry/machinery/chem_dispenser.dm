@@ -34,47 +34,47 @@
 	var/macroresolution = 1
 	var/obj/item/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
-		/datum/reagent/hydrogen,
-		/datum/reagent/lithium,
+		/datum/reagent/aluminium,
+		/datum/reagent/bromine,
 		/datum/reagent/carbon,
+		/datum/reagent/chlorine,
+		/datum/reagent/copper,
+		/datum/reagent/consumable/ethanol,
+		/datum/reagent/fluorine,
+		/datum/reagent/hydrogen,
+		/datum/reagent/iodine,
+		/datum/reagent/iron,
+		/datum/reagent/lithium,
+		/datum/reagent/mercury,
 		/datum/reagent/nitrogen,
 		/datum/reagent/oxygen,
-		/datum/reagent/fluorine,
-		/datum/reagent/sodium,
-		/datum/reagent/aluminium,
-		/datum/reagent/silicon,
 		/datum/reagent/phosphorus,
-		/datum/reagent/sulfur,
-		/datum/reagent/chlorine,
 		/datum/reagent/potassium,
-		/datum/reagent/iron,
-		/datum/reagent/copper,
-		/datum/reagent/mercury,
 		/datum/reagent/uranium/radium,
-		/datum/reagent/water,
-		/datum/reagent/consumable/ethanol,
-		/datum/reagent/consumable/sugar,
-		/datum/reagent/toxin/acid,
-		/datum/reagent/fuel,
+		/datum/reagent/silicon,
 		/datum/reagent/silver,
-		/datum/reagent/iodine,
-		/datum/reagent/bromine,
-		/datum/reagent/stable_plasma
+		/datum/reagent/sodium,
+		/datum/reagent/stable_plasma,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/sulfur,
+		/datum/reagent/toxin/acid,
+		/datum/reagent/water,
+		/datum/reagent/fuel
 	)
 	//these become available once the manipulator has been upgraded to tier 4 (femto)
 	var/list/upgrade_reagents = list(
-		"oil",
-		/datum/reagent/ash,
 		/datum/reagent/acetone,
-		/datum/reagent/saltpetre,
 		/datum/reagent/ammonia,
-		/datum/reagent/diethylamine
+		/datum/reagent/ash,
+		/datum/reagent/diethylamine,
+		/datum/reagent/oil,
+		/datum/reagent/saltpetre
 	)
 	var/list/emagged_reagents = list(
-		/datum/reagent/drug/space_drugs,
-		/datum/reagent/medicine/morphine,
 		/datum/reagent/toxin/carpotoxin,
 		/datum/reagent/medicine/mine_salve,
+		/datum/reagent/medicine/morphine,
+		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin
 	)
 
@@ -82,7 +82,11 @@
 
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
-	dispensable_reagents = sortList(dispensable_reagents)
+	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
+	if(emagged_reagents)
+		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
+	if(upgrade_reagents)
+		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
@@ -91,11 +95,12 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/examine(mob/user)
-	..()
+	. = ..()
 	if(panel_open)
-		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
+		. += "<span class='notice'>[src]'s maintenance hatch is open!</span>"
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.<br>Macro granularity at <b>[macroresolution]u</b>.<span>")
+		. += {"<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>
+		[round((powerefficiency*1000)-100, 1)]%</b>.<br>Macro granularity at <b>[macroresolution]u</b>.<span>"}
 
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)

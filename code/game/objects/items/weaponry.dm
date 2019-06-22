@@ -123,10 +123,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/claymore/highlander/examine(mob/user)
-	..()
-	to_chat(user, "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade.")
+	. = ..()
+	. += "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
 	if(nuke_disk)
-		to_chat(user, "<span class='boldwarning'>It's holding the nuke disk!</span>")
+		. += "<span class='boldwarning'>It's holding the nuke disk!</span>"
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -420,7 +420,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/ectoplasm/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!</span>")
 	return (OXYLOSS)
-	
+
 /obj/item/ectoplasm/angelic
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "angelplasm"
@@ -468,11 +468,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 5
 	throw_range = 2
 	attack_verb = list("busted")
+	var/impressiveness = 45
+
+/obj/item/statuebust/Initialize()
+	. = ..()
+	AddComponent(/datum/component/art, impressiveness)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
 	desc = "A bust of the famous Greek physician Hippocrates of Kos, often referred to as the father of western medicine."
 	icon_state = "hippocratic"
+	impressiveness = 50
 
 /obj/item/tailclub
 	name = "tail club"
@@ -659,6 +665,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 0
 	throwforce = 5
 	reach = 2
+	var/min_reach = 2
 
 /obj/item/extendohand/acme
 	name = "\improper ACME Extendo-Hand"
@@ -666,7 +673,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user)
 	var/dist = get_dist(M, user)
-	if(dist < reach)
+	if(dist < min_reach)
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
 	M.attack_hand(user)

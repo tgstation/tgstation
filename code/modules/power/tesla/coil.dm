@@ -29,6 +29,9 @@
 	wires = new /datum/wires/tesla_coil(src)
 	linked_techweb = SSresearch.science_tech
 
+/obj/machinery/power/testla_coil/should_have_node()
+	return anchored
+
 /obj/machinery/power/tesla_coil/RefreshParts()
 	var/power_multiplier = 0
 	zap_cooldown = 100
@@ -38,9 +41,9 @@
 	input_power_multiplier = power_multiplier
 
 /obj/machinery/power/tesla_coil/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Power generation at <b>[input_power_multiplier*100]%</b>.<br>Shock interval at <b>[zap_cooldown*0.1]</b> seconds.<span>")
+		. += "<span class='notice'>The status display reads: Power generation at <b>[input_power_multiplier*100]%</b>.<br>Shock interval at <b>[zap_cooldown*0.1]</b> seconds.<span>"
 
 /obj/machinery/power/tesla_coil/on_construction()
 	if(anchored)
@@ -57,6 +60,7 @@
 			connect_to_network()
 		else
 			disconnect_from_network()
+		update_cable_icons_on_turf(get_turf(src))
 
 /obj/machinery/power/tesla_coil/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "coil_open[anchored]", "coil[anchored]", W))

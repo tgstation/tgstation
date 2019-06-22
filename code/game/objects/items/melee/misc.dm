@@ -131,6 +131,27 @@
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 
+/obj/item/melee/sabre/bee
+	name = "the stinger"
+	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "stinger"
+	item_state = "stinger"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	force = 7
+	block_chance = 20
+	armour_penetration = 85
+	attack_verb = list("slashed", "stung", "prickled", "poked")
+
+/obj/item/melee/sabre/bee/afterattack(atom/target, mob/user, proximity = TRUE)
+	. = ..()
+	user.changeNext_move(CLICK_CD_RAPID)
+	if(iscarbon(target))
+		var/mob/living/carbon/H = target
+		H.reagents.add_reagent(/datum/reagent/toxin/histamine, 4)
+
 /obj/item/melee/classic_baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."

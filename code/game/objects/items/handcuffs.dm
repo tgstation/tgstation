@@ -96,14 +96,15 @@
 		qdel(src)
 	return
 
-/obj/item/restraints/handcuffs/sinew
+/obj/item/restraints/handcuffs/cable/sinew
 	name = "sinew restraints"
 	desc = "A pair of restraints fashioned from long strands of flesh."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sinewcuff"
 	item_state = "sinewcuff"
-	breakouttime = 300 //Deciseconds = 30s
-	cuffsound = 'sound/weapons/cablecuff.ogg'
+	materials = null
+	item_color = "white"
+	color = "#000000"
 
 /obj/item/restraints/handcuffs/cable
 	name = "cable restraints"
@@ -121,10 +122,6 @@
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, param_color)
 	. = ..()
 
-	var/list/cable_colors = GLOB.cable_colors
-	item_color = param_color || item_color || pick(cable_colors)
-	if(cable_colors[item_color])
-		item_color = cable_colors[item_color]
 	update_icon()
 
 /obj/item/restraints/handcuffs/cable/update_icon()
@@ -178,7 +175,7 @@
 			var/obj/item/wirerod/W = new /obj/item/wirerod
 			remove_item_from_storage(user)
 			user.put_in_hands(W)
-			to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
+			to_chat(user, "<span class='notice'>You wrap [src] around the top of [I].</span>")
 			qdel(src)
 		else
 			to_chat(user, "<span class='warning'>You need one rod to make a wired rod!</span>")

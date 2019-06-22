@@ -19,8 +19,8 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/wood/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>")
+	. = ..()
+	. += "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>"
 
 /turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -178,8 +178,8 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/carpet/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+	. = ..()
+	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()
