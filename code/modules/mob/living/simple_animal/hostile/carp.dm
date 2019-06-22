@@ -44,9 +44,9 @@
 
 	var/static/list/carp_colors = list(\
 	"lightpurple" = "#c3b9f1", \
-	"red" = "#fe011f", \
-	"green" = "#2ecf0c", \
-	"grape" = "#bc0bdf", \
+	"lightpink" = "#da77a8", \
+	"green" = "#70ff25", \
+	"grape" = "#df0afb", \
 	"swamp" = "#e5e75a", \
 	"turquoise" = "#04e1ed", \
 	"brown" = "#ca805a", \
@@ -54,7 +54,9 @@
 	"lightblue" = "#4d88cc", \
 	"rusty" = "#dd5f34", \
 	"beige" = "#bbaeaf", \
-	"yellow" = "#e5c958", \
+	"yellow" = "#f3ca4a", \
+	"blue" = "#09bae1", \
+	"palegreen" = "#7ef099", \
 	)
 	var/static/list/carp_colors_rare = list(\
 	"silver" = "#fdfbf3", \
