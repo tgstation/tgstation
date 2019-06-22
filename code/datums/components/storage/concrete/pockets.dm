@@ -86,7 +86,7 @@
 
 /datum/component/storage/concrete/pockets/helmet
 	quickdraw = TRUE
-	max_combined_w_class = 100
+	max_combined_w_class = 6
 
 /datum/component/storage/concrete/pockets/helmet/Initialize()
 	. = ..()
