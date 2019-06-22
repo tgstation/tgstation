@@ -96,7 +96,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				return "<b>[copytext(message, 1, word_end)]</b>" + BuildFilterResponse(copytext(message, word_end + 1, 0), filter)
 		else
 			return copytext(message, 1, search_result - 1) + BuildFilterResponse(copytext(message, search_result, 0), filter)
-			
+
+/client/proc/ResetCensorAbuseCounter()
+	var/client/C = src
+	C.censoredMessageCounter = 0
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
@@ -110,14 +113,26 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message || message == "")
 		return
 
-	if(GLOB.in_character_filter.len && !forced)
+	if(src.client && GLOB.in_character_filter.len && !forced)
 		var/bad_message_start = findtext(message, config.ic_filter_regex)
 		if(bad_message_start)
+			// Catch potential baddies
+			var/client/C = src.client
+			C.censoredMessageCounter++
+			if (C.censoredMessageCounter > CENSOR_MESSAGE_LIMIT)
+				to_chat(C, "<span class='userdanger'>You have exceeded the limit of [CENSOR_MESSAGE_LIMIT] censored messages in 60 seconds and have been disconnected. Administrators have been notified of this event.</span><br><span class='danger'>You may reconnect via the button in the file menu or by <b><u><a href='byond://winset?command=.reconnect'>clicking here to reconnect</a></u></b>.</span>")
+				QDEL_IN(C, 1) //to ensure they get our message before getting disconnected
+				message_admins("[key_name(src)] has been kicked for exceeding the limit of [CENSOR_MESSAGE_LIMIT] censored messages in 60 seconds.")
+			else if (C.censoredMessageCounter > CENSOR_MESSAGE_LIMIT - 5)
+				to_chat(C, "<span class='warning'>You are approaching the limit of [CENSOR_MESSAGE_LIMIT] censored messages in 60 seconds. You will be disconnected if you exceed this limit.</span>")
+			else if (C.censoredMessageCounter == 0)
+				addtimer(CALLBACK(C, /client/proc/ResetCensorAbuseCounter), 600)
+
 			// let's try to be a bit more informative!
 			var/warning_message = "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.</br>The bolded terms are disallowed: &quot;"
 			warning_message += BuildFilterResponse(message, config.ic_filter_regex)
 			warning_message = trim(warning_message)
-			to_chat(src, "[warning_message]&quot;</span>")
+			to_chat(C, "[warning_message]&quot;</span>")
 			return
 
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]

@@ -78,3 +78,6 @@
 #define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
 #define MAX_CHARTER_LEN			80
+
+// Maximum censored messages in a 60 second span, kick on exceeding.
+#define CENSOR_MESSAGE_LIMIT	25
