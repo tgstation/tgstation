@@ -292,15 +292,6 @@
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/space/nearstation)
-"aY" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "aZ" = (
 /obj/machinery/light{
 	dir = 8
@@ -402,12 +393,6 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/gateway)
 "bm" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc/highcap/ten_k{
 	auto_name = 1;
 	dir = 4;
@@ -415,6 +400,7 @@
 	pixel_x = 24;
 	pixel_y = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "bn" = (
@@ -589,9 +575,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bD" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bE" = (
@@ -746,6 +730,7 @@
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bU" = (
@@ -812,6 +797,7 @@
 /obj/machinery/gateway,
 /obj/effect/landmark/awaystart,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "ca" = (
@@ -829,29 +815,9 @@
 	name = "Gateway APC";
 	pixel_x = 24
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
-"cc" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"cd" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"ce" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "cf" = (
 /obj/item/ammo_casing/c46x30mm,
 /obj/effect/turf_decal/tile/yellow,
@@ -893,29 +859,20 @@
 	dir = 2
 	},
 /obj/effect/landmark/awaystart,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cl" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
-"cm" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "cn" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cp" = (
@@ -965,25 +922,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
-"cu" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/research/interior/gateway)
 "cv" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
 /obj/structure/table,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
-"cw" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "cx" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/genetics)
@@ -995,9 +937,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cz" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -1038,16 +978,7 @@
 /obj/item/radio,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
-"cE" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/research/interior/gateway)
 "cF" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
 /obj/structure/table,
 /obj/item/paper/pamphlet/gateway,
 /obj/item/paper/pamphlet/gateway,
@@ -1136,9 +1067,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/genetics)
 "cL" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -1185,32 +1114,24 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/secure)
 "cR" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Gateway Access";
 	req_access_txt = "205"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/gateway)
 "cS" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Genetics APC";
 	pixel_x = 24
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/genetics)
 "cT" = (
-/mob/living/carbon/monkey,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1221,6 +1142,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "cU" = (
@@ -1268,7 +1190,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "cX" = (
-/mob/living/carbon/human,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1279,13 +1200,12 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/mob/living/carbon/human,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "cY" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/item/ammo_casing/c9mm,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cZ" = (
@@ -1352,9 +1272,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dg" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "dh" = (
@@ -1374,7 +1292,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/mob/living/carbon/monkey,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1385,6 +1302,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "dj" = (
@@ -1403,10 +1321,8 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/genetics)
 "dk" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/decal/cleanable/blood/drip,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dl" = (
@@ -1432,13 +1348,13 @@
 /area/awaymission/research/interior)
 "dn" = (
 /obj/item/ammo_casing/c45,
-/mob/living/simple_animal/hostile/syndicate,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/syndicate,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "do" = (
@@ -1548,27 +1464,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
-"dw" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"dx" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/item/ammo_casing/c9mm,
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "dy" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dz" = (
@@ -1690,7 +1590,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
 "dI" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -1701,6 +1600,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/nanotrasen/ranged,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
 "dJ" = (
@@ -1796,7 +1696,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/mob/living/carbon/human,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1807,22 +1706,12 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/mob/living/carbon/human,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "dR" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/item/ammo_casing/c45,
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"dS" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dT" = (
@@ -1898,12 +1787,10 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "dZ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ea" = (
@@ -1935,13 +1822,11 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eg" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/decal/cleanable/blood/drip,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eh" = (
@@ -2065,10 +1950,8 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eu" = (
@@ -2159,13 +2042,13 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "eB" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/nanotrasen/ranged,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "eC" = (
@@ -2201,19 +2084,15 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eI" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "eJ" = (
@@ -2229,7 +2108,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "eL" = (
-/mob/living/simple_animal/hostile/syndicate,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -2237,6 +2115,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/syndicate,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "eM" = (
@@ -2291,13 +2170,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/research/interior/security)
-"eR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
 /area/awaymission/research/interior/security)
 "eS" = (
 /obj/machinery/door/airlock/security/glass{
@@ -2363,10 +2235,6 @@
 	name = "Cryostatis APC";
 	pixel_x = 24
 	},
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -2377,6 +2245,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "fb" = (
@@ -2450,16 +2319,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
-"fj" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/research/interior)
 "fk" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -2510,29 +2369,14 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fr" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/research/interior/security)
-"fs" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ft" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -2540,6 +2384,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fu" = (
@@ -2566,15 +2411,14 @@
 	capacity = 9e+006;
 	charge = 10000
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fx" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fy" = (
@@ -2583,9 +2427,7 @@
 	name = "Vault APC";
 	pixel_x = 24
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fz" = (
@@ -2618,9 +2460,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fC" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -2631,6 +2470,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fD" = (
@@ -2738,9 +2578,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fN" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -2748,6 +2585,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fO" = (
@@ -2845,9 +2683,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fX" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -2858,10 +2693,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fY" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -2872,12 +2707,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fZ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/structure/chair{
 	dir = 4
 	},
@@ -2891,6 +2724,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ga" = (
@@ -2940,28 +2774,11 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/research/interior/secure)
-"ge" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/machinery/power/terminal,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gf" = (
-/obj/machinery/power/terminal,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gg" = (
@@ -2970,35 +2787,20 @@
 	name = "Power Storage";
 	req_access_txt = "205"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/research/interior/secure)
-"gh" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gj" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gk" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/barricade/security,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gl" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 0;
 	name = "Vault Storage";
@@ -3007,13 +2809,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/research/interior/secure)
-"gm" = (
-/obj/structure/barricade/security,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gn" = (
@@ -3021,28 +2817,15 @@
 	name = "Secure Storage";
 	req_access_txt = "9,63"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/secure)
-"go" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior)
 "gp" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small,
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "gq" = (
@@ -3050,51 +2833,11 @@
 	name = "Cryogenetics Research";
 	req_access_txt = "9"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/awaymission/research/interior)
-"gr" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/research/interior)
-"gs" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "gt" = (
 /obj/machinery/door/airlock/research{
@@ -3130,7 +2873,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "gv" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3141,6 +2883,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/nanotrasen/ranged,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "gw" = (
@@ -3234,9 +2977,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3247,6 +2987,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "gD" = (
@@ -3328,70 +3069,7 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
-"gJ" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/research/interior/security)
-"gK" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/research/interior/security)
-"gL" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/research/interior/security)
 "gM" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3403,12 +3081,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gN" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
@@ -3422,12 +3098,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gO" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/chair{
 	dir = 8
 	},
@@ -3441,18 +3115,17 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gP" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gQ" = (
@@ -3662,20 +3335,7 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
-"hi" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/research/interior/security)
 "hj" = (
-/mob/living/simple_animal/hostile/nanotrasen,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3686,6 +3346,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/nanotrasen,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/cryo)
 "hk" = (
@@ -3727,43 +3388,26 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ho" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/research/interior/security)
-"hp" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hq" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hr" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -3773,6 +3417,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hs" = (
@@ -3814,24 +3459,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
-"hx" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "hy" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "hz" = (
@@ -3870,12 +3504,10 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "hD" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "hE" = (
@@ -3903,9 +3535,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hH" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/vending/security,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3913,6 +3542,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hI" = (
@@ -4005,9 +3635,6 @@
 	},
 /area/awaymission/research/interior)
 "hR" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -4015,6 +3642,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hS" = (
@@ -4085,7 +3713,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/mob/living/carbon/monkey,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -4096,6 +3723,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "hX" = (
@@ -4145,17 +3773,7 @@
 "id" = (
 /turf/closed/wall,
 /area/awaymission/research/interior/maint)
-"ie" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "if" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -4166,17 +3784,9 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
-"ig" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "ih" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/tile/red{
@@ -4202,6 +3812,12 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ij" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "A beefy variant of the standard securitron model.";
 	emagged = 1;
@@ -4210,24 +3826,16 @@
 	maxHealth = 50;
 	name = "Officer Genesky"
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ik" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "il" = (
@@ -4296,29 +3904,15 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
-"iq" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "ir" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "is" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -4329,53 +3923,27 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "it" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
-"iu" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "iv" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Security Maintenance";
 	req_access_txt = "63"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
-"iw" = (
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 4;
-	name = "Genetics APC";
-	pixel_x = 24
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/genetics)
 "ix" = (
 /obj/machinery/door/window/eastleft,
 /obj/effect/turf_decal/tile/purple{
@@ -4459,12 +4027,7 @@
 	name = "Security APC";
 	pixel_y = 23
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
 "iG" = (
@@ -4561,11 +4124,11 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
 "iQ" = (
-/mob/living/simple_animal/hostile/syndicate,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/syndicate,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "iR" = (
@@ -4577,26 +4140,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/maint)
-"iT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "iU" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/awaymission/research/interior/maint)
-"iV" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "iW" = (
 /turf/closed/wall/r_wall,
@@ -4753,7 +4299,6 @@
 	pixel_x = 32;
 	pixel_y = 26
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -4764,6 +4309,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "js" = (
@@ -4991,7 +4537,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "jP" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -5002,6 +4547,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "jQ" = (
@@ -5235,12 +4781,7 @@
 	name = "Dorms APC";
 	pixel_x = 24
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/dorm)
 "kq" = (
@@ -5628,7 +5169,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "lr" = (
-/mob/living/simple_animal/hostile/syndicate,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -5639,6 +5179,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/syndicate,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "ls" = (
@@ -5887,24 +5428,13 @@
 	dir = 4
 	},
 /area/awaymission/research/interior/dorm)
-"lV" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "lW" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Medbay APC";
 	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "lX" = (
@@ -5919,17 +5449,12 @@
 	},
 /area/awaymission/research/interior/dorm)
 "lZ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Escape APC";
 	pixel_y = 23
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "ma" = (
@@ -6375,6 +5900,10 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
+"qS" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/gateway)
 "su" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
@@ -6388,6 +5917,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
+"sM" = (
+/obj/structure/window/reinforced,
+/obj/effect/landmark/awaystart,
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/gateway)
 "tE" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
@@ -6443,12 +5978,10 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "Bx" = (
@@ -30364,7 +29897,7 @@ er
 cQ
 fw
 gd
-dc
+fw
 cQ
 hs
 cQ
@@ -30620,8 +30153,8 @@ dW
 dc
 cQ
 fx
-ge
 dc
+gf
 cQ
 dc
 hI
@@ -30878,7 +30411,7 @@ dc
 cQ
 fy
 gf
-fw
+gf
 cQ
 dc
 cQ
@@ -31391,7 +30924,7 @@ cQ
 dc
 eT
 dK
-gh
+gf
 dK
 dc
 dc
@@ -31648,7 +31181,7 @@ cQ
 dc
 eU
 dc
-gh
+gf
 dc
 dc
 dc
@@ -32419,7 +31952,7 @@ cQ
 dc
 eW
 fz
-gh
+gf
 fz
 eW
 dc
@@ -32933,7 +32466,7 @@ cQ
 dc
 dc
 fA
-gh
+gf
 fA
 dc
 dc
@@ -33190,7 +32723,7 @@ cQ
 dc
 dc
 dc
-gh
+gf
 dc
 dc
 dc
@@ -33447,7 +32980,7 @@ cQ
 dc
 dc
 dc
-gm
+gk
 dc
 dc
 dc
@@ -33961,7 +33494,7 @@ ae
 ae
 ae
 dY
-go
+dg
 dY
 ae
 ae
@@ -34218,7 +33751,7 @@ ae
 ae
 ae
 dY
-go
+dg
 dY
 ae
 ae
@@ -34475,7 +34008,7 @@ ae
 ae
 ae
 dY
-go
+dg
 dY
 ae
 ae
@@ -34732,7 +34265,7 @@ dY
 dY
 cp
 dY
-go
+dg
 dY
 ae
 ae
@@ -34989,7 +34522,7 @@ dY
 es
 eX
 es
-go
+dg
 dY
 ae
 ae
@@ -35236,8 +34769,8 @@ bB
 bT
 bZ
 ck
-bz
-cu
+qS
+qS
 cR
 dg
 dg
@@ -35492,9 +35025,9 @@ bl
 bC
 bU
 ca
-cj
+sM
 bz
-cE
+bz
 bl
 cp
 cp
@@ -35503,7 +35036,7 @@ dY
 es
 eY
 es
-go
+dg
 dY
 ae
 ae
@@ -35749,8 +35282,8 @@ bl
 bz
 bR
 bR
-cj
-cu
+sM
+bz
 cF
 bl
 ad
@@ -35760,7 +35293,7 @@ dY
 dY
 cp
 dY
-go
+dg
 dY
 ae
 ae
@@ -36017,7 +35550,7 @@ ae
 ae
 ae
 dY
-go
+dg
 dY
 ae
 ae
@@ -36274,7 +35807,7 @@ ae
 ae
 ae
 dY
-go
+dg
 dY
 ae
 ae
@@ -36531,7 +36064,7 @@ ae
 ae
 ae
 dY
-go
+dg
 dY
 ae
 ae
@@ -37045,7 +36578,7 @@ aH
 aH
 eZ
 fB
-gr
+fC
 fB
 eZ
 aH
@@ -37297,17 +36830,17 @@ ad
 ad
 ad
 aH
-cm
+bD
 dZ
 et
 fa
 fC
-gs
+fC
 fC
 fC
 zn
 dZ
-cc
+bD
 aH
 ad
 ad
@@ -37554,7 +37087,7 @@ ad
 ad
 ad
 aH
-cd
+bD
 ea
 ea
 ea
@@ -37564,7 +37097,7 @@ ea
 ea
 ea
 ea
-cd
+bD
 aH
 ad
 ad
@@ -37811,7 +37344,7 @@ aH
 aH
 aH
 aH
-cd
+bD
 ea
 eu
 fb
@@ -37821,7 +37354,7 @@ eu
 fb
 fD
 ea
-cd
+bD
 aH
 aH
 aH
@@ -38063,12 +37596,12 @@ ad
 ad
 ad
 aH
-cm
+bD
 bD
 cS
 bD
 bD
-cw
+bD
 ea
 ev
 fc
@@ -38078,12 +37611,12 @@ ev
 fc
 fE
 ea
-ce
 bD
 bD
-iw
 bD
-cc
+cS
+bD
+bD
 aH
 ad
 ad
@@ -38320,7 +37853,7 @@ ad
 ad
 aH
 aH
-cd
+bD
 cx
 cx
 cx
@@ -38340,7 +37873,7 @@ cx
 cx
 cx
 cx
-cd
+bD
 aH
 aH
 ad
@@ -38576,8 +38109,8 @@ ad
 ad
 ad
 aH
-cm
-cw
+bD
+bD
 cx
 cT
 dh
@@ -38597,8 +38130,8 @@ dq
 dh
 dh
 cx
-ce
-cc
+bD
+bD
 aH
 aH
 aH
@@ -38833,7 +38366,7 @@ ad
 ad
 ad
 aH
-cd
+bD
 cx
 cx
 cU
@@ -38855,16 +38388,16 @@ dh
 ix
 cx
 cx
-cd
+bD
 id
-cm
+bD
 bD
 bD
 bD
 bD
 kp
 bD
-aY
+dy
 bD
 bD
 bD
@@ -38873,7 +38406,7 @@ bD
 bD
 bD
 bD
-cc
+bD
 aH
 ae
 ae
@@ -39090,7 +38623,7 @@ ad
 ad
 ad
 aH
-cd
+bD
 cx
 cG
 cK
@@ -39112,9 +38645,9 @@ dt
 cK
 cK
 cy
-cd
+bD
 id
-cd
+bD
 iX
 iX
 iX
@@ -39130,7 +38663,7 @@ iX
 iX
 iX
 iX
-cd
+bD
 aH
 ae
 ae
@@ -39347,7 +38880,7 @@ ad
 ad
 ad
 aH
-cd
+bD
 cx
 cH
 cK
@@ -39371,7 +38904,7 @@ cJ
 cx
 hD
 id
-cd
+bD
 iX
 jj
 jC
@@ -39387,7 +38920,7 @@ lO
 jC
 jj
 iX
-cd
+bD
 aH
 ae
 ae
@@ -39604,7 +39137,7 @@ ad
 ad
 ad
 aH
-cd
+bD
 cx
 cI
 cV
@@ -39626,9 +39159,9 @@ cK
 iy
 iG
 cx
-cd
+bD
 id
-cd
+bD
 iX
 jk
 jD
@@ -39644,7 +39177,7 @@ jk
 jD
 jk
 iX
-cd
+bD
 aH
 ae
 ae
@@ -39861,7 +39394,7 @@ ad
 ad
 ad
 aH
-cd
+bD
 cx
 cJ
 cK
@@ -39883,9 +39416,9 @@ in
 cK
 iH
 cx
-cd
+bD
 id
-cd
+bD
 iX
 jl
 jk
@@ -39901,7 +39434,7 @@ lP
 jk
 jl
 iX
-cd
+bD
 aH
 ae
 ae
@@ -40118,7 +39651,7 @@ ad
 ad
 ad
 aH
-cd
+bD
 cy
 cK
 cK
@@ -40140,9 +39673,9 @@ cK
 cK
 iI
 cx
-cd
+bD
 id
-cd
+bD
 iX
 iX
 iX
@@ -40158,7 +39691,7 @@ iX
 iX
 iX
 iX
-cd
+bD
 aH
 ae
 ae
@@ -40397,9 +39930,9 @@ ib
 iz
 cx
 cx
-cd
+bD
 id
-cd
+bD
 iX
 jj
 jC
@@ -40415,7 +39948,7 @@ lQ
 jC
 jj
 iX
-cd
+bD
 ma
 mb
 mu
@@ -40632,8 +40165,8 @@ ad
 ad
 ad
 aH
-ce
-cc
+bD
+bD
 cx
 cX
 dh
@@ -40653,10 +40186,10 @@ dv
 dh
 cT
 cx
-cm
-cw
+bD
+bD
 id
-cd
+bD
 iX
 jk
 jD
@@ -40672,7 +40205,7 @@ jk
 jD
 jk
 iX
-cd
+bD
 ma
 mg
 mv
@@ -40890,7 +40423,7 @@ ad
 ad
 aH
 aH
-cd
+bD
 cx
 cx
 cx
@@ -40910,10 +40443,10 @@ cx
 cx
 cx
 cx
-cd
+bD
 id
 id
-cd
+bD
 iX
 jl
 jk
@@ -40929,7 +40462,7 @@ lR
 jk
 jl
 iX
-cd
+bD
 ma
 mb
 TE
@@ -41152,7 +40685,7 @@ bD
 bD
 bD
 bD
-cc
+bD
 ea
 ev
 fh
@@ -41162,15 +40695,15 @@ ev
 fc
 fE
 ea
-cm
 bD
 bD
 bD
 bD
-cw
+bD
+bD
 id
 aO
-cd
+bD
 iX
 iX
 iX
@@ -41186,7 +40719,7 @@ iX
 iX
 iX
 iX
-cd
+bD
 mb
 mh
 mw
@@ -41419,7 +40952,7 @@ gU
 fi
 fF
 ea
-cd
+bD
 id
 id
 id
@@ -41427,7 +40960,7 @@ id
 id
 id
 aO
-cd
+bD
 iX
 jj
 jC
@@ -41443,7 +40976,7 @@ lS
 jC
 jj
 iX
-cd
+bD
 mb
 mi
 mn
@@ -41676,7 +41209,7 @@ fK
 cp
 ea
 ea
-cd
+bD
 id
 io
 io
@@ -41684,7 +41217,7 @@ iJ
 iA
 iM
 aO
-cd
+bD
 iX
 jk
 jD
@@ -41700,7 +41233,7 @@ jk
 jD
 jk
 iX
-cd
+bD
 mb
 mj
 mn
@@ -41931,9 +41464,9 @@ fL
 eZ
 gV
 cp
-cm
 bD
-cw
+bD
+bD
 id
 ip
 iA
@@ -41941,7 +41474,7 @@ iK
 iA
 iM
 aO
-cd
+bD
 iX
 jl
 jk
@@ -41957,7 +41490,7 @@ lT
 jk
 jl
 iX
-cd
+bD
 mb
 mj
 mn
@@ -42180,7 +41713,7 @@ ad
 ad
 ad
 aH
-cd
+bD
 ed
 eF
 cp
@@ -42188,7 +41721,7 @@ fL
 gz
 gV
 cp
-cd
+bD
 eF
 hX
 id
@@ -42198,7 +41731,7 @@ iK
 iN
 iM
 id
-iT
+eH
 iX
 iX
 iX
@@ -42214,7 +41747,7 @@ iX
 iX
 iX
 iX
-cd
+bD
 mb
 mk
 mn
@@ -42437,7 +41970,7 @@ ad
 ad
 ad
 aH
-cd
+bD
 ee
 ee
 cp
@@ -42445,7 +41978,7 @@ fM
 cp
 fM
 cp
-cd
+bD
 ee
 ee
 id
@@ -42683,18 +42216,18 @@ ad
 ad
 aH
 aO
-aY
+ch
 bm
 bD
 bD
-cc
+bD
 aH
 ad
 ad
 ad
 aH
 aH
-cd
+bD
 ef
 eG
 cp
@@ -42702,7 +42235,7 @@ fL
 gA
 gV
 cp
-cd
+bD
 aO
 hY
 id
@@ -42728,7 +42261,7 @@ jF
 jF
 lz
 iX
-cd
+bD
 mb
 mi
 mn
@@ -42944,25 +42477,25 @@ ar
 ar
 ar
 ar
-cd
+bD
 aH
 ad
 ad
 ad
 aH
-dw
-dS
+dk
+bD
 eg
-cc
+bD
 cp
 fL
 eZ
 gV
 cp
-hx
-aY
 bD
-cc
+dy
+bD
+bD
 id
 iB
 iM
@@ -43201,13 +42734,13 @@ aZ
 bn
 bE
 ar
-cd
+bD
 aH
 ad
 ad
 ad
 aH
-cd
+bD
 cp
 cp
 eH
@@ -43219,7 +42752,7 @@ cp
 eH
 cp
 cp
-cd
+bD
 id
 iC
 iM
@@ -43242,7 +42775,7 @@ lU
 lU
 lY
 aP
-cd
+bD
 mb
 mi
 mn
@@ -43458,32 +42991,32 @@ ba
 bh
 bF
 ar
-cd
+bD
 aH
 aH
 aH
 aH
 aH
-dx
+cY
 cp
 eh
 eI
-fj
+eI
 fN
 gC
 fC
-fj
+eI
 hy
 hL
 cp
-cd
+bD
 id
 id
 id
 id
 id
 id
-iT
+eH
 iX
 jp
 jG
@@ -43499,7 +43032,7 @@ iX
 iX
 iX
 iX
-cd
+bD
 aP
 mi
 mn
@@ -43715,7 +43248,7 @@ bb
 bo
 bG
 ar
-ce
+bD
 bD
 bD
 cL
@@ -43733,20 +43266,19 @@ hk
 eJ
 hM
 cp
-ie
-iq
+dy
+bD
 bD
 bD
 bD
 bD
 dZ
-cw
+bD
 iX
 jn
 jF
 kc
 iX
-cm
 bD
 bD
 bD
@@ -43756,7 +43288,8 @@ bD
 bD
 bD
 bD
-cw
+bD
+bD
 mb
 ml
 mn
@@ -44003,7 +43536,7 @@ jq
 jH
 kd
 iD
-iT
+eH
 iD
 iD
 iD
@@ -45031,7 +44564,7 @@ js
 jJ
 ke
 cp
-iT
+eH
 iD
 iD
 iD
@@ -45275,20 +44808,20 @@ fo
 eJ
 hM
 cp
-ig
-iu
+dZ
 bD
-bD
-bD
-bD
-bD
-cc
+aO
+aO
+aO
+aO
+aO
+aO
 cp
 su
 jK
 tE
 cp
-cd
+bD
 dC
 aO
 aO
@@ -45532,20 +45065,20 @@ eO
 eO
 hQ
 cp
-cd
+bD
 aH
 aH
 aH
 aH
 aH
 aH
-cd
+aO
 cp
 js
 jI
 ke
 cp
-cd
+bD
 aH
 aH
 aH
@@ -45789,20 +45322,20 @@ cp
 cp
 cp
 cp
-cd
+bD
 aH
 ad
 ad
 ad
 ad
 aH
-cd
+aO
 cp
 js
 jJ
 ke
 cp
-cd
+bD
 aH
 ad
 ad
@@ -46045,21 +45578,21 @@ hc
 cp
 aH
 aH
-cm
-cw
+bD
+bD
 aH
 ad
 ad
 ad
 ad
 aH
-cd
+aO
 cp
 wM
 cp
 Qd
 cp
-cd
+bD
 aH
 ad
 ad
@@ -46300,9 +45833,9 @@ fT
 gG
 hc
 aP
-cm
 bD
-cw
+bD
+bD
 aH
 aH
 ad
@@ -46310,13 +45843,13 @@ ad
 ad
 ad
 aH
-cd
+aO
 cp
 js
 jM
 ke
 cp
-cd
+bD
 aH
 ad
 ad
@@ -46567,13 +46100,13 @@ ad
 ad
 ad
 aH
-cd
+aO
 cp
 js
 jI
 ke
 cp
-cd
+bD
 aH
 ad
 ad
@@ -46814,7 +46347,7 @@ fT
 gH
 hc
 cp
-cd
+bD
 aH
 ad
 ad
@@ -46824,13 +46357,13 @@ ad
 ad
 ad
 aH
-cd
+aO
 cp
 jt
 cp
 kf
 cp
-cd
+bD
 aH
 ad
 ad
@@ -47071,7 +46604,7 @@ fT
 gE
 hc
 cp
-cd
+bD
 aH
 aH
 aH
@@ -47081,13 +46614,13 @@ aH
 ad
 aH
 aH
-iV
+aO
 iW
 jh
 jN
 kg
 iW
-cd
+bD
 aH
 aH
 aH
@@ -47328,12 +46861,12 @@ fS
 cp
 hb
 cp
-ce
 bD
 bD
 bD
 bD
-cc
+bD
+bD
 aH
 ad
 aH
@@ -47344,13 +46877,13 @@ jh
 jO
 kh
 iW
-ce
 bD
 bD
 bD
 bD
 bD
-cc
+bD
+bD
 aH
 ad
 ad
@@ -47590,7 +47123,7 @@ do
 do
 do
 do
-cd
+bD
 aH
 ad
 aH
@@ -47607,7 +47140,7 @@ iW
 iW
 iW
 iW
-cd
+bD
 aH
 ad
 ad
@@ -47847,7 +47380,7 @@ dH
 dH
 dD
 do
-cd
+bD
 aH
 ad
 aH
@@ -47864,7 +47397,7 @@ ld
 lq
 lC
 iW
-cd
+bD
 aH
 ad
 ad
@@ -48104,7 +47637,7 @@ dH
 dH
 ih
 do
-cd
+bD
 aH
 ad
 aH
@@ -48121,7 +47654,7 @@ jw
 jw
 lD
 iW
-cd
+bD
 aH
 ad
 ad
@@ -48350,7 +47883,7 @@ do
 dF
 dT
 eo
-eR
+hF
 fr
 fW
 fW
@@ -48361,7 +47894,7 @@ eo
 dT
 dF
 do
-cd
+bD
 aH
 ad
 aH
@@ -48378,7 +47911,7 @@ jw
 lr
 kg
 iW
-cd
+bD
 aH
 ad
 ad
@@ -48608,17 +48141,17 @@ do
 do
 do
 do
-fs
+fr
 fX
-gJ
 fX
-hp
+fX
+ho
 do
 do
 do
 do
 do
-cd
+bD
 aH
 ad
 aH
@@ -48635,7 +48168,7 @@ le
 ls
 lE
 iW
-cd
+bD
 aH
 ad
 ad
@@ -48867,7 +48400,7 @@ dH
 do
 fq
 fW
-gK
+fX
 fW
 hq
 do
@@ -48875,7 +48408,7 @@ dH
 dH
 dD
 do
-cd
+bD
 aH
 ad
 aH
@@ -48892,7 +48425,7 @@ jR
 jR
 jR
 iW
-cd
+bD
 aH
 ad
 ad
@@ -49124,7 +48657,7 @@ dH
 eQ
 fq
 fW
-gK
+fX
 fW
 hn
 hE
@@ -49132,7 +48665,7 @@ dH
 dH
 ih
 do
-cd
+bD
 aH
 ad
 aH
@@ -49149,7 +48682,7 @@ lf
 jz
 lF
 iW
-lV
+hD
 aH
 ad
 ad
@@ -49378,10 +48911,10 @@ do
 dF
 dT
 eo
-eR
+hF
 fr
 fY
-gK
+fX
 fW
 ho
 hF
@@ -49389,7 +48922,7 @@ eo
 dT
 dF
 do
-cd
+bD
 aH
 ad
 aH
@@ -49406,7 +48939,7 @@ lg
 lt
 kh
 aP
-cd
+bD
 aH
 ad
 ad
@@ -49638,15 +49171,15 @@ do
 do
 ft
 fZ
-gL
+fZ
 fX
-hp
+ho
 do
 do
 do
 do
 do
-cd
+bD
 aH
 ad
 aH
@@ -50160,7 +49693,7 @@ fW
 fW
 hn
 do
-cd
+bD
 aH
 ad
 aH
@@ -50667,14 +50200,14 @@ do
 fv
 gc
 gP
-hi
+gP
 hr
 hH
 hR
 hR
 ik
 iv
-cw
+bD
 aH
 ad
 aH

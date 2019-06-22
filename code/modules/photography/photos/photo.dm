@@ -62,12 +62,12 @@
 	..()
 
 /obj/item/photo/examine(mob/user)
-	..()
+	. = ..()
 
 	if(in_range(src, user) || isobserver(user))
 		show(user)
 	else
-		to_chat(user, "<span class='warning'>You need to get closer to get a good look at this photo!</span>")
+		. += "<span class='warning'>You need to get closer to get a good look at this photo!</span>"
 
 /obj/item/photo/proc/show(mob/user)
 	if(!istype(picture) || !picture.picture_image)
