@@ -47,25 +47,18 @@
 	var/pop_last_updated = 0
 
 	var/relative_threat = 0 // Relative threat, Lorentz-distributed.
-	var/curve_centre = 0
-	var/curve_width = 1.8
 
 	var/peaceful_percentage = 50
 
+	// These can not right now be modified by an admin before round start, probably will need to turn these into a global var
 	// -- Special tweaks --
 	var/no_stacking = 1
 	var/high_pop_limit = 45
 	var/forced_extended = 0
 	var/stacking_limit = 90
-
-	var/list/threat_by_job = list(
-		"Captain" = 12,
-		"Head of Security" = 10,
-		"Head of Personnel" = 8,
-		"Warden" = 8,
-		"Security Officer" = 4,
-		"Detective" = 3,
-	)
+	var/curve_centre = 0
+	var/curve_width = 1.8
+	var/list/forced_roundstart_ruleset = list() 
 
 /datum/game_mode/dynamic/AdminPanel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -192,7 +185,10 @@
 	if (roundstart_rules.len <= 0)
 		return TRUE
 	
-	roundstart()
+	if(forced_roundstart_ruleset.len > 0)
+		rigged_roundstart()
+	else 
+		roundstart()
 
 	var/starting_rulesets = ""
 	for (var/datum/dynamic_ruleset/roundstart/DR in executed_rules)
@@ -201,9 +197,16 @@
 
 /datum/game_mode/dynamic/post_setup(report)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
-		if(rule.execute())
-			continue
-		else
+		rule.execute()
+
+/datum/game_mode/dynamic/proc/rigged_roundstart()
+	message_admins("[forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
+	for (var/datum/dynamic_ruleset/roundstart/rule in forced_roundstart_ruleset)
+		rule.mode = src
+		rule.candidates = candidates.Copy()
+		rule.trim_candidates()
+		if (rule.ready(1))//ignoring enemy job requirements
+			picking_roundstart_rule(list(rule))
 
 /datum/game_mode/dynamic/proc/roundstart()
 	if (forced_extended)
@@ -499,13 +502,6 @@
 
 		if (drafted_rules.len > 0 && picking_latejoin_rule(drafted_rules))
 			latejoin_injection_cooldown = rand(330,510)//11 to 17 minutes inbetween antag latejoiner rolls
-
-	// -- No injection, we'll just update the threat
-	else
-		var/jobthreat = threat_by_job[newPlayer.mind.assigned_role]
-		if(jobthreat)
-			refund_threat(jobthreat)
-			threat_log += "[worldtime2text()]: [newPlayer] refunded [jobthreat] by joining as [newPlayer.mind.assigned_role]."
 
 //Regenerate threat, but no more than our original threat level.
 /datum/game_mode/dynamic/proc/refund_threat(var/regain)
