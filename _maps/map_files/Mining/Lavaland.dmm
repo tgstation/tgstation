@@ -3722,8 +3722,7 @@
 /area/mine/production)
 "zo" = (
 /obj/machinery/computer/prisoner{
-	dir = 8;
-	step_x = 0
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
