@@ -158,8 +158,7 @@
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
 	if(user)
-		if(AM.AddComponent(/datum/component/extralasers, stored_ammo_type, type))
-			qdel(src)
+		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, type, src, user)
 
 /obj/item/external_lens/ricochet
 	name = "external lens: bouncing ray"
