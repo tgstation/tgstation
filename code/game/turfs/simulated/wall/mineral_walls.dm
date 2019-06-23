@@ -40,7 +40,7 @@
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	canSmoothWith = list(/turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium, /turf/closed/wall/fakebananium)
+	canSmoothWith = list(/turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium)
 
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
