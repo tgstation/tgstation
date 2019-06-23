@@ -20,7 +20,7 @@
 
 /datum/component/extralasers/proc/attackby(datum/source, obj/item/I, mob/user, params)
 	. = ..()
-	if(I.tool_behaviour == TOOL_CROWBAR && istype(I, /obj/item/external_lens))
+	if(I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/external_lens))
 		detach(source, user)
 
 /datum/component/extralasers/proc/detach(datum/source, mob/user)
