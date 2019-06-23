@@ -286,7 +286,7 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/chosen = pick(candidates)
 		S.key = chosen.key
-		log_game("[key_name(S.key)] was made into a slime by pyroclastic anomaly.")
+		log_game("[key_name(S.key)] was made into a slime by pyroclastic anomaly at [AREACOORD(T)].")
 
 /////////////////////
 
