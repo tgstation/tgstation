@@ -242,8 +242,8 @@
 				chassis.use_power(projectile_energy_cost)
 
 		else
-			if(projectiles_cache == 0)
-				return 0
+			if(!projectiles_cache)
+				return FALSE
 			if(projectiles_to_add <= projectiles_cache)
 				projectiles = projectiles + projectiles_to_add
 				projectiles_cache = projectiles_cache - projectiles_to_add
@@ -253,7 +253,7 @@
 
 		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 		log_message("Rearmed [src.name].", LOG_MECHA)
-		return 1
+		return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/needs_rearm()
@@ -336,7 +336,7 @@
 	projectiles = 8
 	projectiles_cache = 0
 	projectiles_cache_max = 0
-	disabledreload = 1
+	disabledreload = TRUE
 	equip_cooldown = 60
 	harmful = TRUE
 	ammo_type = "missiles_he"
@@ -350,7 +350,7 @@
 	projectiles = 6
 	projectiles_cache = 0
 	projectiles_cache_max = 0
-	disabledreload = 1
+	disabledreload = TRUE
 	equip_cooldown = 60
 	harmful = TRUE
 	ammo_type = "missiles_br"
@@ -403,6 +403,7 @@
 	projectiles = 3
 	projectiles_cache = 0
 	projectiles_cache_max = 0
+	disabledreload = TRUE
 	projectile = /obj/item/grenade/clusterbuster
 	equip_cooldown = 90
 	ammo_type = "clusterbang"
