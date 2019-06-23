@@ -869,3 +869,22 @@
 		C.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
+
+/obj/item/twohanded/binoculars/bsa
+
+/obj/item/twohanded/binoculars/bsa/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
+	if(wielded)
+		laser_act(target, user, params)
+
+/obj/item/twohanded/binoculars/bsa/proc/laser_act(target, user, params)
+	if(isturf(target))
+		new /obj/item/supplypod_beacon/bsatarget(target)
+
+/obj/item/supplypod_beacon/bsatarget
+	var/obj/item/gps/internal/ai_upload/embedded_gps
+	var/obj/item/gps/internal/ai_upload/embedded_gps_type = /obj/item/gps/internal/ai_upload
+
+/obj/item/supplypod_beacon/bsatarget/Initialize()
+	. = ..()
+	embedded_gps = new embedded_gps_type(src)
