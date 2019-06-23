@@ -1,5 +1,15 @@
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 
+/proc/exp_distribution(var/desired_mean)
+	if (desired_mean <= 0)
+		desired_mean = 1 // Let's not allow that to happen
+	var/lambda = 1/desired_mean
+	var/x = rand()
+	while (x == 1)
+		x = rand()
+	var/y = -(1/lambda)*log(1-x)
+	return y
+
 /proc/lorentz_distribution(var/x0, var/s)
 	var/x = rand()
 	var/y = s*TAN(TODEGREES(PI*(x-0.5))) + x0
