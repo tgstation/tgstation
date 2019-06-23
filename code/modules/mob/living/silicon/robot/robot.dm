@@ -670,6 +670,7 @@
 		throw_alert("locked", /obj/screen/alert/locked)
 	else
 		clear_alert("locked")
+		hardlock = state
 	lockcharge = state
 	update_mobility()
 

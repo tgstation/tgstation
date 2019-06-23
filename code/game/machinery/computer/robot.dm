@@ -68,15 +68,15 @@
 				dat += "<b>Unit Controls:</b> "
 				if(issilicon(user) && user != R)
 					var/mob/living/silicon/S = user
+					if(S.hack_software || S == R)
+						dat += "<A href='?src=[REF(src)];killbot=[REF(R)]'>(<font color=red><i>Destroy</i></font>)</A>"
 					if(is_servant_of_ratvar(S) && !is_servant_of_ratvar(R))
 						dat += "<A href='?src=[REF(src)];convert=[REF(R)]'>(<font color=#BE8700><i>Convert</i></font>)</A> "
 					else if(S.hack_software && !R.emagged)
 						dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
 				else if(IsAdminGhost(user) && !R.emagged)
 					dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
-				dat += "<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=green><i>[(R.mobility_flags & MOBILITY_MOVE) ? "Lockdown" : "Release"]</i></font>)</A> "
-				if(issilicon(user) && (user?.mind?.special_role || user == R))
-					dat += "<A href='?src=[REF(src)];killbot=[REF(R)]'>(<font color=red><i>Destroy</i></font>)</A>"
+				dat += "<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=lightgreen><i>[(R.mobility_flags & MOBILITY_MOVE) ? "Lockdown" : "Release"]</i></font>)</A> "
 			dat += "</div>"
 
 	dat += "<center><h2>Drones</h2></center>"
