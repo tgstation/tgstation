@@ -908,22 +908,40 @@
 	description = "Capable of hiding even the worst odor, but doesn't actually get rid of it. Highly flammable."
 	color = "#a0efff" // rgb: 160, 239, 255
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 31 //more than 3 full-blast sprays 
 	taste_description = "highschool locker room"
 	glass_name = "glass of antiperspirant"
 	glass_desc = "Tastes like teen spirit."
+	var/mutable_appearance/deodorant_stank
 
 /datum/reagent/deodorant_spray/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//bad for your health
 	if(method == TOUCH || method == VAPOR)
+		ADD_TRAIT(M, TRAIT_RESISTSMELL, "resist_smellyness")
 		M.adjust_fire_stacks(reac_volume / 10)
 		..()
 
-/datum/reagent/deodorant_spray/on_mob_life(mob/living/carbon/C)
-	ADD_TRAIT(C, TRAIT_RESISTSMELL, "resist_smellyness")
-	..()
+/datum/reagent/deodorant_spray/overdose_start(mob/living/carbon/human/M)
+	to_chat(M, "<span class='userdanger'>Augh, I can't breathe through all this low-quality antiperspirant!</span>")
+	deodorant_stank = mutable_appearance('icons/effects/atmospherics.dmi', "freon")
+	M.add_overlay(deodorant_stank)
 
 /datum/reagent/deodorant_spray/on_mob_end_metabolize(mob/living/carbon/C)
 	REMOVE_TRAIT(C, TRAIT_RESISTSMELL, "resist_smellyness")
+	if(overdosed)
+		C.remove_overlay(deodorant_stank)
+		overdosed = FALSE
 	..()
+
+/datum/reagent/deodorant_spray/overdose_process(mob/living/carbon/human/M)
+	if(!HAS_TRAIT(M, TRAIT_NOBREATH) && prob(3) || (!istype(M.wear_mask, /obj/item/clothing/mask/gas && prob(3))))
+		M.adjustOxyLoss(15)
+		M.emote("gasp")
+		to_chat(M, "<span class='userdanger'>You gag on the cloud of antiperspirant!</span>")
+	if(prob(5))
+		M.emote("cough")
+	if(M.hygiene > 50 && prob(15))
+		M.adjust_hygiene(-5)//replacing one horrible odor with another
+	..()	
 
 
 /datum/reagent/fuel
