@@ -81,19 +81,40 @@
 /mob/living/simple_animal/hostile/carp/proc/add_carp_overlay()
 	if(!random_color)
 		return
-	cut_overlays(TRUE)
+	cut_overlays()
 	var/mutable_appearance/base_overlay = mutable_appearance(icon, "base_mouth")
 	base_overlay.appearance_flags = RESET_COLOR
 	add_overlay(base_overlay)
 
-/mob/living/simple_animal/hostile/carp/death(gibbed)
-	. = ..()
-	cut_overlays(TRUE)
-	if(!random_color || gibbed)
+/mob/living/simple_animal/hostile/carp/proc/add_dead_carp_overlay()
+	if(!random_color)
 		return
+	cut_overlays()
 	var/mutable_appearance/base_dead_overlay = mutable_appearance(icon, "base_dead_mouth")
 	base_dead_overlay.appearance_flags = RESET_COLOR
 	add_overlay(base_dead_overlay)
+
+/mob/living/simple_animal/hostile/carp/death(gibbed)
+	. = ..()
+	cut_overlays()
+	if(!random_color || gibbed)
+		return
+	add_dead_carp_overlay()
+
+/mob/living/simple_animal/hostile/carp/revive(full_heal = 0, admin_revive = 0)
+	. = ..()
+	if(.)
+		regenerate_icons()
+
+/mob/living/simple_animal/hostile/carp/regenerate_icons()
+	cut_overlays()
+	if(!random_color)
+		return
+	if(stat != DEAD)
+		add_carp_overlay()
+	else
+		add_dead_carp_overlay()
+	..()
 
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
