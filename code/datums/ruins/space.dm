@@ -287,3 +287,10 @@
 	suffix = "hilbertshoteltestingsite.dmm"
 	name = "Hilbert Research Facility"
 	description = "A research facility of great bluespace discoveries. Long since abandoned, willingly or not..."
+
+/datum/map_template/ruin/space/clownstation
+	id = "clownstation"
+	suffix = "clownstation.dmm"
+	name = "Honk Salvation Monastery"
+	description = "While some clowns work as entertainers, others dedicate their life to solemn prayer. \
+	The Honk Salvation Station is a place for clowns from across the cosmos to enjoy both pie and piety."
