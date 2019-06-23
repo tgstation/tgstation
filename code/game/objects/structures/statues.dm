@@ -235,6 +235,23 @@
 /obj/structure/statue/bananium/clown
 	name = "statue of a clown"
 	icon_state = "clown"
+	
+/obj/structure/statue/bananium/honkmother
+	name = "statue of the Honkmother"
+	desc= "the statue depicts the eternal Honkmother in one of her many forms."
+	icon = 'icons/obj/statuehuge.dmi'
+	icon_state = "honkmother"
+	pixel_x = -16
+
+/obj/structure/statue/bananium/honkmother/honkfather
+	name = "statue of the Honkfather"
+	desc= "the statue depicts the dastardly Honfather in one of his many forms."
+	icon_state = "honkfather"
+
+/obj/structure/statue/bananium/honkmother/honkspirit
+	name = "statue of the spirit of honking"
+	desc= "the statue represents the very spirit of honking itself."
+	icon_state = "honkspirit"
 
 /obj/structure/statue/bananium/Bumped(atom/movable/AM)
 	honk()
