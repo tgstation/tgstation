@@ -47,24 +47,23 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			under_thing = UNDER_SMES
 			search_parent = P
 			break
-	dir_loop:
-		for(var/check_dir in GLOB.cardinals)
-			var/TB = get_step(src, check_dir)
-			if(under_thing)
-				switch(under_thing)
-					if(UNDER_SMES)
-						for(var/obj/machinery/power/terminal/term in TB)
-							if(term.master == search_parent)
-								continue dir_loop
-					if(UNDER_TERMINAL)
-						for(var/obj/machinery/power/smes/S in TB)
-							if(S.terminal == search_parent)
-								continue dir_loop
-			var/inverse = turn(check_dir, 180)
-			for(var/obj/structure/cable/C in TB)
-				linked_dirs |= check_dir
-				C.linked_dirs |= inverse
-				C.update_icon()
+	for(var/check_dir in GLOB.cardinals)
+		var/TB = get_step(src, check_dir)
+		if(under_thing)
+			switch(under_thing)
+				if(UNDER_SMES)
+					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
+					if(term && term.master == search_parent)
+						continue
+				if(UNDER_TERMINAL)
+					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
+					if(S && S.terminal == search_parent)
+						continue
+		var/inverse = turn(check_dir, 180)
+		for(var/obj/structure/cable/C in TB)
+			linked_dirs |= check_dir
+			C.linked_dirs |= inverse
+			C.update_icon()
 
 	update_icon()
 
