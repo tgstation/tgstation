@@ -117,6 +117,7 @@
 /obj/item/book/granter/spell
 	var/spell
 	var/spellname = "conjure bugs"
+	var/novicespell
 
 /obj/item/book/granter/spell/already_known(mob/user)
 	if(!spell)
@@ -136,7 +137,11 @@
 
 /obj/item/book/granter/spell/on_reading_finished(mob/user)
 	to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
-	var/obj/effect/proc_holder/spell/S = new spell
+	var/obj/effect/proc_holder/spell/S
+	if(novicespell && !(ROLE_WIZARD in user.faction))
+		S = new novicespell
+	else
+		S = new spell
 	user.mind.AddSpell(S)
 	user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
 	onlearned(user)
@@ -259,6 +264,7 @@
 
 /obj/item/book/granter/spell/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	novicespell = /obj/effect/proc_holder/spell/targeted/barnyardcurse/novice
 	spellname = "barnyard"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
