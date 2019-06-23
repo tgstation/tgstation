@@ -22631,8 +22631,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/computer/shuttle/mining/common{
-	dir = 1;
-	glide_size = 2
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
