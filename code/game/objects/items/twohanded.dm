@@ -871,20 +871,50 @@
 		user.client.pixel_y = 0
 
 /obj/item/twohanded/binoculars/bsa
+	var/obj/machinery/computer/cargo/express/console
 
 /obj/item/twohanded/binoculars/bsa/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(wielded)
-		laser_act(target, user, params)
+	if(wielded && (target in view(user.client.view, get_turf(user))))
+		var/obj/effect/temp_visual/bs/L = new /obj/effect/temp_visual/bs(target)
+		L.alpha = 0
+		animate(L, alpha = 255, time = 30)
+		if(do_after(user, 30, target = target))
+			laser_act(target, user, params)
+		else
+			qdel(L)
 
 /obj/item/twohanded/binoculars/bsa/proc/laser_act(target, user, params)
 	if(isturf(target))
-		new /obj/item/supplypod_beacon/bsatarget(target)
+		new /obj/item/supplypod_beacon/bsatarget(target,console,user)
 
 /obj/item/supplypod_beacon/bsatarget
-	var/obj/item/gps/internal/ai_upload/embedded_gps
-	var/obj/item/gps/internal/ai_upload/embedded_gps_type = /obj/item/gps/internal/ai_upload
+	var/obj/item/gps/internal/bsa/embedded_gps
+	var/obj/item/gps/internal/bsa/embedded_gps_type = /obj/item/gps/internal/bsa
+	anchored = TRUE
+	light_color = "#40ceff"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield"
 
-/obj/item/supplypod_beacon/bsatarget/Initialize()
+/obj/item/supplypod_beacon/bsatarget/Initialize(mapload, console, user)
 	. = ..()
-	embedded_gps = new embedded_gps_type(src)
+	embedded_gps = new embedded_gps_type(src,user)
+	link_console(console)
+	QDEL_IN(src, 200)
+	set_light(7)
+
+/obj/item/gps/internal/bsa
+	icon_state = null
+	gpstag = "!"
+	desc = "Signal used to connect remotely with silicons."
+	invisibility = 100
+
+obj/item/gps/internal/bsa/Initialize(mapload, user)
+	gpstag  = "![random_string(7, GLOB.hex_characters)]"
+	to_chat(user,"Target marked with code: [gpstag].")
+	..()
+
+/obj/effect/temp_visual/bs
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "anom"
+	duration = 30

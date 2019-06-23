@@ -51,6 +51,9 @@
 			return TRUE
 		else
 			to_chat(user, "<span class='notice'>[src] is already linked to [sb].</span>")
+	else if(istype(W, /obj/item/twohanded/binoculars/bsa))
+		var/obj/item/twohanded/binoculars/bsa/B = W
+		B.console = src
 	..()
 
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)

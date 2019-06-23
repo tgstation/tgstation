@@ -73,7 +73,8 @@
 	update_status(SP_LINKED)
 	if (express_console.usingBeacon)
 		update_status(SP_READY)
-	to_chat(user, "<span class='notice'>[src] linked to [C].</span>")
+	if(user)
+		to_chat(user, "<span class='notice'>[src] linked to [C].</span>")
 
 /obj/item/supplypod_beacon/AltClick(mob/user)
 	if (!user.canUseTopic(src, !issilicon(user)))
