@@ -3538,11 +3538,11 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "oL" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Lavaland Shuttle Airlock"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Lavaland Shuttle Airlock"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -4144,11 +4144,11 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "US" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Lavaland Shuttle Airlock"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Lavaland Shuttle Airlock"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
