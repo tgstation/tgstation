@@ -630,11 +630,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	//Burn off limbs one by one
 	var/obj/item/bodypart/limb
 	var/list/limb_list = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	while(LAZYLEN(limb_list))
-		limb = get_bodypart(pick_n_take(limb_list))
+	var/still_has_limbs = FALSE
+	for(var/zone in limb_list)
+		limb = get_bodypart(zone)
 		if(limb)
+			still_has_limbs = TRUE
 			if(limb.get_damage() >= limb.max_damage)
-				if(prob(25))
+				limb.cremation_progress += rand(2,5)
+				if(limb.cremation_progress >= 100)
 					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
 						limb.drop_limb()
 						limb.visible_message("<span class='warning'>[src]'s [limb.name] crumbles into ash!</span>")
@@ -642,13 +645,15 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					else
 						limb.drop_limb()
 						limb.visible_message("<span class='warning'>[src]'s [limb.name] detaches from [p_their()] body!</span>")
-			return
-	
+	if(still_has_limbs)
+		return
+
 	//Burn the head last
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		if(head.get_damage() >= head.max_damage)
-			if(prob(25))
+			head.cremation_progress += rand(2,5)
+			if(head.cremation_progress >= 100)
 				if(head.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
 					head.drop_limb()
 					head.visible_message("<span class='warning'>[src]'s head crumbles into ash!</span>")
@@ -659,7 +664,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return
 
 	//Nothing left: dust the body, drop the items (if they're flammable they'll burn on their own)
-	if(prob(20))
+	chest.cremation_progress += rand(2,5)
+	if(chest.cremation_progress >= 100)
 		visible_message("<span class='warning'>[src]'s body crumbles into a pile of ash!</span>")
 		dust(TRUE, TRUE)
 

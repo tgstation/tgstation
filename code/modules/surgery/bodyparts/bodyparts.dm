@@ -32,6 +32,8 @@
 	var/max_stamina_damage = 0
 	var/max_damage = 0
 
+	var/cremation_progress = 0 //Gradually increases while burning when at full damage, destroys the limb when at 100
+
 	var/brute_reduction = 0 //Subtracted to brute damage taken
 	var/burn_reduction = 0	//Subtracted to burn damage taken
 
@@ -209,6 +211,7 @@
 		owner.updatehealth()
 	consider_processing()
 	update_disabled()
+	cremation_progress = 0
 	return update_bodypart_damage_state()
 
 //Returns total damage.
