@@ -8736,6 +8736,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/reagent_containers/spray/spaceaxe,
+/obj/item/reagent_containers/spray/spaceaxe{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/janitor)
 "avE" = (

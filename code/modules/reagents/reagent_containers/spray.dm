@@ -188,7 +188,7 @@
 
 //bo spray
 /obj/item/reagent_containers/spray/spaceaxe
-	name = "nanotrasen shower-in-a-can"
+	name = "\improper Nanotrasen shower-in-a-can(tm)"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "deodorant"
 	volume = 50
@@ -197,7 +197,7 @@
 	list_reagents = list(/datum/reagent/deodorant_spray = 50)
 
 /obj/item/reagent_containers/spray/spaceaxe/Initialize()
-	..()	
+	..()
 	DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 
 //pepperspray
