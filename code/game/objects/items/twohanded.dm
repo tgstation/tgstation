@@ -871,6 +871,8 @@
 		user.client.pixel_y = 0
 
 /obj/item/twohanded/binoculars/bsa
+	name = "Bluespace Designator"
+	desc = "This device creates a bluespace marker, which can be used as a gps or as an drop zone for pods."
 	var/obj/machinery/computer/cargo/express/console
 
 /obj/item/twohanded/binoculars/bsa/afterattack(atom/target, mob/living/user, flag, params)
@@ -889,12 +891,16 @@
 		new /obj/item/supplypod_beacon/bsatarget(target,console,user)
 
 /obj/item/supplypod_beacon/bsatarget
-	var/obj/item/gps/internal/bsa/embedded_gps
-	var/obj/item/gps/internal/bsa/embedded_gps_type = /obj/item/gps/internal/bsa
-	anchored = TRUE
-	light_color = "#40ceff"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield"
+	anchored = TRUE
+	light_color = "#40ceff"
+	var/obj/item/gps/internal/bsa/embedded_gps
+	var/obj/item/gps/internal/bsa/embedded_gps_type = /obj/item/gps/internal/bsa
+
+
+/obj/item/supplypod_beacon/bsatarget/update_icon()
+	return
 
 /obj/item/supplypod_beacon/bsatarget/Initialize(mapload, console, user)
 	. = ..()
@@ -904,9 +910,9 @@
 	set_light(7)
 
 /obj/item/gps/internal/bsa
+	desc = "bluespace signal."
 	icon_state = null
 	gpstag = "!"
-	desc = "Signal used to connect remotely with silicons."
 	invisibility = 100
 
 obj/item/gps/internal/bsa/Initialize(mapload, user)

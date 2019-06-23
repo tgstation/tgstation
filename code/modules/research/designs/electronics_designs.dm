@@ -109,3 +109,13 @@
 	build_path = /obj/item/disk/nanite_program
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/nanite_disk
+	name = "Bluespace Designator"
+	desc = "It does stuff"
+	id = "bsa_binoculars"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 15000, MAT_SILVER = 2000, MAT_GOLD = 5000, MAT_BLUESPACE = 7000)
+	build_path = /obj/item/twohanded/binoculars/bsa
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_CARGO
