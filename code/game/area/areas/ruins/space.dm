@@ -406,3 +406,17 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle
 	name = "Ancient Shuttle"
 	icon_state = "yellow"
+
+//CLOWN TEMPLE SHUTTLE
+
+/area/ruin/space/has_grav/powered/clownchapel
+	name = "Clown Chapel"
+
+/area/ruin/space/has_grav/powered/clownchapel/kitchen
+	name = "Clown Chapel Kitchen"
+
+/area/ruin/space/has_grav/powered/clownchapel/dorms
+	name = "Clown Chapel Dorms"
+
+/area/ruin/space/has_grav/powered/clownchapel/garden
+	name = "Banana Garden"
