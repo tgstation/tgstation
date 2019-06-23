@@ -70053,6 +70053,15 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"cWS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "cXc" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -85775,7 +85784,7 @@ aaa
 aaa
 aVs
 bKS
-aWT
+cWS
 aVs
 aVs
 aVs
