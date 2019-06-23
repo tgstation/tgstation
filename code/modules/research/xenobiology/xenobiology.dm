@@ -18,9 +18,9 @@
 	var/recurring = FALSE
 
 /obj/item/slime_extract/examine(mob/user)
-	..()
+	. = ..()
 	if(Uses > 1)
-		to_chat(user,"It has [Uses] uses remaining.")
+		. += "It has [Uses] uses remaining."
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))

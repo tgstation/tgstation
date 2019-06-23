@@ -349,7 +349,7 @@
 	. = ..()
 	RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
 
-/datum/nanite_program/sensor/voice/Destroy()
+/datum/nanite_program/sensor/voice/on_mob_remove()
 	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
 
 /datum/nanite_program/sensor/voice/set_extra_setting(user, setting)

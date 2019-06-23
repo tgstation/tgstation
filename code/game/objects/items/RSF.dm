@@ -20,8 +20,8 @@ RSF
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/rsf/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>")
+	. = ..()
+	. += "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>"
 
 /obj/item/rsf/cyborg
 	matter = 30
@@ -120,8 +120,8 @@ RSF
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/cookiesynth/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It currently holds [matter]/10 cookie-units.</span>")
+	. = ..()
+	. += "<span class='notice'>It currently holds [matter]/10 cookie-units.</span>"
 
 /obj/item/cookiesynth/attackby()
 	return

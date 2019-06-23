@@ -129,9 +129,9 @@
 	break_message = "slowly falls dark, lights stuttering."
 
 /obj/machinery/droneDispenser/examine(mob/user)
-	..()
+	. = ..()
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
-		to_chat(user, "<span class='warning'>[recharging_text]</span>")
+		. += "<span class='warning'>[recharging_text]</span>"
 
 /obj/machinery/droneDispenser/power_change()
 	..()

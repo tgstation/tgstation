@@ -295,13 +295,13 @@ LINEN BINS
 
 
 /obj/structure/bedsheetbin/examine(mob/user)
-	..()
+	. = ..()
 	if(amount < 1)
-		to_chat(user, "There are no bed sheets in the bin.")
+		. += "There are no bed sheets in the bin."
 	else if(amount == 1)
-		to_chat(user, "There is one bed sheet in the bin.")
+		. += "There is one bed sheet in the bin."
 	else
-		to_chat(user, "There are [amount] bed sheets in the bin.")
+		. += "There are [amount] bed sheets in the bin."
 
 
 /obj/structure/bedsheetbin/update_icon()

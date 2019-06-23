@@ -221,12 +221,9 @@
 	if(marked == target)
 		to_chat(user, "<span class='warning'>This specimen is already marked!</span>")
 		return
-	if(ishuman(target))
-		if(isabductor(target))
-			marked = target
-			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
-		else
-			prepare(target,user)
+	if(isabductor(target) || iscow(target))
+		marked = target
+		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 	else
 		prepare(target,user)
 
@@ -607,16 +604,16 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	. = ..()
 
 /obj/item/abductor/baton/examine(mob/user)
-	..()
+	. = ..()
 	switch(mode)
 		if(BATON_STUN)
-			to_chat(user, "<span class='warning'>The baton is in stun mode.</span>")
+			. += "<span class='warning'>The baton is in stun mode.</span>"
 		if(BATON_SLEEP)
-			to_chat(user, "<span class='warning'>The baton is in sleep inducement mode.</span>")
+			. += "<span class='warning'>The baton is in sleep inducement mode.</span>"
 		if(BATON_CUFF)
-			to_chat(user, "<span class='warning'>The baton is in restraining mode.</span>")
+			. += "<span class='warning'>The baton is in restraining mode.</span>"
 		if(BATON_PROBE)
-			to_chat(user, "<span class='warning'>The baton is in probing mode.</span>")
+			. += "<span class='warning'>The baton is in probing mode.</span>"
 
 /obj/item/radio/headset/abductor
 	name = "alien headset"

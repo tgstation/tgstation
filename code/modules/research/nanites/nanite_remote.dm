@@ -22,7 +22,7 @@
 /obj/item/nanite_remote/examine(mob/user)
 	. = ..()
 	if(locked)
-		to_chat(user, "<span class='notice'>Alt-click to unlock.</span>")
+		. += "<span class='notice'>Alt-click to unlock.</span>"
 
 /obj/item/nanite_remote/AltClick(mob/user)
 	. = ..()

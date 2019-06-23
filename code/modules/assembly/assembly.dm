@@ -111,8 +111,8 @@
 	return TRUE
 
 /obj/item/assembly/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>\The [src] [secured? "is secured and ready to be used!" : "can be attached to other things."]</span>")
+	. = ..()
+	. += "<span class='notice'>\The [src] [secured? "is secured and ready to be used!" : "can be attached to other things."]</span>"
 
 
 /obj/item/assembly/attack_self(mob/user)

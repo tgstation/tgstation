@@ -19,8 +19,8 @@
 	store_file(new/datum/computer_file/program/filemanager(src))		// File manager, allows text editor functions and basic file manipulation.
 
 /obj/item/computer_hardware/hard_drive/examine(user)
-	..()
-	to_chat(user, "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>")
+	. = ..()
+	. += "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>"
 
 /obj/item/computer_hardware/hard_drive/diagnostics(var/mob/user)
 	..()
@@ -121,7 +121,7 @@
 	return ..()
 
 /obj/item/computer_hardware/hard_drive/Initialize()
-	. = ..()	
+	. = ..()
 	install_default_programs()
 
 

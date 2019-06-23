@@ -33,7 +33,7 @@
 	var/has_panel_overlay = TRUE
 	var/macroresolution = 1
 	var/obj/item/reagent_containers/beaker = null
-	var/list/dispensable_reagents = list(	
+	var/list/dispensable_reagents = list(
 		/datum/reagent/aluminium,
 		/datum/reagent/bromine,
 		/datum/reagent/carbon,
@@ -95,11 +95,12 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/examine(mob/user)
-	..()
+	. = ..()
 	if(panel_open)
-		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
+		. += "<span class='notice'>[src]'s maintenance hatch is open!</span>"
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.<br>Macro granularity at <b>[macroresolution]u</b>.<span>")
+		. += {"<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>
+		[round((powerefficiency*1000)-100, 1)]%</b>.<br>Macro granularity at <b>[macroresolution]u</b>.<span>"}
 
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)

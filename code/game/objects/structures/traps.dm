@@ -38,7 +38,7 @@
 	if(user.mind && user.mind in immune_minds)
 		return
 	if(get_dist(user, src) <= 1)
-		to_chat(user, "<span class='notice'>You reveal [src]!</span>")
+		. += "<span class='notice'>You reveal [src]!</span>"
 		flare()
 
 /obj/structure/trap/proc/flare()

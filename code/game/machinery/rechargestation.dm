@@ -29,11 +29,11 @@
 		recharge_speed *= C.maxcharge / 10000
 
 /obj/machinery/recharge_station/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Recharging <b>[recharge_speed]J</b> per cycle.<span>")
+		. += "<span class='notice'>The status display reads: Recharging <b>[recharge_speed]J</b> per cycle.<span>"
 		if(repairs)
-			to_chat(user, "<span class='notice'>[src] has been upgraded to support automatic repairs.<span>")
+			. += "<span class='notice'>[src] has been upgraded to support automatic repairs.<span>"
 
 /obj/machinery/recharge_station/process()
 	if(!is_operational())
@@ -105,4 +105,3 @@
 	if(!occupant)
 		return
 	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed, repairs)
-
