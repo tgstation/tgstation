@@ -642,7 +642,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					else
 						limb.drop_limb()
 						limb.visible_message("<span class='warning'>[src]'s [limb.name] detaches from [p_their()] body!</span>")
-				return
+			return
 	
 	//Burn the head last
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
@@ -656,7 +656,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				else
 					head.drop_limb()
 					head.visible_message("<span class='warning'>[src]'s head detaches from [p_their()] body!</span>")
-			return
+		return
 
 	//Nothing left: dust the body, drop the items (if they're flammable they'll burn on their own)
 	if(prob(20))
