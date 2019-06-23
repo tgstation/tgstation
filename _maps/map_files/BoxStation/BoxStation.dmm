@@ -5959,6 +5959,7 @@
 	},
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "ane" = (
@@ -9128,6 +9129,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/reagent_containers/spray/spaceaxe,
+/obj/item/reagent_containers/spray/spaceaxe{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "awt" = (
@@ -9205,6 +9211,7 @@
 "awF" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/two,
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awG" = (
@@ -18087,6 +18094,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/reagent_containers/spray/spaceaxe,
+/obj/item/reagent_containers/spray/spaceaxe{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aUr" = (
@@ -25170,6 +25182,10 @@
 /obj/structure/dresser,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
+	},
+/obj/item/reagent_containers/spray/spaceaxe{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)

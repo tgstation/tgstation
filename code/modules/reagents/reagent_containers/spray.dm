@@ -186,6 +186,19 @@
 	desc = "Gyaro brand spray tan. Do not spray near eyes or other orifices."
 	list_reagents = list(/datum/reagent/spraytan = 50)
 
+//bo spray
+/obj/item/reagent_containers/spray/spaceaxe
+	name = "nanotrasen shower-in-a-can"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "deodorant"
+	volume = 50
+	stream_range = 2
+	desc = "Nanotrasen approved body spray, capable of hiding even the worst odor! CAUTION: Highly flammable!"
+	list_reagents = list(/datum/reagent/deodorant_spray = 50)
+
+/obj/item/reagent_containers/spray/spaceaxe/Initialize()
+	..()	
+	DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 
 //pepperspray
 /obj/item/reagent_containers/spray/pepper

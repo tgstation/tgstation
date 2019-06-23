@@ -4658,6 +4658,7 @@
 /obj/structure/closet,
 /obj/item/clothing/gloves/color/fyellow,
 /obj/effect/spawner/lootdrop/maintenance/two,
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ajP" = (
@@ -15722,6 +15723,7 @@
 /obj/structure/closet,
 /obj/item/storage/box/donkpockets,
 /obj/effect/spawner/lootdrop/maintenance/two,
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aHX" = (
@@ -19685,6 +19687,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/item/reagent_containers/spray/spaceaxe,
+/obj/item/reagent_containers/spray/spaceaxe{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -25914,6 +25921,7 @@
 	pixel_x = 6;
 	pixel_y = 28
 	},
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "bdO" = (
@@ -45718,6 +45726,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bVC" = (
@@ -51597,6 +51606,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "chE" = (
@@ -76254,6 +76264,13 @@
 	},
 /turf/closed/wall,
 /area/science/misc_lab/range)
+"wMx" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/reagent_containers/spray/spaceaxe,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "wOE" = (
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
@@ -115537,7 +115554,7 @@ afD
 afD
 afD
 aqo
-arI
+wMx
 atd
 bai
 ate

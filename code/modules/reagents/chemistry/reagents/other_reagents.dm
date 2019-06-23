@@ -903,6 +903,29 @@
 	color = "#A8A8A8" // rgb: 168, 168, 168
 	taste_mult = 0
 
+/datum/reagent/deodorant_spray
+	name = "liquid antiperspirant"
+	description = "Capable of hiding even the worst odor, but doesn't actually get rid of it. Highly flammable."
+	color = "#a0efff" // rgb: 160, 239, 255
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "highschool locker room"
+	glass_name = "glass of antiperspirant"
+	glass_desc = "Tastes like teen spirit."
+
+/datum/reagent/deodorant_spray/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//bad for your health
+	if(method == TOUCH || method == VAPOR)
+		M.adjust_fire_stacks(reac_volume / 10)
+		..()
+
+/datum/reagent/deodorant_spray/on_mob_life(mob/living/carbon/C)
+	ADD_TRAIT(C, TRAIT_RESISTSMELL, "resist_smellyness")
+	..()
+
+/datum/reagent/deodorant_spray/on_mob_end_metabolize(mob/living/carbon/C)
+	REMOVE_TRAIT(C, TRAIT_RESISTSMELL, "resist_smellyness")
+	..()
+
+
 /datum/reagent/fuel
 	name = "Welding fuel"
 	description = "Required for welders. Flammable."

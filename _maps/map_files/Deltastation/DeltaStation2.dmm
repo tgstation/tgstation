@@ -59948,6 +59948,7 @@
 /area/crew_quarters/heads/captain/private)
 "cgy" = (
 /obj/structure/dresser,
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "cgz" = (
@@ -70466,6 +70467,11 @@
 /obj/item/stack/pipe_cleaner_coil/random,
 /obj/item/stack/pipe_cleaner_coil/random,
 /obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/reagent_containers/spray/spaceaxe,
+/obj/item/reagent_containers/spray/spaceaxe{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cAs" = (
@@ -75063,6 +75069,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -99863,6 +99870,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "dCS" = (

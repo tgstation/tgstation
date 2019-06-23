@@ -9000,6 +9000,7 @@
 /area/hallway/primary/fore)
 "axN" = (
 /obj/structure/dresser,
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)
 "axO" = (
@@ -9715,6 +9716,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "azA" = (
@@ -45738,6 +45740,7 @@
 "cnX" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/reagent_containers/spray/spaceaxe,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "cod" = (
@@ -45758,6 +45761,11 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/item/reagent_containers/spray/spaceaxe,
+/obj/item/reagent_containers/spray/spaceaxe{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/dorms)
 "coe" = (
