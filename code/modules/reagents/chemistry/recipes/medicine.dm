@@ -252,7 +252,7 @@
 	id = /datum/reagent/medicine/rhigoxane
 	results = list(/datum/reagent/medicine/rhigoxane/ = 5)
 	required_reagents = list(/datum/reagent/cryostylane = 3, /datum/reagent/bromine = 1, /datum/reagent/lye = 1)
-	required_temp = 200
+	required_temp = 47
 	is_cold_recipe = TRUE
 
 /datum/chemical_reaction/trophazole
