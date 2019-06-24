@@ -20,18 +20,13 @@
 			closest = BG
 	var/obj/structure/beacon_wall/edge = closest.walls[1]
 	var/facingdir = closest.dir
-	var/should_die = FALSE
 	if(facingdir == NORTH && edge.y <= parentatom.y)
-		should_die = TRUE
+		kill_parent()
 	if(facingdir == SOUTH && edge.y >= parentatom.y)
-		should_die = TRUE
+		kill_parent()
 	if(facingdir == EAST && edge.x >= parentatom.x)
-		should_die = TRUE
+		kill_parent()
 	if(facingdir == WEST && edge.x <= parentatom.x)
-		should_die = TRUE
-	if(isobj(parentatom.loc))
-		should_die = FALSE // don't kill them if they're in a locker, or something is holding them
-	if(should_die)
 		kill_parent()
 
 /datum/component/no_beacon_crossing/proc/kill_parent(atom/parentatom = parent)
@@ -40,6 +35,7 @@
 	playsound(get_turf(parentatom), 'sound/effects/supermatter.ogg', 50, 1)
 	if(isliving(parent))
 		var/mob/living/todie = parent
+		todie.health = 0
 		todie.death()
 	else
 		qdel(parent)

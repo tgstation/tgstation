@@ -6,13 +6,13 @@
 	pixel_x = -32
 	pixel_y = -24
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 65, "acid" = 90)
 	health_regen = 3
 	point_return = 5
 	build_time = 100
 	var/expansion_range = 6
 	var/expansion_amount = 6
 	var/base_pulse_cd // cooldown before being increased by time they've been alive
+	upgrade_subtype = /datum/infection_upgrade/node
 
 /obj/structure/infection/node/Initialize()
 	GLOB.infection_nodes += src

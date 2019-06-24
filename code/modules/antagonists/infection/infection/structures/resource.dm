@@ -9,8 +9,6 @@
 	point_return = 5
 	build_time = 50
 	var/resource_delay = 0
-	var/set_delay = 40
-	var/produced = 1 // points produced
 	var/point_return_gain = 0
 	upgrade_subtype = /datum/infection_upgrade/resource
 
@@ -40,6 +38,6 @@
 		return
 	flick("blob_resource_glow", src)
 	if(overmind)
-		overmind.add_points(produced)
+		overmind.add_points(1)
 	point_return = min(point_return + point_return_gain, 100)
-	resource_delay = world.time + set_delay
+	resource_delay = world.time + (overmind ? 40 + overmind.resource_infection.len * 2.5 : 40)

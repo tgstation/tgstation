@@ -313,6 +313,13 @@
 	randomdir = 0
 	duration = 6
 
+/obj/effect/temp_visual/infection
+	name = "infection"
+	icon_state = "infection_attack"
+	alpha = 140
+	randomdir = 0
+	duration = 6
+
 /obj/effect/temp_visual/desynchronizer
 	name = "desynchronizer field"
 	icon_state = "chronofield"

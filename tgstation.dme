@@ -1359,6 +1359,7 @@
 #include "code\modules\antagonists\infection\infection\upgrades.dm"
 #include "code\modules\antagonists\infection\infection\mobs\infection_mobs.dm"
 #include "code\modules\antagonists\infection\infection\mobs\sentient_mobs.dm"
+#include "code\modules\antagonists\infection\infection\structures\beamturret.dm"
 #include "code\modules\antagonists\infection\infection\structures\core.dm"
 #include "code\modules\antagonists\infection\infection\structures\factory.dm"
 #include "code\modules\antagonists\infection\infection\structures\node.dm"

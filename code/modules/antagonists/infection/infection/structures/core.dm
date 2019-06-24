@@ -7,7 +7,6 @@
 	pixel_y = -16
 	desc = "A huge, pulsating infectious mass. It almost seems to beckon you."
 	max_integrity = 400
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 90)
 	explosion_block = 6
 	point_return = -1
 	health_regen = 0 //we regen in Life() instead of when pulsed
@@ -128,7 +127,7 @@
 	obj_integrity = min(max_integrity, obj_integrity+core_regen)
 	if(overmind)
 		overmind.update_health_hud()
-		Pulse_Area(overmind, 20, 40)
+		Pulse_Area(overmind, 20, 40, TRUE)
 	for(var/obj/structure/infection/normal/I in (range(2, src) - range(1, src)) + (range(6, src) - range(5, src)))
 		INVOKE_ASYNC(I, .proc/change_to, /obj/structure/infection/shield/reflective/strong/core, overmind)
 	var/list/turrets = list()

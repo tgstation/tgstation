@@ -7,6 +7,15 @@
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr
 	I.infection_help()
 
+/obj/screen/infection/Refund
+	icon_state = "ui_factory"
+	name = "Revert Evolutions"
+	desc = "Refund all currently purchased traits."
+
+/obj/screen/infection/Refund/Click()
+	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr
+	I.refund_upgrades()
+
 /obj/screen/infection/EvolveSpore
 	icon_state = "ui_swap"
 	name = "Evolution"
@@ -16,14 +25,14 @@
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr
 	I.evolve_menu()
 
-/obj/screen/infection/Refund
-	icon_state = "ui_factory"
-	name = "Refund Upgrades"
-	desc = "Refund all currently purchased traits."
+/obj/screen/infection/Respawn
+	icon_state = "ui_blobbernaut"
+	name = "Respawn"
+	desc = "Lets you come back from the dead once you have finished reforming."
 
-/obj/screen/infection/Refund/Click()
+/obj/screen/infection/Respawn/Click()
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr
-	I.refund_upgrades()
+	I.do_spawn()
 
 /datum/hud/infection_spore/New(mob/owner)
 	..()
@@ -41,14 +50,18 @@
 	healths = new /obj/screen/healths/blob()
 	infodisplay += healths
 
-	using = new /obj/screen/infection/Refund()
+	using = new /obj/screen/infection/InfectionSporeHelp()
 	using.screen_loc = ui_back
 	static_inventory += using
 
-	using = new /obj/screen/infection/InfectionSporeHelp()
+	using = new /obj/screen/infection/Refund()
 	using.screen_loc = ui_hand_position(2)
 	static_inventory += using
 
 	using = new /obj/screen/infection/EvolveSpore()
 	using.screen_loc = ui_hand_position(1)
+	static_inventory += using
+
+	using = new /obj/screen/infection/Respawn()
+	using.screen_loc = ui_storage1
 	static_inventory += using

@@ -1,3 +1,4 @@
+#define ISRESPAWNING (istype(loc, /obj/structure/infection))
 
 //////////////////////
 // Player Controlled//
@@ -11,6 +12,7 @@
 	obj_damage = 20
 	var/respawn_time = 30
 	var/current_respawn_time = -1
+	var/can_respawn = FALSE
 	var/upgrade_points = 0
 	var/spent_upgrade_points = 0
 	var/max_upgrade_points = 1000
@@ -63,12 +65,15 @@
 	return 2
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/evolve_menu()
+	if(!ISRESPAWNING)
+		to_chat(src, "<span class='warning'>You cannot evolve unless you are reforming at a node or core!</span>")
+		return
 	menu_handler.ui_interact(src)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/can_upgrade(cost = 1)
 	var/diff = upgrade_points - cost
 	if(diff < 0)
-		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [diff * -1] more upgrade points! Destroy beacons to acquire them!</span>")
+		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [diff * -1] more points!</span>")
 		return FALSE
 	upgrade_points = diff
 	spent_upgrade_points += diff
@@ -102,7 +107,7 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/respawn(var/set_time = respawn_time)
 	current_respawn_time = set_time
 	while(current_respawn_time > 0)
-		if(current_respawn_time < 10 || current_respawn_time % 5 == 0)
+		if(current_respawn_time < 5 || current_respawn_time % 5 == 0)
 			to_chat(src, "<b>Respawning in [current_respawn_time] seconds.</b>")
 		sleep(10)
 		if(!src)
@@ -111,12 +116,19 @@
 			death()
 			return
 		current_respawn_time--
-	to_chat(src, "<b>You have respawned!</b>")
-	playsound(src, 'sound/effects/genetics.ogg', 100)
-	adjustHealth(health * 0.8)
-	forceMove(get_turf(src))
+	to_chat(src, "<b>You may now respawn!</b>")
+	playsound(src, 'sound/effects/genetics.ogg', 50)
+	can_respawn = TRUE
 	current_respawn_time = -1
 	return
+
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/do_spawn()
+	if(!can_respawn)
+		to_chat(src, "<span class='warning'>You cannot respawn right now!</span>")
+		return
+	adjustHealth(health * 0.8)
+	forceMove(get_turf(src))
+	can_respawn = FALSE
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/transfer_to_type(var/new_type)
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/new_spore = new new_type(loc, null, overmind)
@@ -124,7 +136,7 @@
 	new_spore.upgrade_points = upgrade_points
 	new_spore.spent_upgrade_points = spent_upgrade_points
 	// check if we were respawning
-	if(current_respawn_time != -1)
+	if(ISRESPAWNING)
 		// restart respawn for new spore
 		INVOKE_ASYNC(new_spore, .proc/respawn, current_respawn_time)
 	overmind.infection_mobs += new_spore

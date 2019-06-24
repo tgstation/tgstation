@@ -1,5 +1,5 @@
 #define DOOM_CLOCK_EVENT_DELAY 3000 // 6000 // 10 minutes per event
-#define SAME_INFECTION_TYPE(check, typetocheck) (istype(check, typetocheck) || check.building == typetocheck)
+#define SAME_INFECTION_TYPE(check, typetocheck) (check.type == typetocheck || check.building == typetocheck)
 
 /datum/antagonist/infection
 	name = "Infection"

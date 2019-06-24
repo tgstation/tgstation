@@ -22,8 +22,8 @@ GLOBAL_VAR(infection_commander)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	hud_type = /datum/hud/infection_commander
 	var/obj/structure/infection/core/infection_core = null // The infection commanders's core
-	var/infection_points = 300
-	var/max_infection_points = 300
+	var/infection_points = 0
+	var/max_infection_points = 100
 	var/upgrade_points = 10 // obtained by destroying beacons
 	var/last_attack = 0
 	var/list/infection_mobs = list()
@@ -32,7 +32,7 @@ GLOBAL_VAR(infection_commander)
 	var/placed = FALSE
 	var/freecam = FALSE
 	var/base_point_rate = 2 //for core placement
-	var/autoplace_time = 20 // a few seconds, just so it isnt sudden at game start
+	var/autoplace_time = 40 // a few seconds, just so it isnt sudden at game start
 	var/place_beacons_delay = 10
 	var/victory_in_progress = FALSE
 	var/infection_color = "#ffffff"
@@ -47,7 +47,7 @@ GLOBAL_VAR(infection_commander)
 
 	var/datum/infection_menu/menu_handler
 
-/mob/camera/commander/Initialize(mapload, starting_points = 0)
+/mob/camera/commander/Initialize(mapload, starting_points = max_infection_points)
 	if(GLOB.infection_commander)
 		return INITIALIZE_HINT_QDEL // there can be only one
 	. = ..()

@@ -7,12 +7,11 @@
 	pixel_y = -4
 	max_integrity = 150
 	point_return = 10
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 	build_time = 100
 	var/frequency = 1 // amount of times the turret will fire per process tick (1 second)
 	var/scan_range = 7 // range to search for targets
 	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
-	upgrade_subtype = /datum/infection_upgrade/turret_type_change
+	upgrade_subtype = /datum/infection_upgrade/turret
 
 /obj/structure/infection/turret/Initialize()
 	. = ..()
@@ -118,12 +117,6 @@
 	A.fire()
 	return A
 
-/*
-//
-// Projectiles
-//
-*/
-
 /obj/item/projectile/bullet/infection
 	name = "bulky spore"
 	icon = 'icons/mob/infection/infection.dmi'
@@ -138,27 +131,6 @@
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
-/obj/item/projectile/bullet/infection/core
-	name = "strong spore"
-	icon_state = "tracking_bullet"
-	damage = 20
-
-/obj/item/projectile/bullet/infection/infernal
-	name = "burning spore"
-	icon_state = "fire_bullet"
-	speed = 1
-	damage_type = BURN
-	flag = "laser"
-
-/obj/item/projectile/bullet/infection/homing
-	name = "tracking spore"
-	icon_state = "tracking_bullet"
-	range = 150
-
-/obj/item/projectile/bullet/infection/homing/stamina
-	damage_type = STAMINA
-	damage = 30
-
 /obj/item/projectile/bullet/infection/flak
 	name = "flak spore"
 	icon_state = "flak_bullet"
@@ -166,44 +138,14 @@
 	range = 2
 	speed = 2
 
-/*
-//
-// Turrets
-//
-*/
-
 /obj/structure/infection/turret/core
 	name = "core turret"
 	desc = "A turret for the core of the infection. It holds destructive capabilities that many might find unbeatable."
 	point_return = -1
-	projectile_type = /obj/item/projectile/bullet/infection/core
-	scan_range = 5
+	scan_range = 8
 	upgrade_subtype = null
-	upgrade_types = list(/datum/infection_upgrade/infernal/fire_rate,
-						 /datum/infection_upgrade/resistant/spore_bullets)
 
 /obj/structure/infection/turret/core/Initialize()
 	. = ..()
-	max_upgrade()
-
-/obj/structure/infection/turret/resistant
-	name = "resistant turret"
-	desc = "A very bulky turret fit for a war of attrition."
-	max_integrity = 300
-	upgrade_subtype = /datum/infection_upgrade/resistant
-
-/obj/structure/infection/turret/infernal
-	name = "infernal turret"
-	desc = "A fiery turret intent on disintegrating its enemies."
-	projectile_type = /obj/item/projectile/bullet/infection/infernal // the bullet fired for this turret
-	scan_range = 5
-	upgrade_subtype = /datum/infection_upgrade/infernal
-
-/obj/structure/infection/turret/homing
-	name = "homing turret"
-	desc = "A frail looking turret that seems to track your every movement."
-	max_integrity = 75
-	projectile_type = /obj/item/projectile/bullet/infection/homing // the bullet fired for this turret
-	upgrade_subtype = /datum/infection_upgrade/homing
-
-
+	AddComponent(/datum/component/knockback, 4)
+	AddComponent(/datum/component/summoning, list(/mob/living/simple_animal/hostile/infection/infectionspore), 10, 4, 0, "forms from the raw energy", 'sound/effects/blobattack.ogg')

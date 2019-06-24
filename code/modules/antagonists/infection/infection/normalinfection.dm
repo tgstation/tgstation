@@ -8,15 +8,15 @@
 	opacity = 0
 	anchored = TRUE
 	layer = TABLE_LAYER
-	CanAtmosPass = ATMOS_PASS_NO
+	CanAtmosPass = ATMOS_PASS_PROC
 	var/point_return = 0 //How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/health_regen = 5 //how much health this blob regens when pulsed
 	var/next_pulse = 0
 	var/pulse_cooldown = 20
-	var/brute_resist = 0.5 //multiplies brute damage by this
-	var/fire_resist = 1 //multiplies burn damage by this
+	var/brute_resist = 0.75 //multiplies brute damage by this
+	var/fire_resist = 0.5 //multiplies burn damage by this
 	var/atmosblock = FALSE //if the infection blocks atmos and heat spread
 	var/mob/camera/commander/overmind
 	var/list/angles = list() // possible angles for the node to expand on
@@ -160,7 +160,7 @@
 /obj/structure/infection/proc/reset_angles()
 	angles = list(0,15,30,45,60,75,90,105,120,135,150,165,180,195,210,225,240,255,270,285,300,315,330,345) // this is aids but you cant use initial() on lists so :shrug: i'd rather not loop
 
-/obj/structure/infection/proc/Pulse_Area(mob/camera/commander/pulsing_overmind, var/claim_range = 6, var/count = 6)
+/obj/structure/infection/proc/Pulse_Area(mob/camera/commander/pulsing_overmind, claim_range = 6, count = 6, space_expand = FALSE)
 	if(QDELETED(pulsing_overmind))
 		pulsing_overmind = overmind
 	Be_Pulsed()
@@ -186,7 +186,7 @@
 				var/dir_to_next = get_dir(toaffect[j-1], toaffect[j])
 				// okay i know we said we were totally going to expand to toaffect[j] but cardinals look cleaner (connectivity) so we'll check if those are empty
 				var/turf/finalturf = get_final_expand_turf(toaffect[j-1], toaffect[j], dir_to_next)
-				previous.expand(finalturf)
+				previous.expand(finalturf, overmind, space_expand)
 				break
 			INF.ConsumeTile()
 			INF.air_update_turf(1)
@@ -224,10 +224,19 @@
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/structure/infection/proc/infection_attack_animation(atom/A = null) //visually attacks an atom
-	return
+	var/obj/effect/temp_visual/infection/O = new /obj/effect/temp_visual/infection(src.loc)
+	O.setDir(dir)
+	if(overmind)
+		O.color = overmind.infection_color
+	if(A)
+		O.do_attack_animation(A) //visually attack the whatever
+	return O //just in case you want to do something to the animation.
 
-/obj/structure/infection/proc/expand(turf/T = null, controller = null)
+/obj/structure/infection/proc/expand(turf/T = null, controller = null, space_expand = FALSE)
 	infection_attack_animation(T)
+	// do not expand to areas that are space, unless we're very lucky or the core
+	if(isspaceturf(T) && prob(95) && !space_expand)
+		return null
 	if(locate(/obj/structure/beacon_wall) in T.contents || locate(/obj/structure/infection) in T.contents)
 		return
 	var/obj/structure/infection/I = new /obj/structure/infection/normal(src.loc, (controller || overmind))
@@ -271,7 +280,7 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+				playsound(src.loc, pick('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg'), 50, 1)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
@@ -358,7 +367,7 @@
 	if(ismob(mover))
 		var/mob/M = mover
 		M.add_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update=TRUE, priority=100, multiplicative_slowdown=3)
-		M.overlay_fullscreen("infectionvision", /obj/screen/fullscreen/infection_covered, 1)
+		M.overlay_fullscreen("infectionvision", /obj/screen/fullscreen/curse, 1)
 
 /obj/structure/infection/normal/Uncrossed(atom/movable/mover)
 	if(!locate(/obj/structure/infection/normal) in get_turf(mover))
