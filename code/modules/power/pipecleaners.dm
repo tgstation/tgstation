@@ -130,9 +130,6 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - pipe cleaner coil : merge pipe cleaners
 //
 /obj/structure/pipe_cleaner/proc/handlecable(obj/item/W, mob/user, params)
-	var/turf/T = get_turf(src)
-	if(T.intact)
-		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		user.visible_message("[user] cuts the pipe cleaner.", "<span class='notice'>You cut the pipe cleaner.</span>")
 		stored.add_fingerprint(user)
