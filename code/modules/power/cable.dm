@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
 					//Why null or equal to the search parent?
 					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
-					//but the cable underneath it has
+					//but the cable underneath it is ready to link.
 					//I don't believe null is even a valid state for a smes terminal while the game is actually running
 					//So in the rare case that this happens, we also shouldn't connect
 					//This might break.
@@ -316,9 +316,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 
 	var/turf/T1 = loc
-	var/list/P_list
 	if(!T1)
 		return
+
+	//clear the powernet of any machines on tile first
+	for(var/obj/machinery/power/P in T1)
+		P.disconnect_from_network() 
+
+	var/list/P_list
 	for(var/dir_check in GLOB.cardinals)
 		if(linked_dirs & dir_check)
 			T1 = get_step(T1, dir_check)
@@ -326,15 +331,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	P_list += power_list(loc, src, FALSE, TRUE)//... and on turf
 
-
-	if(P_list.len == 0)//if nothing in both list, then the cable was a lone cable, just delete it and its powernet
-		powernet.remove_cable(src)
-
-		for(var/obj/machinery/power/P in T1)//check if it was powering a machine
-			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
-				P.disconnect_from_network() //remove from current network (and delete powernet)
-		return
-	
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
 		moveToNullspace()
@@ -342,6 +338,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	var/first = TRUE
 	var/delay = 0
+	//delay is to break up the new powernet creation over a little bit of time to mitigate the effect of it all happening at once
 	for(var/obj/O in P_list)
 		if(first)
 			first = FALSE
