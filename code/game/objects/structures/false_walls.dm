@@ -262,7 +262,7 @@
 	icon_state = "bananium"
 	mineral = /obj/item/stack/sheet/mineral/bananium
 	walltype = /turf/closed/wall/mineral/bananium
-	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/closed/wall/mineral/bananium)
+	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/closed/wall/mineral/bananium, /turf/closed/wall/fakebananium)
 
 
 /obj/structure/falsewall/sandstone
