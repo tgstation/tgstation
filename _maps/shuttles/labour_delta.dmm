@@ -29,9 +29,7 @@
 /area/shuttle/labor)
 "f" = (
 /obj/structure/grille,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
