@@ -53,11 +53,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			switch(under_thing)
 				if(UNDER_SMES)
 					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
-					if(term && term.master == search_parent)
+					if(term && (!term.master || term.master == search_parent))
 						continue
 				if(UNDER_TERMINAL)
 					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
-					if(S && S.terminal == search_parent)
+					if(S && (!S.terminal || S.terminal == search_parent))
 						continue
 		var/inverse = turn(check_dir, 180)
 		for(var/obj/structure/cable/C in TB)
