@@ -522,7 +522,6 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bB" = (
-/obj/structure/closet/secure_closet/security/cargo,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -530,6 +529,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/structure/closet/secure_closet/labor_camp_security,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "bC" = (
@@ -608,12 +608,12 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "bL" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/door/airlock/highsecurity{
 	name = "Labor Camp Monitoring";
 	req_access_txt = "2"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bM" = (
@@ -2664,10 +2664,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jh" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/freezer/gulag_fridge,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "jk" = (
@@ -3708,6 +3708,9 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"yr" = (
+/turf/closed/wall/r_wall,
+/area/mine/laborcamp)
 "zn" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -3886,6 +3889,9 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
+"Hd" = (
+/turf/closed/wall/r_wall,
+/area/mine/laborcamp/security)
 "Ho" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -9644,10 +9650,10 @@ aq
 bj
 az
 az
-aq
-ca
-ca
-ca
+yr
+Hd
+Hd
+Hd
 FF
 FF
 FF
@@ -9901,7 +9907,7 @@ az
 su
 az
 az
-aq
+yr
 cb
 bh
 cG
@@ -10415,7 +10421,7 @@ aQ
 bk
 az
 az
-aq
+yr
 cd
 ch
 GI
@@ -10670,10 +10676,10 @@ az
 bc
 aq
 bl
-aq
-aq
-aq
-ca
+yr
+yr
+yr
+Hd
 Gw
 QN
 oW
@@ -10927,7 +10933,7 @@ aq
 bd
 aq
 bl
-aq
+yr
 by
 pV
 ch
@@ -11184,7 +11190,7 @@ aW
 be
 aW
 bm
-aq
+yr
 bB
 bM
 cf
@@ -11441,9 +11447,9 @@ aq
 aq
 aq
 aq
-aq
-aq
-ca
+yr
+yr
+Hd
 cg
 cB
 bh
