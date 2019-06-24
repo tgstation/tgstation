@@ -145,3 +145,7 @@
 	description = "<span class='nicegreen'>That work of art was so great it made me believe in the goodness of humanity. Says a lot in a place like this.</span>\n"
 	mood_change = 6
 	timeout = 5 MINUTES
+
+/datum/mood_event/area
+	description = "fill this in in the area"
+	mood_change = 0 
