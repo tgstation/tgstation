@@ -53,7 +53,7 @@
 		return
 
 	var/obj/item/reagent_containers/glass/bucket/bucket = H.get_item_for_held_index(1)
-	bucket.reagents.add_reagent("water",70)
+	bucket.reagents.add_reagent(/datum/reagent/water,70)
 
 /datum/outfit/laser_tag
 	name = "Laser Tag Red"

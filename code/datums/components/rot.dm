@@ -14,12 +14,13 @@
 	var/atom/A = parent
 
 	var/turf/open/T = get_turf(A)
-	if(!istype(T))
+	if(!istype(T) || T.return_air().return_pressure() > (WARNING_HIGH_PRESSURE - 10))
 		return
 
 	var/datum/gas_mixture/stank = new
 	ADD_GAS(/datum/gas/miasma, stank.gases)
 	stank.gases[/datum/gas/miasma][MOLES] = amount
+	stank.temperature = BODYTEMP_NORMAL // otherwise we have gas below 2.7K which will break our lag generator
 	T.assume_air(stank)
 	T.air_update_turf()
 
@@ -46,7 +47,7 @@
 		return
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(C.reagents.has_reagent("formaldehyde", 15) || C.has_trait(TRAIT_HUSK))
+	if(C.reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(C, TRAIT_HUSK))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead

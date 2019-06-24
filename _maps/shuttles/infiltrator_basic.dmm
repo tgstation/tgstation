@@ -87,7 +87,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "ao" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8;
 	name = "tactical swivel chair"
 	},
@@ -97,7 +97,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "aq" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1;
 	name = "tactical swivel chair"
 	},
@@ -111,7 +111,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "ar" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4;
 	name = "tactical swivel chair"
 	},

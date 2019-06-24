@@ -105,18 +105,6 @@
 	else
 		to_chat(src, msg)
 
-/mob/proc/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
-	if(!can_hear())
-		return
-	//Process sound
-	if(S)
-		SEND_SOUND(src, S)
-	//Process text
-	if(text)
-		to_chat(src, "<span class='italics'>[text]</span>")
-	//to whoever sees this: icons are handled in living.dm
-
-
 // Show a message to all player mobs who sees this atom
 // Show a message to the src mob (if the src is a mob)
 // Use for atoms performing visible actions
@@ -126,17 +114,19 @@
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, list/ignored_mobs)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
 	var/range = 7
 	if(vision_distance)
 		range = vision_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
-		if(M == ignored_mob)
+		if(M in ignored_mobs)
 			continue
 		var/msg = message
 		if(M == src) //the src always see the main message or self message
@@ -187,9 +177,6 @@
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
-
-/mob/proc/Life()
-	set waitfor = FALSE
 
 /mob/proc/get_item_by_slot(slot_id)
 	return null
@@ -318,7 +305,9 @@
 		return
 
 	face_atom(A)
-	A.examine(src)
+	var/list/result = A.examine(src)
+	to_chat(src, result.Join("\n"))
+	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 //same as above
 //note: ghosts can point, this is intended
@@ -516,7 +505,12 @@
 		return
 	if(isAI(M))
 		return
-	show_inv(usr)
+
+/mob/MouseDrop_T(atom/dropping, atom/user)
+	. = ..()
+	if(ismob(dropping) && dropping != user)
+		var/mob/M = dropping
+		M.show_inv(user)
 
 /mob/proc/is_muzzled()
 	return 0
@@ -701,16 +695,16 @@
 			mob_spell_list -= S
 			qdel(S)
 
-/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, major = TRUE, self = FALSE)
-	if(!magic && !holy)
+/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
+	if(!magic && !holy && !tinfoil)
 		return
 	var/list/protection_sources = list()
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, major, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, tinfoil, chargecost, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
 		if(protection_sources.len)
 			return pick(protection_sources)
 		else
 			return src
-	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
+	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
 		return src
 
 //You can buckle on mobs if you're next to them since most are dense

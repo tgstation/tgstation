@@ -23,7 +23,7 @@
 	if (!wearer)
 		STOP_PROCESSING(SSobj, src)
 		return
-	if(!wearer.has_trait(TRAIT_DEAF))
+	if(!HAS_TRAIT(wearer, TRAIT_DEAF))
 		var/obj/item/organ/ears/ears = wearer.getorganslot(ORGAN_SLOT_EARS)
 		if (ears)
 			ears.deaf = max(ears.deaf - 1, (ears.ear_damage < UNHEALING_EAR_DAMAGE ? 0 : 1)) // Do not clear deafness while above the unhealing ear damage threshold

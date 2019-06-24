@@ -101,7 +101,7 @@
 		if (!open)
 			return
 		var/obj/item/reagent_containers/RG = I
-		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+		RG.reagents.add_reagent(/datum/reagent/water, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		to_chat(user, "<span class='notice'>You fill [RG] from [src]. Gross.</span>")
 	else
 		return ..()
@@ -199,7 +199,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
-	list_reagents = list("chlorine" = 3, "ammonia" = 1)
+	list_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
 	foodtype = TOXIC | GROSS
 
 /obj/item/reagent_containers/food/snacks/urinalcake/attack_self(mob/living/user)
@@ -222,7 +222,7 @@
 	desc = "A sink used for washing one's hands and face."
 	anchored = TRUE
 	var/busy = FALSE 	//Something's being washed at the moment
-	var/dispensedreagent = "water" // for whenever plumbing happens
+	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
 
 /obj/structure/sink/attack_hand(mob/living/user)
 	. = ..()

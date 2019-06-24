@@ -33,13 +33,7 @@
 	var/datum/antagonist/hivemind/host = owner.has_antag_datum(/datum/antagonist/hivemind)
 	if(!host)
 		return FALSE
-	for(var/obj/item/organ/brain/B in host.hivemembers)
-		var/mob/living/carbon/C = B.owner
-		if(!C)
-			continue
-		var/datum/mind/M = C.mind
-		if(!M)
-			continue
+	for(var/datum/mind/M in host.hivemembers)
 		if(considered_escaped(M))
 			count++
 	return count >= target_amount

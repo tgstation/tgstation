@@ -79,7 +79,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -125,7 +125,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -150,7 +150,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,

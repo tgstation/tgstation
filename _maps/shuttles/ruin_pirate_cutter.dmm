@@ -717,7 +717,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Pirate Cutter APC";
-	pixel_x = -24;
+	pixel_x = -25;
 	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -735,7 +735,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "EB" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/machinery/turretid{
@@ -1066,7 +1066,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "ZY" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{

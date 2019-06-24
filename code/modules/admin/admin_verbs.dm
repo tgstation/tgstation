@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/admin_away
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character))
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel))
 GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 GLOBAL_PROTECT(admin_verbs_server)
@@ -150,7 +150,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/get_dynex_range,		//*debug verbs for dynex explosions.
 	/client/proc/set_dynex_scale,
 	/client/proc/cmd_display_del_log,
-	/client/proc/create_outfits,
+	/client/proc/outfit_manager,
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
@@ -333,11 +333,12 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Aghost"
 	if(!holder)
 		return
+	. = TRUE
 	if(isobserver(mob))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
 		if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
-			return
+			return FALSE
 		if(!ghost.can_reenter_corpse)
 			log_admin("[key_name(usr)] re-entered corpse")
 			message_admins("[key_name_admin(usr)] re-entered corpse")
@@ -346,6 +347,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Reenter") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(isnewplayer(mob))
 		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
+		return FALSE
 	else
 		//ghostize
 		log_admin("[key_name(usr)] admin ghosted.")

@@ -30,12 +30,12 @@
 	return ..()
 
 /obj/machinery/quantumpad/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It is [ linked_pad ? "currently" : "not"] linked to another pad.</span>")
+	. = ..()
+	. += "<span class='notice'>It is [ linked_pad ? "currently" : "not"] linked to another pad.</span>"
 	if(!panel_open)
-		to_chat(user, "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device.</span>")
+		. += "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device.</span>"
 	else
-		to_chat(user, "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.</span>")
+		. += "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.</span>"
 
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
@@ -77,7 +77,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is no quantum pad data saved in [I]'s buffer!</span>")
 			return TRUE
-			
+
 	else if(istype(I, /obj/item/quantum_keycard))
 		var/obj/item/quantum_keycard/K = I
 		if(K.qpad)
@@ -165,7 +165,7 @@
 			for(var/atom/movable/ROI in get_turf(src))
 				if(QDELETED(ROI))
 					continue //sleeps in CHECK_TICK
-				   
+
 				// if is anchored, don't let through
 				if(ROI.anchored)
 					if(isliving(ROI))

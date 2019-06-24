@@ -295,15 +295,16 @@
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 
-	var/datum/component/mobhook
+	var/mob/listeningTo
 
 /obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
 	. = ..()
-	if(req_defib)
-		if (mobhook && mobhook.parent != user)
-			QDEL_NULL(mobhook)
-		if (!mobhook)
-			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/check_range)))
+	if(!req_defib || listeningTo == user)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
+	listeningTo = user
 
 /obj/item/twohanded/shockpaddles/Moved()
 	. = ..()
@@ -360,8 +361,8 @@
 /obj/item/twohanded/shockpaddles/dropped(mob/user)
 	if(!req_defib)
 		return ..()
-	if (mobhook)
-		QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	if(user)
 		var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 		if(istype(O))
@@ -437,7 +438,7 @@
 	do_help(H, user)
 
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
-	if(H.suiciding || H.hellbound || H.has_trait(TRAIT_HUSK))
+	if(H.suiciding || H.hellbound || HAS_TRAIT(H, TRAIT_HUSK))
 		return
 	if((world.time - H.timeofdeath) > tlimit)
 		return
@@ -453,7 +454,7 @@
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
 	if(isliving(H.pulledby))		//CLEAR!
 		var/mob/living/M = H.pulledby
-		if(M.electrocute_act(30, src))
+		if(M.electrocute_act(30, H))
 			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
 			M.emote("scream")
 
@@ -467,7 +468,7 @@
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
 	M.adjustStaminaLoss(50)
 	M.Paralyze(100)
-	M.updatehealth() //forces health update before next life tick
+	M.updatehealth() //forces health update before next life tick //isn't this done by adjustStaminaLoss anyway?
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
 	log_combat(user, M, "stunned", src)
@@ -577,7 +578,7 @@
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!H.getorgan(/obj/item/organ/heart))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
-				else if(total_burn >= MAX_REVIVE_FIRE_DAMAGE || total_brute >= MAX_REVIVE_BRUTE_DAMAGE || H.has_trait(TRAIT_HUSK))
+				else if(total_burn >= MAX_REVIVE_FIRE_DAMAGE || total_brute >= MAX_REVIVE_BRUTE_DAMAGE || HAS_TRAIT(H, TRAIT_HUSK))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
 				else if(H.get_ghost())
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"

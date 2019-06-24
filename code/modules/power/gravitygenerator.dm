@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
-/obj/machinery/gravity_generator/safe_throw_at()
+/obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
 	return FALSE
 
 /obj/machinery/gravity_generator/ex_act(severity, target)

@@ -69,8 +69,8 @@
 		return ..()
 
 /obj/item/circuitboard/computer/card/minor/examine(user)
-	..()
-	to_chat(user, "Currently set to \"[dept_list[target_dept]]\".")
+	. = ..()
+	. += "Currently set to \"[dept_list[target_dept]]\"."
 
 //obj/item/circuitboard/computer/shield
 //	name = "Shield Control (Computer Board)"
@@ -154,6 +154,10 @@
 /obj/item/circuitboard/computer/arcade/orion_trail
 	name = "Orion Trail (Computer Board)"
 	build_path = /obj/machinery/computer/arcade/orion_trail
+
+/obj/item/circuitboard/computer/arcade/amputation
+	name = "Mediborg's Amputation Adventure (Computer Board)"
+	build_path = /obj/machinery/computer/arcade/amputation
 
 /obj/item/circuitboard/computer/turbine_control
 	name = "Turbine control (Computer Board)"

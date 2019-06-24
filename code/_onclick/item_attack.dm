@@ -40,7 +40,7 @@
 		return TRUE
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(user.a_intent == INTENT_HARM && stat == DEAD && (butcher_results || guaranteed_butcher_results)) //can we butcher it?
-		GET_COMPONENT_FROM(butchering, /datum/component/butchering, I)
+		var/datum/component/butchering/butchering = I.GetComponent(/datum/component/butchering)
 		if(butchering && butchering.butchering_enabled)
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, butchering.butcher_sound, 50, TRUE, -1)
@@ -60,7 +60,7 @@
 	if(item_flags & NOBLUDGEON)
 		return
 
-	if(force && user.has_trait(TRAIT_PACIFISM))
+	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
 

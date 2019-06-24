@@ -12,7 +12,7 @@
 	if(target == user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
 		for(var/obj/item/implant/uplink/I in target)
 			if(I && I.imp_in)
-				GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, I)
+				var/datum/component/uplink/hidden_uplink = I.GetComponent(/datum/component/uplink)
 				if(hidden_uplink)
 					hidden_uplink.telecrystals += amount
 					use(amount)

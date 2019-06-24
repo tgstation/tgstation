@@ -32,23 +32,19 @@
 	mat_mod *= 50000
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		amt_made = 12.5 * M.rating //% of materials salvaged
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
-	GET_COMPONENT(butchering, /datum/component/butchering)
+	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
 	butchering.effectiveness = amount_produced
 	butchering.bonus_modifier = amount_produced/5
 
 /obj/machinery/recycler/examine(mob/user)
-	..()
-	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.<span>")
-
-/obj/machinery/recycler/examine(mob/user)
-	..()
-	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
-	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
-	to_chat(user, "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"].")
+	. = ..()
+	. += "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.<span>"
+	. += {"The power light is [(stat & NOPOWER) ? "off" : "on"].
+	The safety-mode light is [safety_mode ? "on" : "off"].
+	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -142,7 +138,7 @@
 		qdel(L)
 		return
 	else
-		GET_COMPONENT(materials, /datum/component/material_container)
+		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/material_amount = materials.get_item_material_amount(I)
 		if(!material_amount)
 			qdel(I)
@@ -193,7 +189,7 @@
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		GET_COMPONENT(butchering, /datum/component/butchering)
+		var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
 		butchering.Butcher(src,L)
 
 /obj/machinery/recycler/deathtrap

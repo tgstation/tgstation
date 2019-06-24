@@ -111,8 +111,8 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/salbutamol = 4,
-		/obj/item/reagent_containers/hypospray/medipen = 2,
+		/obj/item/reagent_containers/syringe/perfluorodecalin = 5,
+		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -159,7 +159,7 @@
 
 /obj/item/storage/firstaid/tactical/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
@@ -173,6 +173,32 @@
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
+
+//medibot assembly
+/obj/item/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
+	if((!istype(S, /obj/item/bodypart/l_arm/robot)) && (!istype(S, /obj/item/bodypart/r_arm/robot)))
+		return ..()
+
+	//Making a medibot!
+	if(contents.len >= 1)
+		to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
+		return
+
+	var/obj/item/bot_assembly/medbot/A = new
+	if(istype(src, /obj/item/storage/firstaid/fire))
+		A.skin = "ointment"
+	else if(istype(src, /obj/item/storage/firstaid/toxin))
+		A.skin = "tox"
+	else if(istype(src, /obj/item/storage/firstaid/o2))
+		A.skin = "o2"
+	else if(istype(src, /obj/item/storage/firstaid/brute))
+		A.skin = "brute"
+	user.put_in_hands(A)
+	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
+	A.robot_arm = S.type
+	A.firstaid = type
+	qdel(S)
+	qdel(src)
 
 /*
  * Pill Bottles
@@ -190,10 +216,10 @@
 
 /obj/item/storage/pill_bottle/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
 	STR.click_gather = TRUE
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
+	STR.set_holdable(list(/obj/item/reagent_containers/pill, /obj/item/dice))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -298,7 +324,7 @@
 
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
-	desc = "Contains pills to expunge radioation and toxins"
+	desc = "Contains pills to expunge radiation and toxins."
 
 /obj/item/storage/pill_bottle/penacid/PopulateContents()
 	for(var/i in 1 to 3)

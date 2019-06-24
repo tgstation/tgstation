@@ -1,7 +1,7 @@
 /mob/living/carbon/human/get_movespeed_modifiers()
 	var/list/considering = ..()
 	. = considering
-	if(has_trait(TRAIT_IGNORESLOWDOWN))
+	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
 		for(var/id in .)
 			var/list/data = .[id]
 			if(data[MOVESPEED_DATA_INDEX_FLAGS] & IGNORE_NOSLOW)
@@ -13,10 +13,10 @@
 		. += dna.species.movement_delay(src)
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
-	if(has_trait(TRAIT_NOSLIPALL))
+	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
 		return 0
 	if (!(lube&GALOSHES_DONT_HELP))
-		if(has_trait(TRAIT_NOSLIPWATER))
+		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
 			return 0
 		if(shoes && istype(shoes, /obj/item/clothing))
 			var/obj/item/clothing/CS = shoes
@@ -43,8 +43,6 @@
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_move(NewLoc)
 
 	if(shoes)
 		if(mobility_flags & MOBILITY_STAND)

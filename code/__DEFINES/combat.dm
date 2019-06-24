@@ -12,12 +12,13 @@
 #define BRAIN		"brain"
 
 //bitflag damage defines used for suicide_act
-#define BRUTELOSS 		(1<<0)
-#define FIRELOSS 		(1<<1)
-#define TOXLOSS 		(1<<2)
-#define OXYLOSS 		(1<<3)
-#define SHAME 			(1<<4)
-#define MANUAL_SUICIDE	(1<<5)	//suicide_act will do the actual killing.
+#define BRUTELOSS 	            	(1<<0)
+#define FIRELOSS 	            	(1<<1)
+#define TOXLOSS 	            	(1<<2)
+#define OXYLOSS 	            	(1<<3)
+#define SHAME 			            (1<<4)
+#define MANUAL_SUICIDE          	(1<<5)	//suicide_act will do the actual killing.
+#define MANUAL_SUICIDE_NONLETHAL	(1<<6)  //when the suicide is conditionally lethal
 
 #define EFFECT_STUN			"stun"
 #define EFFECT_KNOCKDOWN	"knockdown"
@@ -67,6 +68,9 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
+//Grab breakout odds
+#define BASE_GRAB_RESIST_CHANCE 	30
+
 //slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
 #define SOFTCRIT_ADD_SLOWDOWN 2
 //slowdown when crawling
@@ -84,6 +88,7 @@
 #define ATTACK_EFFECT_KICK		"kick"
 #define ATTACK_EFFECT_SMASH		"smash"
 #define ATTACK_EFFECT_CLAW		"claw"
+#define ATTACK_EFFECT_SLASH		"slash"
 #define ATTACK_EFFECT_DISARM	"disarm"
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_MECHFIRE	"mech_fire"
@@ -102,6 +107,20 @@
 
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
+
+//Shove knockdown lengths (deciseconds)
+#define SHOVE_KNOCKDOWN_SOLID 30
+#define SHOVE_KNOCKDOWN_HUMAN 30
+#define SHOVE_KNOCKDOWN_TABLE 30
+#define SHOVE_KNOCKDOWN_COLLATERAL 10
+#define SHOVE_CHAIN_PARALYZE 40
+//Shove slowdown
+#define SHOVE_SLOWDOWN_LENGTH 30
+#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+//Shove disarming item list
+GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
+	/obj/item/gun)))
+
 
 //Combat object defines
 

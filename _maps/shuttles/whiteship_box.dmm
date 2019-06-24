@@ -181,7 +181,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -193,7 +193,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/blood/old,
@@ -210,7 +210,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
@@ -218,7 +218,7 @@
 "ax" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -240,7 +240,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/airalarm/all_access{
@@ -257,7 +257,7 @@
 "az" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -281,7 +281,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -304,7 +304,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -329,7 +329,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -343,10 +343,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -377,13 +377,13 @@
 /obj/item/reagent_containers/food/snacks/muffin/berry,
 /obj/item/reagent_containers/food/snacks/tofu,
 /obj/item/reagent_containers/food/snacks/burrito,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Crew Quarters APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -410,7 +410,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
 /obj/effect/decal/cleanable/blood/old,
@@ -423,7 +423,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /mob/living/simple_animal/hostile/zombie{
@@ -532,10 +532,11 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/zombie{
 	desc = "This undead fiend looks to be badly decomposed.";
 	environment_smash = 0;
@@ -544,7 +545,6 @@
 	melee_damage_upper = 11;
 	name = "Rotting Carcass"
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aQ" = (
@@ -661,7 +661,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -712,7 +712,7 @@
 "bc" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -814,9 +814,6 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bp" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/terminal{
 	dir = 4
 	},
@@ -826,6 +823,9 @@
 	},
 /obj/machinery/light/small/built{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -844,7 +844,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/white,
@@ -895,7 +895,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -929,7 +929,7 @@
 "bz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -998,7 +998,7 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/blood/old,
@@ -1030,7 +1030,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -1041,13 +1041,13 @@
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /obj/item/crowbar,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Medbay APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/plasteel/white,
@@ -1093,7 +1093,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1140,6 +1140,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/zombie{
 	desc = "This undead fiend looks to be badly decomposed.";
 	environment_smash = 0;
@@ -1148,7 +1149,6 @@
 	melee_damage_upper = 11;
 	name = "Rotting Carcass"
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "bT" = (
@@ -1162,7 +1162,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -1172,7 +1172,7 @@
 "bV" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/medical/glass{
@@ -1182,7 +1182,7 @@
 /area/shuttle/abandoned/medbay)
 "bW" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -1194,13 +1194,13 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -1218,7 +1218,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1228,7 +1228,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -1268,7 +1268,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/blood/old,
@@ -1362,7 +1362,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1438,24 +1438,24 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cr" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cs" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ct" = (
@@ -1468,7 +1468,7 @@
 	pixel_y = -24;
 	req_access = null
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
@@ -1477,7 +1477,7 @@
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1494,7 +1494,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/white,
@@ -1506,7 +1506,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1541,7 +1541,6 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,
@@ -1549,6 +1548,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cz" = (
@@ -1560,21 +1560,21 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cB" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cC" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/engineering{
@@ -1590,10 +1590,10 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -1738,7 +1738,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -1750,7 +1750,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/white/corner{
@@ -1818,7 +1818,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/blood/old,
@@ -1874,7 +1874,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -1884,7 +1884,7 @@
 "da" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white/corner{
@@ -1896,7 +1896,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -1916,7 +1916,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1927,7 +1927,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1937,7 +1937,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -1954,7 +1954,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1965,7 +1965,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/structure/sign/warning/nosmoking{
@@ -1985,7 +1985,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1997,7 +1997,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2129,13 +2129,13 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Bridge APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/blue{

@@ -223,17 +223,17 @@
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
-	if(has_trait(TRAIT_SHOCKIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
-	if(reagents.has_reagent("teslium"))
+	if(reagents.has_reagent(/datum/reagent/teslium))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	if(illusion)
 		adjustStaminaLoss(shock_damage)
@@ -244,6 +244,12 @@
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack.</span>" \
 		)
+	if(iscarbon(pulling) && !illusion && source != pulling)
+		var/mob/living/carbon/C = pulling
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
+	if(iscarbon(pulledby) && !illusion && source != pulledby)
+		var/mob/living/carbon/C = pulledby
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
@@ -265,7 +271,7 @@
 
 	if(!(mobility_flags & MOBILITY_STAND))
 		if(buckled)
-			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
+			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
 			return
 		M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 						"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
@@ -273,6 +279,12 @@
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
+			var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+			if (mood.sanity >= SANITY_GREAT)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+			else if (mood.sanity >= SANITY_DISTURBED)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 		for(var/datum/brain_trauma/trauma in M.get_traumas())
 			trauma.on_hug(M, src)
 	AdjustStun(-60)
@@ -287,13 +299,16 @@
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	if(NOFLASH in dna?.species?.species_traits)
+		return
+	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes) //can't flash what can't see!
+		return
+
 	. = ..()
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
-		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-		if (!eyes)
-			return
 		if(visual)
 			return
 
@@ -316,12 +331,12 @@
 
 			if(eyes.eye_damage > 20)
 				if(prob(eyes.eye_damage - 20))
-					if(!has_trait(TRAIT_NEARSIGHT))
+					if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.eye_damage - 25))
-					if(!has_trait(TRAIT_BLIND))
+					if(!HAS_TRAIT(src, TRAIT_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 					become_blind(EYE_DAMAGE)
 

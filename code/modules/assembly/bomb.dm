@@ -17,7 +17,7 @@
 	return TRUE
 
 /obj/item/onetankbomb/examine(mob/user)
-	bombtank.examine(user)
+	return bombtank.examine(user)
 
 /obj/item/onetankbomb/update_icon()
 	cut_overlays()
@@ -55,10 +55,6 @@
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		add_fingerprint(user)
 		return TRUE
-
-
-/obj/item/onetankbomb/analyzer_act(mob/living/user, obj/item/I)
-	bombtank.analyzer_act(user, I)
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, TRUE)
@@ -200,3 +196,9 @@
 		return
 	T.assume_air(removed)
 	air_update_turf()
+
+/obj/item/onetankbomb/return_analyzable_air()
+	if(bombtank)
+		return bombtank.return_analyzable_air()
+	else
+		return null

@@ -102,7 +102,7 @@
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH)))
+	if(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH)))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
@@ -174,7 +174,7 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
+	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
@@ -184,9 +184,9 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	var/virus_threat = check_virus()
 	holder.pixel_y = I.Height() - world.icon_size
-	if(has_trait(TRAIT_XENO_HOST))
+	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
-	else if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
+	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		if(tod)
 			var/tdelta = round(world.time - timeofdeath)
 			if(tdelta < (DEFIB_TIME_LIMIT * 10))
@@ -244,7 +244,7 @@
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_chem"
-	if(has_trait(TRAIT_MINDSHIELD))
+	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		holder = hud_list[IMPLOYAL_HUD]
 		var/icon/IC = icon(icon, icon_state, dir)
 		holder.pixel_y = IC.Height() - world.icon_size

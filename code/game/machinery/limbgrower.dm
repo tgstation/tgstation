@@ -87,7 +87,7 @@
 			selected_category = href_list["category"]
 
 		if(href_list["disposeI"])  //Get rid of a reagent incase you add the wrong one by mistake
-			reagents.del_reagent(href_list["disposeI"])
+			reagents.del_reagent(text2path(href_list["disposeI"]))
 
 		if(href_list["make"])
 
@@ -98,10 +98,10 @@
 				return
 
 
-			var/synth_cost = being_built.reagents_list["synthflesh"]*prod_coeff
+			var/synth_cost = being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff
 			var/power = max(2000, synth_cost/5)
 
-			if(reagents.has_reagent("synthflesh", being_built.reagents_list["synthflesh"]*prod_coeff))
+			if(reagents.has_reagent(/datum/reagent/medicine/synthflesh, being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff))
 				busy = TRUE
 				use_power(power)
 				flick("limbgrower_fill",src)
@@ -115,8 +115,8 @@
 	return
 
 /obj/machinery/limbgrower/proc/build_item()
-	if(reagents.has_reagent("synthflesh", being_built.reagents_list["synthflesh"]*prod_coeff))	//sanity check, if this happens we are in big trouble
-		reagents.remove_reagent("synthflesh",being_built.reagents_list["synthflesh"]*prod_coeff)
+	if(reagents.has_reagent(/datum/reagent/medicine/synthflesh, being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff))	//sanity check, if this happens we are in big trouble
+		reagents.remove_reagent(/datum/reagent/medicine/synthflesh,being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff)
 		var/buildpath = being_built.build_path
 		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
 			build_limb(buildpath)
@@ -157,9 +157,9 @@
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 
 /obj/machinery/limbgrower/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of synthflesh.<br>Synthflesh consumption at <b>[prod_coeff*100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of synthflesh.<br>Synthflesh consumption at <b>[prod_coeff*100]%</b>.<span>"
 
 /obj/machinery/limbgrower/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Limb Grower Menu:</h3><br>"
@@ -201,7 +201,7 @@
 
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume]"
-		dat += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A><BR>"
+		dat += "<A href='?src=[REF(src)];disposeI=[R]'>Purge</A><BR>"
 
 	dat += "</div>"
 	return dat
@@ -211,12 +211,12 @@
 	return dat
 
 /obj/machinery/limbgrower/proc/can_build(datum/design/D)
-	return (reagents.has_reagent("synthflesh", D.reagents_list["synthflesh"]*prod_coeff)) //Return whether the machine has enough synthflesh to produce the design
+	return (reagents.has_reagent(/datum/reagent/medicine/synthflesh, D.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff)) //Return whether the machine has enough synthflesh to produce the design
 
 /obj/machinery/limbgrower/proc/get_design_cost(datum/design/D)
 	var/dat
-	if(D.reagents_list["synthflesh"])
-		dat += "[D.reagents_list["synthflesh"] * prod_coeff] Synthetic flesh "
+	if(D.reagents_list[/datum/reagent/medicine/synthflesh])
+		dat += "[D.reagents_list[/datum/reagent/medicine/synthflesh] * prod_coeff] Synthetic flesh "
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)

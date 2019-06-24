@@ -32,9 +32,9 @@
 	accuracy = A
 
 /obj/machinery/teleport/hub/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.<span>"
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
@@ -131,13 +131,13 @@
 	efficiency = E - 1
 
 /obj/machinery/teleport/station/examine(mob/user)
-	..()
+	. = ..()
 	if(!panel_open)
-		to_chat(user, "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device and wiring panel.</span>")
+		. += "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device and wiring panel.</span>"
 	else
-		to_chat(user, "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned</i> with a multitool.<br>The <i>wiring</i> can be <i>connected<i> to a nearby console and hub with a pair of wirecutters.</span>")
+		. += "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned</i> with a multitool.<br>The <i>wiring</i> can be <i>connected<i> to a nearby console and hub with a pair of wirecutters.</span>"
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: This station can be linked to <b>[efficiency]</b> other station(s).<span>")
+		. += "<span class='notice'>The status display reads: This station can be linked to <b>[efficiency]</b> other station(s).<span>"
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
 	for(var/direction in GLOB.cardinals)
@@ -225,5 +225,7 @@
 		icon_state = "controller-o"
 	else if(stat & (BROKEN|NOPOWER))
 		icon_state = "controller-p"
+	else if(teleporter_console && teleporter_console.calibrating)
+		icon_state = "controller-c"
 	else
 		icon_state = "controller"

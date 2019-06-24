@@ -412,7 +412,7 @@
 	auto_name = 1;
 	dir = 4;
 	name = "Engineering APC";
-	pixel_x = 27;
+	pixel_x = 24;
 	pixel_y = 2
 	},
 /turf/open/floor/plating,
@@ -1238,7 +1238,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "cV" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -4391,7 +4391,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "iy" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -4457,7 +4457,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Security APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -5903,7 +5903,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Medbay APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
@@ -5925,7 +5925,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Escape APC";
-	pixel_y = -24
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-8"

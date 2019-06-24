@@ -53,7 +53,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "al" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -75,7 +75,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aq" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -574,7 +574,7 @@
 /area/shuttle/escape)
 "br" = (
 /obj/machinery/light,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -584,7 +584,7 @@
 /area/shuttle/escape)
 "bt" = (
 /obj/machinery/light,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,

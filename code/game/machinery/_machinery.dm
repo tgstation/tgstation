@@ -147,6 +147,10 @@ Class Procs:
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
+	if(length(component_parts))
+		for(var/atom/A in component_parts)
+			qdel(A)
+		component_parts.Cut()
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
@@ -183,12 +187,15 @@ Class Procs:
 			L.update_mobility()
 	occupant = null
 
+/obj/machinery/proc/can_be_occupant(atom/movable/am)
+	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)
+
 /obj/machinery/proc/close_machine(atom/movable/target = null)
 	state_open = FALSE
 	density = TRUE
 	if(!target)
 		for(var/am in loc)
-			if (!(occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)))
+			if (!(can_be_occupant(am)))
 				continue
 			var/atom/movable/AM = am
 			if(AM.has_buckled_mobs())
@@ -249,19 +256,19 @@ Class Procs:
 				var/datum/bank_account/insurance = I.registered_account
 				if(!insurance)
 					say("[market_verb] NAP Violation: No bank account found.")
-					nap_violation()
+					nap_violation(occupant)
 					return FALSE
 				else
 					if(!insurance.adjust_money(-fair_market_price))
 						say("[market_verb] NAP Violation: Unable to pay.")
-						nap_violation()
+						nap_violation(occupant)
 						return FALSE
 					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 					if(D)
 						D.adjust_money(fair_market_price)
 			else
 				say("[market_verb] NAP Violation: No ID card found.")
-				nap_violation()
+				nap_violation(occupant)
 				return FALSE
 	return TRUE
 
@@ -345,6 +352,7 @@ Class Procs:
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
+			component_parts.Cut()
 	qdel(src)
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -440,7 +448,7 @@ Class Procs:
 			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
 			var/P
 			if(W.works_from_distance)
-				display_parts(user)
+				to_chat(user, display_parts(user))
 			for(var/obj/item/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
@@ -468,34 +476,36 @@ Class Procs:
 							break
 			RefreshParts()
 		else
-			display_parts(user)
+			to_chat(user, display_parts(user))
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return TRUE
 	return FALSE
 
 /obj/machinery/proc/display_parts(mob/user)
-	to_chat(user, "<span class='notice'>It contains the following parts:</span>")
+	. = list()
+	. += "<span class='notice'>It contains the following parts:</span>"
 	for(var/obj/item/C in component_parts)
-		to_chat(user, "<span class='notice'>[icon2html(C, user)] \A [C].</span>")
+		. += "<span class='notice'>[icon2html(C, user)] \A [C].</span>"
+	. = jointext(., "")
 
 /obj/machinery/examine(mob/user)
-	..()
+	. = ..()
 	if(stat & BROKEN)
-		to_chat(user, "<span class='notice'>It looks broken and non-functional.</span>")
+		. += "<span class='notice'>It looks broken and non-functional.</span>"
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			to_chat(user, "<span class='warning'>It's on fire!</span>")
+			. += "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				to_chat(user,  "It looks slightly damaged.")
+				. += "It looks slightly damaged."
 			if(25 to 50)
-				to_chat(user,  "It appears heavily damaged.")
+				. += "It appears heavily damaged."
 			if(0 to 25)
-				to_chat(user,  "<span class='warning'>It's falling apart!</span>")
+				. += "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
-		display_parts(user)
+		. += display_parts(user, TRUE)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()

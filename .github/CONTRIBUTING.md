@@ -243,6 +243,8 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Queries must never specify the database, be it in code, or in text files in the repo.
 
+* Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
+
 ### Mapping Standards
 * TGM Format & Map Merge
 	* All new maps submitted to the repo through a pull request must be in TGM format (unless there is a valid reason present to have it in the default BYOND format.) This is done using the [Map Merge](https://github.com/tgstation/tgstation/wiki/Map-Merger) utility included in the repo to convert the file to TGM format.

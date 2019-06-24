@@ -105,7 +105,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 8;
 	name = "Syndicate Drop Ship APC";
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,

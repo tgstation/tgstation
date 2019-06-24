@@ -15,6 +15,7 @@
 		)) - typecacheof(list(
 		/obj/effect/dummy/chameleon,
 		/obj/effect/wisp,
+		/obj/effect/mob_spawn,
 		))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
@@ -56,7 +57,7 @@
 
 	var/area/A = get_area(curturf)
 	var/area/B = get_area(destturf)
-	if(!forced && (teleatom.has_trait(TRAIT_NO_TELEPORT) || A.noteleport || B.noteleport))
+	if(!forced && (HAS_TRAIT(teleatom, TRAIT_NO_TELEPORT) || A.noteleport || B.noteleport))
 		return FALSE
 
 	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf))

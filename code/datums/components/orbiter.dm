@@ -1,4 +1,5 @@
 /datum/component/orbiter
+	can_transfer = TRUE
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/orbiters
 	var/datum/callback/orbiter_spy
@@ -80,7 +81,7 @@
 	shift.Translate(0, radius)
 	orbiter.transform = shift
 
-	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
+	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
 
 	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
 	orbiter.transform = initial_transform

@@ -6,7 +6,7 @@
 	return
 
 /datum/proc/ntnet_send(datum/netdata/data, netid)
-	GET_COMPONENT(NIC, /datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/NIC = GetComponent(/datum/component/ntnet_interface)
 	if(!NIC)
 		return FALSE
 	return NIC.__network_send(data, netid)

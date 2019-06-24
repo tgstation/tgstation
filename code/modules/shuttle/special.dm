@@ -76,7 +76,7 @@
 			break
 
 	if(!our_statue)
-		name = "inert [name]"
+		name = "inert [initial(name)]"
 		return
 	else
 		name = initial(name)
@@ -165,7 +165,7 @@
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
-	access_card.add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)

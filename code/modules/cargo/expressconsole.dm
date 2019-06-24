@@ -1,5 +1,5 @@
 #define MAX_EMAG_ROCKETS 8
-#define BEACON_COST 5000
+#define BEACON_COST 500
 #define SP_LINKED 1
 #define SP_READY 2
 #define SP_LAUNCH 3

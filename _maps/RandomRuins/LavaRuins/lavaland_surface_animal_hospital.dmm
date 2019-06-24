@@ -137,7 +137,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "at" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -149,7 +149,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "au" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -508,7 +508,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "br" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "bs" = (

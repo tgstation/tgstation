@@ -116,7 +116,7 @@
 	appearance = saved_appearance
 	if(istype(M.buckled, /obj/vehicle))
 		var/obj/vehicle/V = M.buckled
-		GET_COMPONENT_FROM(VRD, /datum/component/riding, V)
+		var/datum/component/riding/VRD = V.GetComponent(/datum/component/riding)
 		if(VRD)
 			VRD.force_dismount(M)
 		else

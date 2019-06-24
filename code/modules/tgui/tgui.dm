@@ -198,11 +198,19 @@
  **/
 /datum/tgui/proc/get_html(var/inline)
 	var/html
+	html = SStgui.basehtml
+
+	//Allow the src object to override the html if needed
+	html = src_object.ui_base_html(html)
+	//Strip out any remaining custom tags that are used in ui_base_html
+	html = replacetext(html, "<!--customheadhtml-->", "")
+
 	// Poplate HTML with JSON if we're supposed to inline.
 	if(inline)
-		html = replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
-	else
-		html = SStgui.basehtml
+		html = replacetextEx(html, "{}", get_json(initial_data))
+
+
+	//Setup for tgui stuff, including styles
 	html = replacetextEx(html, "\[ref]", "[REF(src)]")
 	html = replacetextEx(html, "\[style]", style)
 	return html

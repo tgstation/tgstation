@@ -3,6 +3,7 @@
 /datum/outfit/varedit
 	var/list/vv_values
 	var/list/stored_access
+	var/update_id_name = FALSE //If the name of the human is same as the name on the id they're wearing we'll update provided id when equipping
 
 /datum/outfit/varedit/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	H.delete_equipment() //Applying VV to wrong objects is not reccomended.
@@ -82,6 +83,9 @@
 	var/obj/item/id_slot = get_item_by_slot(SLOT_WEAR_ID)
 	if(id_slot)
 		O.stored_access |= id_slot.GetAccess()
+		var/obj/item/card/id/ID = id_slot.GetID()
+		if(ID && ID.registered_name == real_name)
+			O.update_id_name = TRUE
 	//Copy hands
 	if(held_items.len >= 2) //Not in the mood to let outfits transfer amputees
 		var/obj/item/left_hand = held_items[1]
@@ -141,3 +145,27 @@
 		var/obj/item/card/id/card = id_slot.GetID()
 		if(istype(card))
 			card.access |= stored_access
+		if(update_id_name)
+			card.registered_name = H.real_name
+			card.update_label()
+
+/datum/outfit/varedit/get_json_data()
+	. = .. ()
+	.["stored_access"] = stored_access
+	.["update_id_name"] = update_id_name
+	var/list/stripped_vv = list()
+	for(var/slot in vv_values)
+		var/list/vedits = vv_values[slot]
+		var/list/stripped_edits = list()
+		for(var/edit in vedits)
+			if(istext(vedits[edit]) || isnum(vedits[edit]) || isnull(vedits[edit]))
+				stripped_edits[edit] = vedits[edit]
+		if(stripped_edits.len)
+			stripped_vv[slot] = stripped_edits
+	.["vv_values"] = stripped_vv
+
+/datum/outfit/varedit/load_from(list/outfit_data)
+	. = ..()
+	stored_access = outfit_data["stored_access"]
+	vv_values = outfit_data["vv_values"]
+	update_id_name = outfit_data["update_id_name"]

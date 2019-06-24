@@ -53,9 +53,9 @@
 	max_items = max_storage
 
 /obj/machinery/biogenerator/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.<span>")
+		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.<span>"
 
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
@@ -190,11 +190,11 @@
 				dat += "<div class='statusDisplay'>"
 				for(var/V in categories[cat])
 					var/datum/design/D = V
-					dat += "[D.name]: <A href='?src=[REF(src)];create=[REF(D)];amount=1'>Make</A>"
+					dat += "[D.name]: <A href='?src=[REF(src)];create=[D.id];amount=1'>Make</A>"
 					if(cat in timesFiveCategories)
-						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=5'>x5</A>"
+						dat += "<A href='?src=[REF(src)];create=[D.id];amount=5'>x5</A>"
 					if(ispath(D.build_path, /obj/item/stack))
-						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=10'>x10</A>"
+						dat += "<A href='?src=[REF(src)];create=[D.id];amount=10'>x10</A>"
 					dat += "([D.materials[MAT_BIOMASS]/efficiency])<br>"
 				dat += "</div>"
 		else
@@ -215,9 +215,9 @@
 	var/S = 0
 	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
-		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
+		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
 			points += 1*productivity
-		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
+		else points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)*10*productivity
 		qdel(I)
 	if(S)
 		processing = TRUE
@@ -309,8 +309,22 @@
 
 	else if(href_list["create"])
 		var/amount = (text2num(href_list["amount"]))
-		var/datum/design/D = locate(href_list["create"])
-		create_product(D, amount)
+		//Can't be outside these (if you change this keep a sane limit)
+		amount = CLAMP(amount, 1, 10)
+		var/id = href_list["create"]
+		if(!stored_research.researched_designs.Find(id))
+			//naughty naughty
+			stack_trace("ID did not map to a researched datum [id]")
+			return
+
+		//Get design by id (or may return error design)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
+		//Valid design datum, amount and the datum is not the error design, lets proceed
+		if(D && amount && !istype(D, /datum/design/error_design))
+			create_product(D, amount)
+		//This shouldnt happen normally but href forgery is real
+		else
+			stack_trace("ID could not be turned into a valid techweb design datum [id]")
 		updateUsrDialog()
 
 	else if(href_list["menu"])

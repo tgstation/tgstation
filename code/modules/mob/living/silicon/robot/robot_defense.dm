@@ -1,8 +1,5 @@
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
-	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
-		if(!(I.slot_flags & ITEM_SLOT_HEAD))
-			to_chat(user, "<span class='warning'>You can't quite fit [I] onto [src]'s head.</span>")
-			return
+	if(I.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && user.a_intent == INTENT_HELP && !is_type_in_typecache(I, blacklisted_hats))
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
 		if(do_after(user, 30, target = src))

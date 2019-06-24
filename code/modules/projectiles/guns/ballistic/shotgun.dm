@@ -19,6 +19,7 @@
 	casing_ejector = FALSE
 	bolt_wording = "pump"
 	cartridge_wording = "shell"
+	tac_reloads = FALSE
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
@@ -80,8 +81,8 @@
 	semi_auto = TRUE
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to pump it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to pump it.</span>"
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
 	. = ..()
@@ -225,4 +226,3 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
-

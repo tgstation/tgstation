@@ -1,5 +1,5 @@
 //Sends resource files to client cache
-/client/proc/getFiles()
+/client/proc/getFiles(...)
 	for(var/file in args)
 		src << browse_rsc(file)
 
