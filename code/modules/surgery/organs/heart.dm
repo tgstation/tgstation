@@ -151,13 +151,13 @@
 
 /obj/item/organ/heart/cybernetic
 	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. The epinephrine will slowly regenerate after use."
 	icon_state = "heart-c"
 	synthetic = TRUE
 	var/dose_available = TRUE
 
-	var/rid = /datum/reagent/medicine/epinephrine
-	var/ramount = 10
+	var/epinid = /datum/reagent/medicine/epinephrine
+	var/epinamount = 15
 
 /obj/item/organ/heart/cybernetic/emp_act()
 	. = ..()
@@ -167,21 +167,38 @@
 
 /obj/item/organ/heart/cybernetic/on_life()
 	. = ..()
-	if(dose_available && owner.stat == UNCONSCIOUS && !owner.reagents.has_reagent(rid))
-		owner.reagents.add_reagent(rid, ramount)
+	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(epinid))
+		to_chat(owner, "<span class='notice'>You hear a soft beep from your chest as your cybernetic heart activates.</span>")
 		used_dose()
 
 /obj/item/organ/heart/cybernetic/proc/used_dose()
 	dose_available = FALSE
+	owner.reagents.add_reagent(epinid, epinamount)
+	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 10 MINUTES)
 
 /obj/item/organ/heart/cybernetic/upgraded
 	name = "upgraded cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of various healing reagents, used automatically after facing severe trauma. This upgraded model has a reduced cooldown time after use."
 	icon_state = "heart-c-u"
 
+	var/omniid = /datum/reagent/medicine/omnizine
+	var/atroid = /datum/reagent/medicine/atropine
+	var/tricid = /datum/reagent/medicine/tricordrazine
+	var/salbid = /datum/reagent/medicine/salbutamol
+
+	var/omniamount = 5
+	var/atroamount = 10
+	var/tricamount = 10
+	var/salbamount = 15
+
 /obj/item/organ/heart/cybernetic/upgraded/used_dose()
-	. = ..()
+	dose_available = FALSE
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
+	owner.reagents.add_reagent(epinid, epinamount)
+	owner.reagents.add_reagent(omniid, omniamount)
+	owner.reagents.add_reagent(atroid, atroamount)
+	owner.reagents.add_reagent(tricid, tricamount)
+	owner.reagents.add_reagent(salbid, salbamount)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"
