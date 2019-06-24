@@ -722,7 +722,6 @@ What a mess.*/
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
-							to_chat(world,active1.fields["name"])
 							for (var/obj/item/pda/P in GLOB.PDAs)
 								if(P.owner == active1.fields["name"])
 									var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
@@ -735,7 +734,7 @@ What a mess.*/
 									))
 									signal.send_to_receivers()
 									usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-
+							GLOB.data_core.addCitation(active1.fields["id"], crime)
 							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("citation_delete")
 						if(istype(active1, /datum/data/record))
