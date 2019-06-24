@@ -49,10 +49,17 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			break
 	for(var/check_dir in GLOB.cardinals)
 		var/TB = get_step(src, check_dir)
+		//don't link from smes to its terminal
 		if(under_thing)
 			switch(under_thing)
 				if(UNDER_SMES)
 					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
+					//Why null or equal to the search parent?
+					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
+					//but the cable underneath it has
+					//I don't believe null is even a valid state for a smes terminal while the game is actually running
+					//So in the rare case that this happens, we also shouldn't connect
+					//This might break.
 					if(term && (!term.master || term.master == search_parent))
 						continue
 				if(UNDER_TERMINAL)
