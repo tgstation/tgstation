@@ -1411,7 +1411,7 @@
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if(L.failing || !L)
 		return
-	conversion_amount = trans_volume * (min(100 -L.damage, 80) / 100) //the more damaged the liver the worse we metabolize.
+	conversion_amount = trans_volume * (min(100 -C.getLiverLoss(), 80) / 100) //the more damaged the liver the worse we metabolize.
 	C.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
 	C.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
 	..()

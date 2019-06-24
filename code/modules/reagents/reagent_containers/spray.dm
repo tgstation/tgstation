@@ -386,13 +386,10 @@
 		switch(icon_state)
 			if("sprayer_med_red")
 				item_state = "sprayer_med_red"
-				to_chat(user, "item state set.'")
 				return
 			if("sprayer_med_yellow")
 				item_state = "sprayer_med_yellow"
-				to_chat(user, "item state set.'")
 				return
 			if("sprayer_med_blue")
 				item_state = "sprayer_med_blue"
-				to_chat(user, "item state set.'")
 				return
