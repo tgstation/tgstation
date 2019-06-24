@@ -341,12 +341,12 @@
 		if(!V)
 			continue
 		var/obj/machinery/spaceship_navigation_beacon/B = V
-		if(console.z_locked.len && B.z)
-			if(B.z in console.z_locked)
-				break
+		//if(console.z_locked.len && B.z)
+		//	if(B.z in console.z_locked)
+		//		break
 		if(!B.id || (B.id && console.beacon_codes[B.id]))
 			if(!B.access_code || (B.access_code && console.beacon_access_codes[B.access_code]))
-				L["([L.len]) [B.name] located: [B.x] [B.y] [B.z]"] = B
+				L["([L.len]) [B.id] located: [B.x] [B.y] [B.z]"] = B
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L
