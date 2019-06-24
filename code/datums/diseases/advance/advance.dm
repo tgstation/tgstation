@@ -36,8 +36,8 @@
 	var/static/list/advance_cures = 	list(
 									/datum/reagent/consumable/sodiumchloride, /datum/reagent/consumable/sugar, /datum/reagent/consumable/orangejuice,
 									/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/consumable/ethanol,
-									/datum/reagent/medicine/leporazine, /datum/reagent/medicine/synaptizine, /datum/reagent/toxin/lipolicide,
-									/datum/reagent/silver, /datum/reagent/gold
+									/datum/reagent/medicine/leporazine, /datum/reagent/drug/happiness, /datum/reagent/toxin/lipolicide, 
+									/datum/reagent/medicine/haloperidol, /datum/reagent/medicine/modafinil
 								)
 
 /*
