@@ -257,6 +257,16 @@
 /obj/machinery/shower/deluxe/check_clothes(mob/living/carbon/human/H)
 	return FALSE //Always returns false because we go through clothing.
 
+/obj/machinery/shower/deluxe/update_icon()
+	cut_overlays()
+
+	if(on)
+		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "shower_water", ABOVE_MOB_LAYER))
+		icon_state = "d-shower_on"
+	else
+		icon_state = "d-shower"
+
+
 /obj/effect/mist
 	name = "mist"
 	icon = 'icons/obj/watercloset.dmi'
@@ -269,7 +279,7 @@
 	name = "shower parts"
 	desc = "All the things you need to construct a shower, comes with in-built H2O atom assembler to compensate for Nanotrasen's lack of plumbing installation."
 	icon = 'icons/obj/watercloset.dmi'
-	icon_state = "showerparts"
+	icon_state = "showerbuild1"
 	var/created_shower_type = /obj/machinery/shower
 
 /obj/item/showerparts/attack_self(mob/user)
@@ -287,5 +297,5 @@
 /obj/item/showerparts/deluxe
 	name = "deluxe shower parts"
 	desc = "Enough parts to build a deluxe shower with 2 bonus screws...Wait hold on a moment."
-	icon_state = "d-showerparts"
+	icon_state = "showerbuild2"
 	created_shower_type = /obj/machinery/shower/deluxe
