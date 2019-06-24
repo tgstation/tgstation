@@ -12,6 +12,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/unmodify)
 
 /datum/component/tactical/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	unmodify()
 
 /datum/component/fantasy/Destroy()
@@ -31,4 +32,10 @@
 	I.layer = ABOVE_MOB_LAYER
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
+	var/obj/item/master = source || parent
+	if(!user)
+		if(!ismob(master.loc))
+			return
+		user = master.loc
+	
 	user.remove_alt_appearance("sneaking_mission")

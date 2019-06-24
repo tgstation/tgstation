@@ -87,7 +87,7 @@
 /datum/component/proc/UnregisterFromParent()
 	return
 
-/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proc_or_callback, override = FALSE)
+/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))
 		return
 
@@ -100,15 +100,12 @@
 	if(!lookup)
 		target.comp_lookup = lookup = list()
 
-	if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
-		proc_or_callback = CALLBACK(src, proc_or_callback)
-
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
 		if(!override && procs[target][sig_type])
 			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		procs[target][sig_type] = proc_or_callback
+		procs[target][sig_type] = proctype
 
 		if(!lookup[sig_type]) // Nothing has registered here yet
 			lookup[sig_type] = src
@@ -175,17 +172,20 @@
 		var/datum/C = target
 		if(!C.signal_enabled)
 			return NONE
-		var/datum/callback/CB = C.signal_procs[src][sigtype]
-		return CB.InvokeAsync(arglist(arguments))
+		var/proctype = C.signal_procs[src][sigtype]
+		return NONE | call(C, proctype)(arglist(arguments))
 	. = NONE
 	for(var/I in target)
 		var/datum/C = I
 		if(!C.signal_enabled)
 			continue
-		var/datum/callback/CB = C.signal_procs[src][sigtype]
-		. |= CB.InvokeAsync(arglist(arguments))
+		var/proctype = C.signal_procs[src][sigtype]
+		. |= call(C, proctype)(arglist(arguments))
 
-/datum/proc/GetComponent(c_type)
+// The type arg is casted so initial works, you shouldn't be passing a real instance into this
+/datum/proc/GetComponent(datum/component/c_type)
+	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED)
+		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
 	if(!dc)
 		return null

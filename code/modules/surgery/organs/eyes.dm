@@ -243,14 +243,11 @@
 
 /obj/item/organ/eyes/robotic/glow/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
-	if (mobhook && mobhook.parent != M)
-		QDEL_NULL(mobhook)
-	if (!mobhook)
-		mobhook = M.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE = CALLBACK(src, .proc/update_visuals)))
+	RegisterSignal(M, COMSIG_ATOM_DIR_CHANGE, .proc/update_visuals)
 
 /obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
-	QDEL_NULL(mobhook)
+	UnregisterSignal(M, COMSIG_ATOM_DIR_CHANGE)
 
 /obj/item/organ/eyes/robotic/glow/Destroy()
 	QDEL_NULL(mobhook) // mobhook is not our component

@@ -16,6 +16,9 @@
 			handle_feeding()
 		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
 			handle_nutrition()
+			if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
+				return
+			reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len) //Slimes are such snowflakes
 			handle_targets()
 			if (!ckey)
 				handle_mood()
@@ -61,7 +64,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(issilicon(Target))
+				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
@@ -599,7 +602,8 @@
 				phrases += "[M]... friend..."
 				if (nutrition < get_hunger_nutrition())
 					phrases += "[M]... feed me..."
-			say (pick(phrases))
+			if(!stat)
+				say (pick(phrases))
 
 /mob/living/simple_animal/slime/proc/get_max_nutrition() // Can't go above it
 	if (is_adult)

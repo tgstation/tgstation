@@ -1,3 +1,4 @@
+#define PERF_BASE_DAMAGE		0.5
 
 //////////////////////////////////////////////////////////////////////////////////////////
 					// MEDICINE REAGENTS
@@ -357,7 +358,7 @@
 				to_chat(M, "<span class='danger'>You feel your wounds fade away to nothing!</span>" )
 	..()
 
-/datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
 		N.hal_screwyhud = SCREWYHUD_NONE
@@ -394,7 +395,7 @@
 	. = 1
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			M.reagents.remove_reagent(type,1)
+			M.reagents.remove_reagent(R.type,1)
 	..()
 
 /datum/reagent/medicine/omnizine
@@ -505,16 +506,26 @@
 
 /datum/reagent/medicine/perfluorodecalin
 	name = "Perfluorodecalin"
-	description = "Extremely rapidly restores oxygen deprivation, but inhibits speech. May also heal small amounts of bruising and burns."
+	description = "Restores oxygen deprivation while producing a lesser amount of toxic byproducts. Both scale with exposure to the drug and current amount of oxygen deprivation. Overdose causes toxic byproducts regardless of oxygen deprivation."
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
-	M.adjustOxyLoss(-12*REM, 0)
-	M.adjustToxLoss(0.3*REM, 0)
+	var/oxycalc = 2.5*REM*current_cycle
+	if(!overdosed)
+		oxycalc = min(oxycalc,M.getOxyLoss()+PERF_BASE_DAMAGE) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.5. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
+	M.adjustOxyLoss(-oxycalc, 0)
+	M.adjustToxLoss(oxycalc/2.5, 0)
+	if(prob(current_cycle) && M.losebreath)
+		M.losebreath--
 	..()
 	return TRUE
+
+/datum/reagent/medicine/perfluorodecalin/overdose_process(mob/living/M)
+    metabolization_rate += 1
+    return ..()
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
@@ -525,11 +536,11 @@
 	overdose_threshold = 30
 	addiction_threshold = 25
 
-/datum/reagent/medicine/ephedrine/on_mob_add(mob/living/L)
+/datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.85, blacklisted_movetypes=(FLYING|FLOATING))
 
-/datum/reagent/medicine/ephedrine/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
 	..()
 
@@ -632,11 +643,11 @@
 	overdose_threshold = 30
 	addiction_threshold = 25
 
-/datum/reagent/medicine/morphine/on_mob_add(mob/living/L)
+/datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/L)
 	..()
 	L.ignore_slowdown(type)
 
-/datum/reagent/medicine/morphine/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/L)
 	L.unignore_slowdown(type)
 	..()
 
@@ -757,11 +768,11 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
-/datum/reagent/medicine/epinephrine/on_mob_add(mob/living/carbon/M)
+/datum/reagent/medicine/epinephrine/on_mob_metabolize(mob/living/carbon/M)
 	..()
 	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE, type)
 
-/datum/reagent/medicine/epinephrine/on_mob_delete(mob/living/carbon/M)
+/datum/reagent/medicine/epinephrine/on_mob_end_metabolize(mob/living/carbon/M)
 	REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE, type)
 	..()
 
@@ -887,11 +898,11 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
-/datum/reagent/medicine/stimulants/on_mob_add(mob/living/L)
+/datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
-/datum/reagent/medicine/stimulants/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
 	..()
 
@@ -1163,11 +1174,11 @@
 	color = "#C8A5DC"
 	metabolization_rate = 1
 
-/datum/reagent/medicine/changelinghaste/on_mob_add(mob/living/L)
+/datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 
-/datum/reagent/medicine/changelinghaste/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
 	..()
 
@@ -1184,23 +1195,25 @@
 	color = "#F5F5F5"
 	self_consuming = TRUE
 
-/datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
+/datum/reagent/medicine/corazone/on_mob_metabolize(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
-/datum/reagent/medicine/corazone/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
 	..()
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"
 	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
 
-/datum/reagent/medicine/muscle_stimulant/on_mob_add(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/M)
 	. = ..()
 	M.ignore_slowdown(type)
 
-/datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 	M.unignore_slowdown(type)
 
@@ -1214,11 +1227,11 @@
 	taste_description = "salt" // it actually does taste salty
 	var/overdose_progress = 0 // to track overdose progress
 
-/datum/reagent/medicine/modafinil/on_mob_add(mob/living/M)
+/datum/reagent/medicine/modafinil/on_mob_metabolize(mob/living/M)
 	ADD_TRAIT(M, TRAIT_SLEEPIMMUNE, type)
 	..()
 
-/datum/reagent/medicine/modafinil/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/modafinil/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_SLEEPIMMUNE, type)
 	..()
 
@@ -1276,11 +1289,11 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
-/datum/reagent/medicine/psicodine/on_mob_add(mob/living/L)
+/datum/reagent/medicine/psicodine/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_FEARLESS, type)
 
-/datum/reagent/medicine/psicodine/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/psicodine/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_FEARLESS, type)
 	..()
 
@@ -1289,7 +1302,7 @@
 	M.dizziness = max(0, M.dizziness-6)
 	M.confused = max(0, M.confused-6)
 	M.disgust = max(0, M.disgust-6)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	if(mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
 		mood.setSanity(min(mood.sanity+5, SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
 	..()
@@ -1300,3 +1313,6 @@
 	M.adjustToxLoss(1, 0)
 	..()
 	. = 1
+
+
+#undef PERF_BASE_DAMAGE

@@ -6,7 +6,7 @@
 	attack_verb = list("thumped", "whomped", "bumped")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
-	var/component = /datum/component/squeak
+	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
 	//--love ~<3--
@@ -33,7 +33,7 @@
 
 /obj/item/toy/plush/Initialize()
 	. = ..()
-	AddComponent(component)
+	AddComponent(/datum/component/squeak, squeak_override)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -87,7 +87,7 @@
 	scorned_by = null
 
 	//null remaining lists
-	datum_outputs = null
+	squeak_override = null
 
 	love_message = null
 	partner_message = null
@@ -107,10 +107,6 @@
 	if(stuffed || grenade)
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 		if(grenade && !grenade.active)
-			if(istype(grenade, /obj/item/grenade/chem_grenade))
-				var/obj/item/grenade/chem_grenade/G = grenade
-				if(G.nadeassembly) //We're activated through different methods
-					return
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.preprime(user, msg = FALSE, volume = 10)
 	else
@@ -369,14 +365,14 @@
 	icon_state = "carpplush"
 	item_state = "carp_plushie"
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	component = /datum/component/squeak/carp
+	squeak_override = list('sound/weapons/bite.ogg'=1)
 
 /obj/item/toy/plush/bubbleplush
 	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
 	attack_verb = list("rent")
-	component = /datum/component/squeak/bubbleplush
+	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
 
 /obj/item/toy/plush/plushvar
 	name = "\improper Ratvar plushie"
@@ -459,7 +455,7 @@
 		say("NO! I will not be banished again...")
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
 		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
-		playsound(P, /datum/outputs/demonattack, 50, TRUE, frequency = 2)
+		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
 		explosion(src, 0, 0, 1)
 		qdel(src)
 		P.clashing = FALSE
@@ -488,7 +484,7 @@
 	icon_state = "plushie_lizard"
 	item_state = "plushie_lizard"
 	attack_verb = list("clawed", "hissed", "tail slapped")
-	component = /datum/component/squeak/lizardplushie
+	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
@@ -496,7 +492,7 @@
 	icon_state = "plushie_snake"
 	item_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
-	component = /datum/component/squeak/snakeplushie
+	squeak_override = list('sound/weapons/bite.ogg' = 1)
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
@@ -504,7 +500,7 @@
 	icon_state = "plushie_nuke"
 	item_state = "plushie_nuke"
 	attack_verb = list("shot", "nuked", "detonated")
-	component = /datum/component/squeak/nukeplushie
+	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
 
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
@@ -512,8 +508,9 @@
 	icon_state = "plushie_slime"
 	item_state = "plushie_slime"
 	attack_verb = list("blorbled", "slimed", "absorbed")
+	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
-	component = /datum/component/squeak/slimeplushie
+	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
@@ -524,3 +521,12 @@
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
+
+/obj/item/toy/plush/beeplushie
+	name = "bee plushie"
+	desc = "A cute toy that resembles an even cuter bee."
+	icon_state = "plushie_h"
+	item_state = "plushie_h"
+	attack_verb = list("stung")
+	gender = FEMALE
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)

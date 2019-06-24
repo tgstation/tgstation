@@ -6,6 +6,7 @@
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	inherent_traits = list(TRAIT_TOXINLOVER)
+	mutantlungs = /obj/item/organ/lungs/slime
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	damage_overlay_type = ""

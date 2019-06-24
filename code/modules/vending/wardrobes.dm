@@ -265,7 +265,7 @@
 					/obj/item/paint/paint_remover = 1,
 					/obj/item/melee/flyswatter = 1,
 					/obj/item/flashlight = 1,
-					/obj/item/caution = 6,
+					/obj/item/clothing/suit/caution = 6,
 					/obj/item/holosign_creator/janibarrier = 1,
 					/obj/item/lightreplacer = 1,
 					/obj/item/soap/nanotrasen = 1,

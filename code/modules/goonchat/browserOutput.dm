@@ -187,23 +187,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	if(!target)
 		return
 
-	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
-	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
-	if (istype(target, /savefile))
-		CRASH("Invalid message! [message]")
-
-	if(!istext(message))
-		if (istype(message, /image) || istype(message, /sound))
-			CRASH("Invalid message! [message]")
-		return
-
 	if(target == world)
 		target = GLOB.clients
 
 	var/original_message = message
-	//Some macros remain in the string even after parsing and fuck up the eventual output
-	message = replacetext(message, "\improper", "")
-	message = replacetext(message, "\proper", "")
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")

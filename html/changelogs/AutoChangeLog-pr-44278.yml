@@ -1,4 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "lightning holoparasite will no longer zap across the entire zlevel after death"

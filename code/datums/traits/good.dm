@@ -18,13 +18,13 @@
 	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
 
 /datum/quirk/apathetic/add()
-	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 	if(mood)
 		mood.mood_modifier -= 0.2
 
 /datum/quirk/apathetic/remove()
 	if(quirk_holder)
-		GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+		var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 		if(mood)
 			mood.mood_modifier += 0.2
 
@@ -98,9 +98,11 @@
 /datum/quirk/musician/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/choice_beacon/music/B = new(get_turf(H))
-	H.put_in_hands(B)
-	H.equip_to_slot(B, SLOT_IN_BACKPACK)
-	H.regenerate_icons()
+	var/list/slots = list (
+		"backpack" = SLOT_IN_BACKPACK,
+		"hands" = SLOT_HANDS,
+	)
+	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
 
 /datum/quirk/night_vision
 	name = "Night Vision"

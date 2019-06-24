@@ -16,9 +16,9 @@
 	var/warcry
 
 /obj/item/banner/examine(mob/user)
-	..()
+	. = ..()
 	if(inspiration_available)
-		to_chat(user, "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>")
+		. += "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>"
 
 /obj/item/banner/attack_self(mob/living/carbon/human/user)
 	if(!inspiration_available)
@@ -218,7 +218,7 @@
 
 /obj/item/storage/backpack/bannerpack/Initialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red
@@ -365,7 +365,7 @@
 	desc = "This one is rusted."
 	force = 30
 	armour_penetration = 15
-	
+
 /obj/item/claymore/weak/ceremonial
 	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
 	force = 15

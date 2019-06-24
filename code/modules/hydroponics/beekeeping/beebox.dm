@@ -123,25 +123,25 @@
 
 
 /obj/structure/beebox/examine(mob/user)
-	..()
+	. = ..()
 
 	if(!queen_bee)
-		to_chat(user, "<span class='warning'>There is no queen bee! There won't bee any honeycomb without a queen!</span>")
+		. += "<span class='warning'>There is no queen bee! There won't bee any honeycomb without a queen!</span>"
 
 	var/half_bee = get_max_bees()*0.5
 	if(half_bee && (bees.len >= half_bee))
-		to_chat(user, "<span class='notice'>This place is aBUZZ with activity... there are lots of bees!</span>")
+		. += "<span class='notice'>This place is aBUZZ with activity... there are lots of bees!</span>"
 
-	to_chat(user, "<span class='notice'>[bee_resources]/100 resource supply.</span>")
-	to_chat(user, "<span class='notice'>[bee_resources]% towards a new honeycomb.</span>")
-	to_chat(user, "<span class='notice'>[bee_resources*2]% towards a new bee.</span>")
+	. += "<span class='notice'>[bee_resources]/100 resource supply.</span>"
+	. += "<span class='notice'>[bee_resources]% towards a new honeycomb.</span>"
+	. += "<span class='notice'>[bee_resources*2]% towards a new bee.</span>"
 
 	if(honeycombs.len)
 		var/plural = honeycombs.len > 1
-		to_chat(user, "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>")
+		. += "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>"
 
 	if(honeycombs.len >= get_max_honeycomb())
-		to_chat(user, "<span class='warning'>There's no room for more honeycomb!</span>")
+		. += "<span class='warning'>There's no room for more honeycomb!</span>"
 
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)

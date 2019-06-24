@@ -27,32 +27,13 @@
 			for (var/i in 1 to 2)
 				grenade.beakers += beaker_panel_create_container(containersdata[i], grenade)
 				reagent_string += " ([grenade.beakers[i].name] [i] : " + pretty_string_from_reagent_list(grenade.beakers[i].reagents.reagent_list) + ");"
-			grenade.stage_change(3) // ready stage
+			grenade.stage_change(GRENADE_READY)
 			var/grenadedata = json_decode(href_list["grenadedata"])
 			switch (href_list["grenadetype"])
 				if ("normal") // Regular cable coil-timed grenade
 					var/det_time = text2num(grenadedata["grenade-timer"])
 					if (det_time)
 						grenade.det_time = det_time
-				if ("voice")
-					var/voice_mode = text2num(grenadedata["grenade-voice-mode"])
-					var/recording = grenadedata["grenade-voice-recording"]
-					if (voice_mode && recording)
-						var/obj/item/assembly/voice/voice_analyzer = new
-						voice_analyzer.mode = voice_mode
-						voice_analyzer.recorded = recording
-						voice_analyzer.secured = FALSE // needs to be unsecured  because assembly holder assembly toggles it
-						grenade.nadeassembly = beaker_panel_prep_assembly(voice_analyzer, grenade)
-				if ("signaler")
-					var/frq = format_frequency(grenadedata["grenade-signaler-frq"])
-					var/code = text2num(grenadedata["grenade-signaler-code"])
-					if (frq && code)
-						var/obj/item/assembly/signaler/signaler = new
-						signaler.code = code
-						signaler.frequency = frq
-						signaler.secured = FALSE
-						grenade.nadeassembly = beaker_panel_prep_assembly(signaler, grenade)
-
 			log_game("[key_name(usr)] spawned a [grenade] containing: [reagent_string]")
 
 /datum/admins/proc/beaker_panel_prep_assembly(obj/item/assembly/towrap, grenade)
@@ -284,29 +265,8 @@
 			<label for="grenade-type">Grenade type: </label>
 		 <select id="grenade-type">
 			 <option value="normal">Normal</option>
-			 <option value="voice">Voice analyzer</option>
-			 <option value="signaler">Signaler</option>
 		 </select>
 		 <div class="grenade-data normal">
-			 <label for="grenade-timer">Timer: </label>
-			 <input id="grenade-timer" name="grenade-timer" value="30" />
-		 </div>
-		 <div class="grenade-data voice" style="display: none;">
-			 <label for="grenade-voice-mode">Mode</label>
-			 <select id="grenade-voice-mode" name="grenade-voice-mode">
-				 <option value="1">Inclusive</option>
-				 <option value="2">Exclusive</option>
-				 <option value="3">Recognizer</option>
-				 <option value="4">Voice sensor</option>
-			 </select>
-			 <label for="grenade-voice-recording">Name or phrase: </label>
-			 <input id="grenade-voice-recording" name="grenade-voice-recording" />
-		 </div>
-		 <div class="grenade-data signaler" style="display: none;">
-			 <label for="grenade-signaler-frq">Frequency: </label>
-			 <input id="grenade-signaler-frq" name="grenade-signaler-frq" />
-			 <label for="grenade-signaler-code">Code: </label>
-			 <input id="grenade-signaler-code" name="grenade-signaler-code" />
 		 </div>
 			<br />
 <small>note: beakers recommended, other containers may have issues</small>

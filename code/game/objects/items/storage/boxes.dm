@@ -74,8 +74,28 @@
 		return 0
 	return ..()
 
+//Mime spell boxes
+
+/obj/item/storage/box/mime
+	name = "invisible box"
+	desc = "Unfortunately not large enough to trap the mime."
+	foldable = null
+	icon_state = "box"
+	item_state = null
+	alpha = 0
+
+/obj/item/storage/box/mime/attack_hand(mob/user)
+	..()
+	if(user.mind.miming)
+		alpha = 255
+
+/obj/item/storage/box/mime/Moved(oldLoc, dir)
+	if (iscarbon(oldLoc))
+		alpha = 0
+	..()
 
 //Disk boxes
+
 /obj/item/storage/box/disks
 	name = "diskette box"
 	illustration = "disk_kit"
@@ -401,7 +421,7 @@
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
 
 /obj/item/storage/box/donkpockets/PopulateContents()
@@ -417,7 +437,7 @@
 
 /obj/item/storage/box/monkeycubes/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/monkeycube))
 
@@ -437,7 +457,7 @@
 
 /obj/item/storage/box/gorillacubes/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 3
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/monkeycube))
 
@@ -590,7 +610,7 @@
 
 /obj/item/storage/box/snappops/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/toy/snappop))
 	STR.max_items = 8
 
@@ -608,7 +628,7 @@
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.set_holdable(list(/obj/item/match))
 
@@ -631,7 +651,7 @@
 
 /obj/item/storage/box/lights/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 21
 	STR.set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
 	STR.max_combined_w_class = 21

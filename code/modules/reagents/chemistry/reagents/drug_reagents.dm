@@ -4,7 +4,7 @@
 	taste_description = "bitterness"
 	var/trippy = TRUE //Does this drug make you trip?
 
-/datum/reagent/drug/on_mob_delete(mob/living/M)
+/datum/reagent/drug/on_mob_end_metabolize(mob/living/M)
 	if(trippy)
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_high")
 
@@ -170,11 +170,11 @@
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 
-/datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
+/datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 
-/datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
+/datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
 	..()
 
@@ -254,7 +254,7 @@
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
-/datum/reagent/drug/bath_salts/on_mob_add(mob/living/L)
+/datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
@@ -263,7 +263,7 @@
 		rage = new()
 		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/reagent/drug/bath_salts/on_mob_delete(mob/living/L)
+/datum/reagent/drug/bath_salts/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	if(rage)
@@ -369,7 +369,7 @@
 	addiction_threshold = 10
 	overdose_threshold = 20
 
-/datum/reagent/drug/happiness/on_mob_add(mob/living/L)
+/datum/reagent/drug/happiness/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_FEARLESS, type)
 	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug)
@@ -405,7 +405,7 @@
 	. = 1
 
 /datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(min(mood.sanity, SANITY_DISTURBED))
 	M.Jitter(5)
 	if(prob(20))
@@ -413,7 +413,7 @@
 	..()
 
 /datum/reagent/drug/happiness/addiction_act_stage2(mob/living/M)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
 	M.Jitter(10)
 	if(prob(30))
@@ -421,7 +421,7 @@
 	..()
 
 /datum/reagent/drug/happiness/addiction_act_stage3(mob/living/M)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(min(mood.sanity, SANITY_CRAZY))
 	M.Jitter(15)
 	if(prob(40))
@@ -429,7 +429,7 @@
 	..()
 
 /datum/reagent/drug/happiness/addiction_act_stage4(mob/living/carbon/human/M)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(SANITY_INSANE)
 	M.Jitter(20)
 	if(prob(50))
