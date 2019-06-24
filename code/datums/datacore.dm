@@ -34,6 +34,7 @@
 	var/author = ""
 	var/time = ""
 	var/fine = 0
+	var/paid = 0
 	var/dataId = 0
 
 /datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "", fine = "")
@@ -43,6 +44,7 @@
 	c.author = author
 	c.time = time
 	c.fine = fine
+	c.paid = 0
 	c.dataId = ++securityCrimeCounter
 	return c
 
