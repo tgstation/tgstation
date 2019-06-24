@@ -278,10 +278,8 @@
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
-	if(SS.purified)
+	if(purified)
 		icon_state = "purified_soulstone2"
-		S.icon_state = "ghost1"
-		S.name = "Purified [S.name]"
 	else
 		icon_state = "soulstone2"
 	if(U && (iswizard(U) || usability))
