@@ -163,7 +163,6 @@
 	response_help = "tries desperately to appease"
 	response_disarm = "foolishly pushes"
 	response_harm = "angers"
-	access_card = ACCESS_THEATRE
 	speak = list("HONK", "Honk!", "HAUAUANK!!!", "GUUURRRRAAAHHH!!!")
 	emote_see = list("honks", "sweats", "grunts")
 	speak_chance = 5
