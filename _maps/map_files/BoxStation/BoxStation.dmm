@@ -43884,9 +43884,6 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -44103,6 +44100,9 @@
 "cnn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "cnp" = (
@@ -44328,6 +44328,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "cox" = (
@@ -44338,6 +44341,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "coy" = (
@@ -50583,6 +50588,21 @@
 	},
 /obj/item/stock_parts/cell/high/plus,
 /turf/open/floor/plasteel,
+/area/engine/engine_smes)
+"hOF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "hPp" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -75312,9 +75332,9 @@ aaa
 cjJ
 ckw
 clE
-cmA
 mRd
-cmA
+hOF
+mRd
 cox
 lZU
 cpU
