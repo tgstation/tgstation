@@ -13,11 +13,11 @@
 
 /datum/mood_event/hungry
 	description = "<span class='warning'>I'm getting a bit hungry.</span>\n"
-	mood_change = -14
+	mood_change = -10
 
 /datum/mood_event/starving
 	description = "<span class='boldwarning'>I'm starving!</span>\n"
-	mood_change = -20
+	mood_change = -16
 
 //charge
 /datum/mood_event/charged
@@ -39,19 +39,19 @@
 
 /datum/mood_event/verygross
 	description = "<span class='warning'>I think I'm going to puke...</span>\n"
-	mood_change = -7
+	mood_change = -6
 
 /datum/mood_event/disgusted
 	description = "<span class='boldwarning'>Oh god that's disgusting...</span>\n"
-	mood_change = -10
+	mood_change = -8
 
 /datum/mood_event/disgust/bad_smell
 	description = "<span class='warning'>You smell something horribly decayed inside this room.</span>\n"
-	mood_change = -8
+	mood_change = -6
 
 /datum/mood_event/disgust/nauseating_stench
 	description = "<span class='warning'>The stench of rotting carcasses is unbearable!</span>\n"
-	mood_change = -15
+	mood_change = -12
 
 //Hygiene Events
 /datum/mood_event/neat
