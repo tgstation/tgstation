@@ -94,8 +94,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	if(client && !forced && config.ic_filter_regex && findtext(message, config.ic_filter_regex))
-		var/list/words = replacetext(message, config.ic_filter_regex_G, "<span class='boldwarning'>$1</span>")
-		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n\"[words]\"</span>")
+		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span></span>")
 		return
 
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
