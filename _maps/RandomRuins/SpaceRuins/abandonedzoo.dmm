@@ -690,6 +690,21 @@
 "KN" = (
 /turf/template_noop,
 /area/space/nearstation)
+"UK" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/bluespace_beacon,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/abandonedzoo)
 
 (1,1,1) = {"
 ab
@@ -785,7 +800,7 @@ ac
 at
 aS
 Ck
-Ck
+UK
 be
 at
 ac

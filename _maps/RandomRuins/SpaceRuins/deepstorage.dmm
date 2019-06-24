@@ -2759,6 +2759,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "hc" = (
 /obj/machinery/light/small,
+/obj/machinery/bluespace_beacon,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "hd" = (

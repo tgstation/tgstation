@@ -927,6 +927,10 @@
 /obj/item/organ/tail/cat,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
+"dt" = (
+/obj/machinery/bluespace_beacon,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
 "Bl" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1210,7 +1214,7 @@ ab
 ab
 ad
 ae
-ah
+dt
 ad
 aw
 aF

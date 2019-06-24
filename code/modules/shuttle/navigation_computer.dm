@@ -8,12 +8,15 @@
 	var/shuttlePortId = ""
 	var/shuttlePortName = "custom location"
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
+	var/list/beacon_codes = list() //hashset of beacon to jump to
+	var/list/beacon_access_codes = list() //hashset of access codes to beacons
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
+	var/list/z_locked = list(0) //z forbided for custom docking
 	var/view_range = 7
 	var/x_offset = 0
 	var/y_offset = 0
-	var/space_turfs_only = TRUE
+	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating/asteroid/basalt/lava_land_surface, /turf/open/lava/smooth/lava_land_surface, /turf/open/floor/plating/asteroid/airless, /turf/open/floor/plating)
 	var/see_hidden = FALSE
 	var/designate_time = 0
 	var/turf/designating_target_loc
@@ -161,7 +164,7 @@
 	if(current_user.client)
 		current_user.client.images += the_eye.placed_images
 		to_chat(current_user, "<span class='notice'>Transit location designated</span>")
-	return
+	return TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget()
 	if(!designating_target_loc || !current_user || (eyeobj.loc != designating_target_loc) || (stat & (NOPOWER|BROKEN)) )
@@ -227,9 +230,14 @@
 		if(hidden_turf_info)
 			. = SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT
 
-	if(space_turfs_only)
+	if(whitelist_turfs && whitelist_turfs.len)
 		var/turf_type = hidden_turf_info ? hidden_turf_info[2] : T.type
-		if(!ispath(turf_type, /turf/open/space))
+		var/find_legetim = 0
+		for(var/WT in whitelist_turfs)
+			if(ispath(turf_type, WT))
+				find_legetim = 1
+				break
+		if(!find_legetim)
 			return SHUTTLE_DOCKER_BLOCKED
 
 	// Checking for overlapping dock boundaries
@@ -327,7 +335,18 @@
 		if(console.z_lock.len && !(S.z in console.z_lock))
 			continue
 		if(console.jumpto_ports[S.id])
-			L[S.name] = S
+			L["([L.len])[S.name]"] = S
+
+	for(var/V in SSshuttle.beacons)
+		if(!V)
+			continue
+		var/obj/machinery/spaceship_navigation_beacon/B = V
+		if(console.z_locked.len && B.z)
+			if(B.z in console.z_locked)
+				break
+		if(!B.id || (B.id && console.beacon_codes[B.id]))
+			if(!B.access_code || (B.access_code && console.beacon_access_codes[B.access_code]))
+				L["([L.len]) [B.name] located: [B.x] [B.y] [B.z]"] = B
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L
