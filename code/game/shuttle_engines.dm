@@ -17,6 +17,7 @@
 	anchored = TRUE
 	var/engine_power = 1
 	var/state = ENGINE_WELDED //welding shmelding
+	CanAtmosPass = ATMOS_PASS_NO
 
 //Ugh this is a lot of copypasta from emitters, welding need some boilerplate reduction
 /obj/structure/shuttle/engine/can_be_unfasten_wrench(mob/user, silent)
