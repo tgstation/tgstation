@@ -47,7 +47,7 @@
 		if(QDELETED(src))
 			return
 		var/sellect
-		swich(choice)
+		switch(choice)
 			if("Add ID")
 				sellect = replacetext(lowertext(input("Enter the ID to add", "Input ID") as text), " ", "_")
 				if(selected)
