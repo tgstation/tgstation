@@ -56,7 +56,7 @@
 	if (istype(I))
 		id = replacetext(lowertext(input("Enter the ID for this beacon", "Input ID", id) as text), " ", "_")
 		access_code = replacetext(lowertext(input("Enter the access code for this beacon", "Input access code", access_code) as text), " ", "_")
-		name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text)]"
+		name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text]"
 		return TRUE
 
 /obj/machinery/spaceship_navigation_beacon/examine()
