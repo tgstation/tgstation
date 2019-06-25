@@ -71,7 +71,7 @@
 
 	if(!(stat & (NOPOWER|BROKEN)))
 		. += {"<span class='notice'>The status display reads:</span>\n
-		<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>"}
+		<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.</span>"}
 		if(beaker)
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				. += "<span class='notice'>- [R.volume] units of [R.name].</span>"
