@@ -75,7 +75,7 @@
 	density = TRUE
 	var/obj/machinery/mineral/CONSOLE = null
 	var/on = FALSE
-	var/selected_material = /datum/material/metal
+	var/selected_material = /datum/material/hematite
 	var/selected_alloy = null
 	var/datum/techweb/stored_research
 
@@ -112,7 +112,7 @@
 		var/datum/material/M = mat_id
 		var/amount = materials.materials[mat_id]
 		dat += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
-		if (selected_material == mat_id)
+		if (selected_material == mat_id.type)
 			dat += " <i>Smelting</i>"
 		else
 			dat += " <A href='?src=[REF(CONSOLE)];material=[mat_id]'><b>Not Smelting</b></A> "
@@ -189,11 +189,12 @@
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
-	for(var/mat_id in D.materials)
-		var/amount = D.materials[mat_id]
-		var/datum/material/smelter_mat = mat_id
+	for(var/mat_cat in D.materials)
+		var/M = D.materials[mat_cat]
+		var/datum/material/smelter_mat = materials.materials.get_category_amount(mat_cat)
+		var/amount = materials.materials[smelter_mat]
 
-		if(!M || !smelter_mat)
+		if(!smelter_mat)
 			return FALSE
 
 		build_amount = min(build_amount, round(amount / M))

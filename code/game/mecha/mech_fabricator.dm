@@ -35,7 +35,7 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize()
     var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
-     list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_PLASMA, MAT_CATEGORY_URANIUM, MAT_CATEGORY_BANANIUM, MAT_CATEGORY_TITANIUM, MAT_BLUESPACE), 0,
+     list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_PLASMA, MAT_CATEGORY_URANIUM, MAT_CATEGORY_BANANIUM, MAT_CATEGORY_TITANIUM, MAT_CATEGORY_BLUESPACE), 0,
         TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
     materials.precise_insertion = TRUE
     stored_research = new

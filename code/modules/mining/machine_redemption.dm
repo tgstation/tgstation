@@ -89,9 +89,10 @@
 
 	var/build_amount = 0
 
-	for(var/mat_id in D.materials)
-		var/M = D.materials[mat_id]
-		var/datum/material/redemption_mat = mat_container.materials[mat_id]
+	for(var/mat_cat in D.materials)
+		var/M = D.materials[mat_cat]
+		var/datum/material/redemption_mat = materials.materials.get_category_amount(mat_cat)
+		var/amount = materials.materials[redemption_mat]
 
 		if(!M || !redemption_mat)
 			return FALSE
@@ -226,13 +227,13 @@
 	if (mat_container)
 		for(var/mat_id in mat_container.materials)
 			var/datum/material/M = mat_container.materials[mat_id]
-			var/sheet_amount = M.amount ? M.amount / MINERAL_MATERIAL_AMOUNT : "0"
-			data["materials"] += list(list("name" = M.name, "id" = M.id, "amount" = sheet_amount, "value" = ore_values[M.id]))
+			var/sheet_amount = amount ? amount / MINERAL_MATERIAL_AMOUNT : "0"
+			data["materials"] += list(list("name" = M.name, "amount" = sheet_amount, "value" = ore_values[M.id]))
 
 		data["alloys"] = list()
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = SSresearch.techweb_design_by_id(v)
-			data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
+			data["alloys"] += list(list("name" = D.name, "amount" = can_smelt_alloy(D)))
 
 	if (!mat_container)
 		data["disconnected"] = "local mineral storage is unavailable"
