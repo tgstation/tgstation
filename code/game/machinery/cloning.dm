@@ -78,12 +78,12 @@
 		heal_level = 100
 
 /obj/machinery/clonepod/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The <i>linking</i> device can be <i>scanned<i> with a multitool.</span>")
+	. = ..()
+	. += "<span class='notice'>The <i>linking</i> device can be <i>scanned<i> with a multitool.</span>"
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Cloning speed at <b>[speed_coeff*50]%</b>.<br>Predicted amount of cellular damage: <b>[100-heal_level]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Cloning speed at <b>[speed_coeff*50]%</b>.<br>Predicted amount of cellular damage: <b>[100-heal_level]%</b>.<span>"
 		if(efficiency > 5)
-			to_chat(user, "<span class='notice'>Pod has been upgraded to support autoprocessing and apply beneficial mutations.<span>")
+			. += "<span class='notice'>Pod has been upgraded to support autoprocessing and apply beneficial mutations.<span>"
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -106,20 +106,20 @@
 	to_chat(user, "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/disk/data/examine(mob/user)
-	..()
-	to_chat(user, "The write-protect tab is set to [read_only ? "protected" : "unprotected"].")
+	. = ..()
+	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
 
 
 //Clonepod
 
 /obj/machinery/clonepod/examine(mob/user)
-	..()
+	. = ..()
 	var/mob/living/mob_occupant = occupant
 	if(mess)
-		to_chat(user, "It's filled with blood and viscera. You swear you can see it moving...")
-	if(is_operational() && mob_occupant)
+		. += "It's filled with blood and viscera. You swear you can see it moving..."
+	if(is_operational() && istype(mob_occupant))
 		if(mob_occupant.stat != DEAD)
-			to_chat(user, "Current clone cycle is [round(get_completion())]% complete.")
+			. += "Current clone cycle is [round(get_completion())]% complete."
 
 /obj/machinery/clonepod/return_air()
 	// We want to simulate the clone not being in contact with
@@ -200,6 +200,7 @@
 	//Get the clone body ready
 	maim_clone(H)
 	ADD_TRAIT(H, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	ADD_TRAIT(H, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_MUTE, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_NOBREATH, CLONING_POD_TRAIT)
@@ -408,6 +409,7 @@
 		return
 	current_insurance = null
 	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	REMOVE_TRAIT(mob_occupant, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_MUTE, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)

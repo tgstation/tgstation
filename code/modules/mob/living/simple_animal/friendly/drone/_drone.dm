@@ -171,44 +171,43 @@
 
 
 /mob/living/simple_animal/drone/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
+	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!")
 
 	//Hands
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
-			msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+			. += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
-		msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
+		. += "It is holding [internal_storage.get_examine_string(user)] in its internal storage."
 
 	//Cosmetic hat - provides no function other than looks
 	if(head && !(head.item_flags & ABSTRACT))
-		msg += "It is wearing [head.get_examine_string(user)] on its head.\n"
+		. += "It is wearing [head.get_examine_string(user)] on its head."
 
 	//Braindead
 	if(!client && stat != DEAD)
-		msg += "Its status LED is blinking at a steady rate.\n"
+		. += "Its status LED is blinking at a steady rate."
 
 	//Hacked
 	if(hacked)
-		msg += "<span class='warning'>Its display is glowing red!</span>\n"
+		. += "<span class='warning'>Its display is glowing red!</span>"
 
 	//Damaged
 	if(health != maxHealth)
 		if(health > maxHealth * 0.33) //Between maxHealth and about a third of maxHealth, between 30 and 10 for normal drones
-			msg += "<span class='warning'>Its screws are slightly loose.</span>\n"
+			. += "<span class='warning'>Its screws are slightly loose.</span>"
 		else //otherwise, below about 33%
-			msg += "<span class='boldwarning'>Its screws are very loose!</span>\n"
+			. += "<span class='boldwarning'>Its screws are very loose!</span>"
 
 	//Dead
 	if(stat == DEAD)
 		if(client)
-			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".</span>\n"
+			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".</span>"
 		else
-			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>\n"
-	msg += "*---------*</span>"
-	to_chat(user, msg)
+			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>"
+	. += "*---------*</span>"
 
 
 /mob/living/simple_animal/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.

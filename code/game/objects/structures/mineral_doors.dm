@@ -314,7 +314,7 @@
 /obj/structure/mineral_door/paperframe/examine(mob/user)
 	. = ..()
 	if(obj_integrity < max_integrity)
-		to_chat(user, "<span class='info'>It looks a bit damaged, you may be able to fix it with some <b>paper</b>.</span>")
+		. += "<span class='info'>It looks a bit damaged, you may be able to fix it with some <b>paper</b>.</span>"
 
 /obj/structure/mineral_door/paperframe/pickaxe_door(mob/living/user, obj/item/I)
 	return

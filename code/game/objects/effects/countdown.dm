@@ -20,7 +20,7 @@
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	to_chat(user, "This countdown is displaying: [displayed_text].")
+	. += "This countdown is displaying: [displayed_text]."
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
@@ -170,4 +170,3 @@
 	else
 		var/time_left = max(0, (H.finish_time - world.time) / 10)
 		return round(time_left)
-

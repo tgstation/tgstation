@@ -103,5 +103,8 @@
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
 	SSeconomy.generated_accounts += src
-	
+
+/datum/bank_account/remote // Bank account not belonging to the local station
+	add_to_accounts = FALSE
+
 #undef DUMPTIME

@@ -38,8 +38,7 @@
 
 /datum/species/snail/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	var/datum/component/CP = C.GetComponent(/datum/component/snailcrawl)
-	CP.RemoveComponent()
+	qdel(C.GetComponent(/datum/component/snailcrawl))
 	REMOVE_TRAIT(C, TRAIT_NOSLIPALL, SPECIES_TRAIT)
 	var/obj/item/storage/backpack/bag = C.get_item_by_slot(SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))

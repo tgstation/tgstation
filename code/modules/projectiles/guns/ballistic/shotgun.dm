@@ -81,8 +81,8 @@
 	semi_auto = TRUE
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to pump it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to pump it.</span>"
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
 	. = ..()
