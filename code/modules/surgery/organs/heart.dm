@@ -179,7 +179,7 @@
 
 /obj/item/organ/heart/cybernetic/upgraded
 	name = "upgraded cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of various healing reagents, used automatically after facing severe trauma. This upgraded model has a reduced cooldown time after use."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of various healing reagents, used automatically after facing severe trauma. The reagents will slowly regenerate after use."
 	icon_state = "heart-c-u"
 
 /obj/item/organ/heart/cybernetic/upgraded/used_dose()
