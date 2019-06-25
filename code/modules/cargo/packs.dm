@@ -2134,6 +2134,16 @@
 	crate_name = "original costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/costumes_toys/plugsuits
+	name = "Plugsuit Crate"
+	desc = "A different kind of EVA suit. Contains all three colors!"
+	cost = 1500 //state-of-the-art technology doesn't come cheap
+	contains = list(/obj/item/clothing/suit/asuka_plugsuit,
+					/obj/item/clothing/suit/rei_plugsuit,
+					/obj/item/clothing/suit/shinji_plugsuit)
+	crate_name = "plugsuit crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
 /datum/supply_pack/costumes_toys/costume
 	name = "Standard Costume Crate"
 	desc = "Supply the station's entertainers with the equipment of their trade with these Nanotrasen-approved costumes! Contains a full clown and mime outfit, along with a bike horn and a bottle of nothing."
