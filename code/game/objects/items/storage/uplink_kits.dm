@@ -178,7 +178,7 @@
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
 			new /obj/item/storage/box/syndie_kit/bee_grenades(src) // 15 tc
 			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
-			new /obj/item/melee/sabre/bee(src) //priceless
+			new /obj/item/melee/beesword(src) //priceless
 
 		if("mr_freeze")
 			new /obj/item/clothing/glasses/cold(src)
