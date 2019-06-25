@@ -648,7 +648,7 @@
 
 /obj/item/clothing/suit/asuka_plugsuit
 	name = "red plugsuit"
-	desc = "A red plugsuit. Might make your butt look big."
+	desc = "A red plugsuit. Saving the world and looking like a tomato with legs need no longer be mutually exclusive."
 	icon_state = "asuka_plugsuit"
 	item_state = "asuka_plugsuit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -658,7 +658,7 @@
 
 /obj/item/clothing/suit/rei_plugsuit
 	name = "white plugsuit"
-	desc = "A white plugsuit. Placeholder text."
+	desc = "A white plugsuit. Might make your butt look big."
 	icon_state = "rei_plugsuit"
 	item_state = "rei_plugsuit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -667,8 +667,8 @@
 	allowed = list()
 
 /obj/item/clothing/suit/shinji_plugsuit
-	name = "white plugsuit"
-	desc = "A blue plugsuit. Placeholder text."
+	name = "blue plugsuit"
+	desc = "A blue plugsuit. Now with complimentary crotch padding, for genuine anime androgyny!"
 	icon_state = "shinji_plugsuit"
 	item_state = "shinji_plugsuit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
