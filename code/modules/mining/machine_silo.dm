@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/material_container,
-		list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_PLASMA, MAT_CATEGORY_URANIUM, MAT_CATEGORY_BANANIUM, MAT_CATEGORY_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC),
+		list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_PLASMA, MAT_CATEGORY_URANIUM, MAT_CATEGORY_BANANIUM, MAT_CATEGORY_TITANIUM, MAT_CATEGORY_BLUESPACE, MAT_CATEGORY_PLASTIC),
 		INFINITY,
 		FALSE,
 		/obj/item/stack,
@@ -75,8 +75,9 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
 	var/any = FALSE
 	for(var/M in materials.materials)
-		var/datum/material/mat = materials.materials[M]
-		var/sheets = round(mat.amount) / MINERAL_MATERIAL_AMOUNT
+		var/datum/material/mat = M
+		var/amount = materials.materials[M]
+		var/sheets = round(amount) / MINERAL_MATERIAL_AMOUNT
 		if (sheets)
 			if (sheets >= 1)
 				ui += "<a href='?src=[REF(src)];ejectsheet=[mat.id];eject_amt=1'>Eject</a>"

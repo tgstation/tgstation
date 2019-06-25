@@ -91,19 +91,19 @@
 			I.materials = matlist.Copy()
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
-/obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+/obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/category)	// now returns how many times the item can be built with the material
 	if (!materials.mat_container)  // no connected silo
 		return 0
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
-	var/A = materials.mat_container.amount(M)
+	var/A = materials.mat_container.get_category_amount(category)
 	if(!A)
-		A = reagents.get_reagent_amount(M)
+		A = reagents.get_reagent_amount(category)
 
 	// these types don't have their .materials set in do_print, so don't allow
 	// them to be constructed efficiently
 	var/ef = efficient_with(being_built.build_path) ? efficiency_coeff : 1
-	return round(A / max(1, all_materials[M] / ef))
+	return round(A / max(1, all_materials[category] / ef))
 
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
@@ -208,11 +208,12 @@
 	var/list/l = list()
 	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
 	for(var/mat_id in materials.mat_container.materials)
-		var/datum/material/M = materials.mat_container.materials[mat_id]
-		l += "* [M.amount] of [M.name]: "
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
+		var/datum/material/M = mat_id
+		var/amount = materials.mat_container.materials[mat_id]
+		l += "* [amount] of [M.name]: "
+		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
 		l += ""
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l

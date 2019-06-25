@@ -34,10 +34,11 @@
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/mat_id in materials.materials)
-		var/datum/material/M = materials.materials[mat_id]
-		if(!M.amount && chosen != mat_id)
+		var/datum/material/M = mat_id
+		var/amount = materials.materials[mat_id]
+		if(!amount && chosen != mat_id)
 			continue
-		dat += "<br><b>[M.name] amount:</b> [M.amount] cm<sup>3</sup> "
+		dat += "<br><b>[M.name] amount:</b> [amount] cm<sup>3</sup> "
 		if (chosen == mat_id)
 			dat += "<b>Chosen</b>"
 		else
@@ -76,12 +77,12 @@
 		processing = TRUE
 		icon_state = "coinpress1"
 		var/coin_mat = MINERAL_MATERIAL_AMOUNT * 0.2
-		var/datum/material/M = materials.materials[chosen]
+		var/datum/material/M = chosen
 		if(!M || !M.coin_type)
 			updateUsrDialog()
 			return
 
-		while(coinsToProduce > 0 && materials.use_amount_type(coin_mat, chosen))
+		while(coinsToProduce > 0 && materials.use_amount_mat(coin_mat, chosen))
 			create_coins(M.coin_type)
 			coinsToProduce--
 			newCoins++

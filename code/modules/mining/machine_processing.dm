@@ -112,7 +112,7 @@
 		var/datum/material/M = mat_id
 		var/amount = materials.materials[mat_id]
 		dat += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
-		if (selected_material == mat_id.type)
+		if (selected_material == M.type)
 			dat += " <i>Smelting</i>"
 		else
 			dat += " <A href='?src=[REF(CONSOLE)];material=[mat_id]'><b>Not Smelting</b></A> "
@@ -191,7 +191,7 @@
 
 	for(var/mat_cat in D.materials)
 		var/M = D.materials[mat_cat]
-		var/datum/material/smelter_mat = materials.materials.get_category_amount(mat_cat)
+		var/datum/material/smelter_mat = materials.get_category_amount(mat_cat)
 		var/amount = materials.materials[smelter_mat]
 
 		if(!smelter_mat)

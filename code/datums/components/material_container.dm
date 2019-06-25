@@ -42,7 +42,6 @@
 
 	var/list/possible_mats = list()
 	for(var/mat_type in subtypesof(/datum/material))
-		var/datum/material/MT = mat_type
 		possible_mats += mat_type
 
 	for(var/mat in possible_mats)
@@ -163,13 +162,11 @@
 	return material_amount
 
 /datum/component/material_container/proc/insert_materials(obj/item/I, multiplier = 1) //for internal usage only
-	var/datum/material/M
 	var/primary_mat
 	var/max_mat_value = 0
 	for(var/MAT in materials)
-		M = materials[MAT]
-		M.amount += I.materials[MAT] * multiplier
-		total_amount += I.materials[MAT] * multiplier
+		materials[MAT] += I.used_materials[MAT] * multiplier
+		total_amount += I.used_materials[MAT] * multiplier
 		if(I.materials[MAT] > max_mat_value)
 			primary_mat = MAT
 	return primary_mat
@@ -180,29 +177,39 @@
 	if(!mats || !mats.len)
 		return FALSE
 
-	var/datum/material/M
 	for(var/MAT in materials)
-		M = materials[MAT]
-		if(M.amount < (mats[MAT] * multiplier))
+		var/amount = materials[MAT]
+		if(amount < (mats[MAT] * multiplier))
 			return FALSE
 
 	var/total_amount_save = total_amount
 	for(var/MAT in materials)
-		M = materials[MAT]
-		M.amount -= mats[MAT] * multiplier
+		materials[MAT] -= mats[MAT] * multiplier
 		total_amount -= mats[MAT] * multiplier
 
 	return total_amount_save - total_amount
 
 
-/datum/component/material_container/proc/use_amount_type(amt, id)
-	var/datum/material/M = materials[id]
+/datum/component/material_container/proc/use_amount_cat(amt, cat)
+	var/datum/material/M = SSmaterials.get_material(cat)
+	var/amount = materials[id]
 	if(M)
 		if(M.amount >= amt)
 			M.amount -= amt
 			total_amount -= amt
 			return amt
 	return FALSE
+
+/datum/component/material_container/proc/use_amount_mat(amt, mat)
+	var/datum/material/M = mat
+	var/amount = materials[mat]
+	if(M)
+		if(amount >= amt)
+			materials[mat] -= amt
+			total_amount -= amt
+			return amt
+	return FALSE
+
 
 /datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, mat)
 	if((amt==0)||(!T)||(!mat))
@@ -211,7 +218,7 @@
 		return T.transer_amt_to(src, -amt, mat)
 	var/tr = min(amt, materials[mat],T.can_insert_amount(amt, mat))
 	if(tr)
-		use_amount_type(tr, mat)
+		use_amount_mat(tr, mat)
 		T.insert_amount(tr, mat)
 		return tr
 	return FALSE
@@ -248,18 +255,18 @@
 
 	if(!target)
 		target = get_turf(parent)
-	if(M.amount < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
-		sheet_amt = round(M.amount / MINERAL_MATERIAL_AMOUNT)
+	if(materials[M] < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
+		sheet_amt = round(materials[M] / MINERAL_MATERIAL_AMOUNT)
 	var/count = 0
 	while(sheet_amt > MAX_STACK_SIZE)
 		new M.sheet_type(target, MAX_STACK_SIZE)
 		count += MAX_STACK_SIZE
-		use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
+		use_amount_mat(sheet_amt * MINERAL_MATERIAL_AMOUNT, M)
 		sheet_amt -= MAX_STACK_SIZE
 	if(sheet_amt >= 1)
 		new M.sheet_type(target, sheet_amt)
 		count += sheet_amt
-		use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
+		use_amount_mat(sheet_amt * MINERAL_MATERIAL_AMOUNT, M)
 	return count
 
 /datum/component/material_container/proc/retrieve_sheets(sheet_amt, mat, target = null)

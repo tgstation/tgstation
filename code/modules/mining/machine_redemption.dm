@@ -17,7 +17,7 @@
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
-	var/list/ore_values = list(MAT_CATEGORY_GLASS = 1, MAT_CATEGORY_IRON = 1, MAT_CATEGORY_PLASMA = 15, MAT_CATEGORY_SILVER = 16, MAT_CATEGORY_GOLD = 18, MAT_CATEGORY_TITANIUM = 30, MAT_CATEGORY_URANIUM = 30, MAT_CATEGORY_DIAMOND = 50, MAT_BLUESPACE = 50, MAT_CATEGORY_BANANIUM = 60)
+	var/list/ore_values = list("hematite" = 1, "glass" = 1, "plasma" = 15, "silver" = 16, "gold" = 18, "titanium" = 30,"uranium" = 30, "diamond" = 50, "bluespace" = 50, "bananium" = 60)
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
@@ -91,13 +91,13 @@
 
 	for(var/mat_cat in D.materials)
 		var/M = D.materials[mat_cat]
-		var/datum/material/redemption_mat = materials.materials.get_category_amount(mat_cat)
-		var/amount = materials.materials[redemption_mat]
+		var/datum/material/redemption_mat = mat_container.get_category_amount(mat_cat)
+		var/amount = mat_container.materials[redemption_mat]
 
 		if(!M || !redemption_mat)
 			return FALSE
 
-		var/smeltable_sheets = FLOOR(redemption_mat.amount / M, 1)
+		var/smeltable_sheets = FLOOR(amount / M, 1)
 
 		if(!smeltable_sheets)
 			return FALSE
@@ -226,7 +226,8 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (mat_container)
 		for(var/mat_id in mat_container.materials)
-			var/datum/material/M = mat_container.materials[mat_id]
+			var/datum/material/M = mat_id
+			var/amount = mat_container.materials[mat_id]
 			var/sheet_amount = amount ? amount / MINERAL_MATERIAL_AMOUNT : "0"
 			data["materials"] += list(list("name" = M.name, "amount" = sheet_amount, "value" = ore_values[M.id]))
 
@@ -288,8 +289,9 @@
 				var/mat_id = params["id"]
 				if(!mat_container.materials[mat_id])
 					return
-				var/datum/material/mat = mat_container.materials[mat_id]
-				var/stored_amount = mat.amount / MINERAL_MATERIAL_AMOUNT
+				var/datum/material/mat = mat_id
+				var/amount = mat_container.materials[mat_id]
+				var/stored_amount = amount / MINERAL_MATERIAL_AMOUNT
 
 				if(!stored_amount)
 					return
@@ -303,7 +305,7 @@
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat_id, get_step(src, output_dir))
 				var/list/mats = list()
-				mats[mat_id] = MINERAL_MATERIAL_AMOUNT
+				mats[mat] = MINERAL_MATERIAL_AMOUNT
 				materials.silo_log(src, "released", -count, "sheets", mats)
 			return TRUE
 		if("diskInsert")
