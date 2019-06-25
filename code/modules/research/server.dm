@@ -82,7 +82,6 @@
 	. = max(. - penalty, 0)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
-	//var/datum/gas_mixture/environment = loc.return_air()
 	var/turf/L = loc
 	if(isturf(L))
 		return L.temperature
@@ -184,9 +183,9 @@
 		dat += "</table>"
 
 	else
-		dat += "</br>No history found"
+		dat += "</br>No history found."
 
-	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
+	var/datum/browser/popup = new(user, "server_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()

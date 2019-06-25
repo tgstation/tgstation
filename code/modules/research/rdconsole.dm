@@ -167,8 +167,6 @@ Nothing else in the console has ID requirements.
 					var/obj/item/card/id/ID = I.GetID()
 					if(istype(ID))
 						logname = "User: [ID.registered_name]"
-			for(var/thing in price)
-				to_chat(world, "DEBUG -- [thing]")
 			var/i = stored_research.research_logs.len
 			stored_research.research_logs += null
 			stored_research.research_logs[++i] = list(TN.display_name, price["General Research"], logname, "[get_area(src)] ([src.x],[src.y],[src.z])")
