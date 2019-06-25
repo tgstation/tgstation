@@ -69958,8 +69958,6 @@
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/twohanded/rcl/pre_loaded,
-/obj/item/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "czA" = (
@@ -70448,6 +70446,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cAr" = (
