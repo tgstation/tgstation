@@ -184,6 +184,7 @@
 	name = "Sensory Shock"
 	desc = "After a short charging time, we overload the mind of one of our vessels with psionic energy, temporarilly disrupting their sight, hearing, and speech."
 	charge_max = 600
+	panel = "Hivemind Abilities"
 	invocation_type = "none"
 	clothes_req = 0
 	human_req = 1
