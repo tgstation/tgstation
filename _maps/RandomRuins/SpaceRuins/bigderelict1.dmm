@@ -2061,7 +2061,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ta" = (
-/obj/machinery/bluespace_beacon,
+/obj/machinery/spaceship_navigation_beacon,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "uV" = (
