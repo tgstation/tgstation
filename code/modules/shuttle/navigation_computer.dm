@@ -147,6 +147,9 @@
 		my_port.hidden = shuttle_port.hidden
 	my_port.setDir(the_eye.dir)
 	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
+	var/area/newarea = get_area(src)
+	my_port.area_type = newarea?.type
+
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images
 
@@ -192,8 +195,8 @@
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
 		return SHUTTLE_DOCKER_BLOCKED
-	if(z_lock.len && !(eyeturf.z in z_lock))
-		return SHUTTLE_DOCKER_BLOCKED
+	//if(z_lock.len && !(eyeturf.z in z_lock))
+	//	return SHUTTLE_DOCKER_BLOCKED
 
 	. = SHUTTLE_DOCKER_LANDING_CLEAR
 	var/list/bounds = shuttle_port.return_coords(the_eye.x - x_offset, the_eye.y - y_offset, the_eye.dir)
