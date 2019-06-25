@@ -10,15 +10,11 @@ SUBSYSTEM_DEF(materials)
 	return ..()
 
 /datum/controller/subsystem/materials/proc/InitializeMaterials(timeofday)
-	for(var/i in subtypesof(/datum/material))
-		var/datum/material/mat = new i
-		materials[i] = mat
-		for(var/c in mat.categories)
-			materials_by_category[c] += list(mat)
-
-
-/datum/controller/subsystem/materials/proc/get_material(material)
-	return materials[material]
+	for(var/type in subtypesof(/datum/material))
+		var/datum/material/ref = new type
+		materials[type] = ref
+		for(var/cat in ref.categories)
+			materials_by_category[cat] += list(ref)
 
 /datum/controller/subsystem/materials/proc/get_materials_of_category(category)
 	return materials_by_category[category]

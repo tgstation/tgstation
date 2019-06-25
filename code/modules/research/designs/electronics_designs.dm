@@ -18,7 +18,7 @@
 	desc = "Allows for the construction of a pAI Card."
 	id = "paicard"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/glass = 500, datum/material/hematite = 500)
+	materials = list(/datum/material/glass = 500, /datum/material/hematite = 500)
 	build_path = /obj/item/paicard
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
@@ -41,7 +41,7 @@
 	desc = "Allows for the construction of a nanite remote."
 	id = "nanite_remote"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/glass = 500, datum/material/hematite = 500)
+	materials = list(/datum/material/glass = 500, /datum/material/hematite = 500)
 	build_path = /obj/item/nanite_remote
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -51,7 +51,7 @@
 	desc = "Allows for the construction of a nanite communication remote."
 	id = "nanite_comm_remote"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/glass = 500, datum/material/hematite = 500)
+	materials = list(/datum/material/glass = 500, /datum/material/hematite = 500)
 	build_path = /obj/item/nanite_remote/comm
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -61,7 +61,7 @@
 	desc = "Allows for the construction of a nanite scanner."
 	id = "nanite_scanner"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/glass = 500, datum/material/hematite = 500)
+	materials = list(/datum/material/glass = 500, /datum/material/hematite = 500)
 	build_path = /obj/item/nanite_scanner
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

@@ -212,7 +212,7 @@
 	desc = "Allows for the construction of a quantum keycard."
 	id = "quantum_keycard"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/glass = 500, datum/material/hematite = 500, /datum/material/silver = 500, MAT_BLUESPACE = 1000)
+	materials = list(/datum/material/glass = 500, /datum/material/hematite = 500, /datum/material/silver = 500, MAT_BLUESPACE = 1000)
 	build_path = /obj/item/quantum_keycard
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING

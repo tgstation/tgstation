@@ -112,14 +112,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(craft_materials) //If we were crafted; use those materials
 		materials = materials
 
-	if(!materials) //if materials isn't set, then set it up ourselves
-		SetupUsedMaterials() //Failsafe proc
-	else
-		var/list/temp_list = list() //Otherwise, use the instances already provided.
-		for(var/i in materials) //Go through all of our used_materials, get the subsystem instance, and then replace the list.
+	if(materials) //Otherwise, use the instances already provided.
+		var/list/temp_list = list() 
+		for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 			var/amount = materials[i]
-			temp_list[SSmaterials.get_material(i)] = amount
-		used_materials = temp_list	
+			var/datum/material/M = SSmaterials.materials[i]
+			to_chat(world, "[M]")
+			temp_list[M] = amount
+		materials = temp_list.Copy()
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
@@ -237,9 +237,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	// Extractable materials. Only shows the names, not the amounts.
 	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
-	if (used_materials.len)
+	if (materials.len)
 		sep = ""
-		for(var/mat in used_materials)
+		for(var/mat in materials)
 			research_msg += sep
 			research_msg += CallMaterialName(mat)
 			sep = ", "
@@ -807,44 +807,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
-
-
-/obj/item/proc/SetupUsedMaterials() //Failsafe, not the best thing to run so try to set used_materials yourself as much as possible
-	used_materials = list()
-	for(var/i in materials)
-		var/amount = materials[i]
-		var/datum/material/M
-		switch(i)
-			if(MAT_CATEGORY_IRON)
-				M = SSmaterials.get_material(/datum/material/hematite)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_GLASS)
-				M = SSmaterials.get_material(/datum/material/glass)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_SILVER)
-				M = SSmaterials.get_material(/datum/material/silver)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_GOLD)
-				M = SSmaterials.get_material(/datum/material/gold)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_DIAMOND)
-				M = SSmaterials.get_material(/datum/material/diamond)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_URANIUM)
-				M = SSmaterials.get_material(/datum/material/uranium)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_BLUESPACE)
-				M = SSmaterials.get_material(/datum/material/bluespace)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_BANANIUM)
-				M = SSmaterials.get_material(/datum/material/bananium)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_TITANIUM)
-				M = SSmaterials.get_material(/datum/material/titanium)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_PLASTIC)
-				M = SSmaterials.get_material(/datum/material/plastic)
-				used_materials[M] = amount
-			if(MAT_CATEGORY_BIOMASS)
-				M = SSmaterials.get_material(/datum/material/biomass)
-				used_materials[M] = amount

@@ -46,10 +46,10 @@
 
 	for(var/mat in possible_mats)
 		to_chat(world,"[mat]")
-		var/datum/material/M = SSmaterials.get_material(mat)
+		var/datum/material/M = SSmaterials.materials[mat]
 		for(var/i in M.categories)
 			if(mat_list.Find(i))
-				materials[SSmaterials.get_material(i)] = 0
+				materials[M] = 0
 
 /datum/component/material_container/proc/OnExamine(datum/source, mob/user)
 	if(show_on_examine)
@@ -166,8 +166,8 @@
 	var/primary_mat
 	var/max_mat_value = 0
 	for(var/MAT in materials)
-		materials[MAT] += I.used_materials[MAT] * multiplier
-		total_amount += I.used_materials[MAT] * multiplier
+		materials[MAT] += I.materials[MAT] * multiplier
+		total_amount += I.materials[MAT] * multiplier
 		if(I.materials[MAT] > max_mat_value)
 			primary_mat = MAT
 	return primary_mat
@@ -316,6 +316,6 @@
 	if(!istype(I))
 		return FALSE
 	var/material_amount = 0
-	for(var/MAT in I.used_materials)
-		material_amount += I.used_materials[MAT]
+	for(var/MAT in I.materials)
+		material_amount += I.materials[MAT]
 	return material_amount

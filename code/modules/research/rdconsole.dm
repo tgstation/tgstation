@@ -53,7 +53,7 @@ Nothing else in the console has ID requirements.
 
 /proc/CallMaterialName(ID)
 	if (SSmaterials.materials[ID])
-		var/datum/material/material = SSmaterials.get_material(ID)
+		var/datum/material/material = SSmaterials.materials[ID]
 		return material.name
 
 	else if(GLOB.chemical_reagents_list[ID])

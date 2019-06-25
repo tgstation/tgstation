@@ -154,7 +154,7 @@
 
 /obj/machinery/mineral/processing_unit/proc/smelt_ore()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	var/datum/material/mat = SSmaterials.get_material(selected_material)
+	var/datum/material/mat = SSmaterials.materials[selected_material]
 	if(mat)
 		var/sheets_to_remove = (materials.materials[mat] >= (MINERAL_MATERIAL_AMOUNT * SMELT_AMOUNT) ) ? SMELT_AMOUNT : round(materials.materials[mat] /  MINERAL_MATERIAL_AMOUNT)
 		if(!sheets_to_remove)
