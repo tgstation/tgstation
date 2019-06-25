@@ -156,8 +156,9 @@
 	synthetic = TRUE
 	var/dose_available = TRUE
 
-	var/epinid = /datum/reagent/medicine/epinephrine
-	var/epinamount = 15
+	var/reagid[] = list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/atropine, /datum/reagent/medicine/tricordrazine, /datum/reagent/medicine/salbutamol)
+	var/reagamount[] = list(15, 5, 10, 10, 15)
+	//length of each list must match. basic cybernetic heart will only add first element
 
 /obj/item/organ/heart/cybernetic/emp_act()
 	. = ..()
@@ -167,13 +168,13 @@
 
 /obj/item/organ/heart/cybernetic/on_life()
 	. = ..()
-	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(epinid))
+	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(reagid[1]))
 		to_chat(owner, "<span class='notice'>You hear a soft beep from your chest as your cybernetic heart activates.</span>")
 		used_dose()
 
 /obj/item/organ/heart/cybernetic/proc/used_dose()
 	dose_available = FALSE
-	owner.reagents.add_reagent(epinid, epinamount)
+	owner.reagents.add_reagent(reagid[1], reagamount[1])
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 10 MINUTES)
 
 /obj/item/organ/heart/cybernetic/upgraded
@@ -181,24 +182,12 @@
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of various healing reagents, used automatically after facing severe trauma. This upgraded model has a reduced cooldown time after use."
 	icon_state = "heart-c-u"
 
-	var/omniid = /datum/reagent/medicine/omnizine
-	var/atroid = /datum/reagent/medicine/atropine
-	var/tricid = /datum/reagent/medicine/tricordrazine
-	var/salbid = /datum/reagent/medicine/salbutamol
-
-	var/omniamount = 5
-	var/atroamount = 10
-	var/tricamount = 10
-	var/salbamount = 15
-
 /obj/item/organ/heart/cybernetic/upgraded/used_dose()
 	dose_available = FALSE
-	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
-	owner.reagents.add_reagent(epinid, epinamount)
-	owner.reagents.add_reagent(omniid, omniamount)
-	owner.reagents.add_reagent(atroid, atroamount)
-	owner.reagents.add_reagent(tricid, tricamount)
-	owner.reagents.add_reagent(salbid, salbamount)
+	var/i
+	for(i=1, i < reagid.len, i++)
+		owner.reagents.add_reagent(reagid[i], reagamount[i])
+	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 10 MINUTES)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"
