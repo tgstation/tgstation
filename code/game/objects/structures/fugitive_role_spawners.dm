@@ -41,3 +41,21 @@
 	outfit = /datum/outfit/russiancorpse/hunter
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/human/fugitive/bounty
+	name = "deep sleep pod"
+	flavour_text = "We got a new bounty on some fugitives, dead or alive."
+	back_story = "bounty hunters"
+	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
+	mob_name = "bounty hunter"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/human/fugitive/bounty/armor
+	outfit = /datum/outfit/bountyarmor
+
+/obj/effect/mob_spawn/human/fugitive/bounty/grapple
+	outfit = /datum/outfit/bountygrapple
+
+/obj/effect/mob_spawn/human/fugitive/bounty/synth
+	outfit = /datum/outfit/bountysynth

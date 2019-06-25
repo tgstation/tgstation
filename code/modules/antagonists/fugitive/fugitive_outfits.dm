@@ -89,3 +89,66 @@
 /datum/outfit/russiancorpse/hunter/pre_equip(mob/living/carbon/human/H)
 	if(prob(50))
 		head = /obj/item/clothing/head/ushanka
+
+/datum/outfit/bountyarmor
+	name = "Bounty Hunter - Armored"
+	uniform = /obj/item/clothing/under/rank/prisoner
+	head = /obj/item/clothing/head/hunter
+	suit = /obj/item/clothing/suit/space/hunter
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/jackboots
+	mask = /obj/item/clothing/mask/gas/hunter
+	glasses = /obj/item/clothing/glasses/sunglasses/garb
+	l_pocket = /obj/item/tank/internals/plasma/full
+	r_pocket = /obj/item/restraints/handcuffs/cable
+	id = /obj/item/card/id
+	r_hand = /obj/item/flamethrower/full/tank
+
+/datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/card/id/W = H.wear_id
+	W.assignment = "Bounty Hunter"
+	W.registered_name = H.real_name
+	W.update_label()
+
+/datum/outfit/bountygrapple
+	name = "Bounty Hunter - Grapple"
+	uniform = /obj/item/clothing/under/rank/prisoner
+	head = /obj/item/clothing/head/scarecrow_hat
+	gloves = /obj/item/clothing/gloves/botanic_leather
+	shoes = /obj/item/clothing/shoes/jackboots
+	mask = /obj/item/clothing/mask/scarecrow
+	r_pocket = /obj/item/restraints/handcuffs/cable
+	id = /obj/item/card/id
+	r_hand = /obj/item/gun/ballistic/shotgun/doublebarrel/grapple
+
+/datum/outfit/bountygrapple/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/card/id/W = H.wear_id
+	W.assignment = "Bounty Hunter"
+	W.registered_name = H.real_name
+	W.update_label()
+
+/datum/outfit/bountysynth
+	name = "Bounty Hunter - Synth"
+	uniform = /obj/item/clothing/under/rank/prisoner
+	back = /obj/item/storage/backpack
+	suit = /obj/item/clothing/suit/armor/riot
+	shoes = /obj/item/clothing/shoes/jackboots
+	gloves = /obj/item/clothing/gloves/boxing
+	glasses = /obj/item/clothing/glasses/eyepatch
+	r_pocket = /obj/item/restraints/handcuffs/cable
+	id = /obj/item/card/id
+	r_hand = /obj/item/extendohand
+
+/datum/outfit/bountysynth/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	H.set_species(/datum/species/synth)
+	H.set_species(/datum/species/synth)//setting twice removes the skin
+	var/obj/item/card/id/W = H.wear_id
+	W.assignment = "Bounty Hunter"
+	W.registered_name = H.real_name
+	W.update_label()
