@@ -167,13 +167,16 @@
 		return (total_amount - total_amount_saved)
 	return FALSE
 
-/datum/component/material_container/proc/use_amount_mat(amt, mat) //Revamped
-	var/datum/material/M = mat
+/datum/component/material_container/proc/use_amount_mat(amt, var/datum/material/mat) //Revamped
+	if(!istype(mat))
+		mat = SSmaterials.materials[mat]
 	var/amount = materials[mat]
-	if(M)
+	to_chat(world, "[amount]")
+	if(mat)
 		if(amount >= amt)
 			materials[mat] -= amt
 			total_amount -= amt
+			to_chat(world, "[materials[mat]]")
 			return amt
 	return FALSE
 
@@ -220,9 +223,6 @@
 		mats_to_remove[x] += amount_required //Add it to the assoc list of things to remove
 		continue
 		
-	for(var/i in mats_to_remove) //Remove the resources properly
-		use_amount_mat(mats_to_remove[i], i)
-
 	var/total_amount_save = total_amount
 
 	for(var/i in mats_to_remove)
@@ -236,6 +236,7 @@
 		M = SSmaterials.materials[M]
 	if(!M.sheet_type)
 		return 0 //Add greyscale sheet handling here later
+		to_chat(world, "nosheet type")
 	if(sheet_amt <= 0)
 		return 0
 
