@@ -71,6 +71,7 @@
 # Qustinnus
 /code/datums/components/mood.dm @Qustinnus
 /code/datums/mood_events/ @Qustinnus
+/code/__DEFINES/mobs.dm @Qustinnus
 
 # Multiple Owners
 
