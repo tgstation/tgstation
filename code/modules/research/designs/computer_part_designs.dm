@@ -230,7 +230,7 @@
 	name = "Photonic Processor Board"
 	id = "pcpu_normal"
 	build_type = IMPRINTER
-	materials = list(MAT_CATEGORY_GLASS= 6400, /datum/material/gold = 2000)
+	materials = list(/datum/material/glass = 6400, /datum/material/gold = 2000)
 	build_path = /obj/item/computer_hardware/processor_unit/photonic
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING

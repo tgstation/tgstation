@@ -10,7 +10,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_CATEGORY_BANANIUM), 200000, TRUE, /obj/item/stack)
+	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 200000, TRUE, /obj/item/stack)
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
 	if(always_noslip)
 		clothing_flags |= NOSLIP
@@ -27,7 +27,7 @@
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
 		else
 			new /obj/item/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
-			bananium.use_amount_cat(100, MAT_CATEGORY_BANANIUM)
+			bananium.use_amount_cat(100, datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
@@ -43,7 +43,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	if(bananium.get_category_amount(MAT_CATEGORY_BANANIUM))
+	if(bananium.get_category_amount(datum/material/bananium))
 		on = !on
 		update_icon()
 		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")

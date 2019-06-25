@@ -85,7 +85,7 @@
 	desc = "Produce additional disks for storing device designs."
 	id = "design_disk_adv"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/hematite = 300, /datum/material/glass = 100, MAT_CATEGORY_SILVER=50)
+	materials = list(/datum/material/hematite = 300, /datum/material/glass = 100, /datum/material/silver=50)
 	build_path = /obj/item/disk/design_disk/adv
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

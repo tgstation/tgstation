@@ -182,7 +182,7 @@
 	desc = "A disk for storing plant genetic data."
 	id = "diskplantgene"
 	build_type = PROTOLATHE
-	materials = list(MAT_CATEGORY_IRON=200, MAT_CATEGORY_GLASS=100)
+	materials = list(/datum/material/hematite=200, /datum/material/glass = 100)
 	build_path = /obj/item/disk/plantgene
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -192,7 +192,7 @@
 	desc = "A roasting stick for cooking sausages in exotic ovens."
 	id = "roastingstick"
 	build_type = PROTOLATHE
-	materials = list(MAT_CATEGORY_IRON=1000, MAT_CATEGORY_GLASS=500, MAT_BLUESPACE = 250)
+	materials = list(/datum/material/hematite=1000, /datum/material/glass = 500, MAT_BLUESPACE = 250)
 	build_path = /obj/item/melee/roastingstick
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -202,7 +202,7 @@
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
 	id = "locator"
 	build_type = PROTOLATHE
-	materials = list(MAT_CATEGORY_IRON=1000, MAT_CATEGORY_GLASS=500, /datum/material/silver = 500)
+	materials = list(/datum/material/hematite=1000, /datum/material/glass = 500, /datum/material/silver = 500)
 	build_path = /obj/item/locator
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

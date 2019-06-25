@@ -17,7 +17,7 @@
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
-	var/list/ore_values = list(/datum/material/hematite = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material//bananium = 60)
+	var/list/ore_values = list(/datum/material/hematite = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
@@ -286,15 +286,20 @@
 			else if(!check_access(inserted_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			else
+				to_chat(world, "1")
 				var/mat_id = params["id"]
+				to_chat(world, "[mat_id]")
 				if(!mat_container.materials[mat_id])
 					return
-				var/datum/material/mat = mat_id
+				var/datum/material/mat = SSmaterials.materials[mat_id]
+				to_chat(world, "[mat]")
 				var/amount = mat_container.materials[mat_id]
+				to_chat(world, "[amount]")
 				var/stored_amount = amount / MINERAL_MATERIAL_AMOUNT
 
 				if(!stored_amount)
 					return
+					to_chat(world, "2")
 
 				var/desired = 0
 				if (params["sheets"])

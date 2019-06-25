@@ -506,7 +506,7 @@
 	id = "cybernetic_heart_u"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
-	materials = list(/datum/material/hematite = 500, /datum/material/glass = 500, MAT_CATEGORY_SILVER=500)
+	materials = list(/datum/material/hematite = 500, /datum/material/glass = 500, /datum/material/silver=500)
 	build_path = /obj/item/organ/heart/cybernetic/upgraded
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

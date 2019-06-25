@@ -303,7 +303,7 @@
 	name = "Compressed Matter Cartridge"
 	id = "rcd_ammo"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/hematite = 12000, MAT_CATEGORY_GLASS=8000)
+	materials = list(/datum/material/hematite = 12000, /datum/material/glass = 8000)
 	build_path = /obj/item/rcd_ammo
 	category = list("initial","Construction")
 
@@ -367,7 +367,7 @@
 	name = "Cultivator"
 	id = "cultivator"
 	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(MAT_CATEGORY_IRON=50)
+	materials = list(/datum/material/hematite=50)
 	build_path = /obj/item/cultivator
 	category = list("initial","Misc", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE

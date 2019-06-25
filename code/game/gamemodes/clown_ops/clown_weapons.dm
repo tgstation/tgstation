@@ -40,12 +40,12 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize()
 	. = ..()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	bananium.insert_amount(max_recharge, MAT_CATEGORY_BANANIUM)
+	bananium.insert_amount(max_recharge, datum/material/bananium)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	var/bananium_amount = bananium.get_category_amount(MAT_CATEGORY_BANANIUM)
+	var/bananium_amount = bananium.get_category_amount(datum/material/bananium)
 	if(bananium_amount < max_recharge)
 		bananium.insert_amount(min(recharge_rate, max_recharge - bananium_amount), MAT_CATEGORY_BANANIUM)
 

@@ -143,7 +143,7 @@
 	id = "mech_scattershot"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
-	materials = list(MAT_CATEGORY_IRON=10000)
+	materials = list(/datum/material/hematite=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -153,7 +153,7 @@
 	id = "mech_carbine"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
-	materials = list(MAT_CATEGORY_IRON=10000)
+	materials = list(/datum/material/hematite=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -163,7 +163,7 @@
 	id = "mech_ion"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
-	materials = list(MAT_CATEGORY_IRON=20000,MAT_CATEGORY_SILVER=6000,MAT_CATEGORY_URANIUM=2000)
+	materials = list(/datum/material/hematite=20000,/datum/material/silver=6000,/datum/material/uranium=2000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -173,7 +173,7 @@
 	id = "mech_tesla"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
-	materials = list(MAT_CATEGORY_IRON=20000,MAT_CATEGORY_SILVER=8000)
+	materials = list(/datum/material/hematite=20000,/datum/material/silver=8000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -183,7 +183,7 @@
 	id = "mech_laser"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	materials = list(MAT_CATEGORY_IRON=10000)
+	materials = list(/datum/material/hematite=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -193,7 +193,7 @@
 	id = "mech_laser_heavy"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
-	materials = list(MAT_CATEGORY_IRON=10000)
+	materials = list(/datum/material/hematite=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -203,7 +203,7 @@
 	id = "mech_disabler"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
-	materials = list(MAT_CATEGORY_IRON=10000)
+	materials = list(/datum/material/hematite=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -213,7 +213,7 @@
 	id = "mech_grenade_launcher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
-	materials = list(MAT_CATEGORY_IRON=22000,MAT_CATEGORY_GOLD=6000,MAT_CATEGORY_SILVER=8000)
+	materials = list(/datum/material/hematite=22000,/datum/material/gold=6000,/datum/material/silver=8000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -223,7 +223,7 @@
 	id = "mech_missile_rack"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
-	materials = list(MAT_CATEGORY_IRON=22000,MAT_CATEGORY_GOLD=6000,MAT_CATEGORY_SILVER=8000)
+	materials = list(/datum/material/hematite=22000,/datum/material/gold=6000,/datum/material/silver=8000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -233,7 +233,7 @@
 	id = "clusterbang_launcher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang
-	materials = list(MAT_CATEGORY_IRON=20000,MAT_CATEGORY_GOLD=10000,MAT_CATEGORY_URANIUM=10000)
+	materials = list(/datum/material/hematite=20000,/datum/material/gold=10000,/datum/material/uranium=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -243,7 +243,7 @@
 	id = "mech_wormhole_gen"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/wormhole_generator
-	materials = list(MAT_CATEGORY_IRON=10000)
+	materials = list(/datum/material/hematite=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -253,7 +253,7 @@
 	id = "mech_teleporter"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/teleporter
-	materials = list(MAT_CATEGORY_IRON=10000,MAT_CATEGORY_DIAMOND=10000)
+	materials = list(/datum/material/hematite=10000,/datum/material/diamond=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -263,7 +263,7 @@
 	id = "mech_rcd"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/rcd
-	materials = list(MAT_CATEGORY_IRON=30000,MAT_CATEGORY_GOLD=20000,MAT_CATEGORY_PLASMA=25000,MAT_CATEGORY_SILVER=20000)
+	materials = list(/datum/material/hematite=30000,/datum/material/gold=20000,/datum/material/plasma=25000,/datum/material/silver=20000)
 	construction_time = 1200
 	category = list("Exosuit Equipment")
 
@@ -273,7 +273,7 @@
 	id = "mech_gravcatapult"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/gravcatapult
-	materials = list(MAT_CATEGORY_IRON=10000)
+	materials = list(/datum/material/hematite=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -283,7 +283,7 @@
 	id = "mech_repair_droid"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/repair_droid
-	materials = list(MAT_CATEGORY_IRON=10000,MAT_CATEGORY_GLASS=5000,MAT_CATEGORY_GOLD=1000,MAT_CATEGORY_SILVER=2000)
+	materials = list(/datum/material/hematite=10000,/datum/material/glass = 5000,/datum/material/gold=1000,/datum/material/silver=2000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -293,7 +293,7 @@
 	id = "mech_energy_relay"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-	materials = list(MAT_CATEGORY_IRON=10000,MAT_CATEGORY_GLASS=2000,MAT_CATEGORY_GOLD=2000,MAT_CATEGORY_SILVER=3000)
+	materials = list(/datum/material/hematite=10000,/datum/material/glass =  2000,/datum/material/gold=2000,/datum/material/silver=3000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -303,7 +303,7 @@
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster
-	materials = list(MAT_CATEGORY_IRON=20000,MAT_CATEGORY_SILVER=5000)
+	materials = list(/datum/material/hematite=20000,/datum/material/silver=5000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -313,7 +313,7 @@
 	id = "mech_proj_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
-	materials = list(MAT_CATEGORY_IRON=20000,MAT_CATEGORY_GOLD=5000)
+	materials = list(/datum/material/hematite=20000,/datum/material/gold=5000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -323,7 +323,7 @@
 	id = "mech_diamond_drill"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
-	materials = list(MAT_CATEGORY_IRON=10000,MAT_CATEGORY_DIAMOND=6500)
+	materials = list(/datum/material/hematite=10000,/datum/material/diamond=6500)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -333,7 +333,7 @@
 	id = "mech_generator_nuclear"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
-	materials = list(MAT_CATEGORY_IRON=10000,MAT_CATEGORY_GLASS=1000,MAT_CATEGORY_SILVER=500)
+	materials = list(/datum/material/hematite=10000,/datum/material/glass =  1000,/datum/material/silver=500)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -353,7 +353,7 @@
 	id = "mech_lmg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
-	materials = list(MAT_CATEGORY_IRON=10000)
+	materials = list(/datum/material/hematite=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -363,7 +363,7 @@
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/sleeper
-	materials = list(MAT_CATEGORY_IRON=5000,MAT_CATEGORY_GLASS=10000)
+	materials = list(/datum/material/hematite=5000, /datum/material/glass =  10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -373,7 +373,7 @@
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
-	materials = list(MAT_CATEGORY_IRON=3000,MAT_CATEGORY_GLASS=2000)
+	materials = list(/datum/material/hematite=3000, /datum/material/glass = 2000)
 	construction_time = 200
 	category = list("Exosuit Equipment")
 
