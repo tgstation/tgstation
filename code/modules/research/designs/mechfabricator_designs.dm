@@ -575,7 +575,7 @@
 	id = "borg_upgrade_rename"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rename
-	materials = list(MAT_CATEGORY_IRON = 5000)
+	materials = list(/datum/material/hematite = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -584,7 +584,7 @@
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/restart
-	materials = list(MAT_CATEGORY_IRON = 20000 , MAT_CATEGORY_GLASS = 5000)
+	materials = list(/datum/material/hematite = 20000 , /datum/material/glass = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -593,7 +593,7 @@
 	id = "borg_upgrade_vtec"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/vtec
-	materials = list(MAT_CATEGORY_IRON= 35000 , MAT_CATEGORY_GLASS = 12000 , MAT_CATEGORY_URANIUM = 10000)
+	materials = list(MAT_CATEGORY_IRON= 35000 , /datum/material/glass = 12000 , /datum/material/uranium = 10000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
@@ -602,7 +602,7 @@
 	id = "borg_upgrade_thrusters"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/thrusters
-	materials = list(MAT_CATEGORY_IRON = 10000, MAT_CATEGORY_GLASS = 6000, MAT_CATEGORY_PLASMA = 5000, MAT_CATEGORY_URANIUM = 6000)
+	materials = list(/datum/material/hematite = 10000, /datum/material/glass = 6000, /datum/material/plasma = 5000, /datum/material/uranium = 6000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -611,7 +611,7 @@
 	id = "borg_upgrade_disablercooler"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/disablercooler
-	materials = list(MAT_CATEGORY_IRON = 20000 , MAT_CATEGORY_GLASS = 6000, MAT_CATEGORY_GOLD = 2000, MAT_CATEGORY_DIAMOND = 2000)
+	materials = list(/datum/material/hematite = 20000 , /datum/material/glass = 6000, /datum/material/gold = 2000, /datum/material/diamond = 2000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -620,7 +620,7 @@
 	id = "borg_upgrade_diamonddrill"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ddrill
-	materials = list(MAT_CATEGORY_IRON=10000, MAT_CATEGORY_GLASS = 6000, MAT_CATEGORY_DIAMOND = 2000)
+	materials = list(MAT_CATEGORY_IRON=10000, /datum/material/glass = 6000, /datum/material/diamond = 2000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
@@ -629,7 +629,7 @@
 	id = "borg_upgrade_holding"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/soh
-	materials = list(MAT_CATEGORY_IRON = 10000, MAT_CATEGORY_GOLD = 2000, MAT_CATEGORY_URANIUM = 1000)
+	materials = list(/datum/material/hematite = 10000, /datum/material/gold = 2000, /datum/material/uranium = 1000)
 	construction_time = 40
 	category = list("Cyborg Upgrade Modules")
 
@@ -638,7 +638,7 @@
 	id = "borg_upgrade_lavaproof"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/lavaproof
-	materials = list(MAT_CATEGORY_IRON = 10000, MAT_CATEGORY_PLASMA = 4000, MAT_CATEGORY_TITANIUM = 5000)
+	materials = list(/datum/material/hematite = 10000, /datum/material/plasma = 4000, /datum/material/titanium = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -647,7 +647,7 @@
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/syndicate
-	materials = list(MAT_CATEGORY_IRON = 15000, MAT_CATEGORY_GLASS = 15000, MAT_CATEGORY_DIAMOND = 10000)
+	materials = list(/datum/material/hematite = 15000, /datum/material/glass = 15000, /datum/material/diamond = 10000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -656,7 +656,7 @@
 	id = "borg_transform_clown"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/transform/clown
-	materials = list(MAT_CATEGORY_IRON = 15000, MAT_CATEGORY_GLASS = 15000, MAT_CATEGORY_BANANIUM = 1000)
+	materials = list(/datum/material/hematite = 15000, /datum/material/glass = 15000, /datum/material/bananium = 1000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -665,7 +665,7 @@
 	id = "borg_upgrade_selfrepair"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/selfrepair
-	materials = list(MAT_CATEGORY_IRON = 15000, MAT_CATEGORY_GLASS = 15000)
+	materials = list(/datum/material/hematite = 15000, /datum/material/glass = 15000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
@@ -674,7 +674,7 @@
 	id = "borg_upgrade_expandedsynthesiser"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/hypospray/expanded
-	materials = list(MAT_CATEGORY_IRON = 15000, MAT_CATEGORY_GLASS = 15000, MAT_CATEGORY_PLASMA = 8000, MAT_CATEGORY_URANIUM = 8000)
+	materials = list(/datum/material/hematite = 15000, /datum/material/glass = 15000, /datum/material/plasma = 8000, /datum/material/uranium = 8000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
@@ -683,7 +683,7 @@
 	id = "borg_upgrade_piercinghypospray"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/piercing_hypospray
-	materials = list(MAT_CATEGORY_IRON = 15000, MAT_CATEGORY_GLASS = 15000, MAT_CATEGORY_TITANIUM = 5000, MAT_CATEGORY_DIAMOND = 3000)
+	materials = list(/datum/material/hematite = 15000, /datum/material/glass = 15000, /datum/material/titanium = 5000, /datum/material/diamond = 3000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
@@ -692,7 +692,7 @@
 	id = "borg_upgrade_defibrillator"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/defib
-	materials = list(MAT_CATEGORY_IRON = 8000, MAT_CATEGORY_GLASS = 5000, MAT_CATEGORY_SILVER = 4000, MAT_CATEGORY_GOLD = 3000)
+	materials = list(/datum/material/hematite = 8000, /datum/material/glass = 5000, /datum/material/silver = 4000, /datum/material/gold = 3000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
@@ -701,7 +701,7 @@
 	id = "borg_upgrade_surgicalprocessor"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/processor
-	materials = list(MAT_CATEGORY_IRON = 5000, MAT_CATEGORY_GLASS = 4000, MAT_CATEGORY_SILVER = 4000)
+	materials = list(/datum/material/hematite = 5000, /datum/material/glass = 4000, /datum/material/silver = 4000)
 	construction_time = 40
 	category = list("Cyborg Upgrade Modules")
 
@@ -710,7 +710,7 @@
 	id = "borg_upgrade_trashofholding"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/tboh
-	materials = list(MAT_CATEGORY_GOLD = 2000, MAT_CATEGORY_URANIUM = 1000)
+	materials = list(/datum/material/gold = 2000, /datum/material/uranium = 1000)
 	construction_time = 40
 	category = list("Cyborg Upgrade Modules")
 
@@ -719,7 +719,7 @@
 	id = "borg_upgrade_advancedmop"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/amop
-	materials = list(MAT_CATEGORY_IRON = 2000, MAT_CATEGORY_GLASS = 2000)
+	materials = list(/datum/material/hematite = 2000, /datum/material/glass = 2000)
 	construction_time = 40
 	category = list("Cyborg Upgrade Modules")
 
@@ -728,7 +728,7 @@
 	id = "borg_upgrade_expand"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/expand
-	materials = list(MAT_CATEGORY_IRON = 200000, MAT_CATEGORY_TITANIUM = 5000)
+	materials = list(/datum/material/hematite = 200000, /datum/material/titanium = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -737,7 +737,7 @@
 	id = "borg_ai_control"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ai
-	materials = list(MAT_CATEGORY_IRON = 1200, MAT_CATEGORY_GLASS = 1500, MAT_CATEGORY_GOLD = 200)
+	materials = list(/datum/material/hematite = 1200, /datum/material/glass = 1500, /datum/material/gold = 200)
 	construction_time = 50
 	category = list("Misc")
 
@@ -746,7 +746,7 @@
 	id = "borg_upgrade_rped"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rped
-	materials = list(MAT_CATEGORY_IRON = 10000, MAT_CATEGORY_GLASS = 5000)
+	materials = list(/datum/material/hematite = 10000, /datum/material/glass = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -755,7 +755,7 @@
 	id = "borg_upgrade_pinpointer"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/pinpointer
-	materials = list(MAT_CATEGORY_IRON = 1000, MAT_CATEGORY_GLASS = 500)
+	materials = list(/datum/material/hematite = 1000, /datum/material/glass = 500)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -774,7 +774,7 @@
 	id = "mecha_tracking_ai_control"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
-	materials = list(MAT_CATEGORY_IRON = 1000, MAT_CATEGORY_GLASS = 500, MAT_CATEGORY_SILVER = 200)
+	materials = list(/datum/material/hematite = 1000, /datum/material/glass = 500, /datum/material/silver = 200)
 	construction_time = 50
 	category = list("Misc")
 
@@ -783,7 +783,7 @@
 	desc = "When a problem arises, SCIENCE is the solution."
 	id = "sflash"
 	build_type = MECHFAB
-	materials = list(MAT_CATEGORY_IRON = 750, MAT_CATEGORY_GLASS = 750)
+	materials = list(/datum/material/hematite = 750, /datum/material/glass = 750)
 	construction_time = 100
 	build_path = /obj/item/assembly/flash/handheld
 	category = list("Misc")

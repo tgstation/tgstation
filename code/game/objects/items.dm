@@ -65,8 +65,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
-	var/list/materials = list() //MAT_CATEGORIES in this object
-	var/list/used_materials //Actual materials used
+	var/list/materials = list() //materials in this object, and the amount
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -110,15 +109,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	materials =	typelist("materials", materials)
 	
-	if(craft_materials)
-		used_materials = craft_materials
+	if(craft_materials) //If we were crafted; use those materials
+		materials = materials
 
-	if(!used_materials)
+	if(!materials) //if materials isn't set, then set it up ourselves
 		SetupUsedMaterials() //Failsafe proc
 	else
-		var/list/temp_list = list()
-		for(var/i in used_materials) //Go through all of our used_materials, get the subsystem instance, and then replace the list.
-			var/amount = used_materials[i]
+		var/list/temp_list = list() //Otherwise, use the instances already provided.
+		for(var/i in materials) //Go through all of our used_materials, get the subsystem instance, and then replace the list.
+			var/amount = materials[i]
 			temp_list[SSmaterials.get_material(i)] = amount
 		used_materials = temp_list	
 

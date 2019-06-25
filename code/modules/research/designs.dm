@@ -84,5 +84,5 @@ other types of metals and chemistry for reagents).
 /obj/item/disk/design_disk/adv
 	name = "Advanced Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes. This one has extra storage space."
-	materials = list(MAT_CATEGORY_IRON=300, MAT_CATEGORY_GLASS=100, MAT_CATEGORY_SILVER = 50)
+	materials = list(MAT_CATEGORY_IRON=300, MAT_CATEGORY_GLASS=100, /datum/material/silver = 50)
 	max_blueprints = 5

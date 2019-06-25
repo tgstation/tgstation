@@ -79,7 +79,7 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "crimson"
-	materials = list(MAT_CATEGORY_GOLD = 750)
+	materials = list(/datum/material/gold = 750)
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",

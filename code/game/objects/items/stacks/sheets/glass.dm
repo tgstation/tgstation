@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-prglass"
 	item_state = "sheet-prglass"
-	materials = list(MAT_CATEGORY_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_CATEGORY_GLASS=MINERAL_MATERIAL_AMOUNT, MAT_CATEGORY_IRON = MINERAL_MATERIAL_AMOUNT * 0.5,)
+	materials = list(MAT_CATEGORY_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_CATEGORY_GLASS=MINERAL_MATERIAL_AMOUNT, datum/material/hematite = MINERAL_MATERIAL_AMOUNT * 0.5,)
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmarglass

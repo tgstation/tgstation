@@ -110,7 +110,7 @@
 	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."
 	id = "phazon_main"
-	materials = list(MAT_CATEGORY_GLASS = 1000, MAT_BLUESPACE = 100)
+	materials = list(/datum/material/glass = 1000, MAT_BLUESPACE = 100)
 	build_path = /obj/item/circuitboard/mecha/phazon/main
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -119,7 +119,7 @@
 	name = "\"Phazon\" Peripherals Control module"
 	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
 	id = "phazon_peri"
-	materials = list(MAT_CATEGORY_GLASS = 1000, MAT_BLUESPACE = 100)
+	materials = list(/datum/material/glass = 1000, MAT_BLUESPACE = 100)
 	build_path = /obj/item/circuitboard/mecha/phazon/peripherals
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -128,7 +128,7 @@
 	name = "\"Phazon\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
 	id = "phazon_targ"
-	materials = list(MAT_CATEGORY_GLASS = 1000, MAT_BLUESPACE = 100)
+	materials = list(/datum/material/glass = 1000, MAT_BLUESPACE = 100)
 	build_path = /obj/item/circuitboard/mecha/phazon/targeting
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -343,7 +343,7 @@
 	id = "mech_plasma_cutter"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
-	materials = list(MAT_CATEGORY_IRON = 8000, MAT_CATEGORY_GLASS = 1000, MAT_CATEGORY_PLASMA = 2000)
+	materials = list(/datum/material/hematite = 8000, /datum/material/glass = 1000, /datum/material/plasma = 2000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -382,7 +382,7 @@
 	desc = "Equipment for medical exosuits. A mounted medical nanite projector which will treat patients with a focused beam."
 	id = "mech_medi_beam"
 	build_type = MECHFAB
-	materials = list(MAT_CATEGORY_IRON = 15000, MAT_CATEGORY_GLASS = 8000, MAT_CATEGORY_PLASMA = 3000, MAT_CATEGORY_GOLD = 8000, MAT_CATEGORY_DIAMOND = 2000)
+	materials = list(/datum/material/hematite = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
 	construction_time = 250
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
 	category = list("Exosuit Equipment")

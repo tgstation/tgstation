@@ -89,7 +89,7 @@
 	throwforce = 15
 	throw_speed = 3
 	throw_range = 4
-	materials = list(MAT_CATEGORY_IRON = 15000)
+	materials = list(/datum/material/hematite = 15000)
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP

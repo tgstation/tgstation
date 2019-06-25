@@ -12,7 +12,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_CATEGORY_IRON = 500, MAT_CATEGORY_GLASS = 250)
+	materials = list(/datum/material/hematite = 500, /datum/material/glass = 250)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/active = FALSE
 	var/atom/movable/target //The thing we're searching for

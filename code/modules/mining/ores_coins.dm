@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
 	value = 25
-	materials = list(MAT_CATEGORY_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/gold = 4)
 
 /obj/item/coin/silver
@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
 	value = 10
-	materials = list(MAT_CATEGORY_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/silver = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/silver = 4)
 
 /obj/item/coin/diamond
@@ -367,7 +367,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
 	value = 100
-	materials = list(MAT_CATEGORY_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/diamond = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/carbon = 4)
 
 /obj/item/coin/iron
@@ -375,7 +375,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 1
-	materials = list(MAT_CATEGORY_IRON = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/hematite = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/plasma
@@ -383,7 +383,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
 	value = 40
-	materials = list(MAT_CATEGORY_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/plasma = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/toxin/plasma = 4)
 
 /obj/item/coin/uranium
@@ -391,7 +391,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
 	value = 25
-	materials = list(MAT_CATEGORY_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/uranium = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/uranium = 4)
 
 /obj/item/coin/bananium
@@ -399,7 +399,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 200 //makes the clown cry
-	materials = list(MAT_CATEGORY_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/bananium = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/consumable/banana = 4)
 
 /obj/item/coin/adamantine
@@ -419,7 +419,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_iron_heads"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
-	materials = list(MAT_CATEGORY_IRON = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/hematite = MINERAL_MATERIAL_AMOUNT*0.2)
 	value = 1
 	grind_results = list(/datum/reagent/iron = 4)
 

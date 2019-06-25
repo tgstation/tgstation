@@ -8,7 +8,7 @@
 	desc = "A bluespace tracking beacon."
 	id = "beacon"
 	build_type = PROTOLATHE
-	materials = list(MAT_CATEGORY_IRON = 150, MAT_CATEGORY_GLASS = 100)
+	materials = list(/datum/material/hematite = 150, /datum/material/glass = 100)
 	build_path = /obj/item/beacon
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY
@@ -18,7 +18,7 @@
 	desc = "A backpack that opens into a localized pocket of bluespace."
 	id = "bag_holding"
 	build_type = PROTOLATHE
-	materials = list(MAT_CATEGORY_GOLD = 3000, MAT_CATEGORY_DIAMOND = 1500, MAT_CATEGORY_URANIUM = 250, MAT_BLUESPACE = 2000)
+	materials = list(/datum/material/gold = 3000, /datum/material/diamond = 1500, /datum/material/uranium = 250, MAT_BLUESPACE = 2000)
 	build_path = /obj/item/storage/backpack/holding
 	category = list("Bluespace Designs")
 	dangerous_construction = TRUE
@@ -29,7 +29,7 @@
 	desc = "A small blue crystal with mystical properties."
 	id = "bluespace_crystal"
 	build_type = PROTOLATHE
-	materials = list(MAT_CATEGORY_DIAMOND = 1500, MAT_CATEGORY_PLASMA = 1500)
+	materials = list(/datum/material/diamond = 1500, /datum/material/plasma = 1500)
 	build_path = /obj/item/stack/ore/bluespace_crystal/artificial
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -39,7 +39,7 @@
 	desc = "Little thingie that can track its position at all times."
 	id = "telesci_gps"
 	build_type = PROTOLATHE
-	materials = list(MAT_CATEGORY_IRON = 500, MAT_CATEGORY_GLASS = 1000)
+	materials = list(/datum/material/hematite = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/gps
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
@@ -49,7 +49,7 @@
 	desc = "A device that can desynchronize the user from spacetime."
 	id = "desynchronizer"
 	build_type = PROTOLATHE
-	materials = list(MAT_CATEGORY_IRON = 1000, MAT_CATEGORY_GLASS = 500, MAT_CATEGORY_SILVER = 1500, MAT_BLUESPACE = 1000)
+	materials = list(/datum/material/hematite = 1000, /datum/material/glass = 500, /datum/material/silver = 1500, MAT_BLUESPACE = 1000)
 	build_path = /obj/item/desynchronizer
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -59,7 +59,7 @@
 	desc = "A mining satchel that can hold an infinite amount of ores."
 	id = "minerbag_holding"
 	build_type = PROTOLATHE
-	materials = list(MAT_CATEGORY_GOLD = 250, MAT_CATEGORY_URANIUM = 500) //quite cheap, for more convenience
+	materials = list(/datum/material/gold = 250, /datum/material/uranium = 500) //quite cheap, for more convenience
 	build_path = /obj/item/storage/bag/ore/holding
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
