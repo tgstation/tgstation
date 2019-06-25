@@ -646,7 +646,7 @@
 	item_state = "hivehand"
 	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
-	
+
 	reach = 3
 	min_reach = -1
 	item_flags = ABSTRACT | DROPDEL
@@ -670,9 +670,9 @@
 		user.put_in_hands(W)
 		to_chat(user, "<span class='notice'>You make a telekinetic hand!</span>")
 	else
-		to_chat(user,"<span class='notice'>You cannot make a telekinetic hand while holding something!</span>")
+		to_chat(user,"<span class='warning'>You cannot make a telekinetic hand while holding something!</span>")
 		revert_cast()
-		
+
 /obj/effect/proc_holder/spell/targeted/hive_hack
 	name = "Network Invasion"
 	desc = "We probe the mind of an adjacent target and extract valuable information on any enemy hives they may belong to. Takes longer if the target is not in our hive or wearing tinfoil protection."
