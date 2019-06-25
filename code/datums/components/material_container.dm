@@ -262,10 +262,8 @@
 		use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
 	return count
 
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, id, target = null)
-	if(materials[id])
-		return retrieve(sheet_amt, materials[id], target)
-	return FALSE
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, mat, target = null)
+	return retrieve(sheet_amt, mat, target)
 
 /datum/component/material_container/proc/retrieve_amount(amt, id, target)
 	return retrieve_sheets(amount2sheet(amt), id, target)

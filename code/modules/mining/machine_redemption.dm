@@ -127,8 +127,9 @@
 	var/has_minerals = FALSE
 
 	for(var/mat_id in mat_container.materials)
-		var/datum/material/M = mat_container.materials[mat_id]
-		var/mineral_amount = M.amount / MINERAL_MATERIAL_AMOUNT
+		var/datum/material/M = mat_id
+		var/amount = mat_container.materials[mat_id]
+		var/mineral_amount = amount / MINERAL_MATERIAL_AMOUNT
 		if(mineral_amount)
 			has_minerals = TRUE
 		msg += "[capitalize(M.name)]: [mineral_amount] sheets<br>"

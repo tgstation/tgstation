@@ -75,7 +75,7 @@
 	density = TRUE
 	var/obj/machinery/mineral/CONSOLE = null
 	var/on = FALSE
-	var/selected_material = MAT_CATEGORY_IRON
+	var/selected_material = /datum/material/metal
 	var/selected_alloy = null
 	var/datum/techweb/stored_research
 
@@ -154,14 +154,14 @@
 
 /obj/machinery/mineral/processing_unit/proc/smelt_ore()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	var/datum/material/mat = materials.materials[selected_material]
+	var/datum/material/mat = SSmaterials.get_material(selected_material)
 	if(mat)
-		var/sheets_to_remove = (mat.amount >= (MINERAL_MATERIAL_AMOUNT * SMELT_AMOUNT) ) ? SMELT_AMOUNT : round(mat.amount /  MINERAL_MATERIAL_AMOUNT)
+		var/sheets_to_remove = (materials.materials[mat] >= (MINERAL_MATERIAL_AMOUNT * SMELT_AMOUNT) ) ? SMELT_AMOUNT : round(materials.materials[mat] /  MINERAL_MATERIAL_AMOUNT)
 		if(!sheets_to_remove)
 			on = FALSE
 		else
 			var/out = get_step(src, output_dir)
-			materials.retrieve_sheets(sheets_to_remove, selected_material, out)
+			materials.retrieve_sheets(sheets_to_remove, mat, out)
 
 
 /obj/machinery/mineral/processing_unit/proc/smelt_alloy()
@@ -190,13 +190,13 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 	for(var/mat_id in D.materials)
-		var/M = D.materials[mat_id]
-		var/datum/material/smelter_mat  = materials.materials[mat_id]
+		var/amount = D.materials[mat_id]
+		var/datum/material/smelter_mat = mat_id
 
 		if(!M || !smelter_mat)
 			return FALSE
 
-		build_amount = min(build_amount, round(smelter_mat.amount / M))
+		build_amount = min(build_amount, round(amount / M))
 
 	return build_amount
 

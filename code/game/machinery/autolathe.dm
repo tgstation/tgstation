@@ -167,7 +167,7 @@
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			if((materials.get_materials_of_category(MAT_CATEGORY_IRON) >= metal_cost*multiplier*coeff) && (materials.get_materials_of_category(MAT_CATEGORY_GLASS) >= glass_cost*multiplier*coeff))
+			if((SSmaterials.get_materials_of_category(MAT_CATEGORY_IRON) >= metal_cost*multiplier*coeff) && (SSmaterials.get_materials_of_category(MAT_CATEGORY_GLASS) >= glass_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
