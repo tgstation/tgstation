@@ -48,7 +48,7 @@
 					organ_rejection_dam = 30
 
 		if(target_zone == BP.body_zone) //so we can't replace a leg with an arm, or a human arm with a monkey arm.
-			display_results(user, target, "<span class ='notice'>You begin to replace [target]'s [parse_zone(target_zone)] with [tool]...</span>",
+			display_results(user, target, "<span class='notice'>You begin to replace [target]'s [parse_zone(target_zone)] with [tool]...</span>",
 				"[user] begins to replace [target]'s [parse_zone(target_zone)] with [tool].",
 				"[user] begins to replace [target]'s [parse_zone(target_zone)].")
 		else

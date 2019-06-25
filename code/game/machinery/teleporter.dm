@@ -34,7 +34,7 @@
 /obj/machinery/teleport/hub/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.<span>"
+		. += "<span class='notice'>The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.</span>"
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
@@ -47,7 +47,7 @@
 
 /obj/machinery/teleport/hub/Bumped(atom/movable/AM)
 	if(is_centcom_level(z))
-		to_chat(AM, "You can't use this here.")
+		to_chat(AM, "<span class='warning'>You can't use this here!</span>")
 		return
 	if(is_ready())
 		teleport(AM)
