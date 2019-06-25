@@ -28,8 +28,14 @@
 
 /obj/machinery/spaceship_navigation_beacon/random/Initialize()
 	.=..()
+	randomise_beacon()
+
+/obj/machinery/spaceship_navigation_beacon/proc/randomise_beacon()
 	id = "[num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as id.
-	access_code	= "[num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as access code.
+	access_code = "[num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as access code.
+
+//obj/machinery/spaceship_navigation_beacon/emp_act()
+//	randomise_beacon()
 
 /obj/machinery/spaceship_navigation_beacon/Destroy()
 	SSshuttle.beacons -= src
