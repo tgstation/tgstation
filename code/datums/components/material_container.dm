@@ -13,7 +13,7 @@
 	var/total_amount = 0
 	var/max_amount
 	var/sheet_type
-	var/list/materials
+	var/list/materials //Map of key = material ref | Value = amount
 	var/show_on_examine
 	var/disable_attackby
 	var/list/allowed_typecache
@@ -43,17 +43,19 @@
 	var/list/possible_mats = list()
 	for(var/mat_type in subtypesof(/datum/material))
 		var/datum/material/MT = mat_type
-		possible_mats[initial(MT.id)] = mat_type
-	for(var/id in mat_list)
-		if(possible_mats[id])
-			var/mat_path = possible_mats[id]
-			materials[id] = new mat_path()
+		possible_mats += mat_type
+
+	for(var/mat in possible_mats)
+		var/datum/material/M = SSmaterials.get_material(mat)
+		for(var/i in M.categories)
+			if(mat_list.Find(i))
+				materials[SSmaterials.get_material(i)] = 0
 
 /datum/component/material_container/proc/OnExamine(datum/source, mob/user)
 	if(show_on_examine)
 		for(var/I in materials)
-			var/datum/material/M = materials[I]
-			var/amt = amount(M.id)
+			var/datum/material/M = I
+			var/amt = get_material_amount(I)
 			if(amt)
 				to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
 
@@ -113,18 +115,14 @@
 		user.put_in_active_hand(I)
 
 //For inserting an amount of material
-/datum/component/material_container/proc/insert_amount(amt, id = null)
+/datum/component/material_container/proc/insert_amount(amt, mat)
 	if(amt > 0 && has_space(amt))
 		var/total_amount_saved = total_amount
-		if(id)
-			var/datum/material/M = materials[id]
-			if(M)
-				M.amount += amt
-				total_amount += amt
+		if(mat)
+			materials[mat] += amt
 		else
 			for(var/i in materials)
-				var/datum/material/M = materials[i]
-				M.amount += amt
+				materials[i] += amt
 				total_amount += amt
 		return (total_amount - total_amount_saved)
 	return FALSE
@@ -177,7 +175,7 @@
 	return primary_mat
 
 //For consuming material
-//mats is a list of types of material to use and the corresponding amounts, example: list(MAT_METAL=100, MAT_GLASS=200)
+//mats is a list of types of material to use and the corresponding amounts, example: list(MAT_CATEGORY_IRON=100, MAT_CATEGORY_GLASS=200)
 /datum/component/material_container/proc/use_amount(list/mats, multiplier=1)
 	if(!mats || !mats.len)
 		return FALSE
@@ -206,19 +204,16 @@
 			return amt
 	return FALSE
 
-/datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, id)
-	if((amt==0)||(!T)||(!id))
+/datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, mat)
+	if((amt==0)||(!T)||(!mat))
 		return FALSE
 	if(amt<0)
-		return T.transer_amt_to(src, -amt, id)
-	var/datum/material/M = materials[id]
-
-	if(M)
-		var/tr = min(amt, M.amount,T.can_insert_amount(amt, id))
-		if(tr)
-			use_amount_type(tr, id)
-			T.insert_amount(tr, id)
-			return tr
+		return T.transer_amt_to(src, -amt, mat)
+	var/tr = min(amt, materials[mat],T.can_insert_amount(amt, mat))
+	if(tr)
+		use_amount_type(tr, mat)
+		T.insert_amount(tr, mat)
+		return tr
 	return FALSE
 
 /datum/component/material_container/proc/can_insert_amount(amt, id)
@@ -307,9 +302,18 @@
 		return sheet_amt * MINERAL_MATERIAL_AMOUNT
 	return FALSE
 
-/datum/component/material_container/proc/amount(id)
-	var/datum/material/M = materials[id]
-	return M ? M.amount : 0
+/datum/component/material_container/proc/get_material_amount(material)
+	return materials[material]
+
+/datum/component/material_container/proc/get_category_amount(category) //This gets the material with the highest count of a certain category.
+	var/datum/material/best_match
+
+	for(var/i in SSmaterials.get_materials_of_category(category))
+		var/amount = materials[i]
+		if(!best_match || amount >= materials[i])
+		best_match = i
+
+	return best_match
 
 //returns the amount of material relevant to this container;
 //if this container does not support glass, any glass in 'I' will not be taken into account
@@ -320,77 +324,3 @@
 	for(var/MAT in materials)
 		material_amount += I.materials[MAT]
 	return material_amount
-
-
-/datum/material
-	var/name
-	var/amount = 0
-	var/id = null
-	var/sheet_type = null
-	var/coin_type = null
-
-/datum/material/metal
-	name = "Metal"
-	id = MAT_METAL
-	sheet_type = /obj/item/stack/sheet/metal
-	coin_type = /obj/item/coin/iron
-
-/datum/material/glass
-	name = "Glass"
-	id = MAT_GLASS
-	sheet_type = /obj/item/stack/sheet/glass
-
-/datum/material/silver
-	name = "Silver"
-	id = MAT_SILVER
-	sheet_type = /obj/item/stack/sheet/mineral/silver
-	coin_type = /obj/item/coin/silver
-
-/datum/material/gold
-	name = "Gold"
-	id = MAT_GOLD
-	sheet_type = /obj/item/stack/sheet/mineral/gold
-	coin_type = /obj/item/coin/gold
-
-/datum/material/diamond
-	name = "Diamond"
-	id = MAT_DIAMOND
-	sheet_type = /obj/item/stack/sheet/mineral/diamond
-	coin_type = /obj/item/coin/diamond
-
-/datum/material/uranium
-	name = "Uranium"
-	id = MAT_URANIUM
-	sheet_type = /obj/item/stack/sheet/mineral/uranium
-	coin_type = /obj/item/coin/uranium
-
-/datum/material/plasma
-	name = "Solid Plasma"
-	id = MAT_PLASMA
-	sheet_type = /obj/item/stack/sheet/mineral/plasma
-	coin_type = /obj/item/coin/plasma
-
-/datum/material/bluespace
-	name = "Bluespace Mesh"
-	id = MAT_BLUESPACE
-	sheet_type = /obj/item/stack/sheet/bluespace_crystal
-
-/datum/material/bananium
-	name = "Bananium"
-	id = MAT_BANANIUM
-	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	coin_type = /obj/item/coin/bananium
-
-/datum/material/titanium
-	name = "Titanium"
-	id = MAT_TITANIUM
-	sheet_type = /obj/item/stack/sheet/mineral/titanium
-
-/datum/material/biomass
-	name = "Biomass"
-	id = MAT_BIOMASS
-
-/datum/material/plastic
-	name = "Plastic"
-	id = MAT_PLASTIC
-	sheet_type = /obj/item/stack/sheet/plastic

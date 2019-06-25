@@ -11,7 +11,7 @@
 	throw_speed = 2
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL = 500)
+	materials = list(MAT_CATEGORY_IRON = 500)
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/latches = "single_latch"

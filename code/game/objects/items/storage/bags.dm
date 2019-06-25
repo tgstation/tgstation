@@ -282,7 +282,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	materials = list(MAT_METAL=3000)
+	materials = list(MAT_CATEGORY_IRON=3000)
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()

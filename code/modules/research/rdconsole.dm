@@ -52,7 +52,7 @@ Nothing else in the console has ID requirements.
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)
-	if (copytext(ID, 1, 2) == "$" && GLOB.materials_list[ID])
+	if (SSmaterials.materials[ID])
 		var/datum/material/material = GLOB.materials_list[ID]
 		return material.name
 
@@ -1018,7 +1018,7 @@ Nothing else in the console has ID requirements.
 				D.category -= "Imported"
 			else
 				for(var/x in D.materials)
-					if( !(x in list(MAT_METAL, MAT_GLASS)))
+					if( !(x in list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS)))
 						autolathe_friendly = FALSE
 						D.category -= "Imported"
 

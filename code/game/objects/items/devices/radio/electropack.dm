@@ -9,7 +9,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
-	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
+	materials = list(MAT_CATEGORY_IRON=10000, MAT_CATEGORY_GLASS=2500)
 	var/on = TRUE
 	var/code = 2
 	var/frequency = FREQ_ELECTROPACK

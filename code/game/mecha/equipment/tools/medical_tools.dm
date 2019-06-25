@@ -527,7 +527,7 @@
 	range = MELEE|RANGED
 	equip_cooldown = 0
 	var/obj/item/gun/medbeam/mech/medigun
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_PLASMA = 3000, MAT_GOLD = 8000, MAT_DIAMOND = 2000)
+	materials = list(MAT_CATEGORY_IRON = 15000, MAT_CATEGORY_GLASS = 8000, MAT_CATEGORY_PLASMA = 3000, MAT_CATEGORY_GOLD = 8000, MAT_CATEGORY_DIAMOND = 2000)
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize()
 	. = ..()

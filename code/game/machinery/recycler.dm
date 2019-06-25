@@ -18,7 +18,7 @@
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), INFINITY, FALSE, null, null, null, TRUE)
+	AddComponent(/datum/component/material_container, list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS, MAT_CATEGORY_PLASMA, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_URANIUM, MAT_CATEGORY_BANANIUM, MAT_CATEGORY_TITANIUM, MAT_CATEGORY_BLUESPACE, MAT_CATEGORY_PLASTIC), INFINITY, FALSE, null, null, null, TRUE)
 	AddComponent(/datum/component/butchering, 1, amount_produced,amount_produced/5)
 	. = ..()
 	update_icon()

@@ -48,7 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -127,9 +127,9 @@
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
 	else
 		switch(id_inserted)
-			if (MAT_METAL)
+			if (MAT_CATEGORY_IRON)
 				flick("autolathe_o",src)//plays metal insertion animation
-			if (MAT_GLASS)
+			if (MAT_CATEGORY_GLASS)
 				flick("autolathe_r",src)//plays glass insertion animation
 		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
@@ -161,13 +161,13 @@
 			/////////////////
 
 			var/coeff = (is_stack ? 1 : prod_coeff) //stacks are unaffected by production coefficient
-			var/metal_cost = being_built.materials[MAT_METAL]
-			var/glass_cost = being_built.materials[MAT_GLASS]
+			var/metal_cost = being_built.materials[MAT_CATEGORY_IRON]
+			var/glass_cost = being_built.materials[MAT_CATEGORY_GLASS]
 
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
+			if((materials.get_materials_of_category(MAT_CATEGORY_IRON) >= metal_cost*multiplier*coeff) && (materials.get_materials_of_category(MAT_CATEGORY_GLASS) >= glass_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
@@ -193,7 +193,7 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
-	var/list/materials_used = list(MAT_METAL=metal_cost*coeff*multiplier, MAT_GLASS=glass_cost*coeff*multiplier)
+	var/list/materials_used = list(MAT_CATEGORY_IRON=metal_cost*coeff*multiplier, MAT_CATEGORY_GLASS=glass_cost*coeff*multiplier)
 	materials.use_amount(materials_used)
 
 	if(is_stack)
@@ -271,7 +271,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[MAT_CATEGORY_IRON] ?round(materials.get_category_amount(MAT_CATEGORY_IRON)/D.materials[MAT_CATEGORY_IRON]):INFINITY,D.materials[MAT_CATEGORY_GLASS]?round(materials.get_category_amount(MAT_CATEGORY_GLASS)/D.materials[MAT_CATEGORY_GLASS]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -303,7 +303,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[MAT_CATEGORY_IRON] ?round(materials.get_category_amount(MAT_CATEGORY_IRON)/D.materials[MAT_CATEGORY_IRON]):INFINITY,D.materials[MAT_CATEGORY_GLASS]?round(materials.get_category_amount(MAT_CATEGORY_GLASS)/D.materials[MAT_CATEGORY_GLASS]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -320,8 +320,9 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/dat = "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	for(var/mat_id in materials.materials)
-		var/datum/material/M = materials.materials[mat_id]
-		dat += "<b>[M.name] amount:</b> [M.amount] cm<sup>3</sup><br>"
+		var/datum/material/M = mat_id
+		var/amount = materials.materials[mat_id]
+		dat += "<b>[M.name] amount:</b> [amount] cm<sup>3</sup><br>"
 	return dat
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D, amount = 1)
@@ -331,19 +332,19 @@
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff * amount)))
+	if(D.materials[MAT_CATEGORY_IRON] && (materials.get_category_amount(MAT_CATEGORY_IRON) < (D.materials[MAT_CATEGORY_IRON] * coeff * amount)))
 		return FALSE
-	if(D.materials[MAT_GLASS] && (materials.amount(MAT_GLASS) < (D.materials[MAT_GLASS] * coeff * amount)))
+	if(D.materials[MAT_CATEGORY_GLASS] && (materials.get_category_amount(MAT_CATEGORY_GLASS) < (D.materials[MAT_CATEGORY_GLASS] * coeff * amount)))
 		return FALSE
 	return TRUE
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
-	if(D.materials[MAT_METAL])
-		dat += "[D.materials[MAT_METAL] * coeff] metal "
-	if(D.materials[MAT_GLASS])
-		dat += "[D.materials[MAT_GLASS] * coeff] glass"
+	if(D.materials[MAT_CATEGORY_IRON])
+		dat += "[D.materials[MAT_CATEGORY_IRON] * coeff] metal "
+	if(D.materials[MAT_CATEGORY_GLASS])
+		dat += "[D.materials[MAT_CATEGORY_GLASS] * coeff] glass"
 	return dat
 
 /obj/machinery/autolathe/proc/reset(wire)

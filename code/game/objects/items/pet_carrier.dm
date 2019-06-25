@@ -15,7 +15,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 100)
+	materials = list(MAT_CATEGORY_IRON = 7500, MAT_CATEGORY_GLASS = 100)
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()

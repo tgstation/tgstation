@@ -65,7 +65,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
-	var/list/materials
+	var/list/materials //MAT_CATEGORIES in this object
+	var/list/used_materials //Actual materials used
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -105,9 +106,21 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
-/obj/item/Initialize()
+/obj/item/Initialize(var/list/craft_materials)
 
 	materials =	typelist("materials", materials)
+	
+	if(craft_materials)
+		used_materials = craft_materials
+
+	if(!used_materials)
+		SetupUsedMaterials() //Failsafe proc
+	else
+		var/list/temp_list = list()
+		for(var/i in used_materials) //Go through all of our used_materials, get the subsystem instance, and then replace the list.
+			var/amount = used_materials[i]
+			temp_list[SSmaterials.get_material(i)] = amount
+		used_materials = temp_list	
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
@@ -225,9 +238,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	// Extractable materials. Only shows the names, not the amounts.
 	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
-	if (materials.len)
+	if (used_materials.len)
 		sep = ""
-		for(var/mat in materials)
+		for(var/mat in used_materials)
 			research_msg += sep
 			research_msg += CallMaterialName(mat)
 			sep = ", "
@@ -795,3 +808,30 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
+
+
+/obj/item/proc/SetupUsedMaterials() //Failsafe, not the best thing to run so try to set used_materials yourself as much as possible
+	for(var/i in materials)
+		switch(i)
+			if(i == MAT_CATEGORY_IRON)
+				used_materials[SSmaterials.get_material(/datum/material/hematite)] = materials[i]
+			if(i == MAT_CATEGORY_GLASS)
+				used_materials[SSmaterials.get_material(/datum/material/glass)] = materials[i]
+			if(i == MAT_CATEGORY_SILVER)
+				used_materials[SSmaterials.get_material(/datum/material/silver)] = materials[i]
+			if(i == MAT_CATEGORY_GOLD)
+				used_materials[SSmaterials.get_material(/datum/material/gold)] = materials[i]
+			if(i == MAT_CATEGORY_DIAMOND)
+				used_materials[SSmaterials.get_material(/datum/material/diamond)] = materials[i]
+			if(i == MAT_CATEGORY_URANIUM)
+				used_materials[SSmaterials.get_material(/datum/material/uranium)] = materials[i]
+			if(i == MAT_CATEGORY_BLUESPACE)
+				used_materials[SSmaterials.get_material(/datum/material/bluespace)] = materials[i]
+			if(i == MAT_CATEGORY_BANANIUM)
+				used_materials[SSmaterials.get_material( /datum/material/bananium)] = materials[i]
+			if(i == MAT_CATEGORY_TITANIUM)
+				used_materials[SSmaterials.get_material(/datum/material/titanium)] = materials[i]
+			if(i == MAT_CATEGORY_PLASTIC)
+				used_materials[SSmaterials.get_material(/datum/material/plastic)] = materials[i]
+			if(i == MAT_CATEGORY_BIOMASS)
+				used_materials[SSmaterials.get_material(/datum/material/biomass)] = materials[i]

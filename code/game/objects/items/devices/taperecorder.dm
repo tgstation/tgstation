@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = HEAR_1
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(MAT_METAL=60, MAT_GLASS=30)
+	materials = list(MAT_CATEGORY_IRON=60, MAT_CATEGORY_GLASS=30)
 	force = 2
 	throwforce = 0
 	var/recording = 0
@@ -243,7 +243,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL=20, MAT_GLASS=5)
+	materials = list(MAT_CATEGORY_IRON=20, MAT_CATEGORY_GLASS=5)
 	force = 1
 	throwforce = 0
 	var/max_capacity = 600

@@ -35,7 +35,7 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize()
     var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
-     list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+     list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_PLASMA, MAT_CATEGORY_URANIUM, MAT_CATEGORY_BANANIUM, MAT_CATEGORY_TITANIUM, MAT_BLUESPACE), 0,
         TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
     materials.precise_insertion = TRUE
     stored_research = new
@@ -111,11 +111,12 @@
 	var/output
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/mat_id in materials.materials)
-		var/datum/material/M = materials.materials[mat_id]
-		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT)
+		var/datum/material/M = mat_id
+		var/amount= materials.materials[mat_id]
+		output += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
+		if(amount >= MINERAL_MATERIAL_AMOUNT)
 			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[mat_id]'>1</a>\]"
-			if(M.amount >= (MINERAL_MATERIAL_AMOUNT * 10))
+			if(amount >= (MINERAL_MATERIAL_AMOUNT * 10))
 				output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[mat_id]'>10</a>\]"
 			output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
 		output += "<br/>"

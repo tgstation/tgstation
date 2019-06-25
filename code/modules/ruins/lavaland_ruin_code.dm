@@ -34,7 +34,7 @@
 	desc = "Allows for the construction of a Golem Shell."
 	id = "golem"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 40000)
+	materials = list(MAT_CATEGORY_IRON = 40000)
 	build_path = /obj/item/golem_shell
 	category = list("Imported")
 

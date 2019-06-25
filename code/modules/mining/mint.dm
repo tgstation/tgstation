@@ -8,14 +8,14 @@
 	density = TRUE
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = FALSE
-	var/chosen = MAT_METAL //which material will be used to make coins
+	var/chosen = MAT_CATEGORY_IRON //which material will be used to make coins
 	var/coinsToProduce = 10
 	speed_process = TRUE
 
 
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_URANIUM, MAT_DIAMOND, MAT_BANANIUM), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
+	AddComponent(/datum/component/material_container, list(MAT_CATEGORY_IRON, MAT_CATEGORY_PLASMA, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_URANIUM, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_BANANIUM), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)

@@ -2,7 +2,7 @@
 	name = "igniter"
 	desc = "A small electronic device able to ignite combustible substances."
 	icon_state = "igniter"
-	materials = list(MAT_METAL=500, MAT_GLASS=50)
+	materials = list(MAT_CATEGORY_IRON=500, MAT_CATEGORY_GLASS=50)
 	var/datum/effect_system/spark_spread/sparks
 	heat = 1000
 
