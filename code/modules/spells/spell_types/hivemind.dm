@@ -698,7 +698,7 @@
 	var/list/enemies = list()
 
 	to_chat(user, "<span class='notice'>We begin probing [target.name]'s mind!</span>")
-	if(!do_after(user,100,0,target))
+	if(do_after(user,100,0,target))
 		var/foiled = target.anti_magic_check(FALSE, FALSE, TRUE)
 		if(!in_hive || foiled)
 			var/timely = !in_hive ? 200 : 100
