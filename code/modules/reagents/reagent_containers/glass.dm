@@ -116,7 +116,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
-	materials = list(MAT_CATEGORY_GLASS=500)
+	materials = list(/datum/material/glass=500)
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -164,7 +164,7 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
-	materials = list(MAT_CATEGORY_GLASS=2500)
+	materials = list(/datum/material/glass=2500)
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
@@ -173,7 +173,7 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
-	materials = list(MAT_CATEGORY_GLASS=2500, MAT_PLASTIC=3000)
+	materials = list(/datum/material/glass=2500, MAT_PLASTIC=3000)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
@@ -187,7 +187,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 180 units."
 	icon_state = "beakergold"
-	materials = list(MAT_CATEGORY_GLASS=2500, MAT_PLASTIC=3000, MAT_CATEGORY_GOLD=1000, MAT_CATEGORY_TITANIUM=1000)
+	materials = list(/datum/material/glass=2500, MAT_PLASTIC=3000, /datum/material/gold=1000, /datum/material/titanium=1000)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
@@ -197,7 +197,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	materials = list(MAT_CATEGORY_IRON=3000)
+	materials = list(/datum/material/hematite=3000)
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -249,7 +249,7 @@
 	item_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	materials = list(MAT_CATEGORY_IRON=200)
+	materials = list(/datum/material/hematite=200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
@@ -322,7 +322,7 @@
 	icon_state = "smallbottle"
 	item_state = "bottle"
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	materials = list(MAT_CATEGORY_GLASS=0)
+	materials = list(/datum/material/glass=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
 
@@ -332,7 +332,7 @@
 /obj/item/reagent_containers/glass/beaker/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	materials = list(MAT_CATEGORY_GLASS=0)
+	materials = list(/datum/material/glass=0)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20

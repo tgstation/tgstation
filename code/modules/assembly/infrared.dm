@@ -2,7 +2,7 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	materials = list(MAT_CATEGORY_IRON=1000, MAT_CATEGORY_GLASS=500)
+	materials = list(/datum/material/hematite=1000, /datum/material/glass=500)
 	is_position_sensitive = TRUE
 
 	var/on = FALSE

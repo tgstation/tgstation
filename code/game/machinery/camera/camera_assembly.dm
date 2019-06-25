@@ -8,7 +8,7 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
-	materials = list(MAT_CATEGORY_IRON=400, MAT_CATEGORY_GLASS=250)
+	materials = list(/datum/material/hematite=400, /datum/material/glass=250)
 	result_path = /obj/structure/camera_assembly
 
 /obj/structure/camera_assembly

@@ -8,7 +8,7 @@
 	density = TRUE
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = FALSE
-	var/chosen = MAT_CATEGORY_IRON //which material will be used to make coins
+	var/chosen = /datum/material/hematite //which material will be used to make coins
 	var/coinsToProduce = 10
 	speed_process = TRUE
 

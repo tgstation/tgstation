@@ -8,7 +8,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_CATEGORY_IRON=60)
+	materials = list(/datum/material/hematite=60)
 	item_color = "cargo"
 	pressure_resistance = 2
 	attack_verb = list("stamped")

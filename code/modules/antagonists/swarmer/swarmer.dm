@@ -4,7 +4,7 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	materials = list(MAT_CATEGORY_IRON=10000, MAT_CATEGORY_GLASS=4000)
+	materials = list(/datum/material/hematite=10000, /datum/material/glass=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
@@ -189,7 +189,7 @@
 	return 0
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
-	if(materials[MAT_CATEGORY_IRON] || materials[MAT_CATEGORY_GLASS])
+	if(materials[/datum/material/hematite] || materials[/datum/material/glass])
 		return 1
 	return ..()
 

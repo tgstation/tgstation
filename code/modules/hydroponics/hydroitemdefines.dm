@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(MAT_CATEGORY_IRON=30, MAT_CATEGORY_GLASS=20)
+	materials = list(/datum/material/hematite=30, /datum/material/glass=20)
 
 // *************************************
 // Hydroponics Tools
@@ -57,7 +57,7 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_CATEGORY_IRON=50)
+	materials = list(/datum/material/hematite=50)
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
