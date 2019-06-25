@@ -429,7 +429,7 @@
 			if(!B.access_code || (B.access_code && console.beacon_access_codes[B.access_code]))
 				L["([L.len]) [B.id] located: [B.x] [B.y] [B.z]"] = B
 			else
-				L["([L.len]) [B.id] locked"] = null
+				L["([L.len]) [B.name] [B.id] locked"] = null
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L
