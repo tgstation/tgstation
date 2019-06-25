@@ -17,7 +17,7 @@
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
-	var/list/ore_values = list("hematite" = 1, "glass" = 1, "plasma" = 15, "silver" = 16, "gold" = 18, "titanium" = 30,"uranium" = 30, "diamond" = 50, "bluespace" = 50, "bananium" = 60)
+	var/list/ore_values = list(/datum/material/hematite = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material//bananium = 60)
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
@@ -229,7 +229,7 @@
 			var/datum/material/M = mat_id
 			var/amount = mat_container.materials[mat_id]
 			var/sheet_amount = amount ? amount / MINERAL_MATERIAL_AMOUNT : "0"
-			data["materials"] += list(list("name" = M.name, "amount" = sheet_amount, "value" = ore_values[M.id]))
+			data["materials"] += list(list("name" = M.name, "amount" = sheet_amount, "value" = ore_values[M.type]))
 
 		data["alloys"] = list()
 		for(var/v in stored_research.researched_designs)

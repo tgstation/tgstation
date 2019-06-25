@@ -23,7 +23,7 @@
 	icon_state = "tile_gold"
 	turf_type = /turf/open/floor/mineral/gold
 	mineralType = "gold"
-	materials = list(M/datum/material/gold=500)
+	materials = list(/datum/material/gold=500)
 
 /obj/item/stack/tile/mineral/silver
 	name = "silver tile"

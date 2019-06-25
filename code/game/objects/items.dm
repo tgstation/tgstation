@@ -117,9 +117,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 			var/amount = materials[i]
 			var/datum/material/M = SSmaterials.materials[i]
-			to_chat(world, "[M]")
 			temp_list[M] = amount
-		materials = temp_list.Copy()
+		materials = temp_list
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
