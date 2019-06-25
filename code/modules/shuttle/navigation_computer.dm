@@ -31,10 +31,10 @@
 		var/obj/docking_port/stationary/S = V
 		if(jumpto_ports[S.id])
 			z_lock |= S.z
-	z_locked |= levels_by_trait(ZTRAIT_SPACE_RUINS) //after testing maybe move this to where z_locked used because some unaccesible z lvls can be added after init
-	z_locked |= levels_by_trait(ZTRAIT_CENTCOM) //If someone know how to better do this please 
-	z_locked |= levels_by_trait(ZTRAIT_AWAY)
-	z_locked |= levels_by_trait(ZTRAIT_REEBE)
+	z_locked |= SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS) //after testing maybe move this to where z_locked used because some unaccesible z lvls can be added after init
+	z_locked |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM) //If someone know how to better do this please 
+	z_locked |= SSmapping.levels_by_trait(ZTRAIT_AWAY)
+	z_locked |= SSmapping.levels_by_trait(ZTRAIT_REEBE)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()
@@ -50,35 +50,35 @@
 		switch(choice)
 			if("Add ID")
 				sellect = replacetext(lowertext(input("Enter the ID to add", "Input ID") as text), " ", "_")
-				if(selected)
+				if(sellect)
 					beacon_codes |= sellect
 			if("Remove ID")
 				sellect = input("Choice ID to remove", "ID to remove") as null|anything in beacon_codes
-				if(selected)
+				if(sellect)
 					beacon_codes -= sellect
 			if("Add access code")
 				sellect = replacetext(lowertext(input("Enter the access code to add", "Input access code") as text), " ", "_")
-				if(selected)
+				if(sellect)
 					beacon_access_codes |= sellect
 			if("Remove access code")
 				sellect = input("Choice access code to remove", "Access code to remove") as null|anything in beacon_access_codes
-				if(selected)
+				if(sellect)
 					beacon_access_codes -= sellect			
 			if("TO TEST add z_lock")
 				sellect = replacetext(lowertext(input("Enter the Z to add to z_lock", "Input access code") as num), " ", "_")
-				if(selected)
+				if(sellect)
 					z_lock |= sellect
 			if("TO TEST remove z_lock")
 				sellect = input("Choice Z to remove from z_lock", "Z to remove") as null|anything in z_lock
-				if(selected)
+				if(sellect)
 					z_lock -= sellect
 			if("TO TEST add z_locked")
 				sellect = replacetext(lowertext(input("Enter the Z to add to z_lock", "Input access code") as num), " ", "_")
-				if(selected)
+				if(sellect)
 					z_locked |= sellect
 			if("TO TEST remove z_locked")
 				sellect = input("Choice Z to remove from z_lock", "Z to remove") as null|anything in z_locked
-				if(selected)
+				if(sellect)
 					z_locked -= sellect
 		return TRUE
 
