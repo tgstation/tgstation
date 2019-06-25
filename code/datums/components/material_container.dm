@@ -209,23 +209,32 @@
 /datum/component/material_container/proc/use_materials(list/mats, multiplier=1)
 	if(!mats || !length(mats))
 		return FALSE
+	for(var/i in mats)
+		to_chat(world, "mats[i] [i]") //debug
 	
 	var/list/mats_to_remove = list() //Assoc list MAT | AMOUNT
 
 	for(var/x in mats) //Loop through all required materials
-		if(!materials[x]) //Do we have the resource?
+		var/datum/material/req_mat = x
+		if(!istype(req_mat))
+			to_chat(world, "not a ref!! call the cops!!")
+			req_mat = SSmaterials.materials[req_mat]
+		if(!materials[req_mat]) //Do we have the resource?
 			to_chat(world, "cannot afford, mat not available.")
 			return FALSE //Can't afford it
-		var/amount_required = mats[x] * multiplier
-		if(!(materials[x] >= amount_required)) // do we have enough of the resource?
+		var/amount_required = mats[req_mat] * multiplier
+		if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
 			to_chat(world, "cannot afford, not enough mats")
 			return FALSE //Can't afford it
-		mats_to_remove[x] += amount_required //Add it to the assoc list of things to remove
+		to_chat(world, "[amount_required]")
+		mats_to_remove[req_mat] += amount_required //Add it to the assoc list of things to remove
+		to_chat(world, "[mats_to_remove[req_mat]]")
 		continue
 		
 	var/total_amount_save = total_amount
 
 	for(var/i in mats_to_remove)
+		to_chat(world, "[mats_to_remove[i]] [i]")
 		total_amount_save -= use_amount_mat(mats_to_remove[i], i)
 
 	return total_amount_save - total_amount
@@ -270,12 +279,17 @@
 	if(!mats || !mats.len)
 		return FALSE
 
-	for(var/MAT in mats)
-		if(!istype(MAT, /datum/material))
-			MAT = SSmaterials.materials[MAT]
-		var/amount = materials[MAT]
-		if(amount < (mats[MAT] * multiplier))
-			return FALSE
+	for(var/x in mats) //Loop through all required materials
+		var/datum/material/req_mat = x
+		if(!istype(req_mat))
+			req_mat = SSmaterials.materials[req_mat]
+		if(!materials[req_mat]) //Do we have the resource?
+			to_chat(world, "check: cannot afford, mat not available.")
+			return FALSE //Can't afford it
+		var/amount_required = mats[req_mat] * multiplier
+		if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
+			to_chat(world, "check: cannot afford, not enough mats")
+			return FALSE //Can't afford it
 	return TRUE
 
 /datum/component/material_container/proc/amount2sheet(amt) //Revamped
