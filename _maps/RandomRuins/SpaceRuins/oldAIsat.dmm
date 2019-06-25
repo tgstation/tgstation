@@ -898,7 +898,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/oldaisat)
 "Ih" = (
-/obj/machinery/bluespace_beacon,
+/obj/machinery/spaceship_navigation_beacon,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 
