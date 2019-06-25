@@ -2,12 +2,11 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/lens_path
 	var/obj/item/ammo_casing/energy/ammo
-	var/user
 
-/datum/component/extralasers/Initialize(_ammo, _lens_path, lens)
+/datum/component/extralasers/Initialize(_ammo, _lens_path)
 	if(!istype(parent, /obj/item/gun/energy/laser))
 		return COMPONENT_INCOMPATIBLE
-	attach(_ammo, _lens_path, lens)
+	attach(_ammo, _lens_path)
 
 /datum/component/extralasers/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
@@ -18,22 +17,21 @@
 /datum/component/extralasers/proc/attackby(datum/source, obj/item/I, mob/user, params)
 	. = ..()
 	if(I.tool_behaviour == TOOL_CROWBAR)
-		detach(source, user, TRUE)
+		detach(TRUE)
 
-/datum/component/extralasers/proc/attach(obj/item/ammo_casing/energy/_ammo, _lens_path, lens)
+/datum/component/extralasers/proc/attach(obj/item/ammo_casing/energy/_ammo, _lens_path)
 	var/obj/item/gun/energy/laser/L = parent
 	ammo =  new _ammo (src)
 	L.ammo_type  += ammo
 	lens_path = _lens_path
-	qdel(lens)
 
-/datum/component/extralasers/proc/detach(datum/source, mob/user, breaklens = FALSE)
+/datum/component/extralasers/proc/detach(breaklens = FALSE)
 	if(parent)
 		var/obj/item/gun/energy/laser/L = parent
 		L?.chambered = null
 		if(L.ammo_type.len)
 			LAZYREMOVE(L.ammo_type, ammo)
-		L.select_fire(user)
+		L.select_fire()
 		L.recharge_newshot()
 		L.update_icon(TRUE)
 		var/turf/T = get_turf(parent)
@@ -43,5 +41,5 @@
 
 /datum/component/extralasers/InheritComponent(datum/newcomp, orig, list/arglist)
 	. = ..()
-	detach(0, user)
-	attach(arglist[1],arglist[2],arglist[3])
+	detach()
+	attach(arglist[1],arglist[2])
