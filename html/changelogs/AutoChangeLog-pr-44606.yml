@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Antimagic items now also properly work when held in hand, instead of only when equipped."
