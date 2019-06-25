@@ -142,7 +142,7 @@
 	var/list/res_coef = get_resources_w_coeff(D)
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.use_amount(res_coef)
+	materials.use_materials(res_coef)
 	add_overlay("fab-active")
 	use_power = ACTIVE_POWER_USE
 	updateUsrDialog()

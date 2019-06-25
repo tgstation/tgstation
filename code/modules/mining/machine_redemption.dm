@@ -91,7 +91,7 @@
 
 	for(var/mat_cat in D.materials)
 		var/M = D.materials[mat_cat]
-		var/datum/material/redemption_mat = mat_container.get_category_amount(mat_cat)
+		var/datum/material/redemption_mat = mat_container.get_material_amount(mat_cat)
 		var/amount = mat_container.materials[redemption_mat]
 
 		if(!M || !redemption_mat)
@@ -308,7 +308,7 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
-				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat_id, get_step(src, output_dir))
+				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
 				mats[mat] = MINERAL_MATERIAL_AMOUNT
 				materials.silo_log(src, "released", -count, "sheets", mats)
@@ -348,7 +348,7 @@
 				else
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 				var/amount = round(min(desired,50,smelt_amount))
-				mat_container.use_amount(alloy.materials, amount)
+				mat_container.use_materials(alloy.materials, amount)
 				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))

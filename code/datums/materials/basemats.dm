@@ -2,7 +2,7 @@
 	name = "Hematite"
 	id = "hematite"
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_IRON = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/metal
 	coin_type = /obj/item/coin/iron
 
@@ -10,14 +10,13 @@
 	name = "Glass"
 	id = "glass"
 	desc = "Glass forged by melting sand."
-	categories = list(MAT_CATEGORY_TRANSPARENT = TRUE)
 	sheet_type = /obj/item/stack/sheet/glass
 
 /datum/material/silver
 	name = "Silver"
 	id = "silver"
 	desc = "Silver"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_SILVER = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	coin_type = /obj/item/coin/silver
 
@@ -25,7 +24,7 @@
 	name = "Gold"
 	id = "gold"
 	desc = "Gold"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_GOLD = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	coin_type = /obj/item/coin/gold
 
@@ -33,7 +32,7 @@
 	name = "Diamond"
 	id = "diamond"
 	desc = "Highly pressurized carbon"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_DIAMOND = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	coin_type = /obj/item/coin/diamond
 
@@ -41,7 +40,7 @@
 	name = "Uranium"
 	id = "uranium"
 	desc = "Uranium"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_URANIUM = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	coin_type = /obj/item/coin/uranium
 
@@ -52,7 +51,7 @@
 	name = "Plasma"
 	id = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_PLASMA = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	coin_type = /obj/item/coin/plasma
 
@@ -60,14 +59,14 @@
 	name = "Bluespace Crystal"
 	id = "bluespace_crystal"
 	desc = "Crystals with bluespace properties"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_BLUESPACE = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 
 /datum/material/bananium
 	name = "Bananium"
 	id = "bananium"
 	desc = "Material with hilarious properties"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_BANANIUM = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	coin_type = /obj/item/coin/bananium
 
@@ -75,18 +74,16 @@
 	name = "Titanium"
 	id = "titanium"
 	desc = "Titanium"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_TITANIUM = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 
 /datum/material/plastic
-	name = "plastic"
+	name = "Plastic"
 	id = "plastic"
 	desc = "plastic"
-	categories = list(MAT_CATEGORY_PLASTIC = TRUE)
 	sheet_type = /obj/item/stack/sheet/plastic
 
 /datum/material/biomass
 	name = "Biomass"
 	id = "biomass"
 	desc = "Organic matter"
-	categories = list(MAT_CATEGORY_BIOMASS = TRUE)

@@ -91,19 +91,19 @@
 			I.materials = matlist.Copy()
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
-/obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/category)	// now returns how many times the item can be built with the material
+/obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/mat)	// now returns how many times the item can be built with the material
 	if (!materials.mat_container)  // no connected silo
 		return 0
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
-	var/A = materials.mat_container.get_category_amount(category)
+	var/A = materials.mat_container.get_material_amount(mat)
 	if(!A)
-		A = reagents.get_reagent_amount(category)
+		A = reagents.get_reagent_amount(mat)
 
 	// these types don't have their .materials set in do_print, so don't allow
 	// them to be constructed efficiently
 	var/ef = efficient_with(being_built.build_path) ? efficiency_coeff : 1
-	return round(A / max(1, all_materials[category] / ef))
+	return round(A / max(1, all_materials[mat] / ef))
 
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
@@ -147,7 +147,7 @@
 		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/coeff))
 			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
-	materials.mat_container.use_amount(efficient_mats, amount)
+	materials.mat_container.use_materials(efficient_mats, amount)
 	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
 	for(var/R in D.reagents_list)
 		reagents.remove_reagent(R, D.reagents_list[R]*amount/coeff)

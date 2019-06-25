@@ -15,7 +15,7 @@
 
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_CATEGORY_IRON, MAT_CATEGORY_PLASMA, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_URANIUM, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_BANANIUM), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
+	AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/plasma, /datum/material/silver, /datum/material/gold, /datum/material/uranium, /datum/material/diamond, /datum/material/bananium), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
@@ -82,7 +82,7 @@
 			updateUsrDialog()
 			return
 
-		while(coinsToProduce > 0 && materials.use_amount_mat(coin_mat, chosen))
+		while(coinsToProduce > 0 && materials.use_amount_mat(coin_mat, SSmaterials.materials[chosen]))
 			create_coins(M.coin_type)
 			coinsToProduce--
 			newCoins++

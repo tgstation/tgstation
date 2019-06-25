@@ -40,22 +40,16 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
-	var/list/possible_mats = list()
-	for(var/mat_type in subtypesof(/datum/material))
-		possible_mats += mat_type
-
-	for(var/mat in possible_mats)
+	for(var/mat in mat_list) //Make the assoc list ref | amount
 		to_chat(world,"[mat]")
 		var/datum/material/M = SSmaterials.materials[mat]
-		for(var/i in M.categories)
-			if(mat_list.Find(i))
-				materials[M] = 0
+		materials[M] = 0
 
 /datum/component/material_container/proc/OnExamine(datum/source, mob/user)
 	if(show_on_examine)
 		for(var/I in materials)
 			var/datum/material/M = I
-			var/amt = get_material_amount(I)
+			var/amt = materials[I]
 			if(amt)
 				to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
 
@@ -83,7 +77,8 @@
 		return
 	user_insert(I, user)
 
-/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+
+/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user) //Revamped
 	set waitfor = FALSE
 	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
@@ -114,20 +109,30 @@
 	else if(I == active_held)
 		user.put_in_active_hand(I)
 
-//For inserting an amount of material
-/datum/component/material_container/proc/insert_amount(amt, mat)
-	if(amt > 0 && has_space(amt))
-		var/total_amount_saved = total_amount
-		if(mat)
-			materials[mat] += amt
-		else
-			for(var/i in materials)
-				materials[i] += amt
-				total_amount += amt
-		return (total_amount - total_amount_saved)
-	return FALSE
+/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt) //Revamped
+	if(!I)
+		return FALSE
+	if(istype(I, /obj/item/stack))
+		return insert_stack(I, stack_amt, multiplier)
 
-/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1)
+	var/material_amount = get_item_material_amount(I)
+	if(!material_amount || !has_space(material_amount))
+		return FALSE
+
+	last_inserted_id = insert_item_materials(I, multiplier)
+	return material_amount
+
+/datum/component/material_container/proc/insert_item_materials(obj/item/I, multiplier = 1) //for internal usage only //Revamped
+	var/primary_mat
+	var/max_mat_value = 0
+	for(var/MAT in materials)
+		materials[MAT] += I.materials[MAT] * multiplier
+		total_amount += I.materials[MAT] * multiplier
+		if(I.materials[MAT] > max_mat_value)
+			primary_mat = MAT
+	return primary_mat
+
+/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1) //Revamped
 	if(isnull(amt))
 		amt = S.amount
 
@@ -145,64 +150,24 @@
 	if(!amt)
 		return FALSE
 
-	last_inserted_id = insert_materials(S,amt * multiplier)
+	last_inserted_id = insert_item_materials(S,amt * multiplier)
 	S.use(amt)
 	return amt
 
-/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt)
-	if(!I)
-		return FALSE
-	if(istype(I, /obj/item/stack))
-		return insert_stack(I, stack_amt, multiplier)
-
-	var/material_amount = get_item_material_amount(I)
-	if(!material_amount || !has_space(material_amount))
-		return FALSE
-
-	last_inserted_id = insert_materials(I, multiplier)
-	return material_amount
-
-/datum/component/material_container/proc/insert_materials(obj/item/I, multiplier = 1) //for internal usage only
-	var/primary_mat
-	var/max_mat_value = 0
-	for(var/MAT in materials)
-		materials[MAT] += I.materials[MAT] * multiplier
-		total_amount += I.materials[MAT] * multiplier
-		if(I.materials[MAT] > max_mat_value)
-			primary_mat = MAT
-	return primary_mat
-
-//For consuming material
-//cats is a list of types of categories of materials to use and the corresponding amounts, example: list(MAT_CATEGORY_IRON=100, MAT_CATEGORY_GLASS=200)
-/datum/component/material_container/proc/use_amount(list/cats, multiplier=1)
-	if(!cats || !cats.len)
-		return FALSE
-
-	var/list/used_mats
-	for(var/i in cats)
-		var/datum/material/M = get_best_mat_of_category(i)
-		if(materials[M] < (cats[i] * multiplier))
-			return FALSE
-		used_mats += M
-
-	var/total_amount_save = total_amount
-
-	for(var/i in cats)
-		total_amount_save -= use_amount_cat(cats[i] * multiplier, i)
-
-	return total_amount_save - total_amount
-
-
-/datum/component/material_container/proc/use_amount_cat(amt, cat)
-	var/datum/material/M = get_best_mat_of_category(cat)
-	var/amount = materials[M]
-	if(amount >= amt)
-		materials[M] -= amt
-		total_amount -= amt
-		return amt
+//For inserting an amount of material
+/datum/component/material_container/proc/insert_amount_mat(amt, mat) //Revamped
+	if(amt > 0 && has_space(amt))
+		var/total_amount_saved = total_amount
+		if(mat)
+			materials[mat] += amt
+		else
+			for(var/i in materials)
+				materials[i] += amt
+				total_amount += amt
+		return (total_amount - total_amount_saved)
 	return FALSE
 
-/datum/component/material_container/proc/use_amount_mat(amt, mat)
+/datum/component/material_container/proc/use_amount_mat(amt, mat) //Revamped
 	var/datum/material/M = mat
 	var/amount = materials[mat]
 	if(M)
@@ -212,32 +177,65 @@
 			return amt
 	return FALSE
 
-
-/datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, mat)
+/datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, var/datum/material/mat) //Revamped
+	if(!istype(mat))
+		mat = SSmaterials.materials[mat]
 	if((amt==0)||(!T)||(!mat))
 		return FALSE
 	if(amt<0)
 		return T.transer_amt_to(src, -amt, mat)
-	var/tr = min(amt, materials[mat],T.can_insert_amount(amt, mat))
+	var/tr = min(amt, materials[mat],T.can_insert_amount_mat(amt, mat))
 	if(tr)
 		use_amount_mat(tr, mat)
-		T.insert_amount(tr, mat)
+		T.insert_amount_mat(tr, mat)
 		return tr
 	return FALSE
 
-/datum/component/material_container/proc/can_insert_amount(amt, id)
-	if(amt && id)
-		var/datum/material/M = materials[id]
+/datum/component/material_container/proc/can_insert_amount_mat(amt, mat)
+	if(amt && mat)
+		var/datum/material/M = mat
 		if(M)
 			if((total_amount + amt) <= max_amount)
 				return amt
 			else
 				return	(max_amount-total_amount)
 
+
+//For consuming material
+// mats is the list of materials to use and the corresponding amounts, example: list(M/datum/material/glass =100, datum/material/hematite=200)
+/datum/component/material_container/proc/use_materials(list/mats, multiplier=1)
+	if(!mats || !length(mats))
+		return FALSE
+	
+	var/list/mats_to_remove = list() //Assoc list MAT | AMOUNT
+
+	for(var/x in mats) //Loop through all required materials
+		if(!materials[x]) //Do we have the resource?
+			to_chat(world, "cannot afford, mat not available.")
+			return FALSE //Can't afford it
+		var/amount_required = mats[x] * multiplier
+		if(!(materials[x] >= amount_required)) // do we have enough of the resource?
+			to_chat(world, "cannot afford, not enough mats")
+			return FALSE //Can't afford it
+		mats_to_remove[x] += amount_required //Add it to the assoc list of things to remove
+		continue
+		
+	for(var/i in mats_to_remove) //Remove the resources properly
+		use_amount_mat(mats_to_remove[i], i)
+
+	var/total_amount_save = total_amount
+
+	for(var/i in mats_to_remove)
+		total_amount_save -= use_amount_mat(mats_to_remove[i], i)
+
+	return total_amount_save - total_amount
+
 //For spawning mineral sheets; internal use only
-/datum/component/material_container/proc/retrieve(sheet_amt, datum/material/M, target = null)
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, var/datum/material/M, target = null) //Kinda revamped? this is most likely to not work
+	if(!istype(M))
+		M = SSmaterials.materials[M]
 	if(!M.sheet_type)
-		return 0
+		return 0 //Add greyscale sheet handling here later
 	if(sheet_amt <= 0)
 		return 0
 
@@ -257,13 +255,7 @@
 		use_amount_mat(sheet_amt * MINERAL_MATERIAL_AMOUNT, M)
 	return count
 
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, mat, target = null)
-	return retrieve(sheet_amt, mat, target)
-
-/datum/component/material_container/proc/retrieve_amount(amt, id, target)
-	return retrieve_sheets(amount2sheet(amt), id, target)
-
-/datum/component/material_container/proc/retrieve_all(target = null)
+/datum/component/material_container/proc/retrieve_all(target = null) //Revamped
 	var/result = 0
 	for(var/MAT in materials)
 		var/amount = materials[MAT]
@@ -273,49 +265,41 @@
 /datum/component/material_container/proc/has_space(amt = 0)
 	return (total_amount + amt) <= max_amount
 
-/datum/component/material_container/proc/has_materials(list/mats, multiplier=1)
+/datum/component/material_container/proc/has_materials(list/mats, multiplier=1) //Revamped
 	if(!mats || !mats.len)
 		return FALSE
 
 	for(var/MAT in mats)
+		if(!istype(MAT, /datum/material))
+			MAT = SSmaterials.materials[MAT]
 		var/amount = materials[MAT]
 		if(amount < (mats[MAT] * multiplier))
 			return FALSE
 	return TRUE
 
-/datum/component/material_container/proc/amount2sheet(amt)
+/datum/component/material_container/proc/amount2sheet(amt) //Revamped
 	if(amt >= MINERAL_MATERIAL_AMOUNT)
 		return round(amt / MINERAL_MATERIAL_AMOUNT)
 	return FALSE
 
-/datum/component/material_container/proc/sheet2amount(sheet_amt)
+/datum/component/material_container/proc/sheet2amount(sheet_amt) //Revamped
 	if(sheet_amt > 0)
 		return sheet_amt * MINERAL_MATERIAL_AMOUNT
 	return FALSE
 
-/datum/component/material_container/proc/get_material_amount(material)
-	return materials[material]
-
-/datum/component/material_container/proc/get_best_mat_of_category(category) //This gets the material with the highest count of a certain category.
-	var/datum/material/best_match
-
-	for(var/i in SSmaterials.get_materials_of_category(category))
-		var/amount = materials[i]
-		if(!best_match || amount >= materials[i])
-			best_match = i
-
-	return best_match
-
-/datum/component/material_container/proc/get_category_amount(category)
-	return materials[get_best_mat_of_category(category)]
-
 
 //returns the amount of material relevant to this container;
 //if this container does not support glass, any glass in 'I' will not be taken into account
-/datum/component/material_container/proc/get_item_material_amount(obj/item/I)
+/datum/component/material_container/proc/get_item_material_amount(obj/item/I)  //Revamped
 	if(!istype(I))
 		return FALSE
 	var/material_amount = 0
 	for(var/MAT in I.materials)
 		material_amount += I.materials[MAT]
 	return material_amount
+
+
+/datum/component/material_container/proc/get_material_amount(var/datum/material/mat)  //Revamped
+	if(!istype(mat))
+		mat = SSmaterials.materials[mat]
+	return(materials.[mat])

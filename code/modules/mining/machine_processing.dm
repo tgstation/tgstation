@@ -82,7 +82,7 @@
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 1)
-	AddComponent(/datum/component/material_container, list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_PLASMA, MAT_CATEGORY_URANIUM, MAT_CATEGORY_BANANIUM, MAT_CATEGORY_TITANIUM, MAT_CATEGORY_BLUESPACE), INFINITY, TRUE, /obj/item/stack)
+	AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, TRUE, /obj/item/stack)
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 
 /obj/machinery/mineral/processing_unit/Destroy()
@@ -177,7 +177,7 @@
 		return
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.use_amount(alloy.materials, amount)
+	materials.use_materials(alloy.materials, amount)
 
 	generate_mineral(alloy.build_path)
 
@@ -190,14 +190,10 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 	for(var/mat_cat in D.materials)
-		var/M = D.materials[mat_cat]
-		var/datum/material/smelter_mat = materials.get_category_amount(mat_cat)
-		var/amount = materials.materials[smelter_mat]
+		var/required_amount = D.materials[mat_cat]
+		var/amount = materials.materials[mat_cat]
 
-		if(!smelter_mat)
-			return FALSE
-
-		build_amount = min(build_amount, round(amount / M))
+		build_amount = min(build_amount, round(amount / required_amount))
 
 	return build_amount
 

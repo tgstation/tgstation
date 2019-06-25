@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/material_container,
-		list(MAT_CATEGORY_IRON, MAT_CATEGORY_GLASS, MAT_CATEGORY_SILVER, MAT_CATEGORY_GOLD, MAT_CATEGORY_DIAMOND, MAT_CATEGORY_PLASMA, MAT_CATEGORY_URANIUM, MAT_CATEGORY_BANANIUM, MAT_CATEGORY_TITANIUM, MAT_CATEGORY_BLUESPACE, MAT_CATEGORY_PLASTIC),
+		list(/datum/material/hematite, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace, /datum/material/plastic),
 		INFINITY,
 		FALSE,
 		/obj/item/stack,

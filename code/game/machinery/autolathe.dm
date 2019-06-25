@@ -48,7 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, list(datum/material/hematite, datum/material/glass), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/glass), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -127,9 +127,9 @@
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
 	else
 		switch(id_inserted)
-			if (MAT_CATEGORY_IRON)
+			if (/datum/material/hematite)
 				flick("autolathe_o",src)//plays metal insertion animation
-			if (MAT_CATEGORY_GLASS)
+			if (/datum/material/glass)
 				flick("autolathe_r",src)//plays glass insertion animation
 		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
@@ -161,13 +161,13 @@
 			/////////////////
 
 			var/coeff = (is_stack ? 1 : prod_coeff) //stacks are unaffected by production coefficient
-			var/metal_cost = being_built.materials[MAT_CATEGORY_IRON]
-			var/glass_cost = being_built.materials[MAT_CATEGORY_GLASS]
+			var/metal_cost = being_built.materials[/datum/material/hematite]
+			var/glass_cost = being_built.materials[/datum/material/glass]
 
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			if((materials.get_category_amount(MAT_CATEGORY_IRON) >= metal_cost*multiplier*coeff) && (materials.get_category_amount(MAT_CATEGORY_GLASS) >= glass_cost*multiplier*coeff))
+			if((materials.get_material_amount(/datum/material/hematite) >= metal_cost*multiplier*coeff) && (materials.get_material_amount(/datum/material/glass) >= glass_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
@@ -193,8 +193,8 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
-	var/list/materials_used = list(MAT_CATEGORY_IRON=metal_cost*coeff*multiplier, MAT_CATEGORY_GLASS=glass_cost*coeff*multiplier)
-	materials.use_amount(materials_used)
+	var/list/materials_used = list(/datum/material/hematite=metal_cost*coeff*multiplier, /datum/material/glass=glass_cost*coeff*multiplier)
+	materials.use_materials(materials_used)
 
 	if(is_stack)
 		var/obj/item/stack/N = new being_built.build_path(A, multiplier)
@@ -271,7 +271,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_CATEGORY_IRON] ?round(materials.get_category_amount(MAT_CATEGORY_IRON)/D.materials[MAT_CATEGORY_IRON]):INFINITY,D.materials[MAT_CATEGORY_GLASS]?round(materials.get_category_amount(MAT_CATEGORY_GLASS)/D.materials[MAT_CATEGORY_GLASS]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[/datum/material/hematite] ?round(materials.get_material_amount(/datum/material/hematite)/D.materials[/datum/material/hematite]):INFINITY,D.materials[/datum/material/glass]?round(materials.get_material_amount(/datum/material/glass)/D.materials[/datum/material/glass]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -303,7 +303,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_CATEGORY_IRON] ?round(materials.get_category_amount(MAT_CATEGORY_IRON)/D.materials[MAT_CATEGORY_IRON]):INFINITY,D.materials[MAT_CATEGORY_GLASS]?round(materials.get_category_amount(MAT_CATEGORY_GLASS)/D.materials[MAT_CATEGORY_GLASS]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[/datum/material/hematite] ?round(materials.get_material_amount(/datum/material/hematite)/D.materials[/datum/material/hematite]):INFINITY,D.materials[/datum/material/glass]?round(materials.get_material_amount(/datum/material/glass)/D.materials[/datum/material/glass]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -332,19 +332,19 @@
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	if(D.materials[MAT_CATEGORY_IRON] && (materials.get_category_amount(MAT_CATEGORY_IRON) < (D.materials[MAT_CATEGORY_IRON] * coeff * amount)))
+	if(D.materials[/datum/material/hematite] && (materials.get_material_amount(/datum/material/hematite) < (D.materials[/datum/material/hematite] * coeff * amount)))
 		return FALSE
-	if(D.materials[MAT_CATEGORY_GLASS] && (materials.get_category_amount(MAT_CATEGORY_GLASS) < (D.materials[MAT_CATEGORY_GLASS] * coeff * amount)))
+	if(D.materials[/datum/material/glass] && (materials.get_material_amount(/datum/material/glass) < (D.materials[/datum/material/glass] * coeff * amount)))
 		return FALSE
 	return TRUE
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
-	if(D.materials[MAT_CATEGORY_IRON])
-		dat += "[D.materials[MAT_CATEGORY_IRON] * coeff] metal "
-	if(D.materials[MAT_CATEGORY_GLASS])
-		dat += "[D.materials[MAT_CATEGORY_GLASS] * coeff] glass"
+	if(D.materials[/datum/material/hematite])
+		dat += "[D.materials[/datum/material/hematite] * coeff] metal "
+	if(D.materials[/datum/material/glass])
+		dat += "[D.materials[/datum/material/glass] * coeff] glass"
 	return dat
 
 /obj/machinery/autolathe/proc/reset(wire)
