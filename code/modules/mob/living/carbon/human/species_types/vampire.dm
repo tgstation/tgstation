@@ -53,7 +53,7 @@
 		C.dust()
 	var/area/A = get_area(C)
 	if(istype(A, /area/chapel))
-		to_chat(C, "<span class='danger'>You don't belong here!</span>")
+		to_chat(C, "<span class='warning'>You don't belong here!</span>")
 		C.adjustFireLoss(20)
 		C.adjust_fire_stacks(6)
 		C.IgniteMob()
