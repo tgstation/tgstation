@@ -31,6 +31,10 @@
 		var/obj/docking_port/stationary/S = V
 		if(jumpto_ports[S.id])
 			z_lock |= S.z
+	z_locked |= levels_by_trait(ZTRAIT_SPACE_RUINS) //after testing maybe move this to where z_locked used because some unaccesible z lvls can be added after init
+	z_locked |= levels_by_trait(ZTRAIT_CENTCOM) //If someone know how to better do this please 
+	z_locked |= levels_by_trait(ZTRAIT_AWAY)
+	z_locked |= levels_by_trait(ZTRAIT_REEBE)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()
