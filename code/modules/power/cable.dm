@@ -329,8 +329,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			T1 = get_step(T1, dir_check)
 			P_list += power_list(T1, src, FALSE, TRUE)	// what adjacently joins on to cut cable...
 
-	P_list += power_list(loc, src, FALSE, TRUE)//... and on turf
-
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
 		moveToNullspace()
