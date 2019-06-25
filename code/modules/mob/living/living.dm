@@ -570,6 +570,7 @@
 	stuttering = 0
 	slurring = 0
 	jitteriness = 0
+	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
