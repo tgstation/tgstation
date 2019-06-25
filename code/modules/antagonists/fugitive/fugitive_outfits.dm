@@ -37,6 +37,7 @@
 	H.facial_hair_style = "Shaved"
 	H.hair_color = "000"
 	H.facial_hair_color = H.hair_color
+	H.update_body()
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	var/list/no_drops = list()
@@ -71,7 +72,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/ammo_box/magazine/m45
-	r_pocket = /obj/item/ammo_box/magazine/m45
+	r_pocket = /obj/item/restraints/handcuffs
 	id = /obj/item/card/id
 
 /datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -81,3 +82,10 @@
 	W.assignment = "Police Officer"
 	W.registered_name = H.real_name
 	W.update_label()
+
+/datum/outfit/russiancorpse/hunter
+	r_hand = /obj/item/gun/ballistic/rifle/boltaction
+
+/datum/outfit/russiancorpse/hunter/pre_equip(mob/living/carbon/human/H)
+	if(prob(50))
+		head = /obj/item/clothing/head/ushanka
