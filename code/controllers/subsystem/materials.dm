@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(materials)
 	name = "Materials"
 	flags = SS_NO_FIRE
+	init_order = INIT_ORDER_MATERIALS
 	var/list/materials = list() //Dictionary of material.type || material ref
 	var/list/materials_by_category = list() //Dictionary of material category || material refs of that category
 

@@ -216,7 +216,7 @@
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
 	obj_flags = UNIQUE_RENAME
-	materials = list(MAT_CATEGORY_IRON = 100, MAT_CATEGORY_GLASS = 100)
+	materials = list(/datum/material/hematite = 100, MAT_CATEGORY_GLASS = 100)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type

@@ -9,4 +9,4 @@
 
 
 /datum/material/proc/on_applied(atom/source, amount) //What happens to the object that has this material?
-
+	return

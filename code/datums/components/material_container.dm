@@ -45,6 +45,7 @@
 		possible_mats += mat_type
 
 	for(var/mat in possible_mats)
+		to_chat(world,"[mat]")
 		var/datum/material/M = SSmaterials.get_material(mat)
 		for(var/i in M.categories)
 			if(mat_list.Find(i))
@@ -172,32 +173,33 @@
 	return primary_mat
 
 //For consuming material
-//mats is a list of types of material to use and the corresponding amounts, example: list(MAT_CATEGORY_IRON=100, MAT_CATEGORY_GLASS=200)
-/datum/component/material_container/proc/use_amount(list/mats, multiplier=1)
-	if(!mats || !mats.len)
+//cats is a list of types of categories of materials to use and the corresponding amounts, example: list(MAT_CATEGORY_IRON=100, MAT_CATEGORY_GLASS=200)
+/datum/component/material_container/proc/use_amount(list/cats, multiplier=1)
+	if(!cats || !cats.len)
 		return FALSE
 
-	for(var/MAT in materials)
-		var/amount = materials[MAT]
-		if(amount < (mats[MAT] * multiplier))
+	var/list/used_mats
+	for(var/i in cats)
+		var/datum/material/M = get_best_mat_of_category(i)
+		if(materials[M] < (cats[i] * multiplier))
 			return FALSE
+		used_mats += M
 
 	var/total_amount_save = total_amount
-	for(var/MAT in materials)
-		materials[MAT] -= mats[MAT] * multiplier
-		total_amount -= mats[MAT] * multiplier
+
+	for(var/i in cats)
+		total_amount_save -= use_amount_cat(cats[i] * multiplier, i)
 
 	return total_amount_save - total_amount
 
 
 /datum/component/material_container/proc/use_amount_cat(amt, cat)
-	var/datum/material/M = SSmaterials.get_material(cat)
-	var/amount = materials[id]
-	if(M)
-		if(M.amount >= amt)
-			M.amount -= amt
-			total_amount -= amt
-			return amt
+	var/datum/material/M = get_best_mat_of_category(cat)
+	var/amount = materials[M]
+	if(amount >= amt)
+		materials[M] -= amt
+		total_amount -= amt
+		return amt
 	return FALSE
 
 /datum/component/material_container/proc/use_amount_mat(amt, mat)
@@ -232,20 +234,6 @@
 			else
 				return	(max_amount-total_amount)
 
-/datum/component/material_container/proc/can_use_amount(amt, id, list/mats)
-	if(amt && id)
-		var/datum/material/M = materials[id]
-		if(M && M.amount >= amt)
-			return TRUE
-	else if(istype(mats))
-		for(var/M in mats)
-			if(materials[M] && (mats[M] <= materials[M]))
-				continue
-			else
-				return FALSE
-		return TRUE
-	return FALSE
-
 //For spawning mineral sheets; internal use only
 /datum/component/material_container/proc/retrieve(sheet_amt, datum/material/M, target = null)
 	if(!M.sheet_type)
@@ -277,10 +265,9 @@
 
 /datum/component/material_container/proc/retrieve_all(target = null)
 	var/result = 0
-	var/datum/material/M
 	for(var/MAT in materials)
-		M = materials[MAT]
-		result += retrieve_sheets(amount2sheet(M.amount), MAT, target)
+		var/amount = materials[MAT]
+		result += retrieve_sheets(amount2sheet(amount), MAT, target)
 	return result
 
 /datum/component/material_container/proc/has_space(amt = 0)
@@ -290,10 +277,9 @@
 	if(!mats || !mats.len)
 		return FALSE
 
-	var/datum/material/M
 	for(var/MAT in mats)
-		M = materials[MAT]
-		if(M.amount < (mats[MAT] * multiplier))
+		var/amount = materials[MAT]
+		if(amount < (mats[MAT] * multiplier))
 			return FALSE
 	return TRUE
 
@@ -310,15 +296,19 @@
 /datum/component/material_container/proc/get_material_amount(material)
 	return materials[material]
 
-/datum/component/material_container/proc/get_category_amount(category) //This gets the material with the highest count of a certain category.
+/datum/component/material_container/proc/get_best_mat_of_category(category) //This gets the material with the highest count of a certain category.
 	var/datum/material/best_match
 
 	for(var/i in SSmaterials.get_materials_of_category(category))
 		var/amount = materials[i]
 		if(!best_match || amount >= materials[i])
-		best_match = i
+			best_match = i
 
 	return best_match
+
+/datum/component/material_container/proc/get_category_amount(category)
+	return materials[get_best_mat_of_category(category)]
+
 
 //returns the amount of material relevant to this container;
 //if this container does not support glass, any glass in 'I' will not be taken into account
@@ -326,6 +316,6 @@
 	if(!istype(I))
 		return FALSE
 	var/material_amount = 0
-	for(var/MAT in materials)
-		material_amount += I.materials[MAT]
+	for(var/MAT in I.used_materials)
+		material_amount += I.used_materials[MAT]
 	return material_amount

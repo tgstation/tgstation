@@ -65,7 +65,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
-	var/list/materials //MAT_CATEGORIES in this object
+	var/list/materials = list() //MAT_CATEGORIES in this object
 	var/list/used_materials //Actual materials used
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
@@ -811,27 +811,41 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 
 /obj/item/proc/SetupUsedMaterials() //Failsafe, not the best thing to run so try to set used_materials yourself as much as possible
+	used_materials = list()
 	for(var/i in materials)
+		var/amount = materials[i]
+		var/datum/material/M
 		switch(i)
-			if(i == MAT_CATEGORY_IRON)
-				used_materials[SSmaterials.get_material(/datum/material/hematite)] = materials[i]
-			if(i == MAT_CATEGORY_GLASS)
-				used_materials[SSmaterials.get_material(/datum/material/glass)] = materials[i]
-			if(i == MAT_CATEGORY_SILVER)
-				used_materials[SSmaterials.get_material(/datum/material/silver)] = materials[i]
-			if(i == MAT_CATEGORY_GOLD)
-				used_materials[SSmaterials.get_material(/datum/material/gold)] = materials[i]
-			if(i == MAT_CATEGORY_DIAMOND)
-				used_materials[SSmaterials.get_material(/datum/material/diamond)] = materials[i]
-			if(i == MAT_CATEGORY_URANIUM)
-				used_materials[SSmaterials.get_material(/datum/material/uranium)] = materials[i]
-			if(i == MAT_CATEGORY_BLUESPACE)
-				used_materials[SSmaterials.get_material(/datum/material/bluespace)] = materials[i]
-			if(i == MAT_CATEGORY_BANANIUM)
-				used_materials[SSmaterials.get_material( /datum/material/bananium)] = materials[i]
-			if(i == MAT_CATEGORY_TITANIUM)
-				used_materials[SSmaterials.get_material(/datum/material/titanium)] = materials[i]
-			if(i == MAT_CATEGORY_PLASTIC)
-				used_materials[SSmaterials.get_material(/datum/material/plastic)] = materials[i]
-			if(i == MAT_CATEGORY_BIOMASS)
-				used_materials[SSmaterials.get_material(/datum/material/biomass)] = materials[i]
+			if(MAT_CATEGORY_IRON)
+				M = SSmaterials.get_material(/datum/material/hematite)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_GLASS)
+				M = SSmaterials.get_material(/datum/material/glass)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_SILVER)
+				M = SSmaterials.get_material(/datum/material/silver)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_GOLD)
+				M = SSmaterials.get_material(/datum/material/gold)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_DIAMOND)
+				M = SSmaterials.get_material(/datum/material/diamond)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_URANIUM)
+				M = SSmaterials.get_material(/datum/material/uranium)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_BLUESPACE)
+				M = SSmaterials.get_material(/datum/material/bluespace)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_BANANIUM)
+				M = SSmaterials.get_material(/datum/material/bananium)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_TITANIUM)
+				M = SSmaterials.get_material(/datum/material/titanium)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_PLASTIC)
+				M = SSmaterials.get_material(/datum/material/plastic)
+				used_materials[M] = amount
+			if(MAT_CATEGORY_BIOMASS)
+				M = SSmaterials.get_material(/datum/material/biomass)
+				used_materials[M] = amount
