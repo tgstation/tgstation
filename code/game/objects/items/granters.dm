@@ -183,7 +183,7 @@
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
 	if(!isliving(user))
 		return
-	var/mob/living/L
+	var/mob/living/L = user
 	if(L.nutrition)
 		L.set_nutrition(200)
 		if(L.nutrition <= 0)
