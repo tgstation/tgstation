@@ -326,3 +326,96 @@
 	if (!party_overlay)
 		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
 	A.add_overlay(party_overlay)
+
+/obj/machinery/sprinkler
+	name = "foam dispenser"
+	desc = "An automated sprinkler cabable of detecting fire and spray coolant."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "sprinkler0"
+	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
+	plane = FLOOR_PLANE
+	max_integrity = 100
+	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
+	var/obj/item/reagent_containers/glass/beaker/internal
+	var/refill_loaded = FALSE
+	req_access = list(ACCESS_ENGINEERING)
+	var/cooldown = 0
+
+/obj/machinery/sprinkler/Initialize()
+	. = ..()
+	internal = new /obj/item/reagent_containers/glass/beaker(src)
+
+/obj/machinery/sprinkler/examine(mob/user)
+	. = ..()
+	. += "It has [round(internal.reagents)] uses left."
+
+/obj/machinery/sprinkler/interact(mob/user)
+	if(!allowed(user))
+		to_chat(user, "<span class='danger'>Access denied.</span>")
+		return
+	dispense()
+
+/obj/machinery/sprinkler/fire_act()
+	.=..()
+	if(refill_loaded)
+		dispense()
+
+/obj/machinery/sprinkler/proc/dispense()
+	if(cooldown < world.time && refill_loaded)
+		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
+		smoke.set_up(internal.reagents, 5, 8,  get_turf(src))
+		smoke.start()
+		cooldown = world.time + 200
+		if(!internal.reagents)
+			refill_loaded = FALSE
+			update_icon()
+
+/obj/machinery/sprinkler/update_icon()
+	. = ..()
+	if(refill_loaded)
+		icon_state = "sprinkler1"
+		return
+	icon_state = "sprinkler0"
+
+/obj/item/sprinkler_refill
+	name = "water refill"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "sprinkler_refill_water"
+	item_state = "fire_extinguisher"
+	var/obj/item/reagent_containers/glass/beaker/refill
+	var/used = FALSE
+	var/chemtype = /datum/reagent/water
+
+/obj/item/sprinkler_refill/Initialize()
+	. = ..()
+	refill = new /obj/item/reagent_containers/glass/beaker(src)
+	refill.reagents.add_reagent(chemtype, 50)
+
+/obj/item/sprinkler_refill/examine(mob/user)
+	. = ..()
+	if(used)
+		. += "It has been used up, better trow it in the trash."
+
+/obj/item/sprinkler_refill/update_icon()
+	. = ..()
+	cut_overlays()
+	if(used)
+		add_overlay("refill_empty")
+		return
+	add_overlay("refill_[max(round(refill.reagents.total_volume/10),1)]")
+
+/obj/item/sprinkler_refill/attack_obj(obj/O, mob/living/user)
+	if(!used && istype(O, /obj/machinery/sprinkler))
+		var/obj/machinery/sprinkler/S = O
+		refill.reagents.trans_to(S.internal, 50, transfered_by = user)
+		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+		S.refill_loaded = TRUE
+		S.update_icon()
+		if(!refill.reagents.total_volume)
+			used = TRUE
+		update_icon()
+
+/obj/item/sprinkler_refill/foam
+	name = "foam refill"
+	icon_state = "sprinkler_refill_foam"
+	chemtype = /datum/reagent/firefighting_foam
