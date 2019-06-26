@@ -5,11 +5,11 @@
 		return INFINITY //Can't get flashed without eyes
 	else
 		. += E.flash_protect
-	if(isclothing(head) //Adds head protection
+	if(isclothing(head)) //Adds head protection
 		. += head.flash_protect
-	if(isclothing(glasses) //Glasses
+	if(isclothing(glasses)) //Glasses
 		. += glasses.flash_protect
-	if(isclothing(wear_mask) //Mask
+	if(isclothing(wear_mask)) //Mask
 		. += wear_mask.flash_protect
 
 /mob/living/carbon/get_ear_protection()
