@@ -111,9 +111,9 @@ Warping extracts:
 	effect_desc = "Forms a recoverable rune that absorbs food to feed those who cross its path."
 	var/nutrition = 0
 
-/obj/item/slimecross/warping/bluespace
+/obj/item/slimecross/warping/bluespace //TODO: Fix issues.
 	colour = "bluespace"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune//bluespace
 	effect_desc = "Forms a recoverable rune that links a <b>wormhole satchel</b> with the space above it."
 
 /obj/item/slimecross/warping/sepia
@@ -371,3 +371,32 @@ Warping extracts:
 			var/nutrition = min(ex.nutrition, difference)
 			H.adjust_nutrition(nutrition)
 			ex.nutrition -= nutrition
+
+/obj/effect/slimerune/bluespace
+	name = "bluespace rune"
+	desc = "A rectangular hole is at the center, covered with blue cloth."
+	var/obj/item/storage/backpack/satchel/warping/satchel
+
+/obj/effect/slimerune/bluespace/on_place()
+	. = ..()
+	satchel = new(loc, get_turf(loc))
+
+/obj/effect/slimerune/bluespace/process()
+	if(!istype(satchel))
+		extract.forceMove(loc)
+		on_remove()
+		qdel(src)
+
+/obj/effect/slimerune/bluespace/on_remove()
+	if(satchel)
+		qdel(satchel)
+
+/obj/item/storage/backpack/satchel/warping
+	name = "wormhole satchel"
+	desc = "You can make out a strange runic pattern on the interior."
+	component_type = /datum/component/storage/concrete/tilebound
+
+/obj/item/storage/backpack/satchel/warping/Initialize(mapload, turf/tileloc)
+	. = ..()
+	var/datum/component/storage/concrete/tilebound/STR = GetComponent(/datum/component/storage/concrete/tilebound)
+	STR.base_tile = tileloc

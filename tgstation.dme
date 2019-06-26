@@ -410,6 +410,7 @@
 #include "code\datums\components\storage\concrete\pockets.dm"
 #include "code\datums\components\storage\concrete\rped.dm"
 #include "code\datums\components\storage\concrete\stack.dm"
+#include "code\datums\components\storage\concrete\tilebound.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
 #include "code\datums\diseases\anxiety.dm"
