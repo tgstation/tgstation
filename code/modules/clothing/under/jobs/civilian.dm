@@ -22,6 +22,8 @@
 	icon_state = "captain"
 	item_state = "b_suit"
 	item_color = "captain"
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
