@@ -151,6 +151,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //Sawn off nerfs
 #define SAWN_OFF_ACC_PENALTY 25
 #define SAWN_OFF_RECOIL 1
+#define SAW_OFF_SHARPNESS_THRESHOLD 12 //How much force a sharp weapon needs to saw off a gun
 
 //Projectile Reflect
 #define REFLECT_NORMAL 				(1<<0)

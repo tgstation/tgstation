@@ -386,7 +386,9 @@
 
 
 
-/obj/item/gun/ballistic/proc/sawoff(mob/user)
+/obj/item/gun/ballistic/proc/sawoff(mob/user, obj/item/I)
+	if(!I.is_sharp() || I.force < SAW_OFF_SHARPNESS_THRESHOLD)
+		return
 	if(sawn_off)
 		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
 		return
