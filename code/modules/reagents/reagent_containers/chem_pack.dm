@@ -29,15 +29,13 @@
 			to_chat(user, "<span class='warning'>Uh... whoops! You accidentally spill the content of the bag onto yourself.</span>")
 			SplashReagents(user)
 			return
-		seal()
-		to_chat(user, "<span class='notice'>You seal the bag.</span>")
 
-/obj/item/reagent_containers/chem_pack/proc/seal()
-	reagents.flags = NONE
-	reagent_flags = DRAWABLE | INJECTABLE //To allow for sabotage or ghetto use.
-	reagents.flags = reagent_flags
-	spillable = FALSE
-	sealed = TRUE
+		reagents.flags = NONE
+		reagent_flags = DRAWABLE | INJECTABLE //To allow for sabotage or ghetto use.
+		reagents.flags = reagent_flags
+		spillable = FALSE
+		sealed = TRUE
+		to_chat(user, "<span class='notice'>You seal the bag.</span>")
 
 /obj/item/reagent_containers/chem_pack/examine()
 	. = ..()
