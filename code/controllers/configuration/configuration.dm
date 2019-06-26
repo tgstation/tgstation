@@ -412,7 +412,7 @@ Example config:
 			continue
 		if(findtextEx(line,"#",1,2))
 			continue
-		in_character_filter += line
+		in_character_filter += REGEX_QUOTE(line)
 
 	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
 
