@@ -400,7 +400,7 @@
 		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
 		return
 
-	if(do_after(user, 30, target = src))
+	if(do_after(user, max(30, 60 - I.force), target = src))
 		if(sawn_off)
 			return
 		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
