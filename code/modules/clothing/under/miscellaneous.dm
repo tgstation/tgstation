@@ -110,6 +110,7 @@
 	item_state = "g_suit"
 	item_color = "officer"
 	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
+	strip_delay = 50
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/centcom_commander
@@ -119,6 +120,7 @@
 	item_state = "dg_suit"
 	item_color = "centcom"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	strip_delay = 60
 
 /obj/item/clothing/under/space
 	name = "\improper NASA jumpsuit"
