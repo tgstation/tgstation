@@ -54,7 +54,7 @@
 
 /obj/structure/closet/secure_closet/freezer/gulag_fridge/PopulateContents()
 	..()
-	for(var/i = 0, i < 3, i++)
+	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/food/drinks/beer/light(src)
 
 /obj/structure/closet/secure_closet/freezer/fridge
