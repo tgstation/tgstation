@@ -139,12 +139,11 @@
 		vomit() // its supposed to keep vomiting if you move
 		return
 	var/turf/currentTurf = get_turf(src)
-	for (var/obj/item/reagent_containers/food/tasty in currentTurf)
-		if (tasty && get_turf(tasty) == currentTurf) //Make sure the food hasn't moved from our turf
+	while (currentTurf == get_turf(src))
+		var/obj/item/reagent_containers/food/tasty = locate() in currentTurf
+		if (tasty)
 			feed(tasty)
-		sleep(2)
-		if (QDELETED(src) || (get_turf(src) != currentTurf)) //Make sure we don't keep eating if we move from the turf we started eating at
-			return
+		stoplag(2)
 	if(prob(vomitCoefficient * 0.2))
 		vomit_prestart(vomitTimeBonus + 25)
 		vomitCoefficient = 1
