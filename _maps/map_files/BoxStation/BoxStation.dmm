@@ -22630,6 +22630,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bgj" = (
@@ -47139,7 +47142,8 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
-	width = 35
+	width = 35;
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta
 	},
 /turf/open/space/basic,
 /area/space)

@@ -1569,7 +1569,8 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
-	width = 35
+	width = 35;
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta
 	},
 /turf/open/space/basic,
 /area/space)
@@ -116757,6 +116758,14 @@
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
+"sDV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "sJw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -149639,7 +149648,7 @@ aec
 aaO
 aeR
 aft
-aeb
+sDV
 agj
 aaO
 aej
