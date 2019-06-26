@@ -411,13 +411,13 @@ Warping extracts:
 	return //Stops it from processing.
 
 /obj/effect/slimerune/sepia/Crossed(atom/movable/AM)
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		var/mob/living/L = AM
 		L.apply_status_effect(STATUS_EFFECT_STASIS, null, TRUE)
 		RegisterSignal(L, COMSIG_LIVING_RESIST, .proc/resist_stasis)
 
 /obj/effect/slimerune/sepia/Uncrossed(atom/movable/AM)
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		var/mob/living/L = AM
 		L.remove_status_effect(STATUS_EFFECT_STASIS)
 		UnregisterSignal(L, COMSIG_LIVING_RESIST)
@@ -429,3 +429,17 @@ Warping extracts:
 
 /obj/effect/slimerune/sepia/proc/resist_stasis(mob/living/M)
 	attack_hand(M)
+
+/obj/effect/slimerune/cerulean
+	name = "cerulean rune"
+	desc = "It shimmers from certain angles, like an empty mirror..."
+	var/atom/movable/lastcrossed
+
+/obj/effect/slimerune/cerulean/on_place()
+	return //Stops it from processing.
+
+/obj/effect/slimerune/cerulean/Crossed(atom/movable/AM)
+	if(isliving(AM))
+		vis_contents -= lastcrossed
+		lastcrossed = AM
+		vis_contents += lastcrossed
