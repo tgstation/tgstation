@@ -146,7 +146,7 @@
 /obj/item/external_lens
 	name = "external lens"
 	icon_state = "external"
-	desc = "external lens."
+	desc = "These lens modify the laser frequency and trajectory giving them special effects."
 	icon = 'icons/obj/guns/energy.dmi'
 	var/stored_ammo_type = /obj/item/ammo_casing/energy/laser
 	var/overlay = "laser"
