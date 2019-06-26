@@ -43,6 +43,8 @@ Warping extracts:
 		return
 	to_chat(user, "<span class='warning'>You begin to gather [src] up off the ground.</span>")
 	if(do_after(user, pickuptime, src))
+		if(QDELETED(src))
+			return
 		to_chat(user, "<span class='notice'>You collect [src] into a pile, and it reforms into [extract]!</span>")
 		extract.forceMove(loc)
 		on_remove()
@@ -118,7 +120,7 @@ Warping extracts:
 
 /obj/item/slimecross/warping/sepia
 	colour = "sepia"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/sepia
 	effect_desc = "Forms a recoverable rune that holds any living creature in its influence under stasis."
 
 /obj/item/slimecross/warping/cerulean
@@ -400,3 +402,30 @@ Warping extracts:
 	. = ..()
 	var/datum/component/storage/concrete/tilebound/STR = GetComponent(/datum/component/storage/concrete/tilebound)
 	STR.base_tile = tileloc
+
+/obj/effect/slimerune/sepia
+	name = "sepia rune"
+	desc = "You can feel it slow your breathing and your pulse."
+
+/obj/effect/slimerune/sepia/on_place()
+	return //Stops it from processing.
+
+/obj/effect/slimerune/sepia/Crossed(atom/movable/AM)
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		L.apply_status_effect(STATUS_EFFECT_STASIS, null, TRUE)
+		RegisterSignal(L, COMSIG_LIVING_RESIST, .proc/resist_stasis)
+
+/obj/effect/slimerune/sepia/Uncrossed(atom/movable/AM)
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		L.remove_status_effect(STATUS_EFFECT_STASIS)
+		UnregisterSignal(L, COMSIG_LIVING_RESIST)
+
+/obj/effect/slimerune/sepia/Destroy() //On Destroy rather than on_remove to ensure you absolutely cannot circumvent it and maintain infinite stasis.
+	for(var/mob/living/L in get_turf(src))
+		L.remove_status_effect(STATUS_EFFECT_STASIS)
+	return ..()
+
+/obj/effect/slimerune/sepia/proc/resist_stasis(mob/living/M)
+	attack_hand(M)
