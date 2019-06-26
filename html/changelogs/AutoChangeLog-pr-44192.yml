@@ -1,5 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - rscadd: "bamboo which can be used to build punji sticks/ blowguns available as a sugarcane mutation or in exotic seed crate (instead of banana seeds)"
-  - bugfix: "sugar cane is available at the mega seed vendor"

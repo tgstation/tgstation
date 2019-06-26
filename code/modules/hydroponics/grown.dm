@@ -3,7 +3,7 @@
 // Data from the seeds carry over to these grown foods
 // ***********************************************************
 
-// Base type. Subtypes are found in /grown dir.
+// Base type. Subtypes are found in /grown dir. Lavaland-based subtypes can be found in mining/ash_flora.dm
 /obj/item/reagent_containers/food/snacks/grown
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
@@ -56,11 +56,11 @@
 	return 0
 
 /obj/item/reagent_containers/food/snacks/grown/examine(user)
-	..()
+	. = ..()
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			if(T.examine_line)
-				to_chat(user, T.examine_line)
+				. += T.examine_line
 
 /obj/item/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()

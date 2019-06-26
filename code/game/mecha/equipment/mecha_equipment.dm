@@ -82,6 +82,9 @@
 		return 0
 	if(chassis.is_currently_ejecting)
 		return 0
+	if(chassis.equipment_disabled)
+		to_chat(chassis.occupant, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
+		return 0
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
@@ -120,8 +123,6 @@
 	chassis = M
 	forceMove(M)
 	log_message("[src] initialized.", LOG_MECHA)
-	if(!M.selected && selectable)
-		M.selected = src
 	update_chassis_page()
 	return
 

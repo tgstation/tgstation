@@ -43,7 +43,7 @@
 	if(replaced_by == /datum/surgery)
 		return FALSE
 
-	if(HAS_TRAIT(user, TRAIT_SURGEON))
+	if(HAS_TRAIT(user, TRAIT_SURGEON) || HAS_TRAIT(user.mind, TRAIT_SURGEON))
 		if(replaced_by)
 			return FALSE
 		else
@@ -86,9 +86,13 @@
 
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
-		if(S.try_op(user, target, user.zone_selected, user.get_active_held_item(), src, try_to_fail))
+		var/obj/item/tool = user.get_active_held_item()
+		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 			return TRUE
 		if(iscyborg(user) && user.a_intent != INTENT_HARM) //to save asimov borgs a LOT of heartache
+			return TRUE
+		if(tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")
 			return TRUE
 	return FALSE
 
@@ -141,10 +145,10 @@
 	. = ..()
 	surgeries = list()
 	var/list/req_tech_surgeries = subtypesof(/datum/surgery)
-		for(var/i in req_tech_surgeries)
-			var/datum/surgery/beep = i
-			if(beep.requires_tech)
-				surgeries += beep
+	for(var/i in req_tech_surgeries)
+		var/datum/surgery/beep = i
+		if(beep.requires_tech)
+			surgeries += beep
 
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.

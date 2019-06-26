@@ -219,6 +219,7 @@
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
 #define SLIDE_ICE				(1<<3)
+#define SLIP_WHEN_CRAWLING		(1<<4) //clown planet ruin
 
 #define MAX_CHICKENS 50
 
@@ -292,6 +293,9 @@
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
 #define GRAB_PIXEL_SHIFT_NECK 16
+
+#define PULL_PRONE_SLOWDOWN 1.5
+#define HUMAN_CARRY_SLOWDOWN 0.35
 
 //Flags that control what things can spawn species (whitelist)
 //Badmin magic mirror

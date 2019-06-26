@@ -28,10 +28,6 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_items = 21
 
-/obj/item/storage/backpack/examine(mob/user)
-	..()
-	clothing_resistance_flag_examine_message(user)
-
 /*
  * Backpack Types
  */
@@ -410,7 +406,7 @@
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil/random(src)
+	new /obj/item/stack/cable_coil(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 
