@@ -47,7 +47,7 @@
 	add_fingerprint(usr)
 
 	if(href_list["material"])
-		machine.selected_material = href_list["material"]
+		machine.selected_material = locate(href_list["material"])
 		machine.selected_alloy = null
 
 	if(href_list["alloy"])
@@ -115,7 +115,7 @@
 		if (selected_material == M.type)
 			dat += " <i>Smelting</i>"
 		else
-			dat += " <A href='?src=[REF(CONSOLE)];material=[mat_id]'><b>Not Smelting</b></A> "
+			dat += " <A href='?src=[REF(CONSOLE)];material=[REF(mat_id)]'><b>Not Smelting</b></A> "
 		dat += "<br>"
 
 	dat += "<br><br>"

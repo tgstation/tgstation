@@ -48,6 +48,17 @@ other types of metals and chemistry for reagents).
 	SSresearch.techweb_designs -= id
 	return ..()
 
+/datum/design/proc/InitializeMaterials()
+	if(materials) //Otherwise, use the instances already provided.
+		var/list/temp_list = list() 
+		for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
+			var/amount = materials[i]
+			var/datum/material/M = SSmaterials.materials[i]
+			temp_list[M] = amount
+		materials = temp_list
+		for(var/i in materials)
+			to_chat("[i] [materials[i]]")
+
 /datum/design/proc/icon_html(client/user)
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	sheet.send(user)

@@ -41,7 +41,6 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
 	for(var/mat in mat_list) //Make the assoc list ref | amount
-		to_chat(world,"[mat]")
 		var/datum/material/M = SSmaterials.materials[mat]
 		materials[M] = 0
 
@@ -171,12 +170,10 @@
 	if(!istype(mat))
 		mat = SSmaterials.materials[mat]
 	var/amount = materials[mat]
-	to_chat(world, "[amount]")
 	if(mat)
 		if(amount >= amt)
 			materials[mat] -= amt
 			total_amount -= amt
-			to_chat(world, "[materials[mat]]")
 			return amt
 	return FALSE
 
@@ -209,48 +206,41 @@
 /datum/component/material_container/proc/use_materials(list/mats, multiplier=1)
 	if(!mats || !length(mats))
 		return FALSE
-	for(var/i in mats)
-		to_chat(world, "mats[i] [i]") //debug
 	
 	var/list/mats_to_remove = list() //Assoc list MAT | AMOUNT
 
 	for(var/x in mats) //Loop through all required materials
 		var/datum/material/req_mat = x
 		if(!istype(req_mat))
-			to_chat(world, "not a ref!! call the cops!!")
-			req_mat = SSmaterials.materials[req_mat]
+			req_mat = SSmaterials.materials[req_mat] //Get the ref if necesary
+			to_chat(world, "not a ref")
 		if(!materials[req_mat]) //Do we have the resource?
-			to_chat(world, "cannot afford, mat not available.")
 			return FALSE //Can't afford it
-		var/amount_required = mats[req_mat] * multiplier
+		var/amount_required = mats[x] * multiplier
 		if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
-			to_chat(world, "cannot afford, not enough mats")
 			return FALSE //Can't afford it
-		to_chat(world, "[amount_required]")
 		mats_to_remove[req_mat] += amount_required //Add it to the assoc list of things to remove
-		to_chat(world, "[mats_to_remove[req_mat]]")
 		continue
 		
 	var/total_amount_save = total_amount
 
 	for(var/i in mats_to_remove)
-		to_chat(world, "[mats_to_remove[i]] [i]")
 		total_amount_save -= use_amount_mat(mats_to_remove[i], i)
 
 	return total_amount_save - total_amount
 
 //For spawning mineral sheets; internal use only
 /datum/component/material_container/proc/retrieve_sheets(sheet_amt, var/datum/material/M, target = null) //Kinda revamped? this is most likely to not work
-	if(!istype(M))
-		M = SSmaterials.materials[M]
 	if(!M.sheet_type)
+		to_chat(world, "ass")
 		return 0 //Add greyscale sheet handling here later
-		to_chat(world, "nosheet type")
 	if(sheet_amt <= 0)
+		to_chat(world, "ass2")
 		return 0
 
 	if(!target)
 		target = get_turf(parent)
+	to_chat(world, "[materials[M]] [sheet_amt * MINERAL_MATERIAL_AMOUNT]")
 	if(materials[M] < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 		sheet_amt = round(materials[M] / MINERAL_MATERIAL_AMOUNT)
 	var/count = 0
@@ -263,6 +253,7 @@
 		new M.sheet_type(target, sheet_amt)
 		count += sheet_amt
 		use_amount_mat(sheet_amt * MINERAL_MATERIAL_AMOUNT, M)
+	to_chat(world, "[count]")	
 	return count
 
 /datum/component/material_container/proc/retrieve_all(target = null) //Revamped
@@ -284,11 +275,9 @@
 		if(!istype(req_mat))
 			req_mat = SSmaterials.materials[req_mat]
 		if(!materials[req_mat]) //Do we have the resource?
-			to_chat(world, "check: cannot afford, mat not available.")
 			return FALSE //Can't afford it
 		var/amount_required = mats[req_mat] * multiplier
 		if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
-			to_chat(world, "check: cannot afford, not enough mats")
 			return FALSE //Can't afford it
 	return TRUE
 

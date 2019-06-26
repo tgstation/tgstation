@@ -112,20 +112,21 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = mat_id
-		var/amount= materials.materials[mat_id]
+		var/amount = materials.materials[mat_id]
 		output += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
 		if(amount >= MINERAL_MATERIAL_AMOUNT)
-			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[mat_id]'>1</a>\]"
+			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[REF(mat_id)]'>1</a>\]"
 			if(amount >= (MINERAL_MATERIAL_AMOUNT * 10))
-				output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[mat_id]'>10</a>\]"
-			output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
+				output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[REF(M)]'>10</a>\]"
+			output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[REF(M)]'>All</a>\]</span>"
 		output += "<br/>"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
 	var/list/resources = list()
 	for(var/R in D.materials)
-		resources[R] = get_resource_cost_w_coeff(D, R)
+		var/datum/material/M = R
+		resources[M] = get_resource_cost_w_coeff(D, M)
 	return resources
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
@@ -246,7 +247,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, resource, roundto = 1)
+/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, var/datum/material/resource, roundto = 1)
 	return round(D.materials[resource]*component_coeff, roundto)
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
@@ -385,7 +386,9 @@
 
 	if(href_list["remove_mat"] && href_list["material"])
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		materials.retrieve_sheets(text2num(href_list["remove_mat"]), href_list["material"])
+		var/datum/material/Mat = locate(href_list["material"])
+		to_chat(world, "fucking work [Mat.name]")
+		materials.retrieve_sheets(text2num(href_list["remove_mat"]), Mat)
 
 	updateUsrDialog()
 	return

@@ -16,6 +16,8 @@
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/plasma, /datum/material/silver, /datum/material/gold, /datum/material/uranium, /datum/material/diamond, /datum/material/bananium), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
+	chosen = SSmaterials.materials[chosen]
+
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
@@ -36,13 +38,13 @@
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = mat_id
 		var/amount = materials.materials[mat_id]
-		if(!amount && chosen != mat_id)
+		if(!amount && chosen != M.type)
 			continue
 		dat += "<br><b>[M.name] amount:</b> [amount] cm<sup>3</sup> "
-		if (chosen == mat_id)
+		if (chosen == M.type)
 			dat += "<b>Chosen</b>"
 		else
-			dat += "<A href='?src=[REF(src)];choose=[mat_id]'>Choose</A>"
+			dat += "<A href='?src=[REF(src)];choose=[REF(M)]'>Choose</A>"
 
 	var/datum/material/M = materials.materials[chosen]
 
@@ -69,7 +71,7 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(href_list["choose"])
 		if(materials.materials[href_list["choose"]])
-			chosen = href_list["choose"]
+			chosen = locate(href_list["choose"])
 	if(href_list["chooseAmt"])
 		coinsToProduce = CLAMP(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
 	if(href_list["makeCoins"])

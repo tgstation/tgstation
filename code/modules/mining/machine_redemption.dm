@@ -89,9 +89,9 @@
 
 	var/build_amount = 0
 
-	for(var/mat_cat in D.materials)
-		var/M = D.materials[mat_cat]
-		var/datum/material/redemption_mat = mat_container.get_material_amount(mat_cat)
+	for(var/mat in D.materials)
+		var/M = D.materials[mat]
+		var/datum/material/redemption_mat = mat
 		var/amount = mat_container.materials[redemption_mat]
 
 		if(!M || !redemption_mat)
@@ -229,12 +229,12 @@
 			var/datum/material/M = mat_id
 			var/amount = mat_container.materials[mat_id]
 			var/sheet_amount = amount ? amount / MINERAL_MATERIAL_AMOUNT : "0"
-			data["materials"] += list(list("name" = M.name, "amount" = sheet_amount, "value" = ore_values[M.type]))
-
+			data["materials"] += list(list("name" = M.name, "id" = REF(M), "amount" = sheet_amount, "value" = ore_values[M.type]))
+	
 		data["alloys"] = list()
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = SSresearch.techweb_design_by_id(v)
-			data["alloys"] += list(list("name" = D.name, "amount" = can_smelt_alloy(D)))
+			data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
 
 	if (!mat_container)
 		data["disconnected"] = "local mineral storage is unavailable"
@@ -286,20 +286,14 @@
 			else if(!check_access(inserted_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			else
-				to_chat(world, "1")
-				var/mat_id = params["id"]
-				to_chat(world, "[mat_id]")
-				if(!mat_container.materials[mat_id])
+				var/datum/material/mat = locate(params["id"])
+				if(!mat_container.materials[mat])
 					return
-				var/datum/material/mat = SSmaterials.materials[mat_id]
-				to_chat(world, "[mat]")
-				var/amount = mat_container.materials[mat_id]
-				to_chat(world, "[amount]")
+				var/amount = mat_container.materials[mat]
 				var/stored_amount = amount / MINERAL_MATERIAL_AMOUNT
 
 				if(!stored_amount)
 					return
-					to_chat(world, "2")
 
 				var/desired = 0
 				if (params["sheets"])
