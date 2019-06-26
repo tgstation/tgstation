@@ -183,7 +183,7 @@
 
 /datum/design/refill_water
 	name = "Sprinkler Refill (water)"
-	desc = "A sprinkler refill that uses dehydrogen oxyde as coolant."
+	desc = "A sprinkler refill that uses tap water as coolant."
 	id = "refill_water"
 	build_path = /obj/item/sprinkler_refill
 	build_type = PROTOLATHE

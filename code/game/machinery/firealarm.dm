@@ -328,17 +328,16 @@
 	A.add_overlay(party_overlay)
 
 /obj/machinery/sprinkler
-	name = "foam dispenser"
-	desc = "An automated sprinkler cabable of detecting fire and spray coolant."
+	name = "sprinkler"
+	desc = "An automated sprinkler capable of detecting fire and spraying coolant."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "sprinkler0"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	plane = FLOOR_PLANE
 	max_integrity = 100
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
-	var/obj/item/reagent_containers/glass/beaker/internal
 	var/refill_loaded = FALSE
-	req_access = list(ACCESS_ATMOSPHERICS)
+	req_access = list(ACCESS_ENGINE)
 	var/cooldown = 0
 
 /obj/machinery/sprinkler/Initialize()
@@ -351,10 +350,24 @@
 		return
 	dispense()
 
+/obj/machinery/sprinkler/emag_act(mob/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	playsound(src, "sparks", 75, 1)
+	obj_flags |= EMAGGED
+	internal.reagents.remove_all(50)
+	internal.reagents.add(pick(/datum/reagent/clf3,
+							   /datum/reagent/drug/space_drugs,
+							   /datum/reagent/lube,
+							   /datum/reagent/fuel/unholywater,
+							   /datum/reagent/toxin/acid/fluacid,
+							   /datum/reagent/napalm),50)
+	to_chat(user, "<span class='warning'>The war crime LED blinks twice.</span>")
+
 /obj/machinery/sprinkler/fire_act()
 	.=..()
-	if(refill_loaded)
-		dispense()
+	dispense()
 
 /obj/machinery/sprinkler/proc/dispense()
 	if(cooldown < world.time && refill_loaded)
@@ -378,7 +391,6 @@
 	desc = "Apply this refill if the sprinkler light is red."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "sprinkler_refill_water"
-	item_state = "fire_extinguisher"
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/item/reagent_containers/glass/beaker/refill
 	var/used = FALSE
@@ -392,7 +404,7 @@
 /obj/item/sprinkler_refill/examine(mob/user)
 	. = ..()
 	if(used)
-		. += "It has been used up, better trow it in the trash."
+		. += "It has been used up, better throw it in the trash."
 
 /obj/item/sprinkler_refill/update_icon()
 	. = ..()
@@ -406,8 +418,8 @@
 	if(!used && istype(O, /obj/machinery/sprinkler))
 		var/obj/machinery/sprinkler/S = O
 		refill.reagents.trans_to(S.internal, 50, transfered_by = user)
-		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-		to_chat(user, "<span class='notice'>You refill the [S]</span>")
+		playsound(loc, 'sound/effects/refill.ogg', 50, 1, -6)
+		to_chat(user, "<span class='warning'>You refill the [S]</span>")
 		S.refill_loaded = TRUE
 		S.update_icon()
 		if(!refill.reagents.total_volume)
@@ -421,14 +433,14 @@
 
 /obj/item/deployable_sprinkler
 	name = "deployable sprinkler"
-	desc = "A self deploying sprinkler, just press the botton to deploy it."
+	desc = "A self-deploying sprinkler, just press the button to activate it."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "sprinkler_d"
 
 /obj/item/deployable_sprinkler/attack_self(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>You start the activating procedure of the [src]...</span>")
+	to_chat(user, "You start the deployment the [src]...")
 	if(do_after(user, 50, target = src))
-		to_chat(user, "<span class='notice'>You have activated the [src]</span>")
+		to_chat(user, "You have activated the [src].)
 		new /obj/machinery/sprinkler (src)
 		qdel(src)
