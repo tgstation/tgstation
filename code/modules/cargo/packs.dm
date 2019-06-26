@@ -2114,6 +2114,16 @@
 	contains = list(/obj/item/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
 
+/datum/supply_pack/costumes_toys/mech_suits
+	name = "Mech Pilot's Suit Crate"
+	desc = "Suits for piloting big robots. Contains all three colors!"
+	cost = 1500 //state-of-the-art technology doesn't come cheap
+	contains = list(/obj/item/clothing/under/red_mech_suit,
+					/obj/item/clothing/under/white_mech_suit,
+					/obj/item/clothing/under/blue_mech_suit)
+	crate_name = "mech pilot's suit crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
 /datum/supply_pack/costumes_toys/costume_original
 	name = "Original Costume Crate"
 	desc = "Reenact Shakespearean plays with this assortment of outfits. Contains eight different costumes!"
@@ -2132,16 +2142,6 @@
 					/obj/item/clothing/suit/hooded/carp_costume,
 					/obj/item/clothing/suit/hooded/bee_costume)
 	crate_name = "original costume crate"
-	crate_type = /obj/structure/closet/crate/wooden
-
-/datum/supply_pack/costumes_toys/plugsuits
-	name = "Plugsuit Crate"
-	desc = "A different kind of EVA suit. Contains all three colors!"
-	cost = 1500 //state-of-the-art technology doesn't come cheap
-	contains = list(/obj/item/clothing/suit/asuka_plugsuit,
-					/obj/item/clothing/suit/rei_plugsuit,
-					/obj/item/clothing/suit/shinji_plugsuit)
-	crate_name = "plugsuit crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/costume

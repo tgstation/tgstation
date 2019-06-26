@@ -645,33 +645,3 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternate_worn_layer = UNDER_HEAD_LAYER
-
-/obj/item/clothing/suit/asuka_plugsuit
-	name = "red plugsuit"
-	desc = "A red plugsuit. Saving the world and looking like a tomato with legs need no longer be mutually exclusive."
-	icon_state = "asuka_plugsuit"
-	item_state = "asuka_plugsuit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	allowed = list()
-
-/obj/item/clothing/suit/rei_plugsuit
-	name = "white plugsuit"
-	desc = "A white plugsuit. Might make your butt look big."
-	icon_state = "rei_plugsuit"
-	item_state = "rei_plugsuit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	allowed = list()
-
-/obj/item/clothing/suit/shinji_plugsuit
-	name = "blue plugsuit"
-	desc = "A blue plugsuit. Now with complimentary crotch padding, for genuine anime androgyny!"
-	icon_state = "shinji_plugsuit"
-	item_state = "shinji_plugsuit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	allowed = list()
