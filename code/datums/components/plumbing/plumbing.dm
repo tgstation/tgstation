@@ -135,8 +135,8 @@
 		START_PROCESSING(SSfluids, src)
 
 	for(var/D in GLOB.cardinals)
-		if(D in demand_connects + supply_connects)
-			for(var/obj/machinery/duct/duct in get_step(src, D))
+		if(D & (demand_connects + supply_connects))
+			for(var/obj/machinery/duct/duct in get_step(parent, D))
 				var/turned_dir = turn(D, 180)
 				if(turned_dir & duct.connects)
 					duct.connect_network(parent, turned_dir)

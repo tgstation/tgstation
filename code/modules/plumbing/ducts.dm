@@ -58,13 +58,13 @@ All the important duct code:
 	update_dir()
 	for(var/D in GLOB.cardinals)
 		if(D & connects)
-			for(var/A in get_step(src, D))
-				connect_network(A, D)
+			for(var/atom/movable/AM in get_step(src, D))
+				connect_network(AM, D)
 
-/obj/machinery/duct/proc/connect_network(atom/A, direction)
+/obj/machinery/duct/proc/connect_network(atom/movable/AM, direction)
 	var/opposite_dir = turn(direction, 180)
-	if(istype(A, /obj/machinery/duct))
-		var/obj/machinery/duct/D = A
+	if(istype(AM, /obj/machinery/duct))
+		var/obj/machinery/duct/D = AM
 		if(!D.active || ((duct == D.duct) && duct)) //check if we're not just comparing two null values
 			return
 		if(opposite_dir & D.connects)
@@ -79,8 +79,10 @@ All the important duct code:
 				else
 					create_duct()
 					duct.add_duct(D)
+			D.attempt_connect()//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
+			return
 
-	var/datum/component/plumbing/P = A.GetComponent(/datum/component/plumbing)
+	var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
 	if(!P)
 		return
 	var/comp_directions = P.supply_connects + P.demand_connects //they should never, ever have supply and demand connects overlap or catastrophic failure

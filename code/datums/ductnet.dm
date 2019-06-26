@@ -12,7 +12,6 @@
 	D.duct = src
 
 /datum/ductnet/proc/remove_duct(obj/machinery/duct/D)
-	D.active = FALSE
 	destroy_network(FALSE)
 	for(var/A in D.get_adjacent_ducts())
 		var/obj/machinery/duct/duct = A
