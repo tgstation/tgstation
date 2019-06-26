@@ -35,6 +35,6 @@
 	satchel = /obj/item/storage/backpack/satchel/tox
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
-    ..()
-    if(prob(0.4))
-    	neck = /obj/item/clothing/neck/tie/horrible
+	..()
+	if(prob(0.4))
+		neck = /obj/item/clothing/neck/tie/horrible
