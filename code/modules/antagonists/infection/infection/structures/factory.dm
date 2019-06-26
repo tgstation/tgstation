@@ -6,11 +6,11 @@
 	max_integrity = 200
 	health_regen = 1
 	point_return = 5
+	upgrade_subtype = /datum/infection_upgrade/factory
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/spore_cooldown = 80 //8 seconds between spores and after spore death
-	upgrade_subtype = /datum/infection_upgrade/factory
 
 /obj/structure/infection/factory/Initialize()
 	. = ..()

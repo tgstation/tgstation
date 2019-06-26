@@ -51,6 +51,9 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/boss_spore
 	if(boss_type)
 		boss_spore = locate(/mob/living/simple_animal/hostile/infection/infectionspore/sentient) in C.infection_mobs
+		if(!boss_spore)
+			message_admins("Error! Failed to get spore for infection event. Consider spawning spores or giving legendary weapons to make victory possible.")
+			return FALSE
 		boss_spore.forceMove(GLOB.infection_core)
 		var/mob/living/simple_animal/boss = new boss_type(start)
 		boss.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)

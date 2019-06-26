@@ -178,8 +178,12 @@
 			if(!check || check.is_transition_turf())
 				check = locate(src.x + cos(angle) * (j - 1), src.y + sin(angle) * (j - 1), src.z)
 				break
+		if(!check)
+			continue
 		var/list/toaffect = getline(src, check)
 		var/obj/structure/infection/previous = src
+		if(!toaffect)
+			continue
 		for(var/j = 2 to toaffect.len)
 			var/obj/structure/infection/INF = locate(/obj/structure/infection) in toaffect[j]
 			if(!INF)
@@ -235,7 +239,7 @@
 /obj/structure/infection/proc/expand(turf/T = null, controller = null, space_expand = FALSE)
 	infection_attack_animation(T)
 	// do not expand to areas that are space, unless we're very lucky or the core
-	if(isspaceturf(T) && prob(95) && !space_expand)
+	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && !space_expand && prob(80))
 		return null
 	if(locate(/obj/structure/beacon_wall) in T.contents || locate(/obj/structure/infection) in T.contents)
 		return

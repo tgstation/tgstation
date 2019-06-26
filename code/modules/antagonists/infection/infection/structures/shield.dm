@@ -13,12 +13,7 @@
 	var/damaged_icon = "smooth"
 	var/damaged_desc = "A wall of twitching tendrils."
 	var/damaged_name = "weakened strong infection"
-	var/list/crystal_colors = list("#3333aa" = 20,
-								   "#33aa33" = 15,
-								   "#aa3333" = 15,
-								   "#ffffff" = 8,
-								   "#822282" = 4,
-								   "#444444" = 1)
+	var/list/crystal_colors = list("#3333aa" = 20, "#33aa33" = 15, "#aa3333" = 15, "#ffffff" = 8, "#822282" = 4, "#444444" = 1)
 
 /obj/structure/infection/shield/Initialize(mapload)
 	canSmoothWith = typesof(/obj/structure/infection/shield)

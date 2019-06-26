@@ -9,10 +9,10 @@
 	health_regen = 3
 	point_return = 5
 	build_time = 100
+	upgrade_subtype = /datum/infection_upgrade/node
 	var/expansion_range = 6
 	var/expansion_amount = 6
 	var/base_pulse_cd // cooldown before being increased by time they've been alive
-	upgrade_subtype = /datum/infection_upgrade/node
 
 /obj/structure/infection/node/Initialize()
 	GLOB.infection_nodes += src

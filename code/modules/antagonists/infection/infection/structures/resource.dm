@@ -8,9 +8,9 @@
 	max_integrity = 60
 	point_return = 5
 	build_time = 50
+	upgrade_subtype = /datum/infection_upgrade/resource
 	var/resource_delay = 0
 	var/point_return_gain = 0
-	upgrade_subtype = /datum/infection_upgrade/resource
 
 /obj/structure/infection/resource/Initialize()
 	. = ..()

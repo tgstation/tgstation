@@ -8,10 +8,11 @@
 	max_integrity = 150
 	point_return = 10
 	build_time = 100
+	upgrade_subtype = /datum/infection_upgrade/turret
 	var/frequency = 1 // amount of times the turret will fire per process tick (1 second)
 	var/scan_range = 7 // range to search for targets
 	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
-	upgrade_subtype = /datum/infection_upgrade/turret
+	var/projectile_sound = 'sound/weapons/gunshot_smg.ogg'
 
 /obj/structure/infection/turret/Initialize()
 	. = ..()
@@ -108,7 +109,7 @@
 	setDir(get_dir(src, target))
 	update_icon()
 	var/obj/item/projectile/bullet/infection/A = new projectile_type(T)
-	playsound(loc, 'sound/weapons/gunshot_smg.ogg', 75, 1)
+	playsound(loc, projectile_sound, 75, 1, pressure_affected = FALSE)
 
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)
@@ -118,11 +119,11 @@
 	return A
 
 /obj/item/projectile/bullet/infection
-	name = "bulky spore"
-	icon = 'icons/mob/infection/infection.dmi'
-	icon_state = "bullet"
+	name = "energy shot"
+	icon = 'icons/mob/infection/crystal_effect.dmi'
+	icon_state = "lightning-projectile"
 	layer = ABOVE_MOB_LAYER
-	damage = 20
+	damage = 25
 	speed = 5
 	damage_type = BRUTE
 	pass_flags = PASSTABLE | PASSBLOB
@@ -132,20 +133,18 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
 /obj/item/projectile/bullet/infection/flak
-	name = "flak spore"
-	icon_state = "flak_bullet"
-	damage = 8
-	range = 2
+	name = "energy burst"
+	damage = 10
 	speed = 2
 
 /obj/structure/infection/turret/core
 	name = "core turret"
 	desc = "A turret for the core of the infection. It holds destructive capabilities that many might find unbeatable."
 	point_return = -1
-	scan_range = 8
 	upgrade_subtype = null
+	scan_range = 8
 
 /obj/structure/infection/turret/core/Initialize()
 	. = ..()
 	AddComponent(/datum/component/knockback, 4)
-	AddComponent(/datum/component/summoning, list(/mob/living/simple_animal/hostile/infection/infectionspore), 10, 4, 0, "forms from the raw energy", 'sound/effects/blobattack.ogg')
+	AddComponent(/datum/component/summoning, list(/mob/living/simple_animal/hostile/infection/infectionspore), 10, 4, 0, "forms from the raw energy!", 'sound/effects/blobattack.ogg')
