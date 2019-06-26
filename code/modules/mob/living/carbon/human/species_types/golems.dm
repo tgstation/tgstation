@@ -311,7 +311,7 @@
 			H.adjustOxyLoss(-1)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(2,0)
+		H.take_overall_damage(1,1, 0, BODYPART_ORGANIC)
 
 /datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
