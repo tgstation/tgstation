@@ -342,9 +342,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	pixel_y = rand(0,8)-8
 
 /obj/item/coin/examine(mob/user)
-	..()
+	. = ..()
 	if(value)
-		to_chat(user, "<span class='info'>It's worth [value] credit\s.</span>")
+		. += "<span class='info'>It's worth [value] credit\s.</span>"
 
 /obj/item/coin/gold
 	name = "gold coin"

@@ -5,13 +5,13 @@
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
 	attachable = TRUE
 
-	var/scanning = FALSE
+	var/scanning = TRUE
 	var/health_scan
 	var/alarm_health = HEALTH_THRESHOLD_CRIT
 
 /obj/item/assembly/health/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>")
+	. = ..()
+	. += "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>"
 
 /obj/item/assembly/health/activate()
 	if(!..())

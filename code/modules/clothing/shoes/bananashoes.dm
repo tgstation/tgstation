@@ -11,7 +11,7 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE, /obj/item/stack)
-	AddComponent(/datum/component/squeak, /datum/outputs/bikehorn, 75)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
 	if(always_noslip)
 		clothing_flags |= NOSLIP
 
@@ -38,8 +38,8 @@
 		to_chat(user, "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>")
+	. = ..()
+	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)

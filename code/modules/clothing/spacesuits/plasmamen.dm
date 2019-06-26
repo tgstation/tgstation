@@ -15,8 +15,8 @@
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.</span>")
+	. = ..()
+	. += "<span class='notice'>There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.</span>"
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)

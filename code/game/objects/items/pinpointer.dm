@@ -161,7 +161,7 @@
 		return
 	var/mob/mob_holder = get(target, /mob)
 	if(istype(mob_holder))
-		to_chat(user, "Its pair is being held by [mob_holder].")
+		. += "Its pair is being held by [mob_holder]."
 		return
 
 /obj/item/storage/box/pinpointer_pairs

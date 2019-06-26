@@ -108,9 +108,9 @@
 	. = ..()
 	if(HAS_TRAIT(M, TRAIT_ABDUCTOR_TRAINING) || HAS_TRAIT(M.mind, TRAIT_ABDUCTOR_TRAINING) || isobserver(M))
 		if(!mothership)
-			to_chat(M, "<span class='notice'>It is not attuned to a specific mothership.</span>")
+			. += "<span class='notice'>It is not attuned to a specific mothership.</span>"
 		else
-			to_chat(M, "<span class='notice'>It is attuned to [mothership].</span>")
+			. += "<span class='notice'>It is attuned to [mothership].</span>"
 
 /obj/item/organ/tongue/abductor/handle_speech(datum/source, list/speech_args)
 	//Hacks
