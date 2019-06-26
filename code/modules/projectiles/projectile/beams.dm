@@ -222,6 +222,7 @@
 	if(ishuman(target) && prob(60))
 		var/mob/living/carbon/human/H = target
 		H.blind_eyes(5)
+		H.emote("scream")
 
 /obj/item/projectile/beam/laser/incendiary
 	name = "\improper incendiary beam"
