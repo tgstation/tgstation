@@ -39,7 +39,9 @@
 			// contract system.
 			// We also create their contracts at this point.
 			if (traitor_data)
-				traitor_data.create_contracts()
+				// We don't give them more contracts if they somehow assign themselves to a new uplink.
+				if (!traitor_data.assigned_contracts.len)
+					traitor_data.create_contracts()
 				hard_drive.traitor_data = traitor_data
 			else
 				error = "Incorrect login details."
@@ -47,7 +49,7 @@
 		if("PRG_call_extraction")
 			if (hard_drive.traitor_data.current_contract.status != CONTRACT_STATUS_EXTRACTING)
 				if (hard_drive.traitor_data.current_contract.handle_extraction(user))
-					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 75, 1)
+					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 100, 1)
 					hard_drive.traitor_data.current_contract.status = CONTRACT_STATUS_EXTRACTING
 				else
 					user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
