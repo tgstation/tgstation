@@ -158,8 +158,6 @@
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
-		if(panel_open)
-			interact(user)
 	else if(default_deconstruction_crowbar(I))
 		return
 	else

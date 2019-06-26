@@ -73,7 +73,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
 	can_bayonet = FALSE
-	item_flags = NEEDS_PERMIT | DROPDEL
+	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
 	flags_1 = NONE
 
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
@@ -82,24 +82,24 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	. = ..()
 	guns_left = 0
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/proc/discard_gun(mob/user)
-	throw_at(pick(oview(7,get_turf(user))),1,1)
-	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/proc/discard_gun(mob/living/user)
+	user.throw_item(pick(oview(7,get_turf(user))))
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/discard_gun(mob/user)
-	return
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/discard_gun(mob/living/user)
+	qdel(src)
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/attack_self()
 	return
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
-	..()
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	. = ..()
+	if(!.)
+		return
 	if(guns_left)
-		var/obj/item/gun/ballistic/rifle/boltaction/enchanted/GUN = new type
-		GUN.guns_left = guns_left - 1
-		user.dropItemToGround(src, TRUE)
+		var/obj/item/gun/ballistic/rifle/boltaction/enchanted/gun = new type
+		gun.guns_left = guns_left - 1
+		discard_gun(user)
 		user.swap_hand()
-		user.put_in_hands(GUN)
+		user.put_in_hands(gun)
 	else
 		user.dropItemToGround(src, TRUE)
-	discard_gun(user)
