@@ -32679,8 +32679,7 @@
 	maxHealth = 200;
 	melee_damage_lower = 20;
 	melee_damage_upper = 20;
-	name = "Lia"
-	random_color = FALSE
+	name = "Lia"random_color = FALSE
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
@@ -74117,7 +74116,7 @@
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
 	icon_state = "beer";
-	list_reagents = list("bacchus_blessing" = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5

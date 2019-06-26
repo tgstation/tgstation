@@ -18,6 +18,8 @@
 
 /obj/item/reagent_containers/food/snacks/donut/Initialize()
 	. = ..()
+	if(extra_reagent)
+		reagents.add_reagent(extra_reagent, 3)
 	if(prob(30))
 		frost_donut()
 
@@ -53,9 +55,8 @@
 	tastes = list("donut" = 3, "chaos" = 1)
 
 /obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
-	. = ..()
 	extra_reagent = pick(/datum/reagent/consumable/nutriment, /datum/reagent/consumable/capsaicin, /datum/reagent/consumable/frostoil, /datum/reagent/drug/krokodil, /datum/reagent/toxin/plasma, /datum/reagent/consumable/coco, /datum/reagent/toxin/slimejelly, /datum/reagent/consumable/banana, /datum/reagent/consumable/berryjuice, /datum/reagent/medicine/omnizine)
-	reagents.add_reagent("[extra_reagent]", 3)
+	. = ..()
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
 	name = "jelly donut"
@@ -66,11 +67,6 @@
 	extra_reagent = /datum/reagent/consumable/berryjuice
 	tastes = list("jelly" = 1, "donut" = 3)
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT | SUGAR
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/Initialize()
-	. = ..()
-	if(extra_reagent)
-		reagents.add_reagent("[extra_reagent]", 3)
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly
 	name = "jelly donut"
