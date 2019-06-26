@@ -148,6 +148,16 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/safety
+	id = "safety"
+	display_name = "Basic Safety Systems"
+	description = "What if we tried to lower the job related incidents?"
+	prereq_ids = list("adv_engi", "biotech")
+	design_ids = list("sprinkler", "refill_water", "refill_foam")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	export_price = 8000
+
+
 /datum/techweb_node/anomaly
 	id = "anomaly_research"
 	display_name = "Anomaly Research"

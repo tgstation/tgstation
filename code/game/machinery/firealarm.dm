@@ -338,16 +338,12 @@
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
 	var/obj/item/reagent_containers/glass/beaker/internal
 	var/refill_loaded = FALSE
-	req_access = list(ACCESS_ENGINEERING)
+	req_access = list(ACCESS_ATMOSPHERICS)
 	var/cooldown = 0
 
 /obj/machinery/sprinkler/Initialize()
 	. = ..()
 	internal = new /obj/item/reagent_containers/glass/beaker(src)
-
-/obj/machinery/sprinkler/examine(mob/user)
-	. = ..()
-	. += "It has [round(internal.reagents)] uses left."
 
 /obj/machinery/sprinkler/interact(mob/user)
 	if(!allowed(user))
@@ -378,10 +374,12 @@
 	icon_state = "sprinkler0"
 
 /obj/item/sprinkler_refill
-	name = "water refill"
+	name = "sprinkler refill (water)"
+	desc = "Apply this refill if the sprinkler light is red."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "sprinkler_refill_water"
 	item_state = "fire_extinguisher"
+	w_class = WEIGHT_CLASS_SMALL
 	var/obj/item/reagent_containers/glass/beaker/refill
 	var/used = FALSE
 	var/chemtype = /datum/reagent/water
@@ -409,6 +407,7 @@
 		var/obj/machinery/sprinkler/S = O
 		refill.reagents.trans_to(S.internal, 50, transfered_by = user)
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+		to_chat(user, "<span class='notice'>You refill the [S]</span>")
 		S.refill_loaded = TRUE
 		S.update_icon()
 		if(!refill.reagents.total_volume)
@@ -416,6 +415,20 @@
 		update_icon()
 
 /obj/item/sprinkler_refill/foam
-	name = "foam refill"
+	name = "sprinkler refill (firefighting foam)"
 	icon_state = "sprinkler_refill_foam"
 	chemtype = /datum/reagent/firefighting_foam
+
+/obj/item/deployable_sprinkler
+	name = "deployable sprinkler"
+	desc = "A self deploying sprinkler, just press the botton to deploy it."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "sprinkler_d"
+
+/obj/item/deployable_sprinkler/attack_self(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>You start the activating procedure of the [src]...</span>")
+	if(do_after(user, 50, target = src))
+		to_chat(user, "<span class='notice'>You have activated the [src]</span>")
+		new /obj/machinery/sprinkler (src)
+		qdel(src)

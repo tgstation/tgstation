@@ -170,3 +170,35 @@
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/sprinkler
+	name = "Deployable Sprinkler"
+	desc = "A self deployable sprinkler. Use in case of fires."
+	id = "sprinkler"
+	build_path = /obj/item/deployable_sprinkler
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_GLASS = 10000)
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/refill_water
+	name = "Sprinkler Refill (water)"
+	desc = "A sprinkler refill that uses dehydrogen oxyde as coolant."
+	id = "refill_water"
+	build_path = /obj/item/sprinkler_refill
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12000, MAT_GLASS = 4000)
+	reagents_list = list(/datum/reagent/water = 50)
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/refill_foam
+	name = "Sprinkler Refill (firefighting foam)"
+	desc = "A sprinkler refill that uses firefighting foam as coolant."
+	id = "refill_foam"
+	build_path = /obj/item/sprinkler_refill/foam
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12000, MAT_GLASS = 4000)
+	reagents_list = list(/datum/reagent/firefighting_foam = 50)
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
