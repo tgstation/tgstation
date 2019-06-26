@@ -985,12 +985,12 @@
 
 /obj/mecha/container_resist(mob/living/user)
 	is_currently_ejecting = TRUE
-	to_chat(occupant, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.<span>")
+	to_chat(occupant, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.</span>")
 	if(do_after(occupant,exit_delay, target = src))
-		to_chat(occupant, "<span class='notice'>You exit the mech.<span>")
+		to_chat(occupant, "<span class='notice'>You exit the mech.</span>")
 		go_out()
 	else
-		to_chat(occupant, "<span class='notice'>You stop exiting the mech. Weapons are enabled again.<span>")
+		to_chat(occupant, "<span class='notice'>You stop exiting the mech. Weapons are enabled again.</span>")
 	is_currently_ejecting = FALSE
 
 /obj/mecha/Exited(atom/movable/M, atom/newloc)
