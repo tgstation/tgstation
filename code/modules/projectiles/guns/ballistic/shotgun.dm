@@ -230,38 +230,45 @@
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/grapple
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook
 	name = "hook modified sawn-off shotgun"
 	desc = "Range isn't an issue when you can bring your victim to you."
 	icon_state = "hookshotgun"
 	item_state = "shotgun"
 	load_sound = "sound/weapons/shotguninsert.ogg"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/bounty
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	can_saw = FALSE
 	force = 10 //it has a hook on it
 	attack_verb = list("slashed", "hooked", "stabbed")
-	//swap stuff
-	var/obj/item/ammo_box/magazine/internal/shot/dual/unused_mag
-	var/obj/item/ammo_box/magazine/internal/hook/hook_mag
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	//our hook gun!
+	var/obj/item/gun/magic/hook/bounty/hook
 	var/toggled = FALSE
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/grapple/AltClick(mob/user)
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook/Initialize()
+	. = ..()
+	hook = new /obj/item/gun/magic/hook/bounty(src)
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook/AltClick(mob/user)
 	if(toggled)
-		to_chat(user,"<span class='notice'>You switch to firing the shotgun.</span>")
+		to_chat(user,"<span class='notice'>You switch to the shotgun.</span>")
 		fire_sound = initial(fire_sound)
-		hook_mag = magazine
-		magazine = unused_mag
 	else
-		to_chat(user,"<span class='notice'>You switch to firing the hook.</span>")
+		to_chat(user,"<span class='notice'>You switch to the hook.</span>")
 		fire_sound = 'sound/weapons/batonextend.ogg'
-		unused_mag = magazine
-		magazine = hook_mag
 	toggled = !toggled
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/grapple/examine(mob/user)
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook/examine(mob/user)
 	. = ..()
 	if(toggled)
-		. += "<span class='notice'>Alt-click to switch to firing the shotgun.</span>"
+		. += "<span class='notice'>Alt-click to switch to the shotgun.</span>"
 	else
-		. += "<span class='notice'>Alt-click to switch to firing the hook.</span>"
+		. += "<span class='notice'>Alt-click to switch to the hook.</span>"
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook/afterattack(atom/target, mob/living/user, flag, params)
+	if(toggled)
+		hook.afterattack(target, user, flag, params)
+	else
+		return ..()

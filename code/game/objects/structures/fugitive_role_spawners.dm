@@ -43,7 +43,7 @@
 	icon_state = "sleeper"
 
 /obj/effect/mob_spawn/human/fugitive/bounty
-	name = "deep sleep pod"
+	name = "bounty hunter pod"
 	flavour_text = "We got a new bounty on some fugitives, dead or alive."
 	back_story = "bounty hunters"
 	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
@@ -54,8 +54,8 @@
 /obj/effect/mob_spawn/human/fugitive/bounty/armor
 	outfit = /datum/outfit/bountyarmor
 
-/obj/effect/mob_spawn/human/fugitive/bounty/grapple
-	outfit = /datum/outfit/bountygrapple
+/obj/effect/mob_spawn/human/fugitive/bounty/hook
+	outfit = /datum/outfit/bountyhook
 
 /obj/effect/mob_spawn/human/fugitive/bounty/synth
 	outfit = /datum/outfit/bountysynth

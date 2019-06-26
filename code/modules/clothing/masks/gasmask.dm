@@ -200,6 +200,8 @@
 
 /obj/item/clothing/mask/gas/hunter
 	name = "bounty hunting mask"
-	desc = "A custom tactical mask with painted on decals."
+	desc = "A custom tactical mask with decals added."
 	icon_state = "hunter"
 	item_state = "hunter"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR

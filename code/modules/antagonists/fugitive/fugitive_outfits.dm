@@ -112,8 +112,8 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
-/datum/outfit/bountygrapple
-	name = "Bounty Hunter - Grapple"
+/datum/outfit/bountyhook
+	name = "Bounty Hunter - Hook"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	head = /obj/item/clothing/head/scarecrow_hat
 	gloves = /obj/item/clothing/gloves/botanic_leather
@@ -121,7 +121,7 @@
 	mask = /obj/item/clothing/mask/scarecrow
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id
-	r_hand = /obj/item/gun/ballistic/shotgun/doublebarrel/grapple
+	r_hand = /obj/item/gun/ballistic/shotgun/doublebarrel/hook
 
 /datum/outfit/bountygrapple/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -137,11 +137,10 @@
 	back = /obj/item/storage/backpack
 	suit = /obj/item/clothing/suit/armor/riot
 	shoes = /obj/item/clothing/shoes/jackboots
-	gloves = /obj/item/clothing/gloves/boxing
 	glasses = /obj/item/clothing/glasses/eyepatch
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id
-	r_hand = /obj/item/extendohand
+	r_hand = /obj/item/extendohand //come on, do something better than this
 
 /datum/outfit/bountysynth/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
