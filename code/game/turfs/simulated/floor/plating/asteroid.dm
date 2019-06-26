@@ -251,7 +251,7 @@
 	if(!sanity)
 		return
 	SpawnFlora(T)
-	SpawnTerrain(T)
+	// SpawnTerrain(T)
 	SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 

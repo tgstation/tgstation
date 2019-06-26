@@ -37,9 +37,12 @@
 	if(user)
 		user.visible_message("<span class='notice'>[user.name] [anchored ? "fasten" : "unfasten"] [src]</span>", \
 		"<span class='notice'>You [anchored ? "fasten" : "unfasten"] [src]</span>")
+	var/datum/component/plumbing/P = GetComponent(/datum/component/plumbing)
 	if(anchored)
+		P.start()
 		connect_to_network()
 	else
+		P.disable()
 		disconnect_from_network()
 
 /obj/machinery/power/liquid_pump/process()

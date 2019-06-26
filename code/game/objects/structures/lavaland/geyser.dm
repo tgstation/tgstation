@@ -50,8 +50,6 @@
 	. = ..()
 	reagent_id = pickweight(options)
 
-
-
 /obj/item/plunger
 	name = "plunger"
 	desc = "It's a plunger for plunging."

@@ -29,8 +29,6 @@
 		demanders += P
 
 /datum/ductnet/proc/remove_plumber(datum/component/plumbing/P)
-	if(!P.ducts.Find(src)) //out of bounds check, probably wont happen
-		return FALSE
 	suppliers.Remove(P) //we're probably only in one of these, but Remove() is inherently sane so this is fine
 	demanders.Remove(P)
 
