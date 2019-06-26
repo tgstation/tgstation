@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - rscadd: "Mining base now has a common area accessible via a new shuttle on the medium-highpop maps, and a security office connecting the gulag and the mining base. Gulag also has functional atmos."
