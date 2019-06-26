@@ -38,7 +38,7 @@
 	return ..()
 
 
-/datum/surgery/proc/can_start(mob/user, mob/living/carbon/target) //FALSE to not show in list
+/datum/surgery/proc/can_start(mob/user, mob/living) //FALSE to not show in list
 	. = TRUE
 	if(replaced_by == /datum/surgery)
 		return FALSE
