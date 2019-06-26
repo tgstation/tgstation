@@ -215,10 +215,8 @@ Sort out active, anchor and possible layers
 		return
 
 	if(reagent) //only asked for one type of reagent
-		for(var/A in reagents.reagent_list)
-			var/datum/reagent/R = A
-			if(R.id == reagent)
-				return TRUE
+		if(reagent in reagents.reagent_list)
+			return TRUE
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
 
@@ -320,5 +318,3 @@ Sort out active, anchor and possible layers
 /datum/component/plumbing/tank
 	demand_connects = WEST
 	supply_connects = EAST
-
-
