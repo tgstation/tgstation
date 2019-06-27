@@ -1,5 +1,0 @@
-author: "nicbn"
-delete-after: True
-changes: 
-  - bugfix: "Icons will no longer extend past cryo."
-  - imagedel: "Xenos and monkeys no longer have snowflake icons for cryo."

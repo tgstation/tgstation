@@ -130,14 +130,8 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - pipe cleaner coil : merge pipe cleaners
 //
 /obj/structure/pipe_cleaner/proc/handlecable(obj/item/W, mob/user, params)
-	var/turf/T = get_turf(src)
-	if(T.intact)
-		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
-		user.visible_message("[user] cuts the pipe cleaner.", "<span class='notice'>You cut the pipe cleaner.</span>")
-		stored.add_fingerprint(user)
-		investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
-		deconstruct()
+		cut_pipe_cleaner(user)
 		return
 
 	else if(istype(W, /obj/item/stack/pipe_cleaner_coil))
@@ -148,6 +142,12 @@ By design, d1 is the smallest direction and d2 is the highest
 		coil.pipe_cleaner_join(src, user)
 
 	add_fingerprint(user)
+
+/obj/structure/pipe_cleaner/proc/cut_pipe_cleaner(mob/user)
+	user.visible_message("[user] pulls up the pipe cleaner.", "<span class='notice'>You pull up the pipe cleaner.</span>")
+	stored.add_fingerprint(user)
+	investigate_log("was pulled up by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
+	deconstruct()
 
 /obj/structure/pipe_cleaner/attackby(obj/item/W, mob/user, params)
 	handlecable(W, user, params)
@@ -162,6 +162,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	stored.amount = length
 	stored.item_color = colorC
 	stored.update_icon()
+
+/obj/structure/pipe_cleaner/AltClick(mob/living/user)
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	cut_pipe_cleaner(user)
 
 ///////////////////////////////////////////////
 // The pipe cleaner coil object, used for laying pipe cleaner
