@@ -27,9 +27,9 @@
 
 /datum/component/extralasers/proc/detach(breaklens = FALSE)
 	var/obj/item/gun/energy/laser/L = parent
-	L?.chambered = null
-	if(L.ammo_type.len)
-		LAZYREMOVE(L.ammo_type, ammo)
+	if(L.chambered)
+		L.chambered = null
+	LAZYREMOVE(L.ammo_type, ammo)
 	L.select_fire()
 	L.recharge_newshot()
 	L.update_icon(TRUE)
