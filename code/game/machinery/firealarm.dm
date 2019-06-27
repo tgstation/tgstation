@@ -336,8 +336,8 @@
 	plane = FLOOR_PLANE
 	max_integrity = 100
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
-	var/refill_loaded = FALSE
 	req_access = list(ACCESS_ENGINE)
+	var/refill_loaded = FALSE
 	var/cooldown = 0
 
 /obj/machinery/sprinkler/Initialize()
@@ -349,6 +349,14 @@
 		to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 	dispense()
+
+/obj/machinery/sprinkler/AltClick(mob/user)
+	if(issilicon(user))
+		var/harm = alert(user, "Unsanitized input detected, do you want to use this exploit to sabotage the sprinkler chemical storage? It will lead to human harm.", "root", "Abort", "Proceed")
+		if(harm != "Proceed")
+			return
+		emag_act(user)
+	playsound(loc, 'sound/machines/beep.ogg', 100, 1)
 
 /obj/machinery/sprinkler/emag_act(mob/user)
 	. = ..()
@@ -362,12 +370,20 @@
 							  /datum/reagent/lube,
 							  /datum/reagent/fuel/unholywater,
 							  /datum/reagent/toxin/acid/fluacid,
-							  /datum/reagent/napalm),50)
+							  /datum/reagent/napalm
+							  /datum/reagent/oxygen),50)
 	to_chat(user, "<span class='danger'>The war crime LED blinks twice.</span>")
+	refill_loaded = TRUE
+	update_icon()
 
 /obj/machinery/sprinkler/fire_act()
-	.=..()
+	. = ..()
 	dispense()
+
+/obj/machinery/sprinkler/Crossed(atom/movable/AM as obj)
+	. = ..()
+	if(istype(AM,/datum/effect_system/spark_spread))
+		dispense()
 
 /obj/machinery/sprinkler/proc/dispense()
 	if(cooldown < world.time && refill_loaded)
@@ -433,11 +449,20 @@
 	desc = "A self-deploying sprinkler, just press the button to activate it."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "sprinkler_d"
+	var/deploying = FALSE
 
 /obj/item/deployable_sprinkler/attack_self(mob/user)
 	. = ..()
+	var/turf/T = get_turf(loc)
+	if(locate(/obj/machinery/sprinkler) in T.contents)
+		to_chat(user, "<span class='danger'>There is already a sprnkler here!</span>")
+		return
 	to_chat(user, "You start planting \the [src]...")
-	if(do_after(user, 50, target = src))
-		to_chat(user, "You have activated \the [src].")
-		new /obj/machinery/sprinkler (get_turf(src))
-		qdel(src)
+	if(!deploying)
+		deploying = TRUE
+		if(do_after(user, 50, target = src))
+			to_chat(user, "You have activated \the [src].")
+			new /obj/machinery/sprinkler (get_turf(src))
+			qdel(src)
+		else
+			deploying = FALSE
