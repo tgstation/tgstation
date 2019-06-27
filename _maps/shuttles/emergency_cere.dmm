@@ -1128,6 +1128,9 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cu" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -1138,7 +1141,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cv" = (
@@ -1241,11 +1243,13 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cD" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cE" = (
@@ -1384,6 +1388,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
+"cL" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
 "cM" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
@@ -1396,6 +1410,9 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cN" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1403,7 +1420,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cO" = (
@@ -1730,13 +1746,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape)
-"pf" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	use_power = 0
-	},
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -2476,7 +2485,7 @@ cs
 cp
 cp
 cp
-cw
+cL
 ab
 cR
 cY
@@ -2559,7 +2568,7 @@ ac
 ac
 ab
 ab
-pf
+ad
 cu
 cy
 cD
