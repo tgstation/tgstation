@@ -487,8 +487,17 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bD" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/stasis,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bE" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bF" = (
@@ -574,18 +583,6 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"iJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/clothing/gloves/fingerless,
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"wq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table/optable,
-/turf/open/floor/plasteel,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -799,7 +796,7 @@ ax
 ax
 ad
 bA
-bD
+bE
 bA
 bK
 bL
@@ -848,7 +845,7 @@ ax
 bw
 bB
 bB
-bF
+bB
 bK
 bL
 "}
@@ -895,7 +892,7 @@ ax
 ax
 ad
 bC
-iJ
+bF
 ad
 ad
 aa
@@ -918,7 +915,7 @@ bk
 bP
 bt
 ab
-wq
+bD
 ab
 ad
 aa
