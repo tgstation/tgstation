@@ -22,6 +22,7 @@ matrix:
       script:
         - tools/travis/check_filedirs.sh tgstation.dme
         - tools/travis/build_tools.sh
+        - tools/travis/lint_grep.sh
 
     - name: "Compile All Maps"
       env: BUILD_TOOLS=false BUILD_TESTING=true
@@ -61,12 +62,12 @@ matrix:
           - $HOME/MariaDB
           - $HOME/.rustup
       install:
+        - tools/travis/install_byond.sh
+      before_script:
         - mysql -u root -e 'CREATE DATABASE tg_travis;'
         - mysql -u root tg_travis < SQL/tgstation_schema.sql
         - mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'
         - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
-      before_script:
-        - tools/travis/install_byond.sh
       script:
         - tools/travis/build_dependencies.sh || travis_terminate 1
         - tools/travis/build_byond.sh
