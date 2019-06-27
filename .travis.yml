@@ -22,8 +22,6 @@ matrix:
           - tgui/node_modules
       install:
         - tools/travis/install_build_tools.sh
-      before_script:
-        - tools/travis/before_build_tools.sh
       script:
         - tools/travis/check_filedirs.sh tgstation.dme
         - tools/travis/build_tools.sh
@@ -37,8 +35,11 @@ matrix:
       cache:
         directories:
           - $HOME/BYOND
+      install:
+        - tools/travis/install_byond.sh
       before_script:
-        - tools/travis/before_build_byond.sh
+        - tools/travis/template_dm_generator.py
+      script:
         - tools/travis/build_byond.sh
 
     - name: "Compile and Run Tests"
@@ -68,7 +69,7 @@ matrix:
         - mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'
         - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
       before_script:
-        - tools/travis/before_build_byond.sh
+        - tools/travis/install_byond.sh
       script:
         - tools/travis/build_dependencies.sh || travis_terminate 1
         - tools/travis/build_byond.sh
