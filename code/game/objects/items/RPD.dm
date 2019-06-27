@@ -75,10 +75,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	"Fluid Ducts" = list(
-		new /datum/pipe_info/plumbing("Straight Duct",				/obj/machinery/duct, PIPE_STRAIGHT),
-		new /datum/pipe_info/plumbing("Bent Duct",	/obj/machinery/duct/bent, PIPE_UNARY),
-		new /datum/pipe_info/plumbing("Joined Duct",					/obj/machinery/duct/joined, PIPE_UNARY),
-		new /datum/pipe_info/plumbing("4-Way Duct",				/obj/machinery/duct/cross, PIPE_ONEDIR),
+		new /datum/pipe_info/plumbing("Duct",	/obj/machinery/duct, PIPE_ONEDIR)
 	)
 ))
 
@@ -216,12 +213,14 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	var/paint_speed = 5
 	var/category = ATMOS_CATEGORY
 	var/piping_layer = PIPING_LAYER_DEFAULT
+	var/ducting_layer = DUCT_LAYER_DEFAULT
 	var/datum/pipe_info/recipe
 	var/static/datum/pipe_info/first_atmos
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/static/datum/pipe_info/first_plumbing
 	var/mode = BUILD_MODE | PAINT_MODE | DESTROY_MODE | WRENCH_MODE
+	var/locked = FALSE //wheter we can change categories. Useful for the plumber
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -234,8 +233,6 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 		first_disposal = GLOB.disposal_pipe_recipes[GLOB.disposal_pipe_recipes[1]][1]
 	if(!first_transit)
 		first_transit = GLOB.transit_tube_recipes[GLOB.transit_tube_recipes[1]][1]
-	if(!first_plumbing)
-		first_plumbing = GLOB.fluid_duct_recipes[GLOB.fluid_duct_recipes[1]][1]
 
 	recipe = first_atmos
 
@@ -271,11 +268,13 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	var/list/data = list(
 		"category" = category,
 		"piping_layer" = piping_layer,
+		"ducting_layer" = ducting_layer,
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_color" = paint_color,
 		"paint_colors" = GLOB.pipe_paint_colors,
-		"mode" = mode
+		"mode" = mode,
+		"locked" = locked
 	)
 
 	var/list/recipes
@@ -322,6 +321,9 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 			playeffect = FALSE
 		if("piping_layer")
 			piping_layer = text2num(params["piping_layer"])
+			playeffect = FALSE
+		if("ducting_layer")
+			ducting_layer = text2num(params["ducting_layer"])
 			playeffect = FALSE
 		if("pipe_type")
 			var/static/list/recipes
@@ -487,7 +489,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 				to_chat(user, "<span class='notice'>You start building a fluid duct...</span>")
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, plumbing_build_speed, target = A))
-					var/obj/machinery/duct/D = new queued_p_type (A, TRUE, queued_p_dir)
+					var/obj/machinery/duct/D = new queued_p_type (A, TRUE, paint_color, ducting_layer)
 					D.add_fingerprint(usr)
 					if(mode & WRENCH_MODE)
 						D.wrench_act(user, src)
@@ -497,6 +499,23 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
+
+/obj/item/pipe_dispenser/plumbing
+	name = "Plumberinator"
+	desc = "A crude device to rapidly plumb things."
+	icon_state = "plumberer"
+	category = PLUMBING_CATEGORY
+	locked = TRUE
+
+/obj/item/pipe_dispenser/plumbing/Initialize()
+	. = ..()
+	spark_system = new
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	if(!first_plumbing)
+		first_plumbing = GLOB.fluid_duct_recipes[GLOB.fluid_duct_recipes[1]][1]
+
+	recipe = first_plumbing
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY

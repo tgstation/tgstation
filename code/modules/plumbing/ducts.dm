@@ -8,83 +8,79 @@ All the important duct code:
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
 
-	var/connects = NORTH | SOUTH
+	var/connects
 	var/datum/ductnet/duct
 	var/capacity = 10
 
+	var/duct_color = null
+	var/duct_layer = DUCT_LAYER_DEFAULT //1,2,3,4,5
+
 	var/active = TRUE //wheter to even bother with plumbing code or not
 
-/obj/machinery/duct/bent
-	icon_state = "nduct_bent"
-	connects = NORTH | EAST
-
-/obj/machinery/duct/joined
-	icon_state = "nduct_joined"
-	connects = NORTH | WEST | SOUTH
-
-/obj/machinery/duct/cross
-	icon_state = "nduct_crossed"
-	connects = NORTH | SOUTH | EAST | WEST
-
-/obj/machinery/duct/Initialize(mapload, no_anchor, spin=SOUTH)
+/obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct)
 	. = ..()
 
-	setDir(spin)
+	duct_color = color_of_duct
+	duct_layer = layer_of_duct
 	if(no_anchor)
 		active = FALSE
 		anchored = FALSE
 	else if(!can_anchor())
 		CRASH("Overlapping ducts detected")
 		qdel(src)
+	if(duct_color)
+		add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
+	if(duct_layer)
+		handle_layer()
+	for(var/obj/machinery/duct/D in loc)
+		if(D == src)
+			continue
+		if(is_compatible(D))
+			qdel(src) //replace with dropping or something
 	if(active)
 		attempt_connect()
 
-/obj/machinery/duct/ComponentInitialize()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
-
-/obj/machinery/duct/proc/update_dir()
-	//Note that the use of the SOUTH define as default is because it's the initial direction of the ducts and it's connects
-	var/new_connects
-	var/angle = 180 - dir2angle(dir)
-	if(dir == SOUTH)
-		connects = initial(connects)
-	else
-		for(var/D in GLOB.cardinals)
-			if(D & initial(connects))
-				new_connects += turn(D, angle)
-		connects = new_connects
-
 /obj/machinery/duct/proc/attempt_connect()
-	update_dir()
 	for(var/D in GLOB.cardinals)
-		if(D & connects)
-			for(var/atom/movable/AM in get_step(src, D))
-				connect_network(AM, D)
+		for(var/atom/movable/AM in get_step(src, D))
+			if(connect_network(AM, D))
+				connects |= D
+	update_icon()
 
 /obj/machinery/duct/proc/connect_network(atom/movable/AM, direction)
 	var/opposite_dir = turn(direction, 180)
 	if(istype(AM, /obj/machinery/duct))
 		var/obj/machinery/duct/D = AM
-		if(!D.active || ((duct == D.duct) && duct)) //check if we're not just comparing two null values
+		if(!active || !D.active)
 			return
-		if(opposite_dir & D.connects)
-			if(D.duct)
-				if(duct)
-					duct.assimilate(D.duct)
-				else
-					D.duct.add_duct(src)
-			else
-				if(duct)
-					duct.add_duct(D)
-				else
-					create_duct()
-					duct.add_duct(D)
-			D.attempt_connect()//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
+		if((duct == D.duct) && duct)//check if we're not just comparing two null values
+			D.connects |= opposite_dir
+			D.update_icon() //also update the older pipes icon
+			return TRUE //tell the current pipe to also update it's sprite
+
+		if(!is_compatible(D))
 			return
 
+		if(D.duct)
+			if(duct)
+				duct.assimilate(D.duct)
+			else
+				D.duct.add_duct(src)
+		else
+			if(duct)
+				duct.add_duct(D)
+			else
+				create_duct()
+				duct.add_duct(D)
+		D.attempt_connect()//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
+		return TRUE
+
+	if(layer != 3) //plumbing devices don't support multilayering. 3 is the default layer so we only use that. We can change this later
+		return
 	var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
 	if(!P)
 		return
+
 	var/comp_directions = P.supply_connects + P.demand_connects //they should never, ever have supply and demand connects overlap or catastrophic failure
 	if(opposite_dir & comp_directions)
 		if(duct)
@@ -92,6 +88,10 @@ All the important duct code:
 		else
 			create_duct()
 			duct.add_plumber(P, opposite_dir)
+		return TRUE
+
+/obj/machinery/duct/proc/is_compatible(obj/machinery/duct/D)
+	return (duct_layer == D.duct_layer) && (duct_color == D.duct_color)
 
 /obj/machinery/duct/proc/disconnect_duct() //when calling this, make sure something happened to the duct or it'll just reconnect
 	if(!duct)
@@ -110,6 +110,37 @@ All the important duct code:
 				if((turn(A, 180) & D.connects) && D.active)
 					adjacents += D
 	return adjacents
+
+/obj/machinery/duct/update_icon()
+	var/temp_icon = initial(icon_state)
+	for(var/D in GLOB.cardinals)
+		if(D & connects)
+			if(D == NORTH)
+				temp_icon += "_n"
+			if(D == SOUTH)
+				temp_icon += "_s"
+			if(D == EAST)
+				temp_icon += "_e"
+			if(D == WEST)
+				temp_icon += "_w"
+	icon_state = temp_icon
+
+/obj/machinery/duct/proc/handle_layer()
+	var/offset
+	switch(duct_layer)
+		if(1)
+			offset = -10
+		if(2)
+			offset = -5
+		if(3)
+			offset = 0
+		if(4)
+			offset = 5
+		if(5)
+			offset = 10
+	pixel_x = offset
+	pixel_y = offset
+
 
 /obj/machinery/duct/wrench_act(mob/living/user, obj/item/I) //I can also be the RPD
 	add_fingerprint(user)

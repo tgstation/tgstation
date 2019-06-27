@@ -27,7 +27,6 @@
 	if(use_overlays)
 		create_overlays()
 
-
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
 		STOP_PROCESSING(SSfluids, src)
@@ -139,7 +138,7 @@
 			for(var/obj/machinery/duct/duct in get_step(parent, D))
 				var/turned_dir = turn(D, 180)
 				if(turned_dir & duct.connects)
-					duct.connect_network(parent, turned_dir)
+					duct.attempt_connect()
 
 	//TODO: Let plumbers directly plumb into one another without ducts if placed adjacent to each other
 
