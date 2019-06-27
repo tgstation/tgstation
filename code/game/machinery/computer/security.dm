@@ -718,7 +718,10 @@ What a mess.*/
 					if("citation_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
-							var/fine = input(usr, "Please input citation fine:", "Secure. records", 0) as num
+							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 5) as num, 1)
+							if(!fine || fine < 0)
+								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
+								return
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
