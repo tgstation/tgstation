@@ -383,13 +383,16 @@
 /obj/item/reagent_containers/spray/medical/AltClick(mob/user)
 	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		reskin_obj(user)
-		switch(icon_state)
-			if("sprayer_med_red")
-				item_state = "sprayer_med_red"
-				return
-			if("sprayer_med_yellow")
-				item_state = "sprayer_med_yellow"
-				return
-			if("sprayer_med_blue")
-				item_state = "sprayer_med_blue"
-				return
+
+/obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
+	..()
+	switch(icon_state)
+		if("sprayer_med_red")
+			item_state = "sprayer_med_red"
+		if("sprayer_med_yellow")
+			item_state = "sprayer_med_yellow"
+		if("sprayer_med_blue")
+			item_state = "sprayer_med_blue"
+
+
+
