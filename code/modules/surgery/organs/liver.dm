@@ -22,6 +22,9 @@
 #define HAS_PAINFUL_TOXIN 2
 
 /obj/item/organ/liver/on_life()
+	if(HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
+		return
+		
 	var/mob/living/carbon/C = owner
 
 	if(istype(C))
