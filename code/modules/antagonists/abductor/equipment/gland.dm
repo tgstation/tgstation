@@ -57,7 +57,7 @@
 	to_chat(owner, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
 	to_chat(owner, "<span class='mind_control'>[command]</span>")
 	active_mind_control = TRUE
-	log_admin("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
+	message_admins("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
 	update_gland_hud()
 	var/obj/screen/alert/mind_control/mind_alert = owner.throw_alert("mind_control", /obj/screen/alert/mind_control)
 	mind_alert.command = command
@@ -183,18 +183,18 @@
 		var/mob/living/carbon/human/H = M
 		if(H.stat)
 			continue
-		
+
 		broadcasted_mobs += H
 		to_chat(H, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
 		to_chat(H, "<span class='mind_control'>[command]</span>")
-		
-		log_admin("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
-		
+
+		message_admins("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
+
 		var/obj/screen/alert/mind_control/mind_alert = H.throw_alert("mind_control", /obj/screen/alert/mind_control)
 		mind_alert.command = command
-		
-	if(LAZYLEN(broadcasted_mobs))	
-		active_mind_control = TRUE	
+
+	if(LAZYLEN(broadcasted_mobs))
+		active_mind_control = TRUE
 		addtimer(CALLBACK(src, .proc/clear_mind_control), mind_control_duration)
 
 	update_gland_hud()
@@ -222,7 +222,7 @@
 /obj/item/organ/heart/gland/access/activate()
 	to_chat(owner, "<span class='notice'>You feel like a VIP for some reason.</span>")
 	RegisterSignal(owner, COMSIG_MOB_ALLOWED, .proc/free_access)
-	
+
 /obj/item/organ/heart/gland/access/proc/free_access(datum/source, obj/O)
 	return TRUE
 
@@ -352,7 +352,7 @@
 			to_chat(entangled_mob, "<span class='mind_control'>[command]</span>")
 			var/obj/screen/alert/mind_control/mind_alert = entangled_mob.throw_alert("mind_control", /obj/screen/alert/mind_control)
 			mind_alert.command = command
-			log_admin("[key_name(owner)] mirrored an abductor mind control message to [key_name(entangled_mob)]: [command]")
+			message_admins("[key_name(owner)] mirrored an abductor mind control message to [key_name(entangled_mob)]: [command]")
 			update_gland_hud()
 
 /obj/item/organ/heart/gland/quantum/clear_mind_control()
