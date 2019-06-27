@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Setting a defibrillator unit on fire will now make it's paddles appear on fire too when pulled out!"
+  - bugfix: "Setting defibrillator paddles on fire will now cause the flames to run along it's cables and set the main unit on fire as well."

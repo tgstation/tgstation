@@ -77,7 +77,7 @@
 //The maximum size of a stack object.
 #define MAX_STACK_SIZE 50
 //maximum amount of cable in a coil
-#define MAXCOIL 15
+#define MAXCOIL 30
 
 //tablecrafting defines
 #define CAT_NONE	""

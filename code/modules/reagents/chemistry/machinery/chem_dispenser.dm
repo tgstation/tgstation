@@ -102,7 +102,7 @@
 		. += "<span class='notice'>The status display reads: \n"+\
 		"Recharging <b>[recharge_amount]</b> power units per interval.\n"+\
 		"Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.\n"+\
-		"Macro granularity at <b>[macroresolution]u</b>.<span>"
+		"Macro granularity at <b>[macroresolution]u</b>.</span>"
 
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)

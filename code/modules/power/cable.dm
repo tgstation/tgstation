@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	name = "power cable"
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/cable.dmi'
-	icon_state = "1-2-4-8"
+	icon_state = "1-2-4-8-node"
 	level = 1 //is underfloor
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
@@ -37,24 +37,35 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/under_thing = NONE
 	if(clear_before_updating)
 		linked_dirs = 0
+	var/obj/machinery/power/search_parent
 	for(var/obj/machinery/power/P in loc)
 		if(istype(P, /obj/machinery/power/terminal))
 			under_thing = UNDER_TERMINAL
+			search_parent = P
 			break
 		if(istype(P, /obj/machinery/power/smes))
 			under_thing = UNDER_SMES
+			search_parent = P
 			break
 	for(var/check_dir in GLOB.cardinals)
 		var/TB = get_step(src, check_dir)
+		//don't link from smes to its terminal
 		if(under_thing)
-			var/search_target
 			switch(under_thing)
 				if(UNDER_SMES)
-					search_target = /obj/machinery/power/terminal
+					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
+					//Why null or equal to the search parent?
+					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
+					//but the cable underneath it is ready to link.
+					//I don't believe null is even a valid state for a smes terminal while the game is actually running
+					//So in the rare case that this happens, we also shouldn't connect
+					//This might break.
+					if(term && (!term.master || term.master == search_parent))
+						continue
 				if(UNDER_TERMINAL)
-					search_target = /obj/machinery/power/smes
-			if(locate(search_target) in TB)
-				continue
+					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
+					if(S && (!S.terminal || S.terminal == search_parent))
+						continue
 		var/inverse = turn(check_dir, 180)
 		for(var/obj/structure/cable/C in TB)
 			linked_dirs |= check_dir
@@ -282,9 +293,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(linked_dirs & check_dir && check_dir != ignore_dir)
 			T = get_step(src, check_dir)
 			if(T)
-				. |= power_list(T, src, powernetless_only)
+				. += power_list(T, src, powernetless_only)
 
-	. |= power_list(loc, src, powernetless_only) //get on turf matching cables
+	. += power_list(loc, src, powernetless_only) //get on turf matching cables
 
 /obj/structure/cable/proc/auto_propogate_cut_cable(obj/O)
 	if(O && !QDELETED(O))
@@ -305,38 +316,26 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 
 	var/turf/T1 = loc
-	var/list/P_list
 	if(!T1)
 		return
+
+	//clear the powernet of any machines on tile first
+	for(var/obj/machinery/power/P in T1)
+		P.disconnect_from_network() 
+
+	var/list/P_list = list()
 	for(var/dir_check in GLOB.cardinals)
 		if(linked_dirs & dir_check)
 			T1 = get_step(T1, dir_check)
-			P_list += power_list(T1, src, FALSE, TRUE)	// what adjacently joins on to cut cable...
+			P_list += locate(/obj/structure/cable) in T1
 
-	P_list += power_list(loc, src, FALSE, TRUE)//... and on turf
-
-
-	if(P_list.len == 0)//if nothing in both list, then the cable was a lone cable, just delete it and its powernet
-		powernet.remove_cable(src)
-
-		for(var/obj/machinery/power/P in T1)//check if it was powering a machine
-			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
-				P.disconnect_from_network() //remove from current network (and delete powernet)
-		return
-	
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
 		moveToNullspace()
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-	var/first = TRUE
-	var/delay = 0
 	for(var/obj/O in P_list)
-		if(first)
-			first = FALSE
-			continue
-		addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), delay) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
-		delay += 5
+		addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
@@ -350,7 +349,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
-	custom_price = 15
+	custom_price = 30
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"

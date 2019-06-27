@@ -41,7 +41,7 @@
 	starting_node = TRUE
 	display_name = "Basic Exosuit Equipment"
 	description = "Various tools fit for basic mech units"
-	design_ids = list("mech_drill", "mech_mscanner", "mech_extinguisher", "mech_cable_layer")
+	design_ids = list("mech_drill", "mech_mscanner", "mech_extinguisher")
 
 /datum/techweb_node/basic_tools
 	id = "basic_tools"
@@ -199,16 +199,25 @@
 	display_name = "Miniaturized Bluespace Research"
 	description = "Extreme reduction in space required for bluespace engines, leading to portable bluespace technology."
 	prereq_ids = list("bluespace_travel", "practical_bluespace", "high_efficiency")
-	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "bag_holding", "quantum_keycard", "wormholeprojector")
+	design_ids = list("bluespace_matter_bin", "femto_mani", "bluespacebodybag", "triphasic_scanning", "quantum_keycard", "wormholeprojector")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
+
+/datum/techweb_node/advanced_bluespace
+	id = "bluespace_storage"
+	display_name = "Advanced Bluespace Storage"
+	description = "With the use of bluespace we can create even more advanced storage devices than we could have ever done"
+	prereq_ids = list("micro_bluespace", "janitor")
+	design_ids = list("bag_holding")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 3000
 
 /datum/techweb_node/practical_bluespace
 	id = "practical_bluespace"
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick", "ore_silo")
+	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "roastingstick", "ore_silo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
@@ -750,7 +759,7 @@
 	display_name = "Exosuit Weapon (LBX AC 10 \"Scattershot\")"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("ballistic_weapons")
-	design_ids = list("mech_scattershot")
+	design_ids = list("mech_scattershot", "mech_scattershot_ammo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -759,7 +768,7 @@
 	display_name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("ballistic_weapons")
-	design_ids = list("mech_carbine")
+	design_ids = list("mech_carbine", "mech_carbine_ammo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -813,16 +822,16 @@
 	display_name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("explosive_weapons")
-	design_ids = list("mech_grenade_launcher")
+	design_ids = list("mech_grenade_launcher", "mech_grenade_launcher_ammo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
 /datum/techweb_node/mech_missile_rack
 	id = "mech_missile_rack"
-	display_name = "Exosuit Weapon (SRM-8 Missile Rack)"
+	display_name = "Exosuit Weapon (BRM-6 Missile Rack)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("explosive_weapons")
-	design_ids = list("mech_missile_rack")
+	design_ids = list("mech_missile_rack", "mech_missile_rack_ammo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -831,7 +840,7 @@
 	display_name = "Exosuit Module (SOB-3 Clusterbang Launcher)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("explosive_weapons")
-	design_ids = list("clusterbang_launcher")
+	design_ids = list("clusterbang_launcher", "clusterbang_launcher_ammo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -858,7 +867,7 @@
 	display_name = "Exosuit Weapon (\"Ultra AC 2\" LMG)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("ballistic_weapons")
-	design_ids = list("mech_lmg")
+	design_ids = list("mech_lmg", "mech_lmg_ammo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
