@@ -97,8 +97,11 @@
 					dat += "<td>$[c.fine]</td>"
 					dat += "<td>[c.author]</td>"
 					dat += "<td>[c.time]</td>"
-					dat += "<td>$[owed]</td>"
-					dat += "<td><A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td>"
+					if(owed > 0)
+						dat += "<td>$[owed]</td>"
+						dat += "<td><A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td>"
+					else
+						dat += "<td colspan='2'>All Paid Off</td>"
 					dat += "</tr>"
 				dat += "</table>"
 
@@ -220,14 +223,22 @@ What a mess.*/
 					if(p.dataId == text2num(href_list["cdataid"]))
 						var/datum/bank_account/R = scan.registered_account
 						to_chat(world, "Found your citation and your account!")
+						var/diff = p.fine - p.paid
 						var/pay = FLOOR(input(usr, "Please enter how much you would like to pay:", "Citation Payment", 50) as num, 1)
 						if(!pay || pay < 0)
 							to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 							return
+						if(pay > diff)
+							to_chat(usr, "<span class='notice'>You only owe $[diff] credit\s to pay off this fine.</span>")
+							return
 						if(R.adjust_money(-pay))
-							to_chat(usr, "<span class='notice'>You have paid [pay] credits into a towards your fine.</span>")
+							to_chat(usr, "<span class='notice'>You have paid $[pay] credit\s towards your fine.</span>")
 							var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
 							D.adjust_money(pay)
+							GLOB.data_core.payCitation(active2.fields["id"], text2num(href_list["cdataid"]), pay)
+							if (pay == diff)
+								investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
+							updateUsrDialog()
 							return
 						else
 							var/difference = pay - R.account_balance

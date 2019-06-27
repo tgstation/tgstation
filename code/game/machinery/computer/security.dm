@@ -218,13 +218,19 @@
 						<th>Fine</th>
 						<th>Author</th>
 						<th>Time Added</th>
+						<th>Amount Due</th>
 						<th>Del</th>
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["citation"])
+							var/owed = c.fine - c.paid
 							dat += "<tr><td>[c.crimeName]</td>"
 							dat += "<td>$[c.fine]</td>"
 							dat += "<td>[c.author]</td>"
 							dat += "<td>[c.time]</td>"
+							if(owed > 0)
+								dat += "<td>$[owed]</td>"
+							else
+								dat += "<td>All Paid Off</td>"
 							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=citation_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
 							dat += "</tr>"
 						dat += "</table>"
@@ -718,7 +724,7 @@ What a mess.*/
 					if("citation_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
-							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 5) as num, 1)
+							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 50) as num, 1)
 							if(!fine || fine < 0)
 								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 								return

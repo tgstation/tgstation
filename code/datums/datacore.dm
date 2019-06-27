@@ -64,6 +64,15 @@
 					crimes -= crime
 					return
 
+/datum/datacore/proc/payCitation(id, cDataId, amount)
+	for(var/datum/data/record/R in security)
+		if(R.fields["id"] == id)
+			var/list/crimes = R.fields["citation"]
+			for(var/datum/data/crime/crime in crimes)
+				if(crime.dataId == text2num(cDataId))
+					crime.paid = crime.paid + amount
+					return
+
 /datum/datacore/proc/addMinorCrime(id = "", datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
