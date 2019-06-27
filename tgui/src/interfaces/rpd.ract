@@ -46,6 +46,8 @@
 			<ui-button icon='{{data.category == 2 ? "check-square-o" : "square-o"}}' state='{{data.category == 2 ? "selected" : null}}'
 				action='category' params='{"category": 2}'>Transit Tubes</ui-button>
 		</ui-section>
+	</ui-display>
+{{/if}}
 {{#if data.category == 0}}
 	<ui-section label='Piping Layer'>
 		<ui-button state='{{data.piping_layer == 1 ? "selected" : null}}' action='piping_layer'
@@ -70,7 +72,6 @@
 			params='{"ducting_layer": 5}'>5</ui-button>
 	</ui-section>	
 {{/if}}
-</ui-display>
 {{#each data.categories}}
 	<ui-display title='{{cat_name}}'>
 		{{#each recipes}}

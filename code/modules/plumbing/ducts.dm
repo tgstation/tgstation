@@ -35,30 +35,32 @@ All the important duct code:
 	for(var/obj/machinery/duct/D in loc)
 		if(D == src)
 			continue
-		if(is_compatible(D))
+		if(D.duct_layer == duct_layer)
 			qdel(src) //replace with dropping or something
 	if(active)
 		attempt_connect()
 
 /obj/machinery/duct/proc/attempt_connect()
+	connects = 0 //All connects are gathered here again eitherway, we might aswell reset it so they properly update when reconnecting
 	for(var/D in GLOB.cardinals)
 		for(var/atom/movable/AM in get_step(src, D))
 			if(connect_network(AM, D))
 				connects |= D
+				break //we found this directions duct/plumber so there's really no point in continueing
 	update_icon()
 
-/obj/machinery/duct/proc/connect_network(atom/movable/AM, direction)
+/obj/machinery/duct/proc/connect_network(atom/movable/AM, direction, ignore_color)
 	var/opposite_dir = turn(direction, 180)
 	if(istype(AM, /obj/machinery/duct))
 		var/obj/machinery/duct/D = AM
-		if(!active || !D.active)
+		if(!active || !D.active || (duct_layer != D.duct_layer))
 			return
 		if((duct == D.duct) && duct)//check if we're not just comparing two null values
 			D.connects |= opposite_dir
-			D.update_icon() //also update the older pipes icon
+			D.update_icon()
 			return TRUE //tell the current pipe to also update it's sprite
 
-		if(!is_compatible(D))
+		if(duct_color != D.duct_color && !ignore_color)
 			return
 
 		if(D.duct)
@@ -75,7 +77,7 @@ All the important duct code:
 		D.attempt_connect()//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
 		return TRUE
 
-	if(layer != 3) //plumbing devices don't support multilayering. 3 is the default layer so we only use that. We can change this later
+	if(duct_layer != 3) //plumbing devices don't support multilayering. 3 is the default layer so we only use that. We can change this later
 		return
 	var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
 	if(!P)
@@ -90,13 +92,14 @@ All the important duct code:
 			duct.add_plumber(P, opposite_dir)
 		return TRUE
 
-/obj/machinery/duct/proc/is_compatible(obj/machinery/duct/D)
-	return (duct_layer == D.duct_layer) && (duct_color == D.duct_color)
-
-/obj/machinery/duct/proc/disconnect_duct() //when calling this, make sure something happened to the duct or it'll just reconnect
+/obj/machinery/duct/proc/disconnect_duct()
 	if(!duct)
 		return
 	duct.remove_duct(src)
+	anchored = FALSE
+	active = FALSE
+	connects = 0
+	update_icon()
 
 /obj/machinery/duct/proc/create_duct()
 	duct = new()
@@ -111,7 +114,7 @@ All the important duct code:
 					adjacents += D
 	return adjacents
 
-/obj/machinery/duct/update_icon()
+/obj/machinery/duct/update_icon() //setting connects isnt a parameter because sometimes we make more than one change, overwrite it completely or just add it to the bitfield
 	var/temp_icon = initial(icon_state)
 	for(var/D in GLOB.cardinals)
 		if(D & connects)
@@ -146,8 +149,6 @@ All the important duct code:
 	add_fingerprint(user)
 	I.play_tool_sound(src)
 	if(anchored)
-		anchored = FALSE
-		active = FALSE
 		user.visible_message( \
 		"[user] unfastens \the [src].", \
 		"<span class='notice'>You unfasten \the [src].</span>", \
@@ -182,3 +183,20 @@ All the important duct code:
 /obj/machinery/duct/Destroy()
 	disconnect_duct()
 	return ..()
+
+/obj/machinery/duct/MouseDrop_T(atom/A, mob/living/user)
+	if(!istype(A, /obj/machinery/duct))
+		return
+	var/obj/machinery/duct/D = A
+	var/obj/item/I = user.get_active_held_item()
+	if(I?.tool_behaviour != TOOL_WRENCH)
+		to_chat(user, "<span class='warning'>You need to be holding a wrench in your active hand to do that!</span>")
+		return
+	if(get_dist(src, D) != 1)
+		return
+	var/direction = get_dir(src, D)
+	if(!(direction in GLOB.cardinals))
+		return
+	connect_network(D, direction, TRUE)
+	connects |= direction
+	update_icon()

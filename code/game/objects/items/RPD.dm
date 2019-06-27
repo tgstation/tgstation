@@ -489,7 +489,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 				to_chat(user, "<span class='notice'>You start building a fluid duct...</span>")
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, plumbing_build_speed, target = A))
-					var/obj/machinery/duct/D = new queued_p_type (A, TRUE, paint_color, ducting_layer)
+					var/obj/machinery/duct/D = new queued_p_type (A, TRUE, GLOB.pipe_paint_colors[paint_color], ducting_layer)
 					D.add_fingerprint(usr)
 					if(mode & WRENCH_MODE)
 						D.wrench_act(user, src)
