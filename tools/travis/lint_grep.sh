@@ -1,6 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
+#nb: must be bash to support shopt globstar
+shopt -s globstar
+
 st=0
 
 if grep -E '^\".+\" = \(.+\)' _maps/**/*.dmm;	then

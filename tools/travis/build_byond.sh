@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-#nb: must be bash to support shopt globstar
-shopt -s globstar
 
 source $HOME/BYOND/byond/bin/byondsetup
 if [ "$BUILD_TESTING" = true ]; then
