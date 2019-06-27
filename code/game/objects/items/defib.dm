@@ -3,7 +3,7 @@
 
 /obj/item/defibrillator
 	name = "defibrillator"
-	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
+	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients. Ctrl-click to remove the paddles from the defibrillator."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
@@ -79,6 +79,10 @@
 
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
+
+/obj/item/defibrillator/CtrlClick()
+	if(ishuman(usr) && Adjacent(usr))
+		toggle_paddles()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user)
