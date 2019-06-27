@@ -47,101 +47,99 @@
 	if(src.z > 6)
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
-	var/dat
+	var/list/dat
 
-	if(temp)
-		dat = text("<TT>[]</TT><BR><BR><A href='?src=[REF(src)];choice=Clear Screen'>Clear Screen</A>", temp)
-	else
-		dat = text("Confirm Identity: <A href='?src=[REF(src)];choice=Confirm Identity'>[]</A><HR>", (scan ? text("[]", scan.name) : "----------"))
-		if(authenticated)
-			for(var/datum/data/record/R in GLOB.data_core.security)
-				if(R.fields["name"] == scan.registered_name)
-					active2 = R
-			if(istype(active2, /datum/data/record))
-				var/background
-				var/notice = ""
-				switch(active2.fields["criminal"])
-					if("*Arrest*")
-						background = "background-color:#990000;"
-						notice = "<br>**REPORT TO THE BRIG**"
-					if("Incarcerated")
-						background = "background-color:#CD6500;"
-					if("Paroled")
-						background = "background-color:#CD6500;"
-					if("Discharged")
-						background = "background-color:#006699;"
-					if("None")
-						background = "background-color:#4F7529;"
-					if("")
-						background = "''" //"'background-color:#FFFFFF;'"
-				dat += "<font size='4'><b>Warrant Data</b></font>"
-				dat += {"<table>
-				<tr><td>Name:</td><td>&nbsp;[active2.fields["name"]]&nbsp;</td></tr>
-				<tr><td>ID:</td><td>&nbsp;[active2.fields["id"]]&nbsp;</td></tr>
-				</table>"}
-				dat += "<br>Criminal Status:<br><div style='[background] padding: 3px; text-align: center;'><strong>[active2.fields["criminal"]][notice]</strong></div>"
-				dat += "<br><br>Citations:"
+	dat = list({"Confirm Identity: <A href='?src=[REF(src)];choice=Confirm Identity'>[]</A><HR>", (scan ? text("[]", scan.name) : "----------")})
+	if(authenticated)
+		for(var/datum/data/record/R in GLOB.data_core.security)
+			if(R.fields["name"] == scan.registered_name)
+				active2 = R
+		if(istype(active2, /datum/data/record))
+			var/background
+			var/notice = ""
+			switch(active2.fields["criminal"])
+				if("*Arrest*")
+					background = "background-color:#990000;"
+					notice = "<br>**REPORT TO THE BRIG**"
+				if("Incarcerated")
+					background = "background-color:#CD6500;"
+				if("Paroled")
+					background = "background-color:#CD6500;"
+				if("Discharged")
+					background = "background-color:#006699;"
+				if("None")
+					background = "background-color:#4F7529;"
+				if("")
+					background = "''" //"'background-color:#FFFFFF;'"
+			dat += "<font size='4'><b>Warrant Data</b></font>"
+			dat += {"<table>
+			<tr><td>Name:</td><td>&nbsp;[active2.fields["name"]]&nbsp;</td></tr>
+			<tr><td>ID:</td><td>&nbsp;[active2.fields["id"]]&nbsp;</td></tr>
+			</table>"}
+			dat += "<br>Criminal Status:<br><div style='[background] padding: 3px; text-align: center;'><strong>[active2.fields["criminal"]][notice]</strong></div>"
+			dat += "<br><br>Citations:"
 
-				dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-				<tr>
-				<th>Crime</th>
-				<th>Fine</th>
-				<th>Author</th>
-				<th>Time Added</th>
-				<th>Amount Due</th>
-				<th>Make Payment</th>
-				</tr>"}
-				for(var/datum/data/crime/c in active2.fields["citation"])
-					var/owed = c.fine - c.paid
-					dat += "<tr><td>[c.crimeName]</td>"
-					dat += "<td>$[c.fine]</td>"
-					dat += "<td>[c.author]</td>"
-					dat += "<td>[c.time]</td>"
-					if(owed > 0)
-						dat += "<td>$[owed]</td>"
-						dat += "<td><A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td>"
-					else
-						dat += "<td colspan='2'>All Paid Off</td>"
-					dat += "</tr>"
-				dat += "</table>"
+			dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+			<tr>
+			<th>Crime</th>
+			<th>Fine</th>
+			<th>Author</th>
+			<th>Time Added</th>
+			<th>Amount Due</th>
+			<th>Make Payment</th>
+			</tr>"}
+			for(var/datum/data/crime/c in active2.fields["citation"])
+				var/owed = c.fine - c.paid
+				dat += "<tr><td>[c.crimeName]</td>"
+				dat += "<td>$[c.fine]</td>"
+				dat += "<td>[c.author]</td>"
+				dat += "<td>[c.time]</td>"
+				if(owed > 0)
+					dat += "<td>$[owed]</td>"
+					dat += "<td><A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td>"
+				else
+					dat += "<td colspan='2'>All Paid Off</td>"
+				dat += "</tr>"
+			dat += "</table>"
 
-				dat += "<br>Minor Crimes:"
-				dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-				<tr>
-				<th>Crime</th>
-				<th>Details</th>
-				<th>Author</th>
-				<th>Time Added</th>
-				</tr>"}
-				for(var/datum/data/crime/c in active2.fields["mi_crim"])
-					dat += "<tr><td>[c.crimeName]</td>"
-					dat += "<td>[c.crimeDetails]</td>"
-					dat += "<td>[c.author]</td>"
-					dat += "<td>[c.time]</td>"
-					dat += "</tr>"
-				dat += "</table>"
+			dat += "<br>Minor Crimes:"
+			dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+			<tr>
+			<th>Crime</th>
+			<th>Details</th>
+			<th>Author</th>
+			<th>Time Added</th>
+			</tr>"}
+			for(var/datum/data/crime/c in active2.fields["mi_crim"])
+				dat += "<tr><td>[c.crimeName]</td>"
+				dat += "<td>[c.crimeDetails]</td>"
+				dat += "<td>[c.author]</td>"
+				dat += "<td>[c.time]</td>"
+				dat += "</tr>"
+			dat += "</table>"
 
-				dat += "<br>Major Crimes:"
-				dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-				<tr>
-				<th>Crime</th>
-				<th>Details</th>
-				<th>Author</th>
-				<th>Time Added</th>
-				</tr>"}
-				for(var/datum/data/crime/c in active2.fields["ma_crim"])
-					dat += "<tr><td>[c.crimeName]</td>"
-					dat += "<td>[c.crimeDetails]</td>"
-					dat += "<td>[c.author]</td>"
-					dat += "<td>[c.time]</td>"
-					dat += "</tr>"
-				dat += "</table>"
+			dat += "<br>Major Crimes:"
+			dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+			<tr>
+			<th>Crime</th>
+			<th>Details</th>
+			<th>Author</th>
+			<th>Time Added</th>
+			</tr>"}
+			for(var/datum/data/crime/c in active2.fields["ma_crim"])
+				dat += "<tr><td>[c.crimeName]</td>"
+				dat += "<td>[c.crimeDetails]</td>"
+				dat += "<td>[c.author]</td>"
+				dat += "<td>[c.time]</td>"
+				dat += "</tr>"
+			dat += "</table>"
 
-				dat += "<HR><A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"
-			else
-				dat += "<br>Security Record Lost!<br>"
+			dat += "<HR><A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"
 		else
-			dat += "<A href='?src=[REF(src)];choice=Log In'>{Log In}</A>"
+			dat += "<br>Security Record Lost!<br>"
+	else
+		dat += "<A href='?src=[REF(src)];choice=Log In'>{Log In}</A>"
+	dat = dat.Join()
 	var/datum/browser/popup = new(user, "secure_rec", "Security Warrant Console", 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
