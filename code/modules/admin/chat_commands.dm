@@ -73,18 +73,18 @@
 /datum/tgs_chat_command/adminwho/Run(datum/tgs_chat_user/sender, params)
 	return ircadminwho()
 
-GLOBAL_LIST(round_end_notifiees)	
+GLOBAL_LIST(round_end_notifiees)
 
-/datum/tgs_chat_command/endnotify	
-	name = "endnotify"	
-	help_text = "Pings the invoker when the round ends"	
-	admin_only = TRUE	
+/datum/tgs_chat_command/endnotify
+	name = "endnotify"
+	help_text = "Pings the invoker when the round ends"
+	admin_only = TRUE
 
-/datum/tgs_chat_command/endnotify/Run(datum/tgs_chat_user/sender, params)	
-	if(!SSticker.IsRoundInProgress() && SSticker.HasRoundStarted())	
-		return "[sender.mention], the round has already ended!"	
-	LAZYINITLIST(GLOB.round_end_notifiees)	
-	GLOB.round_end_notifiees[sender.mention] = TRUE	
+/datum/tgs_chat_command/endnotify/Run(datum/tgs_chat_user/sender, params)
+	if(!SSticker.IsRoundInProgress() && SSticker.HasRoundStarted())
+		return "[sender.mention], the round has already ended!"
+	LAZYINITLIST(GLOB.round_end_notifiees)
+	GLOB.round_end_notifiees[sender.mention] = TRUE
 	return "I will notify [sender.mention] when the round ends."
 
 /datum/tgs_chat_command/sdql
