@@ -125,12 +125,12 @@ Warping extracts:
 
 /obj/item/slimecross/warping/cerulean
 	colour = "cerulean"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/cerulean
 	effect_desc = "Forms a recoverable rune that displays a hologram of the last creature to cross it."
 
 /obj/item/slimecross/warping/pyrite
 	colour = "pyrite"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/pyrite
 	effect_desc = "Forms a recoverable rune that paints things that cross its area a rainbow of colors."
 
 /obj/item/slimecross/warping/red
@@ -443,3 +443,13 @@ Warping extracts:
 		vis_contents -= lastcrossed
 		lastcrossed = AM
 		vis_contents += lastcrossed
+
+/obj/effect/slimerune/pyrite
+	name = "pyrite rune"
+	desc = "It glitters, reflecting a rainbow of colors."
+
+/obj/effect/slimerune/pyrite/on_place()
+	return //Stops it from processing.
+
+/obj/effect/slimerune/pyrite/Crossed(atom/movable/AM)
+	AM.add_atom_colour(rgb(rand(0,255),rand(0,255),rand(0,255)), WASHABLE_COLOUR_PRIORITY)
