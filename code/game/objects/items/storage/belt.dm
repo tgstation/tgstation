@@ -667,7 +667,7 @@
 		user.put_in_hands(I)
 		update_icon()
 	else
-		to_chat(user, "[src] is empty.")
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 /obj/item/storage/belt/sabre/update_icon()
 	icon_state = "sheath"

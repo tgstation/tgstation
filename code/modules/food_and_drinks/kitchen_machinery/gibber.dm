@@ -71,13 +71,13 @@
 		return
 
 	if(!anchored)
-		to_chat(user, "<span class='notice'>[src] cannot be used unless bolted to the ground.</span>")
+		to_chat(user, "<span class='warning'>[src] cannot be used unless bolted to the ground!</span>")
 		return
 
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			to_chat(user, "<span class='danger'>This item is not suitable for the gibber!</span>")
+			to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled ||C.has_buckled_mobs())
@@ -87,7 +87,7 @@
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
 				if(!HAS_TRAIT(I, TRAIT_NODROP))
-					to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
+					to_chat(user, "<span class='warning'>Subject may not have abiotic items on!</span>")
 					return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
@@ -139,10 +139,10 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		visible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
+		audible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
+	audible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	operating = TRUE
 	update_icon()

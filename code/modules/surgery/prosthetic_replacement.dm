@@ -24,11 +24,11 @@
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(istype(tool, /obj/item/organ_storage))
 		if(!tool.contents.len)
-			to_chat(user, "<span class='notice'>There is nothing inside [tool]!</span>")
+			to_chat(user, "<span class='warning'>There is nothing inside [tool]!</span>")
 			return -1
 		var/obj/item/I = tool.contents[1]
 		if(!isbodypart(I))
-			to_chat(user, "<span class='notice'>[I] cannot be attached!</span>")
+			to_chat(user, "<span class='warning'>[I] cannot be attached!</span>")
 			return -1
 		tool = I
 	if(istype(tool, /obj/item/bodypart))
@@ -94,4 +94,3 @@
 			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return 1
-
