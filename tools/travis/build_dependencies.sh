@@ -4,7 +4,7 @@ set -euo pipefail
 source dependencies.sh
 
 curl https://sh.rustup.rs -sSf | sh -s -- -y --default-host i686-unknown-linux-gnu
-source ~/.profile
+source ~/.cargo/env
 
 mkdir rust-g
 cd rust-g
