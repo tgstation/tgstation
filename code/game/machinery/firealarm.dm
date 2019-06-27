@@ -339,6 +339,7 @@
 	req_access = list(ACCESS_ENGINE)
 	var/refill_loaded = FALSE
 	var/cooldown = 0
+	var/working = FALSE
 
 /obj/machinery/sprinkler/Initialize()
 	. = ..()
@@ -380,10 +381,35 @@
 	. = ..()
 	dispense()
 
-/obj/machinery/sprinkler/Crossed(atom/movable/AM as obj)
+/obj/machinery/sprinkler/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(istype(AM,/datum/effect_system/spark_spread))
-		dispense()
+	if(!allowed(user))
+		to_chat(user, "<span class='danger'>Access denied.</span>")
+		return
+	if(I.tool_behaviour == TOOL_CROWBAR)
+		if(!working)
+			to_chat(user, "You start uprooting \the [src]...")
+			working = TRUE
+			if(do_after(user, 70, target = src) && working)
+				to_chat(user, "You have successfully detached \the [src].")
+				new /obj/item/deployable_sprinkler (get_turf(src))
+				qdel(src)
+				return
+			else
+				working = FALSE
+	if(I.tool_behaviour == TOOL_WRENCH)
+		if(!working)
+			to_chat(user, "You start opening the emergency cap...")
+			working = TRUE
+			if(do_after(user, 50, target = src) && working)
+				to_chat(user, "You have successfully emptied \the [src].")
+				reagents.reaction(user, TOUCH)
+				reagents.remove_all(50)
+				obj_flags &= ~EMAGGED
+				update_icon()
+				return
+			else
+				working = FALSE
 
 /obj/machinery/sprinkler/proc/dispense()
 	if(cooldown < world.time && refill_loaded)
@@ -455,10 +481,10 @@
 	. = ..()
 	var/turf/T = get_turf(loc)
 	if(locate(/obj/machinery/sprinkler) in T.contents)
-		to_chat(user, "<span class='danger'>There is already a sprnkler here!</span>")
+		to_chat(user, "<span class='danger'>There is already a sprinkler here!</span>")
 		return
-	to_chat(user, "You start planting \the [src]...")
 	if(!deploying)
+		to_chat(user, "You start planting \the [src]...")
 		deploying = TRUE
 		if(do_after(user, 50, target = src))
 			to_chat(user, "You have activated \the [src].")
