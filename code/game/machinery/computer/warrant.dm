@@ -217,14 +217,17 @@ What a mess.*/
 
 			if("Pay")
 				for(var/datum/data/crime/p in active2.fields["citation"])
-					if(p.dataId == href_list["cdataid"])
+					if(p.dataId == text2num(href_list["cdataid"]))
 						var/datum/bank_account/R = scan.registered_account
-						var/pay = FLOOR(input(usr, "Please enter how much you would like to pay:", "Citation Payment", 5) as num, 1)
+						to_chat(world, "Found your citation and your account!")
+						var/pay = FLOOR(input(usr, "Please enter how much you would like to pay:", "Citation Payment", 50) as num, 1)
 						if(!pay || pay < 0)
 							to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 							return
 						if(R.adjust_money(-pay))
 							to_chat(usr, "<span class='notice'>You have paid [pay] credits into a towards your fine.</span>")
+							var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
+							D.adjust_money(pay)
 							return
 						else
 							var/difference = pay - R.account_balance
