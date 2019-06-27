@@ -51303,16 +51303,10 @@
 /area/medical/chemistry)
 "chd" = (
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker{
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/glass/beaker{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/dropper,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/yellow{
@@ -54335,22 +54329,21 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cnI" = (
-/obj/structure/disposalpipe/junction/flip{
-	dir = 2
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cnJ" = (
-/obj/machinery/disposal/bin{
-	pixel_x = 5
+/obj/structure/table/glass,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 8;
+	pixel_y = 2
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cnK" = (
