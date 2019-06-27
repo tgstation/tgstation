@@ -1,16 +1,16 @@
 language: generic
-dist: trusty
-sudo: false
 dist: xenial
+sudo: false
+
 branches:
   except:
   - ___TGS3TempBranch
   - ___TGSTempBranch
+
 matrix:
   include:
-    - env:
-      - BUILD_TOOLS=true
-      name: "Build Tools"
+    - name: "Run Linters"
+      env: BUILT_TOOLS=true
       addons:
         apt:
           packages:
@@ -20,10 +20,16 @@ matrix:
       cache:
         directories:
           - tgui/node_modules
-    - env:
-      - BUILD_TESTING=true
-      - BUILD_TOOLS=false
-      name: "Build All Maps"
+      install:
+        - tools/travis/install_build_tools.sh
+      before_script:
+        - tools/travis/before_build_tools.sh
+      script:
+        - tools/travis/check_filedirs.sh tgstation.dme
+        - tools/travis/build_tools.sh
+
+    - name: "Compile All Maps"
+      env: BUILD_TOOLS=false BUILD_TESTING=true
       addons:
         apt:
           packages:
@@ -31,10 +37,12 @@ matrix:
       cache:
         directories:
           - $HOME/BYOND
-    - env:
-      - BUILD_TESTING=false
-      - BUILD_TOOLS=false
-      name: "Build and Run Unit Tests"
+      before_script:
+        - tools/travis/before_build_byond.sh
+        - tools/travis/build_byond.sh
+
+    - name: "Compile and Run Tests"
+      env: BUILD_TOOLS=false BUILD_TESTING=false
       addons:
         mariadb: '10.2'
         apt:
@@ -54,20 +62,13 @@ matrix:
           - $HOME/BYOND
           - $HOME/MariaDB
           - $HOME/.rustup
-
-install:
-  - tools/travis/install_build_tools.sh
-  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis;'; fi
-  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis < SQL/tgstation_schema.sql; fi
-  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'; fi
-  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql; fi
-
-before_script:
-  - tools/travis/before_build_tools.sh
-  - tools/travis/before_build_byond.sh
-
-script:
-  - tools/travis/check_filedirs.sh tgstation.dme
-  - tools/travis/build_tools.sh || travis_terminate 1
-  - tools/travis/build_dependencies.sh || travis_terminate 1
-  - tools/travis/build_byond.sh
+      install:
+        - mysql -u root -e 'CREATE DATABASE tg_travis;'
+        - mysql -u root tg_travis < SQL/tgstation_schema.sql
+        - mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'
+        - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
+      before_script:
+        - tools/travis/before_build_byond.sh
+      script:
+        - tools/travis/build_dependencies.sh || travis_terminate 1
+        - tools/travis/build_byond.sh
