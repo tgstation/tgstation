@@ -2,7 +2,7 @@
 	var/magic = FALSE
 	var/holy = FALSE
 	var/psychic = FALSE
-	var/allowed_slots = ITEM_SLOT_BACK|ITEM_SLOT_MASK|ITEM_SLOT_NECK|ITEM_SLOT_BELT|ITEM_SLOT_ID|ITEM_SLOT_EARS|ITEM_SLOT_EYES|ITEM_SLOT_GLOVES|ITEM_SLOT_HEAD|ITEM_SLOT_FEET|ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING|ITEM_SLOT_POCKET
+	var/allowed_slots = ~ITEM_SLOT_BACKPACK
 	var/charges = INFINITY
 	var/blocks_self = TRUE
 	var/datum/callback/reaction
@@ -29,7 +29,7 @@
 	expire = _expire
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
-	if(!CHECK_BITFIELD(allowed_slots, slotdefine2slotbit(slot)))
+	if(!CHECK_BITFIELD(allowed_slots, slotdefine2slotbit(slot))) //Check that the slot is valid for antimagic
 		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
 		return
 	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect, TRUE)

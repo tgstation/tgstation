@@ -58,6 +58,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/docking_port/mobile/preview_shuttle
 	var/datum/map_template/shuttle/preview_template
 
+	var/datum/turf_reservation/preview_reservation
+
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
@@ -557,6 +559,8 @@ SUBSYSTEM_DEF(shuttle)
 	preview_shuttle = SSshuttle.preview_shuttle
 	preview_template = SSshuttle.preview_template
 
+	preview_reservation = SSshuttle.preview_reservation
+
 /datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)
 	var/area/current = get_area(A)
 	if(istype(current, /area/shuttle) && !istype(current, /area/shuttle/transit))
@@ -637,6 +641,7 @@ SUBSYSTEM_DEF(shuttle)
 		preview_shuttle.jumpToNullSpace()
 		preview_shuttle = null
 		preview_template = null
+		QDEL_NULL(preview_reservation)
 
 	if(!preview_shuttle)
 		if(load_template(loading_template))
@@ -689,14 +694,18 @@ SUBSYSTEM_DEF(shuttle)
 	preview_template = null
 	existing_shuttle = null
 	selected = null
+	QDEL_NULL(preview_reservation)
 
 /datum/controller/subsystem/shuttle/proc/load_template(datum/map_template/shuttle/S)
 	. = FALSE
 	// load shuttle template, centred at shuttle import landmark,
-	var/turf/landmark_turf = get_turf(locate(/obj/effect/landmark/shuttle_import) in GLOB.landmarks_list)
-	S.load(landmark_turf, centered = TRUE, register = FALSE)
+	preview_reservation = SSmapping.RequestBlockReservation(S.width, S.height, SSmapping.transit.z_value, /datum/turf_reservation/transit)
+	if(!preview_reservation)
+		CRASH("failed to reserve an area for shuttle template loading")
+	var/turf/BL = TURF_FROM_COORDS_LIST(preview_reservation.bottom_left_coords)
+	S.load(BL, centered = FALSE, register = FALSE)
 
-	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
+	var/affected = S.get_affected_turfs(BL, centered=FALSE)
 
 	var/found = 0
 	// Search the turfs for docking ports
