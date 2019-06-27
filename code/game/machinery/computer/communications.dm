@@ -164,19 +164,15 @@
 						if(D)
 							points_to_check = D.account_balance
 						if(points_to_check >= S.credit_cost)
-							var/obj/machinery/shuttle_manipulator/M = locate() in GLOB.machines
-							if(M)
-								SSshuttle.shuttle_purchased = TRUE
-								M.unload_preview()
-								M.load_template(S)
-								M.existing_shuttle = SSshuttle.emergency
-								M.action_load(S)
-								D.adjust_money(-S.credit_cost)
-								minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
-								message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
-								SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
-							else
-								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
+							SSshuttle.shuttle_purchased = TRUE
+							SSshuttle.unload_preview()
+							SSshuttle.load_template(S)
+							SSshuttle.existing_shuttle = SSshuttle.emergency
+							SSshuttle.action_load(S)
+							D.adjust_money(-S.credit_cost)
+							minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+							message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
+							SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
 						else
 							to_chat(usr, "Not enough credits.")
 

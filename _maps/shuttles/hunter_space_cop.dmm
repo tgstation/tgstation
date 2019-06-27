@@ -9,7 +9,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ab" = (
-/obj/machinery/computer/shuttle/pirate/hunter{
+/obj/machinery/computer/shuttle/hunter{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,

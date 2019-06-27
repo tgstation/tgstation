@@ -74,8 +74,28 @@
 		return 0
 	return ..()
 
+//Mime spell boxes
+
+/obj/item/storage/box/mime
+	name = "invisible box"
+	desc = "Unfortunately not large enough to trap the mime."
+	foldable = null
+	icon_state = "box"
+	item_state = null
+	alpha = 0
+
+/obj/item/storage/box/mime/attack_hand(mob/user)
+	..()
+	if(user.mind.miming)
+		alpha = 255
+
+/obj/item/storage/box/mime/Moved(oldLoc, dir)
+	if (iscarbon(oldLoc))
+		alpha = 0
+	..()
 
 //Disk boxes
+
 /obj/item/storage/box/disks
 	name = "diskette box"
 	illustration = "disk_kit"
@@ -1051,4 +1071,20 @@
 		/obj/item/stock_parts/manipulator/femto = 3,
 		/obj/item/stock_parts/micro_laser/quadultra = 3,
 		/obj/item/stock_parts/matter_bin/bluespace = 3)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/dishdrive
+	name = "DIY Dish Drive Kit"
+	desc = "Contains everything you need to build your own Dish Drive!"
+	custom_premium_price = 200
+
+/obj/item/storage/box/dishdrive/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/stack/sheet/metal/five = 1,
+		/obj/item/stack/cable_coil/five = 1,
+		/obj/item/circuitboard/machine/dish_drive = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/screwdriver = 1)
 	generate_items_inside(items_inside,src)

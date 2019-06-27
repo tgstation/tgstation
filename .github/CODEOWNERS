@@ -68,6 +68,11 @@
 /icons/ @ShizCalev
 /sound/ @ShizCalev
 
+# Qustinnus
+/code/datums/components/mood.dm @Qustinnus
+/code/datums/mood_events/ @Qustinnus
+/code/__DEFINES/mobs.dm @Qustinnus
+
 # Multiple Owners
 
 /code/__DEFINES/components.dm @Cyberboss @ninjanomnom
