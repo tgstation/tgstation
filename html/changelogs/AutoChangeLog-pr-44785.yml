@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscadd: "Heaters/freezers now support ctrl clicking to turn on and alt clicking to min/max target temperature."
+  - rscadd: "Heaters/freezers now shows target temperature and part status on examine."
