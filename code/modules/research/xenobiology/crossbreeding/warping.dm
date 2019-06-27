@@ -135,8 +135,8 @@ Warping extracts:
 
 /obj/item/slimecross/warping/red
 	colour = "red"
-	rune_path = /obj/effect/slimerune
-	effect_desc = "Forms a recoverable rune that increases the effectiveness of attacks made from within it."
+	rune_path = /obj/effect/slimerune/red
+	effect_desc = "Forms a recoverable rune that increases the effectiveness of unarmed attacks made from within it."
 
 /obj/item/slimecross/warping/green
 	colour = "green"
@@ -425,6 +425,7 @@ Warping extracts:
 /obj/effect/slimerune/sepia/Destroy() //On Destroy rather than on_remove to ensure you absolutely cannot circumvent it and maintain infinite stasis.
 	for(var/mob/living/L in get_turf(src))
 		L.remove_status_effect(STATUS_EFFECT_STASIS)
+		UnregisterSignal(L, COMSIG_LIVING_RESIST)
 	return ..()
 
 /obj/effect/slimerune/sepia/proc/resist_stasis(mob/living/M)
@@ -453,3 +454,27 @@ Warping extracts:
 
 /obj/effect/slimerune/pyrite/Crossed(atom/movable/AM)
 	AM.add_atom_colour(rgb(rand(0,255),rand(0,255),rand(0,255)), WASHABLE_COLOUR_PRIORITY)
+
+/obj/effect/slimerune/red
+	name = "red rune"
+	desc = "Just looking at it makes you want to ball your fists."
+
+/obj/effect/slimerune/red/on_place()
+	return //Stops it from processing.
+
+/obj/effect/slimerune/red/Crossed(atom/movable/AM)
+	if(ishuman(AM))
+		var/mob/living/carbon/human/C = AM
+		RegisterSignal(C, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/bonus_damage)
+
+/obj/effect/slimerune/red/Uncrossed(atom/movable/AM)
+	if(ishuman(AM))
+		var/mob/living/carbon/human/C = AM
+		UnregisterSignal(C, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+
+/obj/effect/slimerune/red/proc/bonus_damage(mob/living/user, atom/A)
+	if(!isliving(A))
+		return
+	var/mob/living/L = A
+	L.visible_message("<span class='danger'>[src] glows brightly below [user]...</span>", "<span class='userdanger'>[src] glows, empowering [user]'s attack!</span>")
+	L.adjustBruteLoss(10) //Turns the average punch into the equivalent of a toolbox, but only as long as you're on the tile.
