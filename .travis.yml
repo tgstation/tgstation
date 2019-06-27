@@ -35,10 +35,11 @@ matrix:
           - $HOME/BYOND
       install:
         - tools/travis/install_byond.sh
+        - source $HOME/BYOND/byond/bin/byondsetup
       before_script:
         - tools/travis/template_dm_generator.py
       script:
-        - tools/travis/build_byond.sh
+        - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
 
     - name: "Compile and Run Tests"
       env: BUILD_TOOLS=false BUILD_TESTING=false
@@ -58,11 +59,13 @@ matrix:
       cache:
         directories:
           - $HOME/.cargo
+          - $HOME/.rustup
           - $HOME/BYOND
           - $HOME/MariaDB
-          - $HOME/.rustup
+          - $HOME/libmariadb
       install:
         - tools/travis/install_byond.sh
+        - source $HOME/BYOND/byond/bin/byondsetup
       before_script:
         - mysql -u root -e 'CREATE DATABASE tg_travis;'
         - mysql -u root tg_travis < SQL/tgstation_schema.sql
@@ -70,4 +73,5 @@ matrix:
         - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
       script:
         - tools/travis/build_dependencies.sh || travis_terminate 1
-        - tools/travis/build_byond.sh
+        - tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
+        - tools/travis/run_server.sh
