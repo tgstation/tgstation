@@ -10,7 +10,7 @@ branches:
 matrix:
   include:
     - name: "Run Linters"
-      env: BUILT_TOOLS=true
+      env: BUILD_TOOLS=true
       addons:
         apt:
           packages:
