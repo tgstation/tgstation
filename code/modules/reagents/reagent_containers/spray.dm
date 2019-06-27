@@ -393,6 +393,8 @@
 			item_state = "sprayer_med_yellow"
 		if("sprayer_med_blue")
 			item_state = "sprayer_med_blue"
+	M.update_inv_hands()
+
 
 
 
