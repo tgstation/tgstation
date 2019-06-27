@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - rscadd: "DIY Dish Drive Kit now available at your local bardrobe. Start saving those tips!"
+  - tweak: "The Dish Drive no longer sends reusable items into the disposal bin"
