@@ -50829,7 +50829,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/maintenance/port/aft)
 "mdr" = (
 /obj/machinery/nuclearbomb/beer,
