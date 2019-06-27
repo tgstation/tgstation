@@ -221,7 +221,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 					SS.icon_state = "purified_soulstone2"
 			for(var/mob/living/simple_animal/shade/EX in SS)
 				EX.icon_state = "ghost1"
-				EX.name = "Purified [initial(name)]"				
+				EX.name = "Purified [initial(EX.name)]"				
 			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
 			
 /obj/item/storage/book/bible/booze
