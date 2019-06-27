@@ -342,7 +342,7 @@
 
 /obj/machinery/sprinkler/Initialize()
 	. = ..()
-	internal = new /obj/item/reagent_containers/glass/beaker(src)
+	create_reagents(50)
 
 /obj/machinery/sprinkler/interact(mob/user)
 	if(!allowed(user))
@@ -356,14 +356,14 @@
 		return
 	playsound(src, "sparks", 75, 1)
 	obj_flags |= EMAGGED
-	internal.reagents.remove_all(50)
-	internal.reagents.add(pick(/datum/reagent/clf3,
-							   /datum/reagent/drug/space_drugs,
-							   /datum/reagent/lube,
-							   /datum/reagent/fuel/unholywater,
-							   /datum/reagent/toxin/acid/fluacid,
-							   /datum/reagent/napalm),50)
-	to_chat(user, "<span class='warning'>The war crime LED blinks twice.</span>")
+	reagents.remove_all(50)
+	reagents.add_reagent(pick(/datum/reagent/clf3,
+							  /datum/reagent/drug/space_drugs,
+							  /datum/reagent/lube,
+							  /datum/reagent/fuel/unholywater,
+							  /datum/reagent/toxin/acid/fluacid,
+							  /datum/reagent/napalm),50)
+	to_chat(user, "<span class='danger'>The war crime LED blinks twice.</span>")
 
 /obj/machinery/sprinkler/fire_act()
 	.=..()
@@ -372,10 +372,10 @@
 /obj/machinery/sprinkler/proc/dispense()
 	if(cooldown < world.time && refill_loaded)
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
-		smoke.set_up(internal.reagents, 5, 8,  get_turf(src))
+		smoke.set_up(reagents, 5, 8,  get_turf(src))
 		smoke.start()
 		cooldown = world.time + 200
-		if(!internal.reagents)
+		if(!reagents.total_volume)
 			refill_loaded = FALSE
 			update_icon()
 
@@ -392,14 +392,14 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "sprinkler_refill_water"
 	w_class = WEIGHT_CLASS_SMALL
-	var/obj/item/reagent_containers/glass/beaker/refill
 	var/used = FALSE
 	var/chemtype = /datum/reagent/water
 
 /obj/item/sprinkler_refill/Initialize()
 	. = ..()
-	refill = new /obj/item/reagent_containers/glass/beaker(src)
-	refill.reagents.add_reagent(chemtype, 50)
+	create_reagents(50)
+	reagents.add_reagent(chemtype, 50)
+	update_icon()
 
 /obj/item/sprinkler_refill/examine(mob/user)
 	. = ..()
@@ -409,20 +409,17 @@
 /obj/item/sprinkler_refill/update_icon()
 	. = ..()
 	cut_overlays()
-	if(used)
-		add_overlay("refill_empty")
-		return
-	add_overlay("refill_[max(round(refill.reagents.total_volume/10),1)]")
+	add_overlay(mutable_appearance(icon,"refill_[used ? "empty" : max(round(reagents.total_volume/10),1)]"))
 
 /obj/item/sprinkler_refill/attack_obj(obj/O, mob/living/user)
 	if(!used && istype(O, /obj/machinery/sprinkler))
 		var/obj/machinery/sprinkler/S = O
-		refill.reagents.trans_to(S.internal, 50, transfered_by = user)
+		reagents.trans_to(S, 50, transfered_by = user)
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1, -6)
-		to_chat(user, "<span class='warning'>You refill the [S]</span>")
+		to_chat(user, "You refill \the [S].")
 		S.refill_loaded = TRUE
 		S.update_icon()
-		if(!refill.reagents.total_volume)
+		if(!reagents.total_volume)
 			used = TRUE
 		update_icon()
 
@@ -439,8 +436,8 @@
 
 /obj/item/deployable_sprinkler/attack_self(mob/user)
 	. = ..()
-	to_chat(user, "You start the deployment the [src]...")
+	to_chat(user, "You start planting \the [src]...")
 	if(do_after(user, 50, target = src))
-		to_chat(user, "You have activated the [src].)
-		new /obj/machinery/sprinkler (src)
+		to_chat(user, "You have activated \the [src].")
+		new /obj/machinery/sprinkler (get_turf(src))
 		qdel(src)
