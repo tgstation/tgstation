@@ -26,18 +26,17 @@
 	lens_path = _lens_path
 
 /datum/component/extralasers/proc/detach(breaklens = FALSE)
-	if(parent)
-		var/obj/item/gun/energy/laser/L = parent
-		L?.chambered = null
-		if(L.ammo_type.len)
-			LAZYREMOVE(L.ammo_type, ammo)
-		L.select_fire()
-		L.recharge_newshot()
-		L.update_icon(TRUE)
-		var/turf/T = get_turf(parent)
-		new lens_path(T)
-		if(breaklens)
-			qdel(src)
+	var/obj/item/gun/energy/laser/L = parent
+	L?.chambered = null
+	if(L.ammo_type.len)
+		LAZYREMOVE(L.ammo_type, ammo)
+	L.select_fire()
+	L.recharge_newshot()
+	L.update_icon(TRUE)
+	var/turf/T = get_turf(parent)
+	new lens_path(T)
+	if(breaklens)
+		qdel(src)
 
 /datum/component/extralasers/InheritComponent(datum/newcomp, orig, list/arglist)
 	. = ..()
