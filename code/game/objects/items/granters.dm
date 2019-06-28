@@ -150,7 +150,7 @@
 					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user,"<span class='notice'>You've already read this one.</span>")
-				return TRUE
+			return TRUE
 	return FALSE
 
 /obj/item/book/granter/spell/on_reading_start(mob/user)
@@ -160,12 +160,10 @@
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == spell)
 			user.mind.RemoveSpell(knownspell)
-			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
-		else
-			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
 	var/obj/effect/proc_holder/spell/S = new spell
 	user.mind.AddSpell(S, spell_level)
-	user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
+	to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [S.name]!</span>")
+	user.log_message("learned the spell [S.name] ([S])", LOG_ATTACK, color="orange")
 	onlearned(user)
 
 /obj/item/book/granter/spell/recoil(mob/user)
