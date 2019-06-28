@@ -2845,7 +2845,6 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
-#include "spacestation413\code\__HELPERS\global_lists.dm"
 #include "spacestation413\code\__HELPERS\mobs.dm"
 #include "spacestation413\code\__HELPERS\names.dm"
 #include "spacestation413\code\_globalvars\lists\flavor_misc.dm"

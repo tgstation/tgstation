@@ -271,6 +271,12 @@
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())
+			//413 start
+			var/icon/newDrip = new(drop.icon,pick(drop.random_icon_states))
+			newDrip.ColorTone(src.blood_color)
+			drop.blood_color = src.blood_color
+			drop.icon=newDrip
+			//413 end
 			drop.transfer_mob_blood_dna(src)
 			return
 
@@ -278,6 +284,7 @@
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
+		B.blood_color = src.blood_color // 413 -- set color to creature blood color
 	if (B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
 		var/old_bloodiness = B.bloodiness //413 -- store bloodiness before changing it
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
@@ -285,6 +292,7 @@
 		var/icon/colored_blood = new(B.icon)
 		B.blood_color = BlendRGB(B.blood_color,src.blood_color,old_bloodiness/B.bloodiness)
 		colored_blood.ColorTone(B.blood_color)
+		B.icon = colored_blood
 		//413 end
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)

@@ -2,7 +2,7 @@
 	name = "blood"
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	icon = 'icons/effects/blood.dmi'
-	var/blood_color = "#981414" // 413 -- blood colors
+	var/blood_color = "#981414" // 413 -- blood color
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_HUMAN
@@ -86,7 +86,10 @@
 	for(var/i in 0 to pick(0, 200; 1, 150; 2, 50))
 		sleep(2)
 		if(i > 0)
-			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
+			//413 start -- blood color
+			var/obj/effect/decal/cleanable/blood/splatter/B = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
+			B.blood_color = blood_color
+			//413 end
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
