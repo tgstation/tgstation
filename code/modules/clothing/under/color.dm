@@ -6,7 +6,7 @@
 
 /obj/item/clothing/under/color/random/Initialize()
 	..()
-	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/grey/glorf - /obj/item/clothing/under/color/black/ghost - /obj/item/clothing/under/color/black/skirt - /obj/item/clothing/under/color/grey/skirt - /obj/item/clothing/under/color/blue/skirt - /obj/item/clothing/under/color/green/skirt - /obj/item/clothing/under/color/orange/skirt - /obj/item/clothing/under/color/pink/skirt - /obj/item/clothing/under/color/red/skirt - /obj/item/clothing/under/color/white/skirt - /obj/item/clothing/under/color/yellow/skirt - /obj/item/clothing/under/color/darkblue/skirt - /obj/item/clothing/under/color/teal/skirt - /obj/item/clothing/under/color/lightpurple/skirt - /obj/item/clothing/under/color/darkgreen/skirt - /obj/item/clothing/under/color/lightbrown/skirt - /obj/item/clothing/under/color/brown/skirt - /obj/item/clothing/under/color/maroon/skirt)
+	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - subtypesof(/obj/item/clothing/under/skirt/color) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/grey/glorf - /obj/item/clothing/under/color/black/ghost)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.equip_to_slot_or_del(new C(H), SLOT_W_UNIFORM) //or else you end up with naked assistants running around everywhere...
@@ -21,7 +21,7 @@
 	item_color = "black"
 	resistance_flags = NONE
 
-/obj/item/clothing/under/color/black/skirt
+/obj/item/clothing/under/skirt/color/black
 	name = "black jumpskirt"
 	icon_state = "black_skirt"
 	item_state = "bl_suit"
@@ -44,7 +44,7 @@
 	item_state = "gy_suit"
 	item_color = "grey"
 
-/obj/item/clothing/under/color/grey/skirt
+/obj/item/clothing/under/skirt/color/grey
 	name = "grey jumpskirt"
 	desc = "A tasteful grey jumpskirt that reminds you of the good old days."
 	icon_state = "grey_skirt"
@@ -68,7 +68,7 @@
 	item_state = "b_suit"
 	item_color = "blue"
 
-/obj/item/clothing/under/color/blue/skirt
+/obj/item/clothing/under/skirt/color/blue
 	name = "blue jumpskirt"
 	icon_state = "blue_skirt"
 	item_state = "b_suit"
@@ -83,7 +83,7 @@
 	item_state = "g_suit"
 	item_color = "green"
 
-/obj/item/clothing/under/color/green/skirt
+/obj/item/clothing/under/skirt/color/green
 	name = "green jumpskirt"
 	icon_state = "green_skirt"
 	item_state = "g_suit"
@@ -99,7 +99,7 @@
 	item_state = "o_suit"
 	item_color = "orange"
 
-/obj/item/clothing/under/color/orange/skirt
+/obj/item/clothing/under/skirt/color/orange
 	name = "orange jumpskirt"
 	icon_state = "orange_skirt"
 	item_state = "o_suit"
@@ -115,7 +115,7 @@
 	item_state = "p_suit"
 	item_color = "pink"
 
-/obj/item/clothing/under/color/pink/skirt
+/obj/item/clothing/under/skirt/color/pink
 	name = "pink jumpskirt"
 	icon_state = "pink_skirt"
 	item_state = "p_suit"
@@ -130,7 +130,7 @@
 	item_state = "r_suit"
 	item_color = "red"
 
-/obj/item/clothing/under/color/red/skirt
+/obj/item/clothing/under/skirt/color/red
 	name = "red jumpskirt"
 	icon_state = "red_skirt"
 	item_state = "r_suit"
@@ -145,7 +145,7 @@
 	item_state = "w_suit"
 	item_color = "white"
 
-/obj/item/clothing/under/color/white/skirt
+/obj/item/clothing/under/skirt/color/white
 	name = "white jumpskirt"
 	icon_state = "white_skirt"
 	item_state = "w_suit"
@@ -160,7 +160,7 @@
 	item_state = "y_suit"
 	item_color = "yellow"
 
-/obj/item/clothing/under/color/yellow/skirt
+/obj/item/clothing/under/skirt/color/yellow
 	name = "yellow jumpskirt"
 	icon_state = "yellow_skirt"
 	item_state = "y_suit"
@@ -175,7 +175,7 @@
 	item_state = "b_suit"
 	item_color = "darkblue"
 
-/obj/item/clothing/under/color/darkblue/skirt
+/obj/item/clothing/under/skirt/color/darkblue
 	name = "darkblue jumpskirt"
 	icon_state = "darkblue_skirt"
 	item_state = "b_suit"
@@ -190,7 +190,7 @@
 	item_state = "b_suit"
 	item_color = "teal"
 
-/obj/item/clothing/under/color/teal/skirt
+/obj/item/clothing/under/skirt/color/teal
 	name = "teal jumpskirt"
 	icon_state = "teal_skirt"
 	item_state = "b_suit"
@@ -206,7 +206,7 @@
 	item_state = "p_suit"
 	item_color = "lightpurple"
 
-/obj/item/clothing/under/color/lightpurple/skirt
+/obj/item/clothing/under/skirt/color/lightpurple
 	name = "lightpurple jumpskirt"
 	icon_state = "lightpurple_skirt"
 	item_state = "p_suit"
@@ -221,7 +221,7 @@
 	item_state = "g_suit"
 	item_color = "darkgreen"
 
-/obj/item/clothing/under/color/darkgreen/skirt
+/obj/item/clothing/under/skirt/color/darkgreen
 	name = "darkgreen jumpskirt"
 	icon_state = "darkgreen_skirt"
 	item_state = "g_suit"
@@ -236,7 +236,7 @@
 	item_state = "lb_suit"
 	item_color = "lightbrown"
 
-/obj/item/clothing/under/color/lightbrown/skirt
+/obj/item/clothing/under/skirt/color/lightbrown
 	name = "lightbrown jumpskirt"
 	icon_state = "lightbrown_skirt"
 	item_state = "lb_suit"
@@ -251,7 +251,7 @@
 	item_state = "lb_suit"
 	item_color = "brown"
 
-/obj/item/clothing/under/color/brown/skirt
+/obj/item/clothing/under/skirt/color/brown
 	name = "brown jumpskirt"
 	icon_state = "brown_skirt"
 	item_state = "lb_suit"
@@ -266,7 +266,7 @@
 	item_state = "r_suit"
 	item_color = "maroon"
 
-/obj/item/clothing/under/color/maroon/skirt
+/obj/item/clothing/under/skirt/color/maroon
 	name = "maroon jumpskirt"
 	icon_state = "maroon_skirt"
 	item_state = "r_suit"
