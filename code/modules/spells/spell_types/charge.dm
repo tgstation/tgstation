@@ -45,7 +45,7 @@
 					I.pages_to_mastery--
 					I.level_up_book(1, FALSE)
 					break
-				if(prob(80))
+				if(prob(50))
 					L.visible_message("<span class='warning'>[I] catches fire!</span>")
 					qdel(I)
 				else
