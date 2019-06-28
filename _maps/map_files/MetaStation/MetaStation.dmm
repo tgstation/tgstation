@@ -7364,7 +7364,6 @@
 	codes_txt = "patrol;next_patrol=14.8-Dorms-Lockers";
 	location = "14.5-Recreation"
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aoY" = (
@@ -7889,6 +7888,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aqh" = (
@@ -7896,7 +7896,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aqi" = (
@@ -8511,12 +8510,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "arD" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "arE" = (
@@ -9205,6 +9204,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "asY" = (
@@ -9212,7 +9212,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "asZ" = (
@@ -9699,13 +9698,13 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aui" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "auj" = (
@@ -10155,6 +10154,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avm" = (
@@ -10164,7 +10164,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avn" = (
@@ -11197,16 +11196,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
-"axG" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
 "axI" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin5";
@@ -11672,6 +11661,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "ayO" = (
@@ -11681,7 +11671,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "ayP" = (
@@ -12321,6 +12310,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aAg" = (
@@ -15295,8 +15285,6 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/item/twohanded/rcl/pre_loaded,
-/obj/item/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -26624,7 +26612,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/grille,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -32174,6 +32161,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/item/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "brg" = (
@@ -51315,16 +51303,10 @@
 /area/medical/chemistry)
 "chd" = (
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker{
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/glass/beaker{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/dropper,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/yellow{
@@ -54347,22 +54329,21 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cnI" = (
-/obj/structure/disposalpipe/junction/flip{
-	dir = 2
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cnJ" = (
-/obj/machinery/disposal/bin{
-	pixel_x = 5
+/obj/structure/table/glass,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 8;
+	pixel_y = 2
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cnK" = (
@@ -70053,6 +70034,15 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"cWS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "cXc" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -75569,7 +75559,8 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
-	width = 35
+	width = 35;
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta
 	},
 /turf/open/space/basic,
 /area/space)
@@ -85774,7 +85765,7 @@ aaa
 aaa
 aVs
 bKS
-aWT
+cWS
 aVs
 aVs
 aVs
@@ -112458,7 +112449,7 @@ asX
 auh
 avl
 asX
-axG
+aBz
 ayN
 aAf
 aBz

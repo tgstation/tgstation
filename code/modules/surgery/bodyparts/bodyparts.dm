@@ -96,7 +96,7 @@
 	..()
 
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
-	if(W.sharpness)
+	if(W.is_sharp())
 		add_fingerprint(user)
 		if(!contents.len)
 			to_chat(user, "<span class='warning'>There is nothing left inside [src]!</span>")

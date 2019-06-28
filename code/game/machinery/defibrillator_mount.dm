@@ -26,7 +26,7 @@
 /obj/machinery/defibrillator_mount/examine(mob/user)
 	. = ..()
 	if(defib)
-		. += "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.<span>"
+		. += "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.</span>"
 		if(GLOB.security_level >= SEC_LEVEL_RED)
 			. += "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>"
 		else
