@@ -1,0 +1,4 @@
+author: "81Denton"
+delete-after: True
+changes: 
+  - bugfix: "Incomplete and non-teleport reactive armors can no longer be used to complete the traitor objective."
