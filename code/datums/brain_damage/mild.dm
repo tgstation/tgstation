@@ -235,10 +235,13 @@
 	var/list/speak_dejavu = list()
 
 /datum/brain_trauma/mild/mind_echo/handle_hearing(datum/source, list/hearing_args)
+	if(owner == hearing_args[HEARING_SPEAKER])
+		return
 	if(hear_dejavu.len >= 5)
 		if(prob(25))
 			var/deja_vu = pick_n_take(hear_dejavu)
-			hearing_args[HEARING_MESSAGE] = replacetext(hearing_args[HEARING_MESSAGE], regex("\".+\"", "gi"),"\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
+			var/static/regex/quoted_spoken_message = regex("\".+\"", "gi")
+			hearing_args[HEARING_MESSAGE] = quoted_spoken_message.Replace(hearing_args[HEARING_MESSAGE], "\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
 			return
 	if(hear_dejavu.len >= 15)
 		if(prob(50))

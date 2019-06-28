@@ -211,7 +211,7 @@
 /datum/brain_trauma/special/existential_crisis/proc/fade_out()
 	if(veil)
 		return
-	var/duration = pick(50, 450)
+	var/duration = rand(50, 450)
 	veil = new(owner.drop_location())
 	to_chat(owner, "<span class='warning'>[pick("You stop thinking for a moment. Therefore you are not.",\
 												"To be or not to be...",\
