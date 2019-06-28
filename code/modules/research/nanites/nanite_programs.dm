@@ -45,6 +45,10 @@
 	//Copying these values is handled by copy_extra_settings_to()
 	var/list/extra_settings = list()
 
+	//Rules
+	//Rules that automatically manage if the program's active without requiring separate sensor programs
+	var/list/datum/nanite_rule/rules = list()
+
 /datum/nanite_program/triggered
 	use_rate = 0
 	trigger_cost = 5
@@ -64,16 +68,7 @@
 
 /datum/nanite_program/proc/copy()
 	var/datum/nanite_program/new_program = new type()
-
-	new_program.activated = activated
-	new_program.activation_delay = activation_delay
-	new_program.timer = timer
-	new_program.timer_type = timer_type
-	new_program.activation_code = activation_code
-	new_program.deactivation_code = deactivation_code
-	new_program.kill_code = kill_code
-	new_program.trigger_code = trigger_code
-	copy_extra_settings_to(new_program)
+	copy_programming(new_program, TRUE)
 
 	return new_program
 
@@ -87,6 +82,12 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
+
+	target.rules = list()
+	for(var/R in rules)
+		var/datum/nanite_rule/rule = R
+		rule.copy_to(target)
+		
 	if(istype(target,src))
 		copy_extra_settings_to(target)
 
@@ -161,6 +162,10 @@
 //If false, disables active and passive effects, but doesn't consume nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
+	for(var/R in rules)
+		var/datum/nanite_rule/rule = R
+		if(!rule.check_rule())
+			return FALSE
 	return TRUE
 
 //Constantly procs as long as the program is active

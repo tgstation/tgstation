@@ -10,25 +10,6 @@
 	. = ..()
 	find_chamber()
 
-/obj/machinery/computer/nanite_chamber_control/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/disk/nanite_program))
-		var/obj/item/disk/nanite_program/N = I
-		if(disk)
-			eject(user)
-		if(user.transferItemToLoc(N, src))
-			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			disk = N
-	else
-		..()
-
-/obj/machinery/computer/nanite_chamber_control/proc/eject(mob/living/user)
-	if(!disk)
-		return
-	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(disk))
-		disk.forceMove(drop_location())
-	disk = null
-
 /obj/machinery/computer/nanite_chamber_control/proc/find_chamber()
 	for(var/direction in GLOB.cardinals)
 		var/C = locate(/obj/machinery/nanite_chamber, get_step(src, direction))
@@ -50,34 +31,6 @@
 
 /obj/machinery/computer/nanite_chamber_control/ui_data()
 	var/list/data = list()
-	if(disk)
-		data["has_disk"] = TRUE
-		var/list/disk_data = list()
-		var/datum/nanite_program/P = disk.program
-		if(P)
-			data["has_program"] = TRUE
-			disk_data["name"] = P.name
-			disk_data["desc"] = P.desc
-
-			disk_data["activated"] = P.activated
-			disk_data["activation_delay"] = P.activation_delay
-			disk_data["timer"] = P.timer
-			disk_data["activation_code"] = P.activation_code
-			disk_data["deactivation_code"] = P.deactivation_code
-			disk_data["kill_code"] = P.kill_code
-			disk_data["trigger_code"] = P.trigger_code
-			disk_data["timer_type"] = P.get_timer_type_text()
-
-			var/list/extra_settings = list()
-			for(var/X in P.extra_settings)
-				var/list/setting = list()
-				setting["name"] = X
-				setting["value"] = P.get_extra_setting(X)
-				extra_settings += list(setting)
-			disk_data["extra_settings"] = extra_settings
-			if(LAZYLEN(extra_settings))
-				disk_data["has_extra_settings"] = TRUE
-		data["disk"] = disk_data
 
 	if(!chamber)
 		data["status_msg"] = "No chamber detected."
@@ -113,9 +66,6 @@
 			chamber.locked = !chamber.locked
 			chamber.update_icon()
 			. = TRUE
-		if("eject")
-			eject(usr)
-			. = TRUE
 		if("set_safety")
 			var/threshold = input("Set safety threshold (0-500):", name, null) as null|num
 			if(!isnull(threshold))
@@ -138,22 +88,4 @@
 			chamber.inject_nanites()
 			log_combat(usr, chamber.occupant, "injected", null, "with nanites via [src]")
 			chamber.occupant.investigate_log("was injected with nanites by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
-			. = TRUE
-		if("add_program")
-			if(!disk?.program || !chamber || !chamber.occupant)
-				return
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
-			chamber.install_program(disk.program)
-			chamber.occupant.investigate_log("had program of type [disk.program.type] installed by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
-			. = TRUE
-		if("remove_program")
-			if(!chamber || !chamber.occupant)
-				return
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
-			var/list/nanite_programs = list()
-			SEND_SIGNAL(chamber.occupant, COMSIG_NANITE_GET_PROGRAMS, nanite_programs)
-			if(LAZYLEN(nanite_programs))
-				var/datum/nanite_program/P = nanite_programs[text2num(params["program_id"])]
-				chamber.uninstall_program(P)
-				chamber.occupant.investigate_log("had program of type [P.type] uninstalled by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE

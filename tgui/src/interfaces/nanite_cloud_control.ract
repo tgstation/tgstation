@@ -62,6 +62,9 @@
 						<h3>{{name}}</h3>
 						<div style="float:right">
 							<ui-button icon='minus-circle' action='remove_program' style='danger' params='{"program_id": "{{id}}"}'>Uninstall</ui-button>
+							{{#if data.disk.can_rule}}
+								<ui-button icon='ruler' action='add_rule' params='{"program_id": "{{id}}"}'>Add Rule from Disk</ui-button>
+							{{/if}}
 						</div>
 					</ui-section>
 					<ui-section>
@@ -95,6 +98,13 @@
 							{{#each extra_settings}}
 							  <ui-section label='{{name}}'>{{value}}</ui-section>
 							{{/each}}
+						{{/if}}
+						{{#if has_rules}}
+							<ui-section label='Rules'>
+								{{#each rules}}
+									{{display}} (<ui-button icon='minus-circle' action='remove_rule' style='danger' params='{"program_id": "{{program_id}}", "rule_id": "{{id}}"}'>Remove</ui-button>)<br>
+								{{/each}}
+							</ui-section>
 						{{/if}}
 					</ui-section>
 				{{/each}}
