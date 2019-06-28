@@ -294,6 +294,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
+	if(TRAIT_TOXIMMUNE in inherent_traits)
+		C.setToxLoss(0, TRUE, TRUE)
+
 	if(TRAIT_NOMETABOLISM in inherent_traits)
 		C.reagents.end_metabolization(C, keep_liverless = TRUE)
 
