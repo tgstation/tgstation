@@ -23,7 +23,7 @@
 
 /obj/item/organ/heart/gland/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || isobserver(user))
+	if((user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)) || isobserver(user))
 		. += "<span class='notice'>It is \a [true_name].</span>"
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
@@ -52,23 +52,25 @@
 
 /obj/item/organ/heart/gland/proc/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
-		return
+		return FALSE
 	mind_control_uses--
 	to_chat(owner, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
 	to_chat(owner, "<span class='mind_control'>[command]</span>")
 	active_mind_control = TRUE
-	log_admin("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
+	message_admins("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
 	update_gland_hud()
 	var/obj/screen/alert/mind_control/mind_alert = owner.throw_alert("mind_control", /obj/screen/alert/mind_control)
 	mind_alert.command = command
 	addtimer(CALLBACK(src, .proc/clear_mind_control), mind_control_duration)
+	return TRUE
 
 /obj/item/organ/heart/gland/proc/clear_mind_control()
 	if(!ownerCheck() || !active_mind_control)
-		return
+		return FALSE
 	to_chat(owner, "<span class='userdanger'>You feel the compulsion fade, and you <i>completely forget</i> about your previous orders.</span>")
 	owner.clear_alert("mind_control")
 	active_mind_control = FALSE
+	return TRUE
 
 /obj/item/organ/heart/gland/Remove(mob/living/carbon/M, special = 0)
 	active = 0
@@ -151,6 +153,7 @@
 	icon_state = "mindshock"
 	mind_control_uses = 1
 	mind_control_duration = 6000
+	var/list/mob/living/carbon/human/broadcasted_mobs = list()
 
 /obj/item/organ/heart/gland/mindshock/activate()
 	to_chat(owner, "<span class='notice'>You get a headache.</span>")
@@ -170,14 +173,71 @@
 			if(3)
 				H.hallucination += 60
 
+/obj/item/organ/heart/gland/mindshock/mind_control(command, mob/living/user)
+	if(!ownerCheck() || !mind_control_uses || active_mind_control)
+		return FALSE
+	mind_control_uses--
+	for(var/mob/M in oview(7, owner))
+		if(!ishuman(M))
+			continue
+		var/mob/living/carbon/human/H = M
+		if(H.stat)
+			continue
+
+		broadcasted_mobs += H
+		to_chat(H, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
+		to_chat(H, "<span class='mind_control'>[command]</span>")
+
+		message_admins("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
+
+		var/obj/screen/alert/mind_control/mind_alert = H.throw_alert("mind_control", /obj/screen/alert/mind_control)
+		mind_alert.command = command
+
+	if(LAZYLEN(broadcasted_mobs))
+		active_mind_control = TRUE
+		addtimer(CALLBACK(src, .proc/clear_mind_control), mind_control_duration)
+
+	update_gland_hud()
+	return TRUE
+
+/obj/item/organ/heart/gland/mindshock/clear_mind_control()
+	if(!active_mind_control || !LAZYLEN(broadcasted_mobs))
+		return FALSE
+	for(var/M in broadcasted_mobs)
+		var/mob/living/carbon/human/H = M
+		to_chat(H, "<span class='userdanger'>You feel the compulsion fade, and you <i>completely forget</i> about your previous orders.</span>")
+		H.clear_alert("mind_control")
+	active_mind_control = FALSE
+	return TRUE
+
+/obj/item/organ/heart/gland/access
+	true_name = "anagraphic electro-scrambler"
+	cooldown_low = 600
+	cooldown_high = 1200
+	uses = 1
+	icon_state = "mindshock"
+	mind_control_uses = 3
+	mind_control_duration = 900
+
+/obj/item/organ/heart/gland/access/activate()
+	to_chat(owner, "<span class='notice'>You feel like a VIP for some reason.</span>")
+	RegisterSignal(owner, COMSIG_MOB_ALLOWED, .proc/free_access)
+
+/obj/item/organ/heart/gland/access/proc/free_access(datum/source, obj/O)
+	return TRUE
+
+/obj/item/organ/heart/gland/access/Remove(mob/living/carbon/M, special = 0)
+	UnregisterSignal(owner, COMSIG_MOB_ALLOWED)
+	..()
+
 /obj/item/organ/heart/gland/pop
-	true_name = "anthropmorphic translocator"
+	true_name = "anthropmorphic transmorphosizer"
 	cooldown_low = 900
 	cooldown_high = 1800
 	uses = -1
 	human_only = TRUE
 	icon_state = "species"
-	mind_control_uses = 5
+	mind_control_uses = 7
 	mind_control_duration = 300
 
 /obj/item/organ/heart/gland/pop/activate()
@@ -253,6 +313,54 @@
 		else
 			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 
+/obj/item/organ/heart/gland/quantum
+	true_name = "quantic de-observation matrix"
+	cooldown_low = 150
+	cooldown_high = 150
+	uses = -1
+	icon_state = "emp"
+	mind_control_uses = 2
+	mind_control_duration = 1200
+	var/mob/living/carbon/entangled_mob
+
+/obj/item/organ/heart/gland/quantum/activate()
+	if(entangled_mob)
+		return
+	for(var/mob/M in oview(owner, 7))
+		if(!iscarbon(M))
+			continue
+		entangled_mob = M
+		addtimer(CALLBACK(src, .proc/quantum_swap), rand(600, 2400))
+		return
+
+/obj/item/organ/heart/gland/quantum/proc/quantum_swap()
+	if(QDELETED(entangled_mob))
+		entangled_mob = null
+		return
+	var/turf/T = get_turf(owner)
+	do_teleport(owner, get_turf(entangled_mob),null,TRUE,channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(entangled_mob, T,null,TRUE,channel = TELEPORT_CHANNEL_QUANTUM)
+	to_chat(owner, "<span class='warning'>You suddenly find yourself somewhere else!</span>")
+	to_chat(entangled_mob, "<span class='warning'>You suddenly find yourself somewhere else!</span>")
+	if(!active_mind_control) //Do not reset entangled mob while mind control is active
+		entangled_mob = null
+
+/obj/item/organ/heart/gland/quantum/mind_control(command, mob/living/user)
+	if(..())
+		if(entangled_mob && ishuman(entangled_mob) && (entangled_mob.stat < DEAD))
+			to_chat(entangled_mob, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
+			to_chat(entangled_mob, "<span class='mind_control'>[command]</span>")
+			var/obj/screen/alert/mind_control/mind_alert = entangled_mob.throw_alert("mind_control", /obj/screen/alert/mind_control)
+			mind_alert.command = command
+			message_admins("[key_name(owner)] mirrored an abductor mind control message to [key_name(entangled_mob)]: [command]")
+			update_gland_hud()
+
+/obj/item/organ/heart/gland/quantum/clear_mind_control()
+	if(active_mind_control)
+		to_chat(entangled_mob, "<span class='userdanger'>You feel the compulsion fade, and you completely forget about your previous orders.</span>")
+		entangled_mob.clear_alert("mind_control")
+	..()
+
 /obj/item/organ/heart/gland/spiderman
 	true_name = "araneae cloister accelerator"
 	cooldown_low = 450
@@ -284,20 +392,41 @@
 	var/turf/T = owner.drop_location()
 	new /obj/item/reagent_containers/food/snacks/egg/gland(T)
 
+
+/obj/item/organ/heart/gland/blood
+	true_name = "pseudonuclear hemo-destabilizer"
+	cooldown_low = 1200
+	cooldown_high = 1800
+	uses = -1
+	icon_state = "egg"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	mind_control_uses = 3
+	mind_control_duration = 1500
+
+/obj/item/organ/heart/gland/blood/activate()
+	if(!ishuman(owner) || !owner.dna.species)
+		return
+	var/mob/living/carbon/human/H = owner
+	var/datum/species/species = H.dna.species
+	to_chat(H, "<span class='warning'>You feel your blood heat up for a moment.</span>")
+	species.exotic_blood = get_random_reagent_id()
+
 /obj/item/organ/heart/gland/electric
 	true_name = "electron accumulator/discharger"
 	cooldown_low = 800
 	cooldown_high = 1200
+	icon_state = "species"
 	uses = -1
 	mind_control_uses = 2
 	mind_control_duration = 900
 
 /obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
 	..()
-	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
 
 /obj/item/organ/heart/gland/electric/Remove(mob/living/carbon/M, special = 0)
-	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
 	..()
 
 /obj/item/organ/heart/gland/electric/activate()
@@ -315,6 +444,7 @@
 	cooldown_low = 50
 	cooldown_high = 50
 	uses = -1
+	icon_state = "viral"
 	mind_control_uses = 3
 	mind_control_duration = 1200
 	var/list/possible_reagents = list()
@@ -327,13 +457,14 @@
 /obj/item/organ/heart/gland/chem/activate()
 	var/chem_to_add = pick(possible_reagents)
 	owner.reagents.add_reagent(chem_to_add, 2)
-	owner.adjustToxLoss(-2, TRUE, TRUE)
+	owner.adjustToxLoss(-5, TRUE, TRUE)
 	..()
 
 /obj/item/organ/heart/gland/plasma
 	true_name = "effluvium sanguine-synonym emitter"
 	cooldown_low = 1200
 	cooldown_high = 1800
+	icon_state = "slime"
 	uses = -1
 	mind_control_uses = 1
 	mind_control_duration = 800

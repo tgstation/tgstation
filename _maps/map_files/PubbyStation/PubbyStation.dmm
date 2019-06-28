@@ -14642,20 +14642,6 @@
 	dir = 1
 	},
 /area/hallway/secondary/exit/departure_lounge)
-"aMR" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"aMS" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "aMT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -14697,6 +14683,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "aMW" = (
@@ -42330,7 +42317,6 @@
 /area/engine/engineering)
 "caw" = (
 /obj/structure/table,
-/obj/item/twohanded/rcl/pre_loaded,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -81562,8 +81548,8 @@ aHE
 aAL
 aAL
 rlV
-aAL
-aMR
+aDZ
+aGV
 aAL
 aAL
 aQA
@@ -81820,7 +81806,7 @@ aIL
 aDZ
 aDZ
 aDZ
-aMS
+aGV
 aDZ
 aDZ
 aQB
