@@ -38,6 +38,33 @@
 		if("fuschia")
 			return "99004d"
 
+/proc/get_hue_from_caste(troll_caste)
+	switch(troll_caste)
+		if("burgundy")
+			return 0
+		if("brown")
+			return 30
+		if("yellow")
+			return 60
+		if("lime")
+			return 90
+		if("olive")
+			return 120
+		if("jade")
+			return 150
+		if("teal")
+			return 180
+		if("cerulean")
+			return 210
+		if("indigo")
+			return 240
+		if("purple")
+			return 270
+		if("violet")
+			return 300
+		if("fuschia")
+			return 330
+
 GLOBAL_LIST_INIT(troll_castes, list(
 	"burgundy",
 	"brown",

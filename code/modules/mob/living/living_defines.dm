@@ -118,3 +118,5 @@
 	var/list/disease_resistances = list()
 
 	var/drag_slowdown = TRUE //Whether the mob is slowed down when dragging another prone mob
+
+	var/blood_color = "#981414" // 413 -- blood color

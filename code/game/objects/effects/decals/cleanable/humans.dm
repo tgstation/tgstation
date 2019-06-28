@@ -2,6 +2,7 @@
 	name = "blood"
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	icon = 'icons/effects/blood.dmi'
+	var/blood_color = "#981414" // 413 -- blood colors
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_HUMAN
@@ -182,12 +183,24 @@
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
+				// 413 start -- blood colors
+				if(blood_state == BLOOD_STATE_HUMAN) //only "human blood" has blood colors
+					var/icon/colored_footstep=new(icon)
+					colored_footstep.ColorTone(blood_color)
+					GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(colored_footstep, "[blood_state]1", dir = Ddir)
+				else
+				//413 end
+					GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
+				if(blood_state == BLOOD_STATE_HUMAN)
+					var/icon/colored_footstep=new(icon)
+					colored_footstep.ColorTone(blood_color)
+					GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(colored_footstep, "[blood_state]2", dir = Ddir)
+				else
+					GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
@@ -204,6 +217,10 @@
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
 		return
+	//413 start -- color blending
+	bloodiness=min(MAX_SHOE_BLOODINESS,bloodiness+C.bloodiness)
+	blood_color=BlendRGB(blood_state,C.blood_state,C.bloodiness/bloodiness)
+	//413 end
 	..()
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()

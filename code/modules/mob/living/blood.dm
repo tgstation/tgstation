@@ -237,7 +237,8 @@
 		"O-" = list("O-"),
 		"O+" = list("O-", "O+"),
 		"L" = list("L"),
-		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U")
+		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U"),
+		"T" = list("T") //413 -- troll blood type
 	)
 
 	var/safe = bloodtypes_safe[bloodtype]
@@ -258,7 +259,11 @@
 		if(drop)
 			if(drop.drips < 5)
 				drop.drips++
-				drop.add_overlay(pick(drop.random_icon_states))
+				//413 start
+				var/icon/newDrip = new(drop.icon,pick(drop.random_icon_states))
+				newDrip.ColorTone(src.blood_color)
+				drop.add_overlay(newDrip)
+				//413 end
 				drop.transfer_mob_blood_dna(src)
 				return
 			else
@@ -274,7 +279,13 @@
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
 	if (B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
+		var/old_bloodiness = B.bloodiness //413 -- store bloodiness before changing it
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
+		//413 start -- coloring blood
+		var/icon/colored_blood = new(B.icon)
+		B.blood_color = BlendRGB(B.blood_color,src.blood_color,old_bloodiness/B.bloodiness)
+		colored_blood.ColorTone(B.blood_color)
+		//413 end
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		B.add_blood_DNA(temp_blood_DNA)
