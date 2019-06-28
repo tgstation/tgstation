@@ -228,7 +228,7 @@
 							<td>$[c.fine]</td><td>[c.author]</td>
 							<td>[c.time]</td>"}
 							if(owed > 0)
-								dat += "<td>$[owed]</td>"
+								dat += "<td>$[owed] <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
 							else
 								dat += "<td>All Paid Off</td>"
 							dat += {"<td>
@@ -383,6 +383,25 @@ What a mess.*/
 							active2 = E
 					screen = 3
 
+			if("Pay")
+				for(var/datum/data/crime/p in active2.fields["citation"])
+					if(p.dataId == text2num(href_list["cdataid"]))
+						var/obj/item/holochip/C = usr.is_holding_item_of_type(/obj/item/holochip)
+						if(C && istype(C))
+							var/pay = C.get_item_credit_value()
+							if(!pay)
+								to_chat(usr, "<span class='warning'>[C] doesn't seem to be worth anything!</span>")
+							else
+								var/diff = p.fine - p.paid
+								GLOB.data_core.payCitation(active2.fields["id"], text2num(href_list["cdataid"]), pay)
+								to_chat(usr, "<span class='notice'>You have paid [pay] credit\s towards your fine</span>")
+								if (pay == diff || pay > diff || pay >= diff)
+									investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
+									to_chat(usr, "<span class='notice'>The fine has been paid in full</span>")
+								qdel(C)
+								playsound(src, "terminal_type", 25, 0)
+						else
+							to_chat(usr, "<span class='warning'>Fines can only be paid with holochips</span>")
 
 			if("Print Record")
 				if(!( printing ))
