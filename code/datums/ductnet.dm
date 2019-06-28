@@ -11,11 +11,12 @@
 	ducts += D
 	D.duct = src
 
-/datum/ductnet/proc/remove_duct(obj/machinery/duct/D)
+/datum/ductnet/proc/remove_duct()
 	destroy_network(FALSE)
 	for(var/A in D.get_adjacent_ducts())
-		var/obj/machinery/duct/duct = A
-		duct.attempt_connect() //we destroyed the network, so now we tell the disconnected ducts neighbours they can start making a new ductnet
+		var/obj/machinery/duct/D = A
+		D.duct = null
+		D.attempt_connect() //we destroyed the network, so now we tell the disconnected ducts neighbours they can start making a new ductnet
 	qdel(src)
 
 /datum/ductnet/proc/add_plumber(datum/component/plumbing/P, dir)

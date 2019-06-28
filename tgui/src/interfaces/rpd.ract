@@ -60,16 +60,16 @@
 {{/if}}
 {{#if data.category == 3}}
 	<ui-section label='Ducting Layer'>
+		<ui-button state='{{data.ducting_layer == 0 ? "selected" : null}}' action='ducting_layer'
+			params='{"ducting_layer": 0}'>1</ui-button>
 		<ui-button state='{{data.ducting_layer == 1 ? "selected" : null}}' action='ducting_layer'
-			params='{"ducting_layer": 1}'>1</ui-button>
+			params='{"ducting_layer": 1}'>2</ui-button>
 		<ui-button state='{{data.ducting_layer == 2 ? "selected" : null}}' action='ducting_layer'
-			params='{"ducting_layer": 2}'>2</ui-button>
-		<ui-button state='{{data.ducting_layer == 3 ? "selected" : null}}' action='ducting_layer'
-			params='{"ducting_layer": 3}'>3</ui-button>
+			params='{"ducting_layer": 2}'>3</ui-button>
 		<ui-button state='{{data.ducting_layer == 4 ? "selected" : null}}' action='ducting_layer'
 			params='{"ducting_layer": 4}'>4</ui-button>
-		<ui-button state='{{data.ducting_layer == 5 ? "selected" : null}}' action='ducting_layer'
-			params='{"ducting_layer": 5}'>5</ui-button>
+		<ui-button state='{{data.ducting_layer == 8 ? "selected" : null}}' action='ducting_layer'
+			params='{"ducting_layer": 8}'>5</ui-button>
 	</ui-section>	
 {{/if}}
 {{#each data.categories}}

@@ -13,11 +13,12 @@ All the important duct code:
 	var/capacity = 10
 
 	var/duct_color = null
-	var/duct_layer = DUCT_LAYER_DEFAULT //1,2,3,4,5
+	var/duct_layer = DUCT_LAYER_DEFAULT //0,1,2,4,8
 
 	var/active = TRUE //wheter to even bother with plumbing code or not
+	var/list/neighbours = list() //track ducts we're connected to. Mainly for ducts we connect to that we normally wouldn't, like different layers and colors, for when we regenerate the ducts
 
-/obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct)
+/obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct = DUCT_LAYER_DEFAULT)
 	. = ..()
 
 	duct_color = color_of_duct
@@ -30,12 +31,11 @@ All the important duct code:
 		qdel(src)
 	if(duct_color)
 		add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
-	if(duct_layer)
-		handle_layer()
+	handle_layer()
 	for(var/obj/machinery/duct/D in loc)
 		if(D == src)
 			continue
-		if(D.duct_layer == duct_layer)
+		if(D.duct_layer & duct_layer)
 			qdel(src) //replace with dropping or something
 	if(active)
 		attempt_connect()
@@ -53,15 +53,23 @@ All the important duct code:
 	var/opposite_dir = turn(direction, 180)
 	if(istype(AM, /obj/machinery/duct))
 		var/obj/machinery/duct/D = AM
-		if(!active || !D.active || (duct_layer != D.duct_layer))
+
+		if(!active || !D.active)
 			return
+
 		if((duct == D.duct) && duct)//check if we're not just comparing two null values
+
+			add_neighbour(D)
+
 			D.connects |= opposite_dir
 			D.update_icon()
 			return TRUE //tell the current pipe to also update it's sprite
+		if(!(D in neighbours)) //we cool
+			if(duct_color != D.duct_color && !ignore_color)
+				return
 
-		if(duct_color != D.duct_color && !ignore_color)
-			return
+			if(!(duct_layer & D.duct_layer))
+				return
 
 		if(D.duct)
 			if(duct)
@@ -74,6 +82,7 @@ All the important duct code:
 			else
 				create_duct()
 				duct.add_duct(D)
+		add_neighbour(D)
 		D.attempt_connect()//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
 		return TRUE
 
@@ -93,17 +102,29 @@ All the important duct code:
 		return TRUE
 
 /obj/machinery/duct/proc/disconnect_duct()
-	if(!duct)
-		return
-	duct.remove_duct(src)
+	if(duct)
+		duct.remove_duct()
 	anchored = FALSE
 	active = FALSE
+	lose_neighbours()
 	connects = 0
 	update_icon()
 
 /obj/machinery/duct/proc/create_duct()
 	duct = new()
 	duct.add_duct(src)
+
+/obj/machinery/duct/proc/add_neighbour(obj/machinery/duct/D)
+	if(!(D in neighbours))
+		neighbours += D
+	if(!(src in D.neighbours))
+		D.neighbours += src
+
+/obj/machinery/duct/proc/lose_neighbours()
+	for(var/A in neighbours)
+		var/obj/machinery/duct/D = A
+		D.neighbours.Remove(src)
+	neighbours = list()
 
 /obj/machinery/duct/proc/get_adjacent_ducts()
 	var/list/adjacents = list()
@@ -131,15 +152,15 @@ All the important duct code:
 /obj/machinery/duct/proc/handle_layer()
 	var/offset
 	switch(duct_layer)
-		if(1)
+		if(FIRST_DUCT_LAYER)
 			offset = -10
-		if(2)
+		if(SECOND_DUCT_LAYER)
 			offset = -5
-		if(3)
+		if(THIRD_DUCT_LAYER)
 			offset = 0
-		if(4)
+		if(FOURTH_DUCT_LAYER)
 			offset = 5
-		if(5)
+		if(FIFTH_DUCT_LAYER)
 			offset = 10
 	pixel_x = offset
 	pixel_y = offset
@@ -200,3 +221,8 @@ All the important duct code:
 	connect_network(D, direction, TRUE)
 	connects |= direction
 	update_icon()
+
+/obj/machinery/duct/multilayered
+	name = "duct layer manifold"
+	duct_layer = FIRST_DUCT_LAYER + SECOND_DUCT_LAYER + THIRD_DUCT_LAYER + FOURTH_DUCT_LAYER + FIFTH_DUCT_LAYER
+
