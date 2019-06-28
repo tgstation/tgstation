@@ -72,7 +72,7 @@
 			put_in_hands(I)
 			update_inv_hands()
 		if(SLOT_IN_BACKPACK)
-			if(!SEND_SIGNAL(back, COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
+			if(!back || !SEND_SIGNAL(back, COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
 				not_handled = TRUE
 		else
 			not_handled = TRUE
@@ -85,7 +85,7 @@
 
 	return not_handled
 
-/mob/living/carbon/doUnEquip(obj/item/I)
+/mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
 	. = ..() //Sets the default return value to what the parent returns.
 	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return

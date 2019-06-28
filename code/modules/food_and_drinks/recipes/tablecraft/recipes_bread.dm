@@ -84,6 +84,16 @@
 	result = /obj/item/reagent_containers/food/snacks/butteredtoast
 	subcategory = CAT_BREAD
 
+/datum/crafting_recipe/food/garlicbread
+	name = "Garlic Bread"
+	time = 40
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/garlic = 1,
+				/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
+				/obj/item/reagent_containers/food/snacks/butter = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/garlicbread
+	subcategory = CAT_BREAD
+
 /datum/crafting_recipe/food/butterbiscuit
 	name = "Butter Biscuit"
 	reqs = list(

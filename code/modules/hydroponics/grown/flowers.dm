@@ -15,7 +15,7 @@
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
-	reagents_add = list("bicaridine" = 0.2, "nutriment" = 0.05)
+	reagents_add = list(/datum/reagent/medicine/bicaridine = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/poppy
 	seed = /obj/item/seeds/poppy
@@ -26,7 +26,7 @@
 	filling_color = "#FF6347"
 	bitesize_mod = 3
 	foodtype = VEGETABLES | GROSS
-	distill_reagent = "vermouth"
+	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -79,7 +79,7 @@
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	reagents_add = list("nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
@@ -89,7 +89,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 3
-	distill_reagent = "vermouth"
+	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
 // Sunflower
 /obj/item/seeds/sunflower
@@ -107,7 +107,7 @@
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
-	reagents_add = list("cornoil" = 0.08, "nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/consumable/cornoil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
@@ -141,7 +141,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/reagent_containers/food/snacks/grown/moonflower
 	mutatelist = list()
-	reagents_add = list("moonshine" = 0.2, "vitamin" = 0.02, "nutriment" = 0.02)
+	reagents_add = list(/datum/reagent/consumable/ethanol/moonshine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/moonflower
@@ -152,7 +152,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 2
-	distill_reagent = "absinthe" //It's made from flowers.
+	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower
@@ -165,7 +165,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
 	mutatelist = list()
-	reagents_add = list("condensedcapsaicin" = 0.25, "capsaicin" = 0.3, "nutriment" = 0)
+	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
 	rarity = 20
 
 /obj/item/grown/novaflower
@@ -183,7 +183,7 @@
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")
-	grind_results = list("capsaicin" = 0, "condensedcapsaicin" = 0)
+	grind_results = list(/datum/reagent/consumable/capsaicin = 0, /datum/reagent/consumable/condensedcapsaicin = 0)
 
 /obj/item/grown/novaflower/add_juice()
 	..()

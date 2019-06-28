@@ -497,30 +497,16 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aQ" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aR" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/escape)
-"aS" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1092,7 +1078,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cf" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1126,7 +1112,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ch" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1168,7 +1154,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cl" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1907,7 +1893,7 @@ aB
 aG
 aJ
 aN
-aS
+aQ
 aP
 aZ
 bd

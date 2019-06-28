@@ -160,11 +160,11 @@
 	cameraFollow = null
 	unset_machine()
 
-	if(!eyeobj || !eyeobj.loc || QDELETED(eyeobj))
+	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
 		create_eye()
 
-	eyeobj.setLoc(loc)
+	eyeobj?.setLoc(loc)
 
 /mob/living/silicon/ai/proc/create_eye()
 	if(eyeobj)

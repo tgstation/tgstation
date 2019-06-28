@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/screen/examine(mob/user)
-	return
+	return list()
 
 /obj/screen/orbit()
 	return
@@ -65,12 +65,6 @@
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
-
-/obj/screen/craft/Click()
-	var/mob/living/M = usr
-	if(isobserver(usr))
-		return
-	M.OpenCraftingMenu()
 
 /obj/screen/area_creator
 	name = "create new area"
@@ -641,9 +635,20 @@
 	screen_loc = ui_construct_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/obj/screen/healths/slime
+	icon = 'icons/mob/screen_slime.dmi'
+	icon_state = "slime_health0"
+	screen_loc = ui_slime_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
+
+/obj/screen/healthdoll/Click()
+	if (ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.check_self_for_injuries()
 
 /obj/screen/mood
 	name = "mood"

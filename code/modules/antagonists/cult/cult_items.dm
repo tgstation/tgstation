@@ -64,8 +64,12 @@
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
-	item_flags = NEEDS_PERMIT | NODROP | DROPDEL
+	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
+
+/obj/item/melee/cultblade/ghost/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
@@ -115,10 +119,11 @@
 	AddComponent(/datum/component/butchering, 50, 80)
 
 /obj/item/twohanded/required/cult_bastard/examine(mob/user)
+	. = ..()
 	if(contents.len)
-		desc+="<br><b>There are [contents.len] souls trapped within the sword's core.</b>"
+		. += "<b>There are [contents.len] souls trapped within the sword's core.</b>"
 	else
-		desc+="<br>The sword appears to be quite lifeless."
+		. += "The sword appears to be quite lifeless."
 
 /obj/item/twohanded/required/cult_bastard/can_be_pulled(user)
 	return FALSE
@@ -302,7 +307,11 @@
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/head/culthood/alt/ghost
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+
+/obj/item/clothing/head/culthood/alt/ghost/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
@@ -311,7 +320,11 @@
 	item_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes/alt/ghost
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+
+/obj/item/clothing/suit/cultrobes/alt/ghost/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 
 /obj/item/clothing/head/magus
@@ -424,8 +437,8 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list("melee" = -50, "bullet" = -50, "laser" = -50,"energy" = -50, "bomb" = -50, "bio" = -50, "rad" = -50, "fire" = 0, "acid" = 0)
-	slowdown = -1
+	armor = list("melee" = -45, "bullet" = -45, "laser" = -45,"energy" = -45, "bomb" = -45, "bio" = -45, "rad" = -45, "fire" = 0, "acid" = 0)
+	slowdown = -0.6
 	hoodtype = /obj/item/clothing/head/hooded/berserkerhood
 
 /obj/item/clothing/head/hooded/berserkerhood
@@ -474,7 +487,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "holyflask"
 	color = "#333333"
-	list_reagents = list("unholywater" = 50)
+	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
 /obj/item/shuttle_curse
 	name = "cursed orb"
@@ -538,11 +551,11 @@
 	var/uses = 4
 
 /obj/item/cult_shift/examine(mob/user)
-	..()
+	. = ..()
 	if(uses)
-		to_chat(user, "<span class='cult'>It has [uses] use\s remaining.</span>")
+		. += "<span class='cult'>It has [uses] use\s remaining.</span>"
 	else
-		to_chat(user, "<span class='cult'>It seems drained.</span>")
+		. += "<span class='cult'>It seems drained.</span>"
 
 /obj/item/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
 	var/mob/living/carbon/C = user
@@ -627,7 +640,7 @@
 		if(A in user.GetAllContents())
 			to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
 			return
-		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
+		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!</span>")
 		cultist_to_receive.put_in_hands(A)
 		charges--
 		to_chat(user, "\The [src] now has [charges] charge\s.")
@@ -744,14 +757,13 @@
 		spear.throw_at(owner, 10, 2, owner)
 
 
-/obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood
 	name = "blood bolt barrage"
 	desc = "Blood for blood."
 	color = "#ff0000"
 	guns_left = 24
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
-	item_flags = NEEDS_PERMIT | NOBLUDGEON | DROPDEL
 
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
@@ -759,10 +771,12 @@
 
 /obj/item/ammo_casing/magic/arcane_barrage/blood
 	projectile_type = /obj/item/projectile/magic/arcane_barrage/blood
+	firing_effect_type = /obj/effect/temp_visual/cult/sparks
 
 /obj/item/projectile/magic/arcane_barrage/blood
 	name = "blood bolt"
 	icon_state = "mini_leaper"
+	nondirectional_sprite = TRUE
 	damage_type = BRUTE
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
@@ -773,7 +787,7 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stat != DEAD)
-				H.reagents.add_reagent("unholywater", 4)
+				H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
 		if(isshade(target) || isconstruct(target))
 			var/mob/living/simple_animal/M = target
 			if(M.health+5 < M.maxHealth)
@@ -787,9 +801,11 @@
 	name = "\improper magical aura"
 	desc = "Sinister looking aura that distorts the flow of reality around it."
 	icon = 'icons/obj/items_and_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
-	item_state = null
-	item_flags = ABSTRACT | NODROP | DROPDEL
+	item_state = "disintegrate"
+	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
 	throw_range = 0
@@ -797,6 +813,10 @@
 	var/charging = FALSE
 	var/firing = FALSE
 	var/angle
+
+/obj/item/blood_beam/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 
 /obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)
@@ -871,7 +891,7 @@
 					if(ishuman(target))
 						var/mob/living/carbon/human/H = target
 						if(H.stat != DEAD)
-							H.reagents.add_reagent("unholywater", 7)
+							H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 7)
 					if(isshade(target) || isconstruct(target))
 						var/mob/living/simple_animal/M = target
 						if(M.health+15 < M.maxHealth)
@@ -912,15 +932,16 @@
 	if(iscultist(owner))
 		if(istype(hitby, /obj/item/projectile))
 			var/obj/item/projectile/P = hitby
-			if(P.damage >= 30)
-				var/turf/T = get_turf(owner)
-				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
-				new /obj/effect/temp_visual/cult/sparks(T)
-				playsound(T, 'sound/effects/glassbr3.ogg', 100)
-				owner.Paralyze(25)
-				qdel(src)
-				return FALSE
-			if(P.is_reflectable)
+			if(P.damage_type == BRUTE || P.damage_type == BURN)
+				if(P.damage >= 30)
+					var/turf/T = get_turf(owner)
+					T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
+					new /obj/effect/temp_visual/cult/sparks(T)
+					playsound(T, 'sound/effects/glassbr3.ogg', 100)
+					owner.Paralyze(25)
+					qdel(src)
+					return FALSE
+			if(P.reflectable & REFLECT_NORMAL)
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(.)
@@ -983,6 +1004,6 @@
 							continue
 						throw_at(Next, 3, 1, D.thrower)
 						return
-					throw_at(D.thrower, 7, 1, D.thrower)
+					throw_at(D.thrower, 7, 1, null)
 	else
 		..()

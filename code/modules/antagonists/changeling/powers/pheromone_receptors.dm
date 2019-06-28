@@ -3,7 +3,7 @@
 #define CHANGELING_PHEROMONE_PING_TIME 20 //2s update time.
 
 
-/obj/effect/proc_holder/changeling/pheromone_receptors
+/datum/action/changeling/pheromone_receptors
 	name = "Pheromone Receptors"
 	desc = "We attune our senses to track other changelings by scent.  The closer they are, the easier we can find them."
 	helptext = "We will know the general direction of nearby changelings, with closer scents being stronger.  Our chemical generation is slowed while this is active."
@@ -11,7 +11,7 @@
 	dna_cost = 2
 	var/receptors_active = FALSE
 
-/obj/effect/proc_holder/changeling/pheromone_receptors/sting_action(mob/living/carbon/user)
+/datum/action/changeling/pheromone_receptors/sting_action(mob/living/carbon/user)
 	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!receptors_active)

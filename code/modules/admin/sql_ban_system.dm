@@ -87,7 +87,9 @@
 		panel_height = 240
 	var/datum/browser/panel = new(usr, "banpanel", "Banning Panel", 910, panel_height)
 	panel.add_stylesheet("banpanelcss", 'html/admin/banpanel.css')
-	panel.add_script("banpaneljs", 'html/admin/banpanel.js')
+	if(usr.client.prefs.tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
+		panel.add_stylesheet("banpanelcss3", 'html/admin/banpanel_css3.css')
+		panel.add_script("banpaneljs", 'html/admin/banpanel.js')
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
 	output += {"<input type='hidden' name='src' value='[REF(src)]'>
 	<label class='inputlabel checkbox'>Key:
@@ -95,16 +97,16 @@
 	<div class='inputbox'></div></label>
 	<input type='text' name='keytext' size='26' value='[player_key]'>
 	<label class='inputlabel checkbox'>IP:
-	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[player_ip ? " checked": ""]>
+	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[isnull(duration) ? " checked" : ""]>
 	<div class='inputbox'></div></label>
 	<input type='text' name='iptext' size='18' value='[player_ip]'>
 	<label class='inputlabel checkbox'>CID:
-	<input type='checkbox' id='cidcheck' name='cidcheck' value='1'[player_cid ? " checked": ""]>
+	<input type='checkbox' id='cidcheck' name='cidcheck' value='1' checked>
 	<div class='inputbox'></div></label>
 	<input type='text' name='cidtext' size='14' value='[player_cid]'>
 	<br>
 	<label class='inputlabel checkbox'>Use IP and CID from last connection of key
-	<input type='checkbox' id='lastconn' name='lastconn' value='1'>
+	<input type='checkbox' id='lastconn' name='lastconn' value='1' [(isnull(duration) && !player_ip) || (!player_cid) ? " checked": ""]>
 	<div class='inputbox'></div></label>
 	<label class='inputlabel checkbox'>Applies to Admins
 	<input type='checkbox' id='applyadmins' name='applyadmins' value='1'[applies_to_admins ? " checked": ""]>
@@ -139,11 +141,11 @@
 			Ban type
 			<br>
 			<label class='inputlabel radio'>Server
-			<input type='radio' id='server' name='radioban' value='server'[role == "Server" ? " checked" : ""][edit_id ? " onclick='return false' onkeydown='return false'" : ""]>
+			<input type='radio' id='server' name='radioban' value='server'[role == "Server" ? " checked" : ""][edit_id ? " disabled" : ""]>
 			<div class='inputbox'></div></label>
 			<br>
 			<label class='inputlabel radio'>Role
-			<input type='radio' id='role' name='radioban' value='role'[role == "Server" ? "" : " checked"][edit_id ? " onclick='return false' onkeydown='return false'" : ""]>
+			<input type='radio' id='role' name='radioban' value='role'[role == "Server" ? "" : " checked"][edit_id ? " disabled" : ""]>
 			<div class='inputbox'></div></label>
 		</div>
 		<div class='column right'>
@@ -200,30 +202,29 @@
 				banned_from += query_get_banned_roles.item[1]
 			qdel(query_get_banned_roles)
 		var/break_counter = 0
-		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' name='Command' class='hidden' onClick='toggle_checkboxes(this, \"_dep\")'>Command</label><div class='content'>"
+		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' name='Command' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_dep\")'" : ""]>Command</label><div class='content'>"
 		//all heads are listed twice so have a javascript call to toggle both their checkboxes when one is pressed
 		//for simplicity this also includes the captain even though it doesn't do anything
 		for(var/job in GLOB.command_positions)
 			if(break_counter > 0 && (break_counter % 3 == 0))
 				output += "<br>"
 			output += {"<label class='inputlabel checkbox'>[job]
-						<input type='checkbox' id='[job]_com' name='[job]' class='Command' onClick='toggle_head(this, \"_dep\")' value='1'>
+						<input type='checkbox' id='[job]_com' name='[job]' class='Command' value='1'[usr.client.prefs.tgui_fancy ? " onClick='toggle_head(this, \"_dep\")'" : ""]>
 						<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
 			"}
 			break_counter++
 		output += "</div></div>"
-		//standard deparments all have identical handling
+		//standard departments all have identical handling
 		var/list/job_lists = list("Security" = GLOB.security_positions,
 							"Engineering" = GLOB.engineering_positions,
 							"Medical" = GLOB.medical_positions,
 							"Science" = GLOB.science_positions,
-							"Supply" = GLOB.supply_positions,
-							"Silicon" = GLOB.nonhuman_positions) //another cheat for simplicity
+							"Supply" = GLOB.supply_positions)
 		for(var/department in job_lists)
 			//the first element is the department head so they need the same javascript call as above
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
 			output += {"<label class='inputlabel checkbox'>[job_lists[department][1]]
-						<input type='checkbox' id='[job_lists[department][1]]_dep' name='[job_lists[department][1]]' class='[department]' onClick='toggle_head(this, \"_com\")' value='1'>
+						<input type='checkbox' id='[job_lists[department][1]]_dep' name='[job_lists[department][1]]' class='[department]' value='1'[usr.client.prefs.tgui_fancy ? " onClick='toggle_head(this, \"_com\")'" : ""]>
 						<div class='inputbox[(job_lists[department][1] in banned_from) ? " banned" : ""]'></div></label>
 			"}
 			break_counter = 1
@@ -236,8 +237,23 @@
 				"}
 				break_counter++
 			output += "</div></div>"
+		//departments/groups that don't have command staff would throw a javascript error since there's no corresponding reference for toggle_head()
+		var/list/headless_job_lists = list("Silicon" = GLOB.nonhuman_positions,
+										"Abstract" = list("Appearance", "Emote", "OOC"))
+		for(var/department in headless_job_lists)
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
+			break_counter = 0
+			for(var/job in headless_job_lists[department])
+				if(break_counter > 0 && (break_counter % 3 == 0))
+					output += "<br>"
+				output += {"<label class='inputlabel checkbox'>[job]
+							<input type='checkbox' name='[job]' class='[department]' value='1'>
+							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
+				"}
+				break_counter++
+			output += "</div></div>"
 		var/list/long_job_lists = list("Civilian" = GLOB.civilian_positions,
-									"Ghost and Other Roles" = list("Appearance", ROLE_BRAINWASHED, ROLE_DEATHSQUAD, ROLE_DRONE, "Emote", ROLE_LAVALAND, ROLE_MIND_TRANSFER, "OOC", ROLE_POSIBRAIN, ROLE_SENTIENCE),
+									"Ghost and Other Roles" = list(ROLE_BRAINWASHED, ROLE_DEATHSQUAD, ROLE_DRONE, ROLE_LAVALAND, ROLE_MIND_TRANSFER, ROLE_POSIBRAIN, ROLE_SENTIENCE),
 									"Antagonist Positions" = list(ROLE_ABDUCTOR, ROLE_ALIEN, ROLE_BLOB,
 									ROLE_BROTHER, ROLE_CHANGELING, ROLE_CULTIST,
 									ROLE_DEVIL, ROLE_INTERNAL_AFFAIRS, ROLE_MALF,
@@ -246,7 +262,7 @@
 									ROLE_REV_HEAD, ROLE_SERVANT_OF_RATVAR, ROLE_SYNDICATE,
 									ROLE_TRAITOR, ROLE_WIZARD)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV
 		for(var/department in long_job_lists)
-			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in long_job_lists[department])
 				if(break_counter > 0 && (break_counter % 10 == 0))
@@ -270,7 +286,9 @@
 		return
 	var/list/error_state = list()
 	var/player_key
+	var/ip_check = FALSE
 	var/player_ip
+	var/cid_check = FALSE
 	var/player_cid
 	var/use_last_connection = FALSE
 	var/applies_to_admins = FALSE
@@ -292,21 +310,26 @@
 		player_key = href_list["keytext"]
 		if(!player_key)
 			error_state += "Key was ticked but none was provided."
+	if(href_list["ipcheck"])
+		ip_check = TRUE
+	if(href_list["cidcheck"])
+		cid_check = TRUE
 	if(href_list["lastconn"])
-		use_last_connection = TRUE
-		if(!player_key)
-			error_state += "A key must be provided to use IP and CID from last connection."
+		if(player_key)
+			use_last_connection = TRUE
 	else
-		if(href_list["ipcheck"])
+		if(ip_check)
 			player_ip = href_list["iptext"]
-			if(!player_ip)
+			if(!player_ip && !use_last_connection)
 				error_state += "IP was ticked but none was provided."
-		if(href_list["cidcheck"])
+		if(cid_check)
 			player_cid = href_list["cidtext"]
-			if(!player_cid)
+			if(!player_cid && !use_last_connection)
 				error_state += "CID was ticked but none was provided."
 	if(!use_last_connection && !player_ip && !player_cid && !player_key)
 		error_state += "At least a key, IP or CID must be provided."
+	if(use_last_connection && !ip_check && !cid_check)
+		error_state += "Use last connection was ticked, but neither IP nor CID was."
 	if(href_list["applyadmins"])
 		applies_to_admins = TRUE
 	switch(href_list["radioduration"])
@@ -354,10 +377,10 @@
 			if("server")
 				roles_to_ban += "Server"
 			if("role")
+				href_list.Remove("Command", "Security", "Engineering", "Medical", "Science", "Supply", "Silicon", "Abstract", "Civilian", "Ghost and Other Roles", "Antagonist Positions") //remove the role banner hidden input values
 				if(href_list[href_list.len] == "roleban_delimiter")
 					error_state += "Role ban was selected but no roles to ban were selected."
 				else
-					href_list.Remove("Command", "Security", "Engineering", "Medical", "Science", "Supply", "Silicon", "Civilian", "Ghost and Other Roles", "Antagonist Positions") //remove the role banner hidden input values
 					var/delimiter_pos = href_list.Find("roleban_delimiter")
 					href_list.Cut(1, delimiter_pos+1)//remove every list element before and including roleban_delimiter so we have a list of only the roles to ban
 					for(var/key in href_list) //flatten into a list of only unique keys
@@ -368,11 +391,11 @@
 		to_chat(usr, "<span class='danger'>Ban not [edit_id ? "edited" : "created"] because the following errors were present:\n[error_state.Join("\n")]</span>")
 		return
 	if(edit_id)
-		edit_ban(edit_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes)
+		edit_ban(edit_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes)
 	else
-		create_ban(player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, roles_to_ban)
+		create_ban(player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, roles_to_ban)
 
-/datum/admins/proc/create_ban(player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, list/roles_to_ban)
+/datum/admins/proc/create_ban(player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, list/roles_to_ban)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
@@ -381,25 +404,28 @@
 	var/player_ckey = sanitizeSQL(ckey(player_key))
 	player_ip = sanitizeSQL(player_ip)
 	player_cid = sanitizeSQL(player_cid)
-	var/datum/DBQuery/query_create_ban_get_player = SSdbcore.NewQuery("SELECT byond_key, INET_NTOA(ip), computerid FROM [format_table_name("player")] WHERE ckey = '[player_ckey]'")
-	if(!query_create_ban_get_player.warn_execute())
-		qdel(query_create_ban_get_player)
-		return
-	if(query_create_ban_get_player.NextRow())
-		player_key = query_create_ban_get_player.item[1]
-		if(use_last_connection)
-			player_ip = query_create_ban_get_player.item[2]
-			player_cid = query_create_ban_get_player.item[3]
-	else
-		if(use_last_connection)
-			to_chat(usr, "<span class='danger'>Ban not created. [player_key]/([player_ckey]) hasn't been seen before, unable to use IP and CID from last connection.</span>")
+	if(player_ckey)
+		var/datum/DBQuery/query_create_ban_get_player = SSdbcore.NewQuery("SELECT byond_key, INET_NTOA(ip), computerid FROM [format_table_name("player")] WHERE ckey = '[player_ckey]'")
+		if(!query_create_ban_get_player.warn_execute())
 			qdel(query_create_ban_get_player)
 			return
+		if(query_create_ban_get_player.NextRow())
+			player_key = query_create_ban_get_player.item[1]
+			if(use_last_connection)
+				if(ip_check)
+					player_ip = query_create_ban_get_player.item[2]
+				if(cid_check)
+					player_cid = query_create_ban_get_player.item[3]
 		else
-			if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
-				qdel(query_create_ban_get_player)
-				return
-	qdel(query_create_ban_get_player)
+			if(use_last_connection)
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
+					qdel(query_create_ban_get_player)
+					return
+			else
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
+					qdel(query_create_ban_get_player)
+					return
+		qdel(query_create_ban_get_player)
 	var/admin_ckey = sanitizeSQL(usr.client.ckey)
 	if(applies_to_admins)
 		var/datum/DBQuery/query_check_adminban_count = SSdbcore.NewQuery("SELECT COUNT(DISTINCT bantime) FROM [format_table_name("ban")] WHERE a_ckey = '[admin_ckey]' AND applies_to_admins = 1 AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())")
@@ -423,6 +449,10 @@
 		interval = sanitizeSQL(interval)
 	else
 		interval = "MINUTE"
+	var/time_message = "[duration] [lowertext(interval)]" //no DisplayTimeText because our duration is of variable interval type
+	if(duration > 1) //pluralize the interval if necessary
+		time_message += "s"
+	var/note_reason = "Banned from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"] [isnull(duration) ? "permanently" : "for [time_message]"] - [reason]"
 	reason = sanitizeSQL(reason)
 	var/list/clients_online = GLOB.clients.Copy()
 	var/list/admins_online = list()
@@ -454,31 +484,35 @@
 		))
 	if(!SSdbcore.MassInsert(format_table_name("ban"), sql_ban, warn = 1))
 		return
-	var/time_message = "[duration] [lowertext(interval)]" //no DisplayTimeText because our duration is of variable interval type
-	if(duration > 1) //pluralize the interval if necessary
-		time_message += "s"
-	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [player_key]."
-	log_admin_private("[kn] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join(", ")]"]")
-	message_admins("[kna] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]")
+	var/target = ban_target_string(player_key, player_ip, player_cid)
+	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [target]."
+	log_admin_private("[kn] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join(", ")]"] Reason: [reason]")
+	message_admins("[kna] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]\nReason: [reason]")
 	if(applies_to_admins)
 		send2irc("BAN ALERT","[kn] [msg]")
-	create_message("note", player_ckey, null, reason, null, null, 0, 0, null, 0, severity)
+	if(player_ckey)
+		create_message("note", player_ckey, admin_ckey, note_reason, null, null, 0, 0, null, 0, severity)
 	var/client/C = GLOB.directory[player_ckey]
 	var/datum/admin_help/AH = admin_ticket_log(player_ckey, msg)
 	var/appeal_url = "No ban appeal url set!"
 	appeal_url = CONFIG_GET(string/banappeals)
+	var/is_admin = FALSE
 	if(C)
 		build_ban_cache(C)
 		to_chat(C, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>")
-		if(roles_to_ban[1] == "Server")
-			if(AH)
-				AH.Resolve()
+		if(GLOB.admin_datums[C.ckey] || GLOB.deadmins[C.ckey])
+			is_admin = TRUE
+		if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
 			qdel(C)
+	if(roles_to_ban[1] == "Server" && AH)
+		AH.Resolve()
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == player_ip || i.computer_id == player_cid)
 			build_ban_cache(i)
 			to_chat(i, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>")
-			if(roles_to_ban[1] == "Server")
+			if(GLOB.admin_datums[i.ckey] || GLOB.deadmins[i.ckey])
+				is_admin = TRUE
+			if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
 				qdel(i)
 
 /datum/admins/proc/unban_panel(player_key, admin_key, player_ip, player_cid, page = 0)
@@ -557,7 +591,8 @@
 			var/unban_datetime = query_unban_search_bans.item[15]
 			var/unban_key = query_unban_search_bans.item[16]
 			var/unban_round_id = query_unban_search_bans.item[17]
-			output += "<div class='banbox'><div class='header [unban_datetime ? "unbanned" : "banned"]'><b>[player_key]</b>[applies_to_admins ? " <b>ADMIN</b>" : ""] banned by <b>[admin_key]</b> from <b>[role]</b> on <b>[ban_datetime]</b> during round <b>#[ban_round_id]</b>.<br>"
+			var/target = ban_target_string(player_key, player_ip, player_cid)
+			output += "<div class='banbox'><div class='header [unban_datetime ? "unbanned" : "banned"]'><b>[target]</b>[applies_to_admins ? " <b>ADMIN</b>" : ""] banned by <b>[admin_key]</b> from <b>[role]</b> on <b>[ban_datetime]</b> during round <b>#[ban_round_id]</b>.<br>"
 			if(!expiration_time)
 				output += "<b>Permanent ban</b>."
 			else
@@ -566,7 +601,7 @@
 				output += "<br>Unbanned by <b>[unban_key]</b> on <b>[unban_datetime]</b> during round <b>#[unban_round_id]</b>."
 			output += "</div><div class='container'><div class='reason'>[reason]</div><div class='edit'>"
 			if(!expired && !unban_datetime)
-				output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[player_key];editbanip=[player_ip];editbancid=[player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[reason];editbanpage=[page];editbanadminkey=[admin_key]'>Edit</a><br>[unban_href]"
+				output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[player_key];editbanip=[player_ip];editbancid=[player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[admin_key]'>Edit</a><br>[unban_href]"
 			if(edits)
 				output += "<br><a href='?_src_=holder;[HrefToken()];unbanlog=[ban_id]'>Edit log</a>"
 			output += "</div></div></div>"
@@ -581,7 +616,8 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	if(alert(usr, "Please confirm unban of [player_key] from [role].", "Unban confirmation", "Yes", "No") == "No")
+	var/target = ban_target_string(player_key, player_ip, player_cid)
+	if(alert(usr, "Please confirm unban of [target] from [role].", "Unban confirmation", "Yes", "No") == "No")
 		return
 	ban_id = sanitizeSQL(ban_id)
 	var/admin_ckey = sanitizeSQL(usr.client.ckey)
@@ -594,19 +630,19 @@
 		qdel(query_unban)
 		return
 	qdel(query_unban)
-	log_admin_private("[kn] has unbanned [player_key] from [role].")
-	message_admins("[kna] has unbanned [player_key] from [role].")
+	log_admin_private("[kn] has unbanned [target] from [role].")
+	message_admins("[kna] has unbanned [target] from [role].")
 	var/client/C = GLOB.directory[player_key]
 	if(C)
 		build_ban_cache(C)
-		to_chat(C, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your key.")
+		to_chat(C, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your key.</span>")
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == player_ip || i.computer_id == player_cid)
 			build_ban_cache(i)
-			to_chat(i, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your IP or CID.")
+			to_chat(i, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your IP or CID.</span>")
 	unban_panel(player_key, admin_key, player_ip, player_cid, page)
 
-/datum/admins/proc/edit_ban(ban_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
+/datum/admins/proc/edit_ban(ban_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
@@ -617,22 +653,29 @@
 	player_ip = sanitizeSQL(player_ip)
 	player_cid = sanitizeSQL(player_cid)
 	var/bantime
-	var/datum/DBQuery/query_edit_ban_get_player = SSdbcore.NewQuery("SELECT byond_key, (SELECT bantime FROM [format_table_name("ban")] WHERE id = [ban_id]), ip, computerid FROM [format_table_name("player")] WHERE ckey = '[player_ckey]'")
-	if(!query_edit_ban_get_player.warn_execute())
-		qdel(query_edit_ban_get_player)
-		return
-	if(query_edit_ban_get_player.NextRow())
-		player_key = query_edit_ban_get_player.item[1]
-		bantime = query_edit_ban_get_player.item[2]
-		if(use_last_connection)
-			player_ip = query_edit_ban_get_player.item[3]
-			player_cid = query_edit_ban_get_player.item[4]
-	else
-		if(use_last_connection)
-			to_chat(usr, "<span class='danger'>Ban not edited. [player_key]/([player_ckey]) hasn't been seen before, unable to use IP and CID from last connection.</span>")
+	if(player_ckey)
+		var/datum/DBQuery/query_edit_ban_get_player = SSdbcore.NewQuery("SELECT byond_key, (SELECT bantime FROM [format_table_name("ban")] WHERE id = [ban_id]), ip, computerid FROM [format_table_name("player")] WHERE ckey = '[player_ckey]'")
+		if(!query_edit_ban_get_player.warn_execute())
 			qdel(query_edit_ban_get_player)
 			return
-	qdel(query_edit_ban_get_player)
+		if(query_edit_ban_get_player.NextRow())
+			player_key = query_edit_ban_get_player.item[1]
+			bantime = query_edit_ban_get_player.item[2]
+			if(use_last_connection)
+				if(ip_check)
+					player_ip = query_edit_ban_get_player.item[3]
+				if(cid_check)
+					player_cid = query_edit_ban_get_player.item[4]
+		else
+			if(use_last_connection)
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to edit a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
+					qdel(query_edit_ban_get_player)
+					return
+			else
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to edit a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
+					qdel(query_edit_ban_get_player)
+					return
+		qdel(query_edit_ban_get_player)
 	if(applies_to_admins && (applies_to_admins != old_applies))
 		var/admin_ckey = sanitizeSQL(usr.client.ckey)
 		var/datum/DBQuery/query_check_adminban_count = SSdbcore.NewQuery("SELECT COUNT(DISTINCT bantime) FROM [format_table_name("ban")] WHERE a_ckey = '[admin_ckey]' AND applies_to_admins = 1 AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())")
@@ -661,7 +704,7 @@
 	var/list/changes_text= list()
 	var/list/changes_keys = list()
 	for(var/i in changes)
-		changes_text += "[i]: [changes[i]]"
+		changes_text += "[sanitizeSQL(i)]: [sanitizeSQL(changes[i])]"
 		changes_keys += i
 	var/where = "id = [sanitizeSQL(ban_id)]"
 	if(text2num(mirror_edit))
@@ -687,7 +730,7 @@
 	var/client/C = GLOB.directory[old_key]
 	if(C)
 		build_ban_cache(C)
-		to_chat(C, "<span class='boldannounce'>[usr.client.key] has edited the [changes_keys_text] of a ban for your key.")
+		to_chat(C, "<span class='boldannounce'>[usr.client.key] has edited the [changes_keys_text] of a ban for your key.</span>")
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == old_ip || i.computer_id == old_cid)
 			build_ban_cache(i)
@@ -711,3 +754,18 @@
 		edit_log.set_content(edits)
 		edit_log.open()
 	qdel(query_get_ban_edits)
+
+/datum/admins/proc/ban_target_string(player_key, player_ip, player_cid)
+	. = list()
+	if(player_key)
+		. += player_key
+	else
+		if(player_ip)
+			. += player_ip
+		else
+			. += "NULL"
+		if(player_cid)
+			. += player_cid
+		else
+			. += "NULL"
+	. = jointext(., "/")

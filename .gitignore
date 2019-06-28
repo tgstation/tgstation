@@ -195,11 +195,16 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
+!/.vscode/extensions.json
 tools/MapAtmosFixer/MapAtmosFixer/obj/*
 tools/MapAtmosFixer/MapAtmosFixer/bin/*
 
 #GitHub Atom
 .atom-build.json
+
+#KDevelop and Kate
+*.kdev4*
+*.kate-swp
 
 #extra map stuff
 /_maps/**/backup/

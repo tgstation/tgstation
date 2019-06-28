@@ -23,9 +23,9 @@
 	return BRUTELOSS
 
 /obj/item/clothing/glasses/examine(mob/user)
-	..()
+	. = ..()
 	if(glass_colour_type && ishuman(user))
-		to_chat(user, "<span class='notice'>Alt-click to toggle its colors.</span>")
+		. += "<span class='notice'>Alt-click to toggle its colors.</span>"
 
 /obj/item/clothing/glasses/visor_toggling()
 	..()
@@ -45,7 +45,7 @@
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
-		if(!(H.has_trait(TRAIT_BLIND)))
+		if(!(HAS_TRAIT(H, TRAIT_BLIND)))
 			if(H.glasses == src)
 				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)
@@ -175,6 +175,12 @@
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
 
+/obj/item/clothing/glasses/regular/circle
+	name = "circle glasses"
+	desc = "Why would you wear something so controversial yet so brave?"
+	icon_state = "circle_glasses"
+	item_state = "circle_glasses"
+
 //Here lies green glasses, so ugly they died. RIP
 
 /obj/item/clothing/glasses/sunglasses
@@ -190,8 +196,17 @@
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
-	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
+	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
 	scan_reagents = TRUE
+
+/obj/item/clothing/glasses/sunglasses/reagent/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user) && slot == SLOT_GLASSES)
+		ADD_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
+
+/obj/item/clothing/glasses/sunglasses/reagent/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
 
 /obj/item/clothing/glasses/sunglasses/garb
 	name = "black gar glasses"
@@ -246,7 +261,6 @@
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_cover = GLASSESCOVERSEYES
-	visor_flags_inv = HIDEEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
 /obj/item/clothing/glasses/welding/attack_self(mob/user)
@@ -320,6 +334,12 @@
 		return
 	thermal_overload()
 
+/obj/item/clothing/glasses/thermal/xray
+	name = "syndicate xray goggles"
+	desc = "A pair of xray goggles manufactured by the Syndicate."
+	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
+	flash_protect = -1
+
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
@@ -327,8 +347,8 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/thermal/syndi/New()
-	..()
+/obj/item/clothing/glasses/thermal/syndi/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
@@ -348,13 +368,12 @@
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 
 /obj/item/clothing/glasses/thermal/monocle/examine(mob/user) //Different examiners see a different description!
-	var/desk = desc
 	if(user.gender == MALE)
 		desc = replacetext(desc, "person", "man")
 	else if(user.gender == FEMALE)
 		desc = replacetext(desc, "person", "woman")
-	..()
-	desc = desk
+	. = ..()
+	desc = initial(desc)
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "optical thermal eyepatch"
@@ -396,9 +415,12 @@
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
 	scan_reagents = TRUE
-	item_flags = NODROP
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
+
+/obj/item/clothing/glasses/godeye/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)

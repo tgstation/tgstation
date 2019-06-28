@@ -49,11 +49,11 @@
 	return ..()
 
 /obj/item/radio/intercom/examine(mob/user)
-	..()
+	. = ..()
 	if(!unfastened)
-		to_chat(user, "<span class='notice'>It's <b>screwed</b> and secured to the wall.</span>")
+		. += "<span class='notice'>It's <b>screwed</b> and secured to the wall.</span>"
 	else
-		to_chat(user, "<span class='notice'>It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.</span>")
+		. += "<span class='notice'>It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.</span>"
 
 /obj/item/radio/intercom/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)

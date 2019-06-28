@@ -27,7 +27,7 @@
 	visible_message("<span class='notice'>[src] swells up!</span>")
 
 	//Animation
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/carp.dmi'
 	flick("carp_swell", src)
 	//Wait for animation to end
 	sleep(6)
@@ -47,3 +47,28 @@
 	else
 		visible_message("<span class='notice'>The newly grown [M.name] looks up at you with friendly eyes.</span>")
 	qdel(src)
+	
+/obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+	user.visible_message("<span class='suicide'>[user] starts eating [src]. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
+	if(istype(H))
+		H.Paralyze(30)
+		forceMove(H) //we move it AWAAAYY
+		sleep(20)
+		
+		if(QDELETED(src))
+			return SHAME
+		if(!QDELETED(H))
+			H.spawn_gibs()
+			H.apply_damage(200, def_zone = BODY_ZONE_CHEST)
+			forceMove(get_turf(H)) //we move it back
+		icon = 'icons/mob/carp.dmi'
+		flick("carp_swell", src)
+		sleep(6) //let the animation play out
+	
+		if(!QDELETED(src))
+			var/mob/living/M = new mobtype(get_turf(src))
+			M.faction = list("neutral")
+			qdel(src)
+	return BRUTELOSS

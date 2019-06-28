@@ -2,7 +2,6 @@
 	name = "chem implant"
 	desc = "Injects things."
 	icon_state = "reagents"
-	container_type = OPENCONTAINER
 	activated = FALSE
 
 /obj/item/implant/chem/get_data()
@@ -23,7 +22,7 @@
 
 /obj/item/implant/chem/Initialize()
 	. = ..()
-	create_reagents(50)
+	create_reagents(50, OPENCONTAINER)
 	GLOB.tracked_chem_implants += src
 
 /obj/item/implant/chem/Destroy()

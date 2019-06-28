@@ -9,14 +9,12 @@
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
 	reroll_friendly = 1
+	announce_span = "Traitors and Changelings"
+	announce_text = "There are alien creatures on the station along with some syndicate operatives out for their own gain! Do not let the changelings or the traitors succeed!"
 
 	var/list/possible_changelings = list()
 	var/list/changelings = list()
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
-
-/datum/game_mode/traitor/changeling/announce()
-	to_chat(world, "<B>The current game mode is - Traitor+Changeling!</B>")
-	to_chat(world, "<B>There are alien creatures on the station along with some syndicate operatives out for their own gain! Do not let the changelings or the traitors succeed!</B>")
 
 /datum/game_mode/traitor/changeling/can_start()
 	if(!..())

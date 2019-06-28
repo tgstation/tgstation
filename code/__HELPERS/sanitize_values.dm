@@ -22,7 +22,7 @@
 
 
 //more specialised stuff
-/proc/sanitize_gender(gender,neuter=0,plural=0, default="male")
+/proc/sanitize_gender(gender,neuter=0,plural=1, default="male")
 	switch(gender)
 		if(MALE, FEMALE)
 			return gender

@@ -92,8 +92,6 @@
 
 	apply_overlay(FIRE_LAYER)
 
-
-
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
 
@@ -278,7 +276,7 @@
 		else
 			. += "-robotic"
 
-	if(has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
 
 

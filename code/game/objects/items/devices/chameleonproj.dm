@@ -16,8 +16,8 @@
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_appearance = null
 
-/obj/item/chameleon/New()
-	..()
+/obj/item/chameleon/Initialize()
+	. = ..()
 	var/obj/item/cigbutt/butt = /obj/item/cigbutt
 	saved_appearance = initial(butt.appearance)
 
@@ -116,7 +116,7 @@
 	appearance = saved_appearance
 	if(istype(M.buckled, /obj/vehicle))
 		var/obj/vehicle/V = M.buckled
-		GET_COMPONENT_FROM(VRD, /datum/component/riding, V)
+		var/datum/component/riding/VRD = V.GetComponent(/datum/component/riding)
 		if(VRD)
 			VRD.force_dismount(M)
 		else
@@ -146,7 +146,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
-	..()
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)

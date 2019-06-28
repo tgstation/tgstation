@@ -115,13 +115,12 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
-/turf/closed/wall/mineral/plasma/bullet_act(var/obj/item/projectile/Proj)
+/turf/closed/wall/mineral/plasma/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj, /obj/item/projectile/beam))
 		PlasmaBurn(2500)
 	else if(istype(Proj, /obj/item/projectile/ion))
 		PlasmaBurn(500)
-	..()
-
+	. = ..()
 
 /turf/closed/wall/mineral/wood
 	name = "wooden wall"
@@ -134,7 +133,7 @@
 	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
 
 /turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
-	if(W.sharpness && W.force)
+	if(W.is_sharp() && W.force)
 		var/duration = (48/W.force) * 2 //In seconds, for now.
 		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/twohanded/fireaxe))
 			duration /= 4 //Much better with hatchets and axes.
@@ -249,7 +248,7 @@
 
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"
-	desc = "An evil wall of plasma and titanium."
+	desc = "A durable wall made of an alloy of plasma and titanium."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle"
 	explosion_block = 4

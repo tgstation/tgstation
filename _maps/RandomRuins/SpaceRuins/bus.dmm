@@ -100,7 +100,7 @@
 /obj/structure/fluff/bus/passable/seat{
 	icon_state = "backseat"
 	},
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+/obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
@@ -110,8 +110,8 @@
 	icon_state = "driverseat";
 	pixel_y = 17
 	},
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},

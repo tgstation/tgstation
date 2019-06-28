@@ -11,6 +11,15 @@
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/mop
+	name = "Mop"
+	id = "mop"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/mop
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/crowbar
 	name = "Pocket Crowbar"
 	id = "crowbar"
@@ -128,9 +137,9 @@
 	id = "cable_coil"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GLASS = 5)
-	build_path = /obj/item/stack/cable_coil/random
+	build_path = /obj/item/stack/cable_coil
 	category = list("initial","Tools","Tool Designs")
-	maxstack = 30
+	maxstack = MAXCOIL
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/toolbox
@@ -227,6 +236,32 @@
 	build_path = /obj/item/airlock_painter
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/emergency_oxygen
+	name = "Emergency Oxygen Tank"
+	id = "emergency_oxygen"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 500)
+	build_path = /obj/item/tank/internals/emergency_oxygen/empty
+	category = list("initial","Misc","Equipment")
+
+/datum/design/emergency_oxygen_engi
+	name = "Extended-Capacity Emergency Oxygen Tank"
+	id = "emergency_oxygen_engi"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 750)
+	build_path = /obj/item/tank/internals/emergency_oxygen/engi/empty
+	category = list("hacked","Misc","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/plasmaman_tank_belt
+	name = "Plasmaman Belt Tank"
+	id = "plasmaman_tank_belt"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 800)
+	build_path = /obj/item/tank/internals/plasmaman/belt/empty
+	category = list("hacked","Misc","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/metal
 	name = "Metal"
@@ -618,10 +653,11 @@
 /datum/design/syringe
 	name = "Syringe"
 	id = "syringe"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GLASS = 20)
 	build_path = /obj/item/reagent_containers/syringe
-	category = list("initial", "Medical")
+	category = list("initial", "Medical", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/prox_sensor
 	name = "Proximity Sensor"
@@ -896,3 +932,30 @@
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/disk/holodisk
 	category = list("initial", "Misc")
+
+/datum/design/circuit
+	name = "Blue Circuit Tile"
+	id = "circuit"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/stack/tile/circuit
+	category = list("initial", "Misc")
+	maxstack = 50
+
+/datum/design/circuitgreen
+	name = "Green Circuit Tile"
+	id = "circuitgreen"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/stack/tile/circuit/green
+	category = list("initial", "Misc")
+	maxstack = 50
+
+/datum/design/circuitred
+	name = "Red Circuit Tile"
+	id = "circuitred"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/stack/tile/circuit/red
+	category = list("initial", "Misc")
+	maxstack = 50

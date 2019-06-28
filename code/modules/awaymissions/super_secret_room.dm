@@ -124,10 +124,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_GLASS = 500)
 
-/obj/item/rupee/New()
+/obj/item/rupee/Initialize()
+	. = ..()
 	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	..()
 
 /obj/item/rupee/Crossed(mob/M)
 	if(!istype(M))

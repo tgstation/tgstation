@@ -19,15 +19,13 @@
 	bubble_icon = "clock"
 	light_color = "#E42742"
 	deathsound = 'sound/magic/clockwork/anima_fragment_death.ogg'
+	speech_span = SPAN_ROBOT
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
 	var/empower_string = "<span class='heavy_brass'>You have nothing to empower, yell at the coders!</span>" //Shown to the mob when the herald beacon activates
 
 /mob/living/simple_animal/hostile/clockwork/Initialize()
 	. = ..()
 	update_values()
-
-/mob/living/simple_animal/hostile/clockwork/get_spans()
-	return ..() | SPAN_ROBOT
 
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()
@@ -39,7 +37,7 @@
 /mob/living/simple_animal/hostile/clockwork/ratvar_act()
 	fully_heal(TRUE)
 
-/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
@@ -59,7 +57,7 @@
 		msg += "[addendum]\n"
 	msg += "*---------*</span>"
 
-	to_chat(user, msg)
+	return list(msg)
 
 /mob/living/simple_animal/hostile/clockwork/proc/examine_info() //Override this on a by-mob basis to have unique examine info
 	return

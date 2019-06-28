@@ -476,6 +476,15 @@
 	category = list("Phazon")
 
 //Exosuit Equipment
+/datum/design/ripleyupgrade
+	name = "Ripley MK-1 to MK-II conversion kit"
+	id = "ripleyupgrade"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/ripleyupgrade
+	materials = list(MAT_METAL=10000,MAT_PLASMA=10000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
 /datum/design/mech_hydraulic_clamp
 	name = "Exosuit Engineering Equipment (Hydraulic Clamp)"
 	id = "mech_hydraulic_clamp"
@@ -508,15 +517,6 @@
 	id = "mech_extinguisher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/extinguisher
-	materials = list(MAT_METAL=10000)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
-/datum/design/mech_cable_layer
-	name = "Exosuit Engineering Equipment (Cable Layer)"
-	id = "mech_cable_layer"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/cable_layer
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -677,7 +677,7 @@
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 15000, MAT_PLASMA = 8000, MAT_URANIUM = 8000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
-	
+
 /datum/design/borg_upgrade_piercinghypospray
 	name = "Cyborg Upgrade (Piercing Hypospray)"
 	id = "borg_upgrade_piercinghypospray"
@@ -695,7 +695,7 @@
 	materials = list(MAT_METAL = 8000, MAT_GLASS = 5000, MAT_SILVER = 4000, MAT_GOLD = 3000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
-	
+
 /datum/design/borg_upgrade_surgicalprocessor
 	name = "Cyborg Upgrade (Surgical Processor)"
 	id = "borg_upgrade_surgicalprocessor"

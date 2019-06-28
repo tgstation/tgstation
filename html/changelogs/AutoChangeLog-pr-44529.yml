@@ -1,0 +1,8 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - balance: "Mecha ballistics weapons now require ammo created from an Exosuit Fabricator or the Security Protolathe, though they will start with a full magazine and in most cases enough for one full reload. Reloading these weapons no longer chunks your power cell. Clown (and mime) mecha equipment have not changed."
+  - balance: "The SRM-8 Missile Launcher has been replaced with the BRM-6 Breaching Missile Launcher in techwebs (Nukie Mauler remains equipped with the SRM-8)."
+  - balance: "Both Missile Launchers and the Clusterbang Launcher do not have an ammo cache, and cannot be reloaded by the pilot. Once the initial loaded ammo has been spent, you can use the appropriate ammo box to load the weapon directly."
+  - rscadd: "Utility mechs that have a clamp equipped can load ammo from their own cargo hold into other mechs."
+  - rscadd: "Nuke Ops can purchase spare ammo duffel bags for their mecha weapons, should they run low."

@@ -71,19 +71,24 @@
 /obj/mecha/proc/get_stats_part()
 	var/integrity = obj_integrity/max_integrity*100
 	var/cell_charge = get_charge()
-	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
-	var/tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
-	var/cabin_pressure = round(return_pressure(),0.01)
+	var/datum/gas_mixture/int_tank_air = 0
+	var/tank_pressure = 0
+	var/tank_temperature = 0
+	var/cabin_pressure = 0
+	if (internal_tank)
+		int_tank_air = internal_tank.return_air()
+		tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
+		tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
+		cabin_pressure = round(return_pressure(),0.01)
 	. = {"[report_internal_damage()]
 						[integrity<30?"<span class='userdanger'>DAMAGE LEVEL CRITICAL</span><br>":null]
 						<b>Integrity: </b> [integrity]%<br>
 						<b>Powercell charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
-						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
-						<b>Airtank pressure: </b>[tank_pressure]kPa<br>
-						<b>Airtank temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
-						<b>Cabin pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<span class='danger'>[cabin_pressure]</span>": cabin_pressure]kPa<br>
-						<b>Cabin temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
+						<b>Air source: </b>[internal_tank?"[use_internal_tank?"Internal Airtank":"Environment"]":"Environment"]<br>
+						<b>Airtank pressure: </b>[internal_tank?"[tank_pressure]kPa":"N/A"]<br>
+						<b>Airtank temperature: </b>[internal_tank?"[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C":"N/A"]<br>
+						<b>Cabin pressure: </b>[internal_tank?"[cabin_pressure>WARNING_HIGH_PRESSURE ? "<span class='danger'>[cabin_pressure]</span>": cabin_pressure]kPa":"N/A"]<br>
+						<b>Cabin temperature: </b> [internal_tank?"[return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C":"N/A"]<br>
 						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=[REF(src)];reset_dna=1'>Reset</a>\]<br>":""]<br>
 						[thrusters_action.owner ? "<b>Thrusters: </b> [thrusters_active ? "Enabled" : "Disabled"]<br>" : ""]
 						[defense_action.owner ? "<b>Defence Mode: </b> [defence_mode ? "Enabled" : "Disabled"]<br>" : ""]
@@ -100,14 +105,14 @@
 						<div class='header'>Electronics</div>
 						<div class='links'>
 						<b>Radio settings:</b><br>
-						Microphone: <a href='?src=[REF(src)];rmictoggle=1'><span id="rmicstate">[radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
-						Speaker: <a href='?src=[REF(src)];rspktoggle=1'><span id="rspkstate">[radio.listening?"Engaged":"Disengaged"]</span></a><br>
+						Microphone: [radio? "<a href='?src=[REF(src)];rmictoggle=1'><span id=\"rmicstate\">[radio.broadcasting?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
+						Speaker: [radio? "<a href='?src=[REF(src)];rspktoggle=1'><span id=\"rspkstate\">[radio.listening?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
 						Frequency:
-						<a href='?src=[REF(src)];rfreq=-10'>-</a>
-						<a href='?src=[REF(src)];rfreq=-2'>-</a>
-						<span id="rfreq">[format_frequency(radio.frequency)]</span>
-						<a href='?src=[REF(src)];rfreq=2'>+</a>
-						<a href='?src=[REF(src)];rfreq=10'>+</a><br>
+						[radio? "<a href='?src=[REF(src)];rfreq=-10'>-</a>":"-"]
+						[radio? "<a href='?src=[REF(src)];rfreq=-2'>-</a>":"-"]
+						<span id="rfreq">[radio?"[format_frequency(radio.frequency)]":"Error"]</span>
+						[radio? "<a href='?src=[REF(src)];rfreq=2'>+</a>":"+"]
+						[radio? "<a href='?src=[REF(src)];rfreq=10'>+</a><br>":"+"]
 						</div>
 						</div>
 						<div class='wr'>
@@ -115,7 +120,7 @@
 						<div class='links'>
 						<a href='?src=[REF(src)];toggle_id_upload=1'><span id='t_id_upload'>[add_req_access?"L":"Unl"]ock ID upload panel</span></a><br>
 						<a href='?src=[REF(src)];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
-						<a href='?src=[REF(src)];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>
+						[internal_tank?"<a href='?src=[REF(src)];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>":""]
 						<a href='?src=[REF(src)];dna_lock=1'>DNA-lock</a><br>
 						<a href='?src=[REF(src)];change_name=1'>Change exosuit name</a><br>
 						</div>
@@ -211,73 +216,71 @@
 	if(usr.incapacitated())
 		return
 
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
-
 	if(in_range(src, usr))
+		var/obj/item/card/id/id_card
+		if (href_list["id_card"])
+			id_card = locate(href_list["id_card"])
+			if (!istype(id_card))
+				return
 
-		if(href_list["req_access"] && add_req_access)
-			output_access_dialog(afilter.getObj("id_card"),afilter.getMob("user"))
+		if(href_list["req_access"] && add_req_access && id_card)
+			output_access_dialog(id_card,usr)
 
-		if(href_list["maint_access"] && maint_access)
-			var/mob/user = afilter.getMob("user")
-			if(user)
-				if(state==0)
-					state = 1
-					to_chat(user, "The securing bolts are now exposed.")
-				else if(state==1)
-					state = 0
-					to_chat(user, "The securing bolts are now hidden.")
-				output_maintenance_dialog(afilter.getObj("id_card"),user)
+		if(href_list["maint_access"] && maint_access && id_card)
+			if(state==0)
+				state = 1
+				to_chat(usr, "The securing bolts are now exposed.")
+			else if(state==1)
+				state = 0
+				to_chat(usr, "The securing bolts are now hidden.")
+			output_maintenance_dialog(id_card,usr)
 
 		if(href_list["set_internal_tank_valve"] && state >=1)
-			var/mob/user = afilter.getMob("user")
-			if(user)
-				var/new_pressure = input(user,"Input new output pressure","Pressure setting",internal_tank_valve) as num
-				if(new_pressure)
-					internal_tank_valve = new_pressure
-					to_chat(user, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
+			var/new_pressure = input(usr,"Input new output pressure","Pressure setting",internal_tank_valve) as num
+			if(new_pressure)
+				internal_tank_valve = new_pressure
+				to_chat(usr, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
 
-		if(href_list["add_req_access"] && add_req_access && afilter.getObj("id_card"))
-			operation_req_access += afilter.getNum("add_req_access")
-			output_access_dialog(afilter.getObj("id_card"),afilter.getMob("user"))
+		if(href_list["add_req_access"] && add_req_access && id_card)
+			operation_req_access += text2num(href_list["add_req_access"])
+			output_access_dialog(id_card,usr)
 
-		if(href_list["del_req_access"] && add_req_access && afilter.getObj("id_card"))
-			operation_req_access -= afilter.getNum("del_req_access")
-			output_access_dialog(afilter.getObj("id_card"),afilter.getMob("user"))
+		if(href_list["del_req_access"] && add_req_access && id_card)
+			operation_req_access -= text2num(href_list["add_req_access"])
+			output_access_dialog(id_card, usr)
 
 		if(href_list["finish_req_access"])
 			add_req_access = 0
-			var/mob/user = afilter.getMob("user")
-			user << browse(null,"window=exosuit_add_access")
+			usr << browse(null,"window=exosuit_add_access")
 
 	if(usr != occupant)
 		return
 
 	if(href_list["update_content"])
-		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
+		send_byjax(usr,"exosuit.browser","content",src.get_stats_part())
 
 	if(href_list["select_equip"])
-		var/obj/item/mecha_parts/mecha_equipment/equip = afilter.getObj("select_equip")
+		var/obj/item/mecha_parts/mecha_equipment/equip = locate(href_list["select_equip"]) in src
 		if(equip && equip.selectable)
-			src.selected = equip
-			src.occupant_message("You switch to [equip]")
-			src.visible_message("[src] raises [equip]")
-			send_byjax(src.occupant,"exosuit.browser","eq_list",src.get_equipment_list())
+			selected = equip
+			occupant_message("You switch to [equip]")
+			visible_message("[src] raises [equip]")
+			send_byjax(usr,"exosuit.browser","eq_list",src.get_equipment_list())
 
 	if(href_list["rmictoggle"])
 		radio.broadcasting = !radio.broadcasting
-		send_byjax(src.occupant,"exosuit.browser","rmicstate",(radio.broadcasting?"Engaged":"Disengaged"))
+		send_byjax(usr,"exosuit.browser","rmicstate",(radio.broadcasting?"Engaged":"Disengaged"))
 
 	if(href_list["rspktoggle"])
 		radio.listening = !radio.listening
-		send_byjax(src.occupant,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
+		send_byjax(usr,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
 
 	if(href_list["rfreq"])
-		var/new_frequency = (radio.frequency + afilter.getNum("rfreq"))
+		var/new_frequency = (radio.frequency + text2num(href_list["rfreq"]))
 		if (!radio.freerange || (radio.frequency < MIN_FREE_FREQ || radio.frequency > MAX_FREE_FREQ))
 			new_frequency = sanitize_frequency(new_frequency)
 		radio.set_frequency(new_frequency)
-		send_byjax(src.occupant,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
+		send_byjax(usr,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
 
 	if (href_list["change_name"])
 		var/userinput = input(occupant, "Choose new exosuit name", "Rename exosuit", "") as null|text
@@ -287,14 +290,14 @@
 
 	if (href_list["toggle_id_upload"])
 		add_req_access = !add_req_access
-		send_byjax(src.occupant,"exosuit.browser","t_id_upload","[add_req_access?"L":"Unl"]ock ID upload panel")
+		send_byjax(usr,"exosuit.browser","t_id_upload","[add_req_access?"L":"Unl"]ock ID upload panel")
 
 	if(href_list["toggle_maint_access"])
 		if(state)
 			occupant_message("<span class='danger'>Maintenance protocols in effect</span>")
 			return
 		maint_access = !maint_access
-		send_byjax(src.occupant,"exosuit.browser","t_maint_access","[maint_access?"Forbid":"Permit"] maintenance protocols")
+		send_byjax(usr,"exosuit.browser","t_maint_access","[maint_access?"Forbid":"Permit"] maintenance protocols")
 
 	if (href_list["toggle_port_connection"])
 		if(internal_tank.connected_port)

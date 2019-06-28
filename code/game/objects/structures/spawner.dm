@@ -13,10 +13,11 @@
 	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
 	var/spawn_text = "emerges from"
 	var/faction = list("hostile")
+	var/spawner_type = /datum/component/spawner
 
 /obj/structure/spawner/Initialize()
 	. = ..()
-	AddComponent(/datum/component/spawner, mob_types, spawn_time, faction, spawn_text, max_mobs)
+	AddComponent(spawner_type, mob_types, spawn_time, faction, spawn_text, max_mobs)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/M)
 	if(faction_check(faction, M.faction, FALSE)&&!M.client)
@@ -43,6 +44,18 @@
 	mob_types = list(/mob/living/simple_animal/hostile/skeleton)
 	spawn_text = "climbs out of"
 	faction = list("skeleton")
+
+/obj/structure/spawner/clown
+	name = "Laughing Larry"
+	desc = "A laughing, jovial figure. Something seems stuck in his throat."
+	icon_state = "clownbeacon"
+	icon = 'icons/obj/device.dmi'
+	max_integrity = 200
+	max_mobs = 15
+	spawn_time = 150
+	mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob, /mob/living/simple_animal/hostile/retaliate/clown/banana, /mob/living/simple_animal/hostile/retaliate/clown/honkling, /mob/living/simple_animal/hostile/retaliate/clown/lube)
+	spawn_text = "climbs out of"
+	faction = list("clown")
 
 /obj/structure/spawner/mining
 	name = "monster den"

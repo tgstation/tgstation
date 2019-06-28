@@ -27,6 +27,10 @@
 			qdel(F)
 			return
 	var/turf/T = get_turf(target)
+	var/obj/structure/projected_forcefield/found_field = locate() in T
+	if(found_field)
+		to_chat(user, "<span class='warning'>There is already a forcefield in that location!</span>")
+		return
 	if(T.density)
 		return
 	if(get_dist(T,src) > field_distance_limit)
@@ -48,9 +52,8 @@
 			qdel(F)
 
 /obj/item/forcefield_projector/examine(mob/user)
-	..()
-	var/percent_charge = round((shield_integrity/max_shield_integrity)*100)
-	to_chat(user, "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>")
+	. = ..()
+	. += "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [round((shield_integrity/max_shield_integrity)*100)]% charged.</span>"
 
 /obj/item/forcefield_projector/Initialize(mapload)
 	. = ..()

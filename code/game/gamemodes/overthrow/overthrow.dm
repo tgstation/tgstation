@@ -74,4 +74,4 @@
 		var/datum/team/Tagain = l
 		if(teams[Tagain] == max_points)
 			winners += Tagain.name
-	return "<span class='greentext big'>The [english_list(winners)] team[winners.len > 1 ? "s tied" : " won"] with [max_points] points!</span>"
+	return "<div class='panel redborder'><span class='greentext big'>The [english_list(winners)] team[winners.len > 1 ? "s tied" : " won"] with [max_points] points!</span></div>"

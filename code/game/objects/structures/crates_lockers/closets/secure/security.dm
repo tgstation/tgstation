@@ -104,6 +104,7 @@
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/clothing/suit/armor/vest/warden(src)
 	new /obj/item/clothing/head/warden(src)
+	new /obj/item/clothing/head/warden/drill(src)
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/under/rank/warden/navyblue(src)
@@ -182,6 +183,7 @@
 	new /obj/item/clothing/under/rank/det/grey(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/det_suit/grey(src)
+	new /obj/item/clothing/suit/det_suit/noir(src)
 	new /obj/item/clothing/head/fedora(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/storage/box/evidence(src)
@@ -308,3 +310,17 @@
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/lethalshot(src)
+
+/obj/structure/closet/secure_closet/labor_camp_security
+	name = "labor camp security locker"
+	req_access = list(ACCESS_SECURITY)
+	icon_state = "sec"
+
+/obj/structure/closet/secure_closet/labor_camp_security/PopulateContents()
+	..()
+	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/clothing/head/helmet/sec(src)
+	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security/skirt(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/flashlight/seclite(src)

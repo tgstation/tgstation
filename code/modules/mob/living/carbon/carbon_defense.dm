@@ -1,35 +1,24 @@
-
 /mob/living/carbon/get_eye_protection()
-	var/number = ..()
-
-	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
-		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
-		number += HFP.flash_protect
-
-	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
-		var/obj/item/clothing/glasses/GFP = src.glasses
-		number += GFP.flash_protect
-
-	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
-		var/obj/item/clothing/mask/MFP = src.wear_mask
-		number += MFP.flash_protect
-
+	. = ..()
 	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
-		number = INFINITY //Can't get flashed without eyes
+		return INFINITY //Can't get flashed without eyes
 	else
-		number += E.flash_protect
-
-	return number
+		. += E.flash_protect
+	if(isclothing(head)) //Adds head protection
+		. += head.flash_protect
+	if(isclothing(glasses)) //Glasses
+		. += glasses.flash_protect
+	if(isclothing(wear_mask)) //Mask
+		. += wear_mask.flash_protect
 
 /mob/living/carbon/get_ear_protection()
-	var/number = ..()
+	. = ..()
 	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
-		number = INFINITY
+		return INFINITY
 	else
-		number += E.bang_protect
-	return number
+		. += E.bang_protect
 
 /mob/living/carbon/is_mouth_covered(head_only = 0, mask_only = 0)
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
@@ -93,7 +82,9 @@
 				add_splatter_floor(location)
 				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
-
+					if(ishuman(user))
+						var/mob/living/carbon/human/dirtyboy = user
+						dirtyboy.adjust_hygiene(-10)
 				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
@@ -129,9 +120,9 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-	if(!(mobility_flags & MOBILITY_STAND) && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
-			for(var/datum/surgery/S in surgeries)
+	for(var/datum/surgery/S in surgeries)
+		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
+			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 				if(S.next_step(user, user.a_intent))
 					return 1
 	return 0
@@ -221,17 +212,17 @@
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
-	if(has_trait(TRAIT_SHOCKIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
-	if(reagents.has_reagent("teslium"))
+	if(reagents.has_reagent(/datum/reagent/teslium))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	if(illusion)
 		adjustStaminaLoss(shock_damage)
@@ -242,6 +233,12 @@
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack.</span>" \
 		)
+	if(iscarbon(pulling) && !illusion && source != pulling)
+		var/mob/living/carbon/C = pulling
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
+	if(iscarbon(pulledby) && !illusion && source != pulledby)
+		var/mob/living/carbon/C = pulledby
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
@@ -263,7 +260,7 @@
 
 	if(!(mobility_flags & MOBILITY_STAND))
 		if(buckled)
-			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
+			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
 			return
 		M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 						"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
@@ -271,6 +268,14 @@
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
+			var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+			if (mood.sanity >= SANITY_GREAT)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+			else if (mood.sanity >= SANITY_DISTURBED)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
+		for(var/datum/brain_trauma/trauma in M.get_traumas())
+			trauma.on_hug(M, src)
 	AdjustStun(-60)
 	AdjustKnockdown(-60)
 	AdjustUnconscious(-60)
@@ -283,13 +288,16 @@
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	if(NOFLASH in dna?.species?.species_traits)
+		return
+	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes) //can't flash what can't see!
+		return
+
 	. = ..()
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
-		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-		if (!eyes)
-			return
 		if(visual)
 			return
 
@@ -312,12 +320,12 @@
 
 			if(eyes.eye_damage > 20)
 				if(prob(eyes.eye_damage - 20))
-					if(!has_trait(TRAIT_NEARSIGHT))
+					if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.eye_damage - 25))
-					if(!has_trait(TRAIT_BLIND))
+					if(!HAS_TRAIT(src, TRAIT_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 					become_blind(EYE_DAMAGE)
 
@@ -346,7 +354,7 @@
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount
-			var/deaf = max(ears.deaf, deafen_pwr * effect_amount)
+			var/deaf = deafen_pwr * effect_amount
 			adjustEarDamage(ear_damage,deaf)
 
 			if(ears.ear_damage >= 15)

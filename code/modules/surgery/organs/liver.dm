@@ -30,19 +30,16 @@
 			damage = max(0, damage - 0.1)
 
 			var/provide_pain_message = HAS_NO_TOXIN
-			if(filterToxins && !owner.has_trait(TRAIT_TOXINLOVER))
+			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				for(var/I in C.reagents.reagent_list)
-					var/datum/reagent/pickedreagent = I
-					if(istype(pickedreagent, /datum/reagent/toxin))
-						var/datum/reagent/toxin/found_toxin = pickedreagent
-						var/thisamount = C.reagents.get_reagent_amount(initial(found_toxin.id))
-						if (thisamount <= toxTolerance && thisamount)
-							C.reagents.remove_reagent(initial(found_toxin.id), 1)
-						else
-							damage += (thisamount*toxLethality)
-							if(provide_pain_message != HAS_PAINFUL_TOXIN)
-								provide_pain_message = found_toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
+				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
+					var/thisamount = C.reagents.get_reagent_amount(T.type)
+					if (thisamount && thisamount <= toxTolerance)
+						C.reagents.remove_reagent(T.type, 1)
+					else
+						damage += (thisamount*toxLethality)
+						if(provide_pain_message != HAS_PAINFUL_TOXIN)
+							provide_pain_message = T.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
 			//metabolize reagents
 			C.reagents.metabolize(C, can_overdose=TRUE)
@@ -59,7 +56,7 @@
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("iron", 5)
+	S.reagents.add_reagent(/datum/reagent/iron, 5)
 	return S
 
 /obj/item/organ/liver/fly
@@ -72,6 +69,13 @@
 	name = "reagent processing crystal"
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
+
+/obj/item/organ/liver/alien
+	name = "alien liver" // doesnt matter for actual aliens because they dont take toxin damage
+	icon_state = "liver-x" // Same sprite as fly-person liver.
+	desc = "A liver that used to belong to a killer alien, who knows what it used to eat."
+	toxLethality = LIVER_DEFAULT_TOX_LETHALITY * 2.5 // rejects its owner early after too much punishment
+	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
 
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"

@@ -72,7 +72,7 @@
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "n" = (
-/obj/effect/landmark/xmastree,
+/obj/effect/spawner/xmastree,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "o" = (

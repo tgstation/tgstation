@@ -30,7 +30,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
-			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
+			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
@@ -79,6 +79,7 @@
 	desc = "A brown paper delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverypackage3"
+	item_state = "deliverypackage"
 	var/giftwrapped = 0
 	var/sortTag = 0
 
@@ -116,7 +117,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
-			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
+			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
@@ -147,6 +148,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
+	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -164,7 +166,7 @@
 		to_chat(user, "<span class='notice'>*HELL*</span>")//lizard nerf
 	else
 		to_chat(user, "<span class='notice'>*HEAVEN*</span>")
-	playsound(src, 'sound/machines/twobeep.ogg', 100, 1)
+	playsound(src, 'sound/machines/twobeep_high.ogg', 100, 1)
 	return BRUTELOSS
 
 /obj/item/destTagger/proc/openwindow(mob/user)
@@ -183,8 +185,9 @@
 	onclose(user, "destTagScreen")
 
 /obj/item/destTagger/attack_self(mob/user)
-	openwindow(user)
-	return
+	if(!locked_destination)
+		openwindow(user)
+		return
 
 /obj/item/destTagger/Topic(href, href_list)
 	add_fingerprint(usr)

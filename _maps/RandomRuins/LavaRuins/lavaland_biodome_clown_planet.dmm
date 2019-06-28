@@ -823,7 +823,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bC" = (
@@ -868,7 +868,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bH" = (
@@ -877,7 +877,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bI" = (
@@ -938,7 +938,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bP" = (
@@ -985,7 +985,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bY" = (
@@ -995,7 +995,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bZ" = (
@@ -1004,7 +1004,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "ca" = (
@@ -1014,7 +1014,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "cc" = (
@@ -1198,7 +1198,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "dO" = (
@@ -1207,7 +1207,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "eX" = (

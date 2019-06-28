@@ -58,12 +58,12 @@ Bonus
 		symptom_delay_max = 60
 	if(A.properties["resistance"] >= 8) //mutate twice
 		power = 2
-	possible_mutations = (GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT]
+	possible_mutations = (GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.all_mutations[RACEMUT]
 	var/mob/living/carbon/M = A.affected_mob
 	if(M)
 		if(!M.has_dna())
 			return
-		archived_dna = M.dna.struc_enzymes
+		archived_dna = M.dna.mutation_index
 
 // Give them back their old DNA when cured.
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
@@ -74,5 +74,5 @@ Bonus
 		if(M && archived_dna)
 			if(!M.has_dna())
 				return
-			M.dna.struc_enzymes = archived_dna
+			M.dna.mutation_index = archived_dna
 			M.domutcheck()

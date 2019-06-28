@@ -5,8 +5,8 @@
 	burnt_states = list("floorscorched1", "floorscorched2")
 
 /turf/open/floor/plasteel/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+	. = ..()
+	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
 /turf/open/floor/plasteel/update_icon()
 	if(!..())
@@ -78,13 +78,20 @@
 	icon_state = "solarpanel"
 
 
-
 /turf/open/floor/plasteel/freezer
 	icon_state = "freezerfloor"
-/turf/open/floor/plasteel/freezer/kitchen_coldroom
-	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
+
 /turf/open/floor/plasteel/freezer/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+
+/turf/open/floor/plasteel/kitchen_coldroom
+	name = "cold room floor"
+	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
+
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor
+	icon_state = "freezerfloor"
+
 
 /turf/open/floor/plasteel/grimy
 	icon_state = "grimy"

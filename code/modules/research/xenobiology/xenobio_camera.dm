@@ -30,8 +30,6 @@
 	var/datum/action/innate/feed_potion/potion_action
 	var/datum/action/innate/hotkey_help/hotkey_help
 
-	var/datum/component/redirect/listener
-
 	var/obj/machinery/monkey_recycler/connected_recycler
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
@@ -53,7 +51,7 @@
 	potion_action = new
 	hotkey_help = new
 	stored_slimes = list()
-	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
+	RegisterSignal(src, COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
 	for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 		if(get_area(recycler.loc) == get_area(loc))
 			connected_recycler = recycler
@@ -118,8 +116,14 @@
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)	
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)	
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)	
-	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)	
+	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
 
+	//Checks for recycler on every interact, prevents issues with load order on certain maps. 
+	if(!connected_recycler)
+		for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
+			if(get_area(recycler.loc) == get_area(loc))
+				connected_recycler = recycler
+				connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)	

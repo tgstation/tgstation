@@ -58,6 +58,9 @@
 /obj/effect/abstract/singularity_act()
 	return
 
+/obj/effect/abstract/has_gravity(turf/T)
+	return FALSE
+
 /obj/effect/dummy/singularity_pull()
 	return
 

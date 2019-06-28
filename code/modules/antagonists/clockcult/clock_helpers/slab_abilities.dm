@@ -99,7 +99,7 @@
 		var/burndamage = L.getFireLoss()
 		var/oxydamage = L.getOxyLoss()
 		var/totaldamage = brutedamage + burndamage + oxydamage
-		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
+		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent(/datum/reagent/water/holywater)))
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>")
 			return TRUE
 
@@ -107,7 +107,7 @@
 
 		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
 		var/targetturf = get_turf(L)
-		var/has_holy_water = (L.reagents && L.reagents.has_reagent("holywater"))
+		var/has_holy_water = (L.reagents && L.reagents.has_reagent(/datum/reagent/water/holywater))
 		var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 		for(var/i in 1 to healseverity)
 			new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
@@ -128,7 +128,7 @@
 		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
 		if(has_holy_water)
-			L.reagents.remove_reagent("holywater", 1000)
+			L.reagents.remove_reagent(/datum/reagent/water/holywater, 1000)
 
 		remove_ranged_ability()
 
@@ -181,7 +181,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
-			return
+			return BULLET_ACT_HIT
 		var/atom/O = L.anti_magic_check()
 		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
 		if(O)

@@ -348,7 +348,7 @@
 			unwield()
 			return
 	..()
-	if(user.has_trait(TRAIT_CLUMSY) && (wielded) && prob(40))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 	if((wielded) && prob(50))
@@ -364,7 +364,7 @@
 /obj/item/twohanded/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
 	if (force_wielded)
-		user.take_bodypart_damage(20,25)
+		user.take_bodypart_damage(20,25,check_armor = TRUE)
 	else
 		user.adjustStaminaLoss(25)
 
@@ -509,7 +509,7 @@
 		parts_list -= G
 		qdel(src)
 	..()
-	
+
 
 /obj/item/twohanded/spear/explosive
 	name = "explosive lance"
@@ -521,7 +521,6 @@
 		G = new /obj/item/grenade/iedcasing() //For admin-spawned explosive lances
 	G.forceMove(src)
 	explosive = G
-
 	desc = "A makeshift spear with [G] attached to it"
 	update_icon()
 
@@ -535,19 +534,11 @@
 	return BRUTELOSS
 
 /obj/item/twohanded/spear/explosive/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
-
-/obj/item/twohanded/spear/explosive/update_icon()	
-	icon_state = "spearbomb[wielded]"
-
- //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
-/obj/item/twohanded/spear/explosive/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(!.) //not caught
-		explosive.forceMove(get_turf(src))
-		explosive.prime()
-		qdel(src)
+	. += "<span class='notice'>Alt-click to set your war cry.</span>"
+
+/obj/item/twohanded/spear/explosive/update_icon()
+	icon_state = "spearbomb[wielded]"
 
 /obj/item/twohanded/spear/explosive/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -559,6 +550,8 @@
 
 /obj/item/twohanded/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if(wielded)
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
@@ -608,7 +601,7 @@
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 
 	if(on)
@@ -830,18 +823,20 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	var/datum/component/mobhook
+	var/mob/listeningTo
 	var/zoom_out_amt = 6
 	var/zoom_amt = 10
+
+/obj/item/twohanded/binoculars/Destroy()
+	listeningTo = null
+	return ..()
 
 /obj/item/twohanded/binoculars/wield(mob/user)
 	. = ..()
 	if(!wielded)
 		return
-	if(QDELETED(mobhook))
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))
-	else
-		user.TakeComponent(mobhook)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
+	listeningTo = user
 	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
 	item_state = "binoculars_wielded"
 	user.regenerate_icons()
@@ -865,7 +860,8 @@
 
 /obj/item/twohanded/binoculars/unwield(mob/user)
 	. = ..()
-	mobhook.RemoveComponent()
+	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	user.visible_message("[user] lowers [src].","You lower [src].")
 	item_state = "binoculars"
 	user.regenerate_icons()
