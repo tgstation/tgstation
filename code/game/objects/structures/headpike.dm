@@ -13,7 +13,6 @@
 	icon_state = "headpike-bone"
 	bonespear = TRUE
 
-
 /obj/structure/headpike/CheckParts(list/parts_list)
 	..()
 	victim = locate(/obj/item/bodypart/head) in parts_list

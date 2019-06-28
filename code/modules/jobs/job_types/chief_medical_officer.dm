@@ -3,6 +3,7 @@
 	flag = CMO_JF
 	department_head = list("Captain")
 	department_flag = MEDSCI
+	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = list(RADIO_CHANNEL_MEDICAL)
 	faction = "Station"
 	total_positions = 1

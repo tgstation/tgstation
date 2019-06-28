@@ -204,7 +204,7 @@
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -242,7 +242,7 @@
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -350,9 +350,21 @@
 	icon_state = "beret"
 	dynamic_hair_suffix = ""
 
-/obj/item/clothing/head/frenchberet/speechModification(M)
-	if(copytext(M, 1, 2) != "*")
-		M = " [M]"
+/obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
+	. = ..()
+	if (slot == SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/frenchberet/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/frenchberet/proc/handle_speech(datum/source, mob/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
 		var/list/french_words = strings("french_replacement.json", "french")
 
 		for(var/key in french_words)
@@ -360,10 +372,37 @@
 			if(islist(value))
 				value = pick(value)
 
-			M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
-			M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
-			M = replacetextEx(M, " [key]", " [value]")
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
 
 		if(prob(3))
-			M += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
-	return trim(M)
+			message += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
+	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/head/clownmitre
+	name = "Hat of the Honkmother"
+	desc = "It's hard for parishoners to see a banana peel on the floor when they're looking up at your glorious chapeau."
+	icon_state = "clownmitre"
+
+/obj/item/clothing/head/kippah
+	name = "kippah"
+	desc = "Signals that you follow the Jewish Halakha. Keeps the head covered and the soul extra-Orthodox."
+	icon_state = "kippah"
+
+/obj/item/clothing/head/medievaljewhat
+	name = "medieval Jew hat"
+	desc = "A silly looking hat, intended to be placed on the heads of the station's oppressed religious minorities."
+	icon_state = "medievaljewhat"
+
+/obj/item/clothing/head/taqiyahwhite
+	name = "white taqiyah"
+	desc = "An extra-mustahabb way of showing your devotion to Allah."
+	icon_state = "taqiyahwhite"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+
+/obj/item/clothing/head/taqiyahred
+	name = "red taqiyah"
+	desc = "An extra-mustahabb way of showing your devotion to Allah."
+	icon_state = "taqiyahred"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small

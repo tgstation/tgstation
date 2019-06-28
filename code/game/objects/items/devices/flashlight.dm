@@ -52,7 +52,7 @@
 	add_fingerprint(user)
 	if(istype(M) && on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))
 
-		if((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
+		if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
@@ -86,7 +86,7 @@
 				else
 					user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
 										 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-					if(M.stat == DEAD || (M.has_trait(TRAIT_BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
+					if(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, "<span class='warning'>[M]'s pupils don't react to the light!</span>")
 					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-ray vision
 						to_chat(user, "<span class='danger'>[M]'s pupils give an eerie glow!</span>")
@@ -260,7 +260,7 @@
 	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
-	grind_results = list("sulfur" = 15)
+	grind_results = list(/datum/reagent/sulfur = 15)
 
 /obj/item/flashlight/flare/Initialize()
 	. = ..()
@@ -403,11 +403,11 @@
 		if(ismob(A))
 			var/mob/M = A
 			log_combat(user, M, "attacked", "EMP-light")
-			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
-								"<span class='userdanger'>[user] blinks \the [src] at you.")
+			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>", \
+								"<span class='userdanger'>[user] blinks \the [src] at you.</span>")
 		else
-			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
-		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
+			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
+		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.</span>")
 		A.emp_act(EMP_HEAVY)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
@@ -429,7 +429,7 @@
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	item_state = "glowstick"
-	grind_results = list("phenol" = 15, "hydrogen" = 10, "oxygen" = 5) //Meth-in-a-stick
+	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	var/fuel = 0
 
 /obj/item/flashlight/glowstick/Initialize()

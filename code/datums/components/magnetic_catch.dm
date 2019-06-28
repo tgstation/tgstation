@@ -15,8 +15,8 @@
 		for(var/i in parent)
 			RegisterSignal(i, COMSIG_MOVABLE_PRE_THROW, .proc/throw_react)
 
-/datum/component/magnetic_catch/proc/examine(datum/source, mob/user)
-	to_chat(user, "It has been installed with inertia dampening to prevent coffee spills.")
+/datum/component/magnetic_catch/proc/examine(datum/source, mob/user, list/examine_list)
+	examine_list += "It has been installed with inertia dampening to prevent coffee spills."
 
 /datum/component/magnetic_catch/proc/crossed_react(datum/source, atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_PRE_THROW, .proc/throw_react, TRUE)

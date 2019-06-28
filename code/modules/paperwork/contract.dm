@@ -100,7 +100,7 @@
 /obj/item/paper/contract/infernal/suicide_act(mob/user)
 	if(signed && (user == target.current) && istype(user, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
-		H.forcesay("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!", forced = "infernal contract suicide")
+		H.say("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!", forced = "infernal contract suicide")
 		H.visible_message("<span class='suicide'>[H] holds up a contract claiming [user.p_their()] soul, then immediately catches fire.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		H.adjust_fire_stacks(20)
 		H.IgniteMob()
@@ -202,7 +202,7 @@
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='notice'>You do not possess a soul.</span>")
 		return 0
-	if(user.has_trait(TRAIT_DUMB))
+	if(HAS_TRAIT(user, TRAIT_DUMB))
 		to_chat(user, "<span class='notice'>You quickly scrawl 'your name' on the contract.</span>")
 		signIncorrectly()
 		return 0

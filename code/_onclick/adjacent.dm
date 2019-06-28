@@ -68,9 +68,10 @@
 /atom/movable/Adjacent(var/atom/neighbor)
 	if(neighbor == loc)
 		return TRUE
-	if(!isturf(loc))
+	var/turf/T = loc
+	if(!istype(T))
 		return FALSE
-	if(loc.Adjacent(neighbor,target = neighbor, mover = src))
+	if(T.Adjacent(neighbor,target = neighbor, mover = src))
 		return TRUE
 	return FALSE
 

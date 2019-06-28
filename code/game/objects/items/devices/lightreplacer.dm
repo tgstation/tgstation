@@ -48,7 +48,7 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-
+	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
@@ -67,8 +67,8 @@
 	var/shards_required = 4
 
 /obj/item/lightreplacer/examine(mob/user)
-	..()
-	to_chat(user, status_string())
+	. = ..()
+	. += status_string()
 
 /obj/item/lightreplacer/attackby(obj/item/W, mob/user, params)
 

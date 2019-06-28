@@ -53,7 +53,7 @@
 		return
 
 	var/obj/item/reagent_containers/glass/bucket/bucket = H.get_item_for_held_index(1)
-	bucket.reagents.add_reagent("water",70)
+	bucket.reagents.add_reagent(/datum/reagent/water,70)
 
 /datum/outfit/laser_tag
 	name = "Laser Tag Red"
@@ -369,7 +369,7 @@
 /datum/outfit/death_commando
 	name = "Death Commando"
 
-	uniform = /obj/item/clothing/under/color/green
+	uniform = /obj/item/clothing/under/rank/centcom_commander
 	suit = /obj/item/clothing/suit/space/hardsuit/deathsquad
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat

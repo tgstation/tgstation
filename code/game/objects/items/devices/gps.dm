@@ -14,8 +14,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 
 /obj/item/gps/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>"
 
 /obj/item/gps/Initialize()
 	. = ..()
@@ -159,7 +159,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 /obj/item/gps/cyborg/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/gps/internal
 	icon_state = null

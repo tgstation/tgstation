@@ -44,10 +44,10 @@
 
 	if(A.stage >= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
-		if(M.reagents.has_reagent("mindbreaker"))
-			M.reagents.remove_reagent("mindbreaker", 5)
-		if(M.reagents.has_reagent("histamine"))
-			M.reagents.remove_reagent("histamine", 5)
+		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
+			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
+			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
 		M.hallucination = max(0, M.hallucination - 10)
 
 	if(A.stage >= 5)
@@ -85,14 +85,14 @@
 		if(4, 5)
 			M.restoreEars()
 
-			if(M.has_trait(TRAIT_BLIND, EYE_DAMAGE))
+			if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
 				if(prob(20))
 					to_chat(M, "<span class='notice'>Your vision slowly returns...</span>")
 					M.cure_blind(EYE_DAMAGE)
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(35)
 
-				else if(M.has_trait(TRAIT_NEARSIGHT, EYE_DAMAGE))
+				else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 					to_chat(M, "<span class='notice'>You can finally focus your eyes on distant objects.</span>")
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(10)

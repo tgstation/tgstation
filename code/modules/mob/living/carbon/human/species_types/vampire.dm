@@ -6,11 +6,11 @@
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	exotic_bloodtype = "U"
 	use_skintones = TRUE
 	mutant_heart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
-	blacklisted = TRUE
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
@@ -58,6 +58,11 @@
 		C.adjust_fire_stacks(6)
 		C.IgniteMob()
 
+/datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)
+	if(istype(weapon, /obj/item/nullrod/whip))
+		return 1 //Whips deal 2x damage to vampires. Vampire killer.
+	return 0
+
 /obj/item/organ/tongue/vampire
 	name = "vampire tongue"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
@@ -90,9 +95,13 @@
 				to_chat(H, "<span class='notice'>[victim] doesn't have blood!</span>")
 				return
 			V.drain_cooldown = world.time + 30
-			if(victim.anti_magic_check(FALSE, TRUE, FALSE))
+			if(victim.anti_magic_check(FALSE, TRUE, FALSE, 0))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
+				return
+			if(victim?.reagents?.has_reagent(/datum/reagent/consumable/garlic))
+				to_chat(victim, "<span class='warning'>[H] tries to bite you, but recoils in disgust!</span>")
+				to_chat(H, "<span class='warning'>[victim] reeks of garlic! you can't bring yourself to drain such tainted blood.</span>")
 				return
 			if(!do_after(H, 30, target = victim))
 				return

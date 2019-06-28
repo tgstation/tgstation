@@ -35,7 +35,7 @@
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=500)
-	breakouttime = 600 //Deciseconds = 60s = 1 minute
+	breakouttime = 1 MINUTES
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
@@ -44,7 +44,7 @@
 	if(!istype(C))
 		return
 
-	if(iscarbon(user) && (user.has_trait(TRAIT_CLUMSY) && prob(50)))
+	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
@@ -96,14 +96,15 @@
 		qdel(src)
 	return
 
-/obj/item/restraints/handcuffs/sinew
+/obj/item/restraints/handcuffs/cable/sinew
 	name = "sinew restraints"
 	desc = "A pair of restraints fashioned from long strands of flesh."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sinewcuff"
 	item_state = "sinewcuff"
-	breakouttime = 300 //Deciseconds = 30s
-	cuffsound = 'sound/weapons/cablecuff.ogg'
+	materials = null
+	item_color = "white"
+	color = "#000000"
 
 /obj/item/restraints/handcuffs/cable
 	name = "cable restraints"
@@ -115,16 +116,12 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	materials = list(MAT_METAL=150, MAT_GLASS=75)
-	breakouttime = 300 //Deciseconds = 30s
+	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, param_color)
 	. = ..()
 
-	var/list/cable_colors = GLOB.cable_colors
-	item_color = param_color || item_color || pick(cable_colors)
-	if(cable_colors[item_color])
-		item_color = cable_colors[item_color]
 	update_icon()
 
 /obj/item/restraints/handcuffs/cable/update_icon()
@@ -168,7 +165,7 @@
 /obj/item/restraints/handcuffs/fake
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
-	breakouttime = 10 //Deciseconds = 1s
+	breakouttime = 1 SECONDS
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
@@ -178,7 +175,7 @@
 			var/obj/item/wirerod/W = new /obj/item/wirerod
 			remove_item_from_storage(user)
 			user.put_in_hands(W)
-			to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
+			to_chat(user, "<span class='notice'>You wrap [src] around the top of [I].</span>")
 			qdel(src)
 		else
 			to_chat(user, "<span class='warning'>You need one rod to make a wired rod!</span>")
@@ -208,7 +205,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	materials = list()
-	breakouttime = 450 //Deciseconds = 45s
+	breakouttime = 45 SECONDS
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
 	item_color = "white"
 
@@ -234,7 +231,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
-	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+	breakouttime = 30 SECONDS
 
 /obj/item/restraints/legcuffs/beartrap
 	name = "bear trap"
@@ -247,6 +244,9 @@
 
 /obj/item/restraints/legcuffs/beartrap/Initialize()
 	. = ..()
+	update_icon()
+
+/obj/item/restraints/legcuffs/beartrap/update_icon()
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/user)
@@ -258,18 +258,32 @@
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
-		icon_state = "[initial(icon_state)][armed]"
+		update_icon()
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
+/obj/item/restraints/legcuffs/beartrap/proc/close_trap()
+	armed = FALSE
+	update_icon()
+	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+
 /obj/item/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
-	if(armed && isturf(src.loc))
+	if(armed && isturf(loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
-			var/snap = 0
+			var/snap = TRUE
+			if(istype(L.buckled, /obj/vehicle))
+				var/obj/vehicle/ridden_vehicle = L.buckled
+				if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
+					close_trap()
+					ridden_vehicle.visible_message("<span class='danger'>[ridden_vehicle] triggers \the [src].</span>")
+					return ..()
+
+			if(L.movement_type & (FLYING|FLOATING)) //don't close the trap if they're flying/floating over it.
+				snap = FALSE
+
 			var/def_zone = BODY_ZONE_CHEST
-			if(iscarbon(L))
+			if(snap && iscarbon(L))
 				var/mob/living/carbon/C = L
-				snap = 1
 				if(C.mobility_flags & MOBILITY_STAND)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
@@ -277,19 +291,15 @@
 						forceMove(C)
 						C.update_inv_legcuffed()
 						SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-			else if(isanimal(L))
+			else if(snap && isanimal(L))
 				var/mob/living/simple_animal/SA = L
-				if(SA.mob_size > MOB_SIZE_TINY)
-					snap = 1
-			if(L.movement_type & FLYING)
-				snap = 0
+				if(SA.mob_size <= MOB_SIZE_TINY) //don't close the trap if they're as small as a mouse.
+					snap = FALSE
 			if(snap)
-				armed = 0
-				icon_state = "[initial(icon_state)][armed]"
-				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				close_trap()
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
-				L.apply_damage(trap_damage,BRUTE, def_zone)
+				L.apply_damage(trap_damage, BRUTE, def_zone)
 	..()
 
 /obj/item/restraints/legcuffs/beartrap/energy

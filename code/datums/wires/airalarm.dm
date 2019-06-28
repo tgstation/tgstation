@@ -44,7 +44,7 @@
 					A.mode = 3 // AALARM_MODE_PANIC
 				else
 					A.mode = 1 // AALARM_MODE_SCRUB
-				A.apply_mode()
+				A.apply_mode(usr)
 		if(WIRE_ALARM) // Clear alarms.
 			var/area/AA = get_area(A)
 			if(AA.atmosalert(0, holder))
@@ -66,7 +66,7 @@
 		if(WIRE_PANIC) // Force panic syphon on.
 			if(!mend && !A.shorted)
 				A.mode = 3 // AALARM_MODE_PANIC
-				A.apply_mode()
+				A.apply_mode(usr)
 		if(WIRE_ALARM) // Post alarm.
 			var/area/AA = get_area(A)
 			if(AA.atmosalert(2, holder))

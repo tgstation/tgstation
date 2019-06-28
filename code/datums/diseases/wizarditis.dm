@@ -3,7 +3,7 @@
 	max_stages = 4
 	spread_text = "Airborne"
 	cure_text = "The Manly Dorf"
-	cures = list("manlydorf")
+	cures = list(/datum/reagent/consumable/ethanol/manly_dorf)
 	cure_chance = 100
 	agent = "Rincewindus Vulgaris"
 	viable_mobtypes = list(/mob/living/carbon/human)

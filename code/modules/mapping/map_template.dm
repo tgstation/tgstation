@@ -70,7 +70,7 @@
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
 	smooth_zlevel(world.maxz)
-	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
+	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 
 	return level
 
@@ -100,7 +100,7 @@
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
 
-	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
+	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)

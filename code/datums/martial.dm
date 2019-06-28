@@ -6,6 +6,7 @@
 	var/current_target
 	var/datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
 	var/deflection_chance = 0 //Chance to deflect projectiles
+	var/reroute_deflection = FALSE //Delete the bullet, or actually deflect it in some direction?
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb

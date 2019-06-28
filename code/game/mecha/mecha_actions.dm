@@ -3,7 +3,8 @@
 /obj/mecha/proc/GrantActions(mob/living/user, human_occupant = 0)
 	if(human_occupant)
 		eject_action.Grant(user, src)
-	internals_action.Grant(user, src)
+	if(enclosed)
+		internals_action.Grant(user, src)
 	cycle_action.Grant(user, src)
 	lights_action.Grant(user, src)
 	stats_action.Grant(user, src)
@@ -43,8 +44,7 @@
 		return
 	if(!chassis || chassis.occupant != owner)
 		return
-	chassis.go_out()
-
+	chassis.container_resist(chassis.occupant)
 
 /datum/action/innate/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"

@@ -6,14 +6,25 @@
 	desc = "Very useful for filtering gasses."
 
 	can_unwrench = TRUE
-
-	var/target_pressure = ONE_ATMOSPHERE
+	var/transfer_rate = MAX_TRANSFER_RATE
 	var/filter_type = null
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
+
+/obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/trinary/filter/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		transfer_rate = MAX_TRANSFER_RATE
+		update_icon()
+	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -67,19 +78,18 @@
 
 	var/output_starting_pressure = air3.return_pressure()
 
-	if(output_starting_pressure >= target_pressure)
+	if(output_starting_pressure >= MAX_OUTPUT_PRESSURE)
 		//No need to transfer if target is already full!
 		return
 
-	//Calculate necessary moles to transfer using PV=nRT, no need to create a new var that will be used only once (delta)
-	var/transfer_moles = (target_pressure - output_starting_pressure)*air3.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+	var/transfer_ratio = transfer_rate/air1.volume
 
 	//Actually transfer the gas
 
-	if(transfer_moles <= 0)
+	if(transfer_ratio <= 0)
 		return
 
-	var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
 	if(!removed)
 		return
@@ -101,7 +111,7 @@
 		removed.gases[filter_type][MOLES] = 0
 		removed.garbage_collect()
 
-		var/datum/gas_mixture/target = (air2.return_pressure() < target_pressure ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
+		var/datum/gas_mixture/target = (air2.return_pressure() < MAX_OUTPUT_PRESSURE ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
 		target.merge(filtered_out)
 
 	air3.merge(removed)
@@ -122,8 +132,8 @@
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()
 	var/data = list()
 	data["on"] = on
-	data["pressure"] = round(target_pressure)
-	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
+	data["rate"] = round(transfer_rate)
+	data["max_rate"] = round(MAX_TRANSFER_RATE)
 
 	data["filter_types"] = list()
 	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !filter_type))
@@ -141,21 +151,21 @@
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
-		if("pressure")
-			var/pressure = params["pressure"]
-			if(pressure == "max")
-				pressure = MAX_OUTPUT_PRESSURE
+		if("rate")
+			var/rate = params["rate"]
+			if(rate == "max")
+				rate = MAX_TRANSFER_RATE
 				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
-				if(!isnull(pressure) && !..())
+			else if(rate == "input")
+				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, transfer_rate) as num|null
+				if(!isnull(rate) && !..())
 					. = TRUE
-			else if(text2num(pressure) != null)
-				pressure = text2num(pressure)
+			else if(text2num(rate) != null)
+				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
+				transfer_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
+				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
 			filter_type = null
 			var/filter_name = "nothing"

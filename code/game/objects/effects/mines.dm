@@ -131,12 +131,12 @@
 	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	victim.log_message("entered a blood frenzy", LOG_ATTACK)
 
-	chainsaw.add_trait(TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
 	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
 	chainsaw.wield(victim)
-	victim.reagents.add_reagent("adminordrazine",25)
+	victim.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
 	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 
 	victim.client.color = pure_red

@@ -1,3 +1,8 @@
+//defines the drill hat's yelling setting
+#define DRILL_DEFAULT	"default"
+#define DRILL_SHOUTING	"shouting"
+#define DRILL_YELLING	"yelling"
+#define DRILL_CANADIAN	"canadian"
 
 //Chef
 /obj/item/clothing/head/chefhat
@@ -55,6 +60,11 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/bishopmitre
+	name = "bishop mitre"
+	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
+	icon_state = "bishopmitre"
+
 //Detective
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
@@ -62,7 +72,7 @@
 	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 	icon_state = "detective"
 	var/candy_cooldown = 0
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/detective
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
 /obj/item/clothing/head/fedora/det_hat/Initialize()
@@ -70,8 +80,8 @@
 	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to take a candy corn.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to take a candy corn.</span>"
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -94,6 +104,18 @@
 	dog_fashion = /datum/dog_fashion/head/beret
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/head/beret/vintage
+	name = "vintage beret"
+	desc = "A well-worn beret."
+	icon_state = "vintageberet"
+	dog_fashion = null
+
+/obj/item/clothing/head/beret/archaic
+	name = "archaic beret"
+	desc = "An absolutely ancient beret, allegedly worn by the first mime to ever step foot on a NanoTrasen station."
+	icon_state = "archaicberet"
+	dog_fashion = null
+
 /obj/item/clothing/head/beret/black
 	name = "black beret"
 	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
@@ -105,7 +127,7 @@
 
 /obj/item/clothing/head/beret/highlander/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"
@@ -146,19 +168,71 @@
 	dog_fashion = /datum/dog_fashion/head/warden
 
 /obj/item/clothing/head/warden/drill
-	name = "warden's drill hat"
-	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection. Has the letters 'FMJ' enscribed on its side."
+	name = "warden's campaign hat"
+	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
 	icon_state = "wardendrill"
 	item_state = "wardendrill"
 	dog_fashion = null
+	var/mode = DRILL_DEFAULT
 
-/obj/item/clothing/head/warden/drill/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if(slot == SLOT_HEAD)
-		user.dna.add_mutation(YELLING)
+/obj/item/clothing/head/warden/drill/screwdriver_act(mob/living/carbon/human/user, obj/item/I)
+	if(..())
+		return TRUE
+	switch(mode)
+		if(DRILL_DEFAULT)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the middle position.</span>")
+			mode = DRILL_SHOUTING
+		if(DRILL_SHOUTING)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the last position.</span>")
+			mode = DRILL_YELLING
+		if(DRILL_YELLING)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the first position.</span>")
+			mode = DRILL_DEFAULT
+		if(DRILL_CANADIAN)
+			to_chat(user, "<span class='danger'>You adjust voice circuit but nothing happens, probably because it's broken.</span>")
+	return TRUE
 
-/obj/item/clothing/head/warden/drill/dropped(mob/living/carbon/human/user)
-		user.dna.remove_mutation(YELLING)
+/obj/item/clothing/head/warden/drill/wirecutter_act(mob/living/user, obj/item/I)
+	if(mode != DRILL_CANADIAN)
+		to_chat(user, "<span class='danger'>You broke the voice circuit!</span>")
+		mode = DRILL_CANADIAN
+	return TRUE
+
+/obj/item/clothing/head/warden/drill/equipped(mob/M, slot)
+	. = ..()
+	if (slot == SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/warden/drill/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/warden/drill/proc/handle_speech(datum/source, mob/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		switch (mode)
+			if(DRILL_SHOUTING)
+				message += "!"
+			if(DRILL_YELLING)
+				message += "!!"
+			if(DRILL_CANADIAN)
+				message = " [message]"
+				var/list/canadian_words = strings("canadian_replacement.json", "canadian")
+
+				for(var/key in canadian_words)
+					var/value = canadian_words[key]
+					if(islist(value))
+						value = pick(value)
+
+					message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+					message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+					message = replacetextEx(message, " [key]", " [value]")
+
+				if(prob(30))
+					message += pick(", eh?", ", EH?")
+		speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
@@ -189,3 +263,8 @@
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
+
+#undef DRILL_DEFAULT
+#undef DRILL_SHOUTING
+#undef DRILL_YELLING
+#undef DRILL_CANADIAN

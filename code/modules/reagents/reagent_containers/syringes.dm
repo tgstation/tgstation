@@ -179,39 +179,44 @@
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
 	desc = "Contains epinephrine - used to stabilize patients."
-	list_reagents = list("epinephrine" = 15)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 15)
 
 /obj/item/reagent_containers/syringe/charcoal
 	name = "syringe (charcoal)"
 	desc = "Contains charcoal."
-	list_reagents = list("charcoal" = 15)
+	list_reagents = list(/datum/reagent/medicine/charcoal = 15)
+
+/obj/item/reagent_containers/syringe/perfluorodecalin
+	name = "syringe (perfluorodecalin)"
+	desc = "Contains perfluorodecalin."
+	list_reagents = list(/datum/reagent/medicine/perfluorodecalin = 15)
 
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
-	list_reagents = list("spaceacillin" = 15)
+	list_reagents = list(/datum/reagent/medicine/spaceacillin = 15)
 
 /obj/item/reagent_containers/syringe/bioterror
 	name = "bioterror syringe"
 	desc = "Contains several paralyzing reagents."
-	list_reagents = list("neurotoxin" = 5, "mutetoxin" = 5, "sodium_thiopental" = 5)
+	list_reagents = list(/datum/reagent/consumable/ethanol/neurotoxin = 5, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/toxin/sodium_thiopental = 5)
 
 /obj/item/reagent_containers/syringe/stimulants
 	name = "Stimpack"
 	desc = "Contains stimulants."
 	amount_per_transfer_from_this = 50
 	volume = 50
-	list_reagents = list("stimulants" = 50)
+	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
 
 /obj/item/reagent_containers/syringe/calomel
 	name = "syringe (calomel)"
 	desc = "Contains calomel."
-	list_reagents = list("calomel" = 15)
+	list_reagents = list(/datum/reagent/medicine/calomel = 15)
 
 /obj/item/reagent_containers/syringe/plasma
 	name = "syringe (plasma)"
 	desc = "Contains plasma."
-	list_reagents = list("plasma" = 15)
+	list_reagents = list(/datum/reagent/toxin/plasma = 15)
 
 /obj/item/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"
@@ -220,24 +225,24 @@
 	volume = 50
 
 /obj/item/reagent_containers/syringe/lethal/choral
-	list_reagents = list("chloralhydrate" = 50)
+	list_reagents = list(/datum/reagent/toxin/chloralhydrate = 50)
 
 /obj/item/reagent_containers/syringe/lethal/execution
-	list_reagents = list("plasma" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10)
+	list_reagents = list(/datum/reagent/toxin/plasma = 15, /datum/reagent/toxin/formaldehyde = 15, /datum/reagent/toxin/cyanide = 10, /datum/reagent/toxin/acid/fluacid = 10)
 
 /obj/item/reagent_containers/syringe/mulligan
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."
 	amount_per_transfer_from_this = 1
 	volume = 1
-	list_reagents = list("mulligan" = 1)
+	list_reagents = list(/datum/reagent/mulligan = 1)
 
 /obj/item/reagent_containers/syringe/gluttony
 	name = "Gluttony's Blessing"
 	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
 	amount_per_transfer_from_this = 1
 	volume = 1
-	list_reagents = list("gluttonytoxin" = 1)
+	list_reagents = list(/datum/reagent/gluttonytoxin = 1)
 
 /obj/item/reagent_containers/syringe/bluespace
 	name = "bluespace syringe"
@@ -256,3 +261,8 @@
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
 	proj_piercing = 1
+
+/obj/item/reagent_containers/syringe/spider_extract
+	name = "spider extract syringe"
+	desc = "Contains crikey juice - makes any gold core create the most deadly companions in the world."
+	list_reagents = list(/datum/reagent/spider_extract = 1)

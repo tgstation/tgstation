@@ -228,7 +228,6 @@
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station.</span>")
 
 
-		href_list["secrets"] = "check_antagonist"
 
 	else if(href_list["edit_shuttle_time"])
 		if(!check_rights(R_SERVER))
@@ -241,7 +240,6 @@
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.")
 		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
-		href_list["secrets"] = "check_antagonist"
 	else if(href_list["trigger_centcom_recall"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -316,13 +314,14 @@
 			if(isnull(SSticker.admin_delay_notice))
 				return
 		else
+			if(alert(usr, "Really cancel current round end delay? The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Undelay round end", "Yes", "No") != "Yes")
+				return
 			SSticker.admin_delay_notice = null
 		SSticker.delay_end = !SSticker.delay_end
 		var/reason = SSticker.delay_end ? "for reason: [SSticker.admin_delay_notice]" : "."//laziness
 		var/msg = "[SSticker.delay_end ? "delayed" : "undelayed"] the round end [reason]"
 		log_admin("[key_name(usr)] [msg]")
 		message_admins("[key_name_admin(usr)] [msg]")
-		href_list["secrets"] = "check_antagonist"
 		if(SSticker.ready_for_reboot && !SSticker.delay_end) //we undelayed after standard reboot would occur
 			SSticker.standard_reboot()
 
@@ -604,13 +603,17 @@
 			return
 
 		if (SSticker.HasRoundStarted())
-			return alert(usr, "The game has already started.", null, null, null, null)
+			if (askuser(usr, "The game has already started. Would you like to save this as the default mode effective next round?", "Save mode", "Yes", "Cancel", Timeout = null) == 1)
+				SSticker.save_mode(href_list["c_mode2"])
+			HandleCMode()
+			return
 		GLOB.master_mode = href_list["c_mode2"]
 		log_admin("[key_name(usr)] set the mode as [GLOB.master_mode].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [GLOB.master_mode].</span>")
 		to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>")
 		Game() // updates the main game menu
-		SSticker.save_mode(GLOB.master_mode)
+		if (askuser(usr, "Would you like to save this as the default mode for the server?", "Save mode", "Yes", "No", Timeout = null) == 1)
+			SSticker.save_mode(GLOB.master_mode)
 		HandleCMode()
 
 	else if(href_list["f_secret2"])
@@ -861,7 +864,7 @@
 
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!</span>")
 		log_admin("[key_name(usr)] AIized [key_name(H)].")
-		H.AIize(H.client)
+		H.AIize(TRUE, H.client)
 
 	else if(href_list["makealien"])
 		if(!check_rights(R_SPAWN))
@@ -930,8 +933,12 @@
 		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
 
 		var/client/C = usr.client
+		var/can_ghost = TRUE
 		if(!isobserver(usr))
-			C.admin_ghost()
+			can_ghost = C.admin_ghost()
+
+		if(!can_ghost)
+			return
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(AM)
 
@@ -1682,33 +1689,28 @@
 		else
 			to_chat(usr, "You may only use this when the game is running.")
 
-	else if(href_list["create_outfit"])
+	else if(href_list["create_outfit_finalize"])
 		if(!check_rights(R_ADMIN))
 			return
-
-		var/datum/outfit/O = new /datum/outfit
-		//swap this for js dropdowns sometime
-		O.name = href_list["outfit_name"]
-		O.uniform = text2path(href_list["outfit_uniform"])
-		O.shoes = text2path(href_list["outfit_shoes"])
-		O.gloves = text2path(href_list["outfit_gloves"])
-		O.suit = text2path(href_list["outfit_suit"])
-		O.head = text2path(href_list["outfit_head"])
-		O.back = text2path(href_list["outfit_back"])
-		O.mask = text2path(href_list["outfit_mask"])
-		O.glasses = text2path(href_list["outfit_glasses"])
-		O.r_hand = text2path(href_list["outfit_r_hand"])
-		O.l_hand = text2path(href_list["outfit_l_hand"])
-		O.suit_store = text2path(href_list["outfit_s_store"])
-		O.l_pocket = text2path(href_list["outfit_l_pocket"])
-		O.r_pocket = text2path(href_list["outfit_r_pocket"])
-		O.id = text2path(href_list["outfit_id"])
-		O.belt = text2path(href_list["outfit_belt"])
-		O.ears = text2path(href_list["outfit_ears"])
-
-		GLOB.custom_outfits.Add(O)
-		message_admins("[key_name(usr)] created \"[O.name]\" outfit!")
-
+		create_outfit_finalize(usr,href_list)
+	else if(href_list["load_outfit"])
+		if(!check_rights(R_ADMIN))
+			return
+		load_outfit(usr)
+	else if(href_list["create_outfit_menu"])
+		if(!check_rights(R_ADMIN))
+			return
+		create_outfit(usr)
+	else if(href_list["delete_outfit"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/outfit/O = locate(href_list["chosen_outfit"]) in GLOB.custom_outfits
+		delete_outfit(usr,O)
+	else if(href_list["save_outfit"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/outfit/O = locate(href_list["chosen_outfit"]) in GLOB.custom_outfits
+		save_outfit(usr,O)
 	else if(href_list["set_selfdestruct_code"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1890,12 +1892,13 @@
 		var/ban_id = href_list["unbanlog"]
 		ban_log(ban_id)
 
+	else if(href_list["beakerpanel"])
+		beaker_panel_act(href_list)
+
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(SSticker.HasRoundStarted())
-		return alert(usr, "The game has already started.", null, null, null, null)
 	var/dat = {"<B>What mode do you wish to play?</B><HR>"}
 	for(var/mode in config.modes)
 		dat += {"<A href='?src=[REF(src)];[HrefToken()];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}

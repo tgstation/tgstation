@@ -43,8 +43,8 @@
 		dat += "<h3>Device Settings</h3><br>"
 		if(pai.radio)
 			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=[REF(src)];wires=[WIRE_TX]'>[(pai.radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
-			dat += "Receive: <A href='byond://?src=[REF(src)];wires=[WIRE_RX]'>[(pai.radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Transmit: <A href='byond://?src=[REF(src)];toggle_transmit=1'>\[[pai.can_transmit? "Disable" : "Enable"] Radio Transmission\]</a><br>"
+			dat += "Receive: <A href='byond://?src=[REF(src)];toggle_receive=1'>\[[pai.can_receive? "Disable" : "Enable"] Radio Reception\]</a><br>"
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
@@ -92,10 +92,17 @@
 					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
 					qdel(pai)
-		if(href_list["wires"])
-			var/wire = text2num(href_list["wires"])
-			if(pai.radio)
-				pai.radio.wires.cut(wire)
+		if(href_list["toggle_transmit"] || href_list["toggle_receive"])
+			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving. 
+			var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
+			if(transmitting)
+				pai.can_transmit = !pai.can_transmit
+			else //receiving
+				pai.can_receive = !pai.can_receive
+			pai.radio.wires.cut(transmit_holder)//wires.cut toggles cut and uncut states
+			transmit_holder = (transmitting ? pai.can_transmit : pai.can_receive) //recycling can be fun!
+			to_chat(usr,"<span class='warning'>You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!</span>")
+			to_chat(pai,"<span class='warning'>Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!</span>")
 		if(href_list["setlaws"])
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
@@ -149,7 +156,7 @@
 				src.add_overlay("pai-null")
 
 /obj/item/paicard/proc/alertUpdate()
-	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
+	audible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] vibrates with an alert.</span>")
 
 /obj/item/paicard/emp_act(severity)
 	. = ..()
@@ -157,3 +164,4 @@
 		return
 	if(pai && !pai.holoform)
 		pai.emp_act(severity)
+

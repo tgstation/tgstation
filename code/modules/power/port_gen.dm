@@ -1,4 +1,3 @@
-
 //Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
 /obj/machinery/power/port_gen
 	name = "portable generator"
@@ -9,9 +8,8 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 
-	var/active = 0
+	var/active = FALSE
 	var/power_gen = 5000
-	var/recent_fault = 0
 	var/power_output = 1
 	var/consumption = 0
 	var/base_icon = "portgen0"
@@ -26,6 +24,9 @@
 /obj/machinery/power/port_gen/Destroy()
 	QDEL_NULL(soundloop)
 	return ..()
+
+/obj/machinery/power/port_gen/should_have_node()
+	return anchored
 
 /obj/machinery/power/port_gen/connect_to_network()
 	if(!anchored)
@@ -49,8 +50,9 @@
 		active = FALSE
 		update_icon()
 		soundloop.stop()
-	else if(HasFuel() && !crit_fail)
+	else if(HasFuel())
 		active = TRUE
+		START_PROCESSING(SSmachines, src)
 		update_icon()
 		soundloop.start()
 
@@ -59,7 +61,7 @@
 
 /obj/machinery/power/port_gen/process()
 	if(active)
-		if(!HasFuel() || crit_fail || !anchored)
+		if(!HasFuel() || !anchored)
 			TogglePower()
 			return
 		if(powernet)
@@ -69,9 +71,8 @@
 		handleInactive()
 
 /obj/machinery/power/port_gen/examine(mob/user)
-	..()
-	to_chat(user, "It is[!active?"n't":""] running.")
-
+	. = ..()
+	. += "It is[!active?"n't":""] running."
 
 /////////////////
 // P.A.C.M.A.N //
@@ -95,8 +96,8 @@
 /obj/machinery/power/port_gen/pacman/Initialize()
 	. = ..()
 
-	var/obj/sheet = new sheet_path(null)
-	sheet_name = sheet.name
+	var/obj/S = sheet_path
+	sheet_name = initial(S.name)
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
@@ -116,14 +117,12 @@
 	consumption = consumption_coeff
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [DisplayPower(power_gen)] per cycle.</span>")
+	. = ..()
+	. += "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [DisplayPower(power_gen)] per cycle.</span>"
 	if(anchored)
-		to_chat(user, "<span class='notice'>It is anchored to the ground.</span>")
-	if(crit_fail)
-		to_chat(user, "<span class='danger'>The generator seems to have broken down.</span>")
+		. += "<span class='notice'>It is anchored to the ground.</span>"
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -164,12 +163,11 @@
 	if (current_heat > 300)
 		overheat()
 		qdel(src)
-	return
 
 /obj/machinery/power/port_gen/pacman/handleInactive()
-
-	if (current_heat > 0)
-		current_heat = max(current_heat - 2, 0)
+	current_heat = max(current_heat - 2, 0)
+	if(current_heat == 0)
+		STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	explosion(src.loc, 2, 5, 2, -1)
@@ -235,7 +233,7 @@
 	data["active"] = active
 	data["sheet_name"] = capitalize(sheet_name)
 	data["sheets"] = sheets
-	data["stack_percent"] = sheet_left * 100
+	data["stack_percent"] = round(sheet_left * 100, 0.1)
 
 	data["anchored"] = anchored
 	data["connected"] = (powernet == null ? 0 : 1)

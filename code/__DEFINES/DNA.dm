@@ -4,7 +4,7 @@
 
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
 #define HULK		/datum/mutation/human/hulk
-#define XRAY		/datum/mutation/human/x_ray
+#define XRAY		/datum/mutation/human/thermal/x_ray
 #define SPACEMUT	/datum/mutation/human/space_adaptation
 #define TK			/datum/mutation/human/telekinesis
 #define NERVOUS		/datum/mutation/human/nervousness
@@ -12,6 +12,7 @@
 #define MUTATE		/datum/mutation/human/bad_dna
 #define COUGH		/datum/mutation/human/cough
 #define DWARFISM	/datum/mutation/human/dwarfism
+#define GIGANTISM	/datum/mutation/human/gigantism
 #define CLOWNMUT	/datum/mutation/human/clumsy
 #define TOURETTES	/datum/mutation/human/tourettes
 #define DEAFMUT		/datum/mutation/human/deaf
@@ -30,15 +31,24 @@
 #define ELVIS		/datum/mutation/human/elvis
 #define RADIOACTIVE	/datum/mutation/human/radioactive
 #define GLOWY		/datum/mutation/human/glow
-#define TELEPATHY	/datum/mutation/human/telepath
+#define TELEPATHY	/datum/mutation/human/telepathy
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
 #define STRONG    	/datum/mutation/human/strong
 #define FIRESWEAT	/datum/mutation/human/fire
+#define THERMAL		/datum/mutation/human/thermal
+#define ANTENNA		/datum/mutation/human/antenna
+#define PARANOIA	/datum/mutation/human/paranoia
+#define MINDREAD	/datum/mutation/human/mindreader
 #define INSULATED	/datum/mutation/human/insulated
 #define SHOCKTOUCH	/datum/mutation/human/shock
 #define OLFACTION	/datum/mutation/human/olfaction
-#define YELLING		/datum/mutation/human/yelling
+#define ACIDFLESH	/datum/mutation/human/acidflesh
+#define BADBLINK	/datum/mutation/human/badblink
+#define SPASTIC		/datum/mutation/human/spastic
+#define EXTRASTUN	/datum/mutation/human/extrastun
+#define GELADIKINESIS		/datum/mutation/human/geladikinesis
+#define CRYOKINESIS /datum/mutation/human/cryokinesis
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
@@ -83,6 +93,8 @@
 #define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	(1<<6)
 #define TR_KEEPORGANS	(1<<8)
+#define TR_KEEPSTUNS	(1<<9)
+#define TR_KEEPREAGENTS	(1<<10)
 
 
 #define CLONER_FRESH_CLONE "fresh"
@@ -104,9 +116,10 @@
 #define NOSTOMACH		13
 #define NO_DNA_COPY     14
 #define DRINKSBLOOD		15
-#define NOEYES			16
+#define NOFLASH			16
 #define DYNCOLORS		17 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define AGENDER			18
+#define NOEYESPRITES	19 //Do not draw eyes or eyeless overlay
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
@@ -130,3 +143,14 @@
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
+#define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
+
+
+//used for the can_chromosome var on mutations
+#define CHROMOSOME_NEVER 0
+#define CHROMOSOME_NONE 1
+#define CHROMOSOME_USED 2
+
+#define G_MALE 1
+#define G_FEMALE 2
+#define G_PLURAL 3

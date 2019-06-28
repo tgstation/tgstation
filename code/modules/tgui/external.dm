@@ -49,6 +49,20 @@
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return 1 // If UI is not interactive or usr calling Topic is not the UI user, bail.
 
+ /**
+  * public
+  *
+  * Called on an object when a tgui object is being created, allowing you to customise the html
+  * For example: inserting a custom stylesheet that you need in the head
+  *
+  * For this purpose, some tags are available in the html, to be parsed out with replacetext
+  * (customheadhtml) - Additions to the head tag
+  *
+  * required html the html base text
+  *
+ **/
+/datum/proc/ui_base_html(html)
+	return html
 
  /**
   * private

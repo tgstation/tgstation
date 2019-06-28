@@ -12,7 +12,7 @@
 			grabbedby(M)
 
 		if("harm", "disarm")
-			if(M.has_trait(TRAIT_PACIFISM))
+			if(HAS_TRAIT(M, TRAIT_PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt [src]!</span>")
 				return
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
-		if(user.has_trait(TRAIT_PACIFISM))
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
 			return FALSE
 		..(user, 1)

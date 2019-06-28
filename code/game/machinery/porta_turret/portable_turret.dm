@@ -325,7 +325,7 @@
 
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
-	if(.) //damage received
+	if(. && obj_integrity > 0) //damage received
 		if(prob(30))
 			spark_system.start()
 		if(on && !attacked && !(obj_flags & EMAGGED))
@@ -376,6 +376,10 @@
 
 		if(issilicon(A))
 			var/mob/living/silicon/sillycone = A
+
+			if(ispAI(A))
+				continue
+
 			if(sillycone.stat || in_faction(sillycone))
 				continue
 
@@ -494,7 +498,7 @@
 			threatcount += 4
 
 	if(shoot_unloyal)
-		if (!perp.has_trait(TRAIT_MINDSHIELD))
+		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD))
 			threatcount += 4
 
 	return threatcount
@@ -558,6 +562,7 @@
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)
 	A.firer = src
+	A.fired_from = src
 	A.fire()
 	return A
 
@@ -824,10 +829,10 @@
 		T.cp = src
 
 /obj/machinery/turretid/examine(mob/user)
-	..()
+	. += ..()
 	if(issilicon(user) && (!stat & BROKEN))
-		to_chat(user, "<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>")
-		to_chat(user, "<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>")
+		. += {"<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>
+					<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>"}
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)

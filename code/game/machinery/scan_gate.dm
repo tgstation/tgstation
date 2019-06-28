@@ -33,11 +33,11 @@
 	set_scanline("passive")
 
 /obj/machinery/scanner_gate/examine(mob/user)
-	..()
+	. = ..()
 	if(locked)
-		to_chat(user, "<span class='notice'>The control panel is ID-locked. Swipe a valid ID to unlock it.</span>")
+		. += "<span class='notice'>The control panel is ID-locked. Swipe a valid ID to unlock it.</span>"
 	else
-		to_chat(user, "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>")
+		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
 /obj/machinery/scanner_gate/Crossed(atom/movable/AM)
 	..()
@@ -90,12 +90,12 @@
 				if(!R || (R.fields["criminal"] == "*Arrest*"))
 					beep = TRUE
 		if(SCANGATE_MINDSHIELD)
-			if(M.has_trait(TRAIT_MINDSHIELD))
+			if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 				beep = TRUE
 		if(SCANGATE_NANITES)
 			if(SEND_SIGNAL(M, COMSIG_HAS_NANITES))
 				if(nanite_cloud)
-					GET_COMPONENT_FROM(nanites, /datum/component/nanites, M)
+					var/datum/component/nanites/nanites = M.GetComponent(/datum/component/nanites)
 					if(nanites && nanites.cloud_id == nanite_cloud)
 						beep = TRUE
 				else

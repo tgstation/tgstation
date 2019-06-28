@@ -25,7 +25,7 @@
 		return
 	var/mob/living/carbon/C = owner
 	// genetic deafness prevents the body from using the ears, even if healthy
-	if(C.has_trait(TRAIT_DEAF))
+	if(HAS_TRAIT(C, TRAIT_DEAF))
 		deaf = max(deaf, 1)
 	else if(ear_damage < UNHEALING_EAR_DAMAGE) // if higher than UNHEALING_EAR_DAMAGE, no natural healing occurs.
 		ear_damage = max(ear_damage - 0.05, 0)
@@ -37,7 +37,7 @@
 
 	var/mob/living/carbon/C = owner
 
-	if(iscarbon(owner) && C.has_trait(TRAIT_DEAF))
+	if(iscarbon(owner) && HAS_TRAIT(C, TRAIT_DEAF))
 		deaf = 1
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)

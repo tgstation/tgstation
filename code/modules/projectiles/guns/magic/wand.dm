@@ -5,7 +5,7 @@
 	icon_state = "nothingwand"
 	item_state = "wand"
 	w_class = WEIGHT_CLASS_SMALL
-	can_charge = 0
+	can_charge = FALSE
 	max_charges = 100 //100, 50, 50, 34 (max charge distribution by 25%ths)
 	var/variable_charges = TRUE
 
@@ -18,8 +18,8 @@
 	return ..()
 
 /obj/item/gun/magic/wand/examine(mob/user)
-	..()
-	to_chat(user, "Has [charges] charge\s remaining.")
+	. = ..()
+	. += "Has [charges] charge\s remaining."
 
 /obj/item/gun/magic/wand/update_icon()
 	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
@@ -94,14 +94,17 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/gun/magic/wand/resurrection/zap_self(mob/living/user)
+	..()
+	charges--
+	if(user.anti_magic_check())
+		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
+		return
 	user.revive(full_heal = 1)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.regenerate_limbs()
 		C.regenerate_organs()
 	to_chat(user, "<span class='notice'>You feel great!</span>")
-	charges--
-	..()
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
 	desc = "Is it possible for something to be even more powerful than regular magic? This wand is."

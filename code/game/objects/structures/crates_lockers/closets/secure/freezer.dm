@@ -45,6 +45,18 @@
 	for(var/i = 0, i < 4, i++)
 		new /obj/item/reagent_containers/food/snacks/meat/slab/monkey(src)
 
+/obj/structure/closet/secure_closet/freezer/meat/open
+	req_access = null
+	locked = FALSE
+
+/obj/structure/closet/secure_closet/freezer/gulag_fridge
+	name = "refrigerator"
+
+/obj/structure/closet/secure_closet/freezer/gulag_fridge/PopulateContents()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/drinks/beer/light(src)
+
 /obj/structure/closet/secure_closet/freezer/fridge
 	name = "refrigerator"
 	req_access = list(ACCESS_KITCHEN)
@@ -57,6 +69,10 @@
 		new /obj/item/reagent_containers/food/condiment/soymilk(src)
 	for(var/i = 0, i < 2, i++)
 		new /obj/item/storage/fancy/egg_box(src)
+
+/obj/structure/closet/secure_closet/freezer/fridge/open
+	req_access = null
+	locked = FALSE
 
 /obj/structure/closet/secure_closet/freezer/money
 	name = "freezer"

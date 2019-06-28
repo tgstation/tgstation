@@ -13,7 +13,14 @@
 /datum/action/changeling/fakedeath/sting_action(mob/living/user)
 	..()
 	if(revive_ready)
-		revive(user)
+		INVOKE_ASYNC(src, .proc/revive, user)
+		revive_ready = FALSE
+		name = "Reviving Stasis"
+		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
+		button_icon_state = "fake_death"
+		UpdateButtonIcon()
+		chemical_cost = 15
+		to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 	else
 		to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 		if(user.stat != DEAD)
@@ -26,6 +33,8 @@
 	return TRUE
 
 /datum/action/changeling/fakedeath/proc/revive(mob/living/user)
+	if(!user || !istype(user))
+		return
 	user.cure_fakedeath("changeling")
 	user.revive(full_heal = TRUE)
 	var/list/missing = user.get_missing_limbs()
@@ -41,13 +50,6 @@
 		user.emote("scream")
 		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
-	revive_ready = FALSE
-	name = "Reviving Stasis"
-	desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
-	button_icon_state = "fake_death"
-	UpdateButtonIcon()
-	chemical_cost = 15
-	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
 	if(user && user.mind)
@@ -62,7 +64,7 @@
 			revive_ready = TRUE
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)
-	if(user.has_trait(TRAIT_DEATHCOMA, "changeling") && !revive_ready)
+	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, "changeling") && !revive_ready)
 		to_chat(user, "<span class='warning'>We are already reviving.</span>")
 		return
 	if(!user.stat && !revive_ready) //Confirmation for living changelings if they want to fake their death

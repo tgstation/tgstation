@@ -34,10 +34,10 @@
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
-									"sodiumchloride", "sugar", "orangejuice",
-									"spaceacillin", "salglu_solution", "ethanol",
-									"leporazine", "synaptizine", "lipolicide",
-									"silver", "gold"
+									/datum/reagent/consumable/sodiumchloride, /datum/reagent/consumable/sugar, /datum/reagent/consumable/orangejuice,
+									/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/consumable/ethanol,
+									/datum/reagent/medicine/leporazine, /datum/reagent/medicine/synaptizine, /datum/reagent/toxin/lipolicide,
+									/datum/reagent/silver, /datum/reagent/gold
 								)
 
 /*
@@ -116,6 +116,13 @@
 	A.mutable = mutable
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
+
+//Describe this disease to an admin in detail (for logging)
+/datum/disease/advance/admin_details()
+	var/list/name_symptoms = list()
+	for(var/datum/symptom/S in symptoms)
+		name_symptoms += S.name
+	return "[name] sym:[english_list(name_symptoms)] r:[totalResistance()] s:[totalStealth()] ss:[totalStageSpeed()] t:[totalTransmittable()]"
 
 /*
 
@@ -431,7 +438,8 @@
 		var/list/name_symptoms = list()
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
-		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
+		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()]")
+		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()]!")
 
 
 /datum/disease/advance/proc/totalStageSpeed()

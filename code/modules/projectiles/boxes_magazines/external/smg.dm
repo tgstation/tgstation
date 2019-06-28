@@ -60,7 +60,7 @@
 /obj/item/ammo_box/magazine/smgm45
 	name = "SMG magazine (.45)"
 	icon_state = "c20r45-24"
-	ammo_type = /obj/item/ammo_casing/c45/nostamina
+	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 24
 
