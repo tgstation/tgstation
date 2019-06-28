@@ -196,8 +196,10 @@
 	desc = "It blocks bullets, but it wont last for long."
 	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "holobarrier0"
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
+	pass_flags = LETPASSTHROW
+	climbable = TRUE
 	max_integrity = 100
 	proj_pass_rate = 25
 	armor = list("melee" = 10, "bullet" = 30, "laser" = 70, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 10, "acid" = 0)

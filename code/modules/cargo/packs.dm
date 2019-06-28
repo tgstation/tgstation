@@ -288,7 +288,6 @@
 					/obj/item/external_lens/stealth,
 					/obj/item/external_lens/shocking,
 					/obj/item/external_lens/incendiary,
-					/obj/item/external_lens/scatter,
 					/obj/item/external_lens/economic,
 					/obj/item/external_lens/shield)
 	crate_name = "external lens crate"

@@ -149,6 +149,7 @@
 	desc = "These lens modify the laser frequency and trajectory giving them special effects."
 	icon = 'icons/obj/guns/energy.dmi'
 	var/stored_ammo_type = /obj/item/ammo_casing/energy/laser
+	var/restricted_type = /obj/item/gun/energy/laser //which type of laser gun it can be assigned to
 	var/overlay = "laser"
 
 /obj/item/external_lens/Initialize()
@@ -157,8 +158,9 @@
 
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
-	if(user && istype(AM, /obj/item/gun/energy/laser) && AM.type == /obj/item/gun/energy/laser)
+	if(user && istype(AM, restricted_type) && AM.type == restricted_type)
 		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, type)
+		playsound(src, 'sound/weapons/pistolrack.ogg', 50, 0)
 		qdel(src)
 
 /obj/item/external_lens/ricochet
@@ -196,12 +198,6 @@
 	desc = "Trades fire power for high efficency, kill people with many smalls shots."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/lowenergy
 	overlay = "economic"
-
-/obj/item/external_lens/scatter
-	name = "external lens: scattershot"
-	desc = "Diffusion lenses."
-	stored_ammo_type = /obj/item/ammo_casing/energy/laser/scatter/small
-	overlay = "scatter"
 
 /obj/item/external_lens/shield
 	name = "external lens: barricade projector"
