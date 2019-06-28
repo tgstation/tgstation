@@ -6,22 +6,19 @@
 
 	var/list/victim_belongings = list()
 
-/datum/syndicate_contract/New(owner)
-	generate(owner)
+/datum/syndicate_contract/New(owner, type, blacklist)
+	generate(owner, type)
 
-/datum/syndicate_contract/proc/generate(owner)
+/datum/syndicate_contract/proc/generate(owner, type, blacklist)
 	contract.owner = owner
-	contract.find_target()
+	contract.find_target(null, blacklist)
 
-	// Balanced around being low numbers, with about 50/50 chance of getting at least one very high paying
-	// contract.
-	// High payout
-	if (prob(15))
-		contract.payout_bonus = rand(6,8)
-	else if (prob(45)) // Low payout
-		contract.payout_bonus = rand(1,2)
-	else // Medium payout
-		contract.payout_bonus = rand(3,5)
+	if (type == CONTRACT_PAYOUT_LARGE)
+		contract.payout_bonus = rand(8,12)
+	else if (type == CONTRACT_PAYOUT_MEDIUM)
+		contract.payout_bonus = rand(5,7)
+	else
+		contract.payout_bonus = rand(2,4)
 
 	contract.payout = rand(0, 3)
 	contract.generate_dropoff()
