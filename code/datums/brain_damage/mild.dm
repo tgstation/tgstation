@@ -234,29 +234,28 @@
 	var/list/hear_dejavu = list()
 	var/list/speak_dejavu = list()
 
-/datum/brain_trauma/mild/mind_echo/on_hear(message, speaker, message_language, raw_message, radio_freq)
+/datum/brain_trauma/mild/mind_echo/handle_hearing(datum/source, list/hearing_args)
 	if(hear_dejavu.len >= 5)
-		if(prob(15))
+		if(prob(25))
 			var/deja_vu = pick_n_take(hear_dejavu)
-			var/new_message = replacetext(message, regex("\".+\"", "gi"),"\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
-			return new_message //Message replaced with one from the past
+			hearing_args[HEARING_MESSAGE] = replacetext(hearing_args[HEARING_MESSAGE], regex("\".+\"", "gi"),"\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
+			return
 	if(hear_dejavu.len >= 15)
 		if(prob(50))
 			popleft(hear_dejavu) //Remove the oldest
-			hear_dejavu += raw_message
+			hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
 	else
-		hear_dejavu += raw_message
-	return message
+		hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
 
-/datum/brain_trauma/mild/mind_echo/on_say(message)
+/datum/brain_trauma/mild/mind_echo/handle_speech(datum/source, list/speech_args)
 	if(speak_dejavu.len >= 5)
-		if(prob(15))
+		if(prob(25))
 			var/deja_vu = pick_n_take(speak_dejavu)
-			return deja_vu //Message replaced with one from the past
+			speech_args[SPEECH_MESSAGE] = deja_vu
+			return
 	if(speak_dejavu.len >= 15)
 		if(prob(50))
 			popleft(speak_dejavu) //Remove the oldest
-			speak_dejavu += message
+			speak_dejavu += speech_args[SPEECH_MESSAGE]
 	else
-		speak_dejavu += message
-	return message
+		speak_dejavu += speech_args[SPEECH_MESSAGE]
