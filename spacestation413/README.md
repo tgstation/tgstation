@@ -2,7 +2,7 @@
 
 ## Why do we use it?
 
-Same reason [HippieStation does.](https://github.com/HippieStation/HippieStation/blob/master/hippiestation/README.md). For ease of use, I've copied the rest here with some choice edits to make sure people aren't adding "hippie -- reason" to the spacestation413 code.
+Same reason [HippieStation does.](https://github.com/HippieStation/HippieStation/blob/master/hippiestation/README.md) For ease of use, I've copied the rest here with some choice edits to make sure people aren't adding "hippie -- reason" to the spacestation413 code.
 
 ## What does it mean to modularize something?
 
