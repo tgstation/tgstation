@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - refactor: "get_eye_protection and get_ear_protection now looks less ugly."

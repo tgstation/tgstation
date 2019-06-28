@@ -131,6 +131,36 @@
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 
+/obj/item/melee/beesword
+	name = "The Stinger"
+	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "beesword"
+	item_state = "stinger"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_BULKY
+	sharpness = IS_SHARP
+	force = 7
+	throwforce = 10
+	block_chance = 20
+	armour_penetration = 85
+	attack_verb = list("slashed", "stung", "prickled", "poked")
+	hitsound = 'sound/weapons/rapierhit.ogg'
+
+/obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity = TRUE)
+	. = ..()
+	user.changeNext_move(CLICK_CD_RAPID)
+	if(iscarbon(target))
+		var/mob/living/carbon/H = target
+		H.reagents.add_reagent(/datum/reagent/toxin/histamine, 4)
+
+/obj/item/melee/beesword/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(get_turf(src), hitsound, 75, 1, -1)
+	return TOXLOSS
+
 /obj/item/melee/classic_baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."

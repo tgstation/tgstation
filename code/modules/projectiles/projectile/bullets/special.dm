@@ -3,7 +3,6 @@
 /obj/item/projectile/bullet/honker
 	name = "banana"
 	damage = 0
-	paralyze = 60
 	movement_type = FLYING | UNSTOPPABLE
 	nodamage = TRUE
 	hitsound = 'sound/items/bikehorn.ogg'
@@ -14,6 +13,12 @@
 /obj/item/projectile/bullet/honker/Initialize()
 	. = ..()
 	SpinAnimation()
+
+/obj/item/projectile/bullet/honker/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	var/mob/M = target
+	if(istype(M))
+		M.slip(100, M.loc, GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
 
 // Mime
 

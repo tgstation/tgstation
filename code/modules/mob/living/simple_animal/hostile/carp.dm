@@ -3,9 +3,10 @@
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
-	icon_state = "carp"
-	icon_living = "carp"
-	icon_dead = "carp_dead"
+	icon = 'icons/mob/carp.dmi'
+	icon_state = "base"
+	icon_living = "base"
+	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	speak_chance = 0
@@ -38,12 +39,90 @@
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
 
+	var/random_color = TRUE //if the carp uses random coloring
+	var/rarechance = 1 //chance for rare color variant
+
+	var/static/list/carp_colors = list(\
+	"lightpurple" = "#c3b9f1", \
+	"lightpink" = "#da77a8", \
+	"green" = "#70ff25", \
+	"grape" = "#df0afb", \
+	"swamp" = "#e5e75a", \
+	"turquoise" = "#04e1ed", \
+	"brown" = "#ca805a", \
+	"teal" = "#20e28e", \
+	"lightblue" = "#4d88cc", \
+	"rusty" = "#dd5f34", \
+	"beige" = "#bbaeaf", \
+	"yellow" = "#f3ca4a", \
+	"blue" = "#09bae1", \
+	"palegreen" = "#7ef099", \
+	)
+	var/static/list/carp_colors_rare = list(\
+	"silver" = "#fdfbf3", \
+	)
+
+/mob/living/simple_animal/hostile/carp/Initialize(mapload)
+	. = ..()
+	carp_randomify(rarechance)
+	update_icons()
+
+/mob/living/simple_animal/hostile/carp/proc/carp_randomify(rarechance)
+	if(random_color)
+		var/our_color
+		if(prob(rarechance))
+			our_color = pick(carp_colors_rare)
+			add_atom_colour(carp_colors_rare[our_color], FIXED_COLOUR_PRIORITY)
+		else
+			our_color = pick(carp_colors)
+			add_atom_colour(carp_colors[our_color], FIXED_COLOUR_PRIORITY)
+		add_carp_overlay()
+
+/mob/living/simple_animal/hostile/carp/proc/add_carp_overlay()
+	if(!random_color)
+		return
+	cut_overlays()
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "base_mouth")
+	base_overlay.appearance_flags = RESET_COLOR
+	add_overlay(base_overlay)
+
+/mob/living/simple_animal/hostile/carp/proc/add_dead_carp_overlay()
+	if(!random_color)
+		return
+	cut_overlays()
+	var/mutable_appearance/base_dead_overlay = mutable_appearance(icon, "base_dead_mouth")
+	base_dead_overlay.appearance_flags = RESET_COLOR
+	add_overlay(base_dead_overlay)
+
+/mob/living/simple_animal/hostile/carp/death(gibbed)
+	. = ..()
+	cut_overlays()
+	if(!random_color || gibbed)
+		return
+	add_dead_carp_overlay()
+
+/mob/living/simple_animal/hostile/carp/revive(full_heal = 0, admin_revive = 0)
+	. = ..()
+	if(.)
+		regenerate_icons()
+
+/mob/living/simple_animal/hostile/carp/regenerate_icons()
+	cut_overlays()
+	if(!random_color)
+		return
+	if(stat != DEAD)
+		add_carp_overlay()
+	else
+		add_dead_carp_overlay()
+	..()
+
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
 	maxbodytemp = INFINITY
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
+	random_color = FALSE
 
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/broadMobs.dmi'
@@ -57,6 +136,7 @@
 	health = 20
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
+	random_color = FALSE
 
 	obj_damage = 80
 	melee_damage_lower = 20
@@ -90,5 +170,6 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	AIStatus = AI_OFF
+	rarechance = 10
 
 #undef REGENERATION_DELAY
