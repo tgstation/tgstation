@@ -1,4 +1,0 @@
-author: "Jgta4444"
-delete-after: True
-changes: 
-  - bugfix: "Dna scanner now correctly calculate its precision coefficient"

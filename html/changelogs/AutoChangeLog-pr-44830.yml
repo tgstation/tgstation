@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Turned off energy weapons can no longer cut down trees, destroy wooden walls, harvest lavaland plants and make planks."
