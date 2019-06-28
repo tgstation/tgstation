@@ -17,16 +17,9 @@
 	if(scan)
 		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
-/obj/machinery/computer/warrant/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/card/id))
-		if(!scan)
-			if(!user.transferItemToLoc(O, src))
-				return
-			scan = O
-			to_chat(user, "<span class='notice'>You insert [O].</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-		else
-			to_chat(user, "<span class='warning'>There's already an ID card in the console.</span>")
+/obj/machinery/computer/warrant/attackby(obj/I, mob/user, params)
+	if(istype(I, /obj/item/card/id))
+		attack_hand(user)
 	else
 		return ..()
 
@@ -34,13 +27,8 @@
 	. = ..()
 
 	var/list/dat = list("Logged in as: ")
-	if(!scan)
-		dat += {"<a href='?src=[REF(src)];choice=Login'>------------</a><hr>"}
-	else
-		dat += {"<a href='?src=[REF(src)];choice=Logout'>[scan.name]</a><hr>"}
-		for(var/datum/data/record/R in GLOB.data_core.security)
-			if(R.fields["name"] == scan.registered_name)
-				current = R
+	if(scan)
+		dat += {"<a href='?src=[REF(src)];choice=Logout'>[scan.registered_name]</a><hr>"}
 		if(current)
 			var/background
 			var/notice = ""
@@ -63,7 +51,7 @@
 			<tr><td>Name:</td><td>&nbsp;[current.fields["name"]]&nbsp;</td></tr>
 			<tr><td>ID:</td><td>&nbsp;[current.fields["id"]]&nbsp;</td></tr>
 			</table>"}
-			dat += {"<br>Criminal Status:<br>
+			dat += {"Criminal Status:<br>
 			<div style='[background] padding: 3px; text-align: center;'>
 			<strong>[current.fields["criminal"]][notice]</strong>
 			</div>"}
@@ -126,6 +114,8 @@
 			dat += "</table>"
 		else
 			dat += {"<span>** No security record found for this ID **</span>"}
+	else
+		dat += {"<a href='?src=[REF(src)];choice=Login'>------------</a><hr>"}
 
 	var/datum/browser/popup = new(user, "warrant", "Security Warrant Console", 600, 400)
 	popup.set_content(dat.Join())
@@ -138,47 +128,36 @@
 
 	switch(href_list["choice"])
 		if("Login")
-			eject_id(usr)
-			if(!scan)
-				var/obj/item/card/id/O = usr.is_holding_item_of_type(/obj/item/card/id)
-				if(O)
-					if(!usr.transferItemToLoc(O, src))
-						return
-					scan = O
-					updateUsrDialog()
-				else
-					to_chat(usr, "<span class='danger'>No valid ID.</span>")
-
+			var/mob/M = usr
+			scan = M.get_idcard(TRUE)
+			if(scan && istype(scan))
+				for(var/datum/data/record/R in GLOB.data_core.security)
+					if(R.fields["name"] == scan.registered_name)
+						current = R
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 		if("Logout")
-			eject_id(usr)
-			updateUsrDialog()
 			current = null
+			scan = null
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
 
 		if("Pay")
 			for(var/datum/data/crime/p in current.fields["citation"])
 				if(p.dataId == text2num(href_list["cdataid"]))
-					var/datum/bank_account/R = scan.registered_account
-					var/diff = p.fine - p.paid
-					var/pay = FLOOR(input(usr, "Please enter how much you would like to pay:", "Citation Payment", 50) as num, 1)
-					if(!pay || pay < 0)
-						to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
-						return
-					if(pay > diff)
-						to_chat(usr, "<span class='notice'>You only owe $[diff] credit\s to pay off this fine.</span>")
-						return
-					if(R.adjust_money(-pay))
-						to_chat(usr, "<span class='notice'>You have paid $[pay] credit\s towards your fine.</span>")
-						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
-						D.adjust_money(pay)
-						GLOB.data_core.payCitation(current.fields["id"], text2num(href_list["cdataid"]), pay)
-						if (pay == diff)
-							investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
-						updateUsrDialog()
-						return
+					var/obj/item/holochip/C = usr.is_holding_item_of_type(/obj/item/holochip)
+					if(C && istype(C))
+						var/pay = C.get_item_credit_value()
+						if(!pay)
+							to_chat(usr, "<span class='warning'>[C] doesn't seem to be worth anything!</span>")
+						else
+							var/diff = p.fine - p.paid
+							GLOB.data_core.payCitation(current.fields["id"], text2num(href_list["cdataid"]), pay)
+							if (pay == diff || pay > diff || pay >= diff)
+								investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
+							qdel(C)
+							playsound(src, "terminal_type", 25, 0)
 					else
-						var/difference = pay - R.account_balance
-						to_chat(usr, "<span class='warning'>ERROR: The linked account requires [difference] more credit\s to perform that withdrawal.</span>")
-
+						to_chat(usr, "<span class='warning'>Fines can only be paid with holochips</span>")
+	updateUsrDialog()
 	add_fingerprint(usr)
 
 
