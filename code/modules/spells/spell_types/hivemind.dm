@@ -184,6 +184,7 @@
 	name = "Sensory Shock"
 	desc = "After a short charging time, we overload the mind of one of our vessels with psionic energy, temporarilly disrupting their sight, hearing, and speech."
 	charge_max = 600
+	panel = "Hivemind Abilities"
 	invocation_type = "none"
 	clothes_req = 0
 	human_req = 1
@@ -443,7 +444,7 @@
 			message_admins("[ADMIN_LOOKUPFLW(vessel)] has been temporarily taken over by [ADMIN_LOOKUPFLW(user)] (Hivemind Host).")
 			log_game("[key_name(vessel)] was Mind Controlled by [key_name(user)].")
 
-			deadchat_broadcast("<span class='deadsay'><span class='name'>[vessel]</span> has just been mind controlled!</span>", vessel)
+			deadchat_broadcast(" has just been mind controlled!", "<span class='name'>[vessel]</span>", vessel)
 
 			original_body = user
 			backseat.loc = vessel
@@ -632,7 +633,7 @@
 			return
 	target.apply_status_effect(STATUS_EFFECT_HIVEMIND_CURSE, CURSE_SPAWNING | CURSE_BLINDING)
 	to_chat(user, "<span class='notice'>We have brought forth the targets nightmares!</span>")
-	deadchat_broadcast("<span class='deadsay'><span class='name'>[target]</span> is suffering corporial nightmares!</span>", target)
+	deadchat_broadcast(" is suffering corporial nightmares!", "<span class='name'>[target]</span>", target)
 
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	if(hive)
@@ -697,7 +698,7 @@
 	var/list/enemies = list()
 
 	to_chat(user, "<span class='notice'>We begin probing [target.name]'s mind!</span>")
-	if(!do_after(user,100,0,target))
+	if(do_after(user,100,0,target))
 		var/foiled = target.anti_magic_check(FALSE, FALSE, TRUE)
 		if(!in_hive || foiled)
 			var/timely = !in_hive ? 200 : 100

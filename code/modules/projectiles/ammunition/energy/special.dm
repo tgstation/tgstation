@@ -11,6 +11,9 @@
 	projectile_type = /obj/item/projectile/energy/declone
 	select_name = "declone"
 	fire_sound = 'sound/weapons/pulse3.ogg'
+	
+/obj/item/ammo_casing/energy/declone/weak
+	projectile_type = /obj/item/projectile/energy/declone/weak
 
 /obj/item/ammo_casing/energy/flora
 	fire_sound = 'sound/effects/stealthoff.ogg'

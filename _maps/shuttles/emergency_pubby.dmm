@@ -419,13 +419,13 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "aX" = (
-/obj/machinery/sleeper,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aY" = (
@@ -454,6 +454,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/vending/wallmed/pubby{
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)

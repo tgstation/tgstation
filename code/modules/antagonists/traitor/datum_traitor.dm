@@ -68,6 +68,10 @@
 		contract_to_add.id = i
 		assigned_contracts.Add(contract_to_add)
 
+	// If the threshold for TC payouts isn't reached, boost the lowest paying contract
+	if (total < lowest_TC_threshold)
+		lowest_paying_contract.contract.payout_bonus += (lowest_TC_threshold - total)
+
 /datum/antagonist/traitor/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
