@@ -211,7 +211,7 @@
 		owner.updatehealth()
 	consider_processing()
 	update_disabled()
-	cremation_progress = 0
+	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
 //Returns total damage.
