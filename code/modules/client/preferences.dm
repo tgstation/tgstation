@@ -241,6 +241,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 
 			var/mutant_colors
+			if(istype(pref_species, /datum/species/troll)) //413 start -- DEFINITELY the best thing to do
+
+				dat += "<td valign='top' width='21%'>"
+
+				dat += "<h3>Blood Color</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=t_caste;task=input'>[troll_caste]</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='21%'>"
+
+				dat += "<h3>Horns</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=horn_type;task=input'>[troll_horn]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=previous_troll_horn;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_troll_horn;task=input'>&gt;</a><BR>"
+
+				dat += "</td>"
+
+			//413 end
 			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
 				if(!use_skintones)
@@ -1027,6 +1047,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					skin_tone = random_skin_tone()
 				if("bag")
 					backbag = pick(GLOB.backbaglist)
+				//413 start
+				if("t_caste")
+					troll_caste = random_troll_caste()
+					eye_color = get_color_from_caste(troll_caste)
+				if("horn_type")
+					troll_horn = random_troll_horns()
+				//413 end
 				if("all")
 					random_character()
 
@@ -1145,6 +1172,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
 					else
 						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
+
+				//413 start
+				if("horn_type")
+					var/new_troll_horns
+					new_troll_horns = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.troll_horns_list
+					if(new_troll_horns)
+						troll_horn = new_troll_horns
+
+				if("next_troll_horn")
+					troll_horn = next_list_item(troll_horn, GLOB.troll_horns_list)
+
+				if("previous_troll_horn")
+					troll_horn = previous_list_item(troll_horn, GLOB.troll_horns_list)
+
+				if("t_caste")
+					var/new_t_caste = input(user, "Choose your character's blood color:", "Character Preference") as null|anything in GLOB.troll_castes
+					if(new_t_caste)
+						troll_caste = new_t_caste
+				//413 end
 
 				if("underwear")
 					var/new_underwear
@@ -1547,7 +1593,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
-
+	//413 start
+	character.troll_caste = troll_caste
+	if (istype(pref_species, /datum/species/troll))
+		character.eye_color=get_color_from_caste(troll_caste)
+	character.troll_horn = troll_horn
+	//413 end
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"
 
