@@ -10,7 +10,6 @@ branches:
 matrix:
   include:
     - name: "Run Linters"
-      env: BUILD_TOOLS=true
       addons:
         apt:
           packages:
@@ -25,7 +24,6 @@ matrix:
         - tools/travis/lint_grep.sh
 
     - name: "Compile All Maps"
-      env: BUILD_TOOLS=false BUILD_TESTING=true
       addons:
         apt:
           packages:
@@ -42,7 +40,6 @@ matrix:
         - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
 
     - name: "Compile and Run Tests"
-      env: BUILD_TOOLS=false BUILD_TESTING=false
       addons:
         mariadb: '10.2'
         apt:
