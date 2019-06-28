@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
-
 tools/deploy.sh travis_test
 mkdir travis_test/config
 
