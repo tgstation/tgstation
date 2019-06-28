@@ -157,7 +157,7 @@
 
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
-	if(user)
+	if(user && istype(AM, /obj/item/gun/energy/laser) && AM.type == /obj/item/gun/energy/laser)
 		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, type)
 		qdel(src)
 
