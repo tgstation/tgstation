@@ -7,7 +7,7 @@
 	var/list/victim_belongings = list()
 
 /datum/syndicate_contract/New(owner, type, blacklist)
-	generate(owner, type)
+	generate(owner, type, blacklist)
 
 /datum/syndicate_contract/proc/generate(owner, type, blacklist)
 	contract.owner = owner
