@@ -196,7 +196,6 @@
 	desc = "It blocks bullets, but it wont last for long."
 	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "holobarrier0"
-	density = TRUE
 	anchored = TRUE
 	pass_flags = LETPASSTHROW
 	climbable = TRUE
@@ -207,6 +206,7 @@
 
 /obj/structure/barricade/security/holobarricade/deploy()
 	icon_state = "holobarrier1"
+	density = TRUE
 
 /obj/structure/barricade/security/holobarricade/Initialize()
 	. = ..()
