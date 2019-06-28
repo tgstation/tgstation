@@ -1,0 +1,5 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - rscadd: "Contract kit's specialist space suit now has its custom sprite."
+  - rscadd: "Assigning to tablet now plays greeting soundclip."

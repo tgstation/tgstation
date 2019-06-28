@@ -588,7 +588,7 @@
 				physiology.damage_resistance = -20000
 			if(5)
 				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
-				reagents.add_reagent("mutationtoxin2", 10)
+				reagents.add_reagent(/datum/reagent/aslimetoxin, 10)
 			if(6)
 				apply_status_effect(STATUS_EFFECT_GO_AWAY)
 			if(7)

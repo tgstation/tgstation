@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - code_imp: "Replaced most instances where cables referenced their maximum size with a define"
