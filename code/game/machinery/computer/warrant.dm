@@ -12,17 +12,6 @@
 /obj/machinery/computer/warrant/Initialize()
 	. = ..()
 
-/obj/machinery/computer/warrant/examine(mob/user)
-	. = ..()
-	if(scan)
-		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
-
-/obj/machinery/computer/warrant/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
-		attack_hand(user)
-	else
-		return ..()
-
 /obj/machinery/computer/warrant/ui_interact(mob/user)
 	. = ..()
 
