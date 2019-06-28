@@ -13,8 +13,6 @@
 	cooldown_min = 30
 	selection_type = "range"
 	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/carbon/monkey))
-	var/mask_integrity //how easy the mask is to destory
-	var/mask_internals = FALSE //does the mask work as internals
 
 	action_icon_state = "barn"
 
@@ -44,11 +42,6 @@
 
 	var/choice = pick(masks)
 	var/obj/item/clothing/mask/magichead = new choice(get_turf(target))
-	if(mask_integrity)
-		magichead.max_integrity = mask_integrity
-		magichead.obj_integrity = mask_integrity
-	if(mask_internals)
-		magichead.clothing_flags += MASKINTERNALS
 	target.visible_message("<span class='danger'>[target]'s face bursts into flames, and a barnyard animal's head takes its place!</span>", \
 						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
 	if(!target.dropItemToGround(target.wear_mask))

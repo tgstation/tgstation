@@ -146,10 +146,18 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	var/obj/item/M = new magic_type(get_turf(H))
 	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, 1)
 
-	if(M.type == /obj/item/book/granter/spell && prob(SPECIALIST_MAGIC_PROB))
+	if(M.type == /obj/item/book/granter/spell)
 		var/obj/item/book/granter/spell/S = M
-		S.level_up_book(4,FALSE)
-		lucky = TRUE
+		if(prob(SPECIALIST_MAGIC_PROB))
+			S.level_up_book(4,FALSE)
+			lucky = TRUE
+		else if(prob(10))
+			S.level_up_book(3,FALSE)
+		else if(prob(40))
+			S.level_up_book(2,FALSE)
+		else if(prob(50))
+			S.level_up_book(1,FALSE)
+
 
 	var/in_hand = H.put_in_hands(M)
 

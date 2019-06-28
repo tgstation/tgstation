@@ -136,7 +136,10 @@
 	qdel(S)
 
 /obj/item/book/granter/spell/proc/level_up_book(amount, message)
-	spell_level += amount
+	if(spell_level + amount > spell.level_max)
+		spell_level = spell.level_max
+	else
+		spell_level += amount
 	update_name()
 	used = FALSE
 	icon_state = initial(icon_state)
