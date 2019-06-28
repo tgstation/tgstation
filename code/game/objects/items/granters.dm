@@ -119,9 +119,14 @@
 	var/spellname = "conjure bugs"
 	var/spell_level = 0
 
-/obj/item/book/granter/spell/New()
-	..()
+/obj/item/book/granter/spell/Initialize()
+	. = ..()
+	GLOB.spellbooks += src
 	update_name()
+
+/obj/item/book/granter/spell/Destroy()
+	. = ..()
+	GLOB.spellbooks -= src
 
 /obj/item/book/granter/spell/proc/update_name()
 	var/obj/effect/proc_holder/spell/S = new spell
@@ -130,11 +135,15 @@
 	name = "spellbook of [S.name]"
 	qdel(S)
 
-/obj/item/book/granter/spell/proc/level_up_book()
-	spell_level += 1
-	used = FALSE
+/obj/item/book/granter/spell/proc/level_up_book(amount, message)
+	spell_level += amount
 	update_name()
+	used = FALSE
 	icon_state = initial(icon_state)
+
+	if(message)
+		playsound(get_turf(src), 'sound/magic/charge.ogg', 50, 1)
+		src.visible_message("<span class='notice'>[src] glows in a white light!</span>")
 
 /obj/item/book/granter/spell/attack_self(mob/user)
 	update_name()

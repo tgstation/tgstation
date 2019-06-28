@@ -36,3 +36,5 @@
 			for(var/obj/effect/proc_holder/spell/S in L.mind.spell_list)
 				S.UpdateSpellLevel(S.spell_level + 1)
 			to_chat(L, "<span class='notice'>You suddenly feel more competent with your casting!</span>")
+	for(var/obj/item/book/granter/spell/B in GLOB.spellbooks)
+		B.level_up_book(1, TRUE)
