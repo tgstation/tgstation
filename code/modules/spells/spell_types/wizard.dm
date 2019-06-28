@@ -68,21 +68,11 @@
 
 
 /obj/effect/proc_holder/spell/targeted/smoke/lesser //Chaplain smoke book
-	name = "Smoke"
+	name = "Lesser Smoke"
 	desc = "This spell spawns a small cloud of choking smoke at your location."
-
-	school = "conjuration"
 	charge_max = 360
-	clothes_req = FALSE
-	invocation = "none"
-	invocation_type = "none"
-	range = -1
-	include_user = TRUE
-
 	smoke_spread = 1
 	smoke_amt = 2
-
-	action_icon_state = "smoke"
 
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	name = "Disable Tech"
@@ -280,7 +270,7 @@
 		var/atom/movable/AM = am
 		if(AM == user || AM.anchored)
 			continue
-		
+
 		if(ismob(AM))
 			var/mob/M = AM
 			if(M.anti_magic_check(anti_magic_check, FALSE))

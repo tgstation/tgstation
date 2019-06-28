@@ -607,8 +607,10 @@
 	add_antag_datum(head)
 	special_role = ROLE_REV_HEAD
 
-/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
+/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S, slevel)
 	spell_list += S
+	if(slevel)
+		S.UpdateSpellLevel(slevel)
 	S.action.Grant(current)
 
 /datum/mind/proc/owns_soul()

@@ -37,24 +37,9 @@
 				to_chat(user,  "<span class='warning'>This spell cannot be improved further.</span>")
 				return FALSE
 			else
-				aspell.name = initial(aspell.name)
-				aspell.spell_level++
-				aspell.charge_max = round(initial(aspell.charge_max) - aspell.spell_level * (initial(aspell.charge_max) - aspell.cooldown_min)/ aspell.level_max)
-				if(aspell.charge_max < aspell.charge_counter)
-					aspell.charge_counter = aspell.charge_max
-				switch(aspell.spell_level)
-					if(1)
-						to_chat(user, "<span class='notice'>You have improved [aspell.name] into Efficient [aspell.name].</span>")
-						aspell.name = "Efficient [aspell.name]"
-					if(2)
-						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Quickened [aspell.name].</span>")
-						aspell.name = "Quickened [aspell.name]"
-					if(3)
-						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Free [aspell.name].</span>")
-						aspell.name = "Free [aspell.name]"
-					if(4)
-						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Instant [aspell.name].</span>")
-						aspell.name = "Instant [aspell.name]"
+				var/old_name = aspell.name
+				aspell.UpdateSpellLevel(aspell.spell_level + 1)
+				to_chat(user, "<span class='notice'>You have [aspell.spell_level == 1 ? "improved" : "further improved"] [old_name] into [aspell.name].</span>")
 				if(aspell.spell_level >= aspell.level_max)
 					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
 				SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[aspell.spell_level]"))
@@ -62,6 +47,7 @@
 	//No same spell found - just learn it
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	user.mind.AddSpell(S)
+	S.nameSpell()
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
 	return TRUE
 
@@ -556,7 +542,7 @@
 	return TRUE
 
 /obj/item/spellbook
-	name = "spell book"
+	name = "spellbook"
 	desc = "An unearthly tome that glows with power."
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"

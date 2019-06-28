@@ -115,29 +115,56 @@
 ///SPELLS///
 
 /obj/item/book/granter/spell
-	var/spell
+	var/obj/effect/proc_holder/spell/spell
 	var/spellname = "conjure bugs"
+	var/spell_level = 0
+
+/obj/item/book/granter/spell/New()
+	..()
+	update_name()
+
+/obj/item/book/granter/spell/proc/update_name()
+	var/obj/effect/proc_holder/spell/S = new spell
+	S.spell_level = spell_level
+	S.nameSpell()
+	name = "spellbook of [S.name]"
+	qdel(S)
+
+/obj/item/book/granter/spell/proc/level_up_book()
+	spell_level += 1
+	used = FALSE
+	update_name()
+	icon_state = initial(icon_state)
+
+/obj/item/book/granter/spell/attack_self(mob/user)
+	update_name()
+	..()
 
 /obj/item/book/granter/spell/already_known(mob/user)
 	if(!spell)
 		return TRUE
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
-		if(knownspell.type == spell)
+		if(knownspell.type == spell && knownspell.spell_level >= spell_level)
 			if(user.mind)
-				if(iswizard(user))
+				if(iswizard(user) || knownspell.spell_level > spell_level)
 					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user,"<span class='notice'>You've already read this one.</span>")
-			return TRUE
+				return TRUE
 	return FALSE
 
 /obj/item/book/granter/spell/on_reading_start(mob/user)
 	to_chat(user, "<span class='notice'>You start reading about casting [spellname]...</span>")
 
 /obj/item/book/granter/spell/on_reading_finished(mob/user)
-	to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
+	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
+		if(knownspell.type == spell)
+			user.mind.RemoveSpell(knownspell)
+			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
+		else
+			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
 	var/obj/effect/proc_holder/spell/S = new spell
-	user.mind.AddSpell(S)
+	user.mind.AddSpell(S, spell_level)
 	user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
 	onlearned(user)
 
@@ -207,9 +234,14 @@
 	remarks = list("If you mindswap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
 
 /obj/item/book/granter/spell/mindswap/onlearned()
-	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
-	icon_state = "book[spellname]"
-	name = "spellbook of [spellname]" //Note, desc doesn't change by design
+	spellname = pick("Fireball","Smoke","Blind","Forcewall","Knock","Barnyard","Charge")
+	name = "spellbook of Efficient [spellname == "Barnyard" ? "Curse of the Barnyard" : "[spellname]"]" //Note, desc doesn't change by design
+	icon_state = "book[lowertext(spellname)]"
+	..()
+
+/obj/item/book/granter/spell/mindswap/update_name()
+	if(used && oneuse)
+		return
 	..()
 
 /obj/item/book/granter/spell/mindswap/recoil(mob/user)

@@ -525,6 +525,52 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			return FALSE
 	return TRUE
 
+/obj/effect/proc_holder/spell/proc/UpdateSpellLevel(new_level)
+	if(new_level == spell_level)
+		return
+
+	if(level_max < 0)
+		return
+
+	var/old_level = spell_level
+
+	new_level = CLAMP(new_level,0,level_max)
+
+	var/upgrade_amount
+	if(new_level < old_level)
+		spell_level = 0
+		charge_max = initial(charge_max)
+		upgrade_amount = new_level
+	else
+		upgrade_amount = new_level - old_level
+
+	for(var/i=0,i<upgrade_amount,i++)
+		LevelUpSpell()
+
+	if(charge_max < charge_counter)
+		charge_counter = charge_max
+
+	nameSpell()
+
+/obj/effect/proc_holder/spell/proc/LevelUpSpell()
+	spell_level++
+	charge_max = round(initial(charge_max) - spell_level * (initial(charge_max) - cooldown_min)/level_max)
+
+/obj/effect/proc_holder/spell/proc/nameSpell()
+	switch(spell_level)
+		if(0)
+			name = "[initial(name)]"
+		if(1)
+			name = "Efficient [initial(name)]"
+		if(2)
+			name = "Quickened [initial(name)]"
+		if(3)
+			name = "Free [initial(name)]"
+		if(4)
+			name = "Instant [initial(name)]"
+		if(5)
+			name = "Ludicrous [initial(name)]"
+
 /obj/effect/proc_holder/spell/self //Targets only the caster. Good for buffs and heals, but probably not wise for fireballs (although they usually fireball themselves anyway, honke)
 	range = -1 //Duh
 

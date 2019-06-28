@@ -43,12 +43,14 @@
 					to_chat(L, "<span class='notice'>This book is infinite use and can't be recharged, yet the magic has improved the book somehow...</span>")
 					burnt_out = TRUE
 					I.pages_to_mastery--
+					I.level_up_book()
 					break
 				if(prob(80))
 					L.visible_message("<span class='warning'>[I] catches fire!</span>")
 					qdel(I)
 				else
 					I.used = FALSE
+					I.level_up_book()
 					charged_item = I
 					break
 			else if(istype(item, /obj/item/gun/magic))
