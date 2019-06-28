@@ -329,6 +329,22 @@
 	status = BURST
 	icon_state = "egg_hatched"
 
+/obj/item/stack/sheet/resin
+	name = "plasma resin"
+	desc = "A sticky mass of resin made from denatured plasma."
+	single name = "plasma resin sample"
+	icon_state = "sheet-resin"
+
+GLOBAL_LIST_INIT(resin_recipes, list( \
+	new/datum/stack_recipe("resin floor coating", /obj/structure/alien/weeds, 1, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("resin wall structure", /obj/structure/alien/resin/wall, 5, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("resin transparent membrane", /obj/structure/alien/resin/membrane, 5, one_per_turf = TRUE, on_floor = TRUE), \
+	))
+
+/obj/item/stack/sheet/resin/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.resin_recipes
+	return ..()
+
 #undef BURST
 #undef GROWING
 #undef GROWN

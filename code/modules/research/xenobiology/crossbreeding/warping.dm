@@ -140,7 +140,7 @@ Warping extracts:
 
 /obj/item/slimecross/warping/green
 	colour = "green"
-	rune_path = /obj/effect/slimerune
+	rune_path = /obj/effect/slimerune/green
 	effect_desc = "Forms a recoverable rune that converts sheets of plasma to resin, allowing you to form xenomorphic structures."
 
 /obj/item/slimecross/warping/pink
@@ -478,3 +478,12 @@ Warping extracts:
 	var/mob/living/L = A
 	L.visible_message("<span class='danger'>[src] glows brightly below [user]...</span>", "<span class='userdanger'>[src] glows, empowering [user]'s attack!</span>")
 	L.adjustBruteLoss(10) //Turns the average punch into the equivalent of a toolbox, but only as long as you're on the tile.
+
+/obj/effect/slimerune/green
+	name = "green rune"
+	desc = "Strange, alien markings line the interior. It searches for plasma."
+
+/obj/effect/slimerune/green/process()
+	for(var/obj/item/stack/sheet/mineral/plasma/P in get_turf(loc))
+		if(P.use(2))
+			new /obj/item/stack/sheet/resin(loc)
