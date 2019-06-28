@@ -157,7 +157,10 @@
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
+	if(user != M && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (H.mind && H.mind.assigned_role == "Clown")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
 	return ..()
 
 /obj/item/bikehorn/suicide_act(mob/user)
