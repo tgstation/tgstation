@@ -142,15 +142,15 @@ GENE SCANNER
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
+		var/message
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
-		if(H.undergoing_liver_failure() && H.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>")
-		//the miscellanous organ failure messages
+		//organ failure messages
 		for(var/obj/item/organ/organ in H.internal_organs)
-			if((!istype(organ, /obj/item/organ/liver)) && (!istype(organ, /obj/item/organ/heart)))
+			if(!istype(organ, /obj/item/organ/heart))
 				if(organ.failing)
-					to_chat(user, "<span class='danger'>All functions detected within [organ] have ceased!</span>")
+					message = organ.Assemble_Failure_Message()
+					to_chat(user, message)
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
