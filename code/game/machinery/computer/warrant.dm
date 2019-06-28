@@ -81,13 +81,13 @@
 			</tr>"}
 			for(var/datum/data/crime/c in current.fields["citation"])
 				var/owed = c.fine - c.paid
-				dat += "<tr><td>[c.crimeName]</td>"
-				dat += "<td>$[c.fine]</td>"
-				dat += "<td>[c.author]</td>"
-				dat += "<td>[c.time]</td>"
+				dat += {"<tr><td>[c.crimeName]</td>
+				<td>$[c.fine]</td>
+				<td>[c.author]</td>
+				<td>[c.time]</td>"}
 				if(owed > 0)
-					dat += "<td>$[owed]</td>"
-					dat += "<td><A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td>"
+					dat += {"<td>$[owed]</td>
+					<td><A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td>"}
 				else
 					dat += "<td colspan='2'>All Paid Off</td>"
 				dat += "</tr>"
@@ -102,11 +102,11 @@
 			<th>Time Added</th>
 			</tr>"}
 			for(var/datum/data/crime/c in current.fields["mi_crim"])
-				dat += "<tr><td>[c.crimeName]</td>"
-				dat += "<td>[c.crimeDetails]</td>"
-				dat += "<td>[c.author]</td>"
-				dat += "<td>[c.time]</td>"
-				dat += "</tr>"
+				dat += {"<tr><td>[c.crimeName]</td>
+				<td>[c.crimeDetails]</td>
+				<td>[c.author]</td>
+				<td>[c.time]</td>
+				</tr>"}
 			dat += "</table>"
 
 			dat += "<br>Major Crimes:"
@@ -118,18 +118,17 @@
 			<th>Time Added</th>
 			</tr>"}
 			for(var/datum/data/crime/c in current.fields["ma_crim"])
-				dat += "<tr><td>[c.crimeName]</td>"
-				dat += "<td>[c.crimeDetails]</td>"
-				dat += "<td>[c.author]</td>"
-				dat += "<td>[c.time]</td>"
-				dat += "</tr>"
+				dat += {"<tr><td>[c.crimeName]</td>
+				<td>[c.crimeDetails]</td>
+				<td>[c.author]</td>
+				<td>[c.time]</td>
+				</tr>"}
 			dat += "</table>"
 		else
 			dat += {"<span>** No security record found for this ID **</span>"}
 
-	dat = dat.Join()
 	var/datum/browser/popup = new(user, "warrant", "Security Warrant Console", 600, 400)
-	popup.set_content(dat)
+	popup.set_content(dat.Join())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
@@ -146,18 +145,19 @@
 					if(!usr.transferItemToLoc(O, src))
 						return
 					scan = O
+					updateUsrDialog()
 				else
 					to_chat(usr, "<span class='danger'>No valid ID.</span>")
 
 		if("Logout")
 			eject_id(usr)
+			updateUsrDialog()
 			current = null
 
 		if("Pay")
 			for(var/datum/data/crime/p in current.fields["citation"])
 				if(p.dataId == text2num(href_list["cdataid"]))
 					var/datum/bank_account/R = scan.registered_account
-					to_chat(world, "Found your citation and your account!")
 					var/diff = p.fine - p.paid
 					var/pay = FLOOR(input(usr, "Please enter how much you would like to pay:", "Citation Payment", 50) as num, 1)
 					if(!pay || pay < 0)
@@ -180,8 +180,6 @@
 						to_chat(usr, "<span class='warning'>ERROR: The linked account requires [difference] more credit\s to perform that withdrawal.</span>")
 
 	add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
 
 
 /obj/machinery/computer/warrant/emp_act(severity)
@@ -189,15 +187,6 @@
 
 	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
 		return
-
-/obj/machinery/computer/warrant/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
-	if(user)
-		if(user.canUseTopic(src, BE_CLOSE))
-			if(!trim(message1))
-				return 0
-			if(!record2 || record2 == current)
-				return 1
-	return 0
 
 /obj/machinery/computer/warrant/AltClick(mob/user)
 	if(user.canUseTopic(src, !issilicon(user)))

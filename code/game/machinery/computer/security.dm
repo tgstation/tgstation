@@ -20,6 +20,7 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+	var/maxFine = 1000
 
 	light_color = LIGHT_COLOR_RED
 
@@ -223,16 +224,17 @@
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["citation"])
 							var/owed = c.fine - c.paid
-							dat += "<tr><td>[c.crimeName]</td>"
-							dat += "<td>$[c.fine]</td>"
-							dat += "<td>[c.author]</td>"
-							dat += "<td>[c.time]</td>"
+							dat += {"<tr><td>[c.crimeName]</td>
+							<td>$[c.fine]</td><td>[c.author]</td>
+							<td>[c.time]</td>"}
 							if(owed > 0)
 								dat += "<td>$[owed]</td>"
 							else
 								dat += "<td>All Paid Off</td>"
-							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=citation_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
-							dat += "</tr>"
+							dat += {"<td>
+							<A href='?src=[REF(src)];choice=Edit  Field;field=citation_delete;cdataid=[c.dataId]'>\[X\]</A>
+							</td>
+							</tr>"}
 						dat += "</table>"
 
 						dat += "<br><br>Minor Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_add'>Add New</A>"
@@ -728,7 +730,7 @@ What a mess.*/
 							if(!fine || fine < 0)
 								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 								return
-							fine = min(fine, 1000)
+							fine = min(fine, maxFine)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
