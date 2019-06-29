@@ -2849,6 +2849,7 @@
 #include "spacestation413\code\__HELPERS\names.dm"
 #include "spacestation413\code\_globalvars\lists\flavor_misc.dm"
 #include "spacestation413\code\_globalvars\lists\names.dm"
+#include "spacestation413\code\datums\ai_laws.dm"
 #include "spacestation413\code\datums\components\crafting\recipes.dm"
 #include "spacestation413\code\game\objects\effects\decals\cleanable\humans.dm"
 #include "spacestation413\code\game\objects\items\storage\butts.dm"
