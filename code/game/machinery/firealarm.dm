@@ -350,6 +350,7 @@
 		to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 	dispense()
+	log_game("[user] has manually actived the sprinkler in [AREACOORD(src)]")
 
 /obj/machinery/sprinkler/AltClick(mob/user)
 	if(issilicon(user))
@@ -369,11 +370,16 @@
 	reagents.add_reagent(pick(/datum/reagent/clf3,
 							  /datum/reagent/drug/space_drugs,
 							  /datum/reagent/lube,
-							  /datum/reagent/fuel/unholywater,
+							  /datum/reagent/hellwater,
 							  /datum/reagent/toxin/acid/fluacid,
-							  /datum/reagent/napalm
-							  /datum/reagent/oxygen),50)
+							  /datum/reagent/napalm,
+							  /datum/reagent/oxygen,
+							  /datum/reagent/toxin/plasma,
+							  /datum/reagent/carbondioxide,
+							  /datum/reagent/consumable/ethanol/tequila),50)
 	to_chat(user, "<span class='danger'>The war crime LED blinks twice.</span>")
+	message_admins(" [user] has emagged a fire sprinkler in [AREACOORD(src)].")
+	log_game("[user] has emagged a fire sprinkler.")
 	refill_loaded = TRUE
 	update_icon()
 
@@ -382,11 +388,10 @@
 	dispense()
 
 /obj/machinery/sprinkler/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	if(!allowed(user))
-		to_chat(user, "<span class='danger'>Access denied.</span>")
-		return
 	if(I.tool_behaviour == TOOL_CROWBAR)
+		if(!allowed(user))
+			to_chat(user, "<span class='danger'>Access denied.</span>")
+			return
 		if(!working)
 			to_chat(user, "You start uprooting \the [src]...")
 			working = TRUE
@@ -397,7 +402,13 @@
 				return
 			else
 				working = FALSE
-	if(I.tool_behaviour == TOOL_WRENCH)
+	else if(I.tool_behaviour == TOOL_WRENCH)
+		if(!allowed(user))
+			to_chat(user, "<span class='danger'>Access denied.</span>")
+			return
+		if(!refill_loaded)
+			to_chat(user, "The sprinkler is empty.")
+			return
 		if(!working)
 			to_chat(user, "You start opening the emergency cap...")
 			working = TRUE
@@ -405,11 +416,14 @@
 				to_chat(user, "You have successfully emptied \the [src].")
 				reagents.reaction(user, TOUCH)
 				reagents.remove_all(50)
+				playsound(loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
 				obj_flags &= ~EMAGGED
 				update_icon()
 				return
 			else
 				working = FALSE
+	else
+		..()
 
 /obj/machinery/sprinkler/proc/dispense()
 	if(cooldown < world.time && refill_loaded)

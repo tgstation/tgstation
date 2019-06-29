@@ -154,7 +154,7 @@
 	description = "What if we tried to lower the job related incidents?"
 	prereq_ids = list("adv_engi", "biotech")
 	design_ids = list("sprinkler", "refill_water", "refill_foam")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 8000
 
 
