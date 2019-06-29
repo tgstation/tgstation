@@ -437,7 +437,7 @@
 				break
 		if(!nav_beacon.id || (nav_beacon.id && console.beacon_codes[nav_beacon.id]))
 			if(!nav_beacon.access_code || (nav_beacon.access_code && console.beacon_access_codes[nav_beacon.access_code]))
-				L["([L.len]) [nav_beacon.id] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = B
+				L["([L.len]) [nav_beacon.id] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = nav_beacon
 			else
 				L["([L.len]) [nav_beacon.name] [nav_beacon.id] locked"] = null
 
