@@ -30,18 +30,18 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	report_type = "dynamic"
 
 	announce_span = "danger"
-	announce_text = "Dynamic mode!" // This needs to be written or something
+	announce_text = "Dynamic mode!" // This needs to be changed maybe
 
-	//Threat logging vars
-	var/threat_level = 0//the "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
-	var/starting_threat = 0 //threat_level's initially rolled value. Threat_level isn't changed by many things.
-	var/threat = 0//set at the beginning of the round. Spent by the mode to "purchase" rules.
-	var/list/threat_log = list() //Running information about the threat. Can store text or datum entries.
+	// Threat logging vars
+	var/threat_level = 0 // The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
+	var/starting_threat = 0 // Threat_level's initially rolled value. Threat_level isn't changed by many things.
+	var/threat = 0 // Set at the beginning of the round. Spent by the mode to "purchase" rules.
+	var/list/threat_log = list() // Running information about the threat. Can store text or datum entries.
 
 	var/list/roundstart_rules = list()
 	var/list/latejoin_rules = list()
 	var/list/midround_rules = list()
-	var/list/second_rule_req = list(100,100,100,80,60,40,20,0,0,0)//requirements for extra round start rules
+	var/list/second_rule_req = list(100,100,100,80,60,40,20,0,0,0)// Requirements for extra round start rules
 	var/list/third_rule_req = list(100,100,100,100,100,70,50,30,10,0)
 	var/roundstart_pop_ready = 0
 	var/list/candidates = list()
@@ -64,7 +64,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 	var/peaceful_percentage = 50
 
-	// These can not right now be modified by an admin before round start, probably will need to turn these into globals
 	// -- Special tweaks --
 	var/no_stacking = TRUE
 	var/high_pop_limit = 45
@@ -238,7 +237,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		rule.mode = src
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
-		if (rule.ready(1))//ignoring enemy job requirements
+		if (rule.ready(TRUE)) // Ignoring enemy job requirements
 			picking_roundstart_rule(list(rule))
 
 /datum/game_mode/dynamic/proc/roundstart()
@@ -253,7 +252,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 				break
 		if (skip_ruleset)
 			continue
-		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	//if we got the population and threat required
+		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready())
@@ -276,12 +275,12 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					extra_rulesets_amount++
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-		if (extra_rulesets_amount > 0)//we've got enough population and threat for a second rulestart rule
+		if (extra_rulesets_amount > 0) // We've got enough population and threat for a second rulestart rule
 			for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 				if (rule.cost > threat)
 					drafted_rules -= rule
 			if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-				if (extra_rulesets_amount > 1)//we've got enough population and threat for a third rulestart rule
+				if (extra_rulesets_amount > 1) // We've got enough population and threat for a third rulestart rule
 					for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 						if (rule.cost > threat)
 							drafted_rules -= rule
@@ -311,9 +310,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			for(var/mob/M in starting_rule.assigned)
 				candidates -= M
 				for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-					rule.candidates -= M//removing the assigned players from the candidates for the other rules
+					rule.candidates -= M // Removing the assigned players from the candidates for the other rules
 					if (!rule.ready())
-						drafted_rules -= rule//and removing rules that are no longer elligible
+						drafted_rules -= rule // And removing rules that are no longer elligible
 			return TRUE
 		else
 			stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
@@ -369,10 +368,10 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			stack_trace("The midround rule \"[midround_rule.name]\" failed to execute.")
 	return FALSE
 
-/datum/game_mode/dynamic/proc/picking_specific_rule(var/ruletype,var/forced=0)//an experimental proc to allow admins to call rules on the fly or have rules call other rules
+/datum/game_mode/dynamic/proc/picking_specific_rule(var/ruletype,var/forced=0) // An experimental proc to allow admins to call rules on the fly or have rules call other rules
 	var/datum/dynamic_ruleset/midround/new_rule
 	if(ispath(ruletype))
-		new_rule = new ruletype()//you should only use it to call midround rules though.
+		new_rule = new ruletype() // You should only use it to call midround rules though.
 	else if(istype(ruletype,/datum/dynamic_ruleset))
 		new_rule = ruletype
 	else
@@ -389,7 +388,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		if (new_rule.ready(forced))
 			spend_threat(new_rule.cost)
 			threat_log += "[worldtime2text()]: Forced rule [new_rule.name] spent [new_rule.cost]"
-			if (new_rule.execute())//this should never fail since ready() returned 1
+			if (new_rule.execute()) // This should never fail since ready() returned 1
 				log_admin("Making a call to a specific ruleset...[new_rule.name]!")
 				executed_rules += new_rule
 				if (new_rule.persistent)
@@ -415,8 +414,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	else
 		if (forced_extended)
 			return
-		//time to inject some threat into the round
-		if(EMERGENCY_ESCAPED_OR_ENDGAMED)//unless the shuttle is gone
+		// Time to inject some threat into the round
+		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
 			return
 
 		log_admin("DYNAMIC MODE: Checking state of the round.")
@@ -424,7 +423,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		update_playercounts()
 
 		if (prob(GetInjectionChance()))
-			midround_injection_cooldown = rand(600,1050)//20 to 35 minutes inbetween midround threat injections attempts
+			midround_injection_cooldown = rand(600,1050) // 20 to 35 minutes inbetween midround threat injections attempts
 			var/list/drafted_rules = list()
 			var/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
 			current_players[CURRENT_LIVING_PLAYERS] = living_players.Copy()
@@ -474,21 +473,21 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		else
 			if (istype(M,/mob/dead/observer))
 				var/mob/dead/observer/O = M
-				if (O.started_as_observer)//Observers
+				if (O.started_as_observer) // Observers
 					list_observers.Add(M)
 					continue
-				if (O.mind && O.mind.current)//Cultists
-					living_players.Add(M)//yes we're adding a ghost to "living_players", so make sure to properly check for type when testing midround rules
+				if (O.mind && O.mind.current) // Cultists
+					living_players.Add(M) // Yes we're adding a ghost to "living_players", so make sure to properly check for type when testing midround rules
 					continue
-			dead_players.Add(M)//Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
+			dead_players.Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 
 /datum/game_mode/dynamic/proc/GetInjectionChance()
 	var/chance = 0
-	//if the high pop override is in effect, we reduce the impact of population on the antag injection chance
+	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
 	var/high_pop_factor = (GLOB.player_list.len >= high_pop_limit)
 	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(living_players.len/(high_pop_factor ? 10 : 5)))//https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=2053826290
 	if (!living_antags.len)
-		chance += 50//no antags at all? let's boost those odds!
+		chance += 50 // No antags at all? let's boost those odds!
 	else
 		var/current_pop_per_antag = living_players.len / living_antags.len
 		if (current_pop_per_antag > max_pop_per_antag)
@@ -496,7 +495,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		else
 			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
 	if (dead_players.len > living_players.len)
-		chance -= 30//more than half the crew died? ew, let's calm down on antags
+		chance -= 30 // More than half the crew died? ew, let's calm down on antags
 	if (threat > 70)
 		chance += 15
 	if (threat < 30)
@@ -512,7 +511,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 /datum/game_mode/dynamic/make_antag_chance(mob/living/carbon/human/newPlayer)
 	if (forced_extended)
 		return
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED)//no more rules after the shuttle has left
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left
 		return
 
 	update_playercounts()
@@ -546,19 +545,19 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					drafted_rules[rule] = rule.get_weight()
 
 		if (drafted_rules.len > 0 && picking_latejoin_rule(drafted_rules))
-			latejoin_injection_cooldown = rand(330,510)//11 to 17 minutes inbetween antag latejoiner rolls
+			latejoin_injection_cooldown = rand(330,510) // 11 to 17 minutes inbetween antag latejoiner rolls
 
-//Regenerate threat, but no more than our original threat level.
+// Regenerate threat, but no more than our original threat level.
 /datum/game_mode/dynamic/proc/refund_threat(var/regain)
 	threat = min(threat_level,threat+regain)
 
-//Generate threat and increase the threat_level if it goes beyond, capped at 100
+// Generate threat and increase the threat_level if it goes beyond, capped at 100
 /datum/game_mode/dynamic/proc/create_threat(var/gain)
 	threat = min(100, threat+gain)
 	if(threat>threat_level)
 		threat_level = threat
 
-//Expend threat, but do not fall below 0.
+// Expend threat, but do not fall below 0.
 /datum/game_mode/dynamic/proc/spend_threat(var/cost)
 	threat = max(threat-cost,0)
 

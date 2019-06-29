@@ -18,10 +18,10 @@
 	cost = 10
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
-	var/autotraitor_cooldown = 450//15 minutes (ticks once per 2 sec)
+	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
-	var/traitor_scaling_coeff = 10 - max(0,round(mode.threat_level/10)-5)//above 50 threat level, coeff goes down by 1 for every 10 levels
+	var/traitor_scaling_coeff = 10 - max(0,round(mode.threat_level/10)-5) // Above 50 threat level, coeff goes down by 1 for every 10 levels
 	var/num_traitors = min(round(mode.candidates.len / traitor_scaling_coeff) + 1, candidates.len)
 	for (var/i = 1 to num_traitors)
 		var/mob/M = pick(candidates)
@@ -35,7 +35,7 @@
 	if (autotraitor_cooldown)
 		autotraitor_cooldown--
 	else
-		autotraitor_cooldown = 450//15 minutes
+		autotraitor_cooldown = 450 // 15 minutes
 		message_admins("Dynamic Mode: Checking if we can turn someone into a traitor...")
 		mode.picking_specific_rule(/datum/dynamic_ruleset/midround/autotraitor)
 
@@ -98,7 +98,7 @@
 	name = "Wizard"
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
-	restricted_roles = list("Head of Security", "Captain")//just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
+	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
 	required_enemies = list(4,4,2,2,2,1,1,1,1,0)
 	required_candidates = 1
@@ -205,7 +205,7 @@
 	antag_flag = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
 	/var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
-	restricted_roles = list("Head of Security", "Captain")//just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
+	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
 	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
@@ -224,7 +224,7 @@
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/nuclear/pre_execute()
-	//if ready() did its job, candidates should have 5 or more members in it
+	// If ready() did its job, candidates should have 5 or more members in it
 
 	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
 	var/operatives = operative_cap[indice_pop]

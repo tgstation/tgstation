@@ -4,7 +4,7 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/midround//Can be drafted once in a while during a round
+/datum/dynamic_ruleset/midround // Can be drafted once in a while during a round
 	var/list/living_players = list()
 	var/list/living_antags = list()
 	var/list/dead_players = list()
@@ -15,15 +15,14 @@
 	var/makeBody = TRUE
 
 /datum/dynamic_ruleset/midround/trim_candidates()
-	//unlike the previous two types, these rulesets are not meant for /mob/dead/new_player
-	//and since I want those rulesets to be as flexible as possible, I'm not gonna put much here,
-	//but be sure to check dynamic_rulesets_debug.dm for an example.
+	// Unlike the previous two types, these rulesets are not meant for /mob/dead/new_player
+	// And since I want those rulesets to be as flexible as possible, I'm not gonna put much here,
 	//
-	//all you need to know is that here, the candidates list contains 4 lists itself, indexed with the following defines:
-	//candidates = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
-	//so for example you can get the list of all current dead players with var/list/dead_players = candidates[CURRENT_DEAD_PLAYERS]
-	//make sure to properly typecheck the mobs in those lists, as the dead_players list could contain ghosts, or dead players still in their bodies.
-	//we're still gonna trim the obvious (mobs without clients, jobbanned players, etc)
+	// All you need to know is that here, the candidates list contains 4 lists itself, indexed with the following defines:
+	// Candidates = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
+	// So for example you can get the list of all current dead players with var/list/dead_players = candidates[CURRENT_DEAD_PLAYERS]
+	// Make sure to properly typecheck the mobs in those lists, as the dead_players list could contain ghosts, or dead players still in their bodies.
+	// We're still gonna trim the obvious (mobs without clients, jobbanned players, etc)
 	living_players = trim_list(candidates[CURRENT_LIVING_PLAYERS])
 	living_antags = trim_list(candidates[CURRENT_LIVING_ANTAGS])
 	dead_players = trim_list(candidates[CURRENT_DEAD_PLAYERS])
@@ -33,27 +32,27 @@
 	var/list/trimmed_list = L.Copy()
 	var/antag_name = initial(antag_flag)
 	for(var/mob/M in trimmed_list)
-		if (!M.client)//are they connected?
+		if (!M.client) // Are they connected?
 			trimmed_list.Remove(M)
 			continue
 		if (!(antag_name in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_name, ROLE_SYNDICATE)))//are they willing and not antag-banned?
 			trimmed_list.Remove(M)
 			continue
 		if (M.mind)
-			if (M.mind.assigned_role in restricted_roles)//does their job allow for it?
+			if (M.mind.assigned_role in restricted_roles) // Does their job allow for it?
 				trimmed_list.Remove(M)
 				continue
 			if (M.mind.assigned_role in protected_roles)
 				candidates.Remove(M)
-			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role in exclusive_roles))//is the rule exclusive to their job?
+			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
 				trimmed_list.Remove(M)
 				continue
 	return trimmed_list
 
-//You can then for example prompt dead players in execute() to join as strike teams or whatever
-//Or autotator someone
+// You can then for example prompt dead players in execute() to join as strike teams or whatever
+// Or autotator someone
 
-//IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
+// IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
 // (see /datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = 0) for example)
 /datum/dynamic_ruleset/midround/ready(var/forced = 0)
 	if (!forced)
@@ -61,9 +60,9 @@
 		if (enemy_roles.len > 0)
 			for (var/mob/M in living_players)
 				if (M.stat == DEAD)
-					continue//dead players cannot count as opponents
+					continue // Dead players cannot count as opponents
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
-					job_check++//checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
@@ -82,7 +81,7 @@
 	for (var/i = required_candidates, i > 0, i--)
 		if(applicants.len <= 0)
 			if(i == required_candidates)
-				//We have found no candidates so far and we are out of applicants.
+				// We have found no candidates so far and we are out of applicants.
 				mode.refund_threat(cost)
 				mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (all applications invalid)"
 				mode.executed_rules -= src
@@ -90,9 +89,9 @@
 		var/mob/applicant = pick(applicants)
 		applicants -= applicant
 		if(!isobserver(applicant))
-			if(applicant.stat == DEAD) //Not an observer? If they're dead, make them one.
+			if(applicant.stat == DEAD) // Not an observer? If they're dead, make them one.
 				applicant = applicant.ghostize(FALSE)
-			else //Not dead? Disregard them, pick a new applicant
+			else // Not dead? Disregard them, pick a new applicant
 				message_admins("[name]: Rule could not use [applicant], not dead.")
 				i++
 				continue
@@ -158,13 +157,13 @@
 	..()
 	for(var/mob/living/player in living_players)
 		if(isAI(player))
-			living_players -= player //Your assigned role doesn't change when you are turned into a MoMMI or AI
+			living_players -= player // Your assigned role doesn't change when you are turned into a MoMMI or AI
 			continue
 		if(is_centcom_level(player.z))
-			living_players -= player//we don't autotator people on Z=2
+			living_players -= player // We don't autotator people in centcom
 			continue
 		if(player.mind && (player.mind.special_role))
-			living_players -= player//we don't autotator people with roles already
+			living_players -= player // We don't autotator people with roles already
 
 /datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = 0)
 	if (required_candidates > living_players.len)
@@ -208,10 +207,10 @@
 			candidates -= player
 			continue
 		if(is_centcom_level(player.z))
-			candidates -= player//we don't autotator people on Z=2
+			candidates -= player // We don't autotator people on Z=2
 			continue
 		if(player.mind && player.mind.special_role)
-			candidates -= player//we don't autotator people with roles already
+			candidates -= player // We don't autotator people with roles already
 
 /datum/dynamic_ruleset/midround/malf/execute()
 	if(!candidates || !candidates.len)
@@ -274,7 +273,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(var/population=0,var/threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
-		return FALSE //unavailable if nuke ops were already sent at roundstart
+		return FALSE // Unavailable if nuke ops were already sent at roundstart
 	var/indice_pop = min(10,round(living_players.len/5)+1)
 	required_candidates = operative_cap[indice_pop]
 	return ..()

@@ -7,7 +7,7 @@
 /datum/dynamic_ruleset/latejoin/trim_candidates()
 	var/role_name = initial(antag_flag)
 	for(var/mob/dead/new_player/P in candidates)
-		if (!P.client || !P.mind || !P.mind.assigned_role)//are they connected?
+		if (!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
 			candidates.Remove(P)
 			continue
 		if (role_name in P.client.prefs.be_special || is_banned_from(P.ckey, list(role_name, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override))))//are they willing and not antag-banned?
@@ -16,10 +16,10 @@
 		if (P.mind.assigned_role in protected_roles)
 			candidates.Remove(P)
 			continue
-		if (P.mind.assigned_role in restricted_roles)//does their job allow for it?
+		if (P.mind.assigned_role in restricted_roles) // Does their job allow for it?
 			candidates.Remove(P)
 			continue
-		if ((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles))//is the rule exclusive to their job?
+		if ((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
 			candidates.Remove(P)
 			continue
 
@@ -29,9 +29,9 @@
 		if (enemy_roles.len > 0)
 			for (var/mob/M in mode.living_players)
 				if (M.stat == DEAD)
-					continue//dead players cannot count as opponents
+					continue // Dead players cannot count as opponents
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
-					job_check++//checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
