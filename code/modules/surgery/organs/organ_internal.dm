@@ -34,9 +34,11 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
+	SEND_SIGNAL(src, COMSIG_ORGAN_INSERTED, owner)
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
+	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, owner)
 	owner = null
 	if(M)
 		M.internal_organs -= src

@@ -210,6 +210,10 @@
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
 
+// /obj/item/organ signals
+#define COMSIG_ORGAN_INSERTED "organ_insert"						//from base of /obj/item/organ/proc/insert(mob/living/carbon/owner)
+#define COMSIG_ORGAN_REMOVED "organ_remove"						//from base of /obj/item/organ/proc/remove(mob/living/carbon/owner)
+
 // /obj/item/implant signals
 #define COMSIG_IMPLANT_ACTIVATED "implant_activated"			//from base of /obj/item/implant/proc/activate(): ()
 #define COMSIG_IMPLANT_IMPLANTING "implant_implanting"			//from base of /obj/item/implant/proc/implant(): (list/args)

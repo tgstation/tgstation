@@ -223,6 +223,15 @@
 /obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
+/obj/item/organ/tongue/robot/primitive
+	name = "old robotic voicebox"
+	desc = "A old prototype for a artifical tongue. It never hit mass production due to being deemed uncanny and being harder to produce than organic replacements."
+	taste_sensitivity = INFINITY // You can basically taste nothing.
+
+/obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
+	..()
+	speech_args[SPEECH_MESSAGE] = Gibberish(speech_args[SPEECH_MESSAGE], chance = 5)
+
 /obj/item/organ/tongue/snail
 	name = "snailtongue"
 	modifies_speech = TRUE

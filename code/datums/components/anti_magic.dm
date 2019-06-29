@@ -10,6 +10,10 @@
 
 /datum/component/anti_magic/Initialize(_magic = FALSE, _holy = FALSE, _psychic = FALSE, _allowed_slots, _charges, _blocks_self = TRUE, datum/callback/_reaction, datum/callback/_expire)
 	if(isitem(parent))
+		if(isorgan(parent))
+			RegisterSignal(parent, COMSIG_ORGAN_INSERTED, .proc/apply_anti_magic)
+			RegisterSignal(parent, COMSIG_ORGAN_REMOVED, .proc/on_drop)
+			allowed_slots = null //by default, organs don't work in any slots.
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else if(ismob(parent))
@@ -29,9 +33,12 @@
 	expire = _expire
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
-	if(!CHECK_BITFIELD(allowed_slots, slotdefine2slotbit(slot))) //Check that the slot is valid for antimagic
+	if(slot && !CHECK_BITFIELD(allowed_slots, slotdefine2slotbit(slot))) //Check that the slot is valid for antimagic
 		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
 		return
+	apply_anti_magic(source, equipper)
+
+/datum/component/anti_magic/proc/apply_anti_magic(datum/source, mob/equipper)
 	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect, TRUE)
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)

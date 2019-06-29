@@ -233,3 +233,52 @@
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	contents = newlist(/obj/item/retractor/augment, /obj/item/hemostat/augment, /obj/item/cautery/augment, /obj/item/surgicaldrill/augment, /obj/item/scalpel/augment, /obj/item/circular_saw/augment, /obj/item/surgical_drapes)
+
+/obj/item/organ/cyberimp/arm/energyweapon
+	name = "hidden energy weapon implant"
+	desc = "A good gunslinger always has an ace up their sleeves. \
+	Do not forget to add a weapon before you implant this. You can recharge it with borg recharging station once implanted."
+
+/obj/item/organ/cyberimp/arm/energyweapon/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	var/obj/item/gun/energy/energy = I
+	if(istype(energy) && !contents.len)
+		. = TRUE
+		if(energy.w_class > WEIGHT_CLASS_NORMAL)
+			to_chat("<span class = 'notice'>The gun is too large for the implant.</span>")
+			return
+		if(!energy.can_charge)
+			to_chat("<span class = 'notice'>The gun needs to be chargable in a recharger.</span>")
+			return
+		to_chat("<span class = 'notice'>You begin to insert \the [I] into the implant!</span>")
+		if(!do_after(user, 30, target = src))
+			to_chat("<span class = 'notice'>You need to stand still.</span>")
+			return
+		if(!user.transferItemToLoc(energy, src))
+			to_chat("<span class = 'notice'>You can't let go of the gun.</span>")
+			return
+
+/obj/item/organ/cyberimp/arm/energyweapon/wrench_act(obj/item/I, mob/user, params)
+	. = ..()
+	for(var/obj/O in contents)
+		O.forceMove(drop_location())
+
+/obj/item/organ/cyberimp/arm/energyweapon/examine(mob/user)
+	. = ..()
+	for(var/obj/O in contents)
+		. += "<span class = 'notice'>\A [O] is placed into the implant. Use a wrench to remove it.</span>"
+
+/obj/item/organ/cyberimp/arm/energyweapon/Insert()
+	. = ..()
+	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge_weapon)
+
+/obj/item/organ/cyberimp/arm/energyweapon/Remove(mob/living/carbon/M, special = 0)
+	. = ..()
+	UnregisterSignal(M, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+
+/obj/item/organ/cyberimp/arm/energyweapon/proc/charge_weapon(datum/source, amount)
+	for(var/obj/O in contents)
+		var/obj/item/stock_parts/cell/C = O.get_cell()
+		if(C)
+			C.give(amount)
+			O.update_icon()

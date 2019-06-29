@@ -180,14 +180,14 @@
 		message = stutter(message)
 	return message
 
-/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+/proc/Gibberish(text, replace_characters = FALSE, chance = 50)
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
-	for(var/i = 1, i <= length(t), i++)
+	for(var/i = 1, i <= length(text), i++)
 
-		var/letter = copytext(t, i, i+1)
-		if(prob(50))
-			if(p >= 70)
+		var/letter = copytext(text, i, i+1)
+		if(prob(chance))
+			if(replace_characters)
 				letter = ""
 
 			for(var/j = 1, j <= rand(0, 2), j++)

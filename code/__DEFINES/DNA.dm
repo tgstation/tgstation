@@ -144,7 +144,8 @@
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
-
+#define ORGAN_SLOT_GENERIC_CHEST_AUG "chest_implant"
+#define ORGAN_SLOT_METAL_HEAD_PLATE "metal_plate"
 
 //used for the can_chromosome var on mutations
 #define CHROMOSOME_NEVER 0

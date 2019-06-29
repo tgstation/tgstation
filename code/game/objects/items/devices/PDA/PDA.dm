@@ -605,7 +605,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(!U.canUseTopic(src, BE_CLOSE))
 		return
 	if(emped)
-		t = Gibberish(t, 100)
+		t = Gibberish(t, TRUE)
 	return t
 
 /obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone)

@@ -91,6 +91,7 @@
 	icon_state = "cybernetic_eyeballs"
 	desc = "Your vision is augmented."
 	status = ORGAN_ROBOTIC
+	eye_color = "DDE0E0"
 
 /obj/item/organ/eyes/robotic/emp_act(severity)
 	. = ..()
@@ -100,6 +101,18 @@
 		return
 	to_chat(owner, "<span class='warning'>Static obfuscates your vision!</span>")
 	owner.flash_act(visual = 1)
+
+/obj/item/organ/eyes/robotic/primitive
+	name = "outdated robotic eyes"
+	desc = "Although outdated by modern standards, certain chief engineers of the past could only have dreamt of such technology."
+
+/obj/item/organ/eyes/robotic/primitive/Insert()
+	. = ..()
+	owner.add_client_colour(/datum/client_colour/eye_colour/monochrome)
+
+/obj/item/organ/eyes/robotic/primitive/Remove(mob/living/carbon/M, special = FALSE)
+	. = ..()
+	owner.remove_client_colour(/datum/client_colour/eye_colour/monochrome)
 
 /obj/item/organ/eyes/robotic/xray
 	name = "\improper X-ray eyes"

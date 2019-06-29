@@ -137,6 +137,22 @@
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	broken_cyber_organ = FALSE
 
+/obj/item/organ/cyberimp/brain/metal_plate
+	name = "plate of surgical metal"
+	desc = "A small plate of stainless steel, designed to replace missing skull pieces and to calm down weirdos with demons in their heads."
+	slot = ORGAN_SLOT_METAL_HEAD_PLATE
+
+/obj/item/organ/cyberimp/brain/metal_plate/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, null, 12, TRUE, null, CALLBACK(src, .proc/use_up))
+
+/obj/item/organ/cyberimp/brain/metal_plate/Remove(mob/living/carbon/M, special = FALSE)
+	. = ..()
+	to_chat(M, "<span class='notice'>Your skull suddenly feels lighter!</span>")
+
+/obj/item/organ/cyberimp/brain/metal_plate/proc/use_up()
+	Destroy()
+
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth
 	zone = BODY_ZONE_PRECISE_MOUTH

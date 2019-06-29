@@ -207,3 +207,19 @@
 
 	toggle(silent = TRUE)
 	return 0
+
+/obj/item/organ/cyberimp/chest/stasis
+	name = "stasis implant"
+	desc = "An implants that allows its user to nearly stop their metabolism at will. It looks like it would fit into someones chest. \
+	WARNING: Excessive use in combination with other stasis tech can lead to unforseen consequences."
+	slot = ORGAN_SLOT_GENERIC_CHEST_AUG
+	implant_color = "#B7F7FF"
+	actions_types = list(/datum/action/item_action/organ_action/toggle)
+
+/obj/item/organ/cyberimp/chest/stasis/Remove(mob/living/carbon/M, special = 0)
+	if(IS_IN_STASIS(owner))
+		owner.remove_status_effect(STATUS_EFFECT_STASIS, null, TRUE)
+	..()
+
+/obj/item/organ/cyberimp/chest/stasis/ui_action_click()
+	IS_IN_STASIS(owner) ? owner.remove_status_effect(STATUS_EFFECT_STASIS, null, TRUE) : owner.apply_status_effect(STATUS_EFFECT_STASIS, null, TRUE)

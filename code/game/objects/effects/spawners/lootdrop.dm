@@ -152,6 +152,13 @@
 				"" = 80
 				)
 
+/obj/effect/spawner/lootdrop/oldimplant
+	name = "old implant spawner"
+	loot = list(
+		/obj/item/organ/tongue/robot/primitive = 2,
+		/obj/item/organ/eyes/robotic/primitive = 1,
+		/obj/item/organ/cyberimp/brain/metal_plate = 5)
+
 /obj/effect/spawner/lootdrop/organ_spawner
 	name = "organ spawner"
 	loot = list(
