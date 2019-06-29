@@ -16,7 +16,7 @@
 	var/view_range = 7
 	var/x_offset = 0
 	var/y_offset = 0
-	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating/asteroid/basalt/lava_land_surface, /turf/open/lava/smooth/lava_land_surface, /turf/open/floor/plating/asteroid/airless, /turf/open/floor/plating)
+	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava)
 	var/see_hidden = FALSE
 	var/designate_time = 0
 	var/turf/designating_target_loc
@@ -31,8 +31,13 @@
 		var/obj/docking_port/stationary/S = V
 		if(jumpto_ports[S.id])
 			z_lock |= S.z
-	z_locked |= SSmapping.levels_by_trait(ZTRAIT_RESERVED) //after testing maybe move this to where z_locked used because some unaccesible z lvls can be added after init
-	z_locked |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM) //If someone know how to better do this please
+	var/list/whitelist_turfs_typecache = list()
+	for(var/WT in whitelist_turfs)
+		whitelist_turfs_typecache |= typecacheof(WT, FALSE, FALSE)
+	whitelist_turfs = whitelist_turfs_typecache
+
+	z_locked |= SSmapping.levels_by_trait(ZTRAIT_RESERVED)
+	z_locked |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
 	z_locked |= SSmapping.levels_by_trait(ZTRAIT_AWAY)
 	z_locked |= SSmapping.levels_by_trait(ZTRAIT_REEBE)
 
@@ -44,11 +49,7 @@
 	.=..()
 	if (!istype(I) || !is_operational() || !can_use(user))
 		return
-	var/choice = input("Choice", "") as null|anything in list("Add ID","Remove ID","Add access code","Remove access code","Cancel",
-	#ifdef TESTING
-	"TO TEST add z_lock","TO TEST remove z_lock","TO TEST add z_locked","TO TEST remove z_locked"
-	#endif
-	)
+	var/choice = input("Choice", "") as null|anything in list("Add ID","Remove ID","Add access code","Remove access code","Cancel")
 	if(QDELETED(src) || !Adjacent(user))
 		return
 	var/sellect
@@ -69,24 +70,6 @@
 			sellect = input("Choice access code to remove", "Access code to remove") as null|anything in beacon_access_codes
 			if(sellect || !Adjacent(user))
 				beacon_access_codes -= sellect
-		#ifdef TESTING
-		if("TO TEST add z_lock")
-			sellect = replacetext(lowertext(input("Enter the Z to add to z_lock", "Input access code") as num), " ", "_")
-			if(sellect || !Adjacent(user))
-				z_lock |= sellect
-		if("TO TEST remove z_lock")
-			sellect = input("Choice Z to remove from z_lock", "Z to remove") as null|anything in z_lock
-			if(sellect || !Adjacent(user))
-				z_lock -= sellect
-		if("TO TEST add z_locked")
-			sellect = replacetext(lowertext(input("Enter the Z to add to z_lock", "Input access code") as num), " ", "_")
-			if(sellect || !Adjacent(user))
-				z_locked |= sellect
-		if("TO TEST remove z_locked")
-			sellect = input("Choice Z to remove from z_lock", "Z to remove") as null|anything in z_locked
-			if(sellect || !Adjacent(user))
-				z_locked -= sellect
-		#endif
 	return TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/examine()
@@ -99,7 +82,6 @@
 	else
 		msg += " none,"
 	. += msg
-
 	msg = ""
 	msg += "Access codes:"
 	if(beacon_access_codes.len)
@@ -107,25 +89,6 @@
 			msg += " [access_code],"
 	else
 		msg += " none,"
-	. += msg
-#ifdef TESTING
-	msg = ""
-	msg += "TEST ZONE z_lock - whitelist:"
-	if(z_lock.len)
-		for(var/zlock in z_lock)
-			msg += " [zlock],"
-	else
-		msg += " none,"
-	. += msg
-
-	msg = ""
-	msg += "TEST ZONE z_locked - blacklist:"
-	if(z_locked.len)
-		for(var/zlocked in z_locked)
-			msg += " [zlocked],"
-	else
-		msg += " none,"
-#endif
 	msg += "</span>"
 	. += msg
 
@@ -328,7 +291,7 @@
 
 	if(length(whitelist_turfs))
 		var/turf_type = hidden_turf_info ? hidden_turf_info[2] : T.type
-		if(!is_type_in_list(turf_type, whitelist_turfs))
+		if(!is_type_in_typecache(turf_type, whitelist_turfs))
 			return SHUTTLE_DOCKER_BLOCKED
 
 	// Checking for overlapping dock boundaries
@@ -437,7 +400,7 @@
 				break
 		if(!nav_beacon.id || (nav_beacon.id && console.beacon_codes[nav_beacon.id]))
 			if(!nav_beacon.access_code || (nav_beacon.access_code && console.beacon_access_codes[nav_beacon.access_code]))
-				L["([L.len]) [nav_beacon.id] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = nav_beacon
+				L["([L.len]) [nav_beacon.name] [nav_beacon.id] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = nav_beacon
 			else
 				L["([L.len]) [nav_beacon.name] [nav_beacon.id] locked"] = null
 
