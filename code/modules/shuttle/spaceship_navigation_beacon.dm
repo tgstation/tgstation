@@ -9,8 +9,8 @@
 	name = "Bluespace Navigation Gigabeacon"
 	desc = "A device that creates a bluespace anchor that allow ships jump near to it."
 
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "floor_beaconf"
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "core"
 
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
@@ -34,8 +34,8 @@
 	id = GUID() //gives us a random id.
 	access_code = GUID() //gives us a random access code.
 
-//obj/machinery/spaceship_navigation_beacon/emp_act()
-//	randomise_beacon()
+obj/machinery/spaceship_navigation_beacon/emp_act()
+	randomise_beacon()
 
 /obj/machinery/spaceship_navigation_beacon/Destroy()
 	SSshuttle.beacons -= src
@@ -43,10 +43,11 @@
 
 // update the icon_state
 /obj/machinery/spaceship_navigation_beacon/update_icon()
-//	if(active && powernet)
-//		icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
-//	else
-	icon_state = initial(icon_state)
+	if(powered())
+		icon_state = "core"
+	else
+		icon_state = "core-open"
+	return
 
 /obj/machinery/spaceship_navigation_beacon/power_change()
 	. = ..()
@@ -64,10 +65,7 @@
 	. += "<span class='warning'>ID: [id], Access code: [access_code] </span>"
 
 /obj/machinery/spaceship_navigation_beacon/attackby(obj/item/W, mob/user, params)
-//	if(default_unfasten_wrench(user, W))
-//		return
-	if(default_deconstruction_screwdriver(user, "floor_beaconf", "floor_beaconf", W))//"ore_redemption-open", "ore_redemption", W)) //spaceship_navigation_beacon
-//		updateUsrDialog()
+	if(default_deconstruction_screwdriver(user, "core-open", "core", W))
 		return
 	if(default_deconstruction_crowbar(W))
 		return
