@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - tweak: "player added items now appear above the standard selection in vending machines."
