@@ -65,8 +65,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "horns_troll" = "Nubby", "troll_caste" = "burgundy") // 413 -- troll features
-	var/list/genders = list(MALE, FEMALE, PLURAL)
-	var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
+	var/list/genders = list(MALE, FEMALE, PLURAL, NEUTER) // 413 -- more customization
+	var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural", "Neuter" = "neuter") // 413 -- more customization
 
 	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
@@ -190,12 +190,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if(!(AGENDER in pref_species.species_traits))
 				var/dispGender
-				if(gender == MALE)
-					dispGender = "Male"
-				else if(gender == FEMALE)
-					dispGender = "Female"
-				else
-					dispGender = "Other"
+				//413 start -- more customization
+				switch(gender)
+					if(MALE)
+						dispGender = "Male"
+					if(FEMALE)
+						dispGender = "Female"
+					if(PLURAL)
+						dispGender = "Other"
+					if(NEUTER)
+						dispGender = "Neuter"
+				//413 end
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a><BR>"
 			dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
 
