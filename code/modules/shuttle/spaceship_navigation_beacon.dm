@@ -31,8 +31,8 @@
 	randomise_beacon()
 
 /obj/machinery/spaceship_navigation_beacon/proc/randomise_beacon()
-	id = "[num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as id.
-	access_code = "[num2hex(rand(1,65535), 4)]" //gives us a random four-digit hex number as access code.
+	id = GUID() //gives us a random id.
+	access_code = GUID() //gives us a random access code.
 
 //obj/machinery/spaceship_navigation_beacon/emp_act()
 //	randomise_beacon()
@@ -54,8 +54,8 @@
 
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
 	if (istype(I))
-		id = replacetext(lowertext(input("Enter the ID for this beacon", "Input ID", id) as text), " ", "_")
-		access_code = replacetext(lowertext(input("Enter the access code for this beacon", "Input access code", access_code) as text), " ", "_")
+		id = replacetext((input("Enter the ID for this beacon", "Input ID", id) as text), " ", "_")
+		access_code = replacetext((input("Enter the access code for this beacon", "Input access code", access_code) as text), " ", "_")
 		name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text]"
 		return TRUE
 
