@@ -1,6 +1,5 @@
 /datum/reagent/drug/fartium
 	name = "Fartium"
-	id = "fartium"
 	description = "A chemical compound that promotes concentrated production of gas in your groin area."
 	color = "#8A4B08" // rgb: 138, 75, 8
 	reagent_state = LIQUID

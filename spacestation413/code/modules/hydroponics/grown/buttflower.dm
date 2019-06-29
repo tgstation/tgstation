@@ -14,7 +14,7 @@
 	growing_icon = 'spacestation413/icons/obj/hydroponics/growing.dmi'
 	potency = 20
 	growthstages = 3
-	reagents_add = list("fartium" = 4)
+	reagents_add = list(/datum/reagent/drug/fartium = 4)
 
 /obj/item/reagent_containers/food/snacks/grown/shell/buttflower
 	seed = /obj/item/seeds/buttseed

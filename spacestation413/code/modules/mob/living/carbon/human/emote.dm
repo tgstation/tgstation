@@ -84,8 +84,10 @@
 		addtimer(CALLBACK(user, /mob/proc/gib), 10)
 	else
 		var/obj/item/storage/internal/pocket/butt/theinv = B.inv
-		if(theinv.contents.len)
-			var/obj/item/O = pick(theinv.contents)
+		var/datum/component/storage/STR = theinv.GetComponent(/datum/component/storage)
+		var/atom/real_location = STR.real_location()
+		if(real_location.contents.len)
+			var/obj/item/O = pick(STR.contents())
 			if(istype(O, /obj/item/lighter))
 				var/obj/item/lighter/G = O
 				if(G.lit && user.loc)
@@ -97,23 +99,24 @@
 					new/obj/effect/hotspot(user.loc)
 					playsound(user, fartsound, 100, 1, 5)
 			else if(istype(O, /obj/item/bikehorn))
-				for(var/obj/item/bikehorn/Q in theinv.contents)
+				for(var/obj/item/bikehorn/Q in STR.contents())
 					playsound(Q, 'sound/items/bikehorn.ogg', 100, 1, 5)
 				message = "<span class='clown'>farts.</span>"
-			else if(istype(O, /obj/item/device/megaphone))
+			else if(istype(O, /obj/item/megaphone))
 				message = "<span class='reallybig'>farts.</span>"
-				playsound(user, 'sound/effects/fartmassive.ogg', 100, 1, 5)
+				playsound(user, 'spacestation413/sound/effects/fartmassive.ogg', 100, 1, 5)
 			else
 				playsound(user, fartsound, 100, 1, 5)
 			if(prob(33))
-				theinv.remove_from_storage(O, user.loc)
+				STR.remove_from_storage(O, user.loc)
 		else
 			playsound(user, fartsound, 100, 1, 5)
 		sleep(1)
 		if(lose_butt)
 			B.Remove(user)
 			B.forceMove(get_turf(user))
-			new bloodkind(user.loc)
+			var/obj/effect/decal/cleanable/blood/blood = new bloodkind(user.loc)
+			blood.set_blood_color(user.blood_color)
 			user.nutrition = max(user.nutrition - rand(5, 20), NUTRITION_LEVEL_STARVING)
 			user.visible_message("<span class='warning'><b>[user]</b> blows their ass off!</span>", "<span class='warning'>Holy shit, your butt flies off in an arc!</span>")
 		else
@@ -121,6 +124,7 @@
 		..()
 		if(!ishuman(user)) //nonhumans don't have the message appear for some reason
 			user.visible_message("<b>[user]</b> [message]")
+		return TRUE
 
 /datum/emote/living/carbon/human/superfart
 	key = "superfart"
@@ -162,9 +166,11 @@
 			sleep(1)
 		playsound(user, 'spacestation413/sound/effects/fartmassive.ogg', 75, 1, 5)
 		var/obj/item/storage/internal/pocket/butt/theinv = B.inv
-		if(theinv.contents.len)
-			for(var/obj/item/O in theinv.contents)
-				theinv.remove_from_storage(O, user.loc)
+		var/datum/component/storage/STR = theinv.GetComponent(/datum/component/storage)
+		var/atom/real_location = STR.real_location()
+		if(real_location.contents.len)
+			for(var/obj/item/O in STR.contents())
+				STR.remove_from_storage(O, user.loc)
 				O.throw_range = 7//will be reset on hit
 				var/turf/target = get_turf(O)
 				var/range = 7
@@ -189,7 +195,8 @@
 		B.forceMove(get_turf(user))
 		if(B.loose)
 			B.loose = FALSE
-		new /obj/effect/decal/cleanable/blood(user.loc)
+		var/obj/effect/decal/cleanable/blood/blood = new /obj/effect/decal/cleanable/blood(user.loc)
+		blood.set_blood_color(user.blood_color)
 		user.nutrition = max(user.nutrition - 500, NUTRITION_LEVEL_STARVING)
 		switch(fart_type)
 			if(1)
@@ -231,3 +238,4 @@
 				new /obj/effect/immovablerod/butt(B.loc, locate(endx, endy, 1))
 				priority_announce("What the fuck was that?!", "General Alert")
 				qdel(B)
+	return TRUE
