@@ -5,6 +5,13 @@
 "aab" = (
 /turf/closed/wall,
 /area/space/nearstation)
+"aac" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/crew_quarters/bar)
 "aad" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
@@ -7853,6 +7860,7 @@
 /obj/item/stack/pipe_cleaner_coil/random,
 /obj/item/stack/pipe_cleaner_coil/random,
 /obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aur" = (
@@ -48510,8 +48518,6 @@
 /obj/item/storage/box/lights/mixed,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,
-/obj/item/twohanded/rcl/pre_loaded,
-/obj/item/twohanded/rcl/pre_loaded,
 /obj/item/crowbar/large,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -75564,7 +75570,7 @@ kIi
 bXA
 bVM
 bVU
-bSy
+aac
 bSy
 bWC
 aRr

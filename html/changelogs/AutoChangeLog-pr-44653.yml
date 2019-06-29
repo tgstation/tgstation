@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Viral healing symptoms that are tied to reagents now also require a functioning liver to work."
+  - tweak: "Holy water, Pyrosium, Cryostilane, Napalm and Phlogiston no longer need a liver to have their effects."
