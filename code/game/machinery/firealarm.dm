@@ -388,6 +388,8 @@
 	dispense()
 
 /obj/machinery/sprinkler/attackby(obj/item/I, mob/user, params)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		if(!allowed(user))
 			to_chat(user, "<span class='danger'>Access denied.</span>")
