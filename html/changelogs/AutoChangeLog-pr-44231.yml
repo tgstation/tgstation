@@ -1,0 +1,6 @@
+author: "AffectedArc07"
+delete-after: True
+changes: 
+  - rscadd: "You can now link your ingame account to your discord account"
+  - rscadd: "You can now set notify status ingame, and be notified on discord when a round restarts"
+  - admin: "There is now an admin panel to lookup IDs to ckeys, and vice versa"
