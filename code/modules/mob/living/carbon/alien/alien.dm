@@ -41,6 +41,7 @@
 	internal_organs += new /obj/item/organ/tongue/alien
 	internal_organs += new /obj/item/organ/eyes/night_vision/alien
 	internal_organs += new /obj/item/organ/liver/alien
+	internal_organs += new /obj/item/organ/butt/xeno // 413 -- butts
 	internal_organs += new /obj/item/organ/ears
 	..()
 
