@@ -4620,14 +4620,6 @@
 	},
 /turf/template_noop,
 /area/space/nearstation)
-"Dp" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/bluespace_beacon,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "FH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror{
@@ -7421,7 +7413,7 @@ ac
 aa
 aa
 aA
-Dp
+gF
 aA
 aa
 aa

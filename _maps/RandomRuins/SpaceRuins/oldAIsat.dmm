@@ -897,10 +897,6 @@
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
 /area/tcommsat/oldaisat)
-"Ih" = (
-/obj/machinery/bluespace_beacon,
-/turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
 
 (1,1,1) = {"
 aa
@@ -2698,7 +2694,7 @@ ac
 bw
 bw
 bw
-Ih
+ac
 ca
 cf
 bw

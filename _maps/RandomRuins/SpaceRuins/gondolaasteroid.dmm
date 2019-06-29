@@ -23,10 +23,6 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
-"g" = (
-/obj/machinery/bluespace_beacon,
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/space/has_grav)
 "h" = (
 /mob/living/simple_animal/pet/gondola,
 /turf/open/floor/plating/asteroid/airless,
@@ -85,10 +81,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/space/has_grav)
-"N" = (
-/obj/machinery/biogenerator,
-/turf/closed/mineral/random,
 /area/ruin/space/has_grav)
 "T" = (
 /obj/machinery/door/airlock/survival_pod/glass{
@@ -649,7 +641,7 @@ c
 c
 c
 c
-N
+b
 b
 b
 b
@@ -748,7 +740,7 @@ b
 b
 b
 b
-g
+c
 c
 c
 c

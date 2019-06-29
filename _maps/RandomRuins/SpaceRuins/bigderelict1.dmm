@@ -2060,10 +2060,6 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
-"ta" = (
-/obj/machinery/bluespace_beacon,
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
 "uV" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3240,7 +3236,7 @@ aa
 aa
 aa
 ad
-ta
+ad
 aZ
 bm
 bE

@@ -358,10 +358,6 @@
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"tc" = (
-/obj/machinery/bluespace_beacon,
-/turf/open/floor/plating,
-/area/ruin/space/djstation)
 "Co" = (
 /obj/machinery/door/airlock/external{
 	name = "Ruskie DJ Station"
@@ -580,7 +576,7 @@ ac
 ac
 af
 ai
-tc
+ah
 aj
 an
 ao
