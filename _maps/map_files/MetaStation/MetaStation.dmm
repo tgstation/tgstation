@@ -9939,6 +9939,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"auR" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "auU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -92469,7 +92473,7 @@ ckP
 ckS
 ckP
 ckP
-ckP
+auR
 cjt
 crh
 ckN
