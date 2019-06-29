@@ -113,6 +113,13 @@
 
 		if("Atmospheric Technician")
 			O = new /datum/outfit/plasmaman/atmospherics
+
+		if("Mime")
+			O = new /datum/outfit/plasmaman/mime
+
+		if("Clown")
+			O = new /datum/outfit/plasmaman/clown
+
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
