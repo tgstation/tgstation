@@ -169,7 +169,7 @@
 		name = "dock[SSshuttle.stationary.len]"
 	if(!area_type)
 		var/area/place = get_area(src)
-		area_type = place.type
+		area_type = place?.type // We might be created in nullspace
 
 	if(mapload)
 		for(var/turf/T in return_turfs())
@@ -183,6 +183,13 @@
 	if(force)
 		SSshuttle.stationary -= src
 	. = ..()
+
+/obj/docking_port/stationary/Moved(atom/oldloc, dir, forced)
+	. = ..()
+	if(area_type) // We already have one
+		return
+	var/area/newarea = get_area(src)
+	area_type = newarea?.type
 
 /obj/docking_port/stationary/proc/load_roundstart()
 	if(json_key)

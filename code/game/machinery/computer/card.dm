@@ -57,9 +57,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	return get_all_centcom_jobs()
 
 /obj/machinery/computer/card/examine(mob/user)
-	..()
+	. = ..()
 	if(scan || modify)
-		to_chat(user, "<span class='notice'>Alt-click to eject the ID card.</span>")
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/computer/card/Initialize()
 	. = ..()

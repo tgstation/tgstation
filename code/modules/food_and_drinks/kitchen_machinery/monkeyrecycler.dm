@@ -13,8 +13,8 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
 	var/stored_matter = 0
 	var/cube_production = 0.2
-	var/list/connected = list()			//Keeps track of connected xenobio consoles, for deletion in /Destroy() 
-	
+	var/list/connected = list()			//Keeps track of connected xenobio consoles, for deletion in /Destroy()
+
 /obj/machinery/monkey_recycler/Initialize(mapload)
 	. = ..()
 	if (mapload)
@@ -33,11 +33,11 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		cube_production += B.rating * 0.1
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		cube_production += M.rating * 0.1
-		
+
 /obj/machinery/monkey_recycler/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Producing <b>[cube_production]</b> cubes for every monkey inserted.<span>")
+		. += "<span class='notice'>The status display reads: Producing <b>[cube_production]</b> cubes for every monkey inserted.<span>"
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))

@@ -17,9 +17,9 @@
 	. = ..()
 	if(key_type)
 		if(!inserted_key)
-			to_chat(user, "<span class='notice'>Put a key inside it by clicking it with the key.</span>")
+			. += "<span class='notice'>Put a key inside it by clicking it with the key.</span>"
 		else
-			to_chat(user, "<span class='notice'>Alt-click [src] to remove the key.</span>")
+			. += "<span class='notice'>Alt-click [src] to remove the key.</span>"
 
 /obj/vehicle/ridden/generate_action_type(actiontype)
 	var/datum/action/vehicle/ridden/A = ..()
@@ -83,7 +83,7 @@
 
 			if(message_cooldown < world.time)
 				to_chat(user, "<span class='warning'>You can't seem to manage that with[how_many_arms ? " your arm[how_many_arms > 1 ? "s" : null]" : "out arms"]...</span>")
-				message_cooldown = world.time + 5 SECONDS			
+				message_cooldown = world.time + 5 SECONDS
 			return FALSE
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)

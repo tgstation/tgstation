@@ -230,25 +230,27 @@
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		if(overmind)
 			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
-			chemeffectreport(user)
+			to_chat(user, chemeffectreport(user).Join("\n"))
 		else
 			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
-		typereport(user)
+		to_chat(user, typereport(user).Join("\n"))
 	else
 		return ..()
 
 /obj/structure/blob/proc/chemeffectreport(mob/user)
+	. = list()
 	if(overmind)
-		to_chat(user, "<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>")
-		to_chat(user, "<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>")
-		to_chat(user, "<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span><br>")
+		. += list("<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>",
+		"<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>",
+		"<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span>")
 	else
-		to_chat(user, "<b>No Material Detected!</b><br>")
+		. += "<b>No Material Detected!</b>"
 
 /obj/structure/blob/proc/typereport(mob/user)
-	to_chat(user, "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>")
-	to_chat(user, "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>")
-	to_chat(user, "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
+	return list("<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>",
+							"<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>",
+							"<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
+
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
 	if(ROLE_BLOB in M.faction) //sorry, but you can't kill the blob as a blobbernaut
@@ -304,20 +306,20 @@
 	return B
 
 /obj/structure/blob/examine(mob/user)
-	..()
+	. = ..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || hud_to_check.hudusers[user])
-		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
+		. += "<b>Your HUD displays an extensive report...</b><br>"
 		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+			. += overmind.blobstrain.examine(user)
 		else
-			to_chat(user, "<b>Core neutralized. Critical mass no longer attainable.</b>")
-		chemeffectreport(user)
-		typereport(user)
+			. += "<b>Core neutralized. Critical mass no longer attainable.</b>"
+		. += chemeffectreport(user)
+		. += typereport(user)
 	else
-		if(isobserver(user) && overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
-		to_chat(user, "It seems to be made of [get_chem_name()].")
+		if((user == overmind || isobserver(user)) && overmind)
+			. += overmind.blobstrain.examine(user)
+		. += "It seems to be made of [get_chem_name()]."
 
 /obj/structure/blob/proc/scannerreport()
 	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."

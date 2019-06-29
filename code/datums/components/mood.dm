@@ -360,9 +360,14 @@
 		return
 
 	var/turf/T = get_turf(H)
+
+	if(!istype(T) || T.return_air().return_pressure() > (WARNING_HIGH_PRESSURE - 10))
+		return
+
 	var/datum/gas_mixture/stank = new
 	ADD_GAS(/datum/gas/miasma, stank.gases)
 	stank.gases[/datum/gas/miasma][MOLES] = MIASMA_HYGIENE_MOLES
+	stank.temperature = BODYTEMP_NORMAL
 	T.assume_air(stank)
 	T.air_update_turf()
 

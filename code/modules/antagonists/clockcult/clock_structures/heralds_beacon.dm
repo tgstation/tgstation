@@ -47,16 +47,16 @@
 		STOP_PROCESSING(SSprocessing, src)
 
 /obj/structure/destructible/clockwork/heralds_beacon/examine(mob/user)
-	..()
+	. = ..()
 	if(isobserver(user) || is_servant_of_ratvar(user))
 		if(!available)
 			if(!GLOB.ratvar_approaches)
-				to_chat(user, "<span class='bold alloy'>It can no longer be activated.</span>")
+				. += "<span class='bold alloy'>It can no longer be activated.</span>"
 			else
-				to_chat(user, "<span class='bold neovgre_small'>It has been activated!</span>")
+				. += "<span class='bold neovgre_small'>It has been activated!</span>"
 		else
-			to_chat(user, "<span class='brass'>There are <b>[time_remaining]</b> second[time_remaining != 1 ? "s" : ""] remaining to vote.</span>")
-			to_chat(user, "<span class='big brass'>There are <b>[voters.len]/[votes_needed]</b> votes to activate the beacon!</span>")
+			. += "<span class='brass'>There are <b>[time_remaining]</b> second[time_remaining != 1 ? "s" : ""] remaining to vote.</span>"
+			. += "<span class='big brass'>There are <b>[voters.len]/[votes_needed]</b> votes to activate the beacon!</span>"
 
 /obj/structure/destructible/clockwork/heralds_beacon/attack_hand(mob/living/user)
 	. = ..()

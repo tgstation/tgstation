@@ -127,21 +127,21 @@ Borg Hypospray
 	return
 
 /obj/item/reagent_containers/borghypo/examine(mob/user)
-	usr = user
-	..()
-	DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
+	. = ..()
+	. += DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
 
 /obj/item/reagent_containers/borghypo/proc/DescribeContents()
-	var/empty = 1
+	. = list()
+	var/empty = TRUE
 
 	for(var/datum/reagents/RS in reagent_list)
 		var/datum/reagent/R = locate() in RS.reagent_list
 		if(R)
-			to_chat(usr, "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>")
-			empty = 0
+			. += "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>"
+			empty = FALSE
 
 	if(empty)
-		to_chat(usr, "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>")
+		. += "<span class='warning'>It is currently empty! Allow some time for the internal synthesizer to produce more.</span>"
 
 /obj/item/reagent_containers/borghypo/hacked
 	icon_state = "borghypo_s"
@@ -218,16 +218,12 @@ Borg Shaker
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
 /obj/item/reagent_containers/borghypo/borgshaker/DescribeContents()
-	var/empty = 1
-
 	var/datum/reagents/RS = reagent_list[mode]
 	var/datum/reagent/R = locate() in RS.reagent_list
 	if(R)
-		to_chat(usr, "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>")
-		empty = 0
-
-	if(empty)
-		to_chat(usr, "<span class='warning'>It is currently empty! Please allow some time for the synthesizer to produce more.</span>")
+		return "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>"
+	else
+		return "<span class='warning'>It is currently empty! Please allow some time for the synthesizer to produce more.</span>"
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"
