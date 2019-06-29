@@ -359,7 +359,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "tc" = (
-/obj/machinery/spaceship_navigation_beacon,
+/obj/machinery/bluespace_beacon,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "Co" = (
