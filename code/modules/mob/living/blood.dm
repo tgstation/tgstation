@@ -260,9 +260,12 @@
 			if(drop.drips < 5)
 				drop.drips++
 				//413 start
-				var/icon/newDrip = new(drop.icon,pick(drop.random_icon_states))
-				newDrip.ColorTone(src.blood_color)
-				drop.add_overlay(newDrip)
+				if(blood_color != "#ffffff")
+					var/icon/newDrip = icon("spacestation413/icons/effects/blood.dmi",pick(drop.random_icon_states))
+					newDrip.Blend(src.blood_color,ICON_MULTIPLY)
+					drop.add_overlay(newDrip)
+				else
+					drop.add_overlay(pick(drop.random_icon_states))
 				//413 end
 				drop.transfer_mob_blood_dna(src)
 				return
@@ -271,12 +274,7 @@
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())
-			//413 start
-			var/icon/newDrip = new(drop.icon,pick(drop.random_icon_states))
-			newDrip.ColorTone(src.blood_color)
-			drop.blood_color = src.blood_color
-			drop.icon=newDrip
-			//413 end
+			drop.set_blood_color(src.blood_color) //413 -- coloring blood
 			drop.transfer_mob_blood_dna(src)
 			return
 
@@ -284,16 +282,11 @@
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
-		B.blood_color = src.blood_color // 413 -- set color to creature blood color
+		B.set_blood_color(src.blood_color) // 413 -- set color to creature blood color
 	if (B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
 		var/old_bloodiness = B.bloodiness //413 -- store bloodiness before changing it
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
-		//413 start -- coloring blood
-		var/icon/colored_blood = new(B.icon)
-		B.blood_color = BlendRGB(B.blood_color,src.blood_color,old_bloodiness/B.bloodiness)
-		colored_blood.ColorTone(B.blood_color)
-		B.icon = colored_blood
-		//413 end
+		B.set_blood_color(BlendRGB(B.blood_color,src.blood_color,old_bloodiness/B.bloodiness)) //413 -- coloring blood
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		B.add_blood_DNA(temp_blood_DNA)

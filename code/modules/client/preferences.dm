@@ -1181,10 +1181,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["horns_troll"] = new_troll_horns
 
 				if("next_troll_horn")
-					features["horns_troll"] = next_list_item(troll_horn, GLOB.troll_horns_list)
+					features["horns_troll"] = next_list_item(features["horns_troll"], GLOB.troll_horns_list)
 
 				if("previous_troll_horn")
-					features["horns_troll"] = previous_list_item(troll_horn, GLOB.troll_horns_list)
+					features["horns_troll"] = previous_list_item(features["horns_troll"], GLOB.troll_horns_list)
 
 				if("t_caste")
 					var/new_t_caste = input(user, "Choose your character's blood color:", "Character Preference") as null|anything in GLOB.troll_castes

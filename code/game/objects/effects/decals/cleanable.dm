@@ -85,7 +85,7 @@
 			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
 			// 413 start -- lord help me
 			if(istype(src,/obj/effect/decal/cleanable/blood)) //cursed
-				var/obj/effect/decal/cleanable/blood = src // CURSED
+				var/obj/effect/decal/cleanable/blood/blood = src // CURSED
 				S.bloody_shoe_color = blood.blood_color
 			// 413 end
 			S.add_blood_DNA(return_blood_DNA())

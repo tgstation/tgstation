@@ -10,3 +10,17 @@
 			if(!S.can_be_bloody)
 				return
 			S.bloody_shoe_color = blood_color
+
+/obj/effect/decal/cleanable/blood/update_icon()
+	if(blood_color!="#ffffff")
+		var/icon/newIcon = icon("spacestation413/icons/effects/blood.dmi")
+		newIcon.Blend(blood_color,ICON_MULTIPLY)
+		icon = newIcon
+	. = ..()
+
+/obj/effect/decal/cleanable/trail_holder/update_icon()
+	if(blood_color!="#ffffff")
+		var/icon/newIcon = icon("spacestation413/icons/effects/blood.dmi")
+		newIcon.Blend(blood_color,ICON_MULTIPLY)
+		icon = newIcon
+	. = ..()
