@@ -453,7 +453,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 		if(hair_overlay.icon)
 			standing += hair_overlay
-
+	//413 start
+	if(H.troll_horn && (TROLLHORNS in species_traits))
+		var/mutable_appearance/horns_overlay = mutable_appearance(layer = -HAIR_LAYER)
+		S = GLOB.troll_horns_list[H.dna.features["horns_troll"]]
+		if(S)
+			horns_overlay.icon = S.icon
+			horns_overlay.icon_state = S.icon_state
+		if(horns_overlay.icon)
+			standing+=horns_overlay
+	//413 end
 	if(standing.len)
 		H.overlays_standing[HAIR_LAYER] = standing
 

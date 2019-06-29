@@ -62,6 +62,7 @@
 					if (S.bloody_shoes[S.blood_state] > BLOOD_LOSS_IN_SPREAD)
 						var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
 						FP.blood_state = S.blood_state
+						FP.blood_color = S.bloody_shoe_color // 413 -- blood color
 						FP.entered_dirs |= dir
 						FP.bloodiness = S.bloody_shoes[S.blood_state] - BLOOD_LOSS_IN_SPREAD
 						FP.add_blood_DNA(S.return_blood_DNA())
