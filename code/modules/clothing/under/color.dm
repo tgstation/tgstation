@@ -1,6 +1,11 @@
 /obj/item/clothing/under/color
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 
+/obj/item/clothing/under/skirt/color
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	fitted = FEMALE_UNIFORM_TOP
+
 /obj/item/clothing/under/color/random
 	icon_state = "random_jumpsuit"
 
@@ -26,9 +31,6 @@
 	icon_state = "black_skirt"
 	item_state = "bl_suit"
 	item_color = "black_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/black/ghost
 	item_flags = DROPDEL
@@ -50,9 +52,6 @@
 	icon_state = "grey_skirt"
 	item_state = "gy_suit"
 	item_color = "grey_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/grey/glorf
 	name = "ancient jumpsuit"
@@ -73,9 +72,6 @@
 	icon_state = "blue_skirt"
 	item_state = "b_suit"
 	item_color = "blue_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/green
 	name = "green jumpsuit"
@@ -88,9 +84,6 @@
 	icon_state = "green_skirt"
 	item_state = "g_suit"
 	item_color = "green_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
@@ -104,9 +97,6 @@
 	icon_state = "orange_skirt"
 	item_state = "o_suit"
 	item_color = "orange_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
@@ -120,9 +110,6 @@
 	icon_state = "pink_skirt"
 	item_state = "p_suit"
 	item_color = "pink_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
@@ -135,9 +122,6 @@
 	icon_state = "red_skirt"
 	item_state = "r_suit"
 	item_color = "red_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
@@ -150,9 +134,6 @@
 	icon_state = "white_skirt"
 	item_state = "w_suit"
 	item_color = "white_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
@@ -165,9 +146,6 @@
 	icon_state = "yellow_skirt"
 	item_state = "y_suit"
 	item_color = "yellow_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/darkblue
 	name = "darkblue jumpsuit"
@@ -180,9 +158,6 @@
 	icon_state = "darkblue_skirt"
 	item_state = "b_suit"
 	item_color = "darkblue_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/teal
 	name = "teal jumpsuit"
@@ -195,9 +170,6 @@
 	icon_state = "teal_skirt"
 	item_state = "b_suit"
 	item_color = "teal_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 
 /obj/item/clothing/under/color/lightpurple
@@ -211,9 +183,6 @@
 	icon_state = "lightpurple_skirt"
 	item_state = "p_suit"
 	item_color = "lightpurple_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/darkgreen
 	name = "darkgreen jumpsuit"
@@ -226,9 +195,6 @@
 	icon_state = "darkgreen_skirt"
 	item_state = "g_suit"
 	item_color = "darkgreen_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/lightbrown
 	name = "lightbrown jumpsuit"
@@ -241,9 +207,6 @@
 	icon_state = "lightbrown_skirt"
 	item_state = "lb_suit"
 	item_color = "lightbrown_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/brown
 	name = "brown jumpsuit"
@@ -256,9 +219,6 @@
 	icon_state = "brown_skirt"
 	item_state = "lb_suit"
 	item_color = "brown_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/maroon
 	name = "maroon jumpsuit"
@@ -271,9 +231,6 @@
 	icon_state = "maroon_skirt"
 	item_state = "r_suit"
 	item_color = "maroon_skirt"
-	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
-	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/rainbow
 	name = "rainbow jumpsuit"
