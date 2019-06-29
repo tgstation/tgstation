@@ -31,6 +31,7 @@
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
+	var/oldres
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
@@ -292,7 +293,10 @@
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
 		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		if(res == oldres)
+			return
 		cures = list(pick(advance_cures[res]))
+		oldres = res
 
 		// Get the cure name from the cure_id
 		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
