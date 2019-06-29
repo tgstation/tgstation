@@ -38,6 +38,12 @@
 			return FALSE
 	return ..()
 
+/datum/dynamic_ruleset/latejoin/execute()
+	var/mob/M = pick(candidates)
+	assigned += M
+	candidates -= M
+	M.mind.add_antag_datum(new antag_datum())
+	return TRUE
 
 //////////////////////////////////////////////
 //                                          //
@@ -58,14 +64,6 @@
 	high_population_requirement = 10
 	repeatable = TRUE
 	flags = TRAITOR_RULESET
-
-/datum/dynamic_ruleset/latejoin/infiltrator/execute()
-	var/mob/M = pick(candidates)
-	assigned += M
-	candidates -= M
-	M.mind.add_antag_datum(new antag_datum())
-	return TRUE
-
 
 //////////////////////////////////////////////
 //                                          //
@@ -93,42 +91,6 @@
 		return FALSE
 
 	return ..()
-
-/datum/dynamic_ruleset/latejoin/wizard/execute()
-	var/mob/M = pick(candidates)
-	assigned += M
-	candidates -= M
-	M.mind.add_antag_datum(new antag_datum())
-	M.forceMove(pick(GLOB.wizardstart))
-	return TRUE
-
-
-//////////////////////////////////////////////
-//                                          //
-//               SPACE NINJA                //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/latejoin/ninja
-	name = "Space Ninja"
-	antag_datum = /datum/antagonist/ninja
-	antag_flag = ROLE_NINJA
-	enemy_roles = list("Security Officer","Detective", "Warden", "Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
-	required_candidates = 1
-	weight = 4
-	cost = 10
-	requirements = list(90,90,60,20,10,10,10,10,10,10)
-	high_population_requirement = 20
-
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/latejoin/ninja/execute()
-	var/mob/M = pick(candidates)
-	assigned += M
-	candidates -= M
-	M.mind.add_antag_datum(new antag_datum())
-	return TRUE
 
 //////////////////////////////////////////////
 //                                          //
