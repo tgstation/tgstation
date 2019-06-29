@@ -80,6 +80,11 @@
 				playsound(src, "terminal_type", 25, 0)
 				chamber.occupant.investigate_log("'s nanites' cloud id was set to [cloud_id] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
+		if("toggle_cloud")
+			chamber.toggle_cloud()
+			playsound(src, "terminal_type", 25, 0)
+			chamber.occupant.investigate_log("'s nanites' cloud sync was toggled by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+			. = TRUE
 		if("connect_chamber")
 			find_chamber()
 			. = TRUE

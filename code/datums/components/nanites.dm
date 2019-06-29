@@ -7,6 +7,7 @@
 	var/regen_rate = 0.5		//nanites generated per second
 	var/safety_threshold = 50	//how low nanites will get before they stop processing/triggering
 	var/cloud_id = 0 			//0 if not connected to the cloud, 1-100 to set a determined cloud backup to draw from
+	var/cloud_active = TRUE		//if false, won't sync to the cloud
 	var/next_sync = 0
 	var/list/datum/nanite_program/programs = list()
 	var/max_programs = NANITE_PROGRAM_LIMIT
@@ -30,7 +31,7 @@
 		host_mob.hud_set_nanite_indicator()
 		START_PROCESSING(SSnanites, src)
 
-		if(cloud_id)
+		if(cloud_id && cloud_active)
 			cloud_sync()
 
 /datum/component/nanites/RegisterWithParent()
@@ -41,6 +42,7 @@
 	RegisterSignal(parent, COMSIG_NANITE_ADJUST_VOLUME, .proc/adjust_nanites)
 	RegisterSignal(parent, COMSIG_NANITE_SET_MAX_VOLUME, .proc/set_max_volume)
 	RegisterSignal(parent, COMSIG_NANITE_SET_CLOUD, .proc/set_cloud)
+	RegisterSignal(parent, COMSIG_NANITE_SET_CLOUD_SYNC, .proc/set_cloud_sync)
 	RegisterSignal(parent, COMSIG_NANITE_SET_SAFETY, .proc/set_safety)
 	RegisterSignal(parent, COMSIG_NANITE_SET_REGEN, .proc/set_regen)
 	RegisterSignal(parent, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
@@ -65,6 +67,7 @@
 								COMSIG_NANITE_ADJUST_VOLUME,
 								COMSIG_NANITE_SET_MAX_VOLUME,
 								COMSIG_NANITE_SET_CLOUD,
+								COMSIG_NANITE_SET_CLOUD_SYNC,
 								COMSIG_NANITE_SET_SAFETY,
 								COMSIG_NANITE_SET_REGEN,
 								COMSIG_NANITE_ADD_PROGRAM,
@@ -101,7 +104,7 @@
 		var/datum/nanite_program/NP = X
 		NP.on_process()
 	set_nanite_bar()
-	if(cloud_id && world.time > next_sync)
+	if(cloud_id && cloud_active && world.time > next_sync)
 		cloud_sync()
 		next_sync = world.time + NANITE_SYNC_DELAY
 
@@ -228,6 +231,15 @@
 /datum/component/nanites/proc/set_cloud(datum/source, amount)
 	cloud_id = CLAMP(amount, 0, 100)
 
+/datum/component/nanites/proc/set_cloud_sync(datum/source, method)
+	switch(method)
+		if(NANITE_CLOUD_TOGGLE)
+			cloud_active = !cloud_active
+		if(NANITE_CLOUD_DISABLE)
+			cloud_active = FALSE
+		if(NANITE_CLOUD_ENABLE)
+			cloud_active = TRUE
+
 /datum/component/nanites/proc/set_safety(datum/source, amount)
 	safety_threshold = CLAMP(amount, 0, max_nanites)
 
@@ -259,7 +271,8 @@
 		to_chat(user, "<span class='info'>================</span>")
 		to_chat(user, "<span class='info'>Saturation: [nanite_volume]/[max_nanites]</span>")
 		to_chat(user, "<span class='info'>Safety Threshold: [safety_threshold]</span>")
-		to_chat(user, "<span class='info'>Cloud ID: [cloud_id ? cloud_id : "Disabled"]</span>")
+		to_chat(user, "<span class='info'>Cloud ID: [cloud_id ? cloud_id : "None"]</span>")
+		to_chat(user, "<span class='info'>Cloud Sync: [cloud_active ? "Active" : "Disabled"]</span>")
 		to_chat(user, "<span class='info'>================</span>")
 		to_chat(user, "<span class='info'>Program List:</span>")
 		if(stealth)
@@ -276,6 +289,7 @@
 	data["regen_rate"] = regen_rate
 	data["safety_threshold"] = safety_threshold
 	data["cloud_id"] = cloud_id
+	data["cloud_active"] = cloud_active
 	var/list/mob_programs = list()
 	var/id = 1
 	for(var/X in programs)

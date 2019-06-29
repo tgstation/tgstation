@@ -67,6 +67,24 @@
 		return TRUE
 	return FALSE
 
+/datum/nanite_rule/cloud_sync
+	name = "Cloud Sync"
+	desc = "Checks if the nanites have cloud sync enabled or disabled."
+	var/check_type = "Enabled"
+
+/datum/nanite_rule/cloud_sync/check_rule()
+	if(check_type == "Enabled")
+		return program.nanites.cloud_active
+	else
+		return !program.nanites.cloud_active
+
+/datum/nanite_rule/cloud_sync/copy_to(datum/nanite_program/new_program)
+	var/datum/nanite_rule/cloud_sync/rule = new(new_program)
+	rule.check_type = check_type
+
+/datum/nanite_rule/cloud_sync/display()
+	return "[name]:[check_type]"
+
 /datum/nanite_rule/nanites
 	name = "Nanite Volume"
 	desc = "Checks the host's nanite volume."

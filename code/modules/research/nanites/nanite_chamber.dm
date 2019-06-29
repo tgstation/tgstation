@@ -50,6 +50,11 @@
 		return
 	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
+/obj/machinery/nanite_chamber/proc/toggle_cloud()
+	if(!occupant)
+		return
+	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD_SYNC, NANITE_CLOUD_TOGGLE)
+
 /obj/machinery/nanite_chamber/proc/inject_nanites()
 	if(stat & (NOPOWER|BROKEN))
 		return
