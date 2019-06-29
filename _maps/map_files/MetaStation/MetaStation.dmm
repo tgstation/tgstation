@@ -5116,12 +5116,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/security/warden)
-"akH" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/showroomfloor,
-/area/security/warden)
 "akI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -8823,9 +8817,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/machinery/camera{
 	c_tag = "Labor Shuttle Control Desk";
 	dir = 4
@@ -10674,9 +10665,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -13313,9 +13301,6 @@
 /area/security/brig)
 "aCs" = (
 /obj/structure/table/wood,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Detective APC";
@@ -29600,7 +29585,6 @@
 /area/aisat)
 "blB" = (
 /obj/machinery/computer/teleporter,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -26
@@ -33979,12 +33963,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bvb" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark/corner,
 /area/hallway/primary/starboard)
 "bvd" = (
@@ -45693,7 +45675,6 @@
 /turf/closed/wall,
 /area/hallway/secondary/service)
 "bVA" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock{
 	name = "Service Hall";
 	req_access_txt = "null";
@@ -76233,6 +76214,7 @@
 /area/maintenance/department/science)
 "xdW" = (
 /obj/machinery/vending/wardrobe/jani_wardrobe,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/janitor)
 "xop" = (
@@ -104443,7 +104425,7 @@ agU
 ahH
 aeq
 ajy
-akH
+arj
 amb
 ajz
 amf
@@ -116051,7 +116033,7 @@ bmY
 bhT
 bhT
 bhT
-bvm
+bhT
 bxc
 bxc
 bAA
