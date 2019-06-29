@@ -91,7 +91,7 @@
 	if (prob(50) && consumed)
 		barf_food(consumed)
 	else
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
+		playsound(T, 'sound/effects/splat.ogg', 50, 1)
 		T.add_vomit_floor(src)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A, var/hard = FALSE)
@@ -108,7 +108,7 @@
 		return
 	currentTurf = get_turf(consumed)
 	currentTurf.add_vomit_floor(src)
-	playsound(get_turf(consumed), 'sound/effects/splat.ogg', 50, 1) //yes getting the turf twice is necessary fuck off
+	playsound(currentTurf, 'sound/effects/splat.ogg', 50, 1)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_prestart(duration)
 	flick("vomit_start",src)
