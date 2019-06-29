@@ -1,5 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - rscadd: "Lavaland atmos is no longer a preset gas mixture and varies per round"
-  - tweak: "Bonfire minimum oxygen content has been reduced"
