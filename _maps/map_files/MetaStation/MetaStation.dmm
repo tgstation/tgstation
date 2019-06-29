@@ -16971,11 +16971,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aKZ" = (
-/obj/machinery/door/window/northleft{
-	dir = 8;
-	name = "MuleBot Supply Access";
-	req_access_txt = "50"
-	},
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -31310,7 +31305,11 @@
 /area/engine/break_room)
 "bpl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/effect/turf_decal/box/red,
+/obj/effect/turf_decal/arrows/red{
+	icon_state = "arrows_red";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bpm" = (
@@ -31448,7 +31447,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/cable,
+/obj/effect/turf_decal/box/red,
+/obj/effect/turf_decal/arrows/red{
+	icon_state = "arrows_red";
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "bpE" = (
@@ -32461,16 +32464,9 @@
 	dir = 1;
 	network = list("minisat")
 	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "MiniSat Exterior APC";
-	areastring = "/area/aisat";
-	pixel_y = -23
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "brR" = (
@@ -32500,6 +32496,12 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "MiniSat Exterior APC";
+	areastring = "/area/aisat";
+	pixel_y = -23
+	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "brU" = (
@@ -32519,6 +32521,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "brV" = (
@@ -47240,10 +47243,6 @@
 	},
 /obj/item/clothing/neck/stethoscope,
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "Station Intercom (Medbay)";
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -50033,9 +50032,6 @@
 "ceF" = (
 /obj/structure/bed/roller,
 /obj/item/radio/intercom{
-	frequency = 1485;
-	listening = 1;
-	name = "Station Intercom (Medbay)";
 	pixel_y = -30
 	},
 /obj/machinery/camera{
@@ -52377,10 +52373,6 @@
 "cjE" = (
 /obj/structure/bed/roller,
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "Station Intercom (Medbay)";
 	pixel_x = -30
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -53116,10 +53108,6 @@
 /area/medical/medbay/central)
 "clm" = (
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "Station Intercom (Medbay)";
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/white,
@@ -54090,10 +54078,6 @@
 "cnt" = (
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "Station Intercom (Medbay)";
 	pixel_x = 30
 	},
 /obj/structure/bedsheetbin{
@@ -56215,10 +56199,6 @@
 	dir = 1
 	},
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "Station Intercom (Medbay)";
 	pixel_y = -30
 	},
 /obj/machinery/light,
@@ -56621,10 +56601,6 @@
 /area/medical/surgery)
 "csn" = (
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "Station Intercom (Medbay)";
 	pixel_y = -30
 	},
 /obj/structure/closet/crate/freezer/blood,
@@ -60876,10 +60852,6 @@
 "cAS" = (
 /obj/structure/chair/stool,
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "Station Intercom (Medbay)";
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -60946,10 +60918,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1485;
-	listening = 0;
-	name = "Station Intercom (Medbay)";
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/white,
@@ -75043,6 +75011,9 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/main)
+"iXM" = (
+/turf/open/space/basic,
+/area/space/nearstation)
 "jah" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -128929,7 +128900,7 @@ aSG
 bnt
 bpG
 brT
-aOU
+bvt
 aOY
 bcQ
 bzl
@@ -129186,8 +129157,8 @@ blA
 bnu
 bpH
 brU
-aOV
-aaa
+bvt
+iXM
 aMq
 bzm
 aOT
@@ -129444,7 +129415,7 @@ bnv
 bpI
 brV
 aRy
-aaa
+iXM
 aaa
 aTT
 aOY

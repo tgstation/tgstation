@@ -9668,7 +9668,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "axx" = (
-/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/power/rad_collector/anchored/delta,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
 	},
@@ -9694,7 +9694,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "axB" = (
-/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/power/rad_collector/anchored/delta,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
@@ -10345,7 +10345,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/power/rad_collector/anchored/delta,
 /obj/structure/window/plasma/reinforced{
 	dir = 4
 	},
@@ -10360,7 +10360,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/power/rad_collector/anchored/delta,
 /obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
@@ -10953,7 +10953,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "azT" = (
-/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/power/rad_collector/anchored/delta,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -10964,7 +10964,7 @@
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "azU" = (
-/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/power/rad_collector/anchored/delta,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
@@ -61442,7 +61442,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cje" = (
-/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/power/rad_collector/anchored/delta,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -70664,7 +70664,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cAK" = (
-/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/power/rad_collector/anchored/delta,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4

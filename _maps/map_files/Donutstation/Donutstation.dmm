@@ -44100,8 +44100,8 @@
 /turf/open/floor/plating,
 /area/science/research)
 "cbq" = (
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
 /area/science/research)
 "cbr" = (
@@ -49863,6 +49863,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/service)
+"rTb" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plating,
+/area/science/research)
 "rUx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -77565,7 +77569,7 @@ cbm
 aeA
 bTH
 aXX
-afM
+rTb
 cbo
 cbp
 bRa
