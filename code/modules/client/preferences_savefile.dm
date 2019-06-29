@@ -302,8 +302,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_legs"]			>> features["legs"]
 	S["feature_moth_wings"]				>> features["moth_wings"]
 	//413 start
-	S["troll_caste"]        >> troll_caste
-	S["troll_horn"]         >> troll_horn
+	S["troll_caste"]        >> features["troll_caste"]
+	S["troll_horn"]         >> features["horns_troll"]
 	//413 end
 	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
@@ -381,8 +381,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
 	skin_tone		= sanitize_inlist(skin_tone, GLOB.skin_tones)
 	//413 start
-	troll_caste     = sanitize_inlist(troll_caste, GLOB.troll_castes)
-	troll_horn     = sanitize_inlist(troll_horn, GLOB.troll_horns_list)
+	features["troll_caste"]     = sanitize_inlist(features["troll_caste"], GLOB.troll_castes)
+	features["horns_troll"]     = sanitize_inlist(features["horns_troll"], GLOB.troll_horns_list)
 	//413 end
 	backbag			= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
@@ -435,8 +435,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["hair_style_name"]	, hair_style)
 	WRITE_FILE(S["facial_style_name"]	, facial_hair_style)
 	//413 start
-	WRITE_FILE(S["troll_caste"] , troll_caste)
-	WRITE_FILE(S["troll_horn"] , troll_horn)
+	WRITE_FILE(S["troll_caste"] , features["troll_caste"])
+	WRITE_FILE(S["troll_horn"] , features["horns_troll"])
 	//413 end
 	WRITE_FILE(S["underwear"]			, underwear)
 	WRITE_FILE(S["undershirt"]			, undershirt)

@@ -259,14 +259,6 @@
 		if(drop)
 			if(drop.drips < 5)
 				drop.drips++
-				//413 start
-				if(blood_color != "#ffffff")
-					var/icon/newDrip = icon("spacestation413/icons/effects/blood.dmi",pick(drop.random_icon_states))
-					newDrip.Blend(src.blood_color,ICON_MULTIPLY)
-					drop.add_overlay(newDrip)
-				else
-					drop.add_overlay(pick(drop.random_icon_states))
-				//413 end
 				drop.transfer_mob_blood_dna(src)
 				return
 			else
@@ -274,7 +266,6 @@
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())
-			drop.set_blood_color(src.blood_color) //413 -- coloring blood
 			drop.transfer_mob_blood_dna(src)
 			return
 

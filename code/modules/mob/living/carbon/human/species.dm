@@ -456,7 +456,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//413 start
 	if(H.troll_horn && (TROLLHORNS in species_traits))
 		var/mutable_appearance/horns_overlay = mutable_appearance(layer = -HAIR_LAYER)
-		S = GLOB.troll_horns_list[H.troll_horn]
+		S = GLOB.troll_horns_list[H.dna.features["horns_troll"]]
 		if(S)
 			horns_overlay.icon = S.icon
 			horns_overlay.icon_state = S.icon_state

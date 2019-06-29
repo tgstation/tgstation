@@ -1176,7 +1176,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				//413 start
 				if("horn_type")
 					var/new_troll_horns
-					new_troll_horns = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.troll_horns_list
+					new_troll_horns = input(user, "Choose your character's horns:", "Character Preference")  as null|anything in GLOB.troll_horns_list
 					if(new_troll_horns)
 						features["horns_troll"] = new_troll_horns
 
