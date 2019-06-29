@@ -1,8 +1,8 @@
 /obj/item/organ/butt
 	name = "butt"
 	desc = "extremely treasured body part"
-	alternate_worn_icon = 'icons/mob/head2.dmi'
-	icon = 'icons/obj/butts.dmi'
+	alternate_worn_icon = 'spacestation413/icons/mob/head.dmi'
+	icon = 'spacestation413/icons/obj/butts.dmi'
 	icon_state = "butt"
 	item_state = "butt"
 	zone = "groin"
@@ -10,7 +10,7 @@
 	throwforce = 5
 	throw_speed = 4
 	force = 5
-	hitsound = 'sound/effects/fart.ogg'
+	hitsound = 'spacestation413/sound/effects/fart.ogg'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 	embed_chance = 5 //This is a joke
@@ -90,7 +90,7 @@
 
 /obj/item/organ/butt/throw_impact(atom/hit_atom)
 	..()
-	playsound(src, 'sound/effects/fart.ogg', 50, 1, 5)
+	playsound(src, 'spacestation413/sound/effects/fart.ogg', 50, 1, 5)
 
 /mob/living/carbon/proc/regeneratebutt()
 	if(!getorganslot("butt"))

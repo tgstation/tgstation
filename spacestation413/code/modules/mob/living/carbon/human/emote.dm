@@ -6,7 +6,7 @@
 	key_third_person = "farts"
 
 /datum/emote/living/carbon/fart/run_emote(mob/living/carbon/user, params)
-	var/fartsound = 'sound/effects/fart.ogg'
+	var/fartsound = 'spacestation413/sound/effects/fart.ogg'
 	var/bloodkind = /obj/effect/decal/cleanable/blood
 	message = null
 	if(user.stat != CONSCIOUS)
@@ -75,7 +75,7 @@
 	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
 	if(istype(Y))
 		user.Stun(20)
-		playsound(Y,'sound/effects/thunder.ogg', 90, 1)
+		playsound(Y,'spacestation413/sound/effects/thunder.ogg', 90, 1)
 		var/turf/T = get_ranged_target_turf(user, NORTH, 8)
 		T.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
 		if(ishuman(user))
@@ -151,16 +151,16 @@
 	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
 	if(istype(Y))
 		user.Stun(20)
-		playsound(Y,'sound/effects/thunder.ogg', 90, 1)
+		playsound(Y,'spacestation413/sound/effects/thunder.ogg', 90, 1)
 		var/turf/T = get_ranged_target_turf(user, NORTH, 8)
 		T.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
 		user.electrocution_animation(10)
 		addtimer(CALLBACK(user, /mob/proc/gib), 10)
 	else
 		for(var/i in 1 to 10)
-			playsound(user, 'sound/effects/fart.ogg', 100, 1, 5)
+			playsound(user, 'spacestation413/sound/effects/fart.ogg', 100, 1, 5)
 			sleep(1)
-		playsound(user, 'sound/effects/fartmassive.ogg', 75, 1, 5)
+		playsound(user, 'spacestation413/sound/effects/fartmassive.ogg', 75, 1, 5)
 		var/obj/item/storage/internal/pocket/butt/theinv = B.inv
 		if(theinv.contents.len)
 			for(var/obj/item/O in theinv.contents)
@@ -202,7 +202,7 @@
 
 			if(2)
 				user.visible_message("<span class='warning'><b>[user]</b> rips their ass apart in a massive explosion!</span>", "<span class='warning'>Holy shit, your butt goes supernova!</span>")
-				playsound(user, 'sound/effects/superfart.ogg', 75, extrarange = 255, pressure_affected = FALSE)
+				playsound(user, 'spacestation413/sound/effects/superfart.ogg', 75, extrarange = 255, pressure_affected = FALSE)
 				explosion(user.loc, 0, 1, 3, adminlog = FALSE, flame_range = 3)
 				user.gib()
 
@@ -226,7 +226,7 @@
 
 				//ASS BLAST USA
 				user.visible_message("<span class='warning'><b>[user]</b> blows their ass off with such force, they explode!</span>", "<span class='warning'>Holy shit, your butt flies off into the galaxy!</span>")
-				playsound(user, 'sound/effects/superfart.ogg', 75, extrarange = 255, pressure_affected = FALSE)
+				playsound(user, 'spacestation413/sound/effects/superfart.ogg', 75, extrarange = 255, pressure_affected = FALSE)
 				user.gib() //can you belive I forgot to put this here?? yeah you need to see the message BEFORE you gib
 				new /obj/effect/immovablerod/butt(B.loc, locate(endx, endy, 1))
 				priority_announce("What the fuck was that?!", "General Alert")
