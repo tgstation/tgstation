@@ -1,0 +1,4 @@
+author: "JJRcop and Bobbahbrown"
+delete-after: True
+changes: 
+  - tweak: "When attempting to say a blocked word in character you will be notified which ones were blocked."
