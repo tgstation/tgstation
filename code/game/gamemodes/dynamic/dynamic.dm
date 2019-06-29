@@ -8,7 +8,7 @@
 #define TRAITOR_RULESET 2
 #define MINOR_RULESET 4
 
- // -- Injection delays (in ticks, ie, you need divide the number with server FPS to get the real result) 
+ // -- Injection delays, must be divided by 20 get the correct time.
 #define LATEJOIN_DELAY_MIN (5 MINUTES) / 20
 #define LATEJOIN_DELAY_MAX (30 MINUTES) / 20
 
@@ -229,7 +229,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 /datum/game_mode/dynamic/post_setup(report)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
-		rule.execute()
+		if(!rule.execute())
+			stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 
 /datum/game_mode/dynamic/proc/rigged_roundstart()
 	message_admins("[forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
@@ -303,7 +304,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 		spend_threat(starting_rule.cost)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
-		if (starting_rule.pre_execute())//this should never fail since ready() returned 1
+		if (starting_rule.pre_execute())
 			executed_rules += starting_rule
 			if (starting_rule.persistent)
 				current_rules += starting_rule
@@ -314,6 +315,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					if (!rule.ready())
 						drafted_rules -= rule//and removing rules that are no longer elligible
 			return TRUE
+		else
+			stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
 	return FALSE
 
 /datum/game_mode/dynamic/proc/pick_delay(var/datum/dynamic_ruleset/roundstart/delayed/rule)
@@ -338,13 +341,15 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			latejoin_rules = remove_rule(latejoin_rules,latejoin_rule.type)
 		spend_threat(latejoin_rule.cost)
 		threat_log += "[worldtime2text()]: Latejoin [latejoin_rule.name] spent [latejoin_rule.cost]"
-		if (latejoin_rule.execute())//this should never fail since ready() returned 1
+		if (latejoin_rule.execute())
 			var/mob/M = pick(latejoin_rule.assigned)
 			log_admin("[key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
 			executed_rules += latejoin_rule
 			if (latejoin_rule.persistent)
 				current_rules += latejoin_rule
 			return TRUE
+		else
+			stack_trace("The latejoin rule \"[latejoin_rule.name]\" failed to execute.")
 	return FALSE
 
 /datum/game_mode/dynamic/proc/picking_midround_rule(var/list/drafted_rules = list())
@@ -354,12 +359,14 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			midround_rules = remove_rule(midround_rules,midround_rule.type)
 		spend_threat(midround_rule.cost)
 		threat_log += "[worldtime2text()]: Midround [midround_rule.name] spent [midround_rule.cost]"
-		if (midround_rule.execute())//this should never fail since ready() returned 1
+		if (midround_rule.execute())
 			log_admin("Injecting some threats...[midround_rule.name]!")
 			executed_rules += midround_rule
 			if (midround_rule.persistent)
 				current_rules += midround_rule
 			return TRUE
+		else
+			stack_trace("The midround rule \"[midround_rule.name]\" failed to execute.")
 	return FALSE
 
 /datum/game_mode/dynamic/proc/picking_specific_rule(var/ruletype,var/forced=0)//an experimental proc to allow admins to call rules on the fly or have rules call other rules
@@ -393,8 +400,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	return FALSE
 
 /datum/game_mode/dynamic/process()
-	. = ..() // Doing the roles process.
-
 	if (pop_last_updated < world.time - (60 SECONDS))
 		pop_last_updated = world.time
 		update_playercounts()
