@@ -31,6 +31,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/troll_horns, GLOB.troll_horns_list) //413
 
 
 	//Species

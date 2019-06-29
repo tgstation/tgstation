@@ -2,6 +2,7 @@
 	name = "blood"
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	icon = 'icons/effects/blood.dmi'
+	var/blood_color = "#ffffff" // 413 -- blood color
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_HUMAN
@@ -12,7 +13,14 @@
 	if (bloodiness)
 		if (C.bloodiness < MAX_SHOE_BLOODINESS)
 			C.bloodiness += bloodiness
+			C.blood_color=BlendRGB(blood_state,C.blood_state,bloodiness/C.bloodiness)
 	return ..()
+
+//413 start -- blood color
+/obj/effect/decal/cleanable/blood/proc/set_blood_color(new_color)
+	blood_color = new_color
+	update_icon()
+//413 end
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -39,6 +47,7 @@
 	name = "blood"
 	icon = 'icons/effects/blood.dmi'
 	desc = "Your instincts say you shouldn't be following these."
+	var/blood_color = "#ffffff" // 413 -- blood color
 	var/list/existing_dirs = list()
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
@@ -85,7 +94,10 @@
 	for(var/i in 0 to pick(0, 200; 1, 150; 2, 50))
 		sleep(2)
 		if(i > 0)
-			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
+			//413 start -- blood color
+			var/obj/effect/decal/cleanable/blood/splatter/B = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
+			B.set_blood_color(blood_color)
+			//413 end
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -143,7 +155,7 @@
 	icon = 'icons/effects/footprints.dmi'
 	icon_state = "nothingwhatsoever"
 	desc = "WHOSE FOOTPRINTS ARE THESE?"
-	icon_state = "blood1"
+	//413 - fixing a tg booboo
 	random_icon_states = null
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
 	var/entered_dirs = 0
@@ -156,7 +168,9 @@
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
+			var/old_bloody_shoes = S.bloody_shoes[blood_state] // 413 -- blood color
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+			S.bloody_shoe_color = BlendRGBasHSV(blood_color,S.bloody_shoe_color,1-(old_bloody_shoes/S.bloody_shoes[blood_state])) // 413 -- blood color
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
@@ -177,17 +191,31 @@
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
-
+	var/blood_is_colored = (blood_color != "#ffffff" && blood_state == BLOOD_STATE_HUMAN) // 413
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
+				//413 start
+				if(blood_is_colored)
+					var/icon/newIcon = icon("spacestation413/icons/effects/footprints.dmi")
+					newIcon.Blend(blood_color,ICON_MULTIPLY)
+					GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(newIcon,"blood1", dir = Ddir)
+				else
+					GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
+				//413 end
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
+				//413 start
+				if(blood_is_colored)
+					var/icon/newIcon = icon("spacestation413/icons/effects/footprints.dmi")
+					newIcon.Blend(blood_color,ICON_MULTIPLY)
+					GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(newIcon,"blood2", dir = Ddir)
+				else
+					GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
+				//413 end
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness

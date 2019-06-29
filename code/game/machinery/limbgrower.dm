@@ -29,6 +29,7 @@
 							"fly",
 							"moth",
 							"plasmaman",
+							"troll", // 413
 							"other"
 							)
 
