@@ -249,7 +249,9 @@ All the important duct code:
 
 /obj/machinery/duct/multilayered
 	name = "duct layer-manifold"
-	icon_state = "lduct"
+	icon = 'icons/obj/2x2.dmi'
+	icon_state = "multiduct"
+
 
 	color_to_color_support = FALSE
 	duct_layer = FIRST_DUCT_LAYER + SECOND_DUCT_LAYER + THIRD_DUCT_LAYER + FOURTH_DUCT_LAYER + FIFTH_DUCT_LAYER
@@ -264,8 +266,12 @@ All the important duct code:
 	icon_state = initial(icon_state)
 	if((connects & NORTH) || (connects & SOUTH))
 		icon_state += "_vertical"
+		pixel_x = -15
+		pixel_y = -15
 	else
 		icon_state += "_horizontal"
+		pixel_x = -10
+		pixel_y = -12
 
 /obj/machinery/duct/multilayered/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	if(istype(D, /obj/machinery/duct/multilayered)) //don't connect to other multilayered stuff because honestly it shouldnt be done and I dont wanna deal with it
