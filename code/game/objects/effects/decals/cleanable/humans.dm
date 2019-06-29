@@ -16,11 +16,11 @@
 			C.blood_color=BlendRGB(blood_state,C.blood_state,bloodiness/C.bloodiness)
 	return ..()
 
-//413 start -- blood color
+// 413 start -- blood color
 /obj/effect/decal/cleanable/blood/proc/set_blood_color(new_color)
 	blood_color = new_color
 	update_icon()
-//413 end
+// 413 end
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -94,10 +94,10 @@
 	for(var/i in 0 to pick(0, 200; 1, 150; 2, 50))
 		sleep(2)
 		if(i > 0)
-			//413 start -- blood color
+			// 413 start -- blood color
 			var/obj/effect/decal/cleanable/blood/splatter/B = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
 			B.set_blood_color(blood_color)
-			//413 end
+			// 413 end
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -155,7 +155,7 @@
 	icon = 'icons/effects/footprints.dmi'
 	icon_state = "nothingwhatsoever"
 	desc = "WHOSE FOOTPRINTS ARE THESE?"
-	//413 - fixing a tg booboo
+	// 413 - fixing a tg booboo
 	random_icon_states = null
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
 	var/entered_dirs = 0
@@ -196,26 +196,26 @@
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				//413 start
+				// 413 start
 				if(blood_is_colored)
 					var/icon/newIcon = icon("spacestation413/icons/effects/footprints.dmi")
 					newIcon.Blend(blood_color,ICON_MULTIPLY)
 					GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(newIcon,"blood1", dir = Ddir)
 				else
 					GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
-				//413 end
+				// 413 end
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				//413 start
+				// 413 start
 				if(blood_is_colored)
 					var/icon/newIcon = icon("spacestation413/icons/effects/footprints.dmi")
 					newIcon.Blend(blood_color,ICON_MULTIPLY)
 					GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(newIcon,"blood2", dir = Ddir)
 				else
 					GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
-				//413 end
+				// 413 end
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness

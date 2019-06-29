@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 
 			var/mutant_colors
-			if(istype(pref_species, /datum/species/troll)) //413 start -- DEFINITELY the best thing to do
+			if(istype(pref_species, /datum/species/troll)) // 413 start -- DEFINITELY the best thing to do
 
 				dat += "<td valign='top' width='21%'>"
 
@@ -260,7 +260,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
-			//413 end
+			// 413 end
 			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
 				if(!use_skintones)
@@ -1047,13 +1047,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					skin_tone = random_skin_tone()
 				if("bag")
 					backbag = pick(GLOB.backbaglist)
-				//413 start
+				// 413 start
 				if("t_caste")
 					features["troll_caste"] = random_troll_caste()
 					eye_color = get_color_from_caste(features["troll_caste"])
 				if("horn_type")
 					features["horns_troll"] = random_troll_horns()
-				//413 end
+				// 413 end
 				if("all")
 					random_character()
 
@@ -1173,7 +1173,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
 
-				//413 start
+				// 413 start
 				if("horn_type")
 					var/new_troll_horns
 					new_troll_horns = input(user, "Choose your character's horns:", "Character Preference")  as null|anything in GLOB.troll_horns_list
@@ -1190,7 +1190,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_t_caste = input(user, "Choose your character's blood color:", "Character Preference") as null|anything in GLOB.troll_castes
 					if(new_t_caste)
 						features["troll_caste"] = new_t_caste
-				//413 end
+				// 413 end
 
 				if("underwear")
 					var/new_underwear
@@ -1593,10 +1593,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
-	//413 start
+	// 413 start
 	if (istype(pref_species, /datum/species/troll))
 		character.eye_color=get_color_from_caste(features["troll_caste"])
-	//413 end
+	// 413 end
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"
 
