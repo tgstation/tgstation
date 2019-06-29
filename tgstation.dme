@@ -325,6 +325,8 @@
 #include "code\datums\world_topic.dm"
 #include "code\datums\actions\beam_rifle.dm"
 #include "code\datums\actions\ninja.dm"
+#include "code\datums\atmosphere\_atmosphere.dm"
+#include "code\datums\atmosphere\planetary.dm"
 #include "code\datums\brain_damage\brain_trauma.dm"
 #include "code\datums\brain_damage\creepy_trauma.dm"
 #include "code\datums\brain_damage\hypnosis.dm"
