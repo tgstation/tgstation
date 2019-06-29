@@ -41,7 +41,7 @@
 	GLOB.navigation_computers -= src
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/multitool_act(mob/living/user, obj/item/multitool/I)
-	..()
+	. = ..()
 	if (istype(I))
 		var/choice = input("Choice", "") as null|anything in list("Add ID","Remove ID","Add access code","Remove access code","Cancel","TO TEST add z_lock","TO TEST remove z_lock","TO TEST add z_locked","TO TEST remove z_locked")
 		if(QDELETED(src))
