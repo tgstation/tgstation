@@ -178,7 +178,7 @@
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
 			new /obj/item/storage/box/syndie_kit/bee_grenades(src) // 15 tc
 			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
-			new /obj/item/melee/sabre/bee(src) //priceless
+			new /obj/item/melee/beesword(src) //priceless
 
 		if("mr_freeze")
 			new /obj/item/clothing/glasses/cold(src)
@@ -248,8 +248,8 @@
 	return ..()
 
 /obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
-	new /obj/item/clothing/head/helmet/space/syndicate/contract/black/red(src)
-	new /obj/item/clothing/suit/space/syndicate/contract/black/red(src)
+	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
+	new /obj/item/clothing/suit/space/syndicate/contract(src)
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/mask/chameleon(src)
 	new /obj/item/card/id/syndicate(src)

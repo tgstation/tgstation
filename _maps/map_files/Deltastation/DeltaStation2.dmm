@@ -1569,7 +1569,8 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
-	width = 35
+	width = 35;
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta
 	},
 /turf/open/space/basic,
 /area/space)
@@ -32679,7 +32680,8 @@
 	maxHealth = 200;
 	melee_damage_lower = 20;
 	melee_damage_upper = 20;
-	name = "Lia"
+	name = "Lia";
+	random_color = FALSE
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
@@ -69958,8 +69960,6 @@
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/twohanded/rcl/pre_loaded,
-/obj/item/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "czA" = (
@@ -70448,6 +70448,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cAr" = (
@@ -74116,7 +74117,7 @@
 /obj/item/reagent_containers/food/drinks/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
 	icon_state = "beer";
-	list_reagents = list("bacchus_blessing" = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -116756,6 +116757,14 @@
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
+"sDV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "sJw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -149638,7 +149647,7 @@ aec
 aaO
 aeR
 aft
-aeb
+sDV
 agj
 aaO
 aej

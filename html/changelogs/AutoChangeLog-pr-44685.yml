@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "the TB antidotes injectors now actually cure TB and have some omnizine so you dont die from perfluoride"
