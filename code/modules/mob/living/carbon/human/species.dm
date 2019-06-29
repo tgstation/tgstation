@@ -463,7 +463,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(hair_overlay.icon)
 			standing += hair_overlay
 	// 413 start
-	if(H.troll_horn && (TROLLHORNS in species_traits))
+	if(H.dna.features["horns_troll"] && (TROLLHORNS in species_traits))
 		var/mutable_appearance/horns_overlay = mutable_appearance(layer = -HAIR_LAYER)
 		S = GLOB.troll_horns_list[H.dna.features["horns_troll"]]
 		if(S)
