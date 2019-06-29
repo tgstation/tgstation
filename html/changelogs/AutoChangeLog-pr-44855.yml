@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - tweak: "Deaths are now logged to the game log."
