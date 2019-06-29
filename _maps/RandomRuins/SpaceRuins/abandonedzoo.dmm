@@ -702,7 +702,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/spaceship_navigation_beacon,
+/obj/machinery/bluespace_beacon,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 
