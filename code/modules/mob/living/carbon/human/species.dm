@@ -144,8 +144,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 	var/obj/item/organ/tail/tail = C.getorganslot(ORGAN_SLOT_TAIL)
+	var/obj/item/organ/butt/butt = C.getorganslot(ORGAN_SLOT_BUTT) // 413 -- butts
 
 	var/should_have_brain = TRUE
+	var/should_have_butt = TRUE // 413 -- butts
 	var/should_have_heart = !(NOBLOOD in species_traits)
 	var/should_have_lungs = !(TRAIT_NOBREATH in inherent_traits)
 	var/should_have_appendix = !(TRAIT_NOHUNGER in inherent_traits)
@@ -155,7 +157,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/should_have_liver = !(NOLIVER in species_traits)
 	var/should_have_stomach = !(NOSTOMACH in species_traits)
 	var/should_have_tail = mutanttail
-
+	// 413 start -- butts
+	if(butt && (!should_have_butt || replace_current))
+		butt.Remove(C,1)
+		QDEL_NULL(butt)
+	if(should_have_butt && !butt)
+		butt = new mutant_butt()
+		butt.Insert(C)
+	// 413 end
 	if(heart && (!should_have_heart || replace_current))
 		heart.Remove(C,1)
 		QDEL_NULL(heart)
@@ -1397,6 +1406,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
+	// 413 start -- butts
+	if(H.checkbuttinsert(I, user))
+		return 0
+	// 413 end
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 			return 0
