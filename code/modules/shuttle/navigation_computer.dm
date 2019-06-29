@@ -41,78 +41,93 @@
 	GLOB.navigation_computers -= src
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/multitool_act(mob/living/user, obj/item/multitool/I)
-	..()
-	if (istype(I))
-		var/choice = input("Choice", "") as null|anything in list("Add ID","Remove ID","Add access code","Remove access code","Cancel","TO TEST add z_lock","TO TEST remove z_lock","TO TEST add z_locked","TO TEST remove z_locked")
-		if(QDELETED(src))
-			return
-		var/sellect
-		switch(choice)
-			if("Add ID")
-				sellect = replacetext(lowertext(input("Enter the ID to add", "Input ID") as text), " ", "_")
-				if(sellect)
-					beacon_codes |= sellect
-			if("Remove ID")
-				sellect = input("Choice ID to remove", "ID to remove") as null|anything in beacon_codes
-				if(sellect)
-					beacon_codes -= sellect
-			if("Add access code")
-				sellect = replacetext(lowertext(input("Enter the access code to add", "Input access code") as text), " ", "_")
-				if(sellect)
-					beacon_access_codes |= sellect
-			if("Remove access code")
-				sellect = input("Choice access code to remove", "Access code to remove") as null|anything in beacon_access_codes
-				if(sellect)
-					beacon_access_codes -= sellect			
-			if("TO TEST add z_lock")
-				sellect = replacetext(lowertext(input("Enter the Z to add to z_lock", "Input access code") as num), " ", "_")
-				if(sellect)
-					z_lock |= sellect
-			if("TO TEST remove z_lock")
-				sellect = input("Choice Z to remove from z_lock", "Z to remove") as null|anything in z_lock
-				if(sellect)
-					z_lock -= sellect
-			if("TO TEST add z_locked")
-				sellect = replacetext(lowertext(input("Enter the Z to add to z_lock", "Input access code") as num), " ", "_")
-				if(sellect)
-					z_locked |= sellect
-			if("TO TEST remove z_locked")
-				sellect = input("Choice Z to remove from z_lock", "Z to remove") as null|anything in z_locked
-				if(sellect)
-					z_locked -= sellect
-		return TRUE
+	.=..()
+	if (!istype(I) || !is_operational() || !can_use(user))
+		return
+	var/choice = input("Choice", "") as null|anything in list("Add ID","Remove ID","Add access code","Remove access code","Cancel",
+	#ifdef TESTING
+	"TO TEST add z_lock","TO TEST remove z_lock","TO TEST add z_locked","TO TEST remove z_locked"
+	#endif
+	)
+	if(QDELETED(src) || !Adjacent(user))
+		return
+	var/sellect
+	switch(choice)
+		if("Add ID")
+			sellect = replacetext(lowertext(input("Enter the ID to add", "Input ID") as text), " ", "_")
+			if(sellect || !Adjacent(user))
+				beacon_codes |= sellect
+		if("Remove ID")
+			sellect = input("Choice ID to remove", "ID to remove") as null|anything in beacon_codes
+			if(sellect || !Adjacent(user))
+				beacon_codes -= sellect
+		if("Add access code")
+			sellect = replacetext(lowertext(input("Enter the access code to add", "Input access code") as text), " ", "_")
+			if(sellect || !Adjacent(user))
+				beacon_access_codes |= sellect
+		if("Remove access code")
+			sellect = input("Choice access code to remove", "Access code to remove") as null|anything in beacon_access_codes
+			if(sellect || !Adjacent(user))
+				beacon_access_codes -= sellect
+		#ifdef TESTING
+		if("TO TEST add z_lock")
+			sellect = replacetext(lowertext(input("Enter the Z to add to z_lock", "Input access code") as num), " ", "_")
+			if(sellect || !Adjacent(user))
+				z_lock |= sellect
+		if("TO TEST remove z_lock")
+			sellect = input("Choice Z to remove from z_lock", "Z to remove") as null|anything in z_lock
+			if(sellect || !Adjacent(user))
+				z_lock -= sellect
+		if("TO TEST add z_locked")
+			sellect = replacetext(lowertext(input("Enter the Z to add to z_lock", "Input access code") as num), " ", "_")
+			if(sellect || !Adjacent(user))
+				z_locked |= sellect
+		if("TO TEST remove z_locked")
+			sellect = input("Choice Z to remove from z_lock", "Z to remove") as null|anything in z_locked
+			if(sellect || !Adjacent(user))
+				z_locked -= sellect
+		#endif
+	return TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/examine()
 	.=..()
-	. += "<span class='warning'>Available ID's:"
+	var/msg = ""
+	msg += "<span class='warning'>Available ID's:"
 	if(beacon_codes.len)
 		for(var/id in beacon_codes)
-			. += " [id],"
+			msg += " [id],"
 	else
-		. += " none,"
+		msg += " none,"
+	. += msg
 
-	. += " Access codes:"
+	msg = ""
+	msg += "Access codes:"
 	if(beacon_access_codes.len)
 		for(var/access_code in beacon_access_codes)
-			. += " [access_code],"
+			msg += " [access_code],"
 	else
-		. += "none,"
-
-	. += "	TEST ZONE z_lock - whitelist:"
+		msg += " none,"
+	. += msg
+#ifdef TESTING
+	msg = ""
+	msg += "TEST ZONE z_lock - whitelist:"
 	if(z_lock.len)
 		for(var/zlock in z_lock)
-			. += " [zlock],"
+			msg += " [zlock],"
 	else
-		. += "none,"
+		msg += " none,"
+	. += msg
 
-	. += " TEST ZONE z_locked - blacklist:"
+	msg = ""
+	msg += "TEST ZONE z_locked - blacklist:"
 	if(z_locked.len)
 		for(var/zlocked in z_locked)
-			. += " [zlocked],"
+			msg += " [zlocked],"
 	else
-		. += "none,"
-
-	. += "</span>"
+		msg += " none,"
+#endif
+	msg += "</span>"
+	. += msg
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
 	if(jammed)
@@ -273,8 +288,8 @@
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
 		return SHUTTLE_DOCKER_BLOCKED
-	//if(z_lock.len && !(eyeturf.z in z_lock))
-	//	return SHUTTLE_DOCKER_BLOCKED
+	if(z_locked.len && (eyeturf.z in z_locked))
+		return SHUTTLE_DOCKER_BLOCKED
 
 	. = SHUTTLE_DOCKER_LANDING_CLEAR
 	var/list/bounds = shuttle_port.return_coords(the_eye.x - x_offset, the_eye.y - y_offset, the_eye.dir)
@@ -311,14 +326,9 @@
 		if(hidden_turf_info)
 			. = SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT
 
-	if(whitelist_turfs && whitelist_turfs.len)
+	if(length(whitelist_turfs))
 		var/turf_type = hidden_turf_info ? hidden_turf_info[2] : T.type
-		var/find_legetim = 0
-		for(var/WT in whitelist_turfs)
-			if(ispath(turf_type, WT))
-				find_legetim = 1
-				break
-		if(!find_legetim)
+		if(!is_type_in_list(turf_type, whitelist_turfs))
 			return SHUTTLE_DOCKER_BLOCKED
 
 	// Checking for overlapping dock boundaries
@@ -421,15 +431,15 @@
 	for(var/V in SSshuttle.beacons)
 		if(!V)
 			continue
-		var/obj/machinery/spaceship_navigation_beacon/B = V
-		if(console.z_locked.len && B.z)
-			if(B.z in console.z_locked)
+		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
+		if(console.z_locked.len && nav_beacon.z)
+			if(nav_beacon.z in console.z_locked)
 				break
-		if(!B.id || (B.id && console.beacon_codes[B.id]))
-			if(!B.access_code || (B.access_code && console.beacon_access_codes[B.access_code]))
-				L["([L.len]) [B.id] located: [B.x] [B.y] [B.z]"] = B
+		if(!nav_beacon.id || (nav_beacon.id && console.beacon_codes[nav_beacon.id]))
+			if(!nav_beacon.access_code || (nav_beacon.access_code && console.beacon_access_codes[nav_beacon.access_code]))
+				L["([L.len]) [nav_beacon.id] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = B
 			else
-				L["([L.len]) [B.name] [B.id] locked"] = null
+				L["([L.len]) [nav_beacon.name] [nav_beacon.id] locked"] = null
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L
