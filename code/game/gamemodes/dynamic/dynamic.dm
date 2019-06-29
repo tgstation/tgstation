@@ -15,13 +15,22 @@
 #define MIDROUND_DELAY_MIN (15 MINUTES) / 20
 #define MIDROUND_DELAY_MAX (50 MINUTES) / 20
 
+GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
+GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
+GLOBAL_VAR_INIT(dynamic_curve_width, 1.8)
+GLOBAL_VAR_INIT(dynamic_classic_secret, FALSE)
+GLOBAL_VAR_INIT(dynamic_high_pop_limit, 45)
+GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
+GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
+GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
+
 /datum/game_mode/dynamic
-	name = "Dynamic"
-	config_tag = "Dynamic"
-	report_type = "Dynamic"
+	name = "dynamic mode"
+	config_tag = "dynamic"
+	report_type = "dynamic"
 
 	announce_span = "danger"
-	announce_text = "Dynamic mode!"
+	announce_text = "Dynamic mode!" // This needs to be written or something
 
 	//Threat logging vars
 	var/threat_level = 0//the "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
@@ -55,14 +64,15 @@
 
 	var/peaceful_percentage = 50
 
-	// These can not right now be modified by an admin before round start, probably will need to turn these into a global var
+	// These can not right now be modified by an admin before round start, probably will need to turn these into globals
 	// -- Special tweaks --
-	var/no_stacking = 1
+	var/no_stacking = TRUE
 	var/high_pop_limit = 45
-	var/forced_extended = 0
+	var/forced_extended = FALSE
 	var/stacking_limit = 90
 	var/curve_centre = 0
 	var/curve_width = 1.8
+	var/classic_secret = FALSE
 	var/list/forced_roundstart_ruleset = list() 
 
 /datum/game_mode/dynamic/AdminPanel()
@@ -74,6 +84,7 @@
 	dat += "Parameters: centre = [curve_centre] ; width = [curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
 	dat += "Forced extended: <a href='?src=\ref[src];forced_extended=1'><b>[forced_extended ? "On" : "Off"]</b></a><br/>"
+	dat += "Classic secret (only autotraitor): <a href='?src=\ref[src];classic_secret=1'><b>[classic_secret ? "On" : "Off"]</b></a><br/>"
 	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];no_stacking=1'><b>[no_stacking ? "On" : "Off"]</b></a><br/>"
 	dat += "Stacking limit: [stacking_limit] <a href='?src=\ref[src];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
@@ -99,12 +110,16 @@
 /datum/game_mode/dynamic/Topic(href, href_list)
 	if (..()) // Sanity, maybe ?
 		return
-	if(!usr.client || !check_rights(R_ADMIN))
+	if(check_rights(R_ADMIN))
+		message_admins("[usr.key] has attempted to override the game mode panel!")
+		log_admin("[key_name(usr)] tried to use the game mode panel without authorization.")
 		return
 	if (href_list["forced_extended"])
 		forced_extended = !forced_extended
 	else if (href_list["no_stacking"])
 		no_stacking = !no_stacking
+	else if (href_list["classic_secret"])
+		classic_secret = !classic_secret
 	else if (href_list["adjustthreat"])
 		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0) as null|num
 		if(!threatadd)
@@ -132,7 +147,7 @@
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
-		alert("The round hasn't started yet!", "Alert")
+		alert("The round hasn't started yet!")
 		return
 
 	if(!check_rights(R_ADMIN))
@@ -159,8 +174,17 @@
 	starting_threat = threat_level
 
 /datum/game_mode/dynamic/can_start()
-	message_admins("Dynamic mode parameters for the round: centre = [curve_centre], width is [curve_width]. Extended : [forced_extended], no stacking : [no_stacking].")
-
+	curve_centre = GLOB.dynamic_curve_centre
+	curve_width = GLOB.dynamic_curve_width
+	forced_extended = GLOB.dynamic_forced_extended
+	no_stacking = GLOB.dynamic_no_stacking
+	stacking_limit = GLOB.dynamic_stacking_limit
+	classic_secret = GLOB.dynamic_classic_secret
+	high_pop_limit = GLOB.dynamic_high_pop_limit
+	forced_roundstart_ruleset = GLOB.dynamic_forced_roundstart_ruleset
+	message_admins("Dynamic mode parameters for the round:")
+	message_admins("Centre is [curve_centre], Width is [curve_width], Forced extended is [forced_extended ? "Enabled" : "Disabled"], No stacking is [no_stacking ? "Enabled" : "Disabled"].")
+	message_admins("Stacking limit is [stacking_limit], Classic secret is [classic_secret ? "Enabled" : "Disabled"], High population limit is [high_pop_limit].")
 	generate_threat()
 
 	var/latejoin_injection_cooldown_middle = 0.5*(LATEJOIN_DELAY_MAX + LATEJOIN_DELAY_MIN)
@@ -236,17 +260,19 @@
 
 	var/indice_pop = min(10,round(roundstart_pop_ready/5)+1)
 	var/extra_rulesets_amount = 0
-
-	if (GLOB.player_list.len > high_pop_limit)
-		if (threat_level > 50)
-			extra_rulesets_amount++
-			if (threat_level > 75)
-				extra_rulesets_amount++
+	if (classic_secret)
+		extra_rulesets_amount = 0
 	else
-		if (threat_level >= second_rule_req[indice_pop])
-			extra_rulesets_amount++
-			if (threat_level >= third_rule_req[indice_pop])
+		if (GLOB.player_list.len > high_pop_limit)
+			if (threat_level > 50)
 				extra_rulesets_amount++
+				if (threat_level > 75)
+					extra_rulesets_amount++
+		else
+			if (threat_level >= second_rule_req[indice_pop])
+				extra_rulesets_amount++
+				if (threat_level >= third_rule_req[indice_pop])
+					extra_rulesets_amount++
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
 		if (extra_rulesets_amount > 0)//we've got enough population and threat for a second rulestart rule
@@ -402,6 +428,9 @@
 			current_players[CURRENT_OBSERVERS] = list_observers.Copy()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
 				if (rule.acceptable(living_players.len,threat_level) && threat >= rule.cost)
+					// Classic secret : only autotraitor/minor roles
+					if (classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
+						continue
 					// No stacking : only one round-enter, unless > stacking_limit threat.
 					if (threat < stacking_limit && no_stacking)
 						var/skip_ruleset = 0
@@ -494,6 +523,9 @@
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 			if (rule.acceptable(living_players.len,threat_level) && threat >= rule.cost)
+				// Classic secret : only autotraitor/minor roles
+				if (classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
+					continue
 				// No stacking : only one round-enter, unless > stacking_limit threat.
 				if (threat < stacking_limit && no_stacking)
 					var/skip_ruleset = 0

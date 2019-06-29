@@ -28,7 +28,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
-	/client/proc/gamemode_panel,        /*game moed panel, game mode specified admin stuff*/
+	/client/proc/gamemode_panel,        /*game mode panel, game mode specified configurations*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
