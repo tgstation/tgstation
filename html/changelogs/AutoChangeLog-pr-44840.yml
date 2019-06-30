@@ -1,5 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - bugfix: "Stasis lets reagents know processing was stopped, fixing some issues."
-  - tweak: "Amanitin's damage only triggers when it is completely removed from your system, not when processing stops."

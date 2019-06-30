@@ -1,4 +1,0 @@
-author: "MCterra10"
-delete-after: True
-changes: 
-  - bugfix: "database requests for admins no longer fail on MySQL version > 8.0.2"
