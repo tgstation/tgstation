@@ -1730,6 +1730,16 @@
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)
 
+/datum/reagent/apitoxin
+	name = "Apitoxin"
+	description = "A strange liquid in a form similar to honey."
+	color = "#d3a308"
+	taste_description = "bad decisions, and honey"
+	can_synth = FALSE
+
+/datum/reagent/apitoxin/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+		L.ForceContractDisease(new /datum/disease/transformation/bee(), FALSE, TRUE)
 
 /datum/reagent/spider_extract
 	name = "Spider Extract"
