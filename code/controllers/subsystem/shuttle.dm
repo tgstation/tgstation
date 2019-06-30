@@ -661,6 +661,9 @@ SUBSYSTEM_DEF(shuttle)
 		D = existing_shuttle.get_docked()
 
 	if(!D)
+		D = generate_transit_dock(preview_shuttle)
+
+	if(!D)
 		CRASH("No dock found for preview shuttle ([preview_template.name]), aborting.")
 
 	var/result = preview_shuttle.canDock(D)
