@@ -15,3 +15,14 @@
 					M.adjust_fire_stacks(3)
 					M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
 					M.adjustFireLoss(3)		//Hence the other damages... ain't I a bastard?
+
+/datum/reagent/cluwnification
+	name = "Cluwne Tears"
+	description = "Tears from thousands of cluwnes compressed into a dangerous cluwnification virus."
+	color = "#535E66" // rgb: 62, 224, 33
+	can_synth = FALSE
+	taste_description = "something funny"
+
+/datum/reagent/cluwnification/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+		L.ForceContractDisease(new /datum/disease/cluwnification(), FALSE, TRUE)
