@@ -213,6 +213,8 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		if(H.a_intent == INTENT_HARM && handle_vamp_biting(H)) // 413/hippie start -- vampire biting				
+			return // 413/hippie end
 		dna.species.spec_attack_hand(H, src)
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
