@@ -9,11 +9,11 @@
 #define MINOR_RULESET 4
 
  // -- Injection delays, must be divided by 20 get the correct time.
-#define LATEJOIN_DELAY_MIN (5 MINUTES) / 20
-#define LATEJOIN_DELAY_MAX (30 MINUTES) / 20
+GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES) / 20)
+GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES) / 20)
 
-#define MIDROUND_DELAY_MIN (15 MINUTES) / 20
-#define MIDROUND_DELAY_MAX (50 MINUTES) / 20
+GLOBAL_VAR_INIT(dynamic_midround_delay_min, (15 MINUTES) / 20)
+GLOBAL_VAR_INIT(dynamic_midround_delay_max, (50 MINUTES) / 20)
 
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
@@ -186,11 +186,11 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	message_admins("Stacking limit is [stacking_limit], Classic secret is [classic_secret ? "Enabled" : "Disabled"], High population limit is [high_pop_limit].")
 	generate_threat()
 
-	var/latejoin_injection_cooldown_middle = 0.5*(LATEJOIN_DELAY_MAX + LATEJOIN_DELAY_MIN)
-	latejoin_injection_cooldown = round(CLAMP(exp_distribution(latejoin_injection_cooldown_middle), LATEJOIN_DELAY_MIN, LATEJOIN_DELAY_MAX))
+	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
+	latejoin_injection_cooldown = round(CLAMP(exp_distribution(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max))
 
-	var/midround_injection_cooldown_middle = 0.5*(MIDROUND_DELAY_MAX + MIDROUND_DELAY_MIN)
-	midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), MIDROUND_DELAY_MIN, MIDROUND_DELAY_MAX))
+	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
+	midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
 	message_admins("Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 
 	if (GLOB.player_list.len >= high_pop_limit)
@@ -423,7 +423,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		update_playercounts()
 
 		if (prob(GetInjectionChance()))
-			midround_injection_cooldown = rand(600,1050) // 20 to 35 minutes inbetween midround threat injections attempts
+			var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
+			midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
 			var/list/drafted_rules = list()
 			var/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
 			current_players[CURRENT_LIVING_PLAYERS] = living_players.Copy()
@@ -453,8 +454,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			if (drafted_rules.len > 0)
 				picking_midround_rule(drafted_rules)
 		else
-			midround_injection_cooldown = rand(600,1050)
-
+			var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
+			midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
 
 /datum/game_mode/dynamic/proc/update_playercounts()
 	living_players = list()
@@ -545,7 +546,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					drafted_rules[rule] = rule.get_weight()
 
 		if (drafted_rules.len > 0 && picking_latejoin_rule(drafted_rules))
-			latejoin_injection_cooldown = rand(330,510) // 11 to 17 minutes inbetween antag latejoiner rolls
+			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
+			latejoin_injection_cooldown = round(CLAMP(exp_distribution(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max))
 
 // Regenerate threat, but no more than our original threat level.
 /datum/game_mode/dynamic/proc/refund_threat(var/regain)
@@ -560,8 +562,3 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Expend threat, but do not fall below 0.
 /datum/game_mode/dynamic/proc/spend_threat(var/cost)
 	threat = max(threat-cost,0)
-
-#undef LATEJOIN_DELAY_MIN
-#undef LATEJOIN_DELAY_MAX
-#undef MIDROUND_DELAY_MIN
-#undef MIDROUND_DELAY_MAX

@@ -707,6 +707,78 @@
 		message_admins("[key_name(usr)] changed the distribution curve center to [new_centre]", 1)
 		GLOB.dynamic_curve_centre = new_centre
 		dynamic_mode_options(usr)
+	
+	else if(href_list["f_dynamic_roundstart_latejoin_min"])
+		if(!check_rights(R_ADMIN))
+			return
+		if(SSticker && SSticker.mode)
+			return alert(usr, "The game has already started.", null, null, null, null)
+		if(GLOB.master_mode != "dynamic")
+			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
+		var/new_min = input(usr,"Change the minimum delay of latejoin injection in minutes.", "Change latejoin injection delay minimum", null) as num
+		if(new_min <= 0)
+			return alert(usr, "The minimum can't be zero or lower.", null, null, null, null)
+		if((new_min MINUTES) / 20 > GLOB.dynamic_latejoin_delay_max)
+			return alert(usr, "The minimum must be lower than the maximum.", null, null, null, null)
+
+		log_admin("[key_name(usr)] changed the latejoin injection minimum delay to [new_min] minutes.")
+		message_admins("[key_name(usr)] changed the latejoin injection minimum delay to [new_min] minutes", 1)
+		GLOB.dynamic_latejoin_delay_min = (new_min MINUTES) / 20
+		dynamic_mode_options(usr)
+
+	else if(href_list["f_dynamic_roundstart_latejoin_max"])
+		if(!check_rights(R_ADMIN))
+			return
+		if(SSticker && SSticker.mode)
+			return alert(usr, "The game has already started.", null, null, null, null)
+		if(GLOB.master_mode != "dynamic")
+			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
+		var/new_max = input(usr,"Change the maximum delay of latejoin injection in minutes.", "Change latejoin injection delay maximum", null) as num
+		if(new_max <= 0)
+			return alert(usr, "The maximum can't be zero or lower.", null, null, null, null)
+		if((new_max MINUTES) / 20 < GLOB.dynamic_latejoin_delay_min)
+			return alert(usr, "The maximum must be higher than the minimum.", null, null, null, null)
+
+		log_admin("[key_name(usr)] changed the latejoin injection maximum delay to [new_max] minutes.")
+		message_admins("[key_name(usr)] changed the latejoin injection maximum delay to [new_max] minutes", 1)
+		GLOB.dynamic_latejoin_delay_max = (new_max MINUTES) / 20
+		dynamic_mode_options(usr)
+
+	else if(href_list["f_dynamic_roundstart_midround_min"])
+		if(!check_rights(R_ADMIN))
+			return
+		if(SSticker && SSticker.mode)
+			return alert(usr, "The game has already started.", null, null, null, null)
+		if(GLOB.master_mode != "dynamic")
+			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
+		var/new_min = input(usr,"Change the minimum delay of midround injection in minutes.", "Change midround injection delay minimum", null) as num
+		if(new_min <= 0)
+			return alert(usr, "The minimum can't be zero or lower.", null, null, null, null)
+		if((new_min MINUTES) / 20 > GLOB.dynamic_midround_delay_max)
+			return alert(usr, "The minimum must be lower than the maximum.", null, null, null, null)
+
+		log_admin("[key_name(usr)] changed the midround injection minimum delay to [new_min] minutes.")
+		message_admins("[key_name(usr)] changed the midround injection minimum delay to [new_min] minutes", 1)
+		GLOB.dynamic_midround_delay_min = (new_min MINUTES) / 20
+		dynamic_mode_options(usr)
+
+	else if(href_list["f_dynamic_roundstart_midround_max"])
+		if(!check_rights(R_ADMIN))
+			return
+		if(SSticker && SSticker.mode)
+			return alert(usr, "The game has already started.", null, null, null, null)
+		if(GLOB.master_mode != "dynamic")
+			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
+		var/new_max = input(usr,"Change the maximum delay of midround injection in minutes.", "Change midround injection delay maximum", null) as num
+		if(new_max <= 0)
+			return alert(usr, "The maximum can't be zero or lower.", null, null, null, null)
+		if((new_max MINUTES) / 20 > GLOB.dynamic_midround_delay_max)
+			return alert(usr, "The maximum must be higher than the minimum.", null, null, null, null)
+
+		log_admin("[key_name(usr)] changed the midround injection maximum delay to [new_max] minutes.")
+		message_admins("[key_name(usr)] changed the midround injection maximum delay to [new_max] minutes", 1)
+		GLOB.dynamic_midround_delay_max = (new_max MINUTES) / 20
+		dynamic_mode_options(usr)
 
 	else if(href_list["force_extended"])
 		if(!check_rights(R_ADMIN))
