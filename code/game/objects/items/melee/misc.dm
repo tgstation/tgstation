@@ -140,7 +140,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	force = 7
+	force = 5
 	block_chance = 20
 	armour_penetration = 85
 	attack_verb = list("slashed", "stung", "prickled", "poked")
@@ -150,7 +150,7 @@
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
-		H.reagents.add_reagent(/datum/reagent/toxin/histamine, 4)
+		H.reagents.add_reagent(/datum/reagent/toxin/amatoxin, 3)
 
 /obj/item/melee/classic_baton
 	name = "police baton"
