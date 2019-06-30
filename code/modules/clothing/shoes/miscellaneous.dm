@@ -364,13 +364,12 @@
 	name = "lizard skin boots"
 	desc = "You can hear a faint hissing from inside the boots, you hope it is just a mournful ghost."
 	icon_state = "lizardboots_green"
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 0) //lizards like to stay warm
 
 /obj/item/clothing/shoes/cowboy/lizard/masterwork
-	name = "Hugs-the-Feet lizard skin boots"
+	name = "Hugs-The-Feet lizard skin boots"
 	desc = "A pair of masterfully crafted lizard skin boots. Finally a good application for the station's most bothersome inhabitants."
 	icon_state = "lizardboots_blue"
-	armor = list("melee" = 15, "bullet" = 15, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/effect/spawner/lootdrop/lizardboots
 	name = "random lizard boot quality"
