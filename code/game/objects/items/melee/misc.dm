@@ -233,6 +233,11 @@
 	force = 0
 	on = FALSE
 
+/obj/item/melee/classic_baton/telescopic/contractor
+	name = "contractor baton"
+	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. Assigned to Syndicate contractors."
+	icon_state = "contractor_telebaton_0"
+
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
@@ -250,6 +255,27 @@
 			qdel(B)
 		new /obj/effect/gibspawner/generic(H.drop_location(), H)
 		return (BRUTELOSS)
+
+/obj/item/melee/classic_baton/telescopic/contractor/attack_self(mob/user)
+	on = !on
+	if(on)
+		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
+		icon_state = "contractor_telebaton_1"
+		item_state = "nullrod"
+		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
+		force = 14 //stun baton damage
+		attack_verb = list("smacked", "struck", "cracked", "beaten")
+	else
+		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
+		icon_state = "contractor_telebaton_0"
+		item_state = null //no sprite for concealment even when in hand
+		slot_flags = ITEM_SLOT_BELT
+		w_class = WEIGHT_CLASS_SMALL
+		force = 0 //not so robust now
+		attack_verb = list("hit", "poked")
+
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	add_fingerprint(user)
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
