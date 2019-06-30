@@ -49,7 +49,7 @@
 		air_update_turf()
 
 /obj/machinery/atmospherics/pipe/return_air()
-	return parent ? parent.air : NULL
+	return parent ? parent.air : FALSE
 
 /obj/machinery/atmospherics/pipe/return_analyzable_air()
 	return parent.air
