@@ -2,7 +2,7 @@
 	. = text
 	if(!CONFIG_GET(flag/emojis))
 		return
-	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
+	var/static/list/emojis = icon_states(icon('icons/emoji.dmi')) | icon_states(icon('spacestation413/icons/emoji.dmi')) // 413 -- more emoji
 	var/parsed = ""
 	var/pos = 1
 	var/search = 0
