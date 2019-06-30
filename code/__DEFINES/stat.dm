@@ -15,5 +15,5 @@
 #define EMPED	(1<<3)		// temporary broken by EMP pulse
 
 //ai power requirement defines
-#define POWER_REQ_ALL 1
-#define POWER_REQ_CLOCKCULT 2
+#define POWER_REQ_ALL		1
+#define POWER_REQ_CLOCKCULT	2

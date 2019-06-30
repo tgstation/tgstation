@@ -1,19 +1,19 @@
-#define FOOTSTEP_WOOD "wood"
-#define FOOTSTEP_FLOOR "floor"
-#define FOOTSTEP_PLATING "plating"
-#define FOOTSTEP_CARPET "carpet"
-#define FOOTSTEP_SAND "sand"
-#define FOOTSTEP_GRASS "grass"
-#define FOOTSTEP_WATER "water"
-#define FOOTSTEP_LAVA "lava"
+#define FOOTSTEP_WOOD		"wood"
+#define FOOTSTEP_FLOOR		"floor"
+#define FOOTSTEP_PLATING	"plating"
+#define FOOTSTEP_CARPET		"carpet"
+#define FOOTSTEP_SAND		"sand"
+#define FOOTSTEP_GRASS		"grass"
+#define FOOTSTEP_WATER		"water"
+#define FOOTSTEP_LAVA		"lava"
 //barefoot sounds
-#define FOOTSTEP_WOOD_BAREFOOT "woodbarefoot"
-#define FOOTSTEP_WOOD_CLAW "woodclaw"
-#define FOOTSTEP_HARD_BAREFOOT "hardbarefoot"
-#define FOOTSTEP_HARD_CLAW "hardclaw"
-#define FOOTSTEP_CARPET_BAREFOOT "carpetbarefoot"
+#define FOOTSTEP_WOOD_BAREFOOT		"woodbarefoot"
+#define FOOTSTEP_WOOD_CLAW			"woodclaw"
+#define FOOTSTEP_HARD_BAREFOOT		"hardbarefoot"
+#define FOOTSTEP_HARD_CLAW			"hardclaw"
+#define FOOTSTEP_CARPET_BAREFOOT	"carpetbarefoot"
 //misc footstep sounds
-#define FOOTSTEP_GENERIC_HEAVY "heavy"
+#define FOOTSTEP_GENERIC_HEAVY		"heavy"
 
 /*
 

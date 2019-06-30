@@ -3,8 +3,8 @@
 #define DEFAULT_AI_LAWID "default"
 
 //Bot defines, placed here so they can be read by other things!
-#define BOT_STEP_DELAY 4 //Delay between movemements
-#define BOT_STEP_MAX_RETRIES 5 //Maximum times a bot will retry to step from its position
+#define BOT_STEP_DELAY			4 //Delay between movemements
+#define BOT_STEP_MAX_RETRIES	5 //Maximum times a bot will retry to step from its position
 
 #define DEFAULT_SCAN_RANGE		7	//default view range for finding targets.
 
@@ -38,15 +38,15 @@
 #define FIRE_BOT			(1<<6)  // Firebots
 
 //AI notification defines
-#define		NEW_BORG     1
-#define		NEW_MODULE   2
-#define		RENAME       3
-#define		AI_SHELL     4
-#define		DISCONNECT   5
+#define NEW_BORG	1
+#define NEW_MODULE	2
+#define RENAME		3
+#define AI_SHELL	4
+#define DISCONNECT	5
 
 //Assembly defines
-#define ASSEMBLY_FIRST_STEP 	0
-#define ASSEMBLY_SECOND_STEP 	1
-#define ASSEMBLY_THIRD_STEP     2
-#define ASSEMBLY_FOURTH_STEP    3
-#define ASSEMBLY_FIFTH_STEP     4
+#define ASSEMBLY_FIRST_STEP		0
+#define ASSEMBLY_SECOND_STEP	1
+#define ASSEMBLY_THIRD_STEP		2
+#define ASSEMBLY_FOURTH_STEP	3
+#define ASSEMBLY_FIFTH_STEP		4

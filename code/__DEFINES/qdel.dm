@@ -11,14 +11,14 @@
 #define QDEL_HINT_IFFAIL_FINDREFERENCE 6		//Above but only if gc fails.
 //defines for the gc_destroyed var
 
-#define GC_QUEUE_CHECK 1
-#define GC_QUEUE_HARDDELETE 2
-#define GC_QUEUE_COUNT 2 //increase this when adding more steps.
+#define GC_QUEUE_CHECK		1
+#define GC_QUEUE_HARDDELETE	2
+#define GC_QUEUE_COUNT		2 //increase this when adding more steps.
 
-#define GC_QUEUED_FOR_QUEUING -1
-#define GC_CURRENTLY_BEING_QDELETED -2
+#define GC_QUEUED_FOR_QUEUING		-1
+#define GC_CURRENTLY_BEING_QDELETED	-2
 
-#define QDELING(X) (X.gc_destroyed)
-#define QDELETED(X) (!X || QDELING(X))
-#define QDESTROYING(X) (!X || X.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+#define QDELING(X)		(X.gc_destroyed)
+#define QDELETED(X)		(!X || QDELING(X))
+#define QDESTROYING(X)	(!X || X.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 

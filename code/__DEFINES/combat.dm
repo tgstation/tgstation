@@ -40,27 +40,27 @@
 #define GODMODE			(1<<4)
 
 //Health Defines
-#define HEALTH_THRESHOLD_CRIT 0
-#define HEALTH_THRESHOLD_FULLCRIT -30
-#define HEALTH_THRESHOLD_DEAD -100
+#define HEALTH_THRESHOLD_CRIT		0
+#define HEALTH_THRESHOLD_FULLCRIT	-30
+#define HEALTH_THRESHOLD_DEAD		-100
 
-#define HEALTH_THRESHOLD_NEARDEATH -90 //Not used mechanically, but to determine if someone is so close to death they hear the other side
+#define HEALTH_THRESHOLD_NEARDEATH	-90 //Not used mechanically, but to determine if someone is so close to death they hear the other side
 
 //Actual combat defines
 
 //click cooldowns, in tenths of a second, used for various combat actions
-#define CLICK_CD_MELEE 8
-#define CLICK_CD_RANGE 4
-#define CLICK_CD_RAPID 2
-#define CLICK_CD_CLICK_ABILITY 6
-#define CLICK_CD_BREAKOUT 100
-#define CLICK_CD_HANDCUFFED 10
-#define CLICK_CD_RESIST 20
-#define CLICK_CD_GRABBING 10
+#define CLICK_CD_MELEE			8
+#define CLICK_CD_RANGE			4
+#define CLICK_CD_RAPID			2
+#define CLICK_CD_CLICK_ABILITY	6
+#define CLICK_CD_BREAKOUT		100
+#define CLICK_CD_HANDCUFFED		10
+#define CLICK_CD_RESIST			20
+#define CLICK_CD_GRABBING		10
 
 //Cuff resist speeds
-#define FAST_CUFFBREAK 1
-#define INSTANT_CUFFBREAK 2
+#define FAST_CUFFBREAK			1
+#define INSTANT_CUFFBREAK		2
 
 //Grab levels
 #define GRAB_PASSIVE				0
@@ -72,16 +72,16 @@
 #define BASE_GRAB_RESIST_CHANCE 	30
 
 //slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
-#define SOFTCRIT_ADD_SLOWDOWN 2
+#define SOFTCRIT_ADD_SLOWDOWN	2
 //slowdown when crawling
-#define CRAWLING_ADD_SLOWDOWN 4
+#define CRAWLING_ADD_SLOWDOWN	4
 
 //Attack types for checking shields/hit reactions
-#define MELEE_ATTACK 1
-#define UNARMED_ATTACK 2
-#define PROJECTILE_ATTACK 3
-#define THROWN_PROJECTILE_ATTACK 4
-#define LEAP_ATTACK 5
+#define MELEE_ATTACK				1
+#define UNARMED_ATTACK				2
+#define PROJECTILE_ATTACK			3
+#define THROWN_PROJECTILE_ATTACK	4
+#define LEAP_ATTACK					5
 
 //attack visual effects
 #define ATTACK_EFFECT_PUNCH		"punch"
@@ -96,27 +96,27 @@
 #define ATTACK_EFFECT_BOOP		"boop" //Honk
 
 //intent defines
-#define INTENT_HELP   "help"
-#define INTENT_GRAB   "grab"
-#define INTENT_DISARM "disarm"
-#define INTENT_HARM   "harm"
+#define INTENT_HELP			"help"
+#define INTENT_GRAB			"grab"
+#define INTENT_DISARM		"disarm"
+#define INTENT_HARM			"harm"
 //NOTE: INTENT_HOTKEY_* defines are not actual intents!
 //they are here to support hotkeys
-#define INTENT_HOTKEY_LEFT  "left"
-#define INTENT_HOTKEY_RIGHT "right"
+#define INTENT_HOTKEY_LEFT	"left"
+#define INTENT_HOTKEY_RIGHT	"right"
 
 //the define for visible message range in combat
-#define COMBAT_MESSAGE_RANGE 3
+#define COMBAT_MESSAGE_RANGE		3
 
 //Shove knockdown lengths (deciseconds)
-#define SHOVE_KNOCKDOWN_SOLID 30
-#define SHOVE_KNOCKDOWN_HUMAN 30
-#define SHOVE_KNOCKDOWN_TABLE 30
-#define SHOVE_KNOCKDOWN_COLLATERAL 10
-#define SHOVE_CHAIN_PARALYZE 40
+#define SHOVE_KNOCKDOWN_SOLID		30
+#define SHOVE_KNOCKDOWN_HUMAN		30
+#define SHOVE_KNOCKDOWN_TABLE		30
+#define SHOVE_KNOCKDOWN_COLLATERAL	10
+#define SHOVE_CHAIN_PARALYZE		40
 //Shove slowdown
-#define SHOVE_SLOWDOWN_LENGTH 30
-#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+#define SHOVE_SLOWDOWN_LENGTH		30
+#define SHOVE_SLOWDOWN_STRENGTH		0.85 //multiplier
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
@@ -136,21 +136,21 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
 
 //Gun weapon weight
-#define WEAPON_LIGHT 1
-#define WEAPON_MEDIUM 2
-#define WEAPON_HEAVY 3
+#define WEAPON_LIGHT	1
+#define WEAPON_MEDIUM	2
+#define WEAPON_HEAVY	3
 //Gun trigger guards
-#define TRIGGER_GUARD_ALLOW_ALL -1
-#define TRIGGER_GUARD_NONE 0
-#define TRIGGER_GUARD_NORMAL 1
+#define TRIGGER_GUARD_ALLOW_ALL		-1
+#define TRIGGER_GUARD_NONE			0
+#define TRIGGER_GUARD_NORMAL		1
 //Gun bolt types
-#define BOLT_TYPE_STANDARD 1
-#define BOLT_TYPE_OPEN 2
-#define BOLT_TYPE_NO_BOLT 3
-#define BOLT_TYPE_LOCKING 4
+#define BOLT_TYPE_STANDARD	1
+#define BOLT_TYPE_OPEN		2
+#define BOLT_TYPE_NO_BOLT	3
+#define BOLT_TYPE_LOCKING	4
 //Sawn off nerfs
-#define SAWN_OFF_ACC_PENALTY 25
-#define SAWN_OFF_RECOIL 1
+#define SAWN_OFF_ACC_PENALTY	25
+#define SAWN_OFF_RECOIL			1
 
 //Projectile Reflect
 #define REFLECT_NORMAL 				(1<<0)
@@ -162,27 +162,27 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define IS_SHARP_ACCURATE	2
 
 //His Grace.
-#define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
-#define HIS_GRACE_PECKISH 20 //Slightly hungry.
-#define HIS_GRACE_HUNGRY 60 //Getting closer. Increases damage up to a minimum of 20.
-#define HIS_GRACE_FAMISHED 100 //Dangerous. Increases damage up to a minimum of 25 and cannot be dropped.
-#define HIS_GRACE_STARVING 120 //Incredibly close to breaking loose. Increases damage up to a minimum of 30.
-#define HIS_GRACE_CONSUME_OWNER 140 //His Grace consumes His owner at this point and becomes aggressive.
-#define HIS_GRACE_FALL_ASLEEP 160 //If it reaches this point, He falls asleep and resets.
+#define HIS_GRACE_SATIATED		0	//He hungers not. If bloodthirst is set to this, His Grace is asleep.
+#define HIS_GRACE_PECKISH		20	//Slightly hungry.
+#define HIS_GRACE_HUNGRY		60	//Getting closer. Increases damage up to a minimum of 20.
+#define HIS_GRACE_FAMISHED		100	//Dangerous. Increases damage up to a minimum of 25 and cannot be dropped.
+#define HIS_GRACE_STARVING		120	//Incredibly close to breaking loose. Increases damage up to a minimum of 30.
+#define HIS_GRACE_CONSUME_OWNER	140	//His Grace consumes His owner at this point and becomes aggressive.
+#define HIS_GRACE_FALL_ASLEEP	160	//If it reaches this point, He falls asleep and resets.
 
-#define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
+#define HIS_GRACE_FORCE_BONUS	4 //How much force is gained per kill.
 
-#define EXPLODE_NONE 0				//Don't even ask me why we need this.
-#define EXPLODE_DEVASTATE 1
-#define EXPLODE_HEAVY 2
-#define EXPLODE_LIGHT 3
+#define EXPLODE_NONE		0 //Don't even ask me why we need this.
+#define EXPLODE_DEVASTATE	1
+#define EXPLODE_HEAVY		2
+#define EXPLODE_LIGHT		3
 
-#define EMP_HEAVY 1
-#define EMP_LIGHT 2
+#define EMP_HEAVY	1
+#define EMP_LIGHT	2
 
-#define GRENADE_CLUMSY_FUMBLE 1
-#define GRENADE_NONCLUMSY_FUMBLE 2
-#define GRENADE_NO_FUMBLE 3
+#define GRENADE_CLUMSY_FUMBLE		1
+#define GRENADE_NONCLUMSY_FUMBLE	2
+#define GRENADE_NO_FUMBLE			3
 
 #define BODY_ZONE_HEAD		"head"
 #define BODY_ZONE_CHEST		"chest"

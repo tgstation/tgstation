@@ -1,2 +1,2 @@
-#define WALL_DENT_HIT 1
-#define WALL_DENT_SHOT 2
+#define WALL_DENT_HIT	1
+#define WALL_DENT_SHOT	2

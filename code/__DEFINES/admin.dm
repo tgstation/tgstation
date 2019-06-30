@@ -20,7 +20,7 @@
 #define BANTYPE_ANY_JOB		9 //used to remove jobbans
 
 //Admin Permissions
-#define R_BUILD		(1<<0)
+#define R_BUILD			(1<<0)
 #define R_ADMIN			(1<<1)
 #define R_BAN			(1<<2)
 #define R_FUN			(1<<3)
@@ -31,7 +31,7 @@
 #define R_STEALTH		(1<<8)
 #define R_POLL			(1<<9)
 #define R_VAREDIT		(1<<10)
-#define R_SOUND		(1<<11)
+#define R_SOUND			(1<<11)
 #define R_SPAWN			(1<<12)
 #define R_AUTOADMIN		(1<<13)
 #define R_DBRANKS		(1<<14)
@@ -63,28 +63,28 @@
 #define ADMIN_VERBOSEJMP(src) "[src ? "[AREACOORD(src)] [ADMIN_JMP(src)]" : "nonexistent location"]"
 #define ADMIN_INDIVIDUALLOG(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];individuallog=[REF(user)]'>LOGS</a>)"
 
-#define ADMIN_PUNISHMENT_LIGHTNING "Lightning bolt"
-#define ADMIN_PUNISHMENT_BRAINDAMAGE "Brain damage"
-#define ADMIN_PUNISHMENT_GIB "Gib"
-#define ADMIN_PUNISHMENT_BSA "Bluespace Artillery Device"
-#define ADMIN_PUNISHMENT_FIREBALL "Fireball"
-#define ADMIN_PUNISHMENT_ROD "Immovable Rod"
+#define ADMIN_PUNISHMENT_LIGHTNING		"Lightning bolt"
+#define ADMIN_PUNISHMENT_BRAINDAMAGE	"Brain damage"
+#define ADMIN_PUNISHMENT_GIB			"Gib"
+#define ADMIN_PUNISHMENT_BSA			"Bluespace Artillery Device"
+#define ADMIN_PUNISHMENT_FIREBALL		"Fireball"
+#define ADMIN_PUNISHMENT_ROD			"Immovable Rod"
 #define ADMIN_PUNISHMENT_SUPPLYPOD_QUICK "Supply Pod (Quick)"
-#define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
-#define ADMIN_PUNISHMENT_MAZING "Puzzle"
+#define ADMIN_PUNISHMENT_SUPPLYPOD		"Supply Pod"
+#define ADMIN_PUNISHMENT_MAZING			"Puzzle"
 
-#define AHELP_ACTIVE 1
-#define AHELP_CLOSED 2
-#define AHELP_RESOLVED 3
+#define AHELP_ACTIVE	1
+#define AHELP_CLOSED	2
+#define AHELP_RESOLVED	3
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME	6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
 #define SPAM_TRIGGER_WARNING	5	//Number of identical messages required before the spam-prevention will warn you to stfu
 #define SPAM_TRIGGER_AUTOMUTE	10	//Number of identical messages required before the spam-prevention will automute you
 
-#define STICKYBAN_DB_CACHE_TIME 10 SECONDS
-#define STICKYBAN_ROGUE_CHECK_TIME 5
+#define STICKYBAN_DB_CACHE_TIME		10 SECONDS
+#define STICKYBAN_ROGUE_CHECK_TIME	5
 
 
-#define POLICY_POLYMORPH "polymorph" //Shown to vicitm of staff of change and related effects.
-#define POLICY_VERB_HEADER "policy_verb_header" //Shown on top of policy verb window
+#define POLICY_POLYMORPH	"polymorph" //Shown to vicitm of staff of change and related effects.
+#define POLICY_VERB_HEADER	"policy_verb_header" //Shown on top of policy verb window

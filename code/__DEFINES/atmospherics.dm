@@ -174,47 +174,47 @@
 #define LAVALAND_DEFAULT_ATMOS		"LAVALAND_ATMOS"
 
 //ATMOSIA GAS MONITOR TAGS
-#define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_O2 "o2_out"
-#define ATMOS_GAS_MONITOR_SENSOR_O2 "o2_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_O2		"o2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_O2		"o2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_O2		"o2_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_TOX "tox_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_TOX "tox_out"
-#define ATMOS_GAS_MONITOR_SENSOR_TOX "tox_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_TOX		"tox_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_TOX	"tox_out"
+#define ATMOS_GAS_MONITOR_SENSOR_TOX	"tox_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_AIR "air_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_AIR "air_out"
-#define ATMOS_GAS_MONITOR_SENSOR_AIR "air_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_AIR		"air_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_AIR	"air_out"
+#define ATMOS_GAS_MONITOR_SENSOR_AIR	"air_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_MIX "mix_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_MIX "mix_out"
-#define ATMOS_GAS_MONITOR_SENSOR_MIX "mix_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_MIX		"mix_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_MIX	"mix_out"
+#define ATMOS_GAS_MONITOR_SENSOR_MIX	"mix_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_N2O "n2o_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_N2O "n2o_out"
-#define ATMOS_GAS_MONITOR_SENSOR_N2O "n2o_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_N2O		"n2o_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_N2O	"n2o_out"
+#define ATMOS_GAS_MONITOR_SENSOR_N2O	"n2o_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_N2 "n2_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_N2 "n2_out"
-#define ATMOS_GAS_MONITOR_SENSOR_N2 "n2_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_N2		"n2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_N2		"n2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_N2		"n2_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_CO2 "co2_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_CO2 "co2_out"
-#define ATMOS_GAS_MONITOR_SENSOR_CO2 "co2_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_CO2		"co2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_CO2	"co2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_CO2	"co2_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_INCINERATOR "incinerator_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR "incinerator_out"
-#define ATMOS_GAS_MONITOR_SENSOR_INCINERATOR "incinerator_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_INCINERATOR		"incinerator_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR	"incinerator_out"
+#define ATMOS_GAS_MONITOR_SENSOR_INCINERATOR	"incinerator_sensor"
 
-#define ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB "toxinslab_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB "toxinslab_out"
-#define ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB "toxinslab_sensor"
+#define ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB		"toxinslab_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB		"toxinslab_out"
+#define ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB		"toxinslab_sensor"
 
-#define ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION "distro-loop_meter"
-#define ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE "atmos-waste_loop_meter"
+#define ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION		"distro-loop_meter"
+#define ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE		"atmos-waste_loop_meter"
 
-#define ATMOS_GAS_MONITOR_WASTE_ENGINE "engine-waste_out"
-#define ATMOS_GAS_MONITOR_WASTE_ATMOS "atmos-waste_out"
+#define ATMOS_GAS_MONITOR_WASTE_ENGINE			"engine-waste_out"
+#define ATMOS_GAS_MONITOR_WASTE_ATMOS			"atmos-waste_out"
 
 //AIRLOCK CONTROLLER TAGS
 
@@ -249,12 +249,12 @@
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
-#define PIPING_LAYER_MIN 1
-#define PIPING_LAYER_MAX 3
-#define PIPING_LAYER_DEFAULT 2
-#define PIPING_LAYER_P_X 5
-#define PIPING_LAYER_P_Y 5
-#define PIPING_LAYER_LCHANGE 0.05
+#define PIPING_LAYER_MIN		1
+#define PIPING_LAYER_MAX		3
+#define PIPING_LAYER_DEFAULT	2
+#define PIPING_LAYER_P_X		5
+#define PIPING_LAYER_P_Y		5
+#define PIPING_LAYER_LCHANGE	0.05
 
 #define PIPING_ALL_LAYER				(1<<0)	//intended to connect with all layers, check for all instead of just one.
 #define PIPING_ONE_PER_TURF				(1<<1) 	//can only be built if nothing else with this flag is on the tile already.
@@ -309,6 +309,6 @@ GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"yellow" = rgb(255,198,0)
 ))
 
-#define MIASMA_CORPSE_MOLES 0.02
-#define MIASMA_GIBS_MOLES 0.005
-#define MIASMA_HYGIENE_MOLES 0.002
+#define MIASMA_CORPSE_MOLES		0.02
+#define MIASMA_GIBS_MOLES		0.005
+#define MIASMA_HYGIENE_MOLES	0.002

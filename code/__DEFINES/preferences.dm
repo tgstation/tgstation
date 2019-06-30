@@ -16,9 +16,9 @@
 #define DISABLE_ARRIVALRATTLE	(1<<13)
 #define COMBOHUD_LIGHTING		(1<<14)
 
-#define DEADMIN_ALWAYS			(1<<15)
-#define DEADMIN_ANTAGONIST		(1<<16)
-#define DEADMIN_POSITION_HEAD	(1<<17)
+#define DEADMIN_ALWAYS				(1<<15)
+#define DEADMIN_ANTAGONIST			(1<<16)
+#define DEADMIN_POSITION_HEAD		(1<<17)
 #define DEADMIN_POSITION_SECURITY	(1<<18)
 #define DEADMIN_POSITION_SILICON	(1<<19)
 
@@ -35,26 +35,26 @@
 #define CHAT_GHOSTWHISPER	(1<<7)
 #define CHAT_GHOSTPDA		(1<<8)
 #define CHAT_GHOSTRADIO 	(1<<9)
-#define CHAT_BANKCARD  (1<<10)
+#define CHAT_BANKCARD		(1<<10)
 
 #define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD)
 
-#define PARALLAX_INSANE -1 //for show offs
-#define PARALLAX_HIGH    0 //default.
-#define PARALLAX_MED     1
-#define PARALLAX_LOW     2
-#define PARALLAX_DISABLE 3 //this option must be the highest number
+#define PARALLAX_INSANE		-1 //for show offs
+#define PARALLAX_HIGH		0 //default.
+#define PARALLAX_MED		1
+#define PARALLAX_LOW		2
+#define PARALLAX_DISABLE	3 //this option must be the highest number
 
-#define PARALLAX_DELAY_DEFAULT world.tick_lag
-#define PARALLAX_DELAY_MED     1
-#define PARALLAX_DELAY_LOW     2
+#define PARALLAX_DELAY_DEFAULT	world.tick_lag
+#define PARALLAX_DELAY_MED		1
+#define PARALLAX_DELAY_LOW		2
 
-#define SEC_DEPT_NONE "None"
-#define SEC_DEPT_RANDOM "Random"
-#define SEC_DEPT_ENGINEERING "Engineering"
-#define SEC_DEPT_MEDICAL "Medical"
-#define SEC_DEPT_SCIENCE "Science"
-#define SEC_DEPT_SUPPLY "Supply"
+#define SEC_DEPT_NONE			"None"
+#define SEC_DEPT_RANDOM			"Random"
+#define SEC_DEPT_ENGINEERING	"Engineering"
+#define SEC_DEPT_MEDICAL		"Medical"
+#define SEC_DEPT_SCIENCE		"Science"
+#define SEC_DEPT_SUPPLY			"Supply"
 
 // Playtime tracking system, see jobs_exp.dm
 #define EXP_TYPE_LIVING			"Living"
@@ -73,12 +73,12 @@
 #define EXP_TYPE_ADMIN			"Admin"
 
 //Flags in the players table in the db
-#define DB_FLAG_EXEMPT 1
+#define DB_FLAG_EXEMPT			1
 
-#define DEFAULT_CYBORG_NAME "Default Cyborg Name"
+#define DEFAULT_CYBORG_NAME		"Default Cyborg Name"
 
 
 //Job preferences levels
-#define JP_LOW 1
-#define JP_MEDIUM 2
-#define JP_HIGH 3
+#define JP_LOW		1
+#define JP_MEDIUM	2
+#define JP_HIGH		3
