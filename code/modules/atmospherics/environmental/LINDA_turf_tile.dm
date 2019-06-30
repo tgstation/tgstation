@@ -176,6 +176,8 @@
 
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t
+		if(!enemy_tile || istype(enemy_tile))
+			return
 
 		if(fire_count <= enemy_tile.current_cycle)
 			continue
