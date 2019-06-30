@@ -35,12 +35,9 @@
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(prob(0.4))
-		neck = /obj/item/clothing/neck/tie/horrible
-
-/datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
-	..()
 	if(H.jumps == SUIT)
 		uniform = /obj/item/clothing/under/rank/scientist
 	else
 		uniform = /obj/item/clothing/under/rank/scientist/skirt
+	if(prob(0.4))
+		neck = /obj/item/clothing/neck/tie/horrible

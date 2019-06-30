@@ -134,13 +134,13 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	chameleon_extras = list(/obj/item/gun/energy/disabler, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
 	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 
+
 /datum/outfit/job/security/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.jumps == SUIT)
 		uniform = /obj/item/clothing/under/rank/security
 	else
 		uniform = /obj/item/clothing/under/rank/security/skirt
-
 
 /obj/item/radio/headset/headset_sec/alt/department/Initialize()
 	. = ..()

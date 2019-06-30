@@ -40,5 +40,5 @@ Assistant
 		if(H.jumps == SUIT)
 			uniform = /obj/item/clothing/under/color/random
 		else
-//			uniform = /obj/item/clothing/under/skirt/color/random	//out until a random skirt color attempt works
-			uniform = /obj/item/clothing/under/color/random
+			uniform = /obj/item/clothing/under/skirt/color/random
+
