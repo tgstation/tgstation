@@ -2873,6 +2873,7 @@
 #include "spacestation413\code\game\gamemodes\vampire\vampire_objectives.dm"
 #include "spacestation413\code\game\gamemodes\vampire\vampire_other.dm"
 #include "spacestation413\code\game\gamemodes\vampire\vampire_powers.dm"
+#include "spacestation413\code\game\objects\effects\contraband.dm"
 #include "spacestation413\code\game\objects\effects\decals\cleanable\humans.dm"
 #include "spacestation413\code\game\objects\items\storage\butts.dm"
 #include "spacestation413\code\modules\admin\topic.dm"
