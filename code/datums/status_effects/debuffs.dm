@@ -395,36 +395,42 @@
 	duration = -1 //removed under specific conditions
 	tick_interval = 6
 	alert_type = null
-	var/mutable_appearance/bleed_overlay
-	var/mutable_appearance/bleed_underlay
-	var/bleed_amount = 3
+	var/mutable_appearance/status_overlay
+	var/mutable_appearance/status_underlay
+	var/number_of_stacks = 3
 	var/bleed_buildup = 3
 	var/delay_before_decay = 5
+	
+	var/overlay_file = 'icons/effects/bleed.dmi'
+	var/underlay_file = 'icons/effects/bleed.dmi'
+	var/overlay_state = "bleed"
+	var/underlay_state = "bleed"
+	
 	var/bleed_damage = 200
 	var/needs_to_bleed = FALSE
 
 /datum/status_effect/saw_bleed/Destroy()
 	if(owner)
-		owner.cut_overlay(bleed_overlay)
-		owner.underlays -= bleed_underlay
-	QDEL_NULL(bleed_overlay)
+		owner.cut_overlay(status_overlay)
+		owner.underlays -= status_underlay
+	QDEL_NULL(status_overlay)
 	return ..()
 
 /datum/status_effect/saw_bleed/on_apply()
 	if(owner.stat == DEAD)
 		return FALSE
-	bleed_overlay = mutable_appearance('icons/effects/bleed.dmi', "bleed[bleed_amount]")
-	bleed_underlay = mutable_appearance('icons/effects/bleed.dmi', "bleed[bleed_amount]")
+	status_overlay = mutable_appearance(overlay_file, "[overlay_state][number_of_stacks]")
+	status_underlay = mutable_appearance(underlay_file, "[underlay_state][number_of_stacks]")
 	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
 	var/icon_height = I.Height()
-	bleed_overlay.pixel_x = -owner.pixel_x
-	bleed_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
-	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
-	bleed_underlay.pixel_x = -owner.pixel_x
-	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
-	bleed_underlay.alpha = 40
-	owner.add_overlay(bleed_overlay)
-	owner.underlays += bleed_underlay
+	status_overlay.pixel_x = -owner.pixel_x
+	status_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
+	status_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the status's overlay size based on the target's icon size
+	status_underlay.pixel_x = -owner.pixel_x
+	status_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
+	status_underlay.alpha = 40
+	owner.add_overlay(status_overlay)
+	owner.underlays += status_underlay
 	return ..()
 
 /datum/status_effect/saw_bleed/tick()
@@ -434,20 +440,20 @@
 		add_bleed(-1)
 
 /datum/status_effect/saw_bleed/proc/add_bleed(amount)
-	owner.cut_overlay(bleed_overlay)
-	owner.underlays -= bleed_underlay
-	bleed_amount += amount
-	if(bleed_amount)
-		if(bleed_amount >= 10)
+	owner.cut_overlay(status_overlay)
+	owner.underlays -= status_underlay
+	number_of_stacks += amount
+	if(number_of_stacks)
+		if(number_of_stacks >= 10)
 			needs_to_bleed = TRUE
 			qdel(src)
 		else
 			if(amount > 0)
 				tick_interval += delay_before_decay
-			bleed_overlay.icon_state = "bleed[bleed_amount]"
-			bleed_underlay.icon_state = "bleed[bleed_amount]"
-			owner.add_overlay(bleed_overlay)
-			owner.underlays += bleed_underlay
+			status_overlay.icon_state = "[overlay_state][number_of_stacks]"
+			status_underlay.icon_state = "[underlay_state][number_of_stacks]"
+			owner.add_overlay(status_overlay)
+			owner.underlays += status_underlay
 	else
 		qdel(src)
 
