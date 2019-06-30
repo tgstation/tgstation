@@ -191,7 +191,7 @@
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
-	var/blood_is_colored = (blood_color != "#ffffff" && blood_state == BLOOD_STATE_HUMAN) // 413
+	var/blood_is_colored = (blood_color && blood_color != "#ffffff" && blood_state == BLOOD_STATE_HUMAN) // 413
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
