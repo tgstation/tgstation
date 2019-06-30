@@ -14,9 +14,9 @@
 	contract.find_target(null, blacklist)
 
 	if (type == CONTRACT_PAYOUT_LARGE)
-		contract.payout_bonus = rand(8,12)
+		contract.payout_bonus = rand(9,13)
 	else if (type == CONTRACT_PAYOUT_MEDIUM)
-		contract.payout_bonus = rand(5,7)
+		contract.payout_bonus = rand(6,8)
 	else
 		contract.payout_bonus = rand(2,4)
 
