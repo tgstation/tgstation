@@ -58,6 +58,9 @@
 	if(!target)
 		icon_state = "meterX"
 		return 0
+	else if(!(target.flags_1 & INITIALIZED_1))
+		icon_state = "meterX"
+		return 0
 
 	if(stat & (BROKEN|NOPOWER))
 		icon_state = "meter0"
