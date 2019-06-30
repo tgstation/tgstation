@@ -27,7 +27,6 @@
 
 	belt = /obj/item/pda/toxins
 	ears = /obj/item/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/scientist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
 
@@ -38,3 +37,10 @@
 	..()
 	if(prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
+
+/datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/scientist
+	else
+		uniform = /obj/item/clothing/under/rank/scientist/skirt

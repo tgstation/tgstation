@@ -26,7 +26,6 @@
 
 	belt = /obj/item/pda/geneticist
 	ears = /obj/item/radio/headset/headset_medsci
-	uniform = /obj/item/clothing/under/rank/geneticist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/genetics
 	suit_store =  /obj/item/flashlight/pen
@@ -36,3 +35,9 @@
 	satchel = /obj/item/storage/backpack/satchel/gen
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
+/datum/outfit/job/geneticist/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/geneticist
+	else
+		uniform = /obj/item/clothing/under/rank/geneticist/skirt

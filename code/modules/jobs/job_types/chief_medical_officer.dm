@@ -37,7 +37,6 @@
 	belt = /obj/item/pda/heads/cmo
 	l_pocket = /obj/item/pinpointer/crew
 	ears = /obj/item/radio/headset/heads/cmo
-	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	l_hand = /obj/item/storage/firstaid/regular
@@ -58,3 +57,9 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	r_pocket = /obj/item/flashlight/pen
 
+/datum/outfit/job/cmo/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/chief_medical_officer
+	else
+		uniform = /obj/item/clothing/under/rank/chief_medical_officer/skirt

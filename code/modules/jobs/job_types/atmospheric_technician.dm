@@ -27,7 +27,6 @@
 	belt = /obj/item/storage/belt/utility/atmostech
 	l_pocket = /obj/item/pda/atmos
 	ears = /obj/item/radio/headset/headset_eng
-	uniform = /obj/item/clothing/under/rank/atmospheric_technician
 	r_pocket = /obj/item/analyzer
 
 	backpack = /obj/item/storage/backpack/industrial
@@ -44,3 +43,10 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = SLOT_S_STORE
+
+/datum/outfit/job/atmos/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/atmospheric_technician
+	else
+		uniform = /obj/item/clothing/under/rank/atmospheric_technician/skirt

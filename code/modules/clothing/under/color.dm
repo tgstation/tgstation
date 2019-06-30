@@ -19,6 +19,16 @@
 		new C(loc)
 	return INITIALIZE_HINT_QDEL
 
+/obj/item/clothing/under/skirt/color/random
+//	icon_state = "random_jumpskirt"		//This seems like something that should be added!
+
+/obj/item/clothing/under/color/random/Initialize()
+	..()
+	var/obj/item/clothing/under/skirt/color/S = pick(subtypesof(/obj/item/clothing/under/skirt/color))
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.equip_to_slot_or_del(new S(H), SLOT_W_UNIFORM)
+
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"

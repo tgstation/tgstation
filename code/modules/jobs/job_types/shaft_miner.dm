@@ -1,4 +1,5 @@
 /datum/job/mining
+	//no mining skirt available, so this job doesn't check for one
 	title = "Shaft Miner"
 	flag = MINER
 	department_head = list("Head of Personnel")

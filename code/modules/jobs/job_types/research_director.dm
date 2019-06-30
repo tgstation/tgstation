@@ -40,7 +40,6 @@
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd
-	uniform = /obj/item/clothing/under/rank/research_director
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/clipboard
@@ -60,3 +59,10 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/rd
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = SLOT_S_STORE
+
+/datum/outfit/job/rd/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/research_director
+	else
+		uniform = /obj/item/clothing/under/rank/research_director/skirt

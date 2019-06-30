@@ -27,7 +27,6 @@
 
 	belt = /obj/item/pda/mime
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/mime
 	mask = /obj/item/clothing/mask/gas/mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
@@ -47,6 +46,13 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = 1
+
+/datum/outfit/job/mime/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/mime
+	else
+		uniform = /obj/item/clothing/under/rank/mime/skirt
 
 /obj/item/book/mimery
 	name = "Guide to Dank Mimery"

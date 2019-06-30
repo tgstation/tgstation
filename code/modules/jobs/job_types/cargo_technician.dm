@@ -24,6 +24,11 @@
 
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargotech
 	l_hand = /obj/item/export_scanner
 
+/datum/outfit/job/cargo_tech/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/cargotech
+	else
+		uniform = /obj/item/clothing/under/rank/cargotech/skirt

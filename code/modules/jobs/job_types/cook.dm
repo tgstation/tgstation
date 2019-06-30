@@ -25,7 +25,6 @@
 
 	belt = /obj/item/pda/cook
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
@@ -40,6 +39,10 @@
 			head = /obj/item/clothing/head/soft/mime
 		if(!visualsOnly)
 			J.cooks++
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/chef
+	else
+		uniform = /obj/item/clothing/under/rank/chef/skirt
 
 /datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

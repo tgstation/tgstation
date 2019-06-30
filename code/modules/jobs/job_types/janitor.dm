@@ -25,5 +25,11 @@
 
 	belt = /obj/item/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/janitor
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
+
+/datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/janitor
+	else
+		uniform = /obj/item/clothing/under/rank/janitor/skirt

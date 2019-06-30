@@ -26,7 +26,6 @@
 
 	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/virologist
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
@@ -35,3 +34,10 @@
 	backpack = /obj/item/storage/backpack/virology
 	satchel = /obj/item/storage/backpack/satchel/vir
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
+/datum/outfit/job/virologist/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/virologist
+	else
+		uniform = /obj/item/clothing/under/rank/virologist/skirt

@@ -39,7 +39,6 @@
 	belt = /obj/item/storage/belt/utility/chief/full
 	l_pocket = /obj/item/pda/heads/ce
 	ears = /obj/item/radio/headset/heads/ce
-	uniform = /obj/item/clothing/under/rank/chief_engineer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black/ce
@@ -63,3 +62,10 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 	head = null
 	internals_slot = SLOT_S_STORE
+
+/datum/outfit/job/ce/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.jumps == SUIT)
+		uniform = /obj/item/clothing/under/rank/chief_engineer
+	else
+		uniform = /obj/item/clothing/under/rank/chief_engineer/skirt

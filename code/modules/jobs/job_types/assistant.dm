@@ -32,6 +32,13 @@ Assistant
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (CONFIG_GET(flag/grey_assistants))
-		uniform = /obj/item/clothing/under/color/grey
+		if(H.jumps == SUIT)
+			uniform = /obj/item/clothing/under/color/grey
+		else
+			uniform = /obj/item/clothing/under/skirt/color/grey
 	else
-		uniform = /obj/item/clothing/under/color/random
+		if(H.jumps == SUIT)
+			uniform = /obj/item/clothing/under/color/random
+		else
+//			uniform = /obj/item/clothing/under/skirt/color/random	//out until a random skirt color attempt works
+			uniform = /obj/item/clothing/under/color/random
