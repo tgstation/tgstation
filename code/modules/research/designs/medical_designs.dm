@@ -290,17 +290,6 @@
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cyberimp_hidden_weapon
-	name = "Energy Weapon Compartment"
-	desc = "A chamber designed to be hidden in ones forearm. It can  completely conceal an energy weapon which can be deployed at will. Any good gunslinger needs one."
-	id = "ci-hiddenweapon"
-	build_type = PROTOLATHE | MECHFAB
-	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_GOLD = 1500)
-	construction_time = 200
-	build_path = /obj/item/organ/cyberimp/arm/energyweapon
-	category = list("Medical Designs", "Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD Implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
@@ -408,17 +397,6 @@
 	construction_time = 60
 	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_GOLD = 300, MAT_URANIUM = 500)
 	build_path = /obj/item/organ/cyberimp/chest/reviver
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cyberimp_stasis
-	name = "Stasis Implant"
-	desc = "This implant can be activated to completely halt the metabolism of the user with only minimal side effects."
-	id = "ci-stasis"
-	build_type = PROTOLATHE | MECHFAB
-	construction_time = 60
-	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_GOLD = 300, MAT_SILVER = 500)
-	build_path = /obj/item/organ/cyberimp/chest/stasis
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
