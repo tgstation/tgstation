@@ -33,7 +33,7 @@
 	expire = _expire
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
-	if(slot && !CHECK_BITFIELD(allowed_slots, slotdefine2slotbit(slot))) //Check that the slot is valid for antimagic
+	if(!CHECK_BITFIELD(allowed_slots, slotdefine2slotbit(slot))) //Check that the slot is valid for antimagic
 		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
 		return
 	apply_anti_magic(source, equipper)
