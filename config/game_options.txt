@@ -360,6 +360,7 @@ DEFAULT_LAWS 0
 RANDOM_LAWS asimov
 RANDOM_LAWS asimovpp
 RANDOM_LAWS paladin
+RANDOM_LAWS paladin5
 RANDOM_LAWS robocop
 RANDOM_LAWS corporate
 
@@ -371,6 +372,8 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS peacekeeper
 #RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
+#RANDOM_LAWS yudkowsky
+#RANDOM_LAWS airisk
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie
@@ -392,7 +395,8 @@ LAW_WEIGHT custom,0
 ## standard-ish laws. These are fairly ok to run
 LAW_WEIGHT asimov,32
 LAW_WEIGHT asimovpp,12
-LAW_WEIGHT paladin,12
+LAW_WEIGHT paladin,6
+LAW_WEIGHT paladin5,6
 LAW_WEIGHT robocop,12
 LAW_WEIGHT corporate,12
 
@@ -404,6 +408,8 @@ LAW_WEIGHT liveandletlive,3
 LAW_WEIGHT peacekeeper,3
 LAW_WEIGHT reporter,4
 LAW_WEIGHT hulkamania,4
+LAW_WEIGHT yudkowsky,4
+LAW_WEIGHT airisk,3
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0

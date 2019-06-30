@@ -2853,6 +2853,7 @@
 #include "spacestation413\code\_globalvars\lists\names.dm"
 #include "spacestation413\code\_onclick\hud\vampire.dm"
 #include "spacestation413\code\datums\antagonists\vampire.dm"
+#include "spacestation413\code\datums\ai_laws.dm"
 #include "spacestation413\code\datums\components\crafting\recipes.dm"
 #include "spacestation413\code\game\gamemodes\vampire\grave_fever.dm"
 #include "spacestation413\code\game\gamemodes\vampire\traitor_vamp.dm"
