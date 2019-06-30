@@ -88,7 +88,7 @@
 	export_types = list(/obj/item/clothing/shoes/cowboy/lizard)
 	include_subtypes = FALSE
 
-datum/export/gear/lizardmasterwork
+/datum/export/gear/lizardmasterwork
 	cost = 1000
 	unit_name = "Hugs-the-Feet lizard boots"
 	export_types = list(/obj/item/clothing/shoes/cowboy/lizard/masterwork)

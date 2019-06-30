@@ -367,7 +367,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 0) //lizards like to stay warm
 
 /obj/item/clothing/shoes/cowboy/lizard/masterwork
-	name = "Hugs-The-Feet lizard skin boots"
+	name = "\improper Hugs-The-Feet lizard skin boots"
 	desc = "A pair of masterfully crafted lizard skin boots. Finally a good application for the station's most bothersome inhabitants."
 	icon_state = "lizardboots_blue"
 
