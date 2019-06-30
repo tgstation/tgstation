@@ -2902,5 +2902,6 @@
 #include "spacestation413\code\modules\reagents\chemistry\reagents\other_reagents.dm"
 #include "spacestation413\code\modules\research\designs\bluespace_designs.dm"
 #include "spacestation413\code\modules\spells\cluwnecurse.dm"
+#include "spacestation413\code\modules\spells\spell_types\touch.dm"
 #include "spacestation413\code\modules\surgery\organs\butts.dm"
 // END_INCLUDE
