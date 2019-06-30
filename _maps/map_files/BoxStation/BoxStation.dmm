@@ -5717,6 +5717,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
+"amu" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "amv" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
@@ -72265,7 +72269,7 @@ bCq
 bPS
 aad
 bPS
-bPS
+amu
 bCq
 cbk
 bLv

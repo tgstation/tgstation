@@ -56011,6 +56011,10 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/science)
+"tSN" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "tSU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer1,
 /obj/effect/turf_decal/stripes/line{
@@ -94879,7 +94883,7 @@ cBk
 jhD
 cBo
 alQ
-alb
+tSN
 cBw
 alb
 aiS

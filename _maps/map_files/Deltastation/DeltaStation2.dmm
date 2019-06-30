@@ -96331,6 +96331,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "dvV" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},

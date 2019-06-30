@@ -1,4 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - code_imp: "Health sensor no longer displays a giant window with 1 button on it, instead can change states with alt click and use in hand."

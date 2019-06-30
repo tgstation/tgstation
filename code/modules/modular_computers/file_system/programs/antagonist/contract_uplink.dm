@@ -42,6 +42,7 @@
 				// We don't give them more contracts if they somehow assign themselves to a new uplink.
 				if (!traitor_data.assigned_contracts.len)
 					traitor_data.create_contracts()
+					user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, 0)
 				hard_drive.traitor_data = traitor_data
 			else
 				error = "Incorrect login details."

@@ -1,4 +1,4 @@
-/datum/surgery/advanced/experimental_dissection
+/datum/surgery/experimental_dissection
 	name = "Experimental Dissection"
 	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
 	steps = list(/datum/surgery_step/incise,
@@ -10,7 +10,7 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	target_mobtypes = list(/mob/living/carbon) //Feel free to dissect devils but they're magic.
 
-/datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/experimental_dissection/can_start(mob/user, mob/living/carbon/target)
 	. = ..()
 	if(HAS_TRAIT(target, TRAIT_DISSECTED))
 		return FALSE

@@ -5,6 +5,13 @@
 "aab" = (
 /turf/closed/wall,
 /area/space/nearstation)
+"aac" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/crew_quarters/bar)
 "aad" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
@@ -75563,7 +75570,7 @@ kIi
 bXA
 bVM
 bVU
-bSy
+aac
 bSy
 bWC
 aRr
