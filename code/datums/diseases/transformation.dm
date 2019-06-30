@@ -325,3 +325,19 @@
 				to_chat(affected_mob, "<span class='danger'>You let go of what you were holding.</span>")
 				var/obj/item/I = affected_mob.get_active_held_item()
 				affected_mob.dropItemToGround(I)
+
+/datum/disease/transformation/bee
+	name = "Beesease The Sequel"
+	cure_text = "honey."
+	cures = list(/datum/reagent/consumable/honey)
+	cure_chance = 90
+	agent = "Apitoxin"
+	desc = "This disease makes the victim buzz up."
+	severity = DISEASE_SEVERITY_BIOHAZARD
+	visibility_flags = 0
+	stage1	= list("BZZZ.")
+	stage2	= list("Your skin feels fuzzy.")
+	stage3	= list("<span class='danger'>Your skin starts growing yellow and black stripes.</span>")
+	stage4	= list("<span class='danger'>You feel something sharp coming out of your skin.</span>")
+	stage5	= list("<span class='danger'>YOU'RE BUZZING WITH ANGER!</span>")
+	new_form = /mob/living/simple_animal/hostile/poison/bees
