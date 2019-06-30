@@ -1325,6 +1325,16 @@
 				message_admins(msg)
 				admin_ticket_log(H, msg)
 
+		else if(href_list["cluwneing"]) // 413/yogs start -- adds cluwneify verb in VV
+			if(!check_rights(R_SPAWN))	return
+			var/mob/living/carbon/human/H = locate(href_list["cluwneing"])
+			if(!H)
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+			H.cluwneify()
+			message_admins("<span class='notice'>[key_name(usr)] has made [key_name(H)] into a Cluwne.</span>")
+			return // 413/yogs end
+
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(NONE))
 				return
