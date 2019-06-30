@@ -152,6 +152,9 @@
 	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
 
 	if (M.stat != DEAD)
+		// Heal them up - gets them out of crit/soft crit.
+		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 15)
+
 		M.flash_act()
 		M.confused += 10
 		M.blur_eyes(5)
