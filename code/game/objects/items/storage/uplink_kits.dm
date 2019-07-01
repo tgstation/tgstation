@@ -227,6 +227,8 @@
 				<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>
 				<li>The payment number shown in brackets is the bonus you'll recieve when bringing your target <b>alive</b>. You recieve the 
 				other number regardless of if they were alive or dead.</li>
+				<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them
+				inside the pod.</li>
 			</ol>
 
 			<p>Be careful when accepting a contract. While you'll be able to see the location of the dropoff point, cancelling will make it 
@@ -241,7 +243,7 @@
 			</ol>
 			<h3>Ransoms</h3>
 			<p>We need your target for our own reasons, but we ransom them back to your mission area once their use is served. They will return back 
-			from where you sent them off from in several minutes time. Don't worry agent, we give you a cut of what we get paid. We pay this into whatever 
+			from where you sent them off from in several minutes time. Don't worry, we give you a cut of what we get paid. We pay this into whatever 
 			ID card you have equipped, on top of the TC payment we give.</p>
 			
 			<p>Good luck agent.</p>"}
