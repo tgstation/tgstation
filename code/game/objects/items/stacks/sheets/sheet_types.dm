@@ -365,9 +365,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox),									\
 	new/datum/stack_recipe("folder", /obj/item/folder),											\
-	null,																						\
-	//TO-DO: Find a proper way to just change the illustration on the box. Code isn't the issue, input is.
-	new/datum/stack_recipe_list("fancy boxes", list(
+	null,
+		new/datum/stack_recipe_list("fancy boxes", list(
 		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box),				\
 		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box),					\
 		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets),			\
