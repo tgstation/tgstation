@@ -344,6 +344,29 @@
 	permeability_coefficient = 0.05 //these are quite tall
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	custom_price = 35 //poor assistants cant afford 50 credits
+	var/list/occupants = list()
+	var/max_occupants = 4
+
+/obj/item/clothing/shoes/cowboy/Initialize()
+	. = ..()
+	if(prob(2))
+		var/mob/living/simple_animal/hostile/retaliate/poison/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/poison/snake(src)
+		occupants += bootsnake
+
+
+/obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
+	. = ..()
+	if(slot == SLOT_SHOES)
+		if(occupants)
+			for(var/mob/living/occupant in occupants)
+				occupant.forceMove(get_turf(user))
+				to_chat(user, "<span class='userdanger'> You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>",
+				"<span class='warning'>")
+				user.visible_message("[user] recoils as something slithers out of [src].</span>")
+				user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
+				user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+				user.reagents.add_reagent(/datum/reagent/toxin, 4)
+				occupants -= occupant
 
 /obj/item/clothing/shoes/cowboy/white
 	name = "white cowboy boots"
