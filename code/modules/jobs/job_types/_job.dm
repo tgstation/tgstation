@@ -174,8 +174,6 @@
 
 	var/pda_slot = SLOT_BELT
 
-	var/jumpskirt
-
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backbag)
 		if(GBACKPACK)
@@ -193,8 +191,10 @@
 		else
 			back = backpack //Department backpack
 
-	if((H.jumps == SKIRT) && (!isnull(jumpskirt)))
-		uniform = jumpskirt
+	if(H.jumps == SKIRT)
+		var/holder = addtext("[uniform]", "/skirt")
+		if(text2path(holder))	//if our uniform has a skirt variant as a child, and we have it set in preferences, set that as our uniform
+			uniform = holder
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

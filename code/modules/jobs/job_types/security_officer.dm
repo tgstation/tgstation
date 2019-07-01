@@ -114,7 +114,6 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	jobtype = /datum/job/officer
 
 	uniform = /obj/item/clothing/under/rank/security
-	jumpskirt = /obj/item/clothing/under/rank/security/skirt
 	belt = /obj/item/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black

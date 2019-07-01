@@ -38,7 +38,6 @@
 	jobtype = /datum/job/rd
 
 	uniform = /obj/item/clothing/under/rank/research_director
-	jumpskirt = /obj/item/clothing/under/rank/research_director/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd

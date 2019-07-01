@@ -25,7 +25,6 @@
 	jobtype = /datum/job/virologist
 
 	uniform = /obj/item/clothing/under/rank/virologist
-	jumpskirt = /obj/item/clothing/under/rank/virologist/skirt
 	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
 	mask = /obj/item/clothing/mask/surgical

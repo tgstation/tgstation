@@ -28,7 +28,6 @@
 	jobtype = /datum/job/detective
 
 	uniform = /obj/item/clothing/under/rank/det
-	jumpskirt = /obj/item/clothing/under/rank/det/skirt
 	belt = /obj/item/pda/detective
 	ears = /obj/item/radio/headset/headset_sec/alt
 	neck = /obj/item/clothing/neck/tie/detective

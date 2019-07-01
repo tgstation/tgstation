@@ -116,7 +116,6 @@
 	jobtype = /datum/job/chaplain
 
 	uniform = /obj/item/clothing/under/rank/chaplain
-	jumpskirt = /obj/item/clothing/under/rank/chaplain/skirt
 	belt = /obj/item/pda/chaplain
 	ears = /obj/item/radio/headset/headset_srv
 	backpack_contents = list(/obj/item/camera/spooky = 1)

@@ -42,7 +42,6 @@
 	jobtype = /datum/job/hop
 
 	uniform = /obj/item/clothing/under/rank/head_of_personnel
-	jumpskirt = /obj/item/clothing/under/rank/head_of_personnel/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop

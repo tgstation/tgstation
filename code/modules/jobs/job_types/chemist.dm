@@ -25,7 +25,6 @@
 	jobtype = /datum/job/chemist
 
 	uniform = /obj/item/clothing/under/rank/chemist
-	jumpskirt = /obj/item/clothing/under/rank/chemist/skirt
 	glasses = /obj/item/clothing/glasses/science
 	belt = /obj/item/pda/chemist
 	ears = /obj/item/radio/headset/headset_med

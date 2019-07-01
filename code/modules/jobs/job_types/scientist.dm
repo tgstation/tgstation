@@ -26,7 +26,6 @@
 	jobtype = /datum/job/scientist
 
 	uniform = /obj/item/clothing/under/rank/scientist
-	jumpskirt = /obj/item/clothing/under/rank/scientist/skirt
 	belt = /obj/item/pda/toxins
 	ears = /obj/item/radio/headset/headset_sci
 	shoes = /obj/item/clothing/shoes/sneakers/white

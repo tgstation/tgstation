@@ -34,7 +34,6 @@
 	jobtype = /datum/job/cmo
 
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
-	jumpskirt = /obj/item/clothing/under/rank/chief_medical_officer/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/cmo
 	l_pocket = /obj/item/pinpointer/crew

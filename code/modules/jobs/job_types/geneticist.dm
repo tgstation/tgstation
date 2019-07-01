@@ -25,7 +25,6 @@
 	jobtype = /datum/job/geneticist
 
 	uniform = /obj/item/clothing/under/rank/geneticist
-	jumpskirt = /obj/item/clothing/under/rank/geneticist/skirt
 	belt = /obj/item/pda/geneticist
 	ears = /obj/item/radio/headset/headset_medsci
 	shoes = /obj/item/clothing/shoes/sneakers/white

@@ -24,7 +24,6 @@
 	jobtype = /datum/job/cook
 
 	uniform = /obj/item/clothing/under/rank/chef
-	jumpskirt = /obj/item/clothing/under/rank/chef/skirt
 	belt = /obj/item/pda/cook
 	ears = /obj/item/radio/headset/headset_srv
 	suit = /obj/item/clothing/suit/toggle/chef

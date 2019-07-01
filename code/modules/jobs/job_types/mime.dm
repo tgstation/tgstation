@@ -26,7 +26,6 @@
 	jobtype = /datum/job/mime
 
 	uniform = /obj/item/clothing/under/rank/mime
-	jumpskirt = /obj/item/clothing/under/rank/mime/skirt
 	belt = /obj/item/pda/mime
 	ears = /obj/item/radio/headset/headset_srv
 	mask = /obj/item/clothing/mask/gas/mime

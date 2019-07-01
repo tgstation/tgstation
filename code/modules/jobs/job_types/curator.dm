@@ -23,7 +23,6 @@
 	jobtype = /datum/job/curator
 
 	uniform = /obj/item/clothing/under/rank/curator
-	jumpskirt = /obj/item/clothing/under/rank/curator/skirt
 	shoes = /obj/item/clothing/shoes/laceup
 	belt = /obj/item/pda/curator
 	ears = /obj/item/radio/headset/headset_srv

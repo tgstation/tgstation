@@ -33,7 +33,6 @@
 	jobtype = /datum/job/warden
 
 	uniform = /obj/item/clothing/under/rank/warden
-	jumpskirt = /obj/item/clothing/under/rank/warden/skirt
 	belt = /obj/item/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt
 	shoes = /obj/item/clothing/shoes/jackboots

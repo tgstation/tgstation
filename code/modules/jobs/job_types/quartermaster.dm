@@ -23,7 +23,6 @@
 	jobtype = /datum/job/qm
 
 	uniform = /obj/item/clothing/under/rank/cargo
-	jumpskirt = /obj/item/clothing/under/rank/cargo/skirt
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
