@@ -277,7 +277,8 @@
 	if (B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
 		var/old_bloodiness = B.bloodiness // 413 -- store bloodiness before changing it
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
-		B.set_blood_color(BlendRGB(B.blood_color,src.blood_color,old_bloodiness/B.bloodiness)) // 413 -- coloring blood
+		if(src.blood_color && src.blood_color != "#ffffff")
+			B.set_blood_color(BlendRGB(B.blood_color,src.blood_color,old_bloodiness/B.bloodiness)) // 413 -- coloring blood
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		B.add_blood_DNA(temp_blood_DNA)

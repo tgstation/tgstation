@@ -13,7 +13,7 @@
 	if (bloodiness)
 		if (C.bloodiness < MAX_SHOE_BLOODINESS)
 			C.bloodiness += bloodiness
-			C.blood_color=BlendRGB(blood_state,C.blood_state,bloodiness/C.bloodiness)
+			C.blood_color=BlendRGB(blood_color,C.blood_color,bloodiness/C.bloodiness)
 	return ..()
 
 // 413 start -- blood color
