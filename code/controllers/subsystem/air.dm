@@ -31,6 +31,7 @@ SUBSYSTEM_DEF(air)
 
 	//atmos singletons
 	var/list/gas_reactions = list()
+	var/list/atmos_gen
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -390,6 +391,20 @@ SUBSYSTEM_DEF(air)
 		qdel(temp)
 
 	return pipe_init_dirs_cache[type]["[dir]"]
+
+/datum/controller/subsystem/air/proc/generate_atmos()
+	atmos_gen = list()
+	for(var/T in subtypesof(/datum/atmosphere))
+		var/datum/atmosphere/atmostype = T
+		atmos_gen[initial(atmostype.id)] = new atmostype
+
+/datum/controller/subsystem/air/proc/preprocess_gas_string(gas_string)
+	if(!atmos_gen)
+		generate_atmos()
+	if(!atmos_gen[gas_string])
+		return gas_string
+	var/datum/atmosphere/mix = atmos_gen[gas_string]
+	return mix.gas_string
 
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY
