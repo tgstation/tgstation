@@ -193,7 +193,7 @@
 		else
 			back = backpack //Department backpack
 
-	else if((H.jumps == SKIRT) && (!isnull(jumpskirt)))
+	if((H.jumps == SKIRT) && (!isnull(jumpskirt)))
 		uniform = jumpskirt
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
