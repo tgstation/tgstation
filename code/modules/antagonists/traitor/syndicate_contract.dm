@@ -113,6 +113,12 @@
 				M.transferItemToLoc(W)
 				victim_belongings.Add(W)
 
+			var/obj/structure/closet/supplypod/extractionpod/pod = source
+
+			// Handle the pod returning
+			pod.send_up(pod)
+
+			// After pod is sent we start the victim narrative/heal.
 			handleVictimExperience(M)
 
 			// This is slightly delayed because of the sleep calls above to handle the narrative. 
