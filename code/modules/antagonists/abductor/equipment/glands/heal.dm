@@ -78,7 +78,7 @@
 		to_chat(owner, "<span class='warning'>You feel a weird rumble in your bowels...</span>")
 	
 	var/liver_type = /obj/item/organ/liver
-	if(owner.dna.species && owner.dna.species.mutantliver)
+	if(owner?.dna?.species?.mutantliver)
 		liver_type = owner.dna.species.mutantliver
 	var/obj/item/organ/liver/new_liver = new liver_type()
 	new_liver.Insert(owner)
