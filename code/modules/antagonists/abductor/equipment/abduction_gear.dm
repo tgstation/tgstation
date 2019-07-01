@@ -671,9 +671,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		playsound(src, 'sound/machines/buzz-two.ogg', 50, 0)
 
 /obj/item/abductor_machine_beacon/chem_dispenser
-	name = "beacon - Reagent Synthetizer"
-	desc = "A beacon designed to instantly tele-construct abductor machinery."
-	w_class = WEIGHT_CLASS_TINY
+	name = "beacon - Reagent Synthesizer"
 	spawned_machine = /obj/machinery/chem_dispenser/abductor
 
 /obj/item/scalpel/alien

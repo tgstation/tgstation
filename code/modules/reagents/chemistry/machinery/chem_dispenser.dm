@@ -617,8 +617,8 @@
 	RefreshParts()
 
 /obj/machinery/chem_dispenser/abductor
-	name = "reagent synthetizer"
-	desc = "Synthetizes a variety of reagents using proto-matter."
+	name = "reagent synthesizer"
+	desc = "Synthesizes a variety of reagents using proto-matter."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "chem_dispenser"
 	has_panel_overlay = FALSE
