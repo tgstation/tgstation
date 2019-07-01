@@ -365,8 +365,27 @@
 				user.visible_message("[user] recoils as something slithers out of [src].</span>")
 				user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 				user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-				user.reagents.add_reagent(/datum/reagent/toxin, 4)
+				if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
+					user.reagents.add_reagent(/datum/reagent/toxin, 4)
 				occupants -= occupant
+
+/obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/user)
+	. = ..()
+	if(target.stat == DEAD)
+		return ..()
+	if(occupants.len >= max_occupants)
+		to_chat(user, "<span class='notice'>[src] seems to be full!</span>")
+		return ..()
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
+		occupants += target
+		target.forceMove(src)
+		to_chat(user, "<span class='notice'>[target] slithers into [src]</span>")
+
+/obj/item/clothing/shoes/cowboy/container_resist(mob/living/user)
+	if(!do_after(user, 10, target = user))
+		return
+	user.forceMove(get_turf(src))
+	occupants -= user
 
 /obj/item/clothing/shoes/cowboy/white
 	name = "white cowboy boots"
