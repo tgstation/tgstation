@@ -12,6 +12,11 @@
 	if(!MOB_ORGANIC in owner.mob_biotypes)
 		return
 
+	for(var/organ in internal_organs)
+		if(istype(organ, /obj/item/organ/cyberimp))
+			reject_implant(organ)
+			return
+
 	var/obj/item/organ/liver/liver = owner.getorganslot(ORGAN_SLOT_LIVER)
 	if((!liver/* && !HAS_TRAIT(owner, TRAIT_NOMETABOLISM)*/) || (liver && ((liver.damage > (liver.maxHealth / 2)) || (istype(liver, /obj/item/organ/liver/cybernetic)))))
 		replace_liver(liver)
@@ -56,6 +61,11 @@
 		replace_chest(chest)
 		return
 
+/obj/item/organ/heart/gland/heal/proc/reject_implant(obj/item/organ/cyberimp/implant)
+	owner.visible_message("<span class='warning'>[owner] vomits up his [implant.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [implant.name]!</span>")
+	owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+	implant.Remove(owner)
+	implant.forceMove(owner.drop_location())
 
 /obj/item/organ/heart/gland/heal/proc/replace_liver(obj/item/organ/liver/liver)
 	if(liver)
