@@ -263,7 +263,7 @@
 
 /mob/living/carbon/proc/adjustLiverLoss(amount, check_toxres = TRUE, rev_failure = FALSE)
 	if(status_flags & GODMODE)
-		return FALSE
+		return 0
 	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
 	if(!L)
 		return
