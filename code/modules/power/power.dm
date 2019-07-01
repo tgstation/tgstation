@@ -260,8 +260,7 @@
 				if(C.powernet && use_old_if_found)
 					propagate_network(C, C.powernet, FALSE, TRUE, TRUE)
 					return
-			worklist |= C.get_connections(skip_assigned_powernets, worklist[P]) //get adjacents power objects, with or without a powernet
-
+				worklist += C.get_connections(skip_assigned_powernets, worklist[P]) //get adjacents power objects, with or without a powernet
 		else if(P.anchored && istype(P, /obj/machinery/power))
 			var/obj/machinery/power/M = P
 			found_machines |= M //we wait until the powernet is fully propagates to connect the machines
