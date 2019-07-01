@@ -43,9 +43,6 @@
 			replace_limb(zone, limb)
 			return
 
-	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
-		replace_blood()
-		return
 	if(owner.getToxLoss() > 40)
 		replace_blood()
 		return
@@ -54,6 +51,10 @@
 		tox_amount += owner.reagents.get_reagent_amount(T.type)
 	if(tox_amount > 10)
 		replace_blood()
+		return
+	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
+		owner.blood_volume = BLOOD_VOLUME_NORMAL
+		to_chat(owner, "<span class='warning'>You feel your blood pulsing within you.</span>")
 		return
 
 	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
