@@ -37,7 +37,7 @@
 	name = "Research Director"
 	jobtype = /datum/job/rd
 
-	jumpsuit = /obj/item/clothing/under/rank/research_director
+	uniform = /obj/item/clothing/under/rank/research_director
 	jumpskirt = /obj/item/clothing/under/rank/research_director/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/rd

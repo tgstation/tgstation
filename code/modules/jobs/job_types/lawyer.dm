@@ -26,7 +26,7 @@
 
 	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
-	jumpsuit = /obj/item/clothing/under/lawyer/bluesuit
+	uniform = /obj/item/clothing/under/lawyer/bluesuit
 	jumpskirt = /obj/item/clothing/under/lawyer/bluesuit/skirt
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
@@ -45,6 +45,6 @@
 	var/datum/job/lawyer/J = SSjob.GetJobType(jobtype)
 	J.lawyers++
 	if(J.lawyers>1)
-		jumpsuit = /obj/item/clothing/under/lawyer/purpsuit
+		uniform = /obj/item/clothing/under/lawyer/purpsuit
 		jumpskirt = /obj/item/clothing/under/lawyer/purpsuit/skirt
 		suit = /obj/item/clothing/suit/toggle/lawyer/purple

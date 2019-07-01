@@ -35,7 +35,7 @@
 	name = "Chief Engineer"
 	jobtype = /datum/job/chief_engineer
 
-	jumpsuit = /obj/item/clothing/under/rank/chief_engineer
+	uniform = /obj/item/clothing/under/rank/chief_engineer
 	jumpskirt = /obj/item/clothing/under/rank/chief_engineer/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/storage/belt/utility/chief/full

@@ -22,7 +22,7 @@
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_tech
 
-	jumpsuit = /obj/item/clothing/under/rank/cargotech
+	uniform = /obj/item/clothing/under/rank/cargotech
 	jumpskirt = /obj/item/clothing/under/rank/cargotech/skirt
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo

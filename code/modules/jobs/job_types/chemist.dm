@@ -24,7 +24,7 @@
 	name = "Chemist"
 	jobtype = /datum/job/chemist
 
-	jumpsuit = /obj/item/clothing/under/rank/chemist
+	uniform = /obj/item/clothing/under/rank/chemist
 	jumpskirt = /obj/item/clothing/under/rank/chemist/skirt
 	glasses = /obj/item/clothing/glasses/science
 	belt = /obj/item/pda/chemist

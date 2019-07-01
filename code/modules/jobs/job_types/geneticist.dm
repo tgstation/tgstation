@@ -24,7 +24,7 @@
 	name = "Geneticist"
 	jobtype = /datum/job/geneticist
 
-	jumpsuit = /obj/item/clothing/under/rank/geneticist
+	uniform = /obj/item/clothing/under/rank/geneticist
 	jumpskirt = /obj/item/clothing/under/rank/geneticist/skirt
 	belt = /obj/item/pda/geneticist
 	ears = /obj/item/radio/headset/headset_medsci

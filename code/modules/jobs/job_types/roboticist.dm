@@ -24,7 +24,7 @@
 	name = "Roboticist"
 	jobtype = /datum/job/roboticist
 
-	jumpsuit = /obj/item/clothing/under/rank/roboticist
+	uniform = /obj/item/clothing/under/rank/roboticist
 	jumpskirt = /obj/item/clothing/under/rank/roboticist/skirt
 	belt = /obj/item/storage/belt/utility/full
 	l_pocket = /obj/item/pda/roboticist
@@ -35,4 +35,3 @@
 	satchel = /obj/item/storage/backpack/satchel/tox
 
 	pda_slot = SLOT_L_STORE
-

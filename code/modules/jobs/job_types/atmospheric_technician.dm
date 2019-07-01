@@ -29,7 +29,7 @@
 	ears = /obj/item/radio/headset/headset_eng
 	r_pocket = /obj/item/analyzer
 
-	jumpsuit = /obj/item/clothing/under/rank/atmospheric_technician
+	uniform = /obj/item/clothing/under/rank/atmospheric_technician
 	jumpskirt = /obj/item/clothing/under/rank/atmospheric_technician/skirt
 
 	backpack = /obj/item/storage/backpack/industrial

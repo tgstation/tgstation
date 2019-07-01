@@ -24,7 +24,7 @@
 	name = "Virologist"
 	jobtype = /datum/job/virologist
 
-	jumpsuit = /obj/item/clothing/under/rank/virologist
+	uniform = /obj/item/clothing/under/rank/virologist
 	jumpskirt = /obj/item/clothing/under/rank/virologist/skirt
 	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
@@ -36,4 +36,3 @@
 	backpack = /obj/item/storage/backpack/virology
 	satchel = /obj/item/storage/backpack/satchel/vir
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
-

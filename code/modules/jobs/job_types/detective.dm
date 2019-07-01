@@ -27,7 +27,7 @@
 	name = "Detective"
 	jobtype = /datum/job/detective
 
-	jumpsuit = /obj/item/clothing/under/rank/det
+	uniform = /obj/item/clothing/under/rank/det
 	jumpskirt = /obj/item/clothing/under/rank/det/skirt
 	belt = /obj/item/pda/detective
 	ears = /obj/item/radio/headset/headset_sec/alt
@@ -55,4 +55,3 @@
 
 	if(visualsOnly)
 		return
-

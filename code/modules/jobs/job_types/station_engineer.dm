@@ -26,7 +26,7 @@
 	name = "Station Engineer"
 	jobtype = /datum/job/engineer
 
-	jumpsuit = /obj/item/clothing/under/rank/engineer
+	uniform = /obj/item/clothing/under/rank/engineer
 	jumpskirt = /obj/item/clothing/under/rank/engineer/skirt
 	belt = /obj/item/storage/belt/utility/full/engi
 	l_pocket = /obj/item/pda/engineering
@@ -52,4 +52,3 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	head = null
 	internals_slot = SLOT_S_STORE
-

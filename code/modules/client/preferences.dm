@@ -1299,9 +1299,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						backbag = new_backbag
 
 				if("suit")
-					var/new_jumps = input(user, "Choose which jumpsuit you spawn with:", "Character Preference") as null|anything in GLOB.jumpsuitlist
-					if(new_jumps)
-						jumps = new_jumps
+					if(jumps == SUIT)
+						jumps = SKIRT
+					else
+						jumps = SUIT
 
 				if("uplink_loc")
 					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list

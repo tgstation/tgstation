@@ -41,4 +41,3 @@ Assistant
 			uniform = /obj/item/clothing/under/color/random
 		else
 			uniform = /obj/item/clothing/under/skirt/color/random
-

@@ -33,7 +33,7 @@
 	name = "Chief Medical Officer"
 	jobtype = /datum/job/cmo
 
-	jumpsuit = /obj/item/clothing/under/rank/chief_medical_officer
+	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	jumpskirt = /obj/item/clothing/under/rank/chief_medical_officer/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/cmo

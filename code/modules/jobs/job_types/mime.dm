@@ -25,7 +25,7 @@
 	name = "Mime"
 	jobtype = /datum/job/mime
 
-	jumpsuit = /obj/item/clothing/under/rank/mime
+	uniform = /obj/item/clothing/under/rank/mime
 	jumpskirt = /obj/item/clothing/under/rank/mime/skirt
 	belt = /obj/item/pda/mime
 	ears = /obj/item/radio/headset/headset_srv

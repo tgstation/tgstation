@@ -174,7 +174,6 @@
 
 	var/pda_slot = SLOT_BELT
 
-	var/jumpsuit
 	var/jumpskirt
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -193,8 +192,7 @@
 			back = duffelbag //Department duffel bag
 		else
 			back = backpack //Department backpack
-	if((H.jumps == SUIT) && (!isnull(jumpsuit)))	//isnull check to ensure we don't remove the assigned uniform if jumpsuit/jumpskirt aren't set
-		uniform = jumpsuit
+
 	else if((H.jumps == SKIRT) && (!isnull(jumpskirt)))
 		uniform = jumpskirt
 

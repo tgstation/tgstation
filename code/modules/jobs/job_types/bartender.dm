@@ -24,10 +24,9 @@
 
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	belt = /obj/item/pda/bar
-	jumpsuit = /obj/item/clothing/under/rank/bartender
+	uniform = /obj/item/clothing/under/rank/bartender
 	jumpskirt = /obj/item/clothing/under/rank/bartender/skirt
 	ears = /obj/item/radio/headset/headset_srv
 	suit = /obj/item/clothing/suit/armor/vest
 	backpack_contents = list(/obj/item/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
-

@@ -22,7 +22,7 @@
 	name = "Quartermaster"
 	jobtype = /datum/job/qm
 
-	jumpsuit = /obj/item/clothing/under/rank/cargo
+	uniform = /obj/item/clothing/under/rank/cargo
 	jumpskirt = /obj/item/clothing/under/rank/cargo/skirt
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
@@ -32,6 +32,3 @@
 	backpack_contents = list(/obj/item/card/id/departmental_budget/car=1)
 
 	chameleon_extras = /obj/item/stamp/qm
-
-
-

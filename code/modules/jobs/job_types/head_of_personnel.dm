@@ -41,7 +41,7 @@
 	name = "Head of Personnel"
 	jobtype = /datum/job/hop
 
-	jumpsuit = /obj/item/clothing/under/rank/head_of_personnel
+	uniform = /obj/item/clothing/under/rank/head_of_personnel
 	jumpskirt = /obj/item/clothing/under/rank/head_of_personnel/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hop
@@ -52,4 +52,3 @@
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced = 1, /obj/item/card/id/departmental_budget/srv=1)
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)
-

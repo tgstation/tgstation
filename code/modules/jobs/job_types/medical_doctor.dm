@@ -25,7 +25,7 @@
 	belt = /obj/item/pda/medical
 	ears = /obj/item/radio/headset/headset_med
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	jumpsuit = /obj/item/clothing/under/rank/medical
+	uniform = /obj/item/clothing/under/rank/medical
 	jumpskirt = /obj/item/clothing/under/rank/medical/skirt
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/regular

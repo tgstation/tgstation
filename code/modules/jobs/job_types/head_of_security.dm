@@ -36,7 +36,7 @@
 	name = "Head of Security"
 	jobtype = /datum/job/hos
 
-	jumpsuit = /obj/item/clothing/under/rank/head_of_security
+	uniform = /obj/item/clothing/under/rank/head_of_security
 	jumpskirt = /obj/item/clothing/under/rank/head_of_security/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hos
@@ -67,4 +67,3 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/security/hos
 	suit_store = /obj/item/tank/internals/oxygen
 	backpack_contents = list(/obj/item/melee/baton/loaded=1, /obj/item/gun/energy/e_gun=1)
-
