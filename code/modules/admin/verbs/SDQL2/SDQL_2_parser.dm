@@ -484,6 +484,11 @@
 
 #if MIN_COMPILER_VERSION > 512
 #warn Remove this outdated workaround
+#elif DM_BUILD < 1467
+			// http://www.byond.com/forum/post/2445083
+			var/dummy = src.type
+			dummy = dummy
+#endif
 
 		while(token(i) && token(i) != "]")
 
