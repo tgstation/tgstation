@@ -1,0 +1,5 @@
+author: "nervere"
+delete-after: True
+changes: 
+  - admin: "There is now a CTF button in the check antags panel."
+  - admin: "There is now a Reboot World button in the check antags panel."
