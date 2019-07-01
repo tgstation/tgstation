@@ -13,6 +13,7 @@
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	tac_reloads = FALSE
+	current_skin = "Default"
 	var/spin_delay = 10
 	var/recent_spin = 0
 
@@ -79,6 +80,7 @@
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	obj_flags = UNIQUE_RENAME
+	current_skin = FALSE
 	unique_reskin = list("Default" = "detective",
 						"Fitz Special" = "detective_fitz",
 						"Police Positive Special" = "detective_police",
