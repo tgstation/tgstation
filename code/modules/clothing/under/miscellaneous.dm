@@ -802,7 +802,7 @@
 	can_adjust = FALSE
 	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
 
-/obj/item/clothing/under/mech_suit/
+/obj/item/clothing/under/mech_suit
 	name = "red mech pilot's suit"
 	desc = "A red mech pilot's suit. Might make your butt look big."
 	icon_state = "red_mech_suit"
