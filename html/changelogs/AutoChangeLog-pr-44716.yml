@@ -1,6 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "The enchanted bolt action rifle"
-  - imageadd: "Blood barrage has a new projectile icon."
-  - code_imp: "Fixed an arcane barrage runtime"

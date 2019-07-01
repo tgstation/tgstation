@@ -1,4 +1,0 @@
-author: "kriskog"
-delete-after: True
-changes: 
-  - bugfix: "Space heaters no longer steal focus upon screwdrivering."

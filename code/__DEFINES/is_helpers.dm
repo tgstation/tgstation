@@ -217,6 +217,8 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
+#define isclothing(A) (istype(A, /obj/item/clothing))
+
 GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 	/obj/item/pen,
 	/obj/item/screwdriver,
