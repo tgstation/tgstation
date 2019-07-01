@@ -695,7 +695,7 @@
 			aiHacking = FALSE
 			return
 		else if(!canAIHack())
-			to_chat(user, "<span class='error'>Connection lost! Unable to hack airlock.</span>")
+			to_chat(user, "Connection lost! Unable to hack airlock.")
 			aiHacking = FALSE
 			return
 		to_chat(user, "Fault confirmed: airlock control wire disabled or cut.")
@@ -717,7 +717,7 @@
 			aiHacking = FALSE
 			return
 		else if(!canAIHack())
-			to_chat(user, "<span class='error'>Connection lost! Unable to hack airlock.</span>")
+			to_chat(user, "Connection lost! Unable to hack airlock.")
 			aiHacking = FALSE
 			return
 		to_chat(user, "Transfer complete. Forcing airlock to execute program.")
@@ -1479,14 +1479,14 @@
 				loseMainPower()
 				update_icon()
 			else
-				to_chat(usr, "<span class='error'>Main power is already offline.</span>")
+				to_chat(usr, "Main power is already offline.")
 			. = TRUE
 		if("disrupt-backup")
 			if(!secondsBackupPowerLost)
 				loseBackupPower()
 				update_icon()
 			else
-				to_chat(usr, "<span class='error'>Backup power is already offline.</span>")
+				to_chat(usr, "Backup power is already offline.")
 			. = TRUE
 		if("shock-restore")
 			shock_restore(usr)
@@ -1499,7 +1499,7 @@
 			. = TRUE
 		if("idscan-on")
 			if(wires.is_cut(WIRE_IDSCAN))
-				to_chat(usr, "<span class='error'>You can't enable IdScan - The IdScan wire has been cut.</span>")
+				to_chat(usr, "You can't enable IdScan - The IdScan wire has been cut.")
 			else if(aiDisabledIdScanner)
 				aiDisabledIdScanner = FALSE
 			else
@@ -1509,7 +1509,7 @@
 			if(wires.is_cut(WIRE_IDSCAN))
 				to_chat(usr, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
 			else if(aiDisabledIdScanner)
-				to_chat(usr, "<span class='error'>You've already disabled the IdScan feature.</span>")
+				to_chat(usr, "You've already disabled the IdScan feature.")
 			else
 				aiDisabledIdScanner = TRUE
 			. = TRUE
@@ -1532,7 +1532,7 @@
 				lights = TRUE
 				update_icon()
 			else
-				to_chat(usr, text("<span class='error'>Door bolt lights are already enabled!</span>"))
+				to_chat(usr, text("Door bolt lights are already enabled!"))
 			. = TRUE
 		if("light-off")
 			if(wires.is_cut(WIRE_LIGHT))
@@ -1541,7 +1541,7 @@
 				lights = FALSE
 				update_icon()
 			else
-				to_chat(usr, "<span class='error'>Door bolt lights are already disabled!</span>")
+				to_chat(usr, "Door bolt lights are already disabled!")
 			. = TRUE
 		if("safe-on")
 			if(wires.is_cut(WIRE_SAFETY))
@@ -1549,7 +1549,7 @@
 			else if (!safe)
 				safe = TRUE
 			else
-				to_chat(usr, "<span class='error'>Firmware reports safeties already in place!</span>")
+				to_chat(usr, "Firmware reports safeties already in place.")
 			. = TRUE
 		if("safe-off")
 			if(wires.is_cut(WIRE_SAFETY))
@@ -1557,7 +1557,7 @@
 			else if (safe)
 				safe = FALSE
 			else
-				to_chat(usr, "<span class='error'>Firmware reports safeties already overridden!</span>")
+				to_chat(usr, "Firmware reports safeties already overridden.")
 			. = TRUE
 		if("speed-on")
 			if(wires.is_cut(WIRE_TIMING))
@@ -1573,7 +1573,7 @@
 			else if (normalspeed)
 				normalspeed = 0
 			else
-				to_chat(usr, "<span class='error'>Door timing circuitry already accelerated!</span>")
+				to_chat(usr, "Door timing circuitry already accelerated.")
 
 			. = TRUE
 		if("open-close")
@@ -1587,7 +1587,7 @@
 	if(!user_allowed(user))
 		return
 	if(wires.is_cut(WIRE_SHOCK))
-		to_chat(user, "<span class='error'>Can't un-electrify the airlock - The electrification wire is cut.</span>")
+		to_chat(user, "Can't un-electrify the airlock - The electrification wire is cut.")
 	else if(isElectrified())
 		set_electrified(MACHINE_NOT_ELECTRIFIED, user)
 
@@ -1614,7 +1614,7 @@
 		emergency = TRUE
 		update_icon()
 	else
-		to_chat(user, "<span class='error'>Emergency access is already enabled!</span>")
+		to_chat(user, "Emergency access is already enabled!")
 
 /obj/machinery/door/airlock/proc/emergency_off(mob/user)
 	if(!user_allowed(user))
@@ -1623,26 +1623,26 @@
 		emergency = FALSE
 		update_icon()
 	else
-		to_chat(user, "<span class='error'>Emergency access is already disabled!</span>")
+		to_chat(user, "Emergency access is already disabled!")
 
 /obj/machinery/door/airlock/proc/bolt_raise(mob/user)
 	if(!user_allowed(user))
 		return
 	if(wires.is_cut(WIRE_BOLTS))
-		to_chat(user, "<span class='error'>The door bolt drop wire is cut - you can't raise the door bolts!</span>")
+		to_chat(user, "The door bolt drop wire is cut - you can't raise the door bolts")
 	else if(!locked)
-		to_chat(user, "<span class='error'>The door bolts are already up!</span>")
+		to_chat(user, "The door bolts are already up")
 	else
 		if(hasPower())
 			unbolt()
 		else
-			to_chat(user, "<span class='error'>Cannot raise door bolts due to power failure.</span>")
+			to_chat(user, "Cannot raise door bolts due to power failure")
 
 /obj/machinery/door/airlock/proc/bolt_drop(mob/user)
 	if(!user_allowed(user))
 		return
 	if(wires.is_cut(WIRE_BOLTS))
-		to_chat(user, "<span class='error'>You can't drop the door bolts - The door bolt dropping wire has been cut.</span>")
+		to_chat(user, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
 	else
 		bolt()
 
