@@ -101,13 +101,5 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	desc = "It could be anything!"
 
 /obj/item/a_gift/anything/get_gift_type()
-	if(!GLOB.possible_gifts.len)
-		var/list/gift_types_list = subtypesof(/obj/item)
-		for(var/V in gift_types_list)
-			var/obj/item/I = V
-			if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.item_flags) & ABSTRACT))
-				gift_types_list -= V
-		GLOB.possible_gifts = gift_types_list
-	var/gift_type = pick(GLOB.possible_gifts)
+	return get_random_item()
 
-	return gift_type

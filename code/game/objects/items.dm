@@ -795,3 +795,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
+
+/proc/get_random_item()
+	if(!GLOB.possible_gifts.len)
+		var/list/items = subtypesof(/obj/item)
+		for(var/V in items)
+			var/obj/item/I = V
+			if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.item_flags) & ABSTRACT))
+				items -= V
+		GLOB.possible_gifts = items
+
+	return pick(GLOB.possible_gifts)

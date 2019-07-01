@@ -50,7 +50,7 @@
 	var/vomiting = FALSE
 	var/vomitCoefficient = 1
 	var/vomitTimeBonus = 0
-	var/treasureChance = 100
+	var/treasureChance = 0.1
 	var/datum/action/cooldown/vomit/goosevomit
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize()
@@ -102,7 +102,8 @@
 	var/obj/consumed = A
 	if(prob(treasureChance))
 		qdel(consumed)
-		consumed = new /obj/item/a_gift/anything ()
+		var/treasure_type = get_random_item()
+		consumed = new treasure_type ()
 	consumed.forceMove(currentTurf)
 	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 	var/throwRange = hard ? rand(2,8) : 1
