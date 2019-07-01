@@ -47,3 +47,22 @@
 	var/obj/item/master = comp.parent
 	comp.appliedComponents += master.AddComponent(/datum/component/tactical)
 	return "tactical [newName]"
+
+/datum/fantasy_affix/pyromantic
+	placement = AFFIX_PREFIX
+	alignment = AFFIX_GOOD
+
+/datum/fantasy_affix/pyromantic/apply(datum/component/fantasy/comp, newName)
+	var/obj/item/master = comp.parent
+	comp.appliedComponents += master.AddComponent(/datum/component/igniter, CLAMP(comp.quality, 1, 10))
+	return "pyromantic [newName]"
+
+/datum/fantasy_affix/vampiric
+	placement = AFFIX_PREFIX
+	alignment = AFFIX_GOOD
+	weight = 5
+
+/datum/fantasy_affix/vampiric/apply(datum/component/fantasy/comp, newName)
+	var/obj/item/master = comp.parent
+	comp.appliedComponents += master.AddComponent(/datum/component/lifesteal, comp.quality)
+	return "vampiric [newName]"

@@ -153,9 +153,9 @@
 	icon_state = "candiedapple"
 	bitesize = 3
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 3)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/caramel = 5)
 	filling_color = "#FF4500"
-	tastes = list("apple" = 2, "sweetness" = 2)
+	tastes = list("apple" = 2, "caramel" = 3)
 	foodtype = JUNKFOOD | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/mint

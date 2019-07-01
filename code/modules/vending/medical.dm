@@ -11,7 +11,7 @@
 					/obj/item/healthanalyzer = 4,
 					/obj/item/reagent_containers/pill/patch/styptic = 5,
 					/obj/item/reagent_containers/pill/patch/silver_sulf = 5,
-					/obj/item/reagent_containers/pill/salbutamol = 2,
+					/obj/item/reagent_containers/syringe/perfluorodecalin = 2,
 					/obj/item/reagent_containers/pill/insulin = 5,
 					/obj/item/reagent_containers/glass/bottle/charcoal = 4,
 					/obj/item/reagent_containers/glass/bottle/epinephrine = 3,

@@ -69,8 +69,8 @@
 		return ..()
 
 /obj/item/circuitboard/computer/card/minor/examine(user)
-	..()
-	to_chat(user, "Currently set to \"[dept_list[target_dept]]\".")
+	. = ..()
+	. += "Currently set to \"[dept_list[target_dept]]\"."
 
 //obj/item/circuitboard/computer/shield
 //	name = "Shield Control (Computer Board)"
@@ -311,6 +311,10 @@
 /obj/item/circuitboard/computer/mining_shuttle
 	name = "Mining Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/mining
+
+/obj/item/circuitboard/computer/mining_shuttle/common
+	name = "Lavaland Shuttle (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/mining/common
 
 /obj/item/circuitboard/computer/white_ship
 	name = "White Ship (Computer Board)"

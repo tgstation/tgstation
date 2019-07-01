@@ -40,6 +40,16 @@
 	update_icon()
 	return
 
+/obj/item/defibrillator/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if(paddles?.loc == src)
+		paddles.fire_act(exposed_temperature, exposed_volume)
+
+/obj/item/defibrillator/extinguish()
+	. = ..()
+	if(paddles?.loc == src)
+		paddles.extinguish()
+
 /obj/item/defibrillator/update_icon()
 	update_power()
 	update_overlays()
@@ -285,6 +295,7 @@
 	force = 0
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = INDESTRUCTIBLE
 
 	var/revivecost = 1000
 	var/cooldown = FALSE
@@ -295,19 +306,26 @@
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 
-	var/datum/component/mobhook
+	var/mob/listeningTo
 
 /obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
 	. = ..()
-	if(req_defib)
-		if (mobhook && mobhook.parent != user)
-			QDEL_NULL(mobhook)
-		if (!mobhook)
-			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/check_range)))
+	if(!req_defib || listeningTo == user)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
+	listeningTo = user
 
 /obj/item/twohanded/shockpaddles/Moved()
 	. = ..()
 	check_range()
+
+
+/obj/item/twohanded/shockpaddles/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if((req_defib && defib) && loc != defib)
+		defib.fire_act(exposed_temperature, exposed_volume)
 
 /obj/item/twohanded/shockpaddles/proc/check_range()
 	if(!req_defib)
@@ -360,8 +378,8 @@
 /obj/item/twohanded/shockpaddles/dropped(mob/user)
 	if(!req_defib)
 		return ..()
-	if (mobhook)
-		QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	if(user)
 		var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 		if(istype(O))
@@ -467,7 +485,7 @@
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
 	M.adjustStaminaLoss(50)
 	M.Paralyze(100)
-	M.updatehealth() //forces health update before next life tick
+	M.updatehealth() //forces health update before next life tick //isn't this done by adjustStaminaLoss anyway?
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
 	log_combat(user, M, "stunned", src)

@@ -48,4 +48,4 @@
 	if(M)
 		M.apply_damage(0.4*reac_volume, OXY)
 	if(M)
-		M.adjustStaminaLoss(0.2*reac_volume)
+		M.adjustStaminaLoss(reac_volume)

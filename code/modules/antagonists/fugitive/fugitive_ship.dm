@@ -9,8 +9,8 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //ha ha no getting out!!
 
 /obj/machinery/fugitive_capture/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Add a prisoner by dragging them into the machine.</span>")
+	. = ..()
+	. += "<span class='notice'>Add a prisoner by dragging them into the machine.</span>"
 
 /obj/machinery/fugitive_capture/MouseDrop_T(mob/target, mob/user)
 	var/mob/living/fugitive_hunter = user
@@ -32,7 +32,7 @@
 	to_chat(fugitive, "<span class='userdanger'>You are thrown into a vast void of bluespace, and as you fall further into oblivion the comparatively small entrance to reality gets smaller and smaller until you cannot see it anymore. You have failed to avoid capture.</span>")
 	fugitive.ghostize(TRUE) //so they cannot suicide, round end stuff.
 
-/obj/machinery/computer/shuttle/pirate/hunter
+/obj/machinery/computer/shuttle/hunter
 	name = "shuttle console"
 	shuttleId = "huntership"
 	possible_destinations = "huntership_away;huntership_home;huntership_custom"

@@ -160,3 +160,7 @@
 		return account
 
 	return FALSE
+
+/mob/living/carbon/human/get_policy_keywords()
+	. = ..()
+	. += "[dna.species.type]"

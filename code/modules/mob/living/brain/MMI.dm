@@ -193,18 +193,18 @@
 	qdel(src)
 
 /obj/item/mmi/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]</span>")
+	. = ..()
+	. += "<span class='notice'>There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]</span>"
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			to_chat(user, "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>")
+			. += "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
 
 		else if(!B.client)
-			to_chat(user, "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>")
+			. += "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
 
 		else
-			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
+			. += "<span class='notice'>The MMI indicates the brain is active.</span>"
 
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move

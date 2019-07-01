@@ -13,7 +13,7 @@
 /mob/camera/yalp_elor/Initialize()
 	. = ..()
 	transmit = new
- 	transport = new
+	transport = new
 	transmit.Grant(src)
 	transport.Grant(src)
 	START_PROCESSING(SSobj, src)

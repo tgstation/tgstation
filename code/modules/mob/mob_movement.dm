@@ -250,7 +250,7 @@
 	return FALSE
 
 
-/mob/proc/slip(knockdown, paralyze, forcedrop, w_amount, obj/O, lube)
+/mob/proc/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	return
 
 /mob/proc/update_gravity()

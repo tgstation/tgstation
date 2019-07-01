@@ -197,6 +197,7 @@
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
 	var/mob/living/owner = parent
 
+	amount = CLAMP(amount, minimum, maximum)
 	if(amount == sanity)
 		return
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
@@ -339,7 +340,7 @@
 
 /datum/component/mood/proc/HandleCharge(mob/living/carbon/human/H)
 	var/datum/species/ethereal/E = H.dna?.species
-	switch(E.ethereal_charge)
+	switch(E.get_charge(H))
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
 			add_event(null, "charge", /datum/mood_event/decharged)
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
@@ -359,9 +360,14 @@
 		return
 
 	var/turf/T = get_turf(H)
+
+	if(!istype(T) || T.return_air().return_pressure() > (WARNING_HIGH_PRESSURE - 10))
+		return
+
 	var/datum/gas_mixture/stank = new
 	ADD_GAS(/datum/gas/miasma, stank.gases)
 	stank.gases[/datum/gas/miasma][MOLES] = MIASMA_HYGIENE_MOLES
+	stank.temperature = BODYTEMP_NORMAL
 	T.assume_air(stank)
 	T.air_update_turf()
 

@@ -297,8 +297,7 @@ SUBSYSTEM_DEF(persistence)
 		if(R.persistent && json)
 			var/list/recipe_data = json[R.id]
 			if(recipe_data)
-				var/creation_time = text2num(recipe_data["timestamp"])
-				if((daysSince(creation_time) <= R.persistence_period) && R.LoadOldRecipe(recipe_data))
+				if(R.LoadOldRecipe(recipe_data) && (daysSince(R.created) <= R.persistence_period))
 					loaded = TRUE
 		if(!loaded) //We do not have information for whatever reason, just generate new one
 			R.GenerateRecipe()
@@ -316,7 +315,7 @@ SUBSYSTEM_DEF(persistence)
 		R = get_chemical_reaction(initial(R.id)) //ew, would be nice to add some simple tracking
 		if(R && R.persistent && R.id)
 			var/recipe_data = list()
-			recipe_data["timestamp"] = world.realtime
+			recipe_data["timestamp"] = R.created
 			recipe_data["required_reagents"] = R.required_reagents
 			recipe_data["required_catalysts"] = R.required_catalysts
 			recipe_data["required_temp"] = R.required_temp

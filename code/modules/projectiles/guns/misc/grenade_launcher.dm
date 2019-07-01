@@ -13,8 +13,8 @@
 	materials = list(MAT_METAL=2000)
 
 /obj/item/gun/grenadelauncher/examine(mob/user)
-	..()
-	to_chat(user, "[grenades.len] / [max_grenades] grenades loaded.")
+	. = ..()
+	. += "[grenades.len] / [max_grenades] grenades loaded."
 
 /obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
 

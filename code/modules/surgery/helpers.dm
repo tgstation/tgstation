@@ -95,6 +95,9 @@
 		if(is_robotic)
 			close_tool_type = /obj/item/screwdriver
 		if(istype(close_tool, close_tool_type) || iscyborg(user))
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.bleed_rate = max( (H.bleed_rate - 3), 0)
 			M.surgeries -= S
 			user.visible_message("[user] closes [M]'s [parse_zone(selected_zone)] with [close_tool] and removes [I].", \
 				"<span class='notice'>You close [M]'s [parse_zone(selected_zone)] with [close_tool] and remove [I].</span>")

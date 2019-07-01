@@ -121,7 +121,6 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	verify = FALSE
 	assets = list(
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
-		"errorHandler.js"          = 'code/modules/goonchat/browserassets/js/errorHandler.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
 		"fontawesome-webfont.eot"  = 'tgui/assets/fonts/fontawesome-webfont.eot',
 		"fontawesome-webfont.svg"  = 'tgui/assets/fonts/fontawesome-webfont.svg',

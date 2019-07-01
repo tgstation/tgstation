@@ -172,7 +172,7 @@
 			setting = DUEL_SETTING_C
 		if(DUEL_SETTING_C)
 			setting = DUEL_SETTING_A
-	to_chat(user,"<span class='notice'>You switch [src] setting to [setting] mode.")
+	to_chat(user,"<span class='notice'>You switch [src] setting to [setting] mode.</span>")
 	update_icon()
 
 /obj/item/gun/energy/dueling/update_icon(force_update)
@@ -253,7 +253,7 @@
 	D.setting = setting
 	D.update_icon()
 
-/obj/item/ammo_casing/energy/duel/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
+/obj/item/ammo_casing/energy/duel/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	. = ..()
 	var/obj/effect/temp_visual/dueling_chaff/C = new(get_turf(user))
 	C.setting = setting
@@ -318,7 +318,7 @@
 
 /obj/item/storage/lockbox/dueling/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_items = 2
 	STR.set_holdable(list(/obj/item/gun/energy/dueling))

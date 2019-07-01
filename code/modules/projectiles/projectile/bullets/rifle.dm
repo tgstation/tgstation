@@ -12,5 +12,5 @@
 
 /obj/item/projectile/bullet/a762_enchanted
 	name = "enchanted 7.62 bullet"
-	damage = 5
+	damage = 20
 	stamina = 80

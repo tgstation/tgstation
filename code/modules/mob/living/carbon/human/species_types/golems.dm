@@ -528,6 +528,11 @@
 	..()
 	last_banana = world.time
 	last_honk = world.time
+	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/species/golem/bananium/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_SAY)
 
 /datum/species/golem/bananium/random_name(gender,unique,lastname)
 	var/clown_name = pick(GLOB.clown_names)
@@ -576,9 +581,8 @@
 /datum/species/golem/bananium/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 70, 0)
 
-/datum/species/golem/bananium/get_spans()
-	return list(SPAN_CLOWN)
-
+/datum/species/golem/bananium/proc/handle_speech(datum/source, list/speech_args)
+	speech_args[SPEECH_SPANS] |= SPAN_CLOWN
 
 /datum/species/golem/runic
 	name = "Runic Golem"
@@ -656,14 +660,16 @@
 /datum/species/golem/clockwork/on_species_gain(mob/living/carbon/human/H)
 	. = ..()
 	H.faction |= "ratvar"
+	RegisterSignal(H, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/species/golem/clockwork/on_species_loss(mob/living/carbon/human/H)
 	if(!is_servant_of_ratvar(H))
 		H.faction -= "ratvar"
+	UnregisterSignal(H, COMSIG_MOB_SAY)
 	. = ..()
 
-/datum/species/golem/clockwork/get_spans()
-	return SPAN_ROBOT //beep
+/datum/species/golem/clockwork/proc/handle_speech(datum/source, list/speech_args)
+	speech_args[SPEECH_SPANS] |= SPAN_ROBOT //beep
 
 /datum/species/golem/clockwork/spec_death(gibbed, mob/living/carbon/human/H)
 	gibbed = !has_corpse ? FALSE : gibbed
@@ -1049,9 +1055,11 @@
 
 	SEND_SOUND(C, sound('sound/misc/capitialism.ogg'))
 	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
+	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/species/golem/capitalist/on_species_loss(mob/living/carbon/C)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_SAY)
 	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
 		C.RemoveSpell(spell)
 
@@ -1064,9 +1072,9 @@
 		return
 	target.adjust_nutrition(40)
 
-/datum/species/golem/capitalist/handle_speech(message, mob/living/carbon/human/H)
-	playsound(H, 'sound/misc/mymoney.ogg', 25, 0)
-	return "Hello, I like money!"
+/datum/species/golem/capitalist/proc/handle_speech(datum/source, list/speech_args)
+	playsound(source, 'sound/misc/mymoney.ogg', 25, 0)
+	speech_args[SPEECH_MESSAGE] = "Hello, I like money!"
 
 /datum/species/golem/soviet
 	name = "Soviet Golem"
@@ -1089,11 +1097,13 @@
 
 	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
 	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
+	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/species/golem/soviet/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
 		C.RemoveSpell(spell)
+	UnregisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/species/golem/soviet/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
@@ -1104,6 +1114,6 @@
 		return
 	target.adjust_nutrition(-40)
 
-/datum/species/golem/soviet/handle_speech(message, mob/living/carbon/human/H)
-	playsound(H, 'sound/misc/Cyka Blyat.ogg', 25, 0)
-	return "Cyka Blyat"
+/datum/species/golem/soviet/proc/handle_speech(datum/source, list/speech_args)
+	playsound(source, 'sound/misc/Cyka Blyat.ogg', 25, 0)
+	speech_args[SPEECH_MESSAGE] = "Cyka Blyat"

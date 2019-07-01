@@ -137,7 +137,7 @@
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return FALSE
 
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
 	grippedby(user)
@@ -168,16 +168,22 @@
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
 				return 0
 			if(user.a_intent != INTENT_GRAB)
-				to_chat(user, "<span class='notice'>You must be on grab intent to upgrade your grab further!<span>")
+				to_chat(user, "<span class='notice'>You must be on grab intent to upgrade your grab further!</span>")
 				return 0
 		user.grab_state++
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
-				log_combat(user, src, "grabbed", addition="aggressive grab")
-				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
-								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
-				drop_all_held_items()
+				var/add_log = ""
+				if(HAS_TRAIT(user, TRAIT_PACIFISM))
+					visible_message("<span class='danger'>[user] has firmly gripped [src]!</span>",
+						"<span class='danger'>[user] has firmly gripped you!</span>")
+					add_log = " (pacifist)"
+				else
+					visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
+									"<span class='userdanger'>[user] has grabbed you aggressively!</span>")
+					drop_all_held_items()
 				stop_pulling()
+				log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 			if(GRAB_NECK)
 				log_combat(user, src, "grabbed", addition="neck grab")
 				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\

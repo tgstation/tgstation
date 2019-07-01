@@ -291,7 +291,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				if(contents.len >= MAX_VENDING_INPUT_AMOUNT) // no more than 30 item can fit inside, legacy from snack vending although not sure why it exists
 					to_chat(user, "<span class='warning'>[src]'s chef compartment is full.</span>")
 					break
-				if(loadingAttempt(the_item,user))
+				if(canLoadItem(the_item) && loadingAttempt(the_item,user))
 					SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, the_item, src, TRUE)
 					loaded++
 				else
@@ -368,8 +368,19 @@ GLOBAL_LIST_EMPTY(vending_products)
 		dat += "<font color = 'red'><h3>No account on registered ID card!</h3></font>"
 	if(onstation && C && C.registered_account)
 		account = C.registered_account
+	if(vending_machine_input.len)
+		dat += "<h3>[input_display_header]</h3>"
+		dat += "<div class='statusDisplay'>"
+		for (var/O in vending_machine_input)
+			if(vending_machine_input[O] > 0)
+				var/N = vending_machine_input[O]
+				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
+				dat += "<B>[capitalize(O)] ($[default_price]): [N]</B><br>"
+		dat += "</div>"
+
 	dat += {"<h3>Select an item</h3>
 					<div class='statusDisplay'>"}
+
 	if(!product_records.len)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
@@ -399,15 +410,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	dat += "</div>"
 	if(onstation && C && C.registered_account)
 		dat += "<b>Balance: $[account.account_balance]</b>"
-	if(vending_machine_input.len)
-		dat += "<h3>[input_display_header]</h3>"
-		dat += "<div class='statusDisplay'>"
-		for (var/O in vending_machine_input)
-			if(vending_machine_input[O] > 0)
-				var/N = vending_machine_input[O]
-				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
-				dat += "<B>[capitalize(O)] ($[default_price]): [N]</B><br>"
-		dat += "</div>"
 
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
@@ -451,7 +453,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
 		for(var/obj/O in contents)
 			if(O.name == N)
-				say("Thank you for supporting your local kitchen and purchasing [O]!")
+				say("Thank you for buying local and purchasing [O]!")
 				O.forceMove(drop_location())
 				break
 		vend_ready = 1

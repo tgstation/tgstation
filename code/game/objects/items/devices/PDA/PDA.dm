@@ -87,15 +87,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return BRUTELOSS
 
 /obj/item/pda/examine(mob/user)
-	..()
+	. = ..()
 	if(!id && !inserted_item)
 		return
 
 	if(id)
-		to_chat(user, "<span class='notice'>Alt-click to remove the id.</span>")
+		. += "<span class='notice'>Alt-click to remove the id.</span>"
 
 	if(inserted_item && (!isturf(loc)))
-		to_chat(user, "<span class='notice'>Ctrl-click to remove [inserted_item].</span>")
+		. += "<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
 
 /obj/item/pda/Initialize()
 	. = ..()
@@ -690,7 +690,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
 	if (last_everyone && world.time < last_everyone + PDA_SPAM_DELAY)
-		to_chat(U,"<span class='warning'>Send To All function is still on cooldown.")
+		to_chat(U,"<span class='warning'>Send To All function is still on cooldown.</span>")
 		return
 	send_message(U,get_viewable_pdas(), TRUE)
 

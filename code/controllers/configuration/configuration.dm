@@ -19,6 +19,9 @@
 	var/list/mode_false_report_weight
 
 	var/motd
+	var/policy
+
+	var/static/regex/ic_filter_regex
 
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
@@ -47,6 +50,8 @@
 				break
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
+	LoadPolicy()
+	LoadChatFilter()
 
 /datum/controller/configuration/proc/full_wipe()
 	if(IsAdminAdvancedProcCall())
@@ -243,6 +248,34 @@
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
 	if(motd || tm_info)
 		motd = motd ? "[motd]<br>[tm_info]" : tm_info
+/*
+Policy file should be a json file with a single object.
+Value is raw html.
+
+Possible keywords :
+Job titles / Assigned roles (ghost spawners for example) : Assistant , Captain , Ash Walker
+Mob types : /mob/living/simple_animal/hostile/carp
+Antagonist types : /datum/antagonist/highlander
+Species types : /datum/species/lizard
+special keywords defined in _DEFINES/admin.dm
+
+Example config:
+{
+    "Assistant" : "Don't kill everyone",
+    "/datum/antagonist/highlander" : "<b>Kill everyone</b>",
+    "Ash Walker" : "Kill all spacemans"
+}
+
+*/
+/datum/controller/configuration/proc/LoadPolicy()
+	policy = list()
+	var/rawpolicy = file2text("[directory]/policy.json")
+	if(rawpolicy)
+		var/parsed = json_decode(rawpolicy)
+		if(!parsed)
+			log_config("JSON parsing failure for policy.json")
+		else
+			policy = parsed
 
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")
@@ -290,6 +323,8 @@
 				currentmap.voteweight = text2num(data)
 			if ("default","defaultmap")
 				defaultmap = currentmap
+			if ("votable")
+				currentmap.votable = TRUE
 			if ("endmap")
 				LAZYINITLIST(maplist)
 				maplist[currentmap.map_name] = currentmap
@@ -363,3 +398,22 @@
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
+
+/datum/controller/configuration/proc/LoadChatFilter()
+	var/list/in_character_filter = list()
+
+	if(!fexists("[directory]/in_character_filter.txt"))
+		return
+
+	log_config("Loading config file in_character_filter.txt...")
+
+	for(var/line in world.file2list("[directory]/in_character_filter.txt"))
+		if(!line)
+			continue
+		if(findtextEx(line,"#",1,2))
+			continue
+		in_character_filter += REGEX_QUOTE(line)
+
+	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
+
+	syncChatRegexes()
