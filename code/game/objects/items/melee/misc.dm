@@ -233,11 +233,6 @@
 	force = 0
 	on = FALSE
 
-/obj/item/melee/classic_baton/telescopic/contractor
-	name = "contractor baton"
-	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. Assigned to Syndicate contractors."
-	icon_state = "contractor_telebaton_0"
-
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
@@ -255,27 +250,6 @@
 			qdel(B)
 		new /obj/effect/gibspawner/generic(H.drop_location(), H)
 		return (BRUTELOSS)
-
-/obj/item/melee/classic_baton/telescopic/contractor/attack_self(mob/user)
-	on = !on
-	if(on)
-		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
-		icon_state = "contractor_telebaton_1"
-		item_state = "nullrod"
-		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
-		force = 15 //stun baton damage
-		attack_verb = list("smacked", "struck", "cracked", "beaten")
-	else
-		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
-		icon_state = "contractor_telebaton_0"
-		item_state = null //no sprite for concealment even when in hand
-		slot_flags = ITEM_SLOT_BELT
-		w_class = WEIGHT_CLASS_SMALL
-		force = 0 //not so robust now
-		attack_verb = list("hit", "poked")
-
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
-	add_fingerprint(user)
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
@@ -297,6 +271,108 @@
 
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
+
+/obj/item/melee/contractor_baton
+	name = "contractor baton"
+	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "contractor_baton_0"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	item_state = null
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NONE
+	force = 5
+	var/cooldown = 0
+	var/on = FALSE
+
+/obj/item/melee/contractor_baton/attack_self(mob/user)
+	on = !on
+	if(on)
+		to_chat(user, "<span class ='warning'>You click the baton into place.</span>")
+		icon_state = "contractor_baton_1"
+		item_state = "contractor_baton"
+		w_class = WEIGHT_CLASS_NORMAL // even extended it can fit in a backpack
+		force = 16 
+		attack_verb = list("smacked", "struck", "cracked", "beaten")
+	else
+		to_chat(user, "<span class ='notice'>You click the baton down.</span>")
+		icon_state = "contractor_baton_0"
+		item_state = null //no sprite for concealment even when in hand
+		slot_flags = ITEM_SLOT_BELT
+		w_class = WEIGHT_CLASS_SMALL
+		force = 5
+		attack_verb = list("hit", "slam")
+
+	playsound(src.loc, 'sound/weapons/contractorbatonextend.ogg', 75, 1)
+	add_fingerprint(user)
+
+/obj/item/melee/contractor_baton/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
+
+	user.visible_message("<span class='suicide'>[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind.</span>")
+	if(!on)
+		src.attack_self(user)
+	else
+		playsound(src, 'sound/weapons/contractorbatonextend.ogg', 85, 1)
+		add_fingerprint(user)
+	sleep(3)
+	if (!QDELETED(H))
+		if(!QDELETED(B))
+			H.internal_organs -= B
+			qdel(B)
+		new /obj/effect/gibspawner/generic(H.drop_location(), H)
+		return (BRUTELOSS)
+
+/obj/item/melee/contractor_baton/attack(mob/living/target, mob/living/user)
+	if(!on)
+		return ..()
+
+	add_fingerprint(user)
+	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
+		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
+		user.Paralyze(20 * force)
+		user.Jitter(20)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+		else
+			user.take_bodypart_damage(2*force)
+		return
+	if(iscyborg(target))
+		..()
+		target.flash_act()
+		playsound(get_turf(src), 'sound/effects/contractorbatonhit.ogg', 100, 1, -1)
+		return
+	if(!isliving(target))
+		return
+	if (user.a_intent == INTENT_HARM)
+		if(!..())
+			return
+		if(!iscyborg(target))
+			return
+	else
+		if(cooldown <= world.time)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+					return
+				if(check_martial_counter(H, user))
+					return
+			playsound(get_turf(src), 'sound/effects/contractorbatonhit.ogg', 110, 1, -1)
+			target.Paralyze(85)
+			target.Jitter(20)
+			log_combat(user, target, "stunned", src)
+			src.add_fingerprint(user)
+			target.visible_message("<span class ='danger'>[user] electrifies [target] with [src]!</span>", \
+				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
+			if(!iscarbon(user))
+				target.LAssailant = null
+			else
+				target.LAssailant = user
+			cooldown = world.time + 35
 
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
