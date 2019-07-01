@@ -2118,9 +2118,9 @@
 	name = "Mech Pilot's Suit Crate"
 	desc = "Suits for piloting big robots. Contains all three colors!"
 	cost = 1500 //state-of-the-art technology doesn't come cheap
-	contains = list(/obj/item/clothing/under/red_mech_suit,
-					/obj/item/clothing/under/white_mech_suit,
-					/obj/item/clothing/under/blue_mech_suit)
+	contains = list(/obj/item/clothing/under/mech_suit/,
+					/obj/item/clothing/under/mech_suit/white,
+					/obj/item/clothing/under/mech_suit/blue)
 	crate_name = "mech pilot's suit crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
