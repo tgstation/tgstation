@@ -54,6 +54,7 @@
 	var/rack_delay = 5
 	var/recent_rack = 0
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
+	var/can_be_sawn_off  = FALSE
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -199,7 +200,7 @@
 	return chambered
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
-	..()
+	. = ..()
 	if (.)
 		return
 	if (!internal_magazine && istype(A, /obj/item/ammo_box/magazine))
@@ -240,6 +241,9 @@
 		if(user.transferItemToLoc(A, src))
 			to_chat(user, "<span class='notice'>You screw \the [S] onto \the [src].</span>")
 			install_suppressor(A)
+			return
+	if (can_be_sawn_off)
+		if (sawoff(user, A))
 			return
 	return FALSE
 
@@ -384,11 +388,23 @@
 #undef BRAINS_BLOWN_THROW_SPEED
 #undef BRAINS_BLOWN_THROW_RANGE
 
+GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
+	/obj/item/circular_saw,
+	/obj/item/gun/energy/plasmacutter,
+	/obj/item/melee/transforming/energy,
+	/obj/item/twohanded/required/chainsaw,
+	/obj/item/nullrod/claymore/chainsaw_sword,
+	/obj/item/nullrod/chainsaw,
+	/obj/item/mounted_chainsaw)))
 
-
-/obj/item/gun/ballistic/proc/sawoff(mob/user)
+/obj/item/gun/ballistic/proc/sawoff(mob/user, obj/item/saw)
+	if(!saw.is_sharp() || !is_type_in_typecache(saw, GLOB.gun_saw_types)) //needs to be sharp. Otherwise turned off eswords can cut this.
+		return
 	if(sawn_off)
 		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
+		return
+	if(bayonet)
+		to_chat(user, "<span class='warning'>You cannot saw-off \the [src] with \the [bayonet] attached!</span>")
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
