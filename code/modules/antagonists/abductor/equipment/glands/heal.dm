@@ -12,7 +12,7 @@
 	if(!MOB_ORGANIC in owner.mob_biotypes)
 		return
 
-	for(var/organ in internal_organs)
+	for(var/organ in owner.internal_organs)
 		if(istype(organ, /obj/item/organ/cyberimp))
 			reject_implant(organ)
 			return
