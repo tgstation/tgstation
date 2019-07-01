@@ -24,15 +24,10 @@
 
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	belt = /obj/item/pda/bar
+	jumpsuit = /obj/item/clothing/under/rank/bartender
+	jumpskirt = /obj/item/clothing/under/rank/bartender/skirt
 	ears = /obj/item/radio/headset/headset_srv
 	suit = /obj/item/clothing/suit/armor/vest
 	backpack_contents = list(/obj/item/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
-
-/datum/outfit/job/bartender/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/bartender
-	else
-		uniform = /obj/item/clothing/under/rank/bartender/skirt
 

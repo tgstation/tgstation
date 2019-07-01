@@ -22,6 +22,8 @@
 	name = "Quartermaster"
 	jobtype = /datum/job/qm
 
+	jumpsuit = /obj/item/clothing/under/rank/cargo
+	jumpskirt = /obj/item/clothing/under/rank/cargo/skirt
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
@@ -31,11 +33,5 @@
 
 	chameleon_extras = /obj/item/stamp/qm
 
-/datum/outfit/job/quartermaster/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/cargo
-	else
-		uniform = /obj/item/clothing/under/rank/cargo/skirt
 
 

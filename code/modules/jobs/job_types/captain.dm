@@ -42,6 +42,8 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/heads/captain/alt
 	gloves = /obj/item/clothing/gloves/color/captain
+	jumpsuit =  /obj/item/clothing/under/rank/captain
+	jumpskirt =  /obj/item/clothing/under/rank/captain/skirt
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/caphat
@@ -62,10 +64,3 @@
 	mask = /obj/item/clothing/mask/gas/sechailer
 	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
 	suit_store = /obj/item/tank/internals/oxygen
-
-/datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform =  /obj/item/clothing/under/rank/captain
-	else
-		uniform =  /obj/item/clothing/under/rank/captain/skirt

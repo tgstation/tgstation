@@ -26,6 +26,8 @@
 
 	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
+	jumpsuit = /obj/item/clothing/under/lawyer/bluesuit
+	jumpskirt = /obj/item/clothing/under/lawyer/bluesuit/skirt
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/storage/briefcase/lawyer
@@ -35,18 +37,14 @@
 	chameleon_extras = /obj/item/stamp/law
 
 
-/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	//visuals only was fucking things up so now it's just this
+	if(visualsOnly)
+		return
+
 	var/datum/job/lawyer/J = SSjob.GetJobType(jobtype)
 	J.lawyers++
 	if(J.lawyers>1)
-		if(H.jumps == SUIT)
-			uniform = /obj/item/clothing/under/lawyer/purpsuit
-		else
-			uniform = /obj/item/clothing/under/lawyer/purpsuit/skirt
-			suit = /obj/item/clothing/suit/toggle/lawyer/purple
-	else if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/lawyer/bluesuit
-	else if(H.jumps == SKIRT)
-		uniform = /obj/item/clothing/under/lawyer/bluesuit/skirt
+		jumpsuit = /obj/item/clothing/under/lawyer/purpsuit
+		jumpskirt = /obj/item/clothing/under/lawyer/purpsuit/skirt
+		suit = /obj/item/clothing/suit/toggle/lawyer/purple

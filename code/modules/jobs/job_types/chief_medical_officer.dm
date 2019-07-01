@@ -33,6 +33,8 @@
 	name = "Chief Medical Officer"
 	jobtype = /datum/job/cmo
 
+	jumpsuit = /obj/item/clothing/under/rank/chief_medical_officer
+	jumpskirt = /obj/item/clothing/under/rank/chief_medical_officer/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/cmo
 	l_pocket = /obj/item/pinpointer/crew
@@ -56,10 +58,3 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/medical
 	suit_store = /obj/item/tank/internals/oxygen
 	r_pocket = /obj/item/flashlight/pen
-
-/datum/outfit/job/cmo/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/chief_medical_officer
-	else
-		uniform = /obj/item/clothing/under/rank/chief_medical_officer/skirt

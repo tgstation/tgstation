@@ -25,6 +25,8 @@
 	belt = /obj/item/pda/medical
 	ears = /obj/item/radio/headset/headset_med
 	shoes = /obj/item/clothing/shoes/sneakers/white
+	jumpsuit = /obj/item/clothing/under/rank/medical
+	jumpskirt = /obj/item/clothing/under/rank/medical/skirt
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/flashlight/pen
@@ -34,10 +36,3 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	chameleon_extras = /obj/item/gun/syringe
-
-/datum/outfit/job/doctor/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/medical
-	else
-		uniform = /obj/item/clothing/under/rank/medical/skirt

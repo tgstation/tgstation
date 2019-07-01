@@ -24,6 +24,8 @@
 	name = "Chemist"
 	jobtype = /datum/job/chemist
 
+	jumpsuit = /obj/item/clothing/under/rank/chemist
+	jumpskirt = /obj/item/clothing/under/rank/chemist/skirt
 	glasses = /obj/item/clothing/glasses/science
 	belt = /obj/item/pda/chemist
 	ears = /obj/item/radio/headset/headset_med
@@ -34,10 +36,3 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	chameleon_extras = /obj/item/gun/syringe
-
-/datum/outfit/job/chemist/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/chemist
-	else
-		uniform = /obj/item/clothing/under/rank/chemist/skirt

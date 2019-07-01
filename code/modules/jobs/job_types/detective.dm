@@ -27,6 +27,8 @@
 	name = "Detective"
 	jobtype = /datum/job/detective
 
+	jumpsuit = /obj/item/clothing/under/rank/det
+	jumpskirt = /obj/item/clothing/under/rank/det/skirt
 	belt = /obj/item/pda/detective
 	ears = /obj/item/radio/headset/headset_sec/alt
 	neck = /obj/item/clothing/neck/tie/detective
@@ -54,9 +56,3 @@
 	if(visualsOnly)
 		return
 
-/datum/outfit/job/detective/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/det
-	else
-		uniform = /obj/item/clothing/under/rank/det/skirt

@@ -26,13 +26,14 @@
 	name = "Station Engineer"
 	jobtype = /datum/job/engineer
 
+	jumpsuit = /obj/item/clothing/under/rank/engineer
+	jumpskirt = /obj/item/clothing/under/rank/engineer/skirt
 	belt = /obj/item/storage/belt/utility/full/engi
 	l_pocket = /obj/item/pda/engineering
 	ears = /obj/item/radio/headset/headset_eng
 	shoes = /obj/item/clothing/shoes/workboots
 	head = /obj/item/clothing/head/hardhat
 	r_pocket = /obj/item/t_scanner
-
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
@@ -51,12 +52,4 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	head = null
 	internals_slot = SLOT_S_STORE
-
-/datum/outfit/job/engineer/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/engineer
-	else
-		uniform = /obj/item/clothing/under/rank/engineer/skirt
-
 

@@ -32,6 +32,8 @@
 	name = "Warden"
 	jobtype = /datum/job/warden
 
+	jumpsuit = /obj/item/clothing/under/rank/warden
+	jumpskirt = /obj/item/clothing/under/rank/warden/skirt
 	belt = /obj/item/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -53,10 +55,4 @@
 
 	chameleon_extras = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 
-/datum/outfit/job/warden/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/warden
-	else
-		uniform = /obj/item/clothing/under/rank/warden/skirt
 

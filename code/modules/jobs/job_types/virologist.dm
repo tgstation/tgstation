@@ -24,6 +24,8 @@
 	name = "Virologist"
 	jobtype = /datum/job/virologist
 
+	jumpsuit = /obj/item/clothing/under/rank/virologist
+	jumpskirt = /obj/item/clothing/under/rank/virologist/skirt
 	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
 	mask = /obj/item/clothing/mask/surgical
@@ -35,9 +37,3 @@
 	satchel = /obj/item/storage/backpack/satchel/vir
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
-/datum/outfit/job/virologist/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/virologist
-	else
-		uniform = /obj/item/clothing/under/rank/virologist/skirt

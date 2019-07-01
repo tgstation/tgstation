@@ -25,6 +25,8 @@
 	name = "Scientist"
 	jobtype = /datum/job/scientist
 
+	jumpsuit = /obj/item/clothing/under/rank/scientist
+	jumpskirt = /obj/item/clothing/under/rank/scientist/skirt
 	belt = /obj/item/pda/toxins
 	ears = /obj/item/radio/headset/headset_sci
 	shoes = /obj/item/clothing/shoes/sneakers/white
@@ -35,9 +37,5 @@
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/scientist
-	else
-		uniform = /obj/item/clothing/under/rank/scientist/skirt
 	if(prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible

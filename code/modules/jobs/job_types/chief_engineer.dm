@@ -35,6 +35,8 @@
 	name = "Chief Engineer"
 	jobtype = /datum/job/chief_engineer
 
+	jumpsuit = /obj/item/clothing/under/rank/chief_engineer
+	jumpskirt = /obj/item/clothing/under/rank/chief_engineer/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/storage/belt/utility/chief/full
 	l_pocket = /obj/item/pda/heads/ce
@@ -62,10 +64,3 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 	head = null
 	internals_slot = SLOT_S_STORE
-
-/datum/outfit/job/ce/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/chief_engineer
-	else
-		uniform = /obj/item/clothing/under/rank/chief_engineer/skirt

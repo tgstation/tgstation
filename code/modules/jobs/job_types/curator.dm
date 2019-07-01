@@ -22,6 +22,8 @@
 	name = "Curator"
 	jobtype = /datum/job/curator
 
+	jumpsuit = /obj/item/clothing/under/rank/curator
+	jumpskirt = /obj/item/clothing/under/rank/curator/skirt
 	shoes = /obj/item/clothing/shoes/laceup
 	belt = /obj/item/pda/curator
 	ears = /obj/item/radio/headset/headset_srv
@@ -42,10 +44,3 @@
 		return
 
 	H.grant_all_languages(omnitongue=TRUE)
-
-/datum/outfit/job/curator/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/curator
-	else
-		uniform = /obj/item/clothing/under/rank/curator/skirt

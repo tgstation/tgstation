@@ -25,16 +25,11 @@
 	ears = /obj/item/radio/headset/headset_srv
 	suit = /obj/item/clothing/suit/apron
 	gloves  =/obj/item/clothing/gloves/botanic_leather
+	jumpsuit = /obj/item/clothing/under/rank/hydroponics
+	jumpskirt = /obj/item/clothing/under/rank/hydroponics/skirt
 	suit_store = /obj/item/plant_analyzer
 
 	backpack = /obj/item/storage/backpack/botany
 	satchel = /obj/item/storage/backpack/satchel/hyd
-
-/datum/outfit/job/botanist/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/hydroponics
-	else
-		uniform = /obj/item/clothing/under/rank/hydroponics/skirt
 
 

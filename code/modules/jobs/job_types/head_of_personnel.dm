@@ -41,6 +41,8 @@
 	name = "Head of Personnel"
 	jobtype = /datum/job/hop
 
+	jumpsuit = /obj/item/clothing/under/rank/head_of_personnel
+	jumpskirt = /obj/item/clothing/under/rank/head_of_personnel/skirt
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
@@ -51,9 +53,3 @@
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)
 
-/datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/head_of_personnel
-	else
-		uniform = /obj/item/clothing/under/rank/head_of_personnel/skirt

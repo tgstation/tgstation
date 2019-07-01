@@ -27,6 +27,7 @@
 	name = "Clown"
 	jobtype = /datum/job/clown
 
+	uniform = /obj/item/clothing/under/rank/clown
 	belt = /obj/item/pda/clown
 	ears = /obj/item/radio/headset/headset_srv
 	shoes = /obj/item/clothing/shoes/clown_shoes
@@ -56,10 +57,3 @@
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
 	H.dna.add_mutation(CLOWNMUT)
-
-/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/clown
-	else
-		uniform = /obj/item/clothing/under/rank/clown/sexy

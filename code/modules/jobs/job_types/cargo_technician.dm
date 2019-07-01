@@ -22,13 +22,8 @@
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_tech
 
+	jumpsuit = /obj/item/clothing/under/rank/cargotech
+	jumpskirt = /obj/item/clothing/under/rank/cargotech/skirt
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
 	l_hand = /obj/item/export_scanner
-
-/datum/outfit/job/cargo_tech/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/cargotech
-	else
-		uniform = /obj/item/clothing/under/rank/cargotech/skirt

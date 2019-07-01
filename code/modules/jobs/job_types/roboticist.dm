@@ -24,6 +24,8 @@
 	name = "Roboticist"
 	jobtype = /datum/job/roboticist
 
+	jumpsuit = /obj/item/clothing/under/rank/roboticist
+	jumpskirt = /obj/item/clothing/under/rank/roboticist/skirt
 	belt = /obj/item/storage/belt/utility/full
 	l_pocket = /obj/item/pda/roboticist
 	ears = /obj/item/radio/headset/headset_sci
@@ -34,9 +36,3 @@
 
 	pda_slot = SLOT_L_STORE
 
-/datum/outfit/job/roboticist/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/roboticist
-	else
-		uniform = /obj/item/clothing/under/rank/roboticist/skirt

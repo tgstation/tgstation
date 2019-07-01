@@ -24,6 +24,8 @@
 	name = "Geneticist"
 	jobtype = /datum/job/geneticist
 
+	jumpsuit = /obj/item/clothing/under/rank/geneticist
+	jumpskirt = /obj/item/clothing/under/rank/geneticist/skirt
 	belt = /obj/item/pda/geneticist
 	ears = /obj/item/radio/headset/headset_medsci
 	shoes = /obj/item/clothing/shoes/sneakers/white
@@ -34,10 +36,3 @@
 	backpack = /obj/item/storage/backpack/genetics
 	satchel = /obj/item/storage/backpack/satchel/gen
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
-
-/datum/outfit/job/geneticist/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/geneticist
-	else
-		uniform = /obj/item/clothing/under/rank/geneticist/skirt

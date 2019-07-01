@@ -29,6 +29,9 @@
 	ears = /obj/item/radio/headset/headset_eng
 	r_pocket = /obj/item/analyzer
 
+	jumpsuit = /obj/item/clothing/under/rank/atmospheric_technician
+	jumpskirt = /obj/item/clothing/under/rank/atmospheric_technician/skirt
+
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
@@ -43,10 +46,3 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = SLOT_S_STORE
-
-/datum/outfit/job/atmos/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.jumps == SUIT)
-		uniform = /obj/item/clothing/under/rank/atmospheric_technician
-	else
-		uniform = /obj/item/clothing/under/rank/atmospheric_technician/skirt
