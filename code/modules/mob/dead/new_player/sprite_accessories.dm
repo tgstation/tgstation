@@ -1029,6 +1029,11 @@
 	icon_state = "male_white"
 	gender = MALE
 
+/datum/sprite_accessory/underwear/male_white
+	name = "Men's Yellow-Black"
+	icon_state = "bee_shorts"
+	gender = MALE
+
 /datum/sprite_accessory/underwear/female_babydoll
 	name = "Babydoll"
 	icon_state = "female_babydoll"
@@ -1313,6 +1318,11 @@
 	icon_state = "shirt_white"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/shirt_bee
+	name = "Shirt (Bee)"
+	icon_state = "bee_shirt"
+	gender = NEUTER
+
 /datum/sprite_accessory/undershirt/blackshortsleeve
 	name = "Short-sleeved Shirt (Black)"
 	icon_state = "blackshortsleeve"
@@ -1484,6 +1494,10 @@
 /datum/sprite_accessory/socks/white_norm
 	name = "Normal (White)"
 	icon_state = "white_norm"
+
+/datum/sprite_accessory/socks/bee_norm
+	name = "Normal (Bee)"
+	icon_state = "bee_norm"
 
 /datum/sprite_accessory/socks/pantyhose
 	name = "Pantyhose"
