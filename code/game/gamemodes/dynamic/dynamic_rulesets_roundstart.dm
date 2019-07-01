@@ -204,7 +204,7 @@
 	name = "Nuclear Emergency"
 	antag_flag = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
-	/var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
+	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
 	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
@@ -283,30 +283,6 @@
 		else
 			SSticker.mode_result = "halfwin - interrupted"
 			SSticker.news_report = OPERATIVE_SKIRMISH
-
-//////////////////////////////////////////////
-//                                          //
-//               EXTENDED                   //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/roundstart/extended
-	name = "Extended"
-	antag_flag = null
-	antag_datum = null
-	restricted_roles = list()
-	enemy_roles = list()
-	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
-	required_candidates = 0
-	weight = 3
-	cost = 0
-	requirements = list(101,101,101,101,101,101,101,101,101,101) // So that's not possible to roll it naturally
-	high_population_requirement = 101
-
-/datum/dynamic_ruleset/roundstart/extended/pre_execute()
-	message_admins("Starting a round of extended.")
-	log_admin("Starting a round of extended.")
-	return TRUE
 
 //////////////////////////////////////////////
 //                                          //
@@ -430,3 +406,319 @@
 		M.mind.restricted_roles = restricted_roles
 		log_game("[key_name(M)] has been selected as a hivemind host")
 	return TRUE
+
+// Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
+
+//////////////////////////////////////////////
+//                                          //
+//               EXTENDED                   //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/extended
+	name = "Extended"
+	antag_flag = null
+	antag_datum = null
+	restricted_roles = list()
+	enemy_roles = list()
+	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
+	required_candidates = 0
+	weight = 3
+	cost = 0
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement = 101
+
+/datum/dynamic_ruleset/roundstart/extended/pre_execute()
+	message_admins("Starting a round of extended.")
+	log_admin("Starting a round of extended.")
+	return TRUE
+
+//////////////////////////////////////////////
+//                                          //
+//               CLOCKCULT                  //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/clockcult
+	name = "Clockcult"
+	antag_flag = ROLE_SERVANT_OF_RATVAR
+	antag_datum = /datum/antagonist/clockcult
+	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
+	enemy_roles = list("Security Officer","Warden", "Detective","Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 4
+	weight = 3
+	cost = 0
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement = 101
+	flags = HIGHLANDER_RULESET
+	var/ark_time
+
+/datum/dynamic_ruleset/roundstart/clockcult/pre_execute()
+	var/list/errorList = list()
+	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
+	if(errorList.len)
+		message_admins("Reebe failed to load!")
+		log_game("Reebe failed to load!")
+		return FALSE
+	for(var/datum/parsed_map/PM in reebes)
+		PM.initTemplateBounds()
+
+	var/starter_servants = 4
+	var/number_players = num_players()
+	if(number_players > 30)
+		number_players -= 30
+		starter_servants += round(number_players / 10)
+	starter_servants = min(starter_servants, 8)
+	for (var/i in 1 to starter_servants)
+		var/mob/servant = pick(candidates)
+		assigned += servant
+		candidates -= servant
+		servant.mind.assigned_role = ROLE_SERVANT_OF_RATVAR
+		servant.mind.special_role = ROLE_SERVANT_OF_RATVAR
+	ark_time = 30 + round((number_players / 5))
+	ark_time = min(ark_time, 35)
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/clockcult/execute()
+	var/list/spread_out_spawns = GLOB.servant_spawns.Copy()
+	for(var/mob/S in assigned)
+		if(!spread_out_spawns.len)
+			spread_out_spawns = GLOB.servant_spawns.Copy()
+		var/datum/mind/servant = S.mind
+		log_game("[key_name(servant)] was made an initial servant of Ratvar")
+		var/turf/T = pick_n_take(spread_out_spawns)
+		S.forceMove(T)
+		greet_servant(S)
+		equip_servant(S)
+		add_servant_of_ratvar(S, TRUE)
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
+	G.final_countdown(ark_time)
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/clockcult/proc/greet_servant(mob/M) //Description of their role
+	if(!M)
+		return 0
+	to_chat(M, "<span class='bold large_brass'>You are a servant of Ratvar, the Clockwork Justiciar!</span>")
+	to_chat(M, "<span class='brass'>You have approximately <b>[ark_time]</b> minutes until the Ark activates.</span>")
+	to_chat(M, "<span class='brass'>Unlock <b>Script</b> scripture by converting a new servant.</span>")
+	to_chat(M, "<span class='brass'><b>Application</b> scripture will be unlocked halfway until the Ark's activation.</span>")
+	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
+	return 1
+
+/datum/dynamic_ruleset/roundstart/clockcult/proc/equip_servant(mob/living/M) //Grants a clockwork slab to the mob, with one of each component
+	if(!M || !ishuman(M))
+		return FALSE
+	var/mob/living/carbon/human/L = M
+	L.equipOutfit(/datum/outfit/servant_of_ratvar)
+	var/obj/item/clockwork/slab/S = new
+	var/slot = "At your feet"
+	var/list/slots = list("In your left pocket" = SLOT_L_STORE, "In your right pocket" = SLOT_R_STORE, "In your backpack" = SLOT_IN_BACKPACK, "On your belt" = SLOT_BELT)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		slot = H.equip_in_one_of_slots(S, slots)
+		if(slot == "In your backpack")
+			slot = "In your [H.back.name]"
+	if(slot == "At your feet")
+		if(!S.forceMove(get_turf(L)))
+			qdel(S)
+	if(S && !QDELETED(S))
+		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! It'll tell you if anything's changed, as well as what to expect.</span>")
+		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
+		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
+		to_chat(L, "<span class='alloy italics'>If you want more information, you can read <a href=\"https://tgstation13.org/wiki/Clockwork_Cult\">the wiki page</a> to learn more.</span>")
+		return TRUE
+	return FALSE
+
+/datum/dynamic_ruleset/roundstart/clockcult/round_result()
+	if(GLOB.clockwork_gateway_activated)
+		SSticker.news_report = CLOCK_SUMMON
+		SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
+	else
+		SSticker.news_report = CULT_FAILURE
+		SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
+
+//////////////////////////////////////////////
+//                                          //
+//               OVERTHROW                  //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/overthrow
+	name = "Overthrow"
+	antag_flag = ROLE_OVERTHROW
+	antag_datum = /datum/antagonist/overthrow
+	restricted_roles = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	enemy_roles = list("Security Officer","Warden", "Detective","Head of Security", "Captain")
+	required_enemies = list(4,4,3,3,3,2,2,1,1,0)
+	required_candidates = 2
+	weight = 3
+	cost = 0
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement = 101
+	flags = HIGHLANDER_RULESET
+
+/datum/dynamic_ruleset/roundstart/overthrow/pre_execute()
+	var/sleeping_agents = required_enemies[round(mode.threat_level/10)] + round(num_players()*0.05)
+
+	for (var/i in 1 to sleeping_agents)
+		var/mob/sleeping_agent = pick(candidates)
+		candidates -= sleeping_agent
+		assigned += sleeping_agent
+		sleeping_agent.mind.restricted_roles = restricted_roles
+		sleeping_agent.mind.special_role = ROLE_OVERTHROW
+
+/datum/dynamic_ruleset/roundstart/overthrow/execute()
+	for(var/i in assigned)
+		var/mob/agent = i
+		var/datum/antagonist/overthrow/O = agent.mind.add_antag_datum(antag_datum)
+		O.equip_initial_overthrow_agent()
+	return TRUE
+
+//////////////////////////////////////////////
+//                                          //
+//               CLOWN OPS                  //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/nuclear/clown_ops
+	name = "clown ops"
+	antag_datum = /datum/antagonist/nukeop/clownop
+	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement = 101
+
+/datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
+	. = ..()
+	if(.)
+		for(var/obj/machinery/nuclearbomb/syndicate/S in GLOB.nuke_list)
+			var/turf/T = get_turf(S)
+			if(T)
+				qdel(S)
+				new /obj/machinery/nuclearbomb/syndicate/bananium(T)
+		for(var/V in assigned)
+			var/mob/the_op = V
+			the_op.mind.assigned_role = "Clown Operative"
+			the_op.mind.special_role = "Clown Operative"
+
+//////////////////////////////////////////////
+//                                          //
+//               DEVIL                      //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/devil
+	name = "Devil"
+	antag_flag = ROLE_DEVIL
+	antag_datum = /datum/antagonist/devil
+	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
+	enemy_roles = list("Lawyer", "Curator", "Chaplain", "Security Officer","Warden", "Detective","Head of Security", "Captain")
+	required_enemies = list(4,4,3,3,3,2,2,1,1,0)
+	required_candidates = 1
+	weight = 3
+	cost = 0
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement = 101
+	var/devil_limit = 4 // Hard limit on devils if scaling is turned off
+
+/datum/dynamic_ruleset/roundstart/devil/pre_execute()	
+	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+	var/num_devils = 1
+
+	if(tsc)
+		num_devils = max(required_candidates, min(round(num_players() / (tsc * 3)) + 2, round(num_players() / (tsc * 1.5))))
+	else
+		num_devils = max(required_candidates, min(num_players(), devil_limit))
+
+	for(var/j = 0, j < num_devils, j++)
+		if (!candidates.len)
+			break
+		var/mob/devil = pick(candidates)
+		assigned += devil
+		candidates -= devil
+		devil.mind.special_role = ROLE_DEVIL
+		devil.mind.restricted_roles = restricted_roles
+
+		log_game("[key_name(devil)] has been selected as a devil")
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/devil/execute()
+	for(var/mob/devil in assigned)
+		add_devil(devil, ascendable = TRUE)
+		add_devil_objectives(devil.mind,2)
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/devil/proc/add_devil_objectives(datum/mind/devil_mind, quantity)
+	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)
+	var/datum/antagonist/devil/D = devil_mind.has_antag_datum(/datum/antagonist/devil)
+	for(var/i = 1 to quantity)
+		var/type = pick(validtypes)
+		var/datum/objective/devil/objective = new type(null)
+		objective.owner = devil_mind
+		D.objectives += objective
+		if(!istype(objective, /datum/objective/devil/buy_target))
+			validtypes -= type
+		else
+			objective.find_target()
+
+//////////////////////////////////////////////
+//                                          //
+//               MONKEY                     //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/monkey
+	name = "Monkey"
+	antag_flag = ROLE_MONKEY
+	antag_datum = /datum/antagonist/monkey/leader
+	restricted_roles = list("Cyborg", "AI")
+	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
+	required_candidates = 1
+	weight = 3
+	cost = 0
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement = 101
+	var/players_per_carrier = 30
+	var/monkeys_to_win = 1
+	var/escaped_monkeys = 0
+	var/datum/team/monkey/monkey_team
+
+/datum/dynamic_ruleset/roundstart/monkey/pre_execute()
+	var/carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
+
+	for(var/j = 0, j < carriers_to_make, j++)
+		if (!candidates.len)
+			break
+		var/mob/carrier = pick(candidates)
+		assigned += carrier
+		candidates -= carrier
+		carrier.mind.special_role = "Monkey Leader"
+		carrier.mind.restricted_roles = restricted_roles
+		log_game("[key_name(carrier)] has been selected as a Jungle Fever carrier")
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/monkey/execute()
+	for(var/mob/carrier in assigned)
+		var/datum/antagonist/monkey/M = add_monkey_leader(carrier.mind)
+		if(M)
+			monkey_team = M.monkey_team
+	return ..()
+
+/datum/dynamic_ruleset/roundstart/monkey/proc/check_monkey_victory()
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return FALSE
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+		if (M.HasDisease(D))
+			if(M.onCentCom() || M.onSyndieBase())
+				escaped_monkeys++
+	if(escaped_monkeys >= monkeys_to_win)
+		return TRUE
+	else
+		return FALSE
+
+/datum/dynamic_ruleset/roundstart/monkey/round_result()
+	if(check_monkey_victory())
+		SSticker.mode_result = "win - monkey win"
+	else
+		SSticker.mode_result = "loss - staff stopped the monkeys"
