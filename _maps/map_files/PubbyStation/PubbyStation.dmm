@@ -3161,7 +3161,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -27
@@ -5203,9 +5202,6 @@
 	},
 /area/maintenance/department/security/brig)
 "aoO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/machinery/camera{
 	c_tag = "Brig Gulag Teleporter";
 	dir = 4
