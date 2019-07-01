@@ -269,7 +269,7 @@
 		return
 
 	if(amount < 0 && L.failing && !rev_failure)
-		return FALSE
+		return 0
 
 	var/adjusted_amount = amount
 
