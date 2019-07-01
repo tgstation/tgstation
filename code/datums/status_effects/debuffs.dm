@@ -390,84 +390,29 @@
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
 
-/datum/status_effect/saw_bleed
+/datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
-	duration = -1 //removed under specific conditions
 	tick_interval = 6
-	alert_type = null
-	var/mutable_appearance/status_overlay
-	var/mutable_appearance/status_underlay
-	var/number_of_stacks = 3
-	var/bleed_buildup = 3
-	var/delay_before_decay = 5
-	
-	var/overlay_file = 'icons/effects/bleed.dmi'
-	var/underlay_file = 'icons/effects/bleed.dmi'
-	var/overlay_state = "bleed"
-	var/underlay_state = "bleed"
-	
+	delay_before_decay = 5
+	stack_threshold = 10
+	max_stacks = 10
+	overlay_file = 'icons/effects/bleed.dmi'
+	underlay_file = 'icons/effects/bleed.dmi'
+	overlay_state = "bleed"
+	underlay_state = "bleed"
 	var/bleed_damage = 200
-	var/needs_to_bleed = FALSE
 
-/datum/status_effect/saw_bleed/Destroy()
-	if(owner)
-		owner.cut_overlay(status_overlay)
-		owner.underlays -= status_underlay
-	QDEL_NULL(status_overlay)
-	return ..()
+/datum/status_effect/stacking/saw_bleed/fadeout_effect()
+	new /obj/effect/temp_visual/bleed(get_turf(owner))
 
-/datum/status_effect/saw_bleed/on_apply()
-	if(owner.stat == DEAD)
-		return FALSE
-	status_overlay = mutable_appearance(overlay_file, "[overlay_state][number_of_stacks]")
-	status_underlay = mutable_appearance(underlay_file, "[underlay_state][number_of_stacks]")
-	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
-	var/icon_height = I.Height()
-	status_overlay.pixel_x = -owner.pixel_x
-	status_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
-	status_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the status's overlay size based on the target's icon size
-	status_underlay.pixel_x = -owner.pixel_x
-	status_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
-	status_underlay.alpha = 40
-	owner.add_overlay(status_overlay)
-	owner.underlays += status_underlay
-	return ..()
-
-/datum/status_effect/saw_bleed/tick()
-	if(owner.stat == DEAD)
-		qdel(src)
-	else
-		add_bleed(-1)
-
-/datum/status_effect/saw_bleed/proc/add_bleed(amount)
-	owner.cut_overlay(status_overlay)
-	owner.underlays -= status_underlay
-	number_of_stacks += amount
-	if(number_of_stacks)
-		if(number_of_stacks >= 10)
-			needs_to_bleed = TRUE
-			qdel(src)
-		else
-			if(amount > 0)
-				tick_interval += delay_before_decay
-			status_overlay.icon_state = "[overlay_state][number_of_stacks]"
-			status_underlay.icon_state = "[underlay_state][number_of_stacks]"
-			owner.add_overlay(status_overlay)
-			owner.underlays += status_underlay
-	else
-		qdel(src)
-
-/datum/status_effect/saw_bleed/on_remove()
-	if(needs_to_bleed)
-		var/turf/T = get_turf(owner)
-		new /obj/effect/temp_visual/bleed/explode(T)
-		for(var/d in GLOB.alldirs)
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
-		playsound(T, "desceration", 200, 1, -1)
-		owner.adjustBruteLoss(bleed_damage)
-	else
-		new /obj/effect/temp_visual/bleed(get_turf(owner))
-
+/datum/status_effect/stacking/saw_bleed/threshold_effect()
+	owner.adjustBruteLoss(bleed_damage)
+	var/turf/T = get_turf(owner)
+	new /obj/effect/temp_visual/bleed/explode(T)
+	for(var/d in GLOB.alldirs)
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
+	playsound(T, "desceration", 200, 1, -1)
+	
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	if(!set_curse)
