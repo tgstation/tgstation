@@ -251,7 +251,6 @@
 		message = replacetext(message," thanks "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
-		message = replacetext(message," faggot "," square ")
 		message = replacetext(message," muh valids "," my kicks ")
 		speech_args[SPEECH_MESSAGE] = trim(message)
 
