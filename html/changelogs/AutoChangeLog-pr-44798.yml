@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - balance: "Added lots of new virus cures, made cure difficulty scale more consistently. Cures are now picked from a list of possible cures per resistance level, multiple diseases at the same level no longer always share a cure. Looking at you table salt."
