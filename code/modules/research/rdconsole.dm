@@ -117,22 +117,22 @@ Nothing else in the console has ID requirements.
 	if(istype(D, /obj/item/disk))
 		if(istype(D, /obj/item/disk/tech_disk))
 			if(t_disk)
-				to_chat(user, "<span class='danger'>A technology disk is already loaded!</span>")
+				to_chat(user, "<span class='warning'>A technology disk is already loaded!</span>")
 				return
 			if(!user.transferItemToLoc(D, src))
-				to_chat(user, "<span class='danger'>[D] is stuck to your hand!</span>")
+				to_chat(user, "<span class='warning'>[D] is stuck to your hand!</span>")
 				return
 			t_disk = D
 		else if (istype(D, /obj/item/disk/design_disk))
 			if(d_disk)
-				to_chat(user, "<span class='danger'>A design disk is already loaded!</span>")
+				to_chat(user, "<span class='warning'>A design disk is already loaded!</span>")
 				return
 			if(!user.transferItemToLoc(D, src))
-				to_chat(user, "<span class='danger'>[D] is stuck to your hand!</span>")
+				to_chat(user, "<span class='warning'>[D] is stuck to your hand!</span>")
 				return
 			d_disk = D
 		else
-			to_chat(user, "<span class='danger'>Machine cannot accept disks in that format.</span>")
+			to_chat(user, "<span class='warning'>Machine cannot accept disks in that format.</span>")
 			return
 		to_chat(user, "<span class='notice'>You insert [D] into \the [src]!</span>")
 	else if(!(linked_destroy && linked_destroy.busy) && !(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))

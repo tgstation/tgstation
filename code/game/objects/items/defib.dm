@@ -40,6 +40,16 @@
 	update_icon()
 	return
 
+/obj/item/defibrillator/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if(paddles?.loc == src)
+		paddles.fire_act(exposed_temperature, exposed_volume)
+
+/obj/item/defibrillator/extinguish()
+	. = ..()
+	if(paddles?.loc == src)
+		paddles.extinguish()
+
 /obj/item/defibrillator/update_icon()
 	update_power()
 	update_overlays()
@@ -285,6 +295,7 @@
 	force = 0
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = INDESTRUCTIBLE
 
 	var/revivecost = 1000
 	var/cooldown = FALSE
@@ -309,6 +320,12 @@
 /obj/item/twohanded/shockpaddles/Moved()
 	. = ..()
 	check_range()
+
+
+/obj/item/twohanded/shockpaddles/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if((req_defib && defib) && loc != defib)
+		defib.fire_act(exposed_temperature, exposed_volume)
 
 /obj/item/twohanded/shockpaddles/proc/check_range()
 	if(!req_defib)
