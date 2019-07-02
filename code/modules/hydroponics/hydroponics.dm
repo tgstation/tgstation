@@ -689,7 +689,7 @@
 				return
 
 		if(!reagent_source.reagents.total_volume)
-			to_chat(user, "<span class='notice'>[reagent_source] is empty.</span>")
+			to_chat(user, "<span class='warning'>[reagent_source] is empty!</span>")
 			return 1
 
 		var/list/trays = list(src)//makes the list just this in cases of syringes and compost etc
