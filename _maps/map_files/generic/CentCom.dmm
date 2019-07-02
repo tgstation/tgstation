@@ -7931,6 +7931,12 @@
 	network = list("rd","minisat");
 	pixel_y = 28
 	},
+/obj/machinery/button/door/indestructible{
+	id = "adminvault";
+	name = "Secure Storage";
+	pixel_x = 24;
+	req_access_txt = "109"
+	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "rz" = (
@@ -8560,16 +8566,15 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "sH" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/vault{
-	name = "Vault Door";
-	req_access_txt = "53"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/poddoor{
+	id = "adminvault";
+	name = "Administrative Secure Storage"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
@@ -9474,10 +9479,7 @@
 /area/wizard_station)
 "uD" = (
 /obj/structure/table/wood/fancy,
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
-	syndie = 1
-	},
+/obj/item/radio/headset,
 /turf/open/floor/wood,
 /area/wizard_station)
 "uE" = (
