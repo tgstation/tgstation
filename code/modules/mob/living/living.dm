@@ -299,7 +299,7 @@
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
 					C.grippedby(src)
-			
+
 			update_pull_movespeed()
 
 		set_pull_offsets(M, state)
@@ -490,15 +490,6 @@
 
 /mob/living/is_drawable(mob/user, allowmobs = TRUE)
 	return (allowmobs && reagents && can_inject(user))
-
-/mob/living/proc/get_organ_target()
-	var/mob/shooter = src
-	var/t = shooter.zone_selected
-	if ((t in list( BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH )))
-		t = BODY_ZONE_HEAD
-	var/def_zone = ran_zone(t)
-	return def_zone
-
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
