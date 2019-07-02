@@ -768,7 +768,7 @@
 				throw_alert("gravity", /obj/screen/alert/highgravity)
 	else
 		throw_alert("gravity", /obj/screen/alert/weightless)
-	if(!override && !movement_type&FLYING)
+	if(!override && !movement_type & FLYING)
 		float(!has_gravity)
 
 /mob/living/float(on)
