@@ -49,19 +49,27 @@
 		H.mind.miming = 1
 
 /obj/item/book/mimery
-	name = "Guide to Dank Mimery"
+	name = "Principles of Mimery"
 	desc = "A primer on basic pantomime."
 	icon_state ="bookmime"
 
 /obj/item/book/mimery/attack_self(mob/user,)
 	user.set_machine(src)
-	var/dat = "<B>Guide to Dank Mimery</B><BR>"
-	dat += "Teaches one of three classic pantomime routines, allowing a practiced mime to conjure invisible objects into corporeal existence.<BR>"
-	dat += "Once you have mastered your routine, this book will have no more to say to you.<BR>"
+	var/dat = "<B>Principles of Mimery</B><BR>"
+	dat += "This book teaches mastery over one of three classic mime routines.<BR>"
+	dat += "Once you've mastered your routine, the book, too, becomes invisible.<BR>"
 	dat += "<HR>"
-	dat += "<A href='byond://?src=[REF(src)];invisible_wall=1'>Invisible Wall</A><BR>"
-	dat += "<A href='byond://?src=[REF(src)];invisible_chair=1'>Invisible Chair</A><BR>"
-	dat += "<A href='byond://?src=[REF(src)];invisible_box=1'>Invisible Box</A><BR>"
+	dat += "<B>Table of Contents</B><BR>"
+	dat += "<BR>"
+	dat += "Indroduction 3<BR>"
+	dat += "Summary 12<BR>"
+	dat += "A History of Mime 19<BR>"
+	dat += "Mime Time Line 24<BR>"
+	dat += "<A href='byond://?src=[REF(src)];invisible_wall=1'>Invisible Wall</A> 30<BR>"
+	dat += "<A href='byond://?src=[REF(src)];invisible_chair=1'>Invisible Chair</A> 39<BR>"
+	dat += "<A href='byond://?src=[REF(src)];invisible_box=1'>Invisible Box</A> 48<BR>"
+	dat += "Glossary 49<BR>"
+	dat += "Index 58<BR>"
 	user << browse(dat, "window=book")
 
 /obj/item/book/mimery/Topic(href, href_list)
