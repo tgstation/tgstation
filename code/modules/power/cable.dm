@@ -36,13 +36,8 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable
 	name = "power cable"
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
-<<<<<<< HEAD
-	icon = 'icons/obj/power_cond/cable.dmi'
-	icon_state = "1-2-4-8-node"
-=======
 	icon = 'icons/obj/power_cond/cables.dmi'
 	icon_state = "0-1"
->>>>>>> parent of 65e9888fa6... [READY] Smart Cables (#44265)
 	level = 1 //is underfloor
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
@@ -497,7 +492,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	//clear the powernet of any machines on tile first
 	for(var/obj/machinery/power/P in T1)
-		P.disconnect_from_network() 
+		P.disconnect_from_network()
 
 	var/list/P_list = list()
 	for(var/dir_check in GLOB.cardinals)
