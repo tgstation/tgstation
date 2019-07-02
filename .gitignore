@@ -4,7 +4,12 @@
 /data/**/*
 /tmp/**/*
 /config/title_music/**/*
+/config/title_screens/**/*
 /config/jukebox_music/**/*
+/icons/default_title.dmi
+ss13_32.png
+ss13_64.png
+tg_32.png
 
 #Ignore byond config folder.
 /cfg/**/*
