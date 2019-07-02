@@ -18,7 +18,7 @@
 
 /obj/effect/baseturf_helper/LateInitialize()
 	if(!baseturf_to_replace)
-		baseturf_to_replace = typecacheof(/turf/open/space) + list(/turf/baseturf_bottom = TRUE)
+		baseturf_to_replace = typecacheof(/turf/open/space)
 	else if(!length(baseturf_to_replace))
 		baseturf_to_replace = list(baseturf_to_replace = TRUE)
 	else if(baseturf_to_replace[baseturf_to_replace[1]] != TRUE) // It's not associative
@@ -26,6 +26,8 @@
 		for(var/i in baseturf_to_replace)
 			formatted[i] = TRUE
 		baseturf_to_replace = formatted
+
+	baseturf_to_replace += list(/turf/baseturf_bottom = TRUE)
 
 	var/area/our_area = get_area(src)
 	for(var/i in get_area_turfs(our_area, z))
