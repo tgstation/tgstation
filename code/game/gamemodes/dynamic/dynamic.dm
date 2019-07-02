@@ -74,16 +74,16 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 /datum/game_mode/dynamic/AdminPanel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
-	dat += "Dynamic Mode <a href='?src=\ref[src];Vars=\ref[src]'>\[VV\]</A><BR>"
+	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
-	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];threatlog=1'>\[View Log\]</a><br/>"
+	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
 	dat += "Parameters: centre = [curve_centre] ; width = [curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
-	dat += "Forced extended: <a href='?src=\ref[src];forced_extended=1'><b>[forced_extended ? "On" : "Off"]</b></a><br/>"
-	dat += "Classic secret (only autotraitor): <a href='?src=\ref[src];classic_secret=1'><b>[classic_secret ? "On" : "Off"]</b></a><br/>"
-	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];no_stacking=1'><b>[no_stacking ? "On" : "Off"]</b></a><br/>"
-	dat += "Stacking limit: [stacking_limit] <a href='?src=\ref[src];stacking_limit=1'>\[Adjust\]</A>"
+	dat += "Forced extended: <a href='?src=\ref[src];[HrefToken()];forced_extended=1'><b>[forced_extended ? "On" : "Off"]</b></a><br/>"
+	dat += "Classic secret (only autotraitor): <a href='?src=\ref[src];[HrefToken()];classic_secret=1'><b>[classic_secret ? "On" : "Off"]</b></a><br/>"
+	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];[HrefToken()];no_stacking=1'><b>[no_stacking ? "On" : "Off"]</b></a><br/>"
+	dat += "Stacking limit: [stacking_limit] <a href='?src=\ref[src];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
 	dat += "Executed rulesets: "
 	if (executed_rules.len > 0)
@@ -100,8 +100,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[GetInjectionChance()]%</b> chance)<BR>"
-	dat += "Latejoin: [latejoin_injection_cooldown>60 ? "[round(latejoin_injection_cooldown/60,0.1)] minutes" : "[latejoin_injection_cooldown] seconds"] <a href='?src=\ref[src];injectnow=1'>\[Now!\]</A><BR>"
-	dat += "Midround: [midround_injection_cooldown>60 ? "[round(midround_injection_cooldown/60,0.1)] minutes" : "[midround_injection_cooldown] seconds"] <a href='?src=\ref[src];injectnow=2'>\[Now!\]</A><BR>"
+	dat += "Latejoin: [latejoin_injection_cooldown>60 ? "[round(latejoin_injection_cooldown/60,0.1)] minutes" : "[latejoin_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Midround: [midround_injection_cooldown>60 ? "[round(midround_injection_cooldown/60,0.1)] minutes" : "[midround_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=2'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -125,9 +125,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			create_threat(threatadd)
 		else
 			spend_threat(-threatadd)
-	else if (href_list["injectnow"] == 1)
+	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
-	else if (href_list["injectnow"] == 2)
+	else if (href_list["injectmid"])
 		midround_injection_cooldown = 0
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
@@ -225,6 +225,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	return TRUE
 
 /datum/game_mode/dynamic/post_setup(report)
+	update_playercounts()
+
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		if(!rule.execute())
 			stack_trace("The starting rule \"[rule.name]\" failed to execute.")
@@ -475,7 +477,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/chance = 0
 	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
 	var/high_pop_factor = (GLOB.player_list.len >= high_pop_limit)
-	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))//https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=2053826290
+	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5))) // https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=2053826290
 	if (!current_players[CURRENT_LIVING_ANTAGS].len)
 		chance += 50 // No antags at all? let's boost those odds!
 	else

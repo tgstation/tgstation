@@ -157,7 +157,7 @@
 	..()
 	for(var/mob/living/player in living_players)
 		if(isAI(player))
-			living_players -= player // Your assigned role doesn't change when you are turned into a MoMMI or AI
+			living_players -= player // Your assigned role doesn't change when you are turned into AI
 			continue
 		if(is_centcom_level(player.z))
 			living_players -= player // We don't autotator people in centcom

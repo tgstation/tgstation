@@ -201,6 +201,11 @@
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
+	else if(href_list["gamemode_panel"])
+		if(!check_rights(R_ADMIN))
+			return
+		SSticker.mode.AdminPanel()
+
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -780,7 +785,7 @@
 		GLOB.dynamic_midround_delay_max = (new_max MINUTES) / 20
 		dynamic_mode_options(usr)
 
-	else if(href_list["force_extended"])
+	else if(href_list["f_dynamic_force_extended"])
 		if(!check_rights(R_ADMIN))
 			return
 
@@ -792,7 +797,7 @@
 		message_admins("[key_name(usr)] set 'forced_extended' to [GLOB.dynamic_forced_extended].")
 		dynamic_mode_options(usr)
 
-	else if(href_list["no_stacking"])
+	else if(href_list["f_dynamic_no_stacking"])
 		if(!check_rights(R_ADMIN))
 			return
 
@@ -804,7 +809,7 @@
 		message_admins("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
 		dynamic_mode_options(usr)
 
-	else if(href_list["classic_secret"])
+	else if(href_list["f_dynamic_classic_secret"])
 		if(!check_rights(R_ADMIN))
 			return
 
@@ -816,7 +821,7 @@
 		message_admins("[key_name(usr)] set 'classic_secret' to [GLOB.dynamic_classic_secret].")
 		dynamic_mode_options(usr)
 
-	else if(href_list["stacking_limit"])
+	else if(href_list["f_dynamic_stacking_limit"])
 		if(!check_rights(R_ADMIN))
 			return
 
@@ -828,7 +833,7 @@
 		message_admins("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
 		dynamic_mode_options(usr)	
 
-	else if(href_list["high_pop_limit"])
+	else if(href_list["f_dynamic_high_pop_limit"])
 		if(!check_rights(R_ADMIN))
 			return
 
