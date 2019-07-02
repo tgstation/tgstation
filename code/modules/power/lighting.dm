@@ -651,7 +651,7 @@
 		else
 			prot = 1
 
-		if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+		if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS) || prob(25))
 			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 		else if(istype(user) && user.dna.check_mutation(TK))
 			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
