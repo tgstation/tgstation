@@ -5,7 +5,7 @@
 /tmp/**/*
 /config/title_music/**/*
 /config/jukebox_music/**/*
-
+/config/title_screens/**/*
 #Ignore byond config folder.
 /cfg/**/*
 
