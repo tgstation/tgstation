@@ -611,7 +611,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				if (!scalpel.usesLeft)
 					to_chat(user, "<span class='notice'>A tiny piece of \the [W] falls off, rendering it useless!</span>")
 			else
-				to_chat(user, "<span class='notice'>You fail to extract a sliver from \The [src]. \the [W] isn't sharp enough anymore!</span>")
+				to_chat(user, "<span class='warning'>You fail to extract a sliver from \The [src]! \the [W] isn't sharp enough anymore.</span>")
 	else if(user.dropItemToGround(W))
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\

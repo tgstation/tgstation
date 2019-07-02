@@ -131,26 +131,35 @@
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 
-/obj/item/melee/sabre/bee
-	name = "the stinger"
+/obj/item/melee/beesword
+	name = "The Stinger"
 	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "stinger"
+	icon_state = "beesword"
 	item_state = "stinger"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_BULKY
+	sharpness = IS_SHARP
 	force = 7
+	throwforce = 10
 	block_chance = 20
 	armour_penetration = 85
 	attack_verb = list("slashed", "stung", "prickled", "poked")
+	hitsound = 'sound/weapons/rapierhit.ogg'
 
-/obj/item/melee/sabre/bee/afterattack(atom/target, mob/user, proximity = TRUE)
+/obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity = TRUE)
 	. = ..()
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
 		H.reagents.add_reagent(/datum/reagent/toxin/histamine, 4)
+
+/obj/item/melee/beesword/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(get_turf(src), hitsound, 75, 1, -1)
+	return TOXLOSS
 
 /obj/item/melee/classic_baton
 	name = "police baton"
@@ -172,7 +181,7 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
+		to_chat(user, "<span class='danger'>You club yourself over the head.</span>")
 		user.Paralyze(60 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -202,8 +211,8 @@
 			target.Paralyze(60)
 			log_combat(user, target, "stunned", src)
 			src.add_fingerprint(user)
-			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
-				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
+			target.visible_message("<span class='danger'>[user] has knocked down [target] with [src]!</span>", \
+				"<span class='userdanger'>[user] has knocked down [target] with [src]!</span>")
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
@@ -245,14 +254,14 @@
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
 	if(on)
-		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
+		to_chat(user, "<span class='warning'>You extend the baton.</span>")
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
 		force = 10 //stun baton damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
-		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
+		to_chat(user, "<span class='notice'>You collapse the baton.</span>")
 		icon_state = "telebaton_0"
 		item_state = null //no sprite for concealment even when in hand
 		slot_flags = ITEM_SLOT_BELT
@@ -444,13 +453,13 @@
 		add_overlay(sausage)
 
 /obj/item/melee/roastingstick/proc/extend(user)
-	to_chat(user, "<span class ='warning'>You extend [src].</span>")
+	to_chat(user, "<span class='warning'>You extend [src].</span>")
 	icon_state = "roastingstick_1"
 	item_state = "nullrod"
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/roastingstick/proc/retract(user)
-	to_chat(user, "<span class ='notice'>You collapse [src].</span>")
+	to_chat(user, "<span class='notice'>You collapse [src].</span>")
 	icon_state = "roastingstick_0"
 	item_state = null
 	w_class = WEIGHT_CLASS_SMALL

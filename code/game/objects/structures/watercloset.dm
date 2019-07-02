@@ -299,7 +299,7 @@
 				return
 
 	if(istype(O, /obj/item/mop))
-		O.reagents.add_reagent("[dispensedreagent]", 5)
+		O.reagents.add_reagent(dispensedreagent, 5)
 		to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		return
