@@ -74,7 +74,7 @@
 			var/mob/buckled_to = M.buckled
 			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
 				return FALSE
-		if(M.is_flying())
+		if(M.movement_type&FLYING)
 			return FALSE
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM

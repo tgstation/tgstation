@@ -299,7 +299,7 @@
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
 					C.grippedby(src)
-			
+
 			update_pull_movespeed()
 
 		set_pull_offsets(M, state)
@@ -768,7 +768,7 @@
 				throw_alert("gravity", /obj/screen/alert/highgravity)
 	else
 		throw_alert("gravity", /obj/screen/alert/weightless)
-	if(!override && !is_flying())
+	if(!override && !movement_type&FLYING)
 		float(!has_gravity)
 
 /mob/living/float(on)
