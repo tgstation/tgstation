@@ -164,3 +164,7 @@
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
 	. += "[dna.species.type]"
+
+/mob/living/carbon/human/can_see_reagents()
+	. = ..()
+	return . || (isclothing(head) ? head.scan_reagents : FALSE) || (isclothing(glasses) ? glasses.scan_reagents : FALSE)
