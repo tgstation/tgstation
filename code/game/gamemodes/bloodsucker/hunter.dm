@@ -20,15 +20,21 @@
 	// Find Valid Hunters
 	var/list/datum/mind/hunter_candidates = get_players_for_role(ROLE_MONSTERHUNTER)
 
+
 	// Assign Hunters (as many as vamps, plus one)
 	for(var/i = 1, i < monster_count, i++) // Start at 1 so we skip Hunters if there's only one sucker.
 		if (!hunter_candidates.len)
 			break
 		var/datum/mind/hunter = pick(hunter_candidates)
+		hunter_candidates.Remove(hunter) // Remove Either Way
+		// Already Antag? Skip
+		if (hunter.antag_datums.len)
+			i --
+			continue
+		// Otherwise, Hunter
 		vamphunters += hunter
-		hunter.restricted_roles = restricted_jobs
+		hunter.restricted_roles = no_hunter_jobs
 		log_game("[hunter.key] (ckey) has been selected as a Hunter.")
-		hunter_candidates.Remove(hunter)
 
 // Called from game mode post_setup()
 /datum/game_mode/proc/finalize_monster_hunters(monster_count = 4)

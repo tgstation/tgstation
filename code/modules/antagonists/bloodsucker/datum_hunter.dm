@@ -232,6 +232,7 @@
 			if (distance < best_dist && distance <= HUNTER_SCAN_MAX_DISTANCE)
 				best_dist = distance
 				best_vamp = M.current
+				break // Stop searching through my antag datums and go to the next guy
 
 	// Found one!
 	if(best_vamp)
