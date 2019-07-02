@@ -7,6 +7,12 @@
 /config/title_screens/**/*
 /config/jukebox_music/**/*
 /icons/default_title.dmi
+/icons/ss13_32.png
+/icons/ss13_64.png
+/icons/tg_32.png
+icons/ss13_32.png
+icons/ss13_64.png
+icons/tg_32.png
 ss13_32.png
 ss13_64.png
 tg_32.png
