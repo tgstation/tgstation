@@ -649,9 +649,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/abductor_machine_beacon/attack_self(mob/user)
 	..()
-	user.visible_message("<span class='notice'>[user] places down [src] and activates it.", "<span class='notice'>You place down [src] and activate it.")
+	user.visible_message("<span class='notice'>[user] places down [src] and activates it.</span>", "<span class='notice'>You place down [src] and activate it.</span>")
 	user.dropItemToGround(src)
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
 	addtimer(CALLBACK(src, .proc/try_spawn_machine), 30)
 
 /obj/item/abductor_machine_beacon/proc/try_spawn_machine()
@@ -660,15 +660,15 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		var/turf/T = loc
 		viable = TRUE
 		for(var/obj/thing in T.contents)
-			if(thing.density || istype(thing, /obj/machinery) || istype(thing, /obj/structure))
+			if(thing.density || ismachinery(thing) || isstructure(thing))
 				viable = FALSE
 	if(viable)
-		playsound(src, 'sound/effects/phasein.ogg', 50, 1)
+		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
 		var/new_machine = new spawned_machine(loc)
 		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!")
 		qdel(src)
 	else
-		playsound(src, 'sound/machines/buzz-two.ogg', 50, 0)
+		playsound(src, 'sound/machines/buzz-two.ogg', 50)
 
 /obj/item/abductor_machine_beacon/chem_dispenser
 	name = "beacon - Reagent Synthesizer"
