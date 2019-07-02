@@ -74,7 +74,7 @@
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 			return
 	if(purified && iscultist(user))
-		to_chat(user, "<span class='warning'>\"Holy magic resides within the stone, you cannot use it.\"</span>")
+		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
 		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	transfer_soul("VICTIM", M, user)
@@ -89,7 +89,7 @@
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
 	if(purified && iscultist(user))
-		to_chat(user, "<span class='warning'>\"Holy magic resides within the stone, you cannot use it.\"</span>")
+		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
 		return
 	release_shades(user)
 
@@ -134,7 +134,7 @@
 			user.Dizzy(30)
 			return
 		if(SS.purified && iscultist(user))
-			to_chat(user, "<span class='warning'>\"Holy magic resides within the stone, you cannot use it.\"</span>")
+			to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
 		SS.was_used()
