@@ -27,7 +27,7 @@
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
-			for (var/mob/M in mode.living_players)
+			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 				if (M.stat == DEAD)
 					continue // Dead players cannot count as opponents
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
@@ -119,7 +119,7 @@
 	if(!..())
 		return FALSE
 	var/head_check = 0
-	for(var/mob/player in mode.living_players)
+	for(var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (player.mind.assigned_role in GLOB.command_positions)
 			head_check++
 	return (head_check >= required_heads)

@@ -145,8 +145,8 @@
 	flags = TRAITOR_RULESET
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(var/population=0,var/threat=0)
-	var/player_count = mode.living_players.len
-	var/antag_count = mode.living_antags.len
+	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
+	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
 	if ((antag_count < max_traitors) && prob(mode.threat_level))//adding traitors if the antag population is getting low
 		return ..()
@@ -320,7 +320,7 @@
 	if(!..())
 		return FALSE
 	var/head_check = 0
-	for(var/mob/player in mode.living_players)
+	for(var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if(!player.mind)
 			continue
 		if(player.mind.assigned_role in GLOB.command_positions)
@@ -347,8 +347,8 @@
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/ninja/acceptable(var/population=0,var/threat=0)
-	var/player_count = mode.living_players.len
-	var/antag_count = mode.living_antags.len
+	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
+	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
 	if ((antag_count < max_traitors) && prob(mode.threat_level))
 		return ..()

@@ -1,12 +1,11 @@
-// These defines are here because they are pretty much only used here
-#define CURRENT_LIVING_PLAYERS	"living"
-#define CURRENT_LIVING_ANTAGS	"antags"
-#define CURRENT_DEAD_PLAYERS	"dead"
-#define CURRENT_OBSERVERS	"observers"
+#define CURRENT_LIVING_PLAYERS	1
+#define CURRENT_LIVING_ANTAGS	2
+#define CURRENT_DEAD_PLAYERS	3
+#define CURRENT_OBSERVERS	    4
 
 #define HIGHLANDER_RULESET 1
-#define TRAITOR_RULESET 2
-#define MINOR_RULESET 4
+#define TRAITOR_RULESET    2
+#define MINOR_RULESET      4
 
 #define RULESET_STOP_PROCESSING 1
 
@@ -50,10 +49,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/list/current_rules = list()
 	var/list/executed_rules = list()
 
-	var/list/living_players = list()
-	var/list/living_antags = list()
-	var/list/dead_players = list()
-	var/list/list_observers = list()
+	var/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
 
 	var/latejoin_injection_cooldown = 0
 	var/midround_injection_cooldown = 0
@@ -379,12 +375,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	else
 		return FALSE
 	update_playercounts()
-	var/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
-	current_players[CURRENT_LIVING_PLAYERS] = living_players.Copy()
-	current_players[CURRENT_LIVING_ANTAGS] = living_antags.Copy()
-	current_players[CURRENT_DEAD_PLAYERS] = dead_players.Copy()
-	current_players[CURRENT_OBSERVERS] = list_observers.Copy()
-	if (new_rule && (forced || (new_rule.acceptable(living_players.len,threat_level) && new_rule.cost <= threat)))
+	if (new_rule && (forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && new_rule.cost <= threat)))
 		new_rule.candidates = current_players.Copy()
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
@@ -429,13 +420,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
 			midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
 			var/list/drafted_rules = list()
-			var/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
-			current_players[CURRENT_LIVING_PLAYERS] = living_players.Copy()
-			current_players[CURRENT_LIVING_ANTAGS] = living_antags.Copy()
-			current_players[CURRENT_DEAD_PLAYERS] = dead_players.Copy()
-			current_players[CURRENT_OBSERVERS] = list_observers.Copy()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
-				if (rule.acceptable(living_players.len,threat_level) && threat >= rule.cost)
+				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && threat >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
 					if (classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 						continue
@@ -461,44 +447,44 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
 
 /datum/game_mode/dynamic/proc/update_playercounts()
-	living_players = list()
-	living_antags = list()
-	dead_players = list()
-	list_observers = list()
+	current_players[CURRENT_LIVING_PLAYERS] = list()
+	current_players[CURRENT_LIVING_ANTAGS] = list()
+	current_players[CURRENT_DEAD_PLAYERS] = list()
+	current_players[CURRENT_OBSERVERS] = list()
 	for (var/mob/M in GLOB.player_list)
 		if (!M.client)
 			continue
 		if (istype(M,/mob/dead/new_player))
 			continue
 		if (M.stat != DEAD)
-			living_players.Add(M)
+			current_players[CURRENT_LIVING_PLAYERS].Add(M)
 			if (M.mind && (M.mind.special_role))
-				living_antags.Add(M)
+				current_players[CURRENT_LIVING_ANTAGS].Add(M)
 		else
 			if (istype(M,/mob/dead/observer))
 				var/mob/dead/observer/O = M
 				if (O.started_as_observer) // Observers
-					list_observers.Add(M)
+					current_players[CURRENT_OBSERVERS].Add(M)
 					continue
 				if (O.mind && O.mind.current) // Cultists
-					living_players.Add(M) // Yes we're adding a ghost to "living_players", so make sure to properly check for type when testing midround rules
+					current_players[CURRENT_LIVING_PLAYERS].Add(M) // Yes we're adding a ghost to "living_players", so make sure to properly check for type when testing midround rules
 					continue
-			dead_players.Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
+			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 
 /datum/game_mode/dynamic/proc/GetInjectionChance()
 	var/chance = 0
 	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
 	var/high_pop_factor = (GLOB.player_list.len >= high_pop_limit)
-	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(living_players.len/(high_pop_factor ? 10 : 5)))//https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=2053826290
-	if (!living_antags.len)
+	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))//https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=2053826290
+	if (!current_players[CURRENT_LIVING_ANTAGS].len)
 		chance += 50 // No antags at all? let's boost those odds!
 	else
-		var/current_pop_per_antag = living_players.len / living_antags.len
+		var/current_pop_per_antag = current_players[CURRENT_LIVING_PLAYERS].len / current_players[CURRENT_LIVING_ANTAGS].len
 		if (current_pop_per_antag > max_pop_per_antag)
 			chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
 		else
 			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
-	if (dead_players.len > living_players.len)
+	if (current_players[CURRENT_DEAD_PLAYERS].len > current_players[CURRENT_LIVING_PLAYERS].len)
 		chance -= 30 // More than half the crew died? ew, let's calm down on antags
 	if (threat > 70)
 		chance += 15
@@ -530,7 +516,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	else if (!latejoin_injection_cooldown && prob(GetInjectionChance()))
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
-			if (rule.acceptable(living_players.len,threat_level) && threat >= rule.cost)
+			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && threat >= rule.cost)
 				// Classic secret : only autotraitor/minor roles
 				if (classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 					continue
