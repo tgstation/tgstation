@@ -377,7 +377,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	else if(istype(ruletype,/datum/dynamic_ruleset))
 		new_rule = ruletype
 	else
-		return
+		return FALSE
 	update_playercounts()
 	var/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
 	current_players[CURRENT_LIVING_PLAYERS] = living_players.Copy()

@@ -739,7 +739,7 @@
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
-	var/meteordelay = 2
+	var/meteordelay = 1000
 	var/nometeors = 0
 	var/rampupdelta = 5
 
@@ -749,7 +749,6 @@
 
 	var/list/wavetype = GLOB.meteors_normal
 	var/meteorminutes = (world.time - SSticker.round_start_time - meteordelay) / 10 / 60
-
 
 	if (prob(meteorminutes))
 		wavetype = GLOB.meteors_threatening
