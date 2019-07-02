@@ -14,7 +14,7 @@ Format:
 endmap
 
 map boxstation
-	default
+	minplayers 30
 	#voteweight 1.5
 	votable
 endmap
@@ -26,7 +26,7 @@ map metastation
 endmap
 
 map pubbystation
-	votable
+	default
 endmap
 
 map deltastation

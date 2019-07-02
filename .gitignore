@@ -3,6 +3,8 @@
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*
+/config/title_music/**/*
+/config/jukebox_music/**/*
 
 #Ignore byond config folder.
 /cfg/**/*
