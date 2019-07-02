@@ -197,6 +197,7 @@
 
 		if("zookeeper")
 			new /obj/item/melee/baton/cattleprod(src)
+			new /obj/item/stock_parts/cell/upgraded(src)
 			new /obj/item/grenade/spawnergrenade/gorilla(src)
 			new /obj/item/lazarus_injector(src)
 			new /obj/item/lazarus_injector(src)
