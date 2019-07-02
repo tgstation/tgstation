@@ -67,7 +67,7 @@
 			stored_chromosomes += I
 			to_chat(user, "<span class='notice'>You insert [I]</span>")
 		else
-			to_chat(user, "<span class='warnning'>You cannot store any more chromosomes.</span>")
+			to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
 		return
 	if(istype(I, /obj/item/dnainjector/activator))
 		var/obj/item/dnainjector/activator/A = I

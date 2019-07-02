@@ -101,7 +101,7 @@
 	if(!isliving(user))
 		return
 	if(user.get_active_held_item() != src)
-		to_chat(user, "You must hold the [src] in your hand to do this.")
+		to_chat(user, "<span class='warning'>You must hold the [src] in your hand to do this!</span>")
 		return
 	if (!enabled_waddle)
 		to_chat(user, "<span class='notice'>You switch off the waddle dampeners!</span>")

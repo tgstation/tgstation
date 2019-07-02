@@ -181,7 +181,7 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
+		to_chat(user, "<span class='danger'>You club yourself over the head.</span>")
 		user.Paralyze(60 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -211,8 +211,8 @@
 			target.Paralyze(60)
 			log_combat(user, target, "stunned", src)
 			src.add_fingerprint(user)
-			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
-				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
+			target.visible_message("<span class='danger'>[user] has knocked down [target] with [src]!</span>", \
+				"<span class='userdanger'>[user] has knocked down [target] with [src]!</span>")
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
@@ -254,14 +254,14 @@
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
 	if(on)
-		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
+		to_chat(user, "<span class='warning'>You extend the baton.</span>")
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
 		force = 10 //stun baton damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
-		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
+		to_chat(user, "<span class='notice'>You collapse the baton.</span>")
 		icon_state = "telebaton_0"
 		item_state = null //no sprite for concealment even when in hand
 		slot_flags = ITEM_SLOT_BELT
@@ -453,13 +453,13 @@
 		add_overlay(sausage)
 
 /obj/item/melee/roastingstick/proc/extend(user)
-	to_chat(user, "<span class ='warning'>You extend [src].</span>")
+	to_chat(user, "<span class='warning'>You extend [src].</span>")
 	icon_state = "roastingstick_1"
 	item_state = "nullrod"
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/roastingstick/proc/retract(user)
-	to_chat(user, "<span class ='notice'>You collapse [src].</span>")
+	to_chat(user, "<span class='notice'>You collapse [src].</span>")
 	icon_state = "roastingstick_0"
 	item_state = null
 	w_class = WEIGHT_CLASS_SMALL

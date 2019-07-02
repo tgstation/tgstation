@@ -187,7 +187,7 @@
 			update_icon()
 			return
 		else if(bomb)
-			to_chat(user, "<span class='notice'>[src] already has a bomb in it!</span>")
+			to_chat(user, "<span class='warning'>[src] already has a bomb in it!</span>")
 	else if(istype(I, /obj/item/pen))
 		if(!open)
 			if(!user.is_literate())

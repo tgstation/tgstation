@@ -384,7 +384,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Teleport"
 	set desc= "Teleport to a location"
 	if(!isobserver(usr))
-		to_chat(usr, "Not when you're not dead!")
+		to_chat(usr, "<span class='warning'>Not when you're not dead!</span>")
 		return
 	var/list/filtered = list()
 	for(var/V in GLOB.sortedAreas)
@@ -401,7 +401,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		L+=T
 
 	if(!L || !L.len)
-		to_chat(usr, "No area available.")
+		to_chat(usr, "<span class='warning'>No area available.</span>")
 		return
 
 	usr.forceMove(pick(L))
@@ -825,7 +825,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(isobserver(src))
 		SSpai.recruitWindow(src)
 	else
-		to_chat(usr, "Can't become a pAI candidate while not dead!")
+		to_chat(usr, "<span class='warning'>Can't become a pAI candidate while not dead!</span>")
 
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
