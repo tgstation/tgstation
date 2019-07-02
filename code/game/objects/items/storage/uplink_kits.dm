@@ -199,12 +199,12 @@
 	name = "Contractor Guide"
 
 /obj/item/paper/contractor_guide/Initialize()
-	info = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
-			this kit will provide you contracts to take on for TC payments.</p>
+	info = "<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
+			 this kit will provide you contracts to take on for TC payments.</p>
 
 			<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the
-			Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed
-			to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>
+			 Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed
+			 to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>
 
 			<p>Your standard issue contractor baton hits harder than the ones you might be used to, and likely be your go to weapon for kidnapping your
 			targets. The three additional items have been randomly selected from what we had available. We hope they're useful to you for your mission.</p>
