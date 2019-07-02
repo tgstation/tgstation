@@ -3,7 +3,7 @@
 	var/armor = getarmor(def_zone, attack_flag)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armor && armour_penetration)
+	if(armor > 0 && armour_penetration)
 		armor = max(0, armor - armour_penetration)
 		if(penetrated_text)
 			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
@@ -150,7 +150,7 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.dna.species.grab_sound)
-				sound_to_play = H.dna.species.grab_sound 	
+				sound_to_play = H.dna.species.grab_sound
 		playsound(src.loc, sound_to_play, 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous
