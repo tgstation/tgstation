@@ -378,15 +378,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	. = list()	// this will be a list of all connected power objects
 	var/turf/T
 
-<<<<<<< HEAD
-	for(var/check_dir in GLOB.cardinals)
-		if(linked_dirs & check_dir && check_dir != ignore_dir)
-			T = get_step(src, check_dir)
-			if(T)
-				. += power_list(T, src, powernetless_only)
-
-	. += power_list(loc, src, powernetless_only) //get on turf matching cables
-=======
 	//get matching cables from the first direction
 	if(d1) //if not a node cable
 		T = get_step(src, d1)
@@ -433,7 +424,6 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(PN.is_empty()) //can happen with machines made nodeless when smoothing cables
 			qdel(PN)
->>>>>>> parent of 65e9888fa6... [READY] Smart Cables (#44265)
 
 /obj/structure/cable/proc/auto_propogate_cut_cable(obj/O)
 	if(O && !QDELETED(O))
@@ -445,19 +435,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/turf/T1 = loc
 	if(!T1)
 		return
-<<<<<<< HEAD
-
-	//clear the powernet of any machines on tile first
-	for(var/obj/machinery/power/P in T1)
-		P.disconnect_from_network()
-
-	var/list/P_list = list()
-	for(var/dir_check in GLOB.cardinals)
-		if(linked_dirs & dir_check)
-			T1 = get_step(T1, dir_check)
-			P_list += locate(/obj/structure/cable) in T1
-
-=======
 	if(d1)
 		T1 = get_step(T1, d1)
 		P_list = power_list(T1, src, turn(d1,180),0,cable_only = 1)	// what adjacently joins on to cut cable...
@@ -474,16 +451,11 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	var/obj/O = P_list[1]
->>>>>>> parent of 65e9888fa6... [READY] Smart Cables (#44265)
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
 		moveToNullspace()
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-<<<<<<< HEAD
-	for(var/obj/O in P_list)
-		addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
-=======
 	addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 	// Disconnect machines connected to nodes
@@ -492,7 +464,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
 
->>>>>>> parent of 65e9888fa6... [READY] Smart Cables (#44265)
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
