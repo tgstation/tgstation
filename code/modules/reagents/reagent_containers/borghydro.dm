@@ -98,7 +98,7 @@ Borg Hypospray
 /obj/item/reagent_containers/borghypo/attack(mob/living/carbon/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
-		to_chat(user, "<span class='notice'>The injector is empty.</span>")
+		to_chat(user, "<span class='warning'>The injector is empty!</span>")
 		return
 	if(!istype(M))
 		return

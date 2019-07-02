@@ -352,7 +352,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
-		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
+		to_chat(user, "<span class='warning'>You cannot place a conveyor belt under yourself!</span>")
 		return
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir, id)
 	transfer_fingerprints_to(C)

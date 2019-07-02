@@ -49,7 +49,7 @@
 /obj/machinery/hydroponics/constructable/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.<span>"
+		. += "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.</span>"
 
 
 /obj/machinery/hydroponics/Destroy()
@@ -313,8 +313,8 @@
 		. += "<span class='info'>It's empty.</span>"
 
 	if(!self_sustaining)
-		. += {"<span class='info'>Water: [waterlevel]/[maxwater].</span>\n
-		<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>"}
+		. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>\n"+\
+		"<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>"
 		if(self_sufficiency_progress > 0)
 			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
 			. += "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>"
@@ -689,7 +689,7 @@
 				return
 
 		if(!reagent_source.reagents.total_volume)
-			to_chat(user, "<span class='notice'>[reagent_source] is empty.</span>")
+			to_chat(user, "<span class='warning'>[reagent_source] is empty!</span>")
 			return 1
 
 		var/list/trays = list(src)//makes the list just this in cases of syringes and compost etc

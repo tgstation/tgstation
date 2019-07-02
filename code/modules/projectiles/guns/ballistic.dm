@@ -232,7 +232,7 @@
 			to_chat(user, "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>")
 			return
 		if(!user.is_holding(src))
-			to_chat(user, "<span class='notice'>You need be holding [src] to fit [S] to it!</span>")
+			to_chat(user, "<span class='warning'>You need be holding [src] to fit [S] to it!</span>")
 			return
 		if(suppressed)
 			to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")

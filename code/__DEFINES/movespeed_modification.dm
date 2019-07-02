@@ -66,11 +66,3 @@
 #define MOVESPEED_ID_SHOVE                              "SHOVE"
 #define MOVESPEED_ID_PRONE_DRAGGING                     "PRONE_DRAG"
 #define MOVESPEED_ID_HUMAN_CARRYING                     "HUMAN_CARRY"
-
-#define MOVESPEED_ID_FAT                                "FAT"
-
-#define MOVESPEED_ID_COLD                               "COLD"
-
-#define MOVESPEED_ID_HUNGRY                             "HUNGRY"
-
-#define MOVESPEED_ID_DAMAGE_SLOWDOWN                    "DAMAGE"

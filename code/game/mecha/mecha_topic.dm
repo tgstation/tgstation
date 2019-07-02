@@ -319,7 +319,7 @@
 
 	if(href_list["dna_lock"])
 		if(occupant && !iscarbon(occupant))
-			to_chat(occupant, "<span class='danger'> You do not have any DNA!</span>")
+			to_chat(occupant, "<span class='warning'> You do not have any DNA!</span>")
 			return
 		dna_lock = occupant.dna.unique_enzymes
 		occupant_message("You feel a prick as the needle takes your DNA sample.")

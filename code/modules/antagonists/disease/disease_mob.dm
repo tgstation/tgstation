@@ -152,7 +152,7 @@ the new instance inside the host to be updated to the template's stats.
 			set_name = "Sentient Virus"
 			break
 		if(taken_names[input])
-			to_chat(src, "<span class='notice'>You cannot use the name of such a well-known disease!</span>")
+			to_chat(src, "<span class='warning'>You cannot use the name of such a well-known disease!</span>")
 		else
 			set_name = input
 	real_name = "[set_name] (Sentient Disease)"

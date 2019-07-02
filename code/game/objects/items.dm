@@ -450,7 +450,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(M.is_eyes_covered())
 		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "<span class='danger'>You're going to need to remove [M.p_their()] eye protection first!</span>")
+		to_chat(user, "<span class='warning'>You're going to need to remove [M.p_their()] eye protection first!</span>")
 		return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
@@ -458,7 +458,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 
 	if(isbrain(M))
-		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
+		to_chat(user, "<span class='warning'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
 	src.add_fingerprint(user)

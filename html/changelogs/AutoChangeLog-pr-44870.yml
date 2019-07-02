@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - tweak: "Dead AI players will now get a notification if they are being restored while outside their body."
