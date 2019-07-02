@@ -42,7 +42,7 @@
 				if(foodtype & H.dna.species.toxic_food)
 					to_chat(H, "<span class='warning'>You don't feel so good...</span>")
 					H.adjust_disgust(25 + 30 * fraction)
-			if(foodtype & BREAKFAST && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
+			if((foodtype & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
 			last_check_time = world.time
 

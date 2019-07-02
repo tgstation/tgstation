@@ -12,7 +12,7 @@
 #define TOXIC 		(1<<11)
 #define PINEAPPLE	(1<<12)
 #define BREAKFAST	(1<<13)
-#define CLOTH (1<<14)
+#define CLOTH 		(1<<14)
 
 #define DRINK_NICE	1
 #define DRINK_GOOD	2
