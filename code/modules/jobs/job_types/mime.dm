@@ -61,7 +61,7 @@
 	dat += "<HR>"
 	dat += "<B>Table of Contents</B><BR>"
 	dat += "<BR>"
-	dat += "Indroduction 3<BR>"
+	dat += "Introduction 3<BR>"
 	dat += "Summary 12<BR>"
 	dat += "A History of Mime 19<BR>"
 	dat += "Mime Time Line 24<BR>"
