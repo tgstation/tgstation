@@ -167,4 +167,4 @@
 
 /mob/living/carbon/human/can_see_reagents()
 	. = ..()
-	return . || (isclothing(head) ? head.scan_reagents : FALSE) || (isclothing(glasses) ? glasses.scan_reagents : FALSE)
+	return . || (isclothing(head) ? head.clothing_flags & SCAN_REAGENTS : FALSE) || (isclothing(glasses) ? glasses.clothing_flags & SCAN_REAGENTS : FALSE)
