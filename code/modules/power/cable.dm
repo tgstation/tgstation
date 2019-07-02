@@ -91,49 +91,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(level==1)
 		hide(T.intact)
 	GLOB.cable_list += src //add it to the global cable list
-<<<<<<< HEAD
-	connect_wire()
-
-/obj/structure/cable/proc/connect_wire(clear_before_updating = FALSE)
-	var/under_thing = NONE
-	if(clear_before_updating)
-		linked_dirs = 0
-	var/obj/machinery/power/search_parent
-	for(var/obj/machinery/power/P in loc)
-		if(istype(P, /obj/machinery/power/terminal))
-			under_thing = UNDER_TERMINAL
-			search_parent = P
-			break
-		if(istype(P, /obj/machinery/power/smes))
-			under_thing = UNDER_SMES
-			search_parent = P
-			break
-	for(var/check_dir in GLOB.cardinals)
-		var/TB = get_step(src, check_dir)
-		//don't link from smes to its terminal
-		if(under_thing)
-			switch(under_thing)
-				if(UNDER_SMES)
-					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
-					//Why null or equal to the search parent?
-					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
-					//but the cable underneath it is ready to link.
-					//I don't believe null is even a valid state for a smes terminal while the game is actually running
-					//So in the rare case that this happens, we also shouldn't connect
-					//This might break.
-					if(term && (!term.master || term.master == search_parent))
-						continue
-				if(UNDER_TERMINAL)
-					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
-					if(S && (!S.terminal || S.terminal == search_parent))
-						continue
-		var/inverse = turn(check_dir, 180)
-		for(var/obj/structure/cable/C in TB)
-			linked_dirs |= check_dir
-			C.linked_dirs |= inverse
-			C.update_icon()
-=======
->>>>>>> parent of 65e9888fa6... [READY] Smart Cables (#44265)
 
 	if(d1)
 		stored = new/obj/item/stack/cable_coil(null,2,cable_color)
