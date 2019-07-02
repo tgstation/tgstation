@@ -88,7 +88,7 @@
 	antag_memory += "You remember your training:<br>"
 	antag_memory += " -Bloodsuckers are weak to fire, or a stake to the heart. Removing their head or heart will also destroy them permanently.<br>"
 	antag_memory += " -Wooden stakes can be made from planks, and your recipes list has ways of making them stronger.<br>"
-	antag_memory += " -Changelings return to life unless their body is destroyed or their head removed.<br>"
+	antag_memory += " -Changelings return to life unless their body is destroyed. Not even decapitation can stop them for long.<br>"
 	antag_memory += " -Cultists are weak to the Chaplain's holy water.<br>"
 	antag_memory += " -Wizards are notoriously hard to outmatch. Rob or steal whatever weapons you need to destroy them, and shoot before asking questions.<br><br>"
 	if (my_kungfu != null)
