@@ -61,3 +61,9 @@
 	item_state = "clown_broken"
 	spawner_type = /mob/living/simple_animal/hostile/retaliate/clown/mutant
 	deliveryamt = 5
+
+/obj/item/grenade/spawnergrenade/gorilla
+	name = "Welcome to the Jungle"
+	desc = "Activating this device will release numerous, angry gorillas"
+	spawner_type = /mob/living/simple_animal/hostile/gorilla
+	deliveryamt = 3

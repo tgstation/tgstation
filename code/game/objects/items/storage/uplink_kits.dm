@@ -120,7 +120,7 @@
 			new /obj/item/card/emag(src) // 6 tc
 
 /obj/item/storage/box/syndicate/bundle_B/PopulateContents()
-	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 2, "mr_freeze" = 2)))
+	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 2, "mr_freeze" = 2, "zookeeper" = 2)))
 		if("bond")
 			new /obj/item/gun/ballistic/automatic/pistol(src)
 			new /obj/item/suppressor(src)
@@ -195,6 +195,14 @@
 			new /obj/item/gun/energy/temperature/security(src)
 			new /obj/item/melee/transforming/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
 
+		if("zookeeper")
+			new /obj/item/melee/baton/cattleprod(src)
+			new /obj/item/grenade/spawnergrenade/gorilla(src)
+			new /obj/item/lazarus_injector(src)
+			new /obj/item/lazarus_injector(src)
+			new /obj/item/reagent_containers/hypospray/magillitis(src)
+			new /obj/item/reagent_containers/food/snacks/grown/banana(src)
+
 /obj/item/storage/box/syndicate/contract_kit
 	name = "Contract Kit"
 	desc = "Supplied to Syndicate contractors in active mission areas."
@@ -211,14 +219,14 @@
 	name = "Contractor Guide"
 
 /obj/item/paper/contractor_guide/Initialize()
-	info = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives, 
+	info = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
 			this kit will provide you contracts to take on for TC payments.</p>
 
-			<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the 
-			Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed 
+			<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the
+			Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed
 			to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>
 
-			<p>The three additional items, apart from the tablet and loadout box, have been randomly selected from what we had available. We hope 
+			<p>The three additional items, apart from the tablet and loadout box, have been randomly selected from what we had available. We hope
 			they're useful to you for you mission.</p>
 
 			<h3>Using the tablet</h3>
@@ -226,11 +234,11 @@
 				<li>Open the Syndicate Contract Uplink program.</li>
 				<li>Assign yourself.</li>
 				<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>
-				<li>The payment number shown in brackets is the bonus you'll recieve when bringing your target <b>alive</b>. You recieve the 
+				<li>The payment number shown in brackets is the bonus you'll recieve when bringing your target <b>alive</b>. You recieve the
 				other number regardless of if they were alive or dead.</li>
 			</ol>
 
-			<p>Be careful when accepting a contract. While you'll be able to see the location of the dropoff point, cancelling will make it 
+			<p>Be careful when accepting a contract. While you'll be able to see the location of the dropoff point, cancelling will make it
 			unavailable to take on again.</p>
 			<p>The tablet can be recharged at any cell charger.</p>
 			<h3>Extracting</h3>
@@ -241,8 +249,8 @@
 				<li>Drag your target into the pod.</li>
 			</ol>
 			<h3>Ransoms</h3>
-			<p>We need your target for our own reasons, but we ransom them back to your mission area once their use is served. They will return back 
-			from where you sent them off from in several minutes time. Don't worry agent, we give you a cut of what we get paid. We pay this into whatever 
+			<p>We need your target for our own reasons, but we ransom them back to your mission area once their use is served. They will return back
+			from where you sent them off from in several minutes time. Don't worry agent, we give you a cut of what we get paid. We pay this into whatever
 			ID card you have equipped, on top of the TC payment we give.</p>"}
 
 	return ..()
