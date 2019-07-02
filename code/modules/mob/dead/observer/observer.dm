@@ -36,6 +36,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/gas_scan_cooldown = 0 //gas scanning cooldown
 	var/radiation_scan = FALSE //Are radiation scans currently enabled?
 	var/radiation_scan_cooldown = 0 //radiation scanning cooldown
+	var/radiation_vision = FALSE //Is radiation vision currently enabled?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
@@ -65,6 +66,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	verbs += list(
 		/mob/dead/observer/proc/dead_tele,
 		/mob/dead/observer/proc/open_spawners_menu,
+		/mob/dead/observer/proc/show_rads,
 		/mob/dead/observer/proc/tray_view)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
@@ -141,6 +143,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	grant_all_languages()
 	show_data_huds()
 	data_huds_on = 1
+	START_PROCESSING(SSobj, src)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -739,6 +742,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Radiation scan enabled.</span>")
 		radiation_scan = TRUE
 
+/mob/dead/observer/verb/toggle_radiation_vision()
+	set name = "Toggle Radiation Vision"
+	set desc = "Toggles whether you have radiation vision"
+	set category = "Ghost"
+
+	if(radiation_vision)
+		to_chat(src, "<span class='notice'>Radiation vision disabled.</span>")
+		radiation_vision = FALSE
+	else
+		to_chat(src, "<span class='notice'>Radiation vision enabled.</span>")
+		radiation_vision = TRUE
+
 /mob/dead/observer/verb/restore_ghost_appearance()
 	set name = "Restore Ghost Character"
 	set desc = "Sets your deadchat name and ghost appearance to your \
@@ -910,3 +925,32 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			client.images += t_ray_images
 		else
 			client.images -= stored_t_ray_images
+
+/mob/dead/observer/proc/show_rads()
+	var/mob/living/carbon/human/user = loc
+	var/list/rad_places = list()
+	for(var/datum/component/radioactive/thing in SSradiation.processing)
+		var/atom/owner = thing.parent
+		var/turf/place = get_turf(owner)
+		if(rad_places[place])
+			rad_places[place] += thing.strength
+		else
+			rad_places[place] = thing.strength
+
+	for(var/i in rad_places)
+		var/turf/place = i
+		if(get_dist(user, place) > 2)	//Rads are easier to see than wires under the floor
+			continue
+		var/strength = round(rad_places[i] / 1000, 0.1)
+		var/image/pic = new(loc = place)
+		var/mutable_appearance/MA = new()
+		MA.alpha = 180
+		MA.maptext = "[strength]k"
+		MA.color = "#64C864"
+		MA.layer = FLY_LAYER
+		pic.appearance = MA
+		flick_overlay(pic, list(src.client), 8)
+
+/mob/dead/observer/process()
+	if(radiation_vision)
+		show_rads()
