@@ -39,9 +39,9 @@
 	var/obj/machinery/power/terminal/terminal = null
 
 /obj/machinery/power/smes/examine(user)
-	..()
+	. = ..()
 	if(!terminal)
-		to_chat(user, "<span class='warning'>This SMES has no power terminal!</span>")
+		. += "<span class='warning'>This SMES has no power terminal!</span>"
 
 /obj/machinery/power/smes/Initialize()
 	. = ..()
@@ -73,6 +73,9 @@
 	capacity = MC / (15000) * 1e6
 	if(!initial(charge) && !charge)
 		charge = C / 15000 * 1e6
+
+/obj/machinery/power/smes/should_have_node()
+	return TRUE
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver

@@ -15,12 +15,12 @@ This file contains the cult dagger and rune list code
 			GLOB.rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
 
 /obj/item/melee/cultblade/dagger/examine(mob/user)
-	..()
+	. = ..()
 	if(iscultist(user) || isobserver(user))
-		to_chat(user, "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar'Sie.</span>")
-		to_chat(user, "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>")
-		to_chat(user, "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>")
-		to_chat(user, "<span class='cult'>Striking a noncultist, however, will tear their flesh.</span>")
+		. += {"<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar'Sie.\n
+		Striking a cult structure will unanchor or reanchor it.\n
+		Striking another cultist with it will purge holy water from them.\n
+		Striking a noncultist, however, will tear their flesh.</span>"}
 
 /obj/item/melee/cultblade/dagger/attack(mob/living/M, mob/living/user)
 	if(iscultist(M))

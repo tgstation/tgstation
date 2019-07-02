@@ -71,5 +71,5 @@
 	if(strength >= cleanable)
 		qdel(src)
 
-/datum/component/decal/proc/examine(datum/source, mob/user)
-	to_chat(user, description)
+/datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
+	examine_list += description
