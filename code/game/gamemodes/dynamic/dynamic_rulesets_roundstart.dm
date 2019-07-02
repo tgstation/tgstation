@@ -7,7 +7,7 @@
 
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"
-	persistent = 1
+	persistent = TRUE
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor/
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
@@ -292,6 +292,7 @@
 
 /datum/dynamic_ruleset/roundstart/delayed/revs
 	name = "Revolution"
+	persistent = TRUE
 	antag_flag = ROLE_REV_HEAD
 	antag_datum = /datum/antagonist/rev/head
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
@@ -353,7 +354,7 @@
 		finished = 1
 	else if(check_heads_victory())
 		finished = 2
-	return FALSE
+	return
 
 /datum/dynamic_ruleset/roundstart/delayed/revs/proc/check_rev_victory()
 	for(var/datum/objective/mutiny/objective in revolution.objectives)
@@ -582,7 +583,7 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops
-	name = "clown ops"
+	name = "Clown Ops"
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
@@ -722,3 +723,40 @@
 		SSticker.mode_result = "win - monkey win"
 	else
 		SSticker.mode_result = "loss - staff stopped the monkeys"
+
+//////////////////////////////////////////////
+//                                          //
+//               METEOR                     //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/meteor
+	name = "Meteor"
+	persistent = TRUE
+	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
+	required_candidates = 0
+	weight = 3
+	cost = 0
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement = 101
+	var/meteordelay = 2
+	var/nometeors = 0
+	var/rampupdelta = 5
+
+/datum/dynamic_ruleset/roundstart/meteor/rule_process()
+	if(nometeors || meteordelay > world.time - SSticker.round_start_time)
+		return
+
+	var/list/wavetype = GLOB.meteors_normal
+	var/meteorminutes = (world.time - SSticker.round_start_time - meteordelay) / 10 / 60
+
+
+	if (prob(meteorminutes))
+		wavetype = GLOB.meteors_threatening
+
+	if (prob(meteorminutes/2))
+		wavetype = GLOB.meteors_catastrophic
+
+	var/ramp_up_final = CLAMP(round(meteorminutes/rampupdelta), 1, 10)
+
+	spawn_meteors(ramp_up_final, wavetype)

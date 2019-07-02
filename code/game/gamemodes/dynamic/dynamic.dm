@@ -8,6 +8,8 @@
 #define TRAITOR_RULESET 2
 #define MINOR_RULESET 4
 
+#define RULESET_STOP_PROCESSING 1
+
  // -- Injection delays, must be divided by 20 get the correct time.
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES) / 20)
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES) / 20)
@@ -109,7 +111,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 /datum/game_mode/dynamic/Topic(href, href_list)
 	if (..()) // Sanity, maybe ?
 		return
-	if(check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN))
 		message_admins("[usr.key] has attempted to override the game mode panel!")
 		log_admin("[key_name(usr)] tried to use the game mode panel without authorization.")
 		return
@@ -395,7 +397,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					current_rules += new_rule
 				return TRUE
 		else if (forced)
-			log_admin("The ruleset couldn't be executed due to lack of elligible players.")
+			log_admin("The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
 	return FALSE
 
 /datum/game_mode/dynamic/process()
@@ -407,7 +409,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		latejoin_injection_cooldown--
 
 	for (var/datum/dynamic_ruleset/rule in current_rules)
-		rule.rule_process()
+		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
+			current_rules -= rule
 
 	if (midround_injection_cooldown)
 		midround_injection_cooldown--
