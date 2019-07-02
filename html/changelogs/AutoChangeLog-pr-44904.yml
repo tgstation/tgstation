@@ -1,0 +1,4 @@
+author: "kingofkosmos"
+delete-after: True
+changes: 
+  - bugfix: "the russian revolver's chamber can be spun again"
