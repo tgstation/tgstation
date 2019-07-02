@@ -183,14 +183,14 @@
 /proc/Gibberish(text, replace_characters = FALSE, chance = 50)
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
-	for(var/i = 1, i <= length(text), i++)
+	for(var/i in 1 to length(text))
 
-		var/letter = copytext(text, i, i+1)
+		var/letter = text[i]
 		if(prob(chance))
 			if(replace_characters)
 				letter = ""
 
-			for(var/j = 1, j <= rand(0, 2), j++)
+			for(var/j in 1 to rand(0, 2))
 				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 
 		returntext += letter

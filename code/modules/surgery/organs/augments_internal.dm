@@ -151,7 +151,7 @@
 	to_chat(M, "<span class='notice'>Your skull suddenly feels lighter!</span>")
 
 /obj/item/organ/cyberimp/brain/metal_plate/proc/use_up()
-	Destroy()
+	qdel(src)
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

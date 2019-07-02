@@ -229,7 +229,7 @@
 	taste_sensitivity = INFINITY // You can basically taste nothing.
 
 /obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
-	..()
+	. = ..()
 	speech_args[SPEECH_MESSAGE] = Gibberish(speech_args[SPEECH_MESSAGE], chance = 5)
 
 /obj/item/organ/tongue/snail

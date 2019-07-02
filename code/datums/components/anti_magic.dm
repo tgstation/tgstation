@@ -13,9 +13,9 @@
 		if(isorgan(parent))
 			RegisterSignal(parent, COMSIG_ORGAN_INSERTED, .proc/apply_anti_magic)
 			RegisterSignal(parent, COMSIG_ORGAN_REMOVED, .proc/on_drop)
-			allowed_slots = null //by default, organs don't work in any slots.
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+		else
+			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect)
 	else
