@@ -344,7 +344,7 @@
 	if(iscyborg(target))
 		if (user.a_intent != INTENT_HARM)
 			target.flash_act(affect_silicon = TRUE)
-			target.Paralyze(50)
+			target.Paralyze(60)
 			user.visible_message("<span class='disarm'>[user] pulses [target]'s sensors with the baton!</span>", "<span class='danger'>You pulse [target]'s sensors with the baton!</span>")
 			playsound(get_turf(src), 'sound/effects/contractorbatonhit.ogg', 100, TRUE, -1)
 			user.do_attack_animation(target)
@@ -368,6 +368,7 @@
 			playsound(src, 'sound/effects/contractorbatonhit.ogg', 100, TRUE, -1)
 			target.Paralyze(85)
 			target.Jitter(20)
+			target.stuttering += 20
 			log_combat(user, target, "stunned", src)
 			add_fingerprint(user)
 			target.visible_message("<span class ='danger'>[user] electrifies [target] with [src]!</span>", \
