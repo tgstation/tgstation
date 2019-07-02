@@ -14,29 +14,29 @@
 /proc/get_color_from_caste(troll_caste)
 	switch(troll_caste)
 		if("burgundy")
-			return "a10000"
+			return "#a10000"
 		if("brown")
-			return "a25203"
+			return "#a25203"
 		if("yellow")
-			return "a1a100"
+			return "#a1a100"
 		if("lime")
-			return "658200"
+			return "#658200"
 		if("olive")
-			return "416600"
+			return "#416600"
 		if("jade")
-			return "078446"
+			return "#078446"
 		if("teal")
-			return "008282"
+			return "#008282"
 		if("cerulean")
-			return "004182"
+			return "#004182"
 		if("indigo")
-			return "0021cb"
+			return "#0021cb"
 		if("purple")
-			return "631db4"
+			return "#631db4"
 		if("violet")
-			return "6a006a"
+			return "#6a006a"
 		if("fuschia")
-			return "99004d"
+			return "#99004d"
 
 /proc/get_hue_from_caste(troll_caste)
 	switch(troll_caste)

@@ -194,6 +194,7 @@
 		blood_data["real_name"] = real_name
 		blood_data["features"] = dna.features
 		blood_data["factions"] = faction
+		blood_data["color"] = blood_color // 413 -- blood color
 		blood_data["quirks"] = list()
 		for(var/V in roundstart_quirks)
 			var/datum/quirk/T = V

@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null,"color"=null) // 413 -- blood color
 	name = "Blood"
 	color = "#C80000" // rgb: 200, 0, 0
 	metabolization_rate = 5 //fast rate so it disappears fast.
@@ -35,8 +35,12 @@
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
 		SetViruses(src, data)
+	//413 start -- blood color
+	if(data["color"] && data["color"] != "#ffffff")
+		color = data["color"]
+	//413 end
 
-/datum/reagent/blood/on_merge(list/mix_data)
+/datum/reagent/blood/on_merge(list/mix_data,amount) // 413 -- blood color (added "amount")
 	if(data && mix_data)
 		if(data["blood_DNA"] != mix_data["blood_DNA"])
 			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
@@ -60,6 +64,10 @@
 					if(!istype(D, /datum/disease/advance))
 						preserve += D
 				data["viruses"] = preserve
+		//413 start -- blood color
+		if(data["color"] != mix_data["color"])
+			color = data["color"] = BlendRGB(mix_data["color"],data["color"],(volume-amount)/volume)
+		//413 end
 	return 1
 
 /datum/reagent/blood/proc/get_diseases()
@@ -80,6 +88,7 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+	B.set_blood_color(data["color"]) // 413 -- blood color
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
