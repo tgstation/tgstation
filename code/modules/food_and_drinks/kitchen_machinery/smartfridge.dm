@@ -393,6 +393,19 @@
 /obj/machinery/smartfridge/chemistry
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
+	var/list/chemfridge_typecache
+
+/obj/machinery/smartfridge/chemistry/Initialize()
+	. = ..()
+	chemfridge_typecache = typecacheof(list(
+					/obj/item/reagent_containers/syringe,
+					/obj/item/reagent_containers/glass/bottle,
+					/obj/item/reagent_containers/glass/beaker,
+					/obj/item/reagent_containers/spray,
+					/obj/item/reagent_containers/medigel,
+					/obj/item/reagent_containers/chem_pack
+	))
+
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	if(istype(O, /obj/item/storage/pill_bottle))
@@ -408,7 +421,7 @@
 		return TRUE
 	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
 		return FALSE
-	if(istype(O, /obj/item/reagent_containers/syringe) || istype(O, /obj/item/reagent_containers/glass/bottle) || istype(O, /obj/item/reagent_containers/glass/beaker) || istype(O, /obj/item/reagent_containers/spray) || istype(O, /obj/item/reagent_containers/medigel) || istype(O, /obj/item/reagent_containers/chem_pack))
+	if(is_type_in_typecache(O, chemfridge_typecache))
 		return TRUE
 	return FALSE
 
