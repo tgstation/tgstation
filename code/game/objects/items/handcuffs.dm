@@ -122,6 +122,10 @@
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, param_color)
 	. = ..()
 
+	var/list/cable_colors = GLOB.cable_colors
+	item_color = param_color || item_color || pick(cable_colors)
+	if(cable_colors[item_color])
+		item_color = cable_colors[item_color]
 	update_icon()
 
 /obj/item/restraints/handcuffs/cable/update_icon()

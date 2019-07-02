@@ -24,9 +24,6 @@
 		master = null
 	return ..()
 
-/obj/machinery/power/terminal/should_have_node()
-	return TRUE
-
 /obj/machinery/power/terminal/hide(i)
 	if(i)
 		invisibility = INVISIBILITY_MAXIMUM

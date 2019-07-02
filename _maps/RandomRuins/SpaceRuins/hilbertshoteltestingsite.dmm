@@ -77,7 +77,7 @@
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "p" = (
 /obj/structure/table/glass,
-/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil/blue,
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},

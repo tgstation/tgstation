@@ -116,8 +116,10 @@
 /turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "hI" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "hT" = (
@@ -179,6 +181,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "jh" = (
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
@@ -186,7 +189,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "jo" = (
@@ -224,12 +226,12 @@
 "ku" = (
 /obj/structure/rack,
 /obj/item/storage/bag/money/vault,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /mob/living/simple_animal/parrot{
 	faction = list("pirate");
 	name = "Pegwing"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
@@ -501,10 +503,10 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "tM" = (
-/obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/pirate/ranged{
 	environment_smash = 0
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "ul" = (
@@ -703,12 +705,15 @@
 "BL" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil/yellow,
 /obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Cb" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Pirate Cutter APC";
@@ -720,7 +725,6 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "DY" = (
@@ -741,6 +745,9 @@
 	pixel_y = -30;
 	req_access = null
 	},
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -750,9 +757,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/mob/living/simple_animal/hostile/pirate/ranged{
-	environment_smash = 0
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
@@ -765,6 +769,9 @@
 "FM" = (
 /obj/machinery/power/terminal{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
 	},
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/metal/twenty,
@@ -782,7 +789,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Gh" = (
@@ -958,10 +964,12 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Sd" = (

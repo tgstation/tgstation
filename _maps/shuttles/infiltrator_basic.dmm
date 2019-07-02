@@ -177,8 +177,8 @@
 /area/shuttle/syndicate/eva)
 "ay" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil/white,
+/obj/item/stack/cable_coil/white,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1

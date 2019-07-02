@@ -104,11 +104,6 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/power/emitter/should_have_node()
-	if(state == EMITTER_WELDED)
-		return TRUE
-	return FALSE
-
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
@@ -273,7 +268,6 @@
 				state = EMITTER_WELDED
 				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 				connect_to_network()
-				update_cable_icons_on_turf(get_turf(src))
 		if(EMITTER_WELDED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
@@ -284,7 +278,6 @@
 				state = EMITTER_WRENCHED
 				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 				disconnect_from_network()
-				update_cable_icons_on_turf(get_turf(src))
 
 	return TRUE
 

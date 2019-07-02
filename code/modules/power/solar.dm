@@ -29,9 +29,6 @@
 	unset_control() //remove from control computer
 	return ..()
 
-/obj/machinery/power/solar/should_have_node()
-	return TRUE
-
 //set the control of the panel to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/solar/proc/set_control(obj/machinery/power/solar_control/SC)
 	if(!SC || (get_dist(src, SC) > SOLAR_MAX_DIST))
