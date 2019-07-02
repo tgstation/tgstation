@@ -305,7 +305,7 @@
 		force = 5
 		attack_verb = list("hit", "slam")
 
-	playsound(src.loc, 'sound/weapons/contractorbatonextend.ogg', 75, 1)
+	playsound(src, 'sound/weapons/contractorbatonextend.ogg', 75, 1)
 	add_fingerprint(user)
 
 /obj/item/melee/contractor_baton/suicide_act(mob/user)
@@ -316,7 +316,7 @@
 	if(!on)
 		src.attack_self(user)
 	else
-		playsound(src, 'sound/weapons/contractorbatonextend.ogg', 85, 1)
+		playsound(src, 'sound/weapons/contractorbatonextend.ogg', 85, TRUE)
 		add_fingerprint(user)
 	sleep(3)
 	if (!QDELETED(H))
@@ -342,10 +342,13 @@
 			user.take_bodypart_damage(2*force)
 		return
 	if(iscyborg(target))
-		..()
-		target.flash_act()
-		playsound(get_turf(src), 'sound/effects/contractorbatonhit.ogg', 100, 1, -1)
-		return
+		if (user.a_intent != INTENT_HARM)
+			target.flash_act(affect_silicon = TRUE)
+			target.Paralyze(50)
+			user.visible_message("<span class='disarm'>[user] pulses [target]'s sensors with the baton!</span>", "<span class='danger'>You pulse [target]'s sensors with the baton!</span>")
+			playsound(get_turf(src), 'sound/effects/contractorbatonhit.ogg', 100, TRUE, -1)
+			user.do_attack_animation(target)
+			return
 	if(!isliving(target))
 		return
 	if (user.a_intent == INTENT_HARM)
@@ -357,15 +360,16 @@
 		if(cooldown <= world.time)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+				if (H.check_shields(src, FALSE, "[user]'s [name]", MELEE_ATTACK))
 					return
 				if(check_martial_counter(H, user))
 					return
-			playsound(get_turf(src), 'sound/effects/contractorbatonhit.ogg', 110, 1, -1)
+			user.do_attack_animation(target)
+			playsound(src, 'sound/effects/contractorbatonhit.ogg', 100, TRUE, -1)
 			target.Paralyze(85)
 			target.Jitter(20)
 			log_combat(user, target, "stunned", src)
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 			target.visible_message("<span class ='danger'>[user] electrifies [target] with [src]!</span>", \
 				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
 			if(!iscarbon(user))
