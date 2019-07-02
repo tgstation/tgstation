@@ -199,7 +199,7 @@
 	name = "Contractor Guide"
 
 /obj/item/paper/contractor_guide/Initialize()
-	info = "<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
+	info = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
 			 this kit will provide you contracts to take on for TC payments.</p>
 
 			<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the
