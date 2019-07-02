@@ -18,8 +18,9 @@
 
 // 413 start -- blood color
 /obj/effect/decal/cleanable/blood/proc/set_blood_color(new_color)
-	blood_color = new_color
-	update_icon()
+	if(new_color)
+		blood_color = new_color
+		update_icon()
 // 413 end
 
 /obj/effect/decal/cleanable/blood/old
@@ -49,6 +50,13 @@
 	desc = "Your instincts say you shouldn't be following these."
 	var/blood_color = "#ffffff" // 413 -- blood color
 	var/list/existing_dirs = list()
+
+// 413 start -- blood color
+/obj/effect/decal/cleanable/trail_holder/proc/set_blood_color(new_color)
+	if(new_color)
+		blood_color = new_color
+		update_icon()
+// 413 end
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return TRUE
