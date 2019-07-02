@@ -48,6 +48,8 @@
 	if(devils.len < required_enemies)
 		setup_error = "Not enough devil candidates"
 		return 0
+	// FULPSTATION: Assign Hunters (as many as monsters, plus one)
+	assign_monster_hunters(devils.len / 1.5)	// FULP
 	return 1
 
 

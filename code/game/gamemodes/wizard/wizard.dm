@@ -30,6 +30,8 @@
 		return FALSE
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.forceMove(pick(GLOB.wizardstart))
+	// FULPSTATION: Assign Hunters (as many as monsters, plus one)
+	assign_monster_hunters(wizards.len + 2)	// FULP
 	return TRUE
 
 

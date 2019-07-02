@@ -1,5 +1,6 @@
 // ROLE PREFERENCES
 #define ROLE_BLOODSUCKER			"Bloodsucker"
+#define ROLE_MONSTERHUNTER			"Monster Hunter"
 
 // ANTAGS
 #define ANTAG_DATUM_BLOODSUCKER			/datum/antagonist/bloodsucker

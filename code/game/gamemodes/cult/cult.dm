@@ -83,6 +83,8 @@
 		log_game("[key_name(cultist)] has been selected as a cultist")
 
 	if(cultists_to_cult.len>=required_enemies)
+		// FULPSTATION: Assign Hunters (as many as monsters, plus one)
+		assign_monster_hunters(cultists_to_cult.len / 1.5)	// FULP
 		return TRUE
 	else
 		setup_error = "Not enough cultist candidates"

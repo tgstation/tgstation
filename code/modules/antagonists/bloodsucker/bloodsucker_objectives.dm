@@ -304,6 +304,36 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/objective/bloodsucker/monsterhunter
+
+//						 GENERATE!
+/datum/objective/bloodsucker/monsterhunter/generate_objective()
+	update_explanation_text()
+
+//						EXPLANATION
+/datum/objective/bloodsucker/monsterhunter/update_explanation_text()
+	explanation_text = "Destroy all monsters on [station_name()]."
+
+//						WIN CONDITIONS?
+/datum/objective/bloodsucker/monsterhunter/check_completion()
+	var/list/datum/mind/monsters = list()
+	monsters += SSticker.mode.bloodsuckers
+	monsters += SSticker.mode.devils
+	monsters += SSticker.mode.cult
+	monsters += SSticker.mode.wizards
+	monsters += SSticker.mode.apprentices
+	monsters += SSticker.mode.servants_of_ratvar
+	monsters += SSticker.mode.changelings
+
+	for (var/datum/mind/M in monsters)
+		if (M && M.current && M.current.stat != DEAD && get_turf(M.current))
+			return FALSE
+	return TRUE
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/objective/bloodsucker/vassal
 
 //						 GENERATE!

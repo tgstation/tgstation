@@ -176,6 +176,8 @@ Credit where due:
 		starter_servants--
 	ark_time = 30 + round((roundstart_player_count / 5)) //In minutes, how long the Ark will wait before activation
 	ark_time = min(ark_time, 35) //35 minute maximum for the activation timer
+	// FULPSTATION: Assign Hunters (as many as monsters, plus one)
+	assign_monster_hunters(servants_of_ratvar.len / 2)	// FULP
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()

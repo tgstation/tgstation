@@ -362,7 +362,13 @@
 
 
 
-/datum/antagonist/bloodsucker/proc/AmFinalDeath()
+/datum/antagonist/proc/AmFinalDeath()
+	// Standard Antags can be dead OR final death
+ 	return owner && (owner.current && owner.current.stat >= DEAD || owner.AmFinalDeath())
+
+/datum/antagonist/bloodsucker/AmFinalDeath()
+ 	return owner && owner.AmFinalDeath()
+/datum/antagonist/changeling/AmFinalDeath()
  	return owner && owner.AmFinalDeath()
 
 /datum/mind/proc/AmFinalDeath()

@@ -241,6 +241,10 @@
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
 		S.punchdamagelow += 1       //lowest possible punch damage   0
 		S.punchdamagehigh += 1      //highest possible punch damage	 9
+		// Clown
+		if(istype(H) && owner.assigned_role == "Clown")
+			//to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
+			H.dna.remove_mutation(CLOWNMUT)
 
 	// Physiology
 	CheckVampOrgans() // Heart, Eyes
@@ -280,6 +284,10 @@
 	if (ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(H.dna.species.type)
+
+		// Clown
+		if(istype(H) && owner.assigned_role == "Clown")
+			H.dna.add_mutation(CLOWNMUT)
 
 	// NOTE: Use initial() to return things to default!
 
@@ -469,6 +477,27 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 
 /datum/antagonist/bloodsucker/get_team()
 	return clan
+
+
+
+
+
+
+//Name shown on antag list
+/datum/antagonist/bloodsucker/antag_listing_name()
+	return ..() + "([ReturnFullName(TRUE)])"
+
+//Whatever interesting things happened to the antag admins should know about
+//Include additional information about antag in this part
+/datum/antagonist/bloodsucker/antag_listing_status()
+	if (owner && owner.AmFinalDeath())
+		return "<font color=red>Final Death</font>"
+	return ..()
+
+
+
+
+
 
 
 

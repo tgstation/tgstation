@@ -5,6 +5,10 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our this objective to all lings
 
 
+/datum/game_mode	// FULP: We need changelings stored in game_mode so we can find them with hunters!
+	var/list/datum/mind/changelings = list() // FULP
+
+
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
@@ -24,7 +28,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	<span class='notice'>Crew</span>: Root out and eliminate the changeling menace."
 
 	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
-	var/list/changelings = list()
+	//var/list/changelings = list() // FULP REMOVE, see above
 
 /datum/game_mode/changeling/pre_setup()
 
@@ -51,6 +55,8 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			changelings += changeling
 			changeling.special_role = ROLE_CHANGELING
 			changeling.restricted_roles = restricted_jobs
+		// FULPSTATION: Assign Hunters (as many as monsters, plus one)
+		assign_monster_hunters(changelings.len)	// FULP
 		return 1
 	else
 		setup_error = "Not enough changeling candidates"

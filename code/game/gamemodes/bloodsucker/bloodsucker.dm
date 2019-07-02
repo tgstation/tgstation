@@ -17,8 +17,8 @@
 	traitor_name = "Bloodsucker"//Nanotrasen Internal Affairs Agent"
 	antag_flag = ROLE_BLOODSUCKER
 	false_report_weight = 1
-	restricted_jobs = list("Cyborg")
-	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_jobs = list("AI","Cyborg")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -57,15 +57,8 @@
 		log_game("[bloodsucker.key] (ckey) has been selected as a Bloodsucker.")
 		antag_candidates.Remove(bloodsucker) // Apparently you can also write antag_candidates -= bloodsucker
 
-	// Assign Hunters (as many as vamps, plus one)
-	for(var/i = 1, i < recommended_enemies, i++) // Start at 1 so we skip Hunters if there's only one sucker.
-		if (!antag_candidates.len)
-			break
-		var/datum/mind/hunter = pick(antag_candidates)
-		vamphunters += hunter
-		hunter.restricted_roles = restricted_jobs
-		log_game("[hunter.key] (ckey) has been selected as a Hunter.")
-		antag_candidates.Remove(hunter)
+	// FULPSTATION: Assign Hunters (as many as monsters, plus one)
+	assign_monster_hunters(bloodsuckers.len, TRUE)	// FULP
 
 	// Do we have enough vamps to continue?
 	return bloodsuckers.len >= required_enemies
@@ -89,9 +82,8 @@
 		// Add Bloodsucker Antag Datum (or remove from list on Fail)
 		if (!make_bloodsucker(bloodsucker))
 			bloodsuckers -= bloodsucker
-	// Hunters
-	for(var/datum/mind/hunter in vamphunters)
-		hunter.add_antag_datum(ANTAG_DATUM_HUNTER)
+
+	// NOTE: Hunters are done in ..() parent proc
 
 	return ..()
 
