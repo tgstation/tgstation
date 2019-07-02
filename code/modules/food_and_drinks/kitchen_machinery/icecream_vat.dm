@@ -18,6 +18,7 @@
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
+	var/obj/item/reagent_containers/beaker = null
 	var/static/list/icecream_vat_reagents = list(
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/flour = 5,
@@ -81,10 +82,16 @@
 	dat += "<b>Waffle cones:</b> <a href='?src=[REF(src)];cone=[CONE_WAFFLE]'><b>Dispense</b></a> <a href='?src=[REF(src)];make=[CONE_WAFFLE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[CONE_WAFFLE];amount=5'><b>x5</b></a> [product_types[CONE_WAFFLE]] cones left. (Ingredients: flour, sugar)<br>"
 	dat += "<b>Chocolate cones:</b> <a href='?src=[REF(src)];cone=[CONE_CHOC]'><b>Dispense</b></a> <a href='?src=[REF(src)];make=[CONE_CHOC];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[CONE_CHOC];amount=5'><b>x5</b></a> [product_types[CONE_CHOC]] cones left. (Ingredients: flour, sugar, coco powder)<br></div>"
 	dat += "<br>"
+	if(beaker)
+		dat += "<b>BEAKER CONTENT</b><br><div class='statusDisplay'>"
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			dat += "[R.name]: [R.volume]u<br>"
+		dat += "<a href='?src=[REF(src)];refill=1'><b>Refill from beaker</b></a></div>"
+	dat += "<br>"
 	dat += "<b>VAT CONTENT</b><br>"
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume]"
-		dat += "<A href='?src=[REF(src)];disposeI=[R.type]'>Purge</A><BR>"
+		dat += "<A href='?src=[REF(src)];disposeI=[R.type]'>Purge</a><BR>"
 	dat += "<a href='?src=[REF(src)];refresh=1'>Refresh</a> <a href='?src=[REF(src)];close=1'>Close</a>"
 
 	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 500, src)
@@ -106,10 +113,32 @@
 		else
 			to_chat(user, "<span class='notice'>[O] already has ice cream in it.</span>")
 		return 1
+	if(istype(O, /obj/item/reagent_containers) && !(O.item_flags & ABSTRACT) && O.is_open_container())
+		. = TRUE //no afterattack
+		var/obj/item/reagent_containers/B = O
+		if(!user.transferItemToLoc(B, src))
+			return
+		replace_beaker(user, B)
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
+		update_icon()
+		return
 	else if(O.is_drainable())
 		return
 	else
 		return ..()
+
+/obj/machinery/icecream_vat/proc/RefillFromBeaker()
+	if(!beaker || !beaker.reagents)
+		return
+	for(var/datum/reagent/R in beaker.reagents.reagent_list)
+		if(R.type in icecream_vat_reagents)
+			beaker.reagents.trans_id_to(src, R, R.volume)
+			say("Internalizing reagent [R.name], volume [R.volume] to [src]")
+			playsound(src, 'sound/items/drink.ogg', 25, 1)
+	return
+
+
 
 /obj/machinery/icecream_vat/proc/make(mob/user, make_type, amount)
 	for(var/R in get_ingredient_list(make_type))
@@ -155,6 +184,9 @@
 
 	if(href_list["disposeI"])
 		reagents.del_reagent(href_list["disposeI"])
+
+	if(href_list["refill"])
+		RefillFromBeaker()
 
 	updateDialog()
 
@@ -221,6 +253,24 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 4)
 	qdel(src)
+
+/obj/machinery/icecream_vat/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
+	return
+
+/obj/machinery/icecream_vat/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(new_beaker)
+		beaker = new_beaker
+	else
+		beaker = null
+		updateDialog()
+	return TRUE
 
 
 #undef ICECREAM_VANILLA
