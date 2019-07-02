@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Engineering closets now start with a construction bag, which can hold machine components, circuits, electronics, and cable coils."
