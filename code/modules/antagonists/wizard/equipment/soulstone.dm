@@ -133,7 +133,7 @@
 			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>")
 			user.Dizzy(30)
 			return
-		if(purified && iscultist(user))
+		if(SS.purified && iscultist(user))
 			to_chat(user, "<span class='warning'>\"Holy magic resides within the stone, you cannot use it.\"</span>")
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
