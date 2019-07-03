@@ -84,7 +84,7 @@
 	if(!selected_dna)
 		return
 	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
-		to_chat(user, "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!</span>")
+		to_chat(user, "<span class='notice'>That DNA is not compatible with changeling retrovirus!</span>")
 		return
 	..()
 

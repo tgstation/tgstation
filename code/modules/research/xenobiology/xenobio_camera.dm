@@ -105,20 +105,20 @@
 		potion_action.target = src
 		potion_action.Grant(user)
 		actions += potion_action
-	
+
 	if(hotkey_help)
 		hotkey_help.target = src
 		hotkey_help.Grant(user)
 		actions += hotkey_help
 
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)	
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)	
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)	
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)	
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)	
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)
 	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
 
-	//Checks for recycler on every interact, prevents issues with load order on certain maps. 
+	//Checks for recycler on every interact, prevents issues with load order on certain maps.
 	if(!connected_recycler)
 		for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 			if(get_area(recycler.loc) == get_area(loc))
@@ -126,13 +126,13 @@
 				connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)	
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)	
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)	
-	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)	
-	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)	
-	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)	
-	..() 
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)
+	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)
+	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)
+	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)
+	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(datum/source, atom/deleted)
 	if(current_potion == deleted)
@@ -244,8 +244,8 @@
 				to_chat(owner, "[X] now has [X.monkeys] monkeys stored.")
 		else
 			to_chat(owner, "[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.")
-	else 
-		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
+	else
+		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 
 
 /datum/action/innate/monkey_recycle
@@ -270,7 +270,7 @@
 				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
 				recycler.use_power(500)
 				X.monkeys += recycler.cube_production
-				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors	
+				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 				qdel(M)
 				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
 	else
@@ -465,6 +465,6 @@
 		M.visible_message("[M] vanishes as [p_theyre()] reclaimed for recycling!")
 		X.connected_recycler.use_power(500)
 		X.monkeys += connected_recycler.cube_production
-		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors	
+		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 		qdel(M)
 		to_chat(C, "[X] now has [X.monkeys] monkeys available.")
