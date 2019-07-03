@@ -172,8 +172,69 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
-	var/cooldown = 0
-	var/on = TRUE
+
+	var/cooldown_check = 0 // Used interally, you don't want to modify
+
+	var/cooldown = 40 // Default wait time until can stun again.
+	var/stun_time_carbon = 60 // How long we stun for - 6 seconds.
+	var/stun_time_silicon = 0.60 // Multiplier for stunning silicons; if enabled, is 60% of human stun time. 
+	var/affect_silicon = FALSE // Does it stun silicons. 
+	var/on_sound // "On" sound, played when switching between able to stun or not.
+	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
+	var/stun_animation = FALSE // Do we animate the "hit" when stunning.
+	var/on = TRUE // Are we on or off
+
+	var/on_icon_state // What is our sprite when turned on
+	var/off_icon_state // What is our sprite when turned off
+	var/on_item_state // What is our in-hand sprite when turned on
+	var/force_on // Damage when on - not stunning
+	var/force_off // Damage when off - not stunning
+	var/weight_class_on // What is the new size class when turned on
+
+/obj/item/melee/classic_baton/Initialize()
+	. = ..()
+
+	// Derive stun time from multiplier.
+	stun_time_silicon = stun_time_carbon * stun_time_silicon
+
+// Description for trying to stun when still on cooldown.
+/obj/item/melee/classic_baton/proc/get_wait_description()
+	return
+
+// Description for when turning their baton "on"
+/obj/item/melee/classic_baton/proc/get_on_description()
+	var/list/desc = list()
+
+	desc["local_on"] = "<span class ='warning'>You extend the baton.</span>"
+	desc["local_off"] = "<span class ='notice'>You collapse the baton.</span>"
+
+	return desc
+
+// Default message for stunning mob.
+/obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
+	var/list/desc = list()
+
+	desc["visible"] =  "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+	desc["local"] = "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+
+	return desc
+
+// Default message for stunning a silicon.
+/obj/item/melee/classic_baton/proc/get_silicon_stun_description(mob/living/target, mob/living/user)
+	var/list/desc = list()
+
+	desc["visible"] = "<span class='danger'>[user] pulses [target]'s sensors with the baton!</span>"
+	desc["local"] = "<span class='danger'>You pulse [target]'s sensors with the baton!</span>"
+
+	return desc
+	
+// Are we applying any special effects when we stun to carbon
+/obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
+	return
+
+// Are we applying any special effects when we stun to carbon
+/obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
+	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
@@ -181,8 +242,9 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
-		user.Paralyze(60 * force)
+		to_chat(user, "<span class ='danger'>You hit yourself over the head.</span>")
+		user.Paralyze(stun_time_carbon * force)
+		additional_effects_carbon(user) // user is the target here
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -190,7 +252,20 @@
 			user.take_bodypart_damage(2*force)
 		return
 	if(iscyborg(target))
-		..()
+		if (affect_silicon)
+			// We don't stun if we're on harm.
+			if (user.a_intent != INTENT_HARM)
+				var/list/desc = get_silicon_stun_description(target, user)
+
+				target.flash_act(affect_silicon = TRUE)
+				target.Paralyze(stun_time_silicon)
+				additional_effects_silicon(target, user)
+
+				user.visible_message(desc["visible"], desc["local"])
+				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
+				
+				if (stun_animation)
+					user.do_attack_animation(target)
 		return
 	if(!isliving(target))
 		return
@@ -200,24 +275,37 @@
 		if(!iscyborg(target))
 			return
 	else
-		if(cooldown <= world.time)
+		if(cooldown_check <= world.time)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 					return
 				if(check_martial_counter(H, user))
 					return
-			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			target.Paralyze(60)
+
+			var/list/desc = get_stun_description(target, user)
+
+			if (stun_animation)
+				user.do_attack_animation(target)
+
+			playsound(get_turf(src), on_stun_sound, 75, 1, -1)
+			target.Paralyze(stun_time_carbon)
+			additional_effects_carbon(target, user)
+
 			log_combat(user, target, "stunned", src)
-			src.add_fingerprint(user)
-			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
-				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
+			add_fingerprint(user)
+
+			target.visible_message(desc["visible"], desc["local"])
+
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
 				target.LAssailant = user
-			cooldown = world.time + 40
+			cooldown_check = world.time + cooldown
+		else
+			var/wait_desc = get_wait_description()
+			if (wait_desc)
+				to_chat(user, wait_desc)
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -232,6 +320,14 @@
 	item_flags = NONE
 	force = 0
 	on = FALSE
+	on_sound = 'sound/weapons/batonextend.ogg'
+
+	on_icon_state = "telebaton_1"
+	off_icon_state = "telebaton_0"
+	on_item_state = "nullrod"
+	force_on = 10
+	force_off = 0
+	weight_class_on = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -241,7 +337,7 @@
 	if(!on)
 		src.attack_self(user)
 	else
-		playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
+		playsound(src, on_sound, 50, 1)
 		add_fingerprint(user)
 	sleep(3)
 	if (!QDELETED(H))
@@ -253,26 +349,28 @@
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
+	var/list/desc = get_on_description()
+
 	if(on)
-		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
-		icon_state = "telebaton_1"
-		item_state = "nullrod"
-		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
-		force = 10 //stun baton damage
+		to_chat(user, desc["local_on"])
+		icon_state = on_icon_state
+		item_state = on_item_state
+		w_class = weight_class_on
+		force = force_on
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
-		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
-		icon_state = "telebaton_0"
+		to_chat(user, desc["local_off"])
+		icon_state = off_icon_state
 		item_state = null //no sprite for concealment even when in hand
 		slot_flags = ITEM_SLOT_BELT
 		w_class = WEIGHT_CLASS_SMALL
-		force = 0 //not so robust now
+		force = force_off
 		attack_verb = list("hit", "poked")
 
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src.loc, on_sound, 50, 1)
 	add_fingerprint(user)
 
-/obj/item/melee/contractor_baton
+/obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -284,100 +382,27 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 5
-	var/cooldown = 0
-	var/on = FALSE
 
-/obj/item/melee/contractor_baton/attack_self(mob/user)
-	on = !on
-	if(on)
-		to_chat(user, "<span class ='warning'>You click the baton into place.</span>")
-		icon_state = "contractor_baton_1"
-		item_state = "contractor_baton"
-		w_class = WEIGHT_CLASS_NORMAL // even extended it can fit in a backpack
-		force = 16 
-		attack_verb = list("smacked", "struck", "cracked", "beaten")
-	else
-		to_chat(user, "<span class ='notice'>You click the baton down.</span>")
-		icon_state = "contractor_baton_0"
-		item_state = null //no sprite for concealment even when in hand
-		slot_flags = ITEM_SLOT_BELT
-		w_class = WEIGHT_CLASS_SMALL
-		force = 5
-		attack_verb = list("hit", "slam")
+	cooldown = 30 
+	stun_time_carbon = 85 
+	affect_silicon = TRUE 
+	on_sound = 'sound/weapons/contractorbatonextend.ogg'
+	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
+	stun_animation = TRUE 
 
-	playsound(src, 'sound/weapons/contractorbatonextend.ogg', 75, 1)
-	add_fingerprint(user)
+	on_icon_state = "contractor_baton_1"
+	off_icon_state = "contractor_baton_0"
+	on_item_state = "contractor_baton"
+	force_on = 16
+	force_off = 5
+	weight_class_on = WEIGHT_CLASS_NORMAL
 
-/obj/item/melee/contractor_baton/suicide_act(mob/user)
-	var/mob/living/carbon/human/H = user
-	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
+/obj/item/melee/classic_baton/telescopic/get_wait_description()
+	return "<span class='danger'>The baton is still charging!</span>"
 
-	user.visible_message("<span class='suicide'>[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind.</span>")
-	if(!on)
-		src.attack_self(user)
-	else
-		playsound(src, 'sound/weapons/contractorbatonextend.ogg', 85, TRUE)
-		add_fingerprint(user)
-	sleep(3)
-	if (!QDELETED(H))
-		if(!QDELETED(B))
-			H.internal_organs -= B
-			qdel(B)
-		new /obj/effect/gibspawner/generic(H.drop_location(), H)
-		return (BRUTELOSS)
-
-/obj/item/melee/contractor_baton/attack(mob/living/target, mob/living/user)
-	if(!on)
-		return ..()
-
-	add_fingerprint(user)
-	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
-		user.Paralyze(20 * force)
-		user.Jitter(20)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
-		else
-			user.take_bodypart_damage(2*force)
-		return
-	if(iscyborg(target))
-		if (user.a_intent != INTENT_HARM)
-			target.flash_act(affect_silicon = TRUE)
-			target.Paralyze(60)
-			user.visible_message("<span class='disarm'>[user] pulses [target]'s sensors with the baton!</span>", "<span class='danger'>You pulse [target]'s sensors with the baton!</span>")
-			playsound(get_turf(src), 'sound/effects/contractorbatonhit.ogg', 100, TRUE, -1)
-			user.do_attack_animation(target)
-			return
-	if(!isliving(target))
-		return
-	if (user.a_intent == INTENT_HARM)
-		if(!..())
-			return
-		if(!iscyborg(target))
-			return
-	else
-		if(cooldown <= world.time)
-			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				if (H.check_shields(src, FALSE, "[user]'s [name]", MELEE_ATTACK))
-					return
-				if(check_martial_counter(H, user))
-					return
-			user.do_attack_animation(target)
-			playsound(src, 'sound/effects/contractorbatonhit.ogg', 100, TRUE, -1)
-			target.Paralyze(85)
-			target.Jitter(20)
-			target.stuttering += 20
-			log_combat(user, target, "stunned", src)
-			add_fingerprint(user)
-			target.visible_message("<span class ='danger'>[user] electrifies [target] with [src]!</span>", \
-				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
-			if(!iscarbon(user))
-				target.LAssailant = null
-			else
-				target.LAssailant = user
-			cooldown = world.time + 35
+/obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_carbon(mob/living/target, mob/living/user)
+	target.Jitter(20)
+	target.stuttering += 20
 
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
