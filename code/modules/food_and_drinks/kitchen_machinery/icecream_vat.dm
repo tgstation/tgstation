@@ -213,6 +213,7 @@
 	desc = "Delicious waffle cone, but no ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "icecream_cone_waffle" //default for admin-spawned cones, href_list["cone"] should overwrite this all the time
+	tastes = list("cream" = 2, "waffle" = 1)
 	var/ice_creamed = 0
 	var/cone_type
 	bitesize = 3
@@ -240,33 +241,33 @@
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")
 			desc = "A delicious [cone_type] cone filled with vanilla ice cream. All the other ice creams take content from it."
-			reagents.add_reagent(/datum/reagent/consumable/vanilla, 2)
+			reagents.add_reagent(/datum/reagent/consumable/vanilla, 3)
 			filling_color = "#ECE1C1"
 		if ("chocolate")
 			desc = "A delicious [cone_type] cone filled with chocolate ice cream. Surprisingly, made with real cocoa."
-			reagents.add_reagent(/datum/reagent/consumable/coco, 2)
+			reagents.add_reagent(/datum/reagent/consumable/coco, 3)
 			filling_color = "#93673B"
 		if ("strawberry")
 			desc = "A delicious [cone_type] cone filled with strawberry ice cream. Definitely not made with real strawberries."
-			reagents.add_reagent(/datum/reagent/consumable/berryjuice, 2)
+			reagents.add_reagent(/datum/reagent/consumable/berryjuice, 3)
 			filling_color = "#EFB4B4"
 		if ("blue")
 			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
-			reagents.add_reagent(/datum/reagent/consumable/ethanol/singulo, 2)
+			reagents.add_reagent(/datum/reagent/consumable/ethanol/singulo, 3)
 			filling_color = "#ACBCED"
 		if ("mob")
 			desc = "A suspicious [cone_type] cone filled with bright red ice cream. That's probably not strawberry..."
-			reagents.add_reagent(/datum/reagent/liquidgibs, 2)
+			reagents.add_reagent(/datum/reagent/liquidgibs, 3)
 			filling_color = "#EFB4B4"
 		if ("custom")
-			if(R && R.total_volume >= 2)
+			if(R && R.total_volume >= 3)
 				var/mutable_appearance/flavoring = mutable_appearance(icon,"icecream_custom")
 				var/datum/reagent/master = R.get_master_reagent()
 				flavoring.color = master.color
 				filling_color = master.color
 				name = "[master.name] icecream"
 				desc = "A delicious [cone_type] cone filled with artisanal icecream. Made with real [master.name]. Ain't that something."
-				R.trans_to(src, 2)
+				R.trans_to(src, 3)
 				add_overlay(flavoring)
 			else
 				name = "bland icecream"
