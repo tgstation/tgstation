@@ -56,14 +56,12 @@ Bonus
 				eyes.applyOrganDamage(1)
 			else
 				M.blur_eyes(20)
-				eyes.applyOrganDamage(5)
-				if(eyes.damage >= 10)
-					M.become_nearsighted(EYE_DAMAGE)
+				eyes.applyOrganDamage(8)
 				if(prob(eyes.damage - 10 + 1))
 					if(!remove_eyes)
 						if(!HAS_TRAIT(M, TRAIT_BLIND))
 							to_chat(M, "<span class='userdanger'>You go blind!</span>")
-						M.become_blind(EYE_DAMAGE)
+							eyes.applyOrganDamage(eyes.maxHealth)
 					else
 						M.visible_message("<span class='warning'>[M]'s eyes fall out of their sockets!</span>", "<span class='userdanger'>Your eyes fall out of their sockets!</span>")
 						eyes.Remove(M)

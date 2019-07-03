@@ -327,7 +327,7 @@
 				else if(prob(eyes.damage - 25))
 					if(!HAS_TRAIT(src, TRAIT_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
-					become_blind(EYE_DAMAGE)
+					eyes.applyOrganDamage(eyes.maxHealth)
 
 			else
 				to_chat(src, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
