@@ -22,6 +22,7 @@
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_tech
 
+	id = /obj/item/card/id/job/cargo
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech

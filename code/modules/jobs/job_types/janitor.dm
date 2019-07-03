@@ -23,6 +23,7 @@
 	name = "Janitor"
 	jobtype = /datum/job/janitor
 
+	id = /obj/item/card/id/job/serv
 	belt = /obj/item/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor

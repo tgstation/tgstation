@@ -65,7 +65,7 @@
  * ID CARDS
  */
 /obj/item/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry."
+	desc = "It is an ID card, the magnetic strip is exposed and attached to some circuitry."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
@@ -77,7 +77,7 @@
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
-	color = rgb(40, 130, 255)
+	icon_state = "emag_bs"
 	prox_check = FALSE
 
 /obj/item/card/emag/attack()
@@ -92,7 +92,7 @@
 	A.emag_act(user)
 
 /obj/item/card/emagfake
-	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
+	desc = "It is an ID card, the magnetic strip is exposed and attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
@@ -263,7 +263,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/silver
 	name = "silver identification card"
-	desc = "A silver card which shows honour and dedication."
+	desc = "A silver ID card, issued to positions which require honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
@@ -277,7 +277,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/gold
 	name = "gold identification card"
-	desc = "A golden card which shows power and might."
+	desc = "A golden ID card. issued to positions which wield power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
@@ -341,7 +341,8 @@ update_label("John Doe", "Clowny")
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	assignment = "Syndicate Overlord"
+	icon_state = "syndicate"
+	assignment = "Syndicate Officer"
 	access = list(ACCESS_SYNDICATE)
 
 /obj/item/card/id/captains_spare
@@ -361,7 +362,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/centcom
 	name = "\improper CentCom ID"
-	desc = "An ID straight from Central Command."
+	desc = "A shimmering Central Command ID card. Simply seeing this is illegal for the majority of the crew."
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
@@ -372,8 +373,8 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert
 	name = "\improper CentCom ID"
-	desc = "An ERT ID card."
-	icon_state = "centcom"
+	desc = "A shimmering Emergency Response Team ID card. All access with style."
+	icon_state = "ert"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
@@ -384,6 +385,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/ert/Security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
+	icon_state = "ert"
 
 /obj/item/card/id/ert/Security/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
@@ -392,6 +394,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
+	icon_state = "ert"
 
 /obj/item/card/id/ert/Engineer/Initialize()
 	access = get_all_accesses()+get_ert_access("eng")-ACCESS_CHANGE_IDS
@@ -400,6 +403,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
+	icon_state = "ert"
 
 /obj/item/card/id/ert/Medical/Initialize()
 	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
@@ -408,6 +412,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/ert/chaplain
 	registered_name = "Religious Response Officer"
 	assignment = "Religious Response Officer"
+	icon_state = "ert"
 
 /obj/item/card/id/ert/chaplain/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
@@ -416,6 +421,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/ert/Janitor
 	registered_name = "Janitorial Response Officer"
 	assignment = "Janitorial Response Officer"
+	icon_state = "ert"
 
 /obj/item/card/id/ert/Janitor/Initialize()
 	access = get_all_accesses()
@@ -519,9 +525,12 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 
+///Department Budget Cards///
+
 /obj/item/card/id/departmental_budget
 	name = "departmental card (FUCK)"
 	desc = "Provides access to the departmental budget."
+	icon_state = "budget"
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
 
@@ -543,27 +552,81 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/departmental_budget/civ
 	department_ID = ACCOUNT_CIV
 	department_name = ACCOUNT_CIV_NAME
+	icon_state = "budget"
 
 /obj/item/card/id/departmental_budget/eng
 	department_ID = ACCOUNT_ENG
 	department_name = ACCOUNT_ENG_NAME
+	icon_state = "budget_eng"
 
 /obj/item/card/id/departmental_budget/sci
 	department_ID = ACCOUNT_SCI
 	department_name = ACCOUNT_SCI_NAME
+	icon_state = "budget_sci"
 
 /obj/item/card/id/departmental_budget/med
 	department_ID = ACCOUNT_MED
 	department_name = ACCOUNT_MED_NAME
+	icon_state = "budget_med"
 
 /obj/item/card/id/departmental_budget/srv
 	department_ID = ACCOUNT_SRV
 	department_name = ACCOUNT_SRV_NAME
+	icon_state = "budget_srv"
 
 /obj/item/card/id/departmental_budget/car
 	department_ID = ACCOUNT_CAR
 	department_name = ACCOUNT_CAR_NAME
+	icon_state = "budget_car"
 
 /obj/item/card/id/departmental_budget/sec
 	department_ID = ACCOUNT_SEC
 	department_name = ACCOUNT_SEC_NAME
+	icon_state = "budget_sec"
+
+///Job Specific ID Cards///
+
+/obj/item/card/id/job/ce
+	icon_state = "ce"
+
+/obj/item/card/id/job/engi
+	icon_state = "engi"
+
+/obj/item/card/id/job/cmo
+	icon_state = "cmo"
+
+/obj/item/card/id/job/med
+	icon_state = "med"
+
+/obj/item/card/id/job/hos
+	icon_state = "hos"
+
+/obj/item/card/id/job/sec
+	icon_state = "sec"
+
+/obj/item/card/id/job/rd
+	icon_state = "rd"
+
+/obj/item/card/id/job/sci
+	icon_state = "sci"
+
+/obj/item/card/id/job/serv //service jobs, botany, etc
+	icon_state = "serv"
+
+/obj/item/card/id/job/chap
+	icon_state = "chap"
+
+/obj/item/card/id/job/qm
+	icon_state = "qm"
+
+/obj/item/card/id/job/miner
+	icon_state = "miner"
+
+/obj/item/card/id/job/cargo
+	icon_state = "cargo"
+
+/obj/item/card/id/job/clown
+	icon_state = "clown"
+
+/obj/item/card/id/job/mime
+	icon_state = "mime"

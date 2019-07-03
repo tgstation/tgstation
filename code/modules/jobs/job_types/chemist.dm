@@ -24,6 +24,7 @@
 	name = "Chemist"
 	jobtype = /datum/job/chemist
 
+	id = /obj/item/card/id/job/med
 	glasses = /obj/item/clothing/glasses/science
 	belt = /obj/item/pda/chemist
 	ears = /obj/item/radio/headset/headset_med

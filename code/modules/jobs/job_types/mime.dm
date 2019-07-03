@@ -25,6 +25,7 @@
 	name = "Mime"
 	jobtype = /datum/job/mime
 
+	id = /obj/item/card/id/job/mime
 	belt = /obj/item/pda/mime
 	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/mime

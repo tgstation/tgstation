@@ -22,6 +22,7 @@
 	name = "Curator"
 	jobtype = /datum/job/curator
 
+	id = /obj/item/card/id/job/serv
 	shoes = /obj/item/clothing/shoes/laceup
 	belt = /obj/item/pda/curator
 	ears = /obj/item/radio/headset/headset_srv

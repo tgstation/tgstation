@@ -16,6 +16,7 @@ Rumpelgeist = Admin
 ImpendingRiot = Moderator
 FaKanza	 = Admin
 Trickytyfly = Admin
+Triiodine = Fulp Crew
 
 #ADMINS
 saladata = Admin
