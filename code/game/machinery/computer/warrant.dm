@@ -150,30 +150,3 @@
 						to_chat(usr, "<span class='warning'>Fines can only be paid with holochips</span>")
 	updateUsrDialog()
 	add_fingerprint(usr)
-
-
-/obj/machinery/computer/warrant/emp_act(severity)
-	. = ..()
-
-	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
-		return
-
-/obj/machinery/computer/warrant/AltClick(mob/user)
-	if(user.canUseTopic(src, !issilicon(user)))
-		eject_id(user)
-
-/obj/machinery/computer/warrant/proc/eject_id(mob/user)
-	if(scan)
-		scan.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(scan)
-		scan = null
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-	else //switching the ID with the one you're holding
-		if(issilicon(user) || !Adjacent(user))
-			return
-		var/obj/item/card/id/held_id = user.is_holding_item_of_type(/obj/item/card/id)
-		if(QDELETED(held_id) || !user.transferItemToLoc(held_id, src))
-			return
-		scan = held_id
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
