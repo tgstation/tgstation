@@ -1038,7 +1038,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				// 413 start
 				if("t_caste")
 					features["troll_caste"] = random_troll_caste()
-					eye_color = get_color_from_caste(features["troll_caste"])
+					eye_color = sanitize_hexcolor(get_color_from_caste(features["troll_caste"]))
 				if("horn_type")
 					features["horns_troll"] = random_troll_horns()
 				// 413 end
