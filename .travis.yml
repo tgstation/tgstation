@@ -23,7 +23,7 @@ matrix:
         - tools/travis/check_filedirs.sh tgstation.dme
         - tools/travis/build_tools.sh
         - tools/travis/build_tgui.sh
-        - tools/travis/lint_grep.sh
+        - tools/travis/check_grep.sh
         - ~/dreamchecker
 
     - name: "Compile All Maps"
