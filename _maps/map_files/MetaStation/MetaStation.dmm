@@ -32977,6 +32977,8 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsO" = (
+/obj/structure/cable,
+/obj/machinery/photocopier,
 /mob/living/simple_animal/pet/dog/corgi/Ian,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
