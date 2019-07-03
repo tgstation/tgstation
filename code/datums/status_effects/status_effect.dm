@@ -155,7 +155,7 @@
 	var/mutable_appearance/status_overlay
 	var/mutable_appearance/status_underlay
 
-/datum/status_effect/stacking/proc/threshold_effect() //what happens when threshold is crossed
+/datum/status_effect/stacking/proc/threshold_cross_effect() //what happens when threshold is crossed
 	return
 
 /datum/status_effect/stacking/proc/stacks_consumed_effect() //runs if status is deleted due to threshold being crossed
@@ -168,10 +168,13 @@
 	return
 
 /datum/status_effect/stacking/proc/on_threshold_cross()
-	threshold_effect()
+	threshold_cross_effect()
 	if(consumed_on_threshold)
 		stacks_consumed_effect()
 		qdel(src)
+
+/datum/status_effect/stacking/proc/on_threshold_drop()
+	return
 
 /datum/status_effect/stacking/proc/can_have_status()
 	if(owner.stat == DEAD)
@@ -202,8 +205,9 @@
 		if(stacks >= stack_threshold && !threshold_crossed) //threshold_crossed check prevents threshold effect from occuring if changing from above threshold to still above threshold
 			threshold_crossed = TRUE
 			on_threshold_cross()
-		else if(stacks < stack_threshold)
+		else if(stacks < stack_threshold && threshold_crossed)
 			threshold_crossed = FALSE //resets threshold effect if we fall below threshold so theshold effect can trigger again
+			on_threshold_drop()
 		if(stacks_added > 0)
 			tick_interval += delay_before_decay //refreshes time until decay
 		if(stacks > max_stacks)
