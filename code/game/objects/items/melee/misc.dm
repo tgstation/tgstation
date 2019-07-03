@@ -203,30 +203,30 @@
 
 // Description for when turning their baton "on"
 /obj/item/melee/classic_baton/proc/get_on_description()
-	var/list/desc = list()
+	. = list()
 
-	desc["local_on"] = "<span class ='warning'>You extend the baton.</span>"
-	desc["local_off"] = "<span class ='notice'>You collapse the baton.</span>"
+	.["local_on"] = "<span class ='warning'>You extend the baton.</span>"
+	.["local_off"] = "<span class ='notice'>You collapse the baton.</span>"
 
-	return desc
+	return .
 
 // Default message for stunning mob.
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
-	var/list/desc = list()
+	. = list()
 
-	desc["visible"] =  "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
-	desc["local"] = "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+	.["visible"] =  "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+	.["local"] = "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
 
-	return desc
+	return .
 
 // Default message for stunning a silicon.
 /obj/item/melee/classic_baton/proc/get_silicon_stun_description(mob/living/target, mob/living/user)
-	var/list/desc = list()
+	. = list()
 
-	desc["visible"] = "<span class='danger'>[user] pulses [target]'s sensors with the baton!</span>"
-	desc["local"] = "<span class='danger'>You pulse [target]'s sensors with the baton!</span>"
+	.["visible"] = "<span class='danger'>[user] pulses [target]'s sensors with the baton!</span>"
+	.["local"] = "<span class='danger'>You pulse [target]'s sensors with the baton!</span>"
 
-	return desc
+	return .
 	
 // Are we applying any special effects when we stun to carbon
 /obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
