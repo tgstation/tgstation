@@ -170,7 +170,6 @@
 		qdel(src)
 
 /datum/status_effect/stacking/proc/on_threshold_drop()
-	return
 
 /datum/status_effect/stacking/proc/can_have_status()
 	return owner.stat != DEAD
@@ -196,7 +195,7 @@
 			threshold_crossed = TRUE
 			on_threshold_cross()
 		else if(stacks < stack_threshold && threshold_crossed)
-			threshold_crossed = FALSE //resets threshold effect if we fall below threshold so theshold effect can trigger again
+			threshold_crossed = FALSE //resets threshold effect if we fall below threshold so threshold effect can trigger again
 			on_threshold_drop()
 		if(stacks_added > 0)
 			tick_interval += delay_before_decay //refreshes time until decay
