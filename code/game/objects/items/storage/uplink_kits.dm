@@ -197,7 +197,7 @@
 
 /obj/item/storage/box/syndicate/contract_kit
 	name = "Contract Kit"
-	desc = "Supplied to Syndicate contractors in active mission areas."
+	desc = "Supplied to Syndicate contractors."
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
@@ -218,32 +218,35 @@
 			Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed 
 			to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>
 
-			<p>The three additional items, apart from the tablet and loadout box, have been randomly selected from what we had available. We hope 
-			they're useful to you for you mission.</p>
+			<p>Your standard issue contractor baton hits harder than the ones you might be used to, and likely be your go to weapon for kidnapping your 
+			targets. The three additional items have been randomly selected from what we had available. We hope they're useful to you for your mission.</p>
 
 			<h3>Using the tablet</h3>
 			<ol>
 				<li>Open the Syndicate Contract Uplink program.</li>
-				<li>Assign yourself.</li>
 				<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>
 				<li>The payment number shown in brackets is the bonus you'll recieve when bringing your target <b>alive</b>. You recieve the 
 				other number regardless of if they were alive or dead.</li>
+				<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them
+				inside the pod.</li>
 			</ol>
 
 			<p>Be careful when accepting a contract. While you'll be able to see the location of the dropoff point, cancelling will make it 
 			unavailable to take on again.</p>
-			<p>The tablet can be recharged at any cell charger.</p>
+			<p>The tablet can also be recharged at any cell charger.</p>
 			<h3>Extracting</h3>
 			<ol>
 				<li>Make sure both yourself and your target are at the dropoff.</li>
-				<li>Call the extraction. Stand back from the drop point - it'll be coming down hard.</li>
+				<li>Call the extraction, and stand back from the drop point.</li>
 				<li>If it fails, make sure your target is inside, and there's a free space for the pod to land.</li>
-				<li>Drag your target into the pod.</li>
+				<li>Grab your target, and drag them into the pod.</li>
 			</ol>
 			<h3>Ransoms</h3>
 			<p>We need your target for our own reasons, but we ransom them back to your mission area once their use is served. They will return back 
-			from where you sent them off from in several minutes time. Don't worry agent, we give you a cut of what we get paid. We pay this into whatever 
-			ID card you have equipped, on top of the TC payment we give.</p>"}
+			from where you sent them off from in several minutes time. Don't worry, we give you a cut of what we get paid. We pay this into whatever 
+			ID card you have equipped, on top of the TC payment we give.</p>
+			
+			<p>Good luck agent.</p>"}
 
 	return ..()
 
@@ -259,6 +262,7 @@
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
 	new /obj/item/storage/box/syndicate/contractor_loadout(src)
+	new /obj/item/melee/classic_baton/telescopic/contractor_baton(src)
 
 	// All about 4 TC or less - some nukeops only items, but fit nicely to the theme.
 	var/list/item_list = list(
