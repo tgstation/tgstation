@@ -5,7 +5,7 @@
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/warrant
 	light_color = LIGHT_COLOR_RED
-	var/obj/item/card/id/scan = null
+	var/authenticated = null
 	var/screen = null
 	var/datum/data/record/current = null
 
@@ -13,8 +13,8 @@
 	. = ..()
 
 	var/list/dat = list("Logged in as: ")
-	if(scan)
-		dat += {"<a href='?src=[REF(src)];choice=Logout'>[scan.registered_name]</a><hr>"}
+	if(authenticated)
+		dat += {"<a href='?src=[REF(src)];choice=Logout'>[authenticated]</a><hr>"}
 		if(current)
 			var/background
 			var/notice = ""
@@ -115,15 +115,16 @@
 	switch(href_list["choice"])
 		if("Login")
 			var/mob/M = usr
-			scan = M.get_idcard(TRUE)
-			if(scan && istype(scan))
+			var/obj/item/card/id/scan = M.get_idcard(TRUE)
+			authenticated = scan.registered_name
+			if(authenticated)
 				for(var/datum/data/record/R in GLOB.data_core.security)
-					if(R.fields["name"] == scan.registered_name)
+					if(R.fields["name"] == authenticated)
 						current = R
 				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 		if("Logout")
 			current = null
-			scan = null
+			authenticated = null
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
 
 		if("Pay")
