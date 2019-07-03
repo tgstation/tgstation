@@ -425,7 +425,7 @@
 			else
 				working = FALSE
 	else
-		..()
+		return ..()
 
 /obj/machinery/sprinkler/proc/dispense()
 	if(cooldown < world.time && refill_loaded)
