@@ -213,16 +213,12 @@
 	desc = "Delicious waffle cone, but no ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "icecream_cone_waffle" //default for admin-spawned cones, href_list["cone"] should overwrite this all the time
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 1)
 	tastes = list("cream" = 2, "waffle" = 1)
 	var/ice_creamed = 0
 	var/cone_type
 	bitesize = 3
-	foodtype = DAIRY
-
-/obj/item/reagent_containers/food/snacks/icecream/Initialize()
-	. = ..()
-	create_reagents(20)
-	reagents.add_reagent(/datum/reagent/consumable/nutriment, 4)
+	foodtype = DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/icecream/proc/set_cone_type(var/cone_name)
 	cone_type = cone_name
