@@ -56,7 +56,7 @@ Bonus
 				eyes.applyOrganDamage(1)
 			else
 				M.blur_eyes(20)
-				yes.applyOrganDamage(5)
+				eyes.applyOrganDamage(5)
 				if(eyes.damage >= 10)
 					M.become_nearsighted(EYE_DAMAGE)
 				if(prob(eyes.damage - 10 + 1))
