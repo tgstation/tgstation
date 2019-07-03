@@ -208,26 +208,6 @@
 // GLOBAL PROCS for powernets handling
 //////////////////////////////////////////
 
-
-//recursive function to find a full set of linked wires
-//Do not call this directly
-/proc/find_cables(obj/structure/cable/C, var/datum/powernet/PN, use_old_powernet_if_found = FALSE, ignore_dir = null)
-	. = list()
-	var/list/connections = C.get_cable_connections(FALSE, ignore_dir)
-	for(var/check_dir in connections)
-		if(connections[check_dir])
-			var/obj/structure/cable/found_cable = connections[check_dir]
-			if(found_cable.powernet)
-				if(use_old_powernet_if_found && (found_cable.powernet != PN || found_cable.powernet != null))
-					return found_cable.powernet
-				if(found_cable.powernet == PN)
-					continue
-			var/true_dir = text2num(check_dir)
-			var/recurse_result = find_cables(found_cable, PN, use_old_powernet_if_found, turn(true_dir, 180))
-			if(istype(recurse_result, /datum/powernet))
-				return recurse_result
-			. += recurse_result
-
 //remove the old powernet and replace it with a new one throughout the network.
 //use_old_if_found will use an existing powernet and repropogate if it finds it.
 //propogate_after_search will do all the actual powernet application at the end instead of as it goes.
@@ -247,20 +227,18 @@ var/first_ever_propogate_ever_oh_god = TRUE
 		current_ignore_dir = cables[working_cable]
 		index++
 
-		if(index > 10)
-			break
-
-		var/list/connections = working_cable.get_cable_connections(FALSE, current_ignore_dir)
+		var/list/connections = working_cable.get_cable_connections(FALSE)
 		if(first_ever_propogate_ever_oh_god)
 			var/print = "[ADMIN_VERBOSEJMP(working_cable)]"
 			print += " [REF(working_cable)]"
 			print += "\nIndex: [index]"
+			print += "\nIgnoring dir: [current_ignore_dir]"
 			print += "\n[connections.Join(", ")]"
 			to_chat(world, print)
 		
 		for(var/obj/structure/cable/cable_entry in connections)
 			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries
-				cables += cable_entry
+				cables[cable_entry] = connections[cable_entry]
 
 	first_ever_propogate_ever_oh_god = FALSE
 	for(var/obj/structure/cable/cable_entry in cables)
