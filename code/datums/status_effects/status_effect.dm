@@ -156,16 +156,12 @@
 	var/mutable_appearance/status_underlay
 
 /datum/status_effect/stacking/proc/threshold_cross_effect() //what happens when threshold is crossed
-	return
 
 /datum/status_effect/stacking/proc/stacks_consumed_effect() //runs if status is deleted due to threshold being crossed
-	return
 
 /datum/status_effect/stacking/proc/fadeout_effect() //runs if status is deleted due to being under one stack
-	return
 
 /datum/status_effect/stacking/proc/stack_decay_effect() //runs every time tick() causes stacks to decay
-	return
 
 /datum/status_effect/stacking/proc/on_threshold_cross()
 	threshold_cross_effect()
@@ -190,12 +186,12 @@
 		stack_decay_effect()
 
 /datum/status_effect/stacking/proc/add_stacks(stacks_added)
-	if(stacks_added>0 && !can_gain_stacks())
+	if(stacks_added > 0 && !can_gain_stacks())
 		return FALSE
 	owner.cut_overlay(status_overlay)
 	owner.underlays -= status_underlay
 	stacks += stacks_added
-	if(stacks>0)
+	if(stacks > 0)
 		if(stacks >= stack_threshold && !threshold_crossed) //threshold_crossed check prevents threshold effect from occuring if changing from above threshold to still above threshold
 			threshold_crossed = TRUE
 			on_threshold_cross()
@@ -204,8 +200,7 @@
 			on_threshold_drop()
 		if(stacks_added > 0)
 			tick_interval += delay_before_decay //refreshes time until decay
-		if(stacks > max_stacks)
-			stacks = max_stacks
+		stacks = min(stacks, max_stacks)
 		status_overlay.icon_state = "[overlay_state][stacks]"
 		status_underlay.icon_state = "[underlay_state][stacks]"
 		owner.add_overlay(status_overlay)
