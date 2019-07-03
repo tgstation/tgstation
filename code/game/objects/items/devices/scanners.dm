@@ -142,15 +142,13 @@ GENE SCANNER
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/message
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
 		//organ failure messages
 		for(var/obj/item/organ/organ in H.internal_organs)
 			if(!istype(organ, /obj/item/organ/heart))
 				if(organ.failing)
-					message = organ.Assemble_Failure_Message()
-					to_chat(user, message)
+					to_chat(user, organ.Assemble_Failure_Message())
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -258,15 +256,9 @@ GENE SCANNER
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/damage
-		var/high_threshold
-		var/low_threshold
 		for(var/obj/item/organ/organ in H.internal_organs)
-			damage = organ.damage
-			high_threshold = organ.high_threshold
-			low_threshold = organ.low_threshold
-			if((damage > low_threshold)&&(!istype(organ, /obj/item/organ/brain)))
-				to_chat(user, "\t<span class='alert'>[damage > high_threshold ? "Severe" : "Minor"] damaged detected within [organ].</span>")
+			if((organ.damage > organ.low_threshold)&&(!istype(organ, /obj/item/organ/brain)))
+				to_chat(user, "\t<span class='alert'>[organ.damage > organ.high_threshold ? "Severe" : "Minor"] damaged detected within [organ].</span>")
 		if(advanced && H.has_dna())
 			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
 

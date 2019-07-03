@@ -19,7 +19,7 @@
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	var/damage = 0		//total damage this organ has sustained
 	var/failing	= FALSE			//is this organ failing or not
-	var/healing_factor = STANDARD_ORGAN_HEALING	//fraction of maxhealth healed per tick
+	var/healing_factor = STANDARD_ORGAN_HEALING	//fraction of maxhealth healed per on_life()
 	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
 	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
 	var/Unique_Failure_Msg		//certain organs may want unique failure messages for details on how to fix them
@@ -30,9 +30,9 @@
 	if(!Unique_Failure_Msg)
 		name_length = lentext(name)
 		if(name[name_length] == "s")	//plural case, done without much sanitization since I don't know any organ that ends with an "s" that isn't plural at the moment
-			return "<span class='danger'>Subject's [name] are too damaged to function, and needs to be replaced or fixed!</span>"
+			Unique_Failure_Msg = "<span class='danger'>Subject's [name] are too damaged to function, and needs to be replaced or fixed!</span>"
 		else
-			return "<span class='danger'>Subject's [name] is too damaged to function, and needs to be replaced or fixed!</span>"
+			Unique_Failure_Msg = "<span class='danger'>Subject's [name] is too damaged to function, and needs to be replaced or fixed!</span>"
 	return Unique_Failure_Msg
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)

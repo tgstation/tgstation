@@ -50,10 +50,12 @@
 	return ..()
 
 /obj/item/paperplane/suicide_act(mob/living/user)
+	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
 	user.Stun(200)
 	user.visible_message("<span class='suicide'>[user] jams [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.adjust_blurriness(6)
-	user.adjust_eye_damage(rand(6,8))
+	if(eyes)
+		eyes.applyOrganDamage(rand(6,8))
 	sleep(10)
 	return (BRUTELOSS)
 
@@ -114,12 +116,13 @@
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return
 	var/mob/living/carbon/human/H = hit_atom
+	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 	if(prob(hit_probability))
 		if(H.is_eyes_covered())
 			return
 		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
 		H.adjust_blurriness(6)
-		H.adjust_eye_damage(rand(6,8))
+		eyes.applyOrganDamage(rand(6,8))
 		H.Paralyze(40)
 		H.emote("scream")
 

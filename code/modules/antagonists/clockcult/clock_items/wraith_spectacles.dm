@@ -138,24 +138,26 @@
 	var/mob/living/carbon/human/H = owner
 	var/glasses_right = istype(H.glasses, /obj/item/clothing/glasses/wraith_spectacles)
 	var/obj/item/clothing/glasses/wraith_spectacles/WS = H.glasses
+	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 	if(glasses_right && !WS.up && !GLOB.ratvar_awakens && !GLOB.ratvar_approaches)
 		apply_eye_damage(H)
 	else
 		if(GLOB.ratvar_awakens)
 			H.cure_nearsighted(list(EYE_DAMAGE))
 			H.cure_blind(list(EYE_DAMAGE))
-			H.adjust_eye_damage(-eye_damage_done)
+			eyes.applyOrganDamage(-eye_damage_done)
 			eye_damage_done = 0
 		else if(prob(50) && eye_damage_done)
-			H.adjust_eye_damage(-1)
+			eyes.applyOrganDamage(-1)
 			eye_damage_done = max(0, eye_damage_done - 1)
 		if(!eye_damage_done)
 			qdel(src)
 
 /datum/status_effect/wraith_spectacles/proc/apply_eye_damage(mob/living/carbon/human/H)
+	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 	if(HAS_TRAIT(H, TRAIT_BLIND))
 		return
-	H.adjust_eye_damage(0.5)
+	eyes.applyOrganDamage(0.5)
 	eye_damage_done += 0.5
 	if(eye_damage_done >= 20)
 		H.adjust_blurriness(2)
