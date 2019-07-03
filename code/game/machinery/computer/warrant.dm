@@ -9,9 +9,6 @@
 	var/screen = null
 	var/datum/data/record/current = null
 
-/obj/machinery/computer/warrant/Initialize()
-	. = ..()
-
 /obj/machinery/computer/warrant/ui_interact(mob/user)
 	. = ..()
 
