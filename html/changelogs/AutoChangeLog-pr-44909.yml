@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Donutstation: The AI chamber SMES is now correctly connected to the AI APC."
-  - tweak: "CentCom: Made the ERT pod doors and vault shutters bomb proof. Replaced loose CentCom ID cards with a box of IDs."
