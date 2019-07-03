@@ -43,14 +43,14 @@
 				inserted_key.forceMove(drop_location())
 			inserted_key = I
 		else
-			to_chat(user, "<span class='notice'>[I] seems to be stuck to your hand!</span>")
+			to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
 		return
 	return ..()
 
 /obj/vehicle/ridden/AltClick(mob/user)
 	if(inserted_key && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(!is_occupant(user))
-			to_chat(user, "<span class='notice'>You must be riding the [src] to remove [src]'s key!</span>")
+			to_chat(user, "<span class='warning'>You must be riding the [src] to remove [src]'s key!</span>")
 			return
 		to_chat(user, "<span class='notice'>You remove \the [inserted_key] from \the [src].</span>")
 		inserted_key.forceMove(drop_location())

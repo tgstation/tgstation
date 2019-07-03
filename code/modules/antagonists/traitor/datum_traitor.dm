@@ -14,7 +14,7 @@
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	var/datum/syndicate_contract/current_contract
-	var/list/assigned_contracts = list()
+	var/list/datum/syndicate_contract/assigned_contracts = list()
 	var/contract_TC_payed_out = 0
 	var/contract_TC_to_redeem = 0
 	can_hijack = HIJACK_HIJACKER
@@ -33,11 +33,28 @@
 
 /datum/antagonist/traitor/proc/create_contracts()
 	var/contract_generation_quantity = 6
+	// We don't want the sum of all the payouts to be under this amount
+	var/lowest_TC_threshold = 28
+
+	var/total = 0
+	var/lowest_paying_sum = 0
+	var/datum/syndicate_contract/lowest_paying_contract
 
 	for (var/i = 1; i <= contract_generation_quantity; i++)
 		var/datum/syndicate_contract/contract_to_add = new(owner)
+		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
+
+		if (!lowest_paying_contract || (contract_payout_total < lowest_paying_sum))
+			lowest_paying_sum = contract_payout_total
+			lowest_paying_contract = contract_to_add
+
+		total += contract_payout_total
 		contract_to_add.id = i
 		assigned_contracts.Add(contract_to_add)
+
+	// If the threshold for TC payouts isn't reached, boost the lowest paying contract
+	if (total < lowest_TC_threshold)
+		lowest_paying_contract.contract.payout_bonus += (lowest_TC_threshold - total)
 
 /datum/antagonist/traitor/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
@@ -377,7 +394,7 @@
 
 	if (completed_contracts > 0)
 		var/pluralCheck = "contract"
-		if (completed_contracts > 1) 
+		if (completed_contracts > 1)
 			pluralCheck = "contracts"
 		result += "<br>Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
 					<span class='greentext'>[tc_total] TC</span>!<br>"

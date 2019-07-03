@@ -1,0 +1,7 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - rscadd: "The R&D Server Controller console now lists the entire research history, including names of people who researched each item and locations it was done from."
+  - rscadd: "The R&D Server Controller console can now be used to disable the servers if someone makes the RD upset."
+  - bugfix: "Fixed the R&D servers working without power."
+  - imageadd: "R&D server sprites are now slightly animated, and new sprites have been added for when the server is disabled or off."

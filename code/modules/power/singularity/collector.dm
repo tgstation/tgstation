@@ -32,8 +32,15 @@
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
 
+/obj/machinery/power/rad_collector/anchored/delta //Deltastation's engine is shared by engineers and atmos techs
+	desc = "A device which uses Hawking Radiation and plasma to produce power. This model allows access by Atmospheric Technicians."
+	req_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS)
+
 /obj/machinery/power/rad_collector/Destroy()
 	return ..()
+
+/obj/machinery/power/rad_collector/should_have_node()
+	return anchored
 
 /obj/machinery/power/rad_collector/process()
 	if(!loaded_tank)
