@@ -18,11 +18,13 @@ matrix:
             - python3-setuptools
       install:
         - tools/travis/install_build_tools.sh
+        - tools/travis/install_dreamchecker.sh
       script:
         - tools/travis/check_filedirs.sh tgstation.dme
         - tools/travis/build_tools.sh
         - tools/travis/build_tgui.sh
         - tools/travis/lint_grep.sh
+        - ~/dreamchecker
 
     - name: "Compile All Maps"
       addons:
