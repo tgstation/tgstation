@@ -67,11 +67,13 @@
 	if(CC)
 		client.color = CC.colour
 
-
-
+#define GLASS_CLIENT_COLOUR_PRIORITY 0
+#define EYE_CLIENT_COLOUR_PRIORITY 1
+#define CURSED_HEARTH_CLIENT_COLOUR_PRIORITY 100 //it's an indicator you're dying, so it's very high priority
+#define QUIRK_CLIENT_COLOUR_PRIORITY INFINITY //we can't see colors anyway!
 
 /datum/client_colour/glass_colour
-	priority = 0
+	priority = GLASS_CLIENT_COLOUR_PRIORITY
 	colour = "red"
 
 /datum/client_colour/glass_colour/green
@@ -107,11 +109,18 @@
 /datum/client_colour/glass_colour/gray
 	colour = "#cccccc"
 
-
-/datum/client_colour/eye_colour/monochrome
+/datum/client_colour/monochrome_eyes //This is needed because otherwise people would lose their monochrome quirk
 	colour = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-	priority = 1
+	priority = EYE_CLIENT_COLOUR_PRIORITY
+
+/datum/client_colour/cursed_heart_blood
+	priority = CURSED_HEARTH_CLIENT_COLOUR_PRIORITY
+	colour = "red"
 
 /datum/client_colour/monochrome
 	colour = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-	priority = INFINITY //we can't see colors anyway!
+	priority = QUIRK_CLIENT_COLOUR_PRIORITY
+
+#undef GLASS_CLIENT_COLOUR_PRIORITY
+#undef EYE_CLIENT_COLOUR_PRIORITY
+#undef QUIRK_CLIENT_COLOUR_PRIORITY

@@ -151,7 +151,8 @@
 	to_chat(M, "<span class='notice'>Your skull suddenly feels lighter!</span>")
 
 /obj/item/organ/cyberimp/brain/metal_plate/proc/use_up()
-	qdel(src)
+	qdel(GetComponent(/datum/component/anti_magic))
+	to_chat(owner, "<span class='warning'>You feel a sudden surge of heat in your head!</span>")
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

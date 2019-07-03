@@ -144,11 +144,6 @@
 				H.adjustFireLoss(-cursed_heart.heal_burn)
 				H.adjustOxyLoss(-cursed_heart.heal_oxy)
 
-
-/datum/client_colour/cursed_heart_blood
-	priority = 100 //it's an indicator you're dying, so it's very high priority
-	colour = "red"
-
 /obj/item/organ/heart/cybernetic
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
