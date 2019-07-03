@@ -1219,7 +1219,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/bot{
 	dir = 2
 	},
@@ -2590,9 +2589,6 @@
 /area/security/prison)
 "afG" = (
 /obj/structure/table,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
 /obj/item/storage/box/hug,
 /obj/item/razor{
 	pixel_x = -6
@@ -5717,6 +5713,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
+"amu" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "amv" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
@@ -7520,9 +7520,6 @@
 /obj/item/folder/blue,
 /obj/item/folder/blue,
 /obj/item/stamp/law,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "arZ" = (
@@ -17826,7 +17823,6 @@
 /turf/open/floor/plasteel,
 /area/storage/art)
 "aTF" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/table,
 /obj/item/camera_film,
 /obj/item/camera,
@@ -72265,7 +72261,7 @@ bCq
 bPS
 aad
 bPS
-bPS
+amu
 bCq
 cbk
 bLv

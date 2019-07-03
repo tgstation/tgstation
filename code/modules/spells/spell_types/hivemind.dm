@@ -312,7 +312,7 @@
 	if(!carbon_members.len)
 		return
 	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && !user.getBrainLoss() && !user.getStaminaLoss())
-		to_chat(user, "<span class='notice'>We cannot heal ourselves any more with this power!</span>")
+		to_chat(user, "<span class='warning'>We cannot heal ourselves any more with this power!</span>")
 		revert_cast()
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
 	while(iterations < 7)
@@ -422,11 +422,11 @@
 			timely = 100
 			restricted_range = TRUE
 		if(!do_after(user, timely, FALSE, user))
-			to_chat(user, "<span class='notice'>We fail to assume control of the target.</span>")
+			to_chat(user, "<span class='warning'>We fail to assume control of the target!</span>")
 			revert_cast()
 			return
 		if(user.z != vessel.z || (restricted_range && get_dist(vessel, user) > 35))
-			to_chat(user, "<span class='notice'>Our vessel is too far away to control.</span>")
+			to_chat(user, "<span class='warning'>Our vessel is too far away to control!</span>")
 			revert_cast()
 			return
 		for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
@@ -647,7 +647,7 @@
 	item_state = "hivehand"
 	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
-	
+
 	reach = 3
 	min_reach = -1
 	item_flags = ABSTRACT | DROPDEL
@@ -671,9 +671,9 @@
 		user.put_in_hands(W)
 		to_chat(user, "<span class='notice'>You make a telekinetic hand!</span>")
 	else
-		to_chat(user,"<span class='notice'>You cannot make a telekinetic hand while holding something!</span>")
+		to_chat(user,"<span class='warning'>You cannot make a telekinetic hand while holding something!</span>")
 		revert_cast()
-		
+
 /obj/effect/proc_holder/spell/targeted/hive_hack
 	name = "Network Invasion"
 	desc = "We probe the mind of an adjacent target and extract valuable information on any enemy hives they may belong to. Takes longer if the target is not in our hive or wearing tinfoil protection."
