@@ -344,7 +344,7 @@
 		updateappearance(icon_update=0)
 
 	if(LAZYLEN(mutation_index))
-		dna.mutation_index = mutation_index
+		dna.mutation_index = mutation_index.Copy()
 		domutcheck()
 
 	if(mrace || newfeatures || ui)
