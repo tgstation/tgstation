@@ -57104,11 +57104,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/computer/warrant{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -64191,7 +64191,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cot" = (
-/obj/item/twohanded/required/kirbyplants/random,
 /obj/item/radio/intercom{
 	pixel_x = -26
 	},
@@ -64205,6 +64204,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/computer/warrant{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)

@@ -14970,7 +14970,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aGo" = (
-/obj/item/beacon,
+/obj/machinery/computer/warrant{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 2
 	},
@@ -75906,6 +75908,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/mixing/chamber)
+"tru" = (
+/obj/machinery/computer/warrant{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/courtroom)
 "tsx" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -106256,7 +106264,7 @@ aPD
 aSa
 aSa
 aTp
-aIT
+tru
 aTk
 aXS
 dCE

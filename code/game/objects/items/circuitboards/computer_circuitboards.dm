@@ -406,6 +406,11 @@
 	icon_state = "security"
 	build_path = /obj/machinery/computer/secure_data
 
+/obj/item/circuitboard/computer/warrant
+	name = "Security Warrant Viewer (Computer Board)"
+	icon_state = "security"
+	build_path = /obj/machinery/computer/warrant
+
 /obj/item/circuitboard/computer/security
 	name = "Security Cameras (Computer Board)"
 	icon_state = "security"

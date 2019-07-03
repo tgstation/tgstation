@@ -10331,16 +10331,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aAe" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "aAf" = (
 /obj/machinery/conveyor_switch/oneway{
 	dir = 8;
@@ -16383,7 +16373,9 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aOO" = (
-/obj/structure/table,
+/obj/machinery/computer/warrant{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "aOP" = (
@@ -93454,7 +93446,7 @@ btG
 qYP
 aVO
 aWi
-aAe
+ark
 aOq
 aOt
 aOt
