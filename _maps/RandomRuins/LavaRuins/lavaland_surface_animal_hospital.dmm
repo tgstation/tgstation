@@ -8,13 +8,13 @@
 /area/lavaland/surface/outdoors)
 "ac" = (
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "ad" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "ae" = (
@@ -186,7 +186,7 @@
 /obj/item/bodybag,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "ay" = (
@@ -254,7 +254,7 @@
 /area/ruin/powered/animal_hospital)
 "aJ" = (
 /turf/open/floor/plasteel/grimy{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "aK" = (
@@ -640,19 +640,19 @@
 	dir = 4
 	},
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "bM" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "bO" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "bP" = (
@@ -722,7 +722,7 @@
 	dir = 6
 	},
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "bY" = (
@@ -730,7 +730,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "bZ" = (
@@ -738,7 +738,7 @@
 	dir = 10
 	},
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "ca" = (
@@ -746,13 +746,13 @@
 	dir = 1
 	},
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "cb" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "cc" = (
@@ -830,7 +830,7 @@
 "cn" = (
 /obj/machinery/light,
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "cp" = (
@@ -899,7 +899,7 @@
 	dir = 4
 	},
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "cy" = (
@@ -929,7 +929,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "cD" = (
@@ -938,7 +938,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors)
 "cE" = (

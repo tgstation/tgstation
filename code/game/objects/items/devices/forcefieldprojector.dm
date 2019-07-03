@@ -36,7 +36,7 @@
 	if(get_dist(T,src) > field_distance_limit)
 		return
 	if(LAZYLEN(current_fields) >= max_fields)
-		to_chat(user, "<span class='notice'>[src] cannot sustain any more forcefields!</span>")
+		to_chat(user, "<span class='warning'>[src] cannot sustain any more forcefields!</span>")
 		return
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
