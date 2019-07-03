@@ -252,9 +252,9 @@
 			user.take_bodypart_damage(2*force)
 		return
 	if(iscyborg(target))
-		if (affect_silicon)
-			// We don't stun if we're on harm.
-			if (user.a_intent != INTENT_HARM)
+		// We don't stun if we're on harm.
+		if (user.a_intent != INTENT_HARM)
+			if (affect_silicon)
 				var/list/desc = get_silicon_stun_description(target, user)
 
 				target.flash_act(affect_silicon = TRUE)
@@ -266,7 +266,11 @@
 				
 				if (stun_animation)
 					user.do_attack_animation(target)
-				return
+			else
+				..()
+		else
+			..()
+		return
 	if(!isliving(target))
 		return
 	if (user.a_intent == INTENT_HARM)
