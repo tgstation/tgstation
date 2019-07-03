@@ -7,5 +7,3 @@ python3 tools/ss13_genchangelog.py html/changelog.html html/changelogs
 find . -name "*.php" -print0 | xargs -0 -n1 php -l
 
 find . -name "*.json" -not -path "./tgui/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
-
-(cd tgui && source ~/.nvm/nvm.sh && npm ci && node node_modules/gulp/bin/gulp.js --min)

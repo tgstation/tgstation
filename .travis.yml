@@ -21,6 +21,7 @@ matrix:
       script:
         - tools/travis/check_filedirs.sh tgstation.dme
         - tools/travis/build_tools.sh
+        - tools/travis/build_tgui.sh
         - tools/travis/lint_grep.sh
 
     - name: "Compile All Maps"
