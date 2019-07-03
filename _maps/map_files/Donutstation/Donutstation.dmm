@@ -14826,10 +14826,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "aKA" = (
-/obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/machinery/photocopier,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "aKB" = (
