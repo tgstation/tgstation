@@ -159,7 +159,7 @@
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user != M && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if (H.mind && H.mind.assigned_role == "Clown")
+		if (HAS_TRAIT(H, TRAIT_CLUMSY)) //only clowns can unlock its true powers
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
 	return ..()
 
