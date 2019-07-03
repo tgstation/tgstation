@@ -209,11 +209,7 @@
 //////////////////////////////////////////
 
 //remove the old powernet and replace it with a new one throughout the network.
-//use_old_if_found will use an existing powernet and repropogate if it finds it.
-//propogate_after_search will do all the actual powernet application at the end instead of as it goes.
-var/first_ever_propogate_ever_oh_god = TRUE
-
-/proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, use_old_if_found = FALSE, skip_assigned_powernets = FALSE, propogate_after_search = FALSE)
+/proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, skip_assigned_powernets = FALSE)
 	var/list/found_machines = list()
 	var/list/cables = list()
 	var/index = 1
@@ -227,20 +223,12 @@ var/first_ever_propogate_ever_oh_god = TRUE
 		current_ignore_dir = cables[working_cable]
 		index++
 
-		var/list/connections = working_cable.get_cable_connections(FALSE)
-		if(first_ever_propogate_ever_oh_god)
-			var/print = "[ADMIN_VERBOSEJMP(working_cable)]"
-			print += " [REF(working_cable)]"
-			print += "\nIndex: [index]"
-			print += "\nIgnoring dir: [current_ignore_dir]"
-			print += "\n[connections.Join(", ")]"
-			to_chat(world, print)
+		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
 		
 		for(var/obj/structure/cable/cable_entry in connections)
 			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries
 				cables[cable_entry] = connections[cable_entry]
 
-	first_ever_propogate_ever_oh_god = FALSE
 	for(var/obj/structure/cable/cable_entry in cables)
 		PN.add_cable(cable_entry)
 		found_machines += cable_entry.get_machine_connections(skip_assigned_powernets)
