@@ -586,7 +586,7 @@
 			break
 	return ..()
 
-	/obj/item/circuitboard/machine/vending/donksofttoyvendor
+/obj/item/circuitboard/machine/vending/donksofttoyvendor
 	name = "Donksoft Toy Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/donksofttoyvendor
 	req_components = list(
