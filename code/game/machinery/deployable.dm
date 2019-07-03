@@ -201,7 +201,7 @@
 	max_integrity = 100
 	proj_pass_rate = 25
 	armor = list("melee" = 10, "bullet" = 30, "laser" = 70, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 10, "acid" = 0)
-	deploy_time = 10
+	deploy_time = 1 SECONDS
 
 /obj/structure/barricade/security/holobarricade/deploy()
 	icon_state = "holobarrier1"
@@ -210,7 +210,7 @@
 /obj/structure/barricade/security/holobarricade/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
-	QDEL_IN(src, 250)
+	QDEL_IN(src, 25 SECONDS)
 
 #undef SINGLE
 #undef VERTICAL
