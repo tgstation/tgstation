@@ -796,7 +796,8 @@
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
 		reagents.clear_reagents()
-	for(var/obj/item/organ/organ in internal_organs)
+	for(var/O in internal_organs)
+		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)

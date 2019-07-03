@@ -145,7 +145,8 @@ GENE SCANNER
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
 		//organ failure messages
-		for(var/obj/item/organ/organ in H.internal_organs)
+		for(var/O in H.internal_organs)
+			var/obj/item/organ/organ = O
 			if(!istype(organ, /obj/item/organ/heart))
 				if(organ.failing)
 					to_chat(user, organ.Assemble_Failure_Message())
@@ -256,7 +257,8 @@ GENE SCANNER
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		for(var/obj/item/organ/organ in H.internal_organs)
+		for(var/O in H.internal_organs)
+			var/obj/item/organ/organ = O
 			if((organ.damage > organ.low_threshold)&&(!istype(organ, /obj/item/organ/brain)))
 				to_chat(user, "\t<span class='alert'>[organ.damage > organ.high_threshold ? "Severe" : "Minor"] damaged detected within [organ].</span>")
 		if(advanced && H.has_dna())
