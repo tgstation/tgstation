@@ -114,8 +114,7 @@
 
 	switch(href_list["choice"])
 		if("Login")
-			var/mob/M = usr
-			var/obj/item/card/id/scan = M.get_idcard(TRUE)
+			var/obj/item/card/id/scan = usr.get_idcard(TRUE)
 			authenticated = scan.registered_name
 			if(authenticated)
 				for(var/datum/data/record/R in GLOB.data_core.security)
