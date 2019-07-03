@@ -177,16 +177,10 @@
 	return
 
 /datum/status_effect/stacking/proc/can_have_status()
-	if(owner.stat == DEAD)
-		return FALSE
-	else
-		return TRUE
+	return owner.stat != DEAD
 
 /datum/status_effect/stacking/proc/can_gain_stacks()
-	if(owner.stat == DEAD)
-		return FALSE
-	else
-		return TRUE
+	return owner.stat != DEAD
 
 /datum/status_effect/stacking/tick()
 	if(!can_have_status())
