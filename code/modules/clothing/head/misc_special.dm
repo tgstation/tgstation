@@ -304,8 +304,7 @@
 	name = "scorched tinfoil hat"
 	desc = "A badly warped up hat. Quite unprobable this will still work against any of fictional and contemporary dangers it used to."
 	warped = TRUE
-	var/datum/component/anti_magic/C = GetComponent(/datum/component/anti_magic)
-	C.RemoveComponent()
+	qdel(GetComponent(/datum/component/anti_magic))
 	if(!isliving(loc))
 		return
 	var/mob/living/target = loc
