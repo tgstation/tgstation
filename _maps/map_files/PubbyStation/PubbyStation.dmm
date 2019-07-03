@@ -3161,7 +3161,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -27
@@ -5203,9 +5202,6 @@
 	},
 /area/maintenance/department/security/brig)
 "aoO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/machinery/camera{
 	c_tag = "Brig Gulag Teleporter";
 	dir = 4
@@ -56011,6 +56007,10 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/science)
+"tSN" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "tSU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer1,
 /obj/effect/turf_decal/stripes/line{
@@ -94879,7 +94879,7 @@ cBk
 jhD
 cBo
 alQ
-alb
+tSN
 cBw
 alb
 aiS

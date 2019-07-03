@@ -14,7 +14,7 @@
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	var/datum/syndicate_contract/current_contract
-	var/list/assigned_contracts = list()
+	var/list/datum/syndicate_contract/assigned_contracts = list()
 	var/contract_TC_payed_out = 0
 	var/contract_TC_to_redeem = 0
 	can_hijack = HIJACK_HIJACKER
@@ -410,7 +410,7 @@
 
 	if (completed_contracts > 0)
 		var/pluralCheck = "contract"
-		if (completed_contracts > 1) 
+		if (completed_contracts > 1)
 			pluralCheck = "contracts"
 		result += "<br>Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
 					<span class='greentext'>[tc_total] TC</span>!<br>"

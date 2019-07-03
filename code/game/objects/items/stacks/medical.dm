@@ -41,9 +41,9 @@
 			if(affecting.heal_damage(brute, burn))
 				C.update_damage_overlays()
 			return TRUE
-		to_chat(user, "<span class='notice'>[C]'s [affecting.name] can not be healed with \the [src].</span>")
+		to_chat(user, "<span class='warning'>[C]'s [affecting.name] can not be healed with \the [src]!</span>")
 		return
-	to_chat(user, "<span class='notice'>\The [src] won't work on a robotic limb!</span>")
+	to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
@@ -58,12 +58,12 @@
 
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
-		to_chat(user, "<span class='notice'> [M] is dead. You can not help [M.p_them()]!</span>")
+		to_chat(user, "<span class='warning'> [M] is dead! You can not help [M.p_them()].</span>")
 		return
 	if(isanimal(M))
 		var/mob/living/simple_animal/critter = M
 		if (!(critter.healable))
-			to_chat(user, "<span class='notice'> You cannot use \the [src] on [M]!</span>")
+			to_chat(user, "<span class='warning'> You cannot use \the [src] on [M]!</span>")
 			return FALSE
 		else if (critter.health == critter.maxHealth)
 			to_chat(user, "<span class='notice'> [M] is at full health.</span>")
@@ -73,7 +73,7 @@
 		return TRUE
 	if(iscarbon(M))
 		return heal_carbon(M, user, heal_brute, 0)
-	to_chat(user, "<span class='notice'>You can't heal [M] with the \the [src]!</span>")
+	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
 
 /obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -96,7 +96,7 @@
 			H.suppress_bloodloss(stop_bleeding)
 			to_chat(user, "<span class='notice'>You stop the bleeding of [M]!</span>")
 			return TRUE
-	to_chat(user, "<span class='notice'>You can not use \the [src] on [M]!</span>")
+	to_chat(user, "<span class='warning'>You can not use \the [src] on [M]!</span>")
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.is_sharp())
@@ -140,11 +140,11 @@
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
-		to_chat(user, "<span class='notice'> [M] is dead. You can not help [M.p_them()]!</span>")
+		to_chat(user, "<span class='warning'> [M] is dead! You can not help [M.p_them()].</span>")
 		return
 	if(iscarbon(M))
 		return heal_carbon(M, user, 0, heal_burn)
-	to_chat(user, "<span class='notice'>You can't heal [M] with the \the [src]!</span>")
+	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")

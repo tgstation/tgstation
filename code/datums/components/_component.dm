@@ -184,6 +184,7 @@
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /datum/proc/GetComponent(datum/component/c_type)
+	RETURN_TYPE(c_type)
 	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components

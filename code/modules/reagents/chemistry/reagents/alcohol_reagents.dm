@@ -175,7 +175,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.dropItemToGround(I)
-			to_chat(M, "<span class ='notice'>Your hands jitter and you drop what you were holding!</span>")
+			to_chat(M, "<span class='notice'>Your hands jitter and you drop what you were holding!</span>")
 			M.Jitter(10)
 
 	if(prob(7))

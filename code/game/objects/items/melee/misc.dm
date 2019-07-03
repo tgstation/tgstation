@@ -585,13 +585,13 @@
 		add_overlay(sausage)
 
 /obj/item/melee/roastingstick/proc/extend(user)
-	to_chat(user, "<span class ='warning'>You extend [src].</span>")
+	to_chat(user, "<span class='warning'>You extend [src].</span>")
 	icon_state = "roastingstick_1"
 	item_state = "nullrod"
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/roastingstick/proc/retract(user)
-	to_chat(user, "<span class ='notice'>You collapse [src].</span>")
+	to_chat(user, "<span class='notice'>You collapse [src].</span>")
 	icon_state = "roastingstick_0"
 	item_state = null
 	w_class = WEIGHT_CLASS_SMALL
