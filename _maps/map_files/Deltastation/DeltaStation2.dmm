@@ -32681,7 +32681,7 @@
 	melee_damage_lower = 20;
 	melee_damage_upper = 20;
 	name = "Lia";
-	random_color = FALSE
+	random_color = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
@@ -115215,7 +115215,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/disposal/incinerator)
 "iaF" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
