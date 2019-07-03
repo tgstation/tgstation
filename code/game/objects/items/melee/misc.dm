@@ -232,7 +232,7 @@
 /obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
 	return
 
-// Are we applying any special effects when we stun to carbon
+// Are we applying any special effects when we stun to silicon
 /obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
 	return
 
@@ -266,7 +266,7 @@
 				
 				if (stun_animation)
 					user.do_attack_animation(target)
-		return
+				return
 	if(!isliving(target))
 		return
 	if (user.a_intent == INTENT_HARM)
@@ -397,7 +397,7 @@
 	force_off = 5
 	weight_class_on = WEIGHT_CLASS_NORMAL
 
-/obj/item/melee/classic_baton/telescopic/get_wait_description()
+/obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
 	return "<span class='danger'>The baton is still charging!</span>"
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_carbon(mob/living/target, mob/living/user)
