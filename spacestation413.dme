@@ -2877,6 +2877,7 @@
 #include "spacestation413\code\game\objects\effects\decals\cleanable\humans.dm"
 #include "spacestation413\code\game\objects\items\storage\butts.dm"
 #include "spacestation413\code\modules\admin\topic.dm"
+#include "spacestation413\code\modules\admin\verbs\fix_air.dm"
 #include "spacestation413\code\modules\admin\verbs\one_click_antag.dm"
 #include "spacestation413\code\modules\admin\verbs\spawnfloorcluwne.dm"
 #include "spacestation413\code\modules\client\asset_cache.dm"
