@@ -653,20 +653,19 @@
 
 		if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 			if(do_after(user, 30, target = src))
-			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
+				to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 		else if(istype(user) && user.dna.check_mutation(TK))
 			if(do_after(user, 25, target = src))
-			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
+				to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
 		else
 			if(do_after(user, 100, target = src))
-			to_chat(user, "<span class='warning'>You remove the light [fitting], but you burn your hand on it!</span>")
-
-			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-			if(affecting && affecting.receive_damage( 0, 20 ))		// 20 burn damage
-				H.update_damage_overlays()
+				to_chat(user, "<span class='warning'>You remove the light [fitting], but you burn your hand on it!</span>")
+				var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+				if(affecting && affecting.receive_damage( 0, 20 ))		// 20 burn damage
+					H.update_damage_overlays()
 	else
 		if(do_after(user, 30, target = src))
-		to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
+			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 	// create a light tube/bulb item and put it in the user's hand
 	drop_light_tube(user)
 
