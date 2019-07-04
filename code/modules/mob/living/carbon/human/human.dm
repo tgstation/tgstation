@@ -425,40 +425,42 @@
 										to_chat(usr, "<b>Notes:</b> [R.fields["notes"]]")
 									return
 
+								if(href_list["cite"])
+									if(R)
+										var/t1 = stripped_input("Please input citation crime:", "Security HUD", "", null)
+										var/fine = FLOOR(input(usr, "Please input citation fine:", "Security HUD", 50) as num, 1)
+										if(!fine || fine < 0)
+											to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
+											return
+										fine = min(fine, MAX_SECRUITY_CITATION)
+										if(R)
+											if (!t1 || !fine || !allowed_access)
+												return
+											else if(!H.canUseHUD())
+												return
+											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/security))
+												return
+											var/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
+											for (var/obj/item/pda/P in GLOB.PDAs)
+												if(P.owner == R.fields["name"])
+													var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
+													var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+														"name" = "Security Citation",
+														"job" = "Citation Server",
+														"message" = message,
+														"targets" = list("[P.owner] ([P.ownjob])"),
+														"automated" = 1
+													))
+													signal.send_to_receivers()
+													usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+											GLOB.data_core.addCitation(R.fields["id"], crime)
+											investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+											to_chat(usr, "<span class='notice'>Successfully added a citation.</span>")
+											return
+
+
 								if(href_list["add_crime"])
-									switch(alert("What crime would you like to add?","Security HUD","Citation","Minor Crime","Major Crime","Cancel"))
-										if("Citation")
-											if(R)
-												var/t1 = stripped_input("Please input citation crime:", "Security HUD", "", null)
-												var/fine = FLOOR(input(usr, "Please input citation fine:", "Security HUD", 50) as num, 1)
-												if(!fine || fine < 0)
-													to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
-													return
-												fine = min(fine, MAX_SECRUITY_CITATION)
-												if(R)
-													if (!t1 || !fine || !allowed_access)
-														return
-													else if(!H.canUseHUD())
-														return
-													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/security))
-														return
-													var/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
-													for (var/obj/item/pda/P in GLOB.PDAs)
-														if(P.owner == R.fields["name"])
-															var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
-															var/datum/signal/subspace/messaging/pda/signal = new(src, list(
-																"name" = "Security Citation",
-																"job" = "Citation Server",
-																"message" = message,
-																"targets" = list("[P.owner] ([P.ownjob])"),
-																"automated" = 1
-															))
-															signal.send_to_receivers()
-															usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-													GLOB.data_core.addCitation(R.fields["id"], crime)
-													investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-													to_chat(usr, "<span class='notice'>Successfully added a citation.</span>")
-													return
+									switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
 										if("Minor Crime")
 											if(R)
 												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
