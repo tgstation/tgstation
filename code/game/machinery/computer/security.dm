@@ -20,7 +20,6 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
-	var/maxFine = 1000
 
 	light_color = LIGHT_COLOR_RED
 
@@ -749,7 +748,7 @@ What a mess.*/
 							if(!fine || fine < 0)
 								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 								return
-							fine = min(fine, maxFine)
+							fine = min(fine, MAX_SECRUITY_CITATION)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
