@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	return W
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags)
-	if ((flags & CHANGETURF_INHERIT_AIR) && ispath(path, /turf/open))
+	if ((!flags || (flags & CHANGETURF_INHERIT_AIR)) && ispath(path, /turf/open))
 		SSair.remove_from_active(src)
 		var/stashed_air = air
 		air = null // so that it doesn't get deleted
