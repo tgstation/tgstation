@@ -21,14 +21,14 @@
 	var/flavour_name = "vanilla"
 	var/obj/item/reagent_containers/beaker = null
 	var/static/list/icecream_vat_reagents = list(
-		/datum/reagent/consumable/milk = 5,
-		/datum/reagent/consumable/flour = 5,
-		/datum/reagent/consumable/sugar = 5,
-		/datum/reagent/consumable/ice = 5,
-		/datum/reagent/consumable/coco = 5,
-		/datum/reagent/consumable/vanilla = 5,
-		/datum/reagent/consumable/berryjuice = 5,
-		/datum/reagent/consumable/ethanol/singulo = 5)
+		/datum/reagent/consumable/milk = 6,
+		/datum/reagent/consumable/flour = 6,
+		/datum/reagent/consumable/sugar = 6,
+		/datum/reagent/consumable/ice = 6,
+		/datum/reagent/consumable/coco = 6,
+		/datum/reagent/consumable/vanilla = 6,
+		/datum/reagent/consumable/berryjuice = 6,
+		/datum/reagent/consumable/ethanol/singulo = 6)
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
@@ -151,14 +151,15 @@
 
 
 /obj/machinery/icecream_vat/proc/make(mob/user, make_type, amount)
+	var/recipe_amount = amount * 3 //prevents reagent duping by requring roughly the amount of reagenst you gain back by grinding.
 	for(var/R in get_ingredient_list(make_type))
-		if(reagents.has_reagent(R, amount))
+		if(reagents.has_reagent(R, recipe_amount))
 			continue
 		amount = 0
 		break
 	if(amount)
 		for(var/R in get_ingredient_list(make_type))
-			reagents.remove_reagent(R, amount)
+			reagents.remove_reagent(R, recipe_amount)
 		product_types[make_type] += amount
 		var/flavour = get_flavour_name(make_type)
 		if(make_type > 5)
@@ -217,8 +218,12 @@
 	tastes = list("cream" = 2, "waffle" = 1)
 	var/ice_creamed = 0
 	var/cone_type
-	bitesize = 3
+	bitesize = 4
 	foodtype = DAIRY | SUGAR
+
+/obj/item/reagent_containers/food/snacks/icecream/Initialize()
+	. = ..()
+	reagents.maximum_volume = 20
 
 /obj/item/reagent_containers/food/snacks/icecream/proc/set_cone_type(var/cone_name)
 	cone_type = cone_name
