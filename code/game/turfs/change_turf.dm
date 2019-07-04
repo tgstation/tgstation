@@ -135,8 +135,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	return W
 
-/turf/open/ChangeTurf(path, list/new_baseturfs, flags)
-	if ((!flags || (flags & CHANGETURF_INHERIT_AIR)) && ispath(path, /turf/open))
+/turf/open/ChangeTurf(path, list/new_baseturfs, flags = CHANGETURF_INHERIT_AIR)
+	if ((flags & CHANGETURF_INHERIT_AIR) && ispath(path, /turf/open))
 		SSair.remove_from_active(src)
 		var/stashed_air = air
 		air = null // so that it doesn't get deleted
@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		return ..()
 
 // Take off the top layer turf and replace it with the next baseturf down
-/turf/proc/ScrapeAway(amount=1, flags)
+/turf/proc/ScrapeAway(amount=1, flags = CHANGETURF_INHERIT_AIR)
 	if(!amount)
 		return
 	if(length(baseturfs))
