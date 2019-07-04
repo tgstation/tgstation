@@ -124,6 +124,7 @@
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)

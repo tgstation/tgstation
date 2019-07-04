@@ -58,3 +58,13 @@
 	mood_change = -100
 	timeout = 30 SECONDS
 	special_screen_obj = "mood_happiness_bad"
+
+/datum/mood_event/narcotic_medium
+	description = "<span class='nicegreen'>I feel comfortably numb.</span>\n"
+	mood_change = 4
+	timeout = 1 MINUTES
+
+/datum/mood_event/narcotic_heavy
+	description = "<span class='nicegreen'>I feel like I'm wrapped in cotton!</span>\n"
+	mood_change = 9
+	timeout = 1 MINUTES
