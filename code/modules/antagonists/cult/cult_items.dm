@@ -594,7 +594,7 @@
 			playsound(destination, "sparks", 50, 1)
 
 	else
-		to_chat(C, "<span class='danger'>The veil cannot be torn here!</span>")
+		to_chat(C, "<span class='warning'>The veil cannot be torn here!</span>")
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"

@@ -305,7 +305,7 @@
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/pod/dark{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/snow_biodome)
 "qt" = (

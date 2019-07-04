@@ -96,7 +96,7 @@
 				if(the_dna)
 					to_chat(user, "<span class='boldnotice'>You uncover that [H.p_their()] true identity is [the_dna.real_name].</span>")
 		else
-			to_chat(user, "<span class='boldnotice'>You can't find a mind to read inside of [M].</span>")
+			to_chat(user, "<span class='warning'>You can't find a mind to read inside of [M]!</span>")
 
 /datum/mutation/human/mindreader/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
