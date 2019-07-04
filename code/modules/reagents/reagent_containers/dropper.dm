@@ -69,7 +69,7 @@
 	else
 
 		if(!target.is_drawable(user, FALSE)) //No drawing from mobs here
-			to_chat(user, "<span class='notice'>You cannot directly remove reagents from [target].</span>")
+			to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target]!</span>")
 			return
 
 		if(!target.reagents.total_volume)

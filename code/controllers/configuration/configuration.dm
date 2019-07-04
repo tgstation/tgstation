@@ -400,7 +400,7 @@ Example config:
 	return runnable_modes
 
 /datum/controller/configuration/proc/LoadChatFilter()
-	GLOB.in_character_filter = list()
+	var/list/in_character_filter = list()
 
 	if(!fexists("[directory]/in_character_filter.txt"))
 		return
@@ -412,7 +412,8 @@ Example config:
 			continue
 		if(findtextEx(line,"#",1,2))
 			continue
-		GLOB.in_character_filter += line
+		in_character_filter += REGEX_QUOTE(line)
 
-	if(!ic_filter_regex && GLOB.in_character_filter.len)
-		ic_filter_regex = regex("\\b([jointext(GLOB.in_character_filter, "|")])\\b", "i")
+	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
+
+	syncChatRegexes()

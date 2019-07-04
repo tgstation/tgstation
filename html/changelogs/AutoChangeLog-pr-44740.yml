@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "The bee sabre now has it's own suicide and no longer uses the one of the captains rapier."
-  - bugfix: "The bee sabre uses the correct articles and actually has icons now."

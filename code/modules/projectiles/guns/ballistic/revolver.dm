@@ -167,7 +167,7 @@
 	var/spun = FALSE
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
-	..()
+	. = ..()
 	spun = TRUE
 
 /obj/item/gun/ballistic/revolver/russian/attackby(obj/item/A, mob/user, params)

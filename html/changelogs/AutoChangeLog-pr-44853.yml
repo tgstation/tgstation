@@ -1,0 +1,5 @@
+author: "Atlanta Ned"
+delete-after: True
+changes: 
+  - rscadd: "Security can now issue citations! Spot someone committing a minor crime? Fine them for it!"
+  - rscadd: "Got a citation? You can view and pay it at any security warrant consoles, located near the brig, your local law office, or the courtroom!"
