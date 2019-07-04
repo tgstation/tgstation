@@ -1,12 +1,10 @@
-//BSQL - DMAPI
-#define BSQL_VERSION "v1.3.0.0"
+//BSQL - DMAPI v1.2.0.1
 
 //types of connections
 #define BSQL_CONNECTION_TYPE_MARIADB "MySql"
 #define BSQL_CONNECTION_TYPE_SQLSERVER "SqlServer"
 
 #define BSQL_DEFAULT_TIMEOUT 5
-#define BSQL_DEFAULT_THREAD_LIMIT 50
 
 //Call this before rebooting or shutting down your world to clean up gracefully. This invalidates all active connection and operation datums
 /world/proc/BSQL_Shutdown()
@@ -26,7 +24,7 @@ Create a new database connection, does not perform the actual connect
   blockingTimeout: The timeout to use for blocking operations, must be less than or equal to asyncTimeout, 0 for infinite, defaults to asyncTimeout
   threadLimit: The limit of additional threads BSQL will run simultaneously, defaults to BSQL_DEFAULT_THREAD_LIMIT
 */
-/datum/BSQL_Connection/New(connection_type, asyncTimeout, blockingTimeout, threadLimit)
+/datum/BSQL_Connection/New(connection_type, asyncTimeout, blockingTimeout)
 	return ..()
 
 /*
