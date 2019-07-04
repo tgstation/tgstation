@@ -96,12 +96,14 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
-	var/backstory = pick("space cop", "russian")
+	var/backstory = pick("space cop", "russian", "bounty hunter")
 	var/datum/map_template/shuttle/ship
 	if(backstory == "space cop")
 		ship = new /datum/map_template/shuttle/hunter/space_cop
-	else
+	else if (backstory == "russian")
 		ship = new /datum/map_template/shuttle/hunter/russian
+	else
+		ship = new /datum/map_template/shuttle/hunter/bounty
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
@@ -109,5 +111,5 @@
 	if(!T)
 		CRASH("Fugitive Hunters (Created from fugitive event) found no turf to load in")
 	if(!ship.load(T))
-		CRASH("Loading hunter ship failed!")
+		CRASH("Loading [backstory] ship failed!")
 	priority_announce("Unidentified ship detected near the station.")

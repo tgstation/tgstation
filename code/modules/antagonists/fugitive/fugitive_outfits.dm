@@ -71,6 +71,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	glasses = /obj/item/clothing/glasses/sunglasses
+	ears = /obj/item/radio/headset
 	l_pocket = /obj/item/ammo_box/magazine/m45
 	r_pocket = /obj/item/restraints/handcuffs
 	id = /obj/item/card/id
@@ -84,6 +85,7 @@
 	W.update_label()
 
 /datum/outfit/russiancorpse/hunter
+	ears = /obj/item/radio/headset
 	r_hand = /obj/item/gun/ballistic/rifle/boltaction
 
 /datum/outfit/russiancorpse/hunter/pre_equip(mob/living/carbon/human/H)
@@ -99,6 +101,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
 	glasses = /obj/item/clothing/glasses/sunglasses/garb
+	ears = /obj/item/radio/headset
 	l_pocket = /obj/item/tank/internals/plasma/full
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id
@@ -117,6 +120,7 @@
 	uniform = /obj/item/clothing/under/rank/prisoner
 	head = /obj/item/clothing/head/scarecrow_hat
 	gloves = /obj/item/clothing/gloves/botanic_leather
+	ears = /obj/item/radio/headset
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/scarecrow
 	r_pocket = /obj/item/restraints/handcuffs/cable
@@ -139,6 +143,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	glasses = /obj/item/clothing/glasses/eyepatch
 	r_pocket = /obj/item/restraints/handcuffs/cable
+	ears = /obj/item/radio/headset
 	id = /obj/item/card/id
 	r_hand = /obj/item/extendohand //come on, do something better than this
 
