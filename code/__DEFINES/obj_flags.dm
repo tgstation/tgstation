@@ -39,3 +39,4 @@
 #define VOICEBOX_TOGGLABLE (1<<6) // The voicebox in this clothing can be toggled.
 #define VOICEBOX_DISABLED (1<<7) // The voicebox is currently turned off.
 #define SHOWEROKAY				(1<<8)	//prevents you from being stupid if you shower in them
+#define SCAN_REAGENTS (1<<9) // Allows helmets and glasses to scan reagents.

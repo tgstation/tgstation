@@ -3161,7 +3161,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -27
@@ -5203,9 +5202,6 @@
 	},
 /area/maintenance/department/security/brig)
 "aoO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/machinery/camera{
 	c_tag = "Brig Gulag Teleporter";
 	dir = 4
@@ -9430,13 +9426,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayR" = (
-/obj/structure/sign/poster/official/random{
-	pixel_x = 32
+/obj/machinery/computer/warrant{
+	dir = 8
 	},
-/obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayS" = (
@@ -50856,15 +50852,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "hnu" = (
-/obj/machinery/button/door{
-	id = "lawyer_shutters";
-	name = "law office shutters control";
-	pixel_x = 34;
-	pixel_y = -1;
-	req_access_txt = "38"
-	},
-/obj/machinery/light_switch{
-	pixel_x = 24
+/obj/machinery/computer/warrant{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -56011,6 +56000,10 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/science)
+"tSN" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "tSU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer1,
 /obj/effect/turf_decal/stripes/line{
@@ -94879,7 +94872,7 @@ cBk
 jhD
 cBo
 alQ
-alb
+tSN
 cBw
 alb
 aiS
