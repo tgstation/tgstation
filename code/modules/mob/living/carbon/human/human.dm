@@ -455,7 +455,7 @@
 															))
 															signal.send_to_receivers()
 															usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-													GLOB.data_core.addMinorCrime(R.fields["id"], crime)
+													GLOB.data_core.addCitation(R.fields["id"], crime)
 													investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 													to_chat(usr, "<span class='notice'>Successfully added a citation.</span>")
 													return
