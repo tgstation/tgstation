@@ -62,9 +62,9 @@
 /datum/mood_event/narcotic_medium
 	description = "<span class='nicegreen'>I feel comfortably numb.</span>\n"
 	mood_change = 4
-	timeout = 1 MINUTES
+	timeout = 3 MINUTES
 
 /datum/mood_event/narcotic_heavy
 	description = "<span class='nicegreen'>I feel like I'm wrapped in cotton!</span>\n"
 	mood_change = 9
-	timeout = 1 MINUTES
+	timeout = 3 MINUTES
