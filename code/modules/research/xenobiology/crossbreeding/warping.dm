@@ -112,12 +112,12 @@ Warping extracts:
 	rune_path = /obj/effect/slimerune/silver
 	effect_desc = "Forms a recoverable rune that absorbs food to feed those who cross its path."
 	var/nutrition = 0
-
+/*
 /obj/item/slimecross/warping/bluespace //TODO: Fix issues.
 	colour = "bluespace"
 	rune_path = /obj/effect/slimerune//bluespace
 	effect_desc = "Forms a recoverable rune that links a <b>wormhole satchel</b> with the space above it."
-
+*/
 /obj/item/slimecross/warping/sepia
 	colour = "sepia"
 	rune_path = /obj/effect/slimerune/sepia
@@ -142,7 +142,7 @@ Warping extracts:
 	colour = "green"
 	rune_path = /obj/effect/slimerune/green
 	effect_desc = "Forms a recoverable rune that converts sheets of plasma to resin, allowing you to form xenomorphic structures."
-
+/*
 /obj/item/slimecross/warping/pink
 	colour = "pink"
 	rune_path = /obj/effect/slimerune
@@ -177,7 +177,7 @@ Warping extracts:
 	colour = "rainbow"
 	rune_path = /obj/effect/slimerune
 	effect_desc = "Forms a recoverable rune that opens a gate to a pocket dimension."
-
+*/
 ///////////////////////////////////////////////
 //////////////////SLIME RUNES//////////////////
 ///////////////////////////////////////////////
