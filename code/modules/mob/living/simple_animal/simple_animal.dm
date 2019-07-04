@@ -121,6 +121,11 @@
 
 	return ..()
 
+mob/living/simple_animal/examine(mob/user)
+	. = ..()
+	if(stat == DEAD)
+		. += "<span class='warning'>Upon closer examination, it appears to be dead.</span>"
+
 /mob/living/simple_animal/initialize_footstep()
 	if(do_footstep)
 		..()
