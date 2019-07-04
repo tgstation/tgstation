@@ -449,11 +449,54 @@
 		attack_self(user)
 
 /obj/item/toy/prize/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is holding \the [src] above [user.p_them()]self and drops it on [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	user.apply_damage(9999, BRUTE, BODY_ZONE_HEAD)
-	if(!quiet)
-		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
-	return (OXYLOSS)
+	user.visible_message("<span class='suicide'>[user] is climbing into \the [src] and activates the self-destruct! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	var/mob/living/simple_animal/mecha_toy/mechmob = new (get_turf(src), src, TRUE)
+	user.mind.transfer_to(mechmob)
+	user.forceMove(mechmob)
+	playsound(loc, 'sound/machines/windowdoor.ogg', 50, 1)
+	SEND_SOUND(mechmob, sound('sound/mecha/nominal.ogg',volume=50))
+	qdel(src)
+	return (BRUTELOSS)
+
+/mob/living/simple_animal/mecha_toy
+	name = "toy mecha"
+	desc = "It's beeping ominously!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "ripleytoy"
+	mob_size = MOB_SIZE_TINY
+	pass_flags = PASSMOB
+	turns_per_move = 8
+	del_on_death = TRUE
+	loot = list(/obj/effect/decal/cleanable/robot_debris)
+	maxHealth = 10
+	health = 10
+	mob_biotypes = list(MOB_ROBOTIC)
+	bubble_icon = "machine"
+	do_footstep = TRUE
+
+/mob/living/simple_animal/mecha_toy/Initialize(mapload, obj/toy, explode)
+	. = ..()
+	if(toy)
+		name = toy.name
+		icon = toy.icon
+		icon_state = toy.icon_state
+	if(explode)
+		addtimer(CALLBACK(src, .proc/explode), 65)
+
+/mob/living/simple_animal/mecha_toy/Life()
+	. = ..()
+	playsound(loc, 'sound/items/timer.ogg', 10, frequency = 8000)
+
+/mob/living/simple_animal/mecha_toy/proc/explode()
+	new /obj/effect/temp_visual/explosion(get_turf(src)) //Make it look like an explosion.
+	playsound(loc,'sound/effects/explosion2.ogg', 200, 1)
+	visible_message("<span class='suicide'>[src] explodes violently!</span>")
+	death()
+
+/mob/living/simple_animal/mecha_toy/Destroy()
+	for(var/atom/movable/AM in contents) //Let's not destroy all the items.
+		AM.forceMove(loc)
+	. = ..()
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
