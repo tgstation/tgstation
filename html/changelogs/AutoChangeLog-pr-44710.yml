@@ -1,0 +1,4 @@
+author: "RandolfTheMeh"
+delete-after: True
+changes: 
+  - code_imp: "Universal Organ Damage variables and procs"
