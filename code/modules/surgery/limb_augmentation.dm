@@ -11,7 +11,7 @@
 
 
 /datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class ='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_selected)]...</span>",
+	display_results(user, target, "<span class='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_selected)]...</span>",
 		"[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_selected)].",
 		"[user] begins an incision on [target]'s [parse_zone(user.zone_selected)].")
 
@@ -34,11 +34,11 @@
 		return -1
 	L = surgery.operated_bodypart
 	if(L)
-		display_results(user, target, "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>",
+		display_results(user, target, "<span class='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>",
 			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].",
 			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)].")
 	else
-		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
+		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
 //ACTUAL SURGERIES

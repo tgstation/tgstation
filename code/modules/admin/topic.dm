@@ -1790,12 +1790,26 @@
 					log_query_debug("[usr.key] | [response]")
 		else if(answer == "no")
 			log_query_debug("[usr.key] | Reported no server hang")
+	
+	else if(href_list["ctf_toggle"])
+		if(!check_rights(R_ADMIN))
+			return
+		toggle_all_ctf(usr)
 
+	else if(href_list["rebootworld"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/confirm = alert("Are you sure you want to reboot the server?", "Confirm Reboot", "Yes", "No")
+		if(confirm == "No")
+			return
+		if(confirm == "Yes")
+			restart()
+		
 	else if(href_list["check_teams"])
 		if(!check_rights(R_ADMIN))
 			return
 		check_teams()
-
+		
 	else if(href_list["team_command"])
 		if(!check_rights(R_ADMIN))
 			return

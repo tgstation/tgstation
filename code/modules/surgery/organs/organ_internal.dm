@@ -56,9 +56,9 @@
 	return
 
 /obj/item/organ/examine(mob/user)
-	..()
+	. = ..()
 	if(status == ORGAN_ROBOTIC && broken_cyber_organ)
-		to_chat(user, "<span class='warning'>[src] seems to be broken!</span>")
+		. += "<span class='warning'>[src] seems to be broken!</span>"
 
 
 /obj/item/organ/proc/prepare_eat()

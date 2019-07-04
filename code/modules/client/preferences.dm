@@ -72,10 +72,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/preferred_ai_core_display = "Blue"
 	var/prefered_security_department = SEC_DEPT_RANDOM
 
-		//Quirk list
-	var/list/positive_quirks = list()
-	var/list/negative_quirks = list()
-	var/list/neutral_quirks = list()
+	//Quirk list
 	var/list/all_quirks = list()
 
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
@@ -835,7 +832,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!SSquirks.quirks.len)
 		dat += "The quirk subsystem hasn't finished initializing, please hold..."
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center><br>"
-
 	else
 		dat += "<center><b>Choose quirk setup</b></center><br>"
 		dat += "<div align='center'>Left-click to add or remove quirks. You need negative quirks to have positive ones.<br>\
@@ -843,7 +839,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
 		dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
-		dat += "<center>[positive_quirks.len] / [MAX_QUIRKS] max positive quirks<br>\
+		dat += "<center>[GetPositiveQuirkCount()] / [MAX_QUIRKS] max positive quirks<br>\
 		<b>Quirk balance remaining:</b> [GetQuirkBalance()]</center><br>"
 		for(var/V in SSquirks.quirks)
 			var/datum/quirk/T = SSquirks.quirks[V]
@@ -892,6 +888,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
 	return bal
+
+/datum/preferences/proc/GetPositiveQuirkCount()
+	. = 0
+	for(var/q in all_quirks)
+		if(SSquirks.quirk_points[q] > 0)
+			.++
 
 /datum/preferences/Topic(href, href_list, hsrc)			//yeah, gotta do this I guess..
 	. = ..()
@@ -959,42 +961,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user, "<span class='danger'>[quirk] is incompatible with [Q].</span>")
 							return
 				var/value = SSquirks.quirk_points[quirk]
-				if(value == 0)
-					if(quirk in neutral_quirks)
-						neutral_quirks -= quirk
-						all_quirks -= quirk
-					else
-						neutral_quirks += quirk
-						all_quirks += quirk
+				var/balance = GetQuirkBalance()
+				if(quirk in all_quirks)
+					if(balance + value < 0)
+						to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
+						return
+					all_quirks -= quirk
 				else
-					var/balance = GetQuirkBalance()
-					if(quirk in positive_quirks)
-						positive_quirks -= quirk
-						all_quirks -= quirk
-					else if(quirk in negative_quirks)
-						if(balance + value < 0)
-							to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
-							return
-						negative_quirks -= quirk
-						all_quirks -= quirk
-					else if(value > 0)
-						if(positive_quirks.len >= MAX_QUIRKS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
-							return
-						if(balance - value < 0)
-							to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
-							return
-						positive_quirks += quirk
-						all_quirks += quirk
-					else
-						negative_quirks += quirk
-						all_quirks += quirk
+					if(GetPositiveQuirkCount() >= MAX_QUIRKS)
+						to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
+						return
+					if(balance - value < 0)
+						to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
+						return
+					all_quirks += quirk
 				SetQuirks(user)
 			if("reset")
 				all_quirks = list()
-				positive_quirks = list()
-				negative_quirks = list()
-				neutral_quirks = list()
 				SetQuirks(user)
 			else
 				SetQuirks(user)
@@ -1091,22 +1074,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_hair_style
 					if(gender == MALE)
 						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_male_list
-					else
+					else if(gender == FEMALE)
 						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_female_list
+					else
+						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_list
 					if(new_hair_style)
 						hair_style = new_hair_style
 
 				if("next_hair_style")
 					if (gender == MALE)
 						hair_style = next_list_item(hair_style, GLOB.hair_styles_male_list)
-					else
+					else if(gender == FEMALE)
 						hair_style = next_list_item(hair_style, GLOB.hair_styles_female_list)
+					else
+						hair_style = next_list_item(hair_style, GLOB.hair_styles_list)
 
 				if("previous_hair_style")
 					if (gender == MALE)
 						hair_style = previous_list_item(hair_style, GLOB.hair_styles_male_list)
-					else
+					else if(gender == FEMALE)
 						hair_style = previous_list_item(hair_style, GLOB.hair_styles_female_list)
+					else
+						hair_style = previous_list_item(hair_style, GLOB.hair_styles_list)
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference","#"+facial_hair_color) as color|null
@@ -1115,24 +1104,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("facial_hair_style")
 					var/new_facial_hair_style
-					if(gender != FEMALE)
+					if(gender == MALE)
 						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_male_list
-					else
+					else if(gender == FEMALE)
 						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_female_list
+					else
+						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_list
 					if(new_facial_hair_style)
 						facial_hair_style = new_facial_hair_style
 
 				if("next_facehair_style")
 					if (gender == MALE)
 						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
-					else
+					else if(gender == FEMALE)
 						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
+					else
+						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
 
 				if("previous_facehair_style")
 					if (gender == MALE)
 						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
-					else
+					else if (gender == FEMALE)
 						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
+					else
+						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
 
 				if("underwear")
 					var/new_underwear
@@ -1141,7 +1136,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else if(gender == FEMALE)
 						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_f
 					else
-						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_m + GLOB.underwear_f
+						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_list
 					if(new_underwear)
 						underwear = new_underwear
 
@@ -1152,7 +1147,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else if(gender == FEMALE)
 						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_f
 					else
-						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_m + GLOB.undershirt_f
+						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_list
 					if(new_undershirt)
 						undershirt = new_undershirt
 

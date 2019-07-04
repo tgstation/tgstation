@@ -30,9 +30,9 @@
 	AI.remote_control = null
 
 /obj/structure/mecha_wreckage/examine(mob/user)
-	..()
+	. = ..()
 	if(AI)
-		to_chat(user, "<span class='notice'>The AI recovery beacon is active.</span>")
+		. += "<span class='notice'>The AI recovery beacon is active.</span>"
 
 /obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WELDER)

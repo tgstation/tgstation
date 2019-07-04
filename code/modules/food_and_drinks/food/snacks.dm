@@ -86,7 +86,7 @@ All foods are distributed among various categories. Use common sense.
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
-		to_chat(user, "<span class='notice'>None of [src] left, oh no!</span>")
+		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		qdel(src)
 		return FALSE
 	if(iscarbon(M))
@@ -99,7 +99,7 @@ All foods are distributed among various categories. Use common sense.
 
 		if(M == user)								//If you're eating it yourself.
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
-				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
+				to_chat(M, "<span class='warning'>You don't feel like eating any more junk food at the moment!</span>")
 				return FALSE
 			else if(fullness <= 50)
 				user.visible_message("<span class='notice'>[user] hungrily [eatverb]s \the [src], gobbling it down!</span>", "<span class='notice'>You hungrily [eatverb] \the [src], gobbling it down!</span>")
@@ -151,16 +151,16 @@ All foods are distributed among various categories. Use common sense.
 	return 0
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
-	..()
-	if(bitecount == 0)
-		return
-	else if(bitecount == 1)
-		to_chat(user, "[src] was bitten by someone!")
-	else if(bitecount <= 3)
-		to_chat(user, "[src] was bitten [bitecount] times!")
-	else
-		to_chat(user, "[src] was bitten multiple times!")
-
+	. = ..()
+	switch (bitecount)
+		if (0)
+			return
+		if(1)
+			. += "[src] was bitten by someone!"
+		if(2,3)
+			. += "[src] was bitten [bitecount] times!"
+		else
+			. += "[src] was bitten multiple times!"
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage))
