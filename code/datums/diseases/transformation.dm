@@ -47,7 +47,7 @@
 			do_disease_transformation(affected_mob)
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
-	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
+	if(istype(affected_mob, /mob/living/carbon) && (affected_mob.stat != DEAD && !process_dead)) //doesn't work on the dead- unless the disease processes while dead
 		if(stage5)
 			to_chat(affected_mob, pick(stage5))
 		if(QDELETED(affected_mob))
