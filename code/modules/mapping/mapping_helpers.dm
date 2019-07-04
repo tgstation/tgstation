@@ -7,7 +7,7 @@
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
 
-	var/list/baseturf_to_replace
+	var/list/baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	var/baseturf
 
 	layer = POINT_LAYER
@@ -26,8 +26,6 @@
 		for(var/i in baseturf_to_replace)
 			formatted[i] = TRUE
 		baseturf_to_replace = formatted
-
-	baseturf_to_replace += list(/turf/baseturf_bottom = TRUE)
 
 	var/area/our_area = get_area(src)
 	for(var/i in get_area_turfs(our_area, z))
