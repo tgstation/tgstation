@@ -159,22 +159,21 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 			return TRUE
 	return FALSE
 
-/mob/living/simple_animal/hostile/floor_cluwne/proc/Acquire_Victim(specific)
-	for(var/I in GLOB.player_list)//better than a potential recursive loop
-		var/mob/living/carbon/human/H = pick(GLOB.player_list)//so the check is fair
-		var/area/A
-		if(specific)
-			H = specific
-			A = get_area(H.loc)
-			if(H.stat != DEAD && H.has_dna() && !H.dna.check_mutation(CLUWNEMUT) && !is_type_in_typecache(A, invalid_area_typecache) && is_station_level(H.z))
+/mob/living/simple_animal/hostile/floor_cluwne/proc/Acquire_Victim(var/mob/living/carbon/human/specific)
+	if(specific && specific.stat != DEAD && specific.has_dna() && !specific.dna.check_mutation(CLUWNEMUT))
+		current_victim = specific
+		interest = 0
+		stage = STAGE_HAUNT
+		return target = current_victim
+	else
+		for(var/I in GLOB.player_list)//better than a potential recursive loop
+			var/mob/living/carbon/human/H = pick(GLOB.player_list)//so the check is fair
+			var/area/A = get_area(H.loc)
+			if(H && ishuman(H) && H.stat != DEAD && H != current_victim && H.has_dna() && !H.dna.check_mutation(CLUWNEMUT) && !is_type_in_typecache(A, invalid_area_typecache) && is_station_level(H.z))
+				current_victim = H
+				interest = 0
+				stage = STAGE_HAUNT
 				return target = current_victim
-		
-		A = get_area(H.loc)
-		if(H && ishuman(H) && H.stat != DEAD && H != current_victim && H.has_dna() && !H.dna.check_mutation(CLUWNEMUT) && !is_type_in_typecache(A, invalid_area_typecache) && is_station_level(H.z))
-			current_victim = H
-			interest = 0
-			stage = STAGE_HAUNT
-			return target = current_victim
 
 	message_admins("Floor Cluwne was deleted due to a lack of valid targets, if this was a manually targeted instance please re-evaluate your choice.")
 	qdel(src)
