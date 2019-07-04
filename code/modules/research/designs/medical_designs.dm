@@ -561,13 +561,6 @@
 	id = "surgery_ext_dissection"
 	surgery = /datum/surgery/advanced/experimental_dissection/alien
 
-/datum/design/surgery/experimental_dissection
-	name = "Experimental Dissection"
-	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
-	id = "surgery_exp_dissection"
-	surgery = /datum/surgery/experimental_dissection
-	research_icon_state = "surgery_chest"
-
 /datum/design/surgery/lobotomy
 	name = "Lobotomy"
 	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
