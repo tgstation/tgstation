@@ -8,6 +8,7 @@
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/Detach)
 
 /datum/element/proc/Detach(datum/source, force)
+	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
 
 /datum/element/Destroy(force)
 	if(!force)
