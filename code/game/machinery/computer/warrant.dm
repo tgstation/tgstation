@@ -6,7 +6,6 @@
 	circuit = /obj/item/circuitboard/computer/warrant
 	light_color = LIGHT_COLOR_RED
 	var/authenticated = null
-	var/screen = null
 	var/datum/data/record/current = null
 
 /obj/machinery/computer/warrant/ui_interact(mob/user)
@@ -117,9 +116,7 @@
 			var/obj/item/card/id/scan = M.get_idcard(TRUE)
 			authenticated = scan.registered_name
 			if(authenticated)
-				for(var/datum/data/record/R in GLOB.data_core.security)
-					if(R.fields["name"] == authenticated)
-						current = R
+				current = find_record("name", authenticated, GLOB.data_core.security)
 				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 		if("Logout")
 			current = null
