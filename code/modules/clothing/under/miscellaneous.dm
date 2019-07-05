@@ -678,7 +678,6 @@
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
 
-
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>"
@@ -691,18 +690,12 @@
 		if(extinguishes_left)
 			if(next_extinguish > world.time)
 				return
-				next_extinguish = world.time + extinguish_cooldown
-				extinguishes_left--
-			if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman/clown)))
-				H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes [H.p_them()]!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
-				H.ExtinguishMob()
-				new /obj/effect/particle_effect/water(get_turf(H))
-			else
-
-				H.visible_message("<span class='warning'>[H]'s suit spews out a tonne of space lube!</span>","<span class='warning'>Your suit spews out a tonne of space lube!</span>")
-				H.ExtinguishMob()
-				new /obj/effect/particle_effect/foam(loc) //Truely terrifying.
-		return 0
+			next_extinguish = world.time + extinguish_cooldown
+			extinguishes_left--
+			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes [H.p_them()]!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
+			H.ExtinguishMob()
+			new /obj/effect/particle_effect/water(get_turf(H))
+	return 0
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	..()

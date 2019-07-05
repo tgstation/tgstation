@@ -69,3 +69,18 @@
 	icon_state = "clown_envirosuit"
 	item_state = "clown_envirosuit"
 	item_color = "clown_envirosuit"
+
+/obj/item/clothing/under/plasmaman/clown/Extinguish(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+
+	if(H.on_fire)
+		if(extinguishes_left)
+			if(next_extinguish > world.time)
+				return
+			next_extinguish = world.time + extinguish_cooldown
+			extinguishes_left--
+			H.visible_message("<span class='warning'>[H]'s suit spews out a tonne of space lube!</span>","<span class='warning'>Your suit spews out a tonne of space lube!</span>")
+			H.ExtinguishMob()
+			new /obj/effect/particle_effect/foam(loc) //Truely terrifying.
+	return 0
