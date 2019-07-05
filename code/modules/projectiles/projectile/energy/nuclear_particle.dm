@@ -3,9 +3,7 @@
 	name = "nuclear particle"
 	icon_state = "nuclear_particle"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 20
-	damage_type = STAMINA
-	irradiate = 2500 //enough to knockdown and induce vomiting
+	irradiate = 5000
 	speed = 0.4
 	hitsound = 'sound/weapons/emitter2.ogg'
 	impact_type = /obj/effect/projectile/impact/xray
