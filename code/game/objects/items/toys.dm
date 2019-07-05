@@ -1420,5 +1420,5 @@
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 	icon_state = "shell[rand(1,3)]"
-	color = pick(possible_colors)
+	color = pickweight(possible_colors)
 	setDir(pick(GLOB.cardinals))
