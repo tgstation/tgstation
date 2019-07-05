@@ -6123,7 +6123,6 @@
 /area/centcom/ferry)
 "om" = (
 /obj/machinery/computer/card/centcom,
-/obj/item/card/id/centcom,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "on" = (
@@ -7924,18 +7923,11 @@
 /area/centcom/ferry)
 "ry" = (
 /obj/machinery/computer/card/centcom,
-/obj/item/card/id/centcom,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office.";
 	name = "Research Monitor";
 	network = list("rd","minisat");
 	pixel_y = 28
-	},
-/obj/machinery/button/door/indestructible{
-	id = "adminvault";
-	name = "Secure Storage";
-	pixel_x = 24;
-	req_access_txt = "109"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
@@ -8482,6 +8474,10 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/item/storage/box/ids{
+	pixel_x = 6;
+	pixel_y = 12
+	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "sB" = (
@@ -8572,10 +8568,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/door/poddoor{
-	id = "adminvault";
-	name = "Administrative Secure Storage"
+/obj/machinery/door/airlock/vault{
+	req_access_txt = "109"
 	},
+/obj/machinery/door/poddoor/shutters/indestructible,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "sI" = (
@@ -17589,9 +17585,9 @@
 /obj/machinery/iv_drip,
 /obj/item/roller,
 /obj/item/storage/firstaid/regular,
-/obj/item/reagent_containers/medspray/synthflesh,
-/obj/item/reagent_containers/medspray/synthflesh,
-/obj/item/reagent_containers/medspray/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Qj" = (

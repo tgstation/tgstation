@@ -450,7 +450,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(M.is_eyes_covered())
 		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "<span class='danger'>You're going to need to remove [M.p_their()] eye protection first!</span>")
+		to_chat(user, "<span class='warning'>You're going to need to remove [M.p_their()] eye protection first!</span>")
 		return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
@@ -458,7 +458,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 
 	if(isbrain(M))
-		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
+		to_chat(user, "<span class='warning'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
 	src.add_fingerprint(user)
@@ -486,12 +486,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	log_combat(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
-	M.adjust_blurriness(3)
-	M.adjust_eye_damage(rand(2,4))
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(eyes.eye_damage >= 10)
+	M.adjust_blurriness(3)
+	eyes.applyOrganDamage(rand(2,4))
+	if(eyes.damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
@@ -505,7 +505,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Paralyze(40)
-		if (prob(eyes.eye_damage - 10 + 1))
+		if (prob(eyes.damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
 

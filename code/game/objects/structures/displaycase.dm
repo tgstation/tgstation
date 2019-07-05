@@ -267,33 +267,33 @@
 			is_locked = !is_locked
 			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
 		else
-			to_chat(user, "<span class='danger'>The lock is stuck shut!</span>")
+			to_chat(user, "<span class='warning'>The lock is stuck shut!</span>")
 		return
 
 	if(is_locked)
-		to_chat(user, "<span class='danger'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
+		to_chat(user, "<span class='warning'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
 		return
 
 	if(!added_roundstart)
-		to_chat(user, "You've already put something new in this case.")
+		to_chat(user, "<span class='warning'>You've already put something new in this case!</span>")
 		return
 
 	if(is_type_in_typecache(W, GLOB.blacklisted_cargo_types))
-		to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
+		to_chat(user, "<span class='warning'>The case rejects the [W]!</span>")
 		return
 
 	for(var/a in W.GetAllContents())
 		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-			to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
+			to_chat(user, "<span class='warning'>The case rejects the [W]!</span>")
 			return
 
 	if(user.transferItemToLoc(W, src))
 
 		if(showpiece)
-			to_chat(user, "You press a button, and [showpiece] descends into the floor of the case.")
+			to_chat(user, "<span class='notice'>You press a button, and [showpiece] descends into the floor of the case.</span>")
 			QDEL_NULL(showpiece)
 
-		to_chat(user, "You insert [W] into the case.")
+		to_chat(user, "<span class='notice'>You insert [W] into the case.</span>")
 		showpiece = W
 		added_roundstart = FALSE
 		update_icon()
@@ -306,9 +306,9 @@
 		if(chosen_plaque)
 			if(user.Adjacent(src))
 				trophy_message = chosen_plaque
-				to_chat(user, "You set the plaque's text.")
+				to_chat(user, "<span class='notice'>You set the plaque's text.</span>")
 			else
-				to_chat(user, "You are too far to set the plaque's text.")
+				to_chat(user, "<span class='warning'>You are too far to set the plaque's text!</span>")
 
 		SSpersistence.SaveTrophy(src)
 		return TRUE

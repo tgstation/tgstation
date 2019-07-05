@@ -113,10 +113,10 @@
 
 /datum/action/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.canUnEquip(user.wear_suit))
-		to_chat(user, "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!")
+		to_chat(user, "<span class='warning'>\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!</span>")
 		return
 	if(!user.canUnEquip(user.head))
-		to_chat(user, "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!")
+		to_chat(user, "<span class='warning'>\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!</span>")
 		return
 	..()
 	user.dropItemToGround(user.head)
@@ -368,7 +368,7 @@
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
 								return BULLET_ACT_HIT
 							else
-								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off [C]'s hands!</span>")
+								to_chat(firer, "<span class='warning'>You can't seem to pry [I] off [C]'s hands!</span>")
 								return BULLET_ACT_BLOCK
 						else
 							to_chat(firer, "<span class='danger'>[C] has nothing in hand to disarm!</span>")
