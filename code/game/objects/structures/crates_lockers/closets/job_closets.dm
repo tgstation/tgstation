@@ -358,6 +358,8 @@
 	new /obj/item/clothing/suit/apron/overalls(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/hydroponics(src)
+	for(var/i in 2 to 4)
+		new /obj/item/storage/belt/botany(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/mask/bandana(src)
 

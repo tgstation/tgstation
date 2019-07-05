@@ -44,14 +44,14 @@
 	if(H && !(world.time < last_enginesound_time + engine_sound_length))
 		last_enginesound_time = world.time
 		playsound(src, engine_sound, 100, TRUE)
-		playsound(src, 'sound/weapons/circsawhit.ogg', 100, TRUE)
+		playsound(src, 'sound/toolbox/car/carrev.ogg', 100, TRUE)
 
 	if(emagged)
 		for(var/mob/living/carbon/human/M in loc)
 			if(M == H)
 				continue
 			if(M.lying)
-				visible_message("<span class='danger'>\the [src] grinds [M.name] into a fine paste!</span>")
+				visible_message("<span class='danger'>\the [src] grinds [M.name]'s flesh!</span>")
 				//M.gib()
 				playsound(src, 'sound/weapons/circsawhit.ogg', 100, TRUE)
 				M.adjustBruteLoss(rand(40,70))

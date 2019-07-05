@@ -104,3 +104,36 @@
 	for(var/obj/item/tank/internals/emergency_oxygen/E in src)
 		qdel(E)
 		new /obj/item/tank/internals/plasmaman/belt/full(src)
+
+//botany belt
+/obj/item/storage/belt/botany
+	name = "botanist belt"
+	desc = "Can carry things like seeds, plant nutrients and other things like that."
+	icon = 'icons/oldschool/clothing/beltitem.dmi'
+	alternate_worn_icon = 'icons/oldschool/clothing/beltmob.dmi'
+	icon_state = "bbelt"
+	item_state = "bbelt"
+	lefthand_file = 'icons/oldschool/inhand_left.dmi'
+	righthand_file = 'icons/oldschool/inhand_right.dmi'
+	storage_slots = 7
+	can_hold = list(
+		/obj/item/reagent_containers/food/snacks,
+		/obj/item/device/flashlight,
+		/obj/item/device/radio,
+		/obj/item/device/plant_analyzer,
+		/obj/item/seeds,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/spray,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/disk/plantgene,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/paper,
+		/obj/item/grown,
+		/obj/item/storage/box/matches,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/lighter,
+		/obj/item/storage/fancy/rollingpapers,
+		/obj/item/rollingpaper,
+		/obj/item/clothing/mask/cigarette
+		)

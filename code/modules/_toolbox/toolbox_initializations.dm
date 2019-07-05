@@ -336,7 +336,11 @@ GLOBAL_LIST_EMPTY(hub_features)
 			client.previous_mind = mind
 		if(!client.previous_mob_type)
 			client.previous_mob_type = type
-		if(!(client.previous_mind.assigned_role == client.previous_mind.special_role) && ((client.previous_mob_type != /mob/dead/new_player) && (!istype(src,/mob/living/carbon/human/jesus))))
+		var/list/skip_types = list(
+			/mob/dead/new_player,
+			/mob/living/carbon/human/jesus,
+			/mob/living/carbon/human/virtual_reality)
+		if(!(client.previous_mind.assigned_role == client.previous_mind.special_role) && !(type in skip_types) && !(client.previous_mob_type in skip_types))
 			if(client.previous_mind != mind)
 				alert(client,"You are in control of another entity. You remember nothing that happened previously up until this point.","Memories Wiped.","Ok")
 		client.previous_mind = mind

@@ -200,14 +200,14 @@
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
 	var/recharging_time = 0 //time until next dash
-	var/jumping = FALSE //are we mid-jump?
+	//var/jumping = FALSE //are we mid-jump?
 
 /obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
 
-	if(jumping)
-		return
+	//if(jumping)
+	//	return
 
 	if(recharging_time > world.time)
 		to_chat(user, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
@@ -218,14 +218,14 @@
 	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
 
 	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE))
-		jumping = TRUE
+		//jumping = TRUE
 		playsound(src, 'sound/effects/stealthoff.ogg', 50, 1, 1)
 		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
 
 /obj/item/clothing/shoes/bhop/proc/hop_end()
-	jumping = FALSE
+	//jumping = FALSE
 	recharging_time = world.time + recharging_rate
 
 /obj/item/clothing/shoes/singery

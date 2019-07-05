@@ -1075,6 +1075,7 @@
 #include "code\modules\_toolbox\silly\thunder_dome_war.dm"
 #include "code\modules\_toolbox\silly\tidepods.dm"
 #include "code\modules\_toolbox\silly\trollcloset.dm"
+#include "code\modules\_toolbox\silly\vr.dm"
 #include "code\modules\_toolbox\silly\weeb.dm"
 #include "code\modules\_toolbox\space_exploration\config.dm"
 #include "code\modules\_toolbox\space_exploration\pods\_defines.dm"
