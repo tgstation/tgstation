@@ -5,7 +5,7 @@
 /// the parent to the exclusion list in code/__HELPERS/unsorted.dm's
 /// get_random_food proc.
 ////////////////////////////////////////////////////////////////////////////////
-#define STOP_SERVING_BREAKFAST 15 MINUTES
+#define STOP_SERVING_BREAKFAST (15 MINUTES)
 
 /obj/item/reagent_containers/food
 	possible_transfer_amounts = list()
