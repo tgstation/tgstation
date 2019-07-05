@@ -291,7 +291,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>", "window=[name]")
 			return
 		else
-			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
+			to_chat(user, "<span class='warning'>You don't know how to read or write!</span>")
 			return
 
 	else if(istype(P, /obj/item/stamp))

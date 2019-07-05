@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - tweak: "Various cosmetic and gameplay related changes to hivebots. Player controlled hivebots can change their look by changing their intent to harm."

@@ -93,7 +93,7 @@
 				to_chat(user, "You slip a candy corn from your hat.")
 				candy_cooldown = world.time+1200
 			else
-				to_chat(user, "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.")
+				to_chat(user, "<span class='warning'>You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.</span>")
 
 
 //Mime

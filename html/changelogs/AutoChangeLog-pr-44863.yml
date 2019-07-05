@@ -1,0 +1,6 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - imageadd: "Coming into contact with -HONK- may have additional effects, do not be alarmed"
+  - tweak: "For safety reasons, the administration of -HONK- may only be performed by trained professionals"
+  - bugfix: "Self-application of -HONK- is now forbidden"

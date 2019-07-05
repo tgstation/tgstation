@@ -35,7 +35,7 @@
 	if(sheet_amount)
 		to_chat(user, "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>")
 	else
-		to_chat(user, "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>")
+		to_chat(user, "<span class='warning'>You cannot retrieve any bananium from the prototype shoes!</span>")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	. = ..()

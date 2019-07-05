@@ -689,7 +689,7 @@
 				return
 
 		if(!reagent_source.reagents.total_volume)
-			to_chat(user, "<span class='notice'>[reagent_source] is empty.</span>")
+			to_chat(user, "<span class='warning'>[reagent_source] is empty!</span>")
 			return 1
 
 		var/list/trays = list(src)//makes the list just this in cases of syringes and compost etc
@@ -699,6 +699,10 @@
 		var/transfer_amount
 
 		if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
+			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks))
+				var/obj/item/reagent_containers/food/snacks/R = reagent_source
+				if (R.trash)
+					R.generate_trash(get_turf(user))
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
 			transfer_amount = reagent_source.reagents.total_volume
 		else
