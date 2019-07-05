@@ -83,7 +83,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	pass_flags = PASSTABLE | PASSMOB
 	density = FALSE
-	del_on_death = 1
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
