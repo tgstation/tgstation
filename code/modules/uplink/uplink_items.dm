@@ -854,13 +854,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 
 
-/datum/uplink_item/support/gygax
-	name = "Dark Gygax Exosuit"
-	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-			for hit-and-run style attacks. Features an incendiary carbine, flash bang launcher, teleporter, ion thrusters and a Tesla energy array."
-	item = /obj/mecha/combat/gygax/dark/loaded
-	cost = 80
-
 //Grenades and Explosives
 /datum/uplink_item/explosives
 	category = "Grenades and Explosives"
@@ -1363,14 +1356,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/aiModule/syndicate
 	cost = 9
-
-/datum/uplink_item/device_tools/briefcase_launchpad
-	name = "Briefcase Launchpad"
-	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to eight tiles away from the briefcase. \
-			Also includes a remote control, disguised as an ordinary folder. Touch the briefcase with the remote to link it."
-	surplus = 0
-	item = /obj/item/storage/briefcase/launchpad
-	cost = 6
 
 /datum/uplink_item/device_tools/hypnotic_flash
 	name = "Hypnotic Flash"
