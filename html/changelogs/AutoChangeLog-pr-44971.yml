@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - bugfix: "smeses no longer link to themselves non-visibly"

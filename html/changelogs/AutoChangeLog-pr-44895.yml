@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Reproductive crossbreed extracts can be fed from the bio bag again"
