@@ -1,9 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -29,9 +27,7 @@
 /area/awaymission/snowdin/outside)
 "ah" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/cave)
@@ -66,9 +62,7 @@
 /area/awaymission/snowdin/cave)
 "aq" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/research)
@@ -95,9 +89,7 @@
 /area/awaymission/snowdin/cave)
 "av" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/outside)
@@ -170,9 +162,7 @@
 /area/awaymission/snowdin/post/research)
 "aJ" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/dorm)
@@ -325,9 +315,7 @@
 /area/awaymission/snowdin/post/research)
 "be" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/kitchen)
@@ -337,9 +325,7 @@
 "bg" = (
 /obj/effect/baseturf_helper/asteroid/snow{
 	baseturf = /turf/open/floor/plating/asteroid/snow/ice;
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
-	baseturf_to_replace = /turf/baseturf_bottom
-	};
+	baseturf_to_replace = /turf/baseturf_bottom;
 	name = "asteroid snowice baseturf editor"
 	},
 /turf/closed/indestructible/rock/snow/ice,
@@ -1657,9 +1643,7 @@
 /area/awaymission/snowdin/post)
 "dN" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/rust,
 /area/awaymission/snowdin/post/messhall)
@@ -1826,9 +1810,7 @@
 /area/awaymission/snowdin/post/dorm)
 "ei" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall,
 /area/awaymission/snowdin/post)
@@ -2254,9 +2236,7 @@
 /area/awaymission/snowdin/post)
 "ff" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall,
 /area/awaymission/snowdin/post/gateway)
@@ -2302,9 +2282,7 @@
 /area/awaymission/snowdin/post/kitchen)
 "fm" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/hydro)
@@ -2623,9 +2601,7 @@
 /area/awaymission/snowdin/post/hydro)
 "fX" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/garage)
@@ -4388,9 +4364,7 @@
 /area/awaymission/snowdin/post/dorm)
 "jQ" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall,
 /area/awaymission/snowdin/post/custodials)
@@ -6001,9 +5975,7 @@
 /area/awaymission/snowdin/post)
 "nl" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall,
 /area/awaymission/snowdin/post/engineering)
@@ -6151,9 +6123,7 @@
 /area/awaymission/snowdin/post/custodials)
 "nE" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/rust,
 /area/awaymission/snowdin/post/secpost)
@@ -8499,9 +8469,7 @@
 /area/awaymission/snowdin/outside)
 "tG" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/mineral/snowmountain,
 /area/awaymission/snowdin/cave)
@@ -9090,9 +9058,7 @@
 "vN" = (
 /obj/effect/spawner/structure/window/shuttle,
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/broken_shuttle)
@@ -10314,9 +10280,7 @@
 /area/awaymission/snowdin/post/minipost)
 "yZ" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall,
 /area/awaymission/snowdin/post/minipost)
@@ -10451,9 +10415,7 @@
 /area/awaymission/snowdin/outside)
 "zt" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/mineral/wood,
 /area/awaymission/snowdin/igloo)
@@ -10682,9 +10644,7 @@
 /area/awaymission/snowdin/cave)
 "zZ" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall/mineral/snow,
 /area/awaymission/snowdin/igloo)
@@ -12923,9 +12883,7 @@
 "FC" = (
 /obj/effect/baseturf_helper/asteroid/snow{
 	baseturf = /turf/open/floor/plating/asteroid/snow/ice;
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
-	baseturf_to_replace = /turf/baseturf_bottom
-	};
+	baseturf_to_replace = /turf/baseturf_bottom;
 	name = "asteroid snowice baseturf editor"
 	},
 /turf/closed/wall/ice,
@@ -13450,9 +13408,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "Hl" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/closed/wall,
 /area/awaymission/snowdin/post/mining_main)
