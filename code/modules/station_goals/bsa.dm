@@ -178,11 +178,10 @@
 
 /obj/machinery/bsa/full/proc/fire(mob/user, turf/bullseye)
 	var/turf/point = get_front_turf()
-	var/obj/effect/temp_visual/bsa_splash/wave
 	for(var/turf/T in getline(get_step(point,dir),get_target_turf()))
 		T.ex_act(EXPLODE_DEVASTATE)
 	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
-	new wave (point, dir)
+	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
 	log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)].")

@@ -142,8 +142,8 @@
 	update_icon()
 
 /obj/effect/temp_visual/bsa_splash
-	name = "Bluespace Energy Waves"
-	desc = "Massive, rippling waves of bluepace energy, all rapidly exhausting itself the moment it leaves the consentrated beam of light."
+	name = "Bluespace energy wave"
+	desc = "A massive, rippling wave of bluepace energy, all rapidly exhausting itself the moment it leaves the concentrated beam of light."
 	icon = 'icons/effects/beam_splash.dmi'
 	icon_state = "beam_splash_l"
 	layer = ABOVE_ALL_MOB_LAYER
