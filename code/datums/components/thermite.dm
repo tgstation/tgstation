@@ -67,7 +67,7 @@
 		master.burn_tile()
 		if(user)
 			master.add_hiddenprint(user)
-	QDEL_IN(fakefire, CLAMP(amount, 50, 100)) //I think 10 seconds is long enough as a maximum value
+	QDEL_IN(fakefire, 100)
 	qdel(src)
 
 /datum/component/thermite/proc/clean_react(datum/source, strength)
