@@ -84,25 +84,20 @@
 	if(T.y+height > world.maxy)
 		return
 
+	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
+							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
+	for(var/L in border)
+		var/turf/turf_to_disable = L
+		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
+
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
-
-	if(!parsed.load(T.x, T.y, T.z, measureOnly=TRUE))
+	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
 		return
-
 	var/list/bounds = parsed.bounds
 	if(!bounds)
-		return
-
-	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
-							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ]))
-	for(var/L in border)
-		var/turf/OT = L
-		SSair.remove_from_active(OT) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
-
-	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
 		return
 
 	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
