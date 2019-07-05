@@ -7,7 +7,7 @@
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
 
-	var/list/baseturf_to_replace
+	var/list/baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	var/baseturf
 
 	layer = POINT_LAYER

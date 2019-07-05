@@ -4510,9 +4510,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "mW" = (
-/obj/effect/baseturf_helper/space{
-	baseturf_to_replace = /turf/baseturf_bottom
-	},
+/obj/effect/baseturf_helper/space,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/pool)
 "sN" = (
