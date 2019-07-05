@@ -84,6 +84,12 @@
 	if(T.y+height > world.maxy)
 		return
 
+	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
+							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ]))
+	for(var/L in border)
+		var/turf/T = L
+		SSair.remove_from_active(T) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
+
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
