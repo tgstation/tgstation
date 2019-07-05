@@ -214,7 +214,7 @@
 	desc = "Delicious waffle cone, but no ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "icecream_cone_waffle" //default for admin-spawned cones, href_list["cone"] should overwrite this all the time
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("cream" = 2, "waffle" = 1)
 	var/ice_creamed = 0
 	var/cone_type
@@ -261,14 +261,14 @@
 			reagents.add_reagent(/datum/reagent/liquidgibs, 3)
 			filling_color = "#EFB4B4"
 		if ("custom")
-			if(R && R.total_volume >= 3)
+			if(R && R.total_volume >= 4) //consumable reagents have stronger taste so higher volume will allow non-food flavourings to break through better.
 				var/mutable_appearance/flavoring = mutable_appearance(icon,"icecream_custom")
 				var/datum/reagent/master = R.get_master_reagent()
 				flavoring.color = master.color
 				filling_color = master.color
 				name = "[master.name] icecream"
 				desc = "A delicious [cone_type] cone filled with artisanal icecream. Made with real [master.name]. Ain't that something."
-				R.trans_to(src, 3)
+				R.trans_to(src, 4)
 				add_overlay(flavoring)
 			else
 				name = "bland icecream"
