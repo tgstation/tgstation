@@ -740,5 +740,5 @@
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#D98736"
 	taste_mult = 2
-	taste_description = "bitter sweetness"
+	taste_description = "caramel"
 	reagent_state = SOLID
