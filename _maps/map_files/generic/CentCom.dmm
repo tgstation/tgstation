@@ -5152,7 +5152,7 @@
 "mB" = (
 /obj/effect/baseturf_helper/asteroid/snow{
 	baseturf_to_replace = /turf/baseturf_bottom
-	},
+	}
 /turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership)
 "mC" = (
