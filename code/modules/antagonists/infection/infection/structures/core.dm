@@ -128,24 +128,13 @@
 	if(overmind)
 		overmind.update_health_hud()
 		Pulse_Area(overmind, 20, 40, TRUE)
-	for(var/obj/structure/infection/normal/I in (range(2, src) - range(1, src)) + (range(6, src) - range(5, src)))
-		INVOKE_ASYNC(I, .proc/change_to, /obj/structure/infection/shield/reflective/strong/core, overmind)
-	var/list/turrets = list()
-	turrets += locate(x-5,y+5,z)
-	turrets += locate(x+5,y+5,z)
-	turrets += locate(x-5,y-5,z)
-	turrets += locate(x+5,y-5,z)
-	for(var/turf/T in turrets)
-		var/obj/structure/infection/normal/I = locate(/obj/structure/infection/normal) in T.contents
-		if(I && prob(15))
-			INVOKE_ASYNC(I, .proc/change_to, /obj/structure/infection/turret/core, overmind)
 	INVOKE_ASYNC(src, .proc/pulseNodes)
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
 	..()
 
 /obj/structure/infection/core/proc/pulseNodes()
 	if(topulse.len)
-		var/sleeptime = SSmobs.wait / topulse.len // constant expansion till the next life tick
+		var/sleeptime = SSobj.wait / topulse.len // constant expansion till the next life tick
 		for(var/i = 1 to topulse.len)
 			if(!topulse.len)
 				return

@@ -32,11 +32,11 @@
 	var/mutable_appearance/resource_base = mutable_appearance('icons/mob/infection/crystaline_infection_medium.dmi', "crystalresource-base")
 	underlays += resource_base
 
-/obj/structure/infection/resource/Life()
+/obj/structure/infection/resource/Be_Pulsed()
 	. = ..()
 	if(resource_delay > world.time)
 		return
-	flick("blob_resource_glow", src)
+	flick("crystalresource-layer-on", src)
 	if(overmind)
 		overmind.add_points(1)
 	point_return = min(point_return + point_return_gain, 100)

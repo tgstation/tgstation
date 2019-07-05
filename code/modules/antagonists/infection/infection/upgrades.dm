@@ -71,11 +71,6 @@
 /datum/infection_upgrade/spore_type_change/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/parentspore)
 	parentspore.transfer_to_type(new_type)
 
-/datum/infection_upgrade/spore_type_change/myconid_spore
-	name = "Myconid Spore"
-	description = "Has the capability to pass beacon walls and cause trouble for humans hiding behind them. Can upgrade to be able to grab humans."
-	new_type = /mob/living/simple_animal/hostile/infection/infectionspore/sentient/myconid
-
 /datum/infection_upgrade/spore_type_change/infector_spore
 	name = "Infector Spore"
 	description = "An underboss of the infection. Can upgrade to repair buildings around it, and can create spore possessed humans with dead bodies. "
@@ -90,12 +85,6 @@
 	name = "Destructive Spore"
 	description = "A generally slow, tanky, and damaging spore useful for destroying structures. Effective for defending and advancing infectious structures."
 	new_type = /mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive
-
-///////////////////////////
-// Myconid Spore Upgrades//
-///////////////////////////
-
-/datum/infection_upgrade/myconid
 
 ////////////////////////////
 // Infector Spore Upgrades//

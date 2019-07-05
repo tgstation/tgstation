@@ -13,6 +13,7 @@
 	var/scan_range = 7 // range to search for targets
 	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
 	var/projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	var/hit_sound = 'sound/effects/meteorimpact.ogg'
 
 /obj/structure/infection/turret/Initialize()
 	. = ..()
@@ -110,6 +111,7 @@
 	update_icon()
 	var/obj/item/projectile/bullet/infection/A = new projectile_type(T)
 	playsound(loc, projectile_sound, 75, 1, pressure_affected = FALSE)
+	A.hitsound = hit_sound
 
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)

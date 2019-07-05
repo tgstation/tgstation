@@ -32,6 +32,8 @@
 	. = ..()
 	if(owner_overmind)
 		overmind = owner_overmind
+	else if(GLOB.infection_commander)
+		overmind = GLOB.infection_commander
 	GLOB.infections += src //Keep track of the structure in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_icon()
@@ -313,7 +315,7 @@
 /obj/structure/infection/obj_destruction(damage_flag)
 	..()
 
-/obj/structure/infection/proc/change_to(type, controller, var/structure_build_time)
+/obj/structure/infection/proc/change_to(type, controller, structure_build_time)
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for infection")
 		return

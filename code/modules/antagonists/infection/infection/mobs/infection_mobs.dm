@@ -5,7 +5,7 @@
 
 //Do not spawn
 /mob/living/simple_animal/hostile/infection
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/infection/slime_mob.dmi'
 	pass_flags = PASSBLOB
 	faction = list(ROLE_INFECTION)
 	bubble_icon = "blob"
@@ -81,10 +81,10 @@
 /////////////////////
 
 /mob/living/simple_animal/hostile/infection/infectionspore
-	name = "infection spore"
-	desc = "A floating, fragile spore."
-	icon_state = "blobpod"
-	icon_living = "blobpod"
+	name = "infection slime"
+	desc = "A floating, fragile slime."
+	icon_state = "infest-slime-core"
+	icon_living = "infest-slime-core"
 	health = 30
 	maxHealth = 30
 	verb_say = "psychically pulses"
@@ -100,8 +100,7 @@
 	movement_type = FLYING
 	del_on_death = 1
 	deathmessage = "dissapates in the atmosphere!"
-	var/mob/living/carbon/human/oldguy
-	var/is_zombie = 0
+	var/crystal_color = "#ffffff"
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	if(istype(linked_node))
@@ -113,36 +112,9 @@
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Life()
 	update_icons()
-	if(!is_zombie && isturf(src.loc))
-		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
-			if(H.stat == DEAD)
-				Zombify(H)
-				break
 	if(factory && z != factory.z)
 		death()
 	..()
-
-/mob/living/simple_animal/hostile/infection/infectionspore/proc/Zombify(mob/living/carbon/human/H)
-	is_zombie = 1
-	if(H.wear_suit)
-		var/obj/item/clothing/suit/armor/A = H.wear_suit
-		maxHealth += A.armor.melee //That zombie's got armor, I want armor!
-	maxHealth += 40
-	health = maxHealth
-	name = "infection zombie"
-	desc = "A shambling corpse animated by the infection."
-	mob_biotypes += MOB_HUMANOID
-	melee_damage_lower += 8
-	melee_damage_upper += 11
-	movement_type = GROUND
-	icon = H.icon
-	icon_state = "zombie"
-	H.hair_style = null
-	H.update_hair()
-	H.forceMove(src)
-	oldguy = H
-	update_icons()
-	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/infection/infectionspore/death(gibbed)
 	if(factory)
@@ -153,23 +125,15 @@
 	if(factory)
 		factory.spores -= src
 	factory = null
-	if(oldguy)
-		oldguy.forceMove(get_turf(src))
-		oldguy = null
 	return ..()
 
 /mob/living/simple_animal/hostile/infection/infectionspore/update_icons()
-	if(overmind)
-		add_atom_colour(overmind.color, FIXED_COLOUR_PRIORITY)
-	else
-		remove_atom_colour(FIXED_COLOUR_PRIORITY)
-	if(is_zombie)
-		copy_overlays(oldguy, TRUE)
-		var/mutable_appearance/infection_head_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_head")
-		if(overmind)
-			infection_head_overlay.color = overmind.color
-		color = initial(color)//looks better.
-		add_overlay(infection_head_overlay)
+	cut_overlays()
+	color = null
+	var/mutable_appearance/slime_crystal = mutable_appearance('icons/mob/infection/slime_mob.dmi', "infest-slime-layer")
+	if(crystal_color)
+		slime_crystal.color = crystal_color
+	add_overlay(slime_crystal)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/weak
 	name = "fragile blob spore"

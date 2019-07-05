@@ -6,6 +6,7 @@
 	max_integrity = 200
 	health_regen = 1
 	point_return = 5
+	build_time = 100
 	upgrade_subtype = /datum/infection_upgrade/factory
 	var/list/spores = list()
 	var/max_spores = 3
@@ -20,11 +21,12 @@
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/spore in spores)
 		if(spore.factory == src)
 			spore.factory = null
+		spore.death()
 	spores = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/structure/infection/factory/Life()
+/obj/structure/infection/factory/Be_Pulsed()
 	. = ..()
 	if(spores.len >= max_spores)
 		return

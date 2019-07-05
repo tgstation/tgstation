@@ -44,7 +44,7 @@
 		atmosblock = TRUE
 	air_update_turf(1)
 
-/obj/structure/infection/shield/reflective
+/*/obj/structure/infection/shield/reflective
 	name = "reflective infection"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
 	damaged_desc = "A wall of twitching tendrils with a reflective glow."
@@ -73,4 +73,4 @@
 
 /obj/structure/infection/shield/reflective/strong/core
 	name = "core reflective infection"
-	point_return = 0
+	point_return = 0*/

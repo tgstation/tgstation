@@ -30,6 +30,7 @@ GLOBAL_VAR(infection_commander)
 	var/list/resource_infection = list()
 	var/nodes_required = TRUE //if the infection needs nodes to place resource and factory blobs
 	var/placed = FALSE
+	var/placing = FALSE
 	var/freecam = FALSE
 	var/base_point_rate = 2 //for core placement
 	var/autoplace_time = 40 // a few seconds, just so it isnt sudden at game start
@@ -94,10 +95,10 @@ GLOBAL_VAR(infection_commander)
 
 /mob/camera/commander/process()
 	if(!infection_core)
-		if(!placed)
+		if(!placed && !placing)
 			if(autoplace_time && world.time >= autoplace_time)
 				place_infection_core()
-		else
+		else if(placed)
 			qdel(src)
 	else if(!victory_in_progress && !GLOB.infection_beacons.len)
 		victory_in_progress = TRUE

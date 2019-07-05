@@ -7,11 +7,11 @@
 	pixel_y = -4
 	max_integrity = 150
 	point_return = 10
-	build_time = 100
 	upgrade_subtype = null
 	scan_range = 8 // range to search for targets
 	projectile_type = /obj/item/projectile/bullet/infection/beam // the bullet fired for this turret
-	projectile_sound = 'sound/effects/hitscan_zap.ogg'
+	projectile_sound = null
+	hit_sound = 'sound/effects/hitscan_zap.ogg'
 	var/datum/beam/B
 
 /obj/structure/infection/turret/beam/Destroy()
@@ -37,7 +37,7 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(T)
-		B = T.Beam(target, icon_state="lightning-hitscan", icon='icons/mob/infection/crystal_effect.dmi', time=INFINITY, maxdistance=8, beam_type=/obj/effect/ebeam/infection_beam, beam_sleep_time=1)
+		B = T.Beam(target, icon_state="lightning-hitscan", icon='icons/mob/infection/crystal_effect.dmi', time=INFINITY, maxdistance=scan_range+1, beam_type=/obj/effect/ebeam/infection_beam, beam_sleep_time=1)
 
 /obj/item/projectile/bullet/infection/beam
 	name = "lightning beam"

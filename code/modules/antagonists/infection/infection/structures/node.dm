@@ -8,10 +8,10 @@
 	max_integrity = 200
 	health_regen = 3
 	point_return = 5
-	build_time = 100
+	build_time = 25
 	upgrade_subtype = /datum/infection_upgrade/node
-	var/expansion_range = 6
-	var/expansion_amount = 6
+	var/expansion_range = 8
+	var/expansion_amount = 16
 	var/base_pulse_cd // cooldown before being increased by time they've been alive
 
 /obj/structure/infection/node/Initialize()

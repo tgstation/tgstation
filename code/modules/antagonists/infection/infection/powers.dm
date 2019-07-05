@@ -1,5 +1,9 @@
 GLOBAL_LIST_EMPTY(infection_spawns)
 
+/datum/map_template/infection_start
+    name = "Infection Start"
+    mappath = '_maps/templates/infection_spawn.dmm'
+
 /obj/effect/landmark/infection_start
 	name = "infectionstart"
 	icon_state = "infection_start"
@@ -14,16 +18,21 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 ////////////////////////
 
 /mob/camera/commander/proc/place_infection_core()
-	if(placed)
+	if(placed || placing)
 		return
+	placing = TRUE
 	var/turf/start = pick(GLOB.infection_spawns)
-	forceMove(get_turf(start))
-	var/obj/structure/infection/core/I = new(get_turf(start), src, base_point_rate, 1)
+	var/datum/map_template/infection_start/template = new
+	var/list/hit_turfs = template.get_affected_turfs(start, CENTERED = TRUE)
+	template.load(start, centered = TRUE)
+	forceMove(start)
+	var/obj/structure/infection/core/I = new(start, src, base_point_rate, 1)
 	infection_core = I
 	I.update_icon()
 	update_health_hud()
 	reset_perspective()
 	transport_core()
+	placing = FALSE
 	placed = TRUE
 
 /mob/camera/commander/proc/can_buy(cost = 0)

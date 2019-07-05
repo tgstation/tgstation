@@ -10,6 +10,7 @@
 	hud_type = /datum/hud/infection_spore
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	obj_damage = 20
+	crystal_color = "#ff8c00"
 	var/respawn_time = 30
 	var/current_respawn_time = -1
 	var/can_respawn = FALSE
@@ -117,7 +118,7 @@
 			return
 		current_respawn_time--
 	to_chat(src, "<b>You may now respawn!</b>")
-	playsound(src, 'sound/effects/genetics.ogg', 50)
+	playsound_local(src, 'sound/effects/genetics.ogg', 50)
 	can_respawn = TRUE
 	current_respawn_time = -1
 	return
@@ -144,6 +145,9 @@
 	new_spore.update_icons()
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/refund_upgrades()
+	if(!ISRESPAWNING)
+		to_chat(src, "<span class='warning'>You cannot revert unless you are reforming at a node or core!</span>")
+		return
 	if(spent_upgrade_points == 0)
 		to_chat(src, "<span class='warning'>We are unable to revert our form any further!</span>")
 		return
@@ -172,53 +176,36 @@
 		to_chat(src, "<span class='warning'>Shifted spawn location to node [curr + 1].</span>")
 	cycle_cooldown = world.time + 5
 
-/mob/living/simple_animal/hostile/infection/infectionspore/sentient/Zombify(mob/living/carbon/human/H)
-	return
-
-/mob/living/simple_animal/hostile/infection/infectionspore/sentient/myconid
-	name = "myconid spore"
-	desc = "A weak spore with fungi poking out of every end. It is the only spore with the capability to cross beacon walls."
-	icon_state = "myconid"
-	icon_living = "myconid"
-	health = 40
-	maxHealth = 40
-	melee_damage_lower = 10
-	melee_damage_upper = 10
-	can_cross_beacons = TRUE
-	upgrade_subtype = /datum/infection_upgrade/myconid
-
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector
 	name = "infector spore"
 	desc = "A spore that oozes infective pus from all of it's pores. It can reanimate corpses of the dead to do its bidding."
-	icon_state = "infector"
-	icon_living = "infector"
 	health = 80
 	maxHealth = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	crystal_color = "#228b22"
 	upgrade_subtype = /datum/infection_upgrade/infector
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter
 	name = "hunter spore"
 	desc = "A congealed but fast moving spore with the abilities to hunt down and consume intruders of the infection."
-	icon_state = "hunter"
-	icon_living = "hunter"
 	health = 60
 	maxHealth = 60
 	speed = -1
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	crystal_color = "#dc143c"
 	upgrade_subtype = /datum/infection_upgrade/hunter
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive
 	name = "destructive spore"
 	desc = "A slow moving but bulky and heavily damaging spore that is useful for taking out buildings and walls, as well as defending infection structures."
-	icon_state = "destructive"
-	icon_living = "destructive"
 	health = 100
 	maxHealth = 100
 	speed = 1
 	melee_damage_lower = 40
 	melee_damage_upper = 40
+	crystal_color = "#4169e1"
+	transform = matrix(1.5, 0, 0, 0, 1.5, 0)
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	upgrade_subtype = /datum/infection_upgrade/destructive
