@@ -1308,6 +1308,11 @@
 	icon_state = "shirt_assblastusa"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/goose
+	name = "Shirt (Vomit Goose)"
+	icon_state = "vomitgooseshirt"
+	gender = NEUTER
+
 /datum/sprite_accessory/undershirt/shirt_white
 	name = "Shirt (White)"
 	icon_state = "shirt_white"
