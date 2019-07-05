@@ -12,7 +12,7 @@
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			IF_HAS_BLOOD_DNA(src)
+			if(HAS_BLOOD_DNA(src))
 				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
@@ -46,6 +46,12 @@
 	icon_state = "horribletie"
 	item_color = "horribletie"
 
+/obj/item/clothing/neck/tie/detective
+	name = "loose tie"
+	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."
+	icon_state = "detective"
+	item_color = "detective"
+
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
@@ -67,7 +73,7 @@
 			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
 			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 
-			if(!(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH))))
+			if(!(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH))))
 				if(heart && istype(heart))
 					heart_strength = "<span class='danger'>an unstable</span>"
 					if(heart.beating)
@@ -195,6 +201,7 @@
 /obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(ishuman(M))
 		return FALSE
+	return ..()
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
@@ -238,4 +245,4 @@
 			user.put_in_hand(newBand, currentHandIndex)
 			user.visible_message("You untie [oldName] back into a [newBand.name]", "[user] unties [oldName] back into a [newBand.name]")
 		else
-			to_chat(user, "<span class='warning'>You must be holding [src] in order to untie it!")
+			to_chat(user, "<span class='warning'>You must be holding [src] in order to untie it!</span>")

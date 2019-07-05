@@ -71,6 +71,8 @@
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 
+#define STAMINA_REGEN_BLOCK_TIME (10 SECONDS)
+
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
@@ -96,6 +98,7 @@
 #define BRAIN_TRAUMA_MILD /datum/brain_trauma/mild
 #define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
+#define BRAIN_TRAUMA_MAGIC /datum/brain_trauma/magic
 
 #define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
 #define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
@@ -116,6 +119,7 @@
 #define BIOWARE_GENERIC "generic"
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
+#define BIOWARE_LIGAMENTS "ligaments"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -130,9 +134,9 @@
 #define MOOD_LEVEL_HAPPY1 2
 #define MOOD_LEVEL_NEUTRAL 0
 #define MOOD_LEVEL_SAD1 -3
-#define MOOD_LEVEL_SAD2 -12
-#define MOOD_LEVEL_SAD3 -18
-#define MOOD_LEVEL_SAD4 -25
+#define MOOD_LEVEL_SAD2 -7
+#define MOOD_LEVEL_SAD3 -15
+#define MOOD_LEVEL_SAD4 -20
 
 //Sanity levels for humans
 #define SANITY_GREAT 125
@@ -141,6 +145,11 @@
 #define SANITY_UNSTABLE 50
 #define SANITY_CRAZY 25
 #define SANITY_INSANE 0
+
+//Hygiene levels for humans
+#define HYGIENE_LEVEL_CLEAN 250
+#define HYGIENE_LEVEL_NORMAL 200
+#define HYGIENE_LEVEL_DIRTY 75
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -210,10 +219,9 @@
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
 #define SLIDE_ICE				(1<<3)
+#define SLIP_WHEN_CRAWLING		(1<<4) //clown planet ruin
 
 #define MAX_CHICKENS 50
-
-#define UNHEALING_EAR_DAMAGE 100
 
 
 #define INCORPOREAL_MOVE_BASIC 1
@@ -260,6 +268,7 @@
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
 #define	ETHEREAL_CHARGE_FACTOR	0.12 //factor at which ethereal's charge decreases
+#define	HYGIENE_FACTOR  0.1	//factor at which mob hygiene decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
@@ -278,3 +287,28 @@
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
+
+#define GRAB_PIXEL_SHIFT_PASSIVE 6
+#define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
+#define GRAB_PIXEL_SHIFT_NECK 16
+
+#define PULL_PRONE_SLOWDOWN 1.5
+#define HUMAN_CARRY_SLOWDOWN 0.35
+
+//Flags that control what things can spawn species (whitelist)
+//Badmin magic mirror
+#define MIRROR_BADMIN (1<<0)
+//Standard magic mirror (wizard)
+#define MIRROR_MAGIC  (1<<1)
+//Pride ruin mirror
+#define MIRROR_PRIDE  (1<<2)
+//Race swap wizard event
+#define RACE_SWAP     (1<<3)
+//ERT spawn template (avoid races that don't function without correct gear)
+#define ERT_SPAWN     (1<<4)
+//xenobio black crossbreed
+#define SLIME_EXTRACT (1<<5)
+//Wabbacjack staff projectiles
+#define WABBAJACK     (1<<6)
+
+#define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;

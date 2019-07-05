@@ -31,13 +31,43 @@
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
+	var/oldres
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
-									"sodiumchloride", "sugar", "orangejuice",
-									"spaceacillin", "salglu_solution", "ethanol",
-									"leporazine", "synaptizine", "lipolicide",
-									"silver", "gold"
+									list(	// level 1
+										/datum/reagent/copper, /datum/reagent/silver, /datum/reagent/iodine, /datum/reagent/iron, /datum/reagent/carbon
+									),
+									list(	// level 2
+										/datum/reagent/potassium, /datum/reagent/consumable/ethanol, /datum/reagent/lithium, /datum/reagent/silicon, /datum/reagent/bromine
+									),
+									list(	// level 3
+										/datum/reagent/consumable/sodiumchloride, /datum/reagent/consumable/sugar, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/milk
+									),
+									list(	//level 4
+										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/charcoal
+									),
+									list(	//level 5
+										/datum/reagent/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol, /datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
+									),
+									list(	// level 6
+										/datum/reagent/phenol, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/oculine, /datum/reagent/medicine/antihol
+									),
+									list(	// level 7
+										/datum/reagent/medicine/leporazine, /datum/reagent/toxin/mindbreaker, /datum/reagent/medicine/corazone
+									),
+									list(	// level 8
+										/datum/reagent/pax, /datum/reagent/drug/happiness, /datum/reagent/medicine/ephedrine
+									),
+									list(	// level 9
+										/datum/reagent/toxin/lipolicide, /datum/reagent/medicine/sal_acid
+									),
+									list(	// level 10
+										/datum/reagent/medicine/haloperidol, /datum/reagent/drug/aranesp, /datum/reagent/medicine/diphenhydramine
+									),
+									list(	//level 11
+										/datum/reagent/medicine/modafinil, /datum/reagent/toxin/anacea
+									)
 								)
 
 /*
@@ -89,6 +119,12 @@
 		for(var/datum/symptom/S in symptoms)
 			S.Activate(src)
 
+// Tell symptoms stage changed
+/datum/disease/advance/update_stage(new_stage)
+	..()
+	for(var/datum/symptom/S in symptoms)
+		S.on_stage_change(new_stage, src)
+
 // Compares type then ID.
 /datum/disease/advance/IsSame(datum/disease/advance/D)
 
@@ -110,6 +146,13 @@
 	A.mutable = mutable
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
+
+//Describe this disease to an admin in detail (for logging)
+/datum/disease/advance/admin_details()
+	var/list/name_symptoms = list()
+	for(var/datum/symptom/S in symptoms)
+		name_symptoms += S.name
+	return "[name] sym:[english_list(name_symptoms)] r:[totalResistance()] s:[totalStealth()] ss:[totalStageSpeed()] t:[totalTransmittable()]"
 
 /*
 
@@ -250,7 +293,10 @@
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
 		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		cures = list(advance_cures[res])
+		if(res == oldres)
+			return
+		cures = list(pick(advance_cures[res]))
+		oldres = res
 
 		// Get the cure name from the cure_id
 		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
@@ -425,7 +471,8 @@
 		var/list/name_symptoms = list()
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
-		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
+		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()]")
+		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()]!")
 
 
 /datum/disease/advance/proc/totalStageSpeed()

@@ -28,7 +28,7 @@
 		//this is largely copypasted from there.
 
 		//handle facial hair (if necessary)
-		if(H.gender == MALE)
+		if(H.gender != FEMALE)
 			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return	//no tele-grooming
@@ -48,8 +48,8 @@
 
 /obj/structure/mirror/examine_status(mob/user)
 	if(broken)
-		return // no message spam
-	..()
+		return list()// no message spam
+	return ..()
 
 /obj/structure/mirror/obj_break(damage_flag, mapload)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
@@ -97,15 +97,14 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombies", "clockwork golem servant", "android", "synth", "mush", "zombie")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
 	if(!choosable_races.len)
 		for(var/speciestype in subtypesof(/datum/species))
-			var/datum/species/S = new speciestype()
-			if(!(S.id in races_blacklist))
-				choosable_races += S.id
+			var/datum/species/S = speciestype
+			if(initial(S.changesource_flags) & MIRROR_MAGIC)
+				choosable_races += initial(S.id)
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
@@ -114,8 +113,9 @@
 
 /obj/structure/mirror/magic/badmin/New()
 	for(var/speciestype in subtypesof(/datum/species))
-		var/datum/species/S = new speciestype()
-		choosable_races += S.id
+		var/datum/species/S = speciestype
+		if(initial(S.changesource_flags) & MIRROR_BADMIN)
+			choosable_races += initial(S.id)
 	..()
 
 /obj/structure/mirror/magic/attack_hand(mob/user)

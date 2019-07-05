@@ -5,15 +5,21 @@
 	var/on_use_sound = null
 	var/obj/effect/proc_holder/spell/targeted/touch/attached_spell
 	icon = 'icons/obj/items_and_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	icon_state = "syndballoon"
 	item_state = null
-	item_flags = NEEDS_PERMIT | ABSTRACT | NODROP | DROPDEL
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 0
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
 	var/charges = 1
+
+/obj/item/melee/touch_attack/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
 	if(!iscarbon(user)) //Look ma, no hands
@@ -48,7 +54,7 @@
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || !(user.mobility_flags & MOBILITY_USE)) //exploding after touching yourself would be bad
 		return
 	if(!user.can_speak_vocal())
-		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
+		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
 		return
 	var/mob/M = target
 	do_sparks(4, FALSE, M.loc)
@@ -90,7 +96,7 @@
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	if(!user.can_speak_vocal())
-		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
+		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
 		return
 	var/mob/living/M = target
 	if(M.anti_magic_check())

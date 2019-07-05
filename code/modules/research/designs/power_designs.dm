@@ -11,7 +11,7 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/empty
 	category = list("Misc","Power Designs","Machinery","initial")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
@@ -65,7 +65,7 @@
 	materials = list(MAT_METAL = 1500, MAT_SILVER = 150, MAT_GLASS = 3000)
 	build_path = /obj/item/lightreplacer
 	category = list("Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/inducer
 	name = "Inducer"

@@ -1,5 +1,6 @@
 /datum/martial_art/krav_maga
 	name = "Krav Maga"
+	id = MARTIALART_KRAVMAGA
 	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
 	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
 	var/datum/action/lung_punch/lungpunch = new/datum/action/lung_punch()
@@ -57,14 +58,14 @@
 
 /datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(..())
-		to_chat(H, "<span class = 'userdanger'>You know the arts of [name]!</span>")
-		to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
+		to_chat(H, "<span class='userdanger'>You know the arts of [name]!</span>")
+		to_chat(H, "<span class='danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
 		neckchop.Grant(H)
 		legsweep.Grant(H)
 		lungpunch.Grant(H)
 
 /datum/martial_art/krav_maga/on_remove(mob/living/carbon/human/H)
-	to_chat(H, "<span class = 'userdanger'>You suddenly forget the arts of [name]...</span>")
+	to_chat(H, "<span class='userdanger'>You suddenly forget the arts of [name]...</span>")
 	neckchop.Remove(H)
 	legsweep.Remove(H)
 	lungpunch.Remove(H)
@@ -191,3 +192,18 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+
+/obj/item/clothing/gloves/krav_maga/combatglovesplus
+	name = "combat gloves plus"
+	desc = "These tactical gloves are fireproof and shock resistant, and using nanochip technology it teaches you the powers of krav maga."
+	icon_state = "black"
+	item_state = "blackglovesplus"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	strip_delay = 80
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)

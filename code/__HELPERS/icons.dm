@@ -875,7 +875,7 @@ world
 				flat.MapColors(arglist(A.color))
 			else
 				flat.Blend(A.color, ICON_MULTIPLY)
-		
+
 		if(A.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 

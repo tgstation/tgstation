@@ -6,7 +6,6 @@
 
 	var/flags_1 = NONE
 	var/interaction_flags_atom = NONE
-	var/container_type = NONE
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
@@ -43,7 +42,7 @@
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		GLOB._preloader.load(src)
+		world.preloader_load(src)
 
 	if(datum_flags & DF_USE_TAG)
 		GenerateTag()
@@ -91,7 +90,7 @@
 
 //called if Initialize returns INITIALIZE_HINT_LATELOAD
 /atom/proc/LateInitialize()
-	return
+	set waitfor = FALSE
 
 // Put your AddComponent() calls here
 /atom/proc/ComponentInitialize()
@@ -186,6 +185,10 @@
 			else
 				M.forceMove(src)
 
+//common name
+/atom/proc/update_multiz(prune_on_fail = FALSE)
+	return FALSE
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
 	return null
@@ -199,6 +202,9 @@
 	else
 		return null
 
+/atom/proc/return_analyzable_air()
+	return null
+
 /atom/proc/check_eye(mob/user)
 	return
 
@@ -210,16 +216,16 @@
 	return is_refillable() && is_drainable()
 
 /atom/proc/is_injectable(mob/user, allowmobs = TRUE)
-	return reagents && (container_type & (INJECTABLE | REFILLABLE))
+	return reagents && (reagents.flags & (INJECTABLE | REFILLABLE))
 
 /atom/proc/is_drawable(mob/user, allowmobs = TRUE)
-	return reagents && (container_type & (DRAWABLE | DRAINABLE))
+	return reagents && (reagents.flags & (DRAWABLE | DRAINABLE))
 
 /atom/proc/is_refillable()
-	return reagents && (container_type & REFILLABLE)
+	return reagents && (reagents.flags & REFILLABLE)
 
 /atom/proc/is_drainable()
-	return reagents && (container_type & DRAINABLE)
+	return reagents && (reagents.flags & DRAINABLE)
 
 
 /atom/proc/AllowDrop()
@@ -259,35 +265,35 @@
 		. = override.Join("")
 
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
-	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	to_chat(user, get_examine_string(user, TRUE))
+	. = list("[get_examine_string(user, TRUE)].")
 
 	if(desc)
-		to_chat(user, desc)
+		. += desc
 
 	if(reagents)
-		if(container_type & TRANSPARENT)
-			to_chat(user, "It contains:")
-			if(reagents.reagent_list.len)
+		if(reagents.flags & TRANSPARENT)
+			. += "It contains:"
+			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/R in reagents.reagent_list)
-						to_chat(user, "[R.volume] units of [R.name]")
+						. += "[R.volume] units of [R.name]"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
 						total_volume += R.volume
-					to_chat(user, "[total_volume] units of various reagents")
+					. += "[total_volume] units of various reagents"
 			else
-				to_chat(user, "Nothing.")
-		else if(container_type & AMOUNT_VISIBLE)
+				. += "Nothing."
+		else if(reagents.flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
+				. += "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>"
 			else
-				to_chat(user, "<span class='danger'>It's empty.</span>")
+				. += "<span class='danger'>It's empty.</span>"
 
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)
@@ -327,12 +333,12 @@
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != "blood")
+	if(get_blood_id() != /datum/reagent/blood)
 		return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != "blood")
+	if(get_blood_id() != /datum/reagent/blood)
 		return
 	var/list/blood_dna = list()
 	if(dna)
@@ -414,7 +420,7 @@
 /atom/proc/component_storage_contents_dump_act(datum/component/storage/src_object, mob/user)
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
 	qdel(progress)
@@ -542,7 +548,7 @@
 	var/atom/L = loc
 	if(!L)
 		return null
-	return L.AllowDrop() ? L : get_turf(L)
+	return L.AllowDrop() ? L : L.drop_location()
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
@@ -691,7 +697,7 @@ Proc for attack log creation, because really why not
 
 	var/sobject = ""
 	if(object)
-		sobject = " with [key_name(object)]"
+		sobject = " with [object]"
 	var/saddition = ""
 	if(addition)
 		saddition = " [addition]"
@@ -726,3 +732,6 @@ Proc for attack log creation, because really why not
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
+
+/atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
+	return FALSE

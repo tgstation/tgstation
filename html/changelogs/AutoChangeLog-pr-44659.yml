@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Abductors can now buy a special chem dispenser for 2 points. The machine is delivered as a beacon which can be used when standing on any free tile to spawn it."

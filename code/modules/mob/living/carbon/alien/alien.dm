@@ -40,6 +40,7 @@
 	internal_organs += new /obj/item/organ/alien/hivenode
 	internal_organs += new /obj/item/organ/tongue/alien
 	internal_organs += new /obj/item/organ/eyes/night_vision/alien
+	internal_organs += new /obj/item/organ/liver/alien
 	internal_organs += new /obj/item/organ/ears
 	..()
 
@@ -105,7 +106,7 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/i in GLOB.mob_living_list)
 			var/mob/living/L = i
-			if(L.has_trait(TRAIT_XENO_HOST))
+			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
 				var/obj/item/organ/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
 					var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[A.stage]")

@@ -3,6 +3,7 @@
 	desc = "Grants unlimited movement in darkness."
 	charge_max = 0
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	phase_allowed = TRUE
 	selection_type = "range"
 	range = -1
@@ -90,7 +91,7 @@
 	return
 
 /obj/effect/dummy/phased_mob/shadow/bullet_act()
-	return
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/effect/dummy/phased_mob/shadow/singularity_act()
 	return

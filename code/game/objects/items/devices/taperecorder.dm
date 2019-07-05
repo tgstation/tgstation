@@ -29,8 +29,8 @@
 
 
 /obj/item/taperecorder/examine(mob/user)
-	..()
-	to_chat(user, "The wire panel is [open_panel ? "opened" : "closed"].")
+	. = ..()
+	. += "The wire panel is [open_panel ? "opened" : "closed"]."
 
 
 /obj/item/taperecorder/attackby(obj/item/I, mob/user, params)
@@ -286,6 +286,6 @@
 /obj/item/tape/random
 	icon_state = "random_tape"
 
-/obj/item/tape/random/New()
+/obj/item/tape/random/Initialize()
+	. = ..()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
-	..()

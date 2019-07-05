@@ -51,9 +51,6 @@
 	to_chat(user, "<span class='warning'>You are unable to attach [src] to [M]!</span>")
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/proc/critfail()
-	log_message("Critical failure", LOG_MECHA, color="red")
-
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis)
 		return
@@ -81,9 +78,12 @@
 		return 0
 	if(!equip_ready)
 		return 0
-	if(crit_fail)
-		return 0
 	if(energy_drain && !chassis.has_charge(energy_drain))
+		return 0
+	if(chassis.is_currently_ejecting)
+		return 0
+	if(chassis.equipment_disabled)
+		to_chat(chassis.occupant, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
 		return 0
 	return 1
 
@@ -123,8 +123,6 @@
 	chassis = M
 	forceMove(M)
 	log_message("[src] initialized.", LOG_MECHA)
-	if(!M.selected && selectable)
-		M.selected = src
 	update_chassis_page()
 	return
 

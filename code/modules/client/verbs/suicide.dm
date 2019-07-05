@@ -39,7 +39,7 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		set_suicide(TRUE)
+		set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
@@ -48,6 +48,10 @@
 					adjustStaminaLoss(200)
 					set_suicide(FALSE)
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
+					return
+
+				if(damagetype & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
+					set_suicide(FALSE)
 					return
 
 				suicide_log()
@@ -237,17 +241,17 @@
 		if(CONSCIOUS)
 			return TRUE
 		if(SOFT_CRIT)
-			to_chat(src, "You can't commit suicide while in a critical condition!")
+			to_chat(src, "<span class='warning'>You can't commit suicide while in a critical condition!</span>")
 		if(UNCONSCIOUS)
-			to_chat(src, "You need to be conscious to commit suicide!")
+			to_chat(src, "<span class='warning'>You need to be conscious to commit suicide!</span>")
 		if(DEAD)
-			to_chat(src, "You're already dead!")
+			to_chat(src, "<span class='warning'>You're already dead!</span>")
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
 	if(!(mobility_flags & MOBILITY_USE))	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		to_chat(src, "You can't commit suicide whilst immobile! ((You can type Ghost instead however.))")
+		to_chat(src, "<span class='warning'>You can't commit suicide whilst immobile! ((You can type Ghost instead however.))</span>")
 		return
 	return TRUE

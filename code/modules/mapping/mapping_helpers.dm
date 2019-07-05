@@ -104,11 +104,11 @@
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		log_world("### MAP WARNING, [src] spawned outside of mapload!")
+		log_mapping("[src] spawned outside of mapload!")
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
-		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
+		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 	else
 		payload(airlock)
 
@@ -121,7 +121,7 @@
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.cyclelinkeddir)
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
+		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
 	else
 		airlock.cyclelinkeddir = dir
 
@@ -132,7 +132,7 @@
 
 /obj/effect/mapping_helpers/airlock/locked/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.locked)
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
+		log_mapping("[src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
 	else
 		airlock.locked = TRUE
 
@@ -150,7 +150,7 @@
 
 /obj/effect/mapping_helpers/airlock/abandoned/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.abandoned)
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
+		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
 	else
 		airlock.abandoned = TRUE
 
@@ -205,3 +205,28 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		CRASH("Wrong disease type passed in.")
 	var/datum/disease/D = new disease_type()
 	return list(component_type,D)
+
+/obj/effect/mapping_helpers/dead_body_placer
+	name = "Dead Body placer"
+	late = TRUE
+	icon_state = "deadbodyplacer"
+	var/bodycount = 2 //number of bodies to spawn
+
+/obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
+	var/area/a = get_area(src)
+	var/list/trays = list()
+	for (var/i in a.contents)
+		if (istype(i, /obj/structure/bodycontainer/morgue))
+			trays += i
+	if(!trays.len)
+		log_mapping("[src] at [x],[y] could not find any morgues.")
+		return
+	for (var/i = 1 to bodycount)
+		var/obj/structure/bodycontainer/morgue/j = pick(trays)
+		var/mob/living/carbon/human/h = new /mob/living/carbon/human(j, 1)
+		h.death()
+		for (var/part in h.internal_organs) //randomly remove organs from each body
+			if (prob(40))
+				qdel(part)
+		j.update_icon()
+	qdel(src)

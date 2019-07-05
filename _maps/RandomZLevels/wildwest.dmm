@@ -317,7 +317,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bx" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -400,7 +400,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bN" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
@@ -621,7 +621,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "cs" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -1674,13 +1674,13 @@
 	},
 /area/awaymission/wildwest/mines)
 "fE" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fF" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1899,14 +1899,6 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
-"gq" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
-"gr" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
 "gs" = (
 /obj/structure/chair/comfy/beige{
 	dir = 4
@@ -40318,7 +40310,7 @@ aT
 bu
 bj
 gj
-gq
+bl
 bj
 bj
 bj
@@ -41089,7 +41081,7 @@ aT
 bu
 bj
 dP
-gr
+dP
 bj
 bj
 bj

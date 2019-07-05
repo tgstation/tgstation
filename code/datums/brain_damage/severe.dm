@@ -13,11 +13,11 @@
 	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
 
 /datum/brain_trauma/severe/mute/on_gain()
-	owner.add_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/mute/on_lose()
-	owner.remove_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/aphasia
@@ -69,7 +69,8 @@
 	 //for descriptions
 
 /datum/brain_trauma/severe/paralysis/New(specific_type)
-	paralysis_type = specific_type
+	if(specific_type)
+		paralysis_type = specific_type
 	if(!paralysis_type)
 		paralysis_type = pick("full","left","right","arms","legs","r_arm","l_arm","r_leg","l_leg")
 	var/subject
@@ -101,21 +102,26 @@
 		if("l_leg")
 			subject = "your left leg"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_LEG)
-		
+
 	gain_text = "<span class='warning'>You can't feel [subject] anymore!</span>"
 	lose_text = "<span class='notice'>You can feel [subject] again!</span>"
 
 /datum/brain_trauma/severe/paralysis/on_gain()
 	..()
 	for(var/X in paralysis_traits)
-		owner.add_trait(X, "trauma_paralysis")
+		ADD_TRAIT(owner, X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
-	
+
 /datum/brain_trauma/severe/paralysis/on_lose()
 	..()
 	for(var/X in paralysis_traits)
-		owner.remove_trait(X, "trauma_paralysis")
+		REMOVE_TRAIT(owner, X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
+
+/datum/brain_trauma/severe/paralysis/paraplegic
+	random_gain = FALSE
+	paralysis_type = "legs"
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
@@ -143,7 +149,7 @@
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
-	scan_desc = "severe monophobia"
+	scan_desc = "monophobia"
 	gain_text = ""
 	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
 	var/stress = 0
@@ -162,10 +168,10 @@
 		if(stress > 10 && (prob(5)))
 			stress_reaction()
 	else
-		stress -= 4
+		stress = max(stress - 4, 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
-	if(owner.has_trait(TRAIT_BLIND))
+	if(HAS_TRAIT(owner, TRAIT_BLIND))
 		return TRUE
 	for(var/mob/M in oview(owner, 7))
 		if(!isliving(M)) //ghosts ain't people
@@ -227,11 +233,11 @@
 	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
 
 /datum/brain_trauma/severe/discoordination/on_gain()
-	owner.add_trait(TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/discoordination/on_lose()
-	owner.remove_trait(TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/pacifism
@@ -242,11 +248,11 @@
 	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
 
 /datum/brain_trauma/severe/pacifism/on_gain()
-	owner.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
-	owner.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/hypnotic_stupor

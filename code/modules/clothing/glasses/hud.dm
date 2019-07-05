@@ -43,6 +43,7 @@
 	icon_state = "healthhudnight"
 	item_state = "glasses"
 	darkness_view = 8
+	flash_protect = -1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -68,6 +69,7 @@
 	icon_state = "diagnostichudnight"
 	item_state = "glasses"
 	darkness_view = 8
+	flash_protect = -1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -95,8 +97,8 @@
 	// have multiple inheritance, okay?
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/hud/security/chameleon/New()
-	..()
+/obj/item/clothing/glasses/hud/security/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
@@ -129,6 +131,7 @@
 	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
 	icon_state = "securityhudnight"
 	darkness_view = 8
+	flash_protect = -1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 

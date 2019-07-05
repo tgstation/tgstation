@@ -124,6 +124,7 @@
 
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/thing in atoms)
 		var/atom/A = thing
@@ -131,6 +132,7 @@
 			. += A
 
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/thing in atoms)
 		var/atom/A = thing
@@ -257,6 +259,7 @@
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
+	RETURN_TYPE(L[_].type)
 	if(L.len)
 		var/picked = rand(1,L.len)
 		. = L[picked]
@@ -571,3 +574,16 @@
 	for(var/key in input)
 		ret += key
 	return ret
+
+/proc/compare_list(list/l,list/d)
+	if(!islist(l) || !islist(d))
+		return FALSE
+
+	if(l.len != d.len)
+		return FALSE
+
+	for(var/i in 1 to l.len)
+		if(l[i] != d[i])
+			return FALSE
+
+	return TRUE

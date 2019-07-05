@@ -40,8 +40,10 @@
 			if (prob(50))
 				qdel(src)
 
-/obj/item/latexballon/bullet_act()
-	burst()
+/obj/item/latexballon/bullet_act(obj/item/projectile/P)
+	if(!P.nodamage)
+		burst()
+	return ..()
 
 /obj/item/latexballon/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+100)

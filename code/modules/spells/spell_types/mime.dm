@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall
 	name = "Invisible Wall"
-	desc = "The mime's performance transmutates into physical reality."
+	desc = "The mime's performance transmutates a wall into physical reality."
 	school = "mime"
 	panel = "Mime"
 	summon_type = list(/obj/effect/forcefield/mime)
@@ -9,6 +9,7 @@
 	summon_lifespan = 300
 	charge_max = 300
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	range = 0
 	cast_sound = null
 	human_req = TRUE
@@ -19,9 +20,83 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of [usr.p_them()]."
+	else
+		invocation_type ="none"
+	..()
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair
+	name = "Invisible Chair"
+	desc = "The mime's performance transmutates a chair into physical reality."
+	school = "mime"
+	panel = "Mime"
+	summon_type = list(/obj/structure/chair/mime)
+	invocation_type = "emote"
+	invocation_emote_self = "<span class='notice'>You conjure an invisible chair and sit down.</span>"
+	summon_lifespan = 250
+	charge_max = 300
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	range = 0
+	cast_sound = null
+	human_req = TRUE
+
+	action_icon_state = "mime"
+	action_background_icon_state = "bg_mime"
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair/Click()
+	if(usr && usr.mind)
+		if(!usr.mind.miming)
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
+			return
+		invocation = "<B>[usr.real_name]</B> pulls out an invisible chair and sits down."
+	else
+		invocation_type ="none"
+	..()
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair/cast(list/targets,mob/user = usr)
+	..()
+	var/turf/T = user.loc
+	for (var/obj/structure/chair/A in T)
+		if (is_type_in_list(A, summon_type))
+			A.setDir(user.dir)
+			A.buckle_mob(user)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box
+	name = "Invisible Box"
+	desc = "The mime's performance transmutates a box into physical reality."
+	school = "mime"
+	panel = "Mime"
+	summon_type = list(/obj/item/storage/box/mime)
+	invocation_type = "emote"
+	invocation_emote_self = "<span class='notice'>You conjure up an invisible box, large enough to store a few things.</span>"
+	summon_lifespan = 250
+	charge_max = 300
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	range = 0
+	cast_sound = null
+	human_req = TRUE
+
+	action_icon_state = "mime"
+	action_background_icon_state = "bg_mime"
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box/cast(list/targets,mob/user = usr)
+	..()
+	var/turf/T = user.loc
+	for (var/obj/item/storage/box/mime/B in T)
+		user.put_in_hands(B)
+		B.alpha = 255
+		addtimer(CALLBACK(B, /obj/item/storage/box/mime/.proc/emptyStorage, FALSE), (summon_lifespan - 1))
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box/Click()
+	if(usr && usr.mind)
+		if(!usr.mind.miming)
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
+			return
+		invocation = "<B>[usr.real_name]</B> moves [usr.p_their()] hands in the shape of a cube, pressing a box out of the air."
 	else
 		invocation_type ="none"
 	..()
@@ -34,6 +109,7 @@
 	panel = "Mime"
 	clothes_req = FALSE
 	human_req = TRUE
+	antimagic_allowed = TRUE
 	charge_max = 3000
 	range = -1
 	include_user = TRUE
@@ -76,6 +152,7 @@
 	charge_max = 600
 	sound =  null
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	range = -1
 	include_user = TRUE
 
@@ -85,7 +162,7 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/mime/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> looks as if a blockade is in front of [usr.p_them()]."
 	else
@@ -99,6 +176,7 @@
 	panel = "Mime"
 	charge_max = 300
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
@@ -121,7 +199,7 @@
 		return
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> fires [usr.p_their()] finger gun!"
 	else

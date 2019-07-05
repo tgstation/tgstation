@@ -4,11 +4,12 @@
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/security
+	light_color = LIGHT_COLOR_RED
+
 	var/last_pic = 1
 	var/list/network = list("ss13")
 	var/list/watchers = list() //who's using the console, associated with the camera they're on.
-
-	light_color = LIGHT_COLOR_RED
+	var/long_ranged = FALSE
 
 /obj/machinery/computer/security/Initialize()
 	. = ..()
@@ -30,14 +31,14 @@
 	if(!C.can_use())
 		user.unset_machine()
 		return
-	if(!issilicon(user))
-		if(!Adjacent(user))
-			user.unset_machine()
-			return
-	else if(iscyborg(user))
+	if(iscyborg(user) || long_ranged)
 		var/list/viewing = viewers(src)
 		if(!viewing.Find(user))
 			user.unset_machine()
+		return
+	if(!issilicon(user) && !Adjacent(user))
+		user.unset_machine()
+		return
 
 /obj/machinery/computer/security/on_unset_machine(mob/user)
 	watchers.Remove(user)
@@ -49,19 +50,16 @@
 			M.unset_machine() //to properly reset the view of the users if the console is deleted.
 	return ..()
 
-/obj/machinery/computer/security/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/computer/security/interact(mob/user)
 	if(stat)
 		return
 	if (!network)
-		throw EXCEPTION("No camera network")
 		user.unset_machine()
+		CRASH("No camera network")
 		return
 	if (!(islist(network)))
-		throw EXCEPTION("Camera network is not a list")
 		user.unset_machine()
+		CRASH("Camera network is not a list")
 		return
 	if(..())
 		user.unset_machine()
@@ -101,13 +99,12 @@
 		var/camera_fail = 0
 		if(!C.can_use() || user.machine != src || user.eye_blind || user.incapacitated())
 			camera_fail = 1
-		else if(iscyborg(user))
+		else if(iscyborg(user) || long_ranged)
 			var/list/viewing = viewers(src)
 			if(!viewing.Find(user))
 				camera_fail = 1
-		else if(!issilicon(user))
-			if(!Adjacent(user))
-				camera_fail = 1
+		else if(!issilicon(user) && !Adjacent(user))
+			camera_fail = 1
 
 		if(camera_fail)
 			user.unset_machine()
@@ -219,8 +216,33 @@
 	name = "entertainment monitor"
 	desc = "Damn, they better have the /tg/ channel on these things."
 	icon = 'icons/obj/status_display.dmi'
-	icon_state = "entertainment"
+	icon_state = "entertainment_blank"
 	network = list("thunder")
+	density = FALSE
+	circuit = null
+	long_ranged = TRUE
+	interaction_flags_atom = NONE  // interact() is called by BigClick()
+	var/icon_state_off = "entertainment_blank"
+	var/icon_state_on = "entertainment"
+
+/obj/machinery/computer/security/telescreen/entertainment/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_CLICK, .proc/BigClick)
+
+// Bypass clickchain to allow humans to use the telescreen from a distance
+/obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
+	interact(usr)
+
+/obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
+	if(on && icon_state == icon_state_off)
+		say(pick(
+			"Feats of bravery live now at the thunderdome!",
+			"Two enter, one leaves! Tune in now!",
+			"Violence like you've never seen it before!",
+			"Spears! Camera! Action! LIVE NOW!"))
+		icon_state = icon_state_on
+	else
+		icon_state = icon_state_off
 
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
@@ -250,7 +272,7 @@
 /obj/machinery/computer/security/telescreen/toxins
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("toxin")
+	network = list("toxins")
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"

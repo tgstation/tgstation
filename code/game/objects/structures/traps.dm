@@ -38,7 +38,7 @@
 	if(user.mind && user.mind in immune_minds)
 		return
 	if(get_dist(user, src) <= 1)
-		to_chat(user, "<span class='notice'>You reveal [src]!</span>")
+		. += "<span class='notice'>You reveal [src]!</span>"
 		flare()
 
 /obj/structure/trap/proc/flare()
@@ -63,7 +63,10 @@
 		return
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.mind in immune_minds || M.anti_magic_check())
+		if(M.mind in immune_minds)
+			return
+		if(M.anti_magic_check())
+			flare()
 			return
 	if(charges <= 0)
 		return
@@ -133,7 +136,6 @@
 	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
-
-/obj/structure/trap/ward/New()
-	..()
+/obj/structure/trap/ward/Initialize()
+	. = ..()
 	QDEL_IN(src, time_between_triggers)

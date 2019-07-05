@@ -12,7 +12,7 @@
 /datum/bounty/reagent/applies_to(obj/O)
 	if(!istype(O, /obj/item/reagent_containers))
 		return FALSE
-	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.id))
+	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.type))
 		return FALSE
 	if(O.flags_1 & HOLOGRAM_1)
 		return FALSE
@@ -21,7 +21,7 @@
 /datum/bounty/reagent/ship(obj/O)
 	if(!applies_to(O))
 		return
-	shipped_volume += O.reagents.get_reagent_amount(wanted_reagent.id)
+	shipped_volume += O.reagents.get_reagent_amount(wanted_reagent.type)
 	if(shipped_volume > required_volume)
 		shipped_volume = required_volume
 
@@ -29,13 +29,13 @@
 	if(!istype(other_bounty, /datum/bounty/reagent))
 		return TRUE
 	var/datum/bounty/reagent/R = other_bounty
-	return wanted_reagent.id != R.wanted_reagent.id
+	return wanted_reagent.type != R.wanted_reagent.type
 
 /datum/bounty/reagent/simple_drink
 	name = "Simple Drink"
 	reward = 1500
 
-datum/bounty/reagent/simple_drink/New()
+/datum/bounty/reagent/simple_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/antifreeze,\
@@ -91,7 +91,7 @@ datum/bounty/reagent/simple_drink/New()
 	name = "Complex Drink"
 	reward = 4000
 
-datum/bounty/reagent/complex_drink/New()
+/datum/bounty/reagent/complex_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/atomicbomb,\
@@ -113,7 +113,7 @@ datum/bounty/reagent/complex_drink/New()
 		/datum/reagent/consumable/ethanol/peppermint_patty,\
 		/datum/reagent/consumable/ethanol/aloe,\
 		/datum/reagent/consumable/pumpkin_latte)
-		
+
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
@@ -125,7 +125,7 @@ datum/bounty/reagent/complex_drink/New()
 	reward = 4000
 	required_volume = 30
 
-datum/bounty/reagent/chemical_simple/New()
+/datum/bounty/reagent/chemical_simple/New()
 	// Chemicals that can be mixed by a single skilled Chemist.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/leporazine,\
@@ -163,7 +163,7 @@ datum/bounty/reagent/chemical_simple/New()
 	reward = 6000
 	required_volume = 20
 
-datum/bounty/reagent/chemical_complex/New()
+/datum/bounty/reagent/chemical_complex/New()
 	// Reagents that require interaction with multiple departments or are a pain to mix. Lower required_volume since acquiring 30u of some is unrealistic
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/pyroxadone,\

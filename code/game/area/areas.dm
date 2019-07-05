@@ -31,6 +31,9 @@
 
 	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
 
+	var/mood_bonus = 0 //Mood for being here
+	var/mood_message = "" //Mood message for being here, only shows up if mood_bonus != 0
+
 	var/power_equip = TRUE
 	var/power_light = TRUE
 	var/power_environ = TRUE
@@ -75,7 +78,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			continue
 		if(GLOB.teleportlocs[AR.name])
 			continue
-		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (!AR.contents.len)
+			continue
+		var/turf/picked = AR.contents[1]
 		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
@@ -327,7 +332,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for(var/obj/machinery/light/L in src)
 		L.update()
 
-/area/proc/updateicon()
+/area/proc/update_icon()
 	var/weather_icon
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
@@ -337,7 +342,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!weather_icon)
 		icon_state = null
 
-/area/space/updateicon()
+/area/space/update_icon()
 	icon_state = null
 
 /*
@@ -370,7 +375,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/power_change()
 	for(var/obj/machinery/M in src)	// for each machine in the area
 		M.power_change()				// reverify power status (to update icons etc.)
-	updateicon()
+	update_icon()
 
 /area/proc/usage(chan)
 	var/used = 0

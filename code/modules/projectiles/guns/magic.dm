@@ -9,11 +9,12 @@
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags_1 =  CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
+	var/checks_antimagic = TRUE
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 4
 	var/charge_tick = 0
-	var/can_charge = 1
+	var/can_charge = TRUE
 	var/ammo_type
 	var/no_den_usage
 	clumsy_check = 0
@@ -23,14 +24,19 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
-/obj/item/gun/magic/afterattack(atom/target, mob/living/user, flag)
+/obj/item/gun/magic/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	if(no_den_usage)
 		var/area/A = get_area(user)
 		if(istype(A, /area/wizard_station))
+			add_fingerprint(user)
 			to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
 			return
 		else
 			no_den_usage = 0
+	if(checks_antimagic && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
+		add_fingerprint(user)
+		to_chat(user, "<span class='warning'>Something is interfering with [src].</span>")
+		return
 	. = ..()
 
 /obj/item/gun/magic/can_shoot()

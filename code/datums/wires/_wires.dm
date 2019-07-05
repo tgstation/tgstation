@@ -98,6 +98,12 @@
 /datum/wires/proc/get_wire(color)
 	return colors[color]
 
+/datum/wires/proc/get_color_of_wire(wire_type)
+	for(var/color in colors)
+		var/other_type = colors[color]
+		if(wire_type == other_type)
+			return color
+
 /datum/wires/proc/get_attached(color)
 	if(assemblies[color])
 		return assemblies[color]

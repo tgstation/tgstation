@@ -99,6 +99,7 @@
 	icon_dead = "legion"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mouse_opacity = MOUSE_OPACITY_ICON
 	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15

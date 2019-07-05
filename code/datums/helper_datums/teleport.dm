@@ -8,13 +8,14 @@
 // forceMove: if false, teleport will use Move() proc (dense objects will prevent teleportation)
 // no_effects: disable the default effectin/effectout of sparks
 // forced: whether or not to ignore no_teleport
-/proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, forceMove = FALSE, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
+/proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, forceMove = TRUE, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
 	// teleporting most effects just deletes them
 	var/static/list/delete_atoms = typecacheof(list(
 		/obj/effect,
 		)) - typecacheof(list(
 		/obj/effect/dummy/chameleon,
 		/obj/effect/wisp,
+		/obj/effect/mob_spawn,
 		))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
@@ -38,14 +39,23 @@
 					var/mob/living/MM = teleatom
 					to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 
-	// if effects are not specified and not explicitly disabled, sparks
-	if ((!effectin || !effectout) && !no_effects)
-		var/datum/effect_system/spark_spread/sparks = new
-		sparks.set_up(5, 1, teleatom)
-		if (!effectin)
-			effectin = sparks
-		if (!effectout)
-			effectout = sparks
+			// if effects are not specified and not explicitly disabled, sparks
+			if ((!effectin || !effectout) && !no_effects)
+				var/datum/effect_system/spark_spread/sparks = new
+				sparks.set_up(5, 1, teleatom)
+				if (!effectin)
+					effectin = sparks
+				if (!effectout)
+					effectout = sparks
+		if(TELEPORT_CHANNEL_QUANTUM)
+			// if effects are not specified and not explicitly disabled, rainbow sparks
+			if ((!effectin || !effectout) && !no_effects)
+				var/datum/effect_system/spark_spread/quantum/sparks = new
+				sparks.set_up(5, 1, teleatom)
+				if (!effectin)
+					effectin = sparks
+				if (!effectout)
+					effectout = sparks
 
 	// perform the teleport
 	var/turf/curturf = get_turf(teleatom)
@@ -56,7 +66,7 @@
 
 	var/area/A = get_area(curturf)
 	var/area/B = get_area(destturf)
-	if(!forced && (A.noteleport || B.noteleport))
+	if(!forced && (HAS_TRAIT(teleatom, TRAIT_NO_TELEPORT) || A.noteleport || B.noteleport))
 		return FALSE
 
 	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf))

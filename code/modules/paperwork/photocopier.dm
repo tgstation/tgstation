@@ -121,26 +121,21 @@
 					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 						temp_img = icon('icons/ass/assalien.png')
 					else if(ishuman(ass)) //Suit checks are in check_ass
-						if(ass.gender == MALE)
-							temp_img = icon('icons/ass/assmale.png')
-						else if(ass.gender == FEMALE)
-							temp_img = icon('icons/ass/assfemale.png')
-						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
-							temp_img = icon('icons/ass/assmale.png')
+						temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
 					else if(isdrone(ass)) //Drones are hot
 						temp_img = icon('icons/ass/assdrone.png')
 					else
 						break
-					var/obj/item/photo/p = new /obj/item/photo (loc)
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
-					p.picture = new(null, "You see [ass]'s ass on the photo.", temp_img)
-					p.picture.psize_x = 128
-					p.picture.psize_y = 128
-					p.update_icon()
-					toner -= 5
 					busy = TRUE
 					sleep(15)
+					var/obj/item/photo/p = new /obj/item/photo (loc)
+					var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
+					p.pixel_x = rand(-10, 10)
+					p.pixel_y = rand(-10, 10)
+					toEmbed.psize_x = 128
+					toEmbed.psize_y = 128
+					p.set_picture(toEmbed, TRUE, TRUE)
+					toner -= 5
 					busy = FALSE
 				else
 					break
@@ -192,7 +187,7 @@
 
 /obj/machinery/photocopier/proc/do_insertion(obj/item/O, mob/user)
 	O.forceMove(src)
-	to_chat(user, "<span class ='notice'>You insert [O] into [src].</span>")
+	to_chat(user, "<span class='notice'>You insert [O] into [src].</span>")
 	flick("photocopier1", src)
 	updateUsrDialog()
 
@@ -335,6 +330,6 @@
 	name = "toner cartridge"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
-	grind_results = list("iodine" = 40, "iron" = 10)
+	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 	var/charges = 5
 	var/max_charges = 5

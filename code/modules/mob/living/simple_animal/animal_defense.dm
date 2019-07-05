@@ -12,8 +12,8 @@
 			grabbedby(M)
 
 		if("harm", "disarm")
-			if(M.has_trait(TRAIT_PACIFISM))
-				to_chat(M, "<span class='notice'>You don't want to hurt [src]!</span>")
+			if(HAS_TRAIT(M, TRAIT_PACIFISM))
+				to_chat(M, "<span class='warning'>You don't want to hurt [src]!</span>")
 				return
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>",\
@@ -26,8 +26,8 @@
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
-		if(user.has_trait(TRAIT_PACIFISM))
-			to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to hurt [src]!</span>")
 			return FALSE
 		..(user, 1)
 		playsound(loc, "punch", 25, 1, -1)
@@ -105,11 +105,9 @@
 		return TRUE
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
 	apply_damage(Proj.damage, Proj.damage_type)
 	Proj.on_hit(src)
-	return 0
+	return BULLET_ACT_HIT
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))

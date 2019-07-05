@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "A wizard's scrying orb now grants both xray vision, and the ability to hear the dead to whoever possesses it."
-  - balance: "However, as soon as the orb is no longer in your possession, these abilities fade."

@@ -165,7 +165,6 @@
 	dir = 1
 	},
 /obj/item/book/manual/wiki/barman_recipes,
-/obj/item/book/granter/action/drink_fling,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/reagent_containers/glass/rag,
 /turf/open/floor/wood,
@@ -243,7 +242,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aX" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aY" = (
@@ -304,7 +303,7 @@
 	},
 /obj/item/bikehorn/airhorn,
 /obj/structure/table/wood,
-/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/brute,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -486,7 +485,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/dark{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/beach)
 "lM" = (
@@ -609,7 +608,7 @@
 	dir = 8
 	},
 /turf/open/floor/pod/dark{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/beach)
 "VO" = (

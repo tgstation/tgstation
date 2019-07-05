@@ -47,20 +47,16 @@
 	dir = 1;
 	name = "Worn-out APC";
 	pixel_x = 1;
-	pixel_y = 26
+	pixel_y = 23
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "al" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "am" = (
@@ -103,9 +99,7 @@
 /turf/template_noop,
 /area/space/nearstation)
 "au" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "av" = (
@@ -181,9 +175,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "aJ" = (
-/obj/item/stack/cable_coil/cut/red{
-	amount = 1
-	},
+/obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "aK" = (
@@ -678,7 +670,7 @@
 /area/tcommsat/oldaisat)
 "cm" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
@@ -742,7 +734,7 @@
 /obj/machinery/light/small,
 /obj/item/paper,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
@@ -2543,7 +2535,7 @@ ag
 cK
 cI
 cI
-cU
+cJ
 cV
 ag
 ag
@@ -2598,7 +2590,7 @@ az
 az
 ag
 cE
-cH
+cU
 cI
 cI
 cI
@@ -2716,7 +2708,7 @@ az
 az
 ag
 cG
-cJ
+cH
 cI
 cI
 cI

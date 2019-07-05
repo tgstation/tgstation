@@ -49,6 +49,8 @@
 		var/datum/track/T = new()
 		T.song_path = file("config/jukebox_music/sounds/[S]")
 		var/list/L = splittext(S,"+")
+		if(L.len != 3)
+			continue
 		T.song_name = L[1]
 		T.song_length = text2num(L[2])
 		T.song_beat = text2num(L[3])

@@ -57,6 +57,7 @@
 	new /obj/item/clothing/head/bio_hood/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
 	new /obj/item/clothing/under/rank/chief_medical_officer(src)
+	new /obj/item/clothing/under/rank/chief_medical_officer/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/brown	(src)
 	new /obj/item/cartridge/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
@@ -88,6 +89,7 @@
 /obj/structure/closet/secure_closet/chemical
 	name = "chemical closet"
 	desc = "Store dangerous chemicals in here."
+	req_access = list(ACCESS_CHEMISTRY)
 	icon_door = "chemical"
 
 /obj/structure/closet/secure_closet/chemical/PopulateContents()
@@ -96,3 +98,14 @@
 	new /obj/item/storage/box/pillbottles(src)
 	new /obj/item/storage/box/medsprays(src)
 	new /obj/item/storage/box/medsprays(src)
+
+/obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
+	name = "advanced chemical closet"
+
+/obj/structure/closet/secure_closet/chemical/heisenberg/PopulateContents()
+	..()
+	new /obj/item/reagent_containers/dropper(src)
+	new /obj/item/reagent_containers/dropper(src)
+	new /obj/item/storage/box/syringes/variety(src)
+	new /obj/item/storage/box/beakers/variety(src)
+	new /obj/item/clothing/glasses/science(src)

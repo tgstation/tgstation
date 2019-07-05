@@ -107,10 +107,6 @@
 	if(stuffed || grenade)
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 		if(grenade && !grenade.active)
-			if(istype(grenade, /obj/item/grenade/chem_grenade))
-				var/obj/item/grenade/chem_grenade/G = grenade
-				if(G.nadeassembly) //We're activated through different methods
-					return
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.preprime(user, msg = FALSE, volume = 10)
 	else
@@ -372,14 +368,14 @@
 	squeak_override = list('sound/weapons/bite.ogg'=1)
 
 /obj/item/toy/plush/bubbleplush
-	name = "bubblegum plushie"
+	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
-	attack_verb = list("rends")
+	attack_verb = list("rent")
 	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
 
 /obj/item/toy/plush/plushvar
-	name = "ratvar plushie"
+	name = "\improper Ratvar plushie"
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
 	var/obj/item/toy/plush/narplush/clash_target
@@ -469,7 +465,6 @@
 	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
 	var/clashing
-	var/is_invoker = TRUE
 	gender = FEMALE	//it's canon if the toy is
 
 /obj/item/toy/plush/narplush/Moved()
@@ -477,10 +472,6 @@
 	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
-
-/obj/item/toy/plush/narplush/hugbox
-	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy? <b>It looks sad.</b>"
-	is_invoker = FALSE
 
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"
@@ -514,6 +505,7 @@
 	attack_verb = list("blorbled", "slimed", "absorbed")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
@@ -524,3 +516,12 @@
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
+
+/obj/item/toy/plush/beeplushie
+	name = "bee plushie"
+	desc = "A cute toy that resembles an even cuter bee."
+	icon_state = "plushie_h"
+	item_state = "plushie_h"
+	attack_verb = list("stung")
+	gender = FEMALE
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)

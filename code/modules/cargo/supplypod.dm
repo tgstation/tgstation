@@ -20,7 +20,7 @@
 	var/bluespace = FALSE //If true, the pod deletes (in a shower of sparks) after landing
 	var/landingDelay = 30 //How long the pod takes to land after launching
 	var/openingDelay = 30 //How long the pod takes to open after landing
-	var/departureDelay = 30 //How long the pod takes to leave after opening (if bluespace=true, it deletes. if reversing=true, it flies back to centcom)
+	var/departureDelay = 30 //How long the pod takes to leave after opening. If bluespace = TRUE, it deletes. If reversing = TRUE, it flies back to centcom.
 	var/damage = 0 //Damage that occurs to any mob under the pod when it lands.
 	var/effectStun = FALSE //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
 	var/effectLimb = FALSE //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
@@ -30,7 +30,7 @@
 	var/effectQuiet = FALSE //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
 	var/effectMissile = FALSE //If true, the pod deletes the second it lands. If you give it an explosion, it will act like a missile exploding as it hits the ground
 	var/effectCircle = FALSE //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
-	var/style = STYLE_STANDARD //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the POD_STYLES list in cargo.dm defines to get the proper icon/name/desc for the pod. 
+	var/style = STYLE_STANDARD //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the POD_STYLES list in cargo.dm defines to get the proper icon/name/desc for the pod.
 	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	var/fallDuration = 4
 	var/fallingSoundLength = 11
@@ -41,12 +41,23 @@
 	var/soundVolume = 80 //Volume to play sounds at. Ignores the cap
 	var/bay //Used specifically for the centcom_podlauncher datum. Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
 	var/list/explosionSize = list(0,0,2,3)
+	var/stay_after_drop = FALSE
+	var/specialised = TRUE // It's not a general use pod for cargo/admin use
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 	landingDelay = 15 //Slightly quicker than the supplypod
+
+/obj/structure/closet/supplypod/extractionpod
+	name = "Syndicate Extraction Pod"
+	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas."
+	specialised = TRUE
+	style = STYLE_SYNDICATE
+	bluespace = TRUE
+	explosionSize = list(0,0,1,2)
+	landingDelay = 25 //Longer than others
 
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM
@@ -55,13 +66,23 @@
 	landingDelay = 20 //Very speedy!
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+	
+/obj/structure/closet/supplypod/proc/specialisedPod()
+	return 1
+
+/obj/structure/closet/supplypod/extractionpod/specialisedPod(atom/movable/holder)
+	holder.forceMove(pick(GLOB.holdingfacility)) // land in ninja jail
+	open(holder, forced = TRUE)
+
 /obj/structure/closet/supplypod/Initialize()
-	..()
+	. = ..()
 	setStyle(style, TRUE) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
 /obj/structure/closet/supplypod/update_icon()
 	cut_overlays()
-	if (style != STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
+	if (style == STYLE_SEETHROUGH || style == STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
+		return
+	else 
 		if (opened)
 			add_overlay("[icon_state]_open")
 		else
@@ -73,14 +94,14 @@
 		return
 	style = chosenStyle
 	icon_state = POD_STYLES[chosenStyle][POD_ICON_STATE] //POD_STYLES is a 2D array we treat as a dictionary. The style represents the verticle index, with the icon state, name, and desc being stored in the horizontal indexes of the 2D array.
-	if (!adminNamed) //We dont want to name it ourselves if it has been specifically named by an admin using the centcom_podlauncher datum
+	if (!adminNamed && !specialised) //We dont want to name it ourselves if it has been specifically named by an admin using the centcom_podlauncher datum
 		name = POD_STYLES[chosenStyle][POD_NAME]
 		desc = POD_STYLES[chosenStyle][POD_DESC]
 	update_icon()
 
 /obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
-	if (bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
-		return FALSE 
+	if(bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
+		return FALSE
 	else
 		..()
 
@@ -95,6 +116,32 @@
 
 /obj/structure/closet/supplypod/toggle(mob/living/user) //Supplypods shouldn't be able to be manually opened under any circumstances, as the open() proc generates supply order datums
 	return
+
+/obj/structure/closet/supplypod/proc/handleReturningClose(atom/movable/holder, returntobay)
+	opened = FALSE
+	INVOKE_ASYNC(holder, .proc/setClosed) //Use the INVOKE_ASYNC proc to call setClosed() on whatever the holder may be, without giving the atom/movable base class a setClosed() proc definition
+	for (var/atom/movable/O in get_turf(holder))
+		if ((ismob(O) && !isliving(O)) || (is_type_in_typecache(O, GLOB.blacklisted_cargo_types) && !isliving(O))) //We dont want to take ghosts with us, and we don't want blacklisted items going, but we allow mobs.
+			continue
+		O.forceMove(holder) //Put objects inside before we close
+	var/obj/effect/temp_visual/risingPod = new /obj/effect/DPfall(get_turf(holder), src) //Make a nice animation of flying back up
+	risingPod.pixel_z = 0 //The initial value of risingPod's pixel_z is 200 because it normally comes down from a high spot
+	animate(risingPod, pixel_z = 200, time = 10, easing = LINEAR_EASING) //Animate our rising pod
+	if (returntobay)
+		holder.forceMove(bay) //Move the pod back to centcom, where it belongs
+		QDEL_IN(risingPod, 10)
+		reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
+		bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
+		open(holder, forced = TRUE)
+	else
+		reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
+		bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
+
+		QDEL_IN(risingPod, 10)
+		audible_message("<span class='notice'>The pod hisses, closing quickly and launching itself away from the station.</span>", "<span class='notice'>The ground vibrates, the nearby pod launching away from the station.</span>")
+		
+		stay_after_drop = FALSE
+		specialisedPod(holder) // Do special actions for specialised pods - this is likely if we were already doing manual launches
 
 /obj/structure/closet/supplypod/proc/preOpen() //Called before the open() proc. Handles anything that occurs right as the pod lands.
 	var/turf/T = get_turf(src)
@@ -121,9 +168,9 @@
 			for (var/obj/item/bodypart/bodypart in CM.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
 				var/destination = get_edge_target_turf(T, pick(GLOB.alldirs))
 				if (bodypart.dismemberable)
-					bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!	
+					bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!
 					bodypart.throw_at(destination, 2, 3)
-					sleep(1)		
+					sleep(1)
 
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
 			M.adjustBruteLoss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
@@ -142,54 +189,67 @@
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
 		moveToNullspace()
 		addtimer(CALLBACK(src, .proc/open, benis), openingDelay) //After the openingDelay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
+	else if (style == STYLE_SEETHROUGH)
+		open(src)
 	else
 		addtimer(CALLBACK(src, .proc/open, src), openingDelay) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
 /obj/structure/closet/supplypod/open(atom/movable/holder, var/broken = FALSE, var/forced = FALSE) //The holder var represents an atom whose contents we will be working with
+	if (!holder)
+		return
+	if (opened) //This is to ensure we don't open something that has already been opened
+		return
+	opened = TRUE 
 	var/turf/T = get_turf(holder) //Get the turf of whoever's contents we're talking about
 	var/mob/M
 	if (istype(holder, /mob)) //Allows mobs to assume the role of the holder, meaning we look at the mob's contents rather than the supplypod's contents. Typically by this point the supplypod's contents have already been moved over to the mob's contents
 		M = holder
 		if (M.key && !forced && !broken) //If we are player controlled, then we shouldnt open unless the opening is manual, or if it is due to being destroyed (represented by the "broken" parameter)
 			return
-	opened = TRUE //This is to ensure we don't open something that has already been opened
 	if (openingSound)
-		playsound(get_turf(holder), openingSound, soundVolume, 0, 0)
+		playsound(get_turf(holder), openingSound, soundVolume, 0, 0) //Special admin sound to play
 	INVOKE_ASYNC(holder, .proc/setOpened) //Use the INVOKE_ASYNC proc to call setOpened() on whatever the holder may be, without giving the atom/movable base class a setOpened() proc definition
+	if (style == STYLE_SEETHROUGH)
+		update_icon()
 	for (var/atom/movable/O in holder.contents) //Go through the contents of the holder
 		O.forceMove(T) //move everything from the contents of the holder to the turf of the holder
-	if (!effectQuiet) //If we aren't being quiet, play an open sound
+	if (!effectQuiet && !openingSound && style != STYLE_SEETHROUGH) //If we aren't being quiet, play the default pod open sound
 		playsound(get_turf(holder), open_sound, 15, 1, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return
-	addtimer(CALLBACK(src, .proc/depart, holder), departureDelay) //Finish up the pod's duties after a certain amount of time
+	if (style == STYLE_SEETHROUGH)
+		depart(src)
+	else
+		if(!stay_after_drop) // Departing should be handled manually
+			addtimer(CALLBACK(src, .proc/depart, holder), departureDelay) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/proc/depart(atom/movable/holder)
 	if (leavingSound)
 		playsound(get_turf(holder), leavingSound, soundVolume, 0, 0)
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
-	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists) 
-		if (style != STYLE_INVISIBLE) 
+	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists)
+		if (!effectQuiet && style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
-		qdel(src) //Delete ourselves and the holder 
+		qdel(src) //Delete ourselves and the holder
 		if (holder != src)
 			qdel(holder)
 
 /obj/structure/closet/supplypod/centcompod/close(atom/movable/holder) //Closes the supplypod and sends it back to centcom. Should only ever be called if the "reversing" variable is true
-	opened = FALSE
-	INVOKE_ASYNC(holder, .proc/setClosed) //Use the INVOKE_ASYNC proc to call setClosed() on whatever the holder may be, without giving the atom/movable base class a setClosed() proc definition
-	for (var/atom/movable/O in get_turf(holder))
-		if (ismob(O) && !isliving(O)) //We dont want to take ghosts with us
-			continue
-		O.forceMove(holder) //Put objects inside before we close
-	var/obj/effect/temp_visual/risingPod = new /obj/effect/DPfall(get_turf(holder), src) //Make a nice animation of flying back up
-	risingPod.pixel_z = 0 //The initial value of risingPod's pixel_z is 200 because it normally comes down from a high spot
-	holder.forceMove(bay) //Move the pod back to centcom, where it belongs
-	animate(risingPod, pixel_z = 200, time = 10, easing = LINEAR_EASING) //Animate our rising pod
-	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
-	open(holder, forced = TRUE)
+	handleReturningClose(holder, TRUE)
+
+/obj/structure/closet/supplypod/extractionpod/close(atom/movable/holder) //handles closing, and returns pod - deletes itself when returned
+	. = ..()
 	return
+
+/obj/structure/closet/supplypod/extractionpod/proc/send_up(atom/movable/holder)
+	if (!holder)
+		holder = src
+
+	if (leavingSound)
+		playsound(get_turf(holder), leavingSound, soundVolume, 0, 0)
+
+	handleReturningClose(holder, FALSE)
 
 /obj/structure/closet/supplypod/proc/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open() proc for more details
 	update_icon()
@@ -198,9 +258,8 @@
 	update_icon()
 
 /obj/structure/closet/supplypod/Destroy()
-	if (!opened) //If we havent opened yet, we're opening because we've been destroyed. Lets dump our contents by opening up
-		open(src, broken = TRUE)
-	return ..()
+	open(src, broken = TRUE) //Lets dump our contents by opening up
+	. = ..()
 
 //------------------------------------FALLING SUPPLY POD-------------------------------------//
 /obj/effect/DPfall //Falling pod
@@ -214,7 +273,13 @@
 	icon_state = ""
 
 /obj/effect/DPfall/Initialize(dropLocation, obj/structure/closet/supplypod/pod)
-	if (pod.style != STYLE_INVISIBLE) //Check to ensure the pod isn't invisible
+	if (pod.style == STYLE_SEETHROUGH)
+		pixel_x = -16
+		pixel_y = 0
+		for (var/atom/movable/O in pod.contents)
+			var/icon/I = getFlatIcon(O) //im so sorry
+			add_overlay(I)
+	else if (pod.style != STYLE_INVISIBLE) //Check to ensure the pod isn't invisible
 		icon_state = "[pod.icon_state]_falling"
 		name = pod.name
 	. = ..()
@@ -234,6 +299,7 @@
 	return
 
 /obj/effect/DPtarget/Initialize(mapload, podParam, var/single_order = null)
+	. = ..()
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
 		podParam = new podParam() //If its just a path, instantiate it
 	pod = podParam
@@ -250,7 +316,7 @@
 		for (var/mob/living/M in get_turf(src))
 			M.Stun(pod.landingDelay+10, ignore_canstun = TRUE)//you aint goin nowhere, kid.
 	if (pod.effectStealth) //If effectStealth is true we want to be invisible
-		alpha = 255
+		icon_state = ""
 	if (pod.fallDuration == initial(pod.fallDuration) && pod.landingDelay + pod.fallDuration < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
 		pod.fallingSound =  'sound/weapons/mortar_whistle.ogg'
@@ -280,6 +346,7 @@
 	addtimer(CALLBACK(src, .proc/endLaunch), pod.fallDuration, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /obj/effect/DPtarget/proc/endLaunch()
+	pod.update_icon()
 	pod.forceMove(drop_location()) //The fallingPod animation is over, now's a good time to forceMove the actual pod into position
 	QDEL_NULL(fallingPod) //Delete the falling pod effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
 	for (var/mob/living/M in src) //Remember earlier (initialization) when we moved mobs into the DPTarget so they wouldnt get lost in nullspace? Time to get them out

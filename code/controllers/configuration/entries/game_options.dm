@@ -35,10 +35,6 @@
 /datum/config_entry/keyed_list/midround_antag/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_list/policy
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_TEXT
-
 /datum/config_entry/number/damage_multiplier
 	config_entry_value = 1
 	integer = FALSE
@@ -151,6 +147,10 @@
 /datum/config_entry/flag/show_game_type_odds	//if set this allows players to see the odds of each roundtype on the get revision screen
 
 /datum/config_entry/keyed_list/roundstart_races	//races you can play as from the get go.
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/roundstart_no_hard_check // Species contained in this list will not cause existing characters with no-longer-roundstart species set to be resetted to the human race.
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
@@ -268,6 +268,8 @@
 	movedelay_type = /mob/living/simple_animal
 /////////////////////////////////////////////////
 
+/datum/config_entry/flag/virtual_reality	//Will virtual reality be loaded
+
 /datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
 
 /datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
@@ -301,6 +303,9 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
 	splitter = ","
+
+/datum/config_entry/number/max_law_len
+	config_entry_value = 1024
 
 /datum/config_entry/number/overflow_cap
 	config_entry_value = -1

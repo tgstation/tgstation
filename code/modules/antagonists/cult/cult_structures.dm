@@ -29,10 +29,10 @@
 
 
 /obj/structure/destructible/cult/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
+	. = ..()
+	. += "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
-		to_chat(user, "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		. += "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>"
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(iscultist(user) || isobserver(user))

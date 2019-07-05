@@ -14,4 +14,4 @@
 	var/turf/location = get_turf(src)
 	if(location)
 		new /obj/effect/hotspot(location)
-		location.hotspot_expose(700, 5, 1)
+		location.hotspot_expose(700, 50, 1)

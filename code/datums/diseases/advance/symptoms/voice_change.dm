@@ -31,6 +31,7 @@ Bonus
 	var/scramble_language = FALSE
 	var/datum/language/current_language
 	var/datum/language_holder/original_language
+	var/datum/language_holder/mob_language
 	threshold_desc = "<b>Transmission 14:</b> The host's language center of the brain is damaged, leading to complete inability to speak or understand any language.<br>\
 					  <b>Stage Speed 7:</b> Changes voice more often.<br>\
 					  <b>Stealth 3:</b> The symptom remains hidden until active."
@@ -47,7 +48,7 @@ Bonus
 	if(A.properties["transmittable"] >= 14) //random language
 		scramble_language = TRUE
 		var/mob/living/M = A.affected_mob
-		var/datum/language_holder/mob_language = M.get_language_holder()
+		mob_language = M.get_language_holder()
 		original_language = mob_language.copy()
 
 /datum/symptom/voice_change/Activate(datum/disease/advance/A)
@@ -66,7 +67,7 @@ Bonus
 					H.remove_language(current_language)
 					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
 					H.grant_language(current_language)
-					var/datum/language_holder/mob_language = H.get_language_holder()
+					mob_language = H.get_language_holder()
 					mob_language.only_speaks_language = current_language
 
 /datum/symptom/voice_change/End(datum/disease/advance/A)
@@ -77,5 +78,8 @@ Bonus
 	if(scramble_language)
 		var/mob/living/M = A.affected_mob
 		M.copy_known_languages_from(original_language, TRUE)
+		mob_language = M.get_language_holder()
+		mob_language.only_speaks_language = null
+		M.selected_default_language = original_language
 		current_language = null
 		QDEL_NULL(original_language)

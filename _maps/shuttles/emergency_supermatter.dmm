@@ -40,7 +40,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "am" = (
-/obj/structure/reflector/single/anchored{
+/obj/structure/reflector/single/mapping{
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -49,12 +49,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "an" = (
-/obj/structure/reflector/box/anchored,
+/obj/structure/reflector/box/mapping,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ao" = (
-/obj/structure/reflector/single{
-	anchored = 1;
+/obj/structure/reflector/single/mapping{
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -146,27 +145,25 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/reflector/single/anchored{
+/obj/structure/reflector/single/mapping{
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aO" = (
-/obj/structure/reflector/double/anchored{
+/obj/structure/reflector/double/mapping{
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aP" = (
-/obj/structure/reflector/double{
-	anchored = 1;
+/obj/structure/reflector/double/mapping{
 	dir = 10
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aQ" = (
-/obj/structure/reflector/single{
-	anchored = 1;
+/obj/structure/reflector/single/mapping{
 	dir = 10
 	},
 /turf/open/floor/plating/airless,

@@ -13,7 +13,7 @@
 		H.stuttering = 0
 		H.lying = 0
 		H.update_mobility()
-		H.reagents.add_reagent("stimulants", 5)
+		H.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
 		H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
 		a_boost--
 		to_chat(H, "<span class='notice'>There are <B>[a_boost]</B> adrenaline boosts remaining.</span>")
@@ -22,5 +22,5 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost_after()
 	var/mob/living/carbon/human/H = affecting
-	H.reagents.add_reagent("radium", a_transfer)
+	H.reagents.add_reagent(/datum/reagent/uranium/radium, a_transfer)
 	to_chat(H, "<span class='danger'>You are beginning to feel the after-effect of the injection.</span>")

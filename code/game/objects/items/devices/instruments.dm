@@ -10,18 +10,14 @@
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "mid"
-	var/tune_time = 0
 
 /obj/item/instrument/Initialize()
 	. = ..()
 	song = new(instrumentId, src, instrumentExt)
 
 /obj/item/instrument/Destroy()
-	if (tune_time)
-		STOP_PROCESSING(SSobj, src)
-	qdel(song)
-	song = null
-	return ..()
+	QDEL_NULL(song)
+	. = ..()
 
 /obj/item/instrument/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -47,34 +43,6 @@
 
 	user.set_machine(src)
 	song.interact(user)
-
-/obj/item/instrument/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/musicaltuner))
-		var/mob/living/carbon/human/H = user
-		if (H.has_trait(TRAIT_MUSICIAN))
-			if (!tune_time)
-				H.visible_message("[H] tunes [src] to perfection!", "<span class='notice'>You tune [src] to perfection!</span>")
-				tune_time = 300
-				START_PROCESSING(SSobj, src)
-			else
-				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
-		else
-			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
-
-/obj/item/instrument/process()
-	if (tune_time)
-		if (song.playing)
-			for (var/mob/living/M in song.hearing_mobs)
-				M.dizziness = max(0,M.dizziness-2)
-				M.jitteriness = max(0,M.jitteriness-2)
-				M.confused = max(M.confused-1)
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
-		tune_time--
-	else
-		if (!tune_time)
-			if (song.playing)
-				loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
-			STOP_PROCESSING(SSobj, src)
 
 /obj/item/instrument/violin
 	name = "space violin"
@@ -104,6 +72,12 @@
 /obj/item/instrument/piano_synth/proc/changeInstrument(name = "piano")
 	song.instrumentDir = name
 	song.instrumentExt = insTypes[name]
+
+/obj/item/instrument/piano_synth/proc/selectInstrument() // Moved here so it can be used by the action and PAI software panel without copypasta
+	var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", song.instrumentDir) as null|anything in insTypes
+	if(!insTypes[chosen])
+		return
+	return changeInstrument(chosen)
 
 /obj/item/instrument/guitar
 	name = "guitar"
@@ -231,11 +205,18 @@
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
 
-/obj/item/instrument/harmonica/speechModification(message)
+/obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
 	if(song.playing && ismob(loc))
 		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
 		song.playing = FALSE
-	return message
+
+/obj/item/instrument/harmonica/equipped(mob/M, slot)
+	. = ..()
+	RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech, override = TRUE)
+
+/obj/item/instrument/harmonica/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"
@@ -254,17 +235,6 @@
 	hitsound = 'sound/items/bikehorn.ogg'
 
 ///
-
-/obj/item/musicaltuner
-	name = "musical tuner"
-	desc = "A device for tuning musical instruments both manual and electronic alike."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "musicaltuner"
-	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
 /obj/item/choice_beacon/music
 	name = "instrument delivery beacon"

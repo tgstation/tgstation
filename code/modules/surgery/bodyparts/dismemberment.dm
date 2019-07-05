@@ -12,7 +12,7 @@
 		return FALSE
 	if(C.status_flags & GODMODE)
 		return FALSE
-	if(C.has_trait(TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
@@ -49,7 +49,7 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return FALSE
-	if(C.has_trait(TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 	. = list()
 	var/organ_spilled = 0
@@ -110,7 +110,7 @@
 			for(var/X in C.dna.mutations) //some mutations require having specific limbs to be kept.
 				var/datum/mutation/human/MT = X
 				if(MT.limb_req && MT.limb_req == body_zone)
-					MT.force_lose(C)
+					C.dna.force_lose(MT)
 
 		for(var/X in C.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/obj/item/organ/O = X

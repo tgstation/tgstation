@@ -62,32 +62,32 @@
 	return ..()
 
 /obj/item/bodypart/head/examine(mob/user)
-	..()
+	. = ..()
 	if(status == BODYPART_ORGANIC)
 		if(!brain)
-			to_chat(user, "<span class='info'>The brain has been removed from [src].</span>")
+			. += "<span class='info'>The brain has been removed from [src].</span>"
 		else if(brain.suicided || brainmob?.suiciding)
-			to_chat(user, "<span class='info'>There's a pretty dumb expression on [real_name]'s face; they must have really hated life. There is no hope of recovery.</span>")
+			. += "<span class='info'>There's a pretty dumb expression on [real_name]'s face; they must have really hated life. There is no hope of recovery.</span>"
 		else if(brain.brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD)
-			to_chat(user, "<span class='info'>It seems to be leaking some kind of... clear fluid? The brain inside must be in pretty bad shape... There is no coming back from that.</span>")
+			. += "<span class='info'>It seems to be leaking some kind of... clear fluid? The brain inside must be in pretty bad shape... There is no coming back from that.</span>"
 		else if(brainmob)
 			if(brainmob.get_ghost(FALSE, TRUE))
-				to_chat(user, "<span class='info'>It's muscles are still twitching slightly... It still seems to have a bit of life left to it.</span>")
+				. += "<span class='info'>Its muscles are still twitching slightly... It still seems to have a bit of life left to it.</span>"
 			else
-				to_chat(user, "<span class='info'>It seems seems particularly lifeless. Perhaps there'll be a chance for them later.</span>")
+				. += "<span class='info'>It seems seems particularly lifeless. Perhaps there'll be a chance for them later.</span>"
 		else if(brain?.decoy_override)
-			to_chat(user, "<span class='info'>It seems seems particularly lifeless. Perhaps there'll be a chance for them later.</span>")
+			. += "<span class='info'>It seems particularly lifeless. Perhaps there'll be a chance for them later.</span>"
 		else
-			to_chat(user, "<span class='info'>It seems completely devoid of life.</span>")
+			. += "<span class='info'>It seems completely devoid of life.</span>"
 
 		if(!eyes)
-			to_chat(user, "<span class='info'>[real_name]'s eyes appear to have been removed.</span>")
+			. += "<span class='info'>[real_name]'s eyes appear to have been removed.</span>"
 
 		if(!ears)
-			to_chat(user, "<span class='info'>[real_name]'s ears appear to have been removed.</span>")
+			. += "<span class='info'>[real_name]'s ears appear to have been removed.</span>"
 
 		if(!tongue)
-			to_chat(user, "<span class='info'>[real_name]'s tongue appears to have been removed.</span>")
+			. += "<span class='info'>[real_name]'s tongue appears to have been removed.</span>"
 
 
 /obj/item/bodypart/head/can_dismember(obj/item/I)
@@ -119,6 +119,9 @@
 				for(var/datum/action/item_action/hands_free/activate_pill/AP in I.actions)
 					qdel(AP)
 			I.forceMove(T)
+	eyes = null
+	ears = null
+	tongue = null
 
 /obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
 	var/mob/living/carbon/C
@@ -128,7 +131,7 @@
 		C = owner
 
 	real_name = C.real_name
-	if(C.has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(C, TRAIT_HUSK))
 		real_name = "Unknown"
 		hair_style = "Bald"
 		facial_hair_style = "Shaved"
@@ -231,13 +234,13 @@
 			. += lips_overlay
 
 		// eyes
-		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes", -BODY_LAYER, SOUTH)
+		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 		. += eyes_overlay
-		if(!eyes)
-			eyes_overlay.icon_state = "eyes_missing"
+		if(eyes)
+			eyes_overlay.icon_state = eyes.eye_icon_state
 
-		else if(eyes.eye_color)
-			eyes_overlay.color = "#" + eyes.eye_color
+			if(eyes.eye_color)
+				eyes_overlay.color = "#" + eyes.eye_color
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'

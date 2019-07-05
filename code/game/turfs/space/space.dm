@@ -19,7 +19,6 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	bullet_bounce_sound = null
 
-
 /turf/open/space/basic/New()	//Do not convert to Initialize
 	//This is used to optimize the map loader
 	return
@@ -27,6 +26,8 @@
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
+	vis_contents.Cut() //removes inherited overlays
+	visibilityChanged()
 
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")

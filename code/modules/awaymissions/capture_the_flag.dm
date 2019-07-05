@@ -54,10 +54,10 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/twohanded/ctf/attack_hand(mob/living/user)
 	if(!is_ctf_target(user) && !anyonecanpickup)
-		to_chat(user, "Non players shouldn't be moving the flag!")
+		to_chat(user, "<span class='warning'>Non-players shouldn't be moving the flag!</span>")
 		return
 	if(team in user.faction)
-		to_chat(user, "You can't move your own flag!")
+		to_chat(user, "<span class='warning'>You can't move your own flag!</span>")
 		return
 	if(loc == user)
 		if(!user.dropItemToGround(src))
@@ -227,7 +227,7 @@
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
-			to_chat(user, "It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!")
+			to_chat(user, "<span class='warning'>It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!</span>")
 			return
 		var/client/new_team_member = user.client
 		if(user.mind && user.mind.current)
@@ -239,10 +239,10 @@
 		if(CTF == src || CTF.ctf_enabled == FALSE)
 			continue
 		if(user.ckey in CTF.team_members)
-			to_chat(user, "No switching teams while the round is going!")
+			to_chat(user, "<span class='warning'>No switching teams while the round is going!</span>")
 			return
 		if(CTF.team_members.len < src.team_members.len)
-			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] team to even things up.")
+			to_chat(user, "<span class='warning'>[src.team] has more team members than [CTF.team]! Try joining [CTF.team] team to even things up.</span>")
 			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
@@ -497,14 +497,14 @@
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
 
-	// The shielded hardsuit is already NODROP
+	no_drops += H.get_item_by_slot(SLOT_WEAR_SUIT)
 	no_drops += H.get_item_by_slot(SLOT_GLOVES)
 	no_drops += H.get_item_by_slot(SLOT_SHOES)
 	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
 	no_drops += H.get_item_by_slot(SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.item_flags |= NODROP
+		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill

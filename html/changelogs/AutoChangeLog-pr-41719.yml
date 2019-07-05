@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - tweak: "Alien infestations are not limited to once per round only, but will never
-happen while existing aliens are alive."

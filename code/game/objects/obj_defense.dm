@@ -32,7 +32,7 @@
 	if(damage_flag)
 		armor_protection = armor.getRating(damage_flag)
 	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
-		armor_protection = CLAMP(armor_protection - armour_penetration, 0, 100)
+		armor_protection = CLAMP(armor_protection - armour_penetration, min(armor_protection, 0), 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
 
 //the sound played when the obj is damaged.
@@ -210,7 +210,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(CLAMP(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
-	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
+	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
 		add_overlay(GLOB.fire_overlay, TRUE)
