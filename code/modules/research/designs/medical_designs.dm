@@ -182,11 +182,11 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/medspray
-	name = "Medical Spray"
-	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap."
-	id = "medspray"
-	build_path = /obj/item/reagent_containers/medspray
+/datum/design/medigel
+	name = "Medical Gel"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap."
+	id = "medigel"
+	build_path = /obj/item/reagent_containers/medigel
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 500)
 	category = list("Medical Designs")
@@ -230,6 +230,36 @@
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_PLASMA = 2000, MAT_URANIUM = 3000, MAT_TITANIUM = 3000)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/medical_spray_bottle
+	name = "Medical Spray Bottle"
+	desc = "A traditional spray bottle used to generate a fine mist. Not to be confused with a medspray."
+	id = "med_spray_bottle"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_PLASTIC = 2000)
+	build_path = /obj/item/reagent_containers/spray/medical
+	category = list("Medical Designs")
+
+/datum/design/chem_pack
+	name = "Intravenous Medicine Bag"
+	desc = "A plastic pressure bag for IV administration of drugs."
+	id = "chem_pack"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_PLASTIC = 2000)
+	build_path = /obj/item/reagent_containers/chem_pack
+	category = list("Medical Designs")
+
+/datum/design/blood_pack
+	name = "Blood Pack"
+	desc = "Is used to contain blood used for transfusion. Must be attached to an IV drip."
+	id = "blood_pack"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_PLASTIC = 1000)
+	build_path = /obj/item/reagent_containers/blood
+	category = list("Medical Designs")
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
@@ -548,7 +578,7 @@
 	name = "Experimental Dissection"
 	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
 	id = "surgery_exp_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection
+	surgery = /datum/surgery/experimental_dissection
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/lobotomy
@@ -679,3 +709,5 @@
 	id = "surgery_zombie"
 	surgery = /datum/surgery/advanced/necrotic_revival
 	research_icon_state = "surgery_head"
+
+
