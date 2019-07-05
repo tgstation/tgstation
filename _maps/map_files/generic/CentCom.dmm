@@ -5151,7 +5151,7 @@
 /area/syndicate_mothership)
 "mB" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = /turf/baseturf_bottom
+	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	},
 /turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership)
@@ -9171,7 +9171,7 @@
 /area/wizard_station)
 "tY" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf_to_replace = /turf/baseturf_bottom
+	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	},
 /turf/closed/indestructible/syndicate,
 /area/syndicate_mothership/control)

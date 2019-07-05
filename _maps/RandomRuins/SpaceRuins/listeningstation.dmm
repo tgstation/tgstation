@@ -640,7 +640,7 @@
 	pixel_y = 5
 	},
 /obj/effect/baseturf_helper/asteroid/airless{
-	baseturf_to_replace = /turf/baseturf_bottom
+	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
