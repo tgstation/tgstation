@@ -194,7 +194,7 @@
 		make(usr, C, amount)
 
 	if(href_list["disposeI"])
-		reagents.del_reagent(href_list["disposeI"])
+		reagents.del_reagent(text2path(href_list["disposeI"]))
 
 	if(href_list["refill"])
 		RefillFromBeaker()
