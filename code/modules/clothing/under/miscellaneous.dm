@@ -678,6 +678,7 @@
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
 
+
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>"
