@@ -177,8 +177,9 @@
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
 			var/old_bloody_shoes = S.bloody_shoes[blood_state] // 413 -- blood color
-			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			S.bloody_shoe_color = BlendRGBasHSV(blood_color,S.bloody_shoe_color,S.bloody_shoes[blood_state]/old_bloody_shoes) // 413 -- blood color
+			if(old_bloody_shoes>0)
+				S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+				S.bloody_shoe_color = BlendRGBasHSV(blood_color,S.bloody_shoe_color,S.bloody_shoes[blood_state]/old_bloody_shoes) // 413 -- blood color
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
