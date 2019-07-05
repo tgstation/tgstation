@@ -177,9 +177,9 @@
 	name = "birthday cake"
 	desc = "Happy Birthday! You get an awesome gift if you eat this whole!"
 	icon_state = "birthdaycake"
-	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/birthday //super sekrit club
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/birthday
 	slices_num = 5
-	trash = /obj/item/clothing/head/hardhat/cakehat
+	trash = /obj/item/clothing/head/hardhat/cakehat //super sekrit club
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 1)
