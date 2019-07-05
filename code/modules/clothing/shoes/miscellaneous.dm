@@ -363,12 +363,12 @@
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
-				user.reagents.add_reagent(/datum/reagent/toxin, 4)
+				user.reagents.add_reagent(/datum/reagent/toxin, 7)
 		occupants.Cut()
 
-/obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/user)
+/obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()
-	if(target.stat == DEAD)
+	if(user.stat || !(user.mobility_flags & MOBILITY_USE) || user.restrained() || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
 		return ..()
 	if(occupants.len >= max_occupants)
 		to_chat(user, "<span class='notice'>[src] are full!</span>")
