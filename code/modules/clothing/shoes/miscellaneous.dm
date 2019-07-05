@@ -357,24 +357,21 @@
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
 	if(slot == SLOT_SHOES)
-		if(occupants)
-			for(var/mob/living/occupant in occupants)
-				occupant.forceMove(get_turf(user))
-				to_chat(user, "<span class='userdanger'> You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>",
-				"<span class='warning'>")
-				user.visible_message("[user] recoils as something slithers out of [src].</span>")
-				user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
-				user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-				if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
-					user.reagents.add_reagent(/datum/reagent/toxin, 4)
-				occupants -= occupant
+		for(var/mob/living/occupant in occupants)
+			occupant.forceMove(user.drop_location())
+			user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'> You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
+			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
+			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
+				user.reagents.add_reagent(/datum/reagent/toxin, 4)
+		occupants.Cut()
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/user)
 	. = ..()
 	if(target.stat == DEAD)
 		return ..()
 	if(occupants.len >= max_occupants)
-		to_chat(user, "<span class='notice'>[src] seems to be full!</span>")
+		to_chat(user, "<span class='notice'>[src] are full!</span>")
 		return ..()
 	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
 		occupants += target
@@ -384,7 +381,7 @@
 /obj/item/clothing/shoes/cowboy/container_resist(mob/living/user)
 	if(!do_after(user, 10, target = user))
 		return
-	user.forceMove(get_turf(src))
+	user.forceMove(user.drop_location())
 	occupants -= user
 
 /obj/item/clothing/shoes/cowboy/white
@@ -404,7 +401,7 @@
 
 /obj/item/clothing/shoes/cowboy/lizard
 	name = "lizard skin boots"
-	desc = "You can hear a faint hissing from inside the boots, you hope it is just a mournful ghost."
+	desc = "You can hear a faint hissing from inside the boots; you hope it is just a mournful ghost."
 	icon_state = "lizardboots_green"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 0) //lizards like to stay warm
 
