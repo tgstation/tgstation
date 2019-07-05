@@ -883,9 +883,10 @@
 
 /datum/reagent/medicine/mutadone/on_mob_metabolize(mob/living/carbon/M)
 	..()
-	var/len = M.dna.mutations.len
-	for(var/i in 1 to len)
-		mut += M.dna.mutations[i].type
+	if(M.has_dna())
+		for(var/i in M.dna.mutations)
+			var/datum/mutation/mutation = i
+			mut += mutation.type
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(0.5 *REM, 0)
@@ -894,12 +895,14 @@
 		M.dna.remove_all_mutations(mutadone = TRUE)
 	if(!QDELETED(M)) //We were a monkey, now a human
 		..()
+
 /datum/reagent/medicine/mutadone/on_mob_end_metabolize(mob/living/carbon/M)
 	..()
-	M.dna.remove_all_mutations(mutadone = TRUE) //just to be sure
-	var/len = mut.len
-	for(var/i in 1 to len)
-		M.dna.add_mutation(mut[i])
+	if(M.has_dna())
+		M.dna.remove_all_mutations(mutadone = TRUE) //just to be sure
+		for(var/i in mut)
+			var/datum/mutation/mutation = i
+			M.dna.add_mutation(mutation)
 
 /datum/reagent/medicine/mutadone/overdose_process(mob/living/carbon/M)
 	M.adjustToxLoss(1*REM, 0)
