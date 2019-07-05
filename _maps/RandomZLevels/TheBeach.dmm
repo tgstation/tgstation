@@ -271,9 +271,7 @@
 /area/awaymission/beach)
 "aO" = (
 /obj/effect/baseturf_helper/beach/sand{
-	baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	baseturf_to_replace = /turf/baseturf_bottom
-	}
 	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
