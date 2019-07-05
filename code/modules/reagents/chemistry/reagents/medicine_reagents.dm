@@ -875,16 +875,37 @@
 
 /datum/reagent/medicine/mutadone
 	name = "Mutadone"
-	description = "Removes jitteriness and restores genetic defects."
+	description = "Removes jitteriness and temporarly supresses genes from manifesting, it also prevents new mutation from appearing while in the system."
 	color = "#5096C8"
 	taste_description = "acid"
+	overdose_threshold = 35
+	var/list/mut = list()
+
+/datum/reagent/medicine/mutadone/on_mob_metabolize(mob/living/carbon/M)
+	..()
+	var/len = M.dna.mutations.len
+	for(var/i in 1 to len)
+		mut += M.dna.mutations[i].type
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(0.5 *REM, 0)
 	M.jitteriness = 0
 	if(M.has_dna())
 		M.dna.remove_all_mutations(mutadone = TRUE)
 	if(!QDELETED(M)) //We were a monkey, now a human
 		..()
+/datum/reagent/medicine/mutadone/on_mob_end_metabolize(mob/living/carbon/M)
+	..()
+	M.dna.remove_all_mutations(mutadone = TRUE) //just to be sure
+	var/len = mut.len
+	for(var/i in 1 to len)
+		M.dna.add_mutation(mut[i])
+
+/datum/reagent/medicine/mutadone/overdose_process(mob/living/carbon/M)
+	M.adjustToxLoss(1*REM, 0)
+	if(prob(10))
+		M.vomit(95)
+	..()
 
 /datum/reagent/medicine/antihol
 	name = "Antihol"

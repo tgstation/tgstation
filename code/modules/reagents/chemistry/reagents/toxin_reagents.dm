@@ -27,7 +27,7 @@
 	name = "Unstable mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
-	toxpwr = 0
+	toxpwr = 1
 	taste_description = "slime"
 	taste_mult = 0.9
 
@@ -36,7 +36,7 @@
 		return
 	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
+	if(prob(reac_volume))
 		M.randmuti()
 		if(prob(98))
 			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
@@ -46,8 +46,16 @@
 		M.domutcheck()
 	..()
 
-/datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C)
-	C.apply_effect(5,EFFECT_IRRADIATE,0)
+/datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
+	M.apply_effect(15,EFFECT_IRRADIATE,0)
+	if(prob(20))
+		M.randmuti()
+		if(prob(98))
+			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+		else
+			M.easy_randmut(POSITIVE)
+		M.updateappearance()
+		M.domutcheck()
 	return ..()
 
 /datum/reagent/toxin/plasma
