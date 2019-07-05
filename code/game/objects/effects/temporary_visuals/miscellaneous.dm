@@ -142,7 +142,7 @@
 	update_icon()
 
 /obj/effect/temp_visual/bsa_splash
-	name = "/improper Bluespace energy wave"
+	name = "\improper Bluespace energy wave"
 	desc = "A massive, rippling wave of bluepace energy, all rapidly exhausting itself the moment it leaves the concentrated beam of light."
 	icon = 'icons/effects/beam_splash.dmi'
 	icon_state = "beam_splash_l"
