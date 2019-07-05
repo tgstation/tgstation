@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/slaughter
 	weight = 10 //As Rare as the Blob event
 	max_occurrences = 1
-	earliest_start = 1 HOURS
+	earliest_start = 30 MINUTES
 	min_players = 20
 
 
