@@ -223,8 +223,6 @@
 
 #define MAX_CHICKENS 50
 
-#define UNHEALING_EAR_DAMAGE 100
-
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows

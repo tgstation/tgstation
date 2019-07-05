@@ -48,9 +48,11 @@
 	description = "<span class='nicegreen'>\The [animal.name] is adorable! I can't stop petting [animal.p_them()]!</span>\n"
 
 /datum/mood_event/honk
-	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
+	description = "<span class='nicegreen'>I've been honked!</span>\n"
 	mood_change = 2
 	timeout = 4 MINUTES
+	special_screen_obj = "honked_nose"
+	special_screen_replace = FALSE
 
 /datum/mood_event/perform_cpr
 	description = "<span class='nicegreen'>It feels good to save a life.</span>\n"

@@ -636,6 +636,40 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		return // Stops humans from disassembling abductor headsets.
 	return ..()
 
+/obj/item/abductor_machine_beacon
+	name = "machine beacon"
+	desc = "A beacon designed to instantly tele-construct abductor machinery."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "beacon"
+	w_class = WEIGHT_CLASS_TINY
+	var/obj/machinery/spawned_machine
+
+/obj/item/abductor_machine_beacon/attack_self(mob/user)
+	..()
+	user.visible_message("<span class='notice'>[user] places down [src] and activates it.</span>", "<span class='notice'>You place down [src] and activate it.</span>")
+	user.dropItemToGround(src)
+	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
+	addtimer(CALLBACK(src, .proc/try_spawn_machine), 30)
+
+/obj/item/abductor_machine_beacon/proc/try_spawn_machine()
+	var/viable = FALSE
+	if(isfloorturf(loc))
+		var/turf/T = loc
+		viable = TRUE
+		for(var/obj/thing in T.contents)
+			if(thing.density || ismachinery(thing) || isstructure(thing))
+				viable = FALSE
+	if(viable)
+		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
+		var/new_machine = new spawned_machine(loc)
+		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!")
+		qdel(src)
+	else
+		playsound(src, 'sound/machines/buzz-two.ogg', 50)
+
+/obj/item/abductor_machine_beacon/chem_dispenser
+	name = "beacon - Reagent Synthesizer"
+	spawned_machine = /obj/machinery/chem_dispenser/abductor
 
 /obj/item/scalpel/alien
 	name = "alien scalpel"
