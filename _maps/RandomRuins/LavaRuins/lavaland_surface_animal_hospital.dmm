@@ -408,6 +408,7 @@
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/dromedaryco,
 /obj/item/storage/box/matches,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/ruin/powered/animal_hospital)
 "bg" = (
@@ -962,11 +963,11 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "cH" = (
-/mob/living/simple_animal/bot/cleanbot,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "cI" = (
