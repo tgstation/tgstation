@@ -55,10 +55,7 @@
 	PIPING_LAYER_DOUBLE_SHIFT(src, target_layer)
 
 /obj/machinery/meter/process_atmos()
-	if(!target)
-		icon_state = "meterX"
-		return 0
-	else if(!(target.flags_1 & INITIALIZED_1))
+	if(!(target?.flags_1 & INITIALIZED_1))
 		icon_state = "meterX"
 		return 0
 
