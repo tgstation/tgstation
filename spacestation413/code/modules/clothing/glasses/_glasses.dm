@@ -3,11 +3,11 @@
 /obj/item/clothing/glasses/sunglasses/gar/dirk
 	name = "anime shades"
 	desc = "For when shit flies too far off the handle. AI not included."
-    icon = 'yada yada'
+    icon = 'spacestation413/icons/obj/clothing/glasses.dmi'
 	icon_state = "dirk"
-	var/item_state = "dirk"
-    var/left hand  
-    var/right hand
+    var/item_state = "dirk"
+    var/lefthand_file = 'spacestation413/icons/mob/inhands/items_lefthand.dmi'
+    var/righthand_file = 'spacestation413/icons/mob/inhands/items_righthand.dmi'
 	force = 10.25
 	throwforce = 10.25
 	throw_speed = 4.13
