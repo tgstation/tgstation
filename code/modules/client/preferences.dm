@@ -1178,6 +1178,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_t_caste = input(user, "Choose your character's blood color:", "Character Preference") as null|anything in GLOB.troll_castes
 					if(new_t_caste)
 						features["troll_caste"] = new_t_caste
+						eye_color = sanitize_hexcolor(get_color_from_caste(features["troll_caste"]))
 				// 413 end
 
 				if("underwear")
