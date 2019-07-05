@@ -1,0 +1,14 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - rscadd: "Trophazole - a new hearty brute medicine."
+  - rscadd: "Rhigoxane -- a new chilly burn medicine."
+  - rscadd: "Thializid - a new high-stakes tox medicine."
+  - rscdel: "The 3 basic trek chems are now unmixable."
+  - rscadd: "IV medicine bags and blood packs are available in the medlathe."
+  - rscadd: "suspicious spray bottles have been added to the chemdrobe contraband compartment."
+  - rscadd: "The medical lathe can now print spray bottles."
+  - rscdel: "Removed the charcoal syringes from the medkits."
+  - balance: "There is now slightly less charcoal available roundstart."
+  - imageadd: "Added new spray bottle & iv bag sprites."
+  - code_imp: "trans_to can now react the reagents if you want."
