@@ -853,11 +853,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 6
 	include_modes = list(/datum/game_mode/nuclear)
 
-
 //Grenades and Explosives
 /datum/uplink_item/explosives
 	category = "Grenades and Explosives"
-
 
 /datum/uplink_item/explosives/bioterrorfoam
 	name = "Bioterror Foam Grenade"
