@@ -100,7 +100,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aw" = (
-/obj/effect/baseturf_helper/asteroid/airless,
+/obj/effect/baseturf_helper/asteroid/airless{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "ax" = (
@@ -2872,38 +2874,54 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "hr" = (
-/obj/effect/baseturf_helper/asteroid/airless,
+/obj/effect/baseturf_helper/asteroid/airless{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/mineral/random/low_chance,
 /area/ruin/unpowered/no_grav)
 "hA" = (
-/obj/effect/baseturf_helper/asteroid/airless,
+/obj/effect/baseturf_helper/asteroid/airless{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "hB" = (
-/obj/effect/baseturf_helper/asteroid/airless,
+/obj/effect/baseturf_helper/asteroid/airless{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "hT" = (
-/obj/effect/baseturf_helper/asteroid/airless,
+/obj/effect/baseturf_helper/asteroid/airless{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage)
 "hU" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "hV" = (
-/obj/effect/baseturf_helper/asteroid/airless,
+/obj/effect/baseturf_helper/asteroid/airless{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "hW" = (
-/obj/effect/baseturf_helper/asteroid/airless,
+/obj/effect/baseturf_helper/asteroid/airless{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/armory)
 "hX" = (
-/obj/effect/baseturf_helper/asteroid/airless,
+/obj/effect/baseturf_helper/asteroid/airless{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "hY" = (
-/obj/effect/baseturf_helper/asteroid/airless,
+/obj/effect/baseturf_helper/asteroid/airless{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "po" = (

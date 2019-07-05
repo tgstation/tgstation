@@ -5150,7 +5150,9 @@
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "mB" = (
-/obj/effect/baseturf_helper/asteroid/snow,
+/obj/effect/baseturf_helper/asteroid/snow{
+	baseturf_to_replace = /turf/baseturf_bottom
+	}
 /turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership)
 "mC" = (
@@ -9168,7 +9170,9 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "tY" = (
-/obj/effect/baseturf_helper/asteroid/snow,
+/obj/effect/baseturf_helper/asteroid/snow{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/indestructible/syndicate,
 /area/syndicate_mothership/control)
 "tZ" = (

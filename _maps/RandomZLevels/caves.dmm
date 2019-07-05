@@ -2252,11 +2252,15 @@
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gX" = (
-/obj/effect/baseturf_helper/lava,
+/obj/effect/baseturf_helper/lava{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/mineral/volcanic,
 /area/awaymission/caves/BMP_asteroid/level_three)
 "gY" = (
-/obj/effect/baseturf_helper/lava,
+/obj/effect/baseturf_helper/lava{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
 	luminosity = 5;
@@ -2265,15 +2269,21 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "gZ" = (
-/obj/effect/baseturf_helper/lava,
+/obj/effect/baseturf_helper/lava{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/mineral/volcanic,
 /area/awaymission/caves/BMP_asteroid/level_two)
 "ha" = (
-/obj/effect/baseturf_helper/lava,
+/obj/effect/baseturf_helper/lava{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/mineral/volcanic,
 /area/awaymission/caves/BMP_asteroid)
 "hb" = (
-/obj/effect/baseturf_helper/asteroid/basalt,
+/obj/effect/baseturf_helper/asteroid/basalt{
+	baseturf_to_replace = /turf/baseturf_bottom
+	},
 /turf/closed/wall,
 /area/awaymission/caves/northblock)
 
