@@ -42,12 +42,20 @@
 	icon_state = "hardhat0_cakehat"
 	item_state = "hardhat0_cakehat"
 	item_color = "cakehat"
+	strip_delay = 500
 	hitsound = 'sound/weapons/tap.ogg'
 	flags_inv = HIDEEARS|HIDEHAIR
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	brightness_on = 2 //luminosity when on
-	flags_cover = HEADCOVERSEYES
-	heat = 999
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100,"energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	brightness_on = 10 //luminosity when on
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SHOWEROKAY
+	resistance_flags = FIRE_PROOF
+	flags_cover = HEADCOVERSEYES|HIDEFACE
+	flash_protect = 5
+	heat = 998
+
+/obj/item/clothing/head/hardhat/cakehat/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
@@ -61,16 +69,16 @@
 
 /obj/item/clothing/head/hardhat/cakehat/turn_on()
 	..()
-	force = 15
-	throwforce = 15
+	force = 200
+	throwforce = 200
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
 	..()
-	force = 0
-	throwforce = 0
+	force = 100
+	throwforce = 100
 	damtype = BRUTE
 	hitsound = 'sound/weapons/tap.ogg'
 	STOP_PROCESSING(SSobj, src)
