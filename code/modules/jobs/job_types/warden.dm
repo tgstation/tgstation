@@ -32,9 +32,9 @@
 	name = "Warden"
 	jobtype = /datum/job/warden
 
-	uniform = /obj/item/clothing/under/rank/warden
 	belt = /obj/item/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/rank/warden
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black

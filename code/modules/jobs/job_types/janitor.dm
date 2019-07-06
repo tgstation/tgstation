@@ -23,7 +23,7 @@
 	name = "Janitor"
 	jobtype = /datum/job/janitor
 
-	uniform = /obj/item/clothing/under/rank/janitor
 	belt = /obj/item/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
+	uniform = /obj/item/clothing/under/rank/janitor
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)

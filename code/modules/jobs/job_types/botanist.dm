@@ -23,9 +23,9 @@
 
 	belt = /obj/item/pda/botanist
 	ears = /obj/item/radio/headset/headset_srv
+	uniform = /obj/item/clothing/under/rank/hydroponics
 	suit = /obj/item/clothing/suit/apron
 	gloves  =/obj/item/clothing/gloves/botanic_leather
-	uniform = /obj/item/clothing/under/rank/hydroponics
 	suit_store = /obj/item/plant_analyzer
 
 	backpack = /obj/item/storage/backpack/botany
