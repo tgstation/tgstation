@@ -33,6 +33,7 @@
 	shoes = /obj/item/clothing/shoes/workboots
 	head = /obj/item/clothing/head/hardhat
 	r_pocket = /obj/item/t_scanner
+
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
@@ -51,3 +52,5 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	head = null
 	internals_slot = SLOT_S_STORE
+
+

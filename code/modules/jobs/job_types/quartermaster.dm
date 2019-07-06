@@ -31,3 +31,4 @@
 	backpack_contents = list(/obj/item/card/id/departmental_budget/car=1)
 
 	chameleon_extras = /obj/item/stamp/qm
+
