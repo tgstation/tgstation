@@ -65,7 +65,6 @@
 	ADD_TRAIT(src,TRAIT_NODROP, CLOTHING_TRAIT)
 	ADD_TRAIT(user,TRAIT_DUMB, CLOTHING_TRAIT)
 	ADD_TRAIT(user,TRAIT_NOSUIT, CLOTHING_TRAIT)
-	locked = TRUE
 	to_chat(wearer,"<span class='notice'>The Lock Snaps Shut. It seems you will be wearing this for a quite while")
 	if(M.wear_suit)
 		to_chat(wearer,"<span class='warning'>Your armor falls off...</span>")
@@ -73,7 +72,6 @@
 
 /obj/item/clothing/under/schoolgirl/locked/proc/unlock(mob/user)
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, CLOTHING_TRAIT))
-		locked = FALSE
 		to_chat(user, "<span class='notice'>You unlock the outfit.</span>")
 		//to_chat(wearer,"<span class='notice'>[user] unlocks your outfit!")
 		REMOVE_TRAIT(src,TRAIT_NODROP, CLOTHING_TRAIT)
