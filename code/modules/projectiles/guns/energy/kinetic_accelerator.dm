@@ -24,6 +24,8 @@
 	var/list/modkits = list()
 
 	var/recharge_timerid
+	pin = /obj/item/firing_pin/implant/miner
+	spawn_empty = FALSE
 
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
 	. = ..()
