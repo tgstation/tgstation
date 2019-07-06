@@ -30,6 +30,9 @@
 	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
+	if(locate(/obj/machinery/abductor/obelisk) in place) //Instant teleport on obelisks
+		doMobToLoc(place, target)
+		return
 	new /obj/effect/temp_visual/teleport_abductor(place)
 	addtimer(CALLBACK(src, .proc/doMobToLoc, place, target), 80)
 
@@ -40,6 +43,9 @@
 		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)
+	if(locate(/obj/machinery/abductor/obelisk) in place) //Instant teleport on obelisks
+		doPadToLoc(place)
+		return
 	new /obj/effect/temp_visual/teleport_abductor(place)
 	addtimer(CALLBACK(src, .proc/doPadToLoc, place), 80)
 

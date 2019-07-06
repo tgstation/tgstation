@@ -224,6 +224,9 @@
 	if(isabductor(target) || iscow(target))
 		marked = target
 		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
+	else if(locate(/obj/machinery/abductor/obelisk) in get_turf(target))
+		marked = target
+		to_chat(user, "<span class='notice'>You use the obelisk to instantly prepare [target] for transport.</span>")
 	else
 		prepare(target,user)
 
@@ -258,6 +261,13 @@
 	if(flag)
 		return
 	if(!AbductorCheck(user))
+		return
+	if(istype(target, /obj/machinery/abductor/obelisk))
+		var/obj/machinery/abductor/obelisk/obelisk = target
+		if(obelisk.silence())
+			to_chat(user, "<span class='notice'>You silence radio devices near the obelisk.</span>")
+		else
+			to_chat(user, "<span class='notice'>The obelisk is still recharging.</span>")
 		return
 	radio_off(target, user)
 
@@ -311,9 +321,15 @@
 
 	switch(mode)
 		if(MIND_DEVICE_CONTROL)
-			mind_control(target, user)
+			if(iscarbon(target))
+				mind_control(target, user)
+			if(istype(target, /obj/machinery/abductor/obelisk))
+				obelisk_sleep(target, user)
 		if(MIND_DEVICE_MESSAGE)
-			mind_message(target, user)
+			if(isliving(target))
+				mind_message(target, user)
+			if(istype(target, /obj/machinery/abductor/obelisk))
+				obelisk_mind_message(target, user)
 
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
@@ -364,6 +380,20 @@
 		to_chat(user, "<span class='notice'>You send the message to your target.</span>")
 		log_directed_talk(user, L, message, LOG_SAY, "abductor whisper")
 
+/obj/item/abductor/mind_device/proc/obelisk_mind_message(obj/machinery/abductor/obelisk/obelisk, mob/living/user)
+	var/message = stripped_input(user, "Write a message to broadcast from the obelisk.","Enter message")
+	if(!message)
+		return
+	if(QDELETED(obelisk))
+		return
+	to_chat(user, "<span class='notice'>You broadcast the message from the obelisk.</span>")
+	obelisk.communicate(user, message)
+
+/obj/item/abductor/mind_device/proc/obelisk_sleep(obj/machinery/abductor/obelisk/obelisk, mob/living/user)
+	if(obelisk.sleep_wave())
+		to_chat(user, "<span class='notice'>You broadcast a sleep-inducing wave from the obelisk.</span>")
+	else
+		to_chat(user, "<span class='notice'>The obelisk is still recharging.</span>")
 
 /obj/item/firing_pin/abductor
 	name = "alien firing pin"
@@ -670,6 +700,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/abductor_machine_beacon/chem_dispenser
 	name = "beacon - Reagent Synthesizer"
 	spawned_machine = /obj/machinery/chem_dispenser/abductor
+
+/obj/item/abductor_machine_beacon/obelisk
+	name = "beacon - Uplink Obelisk"
+	spawned_machine = /obj/machinery/abductor/obelisk
 
 /obj/item/scalpel/alien
 	name = "alien scalpel"
