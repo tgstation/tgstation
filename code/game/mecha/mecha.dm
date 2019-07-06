@@ -892,6 +892,10 @@
 		to_chat(user, "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>")
 		log_message("Permission denied (Attached mobs).", LOG_MECHA)
 		return
+	if(HAS_TRAIT(user,TRAIT_DUMB))
+		to_chat(user, "<span class='warning'>This Mech will not let dumb people drive it")
+		log_message("Permission denied (Drunk Driver) ", LOG_MECHA)
+		return
 
 	visible_message("[user] starts to climb into [name].")
 
@@ -904,11 +908,12 @@
 			to_chat(user, "<span class='warning'>You can't enter the exosuit while buckled.</span>")
 		else if(user.has_buckled_mobs())
 			to_chat(user, "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>")
+		else if(HAS_TRAIT(user,TRAIT_DUMB))
+			to_chat(user,"<span class='warning'>You can't drive dummy</span>")
 		else
 			moved_inside(user)
-	else
-		to_chat(user, "<span class='warning'>You stop entering the exosuit!</span>")
-	return
+			return
+		to_chat(user, "<span class='warning'>You stop entering the exosuit!</span>");
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
@@ -949,8 +954,7 @@
 			return mmi_moved_inside(mmi_as_oc, user)
 		else
 			to_chat(user, "<span class='warning'>Occupant detected!</span>")
-	else
-		to_chat(user, "<span class='notice'>You stop inserting the MMI.</span>")
+			to_chat(user, "<span class='notice'>You stop inserting the MMI.</span>")
 	return FALSE
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/mmi/mmi_as_oc, mob/user)
