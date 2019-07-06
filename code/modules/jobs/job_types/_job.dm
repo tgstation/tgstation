@@ -191,10 +191,15 @@
 		else
 			back = backpack //Department backpack
 
+	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
+	var/holder
 	if(H.jumpsuit_style == PREF_SKIRT)
-		var/holder = addtext("[uniform]", "/skirt")
-		if(text2path(holder))	//if our uniform has a skirt variant as a child, and we have it set in preferences, set that as our uniform
-			uniform = holder
+		holder = "[uniform]/skirt"
+		if(!text2path(holder))
+			holder = "[uniform]"
+	else
+		holder = "[uniform]"
+	uniform = text2path(holder)
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

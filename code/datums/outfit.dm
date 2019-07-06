@@ -205,7 +205,7 @@
 /datum/outfit/proc/load_from(list/outfit_data)
 	//This could probably use more strict validation
 	name = outfit_data["name"]
-	uniform = text2path(outfit_data["uniform"])
+	uniform = outfit_data[uniform]	//already a path
 	suit = text2path(outfit_data["suit"])
 	toggle_helmet = outfit_data["toggle_helmet"]
 	back = text2path(outfit_data["back"])
