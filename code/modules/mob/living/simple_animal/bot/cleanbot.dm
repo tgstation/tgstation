@@ -14,7 +14,7 @@
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
-	window_name = "Automatic Station Cleaner v1.2"
+	window_name = "Automatic Station Cleaner v1.3"
 	pass_flags = PASSMOB
 	path_image_color = "#993299"
 
@@ -207,21 +207,17 @@
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
 	if(istype(A, /obj/effect/decal/cleanable))
 		anchored = TRUE
-		icon_state = "cleanbot-c"
-		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
 		mode = BOT_CLEANING
-		spawn(50)
-			if(mode == BOT_CLEANING)
-				if(A && isturf(A.loc))
-					var/atom/movable/AM = A
-					if(istype(AM, /obj/effect/decal/cleanable))
-						for(var/obj/effect/decal/cleanable/C in A.loc)
-							qdel(C)
+		if(isturf(A.loc))
+			var/atom/movable/AM = A
+			if(istype(AM, /obj/effect/decal/cleanable))
+				visible_message("<span class='notice'>[src] cleans up [A].</span>")
+				for(var/obj/effect/decal/cleanable/C in A.loc)
+					qdel(C)
 
-				anchored = FALSE
-				target = null
-			mode = BOT_IDLE
-			icon_state = "cleanbot[on]"
+		anchored = FALSE
+		target = null
+		mode = BOT_IDLE
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
