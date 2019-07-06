@@ -28,7 +28,7 @@
 	var/undershirt = "Nude" //Which undershirt the player wants
 	var/socks = "Nude" //Which socks the player wants
 	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
-	var/jumps	= SUIT			//Whether we're wearing a skirt to empower our coding socks
+	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 
 	//Equipment slots
 	var/obj/item/clothing/wear_suit = null

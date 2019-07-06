@@ -191,7 +191,7 @@
 		else
 			back = backpack //Department backpack
 
-	if(H.jumps == SKIRT)
+	if(H.jumpsuit_style == PREF_SKIRT)
 		var/holder = addtext("[uniform]", "/skirt")
 		if(text2path(holder))	//if our uniform has a skirt variant as a child, and we have it set in preferences, set that as our uniform
 			uniform = holder
