@@ -22,6 +22,8 @@
 
 	var/area_type
 	var/hidden = FALSE //are we invisible to shuttle navigation computers?
+	
+	var/delete_after = FALSE //Delete this port after ship fly off.
 
 	//these objects are indestructible
 /obj/docking_port/Destroy(force)
@@ -163,10 +165,8 @@
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary += src
-	if(!id)
-		id = "[SSshuttle.stationary.len]"
-	if(name == "dock")
-		name = "dock[SSshuttle.stationary.len]"
+	id = "[SSshuttle.stationary.len]"
+	name = "[name] dock[SSshuttle.stationary.len]"
 	if(!area_type)
 		var/area/place = get_area(src)
 		area_type = place?.type // We might be created in nullspace
@@ -290,10 +290,8 @@
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
 
-	if(!id)
-		id = "[SSshuttle.mobile.len]"
-	if(name == "shuttle")
-		name = "shuttle[SSshuttle.mobile.len]"
+	id = "[SSshuttle.mobile.len]"
+	name = "[name] shuttle[SSshuttle.mobile.len]"
 
 	shuttle_areas = list()
 	var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
@@ -315,10 +313,8 @@
 	var/list/static/shuttle_id = list()
 	var/idnum = ++shuttle_id[template]
 	if(idnum > 1)
-		if(id == initial(id))
-			id = "[id][idnum]"
-		if(name == initial(name))
-			name = "[name] [idnum]"
+		id = "[id][idnum]"
+		name = "[name] [idnum]"
 	for(var/place in shuttle_areas)
 		var/area/area = place
 		area.connect_to_shuttle(src, dock, idnum, FALSE)
@@ -432,7 +428,10 @@
 		if(initiate_docking(S1) != DOCKING_SUCCESS)
 			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
 		else
-			previous = S0
+			if(S0.delete_after)
+				S0.Destroy(TRUE)
+			else
+				previous = S0
 	else
 		WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
 

@@ -132,6 +132,12 @@
 			if(SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT)
 				to_chat(current_user, "<span class='warning'>Unknown object detected in landing zone. Please designate another location.</span>")
 		return
+		
+	//Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.
+	if(my_port && my_port.get_docked()) 
+		my_port.delete_after = TRUE
+		my_port.id = FALSE
+		my_port = FALSE 
 
 	if(!my_port)
 		my_port = new()
@@ -256,6 +262,7 @@
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
 		shuttlePortId = "[port.id]_custom"
+		shuttlePortName = "[shuttleId]_[shuttlePortName]"
 	if(dock)
 		jumpto_ports[dock.id] = TRUE
 
@@ -327,7 +334,7 @@
 		if(console.z_lock.len && !(S.z in console.z_lock))
 			continue
 		if(console.jumpto_ports[S.id])
-			L[S.name] = S
+			L["([L.len])[S.name]"] = S
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L
