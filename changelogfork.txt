@@ -1,0 +1,43 @@
+-Segments schoolgirl objects off and Creates Lockable Schoolgirl outfits
+   (Notes: All Schoolgirl/Anime Items were moved from Miscellanious to a new file called "schoolgirl.dm" in the same directory)
+-All Lockable Schoolgirl Outfits Share these charateristics: 
+	-adds DUMB Trait
+	-contains NODROP trait
+	-adds NOSUIT trait
+	-unlocks with "girlkey"
+	-unequips armor/outerwear slot when worn
+	-Contains 4 "Hidden"/"Stealth" Pockets in addition to those on the normal HUD (alt-click on worn uniform)
+-Changes Firing Pins to Not Come "prespawned" with most weapons
+-Creates Miner Pins (via Implant - based on Weapons_auth code)
+-Creates Miner's Implants (needed for using weapons equipped with Miner's Pins)
+-Adds Miner Pins to All Starting Shaft Miners
+-Adds Miner Pin's to all "default" kenetic Accelerator Spawns
+-Adds Miner Pins to Vending Rewards
+-Adds Miner's Implants to Vending Rewards
+-Adds "Girly" vendor (for silly stuff)
+-Adds "Sleep Sack" - basically a bodybag that can capture living people and doesn't suffocate them
+-Adds "girlkey" - a key with unique emag-like interactions (unlocks Locked Outfits, Interacts with certain devices)
+-Adds "lockbox of girlkeys" - a lockbox which requires CAPTAIN access to open containing a sinlge girlkey
+-Changed Holodeck Computer Code to apply girlkey-based derez-override (basically let's you disable JUST the derezzing when taking stuff out but not the safeties themselves)
+-Added Mob Trait "TRAIT_NOSUIT" - causes the armor/outerwear slot to be unusable when enabled
+-Changed _suit, and _spacesuit code to drop-on-wear when aforementioned trait is present
+-Changed Mecha Code - No More Dumb Pilots (hopefully)
+-SLIGHTLY changes the body bag icon files (including existing body bag reicon - accidental feel free to overwrite the changed icon if you like it better)
+-Changes Cargo packs to include "Schoolgirl" Costumes
+-Changes Box Station Map to include
+	1. A Third Supply Request Terminal in the bar (for easy access)
+	2. Girly Stuff Vendor in Satellight Antechmber
+	3. Removes a few non-essential props (added back by myst-rc-1)
+	4. Adds a "Sleep sack" (basically a body bag) to one of the dorms
+		(note: Code Needs reviewing I really need to place it in the closest subdatum instead of relying on a completely original item file with mostly copied contents)
+	5. Prewires the Telecomms server room to the main energy grid 
+		(note: i got tired of removing the dance with wiring it and keeping the room atmos intact so I fixed it)
+-Changes Lavaland Map to include
+	1. Weapons Recharger on a tablet in the mining vendor room
+	2. Holopad in the Refining Area
+	3. Adds a Snack Vendor to the Bar
+	4. Adds Disposal Chute to Bar 
+		(note: I got tired of littering the inside of the base with junk food wrappers so I made a simple ejection chute to send it into the lava)
+		(note 2: It /might/ be used for less scrupulous means however - I do NOT take accountablility for missing bodies and/or killed players :P)
+	6. Adds a Pink Lockable Schoolgirl Outfit to one of the chests in the public area
+-Did like 8 vesions just getting on GitHub
