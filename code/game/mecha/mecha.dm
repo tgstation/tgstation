@@ -893,12 +893,10 @@
 		log_message("Permission denied (Attached mobs).", LOG_MECHA)
 		return
 	if(HAS_TRAIT(user,TRAIT_DUMB))
-		to_chat(user, "<span class='warning'>This Mech will not let dumb people drive it")
+		to_chat(user, "<span class='warning'>This Mech will not let dumb people drive it</span>")
 		log_message("Permission denied (Drunk Driver) ", LOG_MECHA)
 		return
-
 	visible_message("[user] starts to climb into [name].")
-
 	if(do_after(user, enter_delay, target = src))
 		if(obj_integrity <= 0)
 			to_chat(user, "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
