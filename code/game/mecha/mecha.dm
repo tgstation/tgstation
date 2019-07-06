@@ -952,7 +952,8 @@
 			return mmi_moved_inside(mmi_as_oc, user)
 		else
 			to_chat(user, "<span class='warning'>Occupant detected!</span>")
-			to_chat(user, "<span class='notice'>You stop inserting the MMI.</span>")
+	else
+		to_chat(user, "<span class='notice'>You stop inserting the MMI.</span>")
 	return FALSE
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/mmi/mmi_as_oc, mob/user)
