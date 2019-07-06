@@ -25,6 +25,14 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
+	if(is_station_level(z))
+		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
+
+/obj/effect/decal/cleanable/Destroy()
+	if(is_station_level(z))
+		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
+	return ..()
+
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)
 		return TRUE

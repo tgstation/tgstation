@@ -7,6 +7,16 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
+/obj/item/trash/Initialize()
+	if(is_station_level(z))
+		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
+	return ..()
+
+/obj/item/trash/Destroy()
+	if(is_station_level(initial(z)))
+		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
+	return ..()
+
 /obj/item/trash/raisins
 	name = "\improper 4no raisins"
 	icon_state= "4no_raisins"

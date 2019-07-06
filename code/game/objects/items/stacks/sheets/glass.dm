@@ -270,6 +270,15 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if (icon_prefix)
 		icon_state = "[icon_prefix][icon_state]"
 
+	if(is_station_level(z))
+		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
+
+/obj/item/shard/Destroy()
+	. = ..()
+
+	if(is_station_level(initial(z)))
+		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
+
 /obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
 	. = ..()
 	if(!proximity || !(src in user))
