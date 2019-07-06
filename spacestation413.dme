@@ -2887,6 +2887,8 @@
 #include "spacestation413\code\modules\clothing\clothing.dm"
 #include "spacestation413\code\modules\clothing\mask.dm"
 #include "spacestation413\code\modules\clothing\under.dm"
+#include "spacestation413\code\modules\clothing\glasses\_glasses.dm"
+#include "spacestation413\code\modules\clothing\glasses\hud.dm"
 #include "spacestation413\code\modules\clothing\shoes\buttshoes.dm"
 #include "spacestation413\code\modules\clothing\shoes\cluwne.dm"
 #include "spacestation413\code\modules\events\floorcluwne.dm"
