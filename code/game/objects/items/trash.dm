@@ -8,12 +8,14 @@
 	resistance_flags = FLAMMABLE
 
 /obj/item/trash/Initialize()
-	if(is_station_level(z))
+	var/area/A = get_area(src)
+	if(is_station_level(z) && !istype(A, /area/maintenance))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 	return ..()
 
 /obj/item/trash/Destroy()
-	if(is_station_level(initial(z)))
+	var/area/A = get_area(src)
+	if(is_station_level(initial(z)) && !istype(A, /area/maintenance))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 	return ..()
 

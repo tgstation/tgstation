@@ -55,7 +55,8 @@
 		BB.preparePixelProjectile(target, user, params, spread)
 	BB.fire(null, direct_target)
 	BB = null
-	if(is_station_level(z))
+	var/area/A = get_area(src)
+	if(is_station_level(z) && !istype(A, /area/maintenance))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 	return TRUE
 

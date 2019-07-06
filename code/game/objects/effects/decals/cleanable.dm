@@ -25,11 +25,13 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-	if(is_station_level(z))
+	var/area/A = get_area(src)
+	if(is_station_level(z) && !istype(A, /area/maintenance))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 
 /obj/effect/decal/cleanable/Destroy()
-	if(is_station_level(z))
+	var/area/A = get_area(src)
+	if(is_station_level(initial(z)) && !istype(A, /area/maintenance))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 	return ..()
 
