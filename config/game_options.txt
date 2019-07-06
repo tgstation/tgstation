@@ -103,7 +103,7 @@ PROBABILITY EXTENDED 0
 PROBABILITY SECRET_EXTENDED 0
 PROBABILITY DEVIL 0
 PROBABILITY DEVIL_AGENTS 0
-PROBABILITY CLOWNOPS 0
+PROBABILITY CLOWNOPS 1
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -226,10 +226,10 @@ BROTHER_OBJECTIVES_AMOUNT 2
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
-#PROTECT_ROLES_FROM_ANTAGONIST
+PROTECT_ROLES_FROM_ANTAGONIST
 
 ## Uncomment to prohibit assistants from becoming most antagonists.
-#PROTECT_ASSISTANT_FROM_ANTAGONIST
+PROTECT_ASSISTANT_FROM_ANTAGONIST
 
 ## If non-human species are barred from joining as a head of staff
 #ENFORCE_HUMAN_AUTHORITY
