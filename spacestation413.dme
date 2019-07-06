@@ -2912,6 +2912,7 @@
 #include "spacestation413\code\modules\paperwork\photography.dm"
 #include "spacestation413\code\modules\reagents\chemistry\reagents\drug_reagents.dm"
 #include "spacestation413\code\modules\reagents\chemistry\reagents\other_reagents.dm"
+#include "spacestation413\code\modules\reagents\reagent_containers\blood_pack.dm"
 #include "spacestation413\code\modules\research\designs\bluespace_designs.dm"
 #include "spacestation413\code\modules\spells\cluwnecurse.dm"
 #include "spacestation413\code\modules\spells\spell_types\touch.dm"

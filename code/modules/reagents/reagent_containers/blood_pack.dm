@@ -46,7 +46,7 @@
 
 /obj/item/reagent_containers/blood/random/Initialize()
 	icon_state = "bloodpack"
-	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
+	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L", "T") // 413 -- troll blood type
 	return ..()
 
 /obj/item/reagent_containers/blood/APlus

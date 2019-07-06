@@ -1142,7 +1142,8 @@
 					/obj/item/reagent_containers/blood/OPlus,
 					/obj/item/reagent_containers/blood/OMinus,
 					/obj/item/reagent_containers/blood/lizard,
-					/obj/item/reagent_containers/blood/ethereal)
+					/obj/item/reagent_containers/blood/ethereal,
+					/obj/item/reagent_containers/blood/troll) // 413 -- troll blood packs
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 

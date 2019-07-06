@@ -77,8 +77,10 @@ GLOBAL_LIST_INIT(tendrils, list())
 /obj/effect/collapse/Initialize()
 	. = ..()
 	emitted_light = new(loc)
+	// 413 start -- convey what order you should do shit in better
+	visible_message("<span class='warning'>Something falls free of the tendril!</span>") 
 	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
-	visible_message("<span class='warning'>Something falls free of the tendril!</span>")
+	// 413 end
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	addtimer(CALLBACK(src, .proc/collapse), 50)
 
