@@ -26,15 +26,15 @@
 			if(G.pin && (force_replace || G.pin.pin_removeable))
 				G.pin.forceMove(get_turf(G))
 				G.pin.gun_remove(user)
-				to_chat(user, "<span class='notice'>You remove [G]'s old pin.</span>")
+				to_chat(user, "<span class ='notice'>You remove [G]'s old pin.</span>")
 
 			if(!G.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return
 				gun_insert(user, G)
-				to_chat(user, "<span class='notice'>You insert [src] into [G].</span>")
+				to_chat(user, "<span class ='notice'>You insert [src] into [G].</span>")
 			else
-				to_chat(user, "<span class='notice'>This firearm already has a firing pin installed.</span>")
+				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/firing_pin/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -114,7 +114,10 @@
 	icon_state = "firing_pin_pindi"
 	req_implant = /obj/item/implant/weapons_auth
 
-
+/obj/item/firing_pin/implant/miner
+	name = "Miner's Firing Pin"
+	desc = "Secures your miner's weapons"
+	req_implant = /obj/item/implant/weapons_auth/miner
 
 // Honk pin, clown's joke item.
 // Can replace other pins. Replace a pin in cap's laser for extra fun!
@@ -150,9 +153,32 @@
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object. It has a small nitrobananium charge on it."
 	selfdestruct = TRUE
 
+/obj/item/firing_pin/girl
+	name = "Pink Firing Pin"
+	desc = "Will only let females fire the weapon"
+	force_replace = 1
+	custom_price = 100
+	fail_message = "<span class='warning'>NOT A GIRL! FIRING REJECTED!!</span>"
 
+/obj/item/firing_pin/girl/gun_insert(mob/living/user, obj/item/gun/G)
+	var/gender = user.gender
+	var/user_name = user.real_name
+	var/msg = "[user_name] Is [gender]"
+	to_chat(GLOB.admins, msg)
+	gun = G
+	forceMove(gun)
+	gun.pin = src
+	return
+
+/obj/item/firing_pin/girl/pin_auth(mob/living/user)
+	if(user.gender == FEMALE)
+		return TRUE
+	return FALSE
 // DNA-keyed pin.
 // When you want to keep your toys for yourself.
+/obj/item/firing_pin/girl/emag_act(mob/user)
+	to_chat(user, "<span class='notice'>You Cannot Hack this Pin,</span>")
+
 /obj/item/firing_pin/dna
 	name = "DNA-keyed firing pin"
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link."

@@ -103,6 +103,21 @@
 	. = ..()
 	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 
+/obj/item/card/girls
+	name = "Pink Keycard"
+	desc = "It seems to belong to a clothing lock."
+	icon_state = "girlskey"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+
+/obj/item/card/minerpermit
+	name = "Miner's Permit"
+	desc = "You must equip it to fire stock Kinetic Accelerators."
+	icon_state = "permit"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	slot_flags = ITEM_SLOT_ID
+
 /obj/item/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."

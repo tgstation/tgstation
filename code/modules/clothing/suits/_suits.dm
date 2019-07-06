@@ -8,8 +8,8 @@
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 	var/suittoggled = FALSE
-
-
+	var/equipped_at = null
+	var/wearer = null
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
@@ -30,3 +30,8 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_wear_suit()
+
+/obj/item/clothing/suit/equipped(mob/user, slot)
+	if(HAS_TRAIT(user,TRAIT_NOSUIT))
+		if(slot == SLOT_WEAR_SUIT)
+			user.dropItemToGround(src)

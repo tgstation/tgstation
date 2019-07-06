@@ -36,7 +36,7 @@
 	// to use the same source patterns.  Y'know, if you want to.
 	var/holodeck_type = /area/holodeck/rec_center	// locate(this) to get the target holodeck
 	var/program_type = /area/holodeck/rec_center	// subtypes of this (but not this itself) are loadable programs
-
+	var/derez_override = FALSE
 	var/active = FALSE
 	var/damaged = FALSE
 	var/list/spawned = list()
@@ -46,6 +46,15 @@
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/holodeck/attackby(obj/item/I, mob/user, params)
+	if(user.is_holding_item_of_type(/obj/item/card/girls))
+		if(derez_override)
+			say("De-rezzing Override Disabled")
+			derez_override = FALSE
+		else
+			say("De-rezzing Override Enabled")
+			derez_override = TRUE
 
 /obj/machinery/computer/holodeck/LateInitialize()
 	if(ispath(holodeck_type, /area))
@@ -151,7 +160,7 @@
 	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
 			if(!(get_turf(item) in linked))
-				derez(item, 0)
+				if(!derez_override) derez(item, 0)
 	for(var/e in effects)
 		var/obj/effect/holodeck_effect/HE = e
 		HE.tick()

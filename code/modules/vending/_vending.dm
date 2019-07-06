@@ -77,7 +77,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/extra_price = 50
 	var/onstation = TRUE //if it doesn't originate from off-station during mapload, everything is free
 	var/list/canload_access_list
-
+	var/girl_locked = FALSE
 	var/list/vending_machine_input = list()
 	var/input_display_header = "Custom Compartment"
 
@@ -262,21 +262,21 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
-			to_chat(user, "<span class='warning'>You should probably unscrew the service panel first!</span>")
+			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 		else if (stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='notice'>[src] does not respond.</span>")
 		else
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/vending_refill/canister = I
 			if(canister.get_part_rating() == 0)
-				to_chat(user, "<span class='warning'>[canister] is empty!</span>")
+				to_chat(user, "<span class='notice'>[canister] is empty!</span>")
 			else
 				// instantiate canister if needed
 				var/transferred = restock(canister)
 				if(transferred)
 					to_chat(user, "<span class='notice'>You loaded [transferred] items in [src].</span>")
 				else
-					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
+					to_chat(user, "<span class='notice'>There's nothing to restock!</span>")
 			return
 	if(compartmentLoadAccessCheck(user))
 		if(canLoadItem(I))
@@ -297,7 +297,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				else
 					denied_items++
 			if(denied_items)
-				to_chat(user, "<span class='warning'>[src] refuses some items!</span>")
+				to_chat(user, "<span class='notice'>[src] refuses some items.</span>")
 			if(loaded)
 				to_chat(user, "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>")
 				updateUsrDialog()
@@ -462,7 +462,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
-			to_chat(usr, "<span class='warning'>The vending machine cannot dispense products while its service panel is open!</span>")
+			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
 			return
 
 		vend_ready = 0 //One thing at a time!!
@@ -502,6 +502,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 				return
 			else if (!C.registered_account)
 				say("No account found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			else if(girl_locked && usr.gender != FEMALE)
+				say("Not a girl!")
 				flick(icon_deny,src)
 				vend_ready = 1
 				return

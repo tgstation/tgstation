@@ -12,6 +12,9 @@
 				<b>Function:</b> Allows operation of implant-locked weaponry, preventing equipment from falling into enemy hands."}
 	return dat
 
+/obj/item/implant/weapons_auth/miner
+	name = "Miner's Authentication implant"
+	desc = "Lets you shoot Kinetic Accelerators"
 
 /obj/item/implant/adrenalin
 	name = "adrenal implant"

@@ -25,6 +25,12 @@
 	max_w_class = WEIGHT_CLASS_TINY
 	attack_hand_interact = FALSE
 
+/datum/component/storage/concrete/pockets/schoolgirl
+	max_items = 4
+	max_w_class = WEIGHT_CLASS_SMALL
+	attack_hand_interact = FALSE
+	silent = TRUE
+
 /datum/component/storage/concrete/pockets/small/fedora/Initialize()
 	. = ..()
 	var/static/list/exception_cache = typecacheof(list(

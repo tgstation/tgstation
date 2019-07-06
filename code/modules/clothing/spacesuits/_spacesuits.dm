@@ -21,6 +21,8 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
 	dog_fashion = null
+	var/equipped_at = null
+	var/wearer = null
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -43,3 +45,8 @@
 	strip_delay = 80
 	equip_delay_other = 80
 	resistance_flags = NONE
+
+/obj/item/clothing/suit/equipped(mob/user, slot)
+	if(HAS_TRAIT(user,TRAIT_NOSUIT))
+		if(slot == SLOT_WEAR_SUIT)
+			user.dropItemToGround(src)

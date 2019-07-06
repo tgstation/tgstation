@@ -84,6 +84,19 @@
 /obj/item/storage/lockbox/clusterbang/PopulateContents()
 	new /obj/item/grenade/clusterbuster(src)
 
+/obj/item/storage/lockbox/girlkey
+	name = "lockbox of Girl Keys"
+	desc = "You have a bad feeling about opening this."
+	req_access = list(ACCESS_CAPTAIN)
+
+/obj/item/storage/lockbox/girlkey/emag_act(mob/user)
+	to_chat(user,"<span class='warning'>This is a highly secure box and emagging it won't work.</span>")
+	return
+
+/obj/item/storage/lockbox/girlkey/PopulateContents()
+	new /obj/item/card/girls(src)
+
+
 /obj/item/storage/lockbox/medal
 	name = "medal box"
 	desc = "A locked box used to store medals of honor."
