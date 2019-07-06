@@ -2172,6 +2172,19 @@
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/costumes_toys/schoolgirl
+	name = "Schoolgirl Costume Crate"
+	desc = "A Set of Lockable Schoolgirl Uniforms for your anime fantasies."
+	cost = 3000
+	contains = list(/obj/item/clothing/under/schoolgirl/locked,
+					/obj/item/clothing/under/schoolgirl/locked/blue,
+					/obj/item/clothing/under/schoolgirl/locked/red,
+					/obj/item/clothing/under/schoolgirl/locked/orange,
+					/obj/item/clothing/under/schoolgirl/locked/green,
+					/obj/item/storage/lockbox/girlkey)
+	crate_name = "anime costume crate"
+	crate_type = /obj/structure/closet/crate/schoolgirl
+
 /datum/supply_pack/costumes_toys/randomised/toys
 	name = "Toy Crate"
 	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight to the sweet rewards with this product! Contains five random toys. Warranty void if used to prank research directors."

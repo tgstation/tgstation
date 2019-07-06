@@ -1606,6 +1606,7 @@
 #include "code\modules\clothing\under\color.dm"
 #include "code\modules\clothing\under\miscellaneous.dm"
 #include "code\modules\clothing\under\pants.dm"
+#include "code\modules\clothing\under\schoolgirl.dm"
 #include "code\modules\clothing\under\shorts.dm"
 #include "code\modules\clothing\under\syndicate.dm"
 #include "code\modules\clothing\under\trek.dm"

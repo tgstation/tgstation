@@ -64,6 +64,7 @@
 	manifest = null
 	update_icon()
 
+
 /obj/structure/closet/crate/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
@@ -187,3 +188,8 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/coin/silver(src)
+
+/obj/structure/closet/crate/schoolgirl
+	name = "School Girl Stuff"
+	desc = "A Crate of Anime Goods"
+	icon_state = "schoolgirl"
