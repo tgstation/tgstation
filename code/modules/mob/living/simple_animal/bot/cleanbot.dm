@@ -206,18 +206,19 @@
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
 	if(istype(A, /obj/effect/decal/cleanable))
-		anchored = TRUE
+		icon_state = "cleanbot-c"
 		mode = BOT_CLEANING
-		if(isturf(A.loc))
-			var/atom/movable/AM = A
-			if(istype(AM, /obj/effect/decal/cleanable))
-				visible_message("<span class='notice'>[src] cleans up [A].</span>")
-				for(var/obj/effect/decal/cleanable/C in A.loc)
-					qdel(C)
+		if(do_after(src, 1, target = A))
+			if(isturf(A.loc))
+				var/atom/movable/AM = A
+				if(istype(AM, /obj/effect/decal/cleanable))
+					visible_message("<span class='notice'>[src] cleans up [A].</span>")
+					for(var/obj/effect/decal/cleanable/C in A.loc)
+						qdel(C)
 
-		anchored = FALSE
 		target = null
 		mode = BOT_IDLE
+		icon_state = "cleanbot[on]"
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
