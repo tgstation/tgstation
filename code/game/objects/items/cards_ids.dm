@@ -326,8 +326,44 @@ update_label("John Doe", "Clowny")
 				return
 			assignment = u
 			update_label()
+
+			if("i") //icon_states.
+				var/list/i = list(
+				"id",
+				"orange",
+				"serv",
+				"chap",
+				"lawyer",
+				"gold",
+				"silver",
+				"ce",
+				"engi",
+				"atmos",
+				"cmo",
+				"med",
+				"hos",
+				"warden",
+				"detective",
+				"sec",
+				"rd",
+				"sci",
+				"qm",
+				"cargo",
+				"miner",
+				"clown",
+				"mime",
+				"ert",
+				"centcom",
+				"syndicate",
+				)
+				var/choice = input(user) in i
+				if(!Adjacent(user))
+					return
+				if(!choice)
+					return
+				icon_state = choice
 			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
-			return
+
 	return ..()
 
 /obj/item/card/id/syndicate/anyone

@@ -182,7 +182,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
-	id = /obj/item/card/job/sec
+	id = /obj/item/card/id/job/sec
 
 /obj/effect/mob_spawn/human/corpse/cat_butcher
 	name = "The Cat Surgeon"
@@ -207,7 +207,7 @@
 /obj/effect/mob_spawn/human/corpse/bee_terrorist
 	name = "BLF Operative"
 	outfit = /datum/outfit/bee_terrorist
-	
+
 /datum/outfit/bee_terrorist
 	name = "BLF Operative"
 	uniform = /obj/item/clothing/under/color/yellow
