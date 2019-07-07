@@ -24,6 +24,7 @@
 	name = "Lawyer"
 	jobtype = /datum/job/lawyer
 
+	id = /obj/item/card/id/job/lawyer
 	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
 	uniform = /obj/item/clothing/under/lawyer/bluesuit

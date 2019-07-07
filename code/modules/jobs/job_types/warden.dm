@@ -32,6 +32,7 @@
 	name = "Warden"
 	jobtype = /datum/job/warden
 
+	id = /obj/item/card/id/job/warden
 	belt = /obj/item/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/warden

@@ -182,7 +182,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
-	id = /obj/item/card/id
+	id = /obj/item/card/job/sec
 
 /obj/effect/mob_spawn/human/corpse/cat_butcher
 	name = "The Cat Surgeon"

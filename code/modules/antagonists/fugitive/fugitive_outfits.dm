@@ -72,7 +72,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/ammo_box/magazine/m45
 	r_pocket = /obj/item/ammo_box/magazine/m45
-	id = /obj/item/card/id
+	id = /obj/item/card/id/job/sec
 
 /datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

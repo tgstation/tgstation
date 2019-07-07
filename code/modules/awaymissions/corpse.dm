@@ -438,7 +438,7 @@
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	glasses = /obj/item/clothing/glasses/sunglasses
-	id = /obj/item/card/id
+	id = /obj/item/card/id/gold
 
 
 /obj/effect/mob_spawn/human/commander
@@ -458,7 +458,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
-	id = /obj/item/card/id
+	id = /obj/item/card/id/job/hos
 
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
@@ -476,7 +476,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
-	id = /obj/item/card/id
+	id = /obj/item/card/id/job/sec
 
 
 /obj/effect/mob_spawn/human/commander/alive

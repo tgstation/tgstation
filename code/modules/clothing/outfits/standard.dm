@@ -131,6 +131,7 @@
 
 	var/obj/item/card/id/W = H.wear_id
 	W.access = get_all_accesses()
+	W.icon_state = "clown_op"
 	W.assignment = "Tunnel Clown!"
 	W.registered_name = H.real_name
 	W.update_label(H.real_name)

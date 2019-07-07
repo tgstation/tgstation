@@ -22,6 +22,7 @@
 	name = "Quartermaster"
 	jobtype = /datum/job/qm
 
+	id = /obj/item/card/id/job/qm
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargo
