@@ -175,9 +175,9 @@
 
 /datum/quirk/tagger/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/toy/crayon/spraycan/spraycan = new(get_turf(H))
-	H.put_in_hands(spraycan)
-	H.equip_to_slot(spraycan, SLOT_IN_BACKPACK)
+	var/obj/item/storage/crayons/box = new(get_turf(H))
+	H.put_in_hands(box)
+	H.equip_to_slot(box, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/voracious
