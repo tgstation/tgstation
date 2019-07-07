@@ -1,0 +1,4 @@
+author: "DesurtFawks"
+delete-after: True
+changes: 
+  - bugfix: "Cloning (Computer Board) now print correctly"

@@ -1,8 +1,0 @@
-author: "pireamaineach"
-delete-after: True
-changes: 
-  - rscadd: "Added mime envirosuits, nothing special here."
-  - rscadd: "Added clown envirosuits, which release space lube when they extinguish the clown."
-  - rscdel: "Removes code that theoretically limits plasmamen from being clowns and mimes, but actually doesn't."
-  - tweak: "I guess the roles now spawning with these suits is kind of notable."
-  - tweak: "Reverts unlisted changes to the grey detective suit from https://github.com/tgstation/tgstation/pull/44776."

@@ -1104,6 +1104,14 @@
 /obj/item/clothing/glasses/heat,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
+"iy" = (
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/coastline_t,
+/area/awaymission/beach)
+"MD" = (
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
 
 (1,1,1) = {"
 aa
@@ -4675,9 +4683,9 @@ ac
 aw
 af
 ay
+MD
 ak
-ak
-ak
+MD
 aT
 ao
 aY
@@ -4781,7 +4789,7 @@ ac
 aw
 af
 ay
-ak
+MD
 ak
 ak
 ak
@@ -4890,7 +4898,7 @@ ay
 ak
 ak
 ak
-ak
+MD
 ak
 ak
 ak
@@ -5231,7 +5239,7 @@ aY
 ae
 aw
 ag
-ak
+MD
 aZ
 ak
 ak
@@ -5332,7 +5340,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 aT
 aj
 aj
@@ -5343,7 +5351,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 aT
 ao
 ar
@@ -6309,7 +6317,7 @@ ak
 ak
 ak
 ak
-ap
+iy
 ar
 ac
 ac
@@ -6489,7 +6497,7 @@ ac
 ac
 ad
 ag
-ak
+MD
 ak
 ak
 ak
@@ -8971,7 +8979,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 ak
 ak
 cu
@@ -10343,7 +10351,7 @@ ac
 ac
 aw
 ag
-ak
+MD
 ak
 ak
 ak
@@ -10451,7 +10459,7 @@ ad
 af
 ay
 ak
-ak
+MD
 ak
 ak
 ak
@@ -10589,7 +10597,7 @@ ak
 ak
 cO
 ak
-ap
+iy
 ar
 ac
 ac
@@ -10802,7 +10810,7 @@ ak
 ak
 ak
 aK
-ak
+MD
 ap
 ar
 ac
@@ -10985,7 +10993,7 @@ ac
 ac
 ax
 ag
-ak
+MD
 ak
 ak
 ak
@@ -11015,7 +11023,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 bo
 aq
 ar
@@ -15022,7 +15030,7 @@ ad
 ag
 al
 ak
-ak
+MD
 ap
 ar
 ab
