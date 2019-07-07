@@ -1241,7 +1241,7 @@
 	name = "Blue Crayon Powder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
-	random_color_list = list("#00B7EF")
+	random_color_list = list("#71cae5")
 
 /datum/reagent/colorful_reagent/crayonpowder/purple
 	name = "Purple Crayon Powder"
@@ -1259,7 +1259,7 @@
 	name = "Black Crayon Powder"
 	colorname = "black"
 	color = "#1C1C1C" // not quite black
-	random_color_list = list("#404040")
+	random_color_list = list("#8D8D8D")	//more grey than black, not enough to hide your true colors
 
 /datum/reagent/colorful_reagent/crayonpowder/white
 	name = "White Crayon Powder"
