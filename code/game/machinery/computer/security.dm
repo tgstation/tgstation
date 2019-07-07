@@ -20,6 +20,7 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+	var/maxFine = 1000
 
 	light_color = LIGHT_COLOR_RED
 
@@ -210,6 +211,32 @@
 					if((istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2)))
 						dat += "<font size='4'><b>Security Data</b></font>"
 						dat += "<br>Criminal Status: <A href='?src=[REF(src)];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>"
+						dat += "<br><br>Citations: <A href='?src=[REF(src)];choice=Edit Field;field=citation_add'>Add New</A>"
+
+						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+						<tr>
+						<th>Crime</th>
+						<th>Fine</th>
+						<th>Author</th>
+						<th>Time Added</th>
+						<th>Amount Due</th>
+						<th>Del</th>
+						</tr>"}
+						for(var/datum/data/crime/c in active2.fields["citation"])
+							var/owed = c.fine - c.paid
+							dat += {"<tr><td>[c.crimeName]</td>
+							<td>$[c.fine]</td><td>[c.author]</td>
+							<td>[c.time]</td>"}
+							if(owed > 0)
+								dat += "<td>$[owed] <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
+							else
+								dat += "<td>All Paid Off</td>"
+							dat += {"<td>
+							<A href='?src=[REF(src)];choice=Edit  Field;field=citation_delete;cdataid=[c.dataId]'>\[X\]</A>
+							</td>
+							</tr>"}
+						dat += "</table>"
+
 						dat += "<br><br>Minor Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_add'>Add New</A>"
 
 
@@ -356,6 +383,25 @@ What a mess.*/
 							active2 = E
 					screen = 3
 
+			if("Pay")
+				for(var/datum/data/crime/p in active2.fields["citation"])
+					if(p.dataId == text2num(href_list["cdataid"]))
+						var/obj/item/holochip/C = usr.is_holding_item_of_type(/obj/item/holochip)
+						if(C && istype(C))
+							var/pay = C.get_item_credit_value()
+							if(!pay)
+								to_chat(usr, "<span class='warning'>[C] doesn't seem to be worth anything!</span>")
+							else
+								var/diff = p.fine - p.paid
+								GLOB.data_core.payCitation(active2.fields["id"], text2num(href_list["cdataid"]), pay)
+								to_chat(usr, "<span class='notice'>You have paid [pay] credit\s towards your fine</span>")
+								if (pay == diff || pay > diff || pay >= diff)
+									investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
+									to_chat(usr, "<span class='notice'>The fine has been paid in full</span>")
+								qdel(C)
+								playsound(src, "terminal_type", 25, 0)
+						else
+							to_chat(usr, "<span class='warning'>Fines can only be paid with holochips</span>")
 
 			if("Print Record")
 				if(!( printing ))
@@ -696,6 +742,37 @@ What a mess.*/
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
+					if("citation_add")
+						if(istype(active1, /datum/data/record))
+							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
+							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 50) as num, 1)
+							if(!fine || fine < 0)
+								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
+								return
+							fine = min(fine, maxFine)
+							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
+								return
+							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
+							for (var/obj/item/pda/P in GLOB.PDAs)
+								if(P.owner == active1.fields["name"])
+									var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
+									var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+										"name" = "Security Citation",
+										"job" = "Citation Server",
+										"message" = message,
+										"targets" = list("[P.owner] ([P.ownjob])"),
+										"automated" = 1
+									))
+									signal.send_to_receivers()
+									usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+							GLOB.data_core.addCitation(active1.fields["id"], crime)
+							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+					if("citation_delete")
+						if(istype(active1, /datum/data/record))
+							if(href_list["cdataid"])
+								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
+									return
+								GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
