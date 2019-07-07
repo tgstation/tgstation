@@ -875,9 +875,10 @@
 
 /datum/reagent/medicine/mutadone
 	name = "Mutadone"
-	description = "Removes jitteriness and temporarly supresses genes from manifesting, it also prevents new mutation from appearing while in the system."
+	description = "Removes jitteriness and temporarly supresses genes from manifesting, it also prevents new mutations from appearing while in the system."
 	color = "#5096C8"
 	taste_description = "acid"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 35
 	var/list/mut = list()
 
@@ -887,19 +888,21 @@
 		for(var/i in M.dna.mutations)
 			var/datum/mutation/mutation = i
 			mut += mutation.type
+		M.dna.remove_all_mutations(mutadone = TRUE)
+		ADD_TRAIT(M, TRAIT_STABLEGENES, type)
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(0.5 *REM, 0)
 	M.jitteriness = 0
-	if(M.has_dna())
-		M.dna.remove_all_mutations(mutadone = TRUE)
+	M.adjustStaminaLoss(1*REM, 0)
 	if(!QDELETED(M)) //We were a monkey, now a human
 		..()
 
 /datum/reagent/medicine/mutadone/on_mob_end_metabolize(mob/living/carbon/M)
 	..()
 	if(M.has_dna())
-		M.dna.remove_all_mutations(mutadone = TRUE) //just to be sure
+		REMOVE_TRAIT(M, TRAIT_STABLEGENES, type)
+		if(current_cycle >= 100 && mut.len)
+			mut -= pick(mut)
 		for(var/i in mut)
 			var/datum/mutation/mutation = i
 			M.dna.add_mutation(mutation)
