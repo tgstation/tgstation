@@ -175,15 +175,18 @@
 
 /obj/item/reagent_containers/food/snacks/store/cake/birthday
 	name = "birthday cake"
-	desc = "Happy Birthday! You get an awesome gift if you eat this whole!"
+	desc = "Happy Birthday little clown..."
 	icon_state = "birthdaycake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/birthday
 	slices_num = 5
-	trash = /obj/item/clothing/head/hardhat/cakehat //super sekrit club
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 1)
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
+
+/obj/item/reagent_containers/food/snacks/store/cake/birthday/microwave_act(obj/machinery/microwave/M) //super sekrit club
+	new /obj/item/clothing/head/hardhat/cakehat(get_turf(src))
+	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/cakeslice/birthday
 	name = "birthday cake slice"
