@@ -32,7 +32,7 @@
 	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
 
 	var/mood_bonus = 0 //Mood for being here
-	var/mood_message = "" //Mood message for being here, only shows up if mood_bonus != 0
+	var/mood_message = "This area is pretty nice!" //Mood message for being here, only shows up if mood_bonus != 0
 
 	var/power_equip = TRUE
 	var/power_light = TRUE

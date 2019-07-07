@@ -149,5 +149,9 @@
 	timeout = 5 MINUTES
 
 /datum/mood_event/area
-	description = "fill this in in the area"
-	mood_change = 0 
+	description = "" //Fill this out in the area
+	mood_change = 0
+
+/datum/mood_event/area/add_effects(list/param)
+	mood_change = param[1]
+	description = param[2]
