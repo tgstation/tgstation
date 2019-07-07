@@ -149,7 +149,7 @@
 						to_chat(user, "<span class='notice'>You have [pill_count] implanted pill[pill_count > 1 ? "s" : ""].</span>")
 
 				else
-					user.visible_message("<span class='notice'>[user] directs [src] to [M]'s mouth.</span>",\
+					user.visible_message("[user] directs [src] to [M]'s mouth.",\
 										 "<span class='notice'>You direct [src] to [M]'s mouth.</span>")
 					if(organ_count)
 						to_chat(user, "<span class='notice'>Inside [their] mouth [organ_count > 1 ? "are" : "is"] [organ_list].</span>")
@@ -312,7 +312,7 @@
 	. = ..()
 	// All good, turn it on.
 	if(.)
-		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
+		user.visible_message("[user] lights \the [src].", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
 		damtype = "fire"
 		START_PROCESSING(SSobj, src)
@@ -479,7 +479,7 @@
 
 	. = ..()
 	if(.)
-		user.visible_message("<span class='notice'>[user] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>")
+		user.visible_message("[user] cracks and shakes [src].", "<span class='notice'>You crack and shake [src], turning it on!</span>")
 		START_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)

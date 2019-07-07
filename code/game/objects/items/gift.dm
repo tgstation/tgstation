@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	qdel(src)
 
 	var/obj/item/I = new contains_type(get_turf(M))
-	M.visible_message("<span class='notice'>[M] unwraps \the [src], finding \a [I] inside!</span>")
+	M.visible_message("[M] unwraps \the [src], finding \a [I] inside!")
 	I.investigate_log("([I.type]) was found in a present by [key_name(M)].", INVESTIGATE_PRESENTS)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)

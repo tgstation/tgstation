@@ -88,7 +88,7 @@
 	for(var/obj/item/I in view(4, src))
 		if(is_type_in_list(I, collectable_items) && I.loc != src && (!I.reagents || !I.reagents.total_volume))
 			if(I.Adjacent(src))
-				visible_message("<span class='notice'>[src] beams up [I]!</span>")
+				visible_message("[src] beams up [I]!")
 				I.forceMove(src)
 				playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 				flick("synthesizer_beam", src)
@@ -121,7 +121,7 @@
 			use_power(active_power_usage)
 			disposed++
 	if (disposed)
-		visible_message("<span class='notice'>[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams [disposed] stored item\s into the nearby [bin.name].</span>")
+		visible_message("[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams [disposed] stored item\s into the nearby [bin.name].")
 		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 		playsound(bin, 'sound/items/pshoom.ogg', 50, TRUE)
 		Beam(bin, icon_state = "rped_upgrade", time = 5)

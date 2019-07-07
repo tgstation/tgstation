@@ -245,7 +245,7 @@
 			wires.cut_all()
 		else
 			if(!occupant)
-				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
+				visible_message("[src]'s door slides open. The glowing yellow lights dim to a gentle green.")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
@@ -298,7 +298,7 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
+	user.visible_message("<span class='warning'>You see [user] kicking against the doors of [src]!</span>", \
 		"<span class='notice'>You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a thump from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
@@ -311,7 +311,7 @@
 
 	add_fingerprint(user)
 	if(locked)
-		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
+		visible_message("<span class='warning'>You see [user] kicking against the doors of [src]!</span>", \
 			"<span class='notice'>You start kicking against the doors...</span>")
 		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
 	else
@@ -320,7 +320,7 @@
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
-		visible_message("<span class='notice'>You see [user] burst out of [src]!</span>", \
+		visible_message("<span class='warning'>You see [user] burst out of [src]!</span>", \
 			"<span class='notice'>You escape the cramped confines of [src]!</span>")
 		open_machine()
 
@@ -328,7 +328,7 @@
 	if(state_open && is_operational())
 		if(istype(I, /obj/item/clothing/suit))
 			if(suit)
-				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
+				to_chat(user, "<span class='warning'>The unit already contains a suit!</span>")
 				return
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -355,7 +355,7 @@
 				return
 			storage = I
 
-		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
+		visible_message("[user] inserts [I] into [src].", "<span class='notice'>You load [I] into [src].</span>")
 		update_icon()
 		return
 
@@ -375,7 +375,7 @@
 	. = !(state_open || panel_open || is_operational() || locked || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
-		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
+		visible_message("[usr] pries open \the [src].", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \

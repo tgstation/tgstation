@@ -366,11 +366,11 @@
 		if(R.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need at least one sheet of runed metal to construct a runed wall!</span>")
 			return 0
-		user.visible_message("<span class='notice'>[user] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>")
+		user.visible_message("[user] begins laying runed metal on [src]...", "<span class='notice'>You begin constructing a runed wall...</span>")
 		if(do_after(user, 50, target = src))
 			if(R.get_amount() < 1)
 				return
-			user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
+			user.visible_message("[user] plates [src] with runed metal.", "<span class='notice'>You construct a runed wall.</span>")
 			R.use(1)
 			var/turf/T = get_turf(src)
 			T.PlaceOnTop(/turf/closed/wall/mineral/cult)
@@ -440,11 +440,11 @@
 		if(B.get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two bronze sheets to build a bronze wall!</span>")
 			return 0
-		user.visible_message("<span class='notice'>[user] begins plating [src] with bronze...</span>", "<span class='notice'>You begin constructing a bronze wall...</span>")
+		user.visible_message("[user] begins plating [src] with bronze...", "<span class='notice'>You begin constructing a bronze wall...</span>")
 		if(do_after(user, 50, target = src))
 			if(B.get_amount() < 2)
 				return
-			user.visible_message("<span class='notice'>[user] plates [src] with bronze!</span>", "<span class='notice'>You construct a bronze wall.</span>")
+			user.visible_message("[user] plates [src] with bronze.", "<span class='notice'>You construct a bronze wall.</span>")
 			B.use(2)
 			var/turf/T = get_turf(src)
 			T.PlaceOnTop(/turf/closed/wall/mineral/bronze)

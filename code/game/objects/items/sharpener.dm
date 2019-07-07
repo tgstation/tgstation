@@ -39,7 +39,7 @@
 	if(I.force > initial(I.force))
 		to_chat(user, "<span class='warning'>[I] has already been refined before. It cannot be sharpened further!</span>")
 		return
-	user.visible_message("<span class='notice'>[user] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
+	user.visible_message("[user] sharpens [I] with [src].", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
 	playsound(src, 'sound/items/unsheath.ogg', 25, 1)
 	I.sharpness = IS_SHARP_ACCURATE
 	I.force = CLAMP(I.force + increment, 0, max)

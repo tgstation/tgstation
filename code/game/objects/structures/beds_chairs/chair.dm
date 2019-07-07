@@ -235,7 +235,7 @@
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
-		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
+		usr.visible_message("[usr] grabs \the [src.name].", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
 		TransferComponents(C)
 		usr.put_in_hands(C)
@@ -287,7 +287,7 @@
 			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
-	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
+	user.visible_message("[user] rights \the [src.name].", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	TransferComponents(C)
 	C.setDir(dir)
@@ -397,11 +397,11 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
-		user.visible_message("<span class='notice'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \
+		user.visible_message("<span class='warning'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \
 		"<span class='notice'>Automated spinny chairs. The pinnacle of Ratvarian technology.</span>")
 		START_PROCESSING(SSfastprocess, src)
 	else
-		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
+		user.visible_message("[user] stops [src]'s uncontrollable spinning.", \
 		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
 		STOP_PROCESSING(SSfastprocess, src)
 

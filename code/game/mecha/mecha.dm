@@ -942,7 +942,7 @@
 		to_chat(user, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
 		return FALSE
 
-	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
+	visible_message("[user] starts to insert an MMI into [name].")
 
 	if(do_after(user, 40, target = src))
 		if(!occupant)

@@ -115,7 +115,7 @@ GENE SCANNER
 		to_chat(user, "<span class='info'>Body temperature: ???</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
+	user.visible_message("[user] has analyzed [M]'s vitals.")
 
 	if(scanmode == 0)
 		healthscan(user, M, mode, advanced)
@@ -659,7 +659,7 @@ GENE SCANNER
 	materials = list(MAT_METAL=200)
 
 /obj/item/nanite_scanner/attack(mob/living/M, mob/living/carbon/human/user)
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s nanites.</span>")
+	user.visible_message("[user] has analyzed [M]'s nanites.")
 
 	add_fingerprint(user)
 
@@ -691,11 +691,11 @@ GENE SCANNER
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if (!HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
-		user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
+		user.visible_message("[user] has analyzed [M]'s genetic sequence.")
 		gene_scan(M, user)
 
 	else
-		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
+		user.visible_message("[user] failed to analyse [M]'s genetic sequence.", "<span class='warning'>[M] has no readable genetic sequence!</span>")
 
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)

@@ -721,7 +721,7 @@
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, "rustle", 50, 1, -5)
-	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
+	user.visible_message("[user] hugs \the [src].","<span class='notice'>You hug \the [src].</span>")
 
 /////clown box & honkbot assembly
 /obj/item/storage/box/clown
