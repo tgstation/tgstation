@@ -1,0 +1,6 @@
+## Send a message to a Discord webhook when starting a new game
+#DISCORD_ANNOUNCE_NEW_GAME
+
+## Address the Discord webhook script (tools/discord_webhook_helper/) is listening to
+#DISCORD_WEBHOOK_SCRIPT_ADDRESS localhost:4130
+

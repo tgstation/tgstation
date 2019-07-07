@@ -147,6 +147,18 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
+			// 413 start -- discord
+			if(CONFIG_GET(flag/discord_announce_new_game))
+				// count players
+				totalPlayers = 0
+				totalPlayersReady = 0
+				for(var/mob/dead/new_player/player in GLOB.player_list)
+					++totalPlayers
+					if(player.ready == PLAYER_READY_TO_PLAY)
+						++totalPlayersReady
+				if(totalPlayersReady > 3)
+					SERVER_TOOLS_DISCORD_WEBHOOK_BROADCAST("<@&379039468822331423>\nNew round starting on [SSmapping.config.map_name]!\nInitial player count: [totalPlayersReady]")
+			// 413 end
 			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
