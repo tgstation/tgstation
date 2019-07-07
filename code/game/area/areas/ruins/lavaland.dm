@@ -6,7 +6,8 @@
 /area/ruin/powered/clownplanet
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/animal_hospital
+/area/ruin/unpowered/gaia
+	name = "Heaven in hell"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/snow_biodome
