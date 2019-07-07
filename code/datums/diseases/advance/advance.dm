@@ -31,7 +31,6 @@
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
-	var/oldres
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
@@ -240,7 +239,10 @@
 		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
-		GenerateCure(properties)
+		message_admins("Refresh() called on [src], [cures.len] cures in the list.")
+		if(!cures.len)
+			message_admins("GenerateCure() getting called, cures.len = [cures.len]")
+			GenerateCure(properties)
 	else
 		CRASH("Our properties were empty or null!")
 
@@ -289,15 +291,13 @@
 			severity = "Unknown"
 
 
-// Will generate a random cure, the less resistance the symptoms have, the harder the cure.
+// Will generate a random cure, the more resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure()
-	if(properties && properties.len)
+	message_admins("GenerateCure() ran with [cures.len] cures.")
+	if(properties && properties.len && !cures.len)
 		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		if(res == oldres)
-			return
 		cures = list(pick(advance_cures[res]))
-		oldres = res
-
+		message_admins("GenerateCure() picked [cures[1]]")
 		// Get the cure name from the cure_id
 		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
 		cure_text = D.name
