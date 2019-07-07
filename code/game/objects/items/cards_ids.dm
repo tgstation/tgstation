@@ -191,6 +191,7 @@
 	var/datum/bank_account/old_account = registered_account
 
 	var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num
+
 	if(!alt_click_can_use_id(user))
 		return
 	if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
@@ -199,6 +200,7 @@
 	if (registered_account && registered_account.account_id == new_bank_id)
 		to_chat(user, "<span class='warning'>The account ID was already assigned to this card.</span>")
 		return
+
 	for(var/A in SSeconomy.bank_accounts)
 		var/datum/bank_account/B = A
 		if(B.account_id == new_bank_id)
@@ -208,7 +210,9 @@
 			B.bank_cards += src
 			registered_account = B
 			to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
+
 			return TRUE
+			
 	to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
 	return
 
@@ -358,7 +362,6 @@ update_label("John Doe", "Clowny")
 							registered_account = account
 							to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
 			return
-
 		else if (popup_input == "Change Account ID")
 			set_new_account(user)
 			return
