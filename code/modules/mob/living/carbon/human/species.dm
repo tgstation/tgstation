@@ -1456,7 +1456,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
 						var/datum/antagonist/hivevessel/woke = H.is_wokevessel()
-						if(woke)
+						if(woke && woke.one_mind)
 							H.mind.remove_antag_datum(/datum/antagonist/hivevessel)
 
 				if(bloody)	//Apply blood
