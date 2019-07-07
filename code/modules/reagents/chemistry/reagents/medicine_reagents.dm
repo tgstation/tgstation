@@ -901,7 +901,7 @@
 	..()
 	if(M.has_dna())
 		REMOVE_TRAIT(M, TRAIT_STABLEGENES, type)
-		if(current_cycle >= 100 && mut.len)
+		if(current_cycle >= 50 && mut.len)
 			mut -= pick(mut)
 		for(var/i in mut)
 			var/datum/mutation/mutation = i
