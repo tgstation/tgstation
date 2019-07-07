@@ -14,7 +14,7 @@
 	if(loc && isturf(loc))
 		for(var/obj/effect/decal/cleanable/C in loc)
 			if(C != src && C.type == type && !QDELETED(C))
-				if (replace_decal(C))
+				if(replace_decal(C))
 					return INITIALIZE_HINT_QDEL
 
 	if(LAZYLEN(diseases))
