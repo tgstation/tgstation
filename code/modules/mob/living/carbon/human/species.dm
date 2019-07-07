@@ -1455,6 +1455,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
+						var/datum/antagonist/hivevessel/woke = H.is_wokevessel()
+						if(woke && woke.one_mind)
+							woke.one_mind.remove_member(target.mind)
+							target.mind.remove_antag_datum(/datum/antagonist/hivevessel)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
