@@ -42,6 +42,7 @@
 	var/mob/M = pick(candidates)
 	assigned += M
 	candidates -= M
+	M.mind.special_role = antag_flag
 	M.mind.add_antag_datum(new antag_datum())
 	return TRUE
 
@@ -67,33 +68,6 @@
 
 //////////////////////////////////////////////
 //                                          //
-//             WIZARD (LATEJOIN)            //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/latejoin/wizard
-	name = "Latejoin Wizard"
-	antag_datum = /datum/antagonist/wizard
-	antag_flag = ROLE_WIZARD
-	enemy_roles = list("Security Officer","Detective", "Warden", "Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
-	required_candidates = 1
-	weight = 1
-	cost = 20
-	requirements = list(90,90,70,40,30,20,10,10,10,10)
-	high_population_requirement = 40
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/latejoin/wizard/ready(var/forced = 0)
-	if(GLOB.wizardstart.len == 0)
-		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		return FALSE
-
-	return ..()
-
-//////////////////////////////////////////////
-//                                          //
 //       REVOLUTIONARY PROVOCATEUR          //
 //                                          //
 //////////////////////////////////////////////
@@ -108,10 +82,10 @@
 	required_candidates = 1
 	weight = 2
 	cost = 20
-	var/required_heads = 3
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
+	var/required_heads = 3
 
 /datum/dynamic_ruleset/latejoin/provocateur/ready(var/forced=FALSE)
 	if (forced)
@@ -127,6 +101,11 @@
 /datum/dynamic_ruleset/latejoin/provocateur/execute()
 	var/mob/M = pick(candidates)
 	assigned += M
-	spawn(1 SECONDS)
-		M.mind.add_antag_datum(new antag_datum())
+	candidates -= M
+	M.mind.special_role = antag_flag
+	var/datum/antagonist/rev/head/new_head = new()
+	new_head.give_flash = TRUE
+	new_head.give_hud = TRUE
+	new_head.remove_clumsy = TRUE
+	M.mind.add_antag_datum(new_head)
 	return TRUE

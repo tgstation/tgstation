@@ -136,6 +136,9 @@
 
 /datum/dynamic_ruleset/proc/round_result()
 
+/datum/dynamic_ruleset/proc/check_finished()
+	return FALSE
+
 //////////////////////////////////////////////
 //                                          //
 //           ROUNDSTART RULESETS            //

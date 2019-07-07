@@ -250,6 +250,15 @@
 			var/datum/antagonist/nukeop/new_op = new antag_datum()
 			M.mind.add_antag_datum(new_op)
 
+/datum/dynamic_ruleset/roundstart/nuclear/check_finished()
+	if(nuke_team.operatives_dead())
+		for(var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)
+			if(N.proper_bomb && (N.timing || N.exploding))
+				return FALSE
+		// If ops are dead and bomb is not exploding, end the round
+		return TRUE
+	return FALSE
+
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
 	var result = nuke_team.get_result()
 	switch(result)
@@ -356,6 +365,16 @@
 		finished = 2
 	return
 
+/datum/dynamic_ruleset/roundstart/delayed/revs/check_finished()
+	if(CONFIG_GET(keyed_list/continuous)["revolution"])
+		if(finished)
+			SSshuttle.clearHostileEnvironment(src)
+		return ..()
+	if(finished != 0)
+		return TRUE
+	else
+		return ..()
+
 /datum/dynamic_ruleset/roundstart/delayed/revs/proc/check_rev_victory()
 	for(var/datum/objective/mutiny/objective in revolution.objectives)
 		if(!(objective.check_completion()))
@@ -432,6 +451,7 @@
 /datum/dynamic_ruleset/roundstart/extended/pre_execute()
 	message_admins("Starting a round of extended.")
 	log_admin("Starting a round of extended.")
+	mode.spend_threat(mode.threat)
 	return TRUE
 
 //////////////////////////////////////////////

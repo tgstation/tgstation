@@ -136,11 +136,29 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	
 	AdminPanel() // Refreshes the window
 
+// This needs to be changed to take the result from the ruleset that ended the game mode
 /datum/game_mode/dynamic/set_round_result()
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags == HIGHLANDER_RULESET)
 			return rule.round_result()
 	return ..()
+
+// Yes, this is copy pasted from game_mode
+/datum/game_mode/dynamic/check_finished(force_ending)
+	if(!SSticker.setup_done || !gamemode_ready)
+		return FALSE
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
+		return TRUE
+	if(station_was_nuked)
+		return TRUE
+	if(force_ending)
+		return TRUE
+	for(var/datum/dynamic_ruleset/rule in executed_rules)
+		if(rule.flags == HIGHLANDER_RULESET)
+			return rule.check_finished()
+	
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
