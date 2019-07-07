@@ -364,7 +364,6 @@
 				var/turf/right = locate(target.x+1,target.y,target.z)
 				if(isValidSurface(left) && isValidSurface(right))
 					C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
-					C.add_hiddenprint(user)
 					affected_turfs += left
 					affected_turfs += right
 					affected_turfs += target
