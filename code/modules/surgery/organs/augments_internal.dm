@@ -137,6 +137,37 @@
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	broken_cyber_organ = FALSE
 
+/obj/item/organ/cyberimp/brain/abductor_interface
+	name = "Abductor Interface implant"
+	desc = "This implant will identify you as an abductor when interacting with abductor technology, as well as automatically giving the expertise needed to operate it.\
+	It will also give an innate knowledge of surgical procedures."
+	implant_color = "#FD0098"
+	slot = ORGAN_SLOT_BRAIN_ABDUCTOR
+
+/obj/item/organ/cyberimp/brain/abductor_interface/Insert()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, "interface")
+	ADD_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, "interface")
+
+/obj/item/organ/cyberimp/brain/abductor_interface/Remove(mob/living/carbon/M, special = FALSE)
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, "interface")
+	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, "interface")
+
+/obj/item/organ/cyberimp/brain/surgeon
+	name = "Surgery Helper Implant"
+	desc = "This implant grants instinctive knowledge of advanced surgery, without requiring a surgical computer nor research."
+	implant_color = "#FD0098"
+	slot = ORGAN_SLOT_BRAIN_SURGEON
+
+/obj/item/organ/cyberimp/brain/surgeon/Insert()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_SURGEON, "implant")
+
+/obj/item/organ/cyberimp/brain/surgeon/Remove(mob/living/carbon/M, special = FALSE)
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_SURGEON, "implant")
+
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth
 	zone = BODY_ZONE_PRECISE_MOUTH

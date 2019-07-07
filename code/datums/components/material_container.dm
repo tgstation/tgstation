@@ -394,3 +394,8 @@
 	name = "Plastic"
 	id = MAT_PLASTIC
 	sheet_type = /obj/item/stack/sheet/plastic
+
+/datum/material/alloy
+	name = "Alien Alloy"
+	id = MAT_ALLOY
+	sheet_type = /obj/item/stack/sheet/mineral/abductor

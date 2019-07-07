@@ -393,6 +393,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	item_state = "sheet-abductor"
 	singular_name = "alien alloy sheet"
 	sheettype = "abductor"
+	materials = list(MAT_ALLOY=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/abductor
 
 GLOBAL_LIST_INIT(abductor_recipes, list ( \

@@ -979,10 +979,10 @@
 	hidden = TRUE
 	design_ids = list("alienalloy")
 
-/datum/techweb_node/alien_bio
-	id = "alien_bio"
-	display_name = "Alien Biological Tools"
-	description = "Advanced biological tools."
+/datum/techweb_node/alien_surgery
+	id = "alien_surgery"
+	display_name = "Alien Surgical Tools"
+	description = "Advanced surgical tools."
 	prereq_ids = list("alientech", "adv_biotech")
 	design_ids = list("alien_scalpel", "alien_hemostat", "alien_retractor", "alien_saw", "alien_drill", "alien_cautery")
 	boost_item_paths = list(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien, /obj/item/retractor/alien, /obj/item/circular_saw/alien,
@@ -1003,6 +1003,31 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 20000
 	hidden = TRUE
+
+/datum/techweb_node/alien_glands
+	id = "alien_glands"
+	display_name = "Alien Gland Study"
+	description = "Preliminary analysis of alien glands. Leads to the production of tools to interact with their technology."
+	prereq_ids = list("alientech")
+	boost_item_paths = list(/obj/item/organ/heart/gland/heals,/obj/item/organ/heart/gland/slime,/obj/item/organ/heart/gland/mindshock,\
+	/obj/item/organ/heart/gland/access,/obj/item/organ/heart/gland/pop,/obj/item/organ/heart/gland/ventcrawling,/obj/item/organ/heart/gland/viral,\
+	/obj/item/organ/heart/gland/trauma, /obj/item/organ/heart/gland/quantum,/obj/item/organ/heart/gland/spiderman,/obj/item/organ/heart/gland/egg,\
+	/obj/item/organ/heart/gland/blood,/obj/item/organ/heart/gland/electric,/obj/item/organ/heart/gland/chem,/obj/item/organ/heart/gland/plasma)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 20000
+	hidden = TRUE
+	design_ids = list("obelisk_disruptor")
+
+/datum/techweb_node/alien_core
+	id = "alien_core"
+	display_name = "Alien Core Technology"
+	description = "Study of abductor technology cores, allowing deeper understanding of how they function."
+	prereq_ids = list("alientech","adv_engi")
+	boost_item_paths = list(/obj/item/obelisk_core)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 20000
+	hidden = TRUE
+	design_ids = list("abductor_interface","surgeon_implant")
 
 /datum/techweb_node/syndicate_basic
 	id = "syndicate_basic"

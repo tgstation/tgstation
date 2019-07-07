@@ -227,6 +227,36 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/obelisk_disruptor
+	name = "Obelisk Neutralizer"
+	desc = "A tool engineered to turn an obelisk's energy field against itself, destroying it."
+	id = "obelisk_disruptor"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_SILVER = 2000, MAT_PLASMA = 5000, MAT_ALLOY = 2000)
+	build_path = /obj/item/obelisk_disruptor
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/abductor_interface
+	name = "Abductor Interface Implant"
+	desc = "An implant allows the use of abductor technology."
+	id = "abductor_interface"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_SILVER = 3000, MAT_PLASMA = 5000, MAT_ALLOY = 2000)
+	build_path = /obj/item/organ/cyberimp/brain/abductor_interface
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgeon_implant
+	name = "Surgery Helper Implant"
+	desc = "An implant that grants instinctive knowledge of advanced surgery, without requiring a surgical computer."
+	id = "surgeon_implant"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_SILVER = 2000, MAT_PLASMA = 2500, MAT_ALLOY = 1000)
+	build_path = /obj/item/organ/cyberimp/brain/surgeon
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/donksoft_refill
 	name = "Donksoft Toy Vendor Refill"
 	desc = "A refill canister for Donksoft Toy Vendors."
