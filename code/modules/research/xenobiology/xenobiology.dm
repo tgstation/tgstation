@@ -46,7 +46,7 @@
 
 //Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
-	to_chat(user, "<span class='notice'>Nothing happened... This slime extract cannot be activated this way.</span>")
+	to_chat(user, "<span class='warning'>Nothing happened... This slime extract cannot be activated this way.</span>")
 	return 0
 
 //Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
@@ -616,7 +616,7 @@
 /obj/item/slimepotion/afterattack(obj/item/reagent_containers/target, mob/user , proximity)
 	. = ..()
 	if (istype(target))
-		to_chat(user, "<span class='notice'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" )
+		to_chat(user, "<span class='warning'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" )
 		return
 
 /obj/item/slimepotion/slime/docility

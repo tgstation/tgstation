@@ -63,3 +63,13 @@
 	build_path = /obj/item/storage/bag/ore/holding
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+	
+/datum/design/swapper
+	name = "Quantum Spin Inverter"
+	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function."
+	id = "swapper"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 1000, MAT_BLUESPACE = 2000, MAT_GOLD = 1500, MAT_SILVER = 1000)
+	build_path = /obj/item/swapper
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

@@ -540,7 +540,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/sodiumchloride = 5)
 	bonus_reagents = list(/datum/reagent/consumable/sodiumchloride = 10)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/butter
 	name = "stick of butter"

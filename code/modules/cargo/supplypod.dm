@@ -239,6 +239,10 @@
 	handleReturningClose(holder, TRUE)
 
 /obj/structure/closet/supplypod/extractionpod/close(atom/movable/holder) //handles closing, and returns pod - deletes itself when returned
+	. = ..()
+	return
+
+/obj/structure/closet/supplypod/extractionpod/proc/send_up(atom/movable/holder)
 	if (!holder)
 		holder = src
 

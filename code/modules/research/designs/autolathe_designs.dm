@@ -10,7 +10,7 @@
 	build_path = /obj/item/reagent_containers/glass/bucket
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-	
+
 /datum/design/mop
 	name = "Mop"
 	id = "mop"
@@ -139,7 +139,7 @@
 	materials = list(/datum/material/hematite = 10, /datum/material/glass = 5)
 	build_path = /obj/item/stack/cable_coil
 	category = list("initial","Tools","Tool Designs")
-	maxstack = 15
+	maxstack = MAXCOIL
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/toolbox

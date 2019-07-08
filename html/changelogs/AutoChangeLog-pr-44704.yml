@@ -1,4 +1,0 @@
-author: "TetraK1"
-delete-after: True
-changes: 
-  - bugfix: "Suiciding with an anomaly core kills you properly"

@@ -272,6 +272,8 @@
 	. = ..()
 	if(!warped)
 		AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD,  6, TRUE, null, CALLBACK(src, .proc/warp_up))
+	else
+		warp_up()
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -304,9 +306,7 @@
 	name = "scorched tinfoil hat"
 	desc = "A badly warped up hat. Quite unprobable this will still work against any of fictional and contemporary dangers it used to."
 	warped = TRUE
-	var/datum/component/anti_magic/C = GetComponent(/datum/component/anti_magic)
-	C.RemoveComponent()
-	if(!isliving(loc))
+	if(!isliving(loc) || !paranoia)
 		return
 	var/mob/living/target = loc
 	if(target.get_item_by_slot(SLOT_HEAD) != src)

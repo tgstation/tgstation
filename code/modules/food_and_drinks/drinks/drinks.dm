@@ -205,6 +205,7 @@
 	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
+	foodtype = BREAKFAST
 
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
@@ -321,12 +322,12 @@
 				icon_state = "orangebox"
 				name = "orange juice box"
 				desc = "A great source of vitamins. Stay healthy!"
-				foodtype = FRUIT
+				foodtype = FRUIT | BREAKFAST
 			if(/datum/reagent/consumable/milk)
 				icon_state = "milkbox"
 				name = "carton of milk"
 				desc = "An excellent source of calcium for growing space explorers."
-				foodtype = DAIRY
+				foodtype = DAIRY | BREAKFAST
 			if(/datum/reagent/consumable/applejuice)
 				icon_state = "juicebox"
 				name = "apple juice box"

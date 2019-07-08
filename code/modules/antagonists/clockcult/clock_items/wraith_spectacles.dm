@@ -47,11 +47,12 @@
 				to_chat(H, "<span class='heavy_brass'>You push the spectacles down, but you can't see through the glass.</span>")
 
 /obj/item/clothing/glasses/wraith_spectacles/proc/blind_cultist(mob/living/victim)
+	var/obj/item/organ/eyes/eyes = victim.getorganslot(ORGAN_SLOT_EYES)
 	if(iscultist(victim))
 		to_chat(victim, "<span class='heavy_brass'>\"It looks like Nar'Sie's dogs really don't value their eyes.\"</span>")
 		to_chat(victim, "<span class='userdanger'>Your eyes explode with horrific pain!</span>")
 		victim.emote("scream")
-		victim.become_blind(EYE_DAMAGE)
+		eyes.applyOrganDamage(eyes.maxHealth)
 		victim.adjust_blurriness(30)
 		victim.adjust_blindness(30)
 		return TRUE
@@ -138,24 +139,26 @@
 	var/mob/living/carbon/human/H = owner
 	var/glasses_right = istype(H.glasses, /obj/item/clothing/glasses/wraith_spectacles)
 	var/obj/item/clothing/glasses/wraith_spectacles/WS = H.glasses
+	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 	if(glasses_right && !WS.up && !GLOB.ratvar_awakens && !GLOB.ratvar_approaches)
 		apply_eye_damage(H)
 	else
 		if(GLOB.ratvar_awakens)
 			H.cure_nearsighted(list(EYE_DAMAGE))
 			H.cure_blind(list(EYE_DAMAGE))
-			H.adjust_eye_damage(-eye_damage_done)
+			eyes.applyOrganDamage(-eye_damage_done)
 			eye_damage_done = 0
 		else if(prob(50) && eye_damage_done)
-			H.adjust_eye_damage(-1)
+			eyes.applyOrganDamage(-1)
 			eye_damage_done = max(0, eye_damage_done - 1)
 		if(!eye_damage_done)
 			qdel(src)
 
 /datum/status_effect/wraith_spectacles/proc/apply_eye_damage(mob/living/carbon/human/H)
+	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 	if(HAS_TRAIT(H, TRAIT_BLIND))
 		return
-	H.adjust_eye_damage(0.5)
+	eyes.applyOrganDamage(0.5)
 	eye_damage_done += 0.5
 	if(eye_damage_done >= 20)
 		H.adjust_blurriness(2)
@@ -166,7 +169,7 @@
 	if(eye_damage_done >= blind_breakpoint)
 		if(!HAS_TRAIT(H, TRAIT_BLIND))
 			to_chat(H, "<span class='nzcrentr_large'>A piercing white light floods your vision. Suddenly, all goes dark!</span>")
-		H.become_blind(EYE_DAMAGE)
+		eyes.applyOrganDamage(eyes.maxHealth)
 
 	if(prob(min(20, 5 + eye_damage_done)))
 		to_chat(H, "<span class='nzcrentr_small'><i>Your eyes continue to burn.</i></span>")

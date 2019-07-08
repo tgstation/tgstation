@@ -34,7 +34,7 @@
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
 			if(aspell.spell_level >= aspell.level_max)
-				to_chat(user,  "<span class='warning'>This spell cannot be improved further.</span>")
+				to_chat(user,  "<span class='warning'>This spell cannot be improved further!</span>")
 				return FALSE
 			else
 				aspell.name = initial(aspell.name)
@@ -56,7 +56,7 @@
 						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Instant [aspell.name].</span>")
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
-					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
+					to_chat(user, "<span class='warning'>This spell cannot be strengthened any further!</span>")
 				SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[aspell.spell_level]"))
 				return TRUE
 	//No same spell found - just learn it
@@ -78,7 +78,7 @@
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/spellbook/book) //return point value or -1 for failure
 	var/area/wizard_station/A = GLOB.areas_by_type[/area/wizard_station]
 	if(!(user in A.contents))
-		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair</span>")
+		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair!</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
