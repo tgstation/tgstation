@@ -17,7 +17,7 @@
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
-	var/list/ore_values = list(/datum/material/hematite = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
+	var/list/ore_values = list(MAT_GLASS = 1, MAT_METAL = 1, MAT_PLASMA = 15, MAT_SILVER = 16, MAT_GOLD = 18, MAT_TITANIUM = 30, MAT_URANIUM = 30, MAT_DIAMOND = 50, MAT_BLUESPACE = 50, MAT_BANANIUM = 60)
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
@@ -49,7 +49,7 @@
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Smelting <b>[sheet_per_ore]</b> sheet(s) per piece of ore.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.<span>"
+		. += "<span class='notice'>The status display reads: Smelting <b>[sheet_per_ore]</b> sheet(s) per piece of ore.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.</span>"
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -90,14 +90,13 @@
 	var/build_amount = 0
 
 	for(var/mat in D.materials)
-		var/M = D.materials[mat]
-		var/datum/material/redemption_mat = mat
-		var/amount = mat_container.materials[redemption_mat]
+		var/amount = D.materials[mat]
+		var/datum/material/redemption_mat_amount = mat_container.materials[mat]
 
-		if(!M || !redemption_mat)
+		if(!amount || !redemption_mat_amount)
 			return FALSE
 
-		var/smeltable_sheets = FLOOR(amount / M, 1)
+		var/smeltable_sheets = FLOOR(redemption_mat_amount / amount, 1)
 
 		if(!smeltable_sheets)
 			return FALSE
@@ -127,10 +126,9 @@
 
 	var/has_minerals = FALSE
 
-	for(var/mat_id in mat_container.materials)
-		var/datum/material/M = mat_id
-		var/amount = mat_container.materials[mat_id]
-		var/mineral_amount = amount / MINERAL_MATERIAL_AMOUNT
+	for(var/mat in mat_container.materials)
+		var/datum/material/M = mat
+		var/mineral_amount = mat_container.materials[mat] / MINERAL_MATERIAL_AMOUNT
 		if(mineral_amount)
 			has_minerals = TRUE
 		msg += "[capitalize(M.name)]: [mineral_amount] sheets<br>"
@@ -225,12 +223,13 @@
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (mat_container)
-		for(var/mat_id in mat_container.materials)
-			var/datum/material/M = mat_id
-			var/amount = mat_container.materials[mat_id]
-			var/sheet_amount = amount ? amount / MINERAL_MATERIAL_AMOUNT : "0"
-			data["materials"] += list(list("name" = M.name, "id" = REF(M), "amount" = sheet_amount, "value" = ore_values[M.type]))
-	
+		for(var/mat in mat_container.materials)
+			var/datum/material/M = mat
+			var/amount = mat_container.materials[M]
+			var/sheet_amount = amount / MINERAL_MATERIAL_AMOUNT
+			var/ref = REF(M)
+			data["materials"] += list(list("name" = M.name, "id" = ref, "amount" = sheet_amount, "value" = ore_values[M.id]))
+
 		data["alloys"] = list()
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = SSresearch.techweb_design_by_id(v)
@@ -281,15 +280,18 @@
 		if("Release")
 			if(!mat_container)
 				return
+
 			if(materials.on_hold())
 				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
 			else if(!check_access(inserted_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			else
 				var/datum/material/mat = locate(params["id"])
-				if(!mat_container.materials[mat])
-					return
+
 				var/amount = mat_container.materials[mat]
+				if(!amount)
+					return
+
 				var/stored_amount = amount / MINERAL_MATERIAL_AMOUNT
 
 				if(!stored_amount)
@@ -306,6 +308,7 @@
 				var/list/mats = list()
 				mats[mat] = MINERAL_MATERIAL_AMOUNT
 				materials.silo_log(src, "released", -count, "sheets", mats)
+				//Logging deleted for quick coding
 			return TRUE
 		if("diskInsert")
 			var/obj/item/disk/design_disk/disk = usr.get_active_held_item()
