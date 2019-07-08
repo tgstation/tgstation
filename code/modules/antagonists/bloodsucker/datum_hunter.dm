@@ -6,7 +6,7 @@
 /datum/antagonist/vamphunter
 	name = "Hunter"
 	roundend_category = "hunters"
-	antagpanel_category = "Bloodsucker"
+	antagpanel_category = "Monster Hunter"
 	job_rank = ROLE_MONSTERHUNTER
 	var/list/datum/action/powers = list()// Purchased powers
 	var/list/datum/objective/objectives_given = list()	// For removal if needed.
@@ -87,7 +87,7 @@
 	 										<i>There are greater stakes at hand than the safety of the station!</i> However, security may detain you if they discover your mission...<span>")
 	antag_memory += "You remember your training:<br>"
 	antag_memory += " -Bloodsuckers are weak to fire, or a stake to the heart. Removing their head or heart will also destroy them permanently.<br>"
-	antag_memory += " -Wooden stakes can be made from planks, and your recipes list has ways of making them stronger.<br>"
+	antag_memory += " -Wooden stakes can be made from planks, and hardened by a welding tool. Your recipes list has ways of making them even stronger.<br>"
 	antag_memory += " -Changelings return to life unless their body is destroyed. Not even decapitation can stop them for long.<br>"
 	antag_memory += " -Cultists are weak to the Chaplain's holy water.<br>"
 	antag_memory += " -Wizards are notoriously hard to outmatch. Rob or steal whatever weapons you need to destroy them, and shoot before asking questions.<br><br>"

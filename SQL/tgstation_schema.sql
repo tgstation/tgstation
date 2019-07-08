@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `ckey` varchar(32) NOT NULL,
   `rank` varchar(32) NOT NULL,
+  `feedback` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

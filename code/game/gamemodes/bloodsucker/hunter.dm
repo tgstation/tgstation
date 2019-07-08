@@ -4,9 +4,12 @@
 // Called from game mode pre_setup()
 /datum/game_mode/proc/assign_monster_hunters(monster_count = 4, guaranteed_hunters = FALSE)
 
-	// Not all game modes GUARANTEE a hunter!
-	if (!guaranteed_hunters && rand(0,2) > 0)
-		return
+	// Not all game modes GUARANTEE a hunter
+	if (rand(0,1) == 0) // 50% of the time, we get fewer or NO Hunters
+		if (!guaranteed_hunters)
+			return
+		else
+			monster_count /= 2
 
 	var/list/no_hunter_jobs = list("AI","Cyborg")
 
@@ -20,7 +23,6 @@
 	// Find Valid Hunters
 	var/list/datum/mind/hunter_candidates = get_players_for_role(ROLE_MONSTERHUNTER)
 
-
 	// Assign Hunters (as many as vamps, plus one)
 	for(var/i = 1, i < monster_count, i++) // Start at 1 so we skip Hunters if there's only one sucker.
 		if (!hunter_candidates.len)
@@ -28,7 +30,7 @@
 		var/datum/mind/hunter = pick(hunter_candidates)
 		hunter_candidates.Remove(hunter) // Remove Either Way
 		// Already Antag? Skip
-		if (hunter.antag_datums.len)
+		if (islist(hunter.antag_datums) && hunter.antag_datums.len)
 			i --
 			continue
 		// Otherwise, Hunter

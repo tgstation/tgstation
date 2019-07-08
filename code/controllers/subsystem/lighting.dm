@@ -33,6 +33,8 @@ SUBSYSTEM_DEF(lighting)
 	var/list/queue = sources_queue
 	var/i = 0
 	for (i in 1 to length(queue))
+		if (i < 1 || i > queue.len)	// FULP: Fucking lighting error. This should stop that.
+			break
 		var/datum/light_source/L = queue[i]
 
 		L.update_corners()

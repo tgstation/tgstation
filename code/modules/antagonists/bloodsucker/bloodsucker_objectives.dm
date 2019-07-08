@@ -326,7 +326,7 @@
 	monsters += SSticker.mode.changelings
 
 	for (var/datum/mind/M in monsters)
-		if (M && M.current && M.current.stat != DEAD && get_turf(M.current))
+		if (M && M != owner && M.current && M.current.stat != DEAD && get_turf(M.current))
 			return FALSE
 	return TRUE
 

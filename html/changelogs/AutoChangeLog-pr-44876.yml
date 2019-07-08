@@ -1,9 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Delta: Atmospheric technicians are now able to lock/unlock the SM engine's rad collectors with their IDs."
-  - bugfix: "Donut: Added a missing SciDrobe vending machine to the RnD \"Excess Storage\" area."
-  - bugfix: "Meta: Fixed the AIsat being connected to the station's power grid by round start. Fixed Medbay intercoms with faulty presets. Removed a duplicate windoor in the cargo bay that kept MULEbots from leaving their area."
-  - bugfix: "Mining station: Fixed unconnected air supply pipes."
-  - bugfix: "Replaced the CentCom admin storage vault door with bomb-proof shutters (require CentCom Captain level access to open). Removed broken intercoms from the wizard shuttle and replaced them with two headsets."
-  - bugfix: "Deleted random duplicate and broken atmos piping in most maps."
