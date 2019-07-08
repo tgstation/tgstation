@@ -11,10 +11,9 @@ In any query remember to add a prefix to the table names if you use one.
 ----------------------------------------------------
 
 Version 5.3, 6 July 2019, by Atlanta-Ned
-Added a `feedback` column to the admin table, used for linking to individual admin feedback threads. This is mostly a TG feature, but database disparity has reared its ugly head elsewhere so this is being pushed.
+Added a `feedback` column to the admin table, used for linking to individual admin feedback threads. Currently this is only used for statistics tracking tools such as Statbus and isn't used by the game.
 
-ALTER TABLE `admin`
-  ADD `feedback` VARCHAR(255)  NULL  DEFAULT NULL  AFTER `rank`;
+ALTER TABLE `admin` ADD `feedback` VARCHAR(255) NULL DEFAULT NULL AFTER `rank`;
 
 ----------------------------------------------------
 
