@@ -317,7 +317,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 		if (istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/))
 			spend_threat(starting_rule.cost)
-			return pick_delay(starting_rule)
+			addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
 
 		spend_threat(starting_rule.cost)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
@@ -336,15 +336,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
 	return FALSE
 
-/datum/game_mode/dynamic/proc/pick_delay(var/datum/dynamic_ruleset/roundstart/delayed/rule)
+/datum/game_mode/dynamic/proc/execute_delayed(var/datum/dynamic_ruleset/roundstart/delayed/rule)
 	rule.candidates = GLOB.player_list.Copy()
 	rule.trim_candidates()
-	if(!rule.pre_execute())
-		return FALSE
-	addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
-	return TRUE
-
-/datum/game_mode/dynamic/proc/execute_delayed(var/datum/dynamic_ruleset/roundstart/delayed/rule)
 	if(rule.execute())
 		executed_rules += rule
 		if (rule.persistent)

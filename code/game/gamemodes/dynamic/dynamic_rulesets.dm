@@ -73,8 +73,13 @@
 
 /datum/dynamic_ruleset/proc/execute()
 	for(var/mob/M in assigned)
+		M.mind.special_role = antag_flag
 		M.mind.add_antag_datum(antag_datum)
 	return TRUE
+
+/datum/dynamic_ruleset/roundstart/delayed/execute()
+	if (SSticker && SSticker.current_state < GAME_STATE_PLAYING)
+		CRASH("The delayed ruleset [src.name] executed before the round started.")
 
 /datum/dynamic_ruleset/proc/ready(var/forced = 0)	// Here you can perform any additional checks you want. (such as checking the map, the amount of certain roles, etc)
 	if (required_candidates > candidates.len)		// IMPORTANT: If ready() returns TRUE, that means pre_execute() should never fail!
@@ -154,13 +159,9 @@
 		if (!(antag_name in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_name, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE))))//are they willing and not antag-banned?
 			candidates.Remove(P)
 			continue
-		if ((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
-			candidates.Remove(P)
-			continue
 
 /datum/dynamic_ruleset/roundstart/delayed/trim_candidates()
-	if (SSticker && SSticker.current_state < GAME_STATE_PLAYING)
-		return ..() // If the game didn't start, we'll use the parent's method to see if we have enough people desiring the role & what not.
+	. = ..()
 	var/antag_name = initial(antag_flag)
 	for (var/mob/P in candidates)
 		if (!istype(P, required_type))

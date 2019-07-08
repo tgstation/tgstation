@@ -207,10 +207,10 @@
 			candidates -= player
 			continue
 		if(is_centcom_level(player.z))
-			candidates -= player // We don't autotator people on Z=2
+			candidates -= player
 			continue
 		if(player.mind && player.mind.special_role)
-			candidates -= player // We don't autotator people with roles already
+			candidates -= player
 
 /datum/dynamic_ruleset/midround/malf/execute()
 	if(!candidates || !candidates.len)

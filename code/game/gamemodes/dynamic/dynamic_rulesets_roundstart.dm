@@ -330,7 +330,7 @@
 			head_check++
 	return (head_check >= required_heads)
 
-/datum/dynamic_ruleset/roundstart/delayed/revs/pre_execute()
+/datum/dynamic_ruleset/roundstart/delayed/revs/execute()
 	var/max_canditates = 4
 	revolution = new()
 	for(var/i = 1 to max_canditates)
@@ -341,11 +341,6 @@
 		candidates -= M
 		M.mind.restricted_roles = restricted_roles
 		M.mind.special_role = antag_flag
-
-	return TRUE	
-
-/datum/dynamic_ruleset/roundstart/delayed/revs/execute()
-	for(var/mob/M in assigned)
 		var/datum/antagonist/rev/head/new_head = new antag_datum()
 		new_head.give_flash = TRUE
 		new_head.give_hud = TRUE
