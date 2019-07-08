@@ -106,7 +106,7 @@
 	desc = "A stock part used in the construction of various devices."
 	id = "triphasic_scanning"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/hematite = 200, /datum/material/glass = 200, /datum/material/diamond = 30, MAT_BLUESPACE = 30)
+	materials = list(/datum/material/hematite = 200, /datum/material/glass = 200, /datum/material/diamond = 30, /datum/material/bluespace = 30)
 	build_path = /obj/item/stock_parts/scanning_module/triphasic
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -240,7 +240,7 @@
 	desc = "A stock part used in the construction of various devices."
 	id = "bluespace_matter_bin"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/hematite = 250, /datum/material/diamond = 100, MAT_BLUESPACE = 100)
+	materials = list(/datum/material/hematite = 250, /datum/material/diamond = 100, /datum/material/bluespace = 100)
 	build_path = /obj/item/stock_parts/matter_bin/bluespace
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2

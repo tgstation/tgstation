@@ -167,7 +167,7 @@
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			if((materials.get_material_amount(SSmaterials.materials(/datum/material/hematite)) >= metal_cost*multiplier*coeff) && (materials.get_material_amount(SSmaterials.materials(/datum/material/glass)) >= glass_cost*multiplier*coeff))
+			if((materials.get_material_amount(getmaterialref(/datum/material/hematite)) >= metal_cost*multiplier*coeff) && (materials.get_material_amount(getmaterialref(/datum/material/glass)) >= glass_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
@@ -193,7 +193,12 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
-	var/list/materials_used = list(/datum/material/hematite=metal_cost*coeff*multiplier, /datum/material/glass=glass_cost*coeff*multiplier)
+
+	var/list/materials_used = list()
+	for(var/MAT in being_built.materials)
+		materials_used[MAT] = being_built.materials[MAT] * coeff * multiplier
+	for(var/mat in materials_used)
+		to_chat(world, "[mat] cost: [materials_used[mat]]")
 	materials.use_materials(materials_used)
 
 	if(is_stack)
@@ -226,7 +231,7 @@
 	. += ..()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[prod_coeff*100]%</b>.<span>"
+		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[prod_coeff*100]%</b>.</span>"
 
 /obj/machinery/autolathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
@@ -321,8 +326,8 @@
 	var/dat = "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = mat_id
-		var/amount = materials.materials[mat_id]
-		dat += "<b>[M.name] amount:</b> [amount] cm<sup>3</sup><br>"
+		var/mineral_amount = materials.materials[mat_id]
+		dat += "<b>[M.name] amount:</b> [mineral_amount] cm<sup>3</sup><br>"
 	return dat
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D, amount = 1)
@@ -331,7 +336,7 @@
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container) 
 	if(D.materials[/datum/material/hematite] && (materials.get_material_amount(/datum/material/hematite) < (D.materials[/datum/material/hematite] * coeff * amount)))
 		return FALSE
 	if(D.materials[/datum/material/glass] && (materials.get_material_amount(/datum/material/glass) < (D.materials[/datum/material/glass] * coeff * amount)))

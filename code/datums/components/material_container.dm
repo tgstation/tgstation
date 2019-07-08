@@ -41,7 +41,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
 	for(var/mat in mat_list) //Make the assoc list ref | amount
-		var/datum/material/M = SSmaterials.materials[mat]
+		var/datum/material/M = getmaterialref(mat)
 		materials[M] = 0
 
 /datum/component/material_container/proc/OnExamine(datum/source, mob/user)
@@ -168,7 +168,7 @@
 
 /datum/component/material_container/proc/use_amount_mat(amt, var/datum/material/mat) //Revamped
 	if(!istype(mat))
-		mat = SSmaterials.materials[mat]
+		mat = getmaterialref(mat)
 	var/amount = materials[mat]
 	if(mat)
 		if(amount >= amt)
@@ -179,7 +179,7 @@
 
 /datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, var/datum/material/mat) //Revamped
 	if(!istype(mat))
-		mat = SSmaterials.materials[mat]
+		mat = getmaterialref(mat)
 	if((amt==0)||(!T)||(!mat))
 		return FALSE
 	if(amt<0)
@@ -212,7 +212,7 @@
 	for(var/x in mats) //Loop through all required materials
 		var/datum/material/req_mat = x
 		if(!istype(req_mat))
-			req_mat = SSmaterials.materials[req_mat] //Get the ref if necesary
+			req_mat = getmaterialref(req_mat) //Get the ref if necesary
 			to_chat(world, "not a ref")
 		if(!materials[req_mat]) //Do we have the resource?
 			return FALSE //Can't afford it
@@ -273,7 +273,7 @@
 	for(var/x in mats) //Loop through all required materials
 		var/datum/material/req_mat = x
 		if(!istype(req_mat))
-			req_mat = SSmaterials.materials[req_mat]
+			req_mat = getmaterialref(req_mat)
 		if(!materials[req_mat]) //Do we have the resource?
 			return FALSE //Can't afford it
 		var/amount_required = mats[req_mat] * multiplier
@@ -305,5 +305,5 @@
 
 /datum/component/material_container/proc/get_material_amount(var/datum/material/mat)  //Revamped
 	if(!istype(mat))
-		mat = SSmaterials.materials[mat]
+		mat = getmaterialref(mat)
 	return(materials.[mat])

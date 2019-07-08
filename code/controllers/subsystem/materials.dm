@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(materials)
 	for(var/i in SSresearch.techweb_designs)
 		var/datum/design/D = i
 		D.InitializeMaterials()
+		to_chat(world, "initialized [i] design")
 	return ..()
 	
 

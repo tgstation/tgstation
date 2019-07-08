@@ -123,7 +123,7 @@
 	name = "Kinetic Accelerator Rapid Repeater Mod"
 	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
 	id = "repeatermod"
-	materials = list(/datum/material/hematite = 5000, /datum/material/glass = 5000, /datum/material/uranium = 8000, MAT_BLUESPACE = 2000)
+	materials = list(/datum/material/hematite = 5000, /datum/material/glass = 5000, /datum/material/uranium = 8000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
 
 /datum/design/unique_modkit/resonator_blast
@@ -137,7 +137,7 @@
 	name = "Kinetic Accelerator Death Syphon Mod"
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
-	materials = list(/datum/material/hematite = 4000, /datum/material/silver = 4000, /datum/material/gold = 4000, MAT_BLUESPACE = 4000)
+	materials = list(/datum/material/hematite = 4000, /datum/material/silver = 4000, /datum/material/gold = 4000, /datum/material/bluespace = 4000)
 	reagents_list = list(/datum/reagent/blood = 40)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 

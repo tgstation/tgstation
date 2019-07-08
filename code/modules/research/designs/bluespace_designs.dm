@@ -18,7 +18,7 @@
 	desc = "A backpack that opens into a localized pocket of bluespace."
 	id = "bag_holding"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/gold = 3000, /datum/material/diamond = 1500, /datum/material/uranium = 250, MAT_BLUESPACE = 2000)
+	materials = list(/datum/material/gold = 3000, /datum/material/diamond = 1500, /datum/material/uranium = 250, /datum/material/bluespace = 2000)
 	build_path = /obj/item/storage/backpack/holding
 	category = list("Bluespace Designs")
 	dangerous_construction = TRUE
@@ -49,7 +49,7 @@
 	desc = "A device that can desynchronize the user from spacetime."
 	id = "desynchronizer"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/hematite = 1000, /datum/material/glass = 500, /datum/material/silver = 1500, MAT_BLUESPACE = 1000)
+	materials = list(/datum/material/hematite = 1000, /datum/material/glass = 500, /datum/material/silver = 1500, /datum/material/bluespace = 1000)
 	build_path = /obj/item/desynchronizer
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

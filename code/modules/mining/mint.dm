@@ -16,7 +16,7 @@
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/plasma, /datum/material/silver, /datum/material/gold, /datum/material/uranium, /datum/material/diamond, /datum/material/bananium), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
-	chosen = SSmaterials.materials[chosen]
+	chosen =  getmaterialref(chosen)
 
 
 /obj/machinery/mineral/mint/process()
@@ -38,15 +38,15 @@
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = mat_id
 		var/amount = materials.materials[mat_id]
-		if(!amount && chosen != M.type)
+		if(!amount && chosen != M)
 			continue
 		dat += "<br><b>[M.name] amount:</b> [amount] cm<sup>3</sup> "
-		if (chosen == M.type)
+		if (chosen == M)
 			dat += "<b>Chosen</b>"
 		else
 			dat += "<A href='?src=[REF(src)];choose=[REF(M)]'>Choose</A>"
 
-	var/datum/material/M = materials.materials[chosen]
+	var/datum/material/M = chosen
 
 	dat += "<br><br>Will produce [coinsToProduce] [lowertext(M.name)] coins if enough materials are available.<br>"
 	dat += "<A href='?src=[REF(src)];chooseAmt=-10'>-10</A> "
@@ -84,7 +84,7 @@
 			updateUsrDialog()
 			return
 
-		while(coinsToProduce > 0 && materials.use_amount_mat(coin_mat, SSmaterials.materials[chosen]))
+		while(coinsToProduce > 0 && materials.use_amount_mat(coin_mat, getmaterialref(chosen)))
 			create_coins(M.coin_type)
 			coinsToProduce--
 			newCoins++

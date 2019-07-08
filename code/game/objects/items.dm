@@ -116,7 +116,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/list/temp_list = list() 
 		for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 			var/amount = materials[i]
-			var/datum/material/M = SSmaterials.materials[i]
+			var/datum/material/M = getmaterialref(i)
 			temp_list[M] = amount
 		materials = temp_list
 
