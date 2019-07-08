@@ -28,11 +28,11 @@
 		S.update_starlight()
 
 	needs_update = TRUE
-	GLOB.lighting_update_objects += src
+	SSlighting.objects_queue += src
 
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
-		GLOB.lighting_update_objects     -= src
+		SSlighting.objects_queue -= src
 		if (loc != myturf)
 			var/turf/oldturf = get_turf(myturf)
 			var/turf/newturf = get_turf(loc)

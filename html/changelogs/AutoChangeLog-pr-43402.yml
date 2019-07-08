@@ -1,9 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - tweak: "Certain small items purchased through cargo now get grouped into a single box."
-  - rscadd: "Added single-order options for several existing products in the Cargo Catalog."
-  - rscadd: "Added ALPU MK-I Ripley kit to the cargo catalog, under Engineering."
-  - balance: "Cargo Ripley bounty now requires a MK-II.
-remove: Removed the Ripley and Odysseus listings in the cargo catalog that were only the control boards and nothing more."
-  - tweak: "Ammo and Medkit listings are now single-pack items, and considered small items that get grouped into single boxes. Price per unit for ammo is unchanged, and for medkits is as close to unchanged as is reasonable."

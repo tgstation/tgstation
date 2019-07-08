@@ -12,6 +12,7 @@
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = 0 // so closet code knows to put the tag overlay back
@@ -50,21 +51,28 @@
 	if (tagged)
 		add_overlay("bodybag_label")
 
+/obj/structure/closet/body_bag/open(mob/living/user)
+	. = ..()
+	if(.)
+		mouse_drag_pointer = MOUSE_INACTIVE_POINTER
+
 /obj/structure/closet/body_bag/close()
-	if(..())
+	. = ..()
+	if(.)
 		density = FALSE
-		return 1
-	return 0
+		mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
-			return 0
+			return
 		if(opened)
-			return 0
+			to_chat(usr, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
+			return
 		if(contents.len)
-			return 0
+			to_chat(usr, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
+			return
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
 		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
@@ -84,15 +92,16 @@
 	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
-			return 0
+			return
 		if(opened)
-			return 0
+			to_chat(usr, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
+			return
 		if(contents.len >= mob_storage_capacity / 2)
 			to_chat(usr, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
-			return 0
+			return
 		for(var/obj/item/bodybag/bluespace/B in src)
 			to_chat(usr, "<span class='warning'>You can't recursively fold bluespace body bags!</span>" )
-			return 0
+			return
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
 		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)

@@ -37,7 +37,7 @@
 	if(M == user)
 		to_chat(user,"<span class='warning'>You cannot convert yourself!</span>")
 		return
-	if(M.has_trait(TRAIT_MINDSHIELD))
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		to_chat(user, "<span class='danger'>This mind is too strong to convert, try to remove whatever is protecting it first!</span>")
 		return
 	M.visible_message("<span class='warning'>[user] is attempting to implant [M].</span>")

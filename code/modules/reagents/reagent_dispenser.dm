@@ -8,7 +8,7 @@
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
-	var/reagent_id = "water" //The ID of the reagent that the dispenser uses
+	var/reagent_id = /datum/reagent/water //The ID of the reagent that the dispenser uses
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -54,14 +54,14 @@
 	name = "firefighting foam tank"
 	desc = "A tank full of firefighting foam."
 	icon_state = "foam"
-	reagent_id = "firefighting_foam"
+	reagent_id = /datum/reagent/firefighting_foam
 	tank_volume = 500
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
 	desc = "A tank full of industrial welding fuel. Do not consume."
 	icon_state = "fuel"
-	reagent_id = "welding_fuel"
+	reagent_id = /datum/reagent/fuel
 
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
@@ -89,12 +89,12 @@
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(!reagents.has_reagent("welding_fuel"))
+		if(!reagents.has_reagent(/datum/reagent/fuel))
 			to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 			return
 		var/obj/item/weldingtool/W = I
 		if(!W.welding)
-			if(W.reagents.has_reagent("welding_fuel", W.max_fuel))
+			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, "<span class='warning'>Your [W.name] is already full!</span>")
 				return
 			reagents.trans_to(W, W.max_fuel, transfered_by = user)
@@ -117,7 +117,7 @@
 	icon_state = "pepper"
 	anchored = TRUE
 	density = FALSE
-	reagent_id = "condensedcapsaicin"
+	reagent_id = /datum/reagent/consumable/condensedcapsaicin
 
 /obj/structure/reagent_dispensers/peppertank/Initialize()
 	. = ..()
@@ -135,13 +135,13 @@
 	var/paper_cups = 25 //Paper cups left from the cooler
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
-	..()
+	. = ..()
 	if (paper_cups > 1)
-		to_chat(user, "There are [paper_cups] paper cups left.")
+		. += "There are [paper_cups] paper cups left."
 	else if (paper_cups == 1)
-		to_chat(user, "There is one paper cup left.")
+		. += "There is one paper cup left."
 	else
-		to_chat(user, "There are no paper cups left.")
+		. += "There are no paper cups left."
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
 	. = ..()
@@ -159,7 +159,7 @@
 	name = "beer keg"
 	desc = "Beer is liquid bread, it's good for you..."
 	icon_state = "beer"
-	reagent_id = "beer"
+	reagent_id = /datum/reagent/consumable/ethanol/beer
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
 	explosion(src.loc,0,3,5,7,10)
@@ -173,7 +173,7 @@
 	icon_state = "virus_food"
 	anchored = TRUE
 	density = FALSE
-	reagent_id = "virusfood"
+	reagent_id = /datum/reagent/consumable/virus_food
 
 
 /obj/structure/reagent_dispensers/cooking_oil
@@ -181,4 +181,4 @@
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
 	icon_state = "vat"
 	anchored = TRUE
-	reagent_id = "cooking_oil"
+	reagent_id = /datum/reagent/consumable/cooking_oil

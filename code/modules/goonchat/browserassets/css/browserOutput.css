@@ -17,7 +17,7 @@ body {
     line-height: 1.2;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	word-wrap: break-word;		
+	word-wrap: break-word;
 	scrollbar-face-color:#1A1A1A;
 	scrollbar-track-color:#171717;
 	scrollbar-highlight-color:#171717;
@@ -305,6 +305,7 @@ em						{font-style: normal;	font-weight: bold;}
 .userdanger				{color: #c51e1e;	font-weight: bold; font-size: 24px;}
 .danger					{color: #c51e1e;}
 .warning				{color: #c51e1e;	font-style: italic;}
+.alertwarning           {color: #FF0000;    font-weight: bold}
 .boldwarning			{color: #c51e1e;	font-style: italic;	font-weight: bold}
 .announce 				{color: #c51e1e;	font-weight: bold;}
 .boldannounce			{color: #c51e1e;	font-weight: bold;}
@@ -318,6 +319,8 @@ em						{font-style: normal;	font-weight: bold;}
 .unconscious			{color: #a4bad6;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #059223;}
+.red                    {color: #FF0000}
+.blue                   {color: #215cff}
 .nicegreen				{color: #059223;}
 .shadowling				{color: #8e8a99;}
 .cult					{color: #aa1c1c;}
@@ -378,6 +381,7 @@ em						{font-style: normal;	font-weight: bold;}
 .alertalien				{color: #059223;	font-weight: bold;}
 .changeling				{color: #059223;	font-style: italic;}
 .assimilator			{color: #059223;	font-size: 16px ; font-weight: bold;}
+.alertsyndie			{color: #FF0000;	font-size: 24px ; font-weight: bold;}
 
 .spider					{color: #8800ff;}
 

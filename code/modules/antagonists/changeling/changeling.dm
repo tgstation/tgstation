@@ -63,8 +63,10 @@
 	var/honorific
 	if(owner.current.gender == FEMALE)
 		honorific = "Ms."
-	else
+	else if(owner.current.gender == MALE)
 		honorific = "Mr."
+	else
+		honorific = "Mx."
 	if(GLOB.possible_changeling_IDs.len)
 		changelingID = pick(GLOB.possible_changeling_IDs)
 		GLOB.possible_changeling_IDs -= changelingID
@@ -170,23 +172,23 @@
 		return
 
 	if(absorbedcount < thepower.req_dna)
-		to_chat(owner.current, "We lack the energy to evolve this ability!")
+		to_chat(owner.current, "<span class='warning'>We lack the energy to evolve this ability!</span>")
 		return
 
 	if(has_sting(thepower))
-		to_chat(owner.current, "We have already evolved this ability!")
+		to_chat(owner.current, "<span class='warning'>We have already evolved this ability!</span>")
 		return
 
 	if(thepower.dna_cost < 0)
-		to_chat(owner.current, "We cannot evolve this ability.")
+		to_chat(owner.current, "<span class='warning'>We cannot evolve this ability!</span>")
 		return
 
 	if(geneticpoints < thepower.dna_cost)
-		to_chat(owner.current, "We have reached our capacity for abilities.")
+		to_chat(owner.current, "<span class='warning'>We have reached our capacity for abilities!</span>")
 		return
 
-	if(owner.current.has_trait(TRAIT_DEATHCOMA))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
-		to_chat(owner.current, "We lack the energy to evolve new abilities right now.")
+	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
+		to_chat(owner.current, "<span class='warning'>We lack the energy to evolve new abilities right now!</span>")
 		return
 
 	geneticpoints -= thepower.dna_cost
@@ -195,7 +197,7 @@
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
-		to_chat(owner.current, "<span class='danger'>We can't remove our evolutions in this form!</span>")
+		to_chat(owner.current, "<span class='warning'>We can't remove our evolutions in this form!</span>")
 		return
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
@@ -204,7 +206,7 @@
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
 	else
-		to_chat(owner.current, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
+		to_chat(owner.current, "<span class='warning'>You lack the power to readapt your evolutions!</span>")
 		return 0
 
 //Called in life()
@@ -246,11 +248,11 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	if(target.has_trait(TRAIT_BADDNA))
+	if(HAS_TRAIT(target, TRAIT_BADDNA))
 		if(verbose)
 			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
 		return
-	if(target.has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(target, TRAIT_HUSK))
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target]'s body is ruined beyond usability!</span>")
 		return

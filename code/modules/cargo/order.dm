@@ -65,7 +65,7 @@
 	P.name = "shipping manifest - [packname?"#[id] ([pack.name])":"(Grouped Item Crate)"]"
 	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
 	P.info += "<hr/>"
-	if(id && !(id == "Cargo"))
+	if(owner && !(owner == "Cargo"))
 		P.info += "Direct purchase from [owner]<br/>"
 		P.name += " - Purchased by [owner]"
 	P.info += "Order[packname?"":"s"]: [id]<br/>"
@@ -100,8 +100,13 @@
 	return P
 
 /datum/supply_order/proc/generate(atom/A)
+	var/account_holder
+	if(paying_account)
+		account_holder = paying_account.account_holder
+	else
+		account_holder = "Cargo"
 	var/obj/structure/closet/crate/C = pack.generate(A, paying_account)
-	generateManifest(C, paying_account, pack)
+	generateManifest(C, account_holder, pack)
 	return C
 
 /datum/supply_order/proc/generateCombo(var/miscbox, var/misc_own, var/misc_contents)

@@ -26,14 +26,14 @@
 
 	var/obj/item/storage/book/bible/booze/B = new
 
-	if(SSreligion.religion)
-		B.deity_name = SSreligion.deity
-		B.name = SSreligion.bible_name
-		B.icon_state = SSreligion.bible_icon_state
-		B.item_state = SSreligion.bible_item_state
-		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
+	if(GLOB.religion)
+		B.deity_name = GLOB.deity
+		B.name = GLOB.bible_name
+		B.icon_state = GLOB.bible_icon_state
+		B.item_state = GLOB.bible_item_state
+		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain.")
 		H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
-		var/nrt = SSreligion.holy_weapon_type || /obj/item/nullrod
+		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
 		H.put_in_hands(N)
 		return
@@ -54,9 +54,6 @@
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 		if("buddhism")
 			B.name = "The Sutras"
-		if("space dionysus","space bacchus, partying, servicia,")
-			B.name = "The Tenets of Servicia"
-			B.desc = "Happy, Full, Clean. Live it and give it."
 		if("clownism","honkmother","honk","honkism","comedy")
 			B.name = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
 		if("chaos")
@@ -92,6 +89,10 @@
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		if("scientology")
 			B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+		if("servicianism", "partying")
+			B.name = "The Tenets of Servicia"
+			B.deity_name = pick("Servicia", "Space Bacchus", "Space Dionysus")
+			B.desc = "Happy, Full, Clean. Live it and give it."
 		if("subgenius")
 			B.name = "Book of the SubGenius"
 		if("toolboxia","greytide")
@@ -101,9 +102,9 @@
 		else
 			B.name = "The Holy Book of [new_religion]"
 
-	SSreligion.religion = new_religion
-	SSreligion.bible_name = B.name
-	SSreligion.deity = B.deity_name
+	GLOB.religion = new_religion
+	GLOB.bible_name = B.name
+	GLOB.deity = B.deity_name
 
 	H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 

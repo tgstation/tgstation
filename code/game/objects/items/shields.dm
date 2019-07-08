@@ -53,15 +53,15 @@
 		return ..()
 
 /obj/item/shield/riot/examine(mob/user)
-	..()
+	. = ..()
 	var/healthpercent = round((obj_integrity/max_integrity) * 100, 1)
 	switch(healthpercent)
 		if(50 to 99)
-			to_chat(user, "<span class='info'>It looks slightly damaged.</span>")
+			. += "<span class='info'>It looks slightly damaged.</span>"
 		if(25 to 50)
-			to_chat(user, "<span class='info'>It appears heavily damaged.</span>")
+			. += "<span class='info'>It appears heavily damaged.</span>"
 		if(0 to 25)
-			to_chat(user, "<span class='warning'>It's falling apart!</span>")
+			. += "<span class='warning'>It's falling apart!</span>"
 
 /obj/item/shield/riot/proc/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
@@ -175,8 +175,9 @@
 		item_state = "flashshield"
 
 /obj/item/shield/riot/flash/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>")
+	. = ..()
+	if (embedded_flash?.burnt_out)
+		. += "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>"
 
 /obj/item/shield/energy
 	name = "energy combat shield"
@@ -208,7 +209,7 @@
 	return (active)
 
 /obj/item/shield/energy/attack_self(mob/living/carbon/human/user)
-	if(clumsy_check && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	active = !active

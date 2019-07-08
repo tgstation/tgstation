@@ -482,18 +482,13 @@
 			temp_expression_list = list()
 			i = expression(i, temp_expression_list)
 
-			// Ok, what the fuck BYOND?
-			// Not having these lines here causes the parser to die
-			// on an error saying that list/token() doesn't exist as a proc.
-			// These lines prevent that.
-			// I assume the compiler/VM is shitting itself and swapping out some variables internally?
-			// While throwing in debug logging it disappeared
-			// And these 3 lines prevent it from happening while being quiet.
-			// So.. it works.
-			// Don't touch it.
-			var/whatthefuck = i
-			whatthefuck = src.type
-			whatthefuck = whatthefuck
+#if MIN_COMPILER_VERSION > 512
+#warn Remove this outdated workaround
+#elif DM_BUILD < 1467
+			// http://www.byond.com/forum/post/2445083
+			var/dummy = src.type
+			dummy = dummy
+#endif
 
 		while(token(i) && token(i) != "]")
 

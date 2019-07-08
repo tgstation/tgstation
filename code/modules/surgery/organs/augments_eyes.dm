@@ -36,6 +36,11 @@
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
 
+/obj/item/organ/cyberimp/eyes/hud/diagnostic
+	name = "Diagnostic HUD implant"
+	desc = "These cybernetic eye implants will display a diagnostic HUD over everything you see."
+	HUD_type = DATA_HUD_DIAGNOSTIC_ADVANCED
+
 /obj/item/organ/cyberimp/eyes/hud/security/syndicate
 	name = "Contraband Security HUD Implant"
 	desc = "A Cybersun Industries brand Security HUD Implant. These illicit cybernetic eye implants will display a security HUD over everything you see."
