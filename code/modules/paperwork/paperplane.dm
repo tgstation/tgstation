@@ -45,10 +45,6 @@
 		if(!QDELETED(src))
 			qdel(src)
 
-/obj/item/paperplane/Destroy()
-	QDEL_NULL(internalPaper)
-	return ..()
-
 /obj/item/paperplane/suicide_act(mob/living/user)
 	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
 	user.Stun(200)
