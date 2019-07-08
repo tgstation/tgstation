@@ -14816,10 +14816,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "aKA" = (
-/obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/structure/cable,
+/obj/machinery/photocopier,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "aKB" = (
@@ -14847,6 +14848,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "aKF" = (
@@ -30245,20 +30247,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"buK" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/turf/open/floor/wood,
-/area/crew_quarters/heads/hop)
-"buL" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 5
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/heads/hop)
 "buM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -30266,6 +30254,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "buN" = (
@@ -33626,6 +33615,7 @@
 	name = "Head of Personnel's Private Quarters";
 	req_access_txt = "57"
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bCn" = (
@@ -96497,8 +96487,8 @@ aKv
 aKA
 aKE
 bCm
-buK
-buL
+buS
+buT
 bCk
 anl
 aXc

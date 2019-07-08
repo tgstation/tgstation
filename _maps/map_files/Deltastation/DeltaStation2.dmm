@@ -21683,7 +21683,6 @@
 /area/crew_quarters/bar/atrium)
 "aTJ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/head/hardhat/cakehat,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

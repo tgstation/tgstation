@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Trash from food now gets generated at the location of the food item, instead of in the hands of the eater."

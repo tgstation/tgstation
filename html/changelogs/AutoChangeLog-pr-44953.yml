@@ -1,4 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - bugfix: "Fixes being able to pull from belt/backpack when you are stunned or cuffed."

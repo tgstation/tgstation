@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Negative armor on objects now increases damage taken."

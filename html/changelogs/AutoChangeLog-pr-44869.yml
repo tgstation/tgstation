@@ -1,9 +1,0 @@
-author: "Akrilla"
-delete-after: True
-changes: 
-  - rscadd: "Contract kit comes with a contractor baton - a unique, lightly electrified weapon to help complete your contracts."
-  - tweak: "Finalized payment system for contracts; much more balanced for contractors. No more extremely low paying contract sets."
-  - tweak: "Generated contracts will all have unique targets, no more duplicates."
-  - tweak: "Extraction droppod explosion has been removed, it'll only damage the tile it lands on."
-  - bugfix: "Extraction pods get sent to the jail immediately again."
-  - refactor: "Refactored classic_baton code."
