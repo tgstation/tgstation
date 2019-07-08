@@ -7,7 +7,7 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/unpowered/gaia
-	name = "Heaven in hell"
+	name = "Patch of Eden"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/snow_biodome

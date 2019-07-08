@@ -71,8 +71,8 @@
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/gaia
-	name = "Heaven in hell"
-	id = "fungi_colony"
+	name = "Patch of Eden"
+	id = "gaia"
 	description = "Who would have thought that such a peaceful place could be on such a horrific planet"
 	cost = 5
 	suffix = "lavaland_surface_gaia.dmm"
