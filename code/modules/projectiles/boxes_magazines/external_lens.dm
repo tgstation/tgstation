@@ -15,7 +15,7 @@
 
 /obj/item/external_lens/afterattack(atom/movable/AM, mob/user, flag)
 	. = ..()
-	if(user && istype(AM, restricted_type) && AM.type == restricted_type)
+	if(user && AM.type == restricted_type)
 		AM.AddComponent(/datum/component/extralasers, stored_ammo_type, type)
 		playsound(src, 'sound/weapons/pistolrack.ogg', 50, 0)
 		qdel(src)
