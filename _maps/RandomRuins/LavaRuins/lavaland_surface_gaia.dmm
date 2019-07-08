@@ -41,6 +41,10 @@
 	},
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
+"k" = (
+/mob/living/simple_animal/hostile/mushroom,
+/turf/open/floor/plating/grass,
+/area/ruin/unpowered/gaia)
 "l" = (
 /obj/item/reagent_containers/food/snacks/grown/mushroom/angel,
 /turf/open/floor/plating/grass,
@@ -235,7 +239,7 @@ c
 d
 c
 n
-c
+k
 b
 B
 c
@@ -304,9 +308,9 @@ w
 w
 c
 b
-j
 c
-d
+p
+g
 s
 c
 b
@@ -322,40 +326,22 @@ w
 w
 b
 c
-c
-p
-g
+d
+q
+d
 b
 c
 c
 n
 c
 c
-C
-d
-c
-w
-"}
-(14,1,1) = {"
-w
-w
-c
-d
-q
-d
-c
-g
-c
-b
-c
-h
 b
 D
 C
 w
 "}
-(15,1,1) = {"
-a
+(14,1,1) = {"
+w
 w
 f
 c
@@ -363,16 +349,16 @@ n
 c
 c
 b
+c
+b
+c
 h
-c
-g
-c
 i
 C
 d
 w
 "}
-(16,1,1) = {"
+(15,1,1) = {"
 a
 w
 w
@@ -390,7 +376,7 @@ c
 w
 w
 "}
-(17,1,1) = {"
+(16,1,1) = {"
 a
 a
 w
@@ -408,7 +394,7 @@ w
 w
 a
 "}
-(18,1,1) = {"
+(17,1,1) = {"
 a
 a
 w
@@ -426,7 +412,7 @@ w
 a
 a
 "}
-(19,1,1) = {"
+(18,1,1) = {"
 a
 a
 w
@@ -444,7 +430,7 @@ w
 a
 a
 "}
-(20,1,1) = {"
+(19,1,1) = {"
 a
 a
 a
@@ -462,26 +448,7 @@ w
 a
 a
 "}
-(21,1,1) = {"
-a
-a
-a
-a
-w
-w
-c
-c
-w
-w
-w
-w
-a
-a
-a
-a
-"}
-(22,1,1) = {"
-a
+(20,1,1) = {"
 a
 a
 a
@@ -490,9 +457,10 @@ w
 w
 w
 w
-a
-a
-a
+w
+w
+w
+w
 a
 a
 a
