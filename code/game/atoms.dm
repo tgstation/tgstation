@@ -536,16 +536,70 @@
 		if("color")
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
 
-/atom/vv_get_dropdown_old()
+/atom/vv_get_dropdown()
 	. = ..()
-	. += "---"
-	var/turf/curturf = get_turf(src)
-	if (curturf)
-		.["Jump to"] = "?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
-	.["Modify Transform"] = "?_src_=vars;[HrefToken()];modtransform=[REF(src)]"
-	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=[REF(src)]"
-	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=[REF(src)]"
-	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=[REF(src)]"
+	if(!ismovableatom(src))
+		var/turf/curturf = get_turf(src)
+		if(curturf)
+			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
+	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
+	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
+	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
+	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
+
+/atom/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_ADD_REAGENT] && check_rights(R_VAREDIT))
+		if(!reagents)
+			var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num
+			if(amount)
+				create_reagents(amount)
+
+		if(reagents)
+			var/chosen_id
+			var/list/reagent_options = sortList(GLOB.chemical_reagents_list)
+			switch(alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
+				if("Enter ID")
+					var/valid_id
+					while(!valid_id)
+						chosen_id = stripped_input(usr, "Enter the ID of the reagent you want to add.")
+						if(!chosen_id) //Get me out of here!
+							break
+						for(var/ID in reagent_options)
+							if(ID == chosen_id)
+								valid_id = 1
+						if(!valid_id)
+							to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
+				if("Choose ID")
+					chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in reagent_options
+			if(chosen_id)
+				var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", reagents.maximum_volume) as num
+				if(amount)
+					reagents.add_reagent(chosen_id, amount)
+					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
+					message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to [src]</span>")
+	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
+		usr.client.holder.cmd_admin_explosion(src)
+	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
+		usr.client.holder.cmd_admin_emp(src)
+	if(href_list[VV_HK_MODIFY_TRANSFORM && check_rights(R_VAREDIT))
+		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+		var/matrix/M = transform
+		switch(result)
+			if("Scale")
+				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				if(!isnull(x) && !isnull(y))
+					transform = M.Scale(x,y)
+			if("Translate")
+				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				if(!isnull(x) && !isnull(y))
+					transform = M.Translate(x,y)
+			if("Rotate")
+				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
+				if(!isnull(angle))
+					transform = M.Turn(angle)
 
 /atom/vv_get_header()
 	. = ..()

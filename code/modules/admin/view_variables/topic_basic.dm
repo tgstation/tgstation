@@ -3,7 +3,7 @@
 	var/target_var = GET_VV_VAR_TARGET
 	if(check_rights(R_VAREDIT))
 		if(target_var)
-			IF_VV_OPTION(VV_HK_BASIC_EDIT)
+			if(href_list[VV_HK_BASIC_EDIT])
 				if(!modify_variables(target, target_var, 1))
 					return
 				switch(target_var)
@@ -21,12 +21,12 @@
 						var/mob/living/L = target
 						if(istype(L))
 							vv_update_display(target, "real_name", L.real_name || "No real name")
-			IF_VV_OPTION(VV_HK_BASIC_CHANGE)
+			if(href_list[VV_HK_BASIC_CHANGE])
 				modify_variables(target, target_var, 0)
-			IF_VV_OPTION(VV_HK_BASIC_MASSEDIT)
+			if(href_list[VV_HK_BASIC_MASSEDIT])
 				cmd_mass_modify_object_variables(target, target_var)
 	if(check_rights(R_ADMIN, FALSE))
-		IF_VV_OPTION(VV_HK_EXPOSE)
+		if(href_list[VV_HK_EXPOSE])
 			var/value = vv_get_value(VV_CLIENT)
 			if (value["class"] != VV_CLIENT)
 				return
@@ -41,11 +41,11 @@
 			to_chat(C, "[holder.fakekey ? "an Administrator" : "[usr.client.key]"] has granted you access to view a View Variables window")
 			C.debug_variables(target)
 	if(check_rights(R_DEBUG))
-		IF_VV_OPTION(VV_HK_DELETE)
+		if(href_list[VV_HK_DELETE])
 			usr.client.admin_delete(target)
 			if (isturf(src))	// show the turf that took its place
 				usr.client.debug_variables(src)
-	IF_VV_OPTION(VV_HK_MARK)
+	if(href_list[VV_HK_MARK])
 		usr.client.mark_datum(target)
-	IF_VV_OPTION(VV_HK_CALLPROC)
+	if(href_list[VV_HK_CALLPROC])
 		usr.client.callproc_datum(target)

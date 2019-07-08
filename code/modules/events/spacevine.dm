@@ -399,7 +399,7 @@
 
 /datum/spacevine_controller/vv_do_topic(href_list)
 	. = ..()
-	IF_VV_OPTION(VV_HK_SPACEVINE_PURGE)
+	if(href_list[VV_HK_SPACEVINE_PURGE])
 		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") == "Yes")
 			DeleteVines()
 

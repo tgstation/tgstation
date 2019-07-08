@@ -63,14 +63,6 @@
 			dropdownoptions[i] = "<option value[link? "='[link]'":""]>[name]</option>"
 	else
 		dropdownoptions = D.vv_get_dropdown()
-		//LEGACY SUPPORT UNTIL CONVERSIONS ARE DONE
-		var/list/dropdown_old = D.vv_get_dropdown_old()
-		if(dropdown_old)								//the old style requires post-conversion.
-			for(var/i in 1 to length(dropdown_old))
-				var/name = dropdown_old[i]
-				var/link = dropdown_old[name]
-				dropdownoptions += "<option value[link? "='[link]'":""]>[name]</option>"
-		//END
 
 	var/list/names = list()
 	if(!islist)

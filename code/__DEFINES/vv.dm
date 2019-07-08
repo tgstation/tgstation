@@ -45,9 +45,7 @@
 //Helpers for vv_get_dropdown()
 #define VV_DROPDOWN_OPTION(href_key, name) . += "<option value='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]'>[name]</option>"
 
-//Helpers for vv_do_topic(list/href_list)
-#define IF_VV_OPTION(href_key) if(href_list[href_key])
-
+// VV HREF KEYS
 #define VV_HK_TARGET "target"
 #define VV_HK_VARNAME "targetvar"		//name or index of var for 1 variable targetting hrefs.
 
@@ -76,5 +74,31 @@
 #define VV_HK_ATOM_EXPLODE "turf_explode"
 #define VV_HK_ATOM_EMP "turf_emp"
 
+// /obj
+#define VV_HK_OSAY "osay"
+#define VV_HK_MASS_DEL_TYPE "mass_delete_type"
+#define VV_HK_ARMOR_MOD "mod_obj_armor"
+
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"
+
+
+
+
+
+
+
+
+
+
+/atom
+
+	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
+	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
+	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
+	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
+
+
+
+
+

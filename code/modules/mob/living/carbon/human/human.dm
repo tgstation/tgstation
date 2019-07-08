@@ -823,6 +823,162 @@
 	.["Copy outfit"] = "?_src_=vars;[HrefToken()];copyoutfit=[REF(src)]"
 	.["Add/Remove Quirks"] = "?_src_=vars;[HrefToken()];modquirks=[REF(src)]"
 
+
+
+		else if(href_list["copyoutfit"])
+			if(!check_rights(R_SPAWN))
+				return
+			var/mob/living/carbon/human/H = locate(href_list["copyoutfit"]) in GLOB.carbon_list
+			if(istype(H))
+				H.copy_outfit()
+		else if(href_list["modquirks"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["modquirks"]) in GLOB.mob_list
+			if(!istype(H))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+				return
+
+			var/list/options = list("Clear"="Clear")
+			for(var/x in subtypesof(/datum/quirk))
+				var/datum/quirk/T = x
+				var/qname = initial(T.name)
+				options[H.has_quirk(T) ? "[qname] (Remove)" : "[qname] (Add)"] = T
+
+			var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in options
+			if(result)
+				if(result == "Clear")
+					for(var/datum/quirk/q in H.roundstart_quirks)
+						H.remove_quirk(q.type)
+				else
+					var/T = options[result]
+					if(H.has_quirk(T))
+						H.remove_quirk(T)
+					else
+						H.add_quirk(T,TRUE)
+
+
+		else if(href_list["makemonkey"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["makemonkey"]) in GLOB.mob_list
+			if(!istype(H))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+				return
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
+			if(!H)
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+			holder.Topic(href, list("monkeyone"=href_list["makemonkey"]))
+
+		else if(href_list["makerobot"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["makerobot"]) in GLOB.mob_list
+			if(!istype(H))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+				return
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
+			if(!H)
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+			holder.Topic(href, list("makerobot"=href_list["makerobot"]))
+
+		else if(href_list["makealien"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["makealien"]) in GLOB.mob_list
+			if(!istype(H))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+				return
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
+			if(!H)
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+			holder.Topic(href, list("makealien"=href_list["makealien"]))
+
+		else if(href_list["makeslime"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["makeslime"]) in GLOB.mob_list
+			if(!istype(H))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+				return
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
+			if(!H)
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+			holder.Topic(href, list("makeslime"=href_list["makeslime"]))
+
+		else if(href_list["setspecies"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["setspecies"]) in GLOB.mob_list
+			if(!istype(H))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+				return
+
+			var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
+
+			if(!H)
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			if(result)
+				var/newtype = GLOB.species_list[result]
+				admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [H] to [result]")
+				H.set_species(newtype)
+
+		else if(href_list["purrbation"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["purrbation"]) in GLOB.mob_list
+			if(!istype(H))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+				return
+			if(!ishumanbasic(H))
+				to_chat(usr, "This can only be done to the basic human species at the moment.")
+				return
+
+			if(!H)
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			var/success = purrbation_toggle(H)
+			if(success)
+				to_chat(usr, "Put [H] on purrbation.")
+				log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
+				var/msg = "<span class='notice'>[key_name_admin(usr)] has put [key_name(H)] on purrbation.</span>"
+				message_admins(msg)
+				admin_ticket_log(H, msg)
+
+			else
+				to_chat(usr, "Removed [H] from purrbation.")
+				log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
+				var/msg = "<span class='notice'>[key_name_admin(usr)] has removed [key_name(H)] from purrbation.</span>"
+				message_admins(msg)
+				admin_ticket_log(H, msg)
+
+
+
+
+
+
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
 	if(user == target && can_piggyback(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
