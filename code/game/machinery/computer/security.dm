@@ -766,6 +766,8 @@ What a mess.*/
 									signal.send_to_receivers()
 									usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
 							GLOB.data_core.addCitation(active1.fields["id"], crime)
+							if(SSticker.HasRoundStarted())
+								SSblackbox.AddCitation(crime, active1.fields["name"], usr.ckey)
 							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("citation_delete")
 						if(istype(active1, /datum/data/record))
@@ -773,6 +775,8 @@ What a mess.*/
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
+								if(SSticker.HasRoundStarted())
+									SSblackbox.DeleteCitation(href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
