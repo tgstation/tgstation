@@ -249,7 +249,11 @@
 /datum/antagonist/bloodsucker/proc/CureDisabilities()
 	owner.current.cure_blind(list(EYE_DAMAGE))//()
 	owner.current.cure_nearsighted(EYE_DAMAGE)
-	owner.current.adjust_eye_damage(-100)
+	var/mob/living/carbon/C = owner.current
+	for(var/O in C.internal_organs) //owner.current.adjust_eye_damage(-100)  // This was removed by TG
+		var/obj/item/organ/organ = O
+		organ.setOrganDamage(0)
+
 	owner.current.cure_husk()
 
 
