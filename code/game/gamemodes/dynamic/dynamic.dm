@@ -316,8 +316,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		drafted_rules -= starting_rule
 
 		if (istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/))
-			spend_threat(starting_rule.cost)
-			addtimer(CALLBACK(src, .proc/execute_delayed, starting_rule), starting_rule.delay)
+			var/datum/dynamic_ruleset/roundstart/delayed/rule = starting_rule
+			spend_threat(rule.cost)
+			addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
 
 		spend_threat(starting_rule.cost)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
