@@ -72,7 +72,7 @@
 					return
 				tablepush(user, pushed_mob)
 			if(user.a_intent == INTENT_HELP)
-				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
+				pushed_mob.visible_message("[user] begins to place [pushed_mob] onto [src]...", \
 									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
 				if(do_after(user, 35, target = pushed_mob))
 					tableplace(user, pushed_mob)
@@ -82,7 +82,7 @@
 		else if(user.pulling.pass_flags & PASSTABLE)
 			user.Move_Pulled(src)
 			if (user.pulling.loc == loc)
-				user.visible_message("<span class='notice'>[user] places [user.pulling] onto [src].</span>",
+				user.visible_message("[user] places [user.pulling] onto [src].",
 					"<span class='notice'>You place [user.pulling] onto [src].</span>")
 				user.stop_pulling()
 	return ..()
@@ -109,7 +109,7 @@
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
-	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
+	pushed_mob.visible_message("[user] places [pushed_mob] onto [src].", \
 								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
 	log_combat(user, pushed_mob, "places", null, "onto [src]")
 
@@ -432,7 +432,7 @@
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
-	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
+	visible_message("[user] has laid [pushed_mob] on [src].")
 	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()
@@ -561,8 +561,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
-		user.visible_message("<span class='notice'>[user] assembles \a [R].\
-			</span>", "<span class='notice'>You assemble \a [R].</span>")
+		user.visible_message("[user] assembles \a [R].", "<span class='notice'>You assemble \a [R].</span>")
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE

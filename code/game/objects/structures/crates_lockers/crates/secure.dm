@@ -93,7 +93,7 @@
 						if(iscarbon(user))
 							add_fingerprint(user)
 						locked = !locked
-						user.visible_message("<span class='notice'>[user] unlocks [src]'s privacy lock.</span>",
+						user.visible_message("[user] unlocks [src]'s privacy lock.",
 										"<span class='notice'>You unlock [src]'s privacy lock.</span>")
 						privacy_lock = FALSE
 						update_icon()

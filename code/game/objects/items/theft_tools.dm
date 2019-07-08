@@ -240,7 +240,7 @@
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
 	if(sliver)
 		sliver.forceMove(loc)
-		visible_message("<span class='notice'>\The [sliver] falls out of \the [src] as it hits the ground.</span>")
+		visible_message("<span class='warning'>\The [sliver] falls out of \the [src] as it hits the ground.</span>")
 		sliver = null
 		update_icon()
 	..()

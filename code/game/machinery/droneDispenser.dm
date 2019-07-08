@@ -160,7 +160,7 @@
 			if(maximum_idle && (count_shells() >= maximum_idle))
 				return // then do nothing; check again next tick
 			if(begin_create_message)
-				visible_message("<span class='notice'>[src] [begin_create_message]</span>")
+				visible_message("[src] [begin_create_message]")
 			if(work_sound)
 				playsound(src, work_sound, 50, 1)
 			mode = DRONE_PRODUCTION
@@ -178,7 +178,7 @@
 			if(create_sound)
 				playsound(src, create_sound, 50, 1)
 			if(end_create_message)
-				visible_message("<span class='notice'>[src] [end_create_message]</span>")
+				visible_message("[src] [end_create_message]")
 
 			mode = DRONE_RECHARGING
 			timer = world.time + cooldownTime
@@ -188,7 +188,7 @@
 			if(recharge_sound)
 				playsound(src, recharge_sound, 50, 1)
 			if(recharge_message)
-				visible_message("<span class='notice'>[src] [recharge_message]</span>")
+				visible_message("[src] [recharge_message]")
 
 			mode = DRONE_READY
 			update_icon()
