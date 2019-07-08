@@ -352,9 +352,7 @@
 
 /datum/component/mood/proc/check_area_mood(datum/source, var/area/A)
 	if(A.mood_bonus)
-		var/datum/mood_event/M = add_event(null, "area", /datum/mood_event/area)
-		M.mood_change = A.mood_bonus
-		M.description = A.mood_message
+		add_event(null, "area", /datum/mood_event/area, list(A.mood_bonus, A.mood_message))
 	else
 		clear_event(null, "area")
 
