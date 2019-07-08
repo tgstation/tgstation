@@ -1,77 +1,67 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
+"a" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
+"b" = (
 /obj/structure/flora/grass/jungle/b,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"ac" = (
+"c" = (
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"ad" = (
+"d" = (
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"ae" = (
+"e" = (
 /obj/structure/flora/rock/jungle,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"af" = (
+"f" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"ag" = (
+"g" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"ah" = (
+"h" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"ai" = (
+"i" = (
 /obj/machinery/hydroponics/soil{
 	self_sustaining = 1
 	},
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"aj" = (
+"j" = (
 /mob/living/simple_animal/butterfly{
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	},
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"ak" = (
-/turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	dir = 8
-	},
-/area/ruin/unpowered/gaia)
-"al" = (
+"l" = (
 /obj/item/reagent_containers/food/snacks/grown/mushroom/angel,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"am" = (
+"m" = (
 /obj/item/reagent_containers/food/snacks/grown/mushroom/libertycap,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"an" = (
+"n" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"ao" = (
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 8
-	},
-/area/ruin/unpowered/gaia)
-"ap" = (
+"p" = (
 /mob/living/simple_animal/hostile/lightgeist,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"aq" = (
+"q" = (
 /obj/structure/flora/tree/jungle/small,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"ar" = (
+"r" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/sparsegrass,
 /mob/living/simple_animal/butterfly{
@@ -79,561 +69,432 @@
 	},
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"as" = (
+"s" = (
 /obj/item/reagent_containers/food/snacks/grown/mushroom/amanita,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"at" = (
+"t" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"au" = (
-/turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	dir = 4
-	},
-/area/ruin/unpowered/gaia)
-"av" = (
+"v" = (
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"aw" = (
+"w" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"ax" = (
-/obj/item/toy/seashell,
-/turf/open/floor/plating/beach/sand,
-/area/ruin/unpowered/gaia)
-"ay" = (
-/turf/open/floor/plating/beach/coastline_t/sandwater_inner,
-/area/ruin/unpowered/gaia)
-"az" = (
-/turf/open/floor/plating/beach/coastline_t,
-/area/ruin/unpowered/gaia)
-"aA" = (
+"A" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"aB" = (
+"B" = (
 /obj/structure/flora/grass/jungle,
 /mob/living/simple_animal/hostile/lightgeist,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"aC" = (
+"C" = (
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"aD" = (
+"D" = (
 /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
-"aF" = (
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 6
-	},
-/area/ruin/unpowered/gaia)
-"aG" = (
-/turf/open/floor/plating/beach/coastline_b{
-	dir = 9
-	},
-/area/ruin/unpowered/gaia)
-"aH" = (
-/turf/open/floor/plating/beach/coastline_b,
-/area/ruin/unpowered/gaia)
-"aI" = (
-/turf/open/floor/plating/beach/coastline_b{
-	dir = 5
-	},
-/area/ruin/unpowered/gaia)
-"aJ" = (
-/obj/item/toy/seashell,
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 8
-	},
-/area/ruin/unpowered/gaia)
-"aL" = (
-/turf/open/floor/plating/beach/sand,
-/area/ruin/unpowered/gaia)
-"aM" = (
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 4
-	},
-/area/ruin/unpowered/gaia)
-"aN" = (
-/turf/open/floor/plating/beach/water,
-/area/ruin/unpowered/gaia)
-"aO" = (
-/turf/open/floor/plating/beach/coastline_b{
-	dir = 8
-	},
-/area/ruin/unpowered/gaia)
-"aT" = (
-/turf/open/floor/plating/beach/coastline_b{
-	dir = 4
-	},
-/area/ruin/unpowered/gaia)
-"aU" = (
-/turf/open/floor/plating/beach/coastline_b{
-	dir = 6
-	},
-/area/ruin/unpowered/gaia)
-"aW" = (
-/obj/item/toy/seashell,
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 4
-	},
-/area/ruin/unpowered/gaia)
-"aX" = (
-/turf/open/floor/plating/beach/coastline_b{
-	dir = 10
-	},
-/area/ruin/unpowered/gaia)
-"aY" = (
-/turf/open/floor/plating/beach/coastline_b{
-	dir = 1
-	},
-/area/ruin/unpowered/gaia)
-"aZ" = (
-/mob/living/simple_animal/butterfly{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	},
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 9
-	},
-/area/ruin/unpowered/gaia)
-"bc" = (
-/mob/living/simple_animal/hostile/lightgeist,
-/turf/open/floor/plating/beach/sand,
-/area/ruin/unpowered/gaia)
-"bd" = (
-/obj/item/toy/seashell,
-/turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	dir = 1
-	},
-/area/ruin/unpowered/gaia)
-"be" = (
-/mob/living/simple_animal/crab{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	},
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 1
-	},
-/area/ruin/unpowered/gaia)
-"bf" = (
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 5
-	},
-/area/ruin/unpowered/gaia)
-"bi" = (
-/turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	dir = 1
-	},
-/area/ruin/unpowered/gaia)
-"bj" = (
-/obj/effect/overlay/palmtree_l,
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 1
-	},
-/area/ruin/unpowered/gaia)
-"bk" = (
-/obj/effect/overlay/coconut,
-/turf/open/floor/plating/beach/coastline_t{
-	dir = 1
-	},
-/area/ruin/unpowered/gaia)
 
 (1,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aa
-aa
-aa
-aa
+a
+a
+a
+a
+a
+w
+w
+w
+w
+w
+w
+w
+a
+a
+a
+a
 "}
 (2,1,1) = {"
-aa
-aa
-aa
-aa
-aw
-aw
-ac
-ab
-ac
-ab
-ac
-aw
-aw
-aa
-aa
-aa
+a
+a
+a
+a
+w
+w
+c
+b
+c
+b
+c
+w
+w
+a
+a
+a
 "}
 (3,1,1) = {"
-aa
-aa
-aa
-aw
-aw
-ac
-ag
-ad
-af
-ac
-ad
-ac
-aw
-aa
-aa
-aa
+a
+a
+a
+w
+w
+c
+g
+d
+f
+c
+d
+c
+w
+a
+a
+a
 "}
 (4,1,1) = {"
-aa
-aa
-aw
-aw
-ac
-ad
-ac
-ai
-ad
-aC
-an
-ac
-aw
-aw
-aw
-aa
+a
+a
+w
+w
+c
+d
+c
+i
+d
+C
+n
+c
+w
+w
+w
+a
 "}
 (5,1,1) = {"
-aa
-aa
-aw
-ac
-ac
-ac
-ac
-ap
-aj
-as
-ab
-ah
-ac
-ab
-aw
-aa
+a
+a
+w
+c
+c
+c
+c
+p
+j
+s
+b
+h
+c
+b
+w
+a
 "}
 (6,1,1) = {"
-aa
-aw
-aw
-ag
-ad
-ac
-ac
-ac
-av
-ad
-ac
-aL
-ac
-aw
-aw
-aa
+a
+w
+w
+g
+d
+c
+c
+c
+v
+d
+c
+c
+h
+w
+w
+a
 "}
 (7,1,1) = {"
-aw
-aw
-ab
-ac
-am
-ar
-ac
-ac
-aA
-an
-aC
-ab
-ag
-ac
-aw
-aw
+w
+w
+b
+c
+m
+r
+c
+c
+A
+n
+C
+b
+g
+c
+w
+w
 "}
 (8,1,1) = {"
-aw
-ab
-ac
-ad
-ac
-an
-ac
-ab
-aB
-ac
-ad
-am
-ad
-ah
-ac
-aw
+w
+b
+c
+d
+c
+n
+c
+b
+B
+c
+d
+m
+d
+h
+c
+w
 "}
 (9,1,1) = {"
-aw
-ac
-ad
-ac
-af
-ad
-ac
-ad
-ah
-ac
-af
-aj
-ac
-ab
-af
-aw
+w
+c
+d
+c
+f
+d
+c
+d
+h
+c
+f
+j
+c
+b
+f
+w
 "}
 (10,1,1) = {"
-aw
-ac
-ac
-ah
-ab
-ac
-ac
-aq
-at
-ab
-ad
-ac
-aA
-ab
-ac
-aw
+w
+c
+c
+h
+b
+c
+c
+q
+t
+b
+d
+c
+A
+b
+c
+w
 "}
 (11,1,1) = {"
-aw
-ad
-ae
-ai
-an
-ad
-ac
-at
-ac
-ac
-an
-ac
-ac
-aq
-ac
-aw
+w
+d
+e
+i
+n
+d
+c
+t
+c
+c
+n
+c
+c
+q
+c
+w
 "}
 (12,1,1) = {"
-aw
-ac
-ab
-aj
-ac
-ad
-as
-ac
-ab
-aj
-ah
-ad
-an
-ac
-ab
-aw
+w
+c
+b
+j
+c
+d
+s
+c
+b
+j
+h
+d
+n
+c
+b
+w
 "}
 (13,1,1) = {"
-aw
-ab
-ac
-ac
-ap
-ag
-ab
-aL
-aL
-aL
-bc
-ac
-aC
-ad
-ac
-aw
+w
+b
+c
+c
+p
+g
+b
+c
+c
+n
+c
+c
+C
+d
+c
+w
 "}
 (14,1,1) = {"
-aw
-aw
-ac
-ad
-aq
-ad
-ay
-aM
-aM
-aW
-bd
-aL
-ab
-aD
-aC
-aw
+w
+w
+c
+d
+q
+d
+c
+g
+c
+b
+c
+h
+b
+D
+C
+w
 "}
 (15,1,1) = {"
-aa
-aw
-af
-ac
-an
-ax
-az
-aG
-aT
-aX
-be
-aL
-ai
-aC
-ad
-aw
+a
+w
+f
+c
+n
+c
+c
+b
+h
+c
+g
+c
+i
+C
+d
+w
 "}
 (16,1,1) = {"
-aa
-aw
-aw
-al
-aj
-ay
-aF
-aH
-aN
-aY
-bf
-bi
-aL
-ac
-aw
-aw
+a
+w
+w
+l
+j
+c
+n
+c
+c
+g
+c
+j
+c
+c
+w
+w
 "}
 (17,1,1) = {"
-aa
-aa
-aw
-ac
-ab
-az
-aG
-aN
-aN
-aN
-aX
-bj
-aL
-aw
-aw
-aa
+a
+a
+w
+c
+b
+c
+c
+g
+c
+c
+c
+n
+c
+w
+w
+a
 "}
 (18,1,1) = {"
-aa
-aa
-aw
-ad
-ag
-az
-aH
-aN
-aN
-aO
-aU
-bk
-aL
-aw
-aa
-aa
+a
+a
+w
+d
+g
+c
+p
+h
+t
+h
+e
+c
+h
+w
+a
+a
 "}
 (19,1,1) = {"
-aa
-aa
-aw
-aw
-ac
-az
-aI
-aO
-aU
-aZ
-ao
-au
-aL
-aw
-aa
-aa
+a
+a
+w
+w
+c
+b
+n
+c
+c
+j
+g
+c
+c
+w
+a
+a
 "}
 (20,1,1) = {"
-aa
-aa
-aa
-aw
-aw
-ak
-aJ
-ao
-ao
-au
-aL
-aw
-aw
-aw
-aa
-aa
+a
+a
+a
+w
+w
+c
+h
+c
+n
+c
+c
+w
+w
+w
+a
+a
 "}
 (21,1,1) = {"
-aa
-aa
-aa
-aa
-aw
-aw
-aL
-aL
-aw
-aw
-aw
-aw
-aa
-aa
-aa
-aa
+a
+a
+a
+a
+w
+w
+c
+c
+w
+w
+w
+w
+a
+a
+a
+a
 "}
 (22,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aw
-aw
-aw
-aw
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+a
+a
+a
+a
+a
+w
+w
+w
+w
+a
+a
+a
+a
+a
+a
+a
 "}
