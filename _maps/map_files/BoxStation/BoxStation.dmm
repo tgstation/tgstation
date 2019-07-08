@@ -50926,6 +50926,11 @@
 "nbv" = (
 /turf/closed/wall,
 /area/science/explab)
+"ndR" = (
+/obj/structure/cable,
+/obj/machinery/photocopier,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "neA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -79034,7 +79039,7 @@ bmo
 bnR
 bpe
 bqB
-bqq
+ndR
 btD
 buO
 bwk
