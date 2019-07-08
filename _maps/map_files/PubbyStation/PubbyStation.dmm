@@ -9426,13 +9426,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayR" = (
-/obj/structure/sign/poster/official/random{
-	pixel_x = 32
+/obj/machinery/computer/warrant{
+	dir = 8
 	},
-/obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayS" = (
@@ -10361,11 +10361,16 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "aBz" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
 /obj/item/storage/secure/safe{
 	pixel_x = -22;
 	pixel_y = 4
+	},
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	layer = 2.9
+	},
+/obj/item/pen{
+	layer = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
@@ -10977,17 +10982,12 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "aCP" = (
-/obj/structure/table/wood,
-/obj/item/pen{
-	layer = 4
-	},
 /obj/machinery/keycard_auth{
 	pixel_x = -26;
 	pixel_y = 6
 	},
-/obj/item/paper_bin{
-	layer = 2.9
-	},
+/obj/structure/cable,
+/obj/machinery/photocopier,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aCQ" = (
@@ -50852,15 +50852,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "hnu" = (
-/obj/machinery/button/door{
-	id = "lawyer_shutters";
-	name = "law office shutters control";
-	pixel_x = 34;
-	pixel_y = -1;
-	req_access_txt = "38"
-	},
-/obj/machinery/light_switch{
-	pixel_x = 24
+/obj/machinery/computer/warrant{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -54576,6 +54569,20 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"qaQ" = (
+/obj/structure/table/wood,
+/obj/item/pen{
+	layer = 4
+	},
+/obj/machinery/keycard_auth{
+	pixel_x = -26;
+	pixel_y = 6
+	},
+/obj/item/paper_bin{
+	layer = 2.9
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "qbp" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/meter,
@@ -87981,7 +87988,7 @@ aQS
 aRQ
 aSN
 aPE
-aPE
+qaQ
 aWd
 aXb
 aRN

@@ -18,7 +18,7 @@ export function css () {
       s.rgba({oldie: true}),
       s.plsfilters({oldIE: true}),
       s.fontweights,
-      f.min ? s.cssnano() : false,
+      ... f.min ? [s.cssnano()] : [],
     ]))
     .pipe(g.bytediff.start())
     .pipe(g.if(f.debug, g.sourcemaps.write()))

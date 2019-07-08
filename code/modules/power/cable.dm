@@ -283,19 +283,23 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Powernets handling helpers
 //////////////////////////////////////////////
 
-//if powernetless_only = 1, will only get connections without powernet
-//ignore_dir makes sure that connections coming from that direction are ignored
-/obj/structure/cable/proc/get_connections(powernetless_only = FALSE, ignore_dir = null)
-	. = list()	// this will be a list of all connected power objects
+/obj/structure/cable/proc/get_cable_connections(powernetless_only, ignore_dir = null)
+	. = list()
 	var/turf/T
-
 	for(var/check_dir in GLOB.cardinals)
-		if(linked_dirs & check_dir && check_dir != ignore_dir)
+		if((linked_dirs & check_dir) && check_dir != ignore_dir)
 			T = get_step(src, check_dir)
 			if(T)
-				. += power_list(T, src, powernetless_only)
+				var/obj/structure/cable/C = locate(/obj/structure/cable) in T
+				if(C)
+					.[C] = check_dir
 
-	. += power_list(loc, src, powernetless_only) //get on turf matching cables
+/obj/structure/cable/proc/get_machine_connections(powernetless_only)
+	. = list()
+	for(var/obj/machinery/power/P in get_turf(src))
+		if(!powernetless_only || !P.powernet)
+			if(P.anchored)
+				. += P
 
 /obj/structure/cable/proc/auto_propogate_cut_cable(obj/O)
 	if(O && !QDELETED(O))

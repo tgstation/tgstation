@@ -208,69 +208,30 @@
 // GLOBAL PROCS for powernets handling
 //////////////////////////////////////////
 
-
-// returns a list of all power-related objects (nodes, cable, junctions) in turf,
-// excluding source, that match the direction d
-// if unmarked==1, only return those with no powernet
-// search_dir is the direction that this is being searched from. null is a valid option.
-/proc/power_list(turf/T, source, unmarked = FALSE, cable_only = FALSE, search_dir = null)
-	. = list()
-
-	for(var/AM in T)
-		if(AM == source)
-			continue			//we don't want to return source
-
-		if(!cable_only && istype(AM, /obj/machinery/power))
-			var/obj/machinery/power/P = AM
-			if(P.powernet == 0)
-				continue		// exclude APCs which have powernet=0
-
-			if(!unmarked || !P.powernet)		//if unmarked=1 we only return things with no powernet
-				.[P] = null
-
-		else if(istype(AM, /obj/structure/cable))
-			var/obj/structure/cable/C = AM
-			if(!unmarked || !C.powernet)
-				.[C] = turn(search_dir, 180) //invert the searching direction to get the direction connections should be ignored when searching
-	return .
-
-
-
-
 //remove the old powernet and replace it with a new one throughout the network.
-//use_old_if_found will use an existing powernet and repropogate if it finds it.
-//propogate_after_search will do all the actual powernet application at the end instead of as it goes.
-/proc/propagate_network(obj/O, datum/powernet/PN, use_old_if_found = FALSE, skip_assigned_powernets = FALSE, propogate_after_search = FALSE)
-	var/list/worklist = list()
+/proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, skip_assigned_powernets = FALSE)
 	var/list/found_machines = list()
+	var/list/cables = list()
 	var/index = 1
-	var/obj/P = null
+	var/obj/structure/cable/working_cable
+	var/current_ignore_dir = 128 //Bullshit dir that will never exist in game, but still passes boolean checks
 
-	worklist |= O //start propagating from the passed object
+	cables[C] = current_ignore_dir
 
-	while(index <= worklist.len) //until we've exhausted all power objects
-		P = worklist[index] //get the next power object found
+	while(index <= length(cables))
+		working_cable = cables[index]
+		current_ignore_dir = cables[working_cable]
 		index++
 
-		if( istype(P, /obj/structure/cable))
-			var/obj/structure/cable/C = P
-			if(C.powernet != PN) //add it to the powernet, if it isn't already there
-				if(!propogate_after_search)
-					PN.add_cable(C)
-				if(C.powernet && use_old_if_found)
-					propagate_network(C, C.powernet, FALSE, TRUE, TRUE)
-					return
-				worklist += C.get_connections(skip_assigned_powernets, worklist[P]) //get adjacents power objects, with or without a powernet
-		else if(P.anchored && istype(P, /obj/machinery/power))
-			var/obj/machinery/power/M = P
-			found_machines |= M //we wait until the powernet is fully propagates to connect the machines
+		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
+		
+		for(var/obj/structure/cable/cable_entry in connections)
+			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries
+				cables[cable_entry] = connections[cable_entry]
 
-		else
-			continue
-
-	if(propogate_after_search)
-		for(var/obj/structure/cable/C in worklist)
-			PN.add_cable(C)
+	for(var/obj/structure/cable/cable_entry in cables)
+		PN.add_cable(cable_entry)
+		found_machines += cable_entry.get_machine_connections(skip_assigned_powernets)
 
 	//now that the powernet is set, connect found machines to it
 	for(var/obj/machinery/power/PM in found_machines)

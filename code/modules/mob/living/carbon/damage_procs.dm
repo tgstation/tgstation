@@ -258,3 +258,28 @@
 	if(B)
 		var/adjusted_amount = amount - B.get_brain_damage()
 		B.adjust_brain_damage(adjusted_amount, null)
+
+/mob/living/carbon/proc/getLiverLoss()
+	. = 0
+	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
+	if(L)
+		. = L.damage
+
+/mob/living/carbon/proc/adjustLiverLoss(amount, check_toxres = TRUE, rev_failure = FALSE)
+	if(status_flags & GODMODE)
+		return 0
+	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
+	if(!L)
+		return
+
+	if(amount < 0 && L.failing && !rev_failure)
+		return 0
+
+	var/adjusted_amount = amount
+
+	if(check_toxres)
+		adjusted_amount *= 100 * L.toxLethality
+
+	L.damage += adjusted_amount
+
+	return adjusted_amount

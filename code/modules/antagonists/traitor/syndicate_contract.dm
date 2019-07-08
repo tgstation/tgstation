@@ -6,22 +6,19 @@
 
 	var/list/victim_belongings = list()
 
-/datum/syndicate_contract/New(owner)
-	generate(owner)
+/datum/syndicate_contract/New(owner, type, blacklist)
+	generate(owner, type, blacklist)
 
-/datum/syndicate_contract/proc/generate(owner)
+/datum/syndicate_contract/proc/generate(owner, type, blacklist)
 	contract.owner = owner
-	contract.find_target()
+	contract.find_target(null, blacklist)
 
-	// 50/50 chance of getting at least one very high paying
-	// contract.
-	// High payout
-	if (prob(18))
-		contract.payout_bonus = rand(7,10)
-	else if (prob(45))
-		contract.payout_bonus = rand(1,3)
-	else // Medium payout
-		contract.payout_bonus = rand(2,6)
+	if (type == CONTRACT_PAYOUT_LARGE)
+		contract.payout_bonus = rand(9,13)
+	else if (type == CONTRACT_PAYOUT_MEDIUM)
+		contract.payout_bonus = rand(6,8)
+	else
+		contract.payout_bonus = rand(2,4)
 
 	contract.payout = rand(0, 2)
 	contract.generate_dropoff()
@@ -77,7 +74,7 @@
 
 	empty_pod.stay_after_drop = TRUE
 	empty_pod.reversing = TRUE
-	empty_pod.explosionSize = list(0,0,2,1)
+	empty_pod.explosionSize = list(0,0,0,1)
 	empty_pod.leavingSound = 'sound/effects/podwoosh.ogg'
 
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
@@ -116,6 +113,12 @@
 				M.transferItemToLoc(W)
 				victim_belongings.Add(W)
 
+			var/obj/structure/closet/supplypod/extractionpod/pod = source
+
+			// Handle the pod returning
+			pod.send_up(pod)
+
+			// After pod is sent we start the victim narrative/heal.
 			handleVictimExperience(M)
 
 			// This is slightly delayed because of the sleep calls above to handle the narrative. 
@@ -146,7 +149,7 @@
 					C.registered_account.adjust_money(ransom * 0.35)
 
 					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
-					$[C.registered_account.account_balance].")
+					$[C.registered_account.account_balance].", TRUE)
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
@@ -155,6 +158,9 @@
 	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
 
 	if (M.stat != DEAD)
+		// Heal them up - gets them out of crit/soft crit.
+		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 15)
+
 		M.flash_act()
 		M.confused += 10
 		M.blur_eyes(5)

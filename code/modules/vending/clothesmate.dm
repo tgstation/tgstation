@@ -101,6 +101,9 @@
 		            /obj/item/clothing/suit/ianshirt = 1,
 		            /obj/item/clothing/shoes/laceup = 2,
 		            /obj/item/clothing/shoes/sandal = 2,
+		            /obj/item/clothing/shoes/cowboy = 2,
+		            /obj/item/clothing/shoes/cowboy/white = 2,
+		            /obj/item/clothing/shoes/cowboy/black = 2,
 		            /obj/item/clothing/suit/jacket/miljacket = 1,
 		            /obj/item/clothing/suit/apron/purple_bartender = 2,
 		            /obj/item/clothing/under/rank/bartender/purple = 2)
