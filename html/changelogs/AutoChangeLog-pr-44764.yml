@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Bodies can now be manually cremated by setting them on fire while their limbs are fully damaged."
+  - rscadd: "Cremation causes limbs to gradually burn off into ash; once none are left, the body is destroyed."
+  - tweak: "Fire damage is now evenly distributed instead of applied to a random limb every tick."
