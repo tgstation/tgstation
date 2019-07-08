@@ -238,7 +238,7 @@
 							else
 								dat += "<td>All Paid Off</td>"
 							dat += {"<td>
-							<A href='?src=[REF(src)];choice=Edit  Field;field=citation_delete;cdataid=[c.dataId]'>\[X\]</A>
+							<A href='?src=[REF(src)];choice=Edit  Field;field=citation_remove;cdataid=[c.dataId]'>\[X\]</A>
 							</td>
 							</tr>"}
 						dat += "</table>"
@@ -406,6 +406,8 @@ What a mess.*/
 									to_chat(usr, "<span class='notice'>The fine has been paid in full</span>")
 									Radio.set_frequency(FREQ_SECURITY)
 									Radio.talk_into(src, "[active2.fields["name"]]\'s citation for [p.crimeName] has been paid off", FREQ_SECURITY)
+									if(SSticker.HasRoundStarted())
+										SSblackbox.PayCitation(href_list["cdataid"], pay)
 								qdel(C)
 								playsound(src, "terminal_type", 25, 0)
 						else
@@ -777,7 +779,7 @@ What a mess.*/
 							if(SSticker.HasRoundStarted())
 								SSblackbox.AddCitation(crime, active1.fields["name"], usr.ckey)
 							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-					if("citation_delete")
+					if("citation_remove")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))

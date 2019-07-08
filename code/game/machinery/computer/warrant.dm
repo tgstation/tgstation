@@ -146,6 +146,8 @@
 								to_chat(M, "<span class='notice'>The fine has been paid in full</span>")
 								Radio.set_frequency(FREQ_SECURITY)
 								Radio.talk_into(src, "[current.fields["name"]]\'s citation for [p.crimeName] has been paid off", FREQ_SECURITY)
+								if(SSticker.HasRoundStarted())
+									SSblackbox.PayCitation(href_list["cdataid"], pay)
 							qdel(C)
 							playsound(src, "terminal_type", 25, 0)
 					else

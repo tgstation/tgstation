@@ -374,3 +374,19 @@ Versioning
 	if(query_delete_citation)
 		query_delete_citation.Execute(async = TRUE)
 		qdel(query_delete_citation)
+
+/datum/controller/subsystem/blackbox/proc/PayCitation(id, amount)
+	set waitfor = FALSE
+	if(sealed)
+		return
+
+	if(SSdbcore.db_major < 5 && SSdbcore.db_minor < 3)
+		return
+
+	var/dataId = sanitizeSQL(id)
+	var/paid = sanitizeSQL(amount)
+
+	var/datum/DBQuery/query_pay_citaiton = SSdbcore.NewQuery("UPDATE [format_table_name("citations")] SET paid = '[paid]' WHERE round_id = [GLOB.round_id] AND dataId = [dataId]")
+	if(query_pay_citaiton)
+		query_pay_citaiton.Execute(async = TRUE)
+		qdel(query_pay_citaiton)
