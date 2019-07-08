@@ -39920,8 +39920,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bIt" = (
-/obj/structure/table,
-/obj/item/clothing/head/hardhat/cakehat,
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
@@ -39932,6 +39930,10 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
+	},
+/obj/item/twohanded/required/kirbyplants{
+	desc = "A reminder of why we can't have nice things.";
+	name = "Potty the plant"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
