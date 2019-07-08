@@ -67,7 +67,7 @@
 		master.burn_tile()
 		if(user)
 			master.add_hiddenprint(user)
-	QDEL_IN(fakefire, 100)
+	QDEL_IN(fakefire, 10 SECONDS)
 	qdel(src)
 
 /datum/component/thermite/proc/clean_react(datum/source, strength)
