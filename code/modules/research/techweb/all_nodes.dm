@@ -797,7 +797,7 @@
 	prereq_ids = list("beam_weapons")
 	design_ids = list("mech_laser_heavy")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 7500
+	export_price = 10000
 
 /datum/techweb_node/mech_disabler
 	id = "mech_disabler"
