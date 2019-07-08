@@ -89,19 +89,19 @@
 
 /datum/surgery/advanced/experimental_dissection/adv
 	name = "Thorough Dissection"
-	value_multiplier = 3
+	value_multiplier = 2
 	replaced_by = /datum/surgery/advanced/experimental_dissection/exp
 	requires_tech = TRUE
 
 /datum/surgery/advanced/experimental_dissection/exp
 	name = "Experimental Dissection"
-	value_multiplier = 6
+	value_multiplier = 5
 	replaced_by = /datum/surgery/advanced/experimental_dissection/alien
 	requires_tech = TRUE
 
 /datum/surgery/advanced/experimental_dissection/alien
 	name = "Extraterrestrial Dissection"
-	value_multiplier = 12
+	value_multiplier = 10
 	requires_tech = TRUE
 
 
