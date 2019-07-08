@@ -37,12 +37,8 @@
 /area/ruin/unpowered/gaia)
 "j" = (
 /mob/living/simple_animal/butterfly{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list()
 	},
-/turf/open/floor/plating/grass,
-/area/ruin/unpowered/gaia)
-"k" = (
-/mob/living/simple_animal/hostile/mushroom,
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
 "l" = (
@@ -58,7 +54,10 @@
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
 "p" = (
-/mob/living/simple_animal/hostile/lightgeist,
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
+	light_color = "#42ECFF"
+	},
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
 "q" = (
@@ -69,7 +68,7 @@
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/sparsegrass,
 /mob/living/simple_animal/butterfly{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list()
 	},
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
@@ -94,7 +93,10 @@
 /area/ruin/unpowered/gaia)
 "B" = (
 /obj/structure/flora/grass/jungle,
-/mob/living/simple_animal/hostile/lightgeist,
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
+	light_color = "#42ECFF"
+	},
 /turf/open/floor/plating/grass,
 /area/ruin/unpowered/gaia)
 "C" = (
@@ -239,7 +241,7 @@ c
 d
 c
 n
-k
+c
 b
 B
 c
