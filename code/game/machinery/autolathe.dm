@@ -167,12 +167,19 @@
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			if((materials.get_material_amount(getmaterialref(/datum/material/hematite)) >= metal_cost*multiplier*coeff) && (materials.get_material_amount(getmaterialref(/datum/material/glass)) >= glass_cost*multiplier*coeff))
+
+			var/list/materials_used = list()
+			for(var/MAT in being_built.materials)
+				materials_used[MAT] = being_built.materials[MAT] * coeff * multiplier
+			for(var/mat in materials_used)
+				to_chat(world, "[mat] cost: [materials_used[mat]]")
+
+			if(materials.has_materials(materials_used))
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
 				var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
-				addtimer(CALLBACK(src, .proc/make_item, power, metal_cost, glass_cost, multiplier, coeff, is_stack), time)
+				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, multiplier, coeff, is_stack), time)
 
 		if(href_list["search"])
 			matching_designs.Cut()
@@ -189,16 +196,11 @@
 
 	return
 
-/obj/machinery/autolathe/proc/make_item(power, metal_cost, glass_cost, multiplier, coeff, is_stack)
+/obj/machinery/autolathe/proc/make_item(power, var/list/materials_used, multiplier, coeff, is_stack)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
 
-	var/list/materials_used = list()
-	for(var/MAT in being_built.materials)
-		materials_used[MAT] = being_built.materials[MAT] * coeff * multiplier
-	for(var/mat in materials_used)
-		to_chat(world, "[mat] cost: [materials_used[mat]]")
 	materials.use_materials(materials_used)
 
 	if(is_stack)

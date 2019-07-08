@@ -39,6 +39,8 @@
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
 
+	var/datum/material/material //The material this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -83,6 +85,10 @@
 
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
+	
+	if(material && !istype(material, /datum/material))
+		material = getmaterialref(material) //Get the proper instanced version
+	material.on_applied(src)
 
 	ComponentInitialize()
 

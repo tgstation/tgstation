@@ -63,6 +63,9 @@ other types of metals and chemistry for reagents).
 	sheet.send(user)
 	return sheet.icon_tag(id)
 
+/datum/design/proc/can_afford(var/atom/constructor)
+
+
 ////////////////////////////////////////
 //Disks for transporting design datums//
 ////////////////////////////////////////

@@ -14,6 +14,7 @@
 	materials = list(/datum/material/hematite = 500)
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
+	material = /datum/material/hematite
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 
