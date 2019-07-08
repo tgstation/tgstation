@@ -48,7 +48,7 @@
 	if(world.time < next_use)
 		to_chat(user, "<span class='warning'>[src] is still recharging.</span>")
 		return
-	if(!QDELETED(linked_swapper))
+	if(QDELETED(linked_swapper))
 		to_chat(user, "<span class='warning'>[src] is not linked with another swapper.</span>")
 		return
 	playsound(src, 'sound/weapons/flash.ogg', 25, 1)
