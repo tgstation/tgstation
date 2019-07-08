@@ -165,8 +165,8 @@
 	ADD_TRAIT(owner, TRAIT_SURGEON, "implant")
 
 /obj/item/organ/cyberimp/brain/surgeon/Remove(mob/living/carbon/M, special = FALSE)
-	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_SURGEON, "implant")
+	. = ..()
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

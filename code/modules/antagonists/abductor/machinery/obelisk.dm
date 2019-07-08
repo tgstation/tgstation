@@ -60,6 +60,7 @@
 /obj/machinery/abductor/obelisk/proc/disintegrate()
 	flick("obelisk_disintegrating", src)
 	visible_message("<span class='warning'>[src] starts buzzing loudly while it disintegrates itself!</span>", null, "<span class='warning'>You hear a loud buzz.</span>")
+	playsound(src, 'sound/effects/screech.ogg', 100, 1)
 	QDEL_IN(src, 50)
 
 /obj/item/obelisk_core
