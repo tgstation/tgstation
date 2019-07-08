@@ -68,3 +68,13 @@
 	description = "<span class='nicegreen'>I feel like I'm wrapped in cotton!</span>\n"
 	mood_change = 9
 	timeout = 3 MINUTES
+
+/datum/mood_event/stimulant_medium
+	description = "<span class='nicegreen'>I have so much energy, I feel like I could do anything.</span>\n"
+	mood_change = 4
+	timeout = 3 MINUTES
+
+/datum/mood_event/stimulant_heavy
+	description = "<span class='nicegreen'>Eh ah AAAAH! HA HA HA HA HAA! Uuuh.</span>\n"
+	mood_change = 6
+	timeout = 3 MINUTES
