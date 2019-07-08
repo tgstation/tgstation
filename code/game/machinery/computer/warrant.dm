@@ -120,8 +120,8 @@
 	switch(href_list["choice"])
 		if("Login")
 			var/obj/item/card/id/scan = M.get_idcard(TRUE)
-			authenticated = scan.registered_name
-			if(authenticated)
+			if(scan && istype(scan))
+				authenticated = scan.registered_name
 				current = find_record("name", authenticated, GLOB.data_core.security)
 				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 		if("Logout")
