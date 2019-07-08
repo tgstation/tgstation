@@ -62,7 +62,7 @@
 	for(var/i in typesof(/datum/surgery/advanced/experimental_dissection))
 		var/datum/surgery/advanced/experimental_dissection/cringe = i
 		if(HAS_TRAIT_FROM(target,TRAIT_DISSECTED,"[initial(cringe.name)]"))
-			multi_surgery_adjust = max(multi_surgery_adjust,initial(cringe.value_multiplier))
+			multi_surgery_adjust = max(multi_surgery_adjust,initial(cringe.value_multiplier)) - 1
 
 	multi_surgery_adjust *= cost
 
@@ -89,19 +89,19 @@
 
 /datum/surgery/advanced/experimental_dissection/adv
 	name = "Thorough Dissection"
-	value_multiplier = 2
+	value_multiplier = 3
 	replaced_by = /datum/surgery/advanced/experimental_dissection/exp
 	requires_tech = TRUE
 
 /datum/surgery/advanced/experimental_dissection/exp
 	name = "Experimental Dissection"
-	value_multiplier = 3
+	value_multiplier = 6
 	replaced_by = /datum/surgery/advanced/experimental_dissection/alien
 	requires_tech = TRUE
 
 /datum/surgery/advanced/experimental_dissection/alien
 	name = "Extraterrestrial Dissection"
-	value_multiplier = 5
+	value_multiplier = 12
 	requires_tech = TRUE
 
 
