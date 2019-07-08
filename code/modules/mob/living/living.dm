@@ -750,12 +750,12 @@
 	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
-		if(has_gravity == 1)
+		if(has_gravity == STANDARD_GRAVITY)
 			clear_alert("gravity")
 		else
 			if(has_gravity >= GRAVITY_DAMAGE_TRESHOLD)
 				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
-			else if(has_gravity < 1)
+			else if(has_gravity < STANDARD_GRAVITY)
 				throw_alert("gravity", /obj/screen/alert/lowgravity)
 			else
 				throw_alert("gravity", /obj/screen/alert/highgravity)
