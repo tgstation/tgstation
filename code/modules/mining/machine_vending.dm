@@ -255,7 +255,6 @@
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
 /obj/item/storage/backpack/duffelbag/mining_conscript/PopulateContents()
-	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/storage/bag/ore(src)
@@ -265,3 +264,4 @@
 	new /obj/item/card/mining_access_card(src)
 	new /obj/item/gun/energy/kinetic_accelerator(src)
 	new /obj/item/kitchen/knife/combat/survival(src)
+	new /obj/item/flashlight/seclite(src)
