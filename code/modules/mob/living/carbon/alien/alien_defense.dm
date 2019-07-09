@@ -28,7 +28,7 @@ In all, this is a lot like the monkey code. /N
 			AdjustParalyzed(-60)
 			AdjustUnconscious(-60)
 			AdjustSleeping(-100)
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
+			visible_message("<span class='none'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
 
 		if ("grab")
 			grabbedby(M)

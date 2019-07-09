@@ -370,7 +370,7 @@
 		P.kill_program(forced = TRUE)
 		idle_threads.Remove(P)
 	if(loud)
-		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
+		physical.visible_message("<span class='none'>\The [src] shuts down.</span>")
 	enabled = 0
 	update_icon()
 

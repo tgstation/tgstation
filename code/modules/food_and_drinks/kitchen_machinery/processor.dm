@@ -142,7 +142,7 @@
 
 /obj/machinery/processor/container_resist(mob/living/user)
 	user.forceMove(drop_location())
-	user.visible_message("<span class='notice'>[user] crawls free of the processor!</span>")
+	user.visible_message("<span class='none'>[user] crawls free of the processor!</span>")
 
 /obj/machinery/processor/proc/empty()
 	for (var/obj/O in src)
@@ -199,7 +199,7 @@
 		var/C = S.cores
 		if(S.stat != DEAD)
 			S.forceMove(drop_location())
-			S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
+			S.visible_message("<span class='none'>[C] crawls free of the processor!</span>")
 			return
 		for(var/i in 1 to (C+rating_amount-1))
 			var/atom/movable/item = new S.coretype(drop_location())

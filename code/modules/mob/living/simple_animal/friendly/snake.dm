@@ -55,7 +55,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/AttackingTarget()
         if(istype(target, /mob/living/simple_animal/mouse))
-                visible_message("<span class='notice'>[name] consumes [target] in a single gulp!</span>", "<span class='notice'>You consume [target] in a single gulp!</span>")
+                visible_message("<span class='none'>[name] consumes [target] in a single gulp!</span>", "<span class='notice'>You consume [target] in a single gulp!</span>")
                 QDEL_NULL(target)
                 adjustBruteLoss(-2)
         else

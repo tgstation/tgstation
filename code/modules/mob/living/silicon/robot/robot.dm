@@ -381,7 +381,7 @@
 		adjustBruteLoss(-30)
 		updatehealth()
 		add_fingerprint(user)
-		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
+		visible_message("<span class='none'>[user] has fixed some of the dents on [src].</span>")
 		return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)

@@ -32,7 +32,7 @@ Chilling extracts:
 	effect_desc = "Creates some slime barrier cubes. When used they create slimy barricades."
 
 /obj/item/slimecross/chilling/grey/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] produces a few small, grey cubes</span>")
+	user.visible_message("<span class='none'>[src] produces a few small, grey cubes</span>")
 	for(var/i in 1 to 3)
 		new /obj/item/barriercube(get_turf(user))
 	..()
@@ -57,7 +57,7 @@ Chilling extracts:
 	if(A.outdoors)
 		to_chat(user, "<span class='warning'>[src] can't affect such a large area.</span>")
 		return
-	user.visible_message("<span class='notice'>[src] shatters, and a healing aura fills the room briefly.</span>")
+	user.visible_message("<span class='none'>[src] shatters, and a healing aura fills the room briefly.</span>")
 	for(var/mob/living/carbon/C in A)
 		C.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
 	..()
@@ -67,7 +67,7 @@ Chilling extracts:
 	effect_desc = "Creates a rebreather, a tankless mask."
 
 /obj/item/slimecross/chilling/blue/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] cracks, and spills out a liquid goo, which reforms into a mask!</span>")
+	user.visible_message("<span class='none'>[src] cracks, and spills out a liquid goo, which reforms into a mask!</span>")
 	new /obj/item/clothing/mask/nobreath(get_turf(user))
 	..()
 
@@ -88,7 +88,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/yellow/do_effect(mob/user)
 	var/area/A = get_area(get_turf(user))
-	user.visible_message("<span class='notice'>[src] shatters, and a the air suddenly feels charged for a moment.</span>")
+	user.visible_message("<span class='none'>[src] shatters, and a the air suddenly feels charged for a moment.</span>")
 	for(var/obj/machinery/power/apc/C in A)
 		if(C.cell)
 			C.cell.charge = min(C.cell.charge + C.cell.maxcharge/2, C.cell.maxcharge)
@@ -113,9 +113,9 @@ Chilling extracts:
 			G.garbage_collect()
 			T.air_update_turf()
 	if(filtered)
-		user.visible_message("<span class='notice'>Cracks spread throughout [src], and some air is sucked in!</span>")
+		user.visible_message("<span class='none'>Cracks spread throughout [src], and some air is sucked in!</span>")
 	else
-		user.visible_message("<span class='notice'>[src] cracks, but nothing happens.</span>")
+		user.visible_message("<span class='none'>[src] cracks, but nothing happens.</span>")
 	..()
 
 /obj/item/slimecross/chilling/darkblue
@@ -124,7 +124,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/darkblue/do_effect(mob/user)
 	if(isliving(user))
-		user.visible_message("<span class='notice'>[src] freezes over [user]'s entire body!</span>")
+		user.visible_message("<span class='none'>[src] freezes over [user]'s entire body!</span>")
 		var/mob/living/M = user
 		M.apply_status_effect(/datum/status_effect/frozenstasis)
 	..()
@@ -134,7 +134,7 @@ Chilling extracts:
 	effect_desc = "Creates several ration packs."
 
 /obj/item/slimecross/chilling/silver/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] crumbles into icy powder, leaving behind several emergency food supplies!</span>")
+	user.visible_message("<span class='none'>[src] crumbles into icy powder, leaving behind several emergency food supplies!</span>")
 	var/amount = rand(5, 10)
 	for(var/i in 1 to amount)
 		new /obj/item/reagent_containers/food/snacks/rationpack(get_turf(user))
@@ -218,7 +218,7 @@ Chilling extracts:
 	effect_desc = "Creates a pair of Prism Glasses, which allow the wearer to place colored light crystals."
 
 /obj/item/slimecross/chilling/pyrite/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] crystallizes into a pair of spectacles!</span>")
+	user.visible_message("<span class='none'>[src] crystallizes into a pair of spectacles!</span>")
 	new /obj/item/clothing/glasses/prism_glasses(get_turf(user))
 	..()
 
@@ -232,9 +232,9 @@ Chilling extracts:
 		slimesfound = TRUE
 		S.docile = TRUE
 	if(slimesfound)
-		user.visible_message("<span class='notice'>[src] lets out a peaceful ring as it shatters, and nearby slimes seem calm.</span>")
+		user.visible_message("<span class='none'>[src] lets out a peaceful ring as it shatters, and nearby slimes seem calm.</span>")
 	else
-		user.visible_message("<span class='notice'>[src] lets out a peaceful ring as it shatters, but nothing happens...</span>")
+		user.visible_message("<span class='none'>[src] lets out a peaceful ring as it shatters, but nothing happens...</span>")
 	..()
 
 /obj/item/slimecross/chilling/green
@@ -265,7 +265,7 @@ Chilling extracts:
 	effect_desc = "Creates a slime corgi puppy."
 
 /obj/item/slimecross/chilling/pink/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] cracks like an egg, and an adorable puppy comes tumbling out!</span>")
+	user.visible_message("<span class='none'>[src] cracks like an egg, and an adorable puppy comes tumbling out!</span>")
 	new /mob/living/simple_animal/pet/dog/corgi/puppy/slime(get_turf(user))
 	..()
 
@@ -274,7 +274,7 @@ Chilling extracts:
 	effect_desc = "Produces a golden capture device"
 
 /obj/item/slimecross/chilling/gold/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] lets off golden light as it melts and reforms into an egg-like device!</span>")
+	user.visible_message("<span class='none'>[src] lets off golden light as it melts and reforms into an egg-like device!</span>")
 	new /obj/item/capturedevice(get_turf(user))
 	..()
 
@@ -296,7 +296,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/black/do_effect(mob/user)
 	if(ishuman(user))
-		user.visible_message("<span class='notice'>[src] crystallizes along [user]'s skin, turning into metallic scales!</span>")
+		user.visible_message("<span class='none'>[src] crystallizes along [user]'s skin, turning into metallic scales!</span>")
 		var/mob/living/carbon/human/H = user
 		H.set_species(/datum/species/golem/random)
 	..()
@@ -306,7 +306,7 @@ Chilling extracts:
 	effect_desc = "Creates a Heroine Bud, a special flower that pacifies whoever wears it on their head. They will not be able to take it off without help."
 
 /obj/item/slimecross/chilling/lightpink/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] blooms into a beautiful flower!</span>")
+	user.visible_message("<span class='none'>[src] blooms into a beautiful flower!</span>")
 	new /obj/item/clothing/head/peaceflower(get_turf(user))
 	..()
 
@@ -315,7 +315,7 @@ Chilling extracts:
 	effect_desc = "Solidifies into a set of adamantine armor."
 
 /obj/item/slimecross/chilling/adamantine/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] creaks and breaks as it shifts into a heavy set of armor!</span>")
+	user.visible_message("<span class='none'>[src] creaks and breaks as it shifts into a heavy set of armor!</span>")
 	new /obj/item/clothing/suit/armor/heavy/adamantine(get_turf(user))
 	..()
 

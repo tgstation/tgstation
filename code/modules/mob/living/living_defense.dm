@@ -226,7 +226,7 @@
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
-		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
+		M.visible_message("<span class='none'>\The [M] [M.friendly] [src]!</span>")
 		return FALSE
 	else
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
@@ -270,7 +270,7 @@
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
 	switch(L.a_intent)
 		if("help")
-			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
+			visible_message("<span class='none'>[L.name] rubs its head against [src].</span>")
 			return FALSE
 
 		else
@@ -293,7 +293,7 @@
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
 	switch(M.a_intent)
 		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
+			visible_message("<span class='none'>[M] caresses [src] with its scythe like arm.</span>")
 			return FALSE
 		if ("grab")
 			grabbedby(M)

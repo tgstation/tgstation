@@ -161,11 +161,11 @@
 		return
 	if(safety)
 		safety = FALSE
-		visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
+		visible_message("<span class='none'>[src] beeps: Safety protocols disabled!</span>")
 		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, 0)
 	else
 		safety = TRUE
-		visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
+		visible_message("<span class='none'>[src] beeps: Safety protocols enabled!</span>")
 		playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, 0)
 	update_icon()
 
@@ -235,10 +235,10 @@
 	spawn(50)
 		if(cell)
 			if(cell.charge >= paddles.revivecost)
-				user.visible_message("<span class='notice'>[src] beeps: Unit ready.</span>")
+				user.visible_message("<span class='none'>[src] beeps: Unit ready.</span>")
 				playsound(src, 'sound/machines/defib_ready.ogg', 50, 0)
 			else
-				user.visible_message("<span class='notice'>[src] beeps: Charge depleted.</span>")
+				user.visible_message("<span class='none'>[src] beeps: Charge depleted.</span>")
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
 		paddles.cooldown = FALSE
 		paddles.update_icon()
@@ -336,7 +336,7 @@
 			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
 			L.temporarilyRemoveItemFromInventory(src,TRUE)
 		else
-			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
+			visible_message("<span class='none'>[src] snap back into [defib].</span>")
 			snap_back()
 
 /obj/item/twohanded/shockpaddles/proc/recharge(var/time)
@@ -409,7 +409,7 @@
 	if(busy)
 		return
 	if(req_defib && !defib.powered)
-		user.visible_message("<span class='notice'>[defib] beeps: Unit is unpowered.</span>")
+		user.visible_message("<span class='none'>[defib] beeps: Unit is unpowered.</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
 		return
 	if(!wielded)
@@ -509,7 +509,7 @@
 	busy = TRUE
 	update_icon()
 	if(do_after(user, 30, target = H))
-		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>",
+		user.visible_message("<span class='none'>[user] places [src] on [H]'s chest.</span>",
 			"<span class='warning'>You place [src] on [H]'s chest and begin to charge them.</span>")
 		var/turf/T = get_turf(defib)
 		playsound(src, 'sound/machines/defib_charge.ogg', 50, 0)
@@ -559,7 +559,7 @@
 	busy = TRUE
 	update_icon()
 	if(do_after(user, 30, target = H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
-		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
+		user.visible_message("<span class='none'>[user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, 0)
 		var/tplus = world.time - H.timeofdeath
 		// past this much time the patient is unrecoverable
@@ -626,7 +626,7 @@
 						H.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), 0)
 						H.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), 0)
 					H.updatehealth() // Previous "adjust" procs don't update health, so we do it manually.
-					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
+					user.visible_message("<span class='none'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 					playsound(src, 'sound/machines/defib_success.ogg', 50, 0)
 					H.set_heartattack(FALSE)
 					H.revive()
@@ -649,7 +649,7 @@
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
 			else if(H.undergoing_cardiac_arrest())
 				H.set_heartattack(FALSE)
-				user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
+				user.visible_message("<span class='none'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
 				playsound(src, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
 

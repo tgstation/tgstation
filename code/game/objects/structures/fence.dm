@@ -77,11 +77,11 @@
 			if(current_stage == hole_size)
 				switch(++hole_size)
 					if(MEDIUM_HOLE)
-						visible_message("<span class='notice'>\The [user] cuts into \the [src] some more.</span>")
+						visible_message("<span class='none'>\The [user] cuts into \the [src] some more.</span>")
 						to_chat(user, "<span class='info'>You could probably fit yourself through that hole now. Although climbing through would be much faster if you made it even bigger.</span>")
 						climbable = TRUE
 					if(LARGE_HOLE)
-						visible_message("<span class='notice'>\The [user] completely cuts through \the [src].</span>")
+						visible_message("<span class='none'>\The [user] completely cuts through \the [src].</span>")
 						to_chat(user, "<span class='info'>The hole in \the [src] is now big enough to walk through.</span>")
 						climbable = FALSE
 
@@ -130,10 +130,10 @@
 /obj/structure/fence/door/proc/toggle(mob/user)
 	switch(open)
 		if(FALSE)
-			visible_message("<span class='notice'>\The [user] opens \the [src].</span>")
+			visible_message("<span class='none'>\The [user] opens \the [src].</span>")
 			open = TRUE
 		if(TRUE)
-			visible_message("<span class='notice'>\The [user] closes \the [src].</span>")
+			visible_message("<span class='none'>\The [user] closes \the [src].</span>")
 			open = FALSE
 
 	update_door_status()

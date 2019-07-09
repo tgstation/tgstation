@@ -11,7 +11,7 @@
 	icon_state = "shadow_mend"
 
 /datum/status_effect/shadow_mend/on_apply()
-	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
+	owner.visible_message("<span class='warning'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
 	playsound(owner, 'sound/magic/teleport_app.ogg', 50, 1)
 	return ..()
 
@@ -588,7 +588,7 @@
 	examine_text = "<span class='notice'>They seem to be covered in a dull, grey aura.</span>"
 
 /datum/status_effect/antimagic/on_apply()
-	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
+	owner.visible_message("<span class='warning'>[owner] is coated with a dull aura!</span>")
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	//glowing wings overlay
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)

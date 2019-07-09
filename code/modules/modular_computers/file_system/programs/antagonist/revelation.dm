@@ -21,7 +21,7 @@
 
 /datum/computer_file/program/revelation/proc/activate()
 	if(computer)
-		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
+		computer.visible_message("<span class='none'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
 		computer.enabled = 0
 		computer.update_icon()
 		var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
@@ -31,13 +31,13 @@
 		computer.take_damage(25, BRUTE, 0, 0)
 		if(battery_module && prob(25))
 			qdel(battery_module)
-			computer.visible_message("<span class='notice'>\The [computer]'s battery explodes in rain of sparks.</span>")
+			computer.visible_message("<span class='none'>\The [computer]'s battery explodes in rain of sparks.</span>")
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()
 
 		if(recharger && prob(50))
 			qdel(recharger)
-			computer.visible_message("<span class='notice'>\The [computer]'s recharger explodes in rain of sparks.</span>")
+			computer.visible_message("<span class='none'>\The [computer]'s recharger explodes in rain of sparks.</span>")
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()
 

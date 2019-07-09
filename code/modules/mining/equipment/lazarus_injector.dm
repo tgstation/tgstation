@@ -39,7 +39,7 @@
 					else
 						H.attack_same = 0
 				loaded = 0
-				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
+				user.visible_message("<span class='none'>[user] injects [M] with [src], reviving it.</span>")
 				SSblackbox.record_feedback("tally", "lazarus_injector", 1, M.type)
 				playsound(src,'sound/effects/refill.ogg',50,1)
 				icon_state = "lazarus_empty"

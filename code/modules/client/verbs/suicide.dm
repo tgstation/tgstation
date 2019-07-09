@@ -186,7 +186,7 @@
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(confirm == "Yes")
 		var/turf/T = get_turf(src.loc)
-		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
+		T.visible_message("<span class='none'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
 		 "<span class='notice'>[src] bleeps electronically.</span>")
 
 		suicide_log()

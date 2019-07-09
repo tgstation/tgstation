@@ -74,16 +74,16 @@
 	if(!istype(O))
 		return
 	if (contents.len > GOOSE_SATIATED)
-		visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
+		visible_message("<span class='none'>[src] looks too full to eat \the [tasty]!</span>")
 		return
 	if (tasty.foodtype & GROSS)
-		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
+		visible_message("<span class='none'>[src] hungrily gobbles up \the [tasty]!</span>")
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, 1)
 		vomitCoefficient += 3
 		vomitTimeBonus += 2
 	else
-		visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
+		visible_message("<span class='none'>[src] refuses to eat \the [tasty].</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
 	var/turf/T = get_turf(src)

@@ -58,7 +58,7 @@ Burning extracts:
 	effect_desc = "Creates a clump of invigorating gel, it has healing properties and makes you feel good."
 
 /obj/item/slimecross/burning/purple/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] fills with a bubbling liquid!</span>")
+	user.visible_message("<span class='none'>[src] fills with a bubbling liquid!</span>")
 	new /obj/item/slimecrossbeaker/autoinjector/slimestimulant(get_turf(user))
 	..()
 
@@ -164,7 +164,7 @@ Burning extracts:
 	effect_desc = "Turns into a special camera that rewinds time when used."
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
+	user.visible_message("<span class='none'>[src] shapes itself into a camera!</span>")
 	new /obj/item/camera/rewind(get_turf(user))
 	..()
 
@@ -173,7 +173,7 @@ Burning extracts:
 	effect_desc = "Produces an extract cloning potion, which copies an extract, as well as its extra uses."
 
 /obj/item/slimecross/burning/cerulean/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] produces a potion!</span>")
+	user.visible_message("<span class='none'>[src] produces a potion!</span>")
 	new /obj/item/slimepotion/extract_cloner(get_turf(user))
 	..()
 
@@ -236,7 +236,7 @@ Burning extracts:
 	effect_desc = "Creates a beaker of synthpax."
 
 /obj/item/slimecross/burning/pink/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] shrinks into a small, gel-filled pellet!</span>")
+	user.visible_message("<span class='none'>[src] shrinks into a small, gel-filled pellet!</span>")
 	new /obj/item/slimecrossbeaker/pax(get_turf(user))
 	..()
 
@@ -300,7 +300,7 @@ Burning extracts:
 	effect_desc = "Creates a mighty adamantine shield."
 
 /obj/item/slimecross/burning/adamantine/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] crystallizes into a large shield!</span>")
+	user.visible_message("<span class='none'>[src] crystallizes into a large shield!</span>")
 	new /obj/item/twohanded/required/adamantineshield(get_turf(user))
 	..()
 
@@ -309,6 +309,6 @@ Burning extracts:
 	effect_desc = "Creates the Rainbow Knife, a kitchen knife that deals random types of damage."
 
 /obj/item/slimecross/burning/rainbow/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] flattens into a glowing rainbow blade.</span>")
+	user.visible_message("<span class='none'>[src] flattens into a glowing rainbow blade.</span>")
 	new /obj/item/kitchen/knife/rainbowknife(get_turf(user))
 	..()

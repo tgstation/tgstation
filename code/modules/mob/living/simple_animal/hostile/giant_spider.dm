@@ -319,7 +319,7 @@
 			to_chat(src, "<span class='warning'>You're already spinning a cocoon!</span>")
 			return //we're already doing this, don't cancel out or anything
 		busy = SPINNING_COCOON
-		visible_message("<span class='notice'>[src] begins to secrete a sticky substance around [cocoon_target].</span>","<span class='notice'>You begin wrapping [cocoon_target] into a cocoon.</span>")
+		visible_message("<span class='none'>[src] begins to secrete a sticky substance around [cocoon_target].</span>","<span class='notice'>You begin wrapping [cocoon_target] into a cocoon.</span>")
 		stop_automated_movement = TRUE
 		walk(src,0)
 		if(do_after(src, 50, target = cocoon_target))
@@ -369,7 +369,7 @@
 
 	if(S.busy != SPINNING_WEB)
 		S.busy = SPINNING_WEB
-		S.visible_message("<span class='notice'>[S] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
+		S.visible_message("<span class='none'>[S] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
 		S.stop_automated_movement = TRUE
 		if(do_after(S, 40, target = T))
 			if(S.busy == SPINNING_WEB && S.loc == T)
@@ -463,7 +463,7 @@
 		to_chat(S, "<span class='warning'>You are too hungry to do this!</span>")
 	else if(S.busy != LAYING_EGGS)
 		S.busy = LAYING_EGGS
-		S.visible_message("<span class='notice'>[S] begins to lay a cluster of eggs.</span>","<span class='notice'>You begin to lay a cluster of eggs.</span>")
+		S.visible_message("<span class='none'>[S] begins to lay a cluster of eggs.</span>","<span class='notice'>You begin to lay a cluster of eggs.</span>")
 		S.stop_automated_movement = TRUE
 		if(do_after(S, 50, target = get_turf(S)))
 			if(S.busy == LAYING_EGGS)

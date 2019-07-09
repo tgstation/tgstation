@@ -23,14 +23,14 @@
 				B.explode_now = TRUE
 				tell_admins(B)
 			else
-				holder.visible_message("<span class='notice'>[icon2html(B, viewers(holder))] Nothing happens.</span>")
+				holder.visible_message("<span class='none'>[icon2html(B, viewers(holder))] Nothing happens.</span>")
 		if(WIRE_UNBOLT)
-			holder.visible_message("<span class='notice'>[icon2html(B, viewers(holder))] The bolts spin in place for a moment.</span>")
+			holder.visible_message("<span class='none'>[icon2html(B, viewers(holder))] The bolts spin in place for a moment.</span>")
 		if(WIRE_DELAY)
 			if(B.delayedbig)
-				holder.visible_message("<span class='notice'>[icon2html(B, viewers(holder))] Nothing happens.</span>")
+				holder.visible_message("<span class='none'>[icon2html(B, viewers(holder))] Nothing happens.</span>")
 			else
-				holder.visible_message("<span class='notice'>[icon2html(B, viewers(holder))] The bomb chirps.</span>")
+				holder.visible_message("<span class='none'>[icon2html(B, viewers(holder))] The bomb chirps.</span>")
 				playsound(B, 'sound/machines/chime.ogg', 30, 1)
 				B.detonation_timer += 300
 				if(B.active)
@@ -51,9 +51,9 @@
 				B.activate()
 				B.update_icon()
 			else if(B.delayedlittle)
-				holder.visible_message("<span class='notice'>[icon2html(B, viewers(holder))] Nothing happens.</span>")
+				holder.visible_message("<span class='none'>[icon2html(B, viewers(holder))] Nothing happens.</span>")
 			else
-				holder.visible_message("<span class='notice'>[icon2html(B, viewers(holder))] The bomb seems to hesitate for a moment.</span>")
+				holder.visible_message("<span class='none'>[icon2html(B, viewers(holder))] The bomb seems to hesitate for a moment.</span>")
 				B.detonation_timer += 100
 				B.delayedlittle = TRUE
 
@@ -67,7 +67,7 @@
 				tell_admins(B)
 		if(WIRE_UNBOLT)
 			if(!mend && B.anchored)
-				holder.visible_message("<span class='notice'>[icon2html(B, viewers(holder))] The bolts lift out of the ground!</span>")
+				holder.visible_message("<span class='none'>[icon2html(B, viewers(holder))] The bolts lift out of the ground!</span>")
 				playsound(B, 'sound/effects/stealthoff.ogg', 30, 1)
 				B.anchored = FALSE
 		if(WIRE_PROCEED)
@@ -77,7 +77,7 @@
 				tell_admins(B)
 		if(WIRE_ACTIVATE)
 			if(!mend && B.active)
-				holder.visible_message("<span class='notice'>[icon2html(B, viewers(holder))] The timer stops! The bomb has been defused!</span>")
+				holder.visible_message("<span class='boldnotice'>[icon2html(B, viewers(holder))] The timer stops! The bomb has been defused!</span>")
 				B.active = FALSE
 				B.delayedlittle = FALSE
 				B.delayedbig = FALSE

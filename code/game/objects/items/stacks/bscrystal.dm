@@ -38,7 +38,7 @@
 
 /obj/item/stack/ore/bluespace_crystal/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) // not caught in mid-air
-		visible_message("<span class='notice'>[src] fizzles and disappears upon impact!</span>")
+		visible_message("<span class='none'>[src] fizzles and disappears upon impact!</span>")
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/particle_effect/sparks(T)
 		playsound(loc, "sparks", 50, 1)

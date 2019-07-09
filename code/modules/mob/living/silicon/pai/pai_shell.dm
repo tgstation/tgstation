@@ -23,7 +23,7 @@
 	if(istype(card.loc, /obj/item/pda))
 		var/obj/item/pda/P = card.loc
 		P.pai = null
-		P.visible_message("<span class='notice'>[src] ejects itself from [P]!</span>")
+		P.visible_message("<span class='none'>[src] ejects itself from [P]!</span>")
 	if(isliving(card.loc))
 		var/mob/living/L = card.loc
 		if(!L.temporarilyRemoveItemFromInventory(card))
@@ -52,7 +52,7 @@
 	if(!holoform)
 		. = fold_out(force)
 		return
-	visible_message("<span class='notice'>[src] deactivates its holochassis emitter and folds back into a compact card!</span>")
+	visible_message("<span class='none'>[src] deactivates its holochassis emitter and folds back into a compact card!</span>")
 	stop_pulling()
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
@@ -84,7 +84,7 @@
 	else
 		icon_state = "[chassis]"
 	if(loc != card)
-		visible_message("<span class='notice'>[src] [resting? "lays down for a moment..." : "perks up from the ground"]</span>")
+		visible_message("<span class='none'>[src] [resting? "lays down for a moment..." : "perks up from the ground"]</span>")
 
 /mob/living/silicon/pai/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return FALSE

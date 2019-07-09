@@ -195,7 +195,7 @@
 	if(!isslimeperson(H))
 		return
 	CHECK_DNA_AND_SPECIES(H)
-	H.visible_message("<span class='notice'>[owner] gains a look of \
+	H.visible_message("<span class='none'>[owner] gains a look of \
 		concentration while standing perfectly still.</span>",
 		"<span class='notice'>You focus intently on moving your body while \
 		standing perfectly still...</span>")
@@ -371,14 +371,14 @@
 	if(!can_swap(dupe)) //sanity check
 		return
 	if(M.current.stat == CONSCIOUS)
-		M.current.visible_message("<span class='notice'>[M.current] \
+		M.current.visible_message("<span class='none'>[M.current] \
 			stops moving and starts staring vacantly into space.</span>",
 			"<span class='notice'>You stop moving this body...</span>")
 	else
 		to_chat(M.current, "<span class='notice'>You abandon this body...</span>")
 	M.current.transfer_trait_datums(dupe)
 	M.transfer_to(dupe)
-	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
+	dupe.visible_message("<span class='none'>[dupe] blinks and looks \
 		around.</span>",
 		"<span class='notice'>...and move this one instead.</span>")
 

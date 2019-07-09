@@ -58,7 +58,7 @@
 		icon_state = initial(icon_state)
 
 /obj/machinery/sleeper/container_resist(mob/living/user)
-	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
+	visible_message("<span class='none'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
@@ -127,7 +127,7 @@
 	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
-		visible_message("<span class='notice'>[usr] pries open [src].</span>", "<span class='notice'>You pry open [src].</span>")
+		visible_message("<span class='none'>[usr] pries open [src].</span>", "<span class='notice'>You pry open [src].</span>")
 		open_machine()
 
 /obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \

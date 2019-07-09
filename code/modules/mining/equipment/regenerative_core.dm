@@ -91,11 +91,11 @@
 	. = ..()
 	if(!preserved && !inert)
 		preserved(TRUE)
-		owner.visible_message("<span class='notice'>[src] stabilizes as it's inserted.</span>")
+		owner.visible_message("<span class='none'>[src] stabilizes as it's inserted.</span>")
 
 /obj/item/organ/regenerative_core/Remove(mob/living/carbon/M, special = 0)
 	if(!inert && !special)
-		owner.visible_message("<span class='notice'>[src] rapidly decays as it's removed.</span>")
+		owner.visible_message("<span class='none'>[src] rapidly decays as it's removed.</span>")
 		go_inert()
 	return ..()
 

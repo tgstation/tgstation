@@ -52,7 +52,7 @@
 		if(enemies.len && prob(10))
 			enemies = list()
 			LoseTarget()
-			src.visible_message("<span class='notice'>[src] calms down.</span>")
+			src.visible_message("<span class='none'>[src] calms down.</span>")
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
 		eat_plants()
@@ -177,7 +177,7 @@
 					if(4)
 						external = "[src] seems resigned to its fate."
 						internal = "You resign yourself to your fate."
-				visible_message("<span class='notice'>[external]</span>",
+				visible_message("<span class='none'>[external]</span>",
 					"<span class='revennotice'>[internal]</span>")
 	else
 		..()

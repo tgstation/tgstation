@@ -273,7 +273,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
+	user.visible_message("<span class='warning'>You see [user] kicking against the glass of [src]!</span>", \
 		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a thump from [src].</span>")
 	if(do_after(user, breakout_time, target = src))

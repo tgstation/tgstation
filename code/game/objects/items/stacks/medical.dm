@@ -19,7 +19,7 @@
 	if(!M.can_inject(user, TRUE))
 		return
 	if(M == user)
-		user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
+		user.visible_message("<span class='none'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
 		if(!do_mob(user, M, self_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
 			return
 	if(heal(M, user))

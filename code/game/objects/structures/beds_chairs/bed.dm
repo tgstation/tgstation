@@ -64,7 +64,7 @@
 		if(has_buckled_mobs())
 			if(buckled_mobs.len > 1)
 				unbuckle_all_mobs()
-				user.visible_message("<span class='notice'>[user] unbuckles all creatures from [src].</span>")
+				user.visible_message("<span class='none'>[user] unbuckles all creatures from [src].</span>")
 			else
 				user_unbuckle_mob(buckled_mobs[1],user)
 		else
@@ -116,7 +116,7 @@
 		if(R.loaded)
 			to_chat(user, "<span class='warning'>[R] already has a roller bed loaded!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] loads [src].</span>", "<span class='notice'>You load [src] into [R].</span>")
+		user.visible_message("<span class='none'>[user] loads [src].</span>", "<span class='notice'>You load [src] into [R].</span>")
 		R.loaded = new/obj/structure/bed/roller(R)
 		qdel(src) //"Load"
 		return

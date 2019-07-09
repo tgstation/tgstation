@@ -14,7 +14,7 @@
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/wormhole_jaunter/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
+	user.visible_message("<span class='none'>[user.name] activates the [src.name]!</span>")
 	SSblackbox.record_feedback("tally", "jaunter", 1, "User") // user activated
 	activate(user, TRUE)
 

@@ -30,7 +30,7 @@ Consuming extracts:
 			to_chat(user, "<span class='warning'>[src] burbles unhappily at the offering.</span>")
 		if(nutriment_eaten >= nutriment_required)
 			nutriment_eaten = 0
-			user.visible_message("<span class='notice'>[src] swells up and produces a small pile of cookies!</span>")
+			user.visible_message("<span class='none'>[src] swells up and produces a small pile of cookies!</span>")
 			playsound(src, 'sound/effects/splat.ogg', 40, 1)
 			last_produced = world.time
 			for(var/i in 1 to cookies)
@@ -62,7 +62,7 @@ Consuming extracts:
 /obj/item/slime_cookie/attack(mob/living/M, mob/user)
 	var/fed = FALSE
 	if(M == user)
-		M.visible_message("<span class='notice'>[user] eats [src]!</span>", "<span class='notice'>You eat [src].</span>")
+		M.visible_message("<span class='none'>[user] eats [src]!</span>", "<span class='notice'>You eat [src].</span>")
 		fed = TRUE
 	else
 		M.visible_message("<span class='danger'>[user] tries to force [M] to eat [src]!</span>", "<span class='userdanger'>[user] tries to force you to eat [src]!</span>")

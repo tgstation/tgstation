@@ -24,7 +24,7 @@
 
 /obj/item/toy/plush/carpplushie/dehy_carp/proc/Swell()
 	desc = "It's growing!"
-	visible_message("<span class='notice'>[src] swells up!</span>")
+	visible_message("<span class='none'>[src] swells up!</span>")
 
 	//Animation
 	icon = 'icons/mob/carp.dmi'
@@ -45,7 +45,7 @@
 	if (!owner || owner.faction != M.faction)
 		visible_message("<span class='warning'>You have a bad feeling about this.</span>") //welcome to the hostile carp enjoy your die
 	else
-		visible_message("<span class='notice'>The newly grown [M.name] looks up at you with friendly eyes.</span>")
+		visible_message("<span class='none'>The newly grown [M.name] looks up at you with friendly eyes.</span>")
 	qdel(src)
 	
 /obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/user)

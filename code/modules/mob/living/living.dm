@@ -823,7 +823,7 @@
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
-		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
+		visible_message("<span class='none'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
@@ -1242,7 +1242,7 @@
 	if(buckled)
 		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
 		return FALSE
-	user.visible_message("<span class='notice'>[user] starts trying to scoop up [src]!</span>")
+	user.visible_message("<span class='none'>[user] starts trying to scoop up [src]!</span>")
 	if(!do_after(user, 20, target = src))
 		return FALSE
 	mob_pickup(user)

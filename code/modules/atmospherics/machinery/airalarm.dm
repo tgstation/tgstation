@@ -773,7 +773,7 @@
 				var/obj/item/electroadaptive_pseudocircuit/P = W
 				if(!P.adapt_circuit(user, 25))
 					return
-				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+				user.visible_message("<span class='none'>[user] fabricates a circuit and places it into [src].</span>", \
 				"<span class='notice'>You adapt an air alarm circuit and slot it into the assembly.</span>")
 				buildstage = 1
 				update_icon()

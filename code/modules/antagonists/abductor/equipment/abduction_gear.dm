@@ -646,7 +646,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/abductor_machine_beacon/attack_self(mob/user)
 	..()
-	user.visible_message("<span class='notice'>[user] places down [src] and activates it.</span>", "<span class='notice'>You place down [src] and activate it.</span>")
+	user.visible_message("<span class='none'>[user] places down [src] and activates it.</span>", "<span class='notice'>You place down [src] and activate it.</span>")
 	user.dropItemToGround(src)
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
 	addtimer(CALLBACK(src, .proc/try_spawn_machine), 30)
@@ -662,7 +662,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(viable)
 		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
 		var/new_machine = new spawned_machine(loc)
-		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!")
+		visible_message("<span class='none'>[new_machine] warps on top of the beacon!")
 		qdel(src)
 	else
 		playsound(src, 'sound/machines/buzz-two.ogg', 50)

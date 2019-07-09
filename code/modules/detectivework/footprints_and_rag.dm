@@ -38,7 +38,7 @@
 		else
 			reagents.reaction(C, TOUCH)
 			reagents.clear_reagents()
-			C.visible_message("<span class='notice'>[user] has touched \the [C] with \the [src].</span>")
+			C.visible_message("<span class='none'>[user] has touched \the [C] with \the [src].</span>")
 			log_combat(user, C, "touched", src, log_object)
 
 	else if(istype(A) && src in user)

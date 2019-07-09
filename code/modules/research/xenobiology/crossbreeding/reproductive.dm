@@ -31,7 +31,7 @@ Reproductive extracts:
 		eat_cube(O, user)
 	if(cubes_eaten >= 3)
 		var/cores = rand(1,4)
-		visible_message("<span class='notice'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!</span>")
+		visible_message("<span class='none'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!</span>")
 		playsound(src, 'sound/effects/splat.ogg', 40, 1)
 		last_produce = world.time
 		for(var/i = 0, i < cores, i++)

@@ -229,7 +229,7 @@
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
-		usr.visible_message("<span class='notice'>[usr] starts closing [src]...</span>", "<span class='notice'>You start closing [src]...</span>")
+		usr.visible_message("<span class='none'>[usr] starts closing [src]...</span>", "<span class='notice'>You start closing [src]...</span>")
 		if(do_after(usr, 30, target = usr))
 			usr.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
@@ -267,7 +267,7 @@
 	if(!isturf(user.loc)) //no setting up in a locker
 		return
 	add_fingerprint(user)
-	user.visible_message("<span class='notice'>[user] starts setting down [src]...", "You start setting up [pad]...</span>")
+	user.visible_message("<span class='none'>[user] starts setting down [src]...", "You start setting up [pad]...</span>")
 	if(do_after(user, 30, target = user))
 		pad.forceMove(get_turf(src))
 		pad.update_indicator()

@@ -207,9 +207,9 @@
 			return TRUE
 	else if(baseturfs == type)
 		return TRUE
-	user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+	user.visible_message("<span class='none'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 	if(I.use_tool(src, user, 70, volume=80))
-		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>")
+		user.visible_message("<span class='none'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>")
 		make_plating()
 	return TRUE
 

@@ -223,7 +223,7 @@
 		return
 	if(new_style && new_style != hair_style)
 		hair_style = new_style
-		user.visible_message("<span class='notice'>[user] changes \the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change \the [src]'s hairstyle to [new_style].</span>")
+		user.visible_message("<span class='none'>[user] changes \the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change \the [src]'s hairstyle to [new_style].</span>")
 	if(adjustablecolor)
 		hair_color = input(usr,"","Choose Color",hair_color) as color|null
 	update_icon()

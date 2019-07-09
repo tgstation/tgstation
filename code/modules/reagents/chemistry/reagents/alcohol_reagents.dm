@@ -56,7 +56,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(reac_volume >= 5)
 			var/obj/item/book/affectedbook = O
 			affectedbook.dat = null
-			O.visible_message("<span class='notice'>[O]'s writing is washed away by [name]!</span>")
+			O.visible_message("<span class='none'>[O]'s writing is washed away by [name]!</span>")
 		else
 			O.visible_message("<span class='warning'>[O]'s ink is smeared by [name], but doesn't wash away!</span>")
 	return
@@ -2015,7 +2015,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 						N.update_hair()
 
 				if(N.age > 969) //Best not let people get older than this or i might incur G-ds wrath
-					M.visible_message("<span class='notice'>[M] becomes older than any man should be.. and crumbles into dust!</span>")
+					M.visible_message("<span class='none'>[M] becomes older than any man should be.. and crumbles into dust!</span>")
 					M.dust(0,1,0)
 
 	return ..()

@@ -25,7 +25,7 @@
 	owner.status_flags &= ~GODMODE
 	owner.color = originalcolor
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
-	owner.visible_message("<span class='notice'>[owner] stops glowing, the rainbow light fading away.</span>",
+	owner.visible_message("<span class='none'>[owner] stops glowing, the rainbow light fading away.</span>",
 		"<span class='warning'>You no longer feel protected...</span>")
 
 /obj/screen/alert/status_effect/slimeskin
@@ -351,7 +351,7 @@ datum/status_effect/rebreathing/tick()
 			huggables += L
 	if(length(huggables))
 		var/mob/living/carbon/hugged = pick(huggables)
-		owner.visible_message("<span class='notice'>[owner] hugs [hugged]!</span>", "<span class='notice'>You hug [hugged]!</span>")
+		owner.visible_message("<span class='none'>[owner] hugs [hugged]!</span>", "<span class='notice'>You hug [hugged]!</span>")
 
 /datum/status_effect/tarcookie
 	id = "tarcookie"

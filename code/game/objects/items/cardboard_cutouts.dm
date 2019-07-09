@@ -92,7 +92,7 @@
 		return
 	if(!do_after(user, 10, FALSE, src, TRUE))
 		return
-	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
+	user.visible_message("<span class='none'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	crayon.use_charges(1)
 	crayon.check_empty(user)
 	alpha = 255

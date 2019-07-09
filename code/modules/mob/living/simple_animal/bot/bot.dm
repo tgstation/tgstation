@@ -292,7 +292,7 @@
 			to_chat(user, "<span class='notice'>You attempt to pull [paicard] free...</span>")
 			if(do_after(user, 30, target = src))
 				if (paicard)
-					user.visible_message("<span class='notice'>[user] uses [W] to pull [paicard] out of [bot_name]!</span>","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
+					user.visible_message("<span class='none'>[user] uses [W] to pull [paicard] out of [bot_name]!</span>","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
