@@ -13,6 +13,7 @@
 	maptext_y = 10
 	layer = HIGH_OBJ_LAYER
 	var/ticket_number = 0 //Increment the ticket number whenever the HOP presses his button
+	var/current_number = 0 //What customer are we currently serving?
 	var/max_number = 999 //To stop the text going fucky. At this point, you need to refill it.
 	var/cooldown = 50 //Small cooldown, stops the clown from immediately breaking it.
 	var/ready = TRUE
@@ -32,6 +33,7 @@
 /obj/machinery/ticket_machine/proc/increment()
 	playsound(src, 'sound/misc/announce_dig.ogg', 50, 0)
 	say("Next customer, please!")
+	current_number ++ //Increment the one we're serving.
 	update_icon() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
 /obj/machinery/button/ticket_machine
@@ -73,7 +75,7 @@
 			maptext_x = 10
 		if(100 to 999)
 			maptext_x = 8
-	maptext = "[ticket_number]" //Finally, apply the maptext
+	maptext = "[current_number]" //Finally, apply the maptext
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()
