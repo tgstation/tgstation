@@ -31,7 +31,7 @@
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
-	var/oldres
+	var/oldres	//To prevent setting new cures unless resistance changes.
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
@@ -144,6 +144,7 @@
 	A.properties = properties.Copy()
 	A.id = id
 	A.mutable = mutable
+	A.oldres = oldres
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
 
@@ -240,7 +241,6 @@
 		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
-		message_admins("Refresh() called on [src], [cures.len] cures in the list.")
 		GenerateCure(properties)
 	else
 		CRASH("Our properties were empty or null!")
@@ -292,15 +292,12 @@
 
 // Will generate a random cure, the more resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure()
-	message_admins("GenerateCure() ran with [cures.len] cures.")
 	if(properties && properties.len)
 		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		if(res == oldres)
-			message_admins("GenerateCure() stopped early, [res] = [oldres]")
 			return
 		cures = list(pick(advance_cures[res]))
 		oldres = res
-		message_admins("GenerateCure() picked [cures[1]]")
 		// Get the cure name from the cure_id
 		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
 		cure_text = D.name
@@ -430,7 +427,7 @@
 
 	var/i = VIRUS_SYMPTOM_LIMIT
 
-	var/datum/disease/advance/D = new(0, null)
+	var/datum/disease/advance/D = new()
 	D.symptoms = list()
 
 	var/list/symptoms = list()
@@ -457,9 +454,6 @@
 			return
 		D.AssignName(new_name)
 		D.Refresh()
-
-		for(var/datum/disease/advance/AD in SSdisease.active_diseases)
-			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
 			if(!is_station_level(H.z))
