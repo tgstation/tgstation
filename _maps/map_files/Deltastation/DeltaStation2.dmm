@@ -21683,7 +21683,6 @@
 /area/crew_quarters/bar/atrium)
 "aTJ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/head/hardhat/cakehat,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -115217,7 +115216,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/disposal/incinerator)
 "iaF" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,

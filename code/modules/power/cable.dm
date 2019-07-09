@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	. = list()
 	var/turf/T
 	for(var/check_dir in GLOB.cardinals)
-		if(check_dir != ignore_dir)
+		if((linked_dirs & check_dir) && check_dir != ignore_dir)
 			T = get_step(src, check_dir)
 			if(T)
 				var/obj/structure/cable/C = locate(/obj/structure/cable) in T

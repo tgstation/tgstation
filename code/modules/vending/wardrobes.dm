@@ -271,22 +271,22 @@
 	icon_state = "janidrobe"
 	product_ads = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
 	vend_reply = "Thank you for using the JaniDrobe!"
-	products = list(/obj/item/clothing/under/rank/janitor = 1,
-					/obj/item/cartridge/janitor = 1,
+	products = list(/obj/item/clothing/under/rank/janitor = 2,
+					/obj/item/cartridge/janitor = 2,
 					/obj/item/clothing/under/rank/janitor/skirt = 2,
-					/obj/item/clothing/gloves/color/black = 1,
-					/obj/item/clothing/head/soft/purple = 1,
-					/obj/item/paint/paint_remover = 1,
-					/obj/item/melee/flyswatter = 1,
-					/obj/item/flashlight = 1,
+					/obj/item/clothing/gloves/color/black = 2,
+					/obj/item/clothing/head/soft/purple = 2,
+					/obj/item/paint/paint_remover = 2,
+					/obj/item/melee/flyswatter = 2,
+					/obj/item/flashlight = 2,
 					/obj/item/clothing/suit/caution = 6,
-					/obj/item/holosign_creator/janibarrier = 1,
-					/obj/item/lightreplacer = 1,
-					/obj/item/soap/nanotrasen = 1,
-					/obj/item/storage/bag/trash = 1,
-					/obj/item/clothing/shoes/galoshes = 1,
+					/obj/item/holosign_creator/janibarrier = 2,
+					/obj/item/lightreplacer = 2,
+					/obj/item/soap/nanotrasen = 2,
+					/obj/item/storage/bag/trash = 2,
+					/obj/item/clothing/shoes/galoshes = 2,
 					/obj/item/watertank/janitor = 1,
-					/obj/item/storage/belt/janitor = 1)
+					/obj/item/storage/belt/janitor = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/jani_wardrobe
@@ -366,6 +366,7 @@
 					/obj/item/storage/backpack/chemistry = 2,
 					/obj/item/storage/backpack/satchel/chem = 2,
 					/obj/item/storage/bag/chemistry = 2)
+	contraband = list(/obj/item/reagent_containers/spray/syndicate = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 	payment_department = ACCOUNT_MED
 /obj/item/vending_refill/wardrobe/chem_wardrobe
