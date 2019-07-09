@@ -171,3 +171,9 @@
 /datum/component/plumbing/tank
 	demand_connects = WEST
 	supply_connects = EAST
+
+/datum/component/plumbing/output
+	demand_connects = NORTH + SOUTH + EAST + WEST
+
+/datum/component/plumbing/input
+	supply_connects = NORTH + SOUTH + EAST + WEST
