@@ -558,7 +558,6 @@ GENE SCANNER
 		to_chat(user, "<span class='boldannounce'>[icon2html(A, user)] Target contains radioactive contamination. Radioactive strength: [rad_strength]</span>")
 	else
 		to_chat(user, "<span class='notice'>[icon2html(A, user)] Target is free of radioactive contamination.</span>")
-	return TRUE
 
 /proc/atmosanalyzer_scan(mob/user, atom/target, silent=FALSE)
 	var/mixture = target.return_analyzable_air()
