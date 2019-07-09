@@ -62,11 +62,14 @@
 	refreshID()
 
 /obj/item/storage/wallet/update_icon()
-	var/new_state = "wallet"
-	if(front_id)
-		new_state = "wallet_[front_id.icon_state]"
-	if(new_state != icon_state)		//avoid so many icon state changes.
-		icon_state = new_state
+	cut_overlays()
+	if(!front_id)
+		icon = 'icons/obj/storage.dmi'
+		icon_state = "wallet"
+	else
+		icon = front_id.icon
+		icon_state = front_id.icon_state
+		add_overlay(icon('icons/obj/storage.dmi', "wallet_overlay"))
 
 /obj/item/storage/wallet/GetID()
 	return front_id
