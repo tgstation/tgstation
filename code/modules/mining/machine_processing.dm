@@ -47,8 +47,10 @@
 	add_fingerprint(usr)
 
 	if(href_list["material"])
-		machine.selected_material = locate(href_list["material"])
-		machine.selected_alloy = null
+		var/datum/material/new_material = locate(href_list["material"])
+		if(istype(new_material))
+			machine.selected_material = new_material
+			machine.selected_alloy = null
 
 	if(href_list["alloy"])
 		machine.selected_material = null
@@ -75,7 +77,7 @@
 	density = TRUE
 	var/obj/machinery/mineral/CONSOLE = null
 	var/on = FALSE
-	var/selected_material = /datum/material/hematite
+	var/datum/material/selected_material = null
 	var/selected_alloy = null
 	var/datum/techweb/stored_research
 
@@ -84,6 +86,7 @@
 	proximity_monitor = new(src, 1)
 	AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, TRUE, /obj/item/stack)
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
+	selected_material = getmaterialref(/datum/material/hematite)
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	CONSOLE = null
@@ -108,14 +111,13 @@
 /obj/machinery/mineral/processing_unit/proc/get_machine_data()
 	var/dat = "<b>Smelter control console</b><br><br>"
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	for(var/mat_id in materials.materials)
-		var/datum/material/M = mat_id
-		var/amount = materials.materials[mat_id]
+	for(var/datum/material/M in materials.materials)
+		var/amount = materials.materials[M]
 		dat += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
-		if (selected_material == M.type)
+		if (selected_material == M)
 			dat += " <i>Smelting</i>"
 		else
-			dat += " <A href='?src=[REF(CONSOLE)];material=[REF(mat_id)]'><b>Not Smelting</b></A> "
+			dat += " <A href='?src=[REF(CONSOLE)];material=[REF(M)]'><b>Not Smelting</b></A> "
 		dat += "<br>"
 
 	dat += "<br><br>"
@@ -154,7 +156,7 @@
 
 /obj/machinery/mineral/processing_unit/proc/smelt_ore()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	var/datum/material/mat =  getmaterialref(selected_material)
+	var/datum/material/mat = selected_material
 	if(mat)
 		var/sheets_to_remove = (materials.materials[mat] >= (MINERAL_MATERIAL_AMOUNT * SMELT_AMOUNT) ) ? SMELT_AMOUNT : round(materials.materials[mat] /  MINERAL_MATERIAL_AMOUNT)
 		if(!sheets_to_remove)
