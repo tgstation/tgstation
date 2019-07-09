@@ -1,9 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - rscdel: "Removes Hygiene"
-  - rscdel: "Removes NEET and neat quirks"
-  - rscdel: "Removes the ability for scangates to scan for hygiene"
-  - tweak: "Garlic no longer makes you stink"
-  - tweak: "Replaced the penalty on transcendent olfaction with the inability to use it when in any amount of miasma."
-  - imagedel: "Removed Stink Clouds"
