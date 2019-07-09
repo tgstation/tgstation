@@ -245,6 +245,7 @@
 		if(istype(H) && owner.assigned_role == "Clown")
 			//to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.dna.remove_mutation(CLOWNMUT)
+			to_chat(H, "As a vampiric clown, you are no longer a danger to yourself. Your nature is subdued.")
 
 	// Physiology
 	CheckVampOrgans() // Heart, Eyes
@@ -345,6 +346,9 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	// Abort?
 	if (options.len > 1)
 		var/choice = input(owner.current, "You have the opportunity to grow more ancient. Select a power to advance your Rank.", "Your Blood Thickens...") in options
+		// Cheat-Safety: Can't keep opening/closing coffin to spam levels
+		if (vamplevel_unspent <= 0) // Already spent all your points, and tried opening/closing your coffin, pal.
+			return
 		if (!istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			to_chat(owner.current, "<span class='warning'>Return to your coffin to advance your Rank.</span>")
 			return

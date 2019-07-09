@@ -49,7 +49,7 @@
 		setup_error = "Not enough devil candidates"
 		return 0
 	// FULPSTATION: Assign Hunters (as many as monsters, plus one)
-	assign_monster_hunters(devils.len / 1.5)	// FULP
+	assign_monster_hunters(devils.len / 1.5, FALSE, devils)	// FULP
 	return 1
 
 

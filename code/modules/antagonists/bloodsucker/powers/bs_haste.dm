@@ -35,9 +35,12 @@
 
 
 /datum/action/bloodsucker/targeted/haste/CheckCanTarget(atom/A, display_error)
-	// Check: Range
-	if (!(A in view(target_range, get_turf(owner))))
+	// DEFAULT CHECKS (Distance)
+	if (!..())
 		return FALSE
+	// Check: Range
+	//if (!(A in view(target_range, get_turf(owner))))
+	//	return FALSE
 	return TRUE
 
 

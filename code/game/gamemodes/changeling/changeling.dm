@@ -56,7 +56,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			changeling.special_role = ROLE_CHANGELING
 			changeling.restricted_roles = restricted_jobs
 		// FULPSTATION: Assign Hunters (as many as monsters, plus one)
-		assign_monster_hunters(changelings.len)	// FULP
+		assign_monster_hunters(changelings.len, FALSE, changelings)	// FULP
 		return 1
 	else
 		setup_error = "Not enough changeling candidates"

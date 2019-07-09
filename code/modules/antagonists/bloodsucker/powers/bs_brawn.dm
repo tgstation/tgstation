@@ -43,6 +43,9 @@
 
 
 /datum/action/bloodsucker/targeted/brawn/CheckCanTarget(atom/A, display_error)
+	// DEFAULT CHECKS (Distance)
+	if (!..()) // Disable range notice for Brawn.
+		return FALSE
 	// Must outside Closet to target anyone!
 	if (!isturf(owner.loc))
 		return FALSE
@@ -59,7 +62,7 @@
 	else if (upgrade_canLocker && istype(A, /obj/structure/closet))
 		return TRUE
 
-	return FALSE // yes, FALSE! You failed if you got here! BAD TARGET
+	return ..() // yes, FALSE! You failed if you got here! BAD TARGET
 
 
 /datum/action/bloodsucker/targeted/brawn/FireTargetedPower(atom/A)

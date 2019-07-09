@@ -34,6 +34,8 @@
 
 
 /datum/action/bloodsucker/targeted/trespass/CheckCanTarget(atom/A, display_error)
+	// NOTE: Do NOT use ..()! We don't want to check distance or anything.
+
 	// Get clicked tile
 	var/final_turf = isturf(A) ? A : get_turf(A)
 

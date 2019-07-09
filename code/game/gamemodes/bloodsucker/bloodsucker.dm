@@ -58,7 +58,7 @@
 		antag_candidates.Remove(bloodsucker) // Apparently you can also write antag_candidates -= bloodsucker
 
 	// FULPSTATION: Assign Hunters (as many as monsters, plus one)
-	assign_monster_hunters(bloodsuckers.len, TRUE)	// FULP
+	assign_monster_hunters(bloodsuckers.len, TRUE, bloodsuckers)	// FULP
 
 	// Do we have enough vamps to continue?
 	return bloodsuckers.len >= required_enemies

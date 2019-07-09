@@ -84,7 +84,7 @@
 
 	if(cultists_to_cult.len>=required_enemies)
 		// FULPSTATION: Assign Hunters (as many as monsters, plus one)
-		assign_monster_hunters(cultists_to_cult.len / 1.5)	// FULP
+		assign_monster_hunters(cultists_to_cult.len / 1.5, FALSE, cultists_to_cult)	// FULP
 		return TRUE
 	else
 		setup_error = "Not enough cultist candidates"

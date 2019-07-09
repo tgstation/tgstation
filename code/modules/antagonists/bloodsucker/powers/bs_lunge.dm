@@ -31,21 +31,21 @@
 	return isliving(A)
 
 
-/datum/action/bloodsucker/targeted/lunge/CheckCanTarget(mob/living/target,display_error)
+/datum/action/bloodsucker/targeted/lunge/CheckCanTarget(atom/A, display_error)
 	// Check: Self
 	if (target == owner)
 		return FALSE
 	// Check: Range
-	if (!(target in view(target_range, get_turf(owner))))
-		if (display_error)
-			to_chat(owner, "<span class='warning'>Your victim is too far away.</span>")
-		return FALSE
-	//if (!target.can_be_pulled())
+	//if (!(target in view(target_range, get_turf(owner))))
 	//	if (display_error)
-	//		to_chat(owner, "<span class='warning'>Your victim cannot be grappled right now.</span>")
+	//		to_chat(owner, "<span class='warning'>Your victim is too far away.</span>")
 	//	return FALSE
+	// DEFAULT CHECKS (Distance)
+	if (!..())
+		return FALSE
 	// Check: Turf
-	if (!isturf(target.loc))
+	var/mob/living/L = A
+	if (!isturf(L.loc))
 		return FALSE
 	return TRUE
 
