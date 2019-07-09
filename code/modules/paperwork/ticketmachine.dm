@@ -88,6 +88,7 @@
 			to_chat(user, "<span class='notice'>You insert [I] into [src] as it whirrs nondescriptly.</span>")
 			qdel(I)
 			ticket_number = 0
+			current_number = 0
 			max_number = initial(max_number)
 			update_icon()
 			return
