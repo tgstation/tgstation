@@ -47,7 +47,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
-	heat = 999
+	heat = 1000
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
@@ -77,6 +77,7 @@
 
 /obj/item/clothing/head/hardhat/cakehat/is_hot()
 	return on * heat
+
 /*
  * Ushanka
  */
