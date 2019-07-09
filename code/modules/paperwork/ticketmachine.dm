@@ -30,7 +30,7 @@
 	. = ..()
 	update_icon()
 
-/obj/machinery/ticket_machine/proc/increment(mob/user)
+/obj/machinery/ticket_machine/proc/increment()
 	if(current_number >= ticket_number)
 		return
 	playsound(src, 'sound/misc/announce_dig.ogg', 50, 0)
