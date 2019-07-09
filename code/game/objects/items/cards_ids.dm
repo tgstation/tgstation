@@ -11,6 +11,7 @@
 /*
  * DATA CARDS - Used for the IC data card reader
  */
+
 /obj/item/card
 	name = "card"
 	desc = "Does card things."
@@ -113,6 +114,7 @@
 	slot_flags = ITEM_SLOT_ID
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/id_type_name = "identification card"
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
@@ -120,6 +122,7 @@
 	var/datum/bank_account/registered_account
 	var/obj/machinery/paystand/my_store
 	var/uses_overlays = TRUE
+	var/static/list/id_icon_cache = list()
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -266,42 +269,47 @@
 /obj/item/card/id/GetID()
 	return src
 
-/obj/item/card/id/update_icon()
+/obj/item/card/id/proc/set_icon(cache_index, iter=0)
+	if(!id_icon_cache[cache_index])
+		if(iter < 5)
+			addtimer(CALLBACK(src, .proc/set_icon, cache_index, iter+1), 5)
+		return
+	icon = id_icon_cache[cache_index]
+	if(istype(loc, /obj/item/storage/wallet))
+		var/obj/item/storage/wallet/powergaming = loc
+		if(powergaming.front_id == src)
+			powergaming.update_icon()
+
+/obj/item/card/id/update_icon(blank=FALSE, iter=0)
 	if(!uses_overlays)
 		return
 	var/job_index = assignment ? ckey(GetJobName()) : null
-	var/index = "[icon_state]-[job_index ? job_index : "null"][registered_name ? "" : "-blank"]"
-	var/static/list/id_icons = list()
-	var/icon/id_icon = id_icons[index]
+	var/index = "[icon_state]-[job_index ? job_index : "null"][blank ? "-blank" : ""]"
+	var/icon/id_icon = id_icon_cache[index]
 	if(!id_icon)
 		id_icon = icon('icons/obj/card.dmi', src.icon_state)
-		if(registered_name)
+		if(!blank)
 			id_icon.Blend(icon('icons/obj/card.dmi', "assigned"), ICON_OVERLAY)
 		if(job_index)
 			id_icon.Blend(icon('icons/obj/card.dmi', "id[job_index]"), ICON_OVERLAY)
 		id_icon = fcopy_rsc(id_icon)
-		id_icons[index] = id_icon
-	icon = id_icon
+		id_icon_cache[index] = id_icon
+	set_icon(index)
 
 /*
 Usage:
 update_label()
 	Sets the id name to whatever registered_name and assignment is
-
-update_label("John Doe", "Clowny")
-	Properly formats the name and occupation and sets the id name to the arguments
 */
 
-/obj/item/card/id/proc/update_label(newname, newjob)
-	update_icon()
-	if(newname || newjob)
-		name = "[(!newname)	? "identification card"	: "[newname]'s ID Card"][(!newjob) ? "" : " ([newjob])"]"
-		return
-
-	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+/obj/item/card/id/proc/update_label()
+	var/blank = !registered_name
+	update_icon(blank)
+	name = "[blank ? id_type_name : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
 /obj/item/card/id/silver
 	name = "silver identification card"
+	id_type_name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
@@ -316,6 +324,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/gold
 	name = "gold identification card"
+	id_type_name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
@@ -396,6 +405,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/syndicate_command
 	name = "syndicate ID card"
+	id_type_name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
@@ -405,6 +415,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/captains_spare
 	name = "captain's spare ID"
+	id_type_name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
 	item_state = "gold_id"
@@ -417,9 +428,18 @@ update_label("John Doe", "Clowny")
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
 	. = ..()
+	update_label()
+
+/obj/item/card/id/captains_spare/update_label()
+	if(registered_name == "Captain")
+		name = "[id_type_name][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
+		update_icon(TRUE)
+	else
+		..()
 
 /obj/item/card/id/centcom
 	name = "\improper CentCom ID"
+	id_type_name = "\improper CentCom ID"
 	desc = "An ID straight from Central Command."
 	icon_state = "centcom"
 	registered_name = "Central Command"
@@ -432,6 +452,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert
 	name = "\improper CentCom ID"
+	id_type_name = "\improper CentCom ID"
 	desc = "An ERT ID card."
 	icon_state = "ert_commander"
 	registered_name = "Emergency Response Team Commander"
@@ -489,6 +510,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/prisoner
 	name = "prisoner ID card"
+	id_type_name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
 	icon_state = "orange"
 	item_state = "orange-id"
@@ -617,7 +639,7 @@ update_label("John Doe", "Clowny")
 	SSeconomy.dep_cards -= src
 	return ..()
 
-/obj/item/card/id/departmental_budget/update_label(newname, newjob)
+/obj/item/card/id/departmental_budget/update_label()
 	return
 
 /obj/item/card/id/departmental_budget/civ
@@ -648,7 +670,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/departmental_budget/car
 	department_ID = ACCOUNT_CAR
 	department_name = ACCOUNT_CAR_NAME
-	icon_state = "car_budget"
+	icon_state = "car_budget" //saving up for a new tesla
 
 /obj/item/card/id/departmental_budget/sec
 	department_ID = ACCOUNT_SEC

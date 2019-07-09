@@ -108,7 +108,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
 		W.registered_name = H.real_name
-		W.update_label(H.real_name)
+		W.update_label()
 
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"
@@ -133,7 +133,7 @@
 	W.access = get_all_accesses()
 	W.assignment = "Tunnel Clown!"
 	W.registered_name = H.real_name
-	W.update_label(H.real_name)
+	W.update_label()
 
 /datum/outfit/psycho
 	name = "Masked Killer"
@@ -197,7 +197,7 @@
 	W.access = get_all_accesses()
 	W.assignment = "Reaper"
 	W.registered_name = H.real_name
-	W.update_label(H.real_name)
+	W.update_label()
 
 /datum/outfit/centcom_commander
 	name = "CentCom Commander"
@@ -405,7 +405,7 @@
 	W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
 	W.assignment = "Death Commando"
 	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	W.update_label()
 
 /datum/outfit/death_commando/officer
 	name = "Death Commando Officer"
