@@ -27,6 +27,7 @@
 		if(prob(10))
 			to_chat(target, "You feel as if you are being watched.")
 		return
+	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
 	to_chat(src, "<span class='revennotice'>You search for the soul of [target].</span>")

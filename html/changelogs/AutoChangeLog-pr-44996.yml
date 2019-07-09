@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "Birdboat and Mulebots now have a high priority of appearing in random sentience event"

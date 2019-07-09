@@ -39,6 +39,8 @@
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 		LoadComponent(/datum/component/rot/corpse)
+	
+	check_cremation()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -605,6 +607,60 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(prob(30))
 		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 
+/////////////
+//CREMATION//
+/////////////
+/mob/living/carbon/proc/check_cremation()
+	//Only cremate while actively on fire
+	if(!on_fire)
+		return
+
+	//Only starts when the chest has taken full damage
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+	if(!(chest.get_damage() >= chest.max_damage))
+		return
+
+	//Burn off limbs one by one
+	var/obj/item/bodypart/limb
+	var/list/limb_list = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/still_has_limbs = FALSE
+	for(var/zone in limb_list)
+		limb = get_bodypart(zone)
+		if(limb)
+			still_has_limbs = TRUE
+			if(limb.get_damage() >= limb.max_damage)
+				limb.cremation_progress += rand(2,5)
+				if(limb.cremation_progress >= 100)
+					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+						limb.drop_limb()
+						limb.visible_message("<span class='warning'>[src]'s [limb.name] crumbles into ash!</span>")
+						qdel(limb)
+					else
+						limb.drop_limb()
+						limb.visible_message("<span class='warning'>[src]'s [limb.name] detaches from [p_their()] body!</span>")
+	if(still_has_limbs)
+		return
+
+	//Burn the head last
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		if(head.get_damage() >= head.max_damage)
+			head.cremation_progress += rand(2,5)
+			if(head.cremation_progress >= 100)
+				if(head.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+					head.drop_limb()
+					head.visible_message("<span class='warning'>[src]'s head crumbles into ash!</span>")
+					qdel(head)
+				else
+					head.drop_limb()
+					head.visible_message("<span class='warning'>[src]'s head detaches from [p_their()] body!</span>")
+		return
+
+	//Nothing left: dust the body, drop the items (if they're flammable they'll burn on their own)
+	chest.cremation_progress += rand(2,5)
+	if(chest.cremation_progress >= 100)
+		visible_message("<span class='warning'>[src]'s body crumbles into a pile of ash!</span>")
+		dust(TRUE, TRUE)
 
 ////////////////
 //BRAIN DAMAGE//
