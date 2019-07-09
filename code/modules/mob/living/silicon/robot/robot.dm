@@ -767,7 +767,7 @@
 	qdel(src)
 
 /mob/living/silicon/robot/modules
-	var/set_module = null
+	var/set_module = /obj/item/robot_module
 
 /mob/living/silicon/robot/modules/Initialize()
 	. = ..()
