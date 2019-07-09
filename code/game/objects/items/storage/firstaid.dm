@@ -92,8 +92,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/syringe/charcoal = 4,
-		/obj/item/storage/pill_bottle/charcoal = 2,
+		/obj/item/reagent_containers/pill/charcoal = 6,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 

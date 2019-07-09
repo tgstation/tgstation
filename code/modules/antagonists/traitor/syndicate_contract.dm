@@ -149,7 +149,7 @@
 					C.registered_account.adjust_money(ransom * 0.35)
 
 					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
-					$[C.registered_account.account_balance].")
+					$[C.registered_account.account_balance].", TRUE)
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)

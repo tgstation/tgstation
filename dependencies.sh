@@ -21,3 +21,6 @@ export NODE_VERSION=8
 
 # PHP version
 export PHP_VERSION=5.6
+
+# SpacemanDMM git tag
+export SPACEMAN_DMM_VERSION=suite-1.0
