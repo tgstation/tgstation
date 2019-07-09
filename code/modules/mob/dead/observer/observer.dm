@@ -36,7 +36,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/gas_scan_cooldown = 0 //gas scanning cooldown
 	var/radiation_scan = FALSE //Are radiation scans currently enabled?
 	var/radiation_scan_cooldown = 0 //radiation scanning cooldown
-	var/radiation_vision = FALSE //Is radiation vision currently enabled?
+	var/datum/component/rad_vision/radiation_vision //Is radiation vision currently enabled?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
