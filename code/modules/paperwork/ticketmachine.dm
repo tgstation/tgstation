@@ -48,15 +48,29 @@
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
 	desc = "A remote controller for the HOP's ticket machine."
+	var/obj/machinery/ticket_machine/linked //To whom are we linked?
+
+/obj/item/assembly/control/ticket_machine/Initialize()
+	. = ..()
+	find_machine()
+
+/obj/item/assembly/control/ticket_machine/proc/find_machine() //Locate the one to which we're linked
+	for(var/obj/machinery/ticket_machine/ticketsplease in GLOB.machines)
+		if (ticketsplease.id == id)
+			linked = ticketsplease
+	if(linked)
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/assembly/control/ticket_machine/activate()
 	if(cooldown)
 		return
+	if(!linked)
+		if(!find_machine()) //No linked ticket machine, find a new one
+			return
 	cooldown = TRUE
-	for (var/obj/machinery/ticket_machine/ticketsplease in GLOB.machines)
-		if (ticketsplease.id == id)
-			ticketsplease.increment()
-
+	linked.increment()
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
 
 /obj/machinery/ticket_machine/update_icon()
