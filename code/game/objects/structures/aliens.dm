@@ -342,8 +342,8 @@ GLOBAL_LIST_INIT(resin_recipes, list( \
 	))
 
 /obj/item/stack/sheet/resin/Initialize(mapload, new_amount, merge = TRUE)
+	. = ..()
 	recipes = GLOB.resin_recipes
-	return ..()
 
 #undef BURST
 #undef GROWING
