@@ -286,7 +286,7 @@
 
 	if(payees[AM] < threshold)
 		var/armless
-		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime)) //slimes can't pull
+		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
 			armless = TRUE
 		else
 			var/mob/living/carbon/human/H = AM
@@ -311,7 +311,8 @@
 			HC.credits = payees[AM]
 			if(istype(AM, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = AM
-				H.put_in_hands(new HC)
+				if(!H.put_in_hands(new HC))
+					AM.pulling = HC
 			else
 				new HC(AM.loc)
 				AM.pulling = HC
