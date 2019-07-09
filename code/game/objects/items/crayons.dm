@@ -621,9 +621,9 @@
 		if(C.client)
 			C.blur_eyes(3)
 			C.blind_eyes(1)
-		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
-			C.confused = max(C.confused, 3)
-			C.Paralyze(60)
+		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
+			C.apply_effects(eyeblur = 5, jitter = 10)
+			flash_color(C, flash_color=paint_color, flash_time=40)
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"
