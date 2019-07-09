@@ -30,7 +30,9 @@
 	. = ..()
 	update_icon()
 
-/obj/machinery/ticket_machine/proc/increment()
+/obj/machinery/ticket_machine/proc/increment(mob/user)
+	if(current_number >= ticket_number)
+		return
 	playsound(src, 'sound/misc/announce_dig.ogg', 50, 0)
 	say("Next customer, please!")
 	current_number ++ //Increment the one we're serving.
