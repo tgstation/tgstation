@@ -411,7 +411,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							updateUsrDialog()
 							break
 					if(!jobdatum)
-						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
+						to_chat(usr, "<span class='warning'>No log exists for this job.</span>")
 						updateUsrDialog()
 						return
 					if(modify.registered_account)
@@ -426,7 +426,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				modify.assignment = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			else
-				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
+				to_chat(usr, "<span class='warning'>You are not authorized to demote this position.</span>")
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
@@ -436,7 +436,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						modify.registered_name = newName
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					else
-						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
+						to_chat(usr, "<span class='warning'>Invalid name entered.</span>")
 						updateUsrDialog()
 						return
 		if ("mode")
