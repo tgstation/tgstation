@@ -7,6 +7,3 @@
 
 /datum/antagonist/melting/melted
 	name = "Melted"
-
-/datum/antagonist/melting/melted/champion
-	name = "Melted Champion"

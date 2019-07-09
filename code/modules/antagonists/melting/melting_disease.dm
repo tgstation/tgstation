@@ -17,13 +17,23 @@
 	new_form = /mob/living/simple_animal/hostile/melted
 	infectable_biotypes = list(MOB_ORGANIC)
 	process_dead = TRUE
-	//bantype = "Melting"
+	var/mob/living/simple_animal/hostile/melting/creator
+	//bantype = "Melting" antag ban! duh!
+
+/datum/disease/transformation/melting/Initialize(mapload, mob_source)
+	. = ..()
+	creator = mob_source
+	var/list/new_agent_name = list()
+	for(var/word in splittext(name," "))
+		new_agent_name += "[copytext(word, 1, 2)]."
+	new_agent_name += " Microorganisms"
+	agent = jointext(new_agent_name, "")
 
 /datum/disease/transformation/melting/stage_act()
-	..()
 	var/obj/item/organ/heart/slime/slimeheart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
 	if(istype(slimeheart))
 		return //champions are not affected by the disease
+	..()
 	switch(stage)
 		if(2)
 			if(prob(4))
@@ -42,9 +52,15 @@
 		if(4)
 			if(affected_mob.stat == UNCONSCIOUS)
 				do_disease_transformation(affected_mob)
-				affected_mob.slurring += 2
+			affected_mob.slurring += 2
 			if(prob(10))
 				//goo vomit
 				affected_mob.adjustCloneLoss(5)
 		if(5)
 			do_disease_transformation(affected_mob)
+
+/datum/disease/transformation/melting/do_disease_transformation(mob/living/affected_mob)
+	var/mob/living/simple_animal/hostile/melted/new_slime = ..()
+	if(!new_slime)
+		return
+	new_slime.creator = creator
