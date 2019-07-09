@@ -165,8 +165,10 @@
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary += src
-	id = "[SSshuttle.stationary.len]"
-	name = "[name] dock[SSshuttle.stationary.len]"
+	if(id == initial(id))
+		id = "[id][SSshuttle.stationary.len]"
+	if(name == initial(name))
+		name = "[name] dock[SSshuttle.stationary.len]"
 	if(!area_type)
 		var/area/place = get_area(src)
 		area_type = place?.type // We might be created in nullspace
@@ -290,8 +292,10 @@
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
 
-	id = "[SSshuttle.mobile.len]"
-	name = "[name] shuttle[SSshuttle.mobile.len]"
+	if(id == initial(id))
+		id = "[id][SSshuttle.mobile.len]"
+	if(name == initial(name))
+		name = "[name] shuttle[SSshuttle.mobile.len]"
 
 	shuttle_areas = list()
 	var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
@@ -313,8 +317,10 @@
 	var/list/static/shuttle_id = list()
 	var/idnum = ++shuttle_id[template]
 	if(idnum > 1)
-		id = "[id][idnum]"
-		name = "[name] [idnum]"
+		if(id == initial(id))
+			id = "[id][idnum]"
+		if(name == initial(name))
+			name = "[name] [idnum]"
 	for(var/place in shuttle_areas)
 		var/area/area = place
 		area.connect_to_shuttle(src, dock, idnum, FALSE)
