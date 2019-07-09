@@ -49,6 +49,8 @@
 
 				gib.add_blood_DNA(dna_to_add)
 
+				gib.set_blood_color(source_mob.blood_color) // 413 -- blood color
+
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
 					if(directions.len)
