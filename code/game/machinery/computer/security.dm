@@ -396,7 +396,7 @@ What a mess.*/
 					if(!fine || fine < 0)
 						to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 						return
-					fine = min(fine, MAX_SECRUITY_CITATION)
+					fine = min(fine, MAX_SECURITY_CITATION)
 					if(!canUseSecurityRecordsConsole(usr, t1, null, active2))
 						return
 					var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)

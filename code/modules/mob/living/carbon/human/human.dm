@@ -432,7 +432,7 @@
 										if(!fine || fine < 0)
 											to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 											return
-										fine = min(fine, MAX_SECRUITY_CITATION)
+										fine = min(fine, MAX_SECURITY_CITATION)
 										if(R)
 											if (!t1 || !fine || !allowed_access)
 												return

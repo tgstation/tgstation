@@ -29,4 +29,4 @@
 
 #define NO_FREEBIES "commies go home"
 
-#define MAX_SECRUITY_CITATION 1000
+#define MAX_SECURITY_CITATION 1000
