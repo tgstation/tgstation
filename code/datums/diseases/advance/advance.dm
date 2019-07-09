@@ -31,6 +31,7 @@
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
+	var/oldres
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
@@ -240,9 +241,7 @@
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		message_admins("Refresh() called on [src], [cures.len] cures in the list.")
-		if(!cures.len)
-			message_admins("GenerateCure() getting called, cures.len = [cures.len]")
-			GenerateCure(properties)
+		GenerateCure(properties)
 	else
 		CRASH("Our properties were empty or null!")
 
@@ -294,9 +293,13 @@
 // Will generate a random cure, the more resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure()
 	message_admins("GenerateCure() ran with [cures.len] cures.")
-	if(properties && properties.len && !cures.len)
+	if(properties && properties.len)
 		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		if(res == oldres)
+			message_admins("GenerateCure() stopped early, [res] = [oldres]")
+			return
 		cures = list(pick(advance_cures[res]))
+		oldres = res
 		message_admins("GenerateCure() picked [cures[1]]")
 		// Get the cure name from the cure_id
 		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
@@ -334,11 +337,8 @@
 
 // Name the disease.
 /datum/disease/advance/proc/AssignName(name = "Unknown")
-	Refresh()
 	var/datum/disease/advance/A = SSdisease.archive_diseases[GetDiseaseID()]
 	A.name = name
-	for(var/datum/disease/advance/AD in SSdisease.active_diseases)
-		AD.Refresh()
 
 // Return a unique ID of the disease.
 /datum/disease/advance/GetDiseaseID()
