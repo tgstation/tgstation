@@ -101,7 +101,7 @@ CREATE TABLE `SS13_ban` (
 --
 -- Table structure for table `SS13_citations`
 --
-DROP TABLE IF EXISTS `Ss13_citations`;
+DROP TABLE IF EXISTS `SS13_citations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_citations` (

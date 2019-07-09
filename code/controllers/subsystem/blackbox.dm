@@ -341,7 +341,7 @@ Versioning
 	if(sealed)
 		return
 
-	if(SSdbcore.db_major < 5 && SSdbcore.db_minor < 3)
+	if(SSdbcore.db_major < 5 && SSdbcore.db_minor < 4)
 		return
 
 	var/crime = sanitizeSQL(C.crimeName)
