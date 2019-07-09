@@ -41,6 +41,8 @@
 			board.one_access = 1
 			board.accesses = req_one_access
 
+	setup_device()
+
 
 /obj/machinery/button/update_icon()
 	cut_overlays()
