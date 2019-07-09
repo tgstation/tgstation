@@ -203,7 +203,7 @@
 	foodtype = TOXIC | GROSS
 
 /obj/item/reagent_containers/food/snacks/urinalcake/attack_self(mob/living/user)
-	user.visible_message("[user] squishes [src]!", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>")
+	user.visible_message("<span class='none'>[user] squishes [src]!</span>", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>")
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
 
@@ -242,7 +242,7 @@
 	var/washing_face = 0
 	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = 1
-	user.visible_message("[user] starts washing [user.p_their()] [washing_face ? "face" : "hands"]...", \
+	user.visible_message("<span class='none'>[user] starts washing [user.p_their()] [washing_face ? "face" : "hands"]...</span>", \
 						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
 	busy = TRUE
 
@@ -252,7 +252,7 @@
 
 	busy = FALSE
 
-	user.visible_message("[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src].", \
+	user.visible_message("<span class='none'>[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src].</span>", \
 						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
 	if(washing_face)
 		if(ishuman(user))
@@ -328,7 +328,7 @@
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)
 		reagents.reaction(O, TOUCH)
-		user.visible_message("[user] washes [O] using [src].", \
+		user.visible_message("<span class='none'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1
 	else
