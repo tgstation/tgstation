@@ -34,21 +34,14 @@
 
 /datum/component/extralasers/InheritComponent(datum/newcomp, orig, list/arglist)
 	. = ..()
-	var/obj/item/gun/energy/laser/L = parent
-	if(L.chambered)
-		L.chambered = null
-	LAZYREMOVE(L.ammo_type, ammo)
-	L.select_fire()
-	L.recharge_newshot()
-	L.update_icon(TRUE)
+	UnregisterFromParent()
 	qdel(ammo)
 	var/turf/T = get_turf(parent)
 	new lens_path(T)
 
 	ammo = arglist[1]
-	ammo =  new ammo (src)
-	L.ammo_type  += ammo
 	lens_path = arglist[2]
+	RegisterWithParent()
 
 /datum/component/extralasers/Destroy()
 	. = ..()
