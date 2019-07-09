@@ -86,7 +86,7 @@
 /area/ruin/unpowered/gaia)
 "w" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/gaia)
 "A" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /turf/open/floor/plating/grass,
