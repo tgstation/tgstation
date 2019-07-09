@@ -118,7 +118,6 @@ CREATE TABLE `citations` (
 	`server_port` SMALLINT(5) UNSIGNED NOT NULL DEFAULT 0,
 	`timestamp` TIMESTAMP NULL DEFAULT NULL,
 	`deleted` TINYINT(1) UNSIGNED NULL DEFAULT NULL,
-	INDEX `id` (`id`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
