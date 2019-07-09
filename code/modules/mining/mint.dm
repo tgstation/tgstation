@@ -35,9 +35,8 @@
 	var/dat = "<b>Coin Press</b><br>"
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	for(var/mat_id in materials.materials)
-		var/datum/material/M = mat_id
-		var/amount = materials.materials[mat_id]
+	for(var/datum/material/M in materials.materials)
+		var/amount = materials.get_material_amount(M)
 		if(!amount && chosen != M)
 			continue
 		dat += "<br><b>[M.name] amount:</b> [amount] cm<sup>3</sup> "
@@ -70,8 +69,9 @@
 		return
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(href_list["choose"])
-		if(materials.materials[href_list["choose"]])
-			chosen = locate(href_list["choose"])
+		var/datum/material/new_material = locate(href_list["choose"])
+		if(istype(new_material))
+			chosen = new_material
 	if(href_list["chooseAmt"])
 		coinsToProduce = CLAMP(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
 	if(href_list["makeCoins"])
@@ -84,7 +84,7 @@
 			updateUsrDialog()
 			return
 
-		while(coinsToProduce > 0 && materials.use_amount_mat(coin_mat, getmaterialref(chosen)))
+		while(coinsToProduce > 0 && materials.use_amount_mat(coin_mat, chosen))
 			create_coins(M.coin_type)
 			coinsToProduce--
 			newCoins++
