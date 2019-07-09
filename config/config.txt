@@ -27,7 +27,7 @@ $include discord.txt
 #HUB
 
 ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
-LOBBY_COUNTDOWN 120
+LOBBY_COUNTDOWN 180
 
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 120
@@ -35,7 +35,7 @@ ROUND_END_COUNTDOWN 120
 ## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt.
 ## You need to set up your database to use the SQL based system.
 ## This flag is automatically enabled if SQL_ENABLED isn't
-ADMIN_LEGACY_SYSTEM
+#ADMIN_LEGACY_SYSTEM
 
 ##Uncomment this to stop any admins loaded by the legacy system from having their rank edited by the permissions panel
 #PROTECT_LEGACY_ADMINS
