@@ -68,8 +68,9 @@
 		place = cmaster_turf
 		for(var/i in 1 to distance)
 			place = get_step(place, dir)
-			if(place)
-				atoms += get_rad_contents(place)
+			if(!place)
+				break
+			atoms += get_rad_contents(place)
 
 	return atoms
 
