@@ -217,7 +217,7 @@
 					if((istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2)))
 						dat += "<font size='4'><b>Security Data</b></font>"
 						dat += "<br>Criminal Status: <A href='?src=[REF(src)];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>"
-						dat += "<br><br>Citations: <A href='?src=[REF(src)];choice=Edit Field;field=citation_add'>Add New</A>"
+						dat += "<br><br>Citations: <A href='?src=[REF(src)];choice=Add Citation'>Add New</A>"
 
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
@@ -234,11 +234,11 @@
 							<td>$[c.fine]</td><td>[c.author]</td>
 							<td>[c.time]</td>"}
 							if(owed > 0)
-								dat += "<td>$[owed] <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
+								dat += "<td>$[owed] <A href='?src=[REF(src)];choice=Pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
 							else
 								dat += "<td>All Paid Off</td>"
 							dat += {"<td>
-							<A href='?src=[REF(src)];choice=Edit  Field;field=citation_remove;cdataid=[c.dataId]'>\[X\]</A>
+							<A href='?src=[REF(src)];choice=Remove Citation;cdataid=[c.dataId]'>\[X\]</A>
 							</td>
 							</tr>"}
 						dat += "</table>"
@@ -388,7 +388,42 @@ What a mess.*/
 						if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 							active2 = E
 					screen = 3
-
+//CITATION FUNCTIONS
+			if("Add Citation")
+				if(istype(active1, /datum/data/record))
+					var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
+					var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 50) as num, 1)
+					if(!fine || fine < 0)
+						to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
+						return
+					fine = min(fine, MAX_SECRUITY_CITATION)
+					if(!canUseSecurityRecordsConsole(usr, t1, null, active2))
+						return
+					var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
+					for (var/obj/item/pda/P in GLOB.PDAs)
+						if(P.owner == active1.fields["name"])
+							var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
+							var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+								"name" = "Security Citation",
+								"job" = "Citation Server",
+								"message" = message,
+								"targets" = list("[P.owner] ([P.ownjob])"),
+								"automated" = 1
+							))
+							signal.send_to_receivers()
+							usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+					GLOB.data_core.addCitation(active1.fields["id"], crime)
+					if(SSticker.HasRoundStarted())
+						SSblackbox.AddCitation(crime, active1.fields["name"], usr.ckey)
+					investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+			if("Remove Citation")
+				if(istype(active1, /datum/data/record))
+					if(href_list["cdataid"])
+						if(!canUseSecurityRecordsConsole(usr, "delete", null, active2))
+							return
+						GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
+						if(SSticker.HasRoundStarted())
+							SSblackbox.DeleteCitation(href_list["cdataid"])
 			if("Pay")
 				for(var/datum/data/crime/p in active2.fields["citation"])
 					if(p.dataId == text2num(href_list["cdataid"]))
@@ -412,7 +447,7 @@ What a mess.*/
 								playsound(src, "terminal_type", 25, 0)
 						else
 							to_chat(usr, "<span class='warning'>Fines can only be paid with holochips</span>")
-
+//PRINTER FUNCTIONS
 			if("Print Record")
 				if(!( printing ))
 					printing = 1
@@ -752,41 +787,6 @@ What a mess.*/
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
-					if("citation_add")
-						if(istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
-							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 50) as num, 1)
-							if(!fine || fine < 0)
-								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
-								return
-							fine = min(fine, MAX_SECRUITY_CITATION)
-							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
-								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
-							for (var/obj/item/pda/P in GLOB.PDAs)
-								if(P.owner == active1.fields["name"])
-									var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
-									var/datum/signal/subspace/messaging/pda/signal = new(src, list(
-										"name" = "Security Citation",
-										"job" = "Citation Server",
-										"message" = message,
-										"targets" = list("[P.owner] ([P.ownjob])"),
-										"automated" = 1
-									))
-									signal.send_to_receivers()
-									usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-							GLOB.data_core.addCitation(active1.fields["id"], crime)
-							if(SSticker.HasRoundStarted())
-								SSblackbox.AddCitation(crime, active1.fields["name"], usr.ckey)
-							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-					if("citation_remove")
-						if(istype(active1, /datum/data/record))
-							if(href_list["cdataid"])
-								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
-									return
-								GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
-								if(SSticker.HasRoundStarted())
-									SSblackbox.DeleteCitation(href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
