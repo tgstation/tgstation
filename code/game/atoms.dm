@@ -86,9 +86,10 @@
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 	
-	if(material && !istype(material, /datum/material))
-		material = getmaterialref(material) //Get the proper instanced version
-	material.on_applied(src)
+	if(material)
+		if(!istype(material, /datum/material))
+			material = getmaterialref(material) //Get the proper instanced version
+		material.on_applied(src)
 
 	ComponentInitialize()
 

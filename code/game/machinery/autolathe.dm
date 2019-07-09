@@ -351,7 +351,6 @@
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
 	for(var/i in D.materials)
-		var/datum/material/M = i
 		dat += "[D.materials[i] * coeff] metal "
 	return dat
 
