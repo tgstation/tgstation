@@ -213,7 +213,6 @@
 		var/datum/material/req_mat = x
 		if(!istype(req_mat))
 			req_mat = getmaterialref(req_mat) //Get the ref if necesary
-			to_chat(world, "not a ref")
 		if(!materials[req_mat]) //Do we have the resource?
 			return FALSE //Can't afford it
 		var/amount_required = mats[x] * multiplier
@@ -232,15 +231,13 @@
 //For spawning mineral sheets; internal use only
 /datum/component/material_container/proc/retrieve_sheets(sheet_amt, var/datum/material/M, target = null) //Kinda revamped? this is most likely to not work
 	if(!M.sheet_type)
-		to_chat(world, "ass")
 		return 0 //Add greyscale sheet handling here later
 	if(sheet_amt <= 0)
-		to_chat(world, "ass2")
+		to_chat(world, "sheet amount is 0 or lower, yell at 4d")
 		return 0
 
 	if(!target)
 		target = get_turf(parent)
-	to_chat(world, "[materials[M]] [sheet_amt * MINERAL_MATERIAL_AMOUNT]")
 	if(materials[M] < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 		sheet_amt = round(materials[M] / MINERAL_MATERIAL_AMOUNT)
 	var/count = 0
@@ -253,7 +250,6 @@
 		new M.sheet_type(target, sheet_amt)
 		count += sheet_amt
 		use_amount_mat(sheet_amt * MINERAL_MATERIAL_AMOUNT, M)
-	to_chat(world, "[count]")	
 	return count
 
 /datum/component/material_container/proc/retrieve_all(target = null) //Revamped

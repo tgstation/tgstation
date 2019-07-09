@@ -48,7 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/glass), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/glass, /datum/material/gold), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -278,7 +278,9 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[/datum/material/hematite] ?round(materials.get_material_amount(/datum/material/hematite)/D.materials[/datum/material/hematite]):INFINITY,D.materials[/datum/material/glass]?round(materials.get_material_amount(/datum/material/glass)/D.materials[/datum/material/glass]):INFINITY)
+			var/max_multiplier
+			for(var/datum/material/mat in D.materials) //Should only loop once, as sheets only require one material.
+				max_multiplier = min(D.maxstack, round(materials.get_material_amount(mat)/D.materials[mat]))
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -348,10 +350,9 @@
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
-	if(D.materials[/datum/material/hematite])
-		dat += "[D.materials[/datum/material/hematite] * coeff] metal "
-	if(D.materials[/datum/material/glass])
-		dat += "[D.materials[/datum/material/glass] * coeff] glass"
+	for(var/i in D.materials)
+		var/datum/material/M = i
+		dat += "[D.materials[i] * coeff] metal "
 	return dat
 
 /obj/machinery/autolathe/proc/reset(wire)
