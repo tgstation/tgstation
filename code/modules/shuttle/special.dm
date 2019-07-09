@@ -230,17 +230,17 @@
 		return ..()
 
 	var/datum/bank_account/account
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(H.get_bank_account())
-			account = H.get_bank_account()
-	else if(istype(AM.pulling, /obj/item/card/id))
+	if(istype(AM.pulling, /obj/item/card/id))
 		var/obj/item/card/id/I = AM.pulling
 		if(I.registered_account)
 			account = I.registered_account
 		else if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
 			to_chat(AM, "<span class='notice'>This ID card doesn't have an owner associated with it!</span>")
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
+	else if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		if(H.get_bank_account())
+			account = H.get_bank_account()
 
 	if(account)
 		if(account.account_balance < threshold - payees[AM])
@@ -286,7 +286,7 @@
 
 	if(payees[AM] < threshold)
 		var/armless
-		if(!ishuman(AM))
+		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime)) //slimes can't pull
 			armless = TRUE
 		else
 			var/mob/living/carbon/human/H = AM
@@ -304,13 +304,20 @@
 			qdel(I)
 		payees[AM] -= threshold
 
+		var/change = FALSE
 		if(payees[AM] > 0)
-			var/obj/item/holochip/H
-			H.credits = payees[AM]
-			new H(AM.loc) //drop their change at their feet for the plebs
+			change = TRUE
+			var/obj/item/holochip/HC
+			HC.credits = payees[AM]
+			if(istype(AM, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = AM
+				H.put_in_hands(new HC)
+			else
+				new HC(AM.loc)
+				AM.pulling = HC
 			payees[AM] -= payees[AM]
 
-		say("<span class='robot'>Welcome aboard, [AM]!</span>")
+		say("<span class='robot'>Welcome aboard, [AM]![change ? " Here is your change." : ""]</span>")
 		approved_passengers += AM
 
 		check_times -= AM
