@@ -10,6 +10,7 @@
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
+	var/failed = FALSE		//to prevent constantly running failing code
 
 /obj/item/organ/heart/update_icon()
 	if(beating)
@@ -52,6 +53,7 @@
 /obj/item/organ/heart/on_life()
 	..()
 	if(owner.client && beating)
+		failed = FALSE
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
@@ -72,6 +74,15 @@
 		else if(beat == BEAT_FAST)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
+
+		if((damage > low_threshold) && prob(20 * (damage/maxHealth)) && !failing)
+			to_chat(owner, "<span class='warning'>[damage > high_threshold ? "You feel a lingering pain in your chest." : "Your left arm prickles with pain, and the pain in your chest grows stronger!"].</span>")
+
+	if(failing)	//heart broke, stopped beating, death imminent
+		if(owner.stat == CONSCIOUS)
+			owner.visible_message("<span class='userdanger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>")
+		owner.set_heartattack(TRUE)
+		failed = TRUE
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"

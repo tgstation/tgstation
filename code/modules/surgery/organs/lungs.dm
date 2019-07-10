@@ -1,4 +1,5 @@
 /obj/item/organ/lungs
+	var/failed = FALSE //have we failed already?
 	name = "lungs"
 	icon_state = "lungs"
 	zone = BODY_ZONE_CHEST
@@ -379,6 +380,18 @@
 		if(breath_temperature > heat_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
+
+/obj/item/organ/lungs/on_life()
+	..()
+	if((damage > low_threshold) && prob(20 * (damage/maxHealth)) && !failing)
+		to_chat(owner, "<span class='warning'>Your breathing is noticeably shallower.</span>")
+	if((!failed) && (failing))
+		if(owner.stat == CONSCIOUS)
+			owner.visible_message("<span class='userdanger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>")
+		failed = TRUE
+	else if(!failing)
+		failed = FALSE
+	return
 
 /obj/item/organ/lungs/prepare_eat()
 	var/obj/S = ..()
