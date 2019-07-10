@@ -178,7 +178,7 @@
 					for(var/i in SSmaterials.materials_by_category[used_material])
 						if(materials.materials[i] > 0)
 							list_to_show += i
-							
+
 					used_material = input("Choose [used_material]", "Custom Material") as null|anything in list_to_show
 					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
@@ -296,7 +296,7 @@
 		if(ispath(D.build_path, /obj/item/stack))
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			var/max_multiplier
-			for(var/datum/material/mat in D.materials) //Should only loop once, as sheets only require one material.
+			for(var/datum/material/mat in D.materials)
 				max_multiplier = min(D.maxstack, round(materials.get_material_amount(mat)/D.materials[mat]))
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
@@ -330,7 +330,7 @@
 		if(ispath(D.build_path, /obj/item/stack))
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			var/max_multiplier
-			for(var/datum/material/mat in D.materials) //Should only loop once, as sheets only require one material.
+			for(var/datum/material/mat in D.materials)
 				max_multiplier = min(D.maxstack, round(materials.get_material_amount(mat)/D.materials[mat]))
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
@@ -360,12 +360,13 @@
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container) 
-	if(D.materials[/datum/material/iron] && (materials.get_material_amount(/datum/material/iron) < (D.materials[/datum/material/iron] * coeff * amount)))
-		return FALSE
-	if(D.materials[/datum/material/glass] && (materials.get_material_amount(/datum/material/glass) < (D.materials[/datum/material/glass] * coeff * amount)))
-		return FALSE
-	return TRUE
+	var/list/materials = list()
+
+	for(var/i in D.materials)
+		materials[i] = D.materials[i] * coeff * amount
+
+	return has_materials(materials)
+
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)

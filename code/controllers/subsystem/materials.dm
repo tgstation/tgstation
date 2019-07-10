@@ -1,9 +1,20 @@
+/*! How material datums work
+Materials are now instanced datums, with an associative list of them being kept in SSmaterials. We only instance the materials once and then re-use these instances for everything.
+
+These materials call on_applied() on whatever item they are applied to, common effects are adding components, changing color and changing description. This allows us to differentiate items based on the material they are made out of.area
+
+Core procs & defines:
+
+*/
+
 SUBSYSTEM_DEF(materials)
 	name = "Materials"
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_MATERIALS
-	var/list/materials = list() //Dictionary of material.type || material ref
-	var/list/materials_by_category = list() //Dictionary of category || list of material refs
+	///Dictionary of material.type || material ref
+	var/list/materials = list() 
+	///Dictionary of category || list of material refs
+	var/list/materials_by_category = list() 
 
 /datum/controller/subsystem/materials/Initialize(timeofday)
 	InitializeMaterials()
