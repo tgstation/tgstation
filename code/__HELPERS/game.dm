@@ -324,7 +324,13 @@
 		else if(isliving(M.current))
 			return M.current.stat != DEAD
 	return FALSE
-
+	
+/**
+  * Exiled check
+  * 
+  * Checks if the current body of the mind has an exile implant and is currently in 
+  * an away mission. Returns FALSE if any of those conditions aren't met.
+  */ 
 /proc/considered_exiled(datum/mind/M)
 	if(M && M.current)
 		var/mob/living/carbon/human/H

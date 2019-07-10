@@ -163,6 +163,7 @@
 
 	return FALSE
 
+///General check to see if an object is on an away mission, returns FALSE if it can't find a turf or if not on an away mission z-level.
 /atom/proc/onAwayMission()
 	var/turf/T = get_turf(src)
 	if(!T)
