@@ -14,9 +14,10 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/leave_swarm)
 
 /datum/component/swarming/Destroy()
-		. = ..()
-	for(var/AM in swarm_members)
-		leave_swarm(null, AM) //If anyone got a better idea for this, please tell me.
+	. = ..()
+	for(var/datum/component/swarming/other_swarm in swarm_members)
+		other_swarm.swarm_members -= src //If anyone got a better idea for this, please tell me.
+	swarm_members = null
 
 /datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
 	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
