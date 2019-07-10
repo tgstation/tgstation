@@ -90,7 +90,7 @@
 				{{/if}}
 			{{else}}
 				<div style="position:absolute; top:2px; left:2px"><ui-button action='PRG_hub_back'><i class="fas fa-arrow-left"></i> Back</ui-button></div>
-				<div style="position:absolute; top:2px; right:2px">Contractor Rep: 0</div>
+				<div style="position:absolute; top:2px; right:2px">Contractor Rep: {{data.contract_rep}}</div>
 
 				<br>
 				<br>
