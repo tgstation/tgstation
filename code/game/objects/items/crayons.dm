@@ -252,6 +252,7 @@
 		return
 
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
+	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 
 	var/cost = 1
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
@@ -259,8 +260,7 @@
 	if(istype(target, /obj/item/canvas))
 		cost = 0
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if (HAS_TRAIT(H, TRAIT_TAGGER))
+		if (istagger)
 			cost *= 0.5
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
@@ -352,10 +352,10 @@
 	var/list/turf/affected_turfs = list()
 
 	if(actually_paints)
+		var/obj/effect/decal/cleanable/crayon/C
 		switch(paint_mode)
 			if(PAINT_NORMAL)
-				var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
-				C.add_hiddenprint(user)
+				C = new(target, paint_color, drawing, temp, graf_rot)
 				C.pixel_x = clickx
 				C.pixel_y = clicky
 				affected_turfs += target
@@ -363,14 +363,16 @@
 				var/turf/left = locate(target.x-1,target.y,target.z)
 				var/turf/right = locate(target.x+1,target.y,target.z)
 				if(isValidSurface(left) && isValidSurface(right))
-					var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
-					C.add_hiddenprint(user)
+					C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
 					affected_turfs += left
 					affected_turfs += right
 					affected_turfs += target
 				else
 					to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
 					return
+		C.add_hiddenprint(user)
+		if(istagger)
+			C.AddComponent(/datum/component/art, 30)
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")
@@ -619,9 +621,9 @@
 		if(C.client)
 			C.blur_eyes(3)
 			C.blind_eyes(1)
-		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
-			C.confused = max(C.confused, 3)
-			C.Paralyze(60)
+		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
+			C.apply_effects(eyeblur = 5, jitter = 10)
+			flash_color(C, flash_color=paint_color, flash_time=40)
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"

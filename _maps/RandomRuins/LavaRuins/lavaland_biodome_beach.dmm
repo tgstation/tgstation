@@ -154,8 +154,7 @@
 /area/ruin/powered/beach)
 "aF" = (
 /obj/machinery/vending/boozeomat{
-	set_obj_flags = "EMAGGED";
-	req_access_txt = "0"
+	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -480,6 +479,10 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
+"jP" = (
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/powered/beach)
 "lF" = (
 /obj/machinery/light{
 	dir = 4
@@ -564,6 +567,11 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
+"zO" = (
+/obj/structure/flora/ausbushes/leafybush,
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/powered/beach)
 "Bl" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light{
@@ -595,6 +603,10 @@
 /obj/item/clothing/shoes/sandal,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
+/area/ruin/powered/beach)
+"Ml" = (
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/coastline_t,
 /area/ruin/powered/beach)
 "QS" = (
 /obj/effect/turf_decal/sand,
@@ -708,7 +720,7 @@ wY
 VO
 lM
 bW
-ad
+zO
 bQ
 bT
 bW
@@ -741,7 +753,7 @@ mh
 mh
 bW
 ap
-bR
+Ml
 bT
 bU
 ct
@@ -1093,7 +1105,7 @@ ar
 bE
 ar
 ar
-bR
+Ml
 bT
 bU
 bU
@@ -1363,7 +1375,7 @@ aa
 aa
 bW
 bW
-ar
+jP
 ap
 ar
 ar
@@ -1412,7 +1424,7 @@ ar
 ar
 ar
 ar
-ar
+jP
 bS
 bT
 bU

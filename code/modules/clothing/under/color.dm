@@ -19,6 +19,19 @@
 		new C(loc)
 	return INITIALIZE_HINT_QDEL
 
+/obj/item/clothing/under/skirt/color/random
+	icon_state = "random_jumpsuit"		//Skirt variant needed
+
+/obj/item/clothing/under/skirt/color/random/Initialize()
+	..()
+	var/obj/item/clothing/under/skirt/color/C = pick(subtypesof(/obj/item/clothing/under/skirt/color) - /obj/item/clothing/under/skirt/color/random)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.equip_to_slot_or_del(new C(H), SLOT_W_UNIFORM)
+	else
+		new C(loc)
+	return INITIALIZE_HINT_QDEL
+
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
