@@ -57,7 +57,7 @@
 
 	for(var/obj/machinery/computer/shuttle/S in GLOB.machines)
 		if(S.shuttleId == shuttle_id)
-			S.possible_destinations = "[destination_type]"
+			S.possible_destinations = "[landing_zone.destination_type]"
 
 	to_chat(user, "Landing zone set.")
 
