@@ -474,6 +474,14 @@
 	admin_notes = "Comes with turrets that will target anything without the neutral faction (nuke ops, xenos etc, but not pets)."
 	credit_cost = 30000
 
+/datum/map_template/shuttle/emergency/zeta
+	suffix = "zeta"
+	name = "Tr%nPo2r& Z3TA"
+	description = "A glitch appears on your monitor, flickering in and out of the options laid before you. \
+	It seems strange and alien, but there is a price tag attached..."
+	admin_notes = "Has an on-board experimental cloner that creates copies of its user, alien surgery tools, and a void core that provides unlimited power."
+	credit_cost = 12000
+
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
 	name = "arrival shuttle (Box)"
