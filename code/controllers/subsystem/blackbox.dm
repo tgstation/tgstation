@@ -341,10 +341,10 @@ Versioning
 	if(sealed)
 		return
 
-	if(SSdbcore.db_major < 5 && SSdbcore.db_minor < 3)
+ 	if(SSdbcore.db_major < 5 && SSdbcore.db_minor < 4)
 		return
 
-	var/crime = sanitizeSQL(C.crimeName)
+ 	var/crime = sanitizeSQL(C.crimeName)
 	var/fine = sanitizeSQL(C.fine)
 	var/paid = sanitizeSQL(C.paid)
 	var/target = sanitizeSQL(tgt)
@@ -352,25 +352,38 @@ Versioning
 	var/author_ckey = sanitizeSQL(ckey)
 	var/dataId = sanitizeSQL(C.dataId)
 
-	if(!SSdbcore.Connect())
+ 	if(!SSdbcore.Connect())
 		return
 
-	var/datum/DBQuery/query_add_citation = SSdbcore.NewQuery("INSERT INTO [format_table_name("citations")] (crime, fine, paid, target, author, author_ckey, dataID, server_ip, server_port, round_id, timestamp) VALUES ('[crime]', '[fine]', '[paid]', '[target]', '[author]', '[author_ckey]', '[dataId]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]','[GLOB.round_id]', '[SQLtime()]')")
-	if(query_add_citation)
-		query_add_citation.Execute(async = TRUE)
-		qdel(query_add_citation)
+ 	var/datum/DBQuery/query_add_citation = SSdbcore.NewQuery("INSERT INTO [format_table_name("citations")] (crime, fine, paid, target, author, author_ckey, dataID, server_ip, server_port, round_id, timestamp) VALUES ('[crime]', '[fine]', '[paid]', '[target]', '[author]', '[author_ckey]', '[dataId]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]','[GLOB.round_id]', '[SQLtime()]')")
+	query_add_citation.Execute()
+	qdel(query_add_citation)
 
 /datum/controller/subsystem/blackbox/proc/DeleteCitation(id)
 	set waitfor = FALSE
 	if(sealed)
 		return
 
-	if(SSdbcore.db_major < 5 && SSdbcore.db_minor < 3)
+ 	if(SSdbcore.db_major < 5 && SSdbcore.db_minor < 4)
 		return
 
-	var/dataId = sanitizeSQL(id)
+ 	var/dataId = sanitizeSQL(id)
 
-	var/datum/DBQuery/query_delete_citation = SSdbcore.NewQuery("UPDATE [format_table_name("citations")] SET DELETED = 1 WHERE round_id = [GLOB.round_id] AND dataId = [dataId]")
-	if(query_delete_citation)
-		query_delete_citation.Execute(async = TRUE)
-		qdel(query_delete_citation)
+ 	var/datum/DBQuery/query_delete_citation = SSdbcore.NewQuery("UPDATE [format_table_name("citations")] SET DELETED = 1 WHERE round_id = [GLOB.round_id] AND dataId = [dataId]")
+	query_delete_citation.Execute()
+	qdel(query_delete_citation)
+
+/datum/controller/subsystem/blackbox/proc/PayCitation(id, amount)
+	set waitfor = FALSE
+	if(sealed)
+		return
+
+ 	if(SSdbcore.db_major < 5 && SSdbcore.db_minor < 4)
+		return
+
+ 	var/dataId = sanitizeSQL(id)
+	var/paid = sanitizeSQL(amount)
+
+ 	var/datum/DBQuery/query_pay_citation = SSdbcore.NewQuery("UPDATE [format_table_name("citations")] SET paid = '[paid]' WHERE round_id = [GLOB.round_id] AND dataId = [dataId]")
+	query_pay_citation.Execute()
+	qdel(query_pay_citation)
