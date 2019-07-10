@@ -12,7 +12,8 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 //
-	var/id
+	var/id //for identifying shuttle among many others, necessarily be unical
+	var/destination_type //for map edits, work as category for search, shuttles can be allowed to fly to category
 	// this should point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
 	var/width = 0	//size of covered area, perpendicular to dir
@@ -165,7 +166,7 @@
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary += src
-	id = "[SSshuttle.stationary.len]"
+	id = "[destination_type][SSshuttle.stationary.len]"
 	name = "[name] dock[SSshuttle.stationary.len]"
 	if(!area_type)
 		var/area/place = get_area(src)
@@ -290,7 +291,7 @@
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
 
-	id = "[SSshuttle.mobile.len]"
+	id = "[destination_type][SSshuttle.mobile.len]"
 	name = "[name] shuttle[SSshuttle.mobile.len]"
 
 	shuttle_areas = list()
@@ -313,7 +314,7 @@
 	var/list/static/shuttle_id = list()
 	var/idnum = ++shuttle_id[template]
 	if(idnum > 1)
-		id = "[id][idnum]"
+		id = "[destination_type][idnum]"
 		name = "[name] [idnum]"
 	for(var/place in shuttle_areas)
 		var/area/area = place
