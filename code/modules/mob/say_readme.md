@@ -1,4 +1,4 @@
-/*=============================================================
+===============================================================
 ======================MIAUW'S SAY REWRITE======================
 ===============================================================
 
@@ -177,4 +177,4 @@ If radio_freq is not null, the code will rely on the fact that the speaker is vi
 
 This is fairly hacky, but it means that I can advoid using istypes. It's mainly relevant for AI tracking and AI job display.
 
-That's all, folks!*/
+That's all, folks!
