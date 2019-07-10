@@ -19,7 +19,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/docking_port/mobile{
 	callTime = 250;
-	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 17;
@@ -180,8 +179,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Bar APC";
-	pixel_x = -25;
-	req_access = null
+	pixel_x = -25
 	},
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/bar,
@@ -441,8 +439,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Frigate Crew Quarters APC";
-	pixel_y = 23;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -1154,8 +1151,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Bridge APC";
-	pixel_x = -25;
-	req_access = null
+	pixel_x = -25
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -1236,8 +1232,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Frigate Engineering APC";
-	pixel_x = 24;
-	req_access = null
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
@@ -2116,8 +2111,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Cargo APC";
-	pixel_x = -25;
-	req_access = null
+	pixel_x = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -2207,8 +2201,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/apc{
 	name = "Frigate Medbay APC";
-	pixel_y = -24;
-	req_access = null
+	pixel_y = -24
 	},
 /obj/structure/spider/stickyweb,
 /obj/structure/cable,

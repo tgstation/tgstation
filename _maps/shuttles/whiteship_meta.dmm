@@ -35,7 +35,6 @@
 /obj/docking_port/mobile{
 	callTime = 250;
 	can_move_docking_ports = 1;
-	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 17;
@@ -880,8 +879,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc{
 	name = "Salvage Ship Crew Quarters APC";
-	pixel_y = -24;
-	req_access = null
+	pixel_y = -24
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1143,8 +1141,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Salvage Ship Bar APC";
-	pixel_y = 23;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -1331,8 +1328,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Salvage Ship Bridge APC";
-	pixel_y = 23;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/item/camera{
 	pixel_x = 12;
@@ -1752,7 +1748,6 @@
 /area/shuttle/abandoned/bridge)
 "cG" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	designate_time = 100;
 	dir = 8;
 	view_range = 14;
 	x_offset = -4;
@@ -1802,8 +1797,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Salvage Ship Cargo APC";
-	pixel_x = -25;
-	req_access = null
+	pixel_x = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -2463,8 +2457,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc{
 	name = "Salvage Ship Engineering APC";
-	pixel_y = -24;
-	req_access = null
+	pixel_y = -24
 	},
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/metal/twenty,

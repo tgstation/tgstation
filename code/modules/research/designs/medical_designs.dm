@@ -575,11 +575,21 @@
 	var/surgery
 
 /datum/design/surgery/experimental_dissection
-	name = "Experimental Dissection"
-	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
-	id = "surgery_exp_dissection"
-	surgery = /datum/surgery/experimental_dissection
+	name = "Advanced Dissection"
+	desc = "A surgical procedure which analyzes the biology of a corpse, and automatically adds new findings to the research database."
+	id = "surgery_adv_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection/adv
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/experimental_dissection/exp
+	name = "Experimental Dissection"
+	id = "surgery_exp_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection/exp
+
+/datum/design/surgery/experimental_dissection/exp
+	name = "Extraterrestrial Dissection"
+	id = "surgery_ext_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection/alien
 
 /datum/design/surgery/lobotomy
 	name = "Lobotomy"
