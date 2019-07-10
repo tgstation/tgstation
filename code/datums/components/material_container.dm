@@ -154,7 +154,9 @@
 	return amt
 
 //For inserting an amount of material
-/datum/component/material_container/proc/insert_amount_mat(amt, mat) //Revamped
+/datum/component/material_container/proc/insert_amount_mat(amt, var/datum/material/mat) //Revamped
+	if(!istype(mat))
+		mat = getmaterialref(mat)
 	if(amt > 0 && has_space(amt))
 		var/total_amount_saved = total_amount
 		if(mat)
