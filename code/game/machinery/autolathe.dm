@@ -116,11 +116,25 @@
 		if(do_after(user, 14.4, target = src))
 			for(var/B in D.blueprints)
 				if(B)
+					if(!can_upload_design(B))
+						continue
 					stored_research.add_design(B)
 		busy = FALSE
 		return TRUE
 
 	return ..()
+
+/obj/machinery/autolathe/proc/can_upload_design(var/datum/design/design) //Kind of a shit proc, remember to refactor this floyd.
+	if(!istype(design))
+		return FALSE
+	for(var/i in design.materials)
+		var/datum/material/M = i
+		if(!istype(M))
+			M = getmaterialref(i)
+		if(!istype(M, /datum/material/iron) && !istype(M, /datum/material/glass))
+			return FALSE
+	return TRUE
+		
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
 	if(ispath(type_inserted, /obj/item/stack/ore/bluespace_crystal))
