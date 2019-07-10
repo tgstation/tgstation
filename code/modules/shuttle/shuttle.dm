@@ -12,7 +12,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 //
-	var/id //for identifying shuttle among many others, necessarily be unical
+	var/id //for identifying shuttle or dock among many others, necessarily be unical
 	var/destination_type //for map edits, work as category for search, shuttles can be allowed to fly to category
 	// this should point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
