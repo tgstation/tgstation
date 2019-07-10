@@ -3,7 +3,7 @@
 	name = "iron"
 	id = "iron"
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
-	color = "#686969"
+	color = "#878687"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/metal
 	coin_type = /obj/item/coin/iron
@@ -13,6 +13,7 @@
 	name = "glass"
 	id = "glass"
 	desc = "Glass forged by melting sand."
+	color = "#dae6f0"
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/glass
 
@@ -21,7 +22,7 @@
 	name = "silver"
 	id = "silver"
 	desc = "Silver"
-	color = "#C0C0C0"
+	color = "#bdbebf"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	coin_type = /obj/item/coin/silver
@@ -75,7 +76,7 @@
 	name = "bluespace crystal"
 	id = "bluespace_crystal"
 	desc = "Crystals with bluespace properties"
-	color = "#0000ff"
+	color = "#506bc7"
 	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 
@@ -84,7 +85,7 @@
 	name = "bananium"
 	id = "bananium"
 	desc = "Material with hilarious properties"
-	color = "#ffd700"
+	color = "#fff263"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	coin_type = /obj/item/coin/bananium
@@ -99,7 +100,7 @@
 	name = "titanium"
 	id = "titanium"
 	desc = "Titanium"
-	color = "#A2A4A4"
+	color = "#b3c0c7"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 
@@ -108,6 +109,7 @@
 	name = "plastic"
 	id = "plastic"
 	desc = "plastic"
+	color = "#caccd9"
 	sheet_type = /obj/item/stack/sheet/plastic
 
 ///Force decrease and mushy sound effect.
@@ -115,4 +117,4 @@
 	name = "biomass"
 	id = "biomass"
 	desc = "Organic matter"
-	color = "#89a203"
+	color = "#735b4d"
