@@ -37,7 +37,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 5;
-	id = "mining_common";
+	destination_type = "mining_common";
 	name = "lavaland shuttle";
 	port_direction = 4;
 	width = 7
