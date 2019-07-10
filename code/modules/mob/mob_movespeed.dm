@@ -1,4 +1,4 @@
-/*!
+/*! How move speed for mobs works
 
 Move speed is now calculated by using a list of movespeed modifiers, which is a list itself (to avoid datum overhead)
 
