@@ -109472,6 +109472,7 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "dVu" = (
