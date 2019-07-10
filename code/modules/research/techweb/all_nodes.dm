@@ -1,3 +1,4 @@
+
 //Current rate: 135000 research points in 90 minutes
 
 //Base Nodes
@@ -123,6 +124,7 @@
 	prereq_ids = list("base")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
+
 
 /////////////////////////engineering tech/////////////////////////
 /datum/techweb_node/engineering
@@ -598,7 +600,7 @@
 	id = "electronic_weapons"
 	display_name = "Electric Weapons"
 	description = "Weapons using electric technology"
-	prereq_ids = list("weaponry", "adv_power", "emp_basic")
+	prereq_ids = list("weaponry", "adv_power"  , "emp_basic")
 	design_ids = list("stunrevolver", "ioncarbine", "lens_SHK", "lens_SHD")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
@@ -607,8 +609,8 @@
 	id = "radioactive_weapons"
 	display_name = "Radioactive Weaponry"
 	description = "Weapons using radioactive technology."
-	prereq_ids = list("adv_engi", "adv_weaponry")
-	design_ids = list("nuclear_gun", "lens_RIC")
+	prereq_ids = list("adv_engi", "adv_weaponry", "lens_RIC")
+	design_ids = list("nuclear_gun")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -626,7 +628,7 @@
 	display_name = "Beam Weaponry"
 	description = "Various basic beam weapons"
 	prereq_ids = list("adv_weaponry")
-	design_ids = list("temp_gun", "xray_laser", "lens_ECO", "lens_INC")
+	design_ids = list("temp_gun", "xray_laser", "lens_INC", "lens_ECO")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -634,8 +636,8 @@
 	id = "adv_beam_weapons"
 	display_name = "Advanced Beam Weaponry"
 	description = "Various advanced beam weapons"
-	prereq_ids = list("beam_weapons")
-	design_ids = list("beamriflee", "lens_STH", "lens_BLN")
+	prereq_ids = list("beam_weapons", "lens_BLN", "lens_STH")
+	design_ids = list("beamrifle")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

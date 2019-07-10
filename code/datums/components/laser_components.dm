@@ -49,4 +49,4 @@
 
 /datum/component/extralasers/Destroy()
 	qdel(ammo)
-	..()
+	return ..()
