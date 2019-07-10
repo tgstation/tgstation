@@ -14,7 +14,6 @@
 	process_dead = TRUE
 
 /datum/disease/decloning/stage_act()
-	var/obj/item/organ/brain = affected_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	..()
 	if(affected_mob.stat == DEAD)
 		cure()
@@ -41,7 +40,7 @@
 			if(prob(2))
 				affected_mob.emote("drool")
 			if(prob(5))
-				brain.applyOrganDamage(1, 170)
+				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 170)
 				affected_mob.adjustCloneLoss(2)
 			if(prob(15))
 				affected_mob.stuttering += 3
@@ -54,7 +53,7 @@
 				to_chat(affected_mob, "<span class='danger'>Your skin starts degrading!</span>")
 			if(prob(10))
 				affected_mob.adjustCloneLoss(5)
-				brain.applyOrganDamage(2, 170)
+				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2, 170)
 			if(affected_mob.cloneloss >= 100)
 				affected_mob.visible_message("<span class='danger'>[affected_mob] skin turns to dust!</span>", "<span class'boldwarning'>Your skin turns to dust!</span>")
 				affected_mob.dust()

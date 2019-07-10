@@ -57,7 +57,6 @@
 	target.notify_ghost_cloning("Someone is trying to zap your brain. Re-enter your corpse if you want to be revived!", source = target)
 
 /datum/surgery_step/revive/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	display_results(user, target, "<span class='notice'>You successfully shock [target]'s brain with [tool]...</span>",
 		"[user] send a powerful shock to [target]'s brain with [tool]...",
 		"[user] send a powerful shock to [target]'s brain with [tool]...")
@@ -67,17 +66,16 @@
 	if(target.revive())
 		target.visible_message("...[target] wakes up, alive and aware!")
 		target.emote("gasp")
-		B.applyOrganDamage(50, 180) //MAD SCIENCE
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
 		return TRUE
 	else
 		target.visible_message("...[target.p_they()] convulses, then lies still.")
 		return FALSE
 
 /datum/surgery_step/revive/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	display_results(user, target, "<span class='notice'>You shock [target]'s brain with [tool], but [target.p_they()] doesn't react.</span>",
 		"[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react.",
 		"[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react.")
 	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, 1)
-	B.applyOrganDamage(15, 180)
+	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 180)
 	return FALSE

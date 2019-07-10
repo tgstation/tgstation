@@ -639,13 +639,12 @@
 	taste_description = "bitter mushroom"
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	if(current_cycle >= 10)
 		M.Unconscious(40, 0)
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
-		B.applyOrganDamage(2*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150)
 		M.adjustToxLoss(3*REM,0)
 		M.adjustStaminaLoss(10*REM,0)
 		M.blur_eyes(5)

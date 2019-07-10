@@ -37,12 +37,11 @@
 	return TRUE
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(target.getorgan(/obj/item/organ/brain))
 		display_results(user, target, "<span class='warning'>You accidentally stab [target] right in the brain!</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>")
-		B.applyOrganDamage(70)
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 70)
 	else
 		display_results(user, target, "<span class='warning'>You accidentally stab [target] right in the brain! Or would have, if [target] had a brain.</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain! Or would have, if [target] had a brain.</span>",

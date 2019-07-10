@@ -85,16 +85,14 @@
 	. = 1
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
-	B.applyOrganDamage(2*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
 	M.adjustToxLoss(2*REM, 0)
 	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
-	B.applyOrganDamage(5*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5*REM)
 	..()
 
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
@@ -108,8 +106,7 @@
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
-	B.applyOrganDamage(3*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM)
 	M.adjustToxLoss(5*REM, 0)
 	M.adjustBruteLoss(5*REM, 0)
 	..()
@@ -132,15 +129,13 @@
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
-	B.applyOrganDamage(0.25*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25*REM)
 	M.adjustToxLoss(0.25*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/krokodil/addiction_act_stage1(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
-	B.applyOrganDamage(2*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
 	M.adjustToxLoss(2*REM, 0)
 	..()
 	. = 1
@@ -187,7 +182,6 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
@@ -198,14 +192,13 @@
 	M.AdjustImmobilized(-40, FALSE)
 	M.adjustStaminaLoss(-2, 0)
 	M.Jitter(2)
-	B.applyOrganDamage(rand(1,4))
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1,4))
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
 	..()
 	. = 1
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i in 1 to 4)
 			step(M, pick(GLOB.cardinals))
@@ -216,7 +209,7 @@
 		M.drop_all_held_items()
 	..()
 	M.adjustToxLoss(1, 0)
-	B.applyOrganDamage(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
 	. = 1
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
@@ -282,12 +275,11 @@
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "salted", /datum/mood_event/stimulant_heavy, name)
 	M.adjustStaminaLoss(-5, 0)
-	B.applyOrganDamage(4)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4)
 	M.hallucination += 5
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		step(M, pick(GLOB.cardinals))
@@ -307,45 +299,41 @@
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage1(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	M.hallucination += 10
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(5)
-	B.applyOrganDamage(10)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
 	if(prob(20))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage2(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	M.hallucination += 20
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(10)
 	M.Dizzy(10)
-	B.applyOrganDamage(10)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
 	if(prob(30))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage3(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	M.hallucination += 30
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 12, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(15)
 	M.Dizzy(15)
-	B.applyOrganDamage(10)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
 	if(prob(40))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	M.hallucination += 30
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 16, i++)
@@ -353,7 +341,7 @@
 	M.Jitter(50)
 	M.Dizzy(50)
 	M.adjustToxLoss(5, 0)
-	B.applyOrganDamage(10)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -396,16 +384,14 @@
 	..()
 
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	M.jitteriness = 0
 	M.confused = 0
 	M.disgust = 0
-	B.applyOrganDamage(0.2)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 	..()
 	. = 1
 
 /datum/reagent/drug/happiness/overdose_process(mob/living/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	if(prob(30))
 		var/reaction = rand(1,3)
 		switch(reaction)
@@ -418,7 +404,7 @@
 			if(3)
 				M.emote("frown")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_bad_od)
-	B.applyOrganDamage(0.5)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
 	..()
 	. = 1
 

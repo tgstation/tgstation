@@ -274,7 +274,6 @@ Versioning
 	key_type = new_key_type
 
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
-	var/obj/item/organ/brain = L.getorganslot(ORGAN_SLOT_BRAIN)
 	set waitfor = FALSE
 	if(sealed)
 		return
@@ -297,7 +296,7 @@ Versioning
 	var/lakey = L.lastattackerckey
 	var/sqlbrute = L.getBruteLoss()
 	var/sqlfire = L.getFireLoss()
-	var/sqlbrain = brain.damage
+	var/sqlbrain = L.getOrganLoss(ORGAN_SLOT_BRAIN)
 	var/sqloxy = L.getOxyLoss()
 	var/sqltox = L.getToxLoss()
 	var/sqlclone = L.getCloneLoss()

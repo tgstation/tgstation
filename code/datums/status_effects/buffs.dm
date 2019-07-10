@@ -499,7 +499,6 @@
 		if(iscarbon(owner))
 			var/mob/living/carbon/itemUser = owner
 			var/obj/item/heldItem = itemUser.get_item_for_held_index(hand)
-			var/obj/item/organ/brain = itemUser.getorganslot(ORGAN_SLOT_BRAIN)
 			if(heldItem == null || heldItem.type != /obj/item/rod_of_asclepius) //Checks to make sure the rod is still in their hand
 				var/obj/item/rod_of_asclepius/newRod = new(itemUser.loc)
 				newRod.activated()
@@ -526,11 +525,10 @@
 			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
 			itemUser.adjustOxyLoss(-1.5)
 			itemUser.adjustStaminaLoss(-1.5)
-			brain.applyOrganDamage(-1.5)
+			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
 			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
 		//Heal all those around you, unbiased
 		for(var/mob/living/L in view(7, owner))
-			var/obj/item/organ/B = L.getorganslot(ORGAN_SLOT_BRAIN)
 			if(L.health < L.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(L), "#375637")
 			if(iscarbon(L))
@@ -539,7 +537,7 @@
 				L.adjustToxLoss(-3.5, forced = TRUE) //Because Slime People are people too
 				L.adjustOxyLoss(-3.5)
 				L.adjustStaminaLoss(-3.5)
-				B.applyOrganDamage(-3.5)
+				L.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3.5)
 				L.adjustCloneLoss(-1) //Becasue apparently clone damage is the bastion of all health
 			else if(issilicon(L))
 				L.adjustBruteLoss(-3.5)

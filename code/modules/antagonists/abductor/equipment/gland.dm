@@ -162,7 +162,6 @@
 	for(var/mob/living/carbon/H in orange(4,T))
 		if(H == owner)
 			continue
-		var/obj/item/organ/brain = H.getorganslot(ORGAN_SLOT_BRAIN)
 		switch(pick(1,3))
 			if(1)
 				to_chat(H, "<span class='userdanger'>You hear a loud buzz in your head, silencing your thoughts!</span>")
@@ -170,7 +169,7 @@
 			if(2)
 				to_chat(H, "<span class='warning'>You hear an annoying buzz in your head.</span>")
 				H.confused += 15
-				brain.applyOrganDamage(10)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
 				H.hallucination += 60
 

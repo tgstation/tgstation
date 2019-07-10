@@ -81,8 +81,7 @@
 	hive.threat_level = max(0, hive.threat_level-0.1)
 	if(bruteforce)
 		if(target.anti_magic_check(FALSE, FALSE, TRUE, 6))
-			var/obj/item/organ/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-			brain.applyOrganDamage(10)
+			target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
 		to_chat(user, "<span class='warning'>We are briefly exhausted by the effort required by our enhanced assimilation abilities.</span>")
 		user.Immobilize(50)
 		SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
@@ -306,14 +305,13 @@
 
 /obj/effect/proc_holder/spell/self/hive_drain/cast(mob/living/carbon/human/user)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
-	var/obj/item/organ/brain = user.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!hive || !hive.hivemembers)
 		return
 	var/iterations = 0
 	var/list/carbon_members = hive.get_carbon_members()
 	if(!carbon_members.len)
 		return
-	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && (brain.damage == 0) && !user.getStaminaLoss())
+	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && !user.getOrganLoss(ORGAN_SLOT_BRAIN) && !user.getStaminaLoss())
 		to_chat(user, "<span class='warning'>We cannot heal ourselves any more with this power!</span>")
 		revert_cast()
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
@@ -326,7 +324,7 @@
 			to_chat(user, "<span class='warning'>We have run out of vessels to drain.</span>")
 			break
 		var/regen = target.anti_magic_check(FALSE, FALSE, TRUE) ? 5 : 10
-		brain.applyOrganDamage(regen/2)
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, regen/2)
 		if(user.getBruteLoss() > user.getFireLoss())
 			user.heal_ordered_damage(regen, list(CLONE, BRUTE, BURN, STAMINA))
 		else
@@ -335,7 +333,10 @@
 			to_chat(user, "<span class='warning'>We finish our healing</span>")
 			break
 		iterations++
-	user.setBrainLoss(0)
+
+	for(var/organ in user.internal_organs)
+		var/obj/item/organ/O = organ
+		O.setOrganDamage(0)
 
 
 /mob/living/passenger
@@ -478,16 +479,15 @@
 	restricted_range = FALSE
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/process()
-	var/obj/item/organ/brain = original_body.getorganslot(ORGAN_SLOT_BRAIN)
 	if(active)
 		if(QDELETED(vessel)) //If we've been gibbed or otherwise deleted, ghost both of them and kill the original
-			brain.applyOrganDamage(brain.maxHealth)
+			original_body.adjustOrganLoss(ORGAN_SLOT_BRAIN, 200)
 			release_control()
 		else if(!is_hivemember(backseat)) //If the vessel is no longer a hive member, return to original bodies
 			to_chat(vessel, "<span class='warning'>Our vessel is one of us no more!</span>")
 			release_control()
 		else if(!QDELETED(original_body) && (!backseat.ckey || vessel.stat == DEAD)) //If the original body exists and the vessel is dead/ghosted, return both to body but not before killing the original
-			brain.applyOrganDamage(brain.maxHealth)
+			original_body.adjustOrganLoss(ORGAN_SLOT_BRAIN, 200)
 			to_chat(vessel.mind, "<span class='warning'>Our vessel is one of us no more!</span>")
 			release_control()
 		else if(!QDELETED(original_body) && original_body.z != vessel.z) //Return to original bodies

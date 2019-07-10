@@ -135,7 +135,6 @@ GENE SCANNER
 	var/fire_loss = M.getFireLoss()
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
-	var/obj/item/organ/brain = M.getorganslot(ORGAN_SLOT_BRAIN)
 
 	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && !advanced)
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
@@ -191,7 +190,7 @@ GENE SCANNER
 		if(C.roundstart_quirks.len)
 			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
-		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - brain.damage)/2]%.</span>")
+		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>")
 
 	if (M.radiation)
 		to_chat(user, "\t<span class='alert'>Subject is irradiated.</span>")

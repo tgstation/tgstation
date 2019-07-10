@@ -73,13 +73,12 @@
 		D.apply_damage(10, A.dna.species.attack_type)
 		log_combat(A, D, "kicked (CQC)")
 	if(D.IsParalyzed() && !D.stat)
-		var/obj/item/organ/brain = D.getorganslot(ORGAN_SLOT_BRAIN)
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking [D.p_them()] out!</span>", \
 					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
 		D.SetSleeping(300)
-		brain.applyOrganDamage(15, 150)
+		D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 	return TRUE
 
 /datum/martial_art/cqc/proc/Pressure(mob/living/carbon/human/A, mob/living/carbon/human/D)

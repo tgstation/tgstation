@@ -1436,9 +1436,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
 				if(!I.is_sharp() && armor_block < 50)
-					var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
 					if(prob(I.force))
-						B.applyOrganDamage(20)
+						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 						if(H.stat == CONSCIOUS)
 							H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
 											"<span class='userdanger'>[H] has been knocked senseless!</span>")
@@ -1447,7 +1446,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						if(prob(10))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 					else
-						B.applyOrganDamage(I.force * 0.2)
+						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, I.force * 0.2)
 
 					if(H.mind && H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
@@ -1489,7 +1488,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
-	
+
 	var/obj/item/bodypart/BP = null
 	if(!spread_damage)
 		if(isbodypart(def_zone))
@@ -1535,9 +1534,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				H.adjustStaminaLoss(damage_amount)
 		if(BRAIN)
-			var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
-			B.applyOrganDamage(damage_amount)
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)

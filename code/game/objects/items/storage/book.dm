@@ -147,9 +147,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			smack = 0
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			var/obj/item/organ/brain = C.getorganslot(ORGAN_SLOT_BRAIN)
 			if(!istype(C.head, /obj/item/clothing/head/helmet))
-				brain.applyOrganDamage(5)
+				C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)

@@ -249,9 +249,8 @@
 				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
 				H.Paralyze(20)
 			else
-				var/obj/item/organ/brain = H.getorganslot(ORGAN_SLOT_BRAIN)
 				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
-				brain.applyOrganDamage(5)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 	..()
 
 /datum/emote/living/pout

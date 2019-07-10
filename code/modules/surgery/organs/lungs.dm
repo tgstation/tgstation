@@ -244,8 +244,7 @@
 			H.hallucination += 10
 			H.reagents.add_reagent(/datum/reagent/bz_metabolites,5)
 			if(prob(33))
-				var/obj/item/organ/brain = H.getorganslot(ORGAN_SLOT_BRAIN)
-				brain.applyOrganDamage(3)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
 		else if(bz_pp > 0.01)
 			H.hallucination += 5

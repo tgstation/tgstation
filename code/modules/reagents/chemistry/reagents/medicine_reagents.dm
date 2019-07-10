@@ -41,7 +41,6 @@
 	M.heal_bodypart_damage(5,5)
 	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
-	M.setBrainLoss(0)
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.set_blurriness(0)
 	M.set_blindness(0)
@@ -63,6 +62,9 @@
 		M.blood_volume = BLOOD_VOLUME_NORMAL
 
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	for(var/organ in M.internal_organs)
+		var/obj/item/organ/O = organ
+		O.setOrganDamage(0)
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
 		if(D.severity == DISEASE_SEVERITY_POSITIVE)
@@ -866,8 +868,7 @@
 	color = "#DCDCFF"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
-	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-	B.applyOrganDamage(-2*REM)
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
 	..()
 
 /datum/reagent/medicine/neurine
@@ -1092,12 +1093,11 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.
 	M.adjustFireLoss(-5*REM, 0)
 	M.adjustOxyLoss(-15, 0)
 	M.adjustToxLoss(-5*REM, 0)
-	B.applyOrganDamage(-15*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
 	..()
 	. = 1
@@ -1116,12 +1116,11 @@
 	overdose_threshold = 25
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	M.adjustBruteLoss(-3 * REM, 0)
 	M.adjustFireLoss(-3 * REM, 0)
 	M.adjustOxyLoss(-15 * REM, 0)
 	M.adjustToxLoss(-3 * REM, 0)
-	B.applyOrganDamage(2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
 	M.adjustStaminaLoss(-30 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
@@ -1143,7 +1142,6 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,5)
 	M.drowsyness += 2
@@ -1152,7 +1150,7 @@
 	if (M.hallucination >= 5)
 		M.hallucination -= 5
 	if(prob(20))
-		B.applyOrganDamage(1*REM, 50)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
 	..()
 	return TRUE

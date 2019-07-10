@@ -71,18 +71,16 @@
 
 /datum/nanite_program/brain_heal/check_conditions()
 	var/problems = FALSE
-	var/obj/item/organ/brain/B = host_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			problems = TRUE
-	if(B.damage > 0)
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
 		problems = TRUE
 	return problems ? ..() : FALSE
 
 /datum/nanite_program/brain_heal/active_effect()
-	var/obj/item/organ/brain = host_mob.getorganslot(ORGAN_SLOT_BRAIN)
-	brain.applyOrganDamage(-1)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
@@ -195,18 +193,16 @@
 
 /datum/nanite_program/brain_heal_advanced/check_conditions()
 	var/problems = FALSE
-	var/obj/item/organ/brain/B = host_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			problems = TRUE
-	if(B.damage > 0)
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
 		problems = TRUE
 	return problems ? ..() : FALSE
 
 /datum/nanite_program/brain_heal_advanced/active_effect()
-	var/obj/item/organ/brain/B = host_mob.getorganslot(ORGAN_SLOT_BRAIN)
-	B.applyOrganDamage(-2)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)

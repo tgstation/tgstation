@@ -57,10 +57,9 @@
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/brain_decay/active_effect()
-	var/obj/item/organ/brain/B = host_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	if(prob(4))
 		host_mob.hallucination = min(15, host_mob.hallucination)
-	B.applyOrganDamage(1)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
 
 //Generic brain-affecting programs can also decay into this
 /datum/nanite_program/brain_misfire

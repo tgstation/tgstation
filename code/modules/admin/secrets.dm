@@ -452,9 +452,8 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				var/obj/item/organ/brain = H.getorganslot(ORGAN_SLOT_BRAIN)
 				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
-				brain.applyOrganDamage(60, 80)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 
 		if("eagles")//SCRAW

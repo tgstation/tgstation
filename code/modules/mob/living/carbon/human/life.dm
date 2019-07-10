@@ -61,7 +61,6 @@
 
 
 /mob/living/carbon/human/handle_traits()
-	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
 	if(eye_blind)			//blindness, heals slowly over time
 		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
 			adjust_blindness(-3)
@@ -70,7 +69,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if (brain.damage >= 60)
+	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")

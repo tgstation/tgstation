@@ -39,7 +39,7 @@
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 		LoadComponent(/datum/component/rot/corpse)
-	
+
 	check_cremation()
 
 	//Updates the number of stored chemicals for powers
@@ -566,9 +566,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
-			var/obj/item/organ/brain = getorganslot(ORGAN_SLOT_BRAIN)
 			adjustToxLoss(1)
-			brain.applyOrganDamage(0.4)
+			adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
@@ -591,7 +590,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
-      
+
 /////////////
 //CREMATION//
 /////////////
@@ -646,7 +645,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(chest.cremation_progress >= 100)
 		visible_message("<span class='warning'>[src]'s body crumbles into a pile of ash!</span>")
 		dust(TRUE, TRUE)
-    
+
 ////////////////
 //BRAIN DAMAGE//
 ////////////////

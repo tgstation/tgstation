@@ -81,11 +81,10 @@ Slimecrossing Items
 		z = T.z
 	if(isliving(parent))
 		var/mob/living/L = parent
-		var/obj/item/organ/brain = L.getorganslot(ORGAN_SLOT_BRAIN)
 		clone_loss = L.getCloneLoss()
 		tox_loss = L.getToxLoss()
 		oxy_loss = L.getOxyLoss()
-		brain_loss = brain.damage
+		brain_loss = L.getOrganLoss(ORGAN_SLOT_BRAIN)
 	if(iscarbon(parent))
 		var/mob/living/carbon/C = parent
 		saved_bodyparts = C.save_bodyparts()
@@ -105,7 +104,7 @@ Slimecrossing Items
 		L.setCloneLoss(clone_loss)
 		L.setToxLoss(tox_loss)
 		L.setOxyLoss(oxy_loss)
-		L.setBrainLoss(brain_loss)
+		L.setOrganLoss(ORGAN_SLOT_BRAIN, brain_loss)
 
 	if(iscarbon(parent))
 		if(saved_bodyparts)

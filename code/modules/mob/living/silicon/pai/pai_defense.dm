@@ -108,9 +108,6 @@
 /mob/living/silicon/pai/setCloneLoss()
 	return FALSE
 
-/mob/living/silicon/pai/setBrainLoss()
-	return FALSE
-
 /mob/living/silicon/pai/setStaminaLoss(amount, updating_health = TRUE)
 	return FALSE
 
