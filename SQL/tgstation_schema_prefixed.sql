@@ -99,6 +99,31 @@ CREATE TABLE `SS13_ban` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `SS13_citations`
+--
+DROP TABLE IF EXISTS `Ss13_citations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_citations` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`crime` VARCHAR(255) NULL DEFAULT NULL,
+	`fine` INT(11) UNSIGNED NOT NULL,
+	`paid` INT(11) NOT NULL,
+	`target` VARCHAR(255) NOT NULL DEFAULT '',
+	`author` VARCHAR(255) NOT NULL DEFAULT '',
+	`author_ckey` VARCHAR(32) NOT NULL DEFAULT '',
+	`dataId` INT(4) NOT NULL DEFAULT 0,
+	`round_id` INT(11) NOT NULL DEFAULT 0,
+	`server_ip` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`server_port` SMALLINT(5) UNSIGNED NOT NULL DEFAULT 0,
+	`timestamp` TIMESTAMP NULL DEFAULT NULL,
+	`deleted` TINYINT(1) UNSIGNED NULL DEFAULT NULL,
+	INDEX `id` (`id`),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `SS13_connection_log`
 --
 

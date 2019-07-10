@@ -1,7 +1,7 @@
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
 #define DB_MAJOR_VERSION 5
-#define DB_MINOR_VERSION 3
+#define DB_MINOR_VERSION 4
 
 
 //Timing subsystem
