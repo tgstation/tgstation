@@ -8,7 +8,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_away";
+	destination_type = "whiteship_away";
 	name = "Deep Space";
 	width = 35;
 	json_key = "whiteship"
