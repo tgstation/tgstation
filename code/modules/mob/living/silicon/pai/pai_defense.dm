@@ -87,9 +87,6 @@
 	else
 		take_holo_damage(amount * 0.25)
 
-/mob/living/silicon/pai/adjustBrainLoss(amount)
-	Paralyze(amount * 0.2)
-
 /mob/living/silicon/pai/getBruteLoss()
 	return emittermaxhealth - emitterhealth
 
@@ -103,9 +100,6 @@
 	return FALSE
 
 /mob/living/silicon/pai/getCloneLoss()
-	return FALSE
-
-/mob/living/silicon/pai/getBrainLoss()
 	return FALSE
 
 /mob/living/silicon/pai/getStaminaLoss()

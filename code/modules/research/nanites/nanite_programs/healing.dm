@@ -71,16 +71,18 @@
 
 /datum/nanite_program/brain_heal/check_conditions()
 	var/problems = FALSE
+	var/obj/item/organ/brain/B = host_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			problems = TRUE
-	if(host_mob.getBrainLoss())
+	if(B.damage > 0)
 		problems = TRUE
 	return problems ? ..() : FALSE
 
 /datum/nanite_program/brain_heal/active_effect()
-	host_mob.adjustBrainLoss(-1, TRUE)
+	var/obj/item/organ/brain = host_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	brain.applyOrganDamage(-1)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
@@ -193,16 +195,18 @@
 
 /datum/nanite_program/brain_heal_advanced/check_conditions()
 	var/problems = FALSE
+	var/obj/item/organ/brain/B = host_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			problems = TRUE
-	if(host_mob.getBrainLoss())
+	if(B.damage > 0)
 		problems = TRUE
 	return problems ? ..() : FALSE
 
 /datum/nanite_program/brain_heal_advanced/active_effect()
-	host_mob.adjustBrainLoss(-2, TRUE)
+	var/obj/item/organ/brain/B = host_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	B.applyOrganDamage(-2)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
@@ -234,7 +238,7 @@
 	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
 		return FALSE
 	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.brain_death || BR.damaged_brain || BR.suicided)
+	if(QDELETED(BR) || BR.brain_death || BR.failing || BR.suicided)
 		return FALSE
 	if(C.get_ghost())
 		return FALSE
@@ -252,9 +256,6 @@
 		C.emote("gasp")
 		C.Jitter(100)
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
-		var/tplus = world.time - C.timeofdeath
-		if(tplus > 600)
-			C.adjustBrainLoss( max(0, ((1800 - tplus) / 1800 * 150)), 150)
 		log_game("[C] has been successfully defibrillated by nanites.")
 	else
 		playsound(C, 'sound/machines/defib_failed.ogg', 50, 0)

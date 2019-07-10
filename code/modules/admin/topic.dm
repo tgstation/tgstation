@@ -1004,6 +1004,7 @@
 		//Health
 		if(isliving(M))
 			var/mob/living/L = M
+			var/obj/item/organ/brain = L.getorganslot(ORGAN_SLOT_BRAIN)
 			var/status
 			switch (M.stat)
 				if(CONSCIOUS)
@@ -1015,7 +1016,7 @@
 				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status = [status]"
-			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()] - Stamina: [L.getStaminaLoss()]"
+			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [brain.damage] - Stamina: [L.getStaminaLoss()]"
 		else
 			health_description = "This mob type has no health to speak of."
 
@@ -1790,7 +1791,7 @@
 					log_query_debug("[usr.key] | [response]")
 		else if(answer == "no")
 			log_query_debug("[usr.key] | Reported no server hang")
-	
+
 	else if(href_list["ctf_toggle"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1804,12 +1805,12 @@
 			return
 		if(confirm == "Yes")
 			restart()
-		
+
 	else if(href_list["check_teams"])
 		if(!check_rights(R_ADMIN))
 			return
 		check_teams()
-		
+
 	else if(href_list["team_command"])
 		if(!check_rights(R_ADMIN))
 			return

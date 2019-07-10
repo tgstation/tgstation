@@ -36,8 +36,5 @@
 /mob/living/silicon/setStaminaLoss(amount, updating_health = TRUE)
 	return FALSE
 
-/mob/living/silicon/adjustBrainLoss(amount)
-	return FALSE
-
 /mob/living/silicon/setBrainLoss(amount)
 	return FALSE

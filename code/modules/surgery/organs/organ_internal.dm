@@ -1,5 +1,6 @@
-#define STANDARD_ORGAN_THRESHOLD 100
-#define STANDARD_ORGAN_HEALING 0.001
+#define STANDARD_ORGAN_THRESHOLD 	100
+#define STANDARD_ORGAN_HEALING 		0.001
+#define STANDARD_ORGAN_DECAY		0.00167				//designed to fail most generic organs at about 10 minutes
 
 /obj/item/organ
 	name = "organ"
@@ -19,7 +20,8 @@
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	var/damage = 0		//total damage this organ has sustained
 	var/failing	= FALSE			//is this organ failing or not
-	var/healing_factor = STANDARD_ORGAN_HEALING	//fraction of maxhealth healed per on_life()
+	var/healing_factor 	= STANDARD_ORGAN_HEALING				//fraction of maxhealth healed per on_life()
+	var/decay_factor 	= STANDARD_ORGAN_DECAY					//same as above but when without a living owner
 	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
 	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
 	var/Unique_Failure_Msg		//certain organs may want unique failure messages for details on how to fix them
@@ -72,15 +74,45 @@
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/proc/on_life()
-	var/mob/living/carbon/C = owner
+/obj/item/organ/proc/on_death()
 	//if we start to fail, cap our damage and fail the organ
-	if(damage > maxHealth)
+	if(damage >= maxHealth)
 		failing = TRUE
 		damage = maxHealth
+		return
+	//damage the organ by its decay factor
+	else if(synthetic)
+		damage = min(maxHealth, damage + (maxHealth * 0.25 * decay_factor))
+		return
+	damage = min(maxHealth, damage + (maxHealth * decay_factor))
+	return
+
+/obj/item/organ/process()
+	//only necessary for when the organ is outside of the body
+	if(!owner)
+		if(damage >= maxHealth)
+			failing = TRUE
+			damage = maxHealth
+			return
+		else if(synthetic)
+			damage = min(maxHealth, damage + (maxHealth * 0.25 * decay_factor))
+			return
+		damage = min(maxHealth, damage + (maxHealth * decay_factor))
+	return
+
+/obj/item/organ/proc/on_life()
+	var/mob/living/carbon/C = owner
+
+	if(damage >= maxHealth)
+		failing = TRUE
+		damage = maxHealth
+		return
 	//repair organ damage if the organ is not failing
-	if((!failing) && C)
-		damage = max(0, damage - (maxHealth * healing_factor) )
+	if((!failing) && (C.stat !=DEAD))
+		if(synthetic)
+			damage = max(0, damage - (maxHealth * 4 * healing_factor))
+			return
+		damage = max(0, damage - (maxHealth * healing_factor))
 	return
 
 /obj/item/organ/examine(mob/user)
@@ -106,8 +138,12 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtype = RAW | MEAT | GROSS
 
+/obj/item/organ/Initialize()
+	START_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/organ/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
@@ -129,7 +165,9 @@
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
-/obj/item/organ/proc/applyOrganDamage(var/d)	//use for damaging effects
+/obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
+	if(maximum < d + damage)
+		d = max(0, maximum - damage)
 	damage = max(0, damage + d)
 
 /obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals

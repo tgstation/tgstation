@@ -189,6 +189,7 @@
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		if(tod)
 			var/tdelta = round(world.time - timeofdeath)
+//			var/obj/item/organ/heart = getorganslot(ORGAN_SLOT_HEART)
 			if(tdelta < (DEFIB_TIME_LIMIT * 10))
 				holder.icon_state = "huddefib"
 				return

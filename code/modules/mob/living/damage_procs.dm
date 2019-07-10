@@ -26,8 +26,6 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			adjustStaminaLoss(damage_amount, forced = forced)
-		if(BRAIN)
-			adjustBrainLoss(damage_amount)
 	return 1
 
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
@@ -44,8 +42,6 @@
 			return adjustCloneLoss(damage)
 		if(STAMINA)
 			return adjustStaminaLoss(damage)
-		if(BRAIN)
-			return adjustBrainLoss(damage)
 
 /mob/living/proc/get_damage_amount(damagetype = BRUTE)
 	switch(damagetype)
@@ -61,8 +57,6 @@
 			return getCloneLoss()
 		if(STAMINA)
 			return getStaminaLoss()
-		if(BRAIN)
-			return getBrainLoss()
 
 
 /mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
@@ -230,12 +224,6 @@
 	if(updating_health)
 		updatehealth()
 	return amount
-
-/mob/living/proc/getBrainLoss()
-	. = 0
-
-/mob/living/proc/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
-	return
 
 /mob/living/proc/setBrainLoss(amount)
 	return

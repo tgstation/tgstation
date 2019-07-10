@@ -135,6 +135,7 @@ GENE SCANNER
 	var/fire_loss = M.getFireLoss()
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
+	var/obj/item/organ/brain = M.getorganslot(ORGAN_SLOT_BRAIN)
 
 	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && !advanced)
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
@@ -147,9 +148,8 @@ GENE SCANNER
 		//organ failure messages
 		for(var/O in H.internal_organs)
 			var/obj/item/organ/organ = O
-			if(!istype(organ, /obj/item/organ/heart))
-				if(organ.failing)
-					to_chat(user, organ.Assemble_Failure_Message())
+			if(organ.failing)
+				to_chat(user, organ.Assemble_Failure_Message())
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -170,12 +170,8 @@ GENE SCANNER
 		to_chat(user, "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>")
 		if(advanced)
 			to_chat(user, "\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>")
-	if (M.getBrainLoss() >= 200 || !M.getorgan(/obj/item/organ/brain))
-		to_chat(user, "\t<span class='alert'>Subject's brain function is non-existent.</span>")
-	else if (M.getBrainLoss() >= 120)
-		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>")
-	else if (M.getBrainLoss() >= 45)
-		to_chat(user, "\t<span class='alert'>Brain damage detected.</span>")
+	if (!M.getorgan(/obj/item/organ/brain))
+		to_chat(user, "\t<span class='alert'>Subject lacks a brain.</span>")
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(LAZYLEN(C.get_traumas()))
@@ -195,7 +191,7 @@ GENE SCANNER
 		if(C.roundstart_quirks.len)
 			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
-		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
+		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - brain.damage)/2]%.</span>")
 
 	if (M.radiation)
 		to_chat(user, "\t<span class='alert'>Subject is irradiated.</span>")

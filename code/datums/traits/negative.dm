@@ -59,7 +59,8 @@
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
 
 /datum/quirk/brainproblems/on_process()
-	quirk_holder.adjustBrainLoss(0.2)
+	var/obj/item/organ/brain = quirk_holder.getorganslot(ORGAN_SLOT_BRAIN)
+	brain.applyOrganDamage(0.2)
 
 /datum/quirk/deafness
 	name = "Deaf"

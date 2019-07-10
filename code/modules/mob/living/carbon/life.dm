@@ -13,6 +13,9 @@
 		if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
 			handle_organs()
 
+		else
+			degrade_organs()
+
 		. = ..()
 
 		if (QDELETED(src))
@@ -327,6 +330,11 @@
 		var/obj/item/organ/O = V
 		O.on_life()
 
+/mob/living/carbon/proc/degrade_organs()
+	for(var/V in internal_organs)
+		var/obj/item/organ/O = V
+		O.on_death()
+
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
@@ -549,8 +557,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
+			var/obj/item/organ/brain = getorganslot(ORGAN_SLOT_BRAIN)
 			adjustToxLoss(1)
-			adjustBrainLoss(0.4, 60)
+			brain.applyOrganDamage(0.4)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
@@ -611,13 +620,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/BT = T
 		BT.on_life()
-
-	if(getBrainLoss() >= BRAIN_DAMAGE_DEATH) //rip
-		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
-		death()
-		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-		if(B)
-			B.brain_death = TRUE
 
 /////////////////////////////////////
 //MONKEYS WITH TOO MUCH CHOLOESTROL//
