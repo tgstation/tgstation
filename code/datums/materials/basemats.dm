@@ -52,7 +52,7 @@
 
 /datum/material/uranium/on_applied(atom/source, amount)
 	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 100, source)
+	source.AddComponent(/datum/component/radioactive, amount / 100, source, 1) //half-life of 1 because we keep on going.
 
 /datum/material/plasma
 	name = "plasma"

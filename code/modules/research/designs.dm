@@ -52,8 +52,11 @@ other types of metals and chemistry for reagents).
 	var/list/temp_list = list() 
 	for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 		var/amount = materials[i]
-		var/datum/material/M =  getmaterialref(i)
-		temp_list[M] = amount
+		if(!ismaterialcategory(i))
+			var/datum/material/M =  getmaterialref(i)
+			temp_list[M] = amount
+		else
+			temp_list[i] = amount
 	materials = temp_list
 	for(var/i in materials)
 		to_chat("[i] [materials[i]]")

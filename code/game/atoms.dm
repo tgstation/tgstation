@@ -88,7 +88,7 @@
 	if(mapload && material)
 		if(!istype(material, /datum/material))
 			material = getmaterialref(material) //Get the proper instanced version
-		material.on_applied(src)
+		material.on_applied(src, should_color = FALSE)
 
 	ComponentInitialize()
 
