@@ -85,8 +85,7 @@
 
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
-	
-	if(material)
+	if(mapload && material)
 		if(!istype(material, /datum/material))
 			material = getmaterialref(material) //Get the proper instanced version
 		material.on_applied(src)

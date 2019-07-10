@@ -147,4 +147,4 @@
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 29
 	inverse = TRUE
-	materials = list(/datum/material/hematite = 75, /datum/material/glass = 25)
+	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)

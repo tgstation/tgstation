@@ -202,7 +202,7 @@
 
 
 //For consuming material
-// mats is the list of materials to use and the corresponding amounts, example: list(M/datum/material/glass =100, datum/material/hematite=200)
+// mats is the list of materials to use and the corresponding amounts, example: list(M/datum/material/glass =100, datum/material/iron=200)
 /datum/component/material_container/proc/use_materials(list/mats, multiplier=1)
 	if(!mats || !length(mats))
 		return FALSE
@@ -262,20 +262,47 @@
 /datum/component/material_container/proc/has_space(amt = 0)
 	return (total_amount + amt) <= max_amount
 
-/datum/component/material_container/proc/has_materials(list/mats, multiplier=1) //Revamped
+/datum/component/material_container/proc/has_materials(list/mats, multiplier=1) //To check if it's possible to afford something at all
 	if(!mats || !mats.len)
 		return FALSE
 
 	for(var/x in mats) //Loop through all required materials
 		var/datum/material/req_mat = x
 		if(!istype(req_mat))
-			req_mat = getmaterialref(req_mat)
-		if(!materials[req_mat]) //Do we have the resource?
-			return FALSE //Can't afford it
-		var/amount_required = mats[req_mat] * multiplier
-		if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
-			return FALSE //Can't afford it
+			if(ispath(req_mat)) //Is this an actual material, or is it a category?
+				req_mat = getmaterialref(req_mat) //Get the ref
+
+			else // Its a category. (For example MAT_CATEGORY_RIGID)
+				if(!has_enough_of_category(req_mat, mats[req_mat], multiplier)) //Do we have enough of this category?
+					return FALSE
+
+		if(!has_enough_of_material(req_mat, mats[req_mat], multiplier))//Not a category, so just check the normal way
+			return FALSE
+
 	return TRUE
+
+/datum/component/material_container/proc/get_categories(list/mats) //Returns just the categories in a recipe.
+	var/list/categories = list()
+	for(var/x in mats) //Loop through all required materials
+		if(!ismaterialcategory(x))
+			continue
+		categories += x
+	return categories
+			
+/datum/component/material_container/proc/has_enough_of_material(var/datum/material/req_mat, amount, multiplier=1) //Revamped
+	if(!materials[req_mat]) //Do we have the resource?
+		return FALSE //Can't afford it
+	var/amount_required = amount * multiplier
+	if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
+		return FALSE //Can't afford it
+	return TRUE
+
+/datum/component/material_container/proc/has_enough_of_category(category, amount, multiplier=1) //Revamped
+	for(var/i in SSmaterials.materials_by_category[category])
+		var/datum/material/mat
+		if(materials[mat] >= amount) //we have enough
+			return TRUE
+
 
 /datum/component/material_container/proc/amount2sheet(amt) //Revamped
 	if(amt >= MINERAL_MATERIAL_AMOUNT)

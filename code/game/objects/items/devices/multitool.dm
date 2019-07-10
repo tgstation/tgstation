@@ -24,7 +24,7 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
-	materials = list(/datum/material/hematite=50, /datum/material/glass=20)
+	materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'

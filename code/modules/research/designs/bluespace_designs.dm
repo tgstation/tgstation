@@ -8,7 +8,7 @@
 	desc = "A bluespace tracking beacon."
 	id = "beacon"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/hematite = 150, /datum/material/glass = 100)
+	materials = list(/datum/material/iron = 150, /datum/material/glass = 100)
 	build_path = /obj/item/beacon
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY
@@ -39,7 +39,7 @@
 	desc = "Little thingie that can track its position at all times."
 	id = "telesci_gps"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/hematite = 500, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/gps
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
@@ -49,7 +49,7 @@
 	desc = "A device that can desynchronize the user from spacetime."
 	id = "desynchronizer"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/hematite = 1000, /datum/material/glass = 500, /datum/material/silver = 1500, /datum/material/bluespace = 1000)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/silver = 1500, /datum/material/bluespace = 1000)
 	build_path = /obj/item/desynchronizer
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

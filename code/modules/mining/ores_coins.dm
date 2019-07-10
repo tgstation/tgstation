@@ -78,7 +78,7 @@
 	item_state = "Iron ore"
 	singular_name = "iron ore chunk"
 	points = 1
-	materials = list(/datum/material/hematite=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/stack/ore/glass
@@ -375,7 +375,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 1
-	materials = list(/datum/material/hematite = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/plasma
@@ -419,7 +419,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_iron_heads"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
-	materials = list(/datum/material/hematite = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*0.2)
 	value = 1
 	grind_results = list(/datum/reagent/iron = 4)
 

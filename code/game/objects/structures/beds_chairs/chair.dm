@@ -261,7 +261,7 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-	materials = list(/datum/material/hematite = 2000)
+	materials = list(/datum/material/iron = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
@@ -302,7 +302,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(materials[/datum/material/hematite])
+	else if(materials[/datum/material/iron])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 

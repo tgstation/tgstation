@@ -8,14 +8,14 @@
 	density = TRUE
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = FALSE
-	var/chosen = /datum/material/hematite //which material will be used to make coins
+	var/chosen = /datum/material/iron //which material will be used to make coins
 	var/coinsToProduce = 10
 	speed_process = TRUE
 
 
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/plasma, /datum/material/silver, /datum/material/gold, /datum/material/uranium, /datum/material/diamond, /datum/material/bananium), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
+	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/plasma, /datum/material/silver, /datum/material/gold, /datum/material/uranium, /datum/material/diamond, /datum/material/bananium), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
 	chosen =  getmaterialref(chosen)
 
 

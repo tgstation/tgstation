@@ -3,7 +3,7 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
-	materials = list(/datum/material/hematite=6000, /datum/material/glass=3000)
+	materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -14,7 +14,7 @@
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
-	materials = list(/datum/material/hematite=6000, /datum/material/glass=3000)
+	materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 
@@ -24,7 +24,7 @@
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
-	materials = list(/datum/material/hematite=5000, /datum/material/glass=2500)
+	materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -36,7 +36,7 @@
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
-	materials = list(/datum/material/hematite=5000, /datum/material/glass=2500)
+	materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
@@ -47,7 +47,7 @@
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
-	materials = list(/datum/material/hematite=2500, /datum/material/glass=750)
+	materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -59,7 +59,7 @@
 	desc = "A heated element that cauterizes wounds."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
-	materials = list(/datum/material/hematite=2500, /datum/material/glass=750)
+	materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("burnt")
@@ -73,7 +73,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	materials = list(/datum/material/hematite=10000, /datum/material/glass=6000)
+	materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
@@ -87,7 +87,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	materials = list(/datum/material/hematite=10000, /datum/material/glass=6000)
+	materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
@@ -109,7 +109,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	materials = list(/datum/material/hematite=4000, /datum/material/glass=1000)
+	materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
@@ -128,7 +128,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	materials = list(/datum/material/hematite=4000, /datum/material/glass=1000)
+	materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	toolspeed = 0.5
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -155,7 +155,7 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	materials = list(/datum/material/hematite=10000, /datum/material/glass=6000)
+	materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
@@ -175,7 +175,7 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	materials = list(/datum/material/hematite=10000, /datum/material/glass=6000)
+	materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	toolspeed = 0.5
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP

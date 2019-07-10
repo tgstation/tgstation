@@ -7,7 +7,7 @@
 
 	w_class = WEIGHT_CLASS_SMALL
 
-	materials = list(/datum/material/hematite=50, /datum/material/glass=50)
+	materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON

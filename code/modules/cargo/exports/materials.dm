@@ -73,7 +73,7 @@
 /datum/export/material/metal
 	cost = 5
 	message = "cm3 of metal"
-	material_id = /datum/material/hematite
+	material_id = /datum/material/iron
 	export_types = list(
 		/obj/item/stack/sheet/metal, /obj/item/stack/tile/plasteel,
 		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)

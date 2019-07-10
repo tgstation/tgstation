@@ -50,10 +50,10 @@
 
 /obj/machinery/droneDispenser/Initialize()
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/hematite, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
-	using_materials = list(/datum/material/hematite = metal_cost, /datum/material/glass = glass_cost)
+	using_materials = list(/datum/material/iron = metal_cost, /datum/material/glass = glass_cost)
 
 /obj/machinery/droneDispenser/preloaded
 	starting_amount = 5000

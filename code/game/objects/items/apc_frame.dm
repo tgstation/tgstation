@@ -1,6 +1,6 @@
 /obj/item/wallframe
 	icon = 'icons/obj/wallframe.dmi'
-	materials = list(/datum/material/hematite=MINERAL_MATERIAL_AMOUNT*2)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*2)
 	flags_1 = CONDUCT_1
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -66,7 +66,7 @@
 		if(iswallturf(T))
 			T.attackby(src, user, params)
 
-	var/metal_amt = round(materials[/datum/material/hematite]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
+	var/metal_amt = round(materials[/datum/material/iron]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
 	var/glass_amt = round(materials[/datum/material/glass]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
 
 	if(W.tool_behaviour == TOOL_WRENCH && (metal_amt || glass_amt))
@@ -119,5 +119,5 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(/datum/material/hematite=50, /datum/material/glass=50)
+	materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)

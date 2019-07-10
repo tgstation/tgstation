@@ -12,7 +12,7 @@
 	item_flags = NOBLUDGEON
 	force = 3
 	attack_verb = list("blown up", "exploded", "detonated")
-	materials = list(/datum/material/hematite=50, /datum/material/glass=30)
+	materials = list(/datum/material/iron=50, /datum/material/glass=30)
 
 /obj/item/doorCharge/ex_act(severity, target)
 	switch(severity)
