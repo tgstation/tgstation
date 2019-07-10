@@ -16,7 +16,7 @@
 /datum/component/swarming/Destroy()
 	var/atom/movable/_parent = parent
 	if(_parent.loc)
-		for(var/atom/movable/AM in _parent.loc.contents)
+		for(var/atom/movable/AM in swarm_members)
 			leave_swarm(_parent, AM) //If anyone got a better idea for this, please tell me.
 	. = ..()
 
