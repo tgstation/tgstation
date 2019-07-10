@@ -175,7 +175,7 @@
 
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
-	id = "emergency"
+	destination_type = "emergency"
 
 	dwidth = 9
 	width = 22
@@ -422,7 +422,7 @@
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"
-	id = "pod"
+	destination_type = "pod"
 	dwidth = 1
 	width = 3
 	height = 4
@@ -469,7 +469,7 @@
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
-	id = "pod"
+	destination_type = "pod"
 	dwidth = 1
 	width = 3
 	height = 4
@@ -564,7 +564,7 @@
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
-	id = "backup"
+	destination_type = "backup"
 	dwidth = 2
 	width = 8
 	height = 8
