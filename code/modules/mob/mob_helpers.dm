@@ -493,8 +493,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 //Examine text for traits shared by multiple types. I wish examine was less copypasted.
 /mob/proc/common_trait_examine()
-	. = ""
-
 	if(HAS_TRAIT(src, TRAIT_DISSECTED))
 		. += "<span class='notice'>This body has been dissected and analyzed. It is no longer worth experimenting on.</span><br>"
 
@@ -506,3 +504,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		. += mind.special_role //In case there's something special leftover, try to avoid
 		for(var/datum/antagonist/A in mind.antag_datums)
 			. += "[A.type]"
+
+//Can the mob see reagents inside of containers?
+/mob/proc/can_see_reagents()
+	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents

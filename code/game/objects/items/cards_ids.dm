@@ -113,7 +113,6 @@
 	slot_flags = ITEM_SLOT_ID
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
@@ -186,24 +185,43 @@
 
 	return TRUE
 
+// Returns true if new account was set.
+/obj/item/card/id/proc/set_new_account(mob/living/user)
+	. = FALSE
+	var/datum/bank_account/old_account = registered_account
+
+	var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num
+
+	if(!alt_click_can_use_id(user))
+		return
+	if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
+		to_chat(user, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span>")
+		return
+	if (registered_account && registered_account.account_id == new_bank_id)
+		to_chat(user, "<span class='warning'>The account ID was already assigned to this card.</span>")
+		return
+
+	for(var/A in SSeconomy.bank_accounts)
+		var/datum/bank_account/B = A
+		if(B.account_id == new_bank_id)
+			if (old_account)
+				old_account.bank_cards -= src
+
+			B.bank_cards += src
+			registered_account = B
+			to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
+
+			return TRUE
+			
+	to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
+	return
+
 /obj/item/card/id/AltClick(mob/living/user)
 	if(!alt_click_can_use_id(user))
 		return
+
 	if(!registered_account)
-		var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num
-		if(!alt_click_can_use_id(user))
-			return
-		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
-			to_chat(user, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span>")
-			return
-		for(var/A in SSeconomy.bank_accounts)
-			var/datum/bank_account/B = A
-			if(B.account_id == new_bank_id)
-				B.bank_cards += src
-				registered_account = B
-				to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
-				return
-		to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
+		set_new_account(user)
 		return
 
 	if (world.time < registered_account.withdrawDelay)
@@ -227,21 +245,19 @@
 		registered_account.bank_card_talk("<span class='warning'>ERROR: The linked account requires [difference] more credit\s to perform that withdrawal.</span>", TRUE)
 
 /obj/item/card/id/examine(mob/user)
-	..()
-	if(mining_points)
-		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
+	. = ..()
 	if(registered_account)
-		to_chat(user, "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance].")
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance]."
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
-		to_chat(user, "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>")
-		to_chat(user, "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>")
+				. += "The [D.account_holder] reports a balance of $[D.account_balance]."
+		. += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
+		. += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
 		if(registered_account.account_holder == user.real_name)
-			to_chat(user, "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>")
+			. += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
 	else
-		to_chat(user, "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>")
+		. += "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>"
 
 /obj/item/card/id/GetAccess()
 	return access
@@ -310,12 +326,15 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/syndicate/attack_self(mob/user)
 	if(isliving(user) && user.mind)
+		var/first_use = registered_name ? FALSE : TRUE
 		if(!(user.mind.special_role || anyone)) //Unless anyone is allowed, only syndies can use the card, to stop metagaming.
-			if(!registered_name) //If a non-syndie is the first to forge an unassigned agent ID, then anyone can forge it.
+			if(first_use) //If a non-syndie is the first to forge an unassigned agent ID, then anyone can forge it.
 				anyone = TRUE
 			else
 				return ..()
-		if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
+
+		var/popup_input = alert(user, "Action", "Agent ID", "Show", "Forge", "Change Account ID")
+		if(popup_input == "Forge")
 			var/t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 			if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
 				if (t)
@@ -330,6 +349,21 @@ update_label("John Doe", "Clowny")
 			assignment = u
 			update_label()
 			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
+			
+			// First time use automatically sets the account id to the user.
+			if (first_use && !registered_account)
+				if(ishuman(user))
+					var/mob/living/carbon/human/accountowner = user
+
+					for(var/bank_account in SSeconomy.bank_accounts)
+						var/datum/bank_account/account = bank_account
+						if(account.account_id == accountowner.account_id)
+							account.bank_cards += src
+							registered_account = account
+							to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
+			return
+		else if (popup_input == "Change Account ID")
+			set_new_account(user)
 			return
 	return ..()
 
@@ -470,6 +504,12 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/mining
 	name = "mining ID"
 	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MECH_MINING, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+
+/obj/item/card/id/mining/Initialize()
+	. = ..()
+	var/static/datum/bank_account/remote/golem_account = new("Liberator")
+	golem_account.bank_cards += src
+	registered_account = golem_account
 
 /obj/item/card/id/away
 	name = "a perfectly generic identification card"

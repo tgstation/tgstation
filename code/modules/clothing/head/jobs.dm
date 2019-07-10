@@ -80,8 +80,8 @@
 	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to take a candy corn.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to take a candy corn.</span>"
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -93,7 +93,7 @@
 				to_chat(user, "You slip a candy corn from your hat.")
 				candy_cooldown = world.time+1200
 			else
-				to_chat(user, "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.")
+				to_chat(user, "<span class='warning'>You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.</span>")
 
 
 //Mime

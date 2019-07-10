@@ -52,29 +52,29 @@
 		speed = M.rating
 
 /obj/machinery/reagentgrinder/examine(mob/user)
-	..()
+	. = ..()
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		to_chat(user, "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
+		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
 		return
 
 	if(operating)
-		to_chat(user, "<span class='warning'>\The [src] is operating.</span>")
+		. += "<span class='warning'>\The [src] is operating.</span>"
 		return
 
 	if(beaker || length(holdingitems))
-		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
+		. += "<span class='notice'>\The [src] contains:</span>"
 		if(beaker)
-			to_chat(user, "<span class='notice'>- \A [beaker].</span>")
+			. += "<span class='notice'>- \A [beaker].</span>"
 		for(var/i in holdingitems)
 			var/obj/item/O = i
-			to_chat(user, "<span class='notice'>- \A [O.name].</span>")
+			. += "<span class='notice'>- \A [O.name].</span>"
 
 	if(!(stat & (NOPOWER|BROKEN)))
-		to_chat(user, "<span class='notice'>The status display reads:</span>")
-		to_chat(user, "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads:</span>\n"+\
+		"<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.</span>"
 		if(beaker)
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
-				to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
+				. += "<span class='notice'>- [R.volume] units of [R.name].</span>"
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -256,6 +256,7 @@
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/obj/item/I = i
+		check_trash(I)
 		if(I.juice_results)
 			juice_item(I)
 
@@ -275,6 +276,7 @@
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/obj/item/I = i
+		check_trash(I)
 		if(I.grind_results)
 			grind_item(i, user)
 
@@ -286,6 +288,12 @@
 	if(I.reagents)
 		I.reagents.trans_to(beaker, I.reagents.total_volume, transfered_by = user)
 	remove_object(I)
+
+/obj/machinery/reagentgrinder/proc/check_trash(obj/item/I)
+	if (istype(I, /obj/item/reagent_containers/food/snacks))
+		var/obj/item/reagent_containers/food/snacks/R = I
+		if (R.trash)
+			R.generate_trash(get_turf(src))
 
 /obj/machinery/reagentgrinder/proc/mix(mob/user)
 	//For butter and other things that would change upon shaking or mixing

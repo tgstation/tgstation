@@ -67,7 +67,7 @@
 			stored_chromosomes += I
 			to_chat(user, "<span class='notice'>You insert [I]</span>")
 		else
-			to_chat(user, "<span class='warnning'>You cannot store any more chromosomes.</span>")
+			to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
 		return
 	if(istype(I, /obj/item/dnainjector/activator))
 		var/obj/item/dnainjector/activator/A = I
@@ -100,11 +100,11 @@
 	stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/examine(mob/user)
-	..()
+	. = ..()
 	if(jokerready < world.time)
-		to_chat(user, "<span class='notice'>JOKER algorithm available.</span>")
+		. += "<span class='notice'>JOKER algorithm available.</span>"
 	else
-		to_chat(user, "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.</span>")
+		. += "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.</span>"
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
 	. = ..()
@@ -714,9 +714,12 @@
 						var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
 						I.add_mutations += new HM.type (copymut = HM)
 						I.name = "[HM.name] activator"
-						I.damage_coeff = connected.damage_coeff*4
 						I.research = TRUE
-						injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected.precision_coeff) //precision_coeff being the manipulator rating
+						if(connected)
+							I.damage_coeff = connected.damage_coeff*4
+							injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected.precision_coeff) //precision_coeff being the manipulator rating
+						else
+							injectorready = world.time + INJECTOR_TIMEOUT
 		if("mutator")
 			if(injectorready < world.time)
 				var/mutation = text2path(href_list["path"])
@@ -727,8 +730,11 @@
 						I.add_mutations += new HM.type (copymut = HM)
 						I.doitanyway = TRUE
 						I.name = "[HM.name] injector"
-						I.damage_coeff = connected.damage_coeff
-						injectorready = world.time + INJECTOR_TIMEOUT*5 * (1 - 0.1 * connected.precision_coeff)
+						if(connected)
+							I.damage_coeff = connected.damage_coeff
+							injectorready = world.time + INJECTOR_TIMEOUT*5 * (1 - 0.1 * connected.precision_coeff)
+						else
+							injectorready = world.time + INJECTOR_TIMEOUT *5
 		if("nullify")
 			if(viable_occupant)
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)

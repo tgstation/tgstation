@@ -43,4 +43,21 @@
 	var/obj/structure/blob/core/core = overmind.blob_core
 	return round(max((coefficient*damage)-min(coefficient*DEBRIS_DENSITY, 10), 0)) // reduce damage taken by items per blob, up to 10
 
+/datum/blobstrain/debris_devourer/examine(mob/user)
+	. = ..()
+	var/obj/structure/blob/core/core = overmind.blob_core
+	if (isobserver(user))
+		. += "<span class='notice'>Absorbed debris is currently reducing incoming damage by [round(max(min(DEBRIS_DENSITY, 10),0))]</span>"
+	else
+		switch (round(max(min(DEBRIS_DENSITY, 10),0)))
+			if (0)
+				. += "<span class='notice'>There is not currently enough absorbed debris to reduce damage.</span>"
+			if (1 to 3)
+				. += "<span class='notice'>Absorbed debris is currently reducing incoming damage by a very low amount.</span>" // these roughly correspond with force description strings
+			if (4 to 7)
+				. += "<span class='notice'>Absorbed debris is currently reducing incoming damage by a low amount.</span>"
+			if (8 to 10)
+				. += "<span class='notice'>Absorbed debris is currently reducing incoming damage by a medium amount.</span>"
+
+
 #undef DEBRIS_DENSITY
