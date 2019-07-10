@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
-/obj/item/trash/Initialize()
+/obj/item/trash/Initialize(mapload)
 	var/area/A = get_area(src)
 	if(is_station_level(z) && !istype(A, /area/maintenance))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
