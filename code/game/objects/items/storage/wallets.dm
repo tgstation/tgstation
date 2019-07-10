@@ -74,7 +74,7 @@
 		add_overlay(add_overlays)
 
 /obj/item/storage/wallet/get_examine_string(mob/user, thats = FALSE)
-	return "[costly_icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+	return "[costly_icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
 
 /obj/item/storage/wallet/GetID()
 	return front_id

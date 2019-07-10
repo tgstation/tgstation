@@ -286,7 +286,7 @@
 
 /obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
 	if(uses_overlays)
-		return "[costly_icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+		return "[costly_icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
 	return ..()
 
 /*
@@ -423,7 +423,7 @@ update_label()
 	. = ..()
 	update_label()
 
-/obj/item/card/id/captains_spare/update_label()
+/obj/item/card/id/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
 		name = "[id_type_name][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
 		update_icon(TRUE)
@@ -613,7 +613,7 @@ update_label()
 	name = "departmental card (FUCK)"
 	desc = "Provides access to the departmental budget."
 	icon_state = "budgetcard"
-	uses_overlays = FALSE //actually does, but not the normal ID ones
+	uses_overlays = FALSE
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
 
