@@ -314,7 +314,7 @@
 	var/list/static/shuttle_id = list()
 	var/idnum = ++shuttle_id[template]
 	if(idnum > 1)
-		id = "[destination_type][idnum]"
+		id = "[id][idnum]"
 		name = "[name] [idnum]"
 	for(var/place in shuttle_areas)
 		var/area/area = place
