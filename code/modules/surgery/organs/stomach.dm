@@ -10,11 +10,28 @@
 
 /obj/item/organ/stomach/on_life()
 	var/mob/living/carbon/human/H = owner
+	var/datum/reagent/Nutri
 
 	..()
 	if(istype(H))
-		H.dna.species.handle_digestion(H)
+		if(!failing)
+			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
+
+	if(damage < low_threshold)
+		return
+
+	Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
+
+	if(Nutri)
+		if(prob((damage/50) * Nutri.volume))
+			H.vomit(damage)
+			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+
+	else if(Nutri && damage > high_threshold)
+		if(prob((damage/20) * Nutri.volume))
+			H.vomit(damage)
+			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)

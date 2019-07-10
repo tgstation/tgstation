@@ -6,6 +6,7 @@
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
+	decay_factor = 0			  //Being synthetic, it doesn't decompose
 
 /obj/item/organ/cyberimp/New(var/mob/M = null)
 	if(iscarbon(M))

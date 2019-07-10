@@ -75,30 +75,27 @@
 	return
 
 /obj/item/organ/proc/on_death()
-	//if we start to fail, cap our damage and fail the organ
+	//synethetic organs do not decay
+	if(synthetic)
+		return
+	//cap our damage and fail if we've reached our max health
 	if(damage >= maxHealth)
 		failing = TRUE
 		damage = maxHealth
 		return
 	//damage the organ by its decay factor
-	else if(synthetic)
-		damage = min(maxHealth, damage + (maxHealth * 0.25 * decay_factor))
-		return
 	damage = min(maxHealth, damage + (maxHealth * decay_factor))
-	return
 
 /obj/item/organ/process()
 	//only necessary for when the organ is outside of the body
 	if(!owner)
+		if(synthetic)
+			return
 		if(damage >= maxHealth)
 			failing = TRUE
 			damage = maxHealth
 			return
-		else if(synthetic)
-			damage = min(maxHealth, damage + (maxHealth * 0.25 * decay_factor))
-			return
 		damage = min(maxHealth, damage + (maxHealth * decay_factor))
-	return
 
 /obj/item/organ/proc/on_life()
 	var/mob/living/carbon/C = owner
