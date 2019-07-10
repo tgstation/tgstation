@@ -18,6 +18,7 @@
   * * sync the mind datum via sync_mind()
   * * call any client login callbacks that exist
   * * grant any actions the mob has to the client
+  * * calls [auto_deadmin_on_login](mob.html#proc/auto_deadmin_on_login)
   * * send signal COMSIG_MOB_CLIENT_LOGIN
   */
 /mob/Login()
@@ -87,6 +88,8 @@
   * * client.prefs?.toggles & DEADMIN_ALWAYS
   * * User is antag and flag/auto_deadmin_antagonists or client.prefs?.toggles & DEADMIN_ANTAGONIST
   * * or if their job demands a deadminning SSjob.handle_auto_deadmin_roles()
+  *
+  * Called from [login](mob.html#proc/Login)
   */
 /mob/proc/auto_deadmin_on_login() //return true if they're not an admin at the end.
 	if(!client?.holder)
