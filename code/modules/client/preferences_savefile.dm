@@ -105,9 +105,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(new_value)
 				job_preferences[initial(J.title)] = new_value
 	if(current_version < 23)
-		all_quirks -= "Physically Obstructive"
-		all_quirks -= "Neat"
-		all_quirks -= "NEET"
+		if(all_quirks)
+			all_quirks -= "Physically Obstructive"
+			all_quirks -= "Neat"
+			all_quirks -= "NEET"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
