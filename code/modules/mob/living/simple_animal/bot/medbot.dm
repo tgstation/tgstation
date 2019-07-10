@@ -58,8 +58,8 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_brute = /datum/reagent/medicine/tricordrazine
-	treatment_fire = /datum/reagent/medicine/tricordrazine
+	treatment_brute = /datum/reagent/medicine/omnizine
+	treatment_fire = /datum/reagent/medicine/omnizine
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
