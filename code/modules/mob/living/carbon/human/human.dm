@@ -775,7 +775,6 @@
 	remove_all_embedded_objects()
 	set_heartattack(FALSE)
 	drunkenness = 0
-	set_hygiene(HYGIENE_LEVEL_NORMAL)
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
@@ -840,7 +839,7 @@
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	if(can_be_firemanned(target))
-		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>", 
+		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
 			"<span class='notice'>You start lifting [target] onto your back...</span>")
 		if(do_after(src, 50, TRUE, target))
 			//Second check to make sure they're still valid to be carried
@@ -849,7 +848,7 @@
 				return
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
 	else
-		to_chat(src, "<span class='notice'>You can't fireman carry [target] while they're standing!</span>")
+		to_chat(src, "<span class='warning'>You can't fireman carry [target] while they're standing!</span>")
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(can_piggyback(target))
@@ -886,14 +885,14 @@
 
 	if(hands_needed || target_hands_needed)
 		if(hands_needed && !equipped_hands_self)
-			src.visible_message("<span class='warning'>[src] can't get a grip on [target] because their hands are full!</span>", 
+			src.visible_message("<span class='warning'>[src] can't get a grip on [target] because their hands are full!</span>",
 				"<span class='warning'>You can't get a grip on [target] because your hands are full!</span>")
 			return
 		else if(target_hands_needed && !equipped_hands_target)
 			target.visible_message("<span class='warning'>[target] can't get a grip on [src] because their hands are full!</span>",
 				"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
 			return
-	
+
 	stop_pulling()
 	riding_datum.handle_vehicle_layer()
 	. = ..(target, force, check_loc)

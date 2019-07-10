@@ -468,7 +468,7 @@
 				add_splatter_floor(T)
 			if(stun)
 				adjustBruteLoss(3)
-		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam))
+		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
 			if(T)
 				T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
@@ -521,12 +521,12 @@
 	update_mobility()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
 		become_husk("burn")
+
 	med_hud_set_health()
 	if(stat == SOFT_CRIT)
 		add_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE, multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN)
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE)
-
 
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
@@ -617,14 +617,15 @@
 	else
 		. += INFINITY
 
-/mob/living/carbon/get_permeability_protection(list/target_zones = list(HANDS = 0, CHEST = 0, GROIN = 0, LEGS = 0, FEET = 0, ARMS = 0, HEAD = 0))
+/mob/living/carbon/get_permeability_protection(list/target_zones = list(HANDS,CHEST,GROIN,LEGS,FEET,ARMS,HEAD))
+	var/list/tally = list()
 	for(var/obj/item/I in get_equipped_items())
 		for(var/zone in target_zones)
 			if(I.body_parts_covered & zone)
-				target_zones[zone] = max(1 - I.permeability_coefficient, target_zones[zone])
+				tally["[zone]"] = max(1 - I.permeability_coefficient, target_zones["[zone]"])
 	var/protection = 0
-	for(var/zone in target_zones)
-		protection += target_zones[zone]
+	for(var/key in tally)
+		protection += tally[key]
 	protection *= INVERSE(target_zones.len)
 	return protection
 
@@ -796,9 +797,9 @@
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
 		reagents.clear_reagents()
-	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
-	if(L)
-		L.damage = 0
+	for(var/O in internal_organs)
+		var/obj/item/organ/organ = O
+		organ.setOrganDamage(0)
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.brain_death = FALSE

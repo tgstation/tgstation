@@ -184,6 +184,7 @@
 	glass_icon_state  = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
+	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
@@ -955,7 +956,6 @@
 			var/mob/living/carbon/C = M
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.adjust_hygiene((30 * reac_volume) / (3 + reac_volume))
 				if(H.lip_style)
 					H.lip_style = null
 					H.update_body()
@@ -1240,7 +1240,7 @@
 	name = "Blue Crayon Powder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
-	random_color_list = list("#00B7EF")
+	random_color_list = list("#71CAE5")
 
 /datum/reagent/colorful_reagent/crayonpowder/purple
 	name = "Purple Crayon Powder"
@@ -1258,7 +1258,7 @@
 	name = "Black Crayon Powder"
 	colorname = "black"
 	color = "#1C1C1C" // not quite black
-	random_color_list = list("#404040")
+	random_color_list = list("#8D8D8D")	//more grey than black, not enough to hide your true colors
 
 /datum/reagent/colorful_reagent/crayonpowder/white
 	name = "White Crayon Powder"

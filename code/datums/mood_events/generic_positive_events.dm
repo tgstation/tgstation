@@ -6,7 +6,7 @@
 /datum/mood_event/betterhug
 	description = "<span class='nicegreen'>Someone was very nice to me.</span>\n"
 	mood_change = 3
-	timeout = 5 MINUTES
+	timeout = 4 MINUTES
 
 /datum/mood_event/betterhug/add_effects(mob/friend)
 	description = "<span class='nicegreen'>[friend.name] was very nice to me.</span>\n"
@@ -14,7 +14,7 @@
 /datum/mood_event/besthug
 	description = "<span class='nicegreen'>Someone is great to be around, they make me feel so happy!</span>\n"
 	mood_change = 5
-	timeout = 5 MINUTES
+	timeout = 4 MINUTES
 
 /datum/mood_event/besthug/add_effects(mob/friend)
 	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!</span>\n"
@@ -22,40 +22,42 @@
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
 	mood_change = 3
-	timeout = 5 MINUTES
+	timeout = 8 MINUTES
 
 /datum/mood_event/blessing
 	description = "<span class='nicegreen'>I've been blessed.</span>\n"
 	mood_change = 3
-	timeout = 5 MINUTES
+	timeout = 8 MINUTES
 
 /datum/mood_event/book_nerd
 	description = "<span class='nicegreen'>I have recently read a book.</span>\n"
-	mood_change = 3
+	mood_change = 1
 	timeout = 5 MINUTES
 
 /datum/mood_event/exercise
 	description = "<span class='nicegreen'>Working out releases those endorphins!</span>\n"
-	mood_change = 3
+	mood_change = 2
 	timeout = 5 MINUTES
 
 /datum/mood_event/pet_animal
 	description = "<span class='nicegreen'>Animals are adorable! I can't stop petting them!</span>\n"
-	mood_change = 3
+	mood_change = 2
 	timeout = 5 MINUTES
 
 /datum/mood_event/pet_animal/add_effects(mob/animal)
 	description = "<span class='nicegreen'>\The [animal.name] is adorable! I can't stop petting [animal.p_them()]!</span>\n"
 
 /datum/mood_event/honk
-	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
+	description = "<span class='nicegreen'>I've been honked!</span>\n"
 	mood_change = 2
 	timeout = 4 MINUTES
+	special_screen_obj = "honked_nose"
+	special_screen_replace = FALSE
 
 /datum/mood_event/perform_cpr
 	description = "<span class='nicegreen'>It feels good to save a life.</span>\n"
 	mood_change = 6
-	timeout = 5 MINUTES
+	timeout = 8 MINUTES
 
 /datum/mood_event/oblivious
 	description = "<span class='nicegreen'>What a lovely day.</span>\n"
@@ -68,12 +70,12 @@
 
 /datum/mood_event/focused
 	description = "<span class='nicegreen'>I have a goal, and I will reach it, whatever it takes!</span>\n" //Used for syndies, nukeops etc so they can focus on their goals
-	mood_change = 12
+	mood_change = 4
 	hidden = TRUE
 
 /datum/mood_event/badass_antag
 	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around."
-	mood_change = 15
+	mood_change = 7
 	hidden = TRUE
 	special_screen_obj = "badass_sun"
 	special_screen_replace = FALSE
@@ -91,7 +93,7 @@
 
 /datum/mood_event/cult
 	description = "<span class='nicegreen'>I have seen the truth, praise the almighty one!</span>\n"
-	mood_change = 40 //maybe being a cultist isnt that bad after all
+	mood_change = 10 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
 /datum/mood_event/family_heirloom
@@ -134,14 +136,22 @@
 /datum/mood_event/artok
 	description = "<span class='nicegreen'>It's nice to see people are making art around here.</span>\n"
 	mood_change = 2
-	timeout = 2 MINUTES
+	timeout = 5 MINUTES
 
 /datum/mood_event/artgood
 	description = "<span class='nicegreen'>What a thought-provoking piece of art. I'll remember that for a while.</span>\n"
-	mood_change = 3
-	timeout = 3 MINUTES
+	mood_change = 4
+	timeout = 5 MINUTES
 
 /datum/mood_event/artgreat
 	description = "<span class='nicegreen'>That work of art was so great it made me believe in the goodness of humanity. Says a lot in a place like this.</span>\n"
-	mood_change = 4
-	timeout = 4 MINUTES
+	mood_change = 6
+	timeout = 5 MINUTES
+
+/datum/mood_event/area
+	description = "" //Fill this out in the area
+	mood_change = 0
+
+/datum/mood_event/area/add_effects(list/param)
+	mood_change = param[1]
+	description = param[2]
