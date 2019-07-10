@@ -24,7 +24,7 @@
 	name = "external lens: bouncing ray"
 	desc = "By making the laser pass through an high density gas its able to create a small ball of hot plasma with high elasticity."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/rico
-	overlay = "ricochet"
+	overlay = "bouncing"
 
 /obj/item/external_lens/shocking
 	name = "external lens: shocking ray"

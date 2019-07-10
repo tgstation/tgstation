@@ -1,4 +1,3 @@
-
 //Current rate: 135000 research points in 90 minutes
 
 //Base Nodes
@@ -56,7 +55,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "medspray","genescanner")
+	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "medigel","genescanner", "med_spray_bottle", "chem_pack", "blood_pack")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -83,7 +82,7 @@
 	id = "imp_wt_surgery"
 	display_name = "Improved Wound-Tending Surgery"
 	description = "Who would have known being more gentle with a hemostat decreases patient pain?"
-	prereq_ids = list("adv_biotech")
+	prereq_ids = list("biotech")
 	design_ids = list("surgery_heal_brute_upgrade","surgery_heal_burn_upgrade")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 	export_price = 1000
@@ -94,7 +93,7 @@
 	display_name = "Advanced Surgery"
 	description = "When simple medicine doesn't cut it."
 	prereq_ids = list("imp_wt_surgery")
-	design_ids = list("surgery_lobotomy", "surgery_heal_brute_upgrade_femto","surgery_heal_burn_upgrade_femto","surgery_heal_combo","surgery_exp_dissection")
+	design_ids = list("surgery_lobotomy", "surgery_heal_brute_upgrade_femto","surgery_heal_burn_upgrade_femto","surgery_heal_combo", "surgery_revival","surgery_adv_dissection")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 	export_price = 4000
 
@@ -103,7 +102,7 @@
 	display_name = "Experimental Surgery"
 	description = "When evolution isn't fast enough."
 	prereq_ids = list("adv_surgery")
-	design_ids = list("surgery_revival","surgery_pacify","surgery_vein_thread","surgery_muscled_veins","surgery_nerve_splice","surgery_nerve_ground","surgery_ligament_hook","surgery_ligament_reinforcement","surgery_viral_bond", "surgery_heal_combo_upgrade")
+	design_ids = list("surgery_pacify","surgery_vein_thread","surgery_muscled_veins","surgery_nerve_splice","surgery_nerve_ground","surgery_ligament_hook","surgery_ligament_reinforcement","surgery_viral_bond", "surgery_heal_combo_upgrade", "surgery_exp_dissection")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
@@ -112,7 +111,7 @@
 	display_name = "Alien Surgery"
 	description = "Abductors did nothing wrong."
 	prereq_ids = list("exp_surgery", "alientech")
-	design_ids = list("surgery_brainwashing","surgery_zombie","surgery_heal_combo_upgrade_femto")
+	design_ids = list("surgery_brainwashing","surgery_zombie","surgery_heal_combo_upgrade_femto", "surgery_ext_dissection")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
 
@@ -124,7 +123,6 @@
 	prereq_ids = list("base")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
-
 
 /////////////////////////engineering tech/////////////////////////
 /datum/techweb_node/engineering
@@ -199,7 +197,7 @@
 	display_name = "Miniaturized Bluespace Research"
 	description = "Extreme reduction in space required for bluespace engines, leading to portable bluespace technology."
 	prereq_ids = list("bluespace_travel", "practical_bluespace", "high_efficiency")
-	design_ids = list("bluespace_matter_bin", "femto_mani", "bluespacebodybag", "triphasic_scanning", "quantum_keycard", "wormholeprojector")
+	design_ids = list("bluespace_matter_bin", "femto_mani", "bluespacebodybag", "triphasic_scanning", "quantum_keycard", "wormholeprojector", "swapper")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
 
@@ -600,7 +598,7 @@
 	id = "electronic_weapons"
 	display_name = "Electric Weapons"
 	description = "Weapons using electric technology"
-	prereq_ids = list("weaponry", "adv_power"  , "emp_basic")
+	prereq_ids = list("weaponry", "adv_power", "emp_basic")
 	design_ids = list("stunrevolver", "ioncarbine", "lens_SHK", "lens_SHD")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
@@ -609,8 +607,8 @@
 	id = "radioactive_weapons"
 	display_name = "Radioactive Weaponry"
 	description = "Weapons using radioactive technology."
-	prereq_ids = list("adv_engi", "adv_weaponry", "lens_RIC")
-	design_ids = list("nuclear_gun")
+	prereq_ids = list("adv_engi", "adv_weaponry")
+	design_ids = list("nuclear_gun", "lens_RIC")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -637,7 +635,7 @@
 	display_name = "Advanced Beam Weaponry"
 	description = "Various advanced beam weapons"
 	prereq_ids = list("beam_weapons")
-	design_ids = list("beamrifle", "lens_STH", "lens_BLN")
+	design_ids = list("beamriflee", "lens_STH", "lens_BLN")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -1054,3 +1052,4 @@
 		var/datum/techweb_node/TN = i
 		TW.add_point_list(TN.research_costs)
 	return TW.printout_points()
+
