@@ -11,12 +11,18 @@
 
 /datum/component/extralasers/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
+	attach()
+
+/datum/component/extralasers/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+	detach()
+
+/datum/component/extralasers/proc/attach()
 	var/obj/item/gun/energy/laser/L = parent
 	ammo =  new ammo (src)
 	L.ammo_type  += ammo
 
-/datum/component/extralasers/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+/datum/component/extralasers/proc/detach()
 	var/obj/item/gun/energy/laser/L = parent
 	if(L.chambered)
 		L.chambered = null
@@ -26,7 +32,6 @@
 	L.update_icon(TRUE)
 
 /datum/component/extralasers/proc/attackby(datum/source, obj/item/I, mob/user, params)
-	. = ..()
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		var/turf/T = get_turf(parent)
 		new lens_path(T)
@@ -34,15 +39,14 @@
 
 /datum/component/extralasers/InheritComponent(datum/newcomp, orig, list/arglist)
 	. = ..()
-	UnregisterFromParent()
+	detach()
 	qdel(ammo)
 	var/turf/T = get_turf(parent)
 	new lens_path(T)
-
 	ammo = arglist[1]
 	lens_path = arglist[2]
-	RegisterWithParent()
+	attach()
 
 /datum/component/extralasers/Destroy()
-	. = ..()
 	qdel(ammo)
+	..()
