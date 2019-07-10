@@ -140,6 +140,11 @@
 	if(P)
 		return P.id
 
+/obj/docking_port/proc/getDockedDestination_type()
+	var/obj/docking_port/P = get_docked()
+	if(P)
+		return P.destination_type
+
 /obj/docking_port/proc/is_in_shuttle_bounds(atom/A)
 	var/turf/T = get_turf(A)
 	if(T.z != z)
