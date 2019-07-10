@@ -15,45 +15,26 @@
 	anchored = FALSE
 	density = FALSE
 	volume = 10
-/*
-/obj/machinery/power/sprinkler/plumbing/Initialize()
-	create_reagents(volume)
-	return ..()
 
-/obj/machinery/power/sprinkler/ComponentInitialize()
+/obj/machinery/power/plumbing/sprinkler/ComponentInitialize()
 	AddComponent(/datum/component/plumbing/output)
-*/
-/obj/machinery/power/sprinkler/plumbing/examine(mob/user)
+
+/obj/machinery/power/plumbing/sprinkler/examine(mob/user)
 	. = ..()
 	. += "It is [anchored? "anchored" : "not anchored"]"
 
-/obj/machinery/power/sprinkler/plumbing/interact(mob/user)
+/obj/machinery/power/plumbing/sprinkler/interact(mob/user)
 	if(!allowed(user))
 		to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 	dispense()
 	log_game("[user] has manually actived the sprinkler in [AREACOORD(src)]")
 
-/obj/machinery/power/sprinkler/plumbing/fire_act()
+/obj/machinery/power/plumbing/sprinkler/fire_act()
 	. = ..()
 	dispense()
-/*
-/obj/machinery/power/sprinkler/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I)
-	return TRUE
 
-/obj/machinery/power/sprinkler/default_unfasten_wrench(mob/user, obj/item/I, time = 5)
-	..()
-	var/datum/component/plumbing/P = GetComponent(/datum/component/plumbing)
-	if(anchored)
-		P.start()
-		connect_to_network()
-	else
-		P.disable()
-		disconnect_from_network()
-*/
-
-/obj/machinery/power/sprinkler/proc/dispense()
+/obj/machinery/power/plumbing/sprinkler/proc/dispense()
 	if(cooldown < world.time)
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
 		smoke.set_up(reagents, 5, 8,  get_turf(src))
@@ -78,30 +59,30 @@
 		deploying = TRUE
 		if(do_after(user, 50, target = src))
 			to_chat(user, "You have activated \the [src].")
-			new /obj/machinery/power/sprinkler (get_turf(src))
+			new /obj/machinery/power/plumbing/sprinkler (get_turf(src))
 			qdel(src)
 		else
 			deploying = FALSE
 
-/obj/machinery/power/plumbing/pipeoutput
-	name = "pipe output"
+/obj/machinery/power/plumbing
+	name = "pipe thing"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "water"
-	var/volume = 100
 	anchored = FALSE
+	var/volume = 100
 
-/obj/machinery/power/pipeoutput/plumbing/Initialize()
+/obj/machinery/power/plumbing/Initialize()
 	create_reagents(volume, OPENCONTAINER | AMOUNT_VISIBLE)
-	. = ..()
+	return ..()
 
-/obj/machinery/power/pipeoutput/plumbing/ComponentInitialize()
-	AddComponent(/datum/component/plumbing/output)
+/obj/machinery/power/plumbing/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/input)
 
-/obj/machinery/power/pipeoutput/plumbing/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/power/plumbing/wrench_act(mob/living/user, obj/item/I)
 	default_unfasten_wrench(user, I)
 	return TRUE
 
-/obj/machinery/power/pipeoutput/plumbing/default_unfasten_wrench(mob/user, obj/item/I, time = 5)
+/obj/machinery/power/plumbing/default_unfasten_wrench(mob/user, obj/item/I, time = 5)
 	..()
 	var/datum/component/plumbing/P = GetComponent(/datum/component/plumbing)
 	if(anchored)
@@ -117,25 +98,16 @@
 	icon_state = "fuel"
 	volume = 100
 	anchored = FALSE
-/*
-/obj/machinery/power/pipeinput/Initialize()
-	create_reagents(volume, OPENCONTAINER | AMOUNT_VISIBLE)
-	. = ..()
-*/
-/obj/machinery/power/pipeinput/ComponentInitialize()
-	AddComponent(/datum/component/plumbing/input)
-/*
-/obj/machinery/power/pipeinput/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I)
-	return TRUE
 
-/obj/machinery/power/pipeinput/default_unfasten_wrench(mob/user, obj/item/I, time = 5)
-	..()
-	var/datum/component/plumbing/P = GetComponent(/datum/component/plumbing)
-	if(anchored)
-		P.start()
-		connect_to_network()
-	else
-		P.disable()
-		disconnect_from_network()
-*/
+/obj/machinery/power/plumbing/pipeoutput
+	name = "pipe output"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "water"
+	volume = 100
+	anchored = FALSE
+
+/obj/machinery/power/plumbing/pipeoutput/Initialize()
+	. = ..()
+
+/obj/machinery/power/plumbing/pipeoutput/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/output)
