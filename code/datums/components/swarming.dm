@@ -19,7 +19,7 @@
 		if(!other_swarm.swarm_members.len)
 			other_swarm.unswarm()
 	swarm_members = null
-	. = ..()
+	return ..()
 
 /datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
 	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
