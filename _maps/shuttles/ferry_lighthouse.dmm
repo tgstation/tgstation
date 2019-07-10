@@ -158,7 +158,7 @@
 	dir = 8;
 	dwidth = 8;
 	height = 27;
-	id = "ferry";
+	destination_type = "ferry";
 	name = "The Lighthouse";
 	port_direction = 2;
 	width = 16
