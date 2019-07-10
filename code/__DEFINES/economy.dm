@@ -28,3 +28,5 @@
 #define ACCOUNT_SEC_NAME "Defense Budget"
 
 #define NO_FREEBIES "commies go home"
+
+#define MAX_SECRUITY_CITATION 1000
