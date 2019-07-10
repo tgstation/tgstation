@@ -213,7 +213,7 @@
 	name = "Regenerative Jelly"
 	id = /datum/reagent/medicine/regen_jelly
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
-	required_reagents = list(/datum/reagent/medicine/tricordrazine = 1, /datum/reagent/toxin/slimejelly = 1)
+	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/toxin/slimejelly = 1)
 
 /datum/chemical_reaction/corazone
 	name = "Corazone"
