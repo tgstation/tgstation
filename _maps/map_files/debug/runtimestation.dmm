@@ -1199,7 +1199,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_home";
+	destination_type = "laborcamp_home";
 	name = "fore bay 1";
 	width = 9;
 	roundstart_template = /datum/map_template/shuttle/labour/box
@@ -1211,7 +1211,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 15;
-	id = "arrivals_stationary";
+	destination_type = "arrivals_stationary";
 	name = "arrivals";
 	width = 7;
 	roundstart_template = /datum/map_template/shuttle/arrival/box
@@ -1261,7 +1261,7 @@
 /area/hallway/secondary/entry)
 "el" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	destination_type = "pod_lavaland1";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -1364,7 +1364,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	destination_type = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -1397,7 +1397,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	id = "supply_home";
+	destination_type = "supply_home";
 	name = "Cargo Bay";
 	width = 12
 	},
@@ -1576,7 +1576,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 15;
-	id = "whiteship_home";
+	destination_type = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
 	width = 28
 	},
@@ -1636,7 +1636,7 @@
 	dir = 2;
 	dwidth = 9;
 	height = 25;
-	id = "emergency_home";
+	destination_type = "emergency_home";
 	name = "Runtimestation emergency evac bay";
 	width = 29
 	},
@@ -1978,7 +1978,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 5;
-	id = "mining_home";
+	destination_type = "mining_home";
 	name = "mining shuttle bay";
 	width = 7;
 	roundstart_template = /datum/map_template/shuttle/mining/box
