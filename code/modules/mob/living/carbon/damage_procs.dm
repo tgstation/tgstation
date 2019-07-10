@@ -110,6 +110,30 @@
 		return
 	adjustStaminaLoss(diff, updating_health, forced)
 
+/mob/living/carbon/adjustOrganLoss(slot, amount, maximum)
+	var/obj/item/organ/O = getorganslot(slot)
+	var/d
+	if(O)
+		if(!maximum)
+			O.damage = min(amount, O.maxHealth - O.damage)
+		else
+			d = max(min(amount, maximum - O.damage), 0)		//will clamp this when finished with more important things
+
+		if(O.damage == O.maxHealth)
+			O.failing = TRUE
+
+/mob/living/carbon/setOrganLoss(slot, amount)
+	var/obj/item/organ/O = getorganslot(slot)
+	if(O)
+		O.damage = amount
+		if(O.failing && (O.damage < O.maxHealth))
+			O.failing = FALSE
+
+/mob/living/carbon/getOrganLoss(slot)
+	var/obj/item/organ/O = getorganslot(slot)
+	if(O)
+		return O.damage
+
 ////////////////////////////////////////////
 
 //Returns a list of damaged bodyparts

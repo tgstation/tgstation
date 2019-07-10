@@ -225,7 +225,13 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/setBrainLoss(amount)
+/mob/living/proc/applyOrganLoss(slot, amount, maximum)
+	return
+
+/mob/living/proc/setOrganLoss(slot, amount, maximum)
+	return
+
+/mob/living/proc/getOrganLoss(slot)
 	return
 
 /mob/living/proc/getStaminaLoss()
