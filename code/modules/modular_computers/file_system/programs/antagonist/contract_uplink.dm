@@ -13,6 +13,7 @@
 	ui_x = 600
 	ui_y = 600
 	var/error = ""
+	var/page = CONTRACT_UPLINK_PAGE_CONTRACTS
 
 /datum/computer_file/program/contract_uplink/run_program(var/mob/living/user)
 	. = ..(user)
@@ -39,10 +40,11 @@
 			// contract system.
 			// We also create their contracts at this point.
 			if (traitor_data)
-				// We don't give them more contracts if they somehow assign themselves to a new uplink.
+				// Only play greet sound when assigning for the first time.
 				if (!traitor_data.assigned_contracts.len)
-					traitor_data.create_contracts()
 					user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, 0)
+				traitor_data.create_contracts()
+
 				hard_drive.traitor_data = traitor_data
 			else
 				error = "Incorrect login details."
@@ -82,7 +84,22 @@
 			else
 				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
 			return 1
+		if("PRG_contractor_hub")
+			page = CONTRACT_UPLINK_PAGE_HUB
+		if ("PRG_hub_back")
+			page = CONTRACT_UPLINK_PAGE_CONTRACTS
+		if ("PRG_purchase_pinpointer")
+			if (hard_drive.traitor_data.contract_rep >= 1)
+				hard_drive.traitor_data.contract_rep -= 1
 
+				var/obj/item/pinpointer/crew/contractor/contract_pinpointer = new /obj/item/pinpointer/crew/contractor
+
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if(H.put_in_hands(contract_pinpointer))
+						to_chat(H, "<span class='notice'>Your purchase materializes into your hands!</span>")
+					else
+						to_chat(user, "<span class='notice'>Your purchase materializes onto the floor.</span>")
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
 	var/list/data = list()
@@ -102,6 +119,9 @@
 		data["logged_in"] = TRUE
 		data["station_name"] = GLOB.station_name
 		data["redeemable_tc"] = traitor_data.contract_TC_to_redeem
+		data["contract_rep"] = traitor_data.contract_rep
+
+		data["page"] = page
 
 		for (var/datum/syndicate_contract/contract in traitor_data.assigned_contracts)
 			data["contracts"] += list(list(

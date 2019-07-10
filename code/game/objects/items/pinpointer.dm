@@ -17,6 +17,7 @@
 	var/active = FALSE
 	var/atom/movable/target //The thing we're searching for
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
+	var/ignore_suit_sensor_level = FALSE // Do we find people even if their suit sensors are turned off
 	var/alert = FALSE // TRUE to display things more seriously
 
 /obj/item/pinpointer/Initialize()
@@ -88,7 +89,7 @@
 		var/obj/item/clothing/under/U = H.w_uniform
 
 		// Suit sensors must be on maximum.
-		if(!U.has_sensor || U.sensor_mode < SENSOR_COORDS)
+		if(!U.has_sensor || (U.sensor_mode < SENSOR_COORDS && !ignore_suit_sensor_level))
 			return FALSE
 
 		var/turf/there = get_turf(H)

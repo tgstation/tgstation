@@ -95,7 +95,8 @@
 
 				if (traitor_data.current_contract == src) 
 					traitor_data.current_contract = null
-	
+				
+				traitor_data.contract_rep++
 			else
 				status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
 				
