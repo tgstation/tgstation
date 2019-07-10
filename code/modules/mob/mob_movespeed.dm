@@ -2,6 +2,12 @@
 
 Move speed is now calculated by using a list of movespeed modifiers, which is a list itself (to avoid datum overhead)
 
+This gives us the ability to have multiple sources of movespeed, reliabily keep them applied and remove them when they should be
+
+THey can have unique sources and a bunch of extra fancy flags that control behaviour
+
+Previously trying to update move speed was a shot in the dark that usually meant mobs got stuck going faster or slower
+
 This list takes the following format
 
 ```Current movespeed modification list format:
