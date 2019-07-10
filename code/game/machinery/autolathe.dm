@@ -174,17 +174,17 @@
 			for(var/MAT in being_built.materials)
 				var/datum/material/used_material = MAT
 				if(ismaterialcategory(used_material))
-					used_material = input("Choose [used_material]", "Custom Material") as null|anything in SSmaterials.materials_by_category[used_material]
+					var/list/list_to_show = list()
+					for(var/i in SSmaterials.materials_by_category[used_material])
+						if(materials.materials[i] > 0)
+							list_to_show += i
+							
+					used_material = input("Choose [used_material]", "Custom Material") as null|anything in list_to_show
 					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
 					custom_materials += used_material
 
 				materials_used[used_material] = being_built.materials[MAT] * coeff * multiplier
-				
-
-
-			for(var/mat in materials_used)
-				to_chat(world, "[mat] cost: [materials_used[mat]]")
 
 			if(materials.has_materials(materials_used))
 				busy = TRUE
@@ -350,7 +350,8 @@
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = mat_id
 		var/mineral_amount = materials.materials[mat_id]
-		dat += "<b>[M.name] amount:</b> [mineral_amount] cm<sup>3</sup><br>"
+		if(mineral_amount > 0)
+			dat += "<b>[M.name] amount:</b> [mineral_amount] cm<sup>3</sup><br>"
 	return dat
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D, amount = 1)

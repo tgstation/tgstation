@@ -7,10 +7,10 @@ SUBSYSTEM_DEF(materials)
 
 /datum/controller/subsystem/materials/Initialize(timeofday)
 	InitializeMaterials()
-	for(var/i in SSresearch.techweb_designs)
+	for(var/i in SSresearch.techweb_designs) //This is currently broken and I'm not sure why.
 		var/datum/design/D = i
 		D.InitializeMaterials()
-		to_chat(world, "initialized [i] design")
+		to_chat(world, "initialized [i] design") 
 	return ..()
 	
 /datum/controller/subsystem/materials/proc/InitializeMaterials(timeofday)
