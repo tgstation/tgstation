@@ -2,13 +2,13 @@
 /obj/item/twohanded/kinetic_crusher
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
-	item_state = "crusher"
+	item_state = "crusher0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "proto-kinetic crusher"
 	desc = "An early design of the proto-kinetic accelerator, it is little more than a combination of various mining tools cobbled together, forming a high-tech club. \
 	While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna."
-	force = 10 //You can't hit mobs unless wielded
+	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 0 
@@ -63,7 +63,7 @@
 
 /obj/item/twohanded/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
 	if(!wielded)
-		to_chat(user, "<span class='warning'>The [src] is too heavy to use with one hand. You fumble and drop everything.")
+		to_chat(user, "<span class='warning'>[src] is too heavy to use with one hand. You fumble and drop everything.")
 		user.drop_all_held_items()
 		return
 	var/datum/status_effect/crusher_damage/C = target.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
@@ -129,6 +129,11 @@
 		update_icon()
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 
+/obj/item/twohanded/kinetic_crusher/ui_action_click(mob/user, actiontype)
+	light_on = !light_on
+	update_brightness(user)
+	update_icon()
+
 /obj/item/twohanded/kinetic_crusher/proc/update_brightness(mob/user = null)
 	if(light_on)
 		set_light(brightness_on)
@@ -146,6 +151,7 @@
 		for(var/X in actions)
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
+	item_state = "crusher[wielded]"
 
 //destablizing force
 /obj/item/projectile/destabilizer
