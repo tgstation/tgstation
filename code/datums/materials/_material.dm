@@ -24,8 +24,14 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/floor_override 
 
 ///This proc is called when the material is added to an object. should_color exists mostly to prevent the removal of color from pre-colored items like toolboxes..
-/datum/material/proc/on_applied(atom/source, amount, should_color = TRUE) //What happens to the object that has this material?
+/datum/material/proc/on_applied(atom/source, amount, should_color = TRUE)
 	source.desc += "<br><u>It is made out of [name]</u>."
 	if(should_color && color) //Do we have a custom color?
 		source.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+	if(istype(source, obj/item))
+		on_applied_item(atom/source, amount)
+	return
+
+///This proc is called when the material is added to an item specifically.
+/datum/material/proc/on_applied_item(atom/source, amount)
 	return
