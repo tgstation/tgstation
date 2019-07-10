@@ -95,7 +95,8 @@
   *
   * You must not sleep in this proc, or any subprocs
   *
-  * Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
+  * Any parameters from new are passed through (excluding loc), naturally if you're loading from a map
+  * there are no other arguments
   * 
   * Must return an [initialization hint](code/__DEFINES/subsystems.html) or a runtime will occur.
   *
