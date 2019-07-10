@@ -2487,7 +2487,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_away";
+	destination_type = "laborcamp_away";
 	name = "labor camp";
 	width = 9
 	},
@@ -4002,7 +4002,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 7;
-	id = "lavaland_common_away";
+	destination_type = "lavaland_common_away";
 	name = "Mining base public dock";
 	width = 7
 	},
@@ -4119,7 +4119,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_lavaland";
+	destination_type = "whiteship_lavaland";
 	name = "lavaland wastes";
 	width = 35
 	},
@@ -4190,7 +4190,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 10;
-	id = "mining_away";
+	destination_type = "mining_away";
 	name = "lavaland mine";
 	width = 7
 	},

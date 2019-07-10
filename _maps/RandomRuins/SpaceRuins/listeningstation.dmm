@@ -1152,7 +1152,7 @@
 	dir = 4;
 	dwidth = 6;
 	height = 7;
-	id = "caravansyndicate3_listeningpost";
+	destination_type = "caravansyndicate3_listeningpost";
 	name = "Syndicate Listening Post";
 	width = 15
 	},
@@ -1160,7 +1160,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 5;
-	id = "caravansyndicate1_listeningpost";
+	destination_type = "caravansyndicate1_listeningpost";
 	name = "Syndicate Listening Post";
 	width = 9
 	},

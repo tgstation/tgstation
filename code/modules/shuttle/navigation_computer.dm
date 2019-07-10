@@ -6,6 +6,7 @@
 	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
 	var/shuttlePortId = ""
+	var/shuttlePortDestination_type = ""
 	var/shuttlePortName = "custom location"
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
@@ -137,13 +138,15 @@
 	if(my_port && my_port.get_docked()) 
 		my_port.delete_after = TRUE
 		my_port.id = FALSE
+		shuttlePortDestination_type = FALSE
 		my_port.name = "Old [my_port.name]"
 		my_port = FALSE 
 
 	if(!my_port)
 		my_port = new()
 		my_port.name = shuttlePortName
-		my_port.id = shuttlePortId
+		my_port.destination_type = shuttlePortDestination_type
+		my_port.id = shuttlePortDestination_type
 		my_port.height = shuttle_port.height
 		my_port.width = shuttle_port.width
 		my_port.dheight = shuttle_port.dheight
@@ -263,6 +266,7 @@
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
 		shuttlePortId = "[port.id]_custom"
+		shuttlePortDestination_type = "[port.id]_custom"
 		shuttlePortName = "[shuttleId]_[shuttlePortName]"
 	if(dock)
 		jumpto_ports[dock.id] = TRUE

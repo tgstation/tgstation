@@ -162,11 +162,15 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.id == id)
 			return M
+		if(M.destination_type == id)
+			return M
 	WARNING("couldn't find shuttle with id: [id]")
 
 /datum/controller/subsystem/shuttle/proc/getDock(id)
 	for(var/obj/docking_port/stationary/S in stationary)
 		if(S.id == id)
+			return S
+		if(S.destination_type == id)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 

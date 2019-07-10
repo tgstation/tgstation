@@ -18,7 +18,7 @@
 	if(M)
 		var/destination_found
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
-			if(!options.Find(S.id))
+			if(!options.Find(S.destination_type))
 				continue
 			if(!M.check_dock(S, silent=TRUE))
 				continue
