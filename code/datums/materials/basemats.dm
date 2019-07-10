@@ -27,7 +27,7 @@
 	name = "gold"
 	id = "gold"
 	desc = "Gold"
-	color = "#D4AF37"
+	color = "#f0972b"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	coin_type = /obj/item/coin/gold
@@ -36,7 +36,7 @@
 	name = "diamond"
 	id = "diamond"
 	desc = "Highly pressurized carbon"
-	color = "#b8d8e7"
+	color = "#22c2d4"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	coin_type = /obj/item/coin/diamond
@@ -45,20 +45,20 @@
 	name = "uranium"
 	id = "uranium"
 	desc = "Uranium"
-	color = "#a5a500"
+	color = "#1fb83b"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	coin_type = /obj/item/coin/uranium
 
 /datum/material/uranium/on_applied(atom/source, amount)
 	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 100, source, 1) //half-life of 1 because we keep on going.
+	source.AddComponent(/datum/component/radioactive, amount / 100, source, 0) //half-life of 0 because we keep on going.
 
 /datum/material/plasma
 	name = "plasma"
 	id = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
-	color = "#8828A0"
+	color = "#c716b8"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	coin_type = /obj/item/coin/plasma
