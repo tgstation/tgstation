@@ -331,7 +331,7 @@
 /obj/docking_port/stationary{
 	dwidth = 3;
 	height = 5;
-	id = "mining_home";
+	destination_type = "mining_home";
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/box;
 	width = 7
@@ -343,7 +343,7 @@
 	dir = 2;
 	dwidth = 3;
 	height = 13;
-	id = "arrivals_stationary";
+	destination_type = "arrivals_stationary";
 	name = "donut arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/donut;
 	width = 7
@@ -367,7 +367,7 @@
 /obj/docking_port/stationary{
 	dwidth = 5;
 	height = 7;
-	id = "supply_home";
+	destination_type = "supply_home";
 	name = "Cargo Bay";
 	width = 12
 	},
@@ -1741,7 +1741,7 @@
 	dir = 4;
 	dwidth = 12;
 	height = 18;
-	id = "emergency_home";
+	destination_type = "emergency_home";
 	name = "Donutstation emergency evac bay";
 	width = 32
 	},
@@ -3612,7 +3612,7 @@
 	dir = 2;
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_home";
+	destination_type = "laborcamp_home";
 	name = "fore bay 1";
 	roundstart_template = /datum/map_template/shuttle/labour/box;
 	width = 9
@@ -8231,7 +8231,7 @@
 /area/ai_monitored/storage/eva)
 "avp" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland2";
+	destination_type = "pod_lavaland2";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -17530,7 +17530,7 @@
 "aRU" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland2";
+	destination_type = "pod_lavaland2";
 	name = "lavaland"
 	},
 /turf/open/space/basic,
@@ -18896,7 +18896,7 @@
 	dir = 8;
 	dwidth = 4;
 	height = 9;
-	id = "aux_base_zone";
+	destination_type = "aux_base_zone";
 	name = "aux base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
 	width = 9
@@ -23437,7 +23437,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	destination_type = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -36339,7 +36339,7 @@
 "bHY" = (
 /obj/docking_port/stationary/random{
 	dir = 2;
-	id = "pod_lavaland2";
+	destination_type = "pod_lavaland2";
 	name = "lavaland"
 	},
 /turf/open/space,

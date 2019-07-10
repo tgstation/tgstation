@@ -3016,7 +3016,7 @@
 	dir = 8;
 	dwidth = 12;
 	height = 17;
-	id = "syndicate_ne";
+	destination_type = "syndicate_ne";
 	name = "northeast of station";
 	width = 23
 	},
@@ -7896,7 +7896,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_home";
+	destination_type = "laborcamp_home";
 	name = "fore bay 1";
 	roundstart_template = /datum/map_template/shuttle/labour/box;
 	width = 9
@@ -17187,7 +17187,7 @@
 	dir = 8;
 	dwidth = 4;
 	height = 15;
-	id = "emergency_home";
+	destination_type = "emergency_home";
 	name = "PubbyStation emergency evac bay";
 	width = 20
 	},
@@ -17540,7 +17540,7 @@
 	dir = 4;
 	dwidth = 5;
 	height = 7;
-	id = "supply_home";
+	destination_type = "supply_home";
 	name = "Cargo Bay";
 	width = 12
 	},
@@ -22405,7 +22405,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 5;
-	id = "mining_home";
+	destination_type = "mining_home";
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/delta;
 	width = 7
@@ -22771,7 +22771,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 13;
-	id = "arrivals_stationary";
+	destination_type = "arrivals_stationary";
 	name = "pubby arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/pubby;
 	width = 6
@@ -27818,7 +27818,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	destination_type = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -44363,7 +44363,7 @@
 	dir = 8;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_home";
+	destination_type = "whiteship_home";
 	name = "monastery";
 	width = 35
 	},
@@ -54895,7 +54895,7 @@
 	dheight = 4;
 	dwidth = 4;
 	height = 9;
-	id = "aux_base_zone";
+	destination_type = "aux_base_zone";
 	name = "aux base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/small;
 	width = 9

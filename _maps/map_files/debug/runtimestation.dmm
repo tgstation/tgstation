@@ -2255,7 +2255,7 @@
 /area/space/nearstation)
 "tG" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	destination_type = "pod_lavaland1";
 	name = "lavaland"
 	},
 /turf/open/space/basic,
@@ -2473,7 +2473,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 5;
-	id = "mining_home";
+	destination_type = "mining_home";
 	name = "mining shuttle bay";
 	width = 7;
 	roundstart_template = /datum/map_template/shuttle/mining/box

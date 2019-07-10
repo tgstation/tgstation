@@ -2284,7 +2284,7 @@
 	dir = 4;
 	dwidth = 12;
 	height = 18;
-	id = "emergency_home";
+	destination_type = "emergency_home";
 	name = "BoxStation emergency evac bay";
 	width = 32
 	},
@@ -6143,7 +6143,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_home";
+	destination_type = "laborcamp_home";
 	name = "fore bay 1";
 	roundstart_template = /datum/map_template/shuttle/labour/box;
 	width = 9
@@ -7077,7 +7077,7 @@
 "aqG" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland3";
+	destination_type = "pod_lavaland3";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -8859,7 +8859,7 @@
 	dir = 8;
 	dwidth = 12;
 	height = 17;
-	id = "syndicate_ne";
+	destination_type = "syndicate_ne";
 	name = "northeast of station";
 	width = 23
 	},
@@ -33738,7 +33738,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 10;
-	id = "mining_home";
+	destination_type = "mining_home";
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/large;
 	width = 7
@@ -43982,7 +43982,7 @@
 "cpe" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	id = "pod_lavaland2";
+	destination_type = "pod_lavaland2";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -46416,7 +46416,7 @@
 "cwV" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	id = "pod_lavaland1";
+	destination_type = "pod_lavaland1";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -46449,7 +46449,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	destination_type = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -46533,7 +46533,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_home";
+	destination_type = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
 	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 35
@@ -46668,7 +46668,7 @@
 	dir = 8;
 	dwidth = 5;
 	height = 7;
-	id = "supply_home";
+	destination_type = "supply_home";
 	name = "Cargo Bay";
 	width = 12
 	},
@@ -46743,7 +46743,7 @@
 "czN" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland4";
+	destination_type = "pod_lavaland4";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -48823,7 +48823,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 15;
-	id = "arrivals_stationary";
+	destination_type = "arrivals_stationary";
 	name = "arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
 	width = 7
@@ -51829,7 +51829,7 @@
 	dir = 8;
 	dwidth = 4;
 	height = 9;
-	id = "aux_base_zone";
+	destination_type = "aux_base_zone";
 	name = "aux base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
 	width = 9
