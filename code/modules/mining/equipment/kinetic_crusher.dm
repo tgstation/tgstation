@@ -131,6 +131,7 @@
 
 /obj/item/twohanded/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	light_on = !light_on
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_brightness(user)
 	update_icon()
 
