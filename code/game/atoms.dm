@@ -8,41 +8,64 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	var/level = 2
-	var/article  // If non-null, overrides a/an/some in all cases
 
+	///If non-null, overrides a/an/some in all cases
+	var/article
+
+	///First atom flags var
 	var/flags_1 = NONE
+	///Intearaction flags
 	var/interaction_flags_atom = NONE
+
+	///Reagents holder
 	var/datum/reagents/reagents = null
 
-	//This atom's HUD (med/sec, etc) images. Associative list.
+	///This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
-	//HUD images that this atom can provide.
+	///HUD images that this atom can provide.
 	var/list/hud_possible
 
-	//Value used to increment ex_act() if reactionary_explosions is on
+	///Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
-	var/list/atom_colours	 //used to store the different colors on an atom
-							//its inherent color, the colored paint applied on it, special color effect etc...
+	/**
+	  * used to store the different colors on an atom
+	  *
+	  * its inherent color, the colored paint applied on it, special color effect etc...
+	  */
+	var/list/atom_colours
 
-	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
-	var/list/remove_overlays // a very temporary list of overlays to remove
-	var/list/add_overlays // a very temporary list of overlays to add
 
-	var/list/managed_vis_overlays //vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
+	///overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
+	var/list/priority_overlays
+	/// a very temporary list of overlays to remove
+	var/list/remove_overlays
+	/// a very temporary list of overlays to add
+	var/list/add_overlays
 
+	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
+	var/list/managed_vis_overlays
+
+	///Proximity monitor associated with this atom
 	var/datum/proximity_monitor/proximity_monitor
+	///Cooldown tick timer for buckle messages
 	var/buckle_message_cooldown = 0
+	///Last fingerprints to touch this atom
 	var/fingerprintslast
 
 	var/list/filter_data //For handling persistent filters
 
+	///Economy cost of item
 	var/custom_price
+	///Economy cost of item in premium vendor
 	var/custom_premium_price
 
+	//List of datums orbiting this atom
 	var/datum/component/orbiter/orbiters
 
-	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
+	/// Will move to flags_1 when i can be arsed to (2019, has not done so)
+	var/rad_flags = NONE
+	/// Radiation insulation types
 	var/rad_insulation = RAD_NO_INSULATION
 
 /**
