@@ -122,7 +122,6 @@
 	var/datum/bank_account/registered_account
 	var/obj/machinery/paystand/my_store
 	var/uses_overlays = TRUE
-	var/static/list/id_icon_cache = list()
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -269,32 +268,26 @@
 /obj/item/card/id/GetID()
 	return src
 
-/obj/item/card/id/proc/set_icon(cache_index, iter=0)
-	if(!id_icon_cache[cache_index])
-		if(iter < 5)
-			addtimer(CALLBACK(src, .proc/set_icon, cache_index, iter+1), 5)
+/obj/item/card/id/update_icon(blank=FALSE)
+	cut_overlays()
+	if(!uses_overlays)
 		return
-	icon = id_icon_cache[cache_index]
+	var/job = assignment ? ckey(GetJobName()) : null
+	var/list/add_overlays = list()
+	if(!blank)
+		add_overlays += mutable_appearance(icon, "assigned")
+	if(job)
+		add_overlays += mutable_appearance(icon, "id[job]")
+	add_overlay(add_overlays)
 	if(istype(loc, /obj/item/storage/wallet))
 		var/obj/item/storage/wallet/powergaming = loc
 		if(powergaming.front_id == src)
-			powergaming.update_icon()
+			powergaming.update_icon(add_overlays)
 
-/obj/item/card/id/update_icon(blank=FALSE, iter=0)
-	if(!uses_overlays)
-		return
-	var/job_index = assignment ? ckey(GetJobName()) : null
-	var/index = "[icon_state]-[job_index ? job_index : "null"][blank ? "-blank" : ""]"
-	var/icon/id_icon = id_icon_cache[index]
-	if(!id_icon)
-		id_icon = icon('icons/obj/card.dmi', src.icon_state)
-		if(!blank)
-			id_icon.Blend(icon('icons/obj/card.dmi', "assigned"), ICON_OVERLAY)
-		if(job_index)
-			id_icon.Blend(icon('icons/obj/card.dmi', "id[job_index]"), ICON_OVERLAY)
-		id_icon = fcopy_rsc(id_icon)
-		id_icon_cache[index] = id_icon
-	set_icon(index)
+/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
+	if(uses_overlays)
+		return "[costly_icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+	return ..()
 
 /*
 Usage:

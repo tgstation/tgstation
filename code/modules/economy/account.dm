@@ -74,13 +74,13 @@
 
 			card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 			if(card_holder.can_hear())
-				to_chat(card_holder, "[icon2html(A, card_holder)] *[message]*")
+				to_chat(card_holder, "[costly_icon2html(A, card_holder)] *[message]*")
 		else if(isturf(A.loc)) //If on the ground
 			for(var/mob/M in hearers(1,get_turf(A)))
 				if(M.client && !(M.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
 					return
 				playsound(A, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-				A.audible_message("[icon2html(A, hearers(A))] *[message]*", null, 1)
+				A.audible_message("[costly_icon2html(A, hearers(A))] *[message]*", null, 1)
 				break
 		else
 			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
@@ -88,7 +88,7 @@
 					return
 				M.playsound_local(get_turf(M), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 				if(M.can_hear())
-					to_chat(M, "[icon2html(A, M)] *[message]*")
+					to_chat(M, "[costly_icon2html(A, M)] *[message]*")
 
 /datum/bank_account/department
 	account_holder = "Guild Credit Agency"

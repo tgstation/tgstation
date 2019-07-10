@@ -61,15 +61,20 @@
 	. = ..()
 	refreshID()
 
-/obj/item/storage/wallet/update_icon()
+/obj/item/storage/wallet/update_icon(list/override_overlays)
 	cut_overlays()
-	if(!front_id)
-		icon = 'icons/obj/storage.dmi'
-		icon_state = "wallet"
-	else
-		icon = front_id.icon
-		icon_state = front_id.icon_state
-		add_overlay(icon('icons/obj/storage.dmi', "wallet_overlay"))
+	if(front_id)
+		var/list/add_overlays = list()
+		add_overlays += mutable_appearance(front_id.icon, front_id.icon_state)
+		if(override_overlays)
+			add_overlays += override_overlays
+		else
+			add_overlays += front_id.overlays
+		add_overlays += mutable_appearance(icon, "wallet_overlay")
+		add_overlay(add_overlays)
+
+/obj/item/storage/wallet/get_examine_string(mob/user, thats = FALSE)
+	return "[costly_icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /obj/item/storage/wallet/GetID()
 	return front_id
