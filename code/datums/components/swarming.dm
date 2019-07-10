@@ -14,7 +14,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/leave_swarm)
 
 /datum/component/swarming/Destroy()
-	for(var/datum/component/swarming/other_swarm in swarm_members)
+	for(var/other in swarm_members)
+		var/datum/component/swarming/other_swarm = other
 		other_swarm.swarm_members -= src
 		if(!other_swarm.swarm_members.len)
 			other_swarm.unswarm()
