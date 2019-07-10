@@ -56,7 +56,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	coin_type = /obj/item/coin/uranium
 
-/datum/material/uranium/on_applied(atom/source, amount)
+/datum/material/uranium/on_applied(atom/source, amount, mapload)
 	. = ..()
 	source.AddComponent(/datum/component/radioactive, amount / 100, source, 0) //half-life of 0 because we keep on going.
 
@@ -89,7 +89,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	coin_type = /obj/item/coin/bananium
 
-/datum/material/bananium/on_applied(atom/source, amount, should_color)
+/datum/material/bananium/on_applied(atom/source, amount, mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 	AddComponent(/datum/component/slippery, min(amount / 10, 80))

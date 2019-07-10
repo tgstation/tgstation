@@ -360,12 +360,15 @@
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
-	var/list/materials = list()
+	var/list/required_materials = list()
 
 	for(var/i in D.materials)
-		materials[i] = D.materials[i] * coeff * amount
+		required_materials[i] = D.materials[i] * coeff * amount
 
-	return has_materials(materials)
+
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+
+	return materials.has_materials(required_materials)
 
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
