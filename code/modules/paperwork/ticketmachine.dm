@@ -2,10 +2,10 @@
 //Simply set this up in the hopline and you can serve people based on ticket numbers
 
 /obj/machinery/ticket_machine
-	name = "Ticket machine"
+	name = "ticket machine"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "ticketmachine"
-	desc = "Please, take a ticket!."
+	desc = "A marvel of bureaucratic engineering encased in an efficient plastic shell. It can be refilled with a hand labeler refill roll and linked to buttons with a multitool."
 	density = FALSE
 	maptext_height = 26
 	maptext_width = 32
@@ -18,6 +18,14 @@
 	var/cooldown = 50 //Small cooldown, stops the clown from immediately breaking it.
 	var/ready = TRUE
 	var/id = "ticket_machine_default" //For buttons
+
+/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
+	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
+		return
+	var/obj/item/multitool/M = I
+	M.buffer = src
+	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+	return TRUE
 
 /obj/machinery/ticket_machine/emag_act(mob/user) //Emag the ticket machine to dispense burning tickets, as well as randomize its customer number to destroy the HOP's mind.
 	if(obj_flags & EMAGGED)
@@ -45,18 +53,38 @@
 	req_access = list()
 	id = "ticket_machine_default"
 
+/obj/machinery/button/ticket_machine/Initialize()
+	. = ..()
+	if(device)
+		var/obj/item/assembly/control/ticket_machine/ours = device
+		ours.id = id
+
+/obj/machinery/button/ticket_machine/multitool_act(mob/living/user, obj/item/I)
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		var/obj/item/multitool/M = I
+		if(M.buffer && !istype(M.buffer, /obj/machinery/ticket_machine))
+			return
+		var/obj/item/assembly/control/ticket_machine/controller = device
+		controller.linked = M.buffer
+		id = null
+		controller.id = null
+		to_chat(user, "<span class='warning'>You've linked [src] to [controller.linked].</span>")
+
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
 	desc = "A remote controller for the HOP's ticket machine."
 	var/obj/machinery/ticket_machine/linked //To whom are we linked?
 
 /obj/item/assembly/control/ticket_machine/Initialize()
-	. = ..()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/assembly/control/ticket_machine/LateInitialize()
 	find_machine()
 
 /obj/item/assembly/control/ticket_machine/proc/find_machine() //Locate the one to which we're linked
 	for(var/obj/machinery/ticket_machine/ticketsplease in GLOB.machines)
-		if (ticketsplease.id == id)
+		if(ticketsplease.id == id)
 			linked = ticketsplease
 	if(linked)
 		return TRUE
@@ -67,11 +95,10 @@
 	if(cooldown)
 		return
 	if(!linked)
-		if(!find_machine()) //No linked ticket machine, find a new one
-			return
+		return
 	cooldown = TRUE
 	linked.increment()
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 /obj/machinery/ticket_machine/update_icon()
 	switch(ticket_number) //Gives you an idea of how many tickets are left
