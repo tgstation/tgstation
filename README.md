@@ -9,7 +9,11 @@
 **Wiki** https://tgstation13.org/wiki/Main_Page
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus)
 
- 
+## Documentation
+We maintain an auto updated autodoc of the code here - https://tgstation.github.io/tgstation/
+
+All PR's are expected to be documented, you can find information on the documentation standards here //TODO
+
 ## DOWNLOADING
 
 There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at https://www.tgstation13.org/wiki/Downloading_the_source_code
