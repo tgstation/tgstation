@@ -8,6 +8,12 @@
 	var/authenticated = null
 	var/screen = null
 	var/datum/data/record/current = null
+	var/obj/item/radio/Radio
+
+/obj/machinery/computer/warrant/Initialize()
+	. = ..()
+	Radio = new/obj/item/radio(src)
+	Radio.listening = 0
 
 /obj/machinery/computer/warrant/ui_interact(mob/user)
 	. = ..()
@@ -115,11 +121,9 @@
 	switch(href_list["choice"])
 		if("Login")
 			var/obj/item/card/id/scan = M.get_idcard(TRUE)
-			authenticated = scan.registered_name
-			if(authenticated)
-				for(var/datum/data/record/R in GLOB.data_core.security)
-					if(R.fields["name"] == authenticated)
-						current = R
+			if(scan && istype(scan))
+				authenticated = scan.registered_name
+				current = find_record("name", authenticated, GLOB.data_core.security)
 				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 		if("Logout")
 			current = null
@@ -141,9 +145,17 @@
 							if (pay == diff || pay > diff || pay >= diff)
 								investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
 								to_chat(M, "<span class='notice'>The fine has been paid in full</span>")
+								Radio.set_frequency(FREQ_SECURITY)
+								Radio.talk_into(src, "[current.fields["name"]]\'s citation for [p.crimeName] has been paid off", FREQ_SECURITY)
+								if(SSticker.HasRoundStarted())
+									SSblackbox.PayCitation(href_list["cdataid"], pay)
 							qdel(C)
 							playsound(src, "terminal_type", 25, 0)
 					else
 						to_chat(M, "<span class='warning'>Fines can only be paid with holochips</span>")
 	updateUsrDialog()
 	add_fingerprint(M)
+
+/obj/machinery/computer/warrant/deconstruct()
+	. = ..()
+	qdel(Radio)

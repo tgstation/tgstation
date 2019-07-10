@@ -20,9 +20,15 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
-	var/maxFine = 1000
+
+	var/obj/item/radio/Radio
 
 	light_color = LIGHT_COLOR_RED
+
+/obj/machinery/computer/secure_data/Initialize()
+	. = ..()
+	Radio = new/obj/item/radio(src)
+	Radio.listening = 0
 
 /obj/machinery/computer/secure_data/examine(mob/user)
 	. = ..()
@@ -433,6 +439,10 @@ What a mess.*/
 								if (pay == diff || pay > diff || pay >= diff)
 									investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
 									to_chat(usr, "<span class='notice'>The fine has been paid in full</span>")
+									Radio.set_frequency(FREQ_SECURITY)
+									Radio.talk_into(src, "[active2.fields["name"]]\'s citation for [p.crimeName] has been paid off", FREQ_SECURITY)
+									if(SSticker.HasRoundStarted())
+										SSblackbox.PayCitation(href_list["cdataid"], pay)
 								qdel(C)
 								playsound(src, "terminal_type", 25, 0)
 						else
@@ -919,7 +929,7 @@ What a mess.*/
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)
 		if(authenticated)
-			if(user.canUseTopic(src, BE_CLOSE))
+			if(user.canUseTopic(src, !issilicon(user)))
 				if(!trim(message1))
 					return 0
 				if(!record1 || record1 == active1)
