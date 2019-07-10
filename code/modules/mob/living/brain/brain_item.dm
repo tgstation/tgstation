@@ -1,6 +1,3 @@
-#define STANDARD_ORGAN_THRESHOLD 	100
-#define STANDARD_ORGAN_DECAY		0.00167				//designed to fail most generic organs at about 10 minutes
-
 /obj/item/organ/brain
 	name = "brain"
 	desc = "A piece of juicy meat found in a person's head."
@@ -12,7 +9,7 @@
 	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
 	attack_verb = list("attacked", "slapped", "whacked")
-	decay_factor = STANDARD_ORGAN_DECAY * 0.75		//slower decay not for realism, but because if it failed too easily we'd get people cloning with every trauma imaginable
+	decay_factor = 0.0012525						//slower decay not for realism, but because if it failed too easily we'd get people cloning with every trauma imaginable
 	healing_factor = 0								//no healing for the brain outside of brain surgery or mannitol
 	maxHealth	= BRAIN_DAMAGE_DEATH
 	low_threshold = 45
