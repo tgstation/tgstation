@@ -193,7 +193,6 @@
 			setSanity(sanity+0.6, maximum=INFINITY)
 
 	HandleNutrition(owner)
-	HandleHygiene(owner)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT)
 	var/mob/living/owner = parent
@@ -298,7 +297,7 @@
 	screen_obj_sanity = new
 	hud.infodisplay += screen_obj
 	hud.infodisplay += screen_obj_sanity
-	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
@@ -351,32 +350,9 @@
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
 
-/datum/component/mood/proc/HandleHygiene(mob/living/carbon/human/H)
-	if(H.hygiene <= HYGIENE_LEVEL_DIRTY)
-		HygieneMiasma(H)
-
-/datum/component/mood/proc/HygieneMiasma(mob/living/carbon/human/H)
-	// Properly stored humans shouldn't create miasma
-	if(istype(H.loc, /obj/structure/closet/crate/coffin)|| istype(H.loc, /obj/structure/closet/body_bag) || istype(H.loc, /obj/structure/bodycontainer))
-		return
-
-	var/turf/T = get_turf(H)
-
-	if(!istype(T) || T.return_air().return_pressure() > (WARNING_HIGH_PRESSURE - 10))
-		return
-
-	var/datum/gas_mixture/stank = new
-	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = MIASMA_HYGIENE_MOLES
-	stank.temperature = BODYTEMP_NORMAL
-	T.assume_air(stank)
-	T.air_update_turf()
-
 /datum/component/mood/proc/check_area_mood(datum/source, var/area/A)
 	if(A.mood_bonus)
-		var/datum/mood_event/M = add_event(null, "area", /datum/mood_event/area)
-		M.mood_change = A.mood_bonus
-		M.description = A.mood_message
+		add_event(null, "area", /datum/mood_event/area, list(A.mood_bonus, A.mood_message))
 	else
 		clear_event(null, "area")
 
