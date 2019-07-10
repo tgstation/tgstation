@@ -33232,7 +33232,7 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 6;
-	id = "monastery_shuttle_asteroid";
+	destination_type = "monastery_shuttle_asteroid";
 	name = "monastery";
 	width = 5
 	},
