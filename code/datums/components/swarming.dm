@@ -5,11 +5,20 @@
 	var/list/swarm_members = list()
 
 /datum/component/swarming/Initialize(max_x = 24, max_y = 24)
+	if(!ismovableatom(parent))
+		return COMPONENT_INCOMPATIBLE
 	offset_x = rand(-max_x, max_x)
 	offset_y = rand(-max_y, max_y)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/join_swarm)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/leave_swarm)
+
+/datum/component/swarming/Destroy()
+	var/atom/movable/_parent = parent
+	if(_parent.loc)
+		for(var/atom/movable/AM in _parent.loc.contents)
+			leave_swarm(_parent, AM) //If anyone got a better idea for this, please tell me.
+	. = ..()
 
 /datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
 	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
