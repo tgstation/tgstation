@@ -163,6 +163,19 @@
 
 	return FALSE
 
+/atom/proc/onAwayMission()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return FALSE
+
+	if(!is_away_level(T.z))
+		return FALSE
+
+	if(istype(T.loc, /area/awaymission))
+		return TRUE
+
+	return FALSE
+
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 	if(does_attack_animation)

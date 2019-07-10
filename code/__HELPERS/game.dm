@@ -325,6 +325,16 @@
 			return M.current.stat != DEAD
 	return FALSE
 
+/proc/considered_exiled(datum/mind/M)
+	if(M && M.current)
+		var/mob/living/carbon/human/H
+		if(ishuman(M.current))
+			H = M.current
+			for(var/obj/item/implant/I in H.implants)
+				if(I == /obj/item/implant/exile && H.onAwayMission())
+					return TRUE
+	return FALSE
+
 /proc/considered_afk(datum/mind/M)
 	return !M || !M.current || !M.current.client || M.current.client.is_afk()
 
