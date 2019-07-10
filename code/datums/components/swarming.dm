@@ -16,7 +16,9 @@
 /datum/component/swarming/Destroy()
 	. = ..()
 	for(var/datum/component/swarming/other_swarm in swarm_members)
-		other_swarm.swarm_members -= src //If anyone got a better idea for this, please tell me.
+		other_swarm.swarm_members -= src
+		if(!other_swarm.swarm_members.len)
+			other_swarm.unswarm()
 	swarm_members = null
 
 /datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
