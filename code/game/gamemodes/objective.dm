@@ -680,9 +680,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/agentcapture
 	name = "agentcapture"
 
-/datum/objective/agentcapture/find_target_by_role(role, role_type=TRUE, invert=FALSE)
-	. = ..()
-
 /datum/objective/agentcapture/update_explanation_text()
 	. = ..()
 	if(target && target.current)

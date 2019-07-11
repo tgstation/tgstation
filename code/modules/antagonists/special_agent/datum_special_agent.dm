@@ -54,7 +54,7 @@ This antagonist works directly in counter to the other antagonists present on th
 	var/datum/objective/agentcapture = new
 	
 	agentcapture.owner = owner
-	agentcapture.find_target_by_role("traitor")
+	agentcapture.find_target_by_role("traitor", role_type=TRUE)
 	add_objective(agentcapture)
 	
 	for(var/i = 1, i < saoa, i++)
