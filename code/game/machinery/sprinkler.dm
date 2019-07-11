@@ -19,7 +19,16 @@
 /obj/machinery/power/plumbing/sprinkler/Initialize()
 	create_reagents(volume, AMOUNT_VISIBLE)
 	START_PROCESSING(SSobj, src)
+	update_icon()
 	return ..()
+
+/obj/machinery/power/plumbing/sprinkler/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/output)
+
+/obj/machinery/power/plumbing/sprinkler/examine(mob/user)
+	. = ..()
+	. += "It is [anchored? "anchored" : "not anchored"]."
+	. += "[dirty? "It's dirty" : "It's clean"]."
 
 /obj/machinery/power/plumbing/sprinkler/process()
 	var/turf/T = get_turf(loc)
@@ -41,9 +50,6 @@
 	if(!connected)
 		add_overlay(mutable_appearance(icon,"sprinkler_connection"))
 
-/obj/machinery/power/plumbing/sprinkler/ComponentInitialize()
-	AddComponent(/datum/component/plumbing/output)
-
 /obj/machinery/power/plumbing/sprinkler/plunger_act(obj/item/plunger/P, mob/living/user)
 	. = ..()
 	if(!dirty)
@@ -59,11 +65,6 @@
 			update_icon()
 		else
 			working = FALSE
-
-/obj/machinery/power/plumbing/sprinkler/examine(mob/user)
-	. = ..()
-	. += "It is [anchored? "anchored" : "not anchored"]."
-	. += "[dirty? "It's dirty" : "It's clean"]."
 
 /obj/machinery/power/plumbing/sprinkler/interact(mob/user)
 	if(!allowed(user))
@@ -129,9 +130,9 @@
 		P.disable()
 		disconnect_from_network()
 		connected = FALSE
+	update_icon()
 
 /obj/machinery/power/plumbing/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
 	if(anchored)
 		to_chat(user, "Unbolt it from the floor first.")
 		return
