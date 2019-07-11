@@ -61,7 +61,7 @@
 
 /datum/material/uranium/on_applied(atom/source, amount, mapload)
 	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 50, source, 0) //half-life of 0 because we keep on going.
+	source.AddComponent(/datum/component/radioactive, amount / 10, source, 0) //half-life of 0 because we keep on going.
 
 ///Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma

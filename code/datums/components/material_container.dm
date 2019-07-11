@@ -335,4 +335,4 @@
 /datum/component/material_container/proc/get_material_amount(var/datum/material/mat)  //Revamped
 	if(!istype(mat))
 		mat = getmaterialref(mat)
-	return(materials.[mat])
+	return(materials[mat])
