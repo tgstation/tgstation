@@ -684,13 +684,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	..()
 
 /datum/objective/agent_capture/update_explaination_text()
-	..()
 	if(target && target.current)
 		explanation_text = "Capture [target.name], the target.assigned_role"
 	else
 		explanation_text = "Free Objective"
 /datum/objective/agent_capture/check_completion()
-	return target.onCentCom()
+	return target.current.onCentCom()
 
 
 
