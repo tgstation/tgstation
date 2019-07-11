@@ -1,3 +1,9 @@
+#define UNREGISTER_BOMB_SIGNALS(A) \
+	do { \
+		UnregisterSignal(A, boom_signals); \
+		UnregisterSignal(A, COMSIG_PARENT_EXAMINE); \
+	} while (0)
+
 //Bomb
 /mob/living/simple_animal/hostile/guardian/bomb
 	melee_damage_lower = 15
@@ -48,23 +54,23 @@
 			to_chat(src, "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</B></span>")
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/kaboom(atom/source, mob/living/explodee)
-	if(istype(explodee))
-		if(explodee != src && explodee != summoner && !hasmatchingsummoner(explodee))
-			to_chat(explodee, "<span class='danger'><B>[source] was boobytrapped!</B></span>")
-			to_chat(src, "<span class='danger'><B>Success! Your trap caught [explodee]</B></span>")
-			var/turf/T = get_turf(source)
-			playsound(T,'sound/effects/explosion2.ogg', 200, 1)
-			new /obj/effect/temp_visual/explosion(T)
-			explodee.ex_act(EXPLODE_HEAVY)
-			RemoveSignals(source)
+	if(!istype(explodee))
+		return
+	if(explodee == src || explodee == summoner || hasmatchingsummoner(explodee))
+		return
+	to_chat(explodee, "<span class='danger'><B>[source] was boobytrapped!</B></span>")
+	to_chat(src, "<span class='danger'><B>Success! Your trap caught [explodee]</B></span>")
+	var/turf/T = get_turf(source)
+	playsound(T,'sound/effects/explosion2.ogg', 200, 1)
+	new /obj/effect/temp_visual/explosion(T)
+	explodee.ex_act(EXPLODE_HEAVY)
+	UNREGISTER_BOMB_SIGNALS(source)
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/disable(atom/A)
 	to_chat(src, "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</B></span>")
-	RemoveSignals(A)
+	UNREGISTER_BOMB_SIGNALS(A)
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/display_examine(datum/source, mob/user, text)
 	text += "<span class='holoparasite'>It glows with a strange <font color=\"[namedatum.colour]\">light</font>!</span>"
 
-/mob/living/simple_animal/hostile/guardian/bomb/proc/RemoveSignals(datum/A)
-	UnregisterSignal(A, boom_signals)
-	UnregisterSignal(A, COMSIG_PARENT_EXAMINE)
+#undef UNREGISTER_BOMB_SIGNALS
