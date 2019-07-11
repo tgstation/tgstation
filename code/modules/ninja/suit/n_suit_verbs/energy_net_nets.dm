@@ -81,3 +81,46 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/structure/energy_net/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	return//The net must be destroyed to free the target
+
+/obj/structure/energy_net/syndie_net
+	var/turf/origin
+/obj/structure/energy_net/syndie_net/proc/moveback(var/mob/C, var/turf/T)
+	C = affecting
+	T = origin
+	C.forceMove(T)
+	do_sparks(5, FALSE, affecting)
+	playsound(affecting, 'sound/effects/phasein.ogg', 25, 1)
+	playsound(affecting, 'sound/effects/sparks2.ogg', 50, 1)
+	new /obj/effect/temp_visual/dir_setting/ninja/phase(affecting.drop_location(), affecting.dir)
+/obj/structure/energy_net/syndie_net/process()
+	if(QDELETED(affecting)||affecting.loc!=loc)
+		qdel(src)//Get rid of the net.
+		return
+
+	if(check>0)
+		check--
+		return
+
+	success = TRUE
+	qdel(src)
+
+	playsound(affecting, 'sound/effects/sparks4.ogg', 50, 1)
+	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location(), affecting.dir)
+
+	origin = get_turf(affecting)
+	visible_message("[affecting] suddenly vanishes!")
+	affecting.forceMove(pick(GLOB.holdingfacility)) //Throw mob in to the holding facility.
+	affecting.mind.captured()
+	to_chat(affecting, "<span class='danger'>You appear in a strange place!</span>")
+	//returns agents after 5 minutes to where they left
+	addtimer(CALLBACK(src, .proc/moveback, 300))
+
+	if(!QDELETED(master))//As long as they still exist.
+		to_chat(master, "<span class='notice'><b>SUCCESS</b>: transport procedure of [affecting] complete.</span>")
+	do_sparks(5, FALSE, affecting)
+	playsound(affecting, 'sound/effects/phasein.ogg', 25, 1)
+	playsound(affecting, 'sound/effects/sparks2.ogg', 50, 1)
+	new /obj/effect/temp_visual/dir_setting/ninja/phase(affecting.drop_location(), affecting.dir)
+
+
+

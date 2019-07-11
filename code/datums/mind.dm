@@ -65,6 +65,7 @@
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 
 	var/list/learned_recipes //List of learned recipe TYPES.
+	var/was_captured = FALSE
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -691,6 +692,13 @@
 	return
 
 /mob/dead/observer/sync_mind()
+	return
+
+/datum/mind/proc/capture_check()
+	return was_captured
+
+/datum/mind/proc/captured()
+	was_captured = TRUE
 	return
 
 //Initialisation procs

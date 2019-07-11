@@ -687,10 +687,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	else
 		explanation_text = "Free Objective"
 /datum/objective/agentcapture/check_completion()
-	return target.current.onCentCom()
+	return target.was_captured
 
-/datum/objective/agentcapture/New()
-	..()
 
 
 /datum/objective/protect_object

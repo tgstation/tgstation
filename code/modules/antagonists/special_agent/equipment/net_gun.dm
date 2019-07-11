@@ -18,7 +18,7 @@ This is a net gun, it looks like an inducer, and acts like an inducer, until you
 				to_chat(user, "<span class='warning'>You may not use an energy net through solid obstacles!</span>")
 				return
 		M.Beam(M,"n_beam",time=15)
-		var/obj/structure/energy_net/E = new /obj/structure/energy_net(M.drop_location())
+		var/obj/structure/energy_net/syndie_net/E = new /obj/structure/energy_net/syndie_net(M.drop_location())
 		E.affecting = M
 		E.master = user
 		user.visible_message("<span class='danger'>[user] caught [M] with an energy net!</span>","<span class='notice'>You caught [M] with an energy net!</span>")
