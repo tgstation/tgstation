@@ -1,49 +1,52 @@
-/obj/machinery/power/plumbing
+///basic plumbing machinery it holds a wrench_act used in all plumbing machinery
+/obj/machinery/plumbing
 	name = "pipe thing"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	icon_state = "pump"
 	anchored = FALSE
-	idle_power_usage = 10
-	active_power_usage = 300
+	active_power_usage = 30
+	use_power = ACTIVE_POWER_USE
+	///how much chems it can hold
 	var/volume = 100
+	///var to prevent do_after stacking
 	var/working = FALSE
+	///if crowbar'd what it turns into
 	var/deployable = null
 
-/obj/machinery/power/plumbing/Initialize()
+/obj/machinery/plumbing/Initialize()
 	create_reagents(volume, OPENCONTAINER | AMOUNT_VISIBLE)
 	update_icon()
+	power_change()
 	return ..()
 
-/obj/machinery/power/plumbing/ComponentInitialize()
+/obj/machinery/plumbing/ComponentInitialize()
 	AddComponent(/datum/component/plumbing/input)
 
-/obj/machinery/power/plumbing/wrench_act(mob/living/user, obj/item/I)
-	/// check to prevent pipe stacking on same tile
-	var/turf/T = get_turf(loc)
-	for(var/A in T.contents)
-		if(istype(A,/obj/machinery/power/plumbing) && A != src && anchored)
-			to_chat(user, "<span class='warning'>There is already a pipe machinery here!</span>")
-			return FALSE
+/obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/I)
+	if(pre_wrench_check())
+		to_chat(user, "<span class='warning'>There is already a pipe machinery here!</span>")
+		return FALSE
 	default_unfasten_wrench(user, I)
 	update_icon()
-	/// connects to pipes nearby
-	for(var/D in GLOB.cardinals)
-		for(var/obj/machinery/duct/P in get_step(src, D))
-			if(istype(P))
-				P.attempt_connect()
 	return TRUE
 
-/obj/machinery/power/plumbing/default_unfasten_wrench(mob/user, obj/item/I, time = 5)
+///checks if there are other machinery already to prevent wrenching one on top of another
+/obj/machinery/plumbing/proc/pre_wrench_check()
+	var/turf/T = get_turf(loc)
+	for(var/A in T.contents)
+		if(istype(A,/obj/machinery/plumbing) && A != src && !anchored)
+			return TRUE
+	return FALSE
+
+/obj/machinery/plumbing/default_unfasten_wrench(mob/user, obj/item/I, time = 5)
 	..()
 	var/datum/component/plumbing/P = GetComponent(/datum/component/plumbing)
 	if(anchored)
 		P.start()
-		connect_to_network()
 	else
 		P.disable()
-		disconnect_from_network()
 
-/obj/machinery/power/plumbing/crowbar_act(mob/living/user, obj/item/I)
+/obj/machinery/plumbing/crowbar_act(mob/living/user, obj/item/I)
 	if(anchored)
 		to_chat(user, "<span class='warning'>Unbolt it from the floor first.</span>")
 		return
@@ -54,30 +57,30 @@
 			to_chat(user, "<span class='notice'>You have disassembled \the [src].</span>")
 			new deployable (get_turf(src))
 			qdel(src)
+			return FALSE
 		else
 			working = FALSE
 
-/obj/machinery/power/plumbing/pipeinput
+/obj/machinery/plumbing/pipeinput
 	name = "pipe input"
 	icon_state = "input"
 	volume = 100
 	anchored = FALSE
 
-/obj/machinery/power/plumbing/pipeoutput
+/obj/machinery/plumbing/pipeoutput
 	name = "pipe output"
 	icon_state = "output"
 	volume = 100
 	anchored = FALSE
 
-/obj/machinery/power/plumbing/pipeoutput/Initialize()
+/obj/machinery/plumbing/pipeoutput/Initialize()
 	create_reagents(volume, OPENCONTAINER | AMOUNT_VISIBLE)
 	return ..()
 
-
-/obj/machinery/power/plumbing/pipeoutput/ComponentInitialize()
+/obj/machinery/plumbing/pipeoutput/ComponentInitialize()
 	AddComponent(/datum/component/plumbing/output)
 
-/obj/machinery/power/plumbing/sprinkler
+/obj/machinery/plumbing/sprinkler
 	name = "sprinkler"
 	desc = "An automated sprinkler capable of detecting fire and spraying coolant."
 	icon_state = "sprinkler"
@@ -88,54 +91,79 @@
 	req_access = list(ACCESS_ENGINE)
 	anchored = FALSE
 	density = FALSE
+	active_power_usage = 70
 	deployable = /obj/item/deployable/sprinkler
 	volume = 10
+	/// if the machine is dirty and needs plunging
 	var/dirty = FALSE
+	/// it holds the time after the sprinkler can dispense again
 	var/cooldown = 0
 
-/obj/machinery/power/plumbing/sprinkler/Initialize()
+/obj/machinery/plumbing/sprinkler/Initialize()
 	create_reagents(volume, AMOUNT_VISIBLE)
 	update_icon()
 	return ..()
 
-/obj/machinery/power/plumbing/sprinkler/ComponentInitialize()
+/obj/machinery/plumbing/sprinkler/ComponentInitialize()
 	AddComponent(/datum/component/plumbing/output)
 
-/obj/machinery/power/plumbing/sprinkler/examine(mob/user)
+/obj/machinery/plumbing/sprinkler/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It is [anchored? "anchored" : "not anchored"].</span>"
 	. += "<span class='notice'>[dirty? "It's dirty" : "It's clean"].</span>"
 
-/obj/machinery/power/plumbing/sprinkler/default_unfasten_wrench(mob/user, obj/item/I, time = 5)
+/obj/machinery/plumbing/sprinkler/power_change()
+	if(powered())
+		stat &= ~NOPOWER
+	else
+		stat |= NOPOWER
+	update_icon()
+
+/obj/machinery/plumbing/sprinkler/default_unfasten_wrench(mob/user, obj/item/I, time = 5)
 	..()
 	if(anchored)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/machinery/power/plumbing/sprinkler/process()
-	///find sparks
-	var/turf/T = get_turf(loc)
+///locates spark effects on the tile and returns a boolean
+/obj/machinery/plumbing/sprinkler/proc/find_sparks(turf/T)
 	var/obj/effect/particle_effect/sparks/S = locate() in T.contents
 	if(S)
-		dispense()
-	if(prob(10))
-		///find dirt
-		var/obj/effect/decal/cleanable/D = locate() in T.contents
-		if(D)
-			dirty = TRUE
-			STOP_PROCESSING(SSobj, src)
-			update_icon()
+		return TRUE
+	else
+		return FALSE
 
-/obj/machinery/power/plumbing/sprinkler/update_icon()
+///locates cleanable effects on the tile and returns a boolean
+/obj/machinery/plumbing/sprinkler/proc/find_dirt(turf/T)
+	var/obj/effect/decal/cleanable/D = locate() in T.contents
+	if(D)
+		return TRUE
+	else
+		return FALSE
+
+/obj/machinery/plumbing/sprinkler/process()
+	var/turf/T = get_turf(loc)
+	if(find_sparks(T))
+		dispense()
+	if(prob(10) && find_dirt(T))
+		dirty = TRUE
+		STOP_PROCESSING(SSobj, src)
+		update_icon()
+
+/obj/machinery/plumbing/sprinkler/update_icon()
 	. = ..()
 	cut_overlays()
+	if(stat&NOPOWER)
+		return
 	if(dirty)
 		add_overlay(mutable_appearance(icon,"sprinkler_dirty"))
 	if(!anchored)
 		add_overlay(mutable_appearance(icon,"sprinkler_connection"))
+	else
+		add_overlay(mutable_appearance(icon,"sprinkler_working"))
 
-/obj/machinery/power/plumbing/sprinkler/plunger_act(obj/item/plunger/P, mob/living/user)
+/obj/machinery/plumbing/sprinkler/plunger_act(obj/item/plunger/P, mob/living/user)
 	. = ..()
 	if(!dirty)
 		to_chat(user, "<span class='notice'>\The [src] is clean, there is no need to plunger it.</span>")
@@ -151,18 +179,19 @@
 		else
 			working = FALSE
 
-/obj/machinery/power/plumbing/sprinkler/interact(mob/user)
+/obj/machinery/plumbing/sprinkler/interact(mob/user)
 	if(!allowed(user))
 		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	dispense()
 	log_game("[user] has manually actived the sprinkler in [AREACOORD(src)]")
 
-/obj/machinery/power/plumbing/sprinkler/fire_act()
+/obj/machinery/plumbing/sprinkler/fire_act()
 	. = ..()
 	dispense()
 
-/obj/machinery/power/plumbing/sprinkler/proc/dispense()
+///dispenses 10u of the chemicals inside as not blinding smoke
+/obj/machinery/plumbing/sprinkler/proc/dispense()
 	if(cooldown < world.time && !dirty && anchored)
 		playsound(src, 'sound/machines/beep.ogg', 100, 1)
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
@@ -171,17 +200,20 @@
 		cooldown = world.time + 200
 		log_game("A sprinkler has been activated in [AREACOORD(src)]")
 
-/obj/machinery/power/plumbing/sprinkler/Destroy()
+/obj/machinery/plumbing/sprinkler/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	..()
 
+///deployable object that has the only function to create something when pressed in hand
 /obj/item/deployable
 	name = "deployable thing"
 	desc = "A self-deploying thing, it shouldn't be here."
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	icon_state = "sprinkler_d"
+	///var to prevent do_after stacking
 	var/deploying = FALSE
-	var/obj/machinery/power/plumbing/result
+	///result machine after deploying it
+	var/obj/machinery/plumbing/result
 
 /obj/item/deployable/attack_self(mob/user)
 	. = ..()
@@ -199,16 +231,16 @@
 	name = "deployable sprinkler"
 	desc = "A self-deploying sprinkler, just press the button to activate it."
 	icon_state = "sprinkler_d"
-	result = /obj/machinery/power/plumbing/sprinkler
+	result = /obj/machinery/plumbing/sprinkler
 
 /obj/item/deployable/input
 	name = "deployable input pipe"
 	desc = "A self-deploying input pipe, just press the button to activate it."
 	icon_state = "input_d"
-	result = /obj/machinery/power/plumbing/pipeinput
+	result = /obj/machinery/plumbing/pipeinput
 
 /obj/item/deployable/output
 	name = "deployable output pipe"
 	desc = "A self-deploying output pipe, just press the button to activate it."
 	icon_state = "output_d"
-	result = /obj/machinery/power/plumbing/pipeoutput
+	result = /obj/machinery/plumbing/pipeoutput
