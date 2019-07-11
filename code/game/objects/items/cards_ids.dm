@@ -103,7 +103,6 @@
 	. = ..()
 	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 
-
 /obj/item/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
@@ -120,7 +119,6 @@
 	var/access_txt // mapping aid
 	var/datum/bank_account/registered_account
 	var/obj/machinery/paystand/my_store
-
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
