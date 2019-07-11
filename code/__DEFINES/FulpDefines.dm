@@ -10,6 +10,7 @@
 // TRAITS
 #define TRAIT_COLDBLOODED		"coldblooded"
 #define TRAIT_NONATURALHEAL		"nonaturalheal"
+#define TRAIT_NORUNNING			"norunning"
 
 // HUD
 #define ANTAG_HUD_BLOODSUCKER		27  // Check atom_hud.dm to see what the current top number is.

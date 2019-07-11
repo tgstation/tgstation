@@ -354,6 +354,9 @@
 	if(m_intent == MOVE_INTENT_RUN)
 		m_intent = MOVE_INTENT_WALK
 	else
+		if (HAS_TRAIT(src,TRAIT_NORUNNING))	// FULPSTATION 7/10/19 So you can't run during fortitude.
+			to_chat(src, "You find yourself unable to run.")
+			return FALSE
 		m_intent = MOVE_INTENT_RUN
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
