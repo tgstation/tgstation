@@ -47,7 +47,7 @@
 
 				hard_drive.traitor_data = traitor_data
 			else
-				error = "Incorrect login details."
+				error = "Invalid user..."
 			return 1
 		if("PRG_call_extraction")
 			if (hard_drive.traitor_data.current_contract.status != CONTRACT_STATUS_EXTRACTING)
@@ -56,9 +56,11 @@
 					hard_drive.traitor_data.current_contract.status = CONTRACT_STATUS_EXTRACTING
 				else
 					user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
+					error = "Either both you or your target aren't at the dropoff location, or the pod hasn't got a valid place to land. Clear space, or make sure you're both inside."
 			else 
 				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
-			
+				error = "Already extracting... Place the target into the pod. If the pod was destroyed, you will need to cancel this contract."
+
 			return 1
 		if("PRG_contract_abort")
 			var/contract_id = hard_drive.traitor_data.current_contract.id
@@ -84,22 +86,29 @@
 			else
 				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
 			return 1
+		if ("PRG_clear_error")
+			error = ""
 		if("PRG_contractor_hub")
 			page = CONTRACT_UPLINK_PAGE_HUB
 		if ("PRG_hub_back")
 			page = CONTRACT_UPLINK_PAGE_CONTRACTS
 		if ("PRG_purchase_pinpointer")
-			if (hard_drive.traitor_data.contract_rep >= 1)
-				hard_drive.traitor_data.contract_rep -= 1
+			if (hard_drive.traitor_data.owner.current == user)
+				if (hard_drive.traitor_data.contract_rep >= 1)
+					hard_drive.traitor_data.contract_rep -= 1
 
-				var/obj/item/pinpointer/crew/contractor/contract_pinpointer = new /obj/item/pinpointer/crew/contractor
+					var/obj/item/pinpointer/crew/contractor/contract_pinpointer = new /obj/item/pinpointer/crew/contractor
 
-				if(ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if(H.put_in_hands(contract_pinpointer))
-						to_chat(H, "<span class='notice'>Your purchase materializes into your hands!</span>")
-					else
-						to_chat(user, "<span class='notice'>Your purchase materializes onto the floor.</span>")
+					contract_pinpointer.pinpointer_owner = user
+
+					if(ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if(H.put_in_hands(contract_pinpointer))
+							to_chat(H, "<span class='notice'>Your purchase materializes into your hands!</span>")
+						else
+							to_chat(user, "<span class='notice'>Your purchase materializes onto the floor.</span>")
+			else 
+				error = "Invalid user..."
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
 	var/list/data = list()
@@ -107,8 +116,6 @@
 
 	if (hard_drive && hard_drive.traitor_data != null)
 		var/datum/antagonist/traitor/traitor_data = hard_drive.traitor_data
-
-		error = ""
 		data = get_header_data()
 
 		if (traitor_data.current_contract)
@@ -122,6 +129,8 @@
 		data["contract_rep"] = traitor_data.contract_rep
 
 		data["page"] = page
+
+		data["error"] = error
 
 		for (var/datum/syndicate_contract/contract in traitor_data.assigned_contracts)
 			data["contracts"] += list(list(
@@ -153,6 +162,5 @@
 
 			data["dropoff_direction"] = direction
 	else
-		data["error"] = error
 		data["logged_in"] = FALSE
 	return data

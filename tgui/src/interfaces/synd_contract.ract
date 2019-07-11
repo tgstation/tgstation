@@ -2,7 +2,17 @@
 <ntosheader/>
 
 <ui-display>
-	<div style="position:relative">
+	<div style="position:relative; min-height: 350px">
+		{{#if data.error}}
+			<div style="position:absolute; width=75%; margin:auto; padding:25px; top:2px; background-color: black; border: 1px solid #750000">
+				<div style="color:white; font-weight: bold; font-style: italic; margin-bottom: 10px">
+					{{data.error}}
+				</div>
+				<div style="text-align:center margin-bottom:3px">
+					<ui-button action='PRG_clear_error'>Confirm</ui-button>
+				</div>
+			</div>
+		{{/if}}
 		{{#if data.logged_in}}
 			{{#if data.page == "CONTRACTS"}}
 				<div style="position:absolute; top:2px; right:2px">
