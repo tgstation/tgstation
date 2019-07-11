@@ -31,6 +31,12 @@
 		deaf = max(deaf, 1)
 	else if(!failing) // if this organ is failing, do not clear deaf stacks.
 		deaf = max(deaf - 1, 0)
+		if(prob(damage / 20) && (damage > low_threshold))
+			adjustEarDamage(0, 4)
+			SEND_SOUND(C, sound('sound/weapons/flash_ring.ogg'))
+			to_chat(C, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
+	else if(failing && deaf == 0)
+		deaf = 1	//stop being not deaf you deaf idiot
 
 /obj/item/organ/ears/proc/restoreEars()
 	deaf = 0
