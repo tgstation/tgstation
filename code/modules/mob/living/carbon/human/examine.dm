@@ -98,7 +98,9 @@
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
 
 	//Status effects
-	. += status_effect_examines()
+	var/list/status_examines = status_effect_examines()
+	if (length(status_examines))
+		. += status_examines
 
 	//Jitters
 	switch(jitteriness)
@@ -127,7 +129,7 @@
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 
-	var/list/msg = list("")
+	var/list/msg = list()
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/disabled = list()
@@ -346,7 +348,7 @@
 							"<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a>",
 							"<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>"), "")
 	else if(isobserver(user) && traitstring)
-		. += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
+		. += "<span class='info'><b>Traits:</b> [traitstring]</span>"
 	. += "*---------*</span>"
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!

@@ -383,12 +383,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	assets = list(
 		"tgui.css"	= 'tgui/assets/tgui.css',
 		"tgui.js"	= 'tgui/assets/tgui.js',
-		"font-awesome.min.css" = 'tgui/assets/font-awesome.min.css',
-		"fontawesome-webfont.eot" = 'tgui/assets/fonts/fontawesome-webfont.eot',
-		"fontawesome-webfont.woff2" = 'tgui/assets/fonts/fontawesome-webfont.woff2',
-		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
-		"fontawesome-webfont.ttf" = 'tgui/assets/fonts/fontawesome-webfont.ttf',
-		"fontawesome-webfont.svg" = 'tgui/assets/fonts/fontawesome-webfont.svg'
+	)
+
+/datum/asset/group/tgui
+	children = list(
+		/datum/asset/simple/tgui,
+		/datum/asset/simple/fontawesome
 	)
 
 /datum/asset/simple/headers
@@ -508,7 +508,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	children = list(
 		/datum/asset/simple/jquery,
 		/datum/asset/simple/goonchat,
-		/datum/asset/spritesheet/goonchat
+		/datum/asset/spritesheet/goonchat,
+		/datum/asset/simple/fontawesome
 	)
 
 /datum/asset/simple/jquery
@@ -522,12 +523,19 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	assets = list(
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
-		"fontawesome-webfont.eot"  = 'tgui/assets/fonts/fontawesome-webfont.eot',
-		"fontawesome-webfont.svg"  = 'tgui/assets/fonts/fontawesome-webfont.svg',
-		"fontawesome-webfont.ttf"  = 'tgui/assets/fonts/fontawesome-webfont.ttf',
-		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
-		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
+		"browserOutput_white.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_white.css',
+	)
+
+/datum/asset/simple/fontawesome
+	verify = FALSE
+	assets = list(
+		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
+		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
+		"fa-solid-900.eot"    = 'html/font-awesome/webfonts/fa-solid-900.eot',
+		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
+		"font-awesome.css"    = 'html/font-awesome/css/all.min.css',
+		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css'
 	)
 
 /datum/asset/spritesheet/goonchat

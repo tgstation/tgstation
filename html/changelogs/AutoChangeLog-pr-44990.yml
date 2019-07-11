@@ -1,0 +1,5 @@
+author: "pireamaineach"
+delete-after: True
+changes: 
+  - balance: "Nuclear particles irradiate more, but no longer deal toxin damage directly, and roll for rad protection."
+  - balance: "X-ray beams now roll for rad-armour, meaning they penetrate laser armour but are completely negated by rad-suits."

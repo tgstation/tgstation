@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Inorganic Biology and Necrotic Metabolism virus symptoms now take effect immediately, allowing for direct infection of the relevant species."

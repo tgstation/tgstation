@@ -902,7 +902,7 @@
 	for(var/bp in body_parts)
 		if(istype(bp, /obj/item/clothing))
 			var/obj/item/clothing/C = bp
-			if(C.blocks_shove_knockdown)
+			if(C.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
 				return TRUE
 	return FALSE
 
