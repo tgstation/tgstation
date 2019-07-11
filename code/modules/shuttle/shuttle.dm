@@ -11,25 +11,24 @@
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
-//
-	var/id //for identifying shuttle or dock among many others, necessarily be unical
-	var/destination_type //for map edits, work as category for search, shuttles can be allowed to fly to category
-	// this should point -away- from the dockingport door, ie towards the ship
-	dir = NORTH
-	var/width = 0	//size of covered area, perpendicular to dir
-	var/height = 0	//size of covered area, parallel to dir
-	var/dwidth = 0	//position relative to covered area, perpendicular to dir
-	var/dheight = 0	//position relative to covered area, parallel to dir
+	var/id ///for identifying shuttle or dock among many others, necessarily be unical
+	var/destination_type ///for map edits, work as category for search, shuttles can be allowed to fly to category
+	
+	dir = NORTH /// this should point -away- from the dockingport door, ie towards the ship
+	var/width = 0	///size of covered area, perpendicular to dir
+	var/height = 0	///size of covered area, parallel to dir
+	var/dwidth = 0	///position relative to covered area, perpendicular to dir
+	var/dheight = 0	///position relative to covered area, parallel to dir
 
 	var/area_type
-	var/hidden = FALSE //are we invisible to shuttle navigation computers?
+	var/hidden = FALSE ///are we invisible to shuttle navigation computers?
 	
-	var/delete_after = FALSE //Delete this port after ship fly off.
+	var/delete_after = FALSE ///Delete this port after ship fly off.
 
-	//these objects are indestructible
+	///these objects are indestructible
 /obj/docking_port/Destroy(force)
-	// unless you assert that you know what you're doing. Horrible things
-	// may result.
+	/// unless you assert that you know what you're doing. Horrible things
+	/// may result.
 	if(force)
 		..()
 		. = QDEL_HINT_QUEUE
@@ -49,7 +48,7 @@
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
 
-//returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
+///returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
 	if(_dir == null)
 		_dir = dir
@@ -79,15 +78,15 @@
 		_y + (-dwidth+width-1)*sin + (-dheight+height-1)*cos
 		)
 
-//returns turfs within our projected rectangle in no particular order
+///returns turfs within our projected rectangle in no particular order
 /obj/docking_port/proc/return_turfs()
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
 	var/turf/T1 = locate(L[3],L[4],z)
 	return block(T0,T1)
 
-//returns turfs within our projected rectangle in a specific order.
-//this ensures that turfs are copied over in the same order, regardless of any rotation
+///returns turfs within our projected rectangle in a specific order.
+///this ensures that turfs are copied over in the same order, regardless of any rotation
 /obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir)
 	var/cos = 1
 	var/sin = 0
@@ -115,7 +114,7 @@
 			.[T] = NONE
 
 #ifdef DOCKING_PORT_HIGHLIGHT
-//Debug proc used to highlight bounding area
+///Debug proc used to highlight bounding area
 /obj/docking_port/proc/highlight(_color)
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
@@ -131,21 +130,21 @@
 		T.color = "#00f"
 #endif
 
-//return first-found touching dockingport
-/obj/docking_port/proc/get_docked()
+
+/obj/docking_port/proc/get_docked() /// Return first-found touching dockingport
 	return locate(/obj/docking_port/stationary) in loc
 
-/obj/docking_port/proc/getDockedId()
+/obj/docking_port/proc/getDockedId() /// Return id of the docked docking_port
 	var/obj/docking_port/P = get_docked()
 	if(P)
 		return P.id
 
-/obj/docking_port/proc/getDockedDestination_type()
+/obj/docking_port/proc/getDockedDestination_type() /// Return destination_type of the docked docking_port
 	var/obj/docking_port/P = get_docked()
 	if(P)
 		return P.destination_type
 
-/obj/docking_port/proc/is_in_shuttle_bounds(atom/A)
+/obj/docking_port/proc/is_in_shuttle_bounds(atom/A) /// Say that A in the absolute (rectangular) bounds of this shuttle or no.
 	var/turf/T = get_turf(A)
 	if(T.z != z)
 		return FALSE
@@ -213,7 +212,7 @@
 	if(roundstart_template)
 		SSshuttle.action_load(roundstart_template, src)
 
-//returns first-found touching shuttleport
+///returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
 	. = locate(/obj/docking_port/mobile) in loc
 
@@ -249,18 +248,18 @@
 
 	var/list/shuttle_areas
 
-	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
+	var/timer						///used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/last_timer_length
 
-	var/mode = SHUTTLE_IDLE			//current shuttle mode
-	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
-	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
-	var/rechargeTime = 0		// time spent after arrival before being able to begin ignition
-	var/prearrivalTime = 0		// time spent after transit 'landing' before actually arriving
+	var/mode = SHUTTLE_IDLE			///current shuttle mode
+	var/callTime = 100				///time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
+	var/ignitionTime = 55			/// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
+	var/rechargeTime = 0		/// time spent after arrival before being able to begin ignition
+	var/prearrivalTime = 0		/// time spent after transit 'landing' before actually arriving
 
-	// The direction the shuttle prefers to travel in
+	/// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
-	// And the angle from the front of the shuttle to the port
+	/// And the angle from the front of the shuttle to the port
 	var/port_direction = NORTH
 
 	var/obj/docking_port/stationary/destination
@@ -273,11 +272,11 @@
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/list/ripples = list()
-	var/engine_coeff = 1 //current engine coeff
-	var/current_engines = 0 //current engine power
-	var/initial_engines = 0 //initial engine power
+	var/engine_coeff = 1 ///current engine coeff
+	var/current_engines = 0 ///current engine power
+	var/initial_engines = 0 ///initial engine power
 	var/list/engine_list = list()
-	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
+	var/can_move_docking_ports = FALSE ///if this shuttle can move docking ports other than the one it is docked at
 	var/list/hidden_turfs = list()
 
 /obj/docking_port/mobile/proc/register()
@@ -288,7 +287,7 @@
 		SSshuttle.mobile -= src
 		destination = null
 		previous = null
-		QDEL_NULL(assigned_transit)		//don't need it where we're goin'!
+		QDEL_NULL(assigned_transit)		///don't need it where we're goin'!
 		shuttle_areas = null
 		remove_ripples()
 	. = ..()
@@ -314,7 +313,7 @@
 	highlight("#0f0")
 	#endif
 
-// Called after the shuttle is loaded from template
+/// Called after the shuttle is loaded from template
 /obj/docking_port/mobile/proc/linkup(datum/map_template/shuttle/template, obj/docking_port/stationary/dock)
 	var/list/static/shuttle_id = list()
 	var/idnum = ++shuttle_id[template]
@@ -329,11 +328,11 @@
 			atom.connect_to_shuttle(src, dock, idnum, FALSE)
 
 
-//this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
+///this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
 	return TRUE
 
-//this is to check if this shuttle can physically dock at dock S
+///this is to check if this shuttle can physically dock at dock S
 /obj/docking_port/mobile/proc/canDock(obj/docking_port/stationary/S)
 	if(!istype(S))
 		return SHUTTLE_NOT_A_DOCKING_PORT
@@ -353,15 +352,15 @@
 	if(height-dheight > S.height-S.dheight)
 		return SHUTTLE_HEIGHT_TOO_LARGE
 
-	//check the dock isn't occupied
+	///check the dock isn't occupied
 	var/currently_docked = S.get_docked()
 	if(currently_docked)
-		// by someone other than us
+		/// by someone other than us
 		if(currently_docked != src)
 			return SHUTTLE_SOMEONE_ELSE_DOCKED
 		else
-		// This isn't an error, per se, but we can't let the shuttle code
-		// attempt to move us where we currently are, it will get weird.
+		/// This isn't an error, per se, but we can't let the shuttle code
+		/// attempt to move us where we currently are, it will get weird.
 			return SHUTTLE_ALREADY_DOCKED
 
 	return SHUTTLE_CAN_DOCK
@@ -374,14 +373,14 @@
 		if(status != SHUTTLE_ALREADY_DOCKED && !silent) // SHUTTLE_ALREADY_DOCKED is no cause for error
 			var/msg = "Shuttle [src] cannot dock at [S], error: [status]"
 			message_admins(msg)
-		// We're already docked there, don't need to do anything.
-		// Triggering shuttle movement code in place is weird
+		/// We're already docked there, don't need to do anything.
+		/// Triggering shuttle movement code in place is weird
 		return FALSE
 
 /obj/docking_port/mobile/proc/transit_failure()
 	message_admins("Shuttle [src] repeatedly failed to create transit zone.")
 
-//call the shuttle to destination S
+///call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
 	if(!check_dock(S))
 		testing("check_dock failed on request for [src]")
@@ -410,7 +409,7 @@
 			mode = SHUTTLE_IGNITING
 			setTimer(ignitionTime)
 
-//recall the shuttle to where it was previously
+///recall the shuttle to where it was previously
 /obj/docking_port/mobile/proc/cancel()
 	if(mode != SHUTTLE_CALL)
 		return
@@ -443,13 +442,13 @@
 
 
 /obj/docking_port/mobile/proc/jumpToNullSpace()
-	// Destroys the docking port and the shuttle contents.
-	// Not in a fancy way, it just ceases.
+	/// Destroys the docking port and the shuttle contents.
+	/// Not in a fancy way, it just ceases.
 	var/obj/docking_port/stationary/current_dock = get_docked()
 
 	var/underlying_area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
-	// If the shuttle is docked to a stationary port, restore its normal
-	// "empty" area and turf
+	/// If the shuttle is docked to a stationary port, restore its normal
+	/// "empty" area and turf
 	if(current_dock && current_dock.area_type)
 		underlying_area_type = current_dock.area_type
 
@@ -468,7 +467,7 @@
 		oldT.change_area(old_area, underlying_area)
 		oldT.empty(FALSE)
 
-		// Here we locate the bottomost shuttle boundary and remove all turfs above it
+		/// Here we locate the bottomost shuttle boundary and remove all turfs above it
 		var/list/baseturf_cache = oldT.baseturfs
 		for(var/k in 1 to length(baseturf_cache))
 			if(ispath(baseturf_cache[k], /turf/baseturf_skipover/shuttle))
@@ -478,19 +477,19 @@
 	qdel(src, force=TRUE)
 
 /obj/docking_port/mobile/proc/intoTheSunset()
-	// Loop over mobs
+	/// Loop over mobs
 	for(var/t in return_turfs())
 		var/turf/T = t
 		for(var/mob/living/M in T.GetAllContents())
-			// If they have a mind and they're not in the brig, they escaped
+			/// If they have a mind and they're not in the brig, they escaped
 			if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
 				M.mind.force_escaped = TRUE
-			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
+			/// Ghostize them and put them in nullspace stasis (for stat & possession checks)
 			M.notransform = TRUE
 			M.ghostize(FALSE)
 			M.moveToNullspace()
 
-	// Now that mobs are stowed, delete the shuttle
+	/// Now that mobs are stowed, delete the shuttle
 	jumpToNullSpace()
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
@@ -534,11 +533,11 @@
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
 
-// Never move the shuttle import landmark, otherwise things get WEIRD
+/// Never move the shuttle import landmark, otherwise things get WEIRD
 /obj/effect/landmark/shuttle_import/onShuttleMove()
 	return FALSE
 
-//used by shuttle subsystem to check timers
+///used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
 	check_effects()
 
@@ -547,8 +546,8 @@
 
 	if(timeLeft(1) > 0)
 		return
-	// If we can't dock or we don't have a transit slot, wait for 20 ds,
-	// then try again
+	/// If we can't dock or we don't have a transit slot, wait for 20 ds,
+	/// then try again
 	switch(mode)
 		if(SHUTTLE_CALL, SHUTTLE_PREARRIVAL)
 			if(prearrivalTime && mode != SHUTTLE_PREARRIVAL)
@@ -643,7 +642,7 @@
 		var/time_passed = last_timer_length - time_remaining
 		setTimer(time_passed)
 
-//returns timeLeft
+///returns timeLeft
 /obj/docking_port/mobile/proc/timeLeft(divisor)
 	if(divisor <= 0)
 		divisor = 10
@@ -656,7 +655,7 @@
 
 	. = round(ds_remaining / divisor, 1)
 
-// returns 3-letter mode string, used by status screens and mob status panel
+/// returns 3-letter mode string, used by status screens and mob status panel
 /obj/docking_port/mobile/proc/getModeStr()
 	switch(mode)
 		if(SHUTTLE_IGNITING)
@@ -677,7 +676,7 @@
 			return "LDN"
 	return ""
 
-// returns 5-letter timer string, used by status screens and mob status panel
+/// returns 5-letter timer string, used by status screens and mob status panel
 /obj/docking_port/mobile/proc/getTimerStr()
 	if(mode == SHUTTLE_STRANDED)
 		return "--:--"
@@ -729,7 +728,7 @@
 		. = "unknown"
 
 
-// attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
+/// attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
 /obj/docking_port/mobile/proc/getControlConsole()
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
@@ -749,9 +748,9 @@
 			selected_sound = "hyperspace_end"
 		else
 			CRASH("Invalid hyperspace sound phase: [phase]")
-	// This previously was played from each door at max volume, and was one of the worst things I had ever seen.
-	// Now it's instead played from the nearest engine if close, or the first engine in the list if far since it doesn't really matter.
-	// Or a door if for some reason the shuttle has no engine, fuck oh hi daniel fuck it
+	/// This previously was played from each door at max volume, and was one of the worst things I had ever seen.
+	/// Now it's instead played from the nearest engine if close, or the first engine in the list if far since it doesn't really matter.
+	/// Or a door if for some reason the shuttle has no engine, fuck oh hi daniel fuck it
 	var/range = (engine_coeff * max(width, height))
 	var/long_range = range * 2.5
 	var/atom/distant_source
@@ -781,8 +780,8 @@
 							closest_dist = dist_near
 				M.playsound_local(source, "sound/effects/[selected_sound].ogg", 100, falloff = range / 2)
 
-// Losing all initial engines should get you 2
-// Adding another set of engines at 0.5 time
+/// Losing all initial engines should get you 2
+/// Adding another set of engines at 0.5 time
 /obj/docking_port/mobile/proc/alter_engines(mod)
 	if(mod == 0)
 		return
@@ -802,9 +801,9 @@
 				engine_list += E
 				. += E.engine_power
 
-// Double initial engines to get to 0.5 minimum
-// Lose all initial engines to get to 2
-//For 0 engine shuttles like BYOS 5 engines to get to doublespeed
+/// Double initial engines to get to 0.5 minimum
+/// Lose all initial engines to get to 2
+///For 0 engine shuttles like BYOS 5 engines to get to doublespeed
 /obj/docking_port/mobile/proc/get_engine_coeff(current,engine_mod)
 	var/new_value = max(0,current + engine_mod)
 	if(new_value == initial_engines)
@@ -842,24 +841,24 @@
 			return ..()
 
 
-//Called when emergency shuttle leaves the station
+///Called when emergency shuttle leaves the station
 /obj/docking_port/mobile/proc/on_emergency_launch()
-	if(launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
+	if(launch_status == UNLAUNCHED) ///Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
 		launch_status = ENDGAME_LAUNCHED
 		enterTransit()
 
 /obj/docking_port/mobile/emergency/on_emergency_launch()
 	return
 
-//Called when emergency shuttle docks at centcom
+///Called when emergency shuttle docks at centcom
 /obj/docking_port/mobile/proc/on_emergency_dock()
-	//Mapping a new docking point for each ship mappers could potentially want docking with centcom would take up lots of space, just let them keep flying off into the sunset for their greentext
+	///Mapping a new docking point for each ship mappers could potentially want docking with centcom would take up lots of space, just let them keep flying off into the sunset for their greentext
 	if(launch_status == ENDGAME_LAUNCHED)
 		launch_status = ENDGAME_TRANSIT
 
 /obj/docking_port/mobile/pod/on_emergency_dock()
 	if(launch_status == ENDGAME_LAUNCHED)
-		initiate_docking(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcom
+		initiate_docking(SSshuttle.getDock("[id]_away")) ///Escape pods dock at centcom
 		mode = SHUTTLE_ENDGAME
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()
