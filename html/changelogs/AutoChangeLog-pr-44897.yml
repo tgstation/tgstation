@@ -1,0 +1,4 @@
+author: "peoplearestrange"
+delete-after: True
+changes: 
+  - tweak: "PKM examine tells you to use a crowbar for modules"

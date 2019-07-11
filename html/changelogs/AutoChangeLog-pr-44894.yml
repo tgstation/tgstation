@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - rscadd: "Added the Pushover and Frail negative quirks"

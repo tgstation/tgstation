@@ -855,7 +855,6 @@
 /area/awaymission/research/interior/gateway)
 "ck" = (
 /obj/machinery/door/window/eastright{
-	icon_state = "right";
 	dir = 2
 	},
 /obj/effect/landmark/awaystart,
@@ -2802,7 +2801,6 @@
 /area/awaymission/research/interior/secure)
 "gl" = (
 /obj/machinery/door/airlock/highsecurity{
-	aiDisabledIdScanner = 0;
 	name = "Vault Storage";
 	req_access_txt = "205"
 	},
@@ -2890,10 +2888,10 @@
 /obj/effect/mob_spawn/human/doctor{
 	brute_damage = 145;
 	id_job = "Geneticist";
+	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/geneticist;
-	name = "Geneticist"
+	uniform = /obj/item/clothing/under/rank/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -3869,10 +3867,10 @@
 /obj/effect/mob_spawn/human/doctor{
 	brute_damage = 145;
 	id_job = "Geneticist";
+	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/geneticist;
-	name = "Geneticist"
+	uniform = /obj/item/clothing/under/rank/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -4263,11 +4261,11 @@
 "jp" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastily flipped over for cover.";
-	obj_integrity = 55;
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
 	max_integrity = 55;
-	name = "flipped table"
+	name = "flipped table";
+	obj_integrity = 55
 	},
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
@@ -4442,11 +4440,11 @@
 "jG" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastily flipped over for cover.";
-	obj_integrity = 55;
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
 	max_integrity = 55;
-	name = "flipped table"
+	name = "flipped table";
+	obj_integrity = 55
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
@@ -4633,11 +4631,11 @@
 "kb" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastily flipped over for cover.";
-	obj_integrity = 55;
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
 	max_integrity = 55;
-	name = "flipped table"
+	name = "flipped table";
+	obj_integrity = 55
 	},
 /turf/open/floor/plasteel/yellowsiding,
 /area/awaymission/research/interior/dorm)
@@ -4708,10 +4706,10 @@
 /obj/effect/mob_spawn/human/doctor{
 	brute_damage = 145;
 	id_job = "Geneticist";
+	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/geneticist;
-	name = "Geneticist"
+	uniform = /obj/item/clothing/under/rank/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue{
@@ -5584,10 +5582,10 @@
 /obj/effect/mob_spawn/human/doctor{
 	brute_damage = 145;
 	id_job = "Geneticist";
+	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/geneticist;
-	name = "Geneticist"
+	uniform = /obj/item/clothing/under/rank/geneticist
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/research/exterior)

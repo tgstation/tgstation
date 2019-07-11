@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscdel: "Removed Bubblegums ability to summon slaughterlings."

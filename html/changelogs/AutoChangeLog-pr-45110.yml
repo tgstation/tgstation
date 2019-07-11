@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscadd: "Kinetic crusher can now be one-hand carried. You'll still need two hand to use it."

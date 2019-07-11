@@ -46,7 +46,7 @@
 			qdel(src)
 
 /obj/item/paperplane/Destroy()
-	QDEL_NULL(internalPaper)
+	internalPaper = null
 	return ..()
 
 /obj/item/paperplane/suicide_act(mob/living/user)
