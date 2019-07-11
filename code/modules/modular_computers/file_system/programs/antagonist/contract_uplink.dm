@@ -44,11 +44,11 @@
 				if (!traitor_data.assigned_contracts.len)
 					user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, 0)
 					traitor_data.contractor_hub = new
+					traitor_data.contractor_hub.create_hub_items()
+
 				traitor_data.create_contracts()
 
 				hard_drive.traitor_data = traitor_data
-			else
-				error = "Invalid user..."
 			return 1
 		if("PRG_call_extraction")
 			if (hard_drive.traitor_data.current_contract.status != CONTRACT_STATUS_EXTRACTING)

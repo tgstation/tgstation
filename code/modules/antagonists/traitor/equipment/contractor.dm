@@ -5,18 +5,20 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_hub/item))
 	var/list/hub_items = list()
 	var/list/purchased_items = list()
 
-/datum/contractor_hub/New()
+/datum/contractor_hub/proc/create_hub_items()
 	for(var/path in GLOB.contractor_items)
 		var/datum/contractor_hub/item/contractor_item = new path
 
-		hub_items += contractor_item
+		to_chat(world, "Adding item to hub")
+
+		hub_items.Add(contractor_item)
 
 /datum/contractor_hub/item
 	var/name // Name of item
 	var/desc // description of item in html
 	var/item // item path, no item path means the purchase needs it's own handle_purchase()
 	var/icon = "fa-broadcast-tower" // fontawesome icon to use inside the hub - https://fontawesome.com/icons/
-	var/limited = -1 // Any number above 0 for how many times it can be bought in a round for a single traitor.
+	var/limited = -1 // Any number above 0 for how many times it can be bought in a round for a single traitor. -1 is unlimited.
 	var/cost // Cost of the item in contract rep.
 
 /datum/contractor_hub/item/contractor_pinpointer
