@@ -5,6 +5,7 @@
 	icon_state = "external"
 	desc = "These lens modify the laser frequency and trajectory giving them special effects."
 	icon = 'icons/obj/guns/energy.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	var/stored_ammo_type = /obj/item/ammo_casing/energy/laser
 	var/restricted_type = /obj/item/gun/energy/laser //which type of laser gun it can be assigned to
 	var/overlay = "laser"
