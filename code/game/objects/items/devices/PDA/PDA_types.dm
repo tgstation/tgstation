@@ -94,6 +94,12 @@
 	name = "head of personnel PDA"
 	default_cartridge = /obj/item/cartridge/hop
 	icon_state = "pda-hop"
+	
+/obj/item/pda/heads/qm
+	name = "quartermaster PDA"
+	default_cartridge = /obj/item/cartridge/quartermaster
+	inserted_item = /obj/item/pen/fountain
+	icon_state = "pda-qm"
 
 /obj/item/pda/heads/hos
 	name = "head of security PDA"
@@ -130,12 +136,6 @@
 	name = "cargo technician PDA"
 	default_cartridge = /obj/item/cartridge/quartermaster
 	icon_state = "pda-cargo"
-
-/obj/item/pda/quartermaster
-	name = "quartermaster PDA"
-	default_cartridge = /obj/item/cartridge/quartermaster
-	inserted_item = /obj/item/pen/fountain
-	icon_state = "pda-qm"
 
 /obj/item/pda/shaftminer
 	name = "shaft miner PDA"
