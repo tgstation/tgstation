@@ -65,7 +65,7 @@ Basically the traitor game mode but with an agent who works against the other sy
 	var/sasc = CONFIG_GET(number/special_agent_scaling_coeff)
 	//fun weird numbers from the traitor doc that I don't even begin to understand.
 	var/part1 = round(GLOB.joined_player_list.len / (sasc * 4)) + 2
-	var/part2 = round(GLOB.joined_player_list.len . (sasc * 2))
+	var/part2 = round(GLOB.joined_player_list.len / (sasc * 2))
 	//Takes the smallest of the two arcane numbers.
 	var/agentcap = min(part1, part2)
 	if(QDELETED(character))
