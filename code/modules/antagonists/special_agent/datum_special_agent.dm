@@ -66,8 +66,12 @@ This antagonist works directly in counter to the other antagonists present on th
 	return
 
 /datum/antagonist/special_agent/proc/forge_single_objective()
-	var/pick = pick(1,2,3)
+	var/pick
 	if( pick == 1 && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
+		pick = pick(1,2,3)
+	else
+		pick = pick(2,3)
+	if(pick == 1)
 		var/datum/objective/download/download_objective = new
 		download_objective.owner = owner
 		download_objective.gen_amount_goal()
