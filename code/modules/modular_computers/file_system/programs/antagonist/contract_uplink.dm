@@ -97,11 +97,16 @@
 			if (hard_drive.traitor_data.owner.current == user)
 				var/item = params["item"]
 
+				to_chat(world, item)		
+
 				for (var/datum/contractor_hub/item/hub_item in hard_drive.traitor_data.contractor_hub.hub_items)
+					to_chat(world, hub_item.name)		
+
 					if (hub_item.name == item)
 						hub_item.handle_purchase()
 			else
-				error = "Invalid user..."			
+				error = "Invalid user..."
+		to_chat(world, action)		
 
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)

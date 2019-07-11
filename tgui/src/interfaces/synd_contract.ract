@@ -123,7 +123,7 @@
 								</div>
 								<br>
 								<div style="text-align:center; padding-left:5px; padding-right:5px">
-									{{desc}}
+									<p>{{desc}}</p>
 								</div>
 								<br>
 								<div style="text-align:center; margin-bottom:10px">
