@@ -12,6 +12,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/id = "mat"
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
 	var/color
+	///Base alpha of the material, is used for greyscale icons.
+	var/alpha
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for.gold
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets.
@@ -28,8 +30,11 @@ Simple datum which is instanced once per type and is used for every object of sa
 ///This proc is called when the material is added to an object. mapload exists mostly to prevent the removal of mapped in variables.
 /datum/material/proc/on_applied(atom/source, amount, mapload = FALSE)
 	source.desc += "<br><u>It is made out of [name]</u>."
-	if(!mapload && color) //Do we have a custom color?
-		source.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+	if(!mapload) //Prevent changing mapload icons, to keep colored toolboxes their looks.
+		if(color) //Do we have a custom color?
+			source.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+		if(alpha)
+			source.alpha = alpha
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, mapload)

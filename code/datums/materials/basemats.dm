@@ -14,6 +14,7 @@
 	id = "glass"
 	desc = "Glass forged by melting sand."
 	color = "#dae6f0"
+	alpha = 210
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/glass
 
@@ -33,6 +34,7 @@
 	id = "gold"
 	desc = "Gold"
 	color = "#f0972b"
+	strength = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	coin_type = /obj/item/coin/gold
@@ -59,9 +61,9 @@
 
 /datum/material/uranium/on_applied(atom/source, amount, mapload)
 	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 100, source, 0) //half-life of 0 because we keep on going.
+	source.AddComponent(/datum/component/radioactive, amount / 50, source, 0) //half-life of 0 because we keep on going.
 
-///Can burn up into plasma.
+///Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
 	name = "plasma"
 	id = "plasma"
@@ -70,6 +72,10 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	coin_type = /obj/item/coin/plasma
+
+/datum/material/plasma/on_applied(atom/source, amount, mapload)
+	. = ..()
+	source.AddComponent(/datum/component/firestackadder)
 
 ///Can cause bluespace effects on use. (Teleportation)
 /datum/material/bluespace
@@ -101,6 +107,7 @@
 	id = "titanium"
 	desc = "Titanium"
 	color = "#b3c0c7"
+	strength = 1.3
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 
@@ -110,6 +117,7 @@
 	id = "plastic"
 	desc = "plastic"
 	color = "#caccd9"
+	strength = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
 
 ///Force decrease and mushy sound effect.
@@ -118,3 +126,4 @@
 	id = "biomass"
 	desc = "Organic matter"
 	color = "#735b4d"
+	strength = 0.8

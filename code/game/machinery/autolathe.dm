@@ -391,7 +391,7 @@
 		if(ismaterialcategory(i))
 			dat += "[D.materials[i] * coeff] [i]"
 		else
-			var/datum/material/M = getmaterialref(i)
+			var/datum/material/M = i
 			dat += "[D.materials[i] * coeff] [M.name] "
 	return dat
 
