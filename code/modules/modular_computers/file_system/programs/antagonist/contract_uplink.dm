@@ -121,11 +121,19 @@
 		data["station_name"] = GLOB.station_name
 		data["redeemable_tc"] = traitor_data.contract_TC_to_redeem
 		data["contract_rep"] = traitor_data.contractor_hub.contract_rep
-		data["contractor_hub_items"] = traitor_data.contractor_hub.hub_items
 
 		data["page"] = page
 
 		data["error"] = error
+
+		for (var/datum/contractor_hub/item/hub_item in traitor_data.contractor_hub.hub_items)
+			data["contractor_hub_items"] += list(list(
+				"name" = hub_item.name,
+				"desc" = hub_item.desc,
+				"cost" = hub_item.cost,
+				"limited" = hub_item.limited,
+				"icon" = hub_item.icon
+			))
 
 		for (var/datum/syndicate_contract/contract in traitor_data.assigned_contracts)
 			data["contracts"] += list(list(

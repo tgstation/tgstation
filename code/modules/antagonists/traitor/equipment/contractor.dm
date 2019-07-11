@@ -9,8 +9,6 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_hub/item))
 	for(var/path in GLOB.contractor_items)
 		var/datum/contractor_hub/item/contractor_item = new path
 
-		to_chat(world, "Adding item to hub")
-
 		hub_items.Add(contractor_item)
 
 /datum/contractor_hub/item

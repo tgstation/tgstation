@@ -112,7 +112,6 @@
 				<div class="margin-top: 10px">
 
 					{{#each data.contractor_hub_items}}
-						a
 						{{#if limited != 0}}
 							<div style="margin-top:10px; border: 1px solid white">
 								<div style="text-align:center; margin-top:5px">
