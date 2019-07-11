@@ -249,7 +249,6 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -858,7 +857,6 @@
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = 23
 	},
@@ -1544,9 +1542,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "db" = (
-/obj/structure/closet/crate/medical{
-	name = "medical crate"
-	},
+/obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -1775,7 +1771,6 @@
 	},
 /obj/machinery/light,
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
@@ -1891,7 +1886,6 @@
 /area/shuttle/escape)
 "dE" = (
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
