@@ -113,7 +113,7 @@ It is possible to destroy the net by the occupant or someone else.
 	affecting.mind.captured()
 	to_chat(affecting, "<span class='danger'>You appear in a strange place!</span>")
 	//returns agents after 5 minutes to where they left
-	addtimer(CALLBACK(src, .proc/moveback, 300))
+	addtimer(CALLBACK(src, .proc/moveback), 300)
 
 	if(!QDELETED(master))//As long as they still exist.
 		to_chat(master, "<span class='notice'><b>SUCCESS</b>: transport procedure of [affecting] complete.</span>")
