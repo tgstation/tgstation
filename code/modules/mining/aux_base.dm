@@ -256,7 +256,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
 	destination_type = "mining"
-	//id = "disabled" //The Aux Base has to leave before this can be used as a dock.
+	hidden = TRUE //The Aux Base has to leave before this can be used as a dock.
 	//Should be checked on the map to ensure it matchs the mining shuttle dimensions.
 	dwidth = 3
 	width = 7
