@@ -1,14 +1,11 @@
 /*!
 Basically the traitor game mode but with an agent who works against the other syndicate operatives, attempting to extract one or more of them.
 */
-
-/datum/game_mode
-	/var/list/datum/mind/special_agents = list()
-
 /datum/game_mode/traitor/special_agent
 	name = "traitor+specialagent"
 	config_tag = "traitoragent"
 	report_type = "traitoragent"
+	antag_flag = ROLE_SPECIAL_AGENT
 	fale_report_weight = 5
 	restricted_jobs = list("AI","Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
