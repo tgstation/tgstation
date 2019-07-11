@@ -46,3 +46,4 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.max_integrity = o.max_integrity *= strength
 		o.obj_integrity = o.max_integrity
 		o.force = o.force *= strength
+		o.throwforce = o.throwforce *= strength
