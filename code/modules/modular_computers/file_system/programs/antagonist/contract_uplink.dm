@@ -40,9 +40,10 @@
 			// contract system.
 			// We also create their contracts at this point.
 			if (traitor_data)
-				// Only play greet sound when assigning for the first time.
+				// Only play greet sound, and handle contractor hub when assigning for the first time.
 				if (!traitor_data.assigned_contracts.len)
 					user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, 0)
+					traitor_data.contractor_hub = new
 				traitor_data.create_contracts()
 
 				hard_drive.traitor_data = traitor_data
@@ -92,23 +93,16 @@
 			page = CONTRACT_UPLINK_PAGE_HUB
 		if ("PRG_hub_back")
 			page = CONTRACT_UPLINK_PAGE_CONTRACTS
-		if ("PRG_purchase_pinpointer")
+		if ("buy_hub")
 			if (hard_drive.traitor_data.owner.current == user)
-				if (hard_drive.traitor_data.contract_rep >= 1)
-					hard_drive.traitor_data.contract_rep -= 1
+				var/item = params["item"]
 
-					var/obj/item/pinpointer/crew/contractor/contract_pinpointer = new /obj/item/pinpointer/crew/contractor
+				for (var/datum/contractor_hub/item/hub_item in hard_drive.traitor_data.contractor_hub.hub_items)
+					if (hub_item.name == item)
+						hub_item.handle_purchase()
+			else
+				error = "Invalid user..."			
 
-					contract_pinpointer.pinpointer_owner = user
-
-					if(ishuman(user))
-						var/mob/living/carbon/human/H = user
-						if(H.put_in_hands(contract_pinpointer))
-							to_chat(H, "<span class='notice'>Your purchase materializes into your hands!</span>")
-						else
-							to_chat(user, "<span class='notice'>Your purchase materializes onto the floor.</span>")
-			else 
-				error = "Invalid user..."
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
 	var/list/data = list()
@@ -122,11 +116,12 @@
 			data["ongoing_contract"] = TRUE
 			if (traitor_data.current_contract.status == CONTRACT_STATUS_EXTRACTING)
 				data["extraction_enroute"] = TRUE
-
+		
 		data["logged_in"] = TRUE
 		data["station_name"] = GLOB.station_name
 		data["redeemable_tc"] = traitor_data.contract_TC_to_redeem
-		data["contract_rep"] = traitor_data.contract_rep
+		data["contract_rep"] = traitor_data.contractor_hub.contract_rep
+		data["contractor_hub_items"] = traitor_data.contractor_hub.hub_items
 
 		data["page"] = page
 

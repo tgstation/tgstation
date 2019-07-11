@@ -18,7 +18,7 @@
 	var/list/assigned_targets = list()
 	var/contract_TC_payed_out = 0
 	var/contract_TC_to_redeem = 0
-	var/contract_rep = 0
+	var/datum/contractor_hub/contractor_hub
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()

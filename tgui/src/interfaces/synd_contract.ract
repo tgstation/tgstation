@@ -110,23 +110,29 @@
 				</p>
 
 				<div class="margin-top: 10px">
-					<div style="margin-top:10px; border: 1px solid white">
-						<div style="text-align:center; margin-top:5px">
-							Contractor Pinpointer - 1 Rep
-						</div>
-						<br>
-						<div style="text-align:center">
-							<i class="fas fa-search-location fa-3x"></i>
-						</div>
-						<br>
-						<div style="text-align:center; padding-left:5px; padding-right:5px">
-							A pinpointer that finds targets even without active suit sensors. Due to taking advantage of an exploit within the system, it can't pinpoint to the same accuracy as the traditional models.
-						</div>
-						<br>
-						<div style="text-align:center; margin-bottom:10px">
-							<ui-button action='PRG_purchase_pinpointer'>Purchase</ui-button>
-						</div>
-					</div>
+
+					{{#each data.contractor_hub_items}}
+						{{#if limited > 0}}
+							<div style="margin-top:10px; border: 1px solid white">
+								<div style="text-align:center; margin-top:5px">
+									{{name}} - {{cost}} Rep
+								</div>
+								<br>
+								<div style="text-align:center">
+									<i class="fas {{icon}} fa-3x"></i>
+								</div>
+								<br>
+								<div style="text-align:center; padding-left:5px; padding-right:5px">
+									{{desc}}
+								</div>
+								<br>
+								<div style="text-align:center; margin-bottom:10px">
+									<ui-button action='buy_hub' params='{"item": {{name}}, "cost": {{cost}}}'>Purchase</ui-button>
+								</div>
+							</div>
+						{{/if}}
+					{{/each}}
+
 				</div>
 			{{/if}}
 		{{else}}
