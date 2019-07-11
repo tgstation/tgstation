@@ -387,6 +387,19 @@
 /obj/machinery/smartfridge/extract/preloaded
 	initial_contents = list(/obj/item/slime_scanner = 2)
 
+// -------------------------
+// Organ Surgery Smartfridge
+// -------------------------
+/obj/machinery/smartfridge/organ
+	name = "smart organ storage"
+	desc = "A refrigerated storage unit for organ storage."
+	max_n_of_items = 100	//1500 seems far too high for organs
+
+/obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
+	if(istype(O, /obj/item/organ) && !istype(O, /obj/item/organ/brain))	//would rather not have a machine to freeze brains from a gameplay perspective, if it is so necessary, freezer chests exist
+		return TRUE
+	return FALSE
+
 // -----------------------------
 // Chemistry Medical Smartfridge
 // -----------------------------

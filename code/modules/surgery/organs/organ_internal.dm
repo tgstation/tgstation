@@ -86,9 +86,17 @@
 	//damage the organ by its decay factor
 	damage = min(maxHealth, damage + (maxHealth * decay_factor))
 
-/obj/item/organ/process()
-	//only necessary for when the organ is outside of the body
+/obj/item/organ/process()	//only necessary for when the organ is outside of the body
 	if(!owner)
+	//	var/obj/cooler
+	//	var/infinite_recursion = 0
+		//first we check to see if we or anything we're in is in a morgue unit, freezer, or organ storage fridge
+	//	while(!isturf(cooler.loc && infinite_recursion < 3))	//not taking a while to check each process()
+			//if(istype(cooler.loc, /obj/structure/bodycontainer/morgue) || istype(cooler.loc, /obj/structure/closet/crate/freezer) || istype(cooler.loc, /obj/machinery/smartfridge/organ))
+			//	return
+		//	cooler = cooler.loc
+		//	infinite_recursion++
+		//synthetic organs don't decompose
 		if(synthetic)
 			return
 		if(damage >= maxHealth)
