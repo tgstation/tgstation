@@ -49,6 +49,8 @@
 	var/treatment_oxy = /datum/reagent/medicine/dexalin
 	var/treatment_fire_avoid = null
 	var/treatment_fire = /datum/reagent/medicine/oxandrolone
+	var/treatment_tox_avoid = null
+	var/treatment_tox = /datum/reagent/medicine/charcoal
 	var/treatment_virus_avoid = null
 	var/treatment_virus = /datum/reagent/medicine/spaceacillin
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
@@ -60,6 +62,7 @@
 	skin = "bezerk"
 	treatment_brute = /datum/reagent/medicine/omnizine
 	treatment_fire = /datum/reagent/medicine/omnizine
+	treatment_tox = /datum/reagent/medicine/omnizine
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
@@ -72,6 +75,8 @@
 	treatment_brute = /datum/reagent/toxin/pancuronium
 	treatment_fire_avoid = null
 	treatment_fire = /datum/reagent/toxin/sodium_thiopental
+	treatment_tox_avoid = null
+	treatment_tox = /datum/reagent/toxin/sodium_thiopental
 
 /mob/living/simple_animal/bot/medbot/update_icon()
 	cut_overlays()
@@ -362,7 +367,7 @@
 		declare(C)
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
-	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getFireLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
+	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getFireLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
 			if(!C.reagents.has_reagent(R.type))
 				return TRUE
@@ -375,6 +380,9 @@
 		return TRUE
 
 	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
+		return TRUE
+		
+	if((!C.reagents.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return TRUE
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
@@ -453,6 +461,10 @@
 		if(!reagent_id && (C.getFireLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_fire) && !C.reagents.has_reagent(treatment_fire_avoid))
 				reagent_id = treatment_fire
+				
+		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
+			if(!C.reagents.has_reagent(treatment_tox) && !C.reagents.has_reagent(treatment_tox_avoid))
+				reagent_id = treatment_tox
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
