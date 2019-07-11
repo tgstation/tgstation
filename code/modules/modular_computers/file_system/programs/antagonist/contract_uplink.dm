@@ -106,7 +106,7 @@
 						hub_item.handle_purchase()
 			else
 				error = "Invalid user..."
-		to_chat(world, action)		
+	to_chat(world, action)		
 
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
