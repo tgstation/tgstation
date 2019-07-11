@@ -388,7 +388,6 @@
 	if(href_list["remove_mat"] && href_list["material"])
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/datum/material/Mat = locate(href_list["material"])
-		to_chat(world, "fucking work [Mat.name]")
 		materials.retrieve_sheets(text2num(href_list["remove_mat"]), Mat)
 
 	updateUsrDialog()

@@ -379,7 +379,6 @@
 	for(var/i in D.materials)
 		required_materials[i] = D.materials[i] * coeff * amount
 
-
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 	return materials.has_materials(required_materials)
@@ -389,7 +388,11 @@
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
 	for(var/i in D.materials)
-		dat += "[D.materials[i] * coeff] metal "
+		if(ismaterialcategory(i))
+			dat += "[D.materials[i] * coeff] [i]"
+		else
+			var/datum/material/M = getmaterialref(i)
+			dat += "[D.materials[i] * coeff] [M.name] "
 	return dat
 
 /obj/machinery/autolathe/proc/reset(wire)

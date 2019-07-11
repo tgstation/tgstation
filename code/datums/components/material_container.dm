@@ -276,7 +276,10 @@
 
 			else // Its a category. (For example MAT_CATEGORY_RIGID)
 				if(!has_enough_of_category(req_mat, mats[req_mat], multiplier)) //Do we have enough of this category?
+					to_chat(world, "not enough of category [req_mat] [mats[req_mat]]")
 					return FALSE
+				else
+					continue
 
 		if(!has_enough_of_material(req_mat, mats[req_mat], multiplier))//Not a category, so just check the normal way
 			return FALSE
@@ -295,15 +298,16 @@
 	if(!materials[req_mat]) //Do we have the resource?
 		return FALSE //Can't afford it
 	var/amount_required = amount * multiplier
-	if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
-		return FALSE //Can't afford it
-	return TRUE
+	if(materials[req_mat] >= amount_required) // do we have enough of the resource?
+		return TRUE 
+	return FALSE //Can't afford it
 
 /datum/component/material_container/proc/has_enough_of_category(category, amount, multiplier=1) //Revamped
 	for(var/i in SSmaterials.materials_by_category[category])
-		var/datum/material/mat
+		var/datum/material/mat = i
 		if(materials[mat] >= amount) //we have enough
 			return TRUE
+	return FALSE
 
 
 /datum/component/material_container/proc/amount2sheet(amt) //Revamped

@@ -92,8 +92,8 @@
 
 /datum/material/bananium/on_applied(atom/source, amount, mapload)
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
-	AddComponent(/datum/component/slippery, min(amount / 10, 80))
+	source.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+	source.AddComponent(/datum/component/slippery, min(amount / 10, 80))
 
 ///Mediocre force increase
 /datum/material/titanium
