@@ -677,6 +677,23 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		target_amount = count
 	update_explanation_text()
 
+/datum/objective/agent_capture
+	name = "agent capture"
+
+/datum/objective/agent_capture/find_target_by_role(role, role_type=TRUE, invert=FALSE)
+	..()
+
+/datum/objective/agent_capture/update_explaination_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Capture [target.name], the target.assigned_role"
+	else
+		explanation_text = "Free Objective"
+/datum/objective/agent_capture/check_completion()
+	return target.onCentCom()
+
+
+
 /datum/objective/protect_object
 	name = "protect object"
 	var/obj/protect_target
@@ -877,6 +894,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
 	if(expl)
 		explanation_text = expl
+
+////////////////////////////////
+// Special Agent Objectives   //
+////////////////////////////////
+
+
 
 ////////////////////////////////
 // Changeling team objectives //
