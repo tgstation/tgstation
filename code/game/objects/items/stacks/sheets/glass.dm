@@ -270,15 +270,15 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if (icon_prefix)
 		icon_state = "[icon_prefix][icon_state]"
 
-	var/area/A = get_area(src)
-	if(is_station_level(z) && !istype(A, /area/maintenance))
+	var/turf/T = get_turf(src)
+	if(is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 
 /obj/item/shard/Destroy()
 	. = ..()
 
-	var/area/A = get_area(src)
-	if(is_station_level(initial(z)) && !istype(A, /area/maintenance))
+	var/turf/T = get_turf(src)
+	if(is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 
 /obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)

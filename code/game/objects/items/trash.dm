@@ -8,14 +8,14 @@
 	resistance_flags = FLAMMABLE
 
 /obj/item/trash/Initialize(mapload)
-	var/area/A = get_area(src)
-	if(is_station_level(z) && !istype(A, /area/maintenance))
+	var/turf/T = get_turf(src)
+	if(is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 	return ..()
 
 /obj/item/trash/Destroy()
-	var/area/A = get_area(src)
-	if(is_station_level(initial(z)) && !istype(A, /area/maintenance))
+	var/turf/T = get_turf(src)
+	if(is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 	return ..()
 
