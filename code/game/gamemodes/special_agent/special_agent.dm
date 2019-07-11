@@ -34,7 +34,12 @@ Basically the traitor game mode but with an agent who works against the other sy
 	
 	var/sasc = CONFIG_GET(number/special_agent_scaling_coeff)
 	if(sasc)
-		num_agents = max(1, min(round(num_players() / (sasc * 2)) + 2 + num_modifier, round(num_players() / sasc) + num_modifier))
+		//weird incoherent numbers ripped from the traitor doc
+		var/part1 = round(num_players() / (sasc * 2)) + 2 + num_modifier
+		//more weird incoherent numbers ripped from the traitor doc
+		var/part2 = round(num_players() / sasc) + num_modifier
+		//either has one agent, or takes the smallest of the two parts
+		num_agents = max(1, min(part1, part2))
 	else
 		num_agents = max(1, min(num_players(), traitors_possible))
 	if(possible_agents.len>0)
@@ -58,7 +63,13 @@ Basically the traitor game mode but with an agent who works against the other sy
 
 /datum/game_mode/traitor/special_agent/make_antag_chance(mob/living/carbon/human/character)
 	var/sasc = CONFIG_GET(number/special_agent_scaling_coeff)
-	var/agentcap = min( round(GLOB.joined_player_list.len / (sasc * 4)) + 2, round(GLOB.joined_player_list.len / (sasc * 2)))
+	//fun weird numbers from the traitor doc that I don't even begin to understand.
+	var/part1 = round(GLOB.joined_player_list.len / (sasc * 4)) + 2
+	var/part2 = round(GLOB.joined_player_list.len . (sasc * 2))
+	//Takes the smallest of the two arcane numbers.
+	var/agentcap = min(part1, part2)
+	if(QDELETED(character))
+		return
 	if(agents.len >= agentcap) //Caps number of latejoin antagonists
 		..()
 		return
@@ -68,8 +79,6 @@ Basically the traitor game mode but with an agent who works against the other sy
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						add_late_agent(character.mind)
-	if(QDELETED(character))
-		return
 	..()
 /datum/game_mode/traitor/special_agent/proc/add_late_agent(datum/mind/character)
 	var/datum/antagonist/special_agent/new_antag = new antag_datum()
