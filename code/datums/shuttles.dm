@@ -180,11 +180,11 @@
 	name = "Build your own shuttle kit"
 	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
 	admin_notes = "No brig, no medical facilities, no shuttle console."
-	credit_cost = 5000
+	credit_cost = 2500
 
 /datum/map_template/shuttle/emergency/airless/prerequisites_met()
-	// first 10 minutes only
-	return world.time - SSticker.round_start_time < 6000
+	// first 10 minutes only(removed)
+	return world.time - SSticker.round_start_time < 99999999
 
 /datum/map_template/shuttle/emergency/airless/post_load()
 	. = ..()

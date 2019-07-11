@@ -71,10 +71,11 @@ All foods are distributed among various categories. Use common sense.
 	if(!eater)
 		return
 	if(!reagents.total_volume)
-		var/obj/item/trash_item = generate_trash(eater)
+		var/mob/living/location = loc
+		var/obj/item/trash_item = generate_trash(location)
 		qdel(src)
-		eater.put_in_hands(trash_item)
-
+		if(istype(location))
+			location.put_in_hands(trash_item)
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return

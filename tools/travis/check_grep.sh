@@ -6,7 +6,7 @@ shopt -s globstar
 
 st=0
 
-if grep -E '^\".+\" = \(.+\)' _maps/**/*.dmm;	then
+if grep -El '^\".+\" = \(.+\)' _maps/**/*.dmm;	then
     echo "Non-TGM formatted map detected. Please convert it using Map Merger!"
     st=1
 fi;

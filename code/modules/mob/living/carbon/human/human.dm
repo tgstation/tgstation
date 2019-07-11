@@ -775,7 +775,6 @@
 	remove_all_embedded_objects()
 	set_heartattack(FALSE)
 	drunkenness = 0
-	set_hygiene(HYGIENE_LEVEL_NORMAL)
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
@@ -903,7 +902,7 @@
 	for(var/bp in body_parts)
 		if(istype(bp, /obj/item/clothing))
 			var/obj/item/clothing/C = bp
-			if(C.blocks_shove_knockdown)
+			if(C.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
 				return TRUE
 	return FALSE
 
