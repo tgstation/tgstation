@@ -39,7 +39,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		"Head of Security",
 		"Chief Engineer",
 		"Research Director",
-		"Chief Medical Officer")
+		"Chief Medical Officer",
+		"Quartermaster")
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
 	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
@@ -357,7 +358,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					else
 						if((ACCESS_HOP in scan.access) && ((target_dept==1) || !target_dept))
 							region_access |= 1
-							region_access |= 6
 							get_subordinates("Head of Personnel")
 						if((ACCESS_HOS in scan.access) && ((target_dept==2) || !target_dept))
 							region_access |= 2
@@ -371,6 +371,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if((ACCESS_CE in scan.access) && ((target_dept==5) || !target_dept))
 							region_access |= 5
 							get_subordinates("Chief Engineer")
+						if((ACCESS_QM in scan.access) && ((target_dept==6) || !target_dept))
+							region_access |= 6
+							get_subordinates("Quartermaster")
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && issilicon(usr)) && (!modify))
