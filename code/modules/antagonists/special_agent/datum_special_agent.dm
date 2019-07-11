@@ -10,19 +10,21 @@ This antagonist works directly in counter to the other antagonists present on th
 	antagpanel_category = "Special Agent"
 	job_rank = ROLE_SPECIAL_AGENT
 	antag_moodlet = /datum/mood_event/focused
-	/var/employer = "The Syndicate"
-	/var/give_objectives = TRUE
-	/var/give_equipment = TRUE
+	var/employer = "The Syndicate"
+	var/give_objectives = TRUE
+	var/give_equipment = TRUE
+	var/special_role = ROLE_SPECIAL_AGENT
 
 /datum/antagonist/special_agent/on_gain()
 	owner.special_role = special_role
-	if(give_objective)
+	if(give_objectives)
 		forge_agent_objectives()
-	if(give_equpment)
+	..()
+	if(give_equipment)
 		give_equipment()
 
 /datum/antagonist/special_agent/proc/give_equipment()
-	/var/mob/living/carbon/human/H = owner.current
+	var/mob/living/carbon/human/H = owner.current
 	/// Adds Equipment to the mob
 	H.equip_to_slot_or_del(/obj/item/card/id/advemag,SLOT_WEAR_ID)
 	H.equip_to_slot_or_del(/obj/item/inducer/netgun,SLOT_IN_BACKPACK)
@@ -48,13 +50,12 @@ This antagonist works directly in counter to the other antagonists present on th
 
 ///gives agent its objectives
 /datum/antagonist/special_agent/proc/forge_agent_objectives()
-	/var/is_hijacker = FALSE
-	/var/saoa = CONFIG_GET(number/special_agent_objective_amount)
+	var/saoa = CONFIG_GET(number/special_agent_objectives_amount)
 	var/datum/objective/agentcapture = new
 	
-	agent_capture.owner = owner
-	agent_capture.find_target_by_role("traitor")
-	add_objective(agent_capture)
+	agentcapture.owner = owner
+	agentcapture.find_target_by_role("traitor")
+	add_objective(agentcapture)
 	
 	for(var/i = 1, i < saoa, i++)
 		forge_single_objective()
@@ -64,7 +65,7 @@ This antagonist works directly in counter to the other antagonists present on th
 	add_objective(escape_objective)
 	return
 
-/datum/antagonist/special_agent/proc/forge_single_objective
+/datum/antagonist/special_agent/proc/forge_single_objective()
 	
 	if(prob(33) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
 		var/datum/objective/download/download_objective = new
@@ -78,7 +79,7 @@ This antagonist works directly in counter to the other antagonists present on th
 		steal_objective.find_target()
 		add_objective(steal_objective)
 		return
-	else()
+	else
 		var/datum/objective/agentcapture/capture_objective = new
 		capture_objective.owner = owner
 		capture_objective.find_target_by_role("traitor")
@@ -86,24 +87,27 @@ This antagonist works directly in counter to the other antagonists present on th
 		return
 
 /datum/antagonist/special_agent/roundend_report()
-	/var/list/results = list()
-	/var/agentwin = TRUE
+	var/list/results = list()
+	var/agentwin = TRUE
 
 	results += printplayer(owner)
 
 	var/objectives_text = ""
+
+	var/special_role_text = lowertext(name)
+
 	if(objectives.len)//If the traitor had no objectives, don't need to process this.
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
-			else()
+			else
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				traitorwin = FALSE
+				agentwin = FALSE
 			count++
-	if(traitorwin)
+	if(agentwin)
 		results += "<span class='greentext'>The [special_role_text] was successful!</span>"
-	else()
+	else
 		results += "<span class='redtext'>The [special_role_text] has failed!</span>"
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 

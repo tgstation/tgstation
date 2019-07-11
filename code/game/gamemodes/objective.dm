@@ -683,7 +683,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/agentcapture/find_target_by_role(role, role_type=TRUE, invert=FALSE)
 	. = ..()
 
-/datum/objective/agentcapture/update_explaination_text()
+/datum/objective/agentcapture/update_explanation_text()
 	. = ..()
 	if(target && target.current)
 		explanation_text = "Capture [target.name], the target.assigned_role"

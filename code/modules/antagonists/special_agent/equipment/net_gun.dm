@@ -9,12 +9,6 @@ This is a net gun, it looks like an inducer, and acts like an inducer, until you
 	item_state = "inducer-engi"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	force = 7
-	var/powertransfer = 1000
-	var/opened = FALSE
-	var/cell_type = /obj/item/stock_parts/cell/high
-	var/obj/item/stock_parts/cell/cell
-	var/recharging = FALSE
 
 /obj/item/inducer/netgun/attack(mob/M, mob/user)
 	
@@ -28,8 +22,6 @@ This is a net gun, it looks like an inducer, and acts like an inducer, until you
 		E.affecting = M
 		E.master = user
 		user.visible_message("<span class='danger'>[user] caught [M] with an energy net!</span>","<span class='notice'>You caught [M] with an energy net!</span>")
-		if(M.buckled)
-			M.buckled.unbuckle_mob(affecting,TRUE)
 		E.buckle_mob(M, TRUE) //No moving for you!
 		//The person can still try and attack the net when inside.
 		START_PROCESSING(SSobj, E)

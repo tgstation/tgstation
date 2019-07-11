@@ -93,11 +93,20 @@
 	integer = FALSE
 	min_val = 1
 
+/datum/config_entry/number/special_agent_scaling_coeff
+	config_entry_value = 6
+	integer = FALSE
+	min_val = 1
+
 /datum/config_entry/number/traitor_objectives_amount
 	config_entry_value = 2
 	min_val = 0
 
 /datum/config_entry/number/brother_objectives_amount
+	config_entry_value = 2
+	min_val = 0
+
+/datum/config_entry/number/special_agent_objectives_amount
 	config_entry_value = 2
 	min_val = 0
 
