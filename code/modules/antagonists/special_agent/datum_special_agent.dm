@@ -31,7 +31,7 @@ This antagonist works directly in counter to the other antagonists present on th
 /datum/antagonist/special_agent/on_removal()
 	. = ..()
 	if(!silent && owner.current)
-		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>"
+		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
 
 /datum/antagonist/special_agent/greet()
@@ -50,7 +50,7 @@ This antagonist works directly in counter to the other antagonists present on th
 /datum/antagonist/special_agent/proc/forge_agent_objectives()
 	/var/is_hijacker = FALSE
 	/var/saoa = CONFIG_GET(number/special_agent_objective_amount)
-	var/datum/objective/agent_capture = new
+	var/datum/objective/agentcapture = new
 	
 	agent_capture.owner = owner
 	agent_capture.find_target_by_role("traitor")
@@ -65,7 +65,7 @@ This antagonist works directly in counter to the other antagonists present on th
 	return
 
 /datum/antagonist/special_agent/proc/forge_single_objective
-	.=1
+	
 	if(prob(33) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
 		var/datum/objective/download/download_objective = new
 		download_objective.owner = owner
@@ -79,10 +79,10 @@ This antagonist works directly in counter to the other antagonists present on th
 		add_objective(steal_objective)
 		return
 	else()
-		var/datum/objective/agent_capture = new
-		agent_capture.owner = owner
-		agent_capture.find_target_by_role("traitor")
-		add_objective(agent_capture)
+		var/datum/objective/agentcapture/capture_objective = new
+		capture_objective.owner = owner
+		capture_objective.find_target_by_role("traitor")
+		add_objective(capture_objective)
 		return
 
 /datum/antagonist/special_agent/roundend_report()

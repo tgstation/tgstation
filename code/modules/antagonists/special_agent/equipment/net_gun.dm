@@ -20,7 +20,7 @@ This is a net gun, it looks like an inducer, and acts like an inducer, until you
 	
 	if(user.a_intent == INTENT_DISARM)
 		for(var/turf/T in getline(get_turf(user), get_turf(M)))
-			f(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
+			if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
 				to_chat(user, "<span class='warning'>You may not use an energy net through solid obstacles!</span>")
 				return
 		M.Beam(M,"n_beam",time=15)

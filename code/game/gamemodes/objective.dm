@@ -677,21 +677,23 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		target_amount = count
 	update_explanation_text()
 
-/datum/objective/agent_capture
-	name = "agent capture"
+/datum/objective/agentcapture
+	name = "agentcapture"
 
-/datum/objective/agent_capture/find_target_by_role(role, role_type=TRUE, invert=FALSE)
-	..()
+/datum/objective/agentcapture/find_target_by_role(role, role_type=TRUE, invert=FALSE)
+	. = ..()
 
-/datum/objective/agent_capture/update_explaination_text()
+/datum/objective/agentcapture/update_explaination_text()
 	. = ..()
 	if(target && target.current)
 		explanation_text = "Capture [target.name], the target.assigned_role"
 	else
 		explanation_text = "Free Objective"
-/datum/objective/agent_capture/check_completion()
+/datum/objective/agentcapture/check_completion()
 	return target.current.onCentCom()
 
+/datum/objective/agentcapture/New()
+	..()
 
 
 /datum/objective/protect_object

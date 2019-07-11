@@ -38,7 +38,7 @@ Basically the traitor game mode but with an agent who works against the other sy
 	var/sasc = CONFIG_GET(number/special_agent_scaling_coeff)
 	if(sasc)
 		num_agents = max(1, min(round(num_players() / (sasc * 2)) + 2 + num_modifier, round(num_players() / sasc) + num_modifier))
-	else
+	else()
 		num_agents = max(1, min(num_players(), traitors_possible))
 	if(possible_agents.len>0)
 		for(/var/j = 0, j < num_agents, j++)
@@ -52,7 +52,7 @@ Basically the traitor game mode but with an agent who works against the other sy
 			agent.restricted_jobs = restricted_jobs
 			log_game("[key_name(agent)] has been selected as a special agent")
 		return ..()
-		else
+		else()
 			return 0
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/agent in pre_agents)
