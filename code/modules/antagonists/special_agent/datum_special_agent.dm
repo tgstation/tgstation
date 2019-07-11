@@ -35,8 +35,7 @@ This antagonist works directly in counter to the other antagonists present on th
 	owner.special_role = null
 
 /datum/antagonist/special_agent/greet()
-	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role].</span>\n\
-	One or more syndicate operatives have been compromised in your sector, take your equipment and secure them for capture. DO NOT inform them of your objective.")
+	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role].</span>")
 	owner.announce_objectives()
 
 ///Gives objectives
@@ -79,7 +78,7 @@ This antagonist works directly in counter to the other antagonists present on th
 		steal_objective.find_target()
 		add_objective(steal_objective)
 		return
-	else
+	else()
 		var/datum/objective/agent_capture = new
 		agent_capture.owner = owner
 		agent_capture.find_target_by_role("traitor")
@@ -98,13 +97,13 @@ This antagonist works directly in counter to the other antagonists present on th
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
-			else
+			else()
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 				traitorwin = FALSE
 			count++
 	if(traitorwin)
 		results += "<span class='greentext'>The [special_role_text] was successful!</span>"
-	else
+	else()
 		results += "<span class='redtext'>The [special_role_text] has failed!</span>"
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
