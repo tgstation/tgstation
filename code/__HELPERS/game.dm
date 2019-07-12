@@ -159,8 +159,8 @@
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
-// Recursive loop based off of the recursive mob check.
-// Takes in a variable "atom/O" to start checking contents of against "var/item", the item we want, outputting a list of those items
+// Recursive loop based off of the recursive mob check. Necessary for preventing organ decay without running every tick.
+// Takes in a variable "atom/O" and looks for any/all organs to toggle decompose, excluding other organ safe containers
 /proc/recursive_organ_check(atom/O, var/decompose)
 
 	var/list/processing_list = list(O)

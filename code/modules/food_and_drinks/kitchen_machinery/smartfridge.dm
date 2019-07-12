@@ -154,6 +154,12 @@
 			O.forceMove(src)
 			return TRUE
 
+/obj/machinery/smartfridge/proc/dispense(obj/item/O, var/mob/M)
+	if(!M.put_in_hands(O))
+		O.forceMove(drop_location())
+		adjust_item_drop_location(O)
+
+
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -206,9 +212,7 @@
 			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
 				for(var/obj/item/O in src)
 					if(O.name == params["name"])
-						if(!usr.put_in_hands(O))
-							O.forceMove(drop_location())
-							adjust_item_drop_location(O)
+						dispense(O, usr)
 						break
 				if (visible_contents)
 					update_icon()
@@ -218,8 +222,7 @@
 				if(desired <= 0)
 					break
 				if(O.name == params["name"])
-					O.forceMove(drop_location())
-					adjust_item_drop_location(O)
+					dispense(O, usr)
 					desired--
 			if (visible_contents)
 				update_icon()
@@ -396,10 +399,21 @@
 	max_n_of_items = 100	//1500 seems far too high for organs
 	var/organ_safe = 1
 
-/obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
-	if(istype(O, /obj/item/organ) && !istype(O, /obj/item/organ/brain))	//would rather not have a machine to freeze brains from a gameplay perspective, if it is so necessary, freezer chests exist
+/obj/machinery/smartfridge/organ/accept_check(obj/item/O)
+	if(istype(O, /obj/item/organ/) && !istype(O, /obj/item/organ/brain))	//would rather not have a machine to freeze brains from a gameplay perspective, if it is so necessary, freezer chests exist
 		return TRUE
 	return FALSE
+
+/obj/machinery/smartfridge/organ/load(obj/item/O)
+	if(..())	//if the item loads, clear can_decompose
+		var/obj/item/organ/organ = O
+		organ.can_decompose = 0
+
+/obj/machinery/smartfridge/organ/dispense(obj/item/O, var/mob/M)
+	var/obj/item/organ/organ = O
+	organ.can_decompose = 1
+	..()
+	.
 
 // -----------------------------
 // Chemistry Medical Smartfridge

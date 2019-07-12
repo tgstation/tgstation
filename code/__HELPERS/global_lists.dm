@@ -47,9 +47,10 @@
 		var/datum/material/D = new path()
 		GLOB.materials_list[D.id] = D
 
+	//Emotes
 	GLOB.emote_list = init_emote_list()
-	
 
+	//Crafting Recipes
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
