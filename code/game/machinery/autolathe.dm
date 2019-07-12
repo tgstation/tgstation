@@ -180,7 +180,7 @@
 			for(var/MAT in being_built.materials)
 				var/datum/material/used_material = MAT
 				var/amount_needed = being_built.materials[MAT] * coeff * multiplier
-				if(ismaterialcategory(used_material))
+				if(istext(used_material)) //This means its a category
 					var/list/list_to_show = list()
 					for(var/i in SSmaterials.materials_by_category[used_material])
 						if(materials.materials[i] > 0)
@@ -383,7 +383,7 @@
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
 	for(var/i in D.materials)
-		if(ismaterialcategory(i))
+		if(istext(i)) //Category handling
 			dat += "[D.materials[i] * coeff] [i]"
 		else
 			var/datum/material/M = i

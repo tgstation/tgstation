@@ -288,7 +288,7 @@
 /datum/component/material_container/proc/get_categories(list/mats) //Returns just the categories in a recipe.
 	var/list/categories = list()
 	for(var/x in mats) //Loop through all required materials
-		if(!ismaterialcategory(x))
+		if(!istext(x)) //This means its not a category
 			continue
 		categories += x
 	return categories
