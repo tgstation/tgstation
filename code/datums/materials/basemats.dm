@@ -80,7 +80,8 @@
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/firestackadder)
+	if(ismovableatom(source))
+		source.AddElement(/datum/element/firestacker)
 
 /datum/material/plasma/on_removed(atom/source, material_flags)
 	. = ..()
