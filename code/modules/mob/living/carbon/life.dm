@@ -13,9 +13,6 @@
 		if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
 			handle_organs()
 
-		else if(!istype(loc, /obj/structure/bodycontainer/morgue) && !istype(loc, /obj/structure/closet/crate/freezer))
-			degrade_organs()
-
 		. = ..()
 
 		if (QDELETED(src))
@@ -338,11 +335,6 @@
 	for(var/V in internal_organs)
 		var/obj/item/organ/O = V
 		O.on_life()
-
-/mob/living/carbon/proc/degrade_organs()
-	for(var/V in internal_organs)
-		var/obj/item/organ/O = V
-		O.on_death()
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)

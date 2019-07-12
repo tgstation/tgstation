@@ -93,6 +93,23 @@
 	name = "freezer"
 	icon_state = "freezer"
 
+//Snowflake organ freezer code
+//Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
+
+/obj/structure/closet/crate/freezer/open()
+	recursive_organ_check(src, 1)
+	..()
+
+/obj/structure/closet/crate/freezer/close()
+	..()
+	recursive_organ_check(src, 0)
+
+/obj/structure/closet/crate/freezer/Destroy()
+	recursive_organ_check(src, 1)
+	..()
+
+
+
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."

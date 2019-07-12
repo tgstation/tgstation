@@ -159,6 +159,37 @@
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
+// Recursive loop based off of the recursive mob check.
+// Takes in a variable "atom/O" to start checking contents of against "var/item", the item we want, outputting a list of those items
+/proc/recursive_organ_check(atom/O, var/decompose)
+
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/obj/item/organ/found_organ
+
+	while(processing_list.len)
+
+		var/atom/A = processing_list[1]
+
+		if(istype(A, /obj/item/organ))
+			found_organ = A
+			found_organ.can_decompose = decompose
+
+		else if(istype(A, /mob/living/carbon))
+			var/mob/living/carbon/Q = A
+			for(var/organ in Q.internal_organs)
+				found_organ = organ
+				found_organ.can_decompose = decompose
+
+		for(var/atom/B in A)
+			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))
+				processing_list|= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return
+
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
 /proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
