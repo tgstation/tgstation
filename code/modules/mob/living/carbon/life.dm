@@ -580,9 +580,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 /////////
 
 /mob/living/carbon/proc/handle_liver()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
+	if(!dna || (NOLIVER in dna.species?.species_traits))
 		return
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		if(liver.damage >= liver.maxHealth)
 			liver.failing = TRUE
