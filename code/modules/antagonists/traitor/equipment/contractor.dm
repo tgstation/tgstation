@@ -73,10 +73,13 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	suit = /obj/item/clothing/suit/chameleon
 	back = /obj/item/storage/backpack
 	belt = /obj/item/pda/chameleon
+	mask = /obj/item/clothing/mask/cigarette/syndicate
 	shoes = /obj/item/clothing/shoes/chameleon/noslip
 	ears = /obj/item/radio/headset/chameleon
 	id = /obj/item/card/id/syndicate
-	backpack_contents = list(/obj/item/storage/toolbox/syndicate, /obj/item/storage/box/syndie_kit/imp_uplink, /obj/item/clothing/mask/chameleon)
+	r_hand = /obj/item/storage/toolbox/syndicate
+
+	backpack_contents = list(/obj/item/implanter/uplink, /obj/item/clothing/mask/chameleon, /datum/uplink_item/badass/syndiecigs, /obj/item/lighter)
 
 /datum/contractor_item/contractor_partner/proc/spawn_contractor_partner(mob/living/user, key)
 	var/mob/living/carbon/human/partner = new()
@@ -87,14 +90,23 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	var/obj/structure/closet/supplypod/arrival_pod = new()
 
 	arrival_pod.style = STYLE_SYNDICATE
-	arrival_pod.explosionSize = list(0,0,0,0)
+	arrival_pod.explosionSize = list(0,0,0,1)
 
 	var/turf/free_location = find_obstruction_free_location(3, user)
 
+	// We really want to send them - if we can't find a nice location just land it on top of them.
 	if (!free_location)
 		free_location = get_turf(user)
 
 	partner.forceMove(arrival_pod)
+	partner.ckey = key
+
+	// flavour text
+	to_chat(partner, "<span class='big bold'>You are the Syndicate agent that answered the requested for backup.</span><span class='big'> <span class='danger'><b>Your mission is to support the specialist agent, [user.real_name], anyway possible - you must stay with them, and follow any orders they give.</b></span><br>\
+	<br>\
+	<span class='danger'><b>Work as a team with your assigned agent, their mission comes first above all else.</b></span></span>")
+
+	partner.playsound_local(partner, 'sound/ambience/antag/tatoralert.ogg', 100)
 
 	new /obj/effect/DPtarget(free_location, arrival_pod)
 

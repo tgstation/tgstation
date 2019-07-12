@@ -425,13 +425,6 @@
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
 
-/obj/effect/mob_spawn/human/syndicate/contractor_partner
-	name = "Contractor Support Unit"
-	random = TRUE
-	flavour_text = "<span class='big bold'>You are a Syndicate agent that answered the requested for backup.</span><span class='big'> <span class='danger'><b>Your mission is to support the specialist agent anyway possible - you must stay with them, and follow any orders they give.</b></span><br>\
-	<br>\
-	<span class='danger'><b>Work as a team with your assigned agent, their mission comes first above all else.</b></span></span>"
-
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
 	flavour_text = "<span class='big bold'>You are a crewmember aboard the syndicate flagship: the SBC Starfury.</span><span class='big'> <span class='danger'><b>Your job is to follow your captain's orders, maintain the ship, and keep the engine running.</b></span> If you are not familiar with how the supermatter engine functions: <b>do not attempt to start it.</b><br>\
