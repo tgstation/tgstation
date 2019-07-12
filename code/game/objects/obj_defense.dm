@@ -253,7 +253,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
 	qdel(src)
 
-///what happens when the obj takes damage and integrity is below integrity_failure level afterwards.
+///called after the obj takes damage and integrity is below integrity_failure level
 /obj/proc/obj_break(damage_flag)
 	return
 
