@@ -11,6 +11,7 @@
 	attack_verb = list("beat", "thumped")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
 	var/failed = FALSE		//to prevent constantly running failing code
+	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
 
 /obj/item/organ/heart/update_icon()
 	if(beating)

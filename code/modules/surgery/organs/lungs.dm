@@ -1,5 +1,6 @@
 /obj/item/organ/lungs
-	var/failed = FALSE //have we failed already?
+	var/failed = FALSE
+	var/operated = FALSE	//whether we can still have our damages fixed through surgery
 	name = "lungs"
 	icon_state = "lungs"
 	zone = BODY_ZONE_CHEST

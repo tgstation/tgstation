@@ -87,6 +87,8 @@
 
 	else
 		var/mob/living/carbon/C = owner
+		if(!C)
+			return
 		if(C.stat == DEAD && !IS_IN_STASIS(C))
 			if(damage >= maxHealth)
 				failing = TRUE
