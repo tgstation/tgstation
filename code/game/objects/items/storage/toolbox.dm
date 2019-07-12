@@ -2,7 +2,7 @@
 	name = "toolbox"
 	desc = "Danger. Very robust."
 	icon_state = "toolbox_default"
-	item_state = "toolbox_red"
+	item_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
