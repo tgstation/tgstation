@@ -538,7 +538,7 @@
 				 /obj/item/wrench
 				 )
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 3,
-				/obj/item/stack/sheet/metal = 3,
+				/obj/item/stack/sheet/metal = 2,
 				/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/storage/belt = 1
 				///obj/item/stack/sheet/animalhide = 1, // /obj/item/stack/sheet/leather = 1,
@@ -547,7 +547,7 @@
 	//parts = list(/obj/item/storage/belt = 1
 	//			 )
 
-	time = 200
+	time = 150
 	category = CAT_STRUCTURE
 	always_availible = FALSE	// Disabled til learned
 

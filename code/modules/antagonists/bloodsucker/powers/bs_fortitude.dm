@@ -12,7 +12,7 @@
 	amToggle = TRUE
 	warn_constant_cost = TRUE
 
-	var/this_brute_resist // So we can raise and lower your brute resist based on what your level_current WAS.
+	var/this_resist // So we can raise and lower your brute resist based on what your level_current WAS.
 
 /datum/action/bloodsucker/fortitude/ActivatePower()
 
@@ -28,8 +28,9 @@
 	ADD_TRAIT(user, TRAIT_NORUNNING, "fortitude")
 	if (ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		this_brute_resist = max(0.3, 0.7 - level_current * 0.1)
-		H.physiology.brute_mod *= this_brute_resist//0.5
+		this_resist = max(0.3, 0.7 - level_current * 0.1)
+		H.physiology.brute_mod *= this_resist//0.5
+		H.physiology.burn_mod *= this_resist//0.5
 
 	// Stop Running   (Taken from /datum/quirk/nyctophobia in negative.dm)
 	var/was_running = (user.m_intent == MOVE_INTENT_RUN)
@@ -58,4 +59,5 @@
 	REMOVE_TRAIT(user, TRAIT_NORUNNING, "fortitude")
 	if (ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod /= this_brute_resist//0.5
+		H.physiology.brute_mod /= this_resist//0.5
+		H.physiology.burn_mod /= this_resist//0.5
