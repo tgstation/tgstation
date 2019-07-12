@@ -182,10 +182,6 @@
 	admin_notes = "No brig, no medical facilities, no shuttle console."
 	credit_cost = 2500
 
-/datum/map_template/shuttle/emergency/airless/prerequisites_met()
-	// first 10 minutes only(removed)
-	return world.time - SSticker.round_start_time < 99999999
-
 /datum/map_template/shuttle/emergency/airless/post_load()
 	. = ..()
 	//enable buying engines from cargo

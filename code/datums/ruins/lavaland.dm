@@ -70,12 +70,12 @@
 	suffix = "lavaland_surface_golem_ship.dmm"
 	allow_duplicates = FALSE
 
-/datum/map_template/ruin/lavaland/animal_hospital
-	name = "Animal Hospital"
-	id = "animal-hospital"
-	description = "Rats with cancer do not live very long. And the ones that wake up from cryostasis seem to commit suicide out of boredom."
+/datum/map_template/ruin/lavaland/gaia
+	name = "Patch of Eden"
+	id = "gaia"
+	description = "Who would have thought that such a peaceful place could be on such a horrific planet"
 	cost = 5
-	suffix = "lavaland_surface_animal_hospital.dmm"
+	suffix = "lavaland_surface_gaia.dmm"
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/sin
