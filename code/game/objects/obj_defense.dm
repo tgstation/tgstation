@@ -266,9 +266,9 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	else
 		deconstruct(FALSE)
 
-/*changes max_integrity while retaining current health percentage
- *returns TRUE if the obj broke, FALSE otherwise
- */
+/**changes max_integrity while retaining current health percentage
+  *returns TRUE if the obj broke, FALSE otherwise
+  */
 /obj/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE, new_failure_integrity = null)
 	var/current_integrity = obj_integrity
 	var/current_max = max_integrity
