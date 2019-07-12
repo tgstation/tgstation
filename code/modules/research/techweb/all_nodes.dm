@@ -97,7 +97,7 @@
 	design_ids = list("surgery_lobotomy", "surgery_heal_brute_upgrade_femto","surgery_heal_burn_upgrade_femto","surgery_heal_combo", "surgery_revival","surgery_adv_dissection")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 	export_price = 4000
-  
+
 /datum/techweb_node/exp_surgery
 	id = "exp_surgery"
 	display_name = "Experimental Surgery"
@@ -318,7 +318,7 @@
 	display_name = "Cyborg Upgrades: Combat"
 	description = "Military grade upgrades for cyborgs."
 	prereq_ids = list("adv_robotics", "adv_engi" , "weaponry")
-	design_ids = list("borg_upgrade_vtec", "borg_upgrade_disablercooler")
+	design_ids = list("borg_upgrade_disablercooler")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
