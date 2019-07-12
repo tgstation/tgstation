@@ -97,20 +97,11 @@
 			if (hard_drive.traitor_data.owner.current == user)
 				var/item = params["item"]
 
-				to_chat(world, "item--")		
-				to_chat(world, item)		
-
 				for (var/datum/contractor_item/hub_item in hard_drive.traitor_data.contractor_hub.hub_items)
-					to_chat(world, "hub_item--")		
-					to_chat(world, hub_item.name)		
-
 					if (hub_item.name == item)
 						hub_item.handle_purchase(hard_drive.traitor_data.contractor_hub)
 			else
 				error = "Invalid user... You weren't recognised as the user of this system."
-	to_chat(world, "action--")		
-	to_chat(world, action)		
-
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
 	var/list/data = list()

@@ -36,10 +36,7 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 /datum/contractor_item/contractor_pinpointer/handle_purchase(var/datum/contractor_hub/hub)
 	. = ..()
 
-	to_chat(world, "pinpointer special0")
-
 	if (.)
-		to_chat(world, "pinpointer special")
 		var/obj/item/pinpointer/crew/contractor/pinpointer = .
 		var/mob/living/user = usr
 
@@ -125,8 +122,6 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	var/mob/living/user = usr
 
 	if (item && ispath(item))
-		to_chat(world, "if item path")
-
 		var/atom/item_to_create = new item(get_turf(user))
 		
 		if(user.put_in_hands(item_to_create))
