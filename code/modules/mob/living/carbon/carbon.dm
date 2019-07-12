@@ -351,14 +351,16 @@
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
-		return
+		return FALSE
+	if(I != handcuffed && I != legcuffed)
+		return FALSE
 	visible_message("<span class='danger'>[src] manages to [cuff_break ? "break" : "remove"] [I]!</span>")
 	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>")
 
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
-		return
+		return TRUE
 
 	else
 		if(I == handcuffed)
@@ -368,17 +370,13 @@
 			if(buckled && buckled.buckle_requires_restraints)
 				buckled.unbuckle_mob(src)
 			update_handcuffed()
-			return
+			return TRUE
 		if(I == legcuffed)
 			legcuffed.forceMove(drop_location())
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
-			return
-		else
-			dropItemToGround(I)
-			return
-		return TRUE
+			return TRUE
 
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
 	if(lying)
