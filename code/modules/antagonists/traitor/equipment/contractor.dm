@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	if (.)
 		var/mob/living/user = usr
 
-		to_chat(user, "The uplink vibrates quietly, connecting to nearby agents...")
+		to_chat(user, "<span class='notice'>The uplink vibrates quietly, connecting to nearby agents...</span>")
 
 		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Contractor Support Unit for [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_CONTRACTOR_SUPPORT)
 
@@ -79,7 +79,8 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	id = /obj/item/card/id/syndicate
 	r_hand = /obj/item/storage/toolbox/syndicate
 
-	backpack_contents = list(/obj/item/implanter/uplink, /obj/item/clothing/mask/chameleon, /datum/uplink_item/badass/syndiecigs, /obj/item/lighter)
+	backpack_contents = list(/obj/item/storage/box/survival, /obj/item/implanter/uplink, /obj/item/clothing/mask/chameleon, 
+							/obj/item/storage/fancy/cigarettes/cigpack_syndicate, /obj/item/lighter)
 
 /datum/contractor_item/contractor_partner/proc/spawn_contractor_partner(mob/living/user, key)
 	var/mob/living/carbon/human/partner = new()
@@ -105,33 +106,21 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	to_chat(partner, "<span class='big bold'>You are the Syndicate agent that answered the requested for backup.</span><span class='big'> <span class='danger'><b>Your mission is to support the specialist agent, [user.real_name], anyway possible - you must stay with them, and follow any orders they give.</b></span><br>\
 	<br>\
 	<span class='danger'><b>Work as a team with your assigned agent, their mission comes first above all else.</b></span></span>")
-
 	partner.playsound_local(partner, 'sound/ambience/antag/tatoralert.ogg', 100)
 
 	new /obj/effect/DPtarget(free_location, arrival_pod)
 
 // Subtract cost, and spawn if it's an item.
 /datum/contractor_item/proc/handle_purchase(var/datum/contractor_hub/hub)
-	to_chat(world, "handling purchase")
-
-	to_chat(world, num2text(cost))
-	to_chat(world, num2text(hub.contract_rep))
-
 	if (hub.contract_rep >= cost)
 		hub.contract_rep -= cost
 	else 
 		return FALSE
 
-	to_chat(world, num2text(limited))
-
 	if (limited >= 1)
 		limited -= 1
 	else if (limited == 0)
 		return FALSE
-
-	to_chat(world, num2text(limited))
-
-	to_chat(world, "limit handled")
 
 	var/mob/living/user = usr
 

@@ -4,7 +4,7 @@
 <ui-display>
 	<div style="position:relative;">
 		{{#if data.error}}
-			<div style="position:absolute; width=75%; margin:auto; padding:25px; top:2px; background-color: black; border: 1px solid #750000; text-align:center">
+			<div style="position:absolute; width=75%; margin:auto; padding:5px; top:2px; background-color: black; border: 1px solid #750000; text-align:center">
 				<div style="color:white; font-weight: bold; font-style: italic; margin-bottom: 10px">
 					{{data.error}}
 				</div>
@@ -114,20 +114,17 @@
 					{{#each data.contractor_hub_items}}
 						{{#if limited != 0}}
 							<div style="margin-top:10px; border: 1px solid white">
-								<div style="text-align:center; margin-top:5px">
+								<div style="text-align:center; margin-top:5px; margin-bottom:3px">
 									{{name}} - {{cost}} Rep
 								</div>
-								<br>
 								<div style="text-align:center">
 									<i class="fas {{icon}} fa-3x"></i>
 								</div>
-								<br>
 								<div style="text-align:center; padding-left:5px; padding-right:5px">
 									<p>{{desc}}</p>
 								</div>
-								<br>
-								<div style="text-align:center; margin-bottom:10px">
-									<ui-button action='buy_hub' params='{"item": {{name}}, "cost": {{cost}}}'>Purchase  </ui-button>
+								<div style="text-align:center; margin-bottom:3px">
+									<ui-button action='buy_hub' params='{"item": {{name}}, "cost": {{cost}}}'>Purchase</ui-button>
 								</div>
 							</div>
 						{{/if}}

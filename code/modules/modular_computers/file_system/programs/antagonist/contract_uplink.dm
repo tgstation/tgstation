@@ -107,7 +107,7 @@
 					if (hub_item.name == item)
 						hub_item.handle_purchase(hard_drive.traitor_data.contractor_hub)
 			else
-				error = "Invalid user..."
+				error = "Invalid user... You weren't recognised as the user of this system."
 	to_chat(world, "action--")		
 	to_chat(world, action)		
 
