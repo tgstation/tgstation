@@ -34,7 +34,7 @@
 	id = "gold"
 	desc = "Gold"
 	color = "#f0972b"
-	strength = 1.2
+	strength_modifier = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	coin_type = /obj/item/coin/gold
@@ -107,7 +107,7 @@
 	id = "titanium"
 	desc = "Titanium"
 	color = "#b3c0c7"
-	strength = 1.3
+	strength_modifier = 1.3
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 
@@ -117,7 +117,7 @@
 	id = "plastic"
 	desc = "plastic"
 	color = "#caccd9"
-	strength = 0.85
+	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
 
 ///Force decrease and mushy sound effect.
@@ -126,4 +126,4 @@
 	id = "biomass"
 	desc = "Organic matter"
 	color = "#735b4d"
-	strength = 0.8
+	strength_modifier = 0.8

@@ -18,11 +18,6 @@ SUBSYSTEM_DEF(materials)
 
 /datum/controller/subsystem/materials/Initialize(timeofday)
 	InitializeMaterials()
-	to_chat(world, "[SSresearch.techweb_designs.len]") 
-	for(var/i in SSresearch.techweb_designs) //This is currently broken and I'm not sure why.
-		var/datum/design/D = SSresearch.techweb_designs[i]
-		D.InitializeMaterials()
-		to_chat(world, "initialized [D] design") 
 	return ..()
 	
 /datum/controller/subsystem/materials/proc/InitializeMaterials(timeofday)

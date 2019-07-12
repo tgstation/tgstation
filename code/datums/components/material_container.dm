@@ -276,7 +276,6 @@
 
 			else // Its a category. (For example MAT_CATEGORY_RIGID)
 				if(!has_enough_of_category(req_mat, mats[req_mat], multiplier)) //Do we have enough of this category?
-					to_chat(world, "not enough of category [req_mat] [mats[req_mat]]")
 					return FALSE
 				else
 					continue

@@ -68,8 +68,10 @@
 	/// Radiation insulation types
 	var/rad_insulation = RAD_NO_INSULATION
 
-  ///The material this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
-	var/datum/material/material 
+	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+	var/list/custom_materials
+	///Bitfield for how the atom handles materials.
+	var/material_flags = NONE
 
 
 /**
@@ -149,10 +151,14 @@
 
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
-	if(mapload && material)
-		if(!istype(material, /datum/material))
-			material = getmaterialref(material) //Get the proper instanced version
-		material.on_applied(src, mapload = TRUE)
+
+	if(custom_materials && custom_materials.len)
+		var/temp_list = list()
+		for(var/i in custom_materials)
+			var/datum/material/material = getmaterialref(i) || i
+			temp_list[material] = custom_materials[material] //Get the proper instanced version
+		custom_materials = temp_list	
+		set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 
@@ -436,6 +442,10 @@
 	if(desc)
 		. += desc
 
+	if(custom_materials)
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			. += "<br><u>It is made out of [M.name]</u>."
 	if(reagents)
 		if(reagents.flags & TRANSPARENT)
 			. += "It contains:"
@@ -1064,3 +1074,12 @@
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	return FALSE
+
+///Adds custom materials to an item, overrides the old materials.
+/atom/proc/set_custom_materials(var/list/materials)
+	custom_materials = list() //Instance the list
+
+	for(var/x in materials)
+		var/datum/material/custom_material = x
+		custom_material.on_applied(src, materials[custom_material], material_flags)
+		custom_materials[custom_material] += materials[custom_material]

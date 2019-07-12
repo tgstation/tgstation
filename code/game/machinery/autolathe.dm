@@ -116,8 +116,8 @@
 		if(do_after(user, 14.4, target = src))
 			for(var/B in D.blueprints)
 				if(B)
-					var/datum/design/D = B
-					if(!D.build_type & AUTOLATHE)
+					var/datum/design/design = B
+					if(!design.build_type & AUTOLATHE)
 						continue
 					stored_research.add_design(B)
 		busy = FALSE
@@ -165,10 +165,12 @@
 			/////////////////
 
 			var/coeff = (is_stack ? 1 : prod_coeff) //stacks are unaffected by production coefficient
-			var/metal_cost = being_built.materials[/datum/material/iron]
-			var/glass_cost = being_built.materials[/datum/material/glass]
+			var/total_amount = 0
+			
+			for(var/MAT in being_built.materials)
+				total_amount += being_built.materials[MAT]
 
-			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5) //Change this to use all materials
+			var/power = max(2000, (total_amount)*multiplier/5) //Change this to use all materials
 
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
@@ -177,6 +179,7 @@
 
 			for(var/MAT in being_built.materials)
 				var/datum/material/used_material = MAT
+				var/amount_needed = being_built.materials[MAT] * coeff * multiplier
 				if(ismaterialcategory(used_material))
 					var/list/list_to_show = list()
 					for(var/i in SSmaterials.materials_by_category[used_material])
@@ -186,9 +189,9 @@
 					used_material = input("Choose [used_material]", "Custom Material") as null|anything in list_to_show
 					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
-					custom_materials += used_material
+					custom_materials[used_material] += amount_needed
 
-				materials_used[used_material] = being_built.materials[MAT] * coeff * multiplier
+				materials_used[used_material] = amount_needed
 
 			if(materials.has_materials(materials_used))
 				busy = TRUE
@@ -232,9 +235,11 @@
 			for(var/mat in materials_used)
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autolathe_crafted(src)
-			for(var/x in custom_materials)
-				var/datum/material/custom_material = x
-				custom_material.on_applied(new_item, materials_used[custom_material])
+
+			if(length(custom_materials))
+				new_item.set_custom_materials(custom_materials)
+
+
 	icon_state = "autolathe"
 	busy = FALSE
 	updateDialog()
