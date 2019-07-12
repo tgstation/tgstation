@@ -538,7 +538,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (callback) //call the original callback
 		. = callback.Invoke()
 	item_flags &= ~IN_INVENTORY
-	if(!pixel_y || !pixel_x)
+	if(!pixel_y && !pixel_x)
 		pixelOffset()
 
 
