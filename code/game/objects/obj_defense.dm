@@ -1,25 +1,24 @@
 
-//the essential proc to call when an obj must receive damage of any kind.
-/obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
+///the essential proc to call when an obj must receive damage of any kind.
+/obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(QDELETED(src))
 		stack_trace("[src] taking damage after deletion")
 		return
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
-		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
-		if(damage_amount >= DAMAGE_PRECISION)
-			. = damage_amount
-			var/old_integ = obj_integrity
-			obj_integrity = max(old_integ - damage_amount, 0)
-			if(obj_integrity <= 0)
-				var/int_fail = integrity_failure
-				if(int_fail && old_integ > int_fail)
-					obj_break(damage_flag)
-				obj_destruction(damage_flag)
-			else if(integrity_failure)
-				if(obj_integrity <= integrity_failure)
-					obj_break(damage_flag)
+	if((resistance_flags & INDESTRUCTIBLE) || obj_integrity <= 0)
+		return
+	damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+	if(damage_amount < DAMAGE_PRECISION)
+		return
+	. = damage_amount
+	obj_integrity = max(obj_integrity - damage_amount, 0)
+	//BREAKING FIRST
+	if(integrity_failure && obj_integrity <= integrity_failure)
+		obj_break(damage_flag)
+	//DESTROYING SECOND
+	if(obj_integrity <= 0)
+		obj_destruction(damage_flag)
 
 //returns the damage value of the attack after processing the obj's various armor protections
 /obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
