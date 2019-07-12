@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 
 	to_chat(world, num2text(limited))
 
-	if (limited > 1)
+	if (limited >= 1)
 		limited -= 1
 	else if (limited == 0)
 		return FALSE
