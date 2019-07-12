@@ -1,6 +1,7 @@
-/*=============================================================
-======================MIAUW'S SAY REWRITE======================
-===============================================================
+# Say code basics
+
+This document is a little dated but I believe it's accurate mostly (oranges 2019)
+# MIAUW'S SAY REWRITE
 
 This is a basic explanation of how say() works. Read this if you don't understand something.
 
@@ -14,8 +15,9 @@ If you came here to see how to use saycode, all you will ever really need to cal
 To have things react when other things speak around them, add the HEAR_1 flag to their flags variable and
 override their Hear() proc.
 
-=======================PROCS & VARIABLES=======================
-	Here follows a list of say()-related procs and variables.
+# PROCS & VARIABLES
+Here follows a list of say()-related procs and variables.
+```
 global procs
 	get_radio_span(freq)
 		Returns the span class associated with that frequency.
@@ -76,7 +78,8 @@ global procs
 		Passes message_mode to say_quote.
 
 	say_quote(input, spans, message_mode)
-		Adds a verb and quotes to a message. Also attaches span classes to a message. Verbs are determined by verb_say/verb_ask/verb_yell variables. Called on the speaker.
+		Adds a verb and quotes to a message. Also attaches span classes to a message.
+        Verbs are determined by verb_say/verb_ask/verb_yell variables. Called on the speaker.
 
 /mob
 	say_dead(message)
@@ -145,8 +148,8 @@ global procs
 
 		Return 0 if no radio was spoken into.
 		IMPORTANT: remember to call ..() and check for ..()'s return value properly!
-
-============================RADIOS=============================
+```
+# RADIOS
 
 I did not want to interfere with radios too much, but I sort of had to.
 For future generations, here is how radio code works:
@@ -162,9 +165,10 @@ This is an associative list, and the numbers as strings are the keys. The values
 To add a radio, simply use add_radio(radio, frequency). To remove a radio, use remove_radio(radio, frequency).
 To remove a radio from ALL frequencies, use remove_radio_all(radio).
 
-VIRTUAL SPEAKERS:
+## VIRTUAL SPEAKERS:
 Virtual speakers are simply atom/movables with a few extra variables.
 If radio_freq is not null, the code will rely on the fact that the speaker is virtual. This means that several procs will return something:
+```
 	(all of these procs are defined at the atom/movable level and return "" at that level.)
 	GetJob()
 		Returns the job string variable of the virtual speaker.
@@ -174,7 +178,7 @@ If radio_freq is not null, the code will rely on the fact that the speaker is vi
 		Returns the source of the virtual speaker.
 	GetRadio()
 		Returns the radio that was spoken through by the source. Needed for AI tracking.
-
+```
 This is fairly hacky, but it means that I can advoid using istypes. It's mainly relevant for AI tracking and AI job display.
 
-That's all, folks!*/
+That's all, folks!
