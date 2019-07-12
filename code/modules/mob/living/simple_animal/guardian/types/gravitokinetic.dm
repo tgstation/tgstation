@@ -10,6 +10,7 @@
 	var/list/gravito_targets = list()
 	var/gravity_power_range = 10 //how close the stand must stay to the target to keep the heavy gravity
 
+///Removes gravity from affected mobs upon guardian death to prevent permanent effects
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/death()
 	. = ..()
 	for(var/datum/component/C in gravito_targets)
