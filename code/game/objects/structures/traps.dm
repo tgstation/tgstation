@@ -81,10 +81,64 @@
 	name = "shock trap"
 	desc = "A trap that will shock and render you immobile. You'd better avoid it."
 	icon_state = "trap-shock"
+	var/stun_time = 100
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
 	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
-	L.Paralyze(100)
+	L.Paralyze(stun_time)
+
+/obj/structure/trap/stun/hunter
+	name = "bounty trap"
+	desc = "A trap that only goes off when a fugitive steps on it, announcing the location and stunning the target. You'd better avoid it."
+	icon_state = "trap-earth"
+	stun_time = 150
+	var/obj/item/radio/radio
+
+/obj/structure/trap/stun/hunter/Initialize()
+	radio = new(src)
+	radio.subspace_transmission = TRUE
+	radio.canhear_range = 0
+	radio.recalculateChannels()
+	..()
+
+/obj/structure/trap/stun/hunter/Destroy()
+	QDEL_NULL(radio)
+	var/obj/item/bountytrap/item = new(get_turf(src))
+	item.name = name
+	. = ..()
+
+/obj/structure/trap/stun/hunter/Crossed(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(!L.mind?.has_antag_datum(/datum/antagonist/fugitive))
+			return //doesn't go off if they are not fugitives
+	. = ..()
+
+/obj/structure/trap/stun/hunter/trap_effect(mob/living/L)
+	..()
+	playsound(src, 'sound/machines/ding.ogg', 50, 1)
+	say("Fugitive has been trapped in [get_area_name(src)].")
+
+/obj/structure/trap/stun/hunter/flare()
+	..()
+	qdel(src)
+
+/obj/item/bountytrap
+	name = "bounty trap"
+	desc = "A trap that only goes off when a fugitive steps on it, announcing the location and stunning the target. It's currently inactive."
+
+/obj/item/bountytrap/Initialize()
+	..()
+	name = "[name] #[rand(1, 999)]"
+
+/obj/item/bountytrap/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	to_chat(user, "<span class=notice>You set up [src]. Examine it while close to disarm it.</span>")
+	var/obj/structure/trap/stun/hunter/trap = new(get_turf(src))
+	trap.name = name
+	qdel(src)
 
 /obj/structure/trap/fire
 	name = "flame trap"

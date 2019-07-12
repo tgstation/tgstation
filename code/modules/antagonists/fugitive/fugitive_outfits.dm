@@ -118,6 +118,7 @@
 /datum/outfit/bountyhook
 	name = "Bounty Hunter - Hook"
 	uniform = /obj/item/clothing/under/rank/prisoner
+	back = /obj/item/storage/backpack
 	head = /obj/item/clothing/head/scarecrow_hat
 	gloves = /obj/item/clothing/gloves/botanic_leather
 	ears = /obj/item/radio/headset
@@ -126,6 +127,10 @@
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id
 	r_hand = /obj/item/gun/ballistic/shotgun/doublebarrel/hook
+
+	backpack_contents = list(
+		/obj/item/ammo_casing/shotgun/incapacitate = 6
+		)
 
 /datum/outfit/bountygrapple/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -145,13 +150,19 @@
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	ears = /obj/item/radio/headset
 	id = /obj/item/card/id
-	r_hand = /obj/item/extendohand //come on, do something better than this
+	r_hand = /obj/item/storage/firstaid/regular
+	l_hand = /obj/item/pinpointer/hunter
+
+	backpack_contents = list(
+		/obj/item/bountytrap = 4
+		)
 
 /datum/outfit/bountysynth/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
-	H.set_species(/datum/species/synth)
-	H.set_species(/datum/species/synth)//setting twice removes the skin
+	var/datum/species/synth/newrace = new()
+	H.set_species(newrace)
+	newrace.assume_disguise()//we can assume disguise without a species to remove fake_species which would usually be the last human
 	var/obj/item/card/id/W = H.wear_id
 	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name

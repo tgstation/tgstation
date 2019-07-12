@@ -232,6 +232,8 @@
 	hook = new /obj/item/gun/magic/hook/bounty(src)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook/AltClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
 	if(toggled)
 		to_chat(user,"<span class='notice'>You switch to the shotgun.</span>")
 		fire_sound = initial(fire_sound)
