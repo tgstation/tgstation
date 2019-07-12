@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "fixed an issue where bolas could get teleported back to someone if their remove timer finished after someone else had already removed it"

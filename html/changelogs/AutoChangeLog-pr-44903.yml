@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Abductor healing glands, instead of healing a flat amount of each damage, now actively (and gruesomely) replace damaged organs and bodyparts. It will also reject robotic implants, organs and limbs."
-  - bugfix: "Fixed a bug where nearsightedness and blindness from eye damage would persist after losing the eyes."
