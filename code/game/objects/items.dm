@@ -800,6 +800,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
 
+///adds a random pixel offset, for non-precise item placement such as throwing or dropping to the ground
 /obj/item/proc/pixelOffset()
 	pixel_x = rand(-8,8)
 	pixel_y = rand(-8,8)
