@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - imageadd: "Added short intro animations for the cyborg module HUD icons."
