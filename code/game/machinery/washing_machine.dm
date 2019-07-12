@@ -15,8 +15,8 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
 
 /obj/machinery/washing_machine/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click it to start a wash cycle.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click it to start a wash cycle.</span>"
 
 /obj/machinery/washing_machine/AltClick(mob/user)
 	if(!user.canUseTopic(src, !issilicon(user)))
@@ -266,7 +266,7 @@
 			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return 1
 
-		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/stamp) || istype(W, /obj/item/reagent_containers/food/snacks/grown/rainbow_flower))
+		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/stamp) || istype(W, /obj/item/reagent_containers/food/snacks/grown/rainbow_flower) || istype(W, /obj/item/stack/ore/bluespace_crystal))
 			color_source = W
 		update_icon()
 

@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "fixed experimental dissection techweb node
+ci: travis will now fail tests on branches with invalid nodes"

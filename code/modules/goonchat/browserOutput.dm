@@ -107,12 +107,34 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	messageQueue = null
 	sendClientData()
 
+	syncRegex()
+
 	//do not convert to to_chat()
 	SEND_TEXT(owner, "<span class=\"userdanger\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
 
 /datum/chatOutput/proc/showChat()
 	winset(owner, "output", "is-visible=false")
 	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
+
+/proc/syncChatRegexes()
+	for (var/user in GLOB.clients)
+		var/client/C = user
+		var/datum/chatOutput/Cchat = C.chatOutput
+		if (Cchat && !Cchat.broken && Cchat.loaded)
+			Cchat.syncRegex()
+
+/datum/chatOutput/proc/syncRegex()
+	var/list/regexes = list()
+
+	if (config.ic_filter_regex)
+		regexes["show_filtered_ic_chat"] = list(
+			config.ic_filter_regex.name,
+			"ig",
+			"<span class='boldwarning'>$1</span>"
+		)
+
+	if (regexes.len)
+		ehjax_send(data = list("syncRegex" = regexes))
 
 /datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))

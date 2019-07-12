@@ -124,6 +124,10 @@
 	port_id = "mining"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/mining_common
+	port_id = "mining_common"
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/cargo
 	port_id = "cargo"
 	can_be_bought = FALSE
@@ -171,16 +175,16 @@
 	name = "Backup Shuttle"
 	can_be_bought = FALSE
 
-/datum/map_template/shuttle/emergency/airless
-	suffix = "airless"
+/datum/map_template/shuttle/emergency/construction
+	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
-	admin_notes = "No brig, no medical facilities, no air."
-	credit_cost = -7500
+	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
+	admin_notes = "No brig, no medical facilities, no shuttle console."
+	credit_cost = 2500
 
 /datum/map_template/shuttle/emergency/airless/prerequisites_met()
-	// first 10 minutes only
-	return world.time - SSticker.round_start_time < 6000
+	// first 10 minutes only(removed)
+	return world.time - SSticker.round_start_time < 99999999
 
 /datum/map_template/shuttle/emergency/airless/post_load()
 	. = ..()
@@ -521,6 +525,10 @@
 /datum/map_template/shuttle/labour/kilo
 	suffix = "kilo"
 	name = "labour shuttle (Kilo)"
+
+/datum/map_template/shuttle/mining_common/meta
+	suffix = "meta"
+	name = "lavaland shuttle (Meta)"
 
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"

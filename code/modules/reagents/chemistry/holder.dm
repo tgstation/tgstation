@@ -167,7 +167,7 @@
 
 	return master
 
-/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE)
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, method = null, show_message = TRUE)
 	//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
@@ -201,6 +201,9 @@
 		if(preserve_data)
 			trans_data = copy_data(T)
 		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+		if(method)
+			R.react_single(T, target_atom, method, part, show_message)
+			T.on_transfer(target_atom, method, transfer_amount * multiplier)
 		remove_reagent(T.type, transfer_amount)
 
 	update_total()
@@ -283,6 +286,10 @@
 			continue
 		if(!C)
 			C = R.holder.my_atom
+		if(!R.metabolizing)
+			R.metabolizing = TRUE
+			R.on_mob_metabolize(C)
+
 		if(C && R)
 			if(C.reagent_check(R) != 1)
 				if(can_overdose)
@@ -333,6 +340,21 @@
 		C.update_mobility()
 		C.update_stamina()
 	update_total()
+
+//Signals that metabolization has stopped, triggering the end of trait-based effects
+/datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
+	var/list/cached_reagents = reagent_list
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/R = reagent
+		if(QDELETED(R.holder))
+			continue
+		if(keep_liverless && R.self_consuming) //Will keep working without a liver
+			continue
+		if(!C)
+			C = R.holder.my_atom
+		if(R.metabolizing)
+			R.metabolizing = FALSE
+			R.on_mob_end_metabolize(C)
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -482,6 +504,9 @@
 		if(R.type == reagent)
 			if(my_atom && isliving(my_atom))
 				var/mob/living/M = my_atom
+				if(R.metabolizing)
+					R.metabolizing = FALSE
+					R.on_mob_end_metabolize(M)
 				R.on_mob_delete(M)
 			qdel(R)
 			reagent_list -= R
@@ -536,6 +561,31 @@
 				R.reaction_turf(A, R.volume * volume_modifier, show_message)
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+
+/datum/reagents/proc/react_single(datum/reagent/R, atom/A, method = TOUCH, volume_modifier = 1, show_message = TRUE)
+	var/react_type
+	if(isliving(A))
+		react_type = "LIVING"
+		if(method == INGEST)
+			var/mob/living/L = A
+			L.taste(src)
+	else if(isturf(A))
+		react_type = "TURF"
+	else if(isobj(A))
+		react_type = "OBJ"
+	else
+		return
+	switch(react_type)
+		if("LIVING")
+			var/touch_protection = 0
+			if(method == VAPOR)
+				var/mob/living/L = A
+				touch_protection = L.get_permeability_protection()
+			R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
+		if("TURF")
+			R.reaction_turf(A, R.volume * volume_modifier, show_message)
+		if("OBJ")
+			R.reaction_obj(A, R.volume * volume_modifier, show_message)
 
 /datum/reagents/proc/holder_full()
 	if(total_volume >= maximum_volume)
@@ -656,15 +706,19 @@
 
 	return FALSE
 
-/datum/reagents/proc/has_reagent(reagent, amount = -1)
+/datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if (R.type == reagent)
 			if(!amount)
+				if(needs_metabolizing && !R.metabolizing)
+					return 0
 				return R
 			else
 				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
+					if(needs_metabolizing && !R.metabolizing)
+						return 0
 					return R
 				else
 					return 0

@@ -19,9 +19,8 @@
 	var/obj/effect/overlay/vis/mattress_on
 
 /obj/machinery/stasis/examine(mob/user)
-	..()
-	var/turn_on_or_off = stasis_enabled ? "turn off" : "turn on"
-	to_chat(user, "<span class='notice'>Alt-click to [turn_on_or_off] the machine.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()

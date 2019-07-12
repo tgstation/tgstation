@@ -20,13 +20,14 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+	var/maxFine = 1000
 
 	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/secure_data/examine(mob/user)
-	..()
+	. = ..()
 	if(scan)
-		to_chat(user, "<span class='notice'>Alt-click to eject the ID card.</span>")
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"
@@ -190,7 +191,7 @@
 						dat += {"<table><tr><td><table>
 						<tr><td>Name:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=name'>&nbsp;[active1.fields["name"]]&nbsp;</A></td></tr>
 						<tr><td>ID:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
-						<tr><td>Sex:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>
+						<tr><td>Gender:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=gender'>&nbsp;[active1.fields["gender"]]&nbsp;</A></td></tr>
 						<tr><td>Age:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"}
 						dat += "<tr><td>Species:</td><td><A href ='?src=[REF(src)];choice=Edit Field;field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += {"<tr><td>Rank:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=rank'>&nbsp;[active1.fields["rank"]]&nbsp;</A></td></tr>
@@ -210,6 +211,32 @@
 					if((istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2)))
 						dat += "<font size='4'><b>Security Data</b></font>"
 						dat += "<br>Criminal Status: <A href='?src=[REF(src)];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>"
+						dat += "<br><br>Citations: <A href='?src=[REF(src)];choice=Edit Field;field=citation_add'>Add New</A>"
+
+						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+						<tr>
+						<th>Crime</th>
+						<th>Fine</th>
+						<th>Author</th>
+						<th>Time Added</th>
+						<th>Amount Due</th>
+						<th>Del</th>
+						</tr>"}
+						for(var/datum/data/crime/c in active2.fields["citation"])
+							var/owed = c.fine - c.paid
+							dat += {"<tr><td>[c.crimeName]</td>
+							<td>$[c.fine]</td><td>[c.author]</td>
+							<td>[c.time]</td>"}
+							if(owed > 0)
+								dat += "<td>$[owed] <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
+							else
+								dat += "<td>All Paid Off</td>"
+							dat += {"<td>
+							<A href='?src=[REF(src)];choice=Edit  Field;field=citation_delete;cdataid=[c.dataId]'>\[X\]</A>
+							</td>
+							</tr>"}
+						dat += "</table>"
+
 						dat += "<br><br>Minor Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_add'>Add New</A>"
 
 
@@ -356,6 +383,25 @@ What a mess.*/
 							active2 = E
 					screen = 3
 
+			if("Pay")
+				for(var/datum/data/crime/p in active2.fields["citation"])
+					if(p.dataId == text2num(href_list["cdataid"]))
+						var/obj/item/holochip/C = usr.is_holding_item_of_type(/obj/item/holochip)
+						if(C && istype(C))
+							var/pay = C.get_item_credit_value()
+							if(!pay)
+								to_chat(usr, "<span class='warning'>[C] doesn't seem to be worth anything!</span>")
+							else
+								var/diff = p.fine - p.paid
+								GLOB.data_core.payCitation(active2.fields["id"], text2num(href_list["cdataid"]), pay)
+								to_chat(usr, "<span class='notice'>You have paid [pay] credit\s towards your fine</span>")
+								if (pay == diff || pay > diff || pay >= diff)
+									investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
+									to_chat(usr, "<span class='notice'>The fine has been paid in full</span>")
+								qdel(C)
+								playsound(src, "terminal_type", 25, 0)
+						else
+							to_chat(usr, "<span class='warning'>Fines can only be paid with holochips</span>")
 
 			if("Print Record")
 				if(!( printing ))
@@ -366,7 +412,7 @@ What a mess.*/
 					var/obj/item/paper/P = new /obj/item/paper( loc )
 					P.info = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
 					if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))
-						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"])
+						P.info += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["gender"], active1.fields["age"])
 						P.info += "\nSpecies: [active1.fields["species"]]<BR>"
 						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
 					else
@@ -530,7 +576,7 @@ What a mess.*/
 				G.fields["name"] = "New Record"
 				G.fields["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
 				G.fields["rank"] = "Unassigned"
-				G.fields["sex"] = "Male"
+				G.fields["gender"] = "Male"
 				G.fields["age"] = "Unknown"
 				G.fields["species"] = "Human"
 				G.fields["photo_front"] = new /icon()
@@ -602,12 +648,14 @@ What a mess.*/
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["fingerprint"] = t1
-					if("sex")
+					if("gender")
 						if(istype(active1, /datum/data/record))
-							if(active1.fields["sex"] == "Male")
-								active1.fields["sex"] = "Female"
+							if(active1.fields["gender"] == "Male")
+								active1.fields["gender"] = "Female"
+							else if(active1.fields["gender"] == "Female")
+								active1.fields["gender"] = "Other"
 							else
-								active1.fields["sex"] = "Male"
+								active1.fields["gender"] = "Male"
 					if("age")
 						if(istype(active1, /datum/data/record))
 							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num
@@ -694,6 +742,37 @@ What a mess.*/
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
+					if("citation_add")
+						if(istype(active1, /datum/data/record))
+							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
+							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 50) as num, 1)
+							if(!fine || fine < 0)
+								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
+								return
+							fine = min(fine, maxFine)
+							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
+								return
+							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
+							for (var/obj/item/pda/P in GLOB.PDAs)
+								if(P.owner == active1.fields["name"])
+									var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
+									var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+										"name" = "Security Citation",
+										"job" = "Citation Server",
+										"message" = message,
+										"targets" = list("[P.owner] ([P.ownjob])"),
+										"automated" = 1
+									))
+									signal.send_to_receivers()
+									usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+							GLOB.data_core.addCitation(active1.fields["id"], crime)
+							investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+					if("citation_delete")
+						if(istype(active1, /datum/data/record))
+							if(href_list["cdataid"])
+								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
+									return
+								GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
@@ -812,7 +891,7 @@ What a mess.*/
 					else
 						R.fields["name"] = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
 				if(2)
-					R.fields["sex"] = pick("Male", "Female")
+					R.fields["gender"] = pick("Male", "Female", "Other")
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)

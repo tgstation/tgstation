@@ -1,0 +1,5 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - tweak: "Slightly changed how explosive holoparasite bombs work. Actual gameplay impact should be minimal."
+  - balance: "The distance requirement for finding bombs on examine has been removed."

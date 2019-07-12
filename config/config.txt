@@ -454,7 +454,7 @@ MINUTE_CLICK_LIMIT 400
 ## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
 ## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
 
-## Send a message with the station name starting a new game
+## Send a message with the station name starting a new game. Also required for the notify function
 #CHAT_ANNOUNCE_NEW_GAME
 
 
