@@ -212,8 +212,8 @@
 	icon_state = "sprinkler_d"
 	///var to prevent do_after stacking
 	var/deploying = FALSE
-	///result machine after deploying it
-	var/obj/machinery/plumbing/result
+	///result thing that gets spawned after deploying it
+	var/obj/result
 
 /obj/item/deployable/attack_self(mob/user)
 	. = ..()
