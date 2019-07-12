@@ -217,7 +217,7 @@
 
 	return
 
-/obj/machinery/autolathe/proc/make_item(power, var/list/materials_used, var/list/custom_materials, multiplier, coeff, is_stack)
+/obj/machinery/autolathe/proc/make_item(power, var/list/materials_used, var/list/picked_materials, multiplier, coeff, is_stack)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
@@ -236,8 +236,8 @@
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autolathe_crafted(src)
 
-			if(length(custom_materials))
-				new_item.set_custom_materials(custom_materials)
+			if(length(picked_materials))
+				new_item.set_custom_materials(picked_materials)
 
 
 	icon_state = "autolathe"

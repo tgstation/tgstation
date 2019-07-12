@@ -25,7 +25,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
 
-///This proc is called when the material is added to an object. mapload exists mostly to prevent the removal of mapped in variables.
+///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
 	if(!(material_flags & MATERIAL_NO_COLOR)) //Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
 		if(color) //Do we have a custom color?
@@ -36,9 +36,27 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
 
-///This proc is called when the material is added to an item specifically.
+///This proc is called when the material is added to an object specifically.
 /datum/material/proc/on_applied_obj(var/obj/o, amount, material_flags)
 	o.max_integrity *= integrity_modifier
 	o.obj_integrity = o.max_integrity
 	o.force *= strength_modifier
 	o.throwforce *= strength_modifier
+
+
+///This proc is called when the material is removed from an object.
+/datum/material/proc/on_removed(atom/source, material_flags)
+	if(!(material_flags & MATERIAL_NO_COLOR)) //Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
+		if(color)
+			source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
+		source.alpha = initial(source.alpha)
+	
+	if(istype(source, /obj)) //objs
+		on_removed_obj(source, material_flags)
+
+///This proc is called when the material is removed from an object specifically.
+/datum/material/proc/on_removed_obj(var/obj/o, amount, material_flags)
+	o.max_integrity = initial(o.max_integrity)
+	o.obj_integrity = o.max_integrity
+	o.force *= initial(o.force)
+	o.throwforce *= initial(o.throwforce)

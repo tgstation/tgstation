@@ -158,7 +158,7 @@
 			var/datum/material/material = getmaterialref(i) || i
 			temp_list[material] = custom_materials[material] //Get the proper instanced version
 		custom_materials = temp_list	
-		set_custom_materials(custom_materials)
+		set_initial_custom_materials(custom_materials)
 
 	ComponentInitialize()
 
@@ -1075,11 +1075,26 @@
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	return FALSE
 
-///Adds custom materials to an item, overrides the old materials.
-/atom/proc/set_custom_materials(var/list/materials)
+///Adds custom materials to an item, only used for initial materials.
+/atom/proc/set_initial_custom_materials(var/list/materials)
 	custom_materials = list() //Instance the list
 
 	for(var/x in materials)
 		var/datum/material/custom_material = x
+		custom_material.on_applied(src, materials[custom_material], material_flags)
+		custom_materials[custom_material] += materials[custom_material]
+
+///Sets the custom materials for an item.
+/atom/proc/set_custom_materials(var/list/materials)
+	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
+		for(var/i in custom_materials)
+			var/datum/material/custom_material = i
+			custom_material.on_removed(src, material_flags) //Remove the current materials
+
+	custom_materials = list() //Reset the list
+
+	for(var/x in materials)
+		var/datum/material/custom_material = x
+
 		custom_material.on_applied(src, materials[custom_material], material_flags)
 		custom_materials[custom_material] += materials[custom_material]

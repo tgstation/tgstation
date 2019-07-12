@@ -59,9 +59,14 @@
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	coin_type = /obj/item/coin/uranium
 
-/datum/material/uranium/on_applied(atom/source, amount, mapload)
+/datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
 	source.AddComponent(/datum/component/radioactive, amount / 10, source, 0) //half-life of 0 because we keep on going.
+
+/datum/material/uranium/on_removed(atom/source, material_flags)
+	. = ..()
+	qdel(source.GetComponent(/datum/component/radioactive))
+
 
 ///Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
@@ -73,9 +78,13 @@
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	coin_type = /obj/item/coin/plasma
 
-/datum/material/plasma/on_applied(atom/source, amount, mapload)
+/datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
 	source.AddComponent(/datum/component/firestackadder)
+
+/datum/material/plasma/on_removed(atom/source, material_flags)
+	. = ..()
+	qdel(source.GetComponent(/datum/component/firestackadder))
 
 ///Can cause bluespace effects on use. (Teleportation)
 /datum/material/bluespace
@@ -96,10 +105,16 @@
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	coin_type = /obj/item/coin/bananium
 
-/datum/material/bananium/on_applied(atom/source, amount, mapload)
+/datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
 	source.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 	source.AddComponent(/datum/component/slippery, min(amount / 10, 80))
+
+/datum/material/bananium/on_removed(atom/source, amount, material_flags)
+	. = ..()
+	qdel(source.GetComponent(/datum/component/slippery))
+	qdel(source.GetComponent(/datum/component/squeak))
+
 
 ///Mediocre force increase
 /datum/material/titanium
