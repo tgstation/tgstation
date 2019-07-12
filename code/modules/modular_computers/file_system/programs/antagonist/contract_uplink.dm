@@ -97,15 +97,18 @@
 			if (hard_drive.traitor_data.owner.current == user)
 				var/item = params["item"]
 
+				to_chat(world, "item--")		
 				to_chat(world, item)		
 
-				for (var/datum/contractor_hub/item/hub_item in hard_drive.traitor_data.contractor_hub.hub_items)
+				for (var/datum/contractor_item/hub_item in hard_drive.traitor_data.contractor_hub.hub_items)
+					to_chat(world, "hub_item--")		
 					to_chat(world, hub_item.name)		
 
 					if (hub_item.name == item)
-						hub_item.handle_purchase()
+						hub_item.handle_purchase(hard_drive.traitor_data.contractor_hub)
 			else
 				error = "Invalid user..."
+	to_chat(world, "action--")		
 	to_chat(world, action)		
 
 
@@ -131,7 +134,7 @@
 
 		data["error"] = error
 
-		for (var/datum/contractor_hub/item/hub_item in traitor_data.contractor_hub.hub_items)
+		for (var/datum/contractor_item/hub_item in traitor_data.contractor_hub.hub_items)
 			data["contractor_hub_items"] += list(list(
 				"name" = hub_item.name,
 				"desc" = hub_item.desc,
