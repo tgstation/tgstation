@@ -374,9 +374,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(item_flags & DROPDEL)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
+	pixelOffset()
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
-	pixel_x = rand(-8,8)
-	pixel_y = rand(-8,8)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -539,6 +538,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (callback) //call the original callback
 		. = callback.Invoke()
 	item_flags &= ~IN_INVENTORY
+	if(!pixel_y || !pixel_x)
+		pixelOffset()
+
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)
@@ -797,3 +799,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
+
+/obj/item/proc/pixelOffset()
+	pixel_x = rand(-8,8)
+	pixel_y = rand(-8,8)
