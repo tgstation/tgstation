@@ -1,0 +1,4 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - bugfix: "Swappers can no longer be sent on the cargo shuttle."
