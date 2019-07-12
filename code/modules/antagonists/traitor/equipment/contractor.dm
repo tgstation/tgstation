@@ -60,16 +60,43 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 			var/mob/dead/observer/C = pick(candidates)
 			spawn_contractor_partner(user, C.key)
 		else
-			to_chat(user, "No available agents at this time, please try again later.")
+			to_chat(user, "<span class='notice'>No available agents at this time, please try again later.</span>")
 
 			// refund and add the limit back.
 			limited += 1
 			hub.contract_rep += cost
 
-/datum/contractor_item/contractor_partner/proc/spawn_contractor_partner(mob/living/user, key)
-	var/obj/effect/mob_spawn/human/syndicate/contractor_partner = new
+/datum/outfit/contractor_partner
+	name = "Contractor Support Unit"
+	
+	uniform = /obj/item/clothing/under/chameleon
+	suit = /obj/item/clothing/suit/chameleon
+	back = /obj/item/storage/backpack
+	belt = /obj/item/pda/chameleon
+	shoes = /obj/item/clothing/shoes/chameleon/noslip
+	ears = /obj/item/radio/headset/chameleon
+	id = /obj/item/card/id/syndicate
+	backpack_contents = list(/obj/item/storage/toolbox/syndicate, /obj/item/storage/box/syndie_kit/imp_uplink, /obj/item/clothing/mask/chameleon)
 
-	contractor_partner.create(key)
+/datum/contractor_item/contractor_partner/proc/spawn_contractor_partner(mob/living/user, key)
+	var/mob/living/carbon/human/partner = new()
+	var/datum/outfit/contractor_partner/partner_outfit = new()
+
+	partner_outfit.equip(partner)
+
+	var/obj/structure/closet/supplypod/arrival_pod = new()
+
+	arrival_pod.style = STYLE_SYNDICATE
+	arrival_pod.explosionSize = list(0,0,0,0)
+
+	var/turf/free_location = find_obstruction_free_location(3, user)
+
+	if (!free_location)
+		free_location = get_turf(user)
+
+	partner.forceMove(arrival_pod)
+
+	new /obj/effect/DPtarget(free_location, arrival_pod)
 
 // Subtract cost, and spawn if it's an item.
 /datum/contractor_item/proc/handle_purchase(var/datum/contractor_hub/hub)

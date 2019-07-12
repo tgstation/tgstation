@@ -25,46 +25,17 @@
 
 	ransom = 100 * rand(18, 45)
 
-/datum/syndicate_contract/proc/ispipewire(item)
-	var/static/list/pire_wire = list(
-		/obj/machinery/atmospherics,
-		/obj/structure/disposalpipe,
-		/obj/structure/cable
-	)
-	return (is_type_in_list(item, pire_wire))
-
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
 	if (contract.target && contract.dropoff_check(user, contract.target.current))
 
-		var/list/turfs = RANGE_TURFS(3, user)
-		var/list/possible_drop_loc = list()
+		var/turf/free_location = find_obstruction_free_location(3, user, contract.dropoff)
 
-		for(var/turf/found_turf in turfs)
-			var/area/turf_area = get_area(found_turf)
+		if (free_location)
+			// We've got a valid location, launch.
+			launch_extraction_pod(free_location)
+			return TRUE
 
-			// We check if both the turf is a floor, and that it's actually in the area. 
-			// We also want a location that's clear of any obstructions.
-			var/location_clear = TRUE
-			
-			if (istype(turf_area, contract.dropoff) && (!isspaceturf(found_turf) && !isclosedturf(found_turf)))
-				for (var/content in found_turf.contents)
-					// We don't want obstructions, but we don't care about wires/pipes.
-					if ((istype(content, /obj/machinery) || istype(content, /obj/structure)) && !ispipewire(content))
-						location_clear = FALSE
-
-				if (location_clear)
-					possible_drop_loc.Add(found_turf)
-
-		// Need at least one free location.
-		if (possible_drop_loc.len < 1)
-			return FALSE
-
-		var/pod_rand_loc = rand(1, possible_drop_loc.len)
-
-		// We've got a valid location, launch.
-		launch_extraction_pod(possible_drop_loc[pod_rand_loc])
-		return 1
-	return 0
+	return FALSE
 
 // Launch the pod to collect our victim.
 /datum/syndicate_contract/proc/launch_extraction_pod(turf/empty_pod_turf)

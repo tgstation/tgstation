@@ -534,3 +534,44 @@
 	var/pressure = environment.return_pressure()
 	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 		. = TRUE
+
+/proc/ispipewire(item)
+	var/static/list/pire_wire = list(
+		/obj/machinery/atmospherics,
+		/obj/structure/disposalpipe,
+		/obj/structure/cable
+	)
+	return (is_type_in_list(item, pire_wire))
+
+// Find a obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
+/proc/find_obstruction_free_location(var/range, var/atom/center, var/area/specific_area)
+	var/list/turfs = RANGE_TURFS(range, center)
+	var/list/possible_loc = list()
+
+	for(var/turf/found_turf in turfs)
+		var/area/turf_area = get_area(found_turf)
+
+		// We check if both the turf is a floor, and that it's actually in the area. 
+		// We also want a location that's clear of any obstructions.
+		var/location_clear = TRUE
+		
+		if (specific_area)
+			if (!istype(turf_area, specific_area))
+				continue
+
+		if ((!isspaceturf(found_turf) && !isclosedturf(found_turf)))
+			for (var/content in found_turf.contents)
+				// We don't want obstructions, but we don't care about wires/pipes.
+				if ((istype(content, /obj/machinery) || istype(content, /obj/structure)) && !ispipewire(content))
+					location_clear = FALSE
+
+			if (location_clear)
+				possible_loc.Add(found_turf)
+
+	// Need at least one free location.
+	if (possible_loc.len < 1)
+		return FALSE
+
+	var/pod_rand_loc = rand(1, possible_loc.len)
+
+	return possible_loc[pod_rand_loc]
