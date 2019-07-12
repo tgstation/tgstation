@@ -12,7 +12,6 @@
 	antag_datum = /datum/antagonist/traitor/
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg")
-	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
 	required_candidates = 1
 	weight = 5
 	cost = 10
@@ -51,8 +50,6 @@
 	antag_datum = /datum/antagonist/changeling
 	restricted_roles = list("AI", "Cyborg")
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
-	required_enemies = list(1,1,0,0,0,0,0,0,0,0)
 	required_candidates = 1
 	weight = 3
 	cost = 30
@@ -99,8 +96,6 @@
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
-	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
-	required_enemies = list(4,4,2,2,2,1,1,1,1,0)
 	required_candidates = 1
 	weight = 3
 	cost = 30
@@ -145,8 +140,6 @@
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
-	enemy_roles = list("Security Officer","Warden", "Detective","Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 4
 	weight = 3
 	cost = 30
@@ -206,8 +199,6 @@
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
-	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
-	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
 	weight = 3
 	cost = 40
@@ -305,8 +296,6 @@
 	antag_flag = ROLE_REV_HEAD
 	antag_datum = /datum/antagonist/rev/head
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
-	enemy_roles = list("AI", "Cyborg", "Security Officer", "Detective", "Head of Security", "Captain", "Warden")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 3
 	weight = 2
 	cost = 35
@@ -403,8 +392,6 @@
 	antag_flag = ROLE_HIVE
 	antag_datum = /datum/antagonist/hivemind
 	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	enemy_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_enemies = list(4,4,2,2,2,1,1,1,1,0)
 	required_candidates = 3
 	weight = 3
 	cost = 30
@@ -435,8 +422,6 @@
 	antag_flag = null
 	antag_datum = null
 	restricted_roles = list()
-	enemy_roles = list()
-	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
 	required_candidates = 0
 	weight = 3
 	cost = 0
@@ -460,8 +445,6 @@
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	antag_datum = /datum/antagonist/clockcult
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
-	enemy_roles = list("Security Officer","Warden", "Detective","Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 4
 	weight = 3
 	cost = 0
@@ -565,17 +548,16 @@
 	antag_flag = ROLE_OVERTHROW
 	antag_datum = /datum/antagonist/overthrow
 	restricted_roles = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	enemy_roles = list("Security Officer","Warden", "Detective","Head of Security", "Captain")
-	required_enemies = list(4,4,3,3,3,2,2,1,1,0)
 	required_candidates = 2
 	weight = 3
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
-	flags = HIGHLANDER_RULESET
+	flags = HIGHLANDER_RULESET	
+	var/agent_count = list(4,4,3,3,3,2,2,1,1,0)
 
 /datum/dynamic_ruleset/roundstart/overthrow/pre_execute()
-	var/sleeping_agents = required_enemies[round(mode.threat_level/10)] + round(num_players()*0.05)
+	var/sleeping_agents = agent_count[round(mode.threat_level/10)] + round(num_players()*0.05)
 
 	for (var/i in 1 to sleeping_agents)
 		var/mob/sleeping_agent = pick(candidates)
@@ -628,8 +610,6 @@
 	antag_flag = ROLE_DEVIL
 	antag_datum = /datum/antagonist/devil
 	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
-	enemy_roles = list("Lawyer", "Curator", "Chaplain", "Security Officer","Warden", "Detective","Head of Security", "Captain")
-	required_enemies = list(4,4,3,3,3,2,2,1,1,0)
 	required_candidates = 1
 	weight = 3
 	cost = 0
@@ -688,7 +668,6 @@
 	antag_flag = ROLE_MONKEY
 	antag_datum = /datum/antagonist/monkey/leader
 	restricted_roles = list("Cyborg", "AI")
-	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
 	required_candidates = 1
 	weight = 3
 	cost = 0
@@ -748,7 +727,6 @@
 /datum/dynamic_ruleset/roundstart/meteor
 	name = "Meteor"
 	persistent = TRUE
-	required_enemies = list(0,0,0,0,0,0,0,0,0,0)
 	required_candidates = 0
 	weight = 3
 	cost = 0
