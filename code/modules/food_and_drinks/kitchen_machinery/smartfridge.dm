@@ -396,8 +396,9 @@
 /obj/machinery/smartfridge/organ
 	name = "smart organ storage"
 	desc = "A refrigerated storage unit for organ storage."
-	max_n_of_items = 100	//1500 seems far too high for organs
+	max_n_of_items = 20	//vastly lower to prevent processing too long
 	var/organ_safe = 1
+	var/repair_rate = 0
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
 	if(istype(O, /obj/item/organ/) && !istype(O, /obj/item/organ/brain))	//would rather not have a machine to freeze brains from a gameplay perspective, if it is so necessary, freezer chests exist
@@ -413,7 +414,31 @@
 	var/obj/item/organ/organ = O
 	organ.can_decompose = 1
 	..()
-	.
+
+/obj/machinery/smartfridge/organ/RefreshParts()
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+		max_n_of_items = 20 * B.rating
+		repair_rate = max(0, 0.001 * (B.rating - 1))
+
+/obj/machinery/smartfridge/organ/Destroy()
+	for(var/organ in src)
+		var/obj/item/organ/O = organ
+		if(O)
+			O.can_decompose = 1
+	..()
+
+/obj/machinery/smartfridge/organ/process()
+	for(var/organ in src)
+		var/obj/item/organ/O = organ
+		if(O)
+			O.damage = max(0, O.damage - repair_rate)
+
+/obj/machinery/smartfridge/organ/deconstruct()
+	for(var/organ in src)
+		var/obj/item/organ/O = organ
+		if(O)
+			O.can_decompose = 1
+	..()
 
 // -----------------------------
 // Chemistry Medical Smartfridge
