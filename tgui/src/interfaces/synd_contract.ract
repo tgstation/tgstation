@@ -16,7 +16,7 @@
 		{{#if data.logged_in}}
 			{{#if data.page == "CONTRACTS"}}
 				<div style="position:absolute; top:2px; right:2px">
-					<ui-button action='PRG_contractor_hub'><div style="padding-top:6px; padding-bottom:3px"><i class="fas fa-database fa-3x"></i></div></ui-button>
+					<ui-button action='PRG_contractor_hub'><div style="padding-top:6px; padding-bottom:3px"><i class="fas fa-satellite-dish fa-3x"></i></div></ui-button>
 				</div>
 				<div style="text-align:center">
 					<h1>Welcome Agent...</h1>
