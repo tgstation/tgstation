@@ -1402,3 +1402,100 @@
 	. = 1
 
 #undef PERF_BASE_DAMAGE
+
+//Injectables!
+//These are shitty chems for medibots and borgs to use in place of the old trekchems. They're limited to injection only, hence the name.
+
+/datum/reagent/medicine/sanguiose
+	name = "Sanguiose"
+	description = "A chemical developed to aid in the buchering proccess, it causes a chemical reaction which consumes blood and oxygen while healing cuts, bruises, and other similar injuries,"
+	reagent_state = LIQUID
+	color = "#FF6464"
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	overdose_threshold = 25
+	taste_description = "salty"
+
+/datum/reagent/medicine/sanguiose/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-1, 0)
+	M.adjustOxyLoss(0.25,0)
+	M.blood_volume -= 1 //Removes blood
+	..()
+	. = 1
+
+/datum/reagent/medicine/sanguiose/overdose_process(mob/living/M)
+	M.adjustOxyLoss(5,0)
+	M.blood_volume -= 6 //I hope you like blood.
+	..()
+	. = 1
+
+/datum/reagent/medicine/sanguiose/on_transfer(atom/A, method=TOUCH, volume) // Borrowed from whoever made charcoal injection or pill only and modified so it doesn't add a reagent.
+	if(method == INJECT || !iscarbon(A)) //the atom not the charcoal
+		return
+	A.reagents.remove_reagent(type, volume)
+	..()
+
+/datum/reagent/medicine/frogenite
+	name = "Frogenite"
+	description = "An industrial cryostorage chemical previously used for preservation and storage. It removes oxygen from the body and heals to prevent and heal burns. If too much is injected the reaction will speed up dramatically removing all oxygen quickly."
+	reagent_state = LIQUID
+	color = "#00FFFF"
+	metabolization_rate = 0.2* REAGENTS_METABOLISM
+	overdose_threshold = 25
+	taste_description = "Oil"
+
+/datum/reagent/medicine/frogenite/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
+	var/firecalc = 1*REM*current_cycle
+	M.adjustFireLoss(-1, 0)
+	if (firecalc <10)
+		M.adjustOxyLoss(firecalc*0.15, 0)
+	if (firecalc >= 10)
+		M.adjustOxyLoss(1.5,0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/frogenite/overdose_process(mob/living/M)
+	M.adjustOxyLoss(40,0)
+	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
+	to_chat(M, "<span class='notice'>You feel like you aren't getting any oxygen!</span>")
+	..()
+	. = 1
+
+/datum/reagent/medicine/frogenite/on_transfer(atom/A, method=TOUCH, volume) // Borrowed from whoever made charcoal injection or pill only and modified so it doesn't add a reagent.
+	if(method == INJECT || !iscarbon(A)) //the atom not the charcoal
+		return
+	A.reagents.remove_reagent(type, volume) 
+	..()
+
+/datum/reagent/medicine/ferveatium
+	name = "Ferveatium"
+	description = "A chemical previously used to cook questionable meat, it has come to enjoy a new life as a treatment for many posions."
+	reagent_state = LIQUID
+	color = "#00FFFF"
+	metabolization_rate = 0.2* REAGENTS_METABOLISM
+	overdose_threshold = 25
+	taste_description = "Fire"
+
+/datum/reagent/medicine/ferveatium/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
+	var/toxcalc = 1*REM*current_cycle
+	M.adjustToxLoss(-1, 0)
+	if (toxcalc <10)
+		M.adjustFireLoss(toxcalc/10, 0)
+	if (toxcalc >= 10)
+		M.adjustFireLoss(1,0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/ferveatium/overdose_process(mob/living/M)
+	M.adjustFireLoss(40,0)
+	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
+	to_chat(M, "<span class='notice'>You feel like you are melting!</span>")
+	..()
+	. = 1
+
+/datum/reagent/medicine/ferveatium/on_transfer(atom/A, method=TOUCH, volume) // Borrowed from whoever made charcoal injection or pill only and modified so it doesn't add a reagent.
+	if(method == INJECT || !iscarbon(A)) //the atom not the charcoal
+		return
+	A.reagents.remove_reagent(type, volume)
+	..()
+
+
