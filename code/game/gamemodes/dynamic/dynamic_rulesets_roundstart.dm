@@ -429,7 +429,7 @@
 
 /datum/dynamic_ruleset/roundstart/extended/pre_execute()
 	message_admins("Starting a round of extended.")
-	log_admin("Starting a round of extended.")
+	log_game("Starting a round of extended.")
 	mode.spend_threat(mode.threat)
 	return TRUE
 

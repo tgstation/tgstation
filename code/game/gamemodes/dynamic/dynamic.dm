@@ -244,6 +244,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	message_admins("Dynamic mode parameters for the round:")
 	message_admins("Centre is [curve_centre], Width is [curve_width], Forced extended is [forced_extended ? "Enabled" : "Disabled"], No stacking is [no_stacking ? "Enabled" : "Disabled"].")
 	message_admins("Stacking limit is [stacking_limit], Classic secret is [classic_secret ? "Enabled" : "Disabled"], High population limit is [high_pop_limit].")
+	log_game("Dynamic mode parameters for the round:")
+	log_game("Centre is [curve_centre], Width is [curve_width], Forced extended is [forced_extended ? "Enabled" : "Disabled"], No stacking is [no_stacking ? "Enabled" : "Disabled"].")
+	log_game("Stacking limit is [stacking_limit], Classic secret is [classic_secret ? "Enabled" : "Disabled"], High population limit is [high_pop_limit].")
 	generate_threat()
 
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
@@ -252,7 +255,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
 	midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
 	message_admins("Dynamic Mode initialized with a Threat Level of... [threat_level]!")
-
+	log_game("Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	if (GLOB.player_list.len >= high_pop_limit)
 		message_admins("High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
 
@@ -356,7 +359,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
 
 	if (starting_rule)
-		log_admin("Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset...<font size='3'>[starting_rule.name]</font>!")
+		log_game("Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset...<font size='3'>[starting_rule.name]</font>!")
 
 		roundstart_rules -= starting_rule
 		drafted_rules -= starting_rule
@@ -401,7 +404,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		threat_log += "[worldtime2text()]: Latejoin [latejoin_rule.name] spent [latejoin_rule.cost]"
 		if (latejoin_rule.execute())
 			var/mob/M = pick(latejoin_rule.assigned)
-			log_admin("[key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
+			log_game("[key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
 			executed_rules += latejoin_rule
 			if (latejoin_rule.persistent)
 				current_rules += latejoin_rule
@@ -418,7 +421,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		spend_threat(midround_rule.cost)
 		threat_log += "[worldtime2text()]: Midround [midround_rule.name] spent [midround_rule.cost]"
 		if (midround_rule.execute())
-			log_admin("Injecting some threats...[midround_rule.name]!")
+			log_game("Injecting some threats...[midround_rule.name]!")
 			executed_rules += midround_rule
 			if (midround_rule.persistent)
 				current_rules += midround_rule
@@ -443,13 +446,13 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			spend_threat(new_rule.cost)
 			threat_log += "[worldtime2text()]: Forced rule [new_rule.name] spent [new_rule.cost]"
 			if (new_rule.execute()) // This should never fail since ready() returned 1
-				log_admin("Making a call to a specific ruleset...[new_rule.name]!")
+				log_game("Making a call to a specific ruleset...[new_rule.name]!")
 				executed_rules += new_rule
 				if (new_rule.persistent)
 					current_rules += new_rule
 				return TRUE
 		else if (forced)
-			log_admin("The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
+			log_game("The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
 	return FALSE
 
 /datum/game_mode/dynamic/process()
@@ -473,7 +476,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
 			return
 
-		log_admin("DYNAMIC MODE: Checking state of the round.")
+		log_game("DYNAMIC MODE: Checking state of the round.")
 
 		update_playercounts()
 

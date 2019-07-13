@@ -113,20 +113,20 @@
 		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
 		return
 	message_admins("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
-	log_admin("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
+	log_game("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
 	applicants = pollGhostCandidates("The mode is looking for volunteers to become [initial(antag_flag)]", antag_flag, SSticker.mode, antag_flag, poll_time = 600)
 	
 	if(!applicants || applicants.len <= 0)
-		log_admin("DYNAMIC MODE: [name] received no applications.")
 		message_admins("DYNAMIC MODE: [name] received no applications.")
+		log_game("DYNAMIC MODE: [name] received no applications.")
 		mode.refund_threat(cost)
 		mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
 		mode.executed_rules -= src
 		return
 
-	log_admin("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 	message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
+	log_game("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 	review_applications()
 
 // Here is where you can check if your ghost applicants are still valid.
