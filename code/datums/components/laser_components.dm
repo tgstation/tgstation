@@ -48,5 +48,6 @@
 	attach()
 
 /datum/component/extralasers/Destroy()
+	detach()
 	qdel(ammo)
 	return ..()
