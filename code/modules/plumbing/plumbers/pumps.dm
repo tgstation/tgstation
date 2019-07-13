@@ -5,7 +5,7 @@
 	icon_state = "pump"
 	anchored = FALSE
 	density = TRUE
-
+	circuit = /obj/item/circuitboard/machine/pump
 	idle_power_usage = 10
 	active_power_usage = 1000
 
@@ -21,7 +21,16 @@
 	return ..()
 
 /obj/machinery/power/liquid_pump/ComponentInitialize()
-	AddComponent(/datum/component/plumbing/simple_supply)
+	AddComponent(/datum/component/plumbing/simple_supply, TRUE)
+
+/obj/machinery/power/pump/attackby(obj/item/W, mob/user, params)
+	if(!anchored)
+		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]",W))
+			return
+	if(default_deconstruction_crowbar(W))
+		return
+
+	return ..()
 
 /obj/machinery/power/liquid_pump/wrench_act(mob/living/user, obj/item/I)
 	default_unfasten_wrench(user, I)
@@ -61,7 +70,7 @@
 	if(avail(active_power_usage))
 		if(!powered) //we werent powered before this tick so update our sprite
 			powered = TRUE
-			icon_state = "[initial(icon_state)]-on"
+			icon_state = "[initial(icon_state)]-on" //put in update_icon()?
 		add_load(active_power_usage)
 		pump()
 	else if(powered) //we were powered, but now we arent

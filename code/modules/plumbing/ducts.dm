@@ -7,6 +7,7 @@ All the important duct code:
 	name = "fluid duct"
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
+	level = 1
 
 	var/connects
 	var/dumb = FALSE //set to TRUE to disable smart cable behaviour
