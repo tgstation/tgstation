@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - rscadd: "Adds stat tracking for the creation/destruction of trash and cleanable decals (e.g. blood)"
