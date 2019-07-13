@@ -98,7 +98,8 @@
 
 /obj/item/organ/proc/on_life()
 	var/mob/living/carbon/C = owner
-
+	if(!C)
+		return
 	if(damage >= maxHealth)
 		failing = TRUE
 		damage = maxHealth

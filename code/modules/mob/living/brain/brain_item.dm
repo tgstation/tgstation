@@ -222,13 +222,14 @@
 			else
 				gain_trauma_type(BRAIN_TRAUMA_SEVERE)
 
-	if (owner.stat < UNCONSCIOUS) // conscious or soft-crit
-		if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
-			to_chat(src, "<span class='warning'>You feel lightheaded.</span>")
-		else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
-			to_chat(src, "<span class='warning'>You feel less in control of your thoughts.</span>")
-		else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
-			to_chat(src, "<span class='warning'>You can feel your mind flickering on and off...</span>")
+	if (owner)
+		if(owner.stat < UNCONSCIOUS) //conscious or soft-crit
+			if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
+				to_chat(src, "<span class='warning'>You feel lightheaded.</span>")
+			else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
+				to_chat(src, "<span class='warning'>You feel less in control of your thoughts.</span>")
+			else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
+				to_chat(src, "<span class='warning'>You can feel your mind flickering on and off...</span>")
 	//update our previous damage holder after we've checked our boundaries
 	prev_damage = damage
 	return
