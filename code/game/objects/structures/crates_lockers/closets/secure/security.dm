@@ -64,8 +64,10 @@
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/HoP(src)
 	var obj/item/helm = new /obj/item/clothing/head/helmet/space(src)
+	helm.name = "old space helmet"
 	helm.desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays. Reminds you of time long gone."
 	var obj/item/suit = new /obj/item/clothing/suit/space(src)
+	suit.name = "old space suit"
 	suit.desc = "A suit that protects against low pressure environments. Has a big 13 on the back. Reminds you of time long gone."
 	new /obj/item/card/id/departmental_budget/srv(src)
 
