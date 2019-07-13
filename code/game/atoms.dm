@@ -169,10 +169,7 @@
 	if(!T)
 		return FALSE
 
-	if(!is_away_level(T.z))
-		return FALSE
-
-	if(istype(T.loc, /area/awaymission))
+	if(is_away_level(T.z))
 		return TRUE
 
 	return FALSE

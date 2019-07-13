@@ -332,14 +332,12 @@
   * an away mission. Returns FALSE if any of those conditions aren't met.
   */ 
 /proc/considered_exiled(datum/mind/M)
-	if(M && M.current)
-		var/mob/living/carbon/human/H
-		if(ishuman(M.current))
-			H = M.current
-			for(var/obj/item/implant/I in H.implants)
-				if(I == /obj/item/implant/exile && H.onAwayMission())
-					return TRUE
-	return FALSE
+	if(!ishuman(M?.current))
+		return FALSE
+	else
+		for(var/obj/item/implant/I in M.current.implants)
+			if(I == /obj/item/implant/exile && M.current.onAwayMission())
+				return TRUE
 
 /proc/considered_afk(datum/mind/M)
 	return !M || !M.current || !M.current.client || M.current.client.is_afk()
