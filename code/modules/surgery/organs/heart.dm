@@ -4,7 +4,7 @@
 	icon_state = "heart-on"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
-	decay_factor = 0.00667		//designed to fail about 2.5 minutes after death
+	decay_factor = 6 * STANDARD_ORGAN_DECAY		//designed to fail about 2.5 minutes after death
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"

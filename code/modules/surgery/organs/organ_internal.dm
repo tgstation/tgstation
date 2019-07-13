@@ -1,7 +1,3 @@
-#define STANDARD_ORGAN_THRESHOLD 	100
-#define STANDARD_ORGAN_HEALING 		0.001
-#define STANDARD_ORGAN_DECAY		0.00167				//designed to fail most generic organs at about 10 minutes
-
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'

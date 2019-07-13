@@ -9,7 +9,7 @@
 	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
 	attack_verb = list("attacked", "slapped", "whacked")
-	decay_factor = 0.0012525						//slower decay not for realism, but because if it failed too easily we'd get people cloning with every trauma imaginable
+	decay_factor = 3 * STANDARD_ORGAN_DECAY			//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
 	healing_factor = 0								//no healing for the brain outside of brain surgery or mannitol
 	maxHealth	= BRAIN_DAMAGE_DEATH
 	low_threshold = 45
@@ -18,8 +18,10 @@
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
 	var/brain_death = FALSE //if the brainmob was intentionally killed by attacking the brain after removal, or by severe braindamage
-							//use the failing var for if the brain was injured after removal, or injured in other ways that make it inoperable until treatment with mannitol.
 	var/decoy_override = FALSE	//if it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
+	//two variables necessary for calculating whether we get a brain trauma or not
+	var/prev_damage = 0
+	var/damage_delta = 0
 
 	var/list/datum/brain_trauma/traumas = list()
 
@@ -116,9 +118,7 @@
 			return
 
 		user.visible_message("[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
-		failing = FALSE 		//heal the superficial damage.
-		applyOrganDamage(-25)	//... and a bit to keep us below the failing threshold
-
+		setOrganDamage(damage - (0.05 * maxHealth))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
 		return
 
@@ -204,8 +204,6 @@
 		brain_death = TRUE
 
 /obj/item/organ/brain/process()	//needs to run in life AND death
-	var/prev_damage
-	var/damage_delta
 	..()
 	//if we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)

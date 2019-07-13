@@ -1,4 +1,3 @@
-#define LIVER_DEFAULT_HEALTH 100 //amount of damage required for liver failure
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_LETHALITY 0.01 //lower values lower how harmful toxins are to the liver
 
@@ -13,7 +12,7 @@
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
-	maxHealth = LIVER_DEFAULT_HEALTH
+	maxHealth = STANDARD_ORGAN_THRESHOLD
 	Unique_Failure_Msg = "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
 
 #define HAS_SILENT_TOXIN 0 //don't provide a feedback message if this is the only toxin present
@@ -88,7 +87,7 @@
 	icon_state = "liver-c"
 	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
 	synthetic = TRUE
-	maxHealth = 110
+	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 3.3
 	toxLethality = 0.009
 
@@ -97,7 +96,7 @@
 	icon_state = "liver-c-u"
 	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	alcohol_tolerance = 0.001
-	maxHealth = 200 //double the health of a normal liver
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 15 //can shrug off up to 15u of toxins
 	toxLethality = 0.008 //20% less damage than a normal liver
 
