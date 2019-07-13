@@ -66,8 +66,8 @@
 	if(owner.health <= owner.crit_threshold)
 		ui_action_click()
 
-/obj/item/organ/regenerative_core/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
+///Handles applying the core, logging and status/mood events.
+/obj/item/organ/regenerative_core/proc/applyto(atom/target, mob/user, proximity_flag=null)
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
@@ -86,6 +86,13 @@
 			H.apply_status_effect(STATUS_EFFECT_REGENERATIVE_CORE)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "core", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
 			qdel(src)
+
+/obj/item/organ/regenerative_core/afterattack(atom/target, mob/user, proximity_flag=null)
+	. = ..()
+	applyto(target, user, proximity_flag)
+
+/obj/item/organ/regenerative_core/attack_self(mob/user)
+	applyto(user, user, TRUE)
 
 /obj/item/organ/regenerative_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	. = ..()
