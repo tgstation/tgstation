@@ -33,6 +33,13 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	limited = 1
 	cost = 2
 
+/datum/contractor_item/blackout
+	name = "Blackout"
+	desc = "Request Syndicate Command to distrupt the station's powernet. Disables power across the station for a short duration. Limited to two uses."
+	icon = "fa-bolt"
+	limited = 2
+	cost = 3
+
 /datum/contractor_item/contractor_pinpointer/handle_purchase(var/datum/contractor_hub/hub)
 	. = ..()
 
@@ -106,6 +113,13 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	partner.playsound_local(partner, 'sound/ambience/antag/tatoralert.ogg', 100)
 
 	new /obj/effect/DPtarget(free_location, arrival_pod)
+
+/datum/contractor_item/blackout/handle_purchase(var/datum/contractor_hub/hub)
+	. = ..()
+
+	if (.)
+		power_fail(35, 50)
+		priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", 'sound/ai/poweroff.ogg')
 
 // Subtract cost, and spawn if it's an item.
 /datum/contractor_item/proc/handle_purchase(var/datum/contractor_hub/hub)

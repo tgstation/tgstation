@@ -575,3 +575,13 @@
 	var/pod_rand_loc = rand(1, possible_loc.len)
 
 	return possible_loc[pod_rand_loc]
+
+/proc/power_fail(duration_min, duration_max)
+	for(var/P in GLOB.apcs_list)
+		var/obj/machinery/power/apc/C = P
+		if(C.cell && SSmapping.level_trait(C.z, ZTRAIT_STATION))
+			var/area/A = C.area
+			if(GLOB.typecache_powerfailure_safe_areas[A.type])
+				continue
+
+			C.energy_fail(rand(duration_min,duration_max))

@@ -110,26 +110,24 @@
 				</p>
 
 				<div class="margin-top: 10px">
-
 					{{#each data.contractor_hub_items}}
 						{{#if limited != 0}}
 							<div style="margin-top:10px; border: 1px solid white">
 								<div style="text-align:center; margin-top:5px; margin-bottom:3px">
 									{{name}} - {{cost}} Rep
 								</div>
-								<div style="text-align:center">
+								<div style="text-align:center; margin-top: 10px">
 									<i class="fas {{icon}} fa-3x"></i>
 								</div>
-								<div style="text-align:center; padding-left:5px; padding-right:5px">
+								<div style="text-align:center; padding:15px">
 									<p>{{desc}}</p>
 								</div>
-								<div style="text-align:center; margin-bottom:3px">
-									<ui-button action='buy_hub' params='{"item": {{name}}, "cost": {{cost}}}'>Purchase</ui-button>
+								<div style="text-align:center; margin-bottom:5px">
+									<ui-button action='buy_hub' params='{"item": "{{name}}", "cost": "{{cost}}"}'>{{#if limited != -1}}{{limited}} remaining{{else}}Buy{{/if}}</ui-button>
 								</div>
 							</div>
 						{{/if}}
 					{{/each}}
-
 				</div>
 			{{/if}}
 		{{else}}
