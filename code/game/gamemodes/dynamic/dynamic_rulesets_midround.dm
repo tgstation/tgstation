@@ -31,7 +31,7 @@
 /datum/dynamic_ruleset/midround/proc/trim_list(var/list/L = list())
 	var/list/trimmed_list = L.Copy()
 	var/antag_name = initial(antag_flag)
-	for(var/mob/M in trimmed_list)
+	for(var/mob/living/carbon/human/M in trimmed_list)
 		if (!M.client) // Are they connected?
 			trimmed_list.Remove(M)
 			continue
@@ -39,10 +39,7 @@
 			trimmed_list.Remove(M)
 			continue
 		if (M.mind)
-			if (M.mind.assigned_role in restricted_roles) // Does their job allow for it?
-				trimmed_list.Remove(M)
-				continue
-			if (M.mind.assigned_role in protected_roles)
+			if (M.mind.assigned_role in restricted_roles || HAS_TRAIT(M, TRAIT_MINDSHIELD)) // Does their job allow it or are they mindshielded?
 				trimmed_list.Remove(M)
 				continue
 			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?

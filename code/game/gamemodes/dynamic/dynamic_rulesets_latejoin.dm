@@ -6,14 +6,11 @@
 
 /datum/dynamic_ruleset/latejoin/trim_candidates()
 	var/role_name = initial(antag_flag)
-	for(var/mob/dead/new_player/P in candidates)
+	for(var/mob/living/carbon/P in candidates)
 		if (!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
 			candidates.Remove(P)
 			continue
 		if (role_name in P.client.prefs.be_special || is_banned_from(P.ckey, list(role_name, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override))))//are they willing and not antag-banned?
-			candidates.Remove(P)
-			continue
-		if (P.mind.assigned_role in protected_roles)
 			candidates.Remove(P)
 			continue
 		if (P.mind.assigned_role in restricted_roles) // Does their job allow for it?
