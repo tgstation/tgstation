@@ -538,9 +538,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 				if (O.started_as_observer) // Observers
 					current_players[CURRENT_OBSERVERS].Add(M)
 					continue
-				if (O.mind && O.mind.current) // Cultists
-					current_players[CURRENT_LIVING_PLAYERS].Add(M) // Yes we're adding a ghost to "living_players", so make sure to properly check for type when testing midround rules
-					continue
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 
 /datum/game_mode/dynamic/proc/GetInjectionChance()
