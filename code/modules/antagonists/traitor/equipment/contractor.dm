@@ -1,7 +1,7 @@
 GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 
 /datum/contractor_hub
-	var/contract_rep = 10
+	var/contract_rep = 0
 	var/list/hub_items = list()
 	var/list/purchased_items = list()
 
