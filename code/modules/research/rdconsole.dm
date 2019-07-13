@@ -52,8 +52,8 @@ Nothing else in the console has ID requirements.
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)
-	if (getmaterialref(ID))
-		var/datum/material/material = getmaterialref(ID)
+	if (istype(ID, /datum/material))
+		var/datum/material/material = ID
 		return material.name
 
 	else if(GLOB.chemical_reagents_list[ID])
