@@ -111,7 +111,7 @@
 	
 /obj/machinery/suit_storage_unit/pirate
 	suit_type = /obj/item/clothing/suit/space/pirate
-	helmet_type = /obj/item/clothing/helmet/space/pirate/bandana
+	helmet_type = /obj/item/clothing/head/helmet/space/pirate/bandana
 	storage_type = /obj/item/tank/jetpack
 
 /obj/machinery/suit_storage_unit/open
