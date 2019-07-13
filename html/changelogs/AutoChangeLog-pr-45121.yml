@@ -1,0 +1,4 @@
+author: "Garen7"
+delete-after: True
+changes: 
+  - bugfix: "Mindshield implants are properly used up when injecting a headrev/hivemind with one."
