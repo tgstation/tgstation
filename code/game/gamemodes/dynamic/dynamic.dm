@@ -9,12 +9,12 @@
 
 #define RULESET_STOP_PROCESSING 1
 
- // -- Injection delays, must be divided by 20 get the correct time.
-GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES) / 20)
-GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES) / 20)
+ // -- Injection delays
+GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES))
+GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES))
 
-GLOBAL_VAR_INIT(dynamic_midround_delay_min, (15 MINUTES) / 20)
-GLOBAL_VAR_INIT(dynamic_midround_delay_max, (50 MINUTES) / 20)
+GLOBAL_VAR_INIT(dynamic_midround_delay_min, (15 MINUTES))
+GLOBAL_VAR_INIT(dynamic_midround_delay_max, (50 MINUTES))
 
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
@@ -44,8 +44,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/list/roundstart_rules = list()
 	var/list/latejoin_rules = list()
 	var/list/midround_rules = list()
-	var/list/second_rule_req = list(100,100,100,80,60,40,20,0,0,0)// Requirements for extra round start rules
-	var/list/third_rule_req = list(100,100,100,100,100,70,50,30,10,0)
+	var/list/second_rule_req = list(100,100,80,70,60,40,20,0,0,0)// Requirements for extra round start rules
+	var/list/third_rule_req = list(100,100,100,90,80,70,50,30,10,0)
 	var/roundstart_pop_ready = 0
 	var/list/candidates = list()
 	var/list/current_rules = list()
@@ -53,8 +53,10 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
 
+	var/last_injection_update = 0
 	var/latejoin_injection_cooldown = 0
 	var/midround_injection_cooldown = 0
+	var/forced_injection = FALSE
 
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
 
@@ -102,8 +104,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[GetInjectionChance()]%</b> chance)<BR>"
-	dat += "Latejoin: [latejoin_injection_cooldown>60 ? "[round(latejoin_injection_cooldown/60,0.1)] minutes" : "[latejoin_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
-	dat += "Midround: [midround_injection_cooldown>60 ? "[round(midround_injection_cooldown/60,0.1)] minutes" : "[midround_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=2'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [latejoin_injection_cooldown>60*10 ? "[round(latejoin_injection_cooldown/60/10,0.1)] minutes" : "[latejoin_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Midround: [midround_injection_cooldown>60*10 ? "[round(midround_injection_cooldown/60/10,0.1)] minutes" : "[midround_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=2'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -129,8 +131,10 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			spend_threat(-threatadd)
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
+		forced_injection = TRUE
 	else if (href_list["injectmid"])
 		midround_injection_cooldown = 0
+		forced_injection = TRUE
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
 	else if (href_list["stacking_limit"])
@@ -453,15 +457,15 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		pop_last_updated = world.time
 		update_playercounts()
 
-	if (latejoin_injection_cooldown)
-		latejoin_injection_cooldown--
+	if (latejoin_injection_cooldown > 0)
+		latejoin_injection_cooldown -= (world.time - last_injection_update)
 
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
 
-	if (midround_injection_cooldown)
-		midround_injection_cooldown--
+	if (midround_injection_cooldown > 0)
+		midround_injection_cooldown -= (world.time - last_injection_update)
 	else
 		if (forced_extended)
 			return
@@ -502,6 +506,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		else
 			var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
 			midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
+	last_injection_update = world.time
 
 /datum/game_mode/dynamic/proc/update_playercounts()
 	current_players[CURRENT_LIVING_PLAYERS] = list()
@@ -529,6 +534,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 
 /datum/game_mode/dynamic/proc/GetInjectionChance()
+	if(forced_injection)
+		forced_injection = FALSE
+		return 100
 	var/chance = 0
 	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
 	var/high_pop_factor = (GLOB.player_list.len >= high_pop_limit)
@@ -570,7 +578,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			picking_latejoin_rule(list(forced_latejoin_rule))
 		forced_latejoin_rule = null
 
-	else if (!latejoin_injection_cooldown && prob(GetInjectionChance()))
+	else if (latejoin_injection_cooldown <= 0 && prob(GetInjectionChance()))
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && threat >= rule.cost)
