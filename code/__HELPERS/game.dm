@@ -553,19 +553,12 @@
 
 		// We check if both the turf is a floor, and that it's actually in the area. 
 		// We also want a location that's clear of any obstructions.
-		var/location_clear = TRUE
-		
 		if (specific_area)
 			if (!istype(turf_area, specific_area))
 				continue
 
 		if ((!isspaceturf(found_turf) && !isclosedturf(found_turf)))
-			for (var/content in found_turf.contents)
-				// We don't want obstructions, but we don't care about wires/pipes.
-				if ((istype(content, /obj/machinery) || istype(content, /obj/structure)) && !ispipewire(content))
-					location_clear = FALSE
-
-			if (location_clear)
+			if (!is_blocked_turf(found_turf))
 				possible_loc.Add(found_turf)
 
 	// Need at least one free location.

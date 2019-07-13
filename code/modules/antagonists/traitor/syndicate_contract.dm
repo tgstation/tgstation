@@ -162,12 +162,8 @@
 	var/list/possible_drop_loc = list()
 
 	for (var/turf/possible_drop in contract.dropoff.contents)
-		var/location_clear = TRUE
 		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
-			for (var/content in possible_drop.contents)
-				if ((istype(content, /obj/machinery) || istype(content, /obj/structure)) && !ispipewire(content))
-					location_clear = FALSE
-			if (location_clear)
+			if (!is_blocked_turf(possible_drop))
 				possible_drop_loc.Add(possible_drop)
 
 	if (possible_drop_loc.len > 0)
