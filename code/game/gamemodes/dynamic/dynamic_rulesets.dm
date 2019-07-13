@@ -72,9 +72,8 @@
 	return TRUE
 
 /datum/dynamic_ruleset/proc/execute()
-	for(var/mob/M in assigned)
-		M.mind.special_role = antag_flag
-		M.mind.add_antag_datum(antag_datum)
+	for(var/datum/mind/M in assigned)
+		M.add_antag_datum(new antag_datum)
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/delayed/execute()

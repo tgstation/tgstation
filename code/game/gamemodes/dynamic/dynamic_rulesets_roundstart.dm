@@ -24,9 +24,9 @@
 	var/num_traitors = min(round(mode.candidates.len / traitor_scaling_coeff) + 1, candidates.len)
 	for (var/i = 1 to num_traitors)
 		var/mob/M = pick(candidates)
-		assigned += M
 		candidates -= M
-		M.mind.special_role = antag_flag
+		assigned += M.mind
+		M.mind.special_role = ROLE_TRAITOR
 		M.mind.restricted_roles = restricted_roles
 	return TRUE
 
@@ -60,9 +60,8 @@
 	var/num_changelings = min(round(mode.candidates.len / 10) + 1, candidates.len)
 	for (var/i = 1 to num_changelings)
 		var/mob/M = pick(candidates)
-		assigned += M
 		candidates -= M
-		M.mind.special_role = ROLE_CHANGELING
+		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
 	return TRUE
 
@@ -82,6 +81,7 @@
 		var/datum/antagonist/changeling/new_antag = new antag_datum()
 		new_antag.team_mode = TRUE
 		changeling.add_antag_datum(new_antag)
+		changeling.assigned_role = ROLE_CHANGELING
 
 	return TRUE
 
@@ -116,17 +116,17 @@
 	
 	var/mob/M = pick(candidates)
 	if (M)
-		assigned += M
 		candidates -= M
+		assigned += M.mind
 		M.mind.assigned_role = ROLE_WIZARD
 		M.mind.special_role = ROLE_WIZARD
 	
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/wizard/execute()
-	for(var/mob/M in assigned)
-		M.mind.current.forceMove(pick(GLOB.wizardstart))
-		M.mind.add_antag_datum(new antag_datum())
+	for(var/datum/mind/M in assigned)
+		M.current.forceMove(pick(GLOB.wizardstart))
+		M.add_antag_datum(new antag_datum())
 	return TRUE
 	
 //////////////////////////////////////////////
@@ -162,19 +162,18 @@
 		if(candidates.len <= 0)
 			break
 		var/mob/M = pick(candidates)
-		assigned += M
 		candidates -= M
+		assigned += M.mind
 		M.mind.special_role = ROLE_CULTIST
 		M.mind.restricted_roles = restricted_roles
-
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/bloodcult/execute()
 	main_cult = new
-	for(var/mob/M in assigned)
+	for(var/datum/mind/M in assigned)
 		var/datum/antagonist/cult/new_cultist = new antag_datum()
 		new_cultist.give_equipment = TRUE
-		M.mind.add_antag_datum(new_cultist)	
+		M.add_antag_datum(new_cultist)	
 	main_cult.setup_objectives()
 	return TRUE
 
@@ -223,23 +222,23 @@
 		if(candidates.len <= 0)
 			break
 		var/mob/M = pick(candidates)
-		assigned += M
 		candidates -= M
+		assigned += M.mind
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
 	var/leader = TRUE
-	for(var/mob/M in assigned)
-		M.mind.assigned_role = "Nuclear Operative"
-		M.mind.special_role = "Nuclear Operative"
+	for(var/datum/mind/M in assigned)
+		M.assigned_role = "Nuclear Operative"
+		M.special_role = "Nuclear Operative"
 		if (leader)
 			leader = FALSE
 			var/datum/antagonist/nukeop/leader/new_op = new antag_leader_datum()
 			nuke_team = new_op.nuke_team
-			M.mind.add_antag_datum(new_op)
+			M.add_antag_datum(new_op)
 		else
 			var/datum/antagonist/nukeop/new_op = new antag_datum()
-			M.mind.add_antag_datum(new_op)
+			M.add_antag_datum(new_op)
 
 /datum/dynamic_ruleset/roundstart/nuclear/check_finished()
 	if(nuke_team.operatives_dead())
@@ -293,7 +292,7 @@
 /datum/dynamic_ruleset/roundstart/delayed/revs
 	name = "Revolution"
 	persistent = TRUE
-	antag_flag = ROLE_REV_HEAD
+	antag_flag = ROLE_REV
 	antag_datum = /datum/antagonist/rev/head
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	required_candidates = 3
@@ -326,10 +325,10 @@
 		if(candidates.len <= 0)
 			break
 		var/mob/M = pick(candidates)
-		assigned += M
 		candidates -= M
+		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
-		M.mind.special_role = antag_flag
+		M.mind.special_role = ROLE_REV_HEAD
 		var/datum/antagonist/rev/head/new_head = new antag_datum()
 		new_head.give_flash = TRUE
 		new_head.give_hud = TRUE
@@ -402,8 +401,8 @@
 	var/num_hosts = max( 1 , rand(0,1) + min(8, round(num_players() / 8) ) )
 	for(var/i = 1 to num_hosts)
 		var/mob/M = pick(candidates)
-		assigned += M
 		candidates -= M
+		assigned += M.mind
 		M.mind.special_role = ROLE_HIVE
 		M.mind.restricted_roles = restricted_roles
 		log_game("[key_name(M)] has been selected as a hivemind host")
@@ -471,8 +470,8 @@
 	starter_servants = min(starter_servants, 8)
 	for (var/i in 1 to starter_servants)
 		var/mob/servant = pick(candidates)
-		assigned += servant
 		candidates -= servant
+		assigned += servant.mind
 		servant.mind.assigned_role = ROLE_SERVANT_OF_RATVAR
 		servant.mind.special_role = ROLE_SERVANT_OF_RATVAR
 	ark_time = 30 + round((number_players / 5))
@@ -481,10 +480,10 @@
 
 /datum/dynamic_ruleset/roundstart/clockcult/execute()
 	var/list/spread_out_spawns = GLOB.servant_spawns.Copy()
-	for(var/mob/S in assigned)
+	for(var/datum/mind/servant in assigned)
+		var/mob/S = servant.current
 		if(!spread_out_spawns.len)
 			spread_out_spawns = GLOB.servant_spawns.Copy()
-		var/datum/mind/servant = S.mind
 		log_game("[key_name(servant)] was made an initial servant of Ratvar")
 		var/turf/T = pick_n_take(spread_out_spawns)
 		S.forceMove(T)
@@ -554,15 +553,15 @@
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
 	flags = HIGHLANDER_RULESET	
-	var/agent_count = list(4,4,3,3,3,2,2,1,1,0)
+	var/agent_cap = list(4,4,3,3,3,2,2,1,1,0)
 
 /datum/dynamic_ruleset/roundstart/overthrow/pre_execute()
-	var/sleeping_agents = agent_count[round(mode.threat_level/10)] + round(num_players()*0.05)
+	var/sleeping_agents = agent_cap[round(mode.threat_level/10)] + round(num_players()*0.05)
 
 	for (var/i in 1 to sleeping_agents)
 		var/mob/sleeping_agent = pick(candidates)
 		candidates -= sleeping_agent
-		assigned += sleeping_agent
+		assigned += sleeping_agent.mind
 		sleeping_agent.mind.restricted_roles = restricted_roles
 		sleeping_agent.mind.special_role = ROLE_OVERTHROW
 
@@ -594,10 +593,9 @@
 			if(T)
 				qdel(S)
 				new /obj/machinery/nuclearbomb/syndicate/bananium(T)
-		for(var/V in assigned)
-			var/mob/the_op = V
-			the_op.mind.assigned_role = "Clown Operative"
-			the_op.mind.special_role = "Clown Operative"
+		for(var/datum/mind/V in assigned)
+			V.assigned_role = "Clown Operative"
+			V.special_role = "Clown Operative"
 
 //////////////////////////////////////////////
 //                                          //
@@ -639,9 +637,9 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/devil/execute()
-	for(var/mob/devil in assigned)
-		add_devil(devil, ascendable = TRUE)
-		add_devil_objectives(devil.mind,2)
+	for(var/datum/mind/devil in assigned)
+		add_devil(devil.current, ascendable = TRUE)
+		add_devil_objectives(devil,2)
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/devil/proc/add_devil_objectives(datum/mind/devil_mind, quantity)
@@ -685,16 +683,16 @@
 		if (!candidates.len)
 			break
 		var/mob/carrier = pick(candidates)
-		assigned += carrier
 		candidates -= carrier
+		assigned += carrier.mind
 		carrier.mind.special_role = "Monkey Leader"
 		carrier.mind.restricted_roles = restricted_roles
 		log_game("[key_name(carrier)] has been selected as a Jungle Fever carrier")
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/monkey/execute()
-	for(var/mob/carrier in assigned)
-		var/datum/antagonist/monkey/M = add_monkey_leader(carrier.mind)
+	for(var/datum/mind/carrier in assigned)
+		var/datum/antagonist/monkey/M = add_monkey_leader(carrier)
 		if(M)
 			monkey_team = M.monkey_team
 	return ..()

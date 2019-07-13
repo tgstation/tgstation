@@ -43,7 +43,8 @@
 				trimmed_list.Remove(M)
 				continue
 			if (M.mind.assigned_role in protected_roles)
-				candidates.Remove(M)
+				trimmed_list.Remove(M)
+				continue
 			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
 				trimmed_list.Remove(M)
 				continue
@@ -135,7 +136,7 @@
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_TRAITOR
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Cyborg")
-	restricted_roles = list("AI")
+	restricted_roles = list("AI", "Free Golem", "Servant Golem", "Lifebringer")
 	required_candidates = 1
 	weight = 7
 	cost = 10
@@ -190,7 +191,7 @@
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_MALF
 	enemy_roles = list("Security Officer", "Warden","Detective","Head of Security", "Captain", "Scientist", "Chemist", "Research Director", "Chief Engineer")
-	exclusive_roles = list("AI")
+	exclusive_roles = list("AI", "Free Golem", "Servant Golem", "Lifebringer")
 	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
 	required_candidates = 1
 	weight = 1
@@ -216,8 +217,8 @@
 	if(!candidates || !candidates.len)
 		return FALSE
 	var/mob/living/silicon/ai/M = pick(candidates)
-	assigned += M
 	candidates -= M
+	assigned += M.mind
 	var/datum/antagonist/traitor/AI = new
 	M.mind.add_antag_datum(AI)
 	return TRUE
@@ -290,72 +291,3 @@
 		setup_role(new_role)
 	else
 		return ..()
-
-//////////////////////////////////////////////
-//                                          //
-//            REVSQUAD (MIDROUND)           //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/midround/from_ghosts/revsquad
-	name = "Revolutionary Squad"
-	antag_datum = /datum/antagonist/rev/head
-	antag_flag = ROLE_REV_HEAD
-	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
-	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
-	required_candidates = 3
-	weight = 5
-	cost = 45
-	requirements = list(101,101,90,60,45,45,45,45,45,45)
-	high_population_requirement = 50
-	flags = HIGHLANDER_RULESET
-
-	var/required_heads = 3
-
-/datum/dynamic_ruleset/midround/from_ghosts/revsquad/ready(var/forced = 0)
-	if(forced)
-		required_heads = 1
-	if (required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
-	if(!..())
-		return FALSE
-	var/head_check = 0
-	for(var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
-		if(!player.mind)
-			continue
-		if(player.mind.assigned_role in GLOB.command_positions)
-			head_check++
-	return (head_check >= required_heads)
-
-//////////////////////////////////////////////
-//                                          //
-//         SPACE NINJA (MIDROUND)           //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/midround/from_ghosts/ninja
-	name = "Space Ninja Attack"
-	antag_datum = /datum/antagonist/ninja
-	antag_flag = ROLE_NINJA
-	enemy_roles = list("Security Officer","Detective", "Warden", "Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
-	required_candidates = 1
-	weight = 4
-	cost = 10
-	requirements = list(90,90,60,20,10,10,10,10,10,10)
-	high_population_requirement = 20
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/from_ghosts/ninja/acceptable(var/population=0,var/threat=0)
-	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
-	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
-	var/max_traitors = round(player_count / 10) + 1
-	if ((antag_count < max_traitors) && prob(mode.threat_level))
-		return ..()
-	else
-		return FALSE
-
-/datum/dynamic_ruleset/midround/from_ghosts/ninja/ready(var/forced = 0)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
-	return ..()

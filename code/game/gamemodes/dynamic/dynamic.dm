@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 				. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
 		if(20 to 39)
 			. += "<b>Anomalous Exogeology</b></center><BR>"
-			. += "Although your station lies within what is generally considered Nanotrasen-controlled space, the course of its orbit has caused it to cross unusually close to exogeological features with anomalous readings. Although these features offer opportunities for our research department, it is known that these little understood readings are often correlated with increased activity from competing interstellar organizations and individuals, among them the Wizard Federation, Cult of the Geometer of Blood, and the remaining Vampire Lords - all known competitors for Anomaly Type B sites. Exercise elevated caution."
+			. += "Although your station lies within what is generally considered Nanotrasen-controlled space, the course of its orbit has caused it to cross unusually close to exogeological features with anomalous readings. Although these features offer opportunities for our research department, it is known that these little understood readings are often correlated with increased activity from competing interstellar organizations and individuals, among them the Wizard Federation and Cult of the Geometer of Blood - all known competitors for Anomaly Type B sites. Exercise elevated caution."
 		if(40 to 65)
 			. += "<b>Contested System</b></center><BR>"
 			. += "Your station's orbit passes along the edge of Nanotrasen's sphere of influence. While subversive elements remain the most likely threat against your station, hostile organizations are bolder here, where our grip is weaker. Exercise increased caution against elite Syndicate strike forces, or Executives forbid, some kind of ill-conceived unionizing attempt."
@@ -199,7 +199,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags == HIGHLANDER_RULESET)
 			return rule.check_finished()
-	
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
