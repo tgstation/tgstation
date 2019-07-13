@@ -11,8 +11,7 @@
 		            /obj/item/reagent_containers/food/snacks/sosjerky = 6,
 					/obj/item/reagent_containers/food/snacks/no_raisin = 6,
 					/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
-					/obj/item/reagent_containers/food/snacks/energybar = 6),
-					/obj/item/reagent_containers/food/snacks/lollipop = 6)
+					/obj/item/reagent_containers/food/snacks/energybar = 6)
 	contraband = list(/obj/item/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
