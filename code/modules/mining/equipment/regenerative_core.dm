@@ -67,15 +67,15 @@
 		ui_action_click()
 
 ///Handles applying the core, logging and status/mood events.
-/obj/item/organ/regenerative_core/proc/applyto(atom/target, mob/user, proximity_flag=null)
-	if(proximity_flag && ishuman(target))
+/obj/item/organ/regenerative_core/proc/applyto(atom/target, mob/user)
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
 			to_chat(user, "<span class='notice'>[src] has decayed and can no longer be used to heal.</span>")
 			return
 		else
 			if(H.stat == DEAD)
-				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
+				to_chat(user, "<span class='notice'>[src] is useless on the dead.</span>")
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... Black tendrils entangle and reinforce [H.p_them()]!")
@@ -87,12 +87,14 @@
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "core", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
 			qdel(src)
 
-/obj/item/organ/regenerative_core/afterattack(atom/target, mob/user, proximity_flag=null)
+/obj/item/organ/regenerative_core/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	applyto(target, user, proximity_flag)
+	if(proximity_flag)
+		applyto(target, user)
 
 /obj/item/organ/regenerative_core/attack_self(mob/user)
-	applyto(user, user, TRUE)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		applyto(user, user)
 
 /obj/item/organ/regenerative_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	. = ..()

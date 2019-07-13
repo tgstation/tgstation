@@ -25,9 +25,9 @@
 /obj/item/reagent_containers/hypospray/proc/inject(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return
+		return FALSE
 	if(!iscarbon(M))
-		return
+		return FALSE
 
 	//Always log attemped injects for admins
 	var/list/injected = list()
@@ -50,6 +50,8 @@
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
 			log_combat(user, M, "injected", src, "([contained])")
+		return TRUE
+	return FALSE
 
 
 /obj/item/reagent_containers/hypospray/CMO
@@ -99,17 +101,15 @@
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
-/obj/item/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
-	..()
-	reagents.maximum_volume = 0 //Makes them useless afterwards
-	reagents.flags = NONE
-	update_icon()
+/obj/item/reagent_containers/hypospray/inject(mob/living/M, mob/user)
+	if(..())
+		reagents.maximum_volume = 0 //Makes them useless afterwards
+		reagents.flags = NONE
+		update_icon()
 
 /obj/item/reagent_containers/hypospray/medipen/attack_self(mob/user)
-	inject(user, user)
-	reagents.maximum_volume = 0 //Makes them useless afterwards
-	reagents.flags = NONE
-	update_icon()
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon()
 	if(reagents.total_volume > 0)
