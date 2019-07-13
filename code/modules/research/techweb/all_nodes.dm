@@ -1,4 +1,3 @@
-
 //Current rate: 135000 research points in 90 minutes
 
 //Base Nodes
