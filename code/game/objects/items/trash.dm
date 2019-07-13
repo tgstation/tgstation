@@ -9,13 +9,13 @@
 
 /obj/item/trash/Initialize(mapload)
 	var/turf/T = get_turf(src)
-	if(is_station_level(T.z))
+	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 	return ..()
 
 /obj/item/trash/Destroy()
 	var/turf/T = get_turf(src)
-	if(is_station_level(T.z))
+	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 	return ..()
 
