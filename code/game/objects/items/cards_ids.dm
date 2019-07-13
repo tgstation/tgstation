@@ -122,6 +122,7 @@
 	var/datum/bank_account/registered_account
 	var/obj/machinery/paystand/my_store
 	var/uses_overlays = TRUE
+	var/icon/cached_flat_icon
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -270,6 +271,7 @@
 
 /obj/item/card/id/update_icon(blank=FALSE)
 	cut_overlays()
+	cached_flat_icon = null
 	if(!uses_overlays)
 		return
 	var/job = assignment ? ckey(GetJobName()) : null
@@ -284,9 +286,15 @@
 		if(powergaming.front_id == src)
 			powergaming.update_icon(add_overlays)
 
+/obj/item/card/id/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
+
+
 /obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
 	if(uses_overlays)
-		return "[costly_icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+		return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
 	return ..()
 
 /*
