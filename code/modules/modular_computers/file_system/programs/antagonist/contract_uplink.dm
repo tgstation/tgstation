@@ -131,7 +131,7 @@
 				"desc" = hub_item.desc,
 				"cost" = hub_item.cost,
 				"limited" = hub_item.limited,
-				"icon" = hub_item.icon
+				"item_icon" = hub_item.item_icon
 			))
 
 		for (var/datum/syndicate_contract/contract in traitor_data.assigned_contracts)

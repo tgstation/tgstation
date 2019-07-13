@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	var/name // Name of item
 	var/desc // description of item
 	var/item // item path, no item path means the purchase needs it's own handle_purchase()
-	var/icon = "fa-broadcast-tower" // fontawesome icon to use inside the hub - https://fontawesome.com/icons/
+	var/item_icon = "fa-broadcast-tower" // fontawesome icon to use inside the hub - https://fontawesome.com/icons/
 	var/limited = -1 // Any number above 0 for how many times it can be bought in a round for a single traitor. -1 is unlimited.
 	var/cost // Cost of the item in contract rep.
 
@@ -23,20 +23,20 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	name = "Contractor Pinpointer"
 	desc = "A pinpointer that finds targets even without active suit sensors. Due to taking advantage of an exploit within the system, it can't pinpoint to the same accuracy as the traditional models."
 	item = /obj/item/pinpointer/crew/contractor
-	icon = "fa-search-location"
+	item_icon = "fa-search-location"
 	cost = 1
 
 /datum/contractor_item/contractor_partner
 	name = "Reinforcements"
 	desc = "Upon purchase we'll contact available units in the area. Should there be an agent free, we'll send them down to assist you immediately. If no units are free, we refund your rep. We're only able to provide this once - should we send the agent to you, this will be unavailable to purchase again."
-	icon = "fa-user-friends"
+	item_icon = "fa-user-friends"
 	limited = 1
 	cost = 2
 
 /datum/contractor_item/blackout
 	name = "Blackout"
 	desc = "Request Syndicate Command to distrupt the station's powernet. Disables power across the station for a short duration. Limited to two uses."
-	icon = "fa-bolt"
+	item_icon = "fa-bolt"
 	limited = 2
 	cost = 3
 
