@@ -108,6 +108,11 @@
 	suit_type = /obj/item/clothing/suit/radiation
 	helmet_type = /obj/item/clothing/head/radiation
 	storage_type = /obj/item/geiger_counter
+	
+/obj/machinery/suit_storage_unit/pirate
+	suit_type = /obj/item/clothing/suit/space/pirate
+	helmet_type = /obj/item/clothing/helmet/space/pirate/bandana
+	storage_type = /obj/item/tank/jetpack
 
 /obj/machinery/suit_storage_unit/open
 	state_open = TRUE
