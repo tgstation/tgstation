@@ -48,6 +48,13 @@ Maintainers can revert your changes if they feel they are not worth maintaining 
 
 As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier. It'll save both your time and ours, by making sure you don't have to make any changes and we don't have to ask you to. Thank you for reading this section!
 
+### Image compression
+After creating or modifying an image file, you are required to losslessly compress it. The suggested tool is [oxipng](https://github.com/shssoichiro/oxipng), and the recommended settings are the following:
+
+```
+oxipng -o 6 -i 0 --keep zTXt -a <PATH>
+```
+
 ### Object Oriented Code
 As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code must be object-oriented when possible in order to be more flexible when adding content to it. If you don't know what "object-oriented" means, we highly recommend you do some light research to grasp the basics.
 
