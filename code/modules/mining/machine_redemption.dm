@@ -292,7 +292,7 @@
 				if(!amount)
 					return
 
-				var/stored_amount = amount / MINERAL_MATERIAL_AMOUNT
+				var/stored_amount = CEILING(amount / MINERAL_MATERIAL_AMOUNT, 0.001)
 
 				if(!stored_amount)
 					return
@@ -304,6 +304,7 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
+				
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
 				mats[mat] = MINERAL_MATERIAL_AMOUNT
