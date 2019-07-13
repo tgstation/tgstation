@@ -1,21 +1,27 @@
-#define RULE_OF_THREE(a, b, x) ((a*x)/b)
-
+// Exponential distribution.
+// Used for midround/latejoin injection delays.
 /proc/exp_distribution(var/desired_mean)
 	if (desired_mean <= 0)
-		desired_mean = 1 // Let's not allow that to happen
+		desired_mean = 1
 	var/lambda = 1/desired_mean
 	var/x = rand()
 	while (x == 1)
 		x = rand()
 	. = -(1/lambda)*log(1-x)
 
+// Lorentz/Cauchy distribution.
+// Used for generating threat.
 /proc/lorentz_distribution(var/x0, var/s)
 	var/x = rand()
 	. = s*TAN(TODEGREES(PI*(x-0.5))) + x0
 
+// Cumulative Lorentz/Cauchy distribution.
+// Used for generating peaceful percentage.
 /proc/lorentz_cummulative_distribution(var/x, var/x0, var/s)
 	. = (1/PI)*TORADIANS(arctan((x-x0)/s)) + 1/2
-
+	
+#define RULE_OF_THREE(a, b, x) ((a*x)/b)
+// Turns lorentz distribution result into threat.
 /proc/lorentz2threat(var/x)
 	switch (x)
 		if (-INFINITY to -20)

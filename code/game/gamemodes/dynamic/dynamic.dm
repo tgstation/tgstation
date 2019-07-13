@@ -20,7 +20,7 @@ GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
 GLOBAL_VAR_INIT(dynamic_curve_width, 1.8)
 GLOBAL_VAR_INIT(dynamic_classic_secret, FALSE)
-GLOBAL_VAR_INIT(dynamic_high_pop_limit, 45)
+GLOBAL_VAR_INIT(dynamic_high_pop_limit, 60)
 GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
 GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
 GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 	// -- Special tweaks --
 	var/no_stacking = TRUE
-	var/high_pop_limit = 45
+	var/high_pop_limit = 60
 	var/forced_extended = FALSE
 	var/stacking_limit = 90
 	var/curve_centre = 0

@@ -1,17 +1,16 @@
 /datum/dynamic_ruleset
 	var/name = "" // For admin logging
-	var/persistent = 0 // If set to 1, the rule won't be discarded after being executed, and /gamemode/dynamic will call rule_process() every MC tick
-	var/repeatable = 0 // If set to 1, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
-	var/list/candidates = list() // List of players that are being drafted for this rule
-	var/list/assigned = list() // List of players that were selected for this rule
-	var/antag_flag = null // Preferences flag such as BE_WIZARD that need to be turned on for players to be antag
-	var/antag_datum = null
-	var/list/protected_roles = list() // If set, and config.protect_roles_antagonist = 0, then the rule will have a much lower chance than usual to pick those roles.
+	var/persistent = 0 // If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every SSTicker tick
+	var/repeatable = 0 // If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
+	var/list/mob/candidates = list() // List of players that are being drafted for this rule
+	var/list/datum/mind/assigned = list() // List of players that were selected for this rule
+	var/antag_flag = null // Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
+	var/datum/antagonist/antag_datum = null
+	var/list/protected_roles = list() // If set, and config flag protect_roles_from_antagonist is false, then the rule will pick players from these roles.
 	var/list/restricted_roles = list() // If set, rule will deny candidates from those roles
-	var/list/exclusive_roles = list() // If set, rule will only accept candidates from those roles
-	var/list/job_priority = list() // May be used by progressive_job_search for prioritizing some roles for a role. Order matters.
-	var/list/enemy_roles = list() // If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted
-	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0) // If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc)
+	var/list/exclusive_roles = list() // If set, rule will only accept candidates from those roles, IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	var/list/enemy_roles = list() // If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0) // If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/required_candidates = 0 // The rule needs this many candidates (post-trimming) to be executed (example: Cult need 4 players at round start)
 	var/weight = 5 // 1 -> 9, probability for this rule to be picked against other rules
 	var/cost = 0 // Threat cost for this rule.
@@ -21,14 +20,14 @@
 	// For midround polling
 	var/list/applicants = list()
 
-	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
-	// Requirements are the threat level requirements per pop range. The ranges are as follow:
+	// Pop range per requirement. If this is the default five, the pop range for requirements are:
 	// 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
-	// So with the above default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
-	// For reminder: the threat level is rolled at roundstart and tends to hover around 50 https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=499381388
-	var/high_population_requirement = 10
-	// An alternative, static requirement used instead when "high_population_override" is set to 1 in the config
-	// Which it should be when even low pop rounds have over 30 players and high pop rounds have 90+.
+	var/pop_per_requirement = 5
+	// Requirements are the threat level requirements per pop range.
+	// With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
+	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
+	// An alternative, static requirement used instead when pop is over mode's high_pop_limit. 
+	var/high_population_requirement = 10.
 
 	var/datum/game_mode/dynamic/mode = null
 
@@ -52,36 +51,45 @@
 	var/delay = 30 SECONDS
 	var/required_type = /mob/living/carbon/human // No ghosts, new players or silicons allowed.
 
-/datum/dynamic_ruleset/latejoin // Can be drafted when a player joins the server
+// Can be drafted when a player joins the server
+/datum/dynamic_ruleset/latejoin
 
-
+// By default, a rule is acceptable if it satisfies the threat level/population requirements.
+// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(var/population=0,var/threat_level=0)
-	// By default, a rule is acceptable if it satisfies the threat level/population requirements.
-	// If your rule has extra checks, such as counting security officers, do that in ready() instead
-
 	if (GLOB.player_list.len >= mode.high_pop_limit)
 		return (threat_level >= high_population_requirement)
 	else
-		var/indice_pop = min(10,round(population/5)+1)
+		var/indice_pop = min(10,round(population/pop_per_requirement)+1)
 		return (threat_level >= requirements[indice_pop])
 
+// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
 	return
 
+// Called on game mode pre_setup, used for non-delayed roundstart rulesets only.
+// Do everything you need to do before job is assigned here.
 /datum/dynamic_ruleset/proc/pre_execute()
 	return TRUE
 
+// Called on post_setup on roundstart and when the rule executes on midround and latejoin.
+// Give your candidates or assignees equipment and antag datum here.
 /datum/dynamic_ruleset/proc/execute()
 	for(var/datum/mind/M in assigned)
 		M.add_antag_datum(new antag_datum)
 	return TRUE
 
+// Called after delay set in ruleset.
+// Give your candidates or assignees equipment and antag datum here.
 /datum/dynamic_ruleset/roundstart/delayed/execute()
 	if (SSticker && SSticker.current_state < GAME_STATE_PLAYING)
 		CRASH("The delayed ruleset [src.name] executed before the round started.")
 
-/datum/dynamic_ruleset/proc/ready(var/forced = 0)	// Here you can perform any additional checks you want. (such as checking the map, the amount of certain roles, etc)
-	if (required_candidates > candidates.len)		// IMPORTANT: If ready() returns TRUE, that means pre_execute() should never fail!
+// Here you can perform any additional checks you want. (such as checking the map etc)
+// Remember that on roundstart no one knows what their job is at this point.
+// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
+/datum/dynamic_ruleset/proc/ready(var/forced = 0)	
+	if (required_candidates > candidates.len)		
 		return FALSE
 	return TRUE
 
@@ -90,12 +98,16 @@
 		for(var/datum/dynamic_ruleset/DR in mode.executed_rules)
 			if(istype(DR,src.type))
 				weight = max(weight-2,1)
-	message_admins("[name] had [weight] weight (-[initial(weight) - weight]).")
 	return weight
 
+// Here you can remove candidates that do not meet your requirements.
+// This means if their job is not correct or they have disconnected you can remove them from candidates here.
+// Usually this does not need to be changed unless you need some specific requirements from your candidates.
 /datum/dynamic_ruleset/proc/trim_candidates()
 	return
 
+// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
+// Called by from_ghost midround rulesets.
 /datum/dynamic_ruleset/proc/send_applications(var/list/possible_volunteers = list())
 	if (possible_volunteers.len <= 0) // This shouldn't happen, as ready() should return FALSE if there is not a single valid candidate
 		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
@@ -117,29 +129,24 @@
 	message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 	review_applications()
 
+// Here is where you can check if your ghost applicants are still valid.
+// Called by send_applications().
 /datum/dynamic_ruleset/proc/review_applications()
 
-/datum/dynamic_ruleset/proc/progressive_job_search()
-	for(var/job in job_priority)
-		for(var/mob/M in candidates)
-			if(M.mind.assigned_role == job)
-				assigned += M
-				candidates -= M
-				return M
-	var/mob/M = pick(candidates)
-	assigned += M
-	candidates -= M
-	return M
-
-
+// Counts how many players are ready at roundstart.
+// Used only by non-delayed roundstart rulesets. 
 /datum/dynamic_ruleset/proc/num_players()
 	. = 0
 	for(var/mob/dead/new_player/P in GLOB.player_list)
 		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
+// Set mode result and news report here.
+// Only called if ruleset is flagged as HIGHLANDER_RULESET
 /datum/dynamic_ruleset/proc/round_result()
 
+// Checks if round is finished, return true to end the round.
+// Only called if ruleset is flagged as HIGHLANDER_RULESET
 /datum/dynamic_ruleset/proc/check_finished()
 	return FALSE
 
@@ -149,6 +156,7 @@
 //                                          //
 //////////////////////////////////////////////
 
+// Checks if candidates are connected and if they are banned or don't want to be the antagonist.
 /datum/dynamic_ruleset/roundstart/trim_candidates()
 	var/antag_name = initial(antag_flag)
 	for(var/mob/dead/new_player/P in candidates)
@@ -159,6 +167,7 @@
 			candidates.Remove(P)
 			continue
 
+// Checks if candidates are required mob type, connected, banned and if the job is exclusive to the role. 
 /datum/dynamic_ruleset/roundstart/delayed/trim_candidates()
 	. = ..()
 	var/antag_name = initial(antag_flag)
@@ -176,5 +185,7 @@
 			candidates.Remove(P)
 			continue
 
+// Do your checks if the ruleset is ready to be executed here.
+// Should ignore certain checks if forced is TRUE
 /datum/dynamic_ruleset/roundstart/ready(var/forced = 0)
 	return ..()
