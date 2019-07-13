@@ -253,8 +253,6 @@
 /datum/action/item_action/chameleon/change/proc/apply_job_data(datum/job/job_datum)
 	return
 
-/datum/action/item_action/chameleon/change/id
-
 /datum/action/item_action/chameleon/change/id/update_item(obj/item/picked_item)
 	..()
 	var/obj/item/card/id/agent_card = target
@@ -264,10 +262,8 @@
 /datum/action/item_action/chameleon/change/id/apply_job_data(datum/job/job_datum)
 	..()
 	var/obj/item/card/id/agent_card = target
-	if(istype(agent_card))
+	if(istype(agent_card) && istype(job_datum))
 		agent_card.assignment = job_datum.title
-
-/datum/action/item_action/chameleon/change/pda
 
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/picked_item)
 	..()
@@ -279,7 +275,7 @@
 /datum/action/item_action/chameleon/change/pda/apply_job_data(datum/job/job_datum)
 	..()
 	var/obj/item/pda/agent_pda = target
-	if(istype(agent_pda))
+	if(istype(agent_pda) && istype(job_datum))
 		agent_pda.ownjob = job_datum.title
 
 
