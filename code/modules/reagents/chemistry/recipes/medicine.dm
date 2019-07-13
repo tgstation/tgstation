@@ -261,3 +261,20 @@
 	results = list(/datum/reagent/medicine/thializid = 5)
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
 
+/datum/chemical_reaction/sanguiose
+	name = "Sanguiose"
+	id = /datum/reagent/medicine/sanguiose
+	results = list(/datum/reagent/medicine/sanguiose= 4)
+	required_reagents = list(/datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1,/datum/reagent/phenol=1, /datum/reagent/acetone=1,)
+	
+/datum/chemical_reaction/frogenite
+	name = "Frogenite"
+	id = /datum/reagent/medicine/rezadone
+	results = list(/datum/reagent/medicine/frogenite = 4)
+	required_reagents = list( /datum/reagent/lye = 1, /datum/reagent/hydrogen = 1,/datum/reagent/phenol=1, /datum/reagent/bromine=1,)
+
+/datum/chemical_reaction/ferveatium
+	name = "Ferveatium"
+	id = /datum/reagent/medicine/ferveatium
+	results = list(/datum/reagent/medicine/ferveatium = 4)
+	required_reagents = list( /datum/reagent/ammonia = 1, /datum/reagent/hydrogen = 1,/datum/reagent/phenol=1, /datum/reagent/toxin/acid=1,)
