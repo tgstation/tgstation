@@ -16,7 +16,9 @@
 		{{#if data.logged_in}}
 			{{#if data.page == "CONTRACTS"}}
 				<div style="position:absolute; top:2px; right:2px">
-					<ui-button action='PRG_contractor_hub'>Contractor Hub</ui-button>
+					<div style="padding:5px">
+						<ui-button action='PRG_contractor_hub'><i class="fas fa-database fa-3x"></i></ui-button>
+					</div>
 				</div>
 				<div style="text-align:center">
 					<h1>Welcome Agent...</h1>
@@ -123,7 +125,7 @@
 									<p>{{desc}}</p>
 								</div>
 								<div style="text-align:center; margin-bottom:5px">
-									<ui-button action='buy_hub' params='{"item": "{{name}}", "cost": "{{cost}}"}'>{{#if limited != -1}}{{limited}} remaining{{else}}Purchase{{/if}}</ui-button>
+									<ui-button action='buy_hub' params='{"item": "{{name}}", "cost": "{{cost}}"}'>{{#if limited != -1}}Purchase - {{limited}} remaining{{else}}Purchase{{/if}}</ui-button>
 								</div>
 							</div>
 						{{/if}}
