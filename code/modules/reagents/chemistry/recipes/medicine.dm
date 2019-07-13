@@ -269,7 +269,7 @@
 	
 /datum/chemical_reaction/frogenite
 	name = "Frogenite"
-	id = /datum/reagent/medicine/rezadone
+	id = /datum/reagent/medicine/frogenite
 	results = list(/datum/reagent/medicine/frogenite = 4)
 	required_reagents = list( /datum/reagent/lye = 1, /datum/reagent/hydrogen = 1,/datum/reagent/phenol=1, /datum/reagent/bromine=1,)
 
