@@ -118,21 +118,6 @@
 	heavyfootstep = null
 	tiled_dirt = FALSE
 
-/turf/open/indestructible/binary
-	name = "tear in the fabric of reality"
-	CanAtmosPass = ATMOS_PASS_NO
-	baseturfs = /turf/open/indestructible/binary
-	icon_state = "binary"
-	footstep = null
-	barefootstep = null
-	clawfootstep = null
-	heavyfootstep = null
-
-/turf/open/indestructible/airblock
-	icon_state = "bluespace"
-	blocks_air = TRUE
-	baseturfs = /turf/open/indestructible/airblock
-
 /turf/open/indestructible/clock_spawn_room
 	name = "cogmetal floor"
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
