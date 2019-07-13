@@ -146,7 +146,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 /datum/game_mode/dynamic/set_round_result()
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags == HIGHLANDER_RULESET)
-			return rule.round_result()
+			if(rule.check_finished()) // Only the rule that actually finished the round sets round result.
+				return rule.round_result()
 	return ..()
 
 /datum/game_mode/dynamic/send_intercept()
