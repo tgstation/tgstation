@@ -21,7 +21,7 @@
 /obj/item/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	inject(M, user)
 
-/// Handles all injection checks, injection and logging.
+///Handles all injection checks, injection and logging.
 /obj/item/reagent_containers/hypospray/proc/inject(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
