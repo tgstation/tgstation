@@ -111,13 +111,6 @@
 	reagents.flags = NONE
 	update_icon()
 
-/obj/item/reagent_containers/hypospray/medipen/proc/cyborg_recharge(mob/living/silicon/robot/user)
-	if(!reagents.total_volume && iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		if(R.cell.use(100))
-			reagents.add_reagent_list(list_reagents)
-			update_icon()
-
 /obj/item/reagent_containers/hypospray/medipen/update_icon()
 	if(reagents.total_volume > 0)
 		icon_state = initial(icon_state)
