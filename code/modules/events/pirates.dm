@@ -200,13 +200,6 @@
 	id = "pirateship"
 	rechargeTime = 3 MINUTES
 
-/obj/machinery/suit_storage_unit/pirate
-	suit_type = /obj/item/clothing/suit/space
-	helmet_type = /obj/item/clothing/head/helmet/space
-	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/tank/internals/oxygen
-
-
 /obj/machinery/loot_locator
 	name = "Booty Locator"
 	desc = "This sophisticated machine scans the nearby space for items of value."
