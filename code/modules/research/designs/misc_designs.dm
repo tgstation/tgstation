@@ -438,7 +438,7 @@
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	id = "zipties"
 	build_type = PROTOLATHE
-	materials = list(MAT_PLASTIC = 250)
+	materials = list(/datum/material/plastic = 250)
 	build_path = /obj/item/restraints/handcuffs/cable/zipties
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -448,7 +448,7 @@
 	desc = "An empty evidence bag."
 	id = "evidencebag"
 	build_type = PROTOLATHE
-	materials = list(MAT_PLASTIC = 100)
+	materials = list(/datum/material/plastic = 100)
 	build_path = /obj/item/evidencebag
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

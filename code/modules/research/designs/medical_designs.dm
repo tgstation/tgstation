@@ -49,7 +49,7 @@
 	id = "xlarge_beaker"
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(/datum/material/glass = 2500, MAT_PLASTIC = 3000)
+	materials = list(/datum/material/glass = 2500, /datum/material/plastic = 3000)
 	build_path = /obj/item/reagent_containers/glass/beaker/plastic
 	category = list("Medical Designs")
 
@@ -58,7 +58,7 @@
 	id = "meta_beaker"
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(/datum/material/glass = 2500, MAT_PLASTIC = 3000, /datum/material/gold = 1000, /datum/material/titanium = 1000)
+	materials = list(/datum/material/glass = 2500, /datum/material/plastic = 3000, /datum/material/gold = 1000, /datum/material/titanium = 1000)
 	build_path = /obj/item/reagent_containers/glass/beaker/meta
 	category = list("Medical Designs")
 
@@ -196,7 +196,7 @@
 	name = "Surgical Drapes"
 	id = "surgical_drapes"
 	build_type = PROTOLATHE
-	materials = list(MAT_PLASTIC = 2000)
+	materials = list(/datum/material/plastic = 2000)
 	build_path = /obj/item/surgical_drapes
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -237,7 +237,7 @@
 	id = "med_spray_bottle"
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(MAT_PLASTIC = 2000)
+	materials = list(/datum/material/plastic = 2000)
 	build_path = /obj/item/reagent_containers/spray/medical
 	category = list("Medical Designs")
 
@@ -247,7 +247,7 @@
 	id = "chem_pack"
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(MAT_PLASTIC = 2000)
+	materials = list(/datum/material/plastic = 2000)
 	build_path = /obj/item/reagent_containers/chem_pack
 	category = list("Medical Designs")
 
@@ -257,7 +257,7 @@
 	id = "blood_pack"
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(MAT_PLASTIC = 1000)
+	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/reagent_containers/blood
 	category = list("Medical Designs")
 
