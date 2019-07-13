@@ -67,7 +67,7 @@ All the important duct code:
 	var/plumber = AM.GetComponent(/datum/component/plumbing)
 	if(!plumber)
 		return
-	connect_plumber(plumber, direction)
+	return connect_plumber(plumber, direction)
 
 /obj/machinery/duct/proc/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	var/opposite_dir = turn(direction, 180)
@@ -109,14 +109,16 @@ All the important duct code:
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/P, direction)
 	var/opposite_dir = turn(direction, 180)
 	if(duct_layer != DUCT_LAYER_DEFAULT) //plumbing devices don't support multilayering. 3 is the default layer so we only use that. We can change this later
+		return FALSE
+
+	if(!P.active)
 		return
+
 	var/comp_directions = P.supply_connects + P.demand_connects //they should never, ever have supply and demand connects overlap or catastrophic failure
 	if(opposite_dir & comp_directions)
-		if(duct)
-			duct.add_plumber(P, opposite_dir)
-		else
+		if(!duct)
 			create_duct()
-			duct.add_plumber(P, opposite_dir)
+		duct.add_plumber(P, opposite_dir)
 		return TRUE
 
 /obj/machinery/duct/proc/disconnect_duct()
@@ -253,15 +255,13 @@ All the important duct code:
 	icon = 'icons/obj/2x2.dmi'
 	icon_state = "multiduct"
 
-
 	color_to_color_support = FALSE
-	duct_layer = FIRST_DUCT_LAYER + SECOND_DUCT_LAYER + THIRD_DUCT_LAYER + FOURTH_DUCT_LAYER + FIFTH_DUCT_LAYER
+	duct_layer = FIRST_DUCT_LAYER | SECOND_DUCT_LAYER | THIRD_DUCT_LAYER | FOURTH_DUCT_LAYER | FIFTH_DUCT_LAYER
 
 	lock_connects = TRUE
 	lock_layers = TRUE
 	ignore_colors = TRUE
 	dumb = TRUE
-
 
 /obj/machinery/duct/multilayered/update_icon()
 	icon_state = initial(icon_state)

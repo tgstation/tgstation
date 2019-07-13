@@ -121,13 +121,12 @@
 	for(var/A in ducts)
 		var/datum/ductnet/D = ducts[A]
 		D.remove_plumber(src)
-	for(var/D in GLOB.cardinals) //tell our neighbours to reconnect
-		if(D & (demand_connects + supply_connects))
-			for(var/obj/machinery/duct/duct in get_step(parent, D))
-				var/turned_dir = turn(D, 180)
-				if(turned_dir & duct.connects)
-					duct.attempt_connect()
 	active = FALSE
+	for(var/D in GLOB.cardinals)
+		if(D & (demand_connects | supply_connects))
+			for(var/obj/machinery/duct/duct in get_step(parent, D))
+				duct.attempt_connect()
+
 
 /datum/component/plumbing/proc/start() //settle wherever we are, and start behaving like a piece of plumbing
 	if(active)
@@ -137,13 +136,10 @@
 
 	if(demand_connects)
 		START_PROCESSING(SSfluids, src)
-
 	for(var/D in GLOB.cardinals)
-		if(D & (demand_connects + supply_connects))
+		if(D & (demand_connects | supply_connects))
 			for(var/obj/machinery/duct/duct in get_step(parent, D))
-				var/turned_dir = turn(D, 180)
-				if(turned_dir & duct.connects)
-					duct.attempt_connect()
+				duct.attempt_connect()
 
 	//TODO: Let plumbers directly plumb into one another without ducts if placed adjacent to each other
 

@@ -15,7 +15,6 @@
 	var/obj/structure/geyser/geyser
 	var/volume = 200
 
-
 /obj/machinery/power/liquid_pump/Initialize()
 	create_reagents(volume)
 	return ..()
@@ -23,13 +22,13 @@
 /obj/machinery/power/liquid_pump/ComponentInitialize()
 	AddComponent(/datum/component/plumbing/simple_supply, TRUE)
 
-/obj/machinery/power/pump/attackby(obj/item/W, mob/user, params)
-	if(!anchored)
-		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]",W))
+/obj/machinery/power/liquid_pump/attackby(obj/item/W, mob/user, params)
+	if(!powered)
+		if(!anchored)
+			if(default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]",W))
+				return
+		if(default_deconstruction_crowbar(W))
 			return
-	if(default_deconstruction_crowbar(W))
-		return
-
 	return ..()
 
 /obj/machinery/power/liquid_pump/wrench_act(mob/living/user, obj/item/I)
@@ -53,16 +52,17 @@
 	else
 		P.disable()
 		disconnect_from_network()
+	update_icon()
 
 /obj/machinery/power/liquid_pump/process()
-	if(!anchored)
+	if(!anchored || panel_open)
 		return
 	if(!geyser)
 		for(var/obj/structure/geyser/G in loc.contents)
 			geyser = G
 		if(!geyser) //we didnt find one, abort
-			toggle_active()
 			anchored = FALSE
+			toggle_active()
 			visible_message("<span class='warning'>The [name] makes a sad beep!</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			return
@@ -70,14 +70,22 @@
 	if(avail(active_power_usage))
 		if(!powered) //we werent powered before this tick so update our sprite
 			powered = TRUE
-			icon_state = "[initial(icon_state)]-on" //put in update_icon()?
+			update_icon()
 		add_load(active_power_usage)
 		pump()
 	else if(powered) //we were powered, but now we arent
 		powered = FALSE
-		icon_state = initial(icon_state)
+		update_icon()
 
 /obj/machinery/power/liquid_pump/proc/pump()
 	if(!geyser || !geyser.reagents)
 		return
 	geyser.reagents.trans_to(src, pump_power)
+
+/obj/machinery/power/liquid_pump/update_icon()
+	if(powered)
+		icon_state = initial(icon_state) + "-on"
+	else if(panel_open)
+		icon_state = initial(icon_state) + "-open"
+	else
+		icon_state = initial(icon_state)
