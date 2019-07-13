@@ -9,12 +9,12 @@
 	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
 	attack_verb = list("attacked", "slapped", "whacked")
-	decay_factor = 3 * STANDARD_ORGAN_DECAY			//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
+	decay_factor = STANDARD_ORGAN_DECAY	/ 2		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
 	healing_factor = 0								//no healing for the brain outside of brain surgery or mannitol
 	maxHealth	= BRAIN_DAMAGE_DEATH
 	low_threshold = 45
 	high_threshold = 120
-	Unique_Failure_Msg = "Subject's brain is too damaged to function, and must be given brain surgery or mannitol!"
+	Unique_Failure_Msg = "<span class='danger'>Subject's brain is too damaged to function, and must be given brain surgery or mannitol!</span>"
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
 	var/brain_death = FALSE //if the brainmob was intentionally killed by attacking the brain after removal, or by severe braindamage
