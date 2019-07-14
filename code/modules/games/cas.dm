@@ -148,7 +148,7 @@
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
 			return
 		if(!blank)
-			to_chat(user, "You cannot write on that card.")
+			to_chat(user, "<span class='warning'>You cannot write on that card!</span>")
 			return
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
 		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))

@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if(G.emped || !G.tracking || G == src)
 			continue
 		var/turf/pos = get_turf(G)
-		if(!global_mode && pos.z != curr.z)
+		if(!pos || !global_mode && pos.z != curr.z)
 			continue
 		var/list/signal = list()
 		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS

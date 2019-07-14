@@ -154,7 +154,7 @@
 			var/good_update = istext(new_value)
 			log_config("Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
 			if(!warned_deprecated_configs)
-				addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, "This server is using deprecated configuration settings. Please check the logs and update accordingly."), 0)
+				DelayedMessageAdmins("This server is using deprecated configuration settings. Please check the logs and update accordingly.")
 				warned_deprecated_configs = TRUE
 			if(good_update)
 				value = new_value
@@ -271,9 +271,10 @@ Example config:
 	policy = list()
 	var/rawpolicy = file2text("[directory]/policy.json")
 	if(rawpolicy)
-		var/parsed = json_decode(rawpolicy)
+		var/parsed = safe_json_decode(rawpolicy)
 		if(!parsed)
 			log_config("JSON parsing failure for policy.json")
+			DelayedMessageAdmins("JSON parsing failure for policy.json")
 		else
 			policy = parsed
 
@@ -400,7 +401,7 @@ Example config:
 	return runnable_modes
 
 /datum/controller/configuration/proc/LoadChatFilter()
-	GLOB.in_character_filter = list()
+	var/list/in_character_filter = list()
 
 	if(!fexists("[directory]/in_character_filter.txt"))
 		return
@@ -412,7 +413,12 @@ Example config:
 			continue
 		if(findtextEx(line,"#",1,2))
 			continue
-		GLOB.in_character_filter += line
+		in_character_filter += REGEX_QUOTE(line)
 
-	if(!ic_filter_regex && GLOB.in_character_filter.len)
-		ic_filter_regex = regex("\\b([jointext(GLOB.in_character_filter, "|")])\\b", "i")
+	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
+
+	syncChatRegexes()
+
+//Message admins when you can.
+/datum/controller/configuration/proc/DelayedMessageAdmins(text)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)
