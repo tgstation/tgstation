@@ -41,7 +41,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
 	for(var/mat in mat_list) //Make the assoc list ref | amount
-		var/datum/material/M = getmaterialref(mat)
+		var/datum/material/M = getmaterialref(mat) || mat
 		materials[M] = 0
 
 /datum/component/material_container/proc/OnExamine(datum/source, mob/user)
