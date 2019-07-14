@@ -3,7 +3,7 @@
 	var/list/hub_items = list()
 	var/list/purchased_items = list()
 
-	var/static/list/contractor_items = typecacheof(/datum/contractor_item/)
+	var/static/list/contractor_items = typecacheof(/datum/contractor_item/, TRUE)
 
 
 /datum/contractor_hub/proc/create_hub_items()
