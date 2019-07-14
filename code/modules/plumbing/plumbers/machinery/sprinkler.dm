@@ -24,7 +24,7 @@
 
 /obj/machinery/plumbing/sprinkler/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/machinery/plumbing/sprinkler/process()
 	var/turf/T = get_turf(loc)
@@ -47,7 +47,8 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/machinery/plumbing/sprinkler/plunger_act(obj/item/plunger/P, mob/living/user)
-	if(..())
+	. = ..()
+	if(.)
 		dirty = FALSE
 		cut_overlay("[icon_state]_dirty")
 		START_PROCESSING(SSobj, src)

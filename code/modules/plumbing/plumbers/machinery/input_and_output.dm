@@ -1,5 +1,5 @@
 /obj/machinery/plumbing/pipeinput
-	name = "pipe input"
+	name = "input pipe"
 	desc = "An input pipe, you put the liquids in here."
 	icon_state = "input"
 	capacity = 100
@@ -16,7 +16,7 @@ obj/machinery/plumbing/pipeinput/Initialize()
 	result = /obj/machinery/plumbing/pipeinput
 
 /obj/machinery/plumbing/pipeoutput
-	name = "pipe output"
+	name = "output pipe"
 	desc = "An output pipe, you can take the fluids from here with a container."
 	icon_state = "output"
 	capacity = 100

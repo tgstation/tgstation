@@ -51,7 +51,7 @@
 		return TRUE
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user)
-	. = ..()
+	..()
 	to_chat(user, "<span class='notice'>You start plunging  \the [src]...</span>")
 	if(do_after(user, 50, target = src))
 		to_chat(user, "<span class='notice'>You have plunged \the [src].</span>")
@@ -98,5 +98,4 @@
 			to_chat(user, "<span class='notice'>You have activated \the [src].</span>")
 			new result (get_turf(src))
 			qdel(src)
-		else
-			deploying = FALSE
+	deploying = FALSE

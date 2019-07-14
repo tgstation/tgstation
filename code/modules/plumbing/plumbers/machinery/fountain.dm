@@ -21,7 +21,7 @@
 
 /obj/machinery/plumbing/fountain/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/machinery/plumbing/fountain/process()
 	update_icon()
