@@ -235,7 +235,6 @@
 	if(!M.sheet_type)
 		return 0 //Add greyscale sheet handling here later
 	if(sheet_amt <= 0)
-		to_chat(world, "sheet amount is 0 or lower, yell at 4d")
 		return 0
 
 	if(!target)
