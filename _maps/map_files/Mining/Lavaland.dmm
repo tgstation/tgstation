@@ -1898,7 +1898,7 @@
 /area/mine/living_quarters)
 "fd" = (
 /obj/machinery/camera{
-	c_tag = "Storage";
+	c_tag = "Public Shuttle Lobby";
 	network = list("mine")
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -3560,7 +3560,7 @@
 /area/mine/laborcamp/security)
 "qt" = (
 /obj/structure/cable,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "rj" = (
@@ -3805,6 +3805,11 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Labor Camp Security Office";
+	dir = 1;
+	network = list("labor")
+	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "Fe" = (
@@ -3823,14 +3828,9 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "Gn" = (
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"Gw" = (
-/obj/structure/cable,
-/obj/machinery/camera,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "GI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -10654,7 +10654,7 @@ yr
 yr
 yr
 za
-Gw
+ch
 QN
 oW
 sM
