@@ -284,6 +284,7 @@
 		if(I.loc != real_location)
 			continue
 		remove_from_storage(I, target)
+		I.random_pixel_offset(10)
 		if(trigger_on_found && I.on_found())
 			return FALSE
 		if(TICK_CHECK)

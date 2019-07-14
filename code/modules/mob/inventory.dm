@@ -292,7 +292,7 @@
 //for when you want the item to end up on the ground
 //will force move the item to the ground and call the turf's Entered
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE)
-	I.random_pixel_offset()
+	I.random_pixel_offset(8)
 	return doUnEquip(I, force, drop_location(), FALSE)
 
 //for when the item will be immediately placed in a loc other than the ground
