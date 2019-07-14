@@ -57,6 +57,36 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/fore)
+"aam" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/stamp/hop{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/machinery/button/ticket_machine{
+	pixel_x = 32
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
+"aan" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/ticket_machine{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "aaq" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -34047,18 +34077,6 @@
 	pixel_y = -25
 	},
 /obj/structure/cable,
-/turf/open/floor/wood,
-/area/crew_quarters/heads/hop)
-"bwp" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/stamp/hop{
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bwq" = (
@@ -99014,7 +99032,7 @@ bwk
 bkz
 bzM
 bBz
-bDa
+aan
 bEE
 bGA
 bIa
@@ -100295,7 +100313,7 @@ bkz
 bqG
 dbe
 but
-bwp
+aam
 bkz
 bzQ
 bzR
