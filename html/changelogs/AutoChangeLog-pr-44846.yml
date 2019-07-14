@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Androids, skeletons and zombies no longer metabolize reagents. As such they no longer benefit from healing reagents, nor are affected by poisons and toxins."
-  - rscadd: "These species are now also immune to any other form of toxin damage."
-  - tweak: "Milk now also heals burn damage for skeletons."
