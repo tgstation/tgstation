@@ -3,3 +3,5 @@
 #define ORGAN_SLOT_BUTT "butt"
 
 #define CLUWNEMUT	/datum/mutation/human/cluwne
+
+#define SPURDOMUT /datum/mutation/human/spurdo
