@@ -20,12 +20,7 @@
 	disliked_food = FRUIT
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
-	items_important_for_life = list(
-		/obj/item/clothing/head/helmet/space/plasmaman,
-		/obj/item/clothing/under/plasmaman,
-		/obj/item/tank/internals/plasmaman/belt/full,
-		/obj/item/clothing/mask/breath
-	)
+	outfit_important_for_life = /datum/outfit/plasmaman
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()

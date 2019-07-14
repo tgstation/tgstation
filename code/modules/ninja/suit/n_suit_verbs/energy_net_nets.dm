@@ -60,7 +60,7 @@ It is possible to destroy the net by the occupant or someone else.
 			H.dropItemToGround(W)
 
 		// After we remove items, at least give them what they need to live.
-		give_important_for_life(affecting)
+		H.dna.species.give_important_for_life(H)
 
 	playsound(affecting, 'sound/effects/sparks4.ogg', 50, 1)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location(), affecting.dir)
