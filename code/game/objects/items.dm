@@ -105,12 +105,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
-/obj/item/Initialize(var/list/craft_materials)
+/obj/item/Initialize()
 
 	materials =	typelist("materials", materials)
-	
-	if(craft_materials) //If we were crafted; use those materials
-		materials = craft_materials
 
 	if(materials) //Otherwise, use the instances already provided.
 		var/list/temp_list = list() 
