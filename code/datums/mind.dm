@@ -64,6 +64,8 @@
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 
+	var/list/learned_recipes //List of learned recipe TYPES.
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
@@ -72,11 +74,7 @@
 /datum/mind/Destroy()
 	SSticker.minds -= src
 	if(islist(antag_datums))
-		for(var/i in antag_datums)
-			var/datum/antagonist/antag_datum = i
-			if(antag_datum.delete_on_mind_deletion)
-				qdel(i)
-		antag_datums = null
+		QDEL_LIST(antag_datums)
 	return ..()
 
 /datum/mind/proc/get_language_holder()
@@ -159,6 +157,7 @@
 	if(antag_team)
 		antag_team.add_member(src)
 	A.on_gain()
+	log_game("[key_name(src)] has gained antag datum [A.name]([A.type])")
 	return A
 
 /datum/mind/proc/remove_antag_datum(datum_type)

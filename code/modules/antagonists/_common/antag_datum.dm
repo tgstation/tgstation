@@ -9,7 +9,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/silent = FALSE							//Silent will prevent the gain/lose texts to show
 	var/can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
 	var/list/typecache_datum_blacklist = list()	//List of datums this type can't coexist with
-	var/delete_on_mind_deletion = TRUE
 	var/job_rank
 	var/replace_banned = TRUE //Should replace jobbanned player with ghosts if granted.
 	var/list/objectives = list()
@@ -73,6 +72,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 		give_antag_moodies()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
+		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
+			owner.current.client.holder.auto_deadmin()
 
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)

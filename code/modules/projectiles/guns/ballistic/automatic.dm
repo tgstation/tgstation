@@ -19,7 +19,6 @@
 	pin = null
 	bolt_type = BOLT_TYPE_LOCKING
 	mag_display = TRUE
-	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/proto/unrestricted
 	pin = /obj/item/firing_pin
@@ -70,7 +69,6 @@
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
-	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/firing_pin
@@ -226,6 +224,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	mag_display = TRUE
 	mag_display_ammo = TRUE
+	tac_reloads = FALSE
 	fire_sound = 'sound/weapons/rifleshot.ogg'
 	rack_sound = 'sound/weapons/chunkyrack.ogg'
 
@@ -234,10 +233,10 @@
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
-	..()
-	to_chat(user, "<b>alt + click</b> to [cover_open ? "close" : "open"] the dust cover.")
+	. = ..()
+	. += "<b>alt + click</b> to [cover_open ? "close" : "open"] the dust cover."
 	if(cover_open && magazine)
-		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
+		. += "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>"
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/AltClick(mob/user)
@@ -250,7 +249,7 @@
 	update_icon()
 
 
-/obj/item/gun/ballistic/automatic/l6_saw/update_icon() 
+/obj/item/gun/ballistic/automatic/l6_saw/update_icon()
 	. = ..()
 	add_overlay("l6_door_[cover_open ? "open" : "closed"]")
 

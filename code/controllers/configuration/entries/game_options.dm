@@ -35,10 +35,6 @@
 /datum/config_entry/keyed_list/midround_antag/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_list/policy
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_TEXT
-
 /datum/config_entry/number/damage_multiplier
 	config_entry_value = 1
 	integer = FALSE
@@ -271,6 +267,8 @@
 /datum/config_entry/number/outdated_movedelay/animal_delay
 	movedelay_type = /mob/living/simple_animal
 /////////////////////////////////////////////////
+
+/datum/config_entry/flag/virtual_reality	//Will virtual reality be loaded
 
 /datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
 

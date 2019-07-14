@@ -199,10 +199,15 @@
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
-/datum/action/item_action/rcl
+/datum/action/item_action/rcl_col
 	name = "Change Cable Color"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_rainbow"
+
+/datum/action/item_action/rcl_gui
+	name = "Toggle Fast Wiring Gui"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_gui"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
@@ -289,10 +294,7 @@
 /datum/action/item_action/synthswitch/Trigger()
 	if(istype(target, /obj/item/instrument/piano_synth))
 		var/obj/item/instrument/piano_synth/synth = target
-		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
-		if(!synth.insTypes[chosen])
-			return
-		return synth.changeInstrument(chosen)
+		return synth.selectInstrument()
 	return ..()
 
 /datum/action/item_action/vortex_recall
@@ -704,12 +706,26 @@
 	small_icon = 'icons/mob/alien.dmi'
 	small_icon_state = "alienq"
 
-/datum/action/small_sprite/drake
+/datum/action/small_sprite/megafauna
+	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
+	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
 	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+
+/datum/action/small_sprite/megafauna/drake
 	small_icon_state = "ash_whelp"
 
-/datum/action/small_sprite/spacedragon
-	small_icon = 'icons/mob/animal.dmi'
+/datum/action/small_sprite/megafauna/colossus
+	small_icon_state = "Basilisk"
+
+/datum/action/small_sprite/megafauna/bubblegum
+	small_icon_state = "goliath2"
+
+/datum/action/small_sprite/megafauna/legion
+	small_icon_state = "dwarf_legion"
+
+/datum/action/small_sprite/megafauna/spacedragon
+	small_icon = 'icons/mob/carp.dmi'
 	small_icon_state = "carp"
 
 /datum/action/small_sprite/Trigger()

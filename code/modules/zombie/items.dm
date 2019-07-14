@@ -16,7 +16,7 @@
 
 /obj/item/zombie_hand/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/zombie_hand/equipped(mob/user, slot)
 	. = ..()

@@ -1,5 +1,6 @@
 /obj/item/shield
 	name = "shield"
+	icon = 'icons/obj/shields.dmi'
 	block_chance = 50
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/transparent = FALSE	// makes beam projectiles pass through the shield
@@ -10,7 +11,6 @@
 /obj/item/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "riot"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
@@ -53,15 +53,15 @@
 		return ..()
 
 /obj/item/shield/riot/examine(mob/user)
-	..()
+	. = ..()
 	var/healthpercent = round((obj_integrity/max_integrity) * 100, 1)
 	switch(healthpercent)
 		if(50 to 99)
-			to_chat(user, "<span class='info'>It looks slightly damaged.</span>")
+			. += "<span class='info'>It looks slightly damaged.</span>"
 		if(25 to 50)
-			to_chat(user, "<span class='info'>It appears heavily damaged.</span>")
+			. += "<span class='info'>It appears heavily damaged.</span>"
 		if(0 to 25)
-			to_chat(user, "<span class='warning'>It's falling apart!</span>")
+			. += "<span class='warning'>It's falling apart!</span>"
 
 /obj/item/shield/riot/proc/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
@@ -109,7 +109,8 @@
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
-	max_integrity = 65
+	max_integrity = 55
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
@@ -136,7 +137,7 @@
 
 /obj/item/shield/riot/flash/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
-	if (. && !embedded_flash.crit_fail)
+	if (. && !embedded_flash.burnt_out)
 		embedded_flash.activate()
 		update_icon()
 
@@ -144,13 +145,13 @@
 /obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/assembly/flash/handheld))
 		var/obj/item/assembly/flash/handheld/flash = W
-		if(flash.crit_fail)
+		if(flash.burnt_out)
 			to_chat(user, "No sense replacing it with a broken bulb.")
 			return
 		else
 			to_chat(user, "You begin to replace the bulb.")
 			if(do_after(user, 20, target = user))
-				if(flash.crit_fail || !flash || QDELETED(flash))
+				if(flash.burnt_out || !flash || QDELETED(flash))
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(embedded_flash)
@@ -166,7 +167,7 @@
 	update_icon()
 
 /obj/item/shield/riot/flash/update_icon()
-	if(!embedded_flash || embedded_flash.crit_fail)
+	if(!embedded_flash || embedded_flash.burnt_out)
 		icon_state = "riot"
 		item_state = "riot"
 	else
@@ -174,13 +175,13 @@
 		item_state = "flashshield"
 
 /obj/item/shield/riot/flash/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>")
+	. = ..()
+	if (embedded_flash?.burnt_out)
+		. += "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>"
 
 /obj/item/shield/energy
 	name = "energy combat shield"
 	desc = "A shield that reflects almost all energy projectiles, but is useless against physical attacks. It can be retracted, expanded, and stored anywhere."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -207,7 +208,7 @@
 	return (active)
 
 /obj/item/shield/energy/attack_self(mob/living/carbon/human/user)
-	if(clumsy_check && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	active = !active
@@ -232,7 +233,6 @@
 /obj/item/shield/riot/tele
 	name = "telescopic shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "teleriot0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'

@@ -1,4 +1,4 @@
-/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
+/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 	//Handle items on mob
@@ -123,6 +123,19 @@
 					qdel(G) //we lose the organs in the missing limbs
 		qdel(BP)
 
+	//transfer stuns
+	if(tr_flags & TR_KEEPSTUNS)
+		O.Stun(AmountStun(), ignore_canstun = TRUE)
+		O.Knockdown(AmountKnockdown(), ignore_canstun = TRUE)
+		O.Immobilize(AmountImmobilized(), ignore_canstun = TRUE)
+		O.Paralyze(AmountParalyzed(), ignore_canstun = TRUE)
+		O.Unconscious(AmountUnconscious(), ignore_canstun = TRUE)
+		O.Sleeping(AmountSleeping(), ignore_canstun = TRUE)
+
+	//transfer reagents
+	if(tr_flags & TR_KEEPREAGENTS)
+		reagents.trans_to(O, reagents.total_volume)
+
 	//transfer mind if we didn't yet
 	if(mind)
 		mind.transfer_to(O)
@@ -149,7 +162,7 @@
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
+/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 	//Handle items on mob
@@ -282,6 +295,19 @@
 						continue //so headless changelings don't lose their brain when transforming
 					qdel(G) //we lose the organs in the missing limbs
 		qdel(BP)
+
+	//transfer stuns
+	if(tr_flags & TR_KEEPSTUNS)
+		O.Stun(AmountStun(), ignore_canstun = TRUE)
+		O.Knockdown(AmountKnockdown(), ignore_canstun = TRUE)
+		O.Immobilize(AmountImmobilized(), ignore_canstun = TRUE)
+		O.Paralyze(AmountParalyzed(), ignore_canstun = TRUE)
+		O.Unconscious(AmountUnconscious(), ignore_canstun = TRUE)
+		O.Sleeping(AmountSleeping(), ignore_canstun = TRUE)
+
+	//transfer reagents
+	if(tr_flags & TR_KEEPREAGENTS)
+		reagents.trans_to(O, reagents.total_volume)
 
 	if(mind)
 		mind.transfer_to(O)

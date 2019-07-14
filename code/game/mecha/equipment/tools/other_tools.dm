@@ -424,25 +424,6 @@
 /obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user, params)
 	load_fuel(weapon)
 
-/obj/item/mecha_parts/mecha_equipment/generator/critfail()
-	..()
-	var/turf/open/T = get_turf(src)
-	if(!istype(T))
-		return
-	var/datum/gas_mixture/GM = new
-	GM.add_gas(/datum/gas/plasma)
-	if(prob(10))
-		GM.gases[/datum/gas/plasma][MOLES] += 100
-		GM.temperature = 1500+T0C //should be enough to start a fire
-		T.visible_message("[src] suddenly disgorges a cloud of heated plasma.")
-		qdel(src)
-	else
-		GM.gases[/datum/gas/plasma][MOLES] += 5
-		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
-		T.visible_message("[src] suddenly disgorges a cloud of plasma.")
-	T.assume_air(GM)
-	return
-
 /obj/item/mecha_parts/mecha_equipment/generator/process()
 	if(!chassis)
 		STOP_PROCESSING(SSobj, src)
@@ -481,9 +462,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src, 0)
-
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/critfail()
-	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())

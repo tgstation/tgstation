@@ -20,6 +20,9 @@
 		            /obj/item/clothing/head/beanie/stripedred = 3,
 		            /obj/item/clothing/head/beanie/stripedblue = 3,
 		            /obj/item/clothing/head/beanie/stripedgreen = 3,
+					/obj/item/clothing/head/beanie/rasta = 3,
+					/obj/item/clothing/head/kippah = 3,
+					/obj/item/clothing/head/taqiyahred = 3,
 		            /obj/item/clothing/gloves/fingerless = 2,
 		            /obj/item/clothing/neck/scarf/pink = 3,
 		            /obj/item/clothing/neck/scarf/red = 3,
@@ -56,6 +59,7 @@
 		            /obj/item/clothing/under/pants/tan = 2,
 		            /obj/item/clothing/under/pants/track = 2,
 		            /obj/item/clothing/shoes/sneakers/black = 4,
+		            /obj/item/clothing/head/wig/natural  = 4,
 		            /obj/item/clothing/under/plaid_skirt = 2,
 		            /obj/item/clothing/under/plaid_skirt/blue = 2,
 		            /obj/item/clothing/under/plaid_skirt/purple = 2,
@@ -64,6 +68,9 @@
 		            /obj/item/clothing/under/skirt/blue = 2,
 		            /obj/item/clothing/under/skirt/red = 2,
 		            /obj/item/clothing/under/skirt/purple = 2,
+		            /obj/item/clothing/under/scratch/skirt = 2,
+		            /obj/item/clothing/under/gimmick/rank/captain/suit/skirt = 2,
+		            /obj/item/clothing/under/gimmick/rank/head_of_personnel/suit/skirt = 2,
 		            /obj/item/clothing/suit/jacket = 2,
 		            /obj/item/clothing/suit/jacket/puffer/vest = 2,
 		            /obj/item/clothing/suit/jacket/puffer = 2,
@@ -94,6 +101,9 @@
 		            /obj/item/clothing/suit/ianshirt = 1,
 		            /obj/item/clothing/shoes/laceup = 2,
 		            /obj/item/clothing/shoes/sandal = 2,
+		            /obj/item/clothing/shoes/cowboy = 2,
+		            /obj/item/clothing/shoes/cowboy/white = 2,
+		            /obj/item/clothing/shoes/cowboy/black = 2,
 		            /obj/item/clothing/suit/jacket/miljacket = 1,
 		            /obj/item/clothing/suit/apron/purple_bartender = 2,
 		            /obj/item/clothing/under/rank/bartender/purple = 2)
@@ -118,6 +128,10 @@
 	default_price = 50
 	extra_price = 75
 	payment_department = NO_FREEBIES
+
+/obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
+
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"

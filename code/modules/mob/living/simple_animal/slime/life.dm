@@ -16,6 +16,9 @@
 			handle_feeding()
 		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
 			handle_nutrition()
+			if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
+				return
+			reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len) //Slimes are such snowflakes
 			handle_targets()
 			if (!ckey)
 				handle_mood()
@@ -41,7 +44,7 @@
 	AIproc = 1
 
 	while(AIproc && stat != DEAD && (attacked || hungry || rabid || buckled))
-		if(buckled) // can't eat AND have this little process at the same time
+		if(!(mobility_flags & MOBILITY_MOVE)) //also covers buckling. Not sure why buckled is in the while condition if we're going to immediately break, honestly
 			break
 
 		if(!Target || client)
@@ -61,7 +64,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(issilicon(Target))
+				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
@@ -69,7 +72,7 @@
 
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
-					return
+					break
 				if((Target.mobility_flags & MOBILITY_STAND) && prob(80))
 
 					if(Target.client && Target.health >= 20)
@@ -276,11 +279,10 @@
 
 
 /mob/living/simple_animal/slime/proc/handle_targets()
+	update_mobility()
 	if(Tempstun)
 		if(!buckled) // not while they're eating!
 			mobility_flags &= ~MOBILITY_MOVE
-	else
-		mobility_flags |= MOBILITY_MOVE
 
 	if(attacked > 50)
 		attacked = 50
@@ -600,7 +602,8 @@
 				phrases += "[M]... friend..."
 				if (nutrition < get_hunger_nutrition())
 					phrases += "[M]... feed me..."
-			say (pick(phrases))
+			if(!stat)
+				say (pick(phrases))
 
 /mob/living/simple_animal/slime/proc/get_max_nutrition() // Can't go above it
 	if (is_adult)

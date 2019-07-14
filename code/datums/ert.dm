@@ -56,7 +56,7 @@
 
 /datum/ert/janitor
 	roles = list(/datum/antagonist/ert/janitor, /datum/antagonist/ert/janitor/heavy)
-	leader_role = /datum/outfit/ert/janitor/heavy
+	leader_role = /datum/antagonist/ert/janitor/heavy
 	teamsize = 4
 	opendoors = FALSE
 	rename_team = "Janitor"

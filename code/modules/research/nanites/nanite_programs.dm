@@ -57,6 +57,7 @@
 			deactivate()
 		if(passive_enabled)
 			disable_passive_effect()
+		on_mob_remove()
 	if(nanites)
 		nanites.programs -= src
 	return ..()
@@ -86,7 +87,8 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
-	copy_extra_settings_to(target)
+	if(istype(target,src))
+		copy_extra_settings_to(target)
 
 /datum/nanite_program/proc/set_extra_setting(user, setting)
 	return
@@ -106,6 +108,9 @@
 	host_mob = nanites.host_mob
 	if(activated) //apply activation effects if it starts active
 		activate()
+
+/datum/nanite_program/proc/on_mob_remove()
+	return
 
 /datum/nanite_program/proc/toggle()
 	if(!activated)
@@ -204,9 +209,6 @@
 /datum/nanite_program/proc/on_death()
 	return
 
-/datum/nanite_program/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	return
-
 /datum/nanite_program/proc/software_error(type)
 	if(!type)
 		type = rand(1,5)
@@ -254,4 +256,3 @@
 			return "Trigger"
 		if(NANITE_TIMER_RESET)
 			return "Reset Activation Timer"
-

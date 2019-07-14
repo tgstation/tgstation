@@ -107,10 +107,6 @@
 	if(stuffed || grenade)
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 		if(grenade && !grenade.active)
-			if(istype(grenade, /obj/item/grenade/chem_grenade))
-				var/obj/item/grenade/chem_grenade/G = grenade
-				if(G.nadeassembly) //We're activated through different methods
-					return
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.preprime(user, msg = FALSE, volume = 10)
 	else
@@ -369,14 +365,14 @@
 	icon_state = "carpplush"
 	item_state = "carp_plushie"
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	squeak_override = /datum/outputs/bite
+	squeak_override = list('sound/weapons/bite.ogg'=1)
 
 /obj/item/toy/plush/bubbleplush
 	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
 	attack_verb = list("rent")
-	squeak_override = /datum/outputs/demonattack
+	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
 
 /obj/item/toy/plush/plushvar
 	name = "\improper Ratvar plushie"
@@ -459,7 +455,7 @@
 		say("NO! I will not be banished again...")
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
 		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
-		playsound(P, /datum/outputs/demonattack, 50, TRUE, frequency = 2)
+		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
 		explosion(src, 0, 0, 1)
 		qdel(src)
 		P.clashing = FALSE
@@ -469,7 +465,6 @@
 	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
 	var/clashing
-	var/is_invoker = TRUE
 	gender = FEMALE	//it's canon if the toy is
 
 /obj/item/toy/plush/narplush/Moved()
@@ -478,17 +473,13 @@
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 
-/obj/item/toy/plush/narplush/hugbox
-	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy? <b>It looks sad.</b>"
-	is_invoker = FALSE
-
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon_state = "plushie_lizard"
 	item_state = "plushie_lizard"
 	attack_verb = list("clawed", "hissed", "tail slapped")
-	squeak_override = /datum/outputs/slash
+	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
@@ -496,7 +487,7 @@
 	icon_state = "plushie_snake"
 	item_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
-	squeak_override = /datum/outputs/bite
+	squeak_override = list('sound/weapons/bite.ogg' = 1)
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
@@ -504,7 +495,7 @@
 	icon_state = "plushie_nuke"
 	item_state = "plushie_nuke"
 	attack_verb = list("shot", "nuked", "detonated")
-	squeak_override = /datum/outputs/punch
+	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
 
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
@@ -512,8 +503,9 @@
 	icon_state = "plushie_slime"
 	item_state = "plushie_slime"
 	attack_verb = list("blorbled", "slimed", "absorbed")
-	squeak_override = /datum/outputs/squelch
+	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
@@ -524,3 +516,12 @@
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
+
+/obj/item/toy/plush/beeplushie
+	name = "bee plushie"
+	desc = "A cute toy that resembles an even cuter bee."
+	icon_state = "plushie_h"
+	item_state = "plushie_h"
+	attack_verb = list("stung")
+	gender = FEMALE
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)

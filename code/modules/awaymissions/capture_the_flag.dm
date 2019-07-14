@@ -11,7 +11,7 @@
 
 /obj/item/twohanded/ctf
 	name = "banner"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
 	item_state = "banner"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
@@ -54,10 +54,10 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/twohanded/ctf/attack_hand(mob/living/user)
 	if(!is_ctf_target(user) && !anyonecanpickup)
-		to_chat(user, "Non players shouldn't be moving the flag!")
+		to_chat(user, "<span class='warning'>Non-players shouldn't be moving the flag!</span>")
 		return
 	if(team in user.faction)
-		to_chat(user, "You can't move your own flag!")
+		to_chat(user, "<span class='warning'>You can't move your own flag!</span>")
 		return
 	if(loc == user)
 		if(!user.dropItemToGround(src))
@@ -227,7 +227,7 @@
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
-			to_chat(user, "It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!")
+			to_chat(user, "<span class='warning'>It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!</span>")
 			return
 		var/client/new_team_member = user.client
 		if(user.mind && user.mind.current)
@@ -239,10 +239,10 @@
 		if(CTF == src || CTF.ctf_enabled == FALSE)
 			continue
 		if(user.ckey in CTF.team_members)
-			to_chat(user, "No switching teams while the round is going!")
+			to_chat(user, "<span class='warning'>No switching teams while the round is going!</span>")
 			return
 		if(CTF.team_members.len < src.team_members.len)
-			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] team to even things up.")
+			to_chat(user, "<span class='warning'>[src.team] has more team members than [CTF.team]! Try joining [CTF.team] team to even things up.</span>")
 			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
@@ -482,7 +482,7 @@
 	toggle_helmet = FALSE // see the whites of their eyes
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/away
 	belt = /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
@@ -495,7 +495,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	no_drops += W
 	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	W.update_label()
 
 	no_drops += H.get_item_by_slot(SLOT_WEAR_SUIT)
 	no_drops += H.get_item_by_slot(SLOT_GLOVES)
@@ -504,7 +504,7 @@
 	no_drops += H.get_item_by_slot(SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.add_trait(TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
+		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill
@@ -515,6 +515,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	id = /obj/item/card/id/syndicate_command //it's red
 
 /datum/outfit/ctf/red/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/red
@@ -525,6 +526,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
+	id = /obj/item/card/id/centcom //it's blue
 
 /datum/outfit/ctf/blue/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/blue

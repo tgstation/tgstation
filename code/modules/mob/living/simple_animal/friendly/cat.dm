@@ -238,6 +238,8 @@
 			if(M && stat != DEAD)
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "purrs!")
+				if(flags_1 & HOLOGRAM_1)
+					return
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		else
 			if(M && stat != DEAD)
@@ -287,5 +289,5 @@
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
 	..()
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
-		L.reagents.add_reagent("nutriment", 0.4)
-		L.reagents.add_reagent("vitamin", 0.4)
+		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
+		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)

@@ -8,8 +8,8 @@
 	flags_1 = NODECONSTRUCT_1
 	use_power = NO_POWER_USE
 	var/static/list/shortcuts = list(
-		"meth" = "methamphetamine",
-		"tricord" = "tricordrazine"
+		"meth" = /datum/reagent/drug/methamphetamine,
+		"tricord" = /datum/reagent/medicine/tricordrazine
 	)
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -31,13 +31,13 @@
 				beaker = null
 				. = TRUE
 		if("input")
-			var/input_reagent = replacetext(lowertext(input("Enter the name of any liquid", "Input") as text), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
+			var/input_reagent = replacetext(lowertext(input("Enter the name of any reagent", "Input") as text), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
 			if(shortcuts[input_reagent])
 				input_reagent = shortcuts[input_reagent]
 			else
 				input_reagent = find_reagent(input_reagent)
-			if(!input_reagent || !GLOB.chemical_reagents_list[input_reagent])
-				say("OUT OF RANGE")
+			if(!input_reagent)
+				say("REAGENT NOT FOUND")
 				return
 			else
 				if(!beaker)

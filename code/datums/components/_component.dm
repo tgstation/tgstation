@@ -2,6 +2,10 @@
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	var/dupe_type
 	var/datum/parent
+	//only set to true if you are able to properly transfer this component
+	//At a minimum RegisterWithParent and UnregisterFromParent should be used
+	//Make sure you also implement PostTransfer for any post transfer handling
+	var/can_transfer = FALSE
 
 /datum/component/New(datum/P, ...)
 	parent = P
@@ -83,7 +87,7 @@
 /datum/component/proc/UnregisterFromParent()
 	return
 
-/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proc_or_callback, override = FALSE)
+/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))
 		return
 
@@ -96,15 +100,12 @@
 	if(!lookup)
 		target.comp_lookup = lookup = list()
 
-	if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
-		proc_or_callback = CALLBACK(src, proc_or_callback)
-
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
 		if(!override && procs[target][sig_type])
 			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		procs[target][sig_type] = proc_or_callback
+		procs[target][sig_type] = proctype
 
 		if(!lookup[sig_type]) // Nothing has registered here yet
 			lookup[sig_type] = src
@@ -154,7 +155,7 @@
 	return
 
 /datum/component/proc/PostTransfer()
-	return
+	return COMPONENT_INCOMPATIBLE //Do not support transfer by default as you must properly support it
 
 /datum/component/proc/_GetInverseTypeList(our_type = type)
 	//we can do this one simple trick
@@ -171,17 +172,21 @@
 		var/datum/C = target
 		if(!C.signal_enabled)
 			return NONE
-		var/datum/callback/CB = C.signal_procs[src][sigtype]
-		return CB.InvokeAsync(arglist(arguments))
+		var/proctype = C.signal_procs[src][sigtype]
+		return NONE | CallAsync(C, proctype, arguments)
 	. = NONE
 	for(var/I in target)
 		var/datum/C = I
 		if(!C.signal_enabled)
 			continue
-		var/datum/callback/CB = C.signal_procs[src][sigtype]
-		. |= CB.InvokeAsync(arglist(arguments))
+		var/proctype = C.signal_procs[src][sigtype]
+		. |= CallAsync(C, proctype, arguments)
 
-/datum/proc/GetComponent(c_type)
+// The type arg is casted so initial works, you shouldn't be passing a real instance into this
+/datum/proc/GetComponent(datum/component/c_type)
+	RETURN_TYPE(c_type)
+	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED)
+		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
 	if(!dc)
 		return null
@@ -281,10 +286,13 @@
 	if(target.parent)
 		target.RemoveComponent()
 	target.parent = src
-	if(target.PostTransfer() == COMPONENT_INCOMPATIBLE)
-		var/c_type = target.type
-		qdel(target)
-		CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+	var/result = target.PostTransfer()
+	switch(result)
+		if(COMPONENT_INCOMPATIBLE)
+			var/c_type = target.type
+			qdel(target)
+			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+
 	if(target == AddComponent(target))
 		target._JoinParent()
 
@@ -294,10 +302,13 @@
 		return
 	var/comps = dc[/datum/component]
 	if(islist(comps))
-		for(var/I in comps)
-			target.TakeComponent(I)
+		for(var/datum/component/I in comps)
+			if(I.can_transfer)
+				target.TakeComponent(I)
 	else
-		target.TakeComponent(comps)
+		var/datum/component/C = comps
+		if(C.can_transfer)
+			target.TakeComponent(comps)
 
 /datum/component/ui_host()
 	return parent

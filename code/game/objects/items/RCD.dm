@@ -45,8 +45,8 @@ RLD
 	spark_system.attach(src)
 
 /obj/item/construction/examine(mob/user)
-	..()
-	to_chat(user, "\A [src]. It currently holds [matter]/[max_matter] matter-units." )
+	. = ..()
+	. += "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -151,7 +151,7 @@ RLD
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
-	var/mode = 1
+	var/mode = RCD_FLOORWALL
 	var/ranged = FALSE
 	var/computer_dir = 1
 	var/airlock_type = /obj/machinery/door/airlock

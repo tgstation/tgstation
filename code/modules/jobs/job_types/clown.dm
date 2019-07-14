@@ -28,6 +28,7 @@
 	jobtype = /datum/job/clown
 
 	belt = /obj/item/pda/clown
+	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat

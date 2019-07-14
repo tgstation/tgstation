@@ -504,7 +504,7 @@
 		output += ruler
 	var/datum/browser/browser = new(usr, "Note panel", "Manage player notes", 1000, 500)
 	var/datum/asset/notes_assets = get_asset_datum(/datum/asset/simple/notes)
-	notes_assets.send(src)
+	notes_assets.send(usr.client)
 	browser.set_content(jointext(output, ""))
 	browser.open()
 

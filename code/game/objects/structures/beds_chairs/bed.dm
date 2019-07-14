@@ -14,7 +14,7 @@
 	icon = 'icons/obj/objects.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
-	buckle_lying = TRUE
+	buckle_lying = 90
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 30
@@ -23,9 +23,9 @@
 	var/bolts = TRUE
 
 /obj/structure/bed/examine(mob/user)
-	..()
+	. = ..()
 	if(bolts)
-		to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+		. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -148,8 +148,8 @@
 	loaded = new(src)
 
 /obj/item/roller/robo/examine(mob/user)
-	..()
-	to_chat(user, "The dock is [loaded ? "loaded" : "empty"].")
+	. = ..()
+	. += "The dock is [loaded ? "loaded" : "empty"]."
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)

@@ -268,7 +268,7 @@ SUBSYSTEM_DEF(timer)
 	var/new_bucket_count
 	var/i = 1
 	for (i in 1 to length(alltimers))
-		var/datum/timedevent/timer = alltimers[1]
+		var/datum/timedevent/timer = alltimers[i]
 		if (!timer)
 			continue
 

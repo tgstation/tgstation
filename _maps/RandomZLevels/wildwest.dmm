@@ -50,9 +50,7 @@
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "an" = (
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "ao" = (
 /turf/open/floor/circuit/green/off,
@@ -162,9 +160,7 @@
 /area/awaymission/wildwest/vault)
 "aL" = (
 /obj/item/paper/fluff/awaymissions/wildwest/grinder,
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "aM" = (
 /turf/closed/mineral/silver,
@@ -174,9 +170,7 @@
 /area/awaymission/wildwest/mines)
 "aO" = (
 /obj/effect/mob_spawn/human/corpse/syndicatecommando,
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "aP" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -317,7 +311,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bx" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -400,7 +394,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bN" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
@@ -621,7 +615,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "cs" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -1674,13 +1668,13 @@
 	},
 /area/awaymission/wildwest/mines)
 "fE" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fF" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/wood,

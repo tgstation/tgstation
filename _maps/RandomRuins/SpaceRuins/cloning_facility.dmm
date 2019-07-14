@@ -180,7 +180,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "w" = (
-/obj/structure/chair/office{
+/obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -201,7 +201,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "y" = (
-/obj/structure/chair/office{
+/obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -287,9 +287,9 @@
 /area/space/nearstation)
 "M" = (
 /obj/structure/fluff/broken_flooring{
-	name = "broken plating";
+	dir = 8;
 	icon_state = "plating";
-	dir = 8
+	name = "broken plating"
 	},
 /turf/template_noop,
 /area/space/nearstation)
