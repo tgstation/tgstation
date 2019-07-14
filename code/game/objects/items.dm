@@ -538,7 +538,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		. = callback.Invoke()
 	item_flags &= ~IN_INVENTORY
 	if(!pixel_y && !pixel_x)
-		random_pixel_offset(6)
+		random_pixel_offset(8)
 
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
