@@ -4,7 +4,7 @@
 <ui-display>
 	<div style="position:relative;">
 		{{#if data.error}}
-			<div style="position:absolute; width=75%; margin:auto; padding:5px; top:2px; background-color: black; border: 1px solid #750000; text-align:center">
+			<div style="position:absolute; width=75%; margin:auto; padding:5px; top:2px; background-color: black; border: 1px solid #750000; text-align:center; z-index: 5000;">
 				<div style="color:white; font-weight: bold; font-style: italic; margin-bottom: 10px">
 					{{data.error}}
 				</div>
