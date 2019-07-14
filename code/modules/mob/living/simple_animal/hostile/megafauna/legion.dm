@@ -119,14 +119,11 @@ Difficulty: Medium
 	visible_message("<span class='warning'><b>[src] screams!</b></span>")
 	playsound(src, 'sound/magic/RATTLEMEBONES.ogg', 100, TRUE)
 	var/list/possiblelocations = list()
-	for(var/turf/open/T in oview(src, 3)) //Only place the turrets on open turfs
-		var/turret_on_location = FALSE
-		for(var/obj/structure/legionturret/L in T.contents) //Make sure there aren't already turrets on the location.
-			turret_on_location = TRUE
+	for(var/turf/T in oview(src, 3)) //Only place the turrets on open turfs
+		if(is_blocked_turf(T))
 			continue
-		if(!turret_on_location)
-			possiblelocations += T
-	for(var/i in 1 to min(3, LAZYLEN(possiblelocations))) //Three spawns max. Make sure aren't spawning in nullspace.
+		possiblelocations += T
+	for(var/i in 1 to min(rand(2, 3), LAZYLEN(possiblelocations))) //Spawns between two and three. Makes sure aren't spawning in nullspace.
 		var/chosen = pick(possiblelocations)
 		var/turret = new /obj/structure/legionturret(chosen)
 		QDEL_IN(turret, 2 MINUTES) //They only stay around for two minutes
