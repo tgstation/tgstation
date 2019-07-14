@@ -1,39 +1,91 @@
-//Update this whenever the db schema changes
-//make sure you add an update to the schema_version stable in the db changelog
+//! Defines for subsystems and overlays
+//!   
+//! Lots of important stuff in here, make sure you have your brain switched on
+//! when editing this file
+
+//! ## DB defines
+/**
+  * DB major schema version
+  * 
+  * Update this whenever the db schema changes
+  *
+  * make sure you add an update to the schema_version stable in the db changelog
+  */
 #define DB_MAJOR_VERSION 5
+
+/**
+  * DB minor schema version
+  * 
+  * Update this whenever the db schema changes
+  *
+  * make sure you add an update to the schema_version stable in the db changelog
+  */
 #define DB_MINOR_VERSION 3
 
 
-//Timing subsystem
-//Don't run if there is an identical unique timer active
-//if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer, and returns the id of the existing timer
+//! ## Timing subsystem
+/**
+  * Don't run if there is an identical unique timer active
+  *
+  * if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer,
+  * and returns the id of the existing timer
+  */
 #define TIMER_UNIQUE			(1<<0)
-//For unique timers: Replace the old timer rather then not start this one
+
+///For unique timers: Replace the old timer rather then not start this one
 #define TIMER_OVERRIDE			(1<<1)
-//Timing should be based on how timing progresses on clients, not the sever.
-//	tracking this is more expensive,
-//	should only be used in conjuction with things that have to progress client side, such as animate() or sound()
+
+/**
+  * Timing should be based on how timing progresses on clients, not the server.
+  *
+  * Tracking this is more expensive,
+  * should only be used in conjuction with things that have to progress client side, such as
+  * animate() or sound()
+  */
 #define TIMER_CLIENT_TIME		(1<<2)
-//Timer can be stopped using deltimer()
+
+///Timer can be stopped using deltimer()
 #define TIMER_STOPPABLE			(1<<3)
-//To be used with TIMER_UNIQUE
-//prevents distinguishing identical timers with the wait variable
+
+///prevents distinguishing identical timers with the wait variable
+///
+///To be used with TIMER_UNIQUE
 #define TIMER_NO_HASH_WAIT		(1<<4)
-//Loops the timer repeatedly until qdeleted
-//In most cases you want a subsystem instead
+
+///Loops the timer repeatedly until qdeleted
+///
+///In most cases you want a subsystem instead, so don't use this unless you have a good reason
 #define TIMER_LOOP				(1<<5)
 
+///Empty ID define
 #define TIMER_ID_NULL -1
 
-#define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
-#define INITIALIZATION_INNEW_MAPLOAD 2	//New should call Initialize(TRUE)
-#define INITIALIZATION_INNEW_REGULAR 1	//New should call Initialize(FALSE)
+//! ## Initialization subsystem
 
-#define INITIALIZE_HINT_NORMAL 0    //Nothing happens
-#define INITIALIZE_HINT_LATELOAD 1  //Call LateInitialize
-#define INITIALIZE_HINT_QDEL 2  //Call qdel on the atom
+///New should not call Initialize
+#define INITIALIZATION_INSSATOMS 0
+///New should call Initialize(TRUE)
+#define INITIALIZATION_INNEW_MAPLOAD 2
+///New should call Initialize(FALSE)
+#define INITIALIZATION_INNEW_REGULAR 1
 
-//type and all subtypes should always call Initialize in New()
+//! ### Initialization hints
+
+///Nothing happens
+#define INITIALIZE_HINT_NORMAL 0
+/**
+  * call LateInitialize at the end of all atom Initalization
+  *
+  * The item will be added to the late_loaders list, this is iterated over after
+  * initalization of subsystems is complete and calls LateInitalize on the atom
+  * see [this file for the LateIntialize proc](atom.html#proc/LateInitialize)
+  */
+#define INITIALIZE_HINT_LATELOAD 1
+
+///Call qdel on the atom after intialization
+#define INITIALIZE_HINT_QDEL 2
+
+///type and all subtypes should always immediately call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
     ..();\
     if(!(flags_1 & INITIALIZED_1)) {\
@@ -123,7 +175,9 @@
 
 
 
+//! ## Overlays subsystem
 
+///Compile all the overlays for an atom from the cache lists
 #define COMPILE_OVERLAYS(A)\
 	if (TRUE) {\
 		var/list/ad = A.add_overlays;\

@@ -7,7 +7,9 @@
 	slot_flags = ITEM_SLOT_ID
 
 	var/obj/item/card/id/front_id = null
+	var/obj/item/card/id/cached_front_id = null
 	var/list/combined_access
+	var/cached_flat_icon
 
 /obj/item/storage/wallet/ComponentInitialize()
 	. = ..()
@@ -61,12 +63,31 @@
 	. = ..()
 	refreshID()
 
-/obj/item/storage/wallet/update_icon()
-	var/new_state = "wallet"
+/obj/item/storage/wallet/update_icon(list/override_overlays)
+	if(!override_overlays && front_id == cached_front_id) //Icon didn't actually change
+		return
+	cut_overlays()
+	cached_flat_icon = null
+	cached_front_id = front_id
 	if(front_id)
-		new_state = "wallet_[front_id.icon_state]"
-	if(new_state != icon_state)		//avoid so many icon state changes.
-		icon_state = new_state
+		var/list/add_overlays = list()
+		add_overlays += mutable_appearance(front_id.icon, front_id.icon_state)
+		if(override_overlays)
+			add_overlays += override_overlays
+		else
+			add_overlays += front_id.overlays
+		add_overlays += mutable_appearance(icon, "wallet_overlay")
+		add_overlay(add_overlays)
+
+/obj/item/storage/wallet/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
+
+/obj/item/storage/wallet/get_examine_string(mob/user, thats = FALSE)
+	if(front_id)
+		return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+	return ..()
 
 /obj/item/storage/wallet/GetID()
 	return front_id

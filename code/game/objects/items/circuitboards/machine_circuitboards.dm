@@ -314,25 +314,6 @@
 	name = "\improper Departmental Techfab (Machine Board) - Engineering"
 	build_path = /obj/machinery/rnd/production/techfab/department/engineering
 
-/obj/item/circuitboard/machine/teleporter_hub
-	name = "Teleporter Hub (Machine Board)"
-	icon_state = "engineering"
-	build_path = /obj/machinery/teleport/hub
-	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 3,
-		/obj/item/stock_parts/matter_bin = 1)
-	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
-
-/obj/item/circuitboard/machine/teleporter_station
-	name = "Teleporter Station (Machine Board)"
-	icon_state = "engineering"
-	build_path = /obj/machinery/teleport/station
-	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 2,
-		/obj/item/stock_parts/capacitor = 2,
-		/obj/item/stack/sheet/glass = 1)
-	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
-
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
 	icon_state = "engineering"
@@ -894,6 +875,25 @@
 	name = "\improper Departmental Techfab (Machine Board) - Science"
 	icon_state = "science"
 	build_path = /obj/machinery/rnd/production/techfab/department/science
+
+/obj/item/circuitboard/machine/teleporter_hub
+	name = "Teleporter Hub (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/teleport/hub
+	req_components = list(
+		/obj/item/stack/ore/bluespace_crystal = 3,
+		/obj/item/stock_parts/matter_bin = 1)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
+
+/obj/item/circuitboard/machine/teleporter_station
+	name = "Teleporter Station (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/teleport/station
+	req_components = list(
+		/obj/item/stack/ore/bluespace_crystal = 2,
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stack/sheet/glass = 1)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 //Security
 

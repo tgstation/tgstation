@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Hacking APC alert status now uses new APC icon instead of the old one."

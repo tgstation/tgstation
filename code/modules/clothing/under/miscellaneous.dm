@@ -314,6 +314,7 @@
 	icon_state = "burial"
 	item_state = "burial"
 	item_color = "burial"
+	can_adjust = FALSE
 	has_sensor = NO_SENSORS
 
 /obj/item/clothing/under/skirt/black
