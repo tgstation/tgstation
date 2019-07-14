@@ -16,8 +16,10 @@
 /datum/weakref/New(datum/thing)
 	reference = REF(thing)
 
-/datum/weakref/Destroy()
-	return QDEL_HINT_LETMELIVE	//Let BYOND autoGC thiswhen nothing is using it anymore.
+/datum/weakref/Destroy(force)
+	if(!force)
+		return QDEL_HINT_LETMELIVE	//Let BYOND autoGC thiswhen nothing is using it anymore.
+	return ..()
 
 /datum/weakref/proc/resolve()
 	var/datum/D = locate(reference)

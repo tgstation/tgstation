@@ -20,9 +20,10 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 
 	Initialize()
 
-/datum/controller/global_vars/Destroy()
-	//fuck off kevinz
-	return QDEL_HINT_IWILLGC
+/datum/controller/global_vars/Destroy(force)
+	if(!force)
+		return QDEL_HINT_IWILLGC
+	return ..()
 
 /datum/controller/global_vars/stat_entry()
 	if(!statclick)
