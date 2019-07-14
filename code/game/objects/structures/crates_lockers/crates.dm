@@ -108,6 +108,10 @@
 	recursive_organ_check(src, 1)
 	..()
 
+/obj/structure/closet/crate/freezer/Initialize()
+	..()
+	recursive_organ_check(src, 0)
+
 
 
 /obj/structure/closet/crate/freezer/blood

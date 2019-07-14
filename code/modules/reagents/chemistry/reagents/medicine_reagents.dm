@@ -1435,13 +1435,13 @@
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if(L.failing || !L)
 		return
-	conversion_amount = trans_volume * (min(100 -C.getLiverLoss(), 80) / 100) //the more damaged the liver the worse we metabolize.
+	conversion_amount = trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100) //the more damaged the liver the worse we metabolize.
 	C.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
 	C.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
 	..()
 
 /datum/reagent/medicine/thializid/on_mob_life(mob/living/carbon/M)
-	M.adjustLiverLoss(0.8)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
@@ -1450,7 +1450,7 @@
 	. = 1
 
 /datum/reagent/medicine/thializid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(1.5)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5)
 	M.adjust_disgust(3)
 	M.reagents.add_reagent(/datum/reagent/medicine/oxalizid, 0.225 * REM)
 	..()
@@ -1466,7 +1466,7 @@
 	var/datum/brain_trauma/mild/muscle_weakness/U
 
 /datum/reagent/medicine/oxalizid/on_mob_life(mob/living/carbon/M)
-	M.adjustLiverLoss(0.1)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
@@ -1484,7 +1484,7 @@
 	return ..()
 
 /datum/reagent/medicine/oxalizid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(1.5)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5)
 	M.adjust_disgust(3)
 	..()
 	. = 1

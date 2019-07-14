@@ -31,6 +31,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/Initialize()
 	. = ..()
 	GLOB.bodycontainers += src
+	recursive_organ_check(src, 0)
 
 /obj/structure/bodycontainer/Destroy()
 	GLOB.bodycontainers -= src
