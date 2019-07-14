@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - code_imp: "Improved the take_damage proc for objs."
