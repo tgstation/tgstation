@@ -20,9 +20,10 @@
 	turn_connects = _turn_connects
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
+	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
 
 	if(start)
-		start()
+		enable()
 
 	if(use_overlays)
 		create_overlays()
@@ -128,7 +129,7 @@
 				duct.attempt_connect()
 
 
-/datum/component/plumbing/proc/start() //settle wherever we are, and start behaving like a piece of plumbing
+/datum/component/plumbing/proc/enable() //settle wherever we are, and start behaving like a piece of plumbing
 	if(active)
 		return
 	update_dir()
@@ -142,6 +143,13 @@
 				duct.attempt_connect()
 
 	//TODO: Let plumbers directly plumb into one another without ducts if placed adjacent to each other
+
+/// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
+/datum/component/plumbing/proc/toggle_active(ob/O, new_state)
+	if(new_state)
+		enable()
+	else
+		disable()
 
 /datum/component/plumbing/proc/update_dir() //note that this is only called when we settle down. If someone wants it to fucking spin while connected to something go actually knock yourself out
 	if(!turn_connects)
