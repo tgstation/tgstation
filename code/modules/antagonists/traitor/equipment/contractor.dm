@@ -1,12 +1,15 @@
-GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
-
 /datum/contractor_hub
 	var/contract_rep = 0
 	var/list/hub_items = list()
 	var/list/purchased_items = list()
 
+	var/static/list/contractor_items = typecacheof(/datum/contractor_item)
+
+
 /datum/contractor_hub/proc/create_hub_items()
-	for(var/path in GLOB.contractor_items)
+
+
+	for(var/path in contractor_items)
 		var/datum/contractor_item/contractor_item = new path
 
 		hub_items.Add(contractor_item)
@@ -42,19 +45,10 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	limited = 1
 	cost = 2
 
-/datum/contractor_item/blackout
-	name = "Blackout"
-	desc = "Request Syndicate Command to distrupt the station's powernet. Disables power across the station for a short duration."
-	item_icon = "fa-bolt"
-	limited = 2
-	cost = 3
-
-/datum/contractor_item/contractor_partner/handle_purchase(var/datum/contractor_hub/hub)
+/datum/contractor_item/contractor_partner/handle_purchase(var/datum/contractor_hub/hub, mob/living/user)
 	. = ..()
 
 	if (.)
-		var/mob/living/user = usr
-
 		to_chat(user, "<span class='notice'>The uplink vibrates quietly, connecting to nearby agents...</span>")
 
 		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Contractor Support Unit for [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_CONTRACTOR_SUPPORT)
@@ -120,6 +114,13 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 
 	new /obj/effect/DPtarget(free_location, arrival_pod)
 
+/datum/contractor_item/blackout
+	name = "Blackout"
+	desc = "Request Syndicate Command to distrupt the station's powernet. Disables power across the station for a short duration."
+	item_icon = "fa-bolt"
+	limited = 2
+	cost = 3
+
 /datum/contractor_item/blackout/handle_purchase(var/datum/contractor_hub/hub)
 	. = ..()
 
@@ -128,18 +129,17 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 		priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", 'sound/ai/poweroff.ogg')
 
 // Subtract cost, and spawn if it's an item.
-/datum/contractor_item/proc/handle_purchase(var/datum/contractor_hub/hub)
-	if (hub.contract_rep >= cost)
-		hub.contract_rep -= cost
-	else 
-		return FALSE
-
+/datum/contractor_item/proc/handle_purchase(var/datum/contractor_hub/hub, mob/living/user)
+	
 	if (limited >= 1)
 		limited -= 1
 	else if (limited == 0)
 		return FALSE
-
-	var/mob/living/user = usr
+	
+	if (hub.contract_rep >= cost)
+		hub.contract_rep -= cost
+	else 
+		return FALSE
 
 	if (item && ispath(item))
 		var/atom/item_to_create = new item(get_turf(user))

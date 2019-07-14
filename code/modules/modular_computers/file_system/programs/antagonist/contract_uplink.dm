@@ -99,7 +99,7 @@
 
 				for (var/datum/contractor_item/hub_item in hard_drive.traitor_data.contractor_hub.hub_items)
 					if (hub_item.name == item)
-						hub_item.handle_purchase(hard_drive.traitor_data.contractor_hub)
+						hub_item.handle_purchase(hard_drive.traitor_data.contractor_hub, user)
 			else
 				error = "Invalid user... You weren't recognised as the user of this system."
 

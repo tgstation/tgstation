@@ -222,7 +222,7 @@
 			targets. The three additional items have been randomly selected from what we had available. We hope they're useful to you for your mission.</p>
 
 			<p>The contractor hub, available at the top right of the uplink, will provide you unique items and abilities. These are bought using Contractor Rep,
-			with one Rep being provided each time you complete a contract.</p>
+			with two Rep being provided each time you complete a contract.</p>
 
 			<h3>Using the tablet</h3>
 			<ol>
