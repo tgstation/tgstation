@@ -89,7 +89,7 @@
 		var/obj/item/tool = user.get_active_held_item()
 		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 			return TRUE
-		if(tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+		if(tool?.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")
 			return TRUE
 	return FALSE
@@ -147,7 +147,7 @@
 	var/list/req_tech_surgeries = subtypesof(/datum/surgery)
 	for(var/i in req_tech_surgeries)
 		var/datum/surgery/beep = i
-		if(beep.requires_tech)
+		if(initial(beep.requires_tech))
 			surgeries += beep
 
 //INFO

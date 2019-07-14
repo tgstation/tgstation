@@ -212,7 +212,7 @@
 			to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
 
 			return TRUE
-			
+
 	to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
 	return
 
@@ -309,7 +309,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/syndicate/Initialize()
 	. = ..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	var/datum/action/item_action/chameleon/change/id/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/card/id
 	chameleon_action.chameleon_name = "ID Card"
 	chameleon_action.initialize_disguises()
@@ -349,7 +349,7 @@ update_label("John Doe", "Clowny")
 			assignment = u
 			update_label()
 			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
-			
+
 			// First time use automatically sets the account id to the user.
 			if (first_use && !registered_account)
 				if(ishuman(user))
