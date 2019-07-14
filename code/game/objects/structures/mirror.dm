@@ -58,7 +58,7 @@
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
-			new /obj/item/shard(src.loc)
+			new /obj/item/shard(loc)
 	qdel(src)
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
@@ -84,7 +84,8 @@
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
 
-/obj/structure/mirror/broken
+/obj/structure/mirror/broken/Initialize()
+	. = ..()
 	desc = "Oh no, seven years of bad luck!"
 	icon_state = "mirror_broke"
 	broken = TRUE
