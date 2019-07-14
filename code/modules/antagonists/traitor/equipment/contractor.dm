@@ -21,9 +21,18 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 
 /datum/contractor_item/contractor_pinpointer
 	name = "Contractor Pinpointer"
-	desc = "A pinpointer that finds targets even without active suit sensors. Due to taking advantage of an exploit within the system, it can't pinpoint to the same accuracy as the traditional models. Only usable by the buyer."
+	desc = "A pinpointer that finds targets even without active suit sensors. Due to taking advantage of an exploit within the system, it can't pinpoint to the same accuracy as the traditional models. Becomes permanently locked to the user that first activates it."
 	item = /obj/item/pinpointer/crew/contractor
 	item_icon = "fa-search-location"
+	limited = 2
+	cost = 1
+
+/datum/contractor_item/fulton_extraction_kit
+	name = "Fulton Extraction Kit"
+	desc = "For getting your target across the station to those difficult dropoffs. Place the beacon somewhere secure, and link the pack. Activating the pack on your target in space will send them over to the beacon - make sure they're not just going to run away though!"
+	item = /obj/item/storage/box/contractor/fulton_extraction
+	item_icon = "fa-parachute-box"
+	limited = 1
 	cost = 1
 
 /datum/contractor_item/contractor_partner
@@ -39,16 +48,6 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	item_icon = "fa-bolt"
 	limited = 2
 	cost = 3
-
-/datum/contractor_item/contractor_pinpointer/handle_purchase(var/datum/contractor_hub/hub)
-	. = ..()
-
-	if (.)
-		var/obj/item/pinpointer/crew/contractor/pinpointer = .
-		var/mob/living/user = usr
-
-		pinpointer.pinpointer_owner = user
-
 
 /datum/contractor_item/contractor_partner/handle_purchase(var/datum/contractor_hub/hub)
 	. = ..()
@@ -158,4 +157,15 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 	desc = "A handheld tracking device that locks onto certain signals. Ignores suit sensors, but is much less accurate."
 	icon_state = "pinpointer_syndicate"
 	minimum_range = 25
+	has_owner = TRUE
 	ignore_suit_sensor_level = TRUE
+
+/obj/item/storage/box/contractor/fulton_extraction
+	name = "Fulton Extraction Kit"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
+	new /obj/item/extraction_pack(src)
+	new /obj/item/fulton_core(src)
+

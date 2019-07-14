@@ -82,6 +82,7 @@
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
 	custom_price = 150
+	var/has_owner = FALSE
 	var/pinpointer_owner = null
 
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
@@ -103,6 +104,9 @@
 		toggle_on()
 		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
 		return
+
+	if (has_owner && !pinpointer_owner)
+		pinpointer_owner = user
 
 	if (pinpointer_owner && pinpointer_owner != user)
 		to_chat(user, "<span class='notice'>The pinpointer doesn't respond. It seems to only recognise its owner.</span>")
