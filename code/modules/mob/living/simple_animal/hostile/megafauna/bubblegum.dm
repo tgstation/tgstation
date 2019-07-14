@@ -129,10 +129,7 @@ Difficulty: Hard
 		blood_warp()
 
 	if(!BUBBLEGUM_SMASH)
-		if(prob(50 + anger_modifier))
-			triple_charge()
-		else
-			slaughterlings()
+		triple_charge()
 	else
 		if(prob(50 + anger_modifier))
 			hallucination_charge()
@@ -393,13 +390,6 @@ Difficulty: Hard
 	desc = "You're not quite sure how a signal can be bloody."
 	invisibility = 100
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/devour(mob/living/L)
-	var/turf/death_turf = get_turf(L)
-	. = ..()
-	if(. && death_turf)
-		for(var/i in 1 to 3)
-			new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter(death_turf)
-
 /mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && prob(25))
@@ -421,7 +411,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()
 	if(.)
-		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
+		SSshuttle.shuttle_purchase_requirements_met |= SHUTTLE_UNLOCK_BUBBLEGUM
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
 	if(!charging)
@@ -563,31 +553,3 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/try_bloodattack()
 	return
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/slaughterlings()
-	visible_message("<span class='danger'>[src] summons a shoal of slaughterlings!</span>")
-	var/max_amount = CLAMP(anger_modifier / 4, 3, 5)
-	for(var/H in get_pools(get_turf(src), 1))
-		if(!max_amount)
-			break
-		max_amount--
-		var/obj/effect/decal/cleanable/blood/B = H
-		new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter(B.loc)
-	return max_amount
-
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter
-	name = "slaughterling"
-	desc = "Though not yet strong enough to create a true physical form, it's nonetheless determined to murder you."
-	icon_state = "bloodbrood"
-	icon_living = "bloodbrood"
-	icon_aggro = "bloodbrood"
-	attacktext = "pierces"
-	color = "#C80000"
-	density = FALSE
-	faction = list("mining", "boss")
-	weather_immunities = list("lava","ash")
-
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
-		return TRUE
-	return FALSE
