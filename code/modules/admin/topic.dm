@@ -1917,7 +1917,7 @@
 		var/confirm = alert("This will teleport all items consumed to the BoH tear back to the BoH tear original location, and delete the BoH if it still exists. Are you sure?", "Confirm Damage Control", "Yes", "No")
 		if(confirm != "Yes")
 			return
-		var/turf/T = get_turf(tear)
+		var/turf/T = get_turf(tear.old_loc)
 		message_admins("The items consumed by the BoH tear at [ADMIN_VERBOSEJMP(T)] were retrieved by [key_name_admin(usr)].")
 		tear.investigate_log("Items consumed at [AREACOORD(T)] retrieved by [key_name(usr)].", INVESTIGATE_SINGULO)
 		tear.retrieve_consumed_items()
