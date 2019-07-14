@@ -16,21 +16,9 @@
 	color = "#dae6f0"
 	alpha = 210
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
 
-/datum/material/glass/on_applied_obj(var/obj/o, amount, material_flags)
-	. = ..()
-	var/new_max_integrity = CEILING(o.max_integrity * 0.1, 1)
-	// This is to keep the same damage relative to the max integrity of the object
-	o.obj_integrity = (o.obj_integrity / o.max_integrity) * new_max_integrity
-	o.max_integrity = new_max_integrity
-
-/datum/material/glass/on_removed_obj(var/obj/o, amount, material_flags)
-	. = ..() 
-	var/new_max_integrity = initial(o.max_integrity)
-	// This is to keep the same damage relative to the max integrity of the object
-	o.obj_integrity = (o.obj_integrity / o.max_integrity) * new_max_integrity
-	o.max_integrity = new_max_integrity
 
 ///Has no special properties. Could be good against vampires in the future perhaps.
 /datum/material/silver
