@@ -557,7 +557,7 @@
 			if (!istype(turf_area, specific_area))
 				continue
 
-		if ((!isspaceturf(found_turf) && !isclosedturf(found_turf)))
+		if (!isspaceturf(found_turf))
 			if (!is_blocked_turf(found_turf))
 				possible_loc.Add(found_turf)
 
@@ -565,9 +565,7 @@
 	if (possible_loc.len < 1)
 		return FALSE
 
-	var/pod_rand_loc = rand(1, possible_loc.len)
-
-	return possible_loc[pod_rand_loc]
+	return pick(possible_loc)
 
 /proc/power_fail(duration_min, duration_max)
 	for(var/P in GLOB.apcs_list)
