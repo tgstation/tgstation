@@ -1,5 +1,6 @@
 /obj/item/shield
 	name = "shield"
+	icon = 'icons/obj/shields.dmi'
 	block_chance = 50
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/transparent = FALSE	// makes beam projectiles pass through the shield
@@ -10,7 +11,6 @@
 /obj/item/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "riot"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
@@ -182,7 +182,6 @@
 /obj/item/shield/energy
 	name = "energy combat shield"
 	desc = "A shield that reflects almost all energy projectiles, but is useless against physical attacks. It can be retracted, expanded, and stored anywhere."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -234,7 +233,6 @@
 /obj/item/shield/riot/tele
 	name = "telescopic shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "teleriot0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'

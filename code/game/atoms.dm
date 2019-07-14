@@ -345,6 +345,7 @@
 
 /atom/proc/Bumped(atom/movable/AM)
 	set waitfor = FALSE
+	SEND_SIGNAL(src, COMSIG_ATOM_BUMPED, AM)
 
 /// Convenience proc to see if a container is open for chemistry handling
 /atom/proc/is_open_container()
