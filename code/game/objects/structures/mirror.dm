@@ -1,4 +1,3 @@
-//wip wip wup
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -8,18 +7,13 @@
 	anchored = TRUE
 	max_integrity = 200
 	integrity_failure = 100
-
-/obj/structure/mirror/Initialize(mapload)
-	. = ..()
-	if(icon_state == "mirror_broke" && !broken)
-		obj_break(null, mapload)
+	var/broken_icon_state = "mirror_broke"
 
 /obj/structure/mirror/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+	if(..())
+		return TRUE
 	if(broken || !Adjacent(user))
-		return
+		return FALSE
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -46,16 +40,17 @@
 
 		H.update_hair()
 
+		return TRUE
+
 /obj/structure/mirror/examine_status(mob/user)
 	if(broken)
 		return list()// no message spam
 	return ..()
 
-/obj/structure/mirror/obj_break(damage_flag, mapload)
+/obj/structure/mirror/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		icon_state = "mirror_broke"
-		if(!mapload)
-			playsound(src, "shatter", 70, 1)
+		icon_state = broken_icon_state
+		playsound(src, "shatter", 70, 1)
 		if(desc == initial(desc))
 			desc = "Oh no, seven years of bad luck!"
 		broken = TRUE
@@ -63,17 +58,13 @@
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
-			new /obj/item/shard( src.loc )
+			new /obj/item/shard(src.loc)
 	qdel(src)
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
-
-	if(!broken)
-		return TRUE
-
-	if(!I.tool_start_check(user, amount=0))
+	if(!broken || !I.tool_start_check(user, amount=0))
 		return TRUE
 
 	to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
@@ -93,10 +84,17 @@
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
 
+/obj/structure/mirror/broken
+	desc = "Oh no, seven years of bad luck!"
+	icon_state = "mirror_broke"
+	broken = TRUE
+
+
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
+	broken_icon_state = "magic_mirror_broke"
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()

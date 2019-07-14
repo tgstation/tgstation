@@ -50863,8 +50863,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/structure/mirror{
-	icon_state = "mirror_broke";
+/obj/structure/mirror/broken{
 	pixel_y = 28
 	},
 /obj/machinery/light/small{
@@ -53681,8 +53680,7 @@
 /turf/closed/wall,
 /area/construction/mining/aux_base)
 "oEG" = (
-/obj/structure/mirror{
-	icon_state = "mirror_broke";
+/obj/structure/mirror/broken{
 	pixel_y = 28
 	},
 /obj/item/shard{

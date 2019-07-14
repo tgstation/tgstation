@@ -7,10 +7,7 @@
 /area/hilbertshotel)
 "ac" = (
 /obj/structure/table/wood/fancy,
-/obj/structure/mirror{
-	broken = 1;
-	desc = "Oh no, seven years of bad luck!";
-	icon_state = "mirror_broke";
+/obj/structure/mirror/broken{
 	pixel_y = 24
 	},
 /obj/machinery/light/small{
