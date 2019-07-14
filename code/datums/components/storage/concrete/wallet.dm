@@ -6,7 +6,7 @@
 		return
 
 	var/obj/item/storage/wallet/A = parent
-	if(istype(A) && A.front_id && !issilicon(user))
+	if(istype(A) && A.front_id && !issilicon(user) && !(A.item_flags & IN_STORAGE)) //if it's a wallet in storage seeing the full inventory is more useful
 		var/obj/item/I = A.front_id
 		A.add_fingerprint(user)
 		remove_from_storage(I, get_turf(user))
