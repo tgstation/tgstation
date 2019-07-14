@@ -3,12 +3,10 @@
 	var/list/hub_items = list()
 	var/list/purchased_items = list()
 
-	var/static/list/contractor_items = typecacheof(/datum/contractor_item)
+	var/static/list/contractor_items = typecacheof(/datum/contractor_item/)
 
 
 /datum/contractor_hub/proc/create_hub_items()
-
-
 	for(var/path in contractor_items)
 		var/datum/contractor_item/contractor_item = new path
 
@@ -131,14 +129,14 @@
 // Subtract cost, and spawn if it's an item.
 /datum/contractor_item/proc/handle_purchase(var/datum/contractor_hub/hub, mob/living/user)
 	
-	if (limited >= 1)
-		limited -= 1
-	else if (limited == 0)
-		return FALSE
-	
 	if (hub.contract_rep >= cost)
 		hub.contract_rep -= cost
 	else 
+		return FALSE
+
+	if (limited >= 1)
+		limited -= 1
+	else if (limited == 0)
 		return FALSE
 
 	if (item && ispath(item))
