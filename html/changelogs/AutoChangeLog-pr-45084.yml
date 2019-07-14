@@ -1,0 +1,8 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "Luxury shuttle now tells you if you don't have arms to drag money into the ticket collector, which will hopefully teach players who don't know to do this"
+  - rscadd: "Luxury shuttle can now access accounts on dragged ID cards"
+  - tweak: "Change doesn't disappear if the payee isn't human or doesn't have a bank account"
+  - tweak: "Change is now placed in the payee's hand, and is otherwise placed on the ground with the payee dragging it if their hands are full or they don't have any"
+  - tweak: "Luxury shuttle now tells you privately how much more money you need, for less spam. It will still loudly welcome you aboard in front of your co-workers."
