@@ -31,7 +31,7 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/traitor/process()
-	if (autotraitor_cooldown)
+	if (autotraitor_cooldown > 0)
 		autotraitor_cooldown--
 	else
 		autotraitor_cooldown = 450 // 15 minutes
@@ -172,6 +172,7 @@
 	main_cult = new
 	for(var/datum/mind/M in assigned)
 		var/datum/antagonist/cult/new_cultist = new antag_datum()
+		new_cultist.cult_team = main_cult
 		new_cultist.give_equipment = TRUE
 		M.add_antag_datum(new_cultist)	
 	main_cult.setup_objectives()

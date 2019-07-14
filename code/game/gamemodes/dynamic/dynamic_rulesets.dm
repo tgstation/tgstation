@@ -163,6 +163,9 @@
 		if (!P.client || !P.mind) // Are they connected?
 			candidates.Remove(P)
 			continue
+		if(P.mind.special_role) // We really don't want to give antag to an antag.
+			candidates.Remove(P)
+			continue
 		if (!(antag_name in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_name, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE))))//are they willing and not antag-banned?
 			candidates.Remove(P)
 			continue

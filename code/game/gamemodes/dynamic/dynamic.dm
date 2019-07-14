@@ -290,12 +290,14 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/starting_rulesets = ""
 	for (var/datum/dynamic_ruleset/roundstart/DR in executed_rules)
 		starting_rulesets += "[DR.name], "
+	candidates.Cut()
 	return TRUE
 
 /datum/game_mode/dynamic/post_setup(report)
 	update_playercounts()
 
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
+		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
 		if(!rule.execute())
 			stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	
