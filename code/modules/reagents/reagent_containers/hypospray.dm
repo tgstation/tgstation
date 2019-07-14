@@ -102,7 +102,8 @@
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
 /obj/item/reagent_containers/hypospray/inject(mob/living/M, mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		reagents.maximum_volume = 0 //Makes them useless afterwards
 		reagents.flags = NONE
 		update_icon()
