@@ -1,21 +1,29 @@
 ///A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.
 /obj/structure/legionturret
-	name = "Legion head"
-	desc = "The eyes pierce your soul."
+	name = "\improper Legion sentinel"
+	desc = "The eye pierces your soul."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "legion_turret"
 	density = TRUE
 	anchored = TRUE
-	light_power = 0.1
+	light_power = 0.5
 	light_range = 2
 	max_integrity = 80
+	luminosity = 6
+	layer = ABOVE_OBJ_LAYER
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 100, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	var/tracer_type = /obj/item/projectile/beam/legion_tracer ///What kind of projectile the tracer should be
-	var/projectile_type = /obj/item/projectile/beam/legion ///What kind of projectile the actual damaging part should be.
-	var/firing_cooldown = 2 ///Cooldown between shots.
-	var/firing_timer = 0 ///Ticks on every process. If smaller than firing_cooldown, this tries to shoot.
-	var/shot_delay = 4 ///How long it takes between shooting the tracer and the projectile.
-	var/faction = list("mining") ///Compared with the targeted mobs. If they have the faction, turret won't shoot.
+	///What kind of projectile the tracer should be
+	var/tracer_type = /obj/item/projectile/beam/legion_tracer
+	///What kind of projectile the actual damaging part should be.
+	var/projectile_type = /obj/item/projectile/beam/legion
+	///Cooldown between shots.
+	var/firing_cooldown = 2
+	///Ticks on every process. If smaller than firing_cooldown, this tries to shoot.
+	var/firing_timer = 0
+	///How long it takes between shooting the tracer and the projectile.
+	var/shot_delay = 4
+	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
+	var/faction = list("mining")
 
 /obj/structure/legionturret/Initialize()
 	. = ..()
@@ -33,7 +41,7 @@
 		return
 	firing_timer = 0
 	for(var/mob/living/L in circlerange(src, 7)&oview(6, src))
-		if(L.stat == DEAD)
+		if(L.stat == DEAD || L.stat == UNCONSCIOUS)
 			continue
 		if(faction_check(faction, L.faction))
 			continue
@@ -61,7 +69,6 @@
 ///Used for the legion turret.
 /obj/item/projectile/beam/legion_tracer
 	name = "tracer"
-	icon_state = "u_laser"
 	damage = 0
 	nodamage = TRUE
 	range = 6
@@ -77,7 +84,6 @@
 ///Used for the legion turret.
 /obj/item/projectile/beam/legion
 	name = "blood pulse"
-	icon_state = "u_laser"
 	hitsound = 'sound/magic/magic_missile.ogg'
 	damage = 19
 	range = 6

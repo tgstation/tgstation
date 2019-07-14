@@ -50,7 +50,8 @@ Difficulty: Medium
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
 	attack_action_types = list(/datum/action/innate/megafauna_attack/create_skull,
-							   /datum/action/innate/megafauna_attack/charge_target)
+							   /datum/action/innate/megafauna_attack/charge_target,
+							   /datum/action/innate/megafauna_attack/create_turrets)
 	small_sprite_type = /datum/action/small_sprite/megafauna/legion
 
 /datum/action/innate/megafauna_attack/create_skull
@@ -67,6 +68,13 @@ Difficulty: Medium
 	chosen_message = "<span class='colossus'>You are now charging at your target.</span>"
 	chosen_attack_num = 2
 
+/datum/action/innate/megafauna_attack/create_turrets
+	name = "Create Sentinels"
+	icon_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "legion_turret"
+	chosen_message = "<span class='colossus'>You are now creating legion sentinels.</span>"
+	chosen_attack_num = 3
+
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(charging)
 		return
@@ -78,12 +86,17 @@ Difficulty: Medium
 				create_legion_skull()
 			if(2)
 				charge_target()
+			if(3)
+				create_legion_turrets()
 		return
 
-	if(prob(75))
-		create_legion_skull()
-	else
-		charge_target()
+	switch(rand(4))
+		if(0 to 2)
+			create_legion_skull()
+		if(3)
+			create_legion_turrets()
+		if(4)
+			charge_target()
 
 /mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_skull()
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
@@ -100,6 +113,24 @@ Difficulty: Medium
 	set_varspeed(0)
 	charging = TRUE
 	addtimer(CALLBACK(src, .proc/reset_charge), 50)
+
+///Attack proc. Creates up to three legion turrets on suitable turfs nearby.
+/mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_turrets()
+	visible_message("<span class='warning'><b>[src] screams!</b></span>")
+	playsound(src, 'sound/magic/RATTLEMEBONES.ogg', 100, TRUE)
+	var/list/possiblelocations = list()
+	for(var/turf/open/T in oview(src, 3)) //Only place the turrets on open turfs
+		var/turret_on_location = FALSE
+		for(var/obj/structure/legionturret/L in T.contents) //Make sure there aren't already turrets on the location.
+			turret_on_location = TRUE
+			continue
+		if(!turret_on_location)
+			possiblelocations += T
+	for(var/i in 1 to min(3, LAZYLEN(possiblelocations))) //Three spawns max. Make sure aren't spawning in nullspace.
+		var/chosen = pick(possiblelocations)
+		var/turret = new /obj/structure/legionturret(chosen)
+		QDEL_IN(turret, 2 MINUTES) //They only stay around for two minutes
+		possiblelocations -= chosen
 
 /mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
 	. = ..()
