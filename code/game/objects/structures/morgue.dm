@@ -122,22 +122,16 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		open()
 
 /obj/structure/bodycontainer/proc/open()
-
 	recursive_organ_check(src, 1)
-
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	playsound(src, 'sound/effects/roll.ogg', 5, 1)
 	var/turf/T = get_step(src, dir)
 	connected.setDir(dir)
-
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
-
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
-
-
 	playsound(src, 'sound/effects/roll.ogg', 5, 1)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
