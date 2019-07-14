@@ -13,10 +13,6 @@
 	///if crowbar'd what it turns into
 	var/deployable
 
-/obj/machinery/plumbing/Initialize()
-	. = ..()
-	update_icon()
-
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(pre_wrench_check())
@@ -46,7 +42,7 @@
 	. = FALSE
 	if(anchored)
 		to_chat(user, "<span class='warning'>Unbolt it from the floor first.</span>")
-		return TRUE
+		return
 	if(I.use_tool(src, user, 40, volume = 100))
 		to_chat(user, "<span class='notice'>You have disassembled \the [src].</span>")
 		if(deployable)
