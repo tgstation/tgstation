@@ -5,7 +5,8 @@
 	icon_keyboard = "security_key"
 	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/secure_data
-	var/obj/item/card/id/scan = null
+	scan = null
+	uses_id = TRUE
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
@@ -24,11 +25,6 @@
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/secure_data/examine(mob/user)
-	. = ..()
-	if(scan)
-		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
-
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"
 
@@ -43,21 +39,14 @@
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/card/id))
-		if(!scan)
-			if(!user.transferItemToLoc(O, src))
-				return
-			scan = O
-			to_chat(user, "<span class='notice'>You insert [O].</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			updateUsrDialog()
-		else
-			to_chat(user, "<span class='warning'>There's already an ID card in the console.</span>")
+		insert_id(usr)
 	else
 		return ..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/ui_interact(mob/user)
 	. = ..()
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 	if(src.z > 6)
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
@@ -337,13 +326,18 @@ What a mess.*/
 				active2 = null
 
 			if("Confirm Identity")
-				eject_id(usr)
+				if(scan)
+					eject_id(usr)
+					return
+				else
+					insert_id(usr)
 
 			if("Log Out")
 				authenticated = null
 				screen = null
 				active1 = null
 				active2 = null
+				playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
 
 			if("Log In")
 				if(issilicon(usr))
@@ -353,12 +347,14 @@ What a mess.*/
 					authenticated = borg.name
 					rank = "AI"
 					screen = 1
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 				else if(IsAdminGhost(usr))
 					active1 = null
 					active2 = null
 					authenticated = usr.client.holder.admin_signature
 					rank = "Central Command"
 					screen = 1
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 				else if(istype(scan, /obj/item/card/id))
 					active1 = null
 					active2 = null
@@ -366,6 +362,7 @@ What a mess.*/
 						authenticated = scan.registered_name
 						rank = scan.assignment
 						screen = 1
+						playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 //RECORD FUNCTIONS
 			if("Record Maintenance")
 				screen = 2
@@ -922,23 +919,3 @@ What a mess.*/
 					if(!record2 || record2 == active2)
 						return 1
 	return 0
-
-/obj/machinery/computer/secure_data/AltClick(mob/user)
-	if(user.canUseTopic(src, !issilicon(user)))
-		eject_id(user)
-
-/obj/machinery/computer/secure_data/proc/eject_id(mob/user)
-	if(scan)
-		scan.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(scan)
-		scan = null
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-	else //switching the ID with the one you're holding
-		if(issilicon(user) || !Adjacent(user))
-			return
-		var/obj/item/card/id/held_id = user.is_holding_item_of_type(/obj/item/card/id)
-		if(QDELETED(held_id) || !user.transferItemToLoc(held_id, src))
-			return
-		scan = held_id
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)

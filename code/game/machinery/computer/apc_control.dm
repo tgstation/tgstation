@@ -99,8 +99,10 @@
 				authenticated = TRUE
 				auth_id = "[ID.registered_name] ([ID.assignment])"
 				log_activity("logged in")
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 	if(href_list["log_out"])
 		log_activity("logged out")
+		playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
 		authenticated = FALSE
 		auth_id = "\[NULL\]"
 	if(href_list["restore_logging"])

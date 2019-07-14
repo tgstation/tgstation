@@ -17,9 +17,10 @@
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
 	. = ..()
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 	var/dat = ""
 	if(screen == 0)
-		dat += "<HR><A href='?src=[REF(src)];lock=1'>Unlock Console</A>"
+		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log In}</A>"
 	else if(screen == 1)
 		dat += "<H3>Prisoner ID Management</H3>"
 		if(inserted_id)
@@ -61,7 +62,7 @@
 			dat += "ID: [T.imp_in.name] | Location: [loc_display]<BR>"
 			dat += "<A href='?src=[REF(src)];warn=[REF(T)]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
 			dat += "********************************<BR>"
-		dat += "<HR><A href='?src=[REF(src)];lock=1'>Lock Console</A>"
+		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log Out}</A>"
 	var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -93,6 +94,7 @@
 					if(!usr.transferItemToLoc(I, src))
 						return
 					inserted_id = I
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				else
 					to_chat(usr, "<span class='danger'>No valid ID.</span>")
 			else if(inserted_id)
@@ -101,6 +103,7 @@
 						inserted_id.forceMove(drop_location())
 						inserted_id.verb_pickup()
 						inserted_id = null
+						playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 					if("reset")
 						inserted_id.points = 0
 					if("setgoal")
@@ -116,7 +119,6 @@
 			var/obj/item/implant/I = locate(href_list["inject5"]) in GLOB.tracked_chem_implants
 			if(I && istype(I))
 				I.activate(5)
-
 		else if(href_list["inject10"])
 			var/obj/item/implant/I = locate(href_list["inject10"]) in GLOB.tracked_chem_implants
 			if(I && istype(I))
@@ -125,6 +127,7 @@
 		else if(href_list["lock"])
 			if(src.allowed(usr))
 				screen = !screen
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 			else
 				to_chat(usr, "Unauthorized Access.")
 

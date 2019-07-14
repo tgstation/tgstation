@@ -7,7 +7,8 @@
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/med_data
-	var/obj/item/card/id/scan = null
+	scan = null
+	uses_id = TRUE
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
@@ -26,16 +27,14 @@
 	icon_keyboard = "syndie_key"
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/card/id) && !scan)
-		if(!user.transferItemToLoc(O, src))
-			return
-		scan = O
-		to_chat(user, "<span class='notice'>You insert [O].</span>")
+	if(istype(O, /obj/item/card/id))
+		insert_id(usr)
 	else
 		return ..()
 
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 	var/dat
 	if(temp)
 		dat = text("<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
@@ -206,20 +205,16 @@
 		if(href_list["temp"])
 			src.temp = null
 		if(href_list["scan"])
-			if(src.scan)
-				usr.put_in_hands(scan)
-				scan = null
+			if(scan)
+				eject_id(usr)
 			else
-				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
-				if(I)
-					if(!usr.transferItemToLoc(I, src))
-						return
-					src.scan = I
+				insert_id(usr)
 		else if(href_list["logout"])
 			src.authenticated = null
 			src.screen = null
 			src.active1 = null
 			src.active2 = null
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
 		else if(href_list["choice"])
 			// SORTING!
 			if(href_list["choice"] == "Sorting")
@@ -253,6 +248,7 @@
 					src.authenticated = src.scan.registered_name
 					src.rank = src.scan.assignment
 					src.screen = 1
+			playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 		if(src.authenticated)
 
 			if(href_list["screen"])

@@ -9,11 +9,18 @@
 	max_integrity = 200
 	integrity_failure = 100
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 20)
+	var/obj/item/card/id/scan = FALSE
 	var/brightness_on = 1
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
-	var/time_to_scewdrive = 20
+	var/time_to_screwdrive = 20
+	var/uses_id = FALSE
+
+/obj/machinery/computer/examine(mob/user)
+	. = ..()
+	if(uses_id && scan)
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -78,7 +85,7 @@
 		return TRUE
 	if(circuit && !(flags_1&NODECONSTRUCT_1))
 		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
-		if(I.use_tool(src, user, time_to_scewdrive, volume=50))
+		if(I.use_tool(src, user, time_to_screwdrive, volume=50))
 			deconstruct(TRUE, user)
 	return TRUE
 
@@ -139,3 +146,37 @@
 			C.forceMove(loc)
 
 	qdel(src)
+
+/obj/machinery/computer/AltClick(mob/user)
+	if(!user.canUseTopic(src, issilicon(user)))
+		return
+	eject_id(user)
+
+/obj/machinery/computer/proc/insert_id(mob/user)
+	if(scan)
+		to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
+		return
+	if(!scan)
+		var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+		if(I)
+			if(!usr.transferItemToLoc(I, src))
+				return
+			src.scan = I
+			usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+							"<span class='notice'>You insert the ID card into the console.</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			src.updateUsrDialog()
+
+/obj/machinery/computer/proc/eject_id(mob/user)
+	if(!scan)
+		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+		return
+	if(scan)
+		scan.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(scan)
+		scan = null
+		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+						"<span class='notice'>You get the ID card from the console.</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+		src.updateUsrDialog()

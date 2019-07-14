@@ -16,7 +16,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_keyboard = "id_key"
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
 	circuit = /obj/item/circuitboard/computer/card
-	var/obj/item/card/id/scan = null
+	scan = null
+	uses_id = TRUE
 	var/obj/item/card/id/modify = null
 	var/authenticated = 0
 	var/mode = 0
@@ -56,11 +57,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/centcom/get_jobs()
 	return get_all_centcom_jobs()
 
-/obj/machinery/computer/card/examine(mob/user)
-	. = ..()
-	if(scan || modify)
-		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
-
 /obj/machinery/computer/card/Initialize()
 	. = ..()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
@@ -73,17 +69,23 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if (!user.transferItemToLoc(idcard,src))
 					return
 				scan = idcard
+				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+								"<span class='notice'>You insert the ID card into the console.</span>")
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else if(!modify)
 				if (!user.transferItemToLoc(idcard,src))
 					return
 				modify = idcard
+				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+								"<span class='notice'>You insert the ID card into the console.</span>")
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
 			if(!modify)
 				if (!user.transferItemToLoc(idcard,src))
 					return
 				modify = idcard
+				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+								"<span class='notice'>You insert the ID card into the console.</span>")
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		updateUsrDialog()
 	else
@@ -147,6 +149,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/ui_interact(mob/user)
 	. = ..()
 
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 	var/list/dat = list()
 	if (mode == 1) // accessing crew manifest
 		dat += "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>"
@@ -337,9 +340,15 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("modify")
-			eject_id_modify(usr)
+			if (modify)
+				eject_id_modify(usr)
+			else
+				insert_id_modify(usr)
 		if ("scan")
-			eject_id_scan(usr)
+			if (scan)
+				eject_id(usr)
+			else
+				insert_id(usr)
 		if ("auth")
 			if ((!( authenticated ) && (scan || issilicon(usr)) && (modify || mode)))
 				if (check_access(scan))
@@ -522,29 +531,13 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/AltClick(mob/user)
 	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
 		return
-	if(scan)
-		eject_id_scan(user)
 	if(modify)
 		eject_id_modify(user)
-
-/obj/machinery/computer/card/proc/eject_id_scan(mob/user)
+		authenticated = FALSE
+		return
 	if(scan)
-		scan.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(scan)
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-		scan = null
-	else //switching the ID with the one you're holding
-		if(issilicon(user) || !Adjacent(user))
-			return
-		var/obj/item/I = user.get_active_held_item()
-		if(istype(I, /obj/item/card/id))
-			if(!user.transferItemToLoc(I,src))
-				return
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			scan = I
-	authenticated = FALSE
-	updateUsrDialog()
+		eject_id(user)
+		authenticated = FALSE
 
 /obj/machinery/computer/card/proc/eject_id_modify(mob/user)
 	if(modify)
@@ -553,21 +546,28 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		modify.forceMove(drop_location())
 		if(!issilicon(user) && Adjacent(user))
 			user.put_in_hands(modify)
+		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+							"<span class='notice'>You get the ID card from the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		modify = null
 		region_access = null
 		head_subordinates = null
-	else //switching the ID with the one you're holding
-		if(issilicon(user) || !Adjacent(user))
-			return
-		var/obj/item/I = user.get_active_held_item()
-		if(istype(I, /obj/item/card/id))
-			if (!user.transferItemToLoc(I,src))
+		updateUsrDialog()
+
+/obj/machinery/computer/card/proc/insert_id_modify(mob/user)
+	if(modify)
+		to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
+		return
+	if(!modify)
+		var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+		if(I)
+			if(!usr.transferItemToLoc(I, src))
 				return
+			src.modify = I
+			usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+							"<span class='notice'>You insert the ID card into the console.</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			modify = I
-	authenticated = FALSE
-	updateUsrDialog()
+			src.updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)
 	for(var/datum/job/job in SSjob.occupations)
