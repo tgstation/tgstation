@@ -110,7 +110,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	materials =	typelist("materials", materials)
 	
 	if(craft_materials) //If we were crafted; use those materials
-		materials = materials
+		materials = craft_materials
 
 	if(materials) //Otherwise, use the instances already provided.
 		var/list/temp_list = list() 

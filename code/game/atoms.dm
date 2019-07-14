@@ -157,8 +157,10 @@
 		for(var/i in custom_materials)
 			var/datum/material/material = getmaterialref(i) || i
 			temp_list[material] = custom_materials[material] //Get the proper instanced version
-		custom_materials = temp_list	
-		set_initial_custom_materials(custom_materials)
+
+		custom_materials = null //Null the list to prepare for applying the materials properly
+		set_custom_materials(temp_list)
+		
 
 	ComponentInitialize()
 
@@ -1074,15 +1076,6 @@
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	return FALSE
-
-///Adds custom materials to an item, only used for initial materials.
-/atom/proc/set_initial_custom_materials(var/list/materials)
-	custom_materials = list() //Instance the list
-
-	for(var/x in materials)
-		var/datum/material/custom_material = x
-		custom_material.on_applied(src, materials[custom_material], material_flags)
-		custom_materials[custom_material] += materials[custom_material]
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(var/list/materials)
