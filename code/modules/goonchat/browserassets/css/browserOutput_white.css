@@ -101,7 +101,7 @@ a.popt {text-decoration: none;}
 #ping {
 	position: fixed;
 	top: 0;
-	right: 115px;
+	right: 135px;
 	width: 45px;
 	background: #ddd;
 	height: 30px;
@@ -131,13 +131,13 @@ a.popt {text-decoration: none;}
 }
 #userBar .subCell:hover {background: #ccc;}
 #userBar .toggle {
-	width: 40px;
+	width: 45px;
     background: #ccc;
     border-top: 0;
     float: right;
     text-align: center;
 }
-#userBar .sub {clear: both; display: none; width: 160px;}
+#userBar .sub {clear: both; display: none; width: 180px;}
 #userBar .sub.scroll {overflow-y: scroll;}
 #userBar .sub.subCell {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
 #userBar .sub span {
