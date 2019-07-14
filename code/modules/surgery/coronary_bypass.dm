@@ -8,8 +8,8 @@
 	var/obj/item/organ/heart/H = target.getorganslot(ORGAN_SLOT_HEART)
 	if(H)
 		if(H.damage > 80 && !H.operated)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 //an incision but with greater bleed, and a 90% base success chance
@@ -31,7 +31,7 @@
 			display_results(user, target, "<span class='notice'>Blood pools around the incision in [H]'s heart.</span>",
 				"Blood pools around the incision in [H]'s heart.",
 				"")
-			H.bleed_rate += 12
+			H.bleed_rate += 10
 			H.adjustBruteLoss(10)
 	return TRUE
 
@@ -41,7 +41,7 @@
 		display_results(user, target, "<span class='warning'>You screw up, cutting too deeply into the heart!</span>",
 			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest!</span>",
 			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest!</span>")
-		H.bleed_rate += 30
+		H.bleed_rate += 20
 		H.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
 		H.adjustBruteLoss(10)
 
@@ -58,9 +58,9 @@
 
 /datum/surgery_step/coronary_bypass/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	target.setOrganLoss(ORGAN_SLOT_HEART, 80)
-	var/obj/item/organ/heart/H = target.getorganslot(ORGAN_SLOT_HEART)
-	if(H)	//slightly worrying if we lost our heart mid-operation, but that's life
-		H.operated = 1
+	var/obj/item/organ/heart/heart = target.getorganslot(ORGAN_SLOT_HEART)
+	if(heart)	//slightly worrying if we lost our heart mid-operation, but that's life
+		heart.operated = TRUE
 	display_results(user, target, "<span class='notice'>You successfully graft a bypass onto [target]'s heart.</span>",
 			"[user] finishes grafting something onto [target]'s heart.",
 			"[user] finishes grafting something onto [target]'s heart.")
@@ -73,5 +73,5 @@
 			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest profusely!</span>",
 			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest profusely!</span>")
 		H.adjustOrganLoss(ORGAN_SLOT_HEART, 20)
-		H.bleed_rate += 50
+		H.bleed_rate += 30
 	return FALSE

@@ -97,20 +97,20 @@
 //Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
 
 /obj/structure/closet/crate/freezer/open()
-	recursive_organ_check(src, 1)
+	recursive_organ_check(src, TRUE)
 	..()
 
 /obj/structure/closet/crate/freezer/close()
 	..()
-	recursive_organ_check(src, 0)
+	recursive_organ_check(src, FALSE)
 
 /obj/structure/closet/crate/freezer/Destroy()
-	recursive_organ_check(src, 1)
+	recursive_organ_check(src, TRUE)
 	..()
 
 /obj/structure/closet/crate/freezer/Initialize()
 	..()
-	recursive_organ_check(src, 0)
+	recursive_organ_check(src, FALSE)
 
 
 

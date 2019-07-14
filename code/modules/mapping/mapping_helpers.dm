@@ -230,6 +230,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				qdel(part)
 			else
 				var/obj/item/organ/O = part
-				O.can_decompose = 0
+				O.can_decompose = FALSE
 		j.update_icon()
 	qdel(src)

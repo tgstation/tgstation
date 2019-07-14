@@ -8,8 +8,8 @@
 	var/obj/item/organ/lungs/L = target.getorganslot(ORGAN_SLOT_LUNGS)
 	if(L)
 		if(L.damage > 80 && !L.operated)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 //lobectomy, removes the most damaged lung lobe with a 95% base success chance
@@ -28,7 +28,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/lungs/L = H.getorganslot(ORGAN_SLOT_LUNGS)
-		L.operated = 1
+		L.operated = TRUE
 		H.setOrganLoss(ORGAN_SLOT_LUNGS, 80)
 		display_results(user, target, "<span class='notice'>You successfully excise [H]'s most damaged lobe.</span>",
 			"Successfully removes a piece of [H]'s lungs.",
