@@ -17,6 +17,11 @@
 	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
 	detach()
 
+/datum/component/extralasers/Destroy()
+	detach()
+	qdel(ammo)
+	return ..()
+
 /datum/component/extralasers/proc/attach()
 	var/obj/item/gun/energy/laser/L = parent
 	ammo =  new ammo (src)
@@ -46,8 +51,3 @@
 	ammo = arglist[1]
 	lens_path = arglist[2]
 	attach()
-
-/datum/component/extralasers/Destroy()
-	detach()
-	qdel(ammo)
-	return ..()
