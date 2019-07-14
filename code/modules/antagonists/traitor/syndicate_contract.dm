@@ -125,13 +125,13 @@
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
-	// Ship 'em back - dead or alive, it depends on if the Syndicate get paid... 5 minutes wait.
+	// Ship 'em back - dead or alive, it depends on if the Syndicate get paid... 4 minutes wait.
 	// Even if they weren't the target, we're still treating them the same.
-	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
+	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 4)
 
 	if (M.stat != DEAD)
 		// Heal them up - gets them out of crit/soft crit.
-		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 15)
+		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 20)
 
 		M.flash_act()
 		M.confused += 10
