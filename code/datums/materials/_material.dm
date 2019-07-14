@@ -58,5 +58,5 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/on_removed_obj(var/obj/o, amount, material_flags)
 	o.max_integrity = initial(o.max_integrity)
 	o.obj_integrity = o.max_integrity
-	o.force *= initial(o.force)
-	o.throwforce *= initial(o.throwforce)
+	o.force = initial(o.force)
+	o.throwforce = initial(o.throwforce)
