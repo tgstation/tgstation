@@ -92,10 +92,11 @@
 /obj/item/deployable/attack_self(mob/user)
 	. = ..()
 	if(!deploying)
-		to_chat(user, "<span class='notice'>You start planting \the [src]...</span>")
-		deploying = TRUE
-		if(do_after(user, 50, target = src))
-			to_chat(user, "<span class='notice'>You have activated \the [src].</span>")
-			new result (get_turf(src))
-			qdel(src)
+		return
+	deploying = TRUE
+	to_chat(user, "<span class='notice'>You start planting \the [src]...</span>")
+	if(do_after(user, 50, target = src))
+		to_chat(user, "<span class='notice'>You have activated \the [src].</span>")
+		new result (get_turf(src))
+		qdel(src)
 	deploying = FALSE
