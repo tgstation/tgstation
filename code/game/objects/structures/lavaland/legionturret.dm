@@ -13,7 +13,7 @@
 	layer = ABOVE_OBJ_LAYER
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 100, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	///What kind of projectile the tracer should be
-	var/tracer_type = /obj/item/projectile/beam/legion_tracer
+	var/tracer_type = /obj/item/projectile/beam/legion/tracer
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/item/projectile/beam/legion
 	///Cooldown between shots.
@@ -67,26 +67,12 @@
 	playsound(src, 'sound/effects/bin_close.ogg', 100, TRUE)
 
 ///Used for the legion turret.
-/obj/item/projectile/beam/legion_tracer
-	name = "tracer"
-	damage = 0
-	nodamage = TRUE
-	range = 6
-	eyeblur = 0
-	light_color = LIGHT_COLOR_RED
-	tracer_type = /obj/effect/projectile/tracer/legion/tracer
-	muzzle_type = /obj/effect/projectile/tracer/legion/tracer
-	impact_type = /obj/effect/projectile/tracer/legion/tracer
-	hitscan = TRUE
-	suppressed = TRUE
-	movement_type = UNSTOPPABLE
-
-///Used for the legion turret.
 /obj/item/projectile/beam/legion
 	name = "blood pulse"
 	hitsound = 'sound/magic/magic_missile.ogg'
 	damage = 19
 	range = 6
+	eyeblur = 0
 	light_color = LIGHT_COLOR_RED
 	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
 	tracer_type = /obj/effect/projectile/tracer/legion
@@ -94,6 +80,16 @@
 	impact_type = /obj/effect/projectile/tracer/legion
 	hitscan = TRUE
 	movement_type = UNSTOPPABLE
+
+///Used for the legion turret.
+/obj/item/projectile/beam/legion/tracer
+	name = "tracer"
+	damage = 0
+	nodamage = TRUE
+	tracer_type = /obj/effect/projectile/tracer/legion/tracer
+	muzzle_type = /obj/effect/projectile/tracer/legion/tracer
+	impact_type = /obj/effect/projectile/tracer/legion/tracer
+	suppressed = TRUE
 
 ///Used for the legion turret tracer.
 /obj/effect/projectile/tracer/legion/tracer
