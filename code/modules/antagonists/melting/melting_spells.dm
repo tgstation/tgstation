@@ -49,8 +49,8 @@
 		return
 
 	var/obj/item/organ/heart/slime/slimeheart = new()
-	slimeheart.Insert(target)
-	user.RemoveSpell(mark)
+	slimeheart.Insert(target, drop_if_replaced = FALSE)
+	user.RemoveSpell(src)
 
 /obj/item/organ/heart/slime
 	name = "slimy heart"
@@ -67,7 +67,7 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/colorchange/Activate()
-	var/color = input(H, "Choose your new color", "Color","#"+owner.color) as color|null
+	owner.color = input(owner, "Choose your new color", "Color","#"+owner.color) as color|null
 	QDEL_NULL(src)
 
 /obj/effect/proc_holder/spell/aimed/slime

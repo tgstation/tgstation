@@ -1,4 +1,6 @@
-﻿Lust
+﻿Attachment
+Affection
+Lust
 Greed
 Envy
 Zeal
@@ -8,4 +10,12 @@ Joy
 Pleasure
 Conceit
 Ecstasy
+Love
 Want
+Madness
+Despair
+Pride
+Misery
+Joy
+Glee
+Wonder

@@ -18,9 +18,10 @@
 	infectable_biotypes = list(MOB_ORGANIC)
 	process_dead = TRUE
 	var/mob/living/simple_animal/hostile/melting/creator
+	var/obj/item/slime_mask/mask
 	//bantype = "Melting" antag ban! duh!
 
-/datum/disease/transformation/melting/Initialize(mapload, mob_source)
+/datum/disease/transformation/melting/New(mob_source)
 	. = ..()
 	creator = mob_source
 	var/list/new_agent_name = list()
@@ -42,6 +43,9 @@
 		if(3)
 			if(affected_mob.stat == DEAD)
 				do_disease_transformation(affected_mob)
+			if(!mask)
+				mask = new(get_turf(affected_mob))
+
 			if(prob(6))
 				to_chat(affected_mob, "<span class='danger'>You feel a burning pain in your chest.</span>")
 				affected_mob.adjustToxLoss(2)
@@ -60,7 +64,19 @@
 			do_disease_transformation(affected_mob)
 
 /datum/disease/transformation/melting/do_disease_transformation(mob/living/affected_mob)
+	var/mob/living/carbon/human/affected_human = affected_mob
+	if(!istype(affected_human))
+		return
+	var/obj/item/organ/brain/brain = affected_human.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!brain)
+		return
+	brain.Remove(affected_human, special = TRUE)
 	var/mob/living/simple_animal/hostile/melted/new_slime = ..()
 	if(!new_slime)
 		return
 	new_slime.creator = creator
+	brain.forceMove(new_slime)
+
+
+/obj/item/slime_mask
+	name = "slime mask"

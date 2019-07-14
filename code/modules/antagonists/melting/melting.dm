@@ -26,9 +26,9 @@
 	attacktext = "glomps"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	del_on_death = TRUE
-	/obj/effect/proc_holder/spell/targeted/mark/mark
-	/datum/action/innate/colorchange/colors
-	/obj/effect/proc_holder/spell/aimed/slime/slimeball
+	var/obj/effect/proc_holder/spell/targeted/mark/mark
+	var/datum/action/innate/colorchange/colors
+	var/obj/effect/proc_holder/spell/aimed/slime/slimeball
 
 /mob/living/simple_animal/hostile/melting/Initialize()
 	. = ..()
@@ -39,7 +39,7 @@
 	AddSpell(mark)
 	colors = new
 	colors.Grant(src)
-	addtimer(CALLBACK(src, /proc/remove_colorpick), 1 MINUTES)
+	addtimer(CALLBACK(src, .proc/remove_colorpick), 1 MINUTES)
 	slimeball = new
 	AddSpell(slimeball)
 
@@ -73,8 +73,8 @@
 	speak_emote = list("gurgles")
 	emote_hear = list("gurgles")
 	icon = 'icons/mob/melting.dmi'
-	icon_state = "melting_base"
-	icon_living = "melting_base"
+	icon_state = "melted_base"
+	icon_living = "melted_base"
 	speed = 2
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -96,6 +96,7 @@
 
 /mob/living/simple_animal/hostile/melted/Initialize()
 	. = ..()
+	add_overlay("melted_shine")
 	if(!creatorname)
 		name = generate_creatorname()
 	name = creatorname
@@ -110,6 +111,14 @@
 		newmeltword = copytext(newmeltword, length(newmeltword)-1)//cease >> ceas //needed to prevent things like "ceaseed"
 	newmeltword = "[newmeltword]ed"//cease >> ceased
 	return newmeltword
+
+/mob/living/simple_animal/hostile/melted/Login()
+	. = ..()
+	GLOB.meltedmobs[src] = TRUE
+
+/mob/living/simple_animal/hostile/melted/Destroy()
+	GLOB.meltedmobs -= src
+	return ..()
 
 /mob/living/simple_animal/hostile/melted/AttackingTarget()
 	. = ..()
