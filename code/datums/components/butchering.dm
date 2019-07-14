@@ -43,7 +43,7 @@
 			new sinew (T)
 		meat.guaranteed_butcher_results.Remove(sinew)
 	if(butcher)
-		meat.visible_message("<span class='none'>[butcher] butchers [meat].</span>")
+		meat.visible_message("<span class='notice'>[butcher] butchers [meat].</span>")
 	ButcherEffects(meat)
 	meat.harvest(butcher)
 	meat.gib(FALSE, FALSE, TRUE)

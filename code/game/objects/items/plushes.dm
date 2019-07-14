@@ -118,7 +118,7 @@
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
 				return
-			user.visible_message("<span class='none'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
+			user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
 			I.play_tool_sound(src)
 			stuffed = FALSE
 		else
@@ -179,7 +179,7 @@
 			chance -= duty	//do we mate for life?
 
 		if(prob(chance))	//did we bag a date?
-			user.visible_message("<span class='none'>[user] makes [Kisser] kiss [src]!</span>",
+			user.visible_message("<span class='notice'>[user] makes [Kisser] kiss [src]!</span>",
 									"<span class='notice'>You make [Kisser] kiss [src]!</span>")
 			if(lover)	//who cares for the past, we live in the present
 				lover.heartbreak(src)
@@ -191,22 +191,22 @@
 
 	//then comes marriage
 	else if(Kisser.lover == src && Kisser.partner != src)	//need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
-		user.visible_message("<span class='none'>[user] pronounces [Kisser] and [src] married! D'aw.</span>",
+		user.visible_message("<span class='notice'>[user] pronounces [Kisser] and [src] married! D'aw.</span>",
 									"<span class='notice'>You pronounce [Kisser] and [src] married!</span>")
 		new_partner(Kisser)
 		Kisser.new_partner(src)
 
 	//then comes a baby in a baby's carriage, or an adoption in an adoption's orphanage
 	else if(Kisser.partner == src && !plush_child)	//the one advancing does not take ownership of the child and we have a one child policy in the toyshop
-		user.visible_message("<span class='none'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
+		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
 									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
 		if(plop(Kisser))
-			user.visible_message("<span class='none'>Something drops at the feet of [user].</span>",
+			user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
 							"<span class='notice'>The miracle of oh god did that just come out of [src]?!</span>")
 
 	//then comes protection, or abstinence if we are catholic
 	else if(Kisser.partner == src && plush_child)
-		user.visible_message("<span class='none'>[user] makes [Kisser] nuzzle [src]!</span>",
+		user.visible_message("<span class='notice'>[user] makes [Kisser] nuzzle [src]!</span>",
 									"<span class='notice'>You make [Kisser] nuzzle [src]!</span>")
 
 	//then oh fuck something unexpected happened

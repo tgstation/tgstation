@@ -45,7 +45,7 @@
 		if(isliving(AM))
 			var/mob/living/L = AM
 			if(L.client && !L.incapacitated())
-				L.visible_message("<span class='none'>[L] starts climbing through [src]...</span>", \
+				L.visible_message("<span class='notice'>[L] starts climbing through [src]...</span>", \
 				"<span class='notice'>You begin climbing through [src]...</span>")
 				if(!do_after(L, 30, target = L))
 					return

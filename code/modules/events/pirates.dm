@@ -351,7 +351,7 @@
 
 	points += value
 
-	pad.visible_message("<span class='none'>[pad] activates!</span>")
+	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
 	sending = FALSE
@@ -362,7 +362,7 @@
 		return
 	sending = TRUE
 	status_report = "Sending..."
-	pad.visible_message("<span class='none'>[pad] starts charging up.</span>")
+	pad.visible_message("<span class='notice'>[pad] starts charging up.</span>")
 	pad.icon_state = pad.warmup_state
 	sending_timer = addtimer(CALLBACK(src,.proc/send),warmup_time, TIMER_STOPPABLE)
 

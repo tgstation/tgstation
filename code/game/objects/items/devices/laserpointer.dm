@@ -148,18 +148,18 @@
 				H.Move(targloc)
 				log_combat(user, H, "moved with a laser pointer",src)
 			else
-				H.visible_message("<span class='none'>[H] looks briefly distracted by the light.</span>","<span class='warning'> You're briefly tempted by the shiny light... </span>")
+				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class='warning'> You're briefly tempted by the shiny light... </span>")
 		else
-			H.visible_message("<span class='none'>[H] stares at the light</span>","<span class='warning'> You stare at the light... </span>")
+			H.visible_message("<span class='notice'>[H] stares at the light</span>","<span class='warning'> You stare at the light... </span>")
 
 	//cats!
 	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
 		if(prob(50))
-			C.visible_message("<span class='none'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
+			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
 			C.Move(targloc)
 			C.set_resting(TRUE, FALSE)
 		else
-			C.visible_message("<span class='none'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
+			C.visible_message("<span class='notice'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"

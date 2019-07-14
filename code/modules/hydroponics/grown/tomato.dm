@@ -142,5 +142,5 @@
 			K.melee_damage_upper += round(seed.potency / 10)
 			K.move_to_delay -= round(seed.production / 50)
 			K.health = K.maxHealth
-			K.visible_message("<span class='none'>The Killer Tomato growls as it suddenly awakens.</span>")
+			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
 			qdel(src)

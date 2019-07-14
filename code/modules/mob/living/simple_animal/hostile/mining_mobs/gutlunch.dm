@@ -89,7 +89,7 @@
 	if(is_type_in_typecache(target,wanted_objects)) //we eats
 		udder.generateMilk()
 		regenerate_icons()
-		visible_message("<span class='none'>[src] slurps up [target].</span>")
+		visible_message("<span class='notice'>[src] slurps up [target].</span>")
 		qdel(target)
 	return ..()
 
@@ -149,7 +149,7 @@
 	L.faction = faction
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
-	visible_message("<span class='none'>[src] grows up into [L].</span>")
+	visible_message("<span class='notice'>[src] grows up into [L].</span>")
 	Destroy()
 
 //Gutlunch udder

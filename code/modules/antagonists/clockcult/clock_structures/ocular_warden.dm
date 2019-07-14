@@ -95,7 +95,7 @@
 				to_chat(M.occupant, "<span class='neovgre'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
-				visible_message("<span class='none'>[src][pick(idle_messages)]</span>")
+				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
 			else
 				setDir(pick(GLOB.cardinals))//Random rotation
 

@@ -50,7 +50,7 @@
 
 /obj/item/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/restraints/handcuffs/cable))
-		user.visible_message("<span class='none'>[user] cuts [C]'s restraints with [src]!</span>")
+		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)
 		return
 	else if(istype(C) && C.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
@@ -119,7 +119,7 @@
 
 /obj/item/wirecutters/power/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed)
-		user.visible_message("<span class='none'>[user] cuts [C]'s restraints with [src]!</span>")
+		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)
 		return
 	else

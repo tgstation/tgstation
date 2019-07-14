@@ -200,7 +200,7 @@
 	var/the_name
 	if(user)
 		the_name = user.real_name
-		visible_message("<span class='none'>[user] pulls the lever and the slot machine starts spinning!</span>")
+		visible_message("<span class='notice'>[user] pulls the lever and the slot machine starts spinning!</span>")
 	else
 		the_name = "Exaybachay"
 

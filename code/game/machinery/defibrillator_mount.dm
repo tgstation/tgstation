@@ -72,7 +72,7 @@
 		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
-		user.visible_message("<span class='none'>[user] hooks up [I] to [src]!</span>", \
+		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \
 		"<span class='notice'>You press [I] into the mount, and it clicks into place.</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		defib = I
@@ -102,12 +102,12 @@
 	if(!clamps_locked)
 		to_chat(user, "<span class='warning'>[src]'s clamps are disengaged!</span>")
 		return TRUE
-	user.visible_message("<span class='none'>[user] presses [multitool] into [src]'s ID slot...</span>", \
+	user.visible_message("<span class='notice'>[user] presses [multitool] into [src]'s ID slot...</span>", \
 	"<span class='notice'>You begin overriding the clamps on [src]...</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	if(!do_after(user, 100, target = src) || !clamps_locked)
 		return
-	user.visible_message("<span class='none'>[user] pulses [multitool], and [src]'s clamps slide up.</span>", \
+	user.visible_message("<span class='notice'>[user] pulses [multitool], and [src]'s clamps slide up.</span>", \
 	"<span class='notice'>You override the locking clamps on [src]!</span>")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	clamps_locked = FALSE
@@ -126,7 +126,7 @@
 	if(!user.put_in_hands(defib))
 		to_chat(user, "<span class='warning'>You need a free hand!</span>")
 		return
-	user.visible_message("<span class='none'>[user] unhooks [defib] from [src].</span>", \
+	user.visible_message("<span class='notice'>[user] unhooks [defib] from [src].</span>", \
 	"<span class='notice'>You slide out [defib] from [src] and unhook the charging cables.</span>")
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	defib = null

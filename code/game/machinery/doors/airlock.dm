@@ -819,7 +819,7 @@
 					if(do_after(user, 20, TRUE, src))
 						if(!panel_open || !S.use(2))
 							return
-						user.visible_message("<span class='none'>[user] reinforces \the [src] with metal.</span>",
+						user.visible_message("<span class='notice'>[user] reinforces \the [src] with metal.</span>",
 											"<span class='notice'>You reinforce \the [src] with metal.</span>")
 						security_level = AIRLOCK_SECURITY_METAL
 						update_icon()
@@ -833,7 +833,7 @@
 					if(do_after(user, 20, TRUE, src))
 						if(!panel_open || !S.use(2))
 							return
-						user.visible_message("<span class='none'>[user] reinforces \the [src] with plasteel.</span>",
+						user.visible_message("<span class='notice'>[user] reinforces \the [src] with plasteel.</span>",
 											"<span class='notice'>You reinforce \the [src] with plasteel.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL
 						modify_max_integrity(normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
@@ -848,7 +848,7 @@
 					if(C.use_tool(src, user, 40, volume=50, amount = 2))
 						if(!panel_open)
 							return
-						user.visible_message("<span class='none'>[user] cuts through \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
 										"<span class='italics'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_NONE
@@ -864,7 +864,7 @@
 							return
 						if(security_level != AIRLOCK_SECURITY_PLASTEEL_I_S)
 							return
-						user.visible_message("<span class='none'>[user] remove \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[user] remove \the [src]'s shielding.</span>",
 											"<span class='notice'>You remove \the [src]'s inner shielding.</span>")
 						security_level = AIRLOCK_SECURITY_NONE
 						modify_max_integrity(normal_integrity)
@@ -880,7 +880,7 @@
 					if(C.use_tool(src, user, 40, volume=50, amount=2))
 						if(!panel_open)
 							return
-						user.visible_message("<span class='none'>[user] cuts through \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
 										"<span class='italics'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL_I_S
@@ -893,7 +893,7 @@
 							return
 						if(security_level != AIRLOCK_SECURITY_PLASTEEL_O_S)
 							return
-						user.visible_message("<span class='none'>[user] remove \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[user] remove \the [src]'s shielding.</span>",
 											"<span class='notice'>You remove \the [src]'s shielding.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL_I
 						spawn_atom_to_turf(/obj/item/stack/sheet/plasteel, user.loc, 1)
@@ -906,7 +906,7 @@
 					if(C.use_tool(src, user, 40, volume=50, amount=2))
 						if(!panel_open)
 							return
-						user.visible_message("<span class='none'>[user] cuts through \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
 										"<span class='italics'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O_S
@@ -919,7 +919,7 @@
 					if(C.use_tool(src, user, 10, volume=100))
 						if(!panel_open)
 							return
-						user.visible_message("<span class='none'>[user] cut through \the [src]'s outer grille.</span>",
+						user.visible_message("<span class='notice'>[user] cut through \the [src]'s outer grille.</span>",
 											"<span class='notice'>You cut through \the [src]'s outer grille.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O
 					return
@@ -932,7 +932,7 @@
 		C.play_tool_sound(src)
 		update_icon()
 	else if((C.tool_behaviour == TOOL_WIRECUTTER) && note)
-		user.visible_message("<span class='none'>[user] cuts down [note] from [src].</span>", "<span class='notice'>You remove [note] from [src].</span>")
+		user.visible_message("<span class='notice'>[user] cuts down [note] from [src].</span>", "<span class='notice'>You remove [note] from [src].</span>")
 		C.play_tool_sound(src)
 		note.forceMove(get_turf(user))
 		note = null
@@ -969,7 +969,7 @@
 		if(!user.transferItemToLoc(C, src))
 			to_chat(user, "<span class='warning'>For some reason, you can't attach [C]!</span>")
 			return
-		user.visible_message("<span class='none'>[user] pins [C] to [src].</span>", "<span class='notice'>You pin [C] to [src].</span>")
+		user.visible_message("<span class='notice'>[user] pins [C] to [src].</span>", "<span class='notice'>You pin [C] to [src].</span>")
 		note = C
 		update_icon()
 	else
@@ -1021,7 +1021,7 @@
 			charge.ex_act(EXPLODE_DEVASTATE)
 			user.Paralyze(60)
 			return
-		user.visible_message("<span class='none'>[user] removes [charge] from [src].</span>", \
+		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
 							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
 		charge.forceMove(get_turf(user))
 		charge = null

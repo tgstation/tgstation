@@ -131,7 +131,7 @@
 	if(is_monkey_leader(mind) || (ismonkey(user) && is_monkey(mind)))
 		user.log_talk(message, LOG_SAY, tag="monkey")
 		if(prob(75) && ismonkey(user))
-			user.visible_message("<span class='none'>\The [user] chimpers.</span>")
+			user.visible_message("<span class='notice'>\The [user] chimpers.</span>")
 		var/msg = "<span class='[is_monkey_leader(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[is_monkey_leader(mind) ? "Monkey Leader" : "Monkey"]\]</font> [user]</b>: [message]</span>"
 		for(var/_M in GLOB.mob_list)
 			var/mob/M = _M

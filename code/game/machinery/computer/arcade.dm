@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		new prizeselect(src)
 
 	var/atom/movable/the_prize = pick(contents)
-	visible_message("<span class='none'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
 	the_prize.forceMove(get_turf(src))
 
@@ -1101,7 +1101,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	to_chat(user, "<span class='warning'>You flip the switch on the underside of [src].</span>")
 	active = 1
-	visible_message("<span class='none'>[src] softly beeps and whirs to life!</span>")
+	visible_message("<span class='notice'>[src] softly beeps and whirs to life!</span>")
 	playsound(loc, 'sound/machines/defib_SaftyOn.ogg', 25, 1)
 	say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
 	sleep(20)

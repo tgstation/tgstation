@@ -404,7 +404,7 @@ Possible to do for anyone motivated enough:
 		move_hologram()
 
 		set_holo(user, Hologram)
-		visible_message("<span class='none'>A holographic image of [user] flickers to life before your eyes!</span>")
+		visible_message("<span class='notice'>A holographic image of [user] flickers to life before your eyes!</span>")
 
 		return Hologram
 	else
@@ -560,7 +560,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	Hologram.setAnchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2)	//hologram lighting
-	visible_message("<span class='none'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")
+	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")
 	return Hologram
 
 /obj/machinery/holopad/proc/replay_start()

@@ -41,7 +41,7 @@
 		else
 			deconvert = prob (5)
 	if(deconvert)
-		M.visible_message("<span class='none'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
+		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
 		to_chat(M, "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>")
 		M.return_soul()
 	else
@@ -236,7 +236,7 @@
 		if(response == "Yes")
 			H.revive(1,0)
 			log_combat(user, H, "infernally revived via contract")
-			user.visible_message("<span class='none'>With a sudden blaze, [H] stands back up.</span>")
+			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
 			H.fakefire()
 			fulfillContract(H, 1)//Revival contracts are always signed in blood
 			addtimer(CALLBACK(H, /mob/living/carbon/human.proc/fakefireextinguish), 5, TIMER_UNIQUE)

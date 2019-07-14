@@ -230,13 +230,13 @@
 				if(W.use_tool(src, user, 40, volume=50))
 					if(!opened)
 						return
-					user.visible_message("<span class='none'>[user] slices apart \the [src].</span>",
+					user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>",
 									"<span class='italics'>You hear welding.</span>")
 					deconstruct(TRUE)
 				return
 			else // for example cardboard box is cut with wirecutters
-				user.visible_message("<span class='none'>[user] cut apart \the [src].</span>", \
+				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
 				deconstruct(TRUE)
 				return
@@ -252,7 +252,7 @@
 				return
 			welded = !welded
 			after_weld(welded)
-			user.visible_message("<span class='none'>[user] [welded ? "welds shut" : "unwelded"] \the [src].</span>",
+			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unwelded"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
@@ -261,7 +261,7 @@
 			return
 		setAnchored(!anchored)
 		W.play_tool_sound(src, 75)
-		user.visible_message("<span class='none'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
+		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
 	else if(user.a_intent != INTENT_HARM)
@@ -303,7 +303,7 @@
 				 	 	"<span class='italics'>You hear clanging.</span>")
 	if(actuallyismob)
 		if(do_after_mob(user, targets, 40))
-			user.visible_message("<span class='none'>[user] stuffs [O] into [src].</span>", \
+			user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
 							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
@@ -426,7 +426,7 @@
 			if(iscarbon(user))
 				add_fingerprint(user)
 			locked = !locked
-			user.visible_message("<span class='none'>[user] [locked ? null : "un"]locks [src].</span>",
+			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
 							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
 			update_icon()
 		else if(!silent)

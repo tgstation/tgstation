@@ -59,7 +59,7 @@
 			to_chat(user, "<span class='warning'>You need to wipe off the old lipstick first!</span>")
 			return
 		if(H == user)
-			user.visible_message("<span class='none'>[user] does [user.p_their()] lips with \the [src].</span>", \
+			user.visible_message("<span class='notice'>[user] does [user.p_their()] lips with \the [src].</span>", \
 								 "<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>")
 			H.lip_style = "lipstick"
 			H.lip_color = colour
@@ -142,9 +142,9 @@
 					if(!get_location_accessible(H, location))
 						to_chat(user, "<span class='warning'>The mask is in the way!</span>")
 						return
-					user.visible_message("<span class='none'>[user] tries to change [H]'s facial hair style using [src].</span>", "<span class='notice'>You try to change [H]'s facial hair style using [src].</span>")
+					user.visible_message("<span class='notice'>[user] tries to change [H]'s facial hair style using [src].</span>", "<span class='notice'>You try to change [H]'s facial hair style using [src].</span>")
 					if(new_style && do_after(user, 60, target = H))
-						user.visible_message("<span class='none'>[user] successfully changes [H]'s facial hair style using [src].</span>", "<span class='notice'>You successfully change [H]'s facial hair style using [src].</span>")
+						user.visible_message("<span class='notice'>[user] successfully changes [H]'s facial hair style using [src].</span>", "<span class='notice'>You successfully change [H]'s facial hair style using [src].</span>")
 						H.facial_hair_style = new_style
 						H.update_hair()
 						return
@@ -188,9 +188,9 @@
 				if(!get_location_accessible(H, location))
 					to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
 					return
-				user.visible_message("<span class='none'>[user] tries to change [H]'s hairstyle using [src].</span>", "<span class='notice'>You try to change [H]'s hairstyle using [src].</span>")
+				user.visible_message("<span class='notice'>[user] tries to change [H]'s hairstyle using [src].</span>", "<span class='notice'>You try to change [H]'s hairstyle using [src].</span>")
 				if(new_style && do_after(user, 60, target = H))
-					user.visible_message("<span class='none'>[user] successfully changes [H]'s hairstyle using [src].</span>", "<span class='notice'>You successfully change [H]'s hairstyle using [src].</span>")
+					user.visible_message("<span class='notice'>[user] successfully changes [H]'s hairstyle using [src].</span>", "<span class='notice'>You successfully change [H]'s hairstyle using [src].</span>")
 					H.hair_style = new_style
 					H.update_hair()
 					return

@@ -207,7 +207,7 @@
 		return_pod.style = STYLE_SYNDICATE
 
 		do_sparks(8, FALSE, M)
-		M.visible_message("<span class='none'>[M] vanishes...</span>")
+		M.visible_message("<span class='notice'>[M] vanishes...</span>")
 
 		for(var/obj/item/W in M)
 			if (ishuman(M))

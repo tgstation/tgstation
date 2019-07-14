@@ -110,7 +110,7 @@
 		if(cell)
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 		else if(user.temporarilyRemoveItemFromInventory(W))
-			user.visible_message("<span class='none'>[user] hooks up [W] to [src].</span>", \
+			user.visible_message("<span class='notice'>[user] hooks up [W] to [src].</span>", \
 			"<span class='notice'>You add [W] to [src].</span>")
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			W.forceMove(src)

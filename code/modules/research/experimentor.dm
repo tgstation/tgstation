@@ -222,7 +222,7 @@
 /obj/machinery/rnd/experimentor/proc/ejectItem(delete=FALSE)
 	if(loaded_item)
 		if(cloneMode)
-			visible_message("<span class='none'>A duplicate [loaded_item] pops out!</span>")
+			visible_message("<span class='notice'>A duplicate [loaded_item] pops out!</span>")
 			var/type_to_make = loaded_item.type
 			new type_to_make(get_turf(pick(oview(1,src))))
 			cloneMode = FALSE
@@ -654,7 +654,7 @@
 
 /obj/item/relic/proc/do_explode(mob/user)
 	if(loc == user)
-		visible_message("<span class='none'>\The [src]'s top opens, releasing a powerful blast!</span>")
+		visible_message("<span class='notice'>\The [src]'s top opens, releasing a powerful blast!</span>")
 		explosion(user.loc, 0, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
 		warn_admins(user, "Explosion")
 		qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
@@ -666,7 +666,7 @@
 /obj/item/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
 	if(loc == user && !is_centcom_level(userturf.z)) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
-		visible_message("<span class='none'>[src] twists and bends, relocating itself!</span>")
+		visible_message("<span class='notice'>[src] twists and bends, relocating itself!</span>")
 		throwSmoke(userturf)
 		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		throwSmoke(get_turf(user))

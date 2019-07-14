@@ -27,7 +27,7 @@
 			return
 		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
 		if(I.use_tool(src, user, 50, volume=50))
-			visible_message("<span class='none'>[user] slices apart \the [src].</span>",
+			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 				"<span class='notice'>You cut \the [src] apart with \the [I].</span>",
 				"<span class='italics'>You hear welding.</span>")
 			new /obj/item/stack/sheet/metal(src.loc, 4)

@@ -103,12 +103,12 @@
 
 /obj/item/pet_carrier/relaymove(mob/living/user, direction)
 	if(open)
-		loc.visible_message("<span class='none'>[user] climbs out of [src]!</span>", \
+		loc.visible_message("<span class='notice'>[user] climbs out of [src]!</span>", \
 		"<span class='warning'>[user] jumps out of [src]!</span>")
 		remove_occupant(user)
 		return
 	else if(!locked)
-		loc.visible_message("<span class='none'>[user] pushes open the door to [src]!</span>", \
+		loc.visible_message("<span class='notice'>[user] pushes open the door to [src]!</span>", \
 		"<span class='warning'>[user] pushes open the door of [src]!</span>")
 		open = TRUE
 		update_icon()
@@ -153,7 +153,7 @@
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
 	. = ..()
 	if(isopenturf(over_atom) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
-		usr.visible_message("<span class='none'>[usr] unloads [src].</span>", \
+		usr.visible_message("<span class='notice'>[usr] unloads [src].</span>", \
 		"<span class='notice'>You unload [src] onto [over_atom].</span>")
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)
@@ -162,7 +162,7 @@
 	if(pet_carrier_full(src))
 		to_chat(user, "<span class='warning'>[src] is already carrying too much!</span>")
 		return
-	user.visible_message("<span class='none'>[user] starts loading [target] into [src].</span>", \
+	user.visible_message("<span class='notice'>[user] starts loading [target] into [src].</span>", \
 	"<span class='notice'>You start loading [target] into [src]...</span>", null, null, target)
 	to_chat(target, "<span class='userdanger'>[user] starts loading you into [user.p_their()] [name]!</span>")
 	if(!do_mob(user, target, 30))
@@ -172,7 +172,7 @@
 	if(pet_carrier_full(src)) //Run the checks again, just in case
 		to_chat(user, "<span class='warning'>[src] is already carrying too much!</span>")
 		return
-	user.visible_message("<span class='none'>[user] loads [target] into [src]!</span>", \
+	user.visible_message("<span class='notice'>[user] loads [target] into [src]!</span>", \
 	"<span class='notice'>You load [target] into [src].</span>", null, null, target)
 	to_chat(target, "<span class='userdanger'>[user] loads you into [user.p_their()] [name]!</span>")
 	add_occupant(target)

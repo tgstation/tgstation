@@ -140,7 +140,7 @@
 		animate(realappearance, color = "#FFC3C3", time = 5)
 	else
 		name = initial(name)
-		visible_message("<span class='none'>[src] cools down.</span>")
+		visible_message("<span class='notice'>[src] cools down.</span>")
 		heated = FALSE
 		hardness = initial(hardness)
 		slicing_duration = initial(slicing_duration)

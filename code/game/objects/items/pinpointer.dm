@@ -31,7 +31,7 @@
 
 /obj/item/pinpointer/attack_self(mob/living/user)
 	toggle_on()
-	user.visible_message("<span class='none'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
+	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 
 /obj/item/pinpointer/proc/toggle_on()
 	active = !active
@@ -99,7 +99,7 @@
 /obj/item/pinpointer/crew/attack_self(mob/living/user)
 	if(active)
 		toggle_on()
-		user.visible_message("<span class='none'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
+		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
 		return
 
 	var/list/name_counts = list()
@@ -122,7 +122,7 @@
 		name_counts[crewmember_name] = 1
 
 	if(!names.len)
-		user.visible_message("<span class='none'>[user]'s pinpointer fails to detect a signal.</span>", "<span class='notice'>Your pinpointer fails to detect a signal.</span>")
+		user.visible_message("<span class='notice'>[user]'s pinpointer fails to detect a signal.</span>", "<span class='notice'>Your pinpointer fails to detect a signal.</span>")
 		return
 
 	var/A = input(user, "Person to track", "Pinpoint") in names
@@ -131,7 +131,7 @@
 
 	target = names[A]
 	toggle_on()
-	user.visible_message("<span class='none'>[user] activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
+	user.visible_message("<span class='notice'>[user] activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
 
 /obj/item/pinpointer/crew/scan_for_target()
 	if(target)

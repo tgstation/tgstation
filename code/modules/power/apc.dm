@@ -460,11 +460,11 @@
 						new /obj/item/electronics/apc(loc)
 						return
 		else if(integration_cog)
-			user.visible_message("<span class='none'>[user] starts prying [integration_cog] from [src]...</span>", \
+			user.visible_message("<span class='notice'>[user] starts prying [integration_cog] from [src]...</span>", \
 			"<span class='notice'>You painstakingly start tearing [integration_cog] out of [src]'s guts...</span>")
 			W.play_tool_sound(src)
 			if(W.use_tool(src, user, 100))
-				user.visible_message("<span class='none'>[user] destroys [integration_cog] in [src]!</span>", \
+				user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
 				"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				QDEL_NULL(integration_cog)
@@ -634,7 +634,7 @@
 				return
 			if(!P.adapt_circuit(user, 50))
 				return
-			user.visible_message("<span class='none'>[user] fabricates a circuit and places it into [src].</span>", \
+			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 			"<span class='notice'>You adapt a power control board and click it into place in [src]'s guts.</span>")
 			has_electronics = APC_ELECTRONICS_INSTALLED
 			locked = FALSE
@@ -648,7 +648,7 @@
 			C.forceMove(src)
 			cell = C
 			chargecount = 0
-			user.visible_message("<span class='none'>[user] fabricates a weak power cell and places it into [src].</span>", \
+			user.visible_message("<span class='notice'>[user] fabricates a weak power cell and places it into [src].</span>", \
 			"<span class='warning'>Your [P.name] whirrs with strain as you create a weak power cell and place it into [src]!</span>")
 			update_icon()
 		else
@@ -1079,7 +1079,7 @@
 	if(!T)
 		return
 	transfer_in_progress = TRUE
-	user.visible_message("<span class='none'>[user] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>")
+	user.visible_message("<span class='notice'>[user] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, 1)
 	SEND_SOUND(occupier, sound('sound/misc/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
 	if(alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", "Yes - Transfer Me", "No - Keep Me Here") == "No - Keep Me Here")
@@ -1101,7 +1101,7 @@
 	if(!occupier || !card)
 		transfer_in_progress = FALSE
 		return
-	user.visible_message("<span class='none'>[user] transfers [occupier] to [card]!</span>", "<span class='notice'>Transfer complete! [occupier] is now stored in [card].</span>")
+	user.visible_message("<span class='notice'>[user] transfers [occupier] to [card]!</span>", "<span class='notice'>Transfer complete! [occupier] is now stored in [card].</span>")
 	to_chat(occupier, "<span class='notice'>Transfer complete! You've been stored in [user]'s [card.name].</span>")
 	occupier.forceMove(card)
 	card.AI = occupier

@@ -502,7 +502,7 @@
 			E.runEvent()
 		addtimer(CALLBACK(src, .proc/really_actually_explode), 110)
 	else
-		visible_message("<span class='none'>[src] fizzes ominously.</span>")
+		visible_message("<span class='notice'>[src] fizzes ominously.</span>")
 		addtimer(CALLBACK(src, .proc/fizzbuzz), 110)
 
 /obj/machinery/nuclearbomb/beer/proc/disarm()

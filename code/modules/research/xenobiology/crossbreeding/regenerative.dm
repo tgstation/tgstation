@@ -23,10 +23,10 @@ Regenerative extracts:
 		to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
 		return
 	if(H != user)
-		user.visible_message("<span class='none'>[user] crushes the [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!</span>",
+		user.visible_message("<span class='notice'>[user] crushes the [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!</span>",
 			"<span class='notice'>You squeeze the [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries.</span>")
 	else
-		user.visible_message("<span class='none'>[user] crushes the [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!</span>",
+		user.visible_message("<span class='notice'>[user] crushes the [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!</span>",
 			"<span class='notice'>You squeeze the [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!</span>")
 	core_effect_before(H, user)
 	H.revive(full_heal = 1)
@@ -100,7 +100,7 @@ Regenerative extracts:
 	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/purple(null), SLOT_GLOVES)
 	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/head/soft/purple(null), SLOT_HEAD)
 	if(equipped > 0)
-		target.visible_message("<span class='none'>The milky goo congeals into clothing!</span>")
+		target.visible_message("<span class='notice'>The milky goo congeals into clothing!</span>")
 
 /obj/item/slimecross/regenerative/darkblue
 	colour = "dark blue"
@@ -120,7 +120,7 @@ Regenerative extracts:
 		var/obj/item/clothing/C = H.get_item_by_slot(SLOT_HEAD)
 		fireproof(C)
 	if(fireproofed)
-		target.visible_message("<span class='none'>Some of [target]'s clothing gets coated in the goo, and turns blue!</span>")
+		target.visible_message("<span class='notice'>Some of [target]'s clothing gets coated in the goo, and turns blue!</span>")
 
 /obj/item/slimecross/regenerative/darkblue/proc/fireproof(obj/item/clothing/C)
 	C.name = "fireproofed [C.name]"

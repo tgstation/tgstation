@@ -85,7 +85,7 @@
 	var/mob/living/carbon/C = occupant
 	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	harvesting = TRUE
-	visible_message("<span class='none'>The [name] begins warming up!</span>")
+	visible_message("<span class='notice'>The [name] begins warming up!</span>")
 	say("Initializing harvest protocol.")
 	update_icon(TRUE)
 	addtimer(CALLBACK(src, .proc/harvest), interval)
@@ -154,7 +154,7 @@
 	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR //We removed is_operational() here
 	if(.)
 		I.play_tool_sound(src, 50)
-		visible_message("<span class='none'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open [src].</span>")
+		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open [src].</span>")
 		open_machine()
 
 /obj/machinery/harvester/emag_act(mob/user)
@@ -166,7 +166,7 @@
 
 /obj/machinery/harvester/container_resist(mob/living/user)
 	if(!harvesting)
-		visible_message("<span class='none'>[occupant] emerges from [src]!</span>",
+		visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 			"<span class='notice'>You climb out of [src]!</span>")
 		open_machine()
 	else

@@ -43,7 +43,7 @@
 	target = new_target
 	if(target != null)
 		if(istype(target, /obj/item/stack/ore) && loot.len < 10)
-			visible_message("<span class='none'>The [name] looks at [target.name] with hungry eyes.</span>")
+			visible_message("<span class='notice'>The [name] looks at [target.name] with hungry eyes.</span>")
 		else if(isliving(target))
 			Aggro()
 			visible_message("<span class='danger'>The [name] tries to flee from [target.name]!</span>")
@@ -65,7 +65,7 @@
 			for(var/i in 1 to using)
 				loot += O.type
 			O.use(using)
-	visible_message("<span class='none'>The ore was swallowed whole!</span>")
+	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!stat)
