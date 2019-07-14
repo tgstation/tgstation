@@ -21,21 +21,21 @@ GLOBAL_LIST_INIT(contractor_items, subtypesof(/datum/contractor_item))
 
 /datum/contractor_item/contractor_pinpointer
 	name = "Contractor Pinpointer"
-	desc = "A pinpointer that finds targets even without active suit sensors. Due to taking advantage of an exploit within the system, it can't pinpoint to the same accuracy as the traditional models."
+	desc = "A pinpointer that finds targets even without active suit sensors. Due to taking advantage of an exploit within the system, it can't pinpoint to the same accuracy as the traditional models. Only usable by the buyer."
 	item = /obj/item/pinpointer/crew/contractor
 	item_icon = "fa-search-location"
 	cost = 1
 
 /datum/contractor_item/contractor_partner
 	name = "Reinforcements"
-	desc = "Upon purchase we'll contact available units in the area. Should there be an agent free, we'll send them down to assist you immediately. If no units are free, we refund your rep. We're only able to provide this once - should we send the agent to you, this will be unavailable to purchase again."
+	desc = "Upon purchase we'll contact available units in the area. Should there be an agent free, we'll send them down to assist you immediately. If no units are free, we give a full refund."
 	item_icon = "fa-user-friends"
 	limited = 1
 	cost = 2
 
 /datum/contractor_item/blackout
 	name = "Blackout"
-	desc = "Request Syndicate Command to distrupt the station's powernet. Disables power across the station for a short duration. Limited to two uses."
+	desc = "Request Syndicate Command to distrupt the station's powernet. Disables power across the station for a short duration."
 	item_icon = "fa-bolt"
 	limited = 2
 	cost = 3
