@@ -641,7 +641,55 @@
 	materials = list(MAT_METAL = 400, MAT_GLASS = 250)
 	build_path = /obj/item/wallframe/camera
 	category = list("initial", "Construction")
+/*
+/datum/design/plunginator
+	name = "Plunginator"
+	id = "plunginator"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000, MAT_GLASS = 25000)
+	build_path = /obj/item/pipe_dispenser/plumbing
+	category = list("initial", "Construction")
 
+/datum/design/sprinkler
+	name = "Sprinkler"
+	id = "sprinkler"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 12000, MAT_GLASS = 8000)
+	build_path = /obj/item/deployable/sprinkler
+	category = list("initial", "Construction")
+
+/datum/design/output_pipe
+	name = "Output Fluid Pipe"
+	id = "output_pipe"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 4000)
+	build_path = /obj/item/deployable/output
+	category = list("initial", "Construction")
+
+/datum/design/input_pipe
+	name = "Input Fluid Pipe"
+	id = "input_pipe"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 4000)
+	build_path = /obj/item/deployable/input
+	category = list("initial", "Construction")
+
+/datum/design/fountain
+	name = "Fountain"
+	id = "fountain"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 12000, MAT_GLASS = 8000)
+	build_path = /obj/item/deployable/fountain
+	category = list("initial", "Construction")
+
+/datum/design/plunger
+	name = "Plunger"
+	id = "plunger"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 800, MAT_GLASS = 400)
+	build_path = /obj/item/plunger
+	category = list("initial", "Construction")
+*/
 /datum/design/newscaster_frame
 	name = "Newscaster Frame"
 	id = "newscaster_frame"

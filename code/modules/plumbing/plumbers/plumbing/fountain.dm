@@ -2,21 +2,22 @@
 	name = "fountain"
 	desc = "A fountain, you can drink from here."
 	icon_state = "fountain"
-	volume = 200
+	density = TRUE
+	capacity = 200
 	deployable = /obj/item/deployable/fountain
-	///fluid overlay
+	///fluid overlay that appears over the fountain when there are liquids inside, it changes color
 	var/mutable_appearance/fluid_overlay
 	///if it has the overlay already
 	var/has_fluid = FALSE
 
 /obj/machinery/plumbing/fountain/Initialize()
 	. = ..()
-	create_reagents(volume, OPENCONTAINER | AMOUNT_VISIBLE)
+	create_reagents(capacity, DRAINABLE|AMOUNT_VISIBLE)
 	AddComponent(/datum/component/plumbing/output)
 
 	fluid_overlay = fluid_overlay || mutable_appearance('icons/obj/plumbing/plumbers.dmi')
 	fluid_overlay.icon_state = "fountain_grey"
-	fluid_overlay.plane = HUD_PLANE
+	fluid_overlay.plane = BELOW_MOB_LAYER
 
 /obj/machinery/plumbing/fountain/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -46,10 +47,10 @@
 
 /obj/machinery/plumbing/fountain/attack_hand(mob/user)
 	. = ..()
-	if(!reagents || !reagents.total_volume || !powered())
+	if(!has_fluid)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
-	addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, user, 5, TRUE, TRUE, FALSE, user, FALSE, INGEST), 20)
+	reagents.trans_to(user, 5, transfered_by = user, method = INGEST)
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 /obj/machinery/plumbing/fountain/attack_paw(mob/living/user)

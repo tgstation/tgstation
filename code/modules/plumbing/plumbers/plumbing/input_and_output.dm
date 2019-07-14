@@ -2,11 +2,11 @@
 	name = "pipe input"
 	desc = "An input pipe, you put the liquids in here."
 	icon_state = "input"
-	volume = 100
+	capacity = 100
 
 obj/machinery/plumbing/pipeinput/Initialize()
 	. = ..()
-	create_reagents(volume, OPENCONTAINER | AMOUNT_VISIBLE)
+	create_reagents(capacity, OPENCONTAINER | AMOUNT_VISIBLE)
 	AddComponent(/datum/component/plumbing/input)
 
 /obj/item/deployable/input
@@ -19,11 +19,11 @@ obj/machinery/plumbing/pipeinput/Initialize()
 	name = "pipe output"
 	desc = "An output pipe, you can take the fluids from here with a container."
 	icon_state = "output"
-	volume = 100
+	capacity = 100
 
 /obj/machinery/plumbing/pipeoutput/Initialize()
 	. = ..()
-	create_reagents(volume, DRAINABLE|AMOUNT_VISIBLE)
+	create_reagents(capacity, DRAINABLE|AMOUNT_VISIBLE)
 	AddComponent(/datum/component/plumbing/output)
 
 /obj/item/deployable/output

@@ -6,24 +6,22 @@
 	anchored = FALSE
 	active_power_usage = 30
 	use_power = ACTIVE_POWER_USE
-	///how much chems it can hold
-	var/volume = 100
+	///how many chems can it hold
+	var/capacity = 100
 	///var to prevent do_after stacking
 	var/working = FALSE
 	///if crowbar'd what it turns into
-	var/deployable = null
-	///if dirty do something
-	var/dirty = FALSE
+	var/deployable
 
 /obj/machinery/plumbing/Initialize()
 	. = ..()
-	power_change()
+	update_icon()
 
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(pre_wrench_check())
 		to_chat(user, "<span class='warning'>There is already a pipe machinery here!</span>")
-		return
+		return TRUE
 	default_unfasten_wrench(user, I)
 	update_icon()
 	return TRUE
@@ -44,37 +42,26 @@
 	else
 		P.disable()
 
-/obj/machinery/plumbing/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
+/obj/machinery/plumbing/screwdriver_act(mob/living/user, obj/item/I)
+	. = FALSE
 	if(anchored)
 		to_chat(user, "<span class='warning'>Unbolt it from the floor first.</span>")
-		return
-	if(!working)
-		to_chat(user, "<span class='notice'>You start disassembling  \the [src]...</span>")
-		working = TRUE
-		if(do_after(user, 50, target = src))
-			to_chat(user, "<span class='notice'>You have disassembled \the [src].</span>")
+		return TRUE
+	if(I.use_tool(src, user, 40, volume = 100))
+		to_chat(user, "<span class='notice'>You have disassembled \the [src].</span>")
+		if(deployable)
 			new deployable (get_turf(src))
-			qdel(src)
-		else
-			working = FALSE
+		qdel(src)
+		return TRUE
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user)
 	. = ..()
 	to_chat(user, "<span class='notice'>You start plunging  \the [src]...</span>")
 	if(do_after(user, 50, target = src))
 		to_chat(user, "<span class='notice'>You have plunged \the [src].</span>")
-		START_PROCESSING(SSobj, src)
 		reagents.remove_all(reagents.total_volume)
-		dirty = FALSE
-		cut_overlay("[icon_state]_dirty")
-		working = FALSE
-
-///locates dirt overlays in the turf returns true if found
-/obj/machinery/plumbing/proc/find_dirt(turf/T)
-	var/obj/effect/decal/cleanable/D = locate() in T.contents
-	if(D)
 		return TRUE
+	return FALSE
 
 /obj/machinery/plumbing/update_icon()
 	. = ..()

@@ -11,18 +11,29 @@
 	density = FALSE
 	active_power_usage = 70
 	deployable = /obj/item/deployable/sprinkler
-	volume = 10
+	capacity = 10
 	/// it holds the time after the sprinkler can dispense again
 	var/cooldown = 0
+	///checks if the thing is dirty
+	var/dirty = FALSE
 
 /obj/machinery/plumbing/sprinkler/Initialize()
 	. = ..()
-	create_reagents(volume, AMOUNT_VISIBLE)
+	create_reagents(capacity, AMOUNT_VISIBLE)
 	AddComponent(/datum/component/plumbing/output)
 
 /obj/machinery/plumbing/sprinkler/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	..()
+
+/obj/machinery/plumbing/sprinkler/process()
+	var/turf/T = get_turf(loc)
+	if(find_sparks(T))
+		dispense()
+	if(prob(10) && find_dirt(T))
+		dirty = TRUE
+		STOP_PROCESSING(SSobj, src)
+		add_overlay("[icon_state]_dirty")
 
 /obj/machinery/plumbing/sprinkler/examine(mob/user)
 	. = ..()
@@ -35,14 +46,11 @@
 		return
 	STOP_PROCESSING(SSobj, src)
 
-/obj/machinery/plumbing/sprinkler/process()
-	var/turf/T = get_turf(loc)
-	if(find_sparks(T))
-		dispense()
-	if(prob(10) && find_dirt(T))
-		dirty = TRUE
-		STOP_PROCESSING(SSobj, src)
-		add_overlay("[icon_state]_dirty")
+/obj/machinery/plumbing/sprinkler/plunger_act(obj/item/plunger/P, mob/living/user)
+	if(..())
+		dirty = FALSE
+		cut_overlay("[icon_state]_dirty")
+		START_PROCESSING(SSobj, src)
 
 /obj/machinery/plumbing/sprinkler/interact(mob/user)
 	. = ..()
@@ -55,6 +63,12 @@
 /obj/machinery/plumbing/sprinkler/proc/find_sparks(turf/T)
 	var/obj/effect/particle_effect/sparks/S = locate() in T.contents
 	if(S)
+		return TRUE
+
+///locates dirt overlays in the turf returns true if found
+/obj/machinery/plumbing/sprinkler/proc/find_dirt(turf/T)
+	var/obj/effect/decal/cleanable/D = locate() in T.contents
+	if(D)
 		return TRUE
 
 /obj/machinery/plumbing/sprinkler/fire_act()
