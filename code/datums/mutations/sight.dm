@@ -48,13 +48,13 @@
 	if(..())
 		return
 
-	owner.add_trait(visionflag, GENETIC_MUTATION)
+	ADD_TRAIT(owner, visionflag, GENETIC_MUTATION)
 	owner.update_sight()
 
 /datum/mutation/human/thermal/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(visionflag, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, visionflag, GENETIC_MUTATION)
 	owner.update_sight()
 
 //X-ray Vision lets you see through walls.
@@ -79,10 +79,11 @@
 
 /datum/mutation/human/laser_eyes/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
-	visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER)
+	if(!(type in visual_indicators))
+		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
 
 /datum/mutation/human/laser_eyes/get_visual_indicator()
-	return visual_indicators[1]
+	return visual_indicators[type][1]
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(atom/target, mouseparams)
 	if(owner.a_intent == INTENT_HARM)

@@ -105,6 +105,18 @@
 			var/program_to_load = text2path(params["type"])
 			if(!ispath(program_to_load))
 				return FALSE
+			var/valid = FALSE
+			var/list/checked = program_cache
+			if(obj_flags & EMAGGED)
+				checked |= emag_programs
+			for(var/prog in checked)
+				var/list/P = prog
+				if(P["type"] == program_to_load)
+					valid = TRUE
+					break
+			if(!valid)
+				return FALSE
+
 			var/area/A = locate(program_to_load) in GLOB.sortedAreas
 			if(A)
 				load_program(A)

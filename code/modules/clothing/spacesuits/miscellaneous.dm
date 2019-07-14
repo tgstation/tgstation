@@ -171,7 +171,7 @@ Contains:
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team commander hardsuit"
@@ -297,7 +297,7 @@ Contains:
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/carp
 	name = "carp space suit"
@@ -329,6 +329,10 @@ Contains:
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_OCLOTHING)
+
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team hardsuit"
 	desc = "Powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats."
@@ -340,7 +344,7 @@ Contains:
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	name = "inquisitor's hardsuit"

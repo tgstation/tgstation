@@ -52,6 +52,9 @@
 /obj/machinery/portable_atmospherics/return_air()
 	return air_contents
 
+/obj/machinery/portable_atmospherics/return_analyzable_air()
+	return air_contents
+
 /obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
@@ -89,9 +92,6 @@
 	update_icon()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/portableConnectorReturnAir()
-	return air_contents
-
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)))
 		return
@@ -100,10 +100,10 @@
 		replace_tank(user, TRUE)
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
-	..()
+	. = ..()
 	if(holding)
-		to_chat(user, "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>")
-		to_chat(user, "<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>")
+		. += "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>"+\
+			"<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>"
 
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
 	if(holding)
@@ -153,9 +153,6 @@
 				update_icon()
 	else
 		return ..()
-
-/obj/machinery/portable_atmospherics/analyzer_act(mob/living/user, obj/item/I)
-	atmosanalyzer_scan(air_contents, user, src)
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
 	if(I.force < 10 && !(stat & BROKEN))

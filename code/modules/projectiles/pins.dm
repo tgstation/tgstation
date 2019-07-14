@@ -26,15 +26,15 @@
 			if(G.pin && (force_replace || G.pin.pin_removeable))
 				G.pin.forceMove(get_turf(G))
 				G.pin.gun_remove(user)
-				to_chat(user, "<span class ='notice'>You remove [G]'s old pin.</span>")
+				to_chat(user, "<span class='notice'>You remove [G]'s old pin.</span>")
 
 			if(!G.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return
 				gun_insert(user, G)
-				to_chat(user, "<span class ='notice'>You insert [src] into [G].</span>")
+				to_chat(user, "<span class='notice'>You insert [src] into [G].</span>")
 			else
-				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
+				to_chat(user, "<span class='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/firing_pin/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -133,7 +133,7 @@
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	if(user && (!(user.has_trait(TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
+	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
 		return FALSE
 	return TRUE
 

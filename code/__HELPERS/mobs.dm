@@ -379,7 +379,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/spawned_mobs = new(amount)
 
 	for(var/j in 1 to amount)
-		var/atom/movable/X 
+		var/atom/movable/X
 
 		if (istype(spawn_type, /list))
 			var/mob_type = pick(spawn_type)
@@ -403,8 +403,10 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	return spawned_mobs
 
-/proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
-	message = "<span class='linkify'>[message]</span>"
+// Displays a message in deadchat, sent by source. Source is not linkified, message is, to avoid stuff like character names to be linkified.
+// Automatically gives the class deadsay to the whole message (message + source)
+/proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
 	for(var/mob/M in GLOB.player_list)
 		var/datum/preferences/prefs
 		if(M.client && M.client.prefs)
@@ -415,7 +417,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		var/override = FALSE
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
 			override = TRUE
-		if(M.has_trait(TRAIT_SIXTHSENSE))
+		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
 			override = TRUE
 		if(isnewplayer(M) && !override)
 			continue

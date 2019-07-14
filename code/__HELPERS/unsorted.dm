@@ -367,12 +367,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return "[round((powerused * 0.000000001),0.0001)] GW"
 
 // Format an energy value in J, kJ, MJ, or GJ. 1W = 1J/s.
-/proc/DisplayEnergy(units)
-	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
-	// excess power into GLOB.CELLRATE energy units when charging cells.
-	// With the current configuration of wait=20 and CELLRATE=0.002, this
-	// means that one unit is 1 kJ.
-	units *= SSmachines.wait * 0.1 / GLOB.CELLRATE
+/proc/DisplayJoules(units)
 	if (units < 1000) // Less than a kJ
 		return "[round(units, 0.1)] J"
 	else if (units < 1000000) // Less than a MJ
@@ -380,6 +375,14 @@ Turf and target are separate in case you want to teleport some distance from a t
 	else if (units < 1000000000) // Less than a GJ
 		return "[round(units * 0.000001, 0.001)] MJ"
 	return "[round(units * 0.000000001, 0.0001)] GJ"
+
+// Format an energy value measured in Power Cell units.
+/proc/DisplayEnergy(units)
+	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
+	// excess power into GLOB.CELLRATE energy units when charging cells.
+	// With the current configuration of wait=20 and CELLRATE=0.002, this
+	// means that one unit is 1 kJ.
+	return DisplayJoules(units * SSmachines.wait * 0.1 / GLOB.CELLRATE)
 
 /proc/get_mob_by_ckey(key)
 	if(!key)
@@ -998,25 +1001,24 @@ B --><-- A
 
 //similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
 /proc/spiral_range(dist=0, center=usr, orange=0)
-	if(!dist)
-		if(!orange)
-			return list(center)
-		else
-			return list()
-
+	var/list/L = list()
 	var/turf/t_center = get_turf(center)
 	if(!t_center)
 		return list()
 
-	var/list/L = list()
+	if(!orange)
+		L += t_center
+		L += t_center.contents
+
+	if(!dist)
+		return L
+
+
 	var/turf/T
 	var/y
 	var/x
 	var/c_dist = 1
 
-	if(!orange)
-		L += t_center
-		L += t_center.contents
 
 	while( c_dist <= dist )
 		y = t_center.y + c_dist
@@ -1125,6 +1127,27 @@ B --><-- A
 
 /proc/get_random_station_turf()
 	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
+
+/proc/get_safe_random_station_turf()
+	for (var/i in 1 to 5)
+		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
+		var/turf/target
+		while (L.len && !target)
+			var/I = rand(1, L.len)
+			var/turf/T = L[I]
+			if(!T.density)
+				var/clear = TRUE
+				for(var/obj/O in T)
+					if(O.density)
+						clear = FALSE
+						break
+				if(clear)
+					target = T
+			if (!target)
+				L.Cut(I,I+1)
+		if (target)
+			return target
+
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1467,9 +1490,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/reagent_containers/food/snacks/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
-		/obj/item/reagent_containers/food/snacks/grown/nettle, // base type
 		/obj/item/reagent_containers/food/snacks/deepfryholder,
-		/obj/item/reagent_containers/food/snacks/clothing
+		/obj/item/reagent_containers/food/snacks/clothing,
+		/obj/item/reagent_containers/food/snacks/grown/shell, //base types
+		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/reagent_containers/food/snacks/grown/nettle
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
@@ -1566,3 +1591,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		return -1
 	else
 		return 0
+
+/proc/CallAsync(datum/source, proctype, list/arguments)
+	set waitfor = FALSE
+	return call(source, proctype)(arglist(arguments))
+
+#define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))

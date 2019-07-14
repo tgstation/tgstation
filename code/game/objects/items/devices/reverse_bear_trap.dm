@@ -49,7 +49,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(C.get_item_by_slot(SLOT_HEAD) == src)
-			if(has_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT) && !struggling)
+			if(HAS_TRAIT_FROM(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT) && !struggling)
 				struggling = TRUE
 				var/fear_string
 				switch(time_left)
@@ -74,7 +74,7 @@
 				else
 					user.visible_message("<span class='warning'>The lock on [user]'s [name] pops open!</span>", \
 					"<span class='userdanger'>You force open the padlock!</span>", "<i>You hear a single, pronounced click!</i>")
-					remove_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+					REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 				struggling = FALSE
 			else
 				..()
@@ -116,7 +116,7 @@
 
 /obj/item/reverse_bear_trap/proc/reset()
 	ticking = FALSE
-	remove_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 	soundloop.stop()
 	soundloop2.stop()
 	STOP_PROCESSING(SSprocessing, src)
@@ -125,7 +125,7 @@
 	ticking = TRUE
 	escape_chance = initial(escape_chance) //we keep these vars until re-arm, for tracking purposes
 	time_left = initial(time_left)
-	add_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 	soundloop.start()
 	soundloop2.mid_length = initial(soundloop2.mid_length)
 	soundloop2.start()

@@ -8,7 +8,6 @@
 
 	var/sight_flags = 0
 	var/see_in_dark = 2
-	var/eye_damage = 0
 	var/tint = 0
 	var/eye_color = "" //set to a hex code to override a mob's eye color
 	var/eye_icon_state = "eyes"
@@ -17,6 +16,10 @@
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
 	var/no_glasses
+	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
+	maxHealth = 50		//half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
+	high_threshold = 20
+	low_threshold = 10
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE, initialising)
 	. = ..()
@@ -28,11 +31,11 @@
 			HMN.regenerate_icons()
 		else
 			eye_color = HMN.eye_color
-		if(HMN.has_trait(TRAIT_NIGHT_VISION) && !lighting_alpha)
+		if(HAS_TRAIT(HMN, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	M.update_tint()
 	owner.update_sight()
-	if(M.has_dna())
+	if(M.has_dna() && ishuman(M))
 		M.dna.species.handle_body(M) //updates eye icon
 
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
@@ -41,8 +44,36 @@
 		var/mob/living/carbon/human/HMN = M
 		HMN.eye_color = old_eye_color
 		HMN.regenerate_icons()
+	M.cure_blind(EYE_DAMAGE)
+	M.cure_nearsighted(EYE_DAMAGE)
+	M.set_blindness(0)
+	M.set_blurriness(0)
 	M.update_tint()
 	M.update_sight()
+	
+
+/obj/item/organ/eyes/on_life()
+	..()
+	var/mob/living/carbon/C = owner
+	//since we can repair fully damaged eyes, check if healing has occurred
+	if(failing && (damage < maxHealth))
+		failing = FALSE
+		C.cure_blind(EYE_DAMAGE)
+	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
+	if(damage > 20)
+		damaged = TRUE
+		if(failing)
+			C.become_blind(EYE_DAMAGE)
+		else if(damage > 30)
+			C.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			C.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	//called once since we don't want to keep clearing the screen of eye damage for people who are below 20 damage
+	else if(damaged)
+		damaged = FALSE
+		C.clear_fullscreen("eye_damage")
+	return
+
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
@@ -243,14 +274,11 @@
 
 /obj/item/organ/eyes/robotic/glow/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
-	if (mobhook && mobhook.parent != M)
-		QDEL_NULL(mobhook)
-	if (!mobhook)
-		mobhook = M.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE = CALLBACK(src, .proc/update_visuals)))
+	RegisterSignal(M, COMSIG_ATOM_DIR_CHANGE, .proc/update_visuals)
 
 /obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
-	QDEL_NULL(mobhook)
+	UnregisterSignal(M, COMSIG_ATOM_DIR_CHANGE)
 
 /obj/item/organ/eyes/robotic/glow/Destroy()
 	QDEL_NULL(mobhook) // mobhook is not our component
@@ -348,4 +376,4 @@
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."
 	eye_icon_state = "snail_eyes"
 	icon_state = "snail_eyeballs"
-	
+

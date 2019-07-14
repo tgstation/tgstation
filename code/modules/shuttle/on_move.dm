@@ -340,11 +340,17 @@ All ShuttleMove procs go here
 	. = ..()
 	update()
 
+/obj/structure/cable/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	cut_cable_from_powernet(FALSE)
+
 /obj/structure/cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/turf/T = loc
 	if(level==1)
 		hide(T.intact)
+	connect_wire(TRUE)
+	propogate_if_no_network()
 
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()

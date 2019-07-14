@@ -8,7 +8,7 @@
 	spray_range = 1
 	stream_range = 1
 	volume = 30
-	list_reagents = list("lube" = 30)
+	list_reagents = list(/datum/reagent/lube = 30)
 
 //COMBAT CLOWN SHOES
 //Clown shoes with combat stats and noslip. Of course they still squeak.
@@ -39,12 +39,12 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize()
 	. = ..()
-	GET_COMPONENT(bananium, /datum/component/material_container)
+	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	bananium.insert_amount(max_recharge, MAT_BANANIUM)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process()
-	GET_COMPONENT(bananium, /datum/component/material_container)
+	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	var/bananium_amount = bananium.amount(MAT_BANANIUM)
 	if(bananium_amount < max_recharge)
 		bananium.insert_amount(min(recharge_rate, max_recharge - bananium_amount), MAT_BANANIUM)
@@ -73,19 +73,19 @@
 /obj/item/melee/transforming/energy/sword/bananium/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-	GET_COMPONENT(slipper, /datum/component/slippery)
+	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/attack(mob/living/M, mob/living/user)
 	..()
 	if(active)
-		GET_COMPONENT(slipper, /datum/component/slippery)
+		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 		slipper.Slip(src, M)
 
 /obj/item/melee/transforming/energy/sword/bananium/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
 	if(active)
-		GET_COMPONENT(slipper, /datum/component/slippery)
+		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 		slipper.Slip(src, hit_atom)
 
 /obj/item/melee/transforming/energy/sword/bananium/attackby(obj/item/I, mob/living/user, params)
@@ -98,7 +98,7 @@
 
 /obj/item/melee/transforming/energy/sword/bananium/transform_weapon(mob/living/user, supress_message_text)
 	..()
-	GET_COMPONENT(slipper, /datum/component/slippery)
+	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/ignition_effect(atom/A, mob/user)
@@ -108,7 +108,7 @@
 	if(!active)
 		transform_weapon(user, TRUE)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!</span>")
-	GET_COMPONENT(slipper, /datum/component/slippery)
+	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.Slip(src, user)
 	return SHAME
 
@@ -130,12 +130,12 @@
 /obj/item/shield/energy/bananium/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-	GET_COMPONENT(slipper, /datum/component/slippery)
+	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/attack_self(mob/living/carbon/human/user)
 	..()
-	GET_COMPONENT(slipper, /datum/component/slippery)
+	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
@@ -149,7 +149,7 @@
 	if(active)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
-			GET_COMPONENT(slipper, /datum/component/slippery)
+			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 			slipper.Slip(src, hit_atom)
 		if(thrownby && !caught)
 			sleep(1)
@@ -166,7 +166,7 @@
 	customfoodfilling = FALSE
 	seed = null
 	tastes = list("explosives" = 10)
-	list_reagents = list("vitamin" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
 
 /obj/item/grown/bananapeel/bombanana
 	desc = "A peel from a banana. Why is it beeping?"
@@ -220,11 +220,11 @@
 
 /obj/item/clothing/mask/fakemoustache/sticky/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
 	addtimer(CALLBACK(src, .proc/unstick), unstick_time)
 
 /obj/item/clothing/mask/fakemoustache/sticky/proc/unstick()
-	remove_trait(TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
 
 //DARK H.O.N.K. AND CLOWN MECH WEAPONS
 

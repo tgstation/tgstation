@@ -3,9 +3,8 @@
 	name = "nuclear particle"
 	icon_state = "nuclear_particle"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 10
-	damage_type = TOX
-	irradiate = 2500 //enough to knockdown and induce vomiting
+	flag = "rad"
+	irradiate = 5000
 	speed = 0.4
 	hitsound = 'sound/weapons/emitter2.ogg'
 	impact_type = /obj/effect/projectile/impact/xray
@@ -25,7 +24,6 @@
 	add_atom_colour(particle_colors[our_color], FIXED_COLOUR_PRIORITY)
 	set_light(4, 3, particle_colors[our_color]) //Range of 4, brightness of 3 - Same range as a flashlight
 
-/atom/proc/fire_nuclear_particle() //used by fusion to fire random nuclear particles. Fires one particle in a random direction.
-	var/angle = rand(0,360)
+/atom/proc/fire_nuclear_particle(angle = rand(0,360)) //used by fusion to fire random nuclear particles. Fires one particle in a random direction.
 	var/obj/item/projectile/energy/nuclear_particle/P = new /obj/item/projectile/energy/nuclear_particle(src)
 	P.fire(angle)

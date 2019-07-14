@@ -169,7 +169,9 @@
 
 //LAVALAND
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
-#define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
+
+//ATMOS MIX IDS
+#define LAVALAND_DEFAULT_ATMOS		"LAVALAND_ATMOS"
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
@@ -285,6 +287,12 @@
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
+#ifdef TESTING
+GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
+#define CALCULATE_ADJACENT_TURFS(T) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = 1 }
+#else
+#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
+#endif
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain
@@ -303,4 +311,3 @@ GLOBAL_LIST_INIT(pipe_paint_colors, list(
 
 #define MIASMA_CORPSE_MOLES 0.02
 #define MIASMA_GIBS_MOLES 0.005
-#define MIASMA_HYGIENE_MOLES 0.002

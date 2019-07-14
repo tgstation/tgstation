@@ -4,8 +4,8 @@
 	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
-	var/unfoldedbag_path = /obj/structure/closet/body_bag
 	w_class = WEIGHT_CLASS_SMALL
+	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
 /obj/item/bodybag/attack_self(mob/user)
 	deploy_bodybag(user, user.loc)
@@ -44,20 +44,16 @@
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_MAT_REDEMPTION
-	var/static/datum/callback/canreach_blocking_callback = CALLBACK(GLOBAL_PROC, .proc/__bluespace_bodybag_canreach_block)
 
 /obj/item/bodybag/bluespace/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_CANREACH, canreach_blocking_callback)
-
-/proc/__bluespace_bodybag_canreach_block()
-	return COMPONENT_BLOCK_REACH
+	RegisterSignal(src, COMSIG_ATOM_CANREACH, .proc/CanReachReact)
 
 /obj/item/bodybag/bluespace/examine(mob/user)
-	..()
+	. = ..()
 	if(contents.len)
 		var/s = contents.len == 1 ? "" : "s"
-		to_chat(user, "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>")
+		. += "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>"
 
 /obj/item/bodybag/bluespace/Destroy()
 	for(var/atom/movable/A in contents)
@@ -65,6 +61,9 @@
 		if(isliving(A))
 			to_chat(A, "<span class='notice'>You suddenly feel the space around you torn apart! You're free!</span>")
 	return ..()
+
+/obj/item/bodybag/bluespace/proc/CanReachReact(atom/movable/source, list/next)
+	return COMPONENT_BLOCK_REACH
 
 /obj/item/bodybag/bluespace/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)

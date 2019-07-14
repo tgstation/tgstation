@@ -10,6 +10,10 @@
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
+
+#define N2O_DECOMPOSITION_MIN_ENERGY		1400
+#define N2O_DECOMPOSITION_ENERGY_RELEASED	200000
+
 #define NITRYL_FORMATION_ENERGY				100000
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
@@ -24,11 +28,12 @@
 #define STIMULUM_ABSOLUTE_DROP				0.00000335
 #define REACTION_OPPRESSION_THRESHOLD		5
 #define NOBLIUM_FORMATION_ENERGY			2e9 	//1 Mole of Noblium takes the planck energy to condense.
+#define STIM_BALL_GAS_AMOUNT				5
 //Research point amounts
 #define NOBLIUM_RESEARCH_AMOUNT				1000
 #define BZ_RESEARCH_SCALE					4
 #define BZ_RESEARCH_MAX_AMOUNT				400
-#define MIASMA_RESEARCH_AMOUNT				160
+#define MIASMA_RESEARCH_AMOUNT				40
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties
 #define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction

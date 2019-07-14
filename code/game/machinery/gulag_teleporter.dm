@@ -178,3 +178,4 @@ The console is located at computer/gulag_teleporter.dm
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "light_on-w"
 	resistance_flags = INDESTRUCTIBLE
+	anchored = TRUE

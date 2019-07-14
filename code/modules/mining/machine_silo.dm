@@ -34,13 +34,13 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/datum/component/remote_materials/mats = C
 		mats.disconnect_from(src)
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
 	return ..()
 
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	// stolen from /datum/component/material_container/proc/OnAttackBy
 	if(user.a_intent != INTENT_HELP)
 		return
@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	popup.open()
 
 /obj/machinery/ore_silo/proc/generate_ui()
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
 	var/any = FALSE
 	for(var/M in materials.materials)
@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return TRUE
 	else if(href_list["ejectsheet"])
 		var/eject_sheet = href_list["ejectsheet"]
-		GET_COMPONENT(materials, /datum/component/material_container)
+		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
 		var/list/matlist = list()
 		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
@@ -181,8 +181,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	flick("silo_active", src)
 
 /obj/machinery/ore_silo/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>")
+	. = ..()
+	. += "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>"
 
 /datum/ore_silo_log
 	var/name  // for VV

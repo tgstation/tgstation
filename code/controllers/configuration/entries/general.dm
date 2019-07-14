@@ -91,6 +91,8 @@
 
 /datum/config_entry/flag/allow_vote_mode	// allow votes to change mode
 
+/datum/config_entry/flag/allow_vote_map	// allow votes to change map
+
 /datum/config_entry/number/vote_delay	// minimum time between voting sessions (deciseconds, 10 minute default)
 	config_entry_value = 6000
 	integer = FALSE
@@ -307,6 +309,8 @@
 /datum/config_entry/string/extreme_popcap_message
 	config_entry_value = "The server is currently serving a high number of users, find alternative servers."
 
+/datum/config_entry/flag/byond_member_bypass_popcap
+
 /datum/config_entry/flag/panic_bunker	// prevents people the server hasn't seen before from connecting
 
 /datum/config_entry/string/panic_bunker_message
@@ -360,6 +364,12 @@
 /datum/config_entry/flag/announce_admin_login
 
 /datum/config_entry/flag/allow_map_voting
+	deprecated_by = /datum/config_entry/flag/preference_map_voting
+
+/datum/config_entry/flag/allow_map_voting/DeprecationUpdate(value)
+	return value
+
+/datum/config_entry/flag/preference_map_voting
 
 /datum/config_entry/number/client_warn_version
 	config_entry_value = null
@@ -458,6 +468,9 @@
 	min_val = 0
 
 /datum/config_entry/string/default_view
+	config_entry_value = "15x15"
+
+/datum/config_entry/string/default_view_square
 	config_entry_value = "15x15"
 
 /datum/config_entry/flag/log_pictures

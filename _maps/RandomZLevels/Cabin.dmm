@@ -105,32 +105,26 @@
 "av" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "cabin APC"
+	name = "cabin APC";
+	pixel_y = 23
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aw" = (
 /obj/machinery/power/smes/magical,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ax" = (
 /obj/structure{
 	density = 1;
 	desc = "Generates power from lava!";
-	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
 	icon_state = "turbine";
 	name = "geothermal generator"
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ay" = (
@@ -175,15 +169,11 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aG" = (
@@ -354,9 +344,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bl" = (
-/obj/machinery/vending/autodrobe{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bm" = (
@@ -494,9 +482,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bN" = (
-/obj/machinery/vending/boozeomat{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bO" = (

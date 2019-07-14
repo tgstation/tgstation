@@ -67,7 +67,7 @@
 			stored_chromosomes += I
 			to_chat(user, "<span class='notice'>You insert [I]</span>")
 		else
-			to_chat(user, "<span class='warnning'>You cannot store any more chromosomes.</span>")
+			to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
 		return
 	if(istype(I, /obj/item/dnainjector/activator))
 		var/obj/item/dnainjector/activator/A = I
@@ -100,11 +100,11 @@
 	stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/examine(mob/user)
-	..()
+	. = ..()
 	if(jokerready < world.time)
-		to_chat(user, "<span class='notice'>JOKER algorithm available.</span>")
+		. += "<span class='notice'>JOKER algorithm available.</span>"
 	else
-		to_chat(user, "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.")
+		. += "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.</span>"
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
 	. = ..()
@@ -126,7 +126,7 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && !viable_occupant.has_trait(TRAIT_RADIMMUNE) && !viable_occupant.has_trait(TRAIT_BADDNA) || (connected.scan_level == 3)) //occupant is viable for dna modification
+			if(viable_occupant.has_dna() && !HAS_TRAIT(viable_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(viable_occupant, TRAIT_BADDNA) || (connected.scan_level == 3)) //occupant is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -714,9 +714,12 @@
 						var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
 						I.add_mutations += new HM.type (copymut = HM)
 						I.name = "[HM.name] activator"
-						I.damage_coeff = connected.damage_coeff*4
 						I.research = TRUE
-						injectorready = world.time + INJECTOR_TIMEOUT
+						if(connected)
+							I.damage_coeff = connected.damage_coeff*4
+							injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected.precision_coeff) //precision_coeff being the manipulator rating
+						else
+							injectorready = world.time + INJECTOR_TIMEOUT
 		if("mutator")
 			if(injectorready < world.time)
 				var/mutation = text2path(href_list["path"])
@@ -727,8 +730,11 @@
 						I.add_mutations += new HM.type (copymut = HM)
 						I.doitanyway = TRUE
 						I.name = "[HM.name] injector"
-						I.damage_coeff = connected.damage_coeff
-						injectorready = world.time + INJECTOR_TIMEOUT*5
+						if(connected)
+							I.damage_coeff = connected.damage_coeff
+							injectorready = world.time + INJECTOR_TIMEOUT*5 * (1 - 0.1 * connected.precision_coeff)
+						else
+							injectorready = world.time + INJECTOR_TIMEOUT *5
 		if("nullify")
 			if(viable_occupant)
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
@@ -817,7 +823,7 @@
 				if(chromosomes.len)
 					var/obj/item/chromosome/CM = input("Select a chromosome to apply", "Apply Chromosome") as null|anything in chromosomes
 					if(CM)
-						to_chat(usr, "<span class='notice'>You apply [CM] to [HM.name].")
+						to_chat(usr, "<span class='notice'>You apply [CM] to [HM.name].</span>")
 						stored_chromosomes -= CM
 						CM.apply(HM)
 
@@ -842,7 +848,7 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
-		if(!istype(viable_occupant) || !viable_occupant.dna || viable_occupant.has_trait(TRAIT_RADIMMUNE) || viable_occupant.has_trait(TRAIT_BADDNA))
+		if(!istype(viable_occupant) || !viable_occupant.dna || HAS_TRAIT(viable_occupant, TRAIT_RADIMMUNE) || HAS_TRAIT(viable_occupant, TRAIT_BADDNA))
 			viable_occupant = null
 	return viable_occupant
 

@@ -1,7 +1,6 @@
 /datum/action/changeling/sting//parent path, not meant for users afaik
 	name = "Tiny Prick"
 	desc = "Stabby stabby"
-	var/sting_icon = null
 
 /datum/action/changeling/sting/Trigger()
 	var/mob/user = owner
@@ -21,7 +20,8 @@
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = src
 
-	user.hud_used.lingstingdisplay.icon_state = sting_icon
+	user.hud_used.lingstingdisplay.icon = icon_icon
+	user.hud_used.lingstingdisplay.icon_state = button_icon_state
 	user.hud_used.lingstingdisplay.invisibility = 0
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
@@ -69,7 +69,6 @@
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform. Costs 50 chemicals."
 	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human."
 	button_icon_state = "sting_transform"
-	sting_icon = "sting_transform"
 	chemical_cost = 50
 	dna_cost = 3
 	var/datum/changelingprofile/selected_dna = null
@@ -84,14 +83,14 @@
 	if(!selected_dna)
 		return
 	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
-		to_chat(user, "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!</span>")
+		to_chat(user, "<span class='notice'>That DNA is not compatible with changeling retrovirus!</span>")
 		return
 	..()
 
 /datum/action/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	if(!..())
 		return
-	if((target.has_trait(TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
+	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
@@ -108,7 +107,7 @@
 		C.real_name = NewDNA.real_name
 		NewDNA.transfer_identity(C)
 		if(ismonkey(C))
-			C.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
+			C.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG)
 		C.updateappearance(mutcolor_update=1)
 
 
@@ -117,7 +116,6 @@
 	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade. Costs 20 chemicals."
 	helptext = "The victim will form an armblade much like a changeling would, except the armblade is dull and useless."
 	button_icon_state = "sting_armblade"
-	sting_icon = "sting_armblade"
 	chemical_cost = 20
 	dna_cost = 1
 
@@ -131,7 +129,7 @@
 		return
 	if(isliving(target))
 		var/mob/living/L = target
-		if((L.has_trait(TRAIT_HUSK)) || !L.has_dna())
+		if((HAS_TRAIT(L, TRAIT_HUSK)) || !L.has_dna())
 			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 			return 0
 	return 1
@@ -170,7 +168,6 @@
 	desc = "We stealthily sting a target and extract their DNA. Costs 25 chemicals."
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
 	button_icon_state = "sting_extract"
-	sting_icon = "sting_extract"
 	chemical_cost = 25
 	dna_cost = 0
 
@@ -191,7 +188,6 @@
 	desc = "We silently sting a human, completely silencing them for a short time. Costs 20 chemicals."
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	button_icon_state = "sting_mute"
-	sting_icon = "sting_mute"
 	chemical_cost = 20
 	dna_cost = 2
 
@@ -205,7 +201,6 @@
 	desc = "We temporarily blind our victim. Costs 25 chemicals."
 	helptext = "This sting completely blinds a target for a short time, and leaves them with blurred vision for a long time."
 	button_icon_state = "sting_blind"
-	sting_icon = "sting_blind"
 	chemical_cost = 25
 	dna_cost = 1
 
@@ -222,7 +217,6 @@
 	desc = "We cause mass terror to our victim."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
 	button_icon_state = "sting_lsd"
-	sting_icon = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
 
@@ -240,12 +234,11 @@
 	desc = "We silently sting our victim with a cocktail of chemicals that freezes them from the inside. Costs 15 chemicals."
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
 	button_icon_state = "sting_cryo"
-	sting_icon = "sting_cryo"
 	chemical_cost = 15
 	dna_cost = 2
 
 /datum/action/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "cryo sting")
 	if(target.reagents)
-		target.reagents.add_reagent("frostoil", 30)
+		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
 	return TRUE

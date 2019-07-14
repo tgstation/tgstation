@@ -65,11 +65,11 @@
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/melee/baton/examine(mob/user)
-	..()
+	. = ..()
 	if(cell)
-		to_chat(user, "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>")
+		. += "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>"
 	else
-		to_chat(user, "<span class='warning'>\The [src] does not have a power source installed.</span>")
+		. += "<span class='warning'>\The [src] does not have a power source installed.</span>"
 
 /obj/item/melee/baton/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
@@ -112,7 +112,7 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Paralyze(stunforce*3)

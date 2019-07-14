@@ -232,7 +232,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/turf/T = get_turf(mob)
 	if(!isturf(T))
 		return
-	show_air_status_to(T, usr)
+	atmosanalyzer_scan(usr, T, TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)

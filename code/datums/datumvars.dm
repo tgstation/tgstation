@@ -935,21 +935,25 @@
 
 			if(A.reagents)
 				var/chosen_id
-				var/list/reagent_options = sortList(GLOB.chemical_reagents_list)
-				switch(alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
-					if("Enter ID")
+				switch(alert(usr, "Choose a method.", "Add Reagents", "Search", "Choose from a list", "I'm feeling lucky"))
+					if("Search")
 						var/valid_id
 						while(!valid_id)
-							chosen_id = stripped_input(usr, "Enter the ID of the reagent you want to add.")
-							if(!chosen_id) //Get me out of here!
+							chosen_id = input(usr, "Enter the ID of the reagent you want to add.", "Search reagents") as null|text
+							if(isnull(chosen_id)) //Get me out of here!
 								break
-							for(var/ID in reagent_options)
-								if(ID == chosen_id)
-									valid_id = 1
+							if (!ispath(text2path(chosen_id)))
+								chosen_id = pick_closest_path(chosen_id, make_types_fancy(subtypesof(/datum/reagent)))
+								if (ispath(chosen_id))
+									valid_id = TRUE
+							else
+								valid_id = TRUE
 							if(!valid_id)
 								to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
-					if("Choose ID")
-						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in reagent_options
+					if("Choose from a list")
+						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in subtypesof(/datum/reagent)
+					if("I'm feeling lucky")
+						chosen_id = pick(subtypesof(/datum/reagent))
 				if(chosen_id)
 					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
 					if(amount)
@@ -1376,3 +1380,29 @@
 			var/mob/living/carbon/human/H = locate(href_list["copyoutfit"]) in GLOB.carbon_list
 			if(istype(H))
 				H.copy_outfit()
+		else if(href_list["modquirks"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["modquirks"]) in GLOB.mob_list
+			if(!istype(H))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+				return
+
+			var/list/options = list("Clear"="Clear")
+			for(var/x in subtypesof(/datum/quirk))
+				var/datum/quirk/T = x
+				var/qname = initial(T.name)
+				options[H.has_quirk(T) ? "[qname] (Remove)" : "[qname] (Add)"] = T
+
+			var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in options
+			if(result)
+				if(result == "Clear")
+					for(var/datum/quirk/q in H.roundstart_quirks)
+						H.remove_quirk(q.type)
+				else
+					var/T = options[result]
+					if(H.has_quirk(T))
+						H.remove_quirk(T)
+					else
+						H.add_quirk(T,TRUE)

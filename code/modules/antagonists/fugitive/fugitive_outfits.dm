@@ -12,7 +12,7 @@
 /datum/outfit/yalp_cultist
 	name = "Cultist of Yalp Elor"
 	uniform = /obj/item/clothing/under/rank/chaplain
-	suit = /obj/item/clothing/suit/holidaypriest
+	suit = /obj/item/clothing/suit/chaplainsuit/holidaypriest
 	gloves = /obj/item/clothing/gloves/color/red
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	mask = /obj/item/clothing/mask/gas/tiki_mask/yalp_elor
@@ -47,7 +47,7 @@
 	no_drops += H.get_item_by_slot(SLOT_GLASSES)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
+		ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /datum/outfit/synthetic
 	name = "Factory Error Synth"

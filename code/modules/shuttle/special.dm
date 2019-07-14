@@ -76,7 +76,7 @@
 			break
 
 	if(!our_statue)
-		name = "inert [name]"
+		name = "inert [initial(name)]"
 		return
 	else
 		name = initial(name)
@@ -165,7 +165,7 @@
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
-	access_card.add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
@@ -206,7 +206,7 @@
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
-	name = "Luxury shuttle ticket booth"
+	name = "luxury shuttle ticket booth"
 	desc = "A forceful money collector."
 	timeleft = 0
 	var/threshold = 500
@@ -228,6 +228,28 @@
 /obj/effect/forcefield/luxury_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
+
+	var/datum/bank_account/account
+	if(istype(AM.pulling, /obj/item/card/id))
+		var/obj/item/card/id/I = AM.pulling
+		if(I.registered_account)
+			account = I.registered_account
+		else if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
+			to_chat(AM, "<span class='notice'>This ID card doesn't have an owner associated with it!</span>")
+			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
+	else if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		if(H.get_bank_account())
+			account = H.get_bank_account()
+
+	if(account)
+		if(account.account_balance < threshold - payees[AM])
+			account.adjust_money(-account.account_balance)
+			payees[AM] += account.account_balance
+		else
+			var/money_owed = threshold - payees[AM]
+			account.adjust_money(-money_owed)
+			payees[AM] += money_owed
 
 	var/list/counted_money = list()
 
@@ -262,32 +284,42 @@
 		payees[AM] += H.credits
 		counted_money += H
 
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(H.get_bank_account())
-			var/datum/bank_account/account = H.get_bank_account()
+	if(payees[AM] < threshold)
+		var/armless
+		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
+			armless = TRUE
+		else
+			var/mob/living/carbon/human/H = AM
+			if(!H.get_bodypart(BODY_ZONE_L_ARM) && !H.get_bodypart(BODY_ZONE_R_ARM))
+				armless = TRUE
 
-			if(account.account_balance < threshold)
-				payees[AM] += account.account_balance
-				account.adjust_money(-account.account_balance)
-			else
-				var/money_owed = threshold - payees[AM]
-				payees[AM] += money_owed
-				account.adjust_money(-money_owed)
+		if(armless)
+			if(!AM.pulling || !iscash(AM.pulling) && !istype(AM.pulling, /obj/item/card/id))
+				if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
+					to_chat(AM, "<span class='notice'>Try pulling a valid ID, space cash, holochip or coin into \the [src]!</span>")
+					check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	if(payees[AM] >= threshold)
 		for(var/obj/I in counted_money)
 			qdel(I)
 		payees[AM] -= threshold
-		say("<span class='robot'>Welcome aboard, [AM]!</span>")
-		approved_passengers += AM
 
-		if(payees[AM] > 0 && ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(H.get_bank_account())
-				var/datum/bank_account/account = H.get_bank_account()
-				account.adjust_money(payees[AM])
-				payees[AM] -= payees[AM]
+		var/change = FALSE
+		if(payees[AM] > 0)
+			change = TRUE
+			var/obj/item/holochip/HC
+			HC.credits = payees[AM]
+			if(istype(AM, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = AM
+				if(!H.put_in_hands(new HC))
+					AM.pulling = HC
+			else
+				new HC(AM.loc)
+				AM.pulling = HC
+			payees[AM] -= payees[AM]
+
+		say("<span class='robot'>Welcome aboard, [AM]![change ? " Here is your change." : ""]</span>")
+		approved_passengers += AM
 
 		check_times -= AM
 		return
@@ -295,7 +327,7 @@
 		for(var/obj/I in counted_money)
 			qdel(I)
 		if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
-			say("<span class='robot'>$[payees[AM]] received, [AM]. You need $[threshold-payees[AM]] more.</span>")
+			to_chat(AM, "<span class='notice'>$[payees[AM]] received. You need $[threshold-payees[AM]] more.</span>")
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 		return ..()
 	else

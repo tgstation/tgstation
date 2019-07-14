@@ -25,6 +25,8 @@
 
 #define MOVESPEED_ID_SLIME_STATUS						"SLIME_STATUS"
 
+#define MOVESPEED_ID_TARANTULA_WEB						"TARANTULA_WEB"
+
 #define MOVESPEED_ID_LIVING_TURF_SPEEDMOD				"LIVING_TURF_SPEEDMOD"
 
 #define MOVESPEED_ID_CARBON_SOFTCRIT					"CARBON_SOFTCRIT"
@@ -60,3 +62,7 @@
 
 #define MOVESPEED_ID_SLAUGHTER                          "SLAUGHTER"
 #define MOVESPEED_ID_DIE_OF_FATE                        "DIE_OF_FATE"
+
+#define MOVESPEED_ID_SHOVE                              "SHOVE"
+#define MOVESPEED_ID_PRONE_DRAGGING                     "PRONE_DRAG"
+#define MOVESPEED_ID_HUMAN_CARRYING                     "HUMAN_CARRY"

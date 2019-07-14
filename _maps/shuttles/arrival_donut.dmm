@@ -7,14 +7,12 @@
 /area/shuttle/arrival)
 "c" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "d" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -67,15 +65,12 @@
 /area/shuttle/arrival)
 "p" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /obj/docking_port/mobile/arrivals{
 	dir = 2;
-	dwidth = 3;
 	height = 13;
-	name = "donut arrivals shuttle";
-	width = 7
+	name = "donut arrivals shuttle"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)

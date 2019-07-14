@@ -5,7 +5,7 @@
 	step_in = 5
 	max_integrity = 500
 	deflect_chance = 25
-	armor = list("melee" = 50, "bullet" = 55, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 50, "bullet" = 55, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 60, "fire" = 100, "acid" = 100)
 	max_temperature = 60000
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	infra_luminosity = 3
@@ -40,6 +40,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
 	ME.attach(src)
+	max_ammo()
 
 /obj/mecha/combat/marauder/seraph
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
@@ -66,6 +67,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
 	ME.attach(src)
+	max_ammo()
 
 /obj/mecha/combat/marauder/mauler
 	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
@@ -89,5 +91,6 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
 	ME.attach(src)
+	max_ammo()
 
 

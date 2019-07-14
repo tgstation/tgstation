@@ -7,7 +7,7 @@
 #define WRITE_LOG(log, text) rustg_log_write(log, text)
 
 //print a warning message to world.log
-#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
+#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
 /proc/warning(msg)
 	msg = "## WARNING: [msg]"
 	log_world(msg)
@@ -69,6 +69,9 @@
 /proc/log_cloning(text, mob/initiator)
 	if(CONFIG_GET(flag/log_cloning))
 		WRITE_LOG(GLOB.world_cloning_log, "CLONING: [text]")
+
+/proc/log_paper(text)
+	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
 
 /proc/log_asset(text)
 	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")

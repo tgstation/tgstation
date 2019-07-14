@@ -6,7 +6,6 @@
 ******************************************/
 
 //DEBUG STUFF
-var triggerError = attachErrorHandler('chatDebug', true);
 var escaper = encodeURIComponent || escape;
 var decoder = decodeURIComponent || unescape;
 window.onerror = function(msg, url, line, col, error) {
@@ -74,6 +73,7 @@ var opts = {
 	'messageCombining': true,
 
 };
+var replaceRegexes = {};
 
 function clamp(val, min, max) {
 	return Math.max(min, Math.min(val, max))
@@ -172,6 +172,15 @@ function byondDecode(message) {
 		message = unescape(message);
 	}
 	return message;
+}
+
+function replaceRegex() {
+	var selectedRegex = replaceRegexes[$(this).attr('replaceRegex')];
+	if (selectedRegex) {
+		var replacedText = $(this).html().replace(selectedRegex[0], selectedRegex[1]);
+		$(this).html(replacedText);
+	}
+	$(this).removeAttr('replaceRegex');
 }
 
 //Actually turns the highlight term match into appropriate html
@@ -367,6 +376,7 @@ function output(message, flag) {
 				badge = $('<span/>', {'class': 'r', 'text': 2});
 			}
 			lastmessages.html(message);
+			lastmessages.find('[replaceRegex]').each(replaceRegex);
 			lastmessages.append(badge);
 			badge.animate({
 				"font-size": "0.9em"
@@ -388,6 +398,8 @@ function output(message, flag) {
 			entry.className += ' hidden';
 			entry.setAttribute('data-filter', filteredOut);
 		}
+
+		$(entry).find('[replaceRegex]').each(replaceRegex);
 
 		$last_message = trimmed_message;
 		$messages[0].appendChild(entry);
@@ -576,6 +588,16 @@ function ehjaxCallback(data) {
 				$('#adminMusic').prop('src', adminMusic);
 				$('#adminMusic').trigger("play");
 			}
+		} else if (data.syncRegex) {
+			for (var i in data.syncRegex) {
+
+				var regexData = data.syncRegex[i];
+				var regexName = regexData[0];
+				var regexFlags = regexData[1];
+				var regexReplaced = regexData[2];
+
+				replaceRegexes[i] = [new RegExp(regexName, regexFlags), regexReplaced];
+			}
 		}
 	}
 }
@@ -723,8 +745,8 @@ $(function() {
 		$("body").css('line-height', savedConfig.slineHeight);
 		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
 	}
-	if(savedConfig.sdarkmode == 'false'){
-		swap(); //They dont want darkmode, so switch!
+	if(savedConfig.sdarkmode == 'true'){
+		swap();
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {

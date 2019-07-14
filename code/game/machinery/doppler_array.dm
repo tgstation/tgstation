@@ -11,24 +11,48 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	var/integrated = FALSE
 	var/max_dist = 150
 	verb_say = "states coldly"
+	var/list/message_log = list()
 
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
 	GLOB.doppler_arrays += src
 
 /obj/machinery/doppler_array/ComponentInitialize()
+	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
 
 /obj/machinery/doppler_array/Destroy()
 	GLOB.doppler_arrays -= src
 	return ..()
 
-/obj/machinery/doppler_array/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>")
 
-/obj/machinery/doppler_array/process()
-	return PROCESS_KILL
+/obj/machinery/doppler_array/ui_interact(mob/user)
+	. = ..()
+	if(stat)
+		return FALSE
+
+	var/list/dat = list()
+	for(var/i in 1 to message_log.len)
+		dat += "Log recording #[i]: [message_log[i]]<br/><br>"
+	dat += "<A href='?src=[REF(src)];delete_log=1'>Delete logs</A><br>"
+	dat += "<hr>"
+	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><br>"
+	dat += "</body></html>"
+	var/datum/browser/popup = new(user, "computer", name, 400, 500)
+	popup.set_content(dat.Join(" "))
+	popup.open()
+	return
+
+/obj/machinery/doppler_array/Topic(href, href_list)
+	if(..())
+		return
+	if(href_list["delete_log"])
+		message_log.Cut()
+	if(href_list["refresh"])
+		updateUsrDialog()
+
+	updateUsrDialog()
+	return
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)
@@ -41,8 +65,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			power_change()
 			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
 		I.play_tool_sound(src)
-	else
-		return ..()
+		return
+	return ..()
 
 /obj/machinery/doppler_array/proc/rot_message(mob/user)
 	to_chat(user, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
@@ -85,6 +109,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	else
 		for(var/message in messages)
 			say(message)
+	LAZYADD(message_log, messages.Join(" "))
 	return TRUE
 
 /obj/machinery/doppler_array/power_change()

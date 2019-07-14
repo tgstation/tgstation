@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#c43b23"
-	var/asaycolor = null
+	var/asaycolor = "#ff4500"			//This won't change the color for current admins, only incoming ones.
 	var/enable_tips = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
 
@@ -57,6 +57,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
 	var/backbag = DBACKPACK				//backpack type
+	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -65,29 +66,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
+	var/list/genders = list(MALE, FEMALE, PLURAL)
+	var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
 
 	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
 	var/prefered_security_department = SEC_DEPT_RANDOM
 
-		//Quirk list
-	var/list/positive_quirks = list()
-	var/list/negative_quirks = list()
-	var/list/neutral_quirks = list()
+	//Quirk list
 	var/list/all_quirks = list()
 
-		//Jobs, uses bitflags
-	var/job_civilian_high = 0
-	var/job_civilian_med = 0
-	var/job_civilian_low = 0
-
-	var/job_medsci_high = 0
-	var/job_medsci_med = 0
-	var/job_medsci_low = 0
-
-	var/job_engsec_high = 0
-	var/job_engsec_med = 0
-	var/job_engsec_low = 0
+	//Job preferences 2.0 - indexed by job title , no key or value implies never
+	var/list/job_preferences = list()
 
 		// Want randomjob if preferences already filled - Donkie
 	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
@@ -105,6 +95,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = FALSE
+	var/widescreenpref = TRUE
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
@@ -196,7 +187,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 
 			if(!(AGENDER in pref_species.species_traits))
-				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
+				var/dispGender
+				if(gender == MALE)
+					dispGender = "Male"
+				else if(gender == FEMALE)
+					dispGender = "Female"
+				else
+					dispGender = "Other"
+				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a><BR>"
 			dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
 
 			dat += "<b>Special Names:</b><BR>"
@@ -229,6 +227,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
+			dat += "<b>Jumpsuit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a><BR>"
 			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
 
 			var/use_skintones = pref_species.use_skintones
@@ -262,7 +261,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<span style='border: 1px solid #161616; background-color: #[features["ethcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=color_ethereal;task=input'>Change</a><BR>"
 
 
-			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
+			if((EYECOLOR in pref_species.species_traits) && !(NOEYESPRITES in pref_species.species_traits))
 
 				if(!use_skintones && !mutant_colors)
 					dat += APPEARANCE_CATEGORY_COLUMN
@@ -513,6 +512,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
+			if (CONFIG_GET(string/default_view) != CONFIG_GET(string/default_view_square))
+				dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled ([CONFIG_GET(string/default_view_square)])"]</a><br>"
 
 			if (CONFIG_GET(flag/maprotation))
 				var/p_map = preferred_map
@@ -529,7 +530,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							p_map = VM.map_name
 					else
 						p_map += " (No longer exists)"
-				if(CONFIG_GET(flag/allow_map_voting))
+				if(CONFIG_GET(flag/preference_map_voting))
 					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
@@ -675,8 +676,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
 
-		var/datum/job/overflow = SSjob.GetJob(SSjob.overflow_role)
-
 		for(var/datum/job/job in sortList(SSjob.occupations, /proc/cmp_job_display_asc))
 
 			index += 1
@@ -704,7 +703,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
-			if((job_civilian_low & overflow.flag) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
+			if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
 			if((rank in GLOB.command_positions) || (rank == "AI"))//Bold head jobs
@@ -719,32 +718,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/prefUpperLevel = -1 // level to assign on left click
 			var/prefLowerLevel = -1 // level to assign on right click
 
-			if(GetJobDepartment(job, 1) & job.flag)
-				prefLevelLabel = "High"
-				prefLevelColor = "slateblue"
-				prefUpperLevel = 4
-				prefLowerLevel = 2
-			else if(GetJobDepartment(job, 2) & job.flag)
-				prefLevelLabel = "Medium"
-				prefLevelColor = "green"
-				prefUpperLevel = 1
-				prefLowerLevel = 3
-			else if(GetJobDepartment(job, 3) & job.flag)
-				prefLevelLabel = "Low"
-				prefLevelColor = "orange"
-				prefUpperLevel = 2
-				prefLowerLevel = 4
-			else
-				prefLevelLabel = "NEVER"
-				prefLevelColor = "red"
-				prefUpperLevel = 3
-				prefLowerLevel = 1
-
+			switch(job_preferences[job.title])
+				if(JP_HIGH)
+					prefLevelLabel = "High"
+					prefLevelColor = "slateblue"
+					prefUpperLevel = 4
+					prefLowerLevel = 2
+				if(JP_MEDIUM)
+					prefLevelLabel = "Medium"
+					prefLevelColor = "green"
+					prefUpperLevel = 1
+					prefLowerLevel = 3
+				if(JP_LOW)
+					prefLevelLabel = "Low"
+					prefLevelColor = "orange"
+					prefUpperLevel = 2
+					prefLowerLevel = 4
+				else
+					prefLevelLabel = "NEVER"
+					prefLevelColor = "red"
+					prefUpperLevel = 3
+					prefLowerLevel = 1
 
 			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
 			if(rank == SSjob.overflow_role)//Overflow is special
-				if(job_civilian_low & overflow.flag)
+				if(job_preferences[SSjob.overflow_role] == JP_LOW)
 					HTML += "<font color=green>Yes</font>"
 				else
 					HTML += "<font color=red>No</font>"
@@ -775,61 +774,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/SetJobPreferenceLevel(datum/job/job, level)
 	if (!job)
-		return 0
+		return FALSE
 
-	if (level == 1) // to high
-		// remove any other job(s) set to high
-		job_civilian_med |= job_civilian_high
-		job_engsec_med |= job_engsec_high
-		job_medsci_med |= job_medsci_high
-		job_civilian_high = 0
-		job_engsec_high = 0
-		job_medsci_high = 0
+	if (level == JP_HIGH) // to high
+		//Set all other high to medium
+		for(var/j in job_preferences)
+			if(job_preferences[j] == JP_HIGH)
+				job_preferences[j] = JP_MEDIUM
+				//technically break here
 
-	if (job.department_flag == CIVILIAN)
-		job_civilian_low &= ~job.flag
-		job_civilian_med &= ~job.flag
-		job_civilian_high &= ~job.flag
-
-		switch(level)
-			if (1)
-				job_civilian_high |= job.flag
-			if (2)
-				job_civilian_med |= job.flag
-			if (3)
-				job_civilian_low |= job.flag
-
-		return 1
-	else if (job.department_flag == ENGSEC)
-		job_engsec_low &= ~job.flag
-		job_engsec_med &= ~job.flag
-		job_engsec_high &= ~job.flag
-
-		switch(level)
-			if (1)
-				job_engsec_high |= job.flag
-			if (2)
-				job_engsec_med |= job.flag
-			if (3)
-				job_engsec_low |= job.flag
-
-		return 1
-	else if (job.department_flag == MEDSCI)
-		job_medsci_low &= ~job.flag
-		job_medsci_med &= ~job.flag
-		job_medsci_high &= ~job.flag
-
-		switch(level)
-			if (1)
-				job_medsci_high |= job.flag
-			if (2)
-				job_medsci_med |= job.flag
-			if (3)
-				job_medsci_low |= job.flag
-
-		return 1
-
-	return 0
+	job_preferences[job.title] = level
+	return TRUE
 
 /datum/preferences/proc/UpdateJobPreference(mob/user, role, desiredLvl)
 	if(!SSjob || SSjob.occupations.len <= 0)
@@ -846,64 +801,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		ShowChoices(user)
 		return
 
-	if(role == SSjob.overflow_role)
-		if(job_civilian_low & job.flag)
-			job_civilian_low &= ~job.flag
-		else
-			job_civilian_low |= job.flag
-		SetChoices(user)
-		return 1
+	var/jpval = null
+	switch(desiredLvl)
+		if(3)
+			jpval = JP_LOW
+		if(2)
+			jpval = JP_MEDIUM
+		if(1)
+			jpval = JP_HIGH
 
-	SetJobPreferenceLevel(job, desiredLvl)
+	if(role == SSjob.overflow_role)
+		if(job_preferences[job.title] == JP_LOW)
+			jpval = null
+		else
+			jpval = JP_LOW
+
+	SetJobPreferenceLevel(job, jpval)
 	SetChoices(user)
 
 	return 1
 
 
 /datum/preferences/proc/ResetJobs()
-
-	job_civilian_high = 0
-	job_civilian_med = 0
-	job_civilian_low = 0
-
-	job_medsci_high = 0
-	job_medsci_med = 0
-	job_medsci_low = 0
-
-	job_engsec_high = 0
-	job_engsec_med = 0
-	job_engsec_low = 0
-
-
-/datum/preferences/proc/GetJobDepartment(datum/job/job, level)
-	if(!job || !level)
-		return 0
-	switch(job.department_flag)
-		if(CIVILIAN)
-			switch(level)
-				if(1)
-					return job_civilian_high
-				if(2)
-					return job_civilian_med
-				if(3)
-					return job_civilian_low
-		if(MEDSCI)
-			switch(level)
-				if(1)
-					return job_medsci_high
-				if(2)
-					return job_medsci_med
-				if(3)
-					return job_medsci_low
-		if(ENGSEC)
-			switch(level)
-				if(1)
-					return job_engsec_high
-				if(2)
-					return job_engsec_med
-				if(3)
-					return job_engsec_low
-	return 0
+	job_preferences = list()
 
 /datum/preferences/proc/SetQuirks(mob/user)
 	if(!SSquirks)
@@ -914,7 +834,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!SSquirks.quirks.len)
 		dat += "The quirk subsystem hasn't finished initializing, please hold..."
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center><br>"
-
 	else
 		dat += "<center><b>Choose quirk setup</b></center><br>"
 		dat += "<div align='center'>Left-click to add or remove quirks. You need negative quirks to have positive ones.<br>\
@@ -922,7 +841,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
 		dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
-		dat += "<center>[positive_quirks.len] / [MAX_QUIRKS] max positive quirks<br>\
+		dat += "<center>[GetPositiveQuirkCount()] / [MAX_QUIRKS] max positive quirks<br>\
 		<b>Quirk balance remaining:</b> [GetQuirkBalance()]</center><br>"
 		for(var/V in SSquirks.quirks)
 			var/datum/quirk/T = SSquirks.quirks[V]
@@ -971,6 +890,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
 	return bal
+
+/datum/preferences/proc/GetPositiveQuirkCount()
+	. = 0
+	for(var/q in all_quirks)
+		if(SSquirks.quirk_points[q] > 0)
+			.++
 
 /datum/preferences/Topic(href, href_list, hsrc)			//yeah, gotta do this I guess..
 	. = ..()
@@ -1038,42 +963,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user, "<span class='danger'>[quirk] is incompatible with [Q].</span>")
 							return
 				var/value = SSquirks.quirk_points[quirk]
-				if(value == 0)
-					if(quirk in neutral_quirks)
-						neutral_quirks -= quirk
-						all_quirks -= quirk
-					else
-						neutral_quirks += quirk
-						all_quirks += quirk
+				var/balance = GetQuirkBalance()
+				if(quirk in all_quirks)
+					if(balance + value < 0)
+						to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
+						return
+					all_quirks -= quirk
 				else
-					var/balance = GetQuirkBalance()
-					if(quirk in positive_quirks)
-						positive_quirks -= quirk
-						all_quirks -= quirk
-					else if(quirk in negative_quirks)
-						if(balance + value < 0)
-							to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
-							return
-						negative_quirks -= quirk
-						all_quirks -= quirk
-					else if(value > 0)
-						if(positive_quirks.len >= MAX_QUIRKS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
-							return
-						if(balance - value < 0)
-							to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
-							return
-						positive_quirks += quirk
-						all_quirks += quirk
-					else
-						negative_quirks += quirk
-						all_quirks += quirk
+					if(GetPositiveQuirkCount() >= MAX_QUIRKS)
+						to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
+						return
+					if(balance - value < 0)
+						to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
+						return
+					all_quirks += quirk
 				SetQuirks(user)
 			if("reset")
 				all_quirks = list()
-				positive_quirks = list()
-				negative_quirks = list()
-				neutral_quirks = list()
 				SetQuirks(user)
 			else
 				SetQuirks(user)
@@ -1106,6 +1012,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					skin_tone = random_skin_tone()
 				if("bag")
 					backbag = pick(GLOB.backbaglist)
+				if("suit")
+					jumpsuit_style = pick(GLOB.jumpsuitlist)
 				if("all")
 					random_character()
 
@@ -1170,22 +1078,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_hair_style
 					if(gender == MALE)
 						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_male_list
-					else
+					else if(gender == FEMALE)
 						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_female_list
+					else
+						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_list
 					if(new_hair_style)
 						hair_style = new_hair_style
 
 				if("next_hair_style")
 					if (gender == MALE)
 						hair_style = next_list_item(hair_style, GLOB.hair_styles_male_list)
-					else
+					else if(gender == FEMALE)
 						hair_style = next_list_item(hair_style, GLOB.hair_styles_female_list)
+					else
+						hair_style = next_list_item(hair_style, GLOB.hair_styles_list)
 
 				if("previous_hair_style")
 					if (gender == MALE)
 						hair_style = previous_list_item(hair_style, GLOB.hair_styles_male_list)
-					else
+					else if(gender == FEMALE)
 						hair_style = previous_list_item(hair_style, GLOB.hair_styles_female_list)
+					else
+						hair_style = previous_list_item(hair_style, GLOB.hair_styles_list)
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference","#"+facial_hair_color) as color|null
@@ -1196,29 +1110,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_facial_hair_style
 					if(gender == MALE)
 						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_male_list
-					else
+					else if(gender == FEMALE)
 						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_female_list
+					else
+						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_list
 					if(new_facial_hair_style)
 						facial_hair_style = new_facial_hair_style
 
 				if("next_facehair_style")
 					if (gender == MALE)
 						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
-					else
+					else if(gender == FEMALE)
 						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
+					else
+						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
 
 				if("previous_facehair_style")
 					if (gender == MALE)
 						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
-					else
+					else if (gender == FEMALE)
 						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
+					else
+						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
 
 				if("underwear")
 					var/new_underwear
 					if(gender == MALE)
 						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_m
-					else
+					else if(gender == FEMALE)
 						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_f
+					else
+						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_list
 					if(new_underwear)
 						underwear = new_underwear
 
@@ -1226,8 +1148,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_undershirt
 					if(gender == MALE)
 						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_m
-					else
+					else if(gender == FEMALE)
 						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_f
+					else
+						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_list
 					if(new_undershirt)
 						undershirt = new_undershirt
 
@@ -1357,6 +1281,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_backbag)
 						backbag = new_backbag
 
+				if("suit")
+					if(jumpsuit_style == PREF_SUIT)
+						jumpsuit_style = PREF_SKIRT
+					else
+						jumpsuit_style = PREF_SUIT
+
 				if("uplink_loc")
 					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
 					if(new_loc)
@@ -1379,6 +1309,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						default += " ([config.defaultmap.map_name])"
 					for (var/M in config.maplist)
 						var/datum/map_config/VM = config.maplist[M]
+						if(!VM.votable)
+							continue
 						var/friendlyname = "[VM.map_name] "
 						if (VM.voteweight <= 0)
 							friendlyname += " (disabled)"
@@ -1414,15 +1346,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
-					if(gender == MALE)
-						gender = FEMALE
-					else
-						gender = MALE
-					underwear = random_underwear(gender)
-					undershirt = random_undershirt(gender)
-					socks = random_socks()
-					facial_hair_style = random_facial_hair_style(gender)
-					hair_style = random_hair_style(gender)
+					var/pickedGender = input(user, "Choose your gender.", "Character Preference", gender) as null|anything in friendlyGenders
+					if(pickedGender && friendlyGenders[pickedGender] != gender)
+						gender = friendlyGenders[pickedGender]
+						underwear = random_underwear(gender)
+						undershirt = random_undershirt(gender)
+						socks = random_socks()
+						facial_hair_style = random_facial_hair_style(gender)
+						hair_style = random_hair_style(gender)
 
 				if("hotkeys")
 					hotkeys = !hotkeys
@@ -1534,6 +1465,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(auto_fit_viewport && parent)
 						parent.fit_viewport()
 
+				if("widescreenpref")
+					widescreenpref = !widescreenpref
+					user.client.change_view(CONFIG_GET(string/default_view))
+
 				if("save")
 					save_preferences()
 					save_character()
@@ -1595,9 +1530,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.backbag = backbag
 
+	character.jumpsuit_style = jumpsuit_style
+
 	var/datum/species/chosen_species
 	chosen_species = pref_species.type
-	if(!(pref_species.id in GLOB.roundstart_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
+	if(roundstart_checks && !(pref_species.id in GLOB.roundstart_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
 		chosen_species = /datum/species/human
 		pref_species = new /datum/species/human
 		save_character()

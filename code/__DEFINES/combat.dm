@@ -68,6 +68,9 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
+//Grab breakout odds
+#define BASE_GRAB_RESIST_CHANCE 	30
+
 //slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
 #define SOFTCRIT_ADD_SLOWDOWN 2
 //slowdown when crawling
@@ -85,6 +88,7 @@
 #define ATTACK_EFFECT_KICK		"kick"
 #define ATTACK_EFFECT_SMASH		"smash"
 #define ATTACK_EFFECT_CLAW		"claw"
+#define ATTACK_EFFECT_SLASH		"slash"
 #define ATTACK_EFFECT_DISARM	"disarm"
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_MECHFIRE	"mech_fire"
@@ -103,6 +107,20 @@
 
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
+
+//Shove knockdown lengths (deciseconds)
+#define SHOVE_KNOCKDOWN_SOLID 30
+#define SHOVE_KNOCKDOWN_HUMAN 30
+#define SHOVE_KNOCKDOWN_TABLE 30
+#define SHOVE_KNOCKDOWN_COLLATERAL 10
+#define SHOVE_CHAIN_PARALYZE 40
+//Shove slowdown
+#define SHOVE_SLOWDOWN_LENGTH 30
+#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+//Shove disarming item list
+GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
+	/obj/item/gun)))
+
 
 //Combat object defines
 

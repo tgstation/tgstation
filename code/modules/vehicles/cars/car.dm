@@ -30,6 +30,7 @@
 		return
 	last_enginesound_time = world.time
 	playsound(src, engine_sound, 100, TRUE)
+	return TRUE
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
 	if(M.stat || M.restrained())

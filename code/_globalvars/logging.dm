@@ -36,6 +36,8 @@ GLOBAL_VAR(world_cloning_log)
 GLOBAL_PROTECT(world_cloning_log)
 GLOBAL_VAR(world_map_error_log)
 GLOBAL_PROTECT(world_map_error_log)
+GLOBAL_VAR(world_paper_log)
+GLOBAL_PROTECT(world_paper_log)
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)

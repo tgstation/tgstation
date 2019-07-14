@@ -62,7 +62,7 @@
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-		CalculateAdjacentTurfs()
+		CALCULATE_ADJACENT_TURFS(src)
 		SSair.add_to_active(src)
 
 	if (light_power && light_range)
@@ -85,7 +85,7 @@
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
-	CalculateAdjacentTurfs()
+	CALCULATE_ADJACENT_TURFS(src)
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -170,11 +170,13 @@
 
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
-		for(var/obj/structure/cable/LC in src)
+		for(var/obj/structure/pipe_cleaner/LC in src)
 			if(!LC.d1 || !LC.d2)
 				LC.handlecable(C, user)
 				return
 		C.loaded.place_turf(src, user)
+		if(C.wiring_gui_menu)
+			C.wiringGuiUpdate(user)
 		C.is_empty(user)
 
 /turf/attackby(obj/item/C, mob/user, params)
@@ -183,8 +185,14 @@
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
 		for(var/obj/structure/cable/LC in src)
+			return
+		coil.place_turf(src, user)
+		return TRUE
+	else if(can_have_cabling() && istype(C, /obj/item/stack/pipe_cleaner_coil))
+		var/obj/item/stack/pipe_cleaner_coil/coil = C
+		for(var/obj/structure/pipe_cleaner/LC in src)
 			if(!LC.d1 || !LC.d2)
-				LC.attackby(C,user)
+				LC.attackby(C, user)
 				return
 		coil.place_turf(src, user)
 		return TRUE
@@ -528,16 +536,24 @@
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
+/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE)
+
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
-	// If the vomit combined, apply toxicity and reagents to the old vomit
+
+	//if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(V))
 		V = locate() in src
-	// Make toxins vomit look different
-	if(toxvomit)
+	if(!V)
+		return
+	// Make toxins and blazaam vomit look different
+	if(toxvomit == VOMIT_PURPLE)
+		V.icon_state = "vomitpurp_[pick(1,4)]"
+	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
-	if(M.reagents)
-		clear_reagents_to_vomit_pool(M,V)
+	if (iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.reagents)
+			clear_reagents_to_vomit_pool(C,V)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
 	M.reagents.trans_to(V, M.reagents.total_volume / 10, transfered_by = M)
@@ -545,7 +561,7 @@
 		if(istype(R, /datum/reagent/consumable))
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.id,R.volume)
+				M.reagents.remove_reagent(R.type,R.volume)
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf

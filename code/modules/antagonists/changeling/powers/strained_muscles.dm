@@ -18,7 +18,7 @@
 	if(active)
 		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
 	else
-		user.add_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
 		if(stacks >= 10)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
@@ -41,7 +41,7 @@
 
 		stacks++
 
-		user.staminaloss += stacks * 1.3 //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
+		user.adjustStaminaLoss(stacks * 1.3) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
 
 		if(stacks == 11) //Warning message that the stacks are getting too high
 			to_chat(user, "<span class='warning'>Our legs are really starting to hurt...</span>")

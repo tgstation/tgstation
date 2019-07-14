@@ -33,7 +33,7 @@
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
 	. = ..()
-	GET_COMPONENT_FROM(target_interface, /datum/component/ntnet_interface, A)
+	var/datum/component/ntnet_interface/target_interface = A.GetComponent(/datum/component/ntnet_interface)
 
 	if(!target_interface)
 		return

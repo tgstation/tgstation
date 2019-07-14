@@ -129,10 +129,11 @@
 	else
 		return ..()
 
-/obj/item/flamethrower/analyzer_act(mob/living/user, obj/item/I)
+/obj/item/flamethrower/return_analyzable_air()
 	if(ptank)
-		ptank.analyzer_act(user, I)
-
+		return ptank.return_analyzable_air()
+	else
+		return null
 
 /obj/item/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
@@ -145,9 +146,9 @@
 		update_icon()
 
 /obj/item/flamethrower/examine(mob/user)
-	..()
+	. = ..()
 	if(ptank)
-		to_chat(user, "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>")
+		. += "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>"
 
 /obj/item/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)

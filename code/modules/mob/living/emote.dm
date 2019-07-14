@@ -46,7 +46,7 @@
 	message = "collapses!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/collapse/run_emote(mob/user, params)
+/datum/emote/living/collapse/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
@@ -58,9 +58,9 @@
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
 	. = ..()
-	if(user.has_trait(TRAIT_SOOTHED_THROAT))
+	if(HAS_TRAIT(user, TRAIT_SOOTHED_THROAT))
 		return FALSE
 
 /datum/emote/living/dance
@@ -81,7 +81,7 @@
 	message_simple =  "stops moving..."
 	stat_allowed = UNCONSCIOUS
 
-/datum/emote/living/deathgasp/run_emote(mob/user, params)
+/datum/emote/living/deathgasp/run_emote(mob/user, params, type_override, intentional)
 	var/mob/living/simple_animal/S = user
 	if(istype(S) && S.deathmessage)
 		message_simple = S.deathmessage
@@ -104,7 +104,7 @@
 	key_third_person = "faints"
 	message = "faints."
 
-/datum/emote/living/faint/run_emote(mob/user, params)
+/datum/emote/living/faint/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
@@ -117,7 +117,7 @@
 	restraint_check = TRUE
 	var/wing_time = 20
 
-/datum/emote/living/flap/run_emote(mob/user, params)
+/datum/emote/living/flap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -206,7 +206,7 @@
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 
-/datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
+/datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
 	if(. && iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -240,7 +240,7 @@
 	message_param = "points at %t."
 	restraint_check = TRUE
 
-/datum/emote/living/point/run_emote(mob/user, params)
+/datum/emote/living/point/run_emote(mob/user, params, type_override, intentional)
 	message_param = initial(message_param) // reset
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -265,6 +265,12 @@
 	message = "screams."
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE
+	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized scream.
+
+/datum/emote/living/scream/select_message_type(mob/user, intentional)
+	. = ..()
+	if(!intentional && isanimal(user))
+		return "makes a loud and pained whimper."
 
 /datum/emote/living/scowl
 	key = "scowl"
@@ -347,7 +353,7 @@
 	message = "puts their hands on their head and falls to the ground, they surrender!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/surrender/run_emote(mob/user, params)
+/datum/emote/living/surrender/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
@@ -399,6 +405,9 @@
 	key_third_person = "custom"
 	message = null
 
+/datum/emote/living/custom/can_run_emote(mob/user, status_check, intentional)
+	. = ..() && intentional
+
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
 	. = TRUE
 	if(copytext(input,1,5) == "says")
@@ -412,7 +421,9 @@
 	else
 		. = FALSE
 
-/datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
+/datum/emote/living/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
+	if(!can_run_emote(user, TRUE, intentional))
+		return FALSE
 	if(is_banned_from(user.ckey, "Emote"))
 		to_chat(user, "You cannot send custom emotes (banned).")
 		return FALSE
@@ -448,18 +459,16 @@
 /datum/emote/living/help
 	key = "help"
 
-/datum/emote/living/help/run_emote(mob/user, params)
+/datum/emote/living/help/run_emote(mob/user, params, type_override, intentional)
 	var/list/keys = list()
 	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
 
-	var/datum/emote/E
-	var/list/emote_list = E.emote_list
-	for(var/e in emote_list)
-		if(e in keys)
-			continue
-		E = emote_list[e]
-		if(E.can_run_emote(user, status_check = FALSE))
-			keys += E.key
+	for(var/key in GLOB.emote_list)
+		for(var/datum/emote/P in GLOB.emote_list[key])
+			if(P.key in keys)
+				continue
+			if(P.can_run_emote(user, status_check = FALSE , intentional = TRUE))
+				keys += P.key
 
 	keys = sortList(keys)
 
@@ -488,7 +497,7 @@
 	key_third_person = "circles"
 	restraint_check = TRUE
 
-/datum/emote/living/circle/run_emote(mob/user, params)
+/datum/emote/living/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	var/obj/item/circlegame/N = new(user)
 	if(user.put_in_hands(N))
@@ -502,7 +511,7 @@
 	key_third_person = "slaps"
 	restraint_check = TRUE
 
-/datum/emote/living/slap/run_emote(mob/user, params)
+/datum/emote/living/slap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
 		return

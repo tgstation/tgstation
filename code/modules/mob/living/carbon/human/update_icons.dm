@@ -479,14 +479,6 @@ There are several things that need to be remembered:
 		client.screen += I
 	update_observer_view(I)
 
-//Update whether we smell
-/mob/living/carbon/human/proc/update_smell(var/smelly_icon = "generic_mob_smell")
-	remove_overlay(SMELL_LAYER)
-	if(hygiene <= HYGIENE_LEVEL_DIRTY)
-		var/mutable_appearance/new_smell_overlay = mutable_appearance('icons/mob/smelly.dmi', smelly_icon, -SMELL_LAYER)
-		overlays_standing[SMELL_LAYER] = new_smell_overlay
-		apply_overlay(SMELL_LAYER)
-
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list
 covers:
@@ -603,7 +595,7 @@ generate/load female uniform sprites matching all previously decided variables
 		if(BP.dmg_overlay_type)
 			. += "-[BP.dmg_overlay_type]"
 
-	if(has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
 
 /mob/living/carbon/human/load_limb_from_cache()
@@ -645,7 +637,7 @@ generate/load female uniform sprites matching all previously decided variables
 	add_overlay(HD.get_limb_icon())
 	update_damage_overlays()
 
-	if(HD && !(has_trait(TRAIT_HUSK)))
+	if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
 		// lipstick
 		if(lip_style && (LIPS in dna.species.species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
@@ -656,7 +648,7 @@ generate/load female uniform sprites matching all previously decided variables
 			add_overlay(lip_overlay)
 
 		// eyes
-		if(!(NOEYES in dna.species.species_traits))
+		if(!(NOEYESPRITES in dna.species.species_traits))
 			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/eye_overlay
 			if(!E)

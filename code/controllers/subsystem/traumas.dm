@@ -66,7 +66,8 @@ SUBSYSTEM_DEF(traumas)
 
 					  "clowns"    = typecacheof(list(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes,
 												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/instrument/bikehorn,
-												 /obj/item/pda/clown, /obj/item/grown/bananapeel)),
+												 /obj/item/pda/clown, /obj/item/grown/bananapeel, /obj/item/reagent_containers/food/snacks/cheesiehonkers,
+												 /obj/item/trash/cheesie)),
 
 					  "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
 												 /obj/item/twohanded/spear, /obj/item/clothing/mask/gas)),
@@ -97,7 +98,7 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/under/rank/nursesuit, /obj/item/clothing/under/rank/chief_medical_officer,
 						/obj/item/reagent_containers/syringe, /obj/item/reagent_containers/pill/, /obj/item/reagent_containers/hypospray,
 						/obj/item/storage/firstaid, /obj/item/storage/pill_bottle, /obj/item/healthanalyzer,
-						/obj/structure/sign/departments/medbay, /obj/machinery/door/airlock/medical, /obj/machinery/sleeper,
+						/obj/structure/sign/departments/medbay, /obj/machinery/door/airlock/medical, /obj/machinery/sleeper, /obj/machinery/stasis,
 						/obj/machinery/dna_scannernew, /obj/machinery/atmospherics/components/unary/cryo_cell, /obj/item/surgical_drapes,
 						/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw,
 						/obj/item/clothing/suit/bio_suit/plaguedoctorsuit, /obj/item/clothing/head/plaguedoctorhat, /obj/item/clothing/mask/gas/plaguedoctor)),

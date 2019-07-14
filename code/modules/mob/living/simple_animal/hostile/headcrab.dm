@@ -42,7 +42,7 @@
 		// Changeling egg can survive in aliens!
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
-			if(C.has_trait(TRAIT_XENO_HOST))
+			if(HAS_TRAIT(C, TRAIT_XENO_HOST))
 				to_chat(src, "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>")
 				return
 			Infect(target)
@@ -65,7 +65,6 @@
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
 	var/mob/living/carbon/monkey/M = new(owner)
-	owner.stomach_contents += M
 
 	for(var/obj/item/organ/I in src)
 		I.Insert(M, 1)

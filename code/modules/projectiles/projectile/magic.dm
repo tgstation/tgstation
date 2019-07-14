@@ -66,7 +66,7 @@
 	if(!isturf(target))
 		teleloc = target.loc
 	for(var/atom/movable/stuff in teleloc)
-		if(!stuff.anchored && stuff.loc)
+		if(!stuff.anchored && stuff.loc && !isobserver(stuff))
 			if(do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
 				teleammount++
 				var/datum/effect_system/smoke_spread/smoke = new
@@ -278,7 +278,7 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
-	var/poly_msg = CONFIG_GET(keyed_list/policy)["polymorph"]
+	var/poly_msg = get_policy(POLICY_POLYMORPH)
 	if(poly_msg)
 		to_chat(new_mob, poly_msg)
 
@@ -378,15 +378,20 @@
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
+	var/obj/structure/closet/locker_temp_instance = /obj/structure/closet/decay
+
+/obj/item/projectile/magic/locker/Initialize()
+	. = ..()
+	locker_temp_instance = new(src)
 
 /obj/item/projectile/magic/locker/prehit(atom/A)
-	if(ismob(A) && locker_suck)
-		var/mob/M = A
+	if(isliving(A) && locker_suck)
+		var/mob/living/M = A
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
 			qdel(src)
 			return
-		if(M.anchored)
+		if(!locker_temp_instance.insertion_allowed(M))
 			return ..()
 		M.forceMove(src)
 		return FALSE
@@ -395,7 +400,7 @@
 /obj/item/projectile/magic/locker/on_hit(target)
 	if(created)
 		return ..()
-	var/obj/structure/closet/decay/C = new(get_turf(src))
+	var/obj/structure/closet/C = new locker_temp_instance(get_turf(src))
 	if(LAZYLEN(contents))
 		for(var/atom/movable/AM in contents)
 			C.insert(AM)

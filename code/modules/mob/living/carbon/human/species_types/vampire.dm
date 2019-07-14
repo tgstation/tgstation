@@ -53,7 +53,7 @@
 		C.dust()
 	var/area/A = get_area(C)
 	if(istype(A, /area/chapel))
-		to_chat(C, "<span class='danger'>You don't belong here!</span>")
+		to_chat(C, "<span class='warning'>You don't belong here!</span>")
 		C.adjustFireLoss(20)
 		C.adjust_fire_stacks(6)
 		C.IgniteMob()
@@ -81,23 +81,27 @@
 		var/mob/living/carbon/H = owner
 		var/obj/item/organ/tongue/vampire/V = target
 		if(V.drain_cooldown >= world.time)
-			to_chat(H, "<span class='notice'>You just drained blood, wait a few seconds.</span>")
+			to_chat(H, "<span class='warning'>You just drained blood, wait a few seconds!</span>")
 			return
 		if(H.pulling && iscarbon(H.pulling))
 			var/mob/living/carbon/victim = H.pulling
 			if(H.blood_volume >= BLOOD_VOLUME_MAXIMUM)
-				to_chat(H, "<span class='notice'>You're already full!</span>")
+				to_chat(H, "<span class='warning'>You're already full!</span>")
 				return
 			if(victim.stat == DEAD)
-				to_chat(H, "<span class='notice'>You need a living victim!</span>")
+				to_chat(H, "<span class='warning'>You need a living victim!</span>")
 				return
 			if(!victim.blood_volume || (victim.dna && ((NOBLOOD in victim.dna.species.species_traits) || victim.dna.species.exotic_blood)))
-				to_chat(H, "<span class='notice'>[victim] doesn't have blood!</span>")
+				to_chat(H, "<span class='warning'>[victim] doesn't have blood!</span>")
 				return
 			V.drain_cooldown = world.time + 30
-			if(victim.anti_magic_check(FALSE, TRUE, FALSE))
+			if(victim.anti_magic_check(FALSE, TRUE, FALSE, 0))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
+				return
+			if(victim?.reagents?.has_reagent(/datum/reagent/consumable/garlic))
+				to_chat(victim, "<span class='warning'>[H] tries to bite you, but recoils in disgust!</span>")
+				to_chat(H, "<span class='warning'>[victim] reeks of garlic! you can't bring yourself to drain such tainted blood.</span>")
 				return
 			if(!do_after(H, 30, target = victim))
 				return
@@ -109,7 +113,7 @@
 			victim.blood_volume = CLAMP(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			H.blood_volume = CLAMP(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			if(!victim.blood_volume)
-				to_chat(H, "<span class='warning'>You finish off [victim]'s blood supply!</span>")
+				to_chat(H, "<span class='notice'>You finish off [victim]'s blood supply.</span>")
 
 #undef VAMP_DRAIN_AMOUNT
 
