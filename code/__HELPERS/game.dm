@@ -183,7 +183,7 @@
 
 		for(var/atom/B in A)
 			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))
-				processing_list|= B
+				processing_list+= B
 
 		processing_list.Cut(1, 2)
 		processed_list[A] = A
