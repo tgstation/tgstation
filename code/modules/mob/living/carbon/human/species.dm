@@ -47,6 +47,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/deathsound //used to set the mobs deathsound on species change
 	var/list/special_step_sounds //Sounds to override barefeet walkng
 	var/grab_sound //Special sound for grabbing
+	var/list/items_important_for_life = list() // A list of paths that are important for species life e.g. plasmaman internals/suit
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()

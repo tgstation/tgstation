@@ -473,3 +473,31 @@ GLOBAL_LIST_EMPTY(species_list)
 		chosen = pick(mob_spawn_meancritters)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
+
+/**
+  * Gives the target carbon mob their items listed in species.items_important_for_life
+  *
+  * Checks all items worn/held/in inventory on mob and gives/equips if they don't already have it.
+  * Tries to equip, put in hands, or drop underneath in that order.
+  */
+/proc/give_important_for_life(var/mob/living/carbon/target)
+	// Path to all items classed as important for a mob to live
+	var/list/important_for_life = target.dna.species.items_important_for_life
+	// Get everything from a mob. Worn/held/in inventory
+	var/list/all_items_on_mob = target.GetAllContents()
+
+	for (var/item_for_life in important_for_life)
+		var/found = FALSE
+		// Try and find if we already have it.
+		for(var/obj/item_on_mob in all_items_on_mob)
+			if (istype(item_for_life, item_on_mob))
+				found = TRUE
+				break
+		// We give them the item.
+		if (!found)
+			// Create our item.
+			var/obj/created_item = new item_for_life(get_turf(target))
+			// If we fail to equip our item, we try to put in hands, or let it fall to floor.
+			if (!target.equip_to_appropriate_slot(created_item))
+				target.put_in_hands(created_item)
+
