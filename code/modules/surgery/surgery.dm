@@ -147,7 +147,7 @@
 	var/list/req_tech_surgeries = subtypesof(/datum/surgery)
 	for(var/i in req_tech_surgeries)
 		var/datum/surgery/beep = i
-		if(beep.requires_tech)
+		if(initial(beep.requires_tech))
 			surgeries += beep
 
 //INFO

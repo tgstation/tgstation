@@ -33,6 +33,36 @@
 /obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
+"aaf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/ticket_machine{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"aag" = (
+/obj/structure/table/wood,
+/obj/item/stamp/hop{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/radio/intercom{
+	pixel_x = 27
+	},
+/obj/item/paper_bin{
+	layer = 2.9
+	},
+/obj/machinery/button/ticket_machine{
+	pixel_x = 28;
+	pixel_y = -12
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -11828,20 +11858,6 @@
 /obj/machinery/light_switch{
 	pixel_x = 38;
 	pixel_y = -35
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/hop)
-"aER" = (
-/obj/structure/table/wood,
-/obj/item/stamp/hop{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/radio/intercom{
-	pixel_x = 27
-	},
-/obj/item/paper_bin{
-	layer = 2.9
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
@@ -90757,7 +90773,7 @@ aEM
 aFA
 aGv
 aKV
-aHV
+aaf
 aDZ
 aJO
 aKZ
@@ -92038,7 +92054,7 @@ aAH
 aBG
 aCU
 aDY
-aER
+aag
 aAH
 aGy
 aAN

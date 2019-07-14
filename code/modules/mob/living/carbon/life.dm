@@ -589,6 +589,33 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 
+/////////
+//LIVER//
+/////////
+
+/mob/living/carbon/proc/handle_liver()
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
+	if(liver)
+		if(liver.damage >= liver.maxHealth)
+			liver.failing = TRUE
+			liver_failure()
+	else
+		liver_failure()
+
+/mob/living/carbon/proc/undergoing_liver_failure()
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
+	if(liver && liver.failing)
+		return TRUE
+
+/mob/living/carbon/proc/liver_failure()
+	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
+	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
+	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
+		return
+	adjustToxLoss(4, TRUE,  TRUE)
+	if(prob(30))
+		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
+
 /////////////
 //CREMATION//
 /////////////

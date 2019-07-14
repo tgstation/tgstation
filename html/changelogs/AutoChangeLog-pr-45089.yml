@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - tweak: "Mining conscription kits now cost 1500, but has a PKA and a survival knife. Cargo cost reduced to 2000."
-  - tweak: "Added public mining vendor to lavaland base."
