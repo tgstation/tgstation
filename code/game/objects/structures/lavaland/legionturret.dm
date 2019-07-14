@@ -32,7 +32,7 @@
 
 /obj/structure/legionturret/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
 ///Handles an extremely basic basic AI. Runs on SSobj
 /obj/structure/legionturret/process()
