@@ -60,7 +60,7 @@
 		mind.store_memory("Time of death: [tod]", 0)
 	GLOB.alive_mob_list -= src
 	if(!gibbed)
-		GLOB.dead_mob_list += src
+		GLOB.dead_mob_list |= src
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)
