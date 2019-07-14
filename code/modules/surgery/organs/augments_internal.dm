@@ -118,11 +118,11 @@
 	RegisterSignal(owner, signalCache, .proc/on_signal)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
-	if(!broken_cyber_organ && amount > 0)
+	if(!failing && amount > 0)
 		addtimer(CALLBACK(src, .proc/clear_stuns), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/clear_stuns()
-	if(owner || !broken_cyber_organ)
+	if(owner || !failing)
 		owner.SetStun(0)
 		owner.SetKnockdown(0)
 		owner.SetImmobilized(0)
@@ -130,13 +130,13 @@
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
-	if(broken_cyber_organ || . & EMP_PROTECT_SELF)
+	if(failing || . & EMP_PROTECT_SELF)
 		return
-	broken_cyber_organ = TRUE
+	failing = TRUE
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
-	broken_cyber_organ = FALSE
+	failing = FALSE
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

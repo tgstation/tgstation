@@ -5,7 +5,6 @@
 	var/status = ORGAN_ORGANIC
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
-	var/broken_cyber_organ = FALSE //if the organ stopped working.
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
@@ -110,8 +109,14 @@
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
-	if(status == ORGAN_ROBOTIC && broken_cyber_organ)
+	if(status == ORGAN_ROBOTIC && failing)
 		. += "<span class='warning'>[src] seems to be broken!</span>"
+
+	else if(failing)
+		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color! It doesn't look like it will work anymore!</span>"
+
+	else if(damage > high_threshold)
+		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 
 
 /obj/item/organ/proc/prepare_eat()
