@@ -87,10 +87,105 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
+"aao" = (
+/obj/structure/table,
+/obj/item/hand_labeler,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/item/camera,
+/obj/item/camera_film,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/turf/open/floor/plasteel,
+/area/storage/art)
+"aap" = (
+/obj/structure/table,
+/obj/machinery/power/apc{
+	areastring = "/area/storage/art";
+	dir = 8;
+	name = "Art Storage APC";
+	pixel_x = -25
+	},
+/obj/item/paper_bin,
+/obj/structure/cable,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/canvas,
+/obj/item/canvas,
+/obj/item/canvas,
+/obj/item/canvas,
+/obj/item/canvas,
+/obj/item/canvas,
+/turf/open/floor/plasteel,
+/area/storage/art)
 "aaq" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/port/fore)
+"aar" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/firealarm{
+	pixel_z = -28
+	},
+/turf/open/floor/plasteel,
+/area/storage/art)
+"aas" = (
+/obj/structure/table,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -26
+	},
+/obj/machinery/chem_dispenser/drinks,
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
+"aat" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
+"aau" = (
+/obj/machinery/camera{
+	c_tag = "Bar"
+	},
+/obj/machinery/requests_console{
+	department = "Bar";
+	departmentType = 2;
+	pixel_y = 30;
+	receive_ore_updates = 1
+	},
+/obj/structure/table,
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/glass/rag{
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "aav" = (
 /turf/open/space,
 /area/space)
@@ -155,6 +250,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aaF" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall,
+/area/crew_quarters/bar)
 "aaG" = (
 /obj/machinery/hydroponics/constructable,
 /obj/item/seeds/ambrosia,
@@ -187,6 +286,24 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aaL" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
+"aaM" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "aaN" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
@@ -311,6 +428,14 @@
 "abe" = (
 /turf/closed/wall,
 /area/security/prison)
+"abf" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "abg" = (
 /obj/machinery/door/poddoor{
 	id = "SecJusticeChamber";
@@ -30649,14 +30774,6 @@
 	},
 /turf/open/floor/plating,
 /area/storage/art)
-"boM" = (
-/obj/structure/table,
-/obj/item/hand_labeler,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/storage/art)
 "boN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -31656,30 +31773,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"brd" = (
-/obj/structure/table,
-/obj/machinery/power/apc{
-	areastring = "/area/storage/art";
-	dir = 8;
-	name = "Art Storage APC";
-	pixel_x = -25
-	},
-/obj/item/paper_bin,
-/obj/structure/cable,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/turf/open/floor/plasteel,
-/area/storage/art)
-"bre" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/storage/art)
 "brf" = (
 /obj/structure/table,
 /obj/item/paper_bin/construction,
@@ -32720,33 +32813,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"btl" = (
-/obj/structure/table,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXnineteen,
-/obj/item/canvas/twentythreeXnineteen,
-/obj/item/canvas/nineteenXnineteen,
-/obj/item/canvas/nineteenXnineteen,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
-/turf/open/floor/plasteel,
-/area/storage/art)
-"btm" = (
-/obj/structure/table,
-/obj/item/camera,
-/turf/open/floor/plasteel,
-/area/storage/art)
-"btn" = (
-/obj/structure/table,
-/obj/item/camera_film,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 28
-	},
-/turf/open/floor/plasteel,
-/area/storage/art)
 "bto" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
@@ -33380,10 +33446,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"buN" = (
-/obj/machinery/vending/boozeomat,
-/turf/closed/wall,
-/area/crew_quarters/bar)
 "buO" = (
 /obj/machinery/door/airlock{
 	name = "Bar Storage";
@@ -34270,68 +34332,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bwK" = (
-/obj/structure/table,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -26
-	},
-/obj/machinery/chem_dispenser/drinks,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
-"bwL" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
-"bwM" = (
-/obj/machinery/camera{
-	c_tag = "Bar"
-	},
-/obj/machinery/requests_console{
-	department = "Bar";
-	departmentType = 2;
-	pixel_y = 30;
-	receive_ore_updates = 1
-	},
-/obj/structure/table,
-/obj/item/book/manual/wiki/barman_recipes{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/reagent_containers/glass/rag{
-	pixel_y = 5
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
-"bwN" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
 "bwO" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -73156,14 +73156,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
-"dCS" = (
-/obj/effect/landmark/event_spawn,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
 "dCU" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
@@ -108022,7 +108014,7 @@ bmL
 boL
 bmO
 bmM
-bmO
+bmP
 bmP
 dhT
 bmP
@@ -108276,11 +108268,11 @@ bhE
 bjp
 bkU
 bmM
-boM
-brd
-btl
+aao
+aap
 bmO
-bwK
+aas
+aaL
 bwO
 bAi
 bBT
@@ -108534,10 +108526,10 @@ bjp
 bkV
 bmN
 boN
-bre
-btm
+aar
 bmO
-bwL
+aat
+bwO
 byy
 bAj
 bBT
@@ -108792,9 +108784,9 @@ bkU
 bmM
 boO
 brf
-btn
 bmO
-bwM
+aau
+bwO
 bwO
 bAk
 bBT
@@ -109050,8 +109042,8 @@ bmO
 bmO
 bmO
 bmO
-bmO
-bwN
+aaF
+aaM
 byz
 bAj
 bBU
@@ -109307,8 +109299,8 @@ bmP
 boP
 brg
 bto
-buN
-dCS
+bmP
+abf
 bwO
 bAl
 bBT
