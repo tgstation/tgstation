@@ -400,7 +400,7 @@
 	var/repair_rate = 0
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
-	if(istype(O, /obj/item/organ) && !istype(O, /obj/item/organ/brain))	//would rather not have a machine to freeze brains from a gameplay perspective, if it is so necessary, freezer chests exist
+	if(istype(O, /obj/item/organ))
 		return TRUE
 	return FALSE
 
