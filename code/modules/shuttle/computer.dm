@@ -10,6 +10,11 @@
 	var/admin_controlled
 	var/no_destination_swap = 0
 
+/obj/machinery/computer/shuttle/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
 /obj/machinery/computer/shuttle/ui_interact(mob/user)
 	. = ..()
 	var/list/options = params2list(possible_destinations)
