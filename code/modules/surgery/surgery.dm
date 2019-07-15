@@ -38,20 +38,20 @@
 	return ..()
 
 
-/datum/surgery/proc/can_start(mob/user, mob/living) //FALSE to not show in list
+/datum/surgery/proc/can_start(mob/user, mob/living/patient) //FALSE to not show in list
 	. = TRUE
 	if(replaced_by == /datum/surgery)
 		return FALSE
 
+	// True surgeons (like abductor scientists) need no instructions
 	if(HAS_TRAIT(user, TRAIT_SURGEON) || HAS_TRAIT(user.mind, TRAIT_SURGEON))
-		if(replaced_by)
+		if(replaced_by) // only show top-level surgeries
 			return FALSE
 		else
 			return TRUE
 
 	if(!requires_tech && !replaced_by)
 		return TRUE
-	// True surgeons (like abductor scientists) need no instructions
 
 	if(requires_tech)
 		. = FALSE
@@ -64,8 +64,7 @@
 		if(type in SP.advanced_surgeries)
 			return TRUE
 
-
-	var/turf/T = get_turf(target)
+	var/turf/T = get_turf(patient)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(table)
 		if(!table.computer)
