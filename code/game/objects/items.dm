@@ -538,7 +538,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		. = callback.Invoke()
 	item_flags &= ~IN_INVENTORY
 	if(!pixel_y && !pixel_x)
-		random_pixel_offset(8)
+		pixel_x = rand(-8,8)
+		pixel_y = rand(-8,8)
 
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
@@ -798,8 +799,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
-
-///adds a random pixel offset, for non-precise item placement such as throwing or dropping to the ground
-/obj/item/proc/random_pixel_offset(maxoffset)
-	pixel_x = rand(-maxoffset,maxoffset)
-	pixel_y = rand(-maxoffset,maxoffset)
