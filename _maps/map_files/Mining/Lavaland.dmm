@@ -3559,8 +3559,8 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "qt" = (
-/obj/structure/cable,
-/obj/structure/closet/secure_closet/miner,
+/obj/structure/table,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "rj" = (
@@ -3828,7 +3828,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "Gn" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "GI" = (
@@ -4068,6 +4068,11 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"TC" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/mine/living_quarters)
 "TP" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -4220,10 +4225,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
-"XP" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/mining/glass{
-	name = "Mining Storage"
+"Xx" = (
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"Ym" = (
+/obj/structure/chair{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -8861,8 +8871,8 @@ aj
 aj
 aj
 aj
-ai
 ab
+ai
 aj
 aj
 aj
@@ -9118,9 +9128,9 @@ aj
 GJ
 aj
 ab
-ai
-ai
 ab
+ai
+ai
 aj
 aj
 ab
@@ -9374,10 +9384,10 @@ bZ
 aj
 aj
 aj
-ai
-ai
-ai
 ab
+ab
+ai
+ai
 ab
 ab
 ab
@@ -9631,8 +9641,8 @@ Hd
 FF
 Hd
 nI
-cM
-cM
+TC
+TC
 cM
 ab
 ab
@@ -9888,7 +9898,7 @@ cG
 QQ
 Hd
 qt
-Gn
+rj
 Gn
 cM
 VY
@@ -10144,7 +10154,7 @@ bw
 Hx
 oU
 Hd
-rj
+Ym
 rj
 eM
 cM
@@ -10401,9 +10411,9 @@ ch
 GI
 Fd
 Hd
-cM
-XP
-cM
+Xx
+rj
+dZ
 cM
 uJ
 nI
