@@ -69,6 +69,7 @@
 
 // Called on game mode pre_setup, used for non-delayed roundstart rulesets only.
 // Do everything you need to do before job is assigned here.
+// IMPORTANT: ASSIGN special_role HERE
 /datum/dynamic_ruleset/proc/pre_execute()
 	return TRUE
 
