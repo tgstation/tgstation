@@ -9,7 +9,7 @@ Contains:
  - Father Christmas' magical clothes
  - Pirate's spacesuit
  - ERT hardsuit: command, sec, engi, med, janitor
- - EVA spacesuit
+ - EVA spacesuit and its variants
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
 */
@@ -248,6 +248,7 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/jani
 	allowed = list(/obj/item/storage/bag/trash, /obj/item/melee/flyswatter, /obj/item/mop, /obj/item/holosign_creator/janibarrier, /obj/item/reagent_containers/glass/bucket, /obj/item/reagent_containers/spray/chemsprayer/janitor)
 
+	//EVA suit
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
 	icon_state = "space"
@@ -263,6 +264,107 @@ Contains:
 	flash_protect = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
 
+	//EVA suit departamental variants
+	//Security
+/obj/item/clothing/suit/space/eva/sec
+	name = "Security EVA suit"
+	icon_state = "secspace_suit"
+	item_state = "s_suit"
+	desc = "A lightweight space suit with the basic ability to protect a security officer from the vacuum of space during space arrests."
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 10,"energy" = 10, "bomb" = 0, "bio" = 100, "rad" = 10, "fire" = 30, "acid" = 30)
+
+/obj/item/clothing/head/helmet/space/eva/sec
+	name = "Security EVA helmet"
+	icon_state = "secspace_suit"
+	item_state = "space"
+	desc = "A lightweight space helmet with the basic ability to protect a security officer from the vacuum of space during space arrests."
+	flash_protect = 0
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 10,"energy" = 10, "bomb" = 0, "bio" = 100, "rad" = 10, "fire" = 30, "acid" = 30)
+
+	//Engineering
+/obj/item/clothing/suit/space/eva/eng
+	name = "Engineering EVA suit"
+	icon_state = "engspace_suit"
+	item_state = "s_suit"
+	desc = "A lightweight space suit designed to protect the wearer from the vacuum of space and minor radiation."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 45, "fire" = 50, "acid" = 30)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
+
+/obj/item/clothing/head/helmet/space/eva/eng
+	name = "Engineering EVA helmet"
+	icon_state = "engspace_suit"
+	item_state = "space"
+	desc = "A lightweight space suit designed to protect the wearer from the vacuum of space and minor radiation."
+	flash_protect = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 45, "fire" = 50, "acid" = 30)
+
+	//Medical
+/obj/item/clothing/suit/space/eva/med
+	name = "Medical EVA suit"
+	icon_state = "medspace_suit"
+	item_state = "s_suit"
+	desc = "Essential equipment for saving lives in the vacuum of space."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 30, "acid" = 80)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/soap, /obj/item/sensor_device)
+
+/obj/item/clothing/head/helmet/space/eva/med
+	name = "Medical EVA helmet"
+	icon_state = "medspace_suit"
+	item_state = "space"
+	desc = "Essential equipment for saving lives in the vacuum of space."
+	flash_protect = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 30, "acid" = 80)
+
+	//Cargo
+/obj/item/clothing/suit/space/eva/cargo
+	name = "Cargo EVA suit"
+	icon_state = "cargospace_suit"
+	item_state = "s_suit"
+	desc = "A lightweight space suit, good for when you forget to close the shuttle shutters."
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 60)
+
+/obj/item/clothing/head/helmet/space/eva/cargo
+	name = "Cargo EVA helmet"
+	icon_state = "cargospace_suit"
+	item_state = "space"
+	desc = "A lightweight space suit, good for when you forget to close the shuttle shutters."
+	flash_protect = 0
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 60)
+
+	//Science
+/obj/item/clothing/suit/space/eva/sci
+	name = "Science EVA suit"
+	icon_state = "scispace_suit"
+	item_state = "s_suit"
+	desc = "A lightweight space suit, almost good enough to explore the unkown."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 20, "bio" = 100, "rad" = 10, "fire" = 30, "acid" = 90)
+
+/obj/item/clothing/head/helmet/space/eva/sci
+	name = "Science EVA helmet"
+	icon_state = "scispace_suit"
+	item_state = "space"
+	desc = "A lightweight space suit, almost good enough to explore the unkown."
+	flash_protect = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 20, "bio" = 100, "rad" = 10, "fire" = 30, "acid" = 90)
+
+	//Janitor
+/obj/item/clothing/suit/space/eva/jani
+	name = "Janitorial EVA suit"
+	icon_state = "janispace_suit"
+	item_state = "s_suit"
+	desc = "A lightweight space suit for janitors, because it's not good enough to clean the station just on the inside."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 10, "fire" = 30, "acid" = 30)
+	allowed = list(/obj/item/storage/bag/trash, /obj/item/flashlight, /obj/item/tank/internals)
+
+/obj/item/clothing/head/helmet/space/eva/jani
+	name = "Janitorial EVA helmet"
+	icon_state = "janispace_suit"
+	item_state = "space"
+	desc = "A lightweight space suit for janitors, because it's not good enough to clean the station just on the inside."
+	flash_protect = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 10, "fire" = 30, "acid" = 30)
+
+	//Eagle Suit
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
