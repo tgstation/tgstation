@@ -66,7 +66,7 @@ All the important duct code:
 	var/plumber = AM.GetComponent(/datum/component/plumbing)
 	if(!plumber)
 		return
-	connect_plumber(plumber, direction)
+	return connect_plumber(plumber, direction)
 
 /obj/machinery/duct/proc/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	var/opposite_dir = turn(direction, 180)

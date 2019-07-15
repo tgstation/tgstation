@@ -871,9 +871,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/oldaisat)
 "cW" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/tcommsat/oldaisat)
 "cX" = (

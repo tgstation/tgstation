@@ -1,7 +1,7 @@
 /obj/item/banner
 	name = "banner"
 	desc = "A banner with Nanotrasen's logo on it."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
 	item_state = "banner"
 	force = 8
