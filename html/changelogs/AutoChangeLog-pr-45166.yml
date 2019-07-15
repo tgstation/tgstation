@@ -1,0 +1,6 @@
+author: "MrFluffster"
+delete-after: True
+changes: 
+  - rscadd: "Furniture and mining items in public mining lobby"
+  - rscdel: "The unnecessary amount of space in mining security"
+  - tweak: "Tweaked the shape of the base slightly"
