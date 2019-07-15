@@ -1,0 +1,5 @@
+author: "Alek2ander"
+delete-after: True
+changes: 
+  - rscadd: "You can now tell which ID a wallet has displayed."
+  - tweak: "Alt-click a wallet to remove the displayed ID. If there is none or it's inside a container - it just shows the inventory as usual."
