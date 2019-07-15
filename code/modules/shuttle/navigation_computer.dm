@@ -31,7 +31,6 @@
 		var/obj/docking_port/stationary/S = V
 		if(jumpto_ports[S.id])
 			z_lock |= S.z
-	var/list/whitelist_turfs_typecache = list()
 	whitelist_turfs = typecacheof(whitelist_turfs)
 
 	z_locked |= SSmapping.levels_by_trait(ZTRAIT_RESERVED)
