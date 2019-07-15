@@ -9,11 +9,13 @@
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
 	///The maximum we can produce for every process
-	var/max_amount = 5
+	buffer = 5
 	///I track them here because I have no idea how I'd make tgui loop like that
 	var/static/list/possible_amounts = list(0,1,2,3,4,5)
-	///The reagent we are producing
-	var/reagent_id = null
+	///The reagent we are producing. We are a typepath, but are also typecast because there's several occations where we need to use initial.
+	var/datum/reagent/reagent_id = null
+	///reagent overlay. its the colored pipe thingies. we track this because overlays.Cut() is bad
+	var/image/r_overlay
 	///straight up copied from chem dispenser. Being a subtype would be extremely tedious and making it global would restrict potential subtypes using different dispensable_reagents
 	var/list/dispensable_reagents = list(
 		/datum/reagent/aluminium,
@@ -46,7 +48,6 @@
 
 /obj/machinery/plumbing/synthesizer/Initialize(mapload)
 	. = ..()
-	create_reagents(max_amount, TRANSPARENT)
 	AddComponent(/datum/component/plumbing/simple_supply)
 
 /obj/machinery/plumbing/synthesizer/wrench_act(mob/living/user, obj/item/I)
@@ -83,8 +84,7 @@
 	data["amount"] = amount
 	data["possible_amounts"] = possible_amounts
 
-	var/datum/reagent/R = reagent_id
-	data["current_reagent"] = ckey(initial(R.name))
+	data["current_reagent"] = ckey(initial(reagent_id.name))
 	return data
 
 /obj/machinery/plumbing/synthesizer/ui_act(action, params)
@@ -96,11 +96,24 @@
 			var/new_amount = text2num(params["target"])
 			if(new_amount in possible_amounts)
 				amount = new_amount
-				reagents.clear_reagents() //we changed to amount. we could get ugly leftovers of previous amounts if we dont do this
 				. = TRUE
 		if("select")
 			var/new_reagent = GLOB.name2reagent[params["reagent"]]
 			if(new_reagent in dispensable_reagents)
 				reagent_id = new_reagent
-				reagents.clear_reagents() //clear because otherwise we got gross leftovers if you misclicked once
 				. = TRUE
+	update_icon()
+	reagents.clear_reagents()
+
+/obj/machinery/plumbing/synthesizer/update_icon()
+	if(!r_overlay)
+		r_overlay = image(icon, "[icon_state]_overlay")
+	else
+		overlays -= r_overlay //we remove it because overlays are completely unnaffected by changing the object, you need to reapply it
+
+	if(reagent_id)
+		r_overlay.color = initial(reagent_id.color)
+	else
+		r_overlay.color = "#FFFFFF"
+
+	overlays += r_overlay

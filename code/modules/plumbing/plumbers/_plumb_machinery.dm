@@ -15,7 +15,7 @@
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags
 
-/obj/machinery/plumbing/input/Initialize(mapload)
+/obj/machinery/plumbing/Initialize(mapload)
 	. = ..()
 	create_reagents(buffer, reagent_flags)
 
@@ -23,18 +23,28 @@
 /obj/machinery/plumbing/input
 	name = "input gate"
 	desc = "Can be manually filled with reagents from containers."
+	icon_state = "pipe_input"
 	reagent_flags = TRANSPARENT | REFILLABLE
 
 /obj/machinery/plumbing/input/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply)
 
+/obj/machinery/plumbing/input/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I)
+	return TRUE
+
 ///We can fill beakers in here and everything. we dont inheret from input because it has nothing that we need
 /obj/machinery/plumbing/output
 	name = "output gate"
 	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
+	icon_state = "pipe_output"
 	reagent_flags = TRANSPARENT | DRAINABLE
 
 /obj/machinery/plumbing/output/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
+
+/obj/machinery/plumbing/output/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I)
+	return TRUE
