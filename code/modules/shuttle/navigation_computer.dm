@@ -138,7 +138,7 @@
 	if(my_port && my_port.get_docked()) 
 		my_port.delete_after = TRUE
 		my_port.id = FALSE
-		shuttlePortDestination_type = FALSE
+		my_port.destination_type = FALSE
 		my_port.name = "Old [my_port.name]"
 		my_port = FALSE 
 
