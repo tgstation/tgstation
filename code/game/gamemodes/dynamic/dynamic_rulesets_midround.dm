@@ -31,7 +31,7 @@
 /datum/dynamic_ruleset/midround/proc/trim_list(var/list/L = list())
 	var/list/trimmed_list = L.Copy()
 	var/antag_name = initial(antag_flag)
-	for(var/mob/living/carbon/human/M in trimmed_list)
+	for(var/mob/M in trimmed_list)
 		if (!M.client) // Are they connected?
 			trimmed_list.Remove(M)
 			continue
