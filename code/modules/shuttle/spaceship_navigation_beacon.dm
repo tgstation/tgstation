@@ -47,7 +47,6 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 		icon_state = "core"
 	else
 		icon_state = "core-open"
-	return
 
 /obj/machinery/spaceship_navigation_beacon/power_change()
 	. = ..()
