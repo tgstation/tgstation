@@ -46,6 +46,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/list/midround_rules = list()
 	var/list/second_rule_req = list(100,100,80,70,60,40,20,0,0,0)// Requirements for extra round start rules
 	var/list/third_rule_req = list(100,100,100,90,80,70,50,30,10,0)
+	var/high_pop_second_rule_req = 50
+	var/high_pop_third_rule_req = 70
 	var/roundstart_pop_ready = 0
 	var/list/candidates = list()
 	var/list/current_rules = list()
@@ -66,28 +68,18 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 	var/peaceful_percentage = 50
 
-	// -- Special tweaks --
-	var/no_stacking = TRUE
-	var/high_pop_limit = 60
-	var/forced_extended = FALSE
-	var/stacking_limit = 90
-	var/curve_centre = 0
-	var/curve_width = 1.8
-	var/classic_secret = FALSE
-	var/list/forced_roundstart_ruleset = list() 
-
 /datum/game_mode/dynamic/AdminPanel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
-	dat += "Parameters: centre = [curve_centre] ; width = [curve_width].<br/>"
+	dat += "Parameters: centre = [GLOB.dynamic_curve_centre] ; width = [GLOB.dynamic_curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
-	dat += "Forced extended: <a href='?src=\ref[src];[HrefToken()];forced_extended=1'><b>[forced_extended ? "On" : "Off"]</b></a><br/>"
-	dat += "Classic secret (only autotraitor): <a href='?src=\ref[src];[HrefToken()];classic_secret=1'><b>[classic_secret ? "On" : "Off"]</b></a><br/>"
-	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];[HrefToken()];no_stacking=1'><b>[no_stacking ? "On" : "Off"]</b></a><br/>"
-	dat += "Stacking limit: [stacking_limit] <a href='?src=\ref[src];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
+	dat += "Forced extended: <a href='?src=\ref[src];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
+	dat += "Classic secret (only autotraitor): <a href='?src=\ref[src];[HrefToken()];classic_secret=1'><b>[GLOB.dynamic_classic_secret ? "On" : "Off"]</b></a><br/>"
+	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
+	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=\ref[src];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
 	dat += "Executed rulesets: "
 	if (executed_rules.len > 0)
@@ -116,11 +108,11 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		log_admin("[key_name(usr)] tried to use the game mode panel without authorization.")
 		return
 	if (href_list["forced_extended"])
-		forced_extended = !forced_extended
+		GLOB.dynamic_forced_extended = !GLOB.dynamic_forced_extended
 	else if (href_list["no_stacking"])
-		no_stacking = !no_stacking
+		GLOB.dynamic_no_stacking = !GLOB.dynamic_no_stacking
 	else if (href_list["classic_secret"])
-		classic_secret = !classic_secret
+		GLOB.dynamic_classic_secret = !GLOB.dynamic_classic_secret
 	else if (href_list["adjustthreat"])
 		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0) as null|num
 		if(!threatadd)
@@ -138,7 +130,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
 	else if (href_list["stacking_limit"])
-		stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
+		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 	
 	AdminPanel() // Refreshes the window
 
@@ -224,30 +216,21 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	usr << browse(out, "window=threatlog;size=700x500")
 
 /datum/game_mode/dynamic/proc/generate_threat()
-	relative_threat = lorentz_distribution(curve_centre, curve_width)
-	threat_level = lorentz2threat(relative_threat)
-	threat = round(threat, 0.1)
+	relative_threat = lorentz_distribution(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
+	threat_level = round(lorentz2threat(relative_threat), 0.1)
 
-	peaceful_percentage = round(lorentz_cummulative_distribution(relative_threat, curve_centre, curve_width), 0.01)*100
+	peaceful_percentage = round(lorentz_cummulative_distribution(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
 
 	threat = threat_level
 	starting_threat = threat_level
 
 /datum/game_mode/dynamic/can_start()
-	curve_centre = GLOB.dynamic_curve_centre
-	curve_width = GLOB.dynamic_curve_width
-	forced_extended = GLOB.dynamic_forced_extended
-	no_stacking = GLOB.dynamic_no_stacking
-	stacking_limit = GLOB.dynamic_stacking_limit
-	classic_secret = GLOB.dynamic_classic_secret
-	high_pop_limit = GLOB.dynamic_high_pop_limit
-	forced_roundstart_ruleset = GLOB.dynamic_forced_roundstart_ruleset
 	message_admins("Dynamic mode parameters for the round:")
-	message_admins("Centre is [curve_centre], Width is [curve_width], Forced extended is [forced_extended ? "Enabled" : "Disabled"], No stacking is [no_stacking ? "Enabled" : "Disabled"].")
-	message_admins("Stacking limit is [stacking_limit], Classic secret is [classic_secret ? "Enabled" : "Disabled"], High population limit is [high_pop_limit].")
+	message_admins("Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
+	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
-	log_game("DYNAMIC: Centre is [curve_centre], Width is [curve_width], Forced extended is [forced_extended ? "Enabled" : "Disabled"], No stacking is [no_stacking ? "Enabled" : "Disabled"].")
-	log_game("DYNAMIC: Stacking limit is [stacking_limit], Classic secret is [classic_secret ? "Enabled" : "Disabled"], High population limit is [high_pop_limit].")
+	log_game("DYNAMIC: Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
+	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
 	generate_threat()
 
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
@@ -257,7 +240,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
 	message_admins("Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
-	if (GLOB.player_list.len >= high_pop_limit)
+	if (GLOB.player_list.len >= GLOB.dynamic_high_pop_limit)
 		message_admins("High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
 		log_game("DYNAMIC: High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
 
@@ -282,7 +265,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	if (roundstart_rules.len <= 0)
 		return TRUE
 	
-	if(forced_roundstart_ruleset.len > 0)
+	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 		rigged_roundstart()
 	else 
 		roundstart()
@@ -304,9 +287,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	..()
 
 /datum/game_mode/dynamic/proc/rigged_roundstart()
-	message_admins("[forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
-	log_game("DYNAMIC: [forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
-	for (var/datum/dynamic_ruleset/roundstart/rule in forced_roundstart_ruleset)
+	message_admins("[GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
+	log_game("DYNAMIC: [GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
+	for (var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
@@ -316,18 +299,14 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			picking_roundstart_rule(list(rule))
 
 /datum/game_mode/dynamic/proc/roundstart()
-	if (forced_extended)
+	if (GLOB.dynamic_forced_extended)
 		log_game("DYNAMIC: Starting a round of forced extended.")
 		return TRUE
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-		var/skip_ruleset = 0
-		for (var/datum/dynamic_ruleset/roundstart/DR in drafted_rules)
-			if ((DR.flags & HIGHLANDER_RULESET) && (rule.flags & HIGHLANDER_RULESET))
-				skip_ruleset = 1
-				break
-		if (skip_ruleset)
-			continue
+		if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(rule.flags == HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
+				continue
 		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
@@ -336,13 +315,13 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 	var/indice_pop = min(10,round(roundstart_pop_ready/5)+1)
 	var/extra_rulesets_amount = 0
-	if (classic_secret)
+	if (GLOB.dynamic_classic_secret)
 		extra_rulesets_amount = 0
 	else
-		if (GLOB.player_list.len > high_pop_limit)
-			if (threat_level > 50)
+		if (GLOB.player_list.len > GLOB.dynamic_high_pop_limit)
+			if (threat_level > high_pop_second_rule_req)
 				extra_rulesets_amount++
-				if (threat_level > 75)
+				if (threat_level > high_pop_third_rule_req)
 					extra_rulesets_amount++
 		else
 			if (threat_level >= second_rule_req[indice_pop])
@@ -360,6 +339,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 						if (rule.cost > threat)
 							drafted_rules -= rule
+					picking_roundstart_rule(drafted_rules)
 	else
 		return FALSE
 	return TRUE
@@ -385,9 +365,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			if (starting_rule.persistent)
 				current_rules += starting_rule
 			for(var/mob/M in starting_rule.assigned)
-				candidates -= M
 				for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-					rule.candidates -= M // Removing the assigned players from the candidates for the other rules
 					if (!rule.ready())
 						drafted_rules -= rule // And removing rules that are no longer elligible
 			return TRUE
@@ -479,7 +457,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	if (midround_injection_cooldown > 0)
 		midround_injection_cooldown -= (world.time - last_injection_update)
 	else
-		if (forced_extended)
+		if (GLOB.dynamic_forced_extended)
 			return
 		// Time to inject some threat into the round
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
@@ -496,16 +474,11 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
 				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && threat >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
-					if (classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
+					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 						continue
 					// No stacking : only one round-enter, unless > stacking_limit threat.
-					if (threat < stacking_limit && no_stacking)
-						var/skip_ruleset = 0
-						for (var/datum/dynamic_ruleset/DR in executed_rules)
-							if ((DR.flags & HIGHLANDER_RULESET) && (rule.flags & HIGHLANDER_RULESET))
-								skip_ruleset = 1
-								break
-						if (skip_ruleset)
+					if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+						if(rule.flags == HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
 							continue
 					rule.candidates = list()
 					rule.candidates = current_players.Copy()
@@ -526,13 +499,11 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	current_players[CURRENT_DEAD_PLAYERS] = list()
 	current_players[CURRENT_OBSERVERS] = list()
 	for (var/mob/M in GLOB.player_list)
-		if (!M.client)
-			continue
 		if (istype(M,/mob/dead/new_player))
 			continue
 		if (M.stat != DEAD)
 			current_players[CURRENT_LIVING_PLAYERS].Add(M)
-			if (M.mind && (M.mind.special_role))
+			if (M.mind && (M.mind.special_role || M.mind.antag_datums.len > 0))
 				current_players[CURRENT_LIVING_ANTAGS].Add(M)
 		else
 			if (istype(M,/mob/dead/observer))
@@ -548,7 +519,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		return 100
 	var/chance = 0
 	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
-	var/high_pop_factor = (GLOB.player_list.len >= high_pop_limit)
+	var/high_pop_factor = (GLOB.player_list.len >= GLOB.dynamic_high_pop_limit)
 	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5))) // https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=2053826290
 	if (!current_players[CURRENT_LIVING_ANTAGS].len)
 		chance += 50 // No antags at all? let's boost those odds!
@@ -573,7 +544,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	return rule_list
 
 /datum/game_mode/dynamic/make_antag_chance(mob/living/carbon/human/newPlayer)
-	if (forced_extended)
+	if (GLOB.dynamic_forced_extended)
 		return
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left
 		return
@@ -593,17 +564,13 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && threat >= rule.cost)
 				// Classic secret : only autotraitor/minor roles
-				if (classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
+				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 					continue
 				// No stacking : only one round-enter, unless > stacking_limit threat.
-				if (threat < stacking_limit && no_stacking)
-					var/skip_ruleset = 0
-					for (var/datum/dynamic_ruleset/DR in executed_rules)
-						if ((DR.flags & HIGHLANDER_RULESET) && (rule.flags & HIGHLANDER_RULESET))
-							skip_ruleset = 1
-							break
-					if (skip_ruleset)
+				if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+					if(rule.flags == HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
 						continue
+					
 				rule.candidates = list(newPlayer)
 				rule.trim_candidates()
 				if (rule.ready())
@@ -626,3 +593,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Expend threat, but do not fall below 0.
 /datum/game_mode/dynamic/proc/spend_threat(var/cost)
 	threat = max(threat-cost,0)
+
+/datum/game_mode/dynamic/proc/check_for_highlander(var/list/drafted_rules)
+	for (var/datum/dynamic_ruleset/roundstart/DR in drafted_rules)
+		if (DR.flags == HIGHLANDER_RULESET)
+			return TRUE

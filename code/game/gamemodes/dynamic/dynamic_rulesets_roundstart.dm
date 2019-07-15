@@ -158,7 +158,7 @@
 	high_population_requirement = 40
 	var/list/roundstart_wizards = list()
 
-/datum/dynamic_ruleset/roundstart/wizard/acceptable(var/population=0,var/threat=0)
+/datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
 	if(GLOB.wizardstart.len == 0)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
@@ -204,7 +204,7 @@
 	var/cultist_cap = list(2,2,3,4,4,4,4,4,4,4)
 	var/datum/team/cult/main_cult
 
-/datum/dynamic_ruleset/roundstart/bloodcult/ready(var/forced = 0)
+/datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = 0)
 	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
 	required_candidates = cultist_cap[indice_pop]
 	. = ..()
@@ -264,7 +264,7 @@
 	var/datum/team/nuclear/nuke_team
 
 
-/datum/dynamic_ruleset/roundstart/nuclear/ready(var/forced = 0)
+/datum/dynamic_ruleset/roundstart/nuclear/ready(forced = 0)
 	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
 	required_candidates = operative_cap[indice_pop]
 	. = ..()
@@ -362,7 +362,7 @@
 	var/datum/team/revolution/revolution
 	var/finished = 0
 
-/datum/dynamic_ruleset/roundstart/delayed/revs/ready(var/forced = 0)
+/datum/dynamic_ruleset/roundstart/delayed/revs/ready(forced = 0)
 	if (forced)
 		required_heads = 1
 		required_candidates = 1

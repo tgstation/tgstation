@@ -1,7 +1,7 @@
 /datum/dynamic_ruleset
 	var/name = "" // For admin logging
-	var/persistent = 0 // If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every SSTicker tick
-	var/repeatable = 0 // If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
+	var/persistent = FALSE // If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every SSTicker tick
+	var/repeatable = FALSE // If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
 	var/list/mob/candidates = list() // List of players that are being drafted for this rule
 	var/list/datum/mind/assigned = list() // List of players that were selected for this rule
 	var/antag_flag = null // Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
@@ -42,7 +42,7 @@
 
 	if (istype(SSticker.mode, /datum/game_mode/dynamic))
 		mode = SSticker.mode
-	else
+	else if (GLOB.master_mode != "dynamic") // This is here to make roundstart forced ruleset function.
 		qdel(src)
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
@@ -56,8 +56,8 @@
 
 // By default, a rule is acceptable if it satisfies the threat level/population requirements.
 // If your rule has extra checks, such as counting security officers, do that in ready() instead
-/datum/dynamic_ruleset/proc/acceptable(var/population=0,var/threat_level=0)
-	if (GLOB.player_list.len >= mode.high_pop_limit)
+/datum/dynamic_ruleset/proc/acceptable(population=0, threat_level=0)
+	if (GLOB.player_list.len >= GLOB.dynamic_high_pop_limit)
 		return (threat_level >= high_population_requirement)
 	else
 		var/indice_pop = min(10,round(population/pop_per_requirement)+1)
@@ -77,7 +77,7 @@
 // Give your candidates or assignees equipment and antag datum here.
 /datum/dynamic_ruleset/proc/execute()
 	for(var/datum/mind/M in assigned)
-		M.add_antag_datum(new antag_datum)
+		M.add_antag_datum(antag_datum)
 	return TRUE
 
 // Called after delay set in ruleset.
@@ -89,7 +89,7 @@
 // Here you can perform any additional checks you want. (such as checking the map etc)
 // Remember that on roundstart no one knows what their job is at this point.
 // IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
-/datum/dynamic_ruleset/proc/ready(var/forced = 0)	
+/datum/dynamic_ruleset/proc/ready(forced = 0)	
 	if (required_candidates > candidates.len)		
 		return FALSE
 	return TRUE
@@ -97,7 +97,7 @@
 /datum/dynamic_ruleset/proc/get_weight()
 	if(repeatable && weight > 1)
 		for(var/datum/dynamic_ruleset/DR in mode.executed_rules)
-			if(istype(DR,src.type))
+			if(istype(DR, type))
 				weight = max(weight-2,1)
 	return weight
 
@@ -109,7 +109,7 @@
 
 // This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
 // Called by from_ghost midround rulesets.
-/datum/dynamic_ruleset/proc/send_applications(var/list/possible_volunteers = list())
+/datum/dynamic_ruleset/proc/send_applications(list/possible_volunteers = list())
 	if (possible_volunteers.len <= 0) // This shouldn't happen, as ready() should return FALSE if there is not a single valid candidate
 		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
 		return
@@ -191,5 +191,5 @@
 
 // Do your checks if the ruleset is ready to be executed here.
 // Should ignore certain checks if forced is TRUE
-/datum/dynamic_ruleset/roundstart/ready(var/forced = 0)
+/datum/dynamic_ruleset/roundstart/ready(forced = FALSE)
 	return ..()

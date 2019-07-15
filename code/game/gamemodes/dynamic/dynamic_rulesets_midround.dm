@@ -28,7 +28,7 @@
 	dead_players = trim_list(candidates[CURRENT_DEAD_PLAYERS])
 	list_observers = trim_list(candidates[CURRENT_OBSERVERS])
 
-/datum/dynamic_ruleset/midround/proc/trim_list(var/list/L = list())
+/datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
 	var/antag_name = initial(antag_flag)
 	for(var/mob/M in trimmed_list)
@@ -52,7 +52,7 @@
 
 // IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
 // (see /datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = 0) for example)
-/datum/dynamic_ruleset/midround/ready(var/forced = 0)
+/datum/dynamic_ruleset/midround/ready(forced = 0)
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
@@ -114,12 +114,12 @@
 	new_character.dna.remove_all_mutations()
 	return new_character
 
-/datum/dynamic_ruleset/midround/from_ghosts/proc/finish_setup(var/mob/new_character, var/index)
+/datum/dynamic_ruleset/midround/from_ghosts/proc/finish_setup(mob/new_character, index)
 	var/datum/antagonist/new_role = new antag_datum()
 	new_character.mind.add_antag_datum(new_role)
 	setup_role(new_role)
 
-/datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(var/datum/antagonist/new_role)
+/datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(datum/antagonist/new_role)
 	return
 
 //////////////////////////////////////////////
@@ -142,7 +142,7 @@
 	high_population_requirement = 10
 	flags = TRAITOR_RULESET
 
-/datum/dynamic_ruleset/midround/autotraitor/acceptable(var/population=0,var/threat=0)
+/datum/dynamic_ruleset/midround/autotraitor/acceptable(population=0, threat=0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
 	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
@@ -163,7 +163,7 @@
 		if(player.mind && (player.mind.special_role))
 			living_players -= player // We don't autotator people with roles already
 
-/datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = 0)
+/datum/dynamic_ruleset/midround/autotraitor/ready(forced = 0)
 	if (required_candidates > living_players.len)
 		return FALSE
 	return ..()
@@ -238,7 +238,7 @@
 	high_population_requirement = 50
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(var/forced = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = 0)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
 	if(GLOB.wizardstart.len == 0)
@@ -268,19 +268,19 @@
 	var/datum/team/nuclear/nuke_team
 	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(var/population=0,var/threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
 		return FALSE // Unavailable if nuke ops were already sent at roundstart
 	var/indice_pop = min(10,round(living_players.len/5)+1)
 	required_candidates = operative_cap[indice_pop]
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/ready(var/forced = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/ready(forced = 0)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(var/mob/new_character, var/index)
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
 	if (index == 1) // Our first guy is the leader
 		var/datum/antagonist/nukeop/leader/new_role = new
 		new_character.mind.add_antag_datum(new_role)

@@ -20,7 +20,7 @@
 			candidates.Remove(P)
 			continue
 
-/datum/dynamic_ruleset/latejoin/ready(var/forced = 0)
+/datum/dynamic_ruleset/latejoin/ready(forced = 0)
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
@@ -40,7 +40,7 @@
 	candidates -= M
 	assigned += M.mind
 	M.mind.special_role = antag_flag
-	M.mind.add_antag_datum(new antag_datum())
+	M.mind.add_antag_datum(antag_datum)
 	return TRUE
 
 //////////////////////////////////////////////
@@ -84,7 +84,7 @@
 	flags = HIGHLANDER_RULESET
 	var/required_heads = 3
 
-/datum/dynamic_ruleset/latejoin/provocateur/ready(var/forced=FALSE)
+/datum/dynamic_ruleset/latejoin/provocateur/ready(forced=FALSE)
 	if (forced)
 		required_heads = 1
 	if(!..())
