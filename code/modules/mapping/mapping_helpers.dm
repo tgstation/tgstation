@@ -7,7 +7,7 @@
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
 
-	var/list/baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
+	var/list/baseturf_to_replace
 	var/baseturf
 
 	layer = POINT_LAYER
@@ -18,7 +18,7 @@
 
 /obj/effect/baseturf_helper/LateInitialize()
 	if(!baseturf_to_replace)
-		baseturf_to_replace = typecacheof(/turf/open/space)
+		baseturf_to_replace = list(/turf/baseturf_bottom = TRUE)
 	else if(!length(baseturf_to_replace))
 		baseturf_to_replace = list(baseturf_to_replace = TRUE)
 	else if(baseturf_to_replace[baseturf_to_replace[1]] != TRUE) // It's not associative
