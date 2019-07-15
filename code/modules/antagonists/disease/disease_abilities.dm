@@ -415,7 +415,7 @@ new /datum/disease_ability/symptom/powerful/youth
 /datum/disease_ability/symptom/powerful/narcolepsy
 	symptoms = list(/datum/symptom/narcolepsy)
 
-/datum/disease_ability/symptom/heal/youth
+/datum/disease_ability/symptom/powerful/youth
 	symptoms = list(/datum/symptom/youth)
 	short_desc = "Cause victims to become eternally young."
 	long_desc = "Cause victims to become eternally young. Provides boosts to all stats except transmissibility."
