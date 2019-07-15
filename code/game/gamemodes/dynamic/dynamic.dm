@@ -344,7 +344,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		return FALSE
 	return TRUE
 
-/datum/game_mode/dynamic/proc/picking_roundstart_rule(var/list/drafted_rules = list())
+/datum/game_mode/dynamic/proc/picking_roundstart_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
 
 	if (starting_rule)
@@ -373,7 +373,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
 	return FALSE
 
-/datum/game_mode/dynamic/proc/execute_delayed(var/datum/dynamic_ruleset/roundstart/delayed/rule)
+/datum/game_mode/dynamic/proc/execute_delayed(datum/dynamic_ruleset/roundstart/delayed/rule)
 	rule.candidates = GLOB.player_list.Copy()
 	rule.trim_candidates()
 	if(rule.execute())
@@ -382,7 +382,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			current_rules += rule
 		return TRUE
 	
-/datum/game_mode/dynamic/proc/picking_latejoin_rule(var/list/drafted_rules = list())
+/datum/game_mode/dynamic/proc/picking_latejoin_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/latejoin/latejoin_rule = pickweight(drafted_rules)
 	if (latejoin_rule)
 		if (!latejoin_rule.repeatable)
@@ -400,7 +400,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			stack_trace("The latejoin rule \"[latejoin_rule.name]\" failed to execute.")
 	return FALSE
 
-/datum/game_mode/dynamic/proc/picking_midround_rule(var/list/drafted_rules = list())
+/datum/game_mode/dynamic/proc/picking_midround_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/midround/midround_rule = pickweight(drafted_rules)
 	if (midround_rule)
 		if (!midround_rule.repeatable)
@@ -417,7 +417,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			stack_trace("The midround rule \"[midround_rule.name]\" failed to execute.")
 	return FALSE
 
-/datum/game_mode/dynamic/proc/picking_specific_rule(var/ruletype,var/forced=0) // An experimental proc to allow admins to call rules on the fly or have rules call other rules
+/datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced=0) // An experimental proc to allow admins to call rules on the fly or have rules call other rules
 	var/datum/dynamic_ruleset/midround/new_rule
 	if(ispath(ruletype))
 		new_rule = new ruletype() // You should only use it to call midround rules though.
@@ -537,7 +537,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		chance -= 15
 	return round(max(0,chance))
 
-/datum/game_mode/dynamic/proc/remove_rule(var/list/rule_list,var/rule_type)
+/datum/game_mode/dynamic/proc/remove_rule(list/rule_list, rule_type)
 	for(var/datum/dynamic_ruleset/DR in rule_list)
 		if(istype(DR,rule_type))
 			rule_list -= DR
@@ -581,20 +581,20 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			latejoin_injection_cooldown = round(CLAMP(exp_distribution(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max))
 
 // Regenerate threat, but no more than our original threat level.
-/datum/game_mode/dynamic/proc/refund_threat(var/regain)
+/datum/game_mode/dynamic/proc/refund_threat(regain)
 	threat = min(threat_level,threat+regain)
 
 // Generate threat and increase the threat_level if it goes beyond, capped at 100
-/datum/game_mode/dynamic/proc/create_threat(var/gain)
+/datum/game_mode/dynamic/proc/create_threat(gain)
 	threat = min(100, threat+gain)
 	if(threat>threat_level)
 		threat_level = threat
 
 // Expend threat, but do not fall below 0.
-/datum/game_mode/dynamic/proc/spend_threat(var/cost)
+/datum/game_mode/dynamic/proc/spend_threat(cost)
 	threat = max(threat-cost,0)
 
-/datum/game_mode/dynamic/proc/check_for_highlander(var/list/drafted_rules)
+/datum/game_mode/dynamic/proc/check_for_highlander(list/drafted_rules)
 	for (var/datum/dynamic_ruleset/roundstart/DR in drafted_rules)
 		if (DR.flags == HIGHLANDER_RULESET)
 			return TRUE
