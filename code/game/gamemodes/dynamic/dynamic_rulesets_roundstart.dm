@@ -280,8 +280,8 @@
 		var/mob/M = pick(candidates)
 		candidates -= M
 		assigned += M.mind
-		M.assigned_role = "Nuclear Operative"
-		M.special_role = "Nuclear Operative"
+		M.mind.assigned_role = "Nuclear Operative"
+		M.mind.special_role = "Nuclear Operative"
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
