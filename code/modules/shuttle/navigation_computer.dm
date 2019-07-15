@@ -56,19 +56,19 @@
 	switch(choice)
 		if("Add ID")
 			sellect = replacetext(lowertext(input("Enter the ID to add", "Input ID") as text), " ", "_")
-			if(sellect && Adjacent(user))
+			if(sellect || !Adjacent(user))
 				beacon_codes |= sellect
 		if("Remove ID")
 			sellect = input("Choice ID to remove", "ID to remove") as null|anything in beacon_codes
-			if(sellect && Adjacent(user))
+			if(sellect || !Adjacent(user))
 				beacon_codes -= sellect
 		if("Add access code")
 			sellect = replacetext(lowertext(input("Enter the access code to add", "Input access code") as text), " ", "_")
-			if(sellect && Adjacent(user))
+			if(sellect || !Adjacent(user))
 				beacon_access_codes |= sellect
 		if("Remove access code")
 			sellect = input("Choice access code to remove", "Access code to remove") as null|anything in beacon_access_codes
-			if(sellect && Adjacent(user))
+			if(sellect || !Adjacent(user))
 				beacon_access_codes -= sellect
 	return TRUE
 
