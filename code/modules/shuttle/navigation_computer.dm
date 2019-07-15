@@ -23,6 +23,14 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
 	. = ..()
 	GLOB.navigation_computers += src
+
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
+		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
+			if(S.destination_type == shuttleDestination_type)
+				jumpto_ports[S.id] = TRUE
+
 	for(var/V in SSshuttle.stationary)
 		if(!V)
 			continue
@@ -133,14 +141,14 @@
 			if(SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT)
 				to_chat(current_user, "<span class='warning'>Unknown object detected in landing zone. Please designate another location.</span>")
 		return
-		
+
 	//Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.
-	if(my_port && my_port.get_docked()) 
+	if(my_port && my_port.get_docked())
 		my_port.delete_after = TRUE
 		my_port.id = FALSE
 		my_port.destination_type = FALSE
 		my_port.name = "Old [my_port.name]"
-		my_port = FALSE 
+		my_port = FALSE
 
 	if(!my_port)
 		my_port = new()
