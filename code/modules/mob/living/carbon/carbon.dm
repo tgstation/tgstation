@@ -351,14 +351,16 @@
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
-		return
+		return FALSE
+	if(I != handcuffed && I != legcuffed)
+		return FALSE
 	visible_message("<span class='danger'>[src] manages to [cuff_break ? "break" : "remove"] [I]!</span>")
 	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>")
 
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
-		return
+		return TRUE
 
 	else
 		if(I == handcuffed)
@@ -368,17 +370,13 @@
 			if(buckled && buckled.buckle_requires_restraints)
 				buckled.unbuckle_mob(src)
 			update_handcuffed()
-			return
+			return TRUE
 		if(I == legcuffed)
 			legcuffed.forceMove(drop_location())
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
-			return
-		else
-			dropItemToGround(I)
-			return
-		return TRUE
+			return TRUE
 
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
 	if(lying)
@@ -430,9 +428,9 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-		return 1
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE)
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !force)
+		return TRUE
 
 	if(nutrition < 100 && !blood)
 		if(message)
@@ -440,7 +438,7 @@
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			Paralyze(200)
-		return 1
+		return TRUE
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
 		if(message)
@@ -466,7 +464,7 @@
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
-			if(stun)
+			if(harm)
 				adjustBruteLoss(3)
 		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
 			if(T)
@@ -477,7 +475,7 @@
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
-	return 1
+	return TRUE
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
