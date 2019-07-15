@@ -15,7 +15,7 @@
 	var/setting = 1 // displayed range is 3 * setting
 	var/max_range = 3 // displayed max range is 3 * max range
 
-/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc)
+/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc, silent=FALSE)
 	amount = setting
 	carry.copy_to(chemholder, 20)
 	carry.remove_any(amount * 16 / efficiency)

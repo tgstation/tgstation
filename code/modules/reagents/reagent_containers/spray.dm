@@ -2,7 +2,7 @@
 	name = "spray bottle"
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
-	icon_state = "cleaner"
+	icon_state = "sprayer_large"
 	item_state = "cleaner"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
@@ -160,6 +160,7 @@
 /obj/item/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
+	icon_state = "cleaner"
 	volume = 100
 	list_reagents = list(/datum/reagent/space_cleaner = 100)
 	amount_per_transfer_from_this = 2
@@ -349,3 +350,51 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
 	list_reagents = list(/datum/reagent/toxin/plantbgone = 100)
+
+/obj/item/reagent_containers/spray/syndicate
+	name = "suspicious spray bottle"
+	desc = "A spray bottle, with a high performance plastic nozzle. The color scheme makes you feel slightly uneasy."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "sprayer_sus_8"
+	item_state = "sprayer_sus"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	spray_range = 4
+	stream_range = 2
+	volume = 100
+	custom_premium_price = 200
+
+/obj/item/reagent_containers/spray/syndicate/Initialize()
+	. = ..()
+	icon_state = pick("sprayer_sus_1", "sprayer_sus_2", "sprayer_sus_3", "sprayer_sus_4", "sprayer_sus_5","sprayer_sus_6", "sprayer_sus_7", "sprayer_sus_8")
+
+/obj/item/reagent_containers/spray/medical
+	name = "medical spray bottle"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "sprayer_med_red"
+	item_state = "sprayer_med_red"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	volume = 100
+	unique_reskin = list("Red" = "sprayer_med_red",
+						"Yellow" = "sprayer_med_yellow",
+						"Blue" = "sprayer_med_blue")
+
+/obj/item/reagent_containers/spray/medical/AltClick(mob/user)
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		reskin_obj(user)
+
+/obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
+	..()
+	switch(icon_state)
+		if("sprayer_med_red")
+			item_state = "sprayer_med_red"
+		if("sprayer_med_yellow")
+			item_state = "sprayer_med_yellow"
+		if("sprayer_med_blue")
+			item_state = "sprayer_med_blue"
+	M.update_inv_hands()
+
+
+
+

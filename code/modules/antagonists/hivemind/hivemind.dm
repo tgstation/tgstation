@@ -185,6 +185,7 @@
 	ADD_TRAIT(C, TRAIT_NOLIMBDISABLE, HIVEMIND_ONE_MIND_TRAIT)
 	ADD_TRAIT(C, TRAIT_NOHUNGER, HIVEMIND_ONE_MIND_TRAIT)
 	ADD_TRAIT(C, TRAIT_NODISMEMBER, HIVEMIND_ONE_MIND_TRAIT)
+	log_game("[key_name(owner)] has awakened vessels.")
 
 /datum/antagonist/hivemind/proc/go_back_to_sleep()
 	if(!active_one_mind)

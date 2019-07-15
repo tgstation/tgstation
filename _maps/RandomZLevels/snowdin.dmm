@@ -407,7 +407,6 @@
 	dir = 1
 	},
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1015,7 +1014,6 @@
 /area/awaymission/snowdin/post/research)
 "cE" = (
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1253,7 +1251,6 @@
 "cY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2;
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -1301,7 +1298,6 @@
 "db" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2;
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -1361,7 +1357,6 @@
 "df" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2;
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -1819,7 +1814,6 @@
 /area/awaymission/snowdin/post)
 "em" = (
 /obj/machinery/power/apc{
-	dir = 2;
 	name = "Gateway APC";
 	pixel_y = -23;
 	req_access = 150
@@ -1878,9 +1872,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/messhall)
 "et" = (
-/obj/machinery/vending/boozeomat{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/boozeomat,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -1910,7 +1902,6 @@
 /area/awaymission/snowdin/post/messhall)
 "ew" = (
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -2148,7 +2139,6 @@
 	dir = 1
 	},
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -2542,7 +2532,6 @@
 /area/awaymission/snowdin/post/hydro)
 "fT" = (
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/green{
@@ -3655,7 +3644,6 @@
 /area/awaymission/snowdin/post)
 "iu" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2;
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -5080,7 +5068,6 @@
 /area/awaymission/snowdin/post)
 "lv" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2;
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -5194,7 +5181,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2;
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -5235,7 +5221,6 @@
 /area/awaymission/snowdin/post/hydro)
 "lG" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2;
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -6110,7 +6095,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/security{
 	name = "Security Checkpoint";
-	req_access = null;
 	req_access_txt = "1"
 	},
 /obj/effect/turf_decal/tile/red{
@@ -6277,7 +6261,6 @@
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
-	locked = 1;
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
@@ -6427,9 +6410,9 @@
 "oo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4;
+	piping_layer = 3;
 	pixel_x = 5;
-	pixel_y = 5;
-	piping_layer = 3
+	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -6437,9 +6420,9 @@
 "op" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4;
+	piping_layer = 3;
 	pixel_x = 5;
-	pixel_y = 5;
-	piping_layer = 3
+	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
@@ -6472,7 +6455,6 @@
 /area/awaymission/snowdin/post/hydro)
 "ot" = (
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
@@ -7746,9 +7728,9 @@
 "rI" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
+	piping_layer = 3;
 	pixel_x = 5;
-	pixel_y = 5;
-	piping_layer = 3
+	pixel_y = 5
 	},
 /obj/effect/light_emitter{
 	name = "cave light";
@@ -8230,7 +8212,6 @@
 /area/awaymission/snowdin/outside)
 "sW" = (
 /obj/machinery/power/turbine{
-	dir = 2;
 	luminosity = 2
 	},
 /obj/structure/cable,
@@ -9103,10 +9084,10 @@
 /area/awaymission/snowdin/post/broken_shuttle)
 "wc" = (
 /obj/machinery/computer{
-	name = "Shuttle Transist Console";
 	desc = "A console meant for calling and sending a transit ferry. It seems iced-over and non-functional.";
 	dir = 1;
-	icon_screen = null
+	icon_screen = null;
+	name = "Shuttle Transist Console"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/snowdin/post/broken_shuttle)
@@ -9195,7 +9176,6 @@
 "wm" = (
 /obj/machinery/porta_turret/centcom_shuttle/weak{
 	desc = "A turret built with substandard parts and run down further with age.";
-	icon_state = "syndie_off";
 	dir = 9;
 	faction = list("pirate")
 	},
@@ -9289,7 +9269,6 @@
 	},
 /obj/effect/light_emitter{
 	light_color = "#FAA019";
-	light_power = 1;
 	light_range = 4;
 	name = "fire light"
 	},
@@ -9321,7 +9300,6 @@
 /area/awaymission/snowdin/outside)
 "wC" = (
 /obj/vehicle/ridden/atv{
-	icon_state = "atv";
 	dir = 4
 	},
 /obj/effect/light_emitter{
@@ -10022,10 +10000,10 @@
 /area/awaymission/snowdin/cave)
 "yu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	name = "toxin out";
 	dir = 8;
+	frequency = 1442;
 	id_tag = "snowdin_toxins_mine_1";
-	frequency = 1442
+	name = "toxin out"
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/snowdin/cave)
@@ -10355,7 +10333,6 @@
 /area/awaymission/snowdin/post/minipost)
 "zq" = (
 /obj/vehicle/ridden/atv{
-	icon_state = "atv";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -10844,7 +10821,6 @@
 	},
 /obj/effect/light_emitter{
 	light_color = "#FAA019";
-	light_power = 1;
 	light_range = 4;
 	name = "fire light"
 	},
@@ -11595,7 +11571,6 @@
 /area/awaymission/snowdin/cave)
 "CP" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12569,7 +12544,6 @@
 /area/awaymission/snowdin/cave)
 "EN" = (
 /obj/machinery/sleeper/syndie{
-	icon_state = "sleeper_s";
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_white,
@@ -12582,7 +12556,6 @@
 "EP" = (
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/sleeper/syndie{
-	icon_state = "sleeper_s";
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -12993,7 +12966,6 @@
 /area/awaymission/snowdin/cave/cavern)
 "FY" = (
 /obj/machinery/conveyor{
-	dir = 2;
 	id = "snowdin_belt_mine"
 	},
 /obj/machinery/light/small{
@@ -13016,8 +12988,7 @@
 /area/awaymission/snowdin/post/mining_main)
 "Gc" = (
 /obj/structure/statue/snow/snowman{
-	anchored = 1;
-	name = "snowman"
+	anchored = 1
 	},
 /obj/item/pickaxe/mini{
 	pixel_x = 5;
@@ -13075,7 +13046,6 @@
 "Gn" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
-	dir = 2;
 	id = "snowdin_belt_mine"
 	},
 /turf/open/floor/plating,
@@ -13250,7 +13220,6 @@
 	output_dir = 2
 	},
 /obj/machinery/conveyor{
-	dir = 2;
 	id = "snowdin_belt_mine"
 	},
 /turf/open/floor/plating,
@@ -13361,7 +13330,6 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Hk" = (
 /obj/machinery/conveyor{
-	dir = 2;
 	id = "snowdin_belt_mine"
 	},
 /turf/open/floor/plating,
@@ -13470,11 +13438,9 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "HC" = (
 /obj/machinery/mineral/processing_unit{
-	dir = 1;
-	output_dir = 2
+	dir = 1
 	},
 /obj/machinery/conveyor{
-	dir = 2;
 	id = "snowdin_belt_mine"
 	},
 /turf/open/floor/plating,
@@ -13788,7 +13754,6 @@
 /area/awaymission/snowdin/post/mining_main)
 "Ix" = (
 /obj/vehicle/ridden/atv{
-	icon_state = "atv";
 	dir = 1
 	},
 /obj/effect/decal/cleanable/oil,
@@ -14964,9 +14929,9 @@
 "ZH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4;
+	piping_layer = 3;
 	pixel_x = 5;
-	pixel_y = 5;
-	piping_layer = 3
+	pixel_y = 5
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,

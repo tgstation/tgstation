@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Action buttons can now be dragged onto each other to swap places"

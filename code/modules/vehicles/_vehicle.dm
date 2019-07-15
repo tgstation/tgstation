@@ -61,6 +61,7 @@
 			.++
 
 /obj/vehicle/proc/return_controllers_with_flag(flag)
+	RETURN_TYPE(/list/mob)
 	. = list()
 	for(var/i in occupants)
 		if(occupants[i] & flag)

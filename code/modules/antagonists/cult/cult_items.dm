@@ -594,7 +594,7 @@
 			playsound(destination, "sparks", 50, 1)
 
 	else
-		to_chat(C, "<span class='danger'>The veil cannot be torn here!</span>")
+		to_chat(C, "<span class='warning'>The veil cannot be torn here!</span>")
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"
@@ -764,7 +764,6 @@
 	guns_left = 24
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
-	item_flags = NEEDS_PERMIT | NOBLUDGEON | DROPDEL
 
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
@@ -772,10 +771,12 @@
 
 /obj/item/ammo_casing/magic/arcane_barrage/blood
 	projectile_type = /obj/item/projectile/magic/arcane_barrage/blood
+	firing_effect_type = /obj/effect/temp_visual/cult/sparks
 
 /obj/item/projectile/magic/arcane_barrage/blood
 	name = "blood bolt"
 	icon_state = "mini_leaper"
+	nondirectional_sprite = TRUE
 	damage_type = BRUTE
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
@@ -914,7 +915,6 @@
 /obj/item/shield/mirror
 	name = "mirror shield"
 	desc = "An infamous shield used by Nar'Sien sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "mirror_shield" // eshield1 for expanded
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'

@@ -98,7 +98,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			. += M
 
 //dupe_search_range is a list of antag datums / minds / teams
-/datum/objective/proc/find_target(dupe_search_range)
+/datum/objective/proc/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
 	if(!dupe_search_range)
 		dupe_search_range = get_owners()
@@ -110,7 +110,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target,dupe_search_range))
-			possible_targets += possible_target
+			if (!(possible_target in blacklist))
+				possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
 		for(var/I in all_possible_targets)

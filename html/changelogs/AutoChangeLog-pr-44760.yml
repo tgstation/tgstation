@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Slimes should now feed properly again."

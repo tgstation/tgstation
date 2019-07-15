@@ -14,7 +14,7 @@
 			user.Paralyze(60)
 			return
 		if(istype(loccheck.loc, /area/fabric_of_reality))
-			to_chat(user, "<span class='danger'>You can't do that here!</span>")
+			to_chat(user, "<span class='warning'>You can't do that here!</span>")
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
 		playsound(loccheck,'sound/effects/supermatter.ogg', 200, 1)

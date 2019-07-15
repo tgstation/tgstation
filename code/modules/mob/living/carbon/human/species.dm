@@ -152,7 +152,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/should_have_eyes = TRUE
 	var/should_have_ears = TRUE
 	var/should_have_tongue = TRUE
-	var/should_have_liver = !(NOLIVER in species_traits)
+	var/should_have_liver = !(TRAIT_NOMETABOLISM in inherent_traits)
 	var/should_have_stomach = !(NOSTOMACH in species_traits)
 	var/should_have_tail = mutanttail
 
@@ -293,6 +293,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
+
+	if(TRAIT_TOXIMMUNE in inherent_traits)
+		C.setToxLoss(0, TRUE, TRUE)
+
+	if(TRAIT_NOMETABOLISM in inherent_traits)
+		C.reagents.end_metabolization(C, keep_liverless = TRUE)
 
 	C.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown=speedmod, movetypes=(~FLYING))
 
@@ -1155,9 +1161,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(we_breathe && we_lung)
 			user.do_cpr(target)
 		else if(we_breathe && !we_lung)
-			to_chat(user, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR.</span>")
+			to_chat(user, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
 		else
-			to_chat(user, "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>")
+			to_chat(user, "<span class='warning'>You do not breathe, so you cannot perform CPR!</span>")
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
@@ -1432,9 +1438,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					H.add_splatter_floor(location)
 				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(H)
-					if(ishuman(user))
-						var/mob/living/carbon/human/dirtyboy = user
-						dirtyboy.adjust_hygiene(-10)
 
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
@@ -1486,21 +1489,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE)
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
-
+	
 	var/obj/item/bodypart/BP = null
-	if(isbodypart(def_zone))
-		BP = def_zone
-	else
-		if(!def_zone)
-			def_zone = ran_zone(def_zone)
-		BP = H.get_bodypart(check_zone(def_zone))
-		if(!BP)
-			BP = H.bodyparts[1]
+	if(!spread_damage)
+		if(isbodypart(def_zone))
+			BP = def_zone
+		else
+			if(!def_zone)
+				def_zone = ran_zone(def_zone)
+			BP = H.get_bodypart(check_zone(def_zone))
+			if(!BP)
+				BP = H.bodyparts[1]
 
 	switch(damagetype)
 		if(BRUTE)
@@ -1618,7 +1622,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
 		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
 			H.emote("scream")
-		H.apply_damage(burn_damage, BURN)
+		H.apply_damage(burn_damage, BURN, spread_damage = TRUE)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
