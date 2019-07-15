@@ -115,6 +115,7 @@
 		candidates -= M
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
+		M.mind.special_role = ROLE_CHANGELING
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/changeling/execute()
@@ -133,7 +134,6 @@
 		var/datum/antagonist/changeling/new_antag = new antag_datum()
 		new_antag.team_mode = TRUE
 		changeling.add_antag_datum(new_antag)
-		changeling.assigned_role = ROLE_CHANGELING
 
 	return TRUE
 
@@ -277,13 +277,13 @@
 		var/mob/M = pick(candidates)
 		candidates -= M
 		assigned += M.mind
+		M.assigned_role = "Nuclear Operative"
+		M.special_role = "Nuclear Operative"
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
 	var/leader = TRUE
 	for(var/datum/mind/M in assigned)
-		M.assigned_role = "Nuclear Operative"
-		M.special_role = "Nuclear Operative"
 		if (leader)
 			leader = FALSE
 			var/datum/antagonist/nukeop/leader/new_op = new antag_leader_datum()
