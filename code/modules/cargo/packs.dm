@@ -2182,6 +2182,13 @@
 			the_toy = pick(subtypesof(/obj/item/toy/plush))
 		new the_toy(.)
 
+/datum/supply_pack/costumes_toys/dank_mimery
+	name = "Guide to Dank Mimery"
+	desc = "A parcel containing \"Guide to Dank Mimery - a primer on basic pantomime.\""
+	cost = 500
+	crate_name = "parcel"
+	crate_type = /obj/item/smallDelivery
+
 /datum/supply_pack/costumes_toys/wizard
 	name = "Wizard Costume Crate"
 	desc = "Pretend to join the Wizard Federation with this full wizard outfit! Nanotrasen would like to remind its employees that actually joining the Wizard Federation is subject to termination of job and life."
