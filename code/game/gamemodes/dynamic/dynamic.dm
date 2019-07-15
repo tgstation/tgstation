@@ -205,7 +205,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/out = "<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [starting_threat]<BR>"
+	var/list/out = "<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [starting_threat]<BR>"
 
 	for(var/entry in threat_log)
 		if(istext(entry))
