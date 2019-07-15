@@ -118,6 +118,12 @@
 			// Handle the pod returning
 			pod.send_up(pod)
 
+			if (ishuman(M))
+				var/mob/living/carbon/human/target = M
+				
+				// After we remove items, at least give them what they need to live.
+				target.dna.species.give_important_for_life(target)
+
 			// After pod is sent we start the victim narrative/heal.
 			handleVictimExperience(M)
 
