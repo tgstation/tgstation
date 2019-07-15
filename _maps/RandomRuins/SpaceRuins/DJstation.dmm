@@ -174,10 +174,8 @@
 "aH" = (
 /obj/structure/table,
 /obj/item/radio/intercom{
-	broadcasting = 0;
 	dir = 8;
 	freerange = 1;
-	listening = 1;
 	name = "Pirate Radio Listening Channel"
 	},
 /turf/open/floor/plasteel/cafeteria,

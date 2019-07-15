@@ -415,7 +415,6 @@
 "pZ" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -712,8 +711,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Pirate Cutter APC";
-	pixel_x = -25;
-	req_access = null
+	pixel_x = -25
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/airalarm/all_access{
@@ -836,9 +834,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/caravan/pirate)
 "Jb" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 2
-	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	id_tag = "caravanpirate_bolt_port"
@@ -872,9 +868,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/caravan/pirate)
 "Ku" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 2
-	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	id_tag = "caravanpirate_bolt_starboard"

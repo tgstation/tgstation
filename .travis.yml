@@ -83,7 +83,7 @@ matrix:
         - tools/travis/install_spaceman_dmm.sh dmdoc
       before_script:
         # Travis checks out a hash, try to get back on a branch.
-        - git checkout -qf $(git name-rev --name-only HEAD) || true
+        - git checkout $TRAVIS_BRANCH || true
       script:
         - ~/dmdoc
       deploy:
