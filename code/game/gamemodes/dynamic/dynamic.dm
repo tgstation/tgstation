@@ -213,7 +213,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 	out += "<B>Remaining threat/threat_level:</B> [threat]/[threat_level]"
 
-	usr << browse(out, "window=threatlog;size=700x500")
+	usr << browse(out.Join(), "window=threatlog;size=700x500")
 
 /datum/game_mode/dynamic/proc/generate_threat()
 	relative_threat = lorentz_distribution(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
