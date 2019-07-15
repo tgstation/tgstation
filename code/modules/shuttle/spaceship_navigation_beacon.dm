@@ -69,7 +69,4 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if(!powered())
-		return
-
 	return ..()
